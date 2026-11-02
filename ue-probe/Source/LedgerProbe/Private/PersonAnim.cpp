@@ -132,6 +132,7 @@ namespace
 			{
 				WalkPlayer.SetSequence(A->WalkSequence);
 				WalkPlayer.SetLoopAnimation(true);
+				WalkPlayer.SetPlayRate(A->WalkRate);
 				Moving.A.SetLinkNode(IdleOut);
 				Moving.B.SetLinkNode(&WalkPlayer);
 				Moving.Alpha = 0.0f;
@@ -529,7 +530,82 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 			}
 			bGatherStep = true;
 		}
-		if (Owner != nullptr && !bGatherStep)
+		// THE WALK TO A PLACE (GoTo): turn off, walk the path, slow to a stop and turn to EndYaw.
+		if (Owner != nullptr && !bGatherStep && !bPaces && GoPhase > 0 && GoPhase < 4)
+		{
+			FVector At = Owner->GetActorLocation();
+			FRotator R = Owner->GetActorRotation();
+			if (GoPhase == 1 || GoPhase == 2)
+			{
+				FVector To = GoPath.IsValidIndex(GoNext) ? GoPath[GoNext] - At : FVector::ZeroVector;
+				To.Z = 0.0f;
+				float Left = To.Size();
+				// a corner is cut within 40 cm of its point; the last point is reached within 5
+				while (GoPath.IsValidIndex(GoNext) && Left < (GoNext + 1 < GoPath.Num() ? 40.0f : 5.0f))
+				{
+					GoSegFrom = GoPath[GoNext];
+					++GoNext;
+					To = GoPath.IsValidIndex(GoNext) ? GoPath[GoNext] - At : FVector::ZeroVector;
+					To.Z = 0.0f;
+					Left = To.Size();
+				}
+				if (!GoPath.IsValidIndex(GoNext)) { GoPhase = 3; }
+				else
+				{
+					const FVector Dir = To / Left;
+					const float Want = FMath::RadiansToDegrees(FMath::Atan2(Dir.Y, Dir.X)) + WalkYawOffset;
+					if (GoPhase == 1)
+					{
+						// off from standing: the turn first, at a walking pace's turn, then away
+						R.Yaw = FMath::FixedTurn(R.Yaw, Want, 150.0f * DeltaSeconds);
+						if (FMath::Abs(FRotator::NormalizeAxis(R.Yaw - Want)) < 35.0f) { GoPhase = 2; }
+					}
+					else
+					{
+						// HE WAITS FOR THE PLAYER rather than walking through him, as the pacing walk does.
+						bool bBlocked = false;
+						const UWorld* W = GetWorld();
+						const APlayerController* WPC = W != nullptr ? W->GetFirstPlayerController() : nullptr;
+						if (WPC != nullptr && WPC->GetPawn() != nullptr)
+						{
+							const FVector Rel = WPC->GetPawn()->GetActorLocation() - At;
+							bBlocked = Rel.Size2D() < 130.0f && FVector::DotProduct(Rel.GetSafeNormal2D(), Dir) > 0.5f;
+						}
+						// the last point: the walk eases out over its blend's last quarter second of travel, so
+						// they slow onto the spot rather than stop dead or run past it
+						const bool bLast = GoNext == GoPath.Num() - 1;
+						const bool bEasing = bLast && Left < WalkSpeedCms * 0.25f;
+						if (!bBlocked)
+						{
+							const float Step = FMath::Min(Left, WalkSpeedCms * FMath::Max(WalkWeight, bEasing ? 0.15f : 0.0f) * DeltaSeconds);
+							At += Dir * Step;
+							// the floor between the segment's two points, so a kerb or a step is walked, not floated
+							const FVector& P = GoPath[GoNext];
+							const float Seg = FVector::Dist2D(GoSegFrom, P);
+							const float Done = Seg > 1.0f ? FMath::Clamp(1.0f - FVector::Dist2D(At, P) / Seg, 0.0f, 1.0f) : 1.0f;
+							At.Z = FMath::Lerp(GoSegFrom.Z, P.Z, Done);
+							Owner->SetActorLocation(At);
+							bGoing = !bEasing;
+						}
+						R.Yaw = FMath::FixedTurn(R.Yaw, Want, 180.0f * DeltaSeconds);
+					}
+					Owner->SetActorRotation(R);
+				}
+			}
+			if (GoPhase == 3)
+			{
+				// the walk's blend out, then a small turn to where they will stand facing; one over 50 degrees is the
+				// caller's, by a turning clip (a body turned in place slides its planted feet: 41 cm at 60 degrees)
+				const float Diff = FRotator::NormalizeAxis(GoEndYaw - R.Yaw);
+				if (FMath::Abs(Diff) <= 50.0f)
+				{
+					R.Yaw = FMath::FixedTurn(R.Yaw, GoEndYaw, (WalkWeight > 0.3f ? 40.0f : 90.0f) * DeltaSeconds);
+					Owner->SetActorRotation(R);
+				}
+				if (WalkWeight <= 0.01f && (FMath::Abs(Diff) < 1.0f || FMath::Abs(Diff) > 50.0f)) { GoPhase = 4; }
+			}
+		}
+		if (Owner != nullptr && !bGatherStep && bPaces)
 		{
 			if (PauseLeft > 0.0f) { PauseLeft -= DeltaSeconds; }
 			else
@@ -731,6 +807,27 @@ void ULedgerPersonAnim::GoAndLook(const FVector& Spot, const FVector& LookAt, fl
 	GatherLeft = FMath::Max(0.0f, Delay);
 	GatherStay = FMath::Max(1.0f, Stay);
 	GatherPhase = 0;
+}
+
+void ULedgerPersonAnim::SetupGoTo(UAnimSequenceBase* InWalk, float InSpeedCms, float InRate, float InYawOffset)
+{
+	WalkSequence = InWalk;
+	WalkSpeedCms = InSpeedCms;
+	WalkRate = InRate;
+	WalkYawOffset = InYawOffset;
+	bPaces = false;
+	GoPhase = 0;
+}
+
+void ULedgerPersonAnim::GoTo(const TArray<FVector>& Path, float EndYaw)
+{
+	AActor* Owner = GetOwningActor();
+	if (WalkSequence == nullptr || bPaces || Owner == nullptr || Path.Num() == 0) { return; }
+	GoPath = Path;
+	GoNext = 0;
+	GoSegFrom = Owner->GetActorLocation();
+	GoEndYaw = EndYaw;
+	GoPhase = 1;
 }
 
 void ULedgerPersonAnim::SetupWalk(UAnimSequenceBase* InWalk, const FVector& InA, const FVector& InB, float InSpeedCms,

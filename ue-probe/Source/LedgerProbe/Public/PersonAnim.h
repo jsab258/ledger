@@ -190,6 +190,23 @@ public:
 	float WalkWeight = 0.0f, PauseLeft = 0.0f;
 	bool bToB = true;
 	int32 WalkLegs = 0;
+	// A WALK TO A PLACE AND NO FURTHER, 2 November (the corner's walk-off: people walk off instead of
+	// vanishing). Set before InitAnim, in place of SetupWalk: the walk clip (authored in place) at Rate,
+	// the owner carried at SpeedCms, the clip's own speed at that rate, so a planted foot stays put; no
+	// pacing. GoTo then turns the owner toward the path's first point, walks it point by point (each
+	// point's Z the floor there), waits while the player stands in its way, and turns to EndYaw at the
+	// end; GoStop ends it where the owner is. GoPhase: 0 none, 1 turning off, 2 walking, 3 stopping, 4
+	// arrived (the caller reads it and calls GoClear).
+	void SetupGoTo(UAnimSequenceBase* InWalk, float InSpeedCms, float InRate, float InYawOffset);
+	void GoTo(const TArray<FVector>& Path, float EndYaw);
+	void GoStop() { if (GoPhase == 1 || GoPhase == 2) { GoPhase = 3; GoEndYaw = GetOwningActor() != nullptr ? GetOwningActor()->GetActorRotation().Yaw : GoEndYaw; } }
+	void GoClear() { GoPhase = 0; GoPath.Reset(); }
+	bool bPaces = true;
+	float WalkRate = 1.0f;
+	int32 GoPhase = 0, GoNext = 0;
+	TArray<FVector> GoPath;
+	FVector GoSegFrom = FVector::ZeroVector;
+	float GoEndYaw = 0.0f;
 	// THE MINUTE AFTER, 1 October (23 September's ruling; the rulings sweep): when something
 	// happens in the street (the smash), a walker turns aside to it: it sets off after Delay
 	// seconds toward Spot, stands there looking at LookAt for Stay seconds, then walks back to

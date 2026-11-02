@@ -906,6 +906,23 @@ namespace
 	// EACH ONE'S HEAD, 29 September (town list 1): the look on every part of
 	// their MetaHuman that plays an idle, body and face alike, by body.
 	TMap<AActor*, TArray<TWeakObjectPtr<ULedgerPersonAnim>>> GLooks;
+	const double kWalkOffRate = 0.85;
+	// THE CLOTHES THAT FOLLOW THE BODY (the cast setup), by body; and the body part they follow
+	TMap<AActor*, TArray<TWeakObjectPtr<USkeletalMeshComponent>>> GFollowers;
+	TMap<AActor*, TWeakObjectPtr<USkeletalMeshComponent>> GFollowed;
+	// A TURNING CLIP, AND THE CLOTHES ON THEIR OWN IDLE MEANWHILE (2 November, the walk-off's review: the retargeted
+	// quarter turns cross the legs, and shorts copying that pose stretched into a sheet to the shin; before the
+	// clothes followed the body they stood in their own idle through a turn, as they do again for its length)
+	void SetFollow(AActor* Body, bool bFollow)
+	{
+		TArray<TWeakObjectPtr<USkeletalMeshComponent>>* F = Body != nullptr ? GFollowers.Find(Body) : nullptr;
+		TWeakObjectPtr<USkeletalMeshComponent>* Lead = Body != nullptr ? GFollowed.Find(Body) : nullptr;
+		if (F == nullptr || Lead == nullptr || !Lead->IsValid()) { return; }
+		for (const TWeakObjectPtr<USkeletalMeshComponent>& C : *F)
+		{
+			if (C.IsValid()) { C->SetLeaderPoseComponent(bFollow ? Lead->Get() : nullptr); }
+		}
+	}   // the walk-off's pace: the plugin's walk is 1.8 m/s, brisk (the walk proof's rate)
 	// EPIC'S OWN IDLE, BODY AND FACE (24 September, MetaHumanPortrait.cpp):
 	// the elizabeth idle carried over from an old street figure put the
 	// hands through the body; these are made on the cast's own skeletons.
@@ -1113,7 +1130,17 @@ namespace
 				Done.Add(C);
 				if (BodyPart != nullptr && C != BodyPart && M->GetSkeleton() == BodyPart->GetSkeletalMeshAsset()->GetSkeleton())
 				{
+					// its own idle too, played only while a turning clip has it let go (SetFollow)
+					C->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+					C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
+					if (ULedgerPersonAnim* Own = Cast<ULedgerPersonAnim>(C->GetAnimInstance()))
+					{
+						Own->Setup(Idle, FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f)), 1.0f, false);
+						C->InitAnim(true);
+					}
 					C->SetLeaderPoseComponent(BodyPart);
+					GFollowers.FindOrAdd(Body).Add(C);
+					GFollowed.Add(Body, BodyPart);
 					UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s follows the body's pose"), Who, *C->GetName());
 					continue;
 				}
@@ -1158,6 +1185,28 @@ namespace
 						else if (Breaks.Num() > 0 && Look->Sequence != nullptr && Breaks[0]->GetSkeleton() == Look->Sequence->GetSkeleton())
 						{
 							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s takes no idle breaks: the clips are not additive (tools/ue/retarget_sitting.py)"), Who, *C->GetName());
+						}
+					}
+					// THE WALK-OFF (WalkOffTick): the body can walk to its next place, Epic's walk authored in place,
+					// carried at that clip's own speed: the walk proof's baked copy's travel over its whole length (frames
+					// 97 to 127 of a 4-second, 121-frame clip ran past its end and gave 140 cm a second, not 180: every
+					// planted foot slid 25 cm back, the first film)
+					if (C == BodyPart && !FParse::Param(FCommandLine::Get(), TEXT("NoWalkOff")))
+					{
+						UAnimSequenceBase* InPlace = LoadObject<UAnimSequenceBase>(nullptr, TEXT("/MetaHumanCharacter/Optional/Animation/UEFNAnimPreset/Locomotion/AS_MH_Neutral_Walk_Loop_F.AS_MH_Neutral_Walk_Loop_F"));
+						UAnimSequence* Baked = LoadObject<UAnimSequence>(nullptr, TEXT("/Game/Ledger/Anim/RootMotion/AS_MH_Neutral_Walk_Loop_F_RM.AS_MH_Neutral_Walk_Loop_F_RM"));
+						if (InPlace != nullptr && Baked != nullptr && InPlace->GetSkeleton() == M->GetSkeleton())
+						{
+							const float WholeCm = (float)Baked->ExtractRootMotionFromRange(0.0f, Baked->GetPlayLength(), FAnimExtractContext()).GetTranslation().Size2D();
+							const float PerS = WholeCm / FMath::Max(Baked->GetPlayLength(), 0.1f);
+							Look->SetupGoTo(InPlace, PerS * (float)kWalkOffRate, (float)kWalkOffRate, -90.0f);
+							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s can walk off, %.0f cm/s (the baked loop: %.1f cm over its %.2f s); its post-process: %s"),
+							       Who, *C->GetName(), PerS * kWalkOffRate, WholeCm, Baked->GetPlayLength(),
+							       C->GetSkeletalMeshAsset()->GetPostProcessAnimBlueprint() != nullptr ? *C->GetSkeletalMeshAsset()->GetPostProcessAnimBlueprint()->GetName() : TEXT("none"));
+						}
+						else
+						{
+							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s cannot walk off: no walk clip on the body's skeleton"), Who);
 						}
 					}
 					C->InitAnim(true);
@@ -7647,6 +7696,383 @@ namespace
 		return FVector::DotProduct(To.GetSafeNormal(), Look.Vector()) > 0.64f;   // within about 50 degrees of where he looks
 	}
 
+	// THE WALK-OFF, 2 November (the corner's people: they walk off instead of vanishing; DECISIONS 2 Nov 15:31): when
+	// the hour moves a speaker who is in his view, they walk there along the pavement instead of being held back and
+	// then cut across (Mafia removes its civilians only out of sight; Kingdom Come II's extras leave by a door). The
+	// body's walk is ULedgerPersonAnim::GoTo, Epic's in-place walk at the clip's own speed (SetupGoTo at the cast's
+	// setup); the simulation's body goes to the place at once (what they see and the save follow it), the figure
+	// walks. Going to a place: around a post or a bin by the stand test's capsule, a side step of 0.6 or 1 m, else
+	// as far as is clear. Leaving the street: away from him along it, and taken off once out of his view. A talk
+	// opened with them stops them where they are. A seat, a seated person and a place indoors keep the old way.
+	// -NoWalkOff for none.
+	struct FWalkOff
+	{
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		bool bLeaving = false;
+		double Since = 0.0, ArrivedAt = -1.0, GameSince = 0.0;
+		FVector Want = FVector::ZeroVector;
+		// out of view the engine stops a body's pose and its anim update (MotionTick's note), which would leave a
+		// walker frozen mid-stride off camera: the body ticks always while it walks, its own setting put back after
+		EVisibilityBasedAnimTickOption TickWas = EVisibilityBasedAnimTickOption::AlwaysTickPose;
+		// EACH FOOT WHILE PLANTED (the walk proof's measure): the ball's drift across the ground while it is down
+		FVector Planted[2] = { FVector::ZeroVector, FVector::ZeroVector };
+		bool bDown[2] = { false, false };
+		float Slip[2] = { 0.0f, 0.0f }, WorstSlip = 0.0f, Along[2] = { 0.0f, 0.0f };
+		double DownAt[2] = { 0.0, 0.0 };
+		int32 Contacts = 0;
+		// A TURN OVER 50 DEGREES BY A TURNING CLIP (TurnTick's way: the clip's own yaw, warped to the angle, turns the
+		// figure): before setting off (bPreTurn, the path kept until it ends) and at the end (bEndTurn)
+		TArray<FVector> Path;
+		float EndYaw = 0.0f, TurnWarp = 1.0f, TurnFrom = 0.0f;
+		double TurnAt = 0.0;
+		bool bPreTurn = false, bEndTurn = false, bEndTurnTried = false;
+		TWeakObjectPtr<UAnimSequence> TurnSeq;
+	};
+	std::map<std::string, FWalkOff> GWalkOffs;
+	std::map<std::string, int> GWalkOffNo;   // the hour (day * 24 + hour) a walk was found impossible, tried once an hour
+
+	ULedgerPersonAnim* WalkingPart(AActor* Body)
+	{
+		TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
+		if (Parts == nullptr) { return nullptr; }
+		for (const TWeakObjectPtr<ULedgerPersonAnim>& P : *Parts)
+		{
+			if (P.IsValid() && !P->bPaces && P->WalkSequence != nullptr) { return P.Get(); }
+		}
+		return nullptr;
+	}
+
+	// The first blocked point on the line, as a share of it (1: clear), sampled every half metre from 0.6 m out:
+	// the stand test's capsule, or a floor more than a step (25 cm) from the one before.
+	double WalkLineClear(UWorld* World, AActor* Body, double X0, double Z0, double Y0, double X1, double Z1)
+	{
+		const double Len = std::hypot(X1 - X0, Z1 - Z0);
+		double PrevY = Y0;
+		for (double D = 0.6; D < Len; D += 0.5)
+		{
+			const double T = D / Len, X = X0 + (X1 - X0) * T, Z = Z0 + (Z1 - Z0) * T;
+			const double Y = FeetYAt(World, X, Z);
+			if (std::abs(Y - PrevY) > 0.25 || !StandBlockedAt(World, Body, X, Z, Y).empty()) { return std::max(0.0, (D - 0.5) / Len); }
+			PrevY = Y;
+		}
+		return 1.0;
+	}
+
+	// The path in the world, each point at the floor's height, from the figure's feet to the place; false when no
+	// clear first half metre. bWhole: it reaches the place.
+	bool WalkPath(UWorld* World, AActor* Body, const FVector& FromFeet, double ToX, double ToZ, TArray<FVector>& Out, bool& bWhole)
+	{
+		Out.Reset();
+		bWhole = false;
+		LedgerCrime::P3 At = ToStreet(FromFeet);
+		double AtY = FeetYAt(World, At.X, At.Z);
+		for (int Leg = 0; Leg < 4; ++Leg)
+		{
+			const double Clear = WalkLineClear(World, Body, At.X, At.Z, AtY, ToX, ToZ);
+			if (Clear >= 1.0)
+			{
+				Out.Add(ToUE(LedgerCrime::P3(ToX, FeetYAt(World, ToX, ToZ), ToZ)));
+				bWhole = true;
+				return true;
+			}
+			const double Len = std::hypot(ToX - At.X, ToZ - At.Z);
+			const double BX = At.X + (ToX - At.X) * Clear, BZ = At.Z + (ToZ - At.Z) * Clear;   // the last clear point
+			// A SIDE STEP: a point beside the blocked one, clear, with both legs to it and on from it clear
+			const double Ux = (ToX - At.X) / Len, Uz = (ToZ - At.Z) / Len;
+			const double Bx = At.X + Ux * std::min(Len, Clear * Len + 1.0), Bz = At.Z + Uz * std::min(Len, Clear * Len + 1.0);
+			bool bStep = false;
+			for (const double Side : { 0.6, -0.6, 1.0, -1.0 })
+			{
+				const double SX = Bx - Uz * Side, SZ = Bz + Ux * Side, SY = FeetYAt(World, SX, SZ);
+				if (std::abs(SY - AtY) > 0.25 || !StandBlockedAt(World, Body, SX, SZ, SY).empty()) { continue; }
+				if (WalkLineClear(World, Body, At.X, At.Z, AtY, SX, SZ) < 1.0) { continue; }
+				Out.Add(ToUE(LedgerCrime::P3(SX, SY, SZ)));
+				At = LedgerCrime::P3(SX, SY, SZ);
+				AtY = SY;
+				bStep = true;
+				break;
+			}
+			if (!bStep)
+			{
+				if (Clear * Len > 0.5) { Out.Add(ToUE(LedgerCrime::P3(BX, FeetYAt(World, BX, BZ), BZ))); }
+				return Out.Num() > 0;
+			}
+		}
+		return Out.Num() > 0;
+	}
+
+	// The turning clip begun, toward the figure's yaw WantYaw; false when the angle is small or the clips are missing.
+	bool BeginClipTurn(UWorld* World, AActor* Body, FWalkOff& W, ULedgerPersonAnim* A, AActor* Visual, float WantYaw)
+	{
+		const float Off = FRotator::NormalizeAxis(WantYaw - Visual->GetActorRotation().Yaw);
+		if (FMath::Abs(Off) <= 50.0f) { return false; }
+		// Unreal's yaw grows clockwise seen from above: a turn to the right is a right turn (TurnTick)
+		UAnimSequence* Seq = LoadObject<UAnimSequence>(nullptr, Off > 0.0f ? TEXT("/Game/Ledger/Anim/Sit/A_turn_right_MH.A_turn_right_MH")
+		                                                                   : TEXT("/Game/Ledger/Anim/Sit/A_turn_left_MH.A_turn_left_MH"));
+		USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+		if (Seq == nullptr || Mesh == nullptr || Mesh->GetSkeletalMeshAsset() == nullptr || Mesh->GetSkeletalMeshAsset()->GetSkeleton() != Seq->GetSkeleton()) { return false; }
+		Seq->bEnableRootMotion = true;
+		const float ClipYaw = Mesh->ConvertLocalRootMotionToWorld(Seq->ExtractRootMotionFromRange(0.0, Seq->GetPlayLength(), FAnimExtractContext())).GetRotation().Rotator().Yaw;
+		if (FMath::Abs(ClipYaw) < 45.0f) { return false; }
+		Mesh->ConsumeRootMotion();
+		if (!A->PlayMove(Seq)) { return false; }
+		SetFollow(Body, false);
+		W.TurnSeq = Seq;
+		W.TurnWarp = FMath::Clamp(Off / ClipYaw, 0.6f, 1.6f);   // past half again the clip's turn the feet would slide (TurnTick)
+		W.TurnFrom = Visual->GetActorRotation().Yaw;
+		W.TurnAt = World->GetTimeSeconds();
+		return true;
+	}
+
+	// One frame of it; true when it has ended.
+	bool ClipTurnStep(UWorld* World, AActor* Body, FWalkOff& W, ULedgerPersonAnim* A, AActor* Visual)
+	{
+		UAnimSequence* Seq = W.TurnSeq.Get();
+		USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+		if (Seq == nullptr || Mesh == nullptr) { return true; }
+		Mesh->ConsumeRootMotion();   // the mesh's own store kept empty
+		UAnimMontage* Mont = A->GetCurrentActiveMontage();
+		const float Pos = Mont != nullptr ? FMath::Min(A->Montage_GetPosition(Mont), Seq->GetPlayLength()) : Seq->GetPlayLength();
+		const float Yaw = Mesh->ConvertLocalRootMotionToWorld(Seq->ExtractRootMotionFromRange(0.0, Pos, FAnimExtractContext())).GetRotation().Rotator().Yaw * W.TurnWarp;
+		Visual->SetActorRotation(FRotator(0.0f, W.TurnFrom + Yaw, 0.0f));
+		const bool bDone = !A->IsMoving() && World->GetTimeSeconds() - W.TurnAt > 0.3;
+		if (bDone) { SetFollow(Body, true); }
+		return bDone;
+	}
+
+	// A walk begun: the figure walks the path, the simulation's body is at its end already (bLeaving: taken off later).
+	bool StartWalkOff(UWorld* World, const char* C, AActor* Body, double ToX, double ToZ, double YawDeg, bool bLeaving)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoWalkOff"));
+		AActor* Visual = GVisualFor(Body);
+		ULedgerPersonAnim* A = WalkingPart(Body);
+		if (bOff || World == nullptr || Body == nullptr || Visual == nullptr || Visual == Body || A == nullptr || A->GoPhase != 0
+		    || A->IsMoving() || (A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit")))) { return false; }
+		TArray<FVector> Path;
+		bool bWhole = false;
+		if (!WalkPath(World, Body, Visual->GetActorLocation(), ToX, ToZ, Path, bWhole) || FVector::Dist2D(Path.Last(), Visual->GetActorLocation()) < 60.0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s cannot walk from where they stand toward (%.2f, %.2f): blocked at once"), UTF8_TO_TCHAR(C), ToX, ToZ);
+			return false;
+		}
+		const LedgerCrime::P3 End = ToStreet(Path.Last());
+		if (!bLeaving)
+		{
+			// the simulation's body at the walk's end now: what they see from, and what a save keeps
+			Body->SetActorLocation(ToUE(LedgerCrime::P3(End.X, End.Y + LedgerCrime::kBodyHeightM * 0.5, End.Z)));
+			Body->SetActorRotation(FRotator(0.0f, (float)YawDeg, 0.0f));
+		}
+		FWalkOff& W = GWalkOffs[C];
+		W = FWalkOff();
+		W.Path = Path;
+		W.EndYaw = (float)YawDeg - 90.0f;   // a MetaHuman faces its actor's +Y
+		// facing well away from the way: the turning clip first, then the walk
+		W.bPreTurn = BeginClipTurn(World, Body, W, A, Visual, (Path[0] - Visual->GetActorLocation()).Rotation().Yaw - 90.0f);
+		if (!W.bPreTurn) { A->GoTo(Path, W.EndYaw); }
+		W.Anim = A;
+		W.bLeaving = bLeaving;
+		W.Since = NowS();
+		W.GameSince = World->GetTimeSeconds();
+		if (USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent())
+		{
+			W.TickWas = Mesh->VisibilityBasedAnimTickOption;
+			Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPose;
+		}
+		W.ArrivedAt = -1.0;
+		W.Want = Path.Last();
+		const LedgerCrime::P3 From = ToStreet(Visual->GetActorLocation());
+		UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s %s from (%.2f, %.2f) to (%.2f, %.2f), %.1f m in %d leg(s)%s, at %s"), UTF8_TO_TCHAR(C),
+		       bLeaving ? TEXT("leaves the street, walking") : TEXT("walks"), From.X, From.Z, End.X, End.Z,
+		       FVector::Dist2D(Visual->GetActorLocation(), Path.Last()) / 100.0, Path.Num(), bWhole ? TEXT("") : TEXT(", as far as is clear"), *Un(GNow.ToString()));
+		return true;
+	}
+
+	// Each frame: a talk stops a walker; one arrived stands there (the body takes the figure's place); one leaving is
+	// taken off out of his view, or after 12 s stood at the end of their way (the old cut-off, now only there).
+	void WalkOffTick(UWorld* World)
+	{
+		for (auto It = GWalkOffs.begin(); It != GWalkOffs.end();)
+		{
+			const char* C = It->first.c_str();
+			FWalkOff& W = It->second;
+			AActor* Body = CardBody(C);
+			AActor* Visual = GVisualFor(Body);
+			ULedgerPersonAnim* A = W.Anim.Get();
+			if (Body == nullptr || A == nullptr || Visual == nullptr) { It = GWalkOffs.erase(It); continue; }
+			const bool bTalk = (bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
+			                   || (GTalkOn && GTalkTarget.Card == C) || HeldByTalk(C);
+			if (bTalk && (A->GoPhase == 1 || A->GoPhase == 2))
+			{
+				A->GoStop();
+				UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s stops for the talk"), UTF8_TO_TCHAR(C));
+			}
+			if (W.bPreTurn)
+			{
+				if (!ClipTurnStep(World, Body, W, A, Visual)) { ++It; continue; }
+				W.bPreTurn = false;
+				// a talk opened meanwhile: they stay, turned (as arrived, below)
+				if (!bTalk) { A->GoTo(W.Path, W.EndYaw); ++It; continue; }
+			}
+			if (W.bEndTurn)
+			{
+				if (!ClipTurnStep(World, Body, W, A, Visual)) { ++It; continue; }
+				W.bEndTurn = false;
+			}
+			else if (!W.bLeaving && !W.bEndTurnTried && (A->GoPhase == 4 || A->GoPhase == 0) && !bTalk)
+			{
+				W.bEndTurnTried = true;
+				if (BeginClipTurn(World, Body, W, A, Visual, W.EndYaw)) { W.bEndTurn = true; ++It; continue; }
+			}
+			// THE FEET: a ball within 2.5 cm of the floor and the lower of the two is planted; its drift is the slip
+			if (USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent(); Mesh != nullptr && (A->GoPhase == 2 || A->GoPhase == 3))
+			{
+				const float Floor = Visual->GetActorLocation().Z;
+				const FName Balls[2] = { FName(TEXT("ball_l")), FName(TEXT("ball_r")) };
+				for (int32 I = 0; I < 2; ++I)
+				{
+					const FVector P = Mesh->GetSocketLocation(Balls[I]);
+					const FVector Other = Mesh->GetSocketLocation(Balls[1 - I]);
+					const bool bDown = P.Z - Floor < 2.5f && P.Z <= Other.Z + 1.0f;
+					if (!bDown && W.bDown[I] && W.Slip[I] > 3.0f)
+					{
+						// along: + the foot drifted the way they walk (carried too fast), - backward (too slow)
+						UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s's %s foot slid %.1f cm while down, %.1f cm along the walk, over %.2f s (walking %.2f, step %d)"), UTF8_TO_TCHAR(C),
+						       I == 0 ? TEXT("left") : TEXT("right"), W.Slip[I], W.Along[I], World->GetTimeSeconds() - W.DownAt[I], A->WalkWeight, A->GoPhase);
+					}
+					if (bDown && !W.bDown[I]) { W.Planted[I] = P; W.Slip[I] = 0.0f; W.Along[I] = 0.0f; W.DownAt[I] = World->GetTimeSeconds(); ++W.Contacts; }
+					if (bDown) { W.Along[I] = (float)FVector::DotProduct(P - W.Planted[I], FRotator(0.0f, Visual->GetActorRotation().Yaw + 90.0f, 0.0f).Vector()); }
+					if (bDown && W.bDown[I])
+					{
+						W.Slip[I] = FMath::Max(W.Slip[I], (float)FVector::Dist2D(P, W.Planted[I]));
+						W.WorstSlip = FMath::Max(W.WorstSlip, W.Slip[I]);
+					}
+					W.bDown[I] = bDown;
+				}
+			}
+			if (W.bLeaving && A->GoPhase > 0)
+			{
+				const bool bSeen = InHisView(World, Visual->GetActorLocation() + FVector(0.0, 0.0, 100.0));
+				const bool bFar = GPawn == nullptr || FVector::Dist2D(GPawn->GetActorLocation(), Visual->GetActorLocation()) > 600.0;
+				if (A->GoPhase == 4 && W.ArrivedAt < 0.0) { W.ArrivedAt = NowS(); }
+				const bool bStoodTooLong = W.ArrivedAt >= 0.0 && NowS() - W.ArrivedAt >= kPlaceWaitSeconds;
+				if ((!bSeen && bFar) || bStoodTooLong)
+				{
+					A->GoClear();
+					A->WalkWeight = 0.0f;
+					if (USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent()) { Mesh->VisibilityBasedAnimTickOption = W.TickWas; }
+					PlaceBodyAt(Body, -400.0, -400.0, 0.0);
+					ShowPerson(Body, false);
+					GAway.insert(C);
+					UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s off the street %s, %.1f s after setting off"), UTF8_TO_TCHAR(C),
+					       bStoodTooLong ? TEXT("IN HIS VIEW (stood at the end of their way 12 s)") : TEXT("out of his view"), World->GetTimeSeconds() - W.GameSince);
+					It = GWalkOffs.erase(It);
+					continue;
+				}
+				++It;
+				continue;
+			}
+			if (A->GoPhase == 4 || A->GoPhase == 0)
+			{
+				// STANDING THERE: the body where the figure stopped, its facing the figure's
+				const FVector Feet = Visual->GetActorLocation();
+				const LedgerCrime::P3 S = ToStreet(Feet);
+				Body->SetActorLocation(ToUE(LedgerCrime::P3(S.X, S.Y + LedgerCrime::kBodyHeightM * 0.5, S.Z)));
+				Body->SetActorRotation(FRotator(0.0f, Visual->GetActorRotation().Yaw + 90.0f, 0.0f));
+				SyncVisual(Body);
+				A->GoClear();
+				if (USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent()) { Mesh->VisibilityBasedAnimTickOption = W.TickWas; }
+				UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s stands at (%.2f, %.2f), %.0f cm from the walk's end, %.1f s after setting off; feet down %d times, worst slip %.1f cm"), UTF8_TO_TCHAR(C),
+				       S.X, S.Z, FVector::Dist2D(Feet, W.Want), World->GetTimeSeconds() - W.GameSince, W.Contacts, W.WorstSlip);
+				It = GWalkOffs.erase(It);
+				continue;
+			}
+			++It;
+		}
+	}
+
+	// THE WALK-OFF'S PROOF (-WalkOffProof, the editor's screen before the packaged walk): once the cast stand, Lena
+	// walks 6 m along the pavement, the clearer way, filmed from the side (Saved/WalkOff, a picture each 0.2 s); a
+	// second after she stands, Sam leaves the street away from the camera and is taken off once out of its view.
+	// -WalkOffProofExit ends the game after, or at 600 s of game time (a new game opens with the walk-round, about 240 s of it at a fixed step, nobody placed).
+	void WalkOffProofTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("WalkOffProof"));
+		static int32 Step = 0, Shot = 0;
+		static double NextShot = 0.0, At = 0.0;
+		if (!bOn || World == nullptr) { return; }
+		// the game's own seconds since the level began (Now is the session's wall clock, NowS)
+		const double GameT = World->GetTimeSeconds();
+		if (GameT > 600.0 && Step < 5 && FParse::Param(FCommandLine::Get(), TEXT("WalkOffProofExit"))) { Step = 5; FPlatformMisc::RequestExit(false); }
+		if (Step >= 4) { return; }
+		AActor* Lena = CardBody("lena");
+		if (Step == 0)
+		{
+			AActor* Visual = GVisualFor(Lena);
+			if (Lena == nullptr || Visual == nullptr || Visual == Lena || WalkingPart(Lena) == nullptr || GameT < 8.0
+			    || GWalkOffs.count("lena") || WalkingPart(Lena)->GoPhase != 0 || !GPlacedFor.count("lena")) { return; }
+			const LedgerCrime::P3 Her = ToStreet(Visual->GetActorLocation());
+			const double Y = FeetYAt(World, Her.X, Her.Z);
+			const double Ahead = WalkLineClear(World, Lena, Her.X, Her.Z, Y, Her.X + 6.0, Her.Z) >= WalkLineClear(World, Lena, Her.X, Her.Z, Y, Her.X - 6.0, Her.Z) ? 1.0 : -1.0;
+			const FVector From = Visual->GetActorLocation();
+			const FVector To = ToUE(LedgerCrime::P3(Her.X + Ahead * 6.0, Y, Her.Z));
+			const FVector Mid = (From + To) * 0.5 + FVector(0.0, 0.0, 150.0);
+			const FVector Across = FVector::CrossProduct((To - From).GetSafeNormal2D(), FVector::UpVector);
+			FVector Eye = Mid + Across * 700.0;
+			for (const double Side : { 1.0, -1.0 })
+			{
+				FHitResult Hit;
+				FCollisionQueryParams Q(FName(TEXT("WalkOffProofEye")), false);
+				if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+				if (!World->LineTraceSingleByChannel(Hit, Mid, Mid + Across * Side * 720.0, ECC_Visibility, Q)) { Eye = Mid + Across * Side * 700.0; break; }
+			}
+			FActorSpawnParameters SP;
+			SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Mid - FVector(0.0, 0.0, 60.0) - Eye).Rotation(), SP))
+			{
+				Cam->GetCameraComponent()->SetFieldOfView(70.0f);
+				if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
+			}
+			const double Yaw = (ToUE(LedgerCrime::P3(Ahead, 0.0, 0.0)) - ToUE(LedgerCrime::P3(0.0, 0.0, 0.0))).Rotation().Yaw;
+			const bool bGo = StartWalkOff(World, "lena", Lena, Her.X + Ahead * 6.0, Her.Z, Yaw + (Ahead > 0.0 ? 60.0 : -60.0), false);
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Lena %s"), bGo ? TEXT("sets off") : TEXT("could not set off"));
+			Step = bGo ? 1 : 4;
+			if (!bGo && FParse::Param(FCommandLine::Get(), TEXT("WalkOffProofExit"))) { FPlatformMisc::RequestExit(false); }
+			NextShot = GameT + 0.2;
+			return;
+		}
+		if (GameT >= NextShot && Shot < 48 && Step <= 2)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+				/ TEXT("WalkOff") / FString::Printf(TEXT("walkoff-%02d.png"), Shot++)), false, false);
+			NextShot = GameT + 0.2;
+		}
+		if (Step == 1 && !GWalkOffs.count("lena"))
+		{
+			At = Now;
+			Step = 2;
+		}
+		else if (Step == 2 && Now - At > 1.0)
+		{
+			AActor* Sam = CardBody("sam");
+			AActor* Visual = GVisualFor(Sam);
+			bool bGo = false;
+			if (Sam != nullptr && Visual != nullptr && Visual != Sam && !GAway.count("sam"))
+			{
+				const LedgerCrime::P3 His = ToStreet(Visual->GetActorLocation());
+				bGo = StartWalkOff(World, "sam", Sam, His.X + 30.0, His.Z, 0.0, true) || StartWalkOff(World, "sam", Sam, His.X - 30.0, His.Z, 0.0, true);
+			}
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Sam %s"), bGo ? TEXT("leaves the street") : TEXT("could not leave"));
+			Step = 3;
+			At = Now;
+		}
+		else if (Step == 3 && (!GWalkOffs.count("sam") || Now - At > 40.0))
+		{
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: done, Sam %s, pictures %d"), GWalkOffs.count("sam") ? TEXT("still walking") : TEXT("off the street"), Shot);
+			Step = 4;
+			if (FParse::Param(FCommandLine::Get(), TEXT("WalkOffProofExit"))) { FPlatformMisc::RequestExit(false); }
+		}
+	}
+
 	void PlaceBodiesByRoutine(UWorld* World)
 	{
 		if (!bRitasWindow || bLiveScript || !bGCast || GEnc != EEncounter::Live || World == nullptr) { return; }
@@ -7685,6 +8111,7 @@ namespace
 			// is up
 			if ((bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
 			    || (GTalkOn && GTalkTarget.Card == C) || HeldByTalk(C)) { continue; }
+			if (GWalkOffs.count(C)) { continue; }   // walking there already (the walk-off)
 			const auto It = Here.find(C);
 			// WITHIN EARSHOT THE WAIT HAS NO END (30 October, the packaged sit walk: Ron vanished from the bench beside
 			// Tom in one frame; the talk film: Sheila in front of him): a person he is close to and looking at keeps their
@@ -7694,6 +8121,20 @@ namespace
 			const bool bWaitedEnough = !bNearHim && GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
 			if (It == Here.end())
 			{
+				// LEAVING IN HIS VIEW: they walk off along the street, away from him, 30 m at most (the walk-off)
+				if (!bPlaceNow && GPlacedFor.count(C) && !GAway.count(C) && InHisView(World, Body->GetActorLocation()) && !(GWalkOffNo.count(C) && GWalkOffNo[C] == Key))
+				{
+					const LedgerCrime::P3 At = ToStreet(GVisualFor(Body)->GetActorLocation());
+					const double Away = GPawn != nullptr && ToStreet(GPawn->GetActorLocation()).X > At.X ? -1.0 : 1.0;
+					const double Yaw = (ToUE(LedgerCrime::P3(Away, 0.0, 0.0)) - ToUE(LedgerCrime::P3(0.0, 0.0, 0.0))).Rotation().Yaw;
+					if (StartWalkOff(World, C, Body, At.X + Away * 30.0, At.Z, Yaw, true))
+					{
+						GHeldBackSince.erase(C);
+						GPlacedFor[C] = Key;
+						continue;
+					}
+					GWalkOffNo[C] = Key;
+				}
 				if (!bPlaceNow && !bWaitedEnough && !GAway.count(C) && InHisView(World, Body->GetActorLocation()))
 				{
 					if (!GHeldBackSince.count(C)) { GHeldBackSince[C] = NowS(); }
@@ -7714,10 +8155,12 @@ namespace
 			// A MARK NAMING SOMEONE IS THEIRS ALONE (7 October: Ron's seat on the bench is not
 			// Sheila's desk), and a seated one keeps them on it.
 			const FOfficeMark* Seat = nullptr;
+			bool bIndoors = false;
 			for (const FOfficeMark& K : GOffice.Marks)
 			{
 				if (GOffice.bOn && K.Place == It->second.Place && (K.Who.empty() || K.Who == C))
 				{
+					bIndoors = true;
 					X = K.X; Z = K.Z;
 					YawDeg = FMath::RadiansToDegrees(std::atan2(K.FaceZ - K.Z, K.FaceX - K.X));
 					Seat = K.Seated.empty() ? nullptr : &K;
@@ -7763,13 +8206,14 @@ namespace
 			}
 			const FVector Goes = ToUE(LedgerCrime::P3(X, 1.0, Z));
 			const bool bAppointment = It->second.Place == "mickeys_office" && std::string(C) == "lena" && GWeek.Week.Waits(GNow);
-			if (!bPlaceNow && !bWaitedEnough && !bAppointment
-			    && ((!GAway.count(C) && InHisView(World, Body->GetActorLocation())) || InHisView(World, Goes)))
+			const bool bInView = (!GAway.count(C) && InHisView(World, Body->GetActorLocation())) || InHisView(World, Goes);
+			// IN HIS VIEW, STANDING IN THE STREET, GOING TO A SPOT IN IT: they walk there (the walk-off), below
+			const bool bWalks = !bPlaceNow && GPlacedFor.count(C) && bInView && !GAway.count(C) && Seat == nullptr && !bIndoors && !(GWalkOffNo.count(C) && GWalkOffNo[C] == Key);
+			if (!bPlaceNow && !bWaitedEnough && !bAppointment && bInView && !bWalks)
 			{
 				if (!GHeldBackSince.count(C)) { GHeldBackSince[C] = NowS(); }
 				continue;
 			}
-			GHeldBackSince.erase(C);
 			// On the pavement, never on a thing (PlaceToStand: Sheila stood on the fish market's crate);
 			// ON a seat, though, its feet at the floor in front of it (7 October).
 			LedgerCrime::StandPlace Stand = LedgerCrime::PlaceToStand(X, Z, [World](double PX, double PZ) { return FeetYAt(World, PX, PZ); });
@@ -7800,6 +8244,32 @@ namespace
 					       bFound ? *FString::Printf(TEXT("stands at (%.2f, %.2f)"), Stand.X, Stand.Z) : TEXT("no clear spot within 2 m, left there"));
 				}
 			}
+			// ALREADY THERE (within 60 cm): they stay as they stand, facing as they face, nothing seen to move
+			if (bWalks && GVisualFor(Body) != Body
+			    && FVector::Dist2D(GVisualFor(Body)->GetActorLocation(), ToUE(LedgerCrime::P3(Stand.X, Stand.FeetY, Stand.Z))) < 60.0)
+			{
+				const LedgerCrime::P3 Now3 = ToStreet(GVisualFor(Body)->GetActorLocation());
+				Stand = { Now3.X, Now3.Z, FeetYAt(World, Now3.X, Now3.Z), false };
+				YawDeg = GVisualFor(Body)->GetActorRotation().Yaw + 90.0f;
+			}
+			else if (bWalks)
+			{
+				if (StartWalkOff(World, C, Body, Stand.X, Stand.Z, YawDeg, false))
+				{
+					GHeldBackSince.erase(C);
+					GPlacedFor[C] = Key;
+					UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s walks to %s (%.1f, %.1f) at %s"), *Un(C), *Un(It->second.Place), X, Z, *Un(GNow.ToString()));
+					continue;
+				}
+				// no way there on foot: held back as before, until he looks away or 12 s
+				GWalkOffNo[C] = Key;
+				if (!bWaitedEnough && !bAppointment)
+				{
+					if (!GHeldBackSince.count(C)) { GHeldBackSince[C] = NowS(); }
+					continue;
+				}
+			}
+			GHeldBackSince.erase(C);
 			SeatPerson(Body, Seat != nullptr ? Seat->Seated : std::string());
 			if (Stand.bMoved)
 			{
@@ -8571,7 +9041,7 @@ namespace
 			{
 				ULedgerPersonAnim* A = T.Anim.Get();
 				UAnimSequence* Seq = T.Seq.Get();
-				if (A == nullptr || Seq == nullptr || T.Visual.Get() != Visual) { T.bTurning = false; continue; }
+				if (A == nullptr || Seq == nullptr || T.Visual.Get() != Visual) { T.bTurning = false; SetFollow(Body, true); continue; }
 				USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
 				Mesh->ConsumeRootMotion();   // the mesh's own store kept empty
 				UAnimMontage* Mont = A->GetCurrentActiveMontage();
@@ -8588,6 +9058,7 @@ namespace
 				}
 				if (A->IsMoving() || Now - T.At < 0.3) { continue; }
 				T.bTurning = false;
+				SetFollow(Body, true);
 				T.DoneAt = Now;
 				T.OffSince = -1.0;
 				// THE BODY TAKES THE FACING: a MetaHuman faces its actor's +Y, the body's yaw is its gaze.
@@ -8614,7 +9085,7 @@ namespace
 				    && M->GetSkeletalMeshAsset()->GetSkeleton() == L->GetSkeleton()) { A = P.Get(); break; }
 			}
 			if (A == nullptr || R == nullptr || (!A->bLook && !bProofHere) || A->IsMoving() || A->IsGathering()
-			    || (A->WalkSequence != nullptr && A->WalkWeight > 0.01f)
+			    || (A->WalkSequence != nullptr && A->WalkWeight > 0.01f) || A->GoPhase != 0
 			    || (A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit"))))
 			{
 				T.OffSince = -1.0;
@@ -8681,6 +9152,7 @@ namespace
 			}
 			Mesh->ConsumeRootMotion();   // nothing carried in from before
 			if (!A->PlayMove(Seq)) { T.OffSince = -1.0; continue; }
+			SetFollow(Body, false);
 			T.bTurning = true;
 			T.Anim = A;
 			T.Visual = Visual;
@@ -9364,6 +9836,8 @@ namespace
 	{
 		MoveProofTick(World, Now);
 		WalkProofTick(World, Now);
+		WalkOffProofTick(World, Now);
+		WalkOffTick(World);
 		SitProofTick(World, Now);
 		OfficeLookTick(World, Now);
 		TurnTick(World, Now);
