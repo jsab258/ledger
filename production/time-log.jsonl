@@ -335,3 +335,5 @@
 {"event": "start", "at": "2026-11-02T12:56:52", "task": "n02-tom-boots: Epic's boots on Tom (research, install, wear); n02-4 corner", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-02T13:36:02", "note": "Epic's boots worn, not kept (toe taken onto his own, helper running); the corner's route set"}
 {"event": "start", "at": "2026-11-02T13:36:03", "task": "n02-4-corner-people: idle breaks on the arms, the motion line, the idle film; Ron's moustache strands kept (research lever 1); n02-6-3 research helper", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-02T14:24:30", "note": "fidgets two tries (take 4 reviewed); clearance test; boots v3 gated; talk cost (7.3) and the 2027 line (7.2) done; build-speed asked; pushed 14:17"}
+{"event": "start", "at": "2026-11-02T14:24:30", "task": "n02-4-corner-people: Sheila's hand into her hip (the cycle test), Ron's spot; study C and the design rulings (helper); deep-dive trial 2 when idle", "phase": "1", "kind": "production"}

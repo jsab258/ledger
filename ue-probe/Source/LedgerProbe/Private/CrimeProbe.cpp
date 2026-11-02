@@ -1119,7 +1119,9 @@ namespace
 					if (!FParse::Param(FCommandLine::Get(), TEXT("NoIdleBreaks")))
 					{
 						TArray<UAnimSequenceBase*> Breaks;
-						for (const TCHAR* B : { TEXT("v01"), TEXT("v02"), TEXT("v03"), TEXT("v04"), TEXT("v06") })
+						// v06 left out (2 November, the cycle test, F:/LedgerTools/tmp/idle-film-6/hand-zoom.jpg): its hand
+						// swings in across the hip, and on Sheila, whose arms hang closer, it went into her shorts
+						for (const TCHAR* B : { TEXT("v01"), TEXT("v02"), TEXT("v03"), TEXT("v04") })
 						{
 							const FString Path = FString::Printf(TEXT("/Game/Ledger/Anim/Idle/A_stand_break_%s_MH.A_stand_break_%s_MH"), B, B);
 							if (UAnimSequenceBase* S = LoadObject<UAnimSequenceBase>(nullptr, *Path)) { Breaks.Add(S); }
@@ -6755,6 +6757,16 @@ namespace
 		const TPair<AActor*, const TCHAR*> People[3] = { { GW1Body, TEXT("Sheila") }, { GN2Body, TEXT("Darren") }, { GR3Body, TEXT("Ron") } };
 		const double T = World->GetTimeSeconds();
 		if (T < 20.0) { return; }
+		// -IdleFilmWho=Sheila: only that one of the three
+		static FString Only;
+		static const bool bOnly = FParse::Value(FCommandLine::Get(), TEXT("IdleFilmWho="), Only);
+		while (bOnly && GIdleFilm.Who < 3 && Only != People[GIdleFilm.Who].Value) { ++GIdleFilm.Who; }
+		if (bOnly && GIdleFilm.Who >= 3 && GIdleFilm.From < 0.0)
+		{
+			static bool bSaid = false;
+			if (!bSaid) { bSaid = true; UE_LOG(LogTemp, Display, TEXT("LedgerIdleFilm: done")); FPlatformMisc::RequestExit(false); }
+			return;
+		}
 		if (GIdleFilm.Who >= 3) { return; }
 		AActor* Body = People[GIdleFilm.Who].Key;
 		AActor* Who = GVisualFor(Body);
@@ -6810,7 +6822,9 @@ namespace
 			       Dist / 100.0f, bFound ? TEXT("clear") : TEXT("blocked"));
 			FScreenshotRequest::RequestScreenshot(FilmDir / People[GIdleFilm.Who].Value / FString::Printf(TEXT("f_%03d.png"), GIdleFilm.Frame++), false, false);
 		}
-		if (T - GIdleFilm.From >= 47.0)
+		static float FilmSeconds = 0.0f;
+		if (FilmSeconds == 0.0f) { FilmSeconds = 45.0f; FParse::Value(FCommandLine::Get(), TEXT("IdleFilmSeconds="), FilmSeconds); }
+		if (T - GIdleFilm.From >= FilmSeconds + 2.0)
 		{
 			GIdleFilm.From = -1.0;
 			if (++GIdleFilm.Who >= 3)
@@ -7468,7 +7482,8 @@ namespace
 
 	// NOBODY OVERLAPPING (2 November, the corner plan's step 4; Ron stood inside the lamp column at the cab rank, the floor
 	// test seeing nothing there because its trace starts 1 m up, inside the column): a person-sized capsule at the spot
-	// (25 cm round, from 25 cm above the feet to 1.75 m) touching anything solid in the street, or another person within
+	// (30 cm round, the hands hanging at the sides included: at 25 cm Ron's hand still hung in a litter bin's rim; from
+	// 30 cm above the feet to 1.75 m) touching anything solid in the street, or another person within
 	// 0.6 m (Kingdom Come II's capped places, Mafia's slots: one to a place). Returns what is in the way, or empty.
 	std::string StandBlockedAt(UWorld* World, AActor* Self, double X, double Z, double FeetY)
 	{
@@ -7477,8 +7492,8 @@ namespace
 		if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
 		for (const char* C : { "lena", "sam", "rocco" }) { if (AActor* B = CardBody(C)) { Q.AddIgnoredActor(B); Q.AddIgnoredActor(GVisualFor(B)); } }
 		TArray<FOverlapResult> Hits;
-		const FVector At = ToUE(LedgerCrime::P3(X, FeetY + 1.0, Z));
-		if (World->OverlapMultiByObjectType(Hits, At, FQuat::Identity, FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionShape::MakeCapsule(25.0f, 75.0f), Q))
+		const FVector At = ToUE(LedgerCrime::P3(X, FeetY + 1.025, Z));
+		if (World->OverlapMultiByObjectType(Hits, At, FQuat::Identity, FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionShape::MakeCapsule(30.0f, 72.5f), Q))
 		{
 			for (const FOverlapResult& H : Hits)
 			{

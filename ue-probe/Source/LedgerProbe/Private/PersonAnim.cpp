@@ -326,16 +326,23 @@ void ULedgerPersonAnim::BreakTick(float DeltaSeconds)
 		const float In = (BreakLength - BreakLeft) / BreakFade;
 		const float Out = BreakLeft / BreakFade;
 		BreakWeight = FMath::Clamp(FMath::Min(In, Out), 0.0f, 1.0f);
-		if (BreakLeft <= 0.0f) { BreakWeight = 0.0f; BreakIn = FMath::FRandRange(BreakEveryMin, BreakEveryMax); }
+		static const bool bCycleGap = FParse::Param(FCommandLine::Get(), TEXT("IdleBreakCycle"));
+		if (BreakLeft <= 0.0f) { BreakWeight = 0.0f; BreakIn = bCycleGap ? 1.0f : FMath::FRandRange(BreakEveryMin, BreakEveryMax); }
 		return;
 	}
 	BreakIn -= DeltaSeconds;
 	const bool bCalm = WalkWeight < 0.01f && SpeakWeight < 0.01f && SaidWeight < 0.01f && !Montage_IsPlaying(nullptr);
 	if (BreakIn > 0.0f || !bCalm) { return; }
-	BreakNow = Breaks[FMath::RandRange(0, Breaks.Num() - 1)];
+	// -IdleBreakCycle (a test: each break in turn, 1 s apart, so a film shows every clip on one person)
+	static const bool bCycle = FParse::Param(FCommandLine::Get(), TEXT("IdleBreakCycle"));
+	BreakNow = bCycle ? Breaks[BreakSerial % Breaks.Num()] : Breaks[FMath::RandRange(0, Breaks.Num() - 1)];
 	BreakLength = FMath::Max(BreakNow->GetPlayLength(), BreakFade * 2.0f);
 	BreakLeft = BreakLength;
 	++BreakSerial;
+	// Which break, for the films' reviewers (a fault is traced to its clip).
+	const AActor* Owner = GetOwningActor();
+	UE_LOG(LogTemp, Display, TEXT("LedgerBreak: %s's %s plays %s (%.1f s)"), Owner != nullptr ? *Owner->GetName() : TEXT("?"),
+	       GetSkelMeshComponent() != nullptr ? *GetSkelMeshComponent()->GetName() : TEXT("?"), *BreakNow->GetName(), BreakLength);
 }
 
 bool ULedgerPersonAnim::PlayMove(UAnimSequenceBase* Clip, float BlendIn, float BlendOut, float Rate)

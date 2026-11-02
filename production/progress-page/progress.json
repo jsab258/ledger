@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 2 November 2026, 7:09",
+  "updated": "Monday 2 November 2026, 14:19",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -31,7 +31,8 @@
         2.0
       ],
       "actual_w": 3.9,
-      "actual_note": "so far, open"
+      "actual_note": "so far, open",
+      "began": "2026-10-06"
     },
     {
       "n": 2,

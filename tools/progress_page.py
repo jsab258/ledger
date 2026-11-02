@@ -107,6 +107,21 @@ def derived():
     return name, studies, carried, days
 
 
+def line_2027(stations, today=None):
+    """THE 2027 LINE (his order of 2 November, n02-7-2): each phase's weeks against the top of the plan's own estimate
+    (PLAN.md), a positive total being weeks behind. The open phase's weeks are counted from its "began" date to today;
+    a phase passed keeps the weeks written on it. Returns (stations with the open phase's weeks set, weeks behind)."""
+    today = today or datetime.date.today()
+    out = []
+    for st in stations:
+        st = dict(st)
+        if st.get("state") == "here" and st.get("began"):
+            st["actual_w"] = round((today - datetime.date.fromisoformat(st["began"])).days / 7.0, 1)
+        out.append(st)
+    behind = sum(st["actual_w"] - st["planned_w"][1] for st in out if "actual_w" in st and st.get("planned_w"))
+    return out, round(behind, 1)
+
+
 def main(argv):
     path = os.path.join(PAGE, "progress.json")
     d = json.load(open(path, encoding="utf-8"))
@@ -124,14 +139,22 @@ def main(argv):
                 bad.append("plain")
         if missing:
             print("progress-page FAIL morning pictures not on the page: %s" % ", ".join(missing))
+        # the 2027 line agrees with the stations' own weeks as written (not with today's date, which moves)
+        behind = round(sum(st["actual_w"] - st["planned_w"][1] for st in d["stations"] if "actual_w" in st and st.get("planned_w")), 1)
+        if d.get("line2027", {}).get("behind_w") != behind:
+            print("progress-page FAIL the 2027 line says %s weeks behind, the stations %s: run tools/progress_page.py" % (d.get("line2027", {}).get("behind_w"), behind))
+            bad.append("line2027")
         print("progress-page: %d studies, %d carried items, %d days; %s" % (len(studies), len(carried), len(days),
               "FAIL" if bad or missing else "PASS"))
         return 1 if bad or missing else 0
     d.update(want)
+    d["stations"], behind = line_2027(d["stations"])
+    d["line2027"]["behind_w"] = behind
+    d["line2027"]["as_of"] = datetime.date.today().strftime("%A %d %B").replace(" 0", " ")
     d["street"]["days"] = sorted(set(d["street"]["days"]) | set(days))
     d["updated"] = datetime.datetime.now().strftime("%A %d %B %Y, %H:%M").replace(" 0", " ")
     json.dump(d, open(path, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    print("progress.json: %d of 16 studies done, %d carried items, %d days, updated %s" % (want["studies"]["done"], len(carried), len(d["street"]["days"]), d["updated"]))
+    print("progress.json: %d of 16 studies done, %d carried items, %d days, %.1f weeks behind the plan, updated %s" % (want["studies"]["done"], len(carried), len(d["street"]["days"]), behind, d["updated"]))
     for day in days:
         for v in VIEWS:
             print("  street/morning-%s-%s.jpg <- production/previews/morning-%s-%s.jpg" % (v, day, v, day))
