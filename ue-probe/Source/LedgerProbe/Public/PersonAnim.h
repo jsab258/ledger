@@ -55,13 +55,23 @@ public:
 	// copy of the idle, so the neck stays the idle's), every BreakEveryMin to BreakEveryMax seconds, faded in and out
 	// over BreakFade, never while walking, speaking or in a move. Set after Setup, before the instance is
 	// reinitialised; only breaks on the idle's own skeleton are kept, and a part without collarbones takes none.
-	void SetupBreaks(const TArray<UAnimSequenceBase*>& InBreaks, float EveryMin = 9.0f, float EveryMax = 22.0f);
+	// THE BREAKS ADDED, NOT SWAPPED IN (2 November, the second try: a fresh reviewer saw Sheila's arms held out like
+	// a shop dummy's for seconds, the break clips carrying the other skeleton's stance): each break is an additive
+	// clip (its movement from its own first frame; tools/ue/retarget_sitting.py), added to a twin of the idle loop, so
+	// the idle's own hang of the arms stays and only the fidget's motion is added. A clip that is not additive is
+	// never played. Every 6 to 14 s (both reviewers: 18 to 20 s between breaks read too still).
+	void SetupBreaks(const TArray<UAnimSequenceBase*>& InBreaks, float EveryMin = 6.0f, float EveryMax = 14.0f);
+	// The arms the breaks move (the collarbones); an arm holding something (a garment tagged LedgerInHand, the
+	// handbag) is left out, so the bag's hand never opens. Empty: no breaks. May change after the instance starts.
+	void SetBreakArms(const TArray<FName>& Arms) { BreakArms = Arms; ++BreakArmsSerial; }
+	TArray<FName> BreakArms = { FName(TEXT("clavicle_l")), FName(TEXT("clavicle_r")) };
+	int32 BreakArmsSerial = 0;
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<UAnimSequenceBase>> Breaks;
 	UPROPERTY(Transient)
 	TObjectPtr<UAnimSequenceBase> BreakNow;
 	float BreakWeight = 0.0f;
-	float BreakEveryMin = 9.0f, BreakEveryMax = 22.0f, BreakIn = 0.0f, BreakLeft = 0.0f, BreakLength = 0.0f;
+	float BreakEveryMin = 6.0f, BreakEveryMax = 14.0f, BreakIn = 0.0f, BreakLeft = 0.0f, BreakLength = 0.0f;
 	int32 BreakSerial = 0;
 	static constexpr float BreakFade = 0.5f;
 	void BreakTick(float DeltaSeconds);

@@ -12,6 +12,7 @@
 #include "AnimNodes/AnimNode_ModifyCurve.h"
 #include "AnimNodes/AnimNode_TwoWayBlend.h"
 #include "AnimNodes/AnimNode_LayeredBoneBlend.h"
+#include "AnimNodes/AnimNode_ApplyAdditive.h"
 #include "BoneControllers/AnimNode_LookAt.h"
 #include "BoneControllers/AnimNode_TwoBoneIK.h"
 #include "BoneControllers/AnimNode_ModifyBone.h"
@@ -34,9 +35,25 @@ namespace
 		FAnimNode_SequencePlayer_Standalone Player;
 		// THE IDLE'S BREAKS (SetupBreaks): one of Epic's breaks over the loop, on the arms.
 		FAnimNode_SequencePlayer_Standalone BreakPlayer;
+		FAnimNode_SequencePlayer_Standalone IdleTwin;   // the idle again, in step with Player, for the break to add to
+		FAnimNode_ApplyAdditive AddBreak;
 		FAnimNode_LayeredBoneBlend Upper;
 		bool bHasBreaks = false;
 		int32 BreakSerialSeen = 0;
+		int32 ArmsSerialSeen = -1;
+		void SetArms(const ULedgerPersonAnim* A)
+		{
+			ArmsSerialSeen = A->BreakArmsSerial;
+			Upper.LayerSetup[0].BranchFilters.Reset();
+			for (const FName& Arm : A->BreakArms)
+			{
+				FBranchFilter F;
+				F.BoneName = Arm;
+				F.BlendDepth = 0;
+				Upper.LayerSetup[0].BranchFilters.Add(F);
+			}
+			Upper.InvalidatePerBoneBlendWeights();
+		}
 		// THE WALK, blended over the idle by how much the person is moving.
 		FAnimNode_SequencePlayer_Standalone WalkPlayer;
 		FAnimNode_TwoWayBlend Moving;
@@ -93,19 +110,18 @@ namespace
 			{
 				BreakPlayer.SetSequence(A->Breaks[0]);
 				BreakPlayer.SetLoopAnimation(false);
+				IdleTwin.SetSequence(A->Sequence);
+				IdleTwin.SetLoopAnimation(true);
+				IdleTwin.SetStartPosition(A->StartSeconds);
+				IdleTwin.SetPlayRate(A->PlayRate);
+				AddBreak.Base.SetLinkNode(&IdleTwin);
+				AddBreak.Additive.SetLinkNode(&BreakPlayer);
+				AddBreak.Alpha = 1.0f;
 				Upper.BasePose.SetLinkNode(&Player);
 				Upper.BlendMode = ELayeredBoneBlendMode::BranchFilter;
 				if (Upper.BlendPoses.Num() == 0) { Upper.AddPose(); }   // Initialize runs again on every InitAnim
-				Upper.BlendPoses[0].SetLinkNode(&BreakPlayer);
-				Upper.LayerSetup[0].BranchFilters.Reset();
-				Upper.InvalidatePerBoneBlendWeights();
-				for (const TCHAR* Arm : { TEXT("clavicle_l"), TEXT("clavicle_r") })
-				{
-					FBranchFilter F;
-					F.BoneName = FName(Arm);
-					F.BlendDepth = 0;
-					Upper.LayerSetup[0].BranchFilters.Add(F);
-				}
+				Upper.BlendPoses[0].SetLinkNode(&AddBreak);
+				SetArms(A);
 				Upper.BlendWeights[0] = 0.0f;
 				Upper.bMeshSpaceRotationBlend = false;   // the arms follow the idle's own shoulders
 				IdleOut = &Upper;
@@ -194,6 +210,8 @@ namespace
 		{
 			OutNodes.Add(&Player);
 			OutNodes.Add(&BreakPlayer);
+			OutNodes.Add(&IdleTwin);
+			OutNodes.Add(&AddBreak);
 			OutNodes.Add(&Upper);
 			OutNodes.Add(&WalkPlayer);
 			OutNodes.Add(&Moving);
@@ -216,7 +234,11 @@ namespace
 			{
 				// A NEW LOOP, 7 October (sitting, item 1.2): the game may swap a person's loop, the
 				// seated one for the standing idle, and the player takes it on its next update.
-				if (A->Sequence != nullptr && Player.GetSequence() != A->Sequence) { Player.SetSequence(A->Sequence); }
+				if (A->Sequence != nullptr && Player.GetSequence() != A->Sequence)
+				{
+					Player.SetSequence(A->Sequence);
+					if (bHasBreaks) { IdleTwin.SetSequence(A->Sequence); IdleTwin.SetAccumulatedTime(Player.GetAccumulatedTime()); }
+				}
 				Look.Alpha = A->LookAlpha;
 				Look.LookAtLocation = A->LookTarget;
 				Mouth.Alpha = A->SpeakWeight;
@@ -231,7 +253,8 @@ namespace
 						BreakPlayer.SetSequence(A->BreakNow);
 						BreakPlayer.SetAccumulatedTime(0.0f);
 					}
-					Upper.BlendWeights[0] = A->BreakWeight;
+					if (A->BreakArmsSerial != ArmsSerialSeen) { SetArms(A); }
+					Upper.BlendWeights[0] = A->BreakArms.Num() > 0 ? A->BreakWeight : 0.0f;
 				}
 				for (int32 I = 0; I < 2; ++I)
 				{
@@ -276,7 +299,10 @@ const FName ULedgerPersonAnim::MoveSlot(TEXT("DefaultSlot"));
 void ULedgerPersonAnim::SetupBreaks(const TArray<UAnimSequenceBase*>& InBreaks, float EveryMin, float EveryMax)
 {
 	Breaks.Reset();
-	for (UAnimSequenceBase* B : InBreaks) { if (B != nullptr && (Sequence == nullptr || B->GetSkeleton() == Sequence->GetSkeleton())) { Breaks.Add(B); } }
+	for (UAnimSequenceBase* B : InBreaks)
+	{
+		if (B != nullptr && B->IsValidAdditive() && (Sequence == nullptr || B->GetSkeleton() == Sequence->GetSkeleton())) { Breaks.Add(B); }
+	}
 	BreakEveryMin = EveryMin;
 	BreakEveryMax = FMath::Max(EveryMax, EveryMin);
 	BreakIn = FMath::FRandRange(BreakEveryMin * 0.5f, BreakEveryMax);   // not all at once at the start

@@ -131,6 +131,24 @@
    ],
    "state": "done",
    "closed": "2026-11-02 12:00, done (about 12:00): both answered; the read-back ran and wrote 11 answers (5ed6f9fb6); the test finished"
+  },
+  {
+   "id": "build-cache-space-2026-11-02",
+   "added": "2026-11-02 14:00",
+   "text": "Faster builds: may the build machine keep about 17 GB more on C: (a bigger cache of compiled shaders and textures, about 10 GB, and the compiled code kept between builds, about 7 GB)? It should take about 14 minutes off each 40-minute build.",
+   "links": [],
+   "recommendation": "Yes, on C: (144 GB free; F: is already just under your 20 GB floor, so not there). Tonight's build is measured first; if the full cache turns out not to be what slows it, I withdraw this. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, on C:"
+    ],
+    [
+     "no",
+     "No, keep C: clear"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

@@ -348,6 +348,36 @@ def epic_bench_idle(unreal, lib):
         return "bench_idle:RAISED-%s" % str(e)[:60].replace(" ", "~")
 
 
+def make_additive(unreal, lib, seq, path):
+    """A break as an additive clip, 2 November (the corner's idle breaks, second try: played whole over the arms they
+    carried the Epic skeleton's stance and held the arms out like a shop dummy's): local-space additive against its own
+    first frame (Unreal's "Frame from this animation"), so only the fidget's motion is added to the idle
+    (ue-probe/Source/LedgerProbe/Private/PersonAnim.cpp, the ApplyAdditive node). One note token."""
+    try:
+        seq.set_editor_property("additive_anim_type", unreal.AdditiveAnimationType.AAT_LOCAL_SPACE_BASE)
+        seq.set_editor_property("ref_pose_type", unreal.AdditiveBasePoseType.ABPT_LOCAL_ANIM_FRAME)
+        seq.set_editor_property("ref_frame_index", 0)
+        lib.save_asset(path, only_if_is_dirty=False)
+        return "additive"
+    except Exception as e:
+        return "additive-RAISED-%s" % str(e)[:40].replace(" ", "~")
+
+
+def breaks_additive_only():
+    """Run inside the editor (a commandlet's -script): the breaks already made, turned additive, without remaking any clip."""
+    import unreal
+    lib = unreal.EditorAssetLibrary
+    notes = []
+    for _leaf, name in EPIC_STANDING:
+        if not name.startswith("stand_break"):
+            continue
+        path = "%s/A_%s%s" % (IDLE_OUT_DIR, name, SUFFIX)
+        seq = unreal.load_asset(path)
+        notes.append("%s:%s" % (name, make_additive(unreal, lib, seq, path) if seq else "missing"))
+    unreal.log("LedgerBreaksAdditive: " + ",".join(notes))
+    return notes
+
+
 def epic_clip(unreal, lib, src_path, name, out_dir):
     """One of Epic's sample clips onto the cast's body skeleton as <out_dir>/A_<name>_MH; one note token, never raises."""
     try:
@@ -375,7 +405,10 @@ def epic_clip(unreal, lib, src_path, name, out_dir):
             return "%s:not-made" % name
         lib.save_directory(out_dir, only_if_is_dirty=False, recursive=True)
         done = unreal.load_asset(want)
-        return "%s:%.1fs/epic" % (name, done.get_play_length() if done else -1.0)
+        extra = ""
+        if done is not None and name.startswith("stand_break"):
+            extra = "/" + make_additive(unreal, lib, done, want)
+        return "%s:%.1fs/epic%s" % (name, done.get_play_length() if done else -1.0, extra)
     except Exception as e:
         return "%s:RAISED-%s" % (name, str(e)[:50].replace(" ", "~"))
 
@@ -402,6 +435,7 @@ def selftest():
     check("a fixed name the game loads", out_path("sit_down") == "/Game/Ledger/Anim/Sit/A_sit_down_MH")
     check("Epic's bench idle under the same folder and name pattern", out_path(EPIC_OUT) == "/Game/Ledger/Anim/Sit/A_bench_idle_MH")
     check("Epic's standing idle and five breaks", len(EPIC_STANDING) == 6 and EPIC_STANDING[0][1] == "stand_idle")
+    check("the five breaks are the ones made additive", sum(1 for _l, n in EPIC_STANDING if n.startswith("stand_break")) == 5)
     check("it lands where the build cooks", out_path("stand_up").startswith("/Game/Ledger/"))
     check("the work stays out of the cook", not WORK_DIR.startswith("/Game/Ledger/"))
     check("the source is a game input on F:", source_fbx("sit_down", r"F:\X").endswith(os.path.join("anim", "sit", "sit_down.fbx")))

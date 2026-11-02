@@ -307,6 +307,10 @@ namespace LedgerGarments
 			Piece->RegisterComponent();
 			Piece->SetLeaderPoseComponent(Body);
 			++Worn;
+			// HELD IN A HAND (2 November): "in_hand": "right" or "left" tags the piece, so the idle's breaks leave
+			// that arm alone (PersonAnim.h SetBreakArms; the handbag's hand opened as Sheila fidgeted).
+			FString InHand;
+			if (G->TryGetStringField(TEXT("in_hand"), InHand)) { Piece->ComponentTags.Add(FName(*(FString(TEXT("LedgerInHand:")) + InHand))); }
 			// ITS CORRECTIVE SHAPES (2 November 2026), tagged for DriveCorrectives: "correctives": [{"morph",
 			// "pitch_full_deg", "yaw_full_deg"}], each a morph target the import kept (tools/ue/import_garments.py).
 			const TArray<TSharedPtr<FJsonValue>>* Correctives = nullptr;

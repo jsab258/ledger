@@ -1,11 +1,30 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Monday 2 November, 12:00",
+ "kicker": "LEDGER · Needs you · 1 open · updated Monday 2 November, 14:00",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "build-cache-space-2026-11-02",
+   "name": "Faster builds: may the build machine keep about 17 GB more on C: (a bigger cache of compiled shaders and textures, about 10 GB, and the compiled code kept between builds, about 7 GB)? It should take about 14 minutes off each 40-minute build.",
+   "links": [],
+   "recommendation": "Yes, on C: (144 GB free; F: is already just under your 20 GB floor, so not there). Tonight's build is measured first; if the full cache turns out not to be what slows it, I withdraw this. No web link: the answer is this page.",
+   "added": "2026-11-02 14:00",
+   "options": [
+    [
+     "yes",
+     "Yes, on C:"
+    ],
+    [
+     "no",
+     "No, keep C: clear"
+    ]
+   ]
+  }
+ ]
 }

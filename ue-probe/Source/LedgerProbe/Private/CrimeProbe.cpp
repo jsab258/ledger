@@ -1134,6 +1134,10 @@ namespace
 						{
 							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s takes %d idle breaks"), Who, *C->GetName(), Look->Breaks.Num());
 						}
+						else if (Breaks.Num() > 0 && Look->Sequence != nullptr && Breaks[0]->GetSkeleton() == Look->Sequence->GetSkeleton())
+						{
+							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s takes no idle breaks: the clips are not additive (tools/ue/retarget_sitting.py)"), Who, *C->GetName());
+						}
 					}
 					C->InitAnim(true);
 					GLooks.FindOrAdd(Body).Add(Look);
@@ -1149,6 +1153,22 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s has %d part(s) that can speak"), Who, PartsAnimated);
 		LedgerJacket::Wear(A, Who);
 		LedgerGarments::Wear(A, Who);
+		// A HAND THAT HOLDS SOMETHING TAKES NO BREAKS (PersonAnim.h SetBreakArms): the worn pieces' LedgerInHand tags.
+		{
+			TArray<FName> Arms = { FName(TEXT("clavicle_l")), FName(TEXT("clavicle_r")) };
+			TArray<UActorComponent*> Held = A->GetComponentsByTag(USkeletalMeshComponent::StaticClass(), FName(TEXT("LedgerInHand:right")));
+			if (Held.Num() > 0) { Arms.Remove(FName(TEXT("clavicle_r"))); }
+			Held = A->GetComponentsByTag(USkeletalMeshComponent::StaticClass(), FName(TEXT("LedgerInHand:left")));
+			if (Held.Num() > 0) { Arms.Remove(FName(TEXT("clavicle_l"))); }
+			if (Arms.Num() < 2)
+			{
+				if (TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = GLooks.Find(Body))
+				{
+					for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks) { if (L.IsValid()) { L->SetBreakArms(Arms); } }
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's breaks move %d arm(s): a hand holds something"), Who, Arms.Num());
+			}
+		}
 		Body->SetActorHiddenInGame(true);
 		GVisuals.Add(Body, A);
 		++GVisualsPlaced;
@@ -6675,18 +6695,37 @@ namespace
 		}
 		// THE STREET'S OWN PEOPLE too (the corner's check is everyone within 30 m): each standing extra in view, on
 		// its own bones (a MetaHuman's names, or the Mixamo rig's).
-		static const FName Mixamo[4] = { FName(TEXT("mixamorig:Head")), FName(TEXT("mixamorig:LeftHand")), FName(TEXT("mixamorig:RightHand")), FName(TEXT("mixamorig:Spine2")) };
+		// A rig's names end in these (Mixamo's "mixamorig:Head", or with the colon made "_" on import).
+		static const TCHAR* Ends[4] = { TEXT("Head"), TEXT("LeftHand"), TEXT("RightHand"), TEXT("Spine2") };
+		static TSet<FString> Told;   // each extra skipped is said once, with why
 		for (TActorIterator<ASkeletalMeshActor> It(World); It; ++It)
 		{
 			USkeletalMeshComponent* C = It->GetSkeletalMeshComponent();
-			if (It->IsHidden() || C == nullptr || Cast<ULedgerPersonAnim>(C->GetAnimInstance()) == nullptr
-			    || FVector::Dist(It->GetActorLocation(), GPawn->GetActorLocation()) > 3000.0 || !C->WasRecentlyRendered(0.5f))
+			if (FVector::Dist(It->GetActorLocation(), GPawn->GetActorLocation()) > 3000.0) { GMotionPrev.Remove(*It); continue; }
+			const TCHAR* Why = It->IsHidden() ? TEXT("hidden") : (C == nullptr || C->GetSkeletalMeshAsset() == nullptr) ? TEXT("no mesh")
+			                 : Cast<ULedgerPersonAnim>(C->GetAnimInstance()) == nullptr ? TEXT("not on the people's animation") : nullptr;
+			FName Names[4];
+			if (Why == nullptr)
 			{
+				const FReferenceSkeleton& Ref = C->GetSkeletalMeshAsset()->GetRefSkeleton();
+				for (int32 I = 0; I < 4; ++I)
+				{
+					Names[I] = C->GetBoneIndex(Bones[I]) != INDEX_NONE ? Bones[I] : NAME_None;
+					for (int32 B = 0; B < Ref.GetNum() && Names[I].IsNone(); ++B)
+					{
+						const FString N = Ref.GetBoneName(B).ToString();
+						if (N.Equals(Ends[I], ESearchCase::IgnoreCase) || N.EndsWith(FString(TEXT(":")) + Ends[I]) || N.EndsWith(FString(TEXT("_")) + Ends[I])) { Names[I] = Ref.GetBoneName(B); }
+					}
+					if (Names[I].IsNone()) { Why = TEXT("no head, hand or chest bone found"); }
+				}
+			}
+			if (Why != nullptr)
+			{
+				if (!Told.Contains(It->GetName())) { Told.Add(It->GetName()); UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s not measured: %s"), *It->GetName(), Why); }
 				GMotionPrev.Remove(*It);
 				continue;
 			}
-			const FName* Names = C->GetBoneIndex(Bones[1]) != INDEX_NONE ? Bones : (C->GetBoneIndex(Mixamo[1]) != INDEX_NONE ? Mixamo : nullptr);
-			if (Names == nullptr) { continue; }
+			if (!C->WasRecentlyRendered(0.5f)) { GMotionPrev.Remove(*It); continue; }
 			TArray<FVector> Now4;
 			for (int32 I = 0; I < 4; ++I) { Now4.Add(C->GetBoneLocation(Names[I], EBoneSpaces::ComponentSpace)); }
 			if (TArray<FVector>* Prev = GMotionPrev.Find(*It))
