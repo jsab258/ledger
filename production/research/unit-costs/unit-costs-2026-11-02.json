@@ -13,12 +13,14 @@
  "conversion_usd_per_logged_hour": {
   "in_window_floor": 21.9,
   "week_total": 37.5,
-  "basis": "week 26 Oct-1 Nov: US$1212.19 inside task windows / 55.35 logged hours of those windows; US$2129.59 total / 56.75 logged hours; 43% of dollars (US$917.40) fall outside any window"
+  "basis": "from the week 26 Oct-1 Nov, not the shop week of 22-24 Oct: US$1212.19 inside task windows / 55.35 logged hours; US$2129.59 total / 56.75 logged hours. Helpers' clock time is extra, not in those hours.",
+  "tag": "I"
  },
  "time_log_limits": [
-  "no entries 9-22 Oct (cloud week and the first shop fronts)",
+  "no entries 8 Oct 16:10 to 23 Oct 15:15 (cloud week and the first shop fronts)",
   "lapse 26 Oct 11:03 to 27 Oct 02:58 (DECISIONS.md 27 Oct 04:39)",
-  "no entries 31 Oct to 1 Nov 20:01",
+  "gap 28 Oct 14:26 to 29 Oct 11:28: jacket work (DECISIONS.md 28 Oct 15:10 to 29 Oct 08:20); US$454 of the audit's dollars outside windows",
+  "31 Oct to 1 Nov 20:01 is no work, not a gap: stopped for the week (DECISIONS.md 30 Oct 20:08)",
   "windows overlap when helpers run in parallel, so sums are task-hours not wall clock",
   "helpers' own clock time is not logged; their dollars are in the audit only"
  ],
@@ -30,27 +32,30 @@
      "hours": 4.0,
      "basis": "R: RECIPE.md 22 Oct 2.5 (front) + 1.5 (wear)",
      "usd": null,
-     "gate_rounds": 7,
+     "gate_rounds": 9,
      "tasks": [],
-     "source": "RECIPE.md; production/audits/gate-ironmonger/GATE.md"
+     "source": "RECIPE.md; production/audits/gate-ironmonger/GATE.md",
+     "gate_rounds_note": "includes wear rounds (GATE.md)"
     },
     {
      "name": "newsagent (22 Oct)",
      "hours": 3.0,
      "basis": "R: RECIPE.md 22 Oct (front and wear in one line)",
      "usd": null,
-     "gate_rounds": 2,
+     "gate_rounds": 3,
      "tasks": [],
-     "source": "RECIPE.md; production/audits/gate-newsagent/GATE.md"
+     "source": "RECIPE.md; production/audits/gate-newsagent/GATE.md",
+     "gate_rounds_note": "includes wear rounds (GATE.md)"
     },
     {
      "name": "tea rooms (23 Oct)",
      "hours": 4.5,
      "basis": "R: RECIPE.md 23 Oct (wear w1,w2 follows in GATE.md; may be extra)",
      "usd": null,
-     "gate_rounds": 8,
+     "gate_rounds": 10,
      "tasks": [],
-     "source": "RECIPE.md; production/audits/gate-tea-rooms/GATE.md"
+     "source": "RECIPE.md; production/audits/gate-tea-rooms/GATE.md",
+     "gate_rounds_note": "includes wear rounds (GATE.md)"
     },
     {
      "name": "grocer (23 Oct)",
@@ -97,20 +102,25 @@
     3.0,
     4.5
    ],
-   "usd_note": "No token figure: every shop front was brought in before 26 October. Only the chandler wear redo of 30 Oct is in range: US$2.77 in-window (a floor).",
+   "usd_note": "No token figure for the fronts: every shop front was brought in before 26 October. The chandler wear redo of 30 Oct cost US$40.48 (M: helper 30.62 + nine reviewers 9.86), not the 2.77 first read; the audit booked its helpers to the jeans window, which opened two minutes into the redo.",
    "related": [
     {
      "name": "chandler front wear redo, D11 (30 Oct; wear pass on a finished front)",
      "hours": 1.77,
-     "usd": 2.77,
-     "usd_gap_filled": 2.77,
+     "usd": 40.48,
+     "usd_gap_filled": null,
      "of_which_set_aside_hours": 0,
      "basis": "M: time-log window 30 Oct 11:28; RECIPE.md says about 2",
      "tasks": [
       "D11 chandler's front wear (helper) and its gate (9 reviewers)"
      ],
      "gate_rounds": 1,
-     "views": 9
+     "views": 9,
+     "usd_breakdown": {
+      "helper": 30.62,
+      "nine_reviewers": 9.86
+     },
+     "usd_note": "M; replaces 2.77. Gap-filled figure not recomputed."
     }
    ],
    "set_aside": [
@@ -124,7 +134,8 @@
      "hours": 2.7,
      "basis": "R: RECIPE.md (a helper plus waits); time-log window 313 is 0.28 h of session time",
      "window_hours_M": 0.28,
-     "usd_M": 5.7526996
+     "usd_M": 66.73,
+     "usd_note": "replaces 5.75; the review's recount of the joinery helpers' dollars across the windows they were booked to"
     },
     {
      "name": "fish market: not brought in (waits on scans behind a sign-in)",
@@ -132,21 +143,29 @@
      "basis": "none recorded"
     }
    ],
-   "all_in_hours_per_gate_round": 0.5,
    "design_side_hours_per_shop": [
-    3.0,
-    4.0
+    4.0,
+    14.0
    ],
-   "design_side_basis": "I: RECIPE.md 13 Oct batch A about 15 h for five fronts; 14 Oct batch B about 16 h for four (elapsed, mostly render waits; cloud week, not in the time log)",
-   "confidence": "medium"
+   "design_side_basis": "I, elapsed (mostly render waits; cloud week, not in the time log): batch B (14 Oct) about 16 h for four fronts = 4 h a shop; batch A (13 Oct) about 15 h for five fronts = 3 h a shop plus its try 2 (14-15 Oct, RECIPE.md) about 33 h for three shops = 11 h a shop, so about 14 h a shop (15/5 + 33/3).",
+   "confidence": "medium",
+   "gate_rounds_range": [
+    3,
+    10
+   ],
+   "gate_rounds_median": 9,
+   "hours_per_gate_round": {
+    "min": 0.44,
+    "median": 0.48,
+    "max": 1.0,
+    "basis": "I: shop hours over the corrected rounds (4.0/9, 3.0/3, 4.5/10, 4.5/10, 4.5/9, 3.58/5). The earlier 0.5 (0.36 to 0.72) did not follow: 0.36 was 3.58 h over ten views, not rounds. See review.fix_9_note."
+   }
   },
   "garment": {
    "examples": [
     {
      "name": "Tom's zip jacket",
      "hours": 6.78,
-     "usd": 220.0,
-     "usd_gap_filled": 305.76,
      "of_which_set_aside_hours": 2.66,
      "basis": "M: share-weighted time-log windows (equal split over the clauses of mixed task texts; outfit-level windows split four ways)",
      "tasks": [
@@ -172,13 +191,21 @@
       "C9 outfit: boots maps and reshape, reviews, hidden-face body, adoption",
       "C9 outfit: commit, joinery record, the toe band's second try (contact decal)"
      ],
-     "game_judgments": "28 Oct narrow fail, 29 Oct fail, 30 Oct pass (packaged sit walk 13 of 13)"
+     "game_judgments": "28 Oct narrow fail, 29 Oct fail, 30 Oct pass (packaged sit walk 13 of 13)",
+     "usd_old_window_split": 220.0,
+     "usd_gap_filled_old": 305.76,
+     "usd": null,
+     "usd_logged_hours_range": [
+      145,
+      220
+     ],
+     "usd_note": "I: about US$145 to 220 for its 6.8 logged hours only. The old 220 also held US$20.42 of shoes, jeans and jumper helpers (collar row) and 41.60 of study and port helpers (28 Oct grain and sleeve-record rows); the gap-filled figure is withdrawn, since the 28-29 Oct gap (US$454) mixes several pieces.",
+     "hours_at_least": 9.78,
+     "finished": "no: the collar's third try is open (DECISIONS.md 1 Nov 21:32, 2 Nov 07:50; NOW.md item 2)"
     },
     {
      "name": "Tom's jeans",
      "hours": 1.61,
-     "usd": 58.15,
-     "usd_gap_filled": 73.79,
      "of_which_set_aside_hours": 0,
      "basis": "M/I: same rule",
      "tasks": [
@@ -189,13 +216,20 @@
       "C9 outfit: boots maps and reshape, reviews, hidden-face body, adoption",
       "C9 outfit: commit, joinery record, the toe band's second try (contact decal)"
      ],
-     "game_judgments": "outfit gate 30 Oct: 1 fail, 1 pass (editor, 3 views)"
+     "game_judgments": "outfit gate 30 Oct: 1 fail, 1 pass (editor, 3 views)",
+     "usd_old_window_split_unreliable": {
+      "in_window": 58.15,
+      "gap_filled": 73.79
+     },
+     "usd": null,
+     "usd_note": "per-garment split unreliable (review fix 1): helpers' dollars sit in other windows and the outfit rows hold US$79.07 of the chandler's helpers",
+     "of_which_set_aside_hours_R": 1.2,
+     "set_aside_basis": "R: RECIPE.md 30 Oct, trousers made for a bare foot put over boots, three tries, about 1.2 h",
+     "finished": "the only later garment actually made (n = 1)"
     },
     {
      "name": "Tom's jumper (built, passes checks, not drawn under the jacket)",
      "hours": 2.81,
-     "usd": 59.57,
-     "usd_gap_filled": 76.21,
      "of_which_set_aside_hours": 0,
      "basis": "M/I: same rule",
      "tasks": [
@@ -207,13 +241,20 @@
       "C9 outfit: boots maps and reshape, reviews, hidden-face body, adoption",
       "C9 outfit: commit, joinery record, the toe band's second try (contact decal)"
      ],
-     "game_judgments": "passes asset checks and first game review; not drawn under the jacket"
+     "game_judgments": "passes asset checks and first game review; not drawn under the jacket",
+     "usd_old_window_split_unreliable": {
+      "in_window": 59.57,
+      "gap_filled": 76.21
+     },
+     "usd": null,
+     "usd_note": "per-garment split unreliable (review fix 1): helpers' dollars sit in other windows and the outfit rows hold US$79.07 of the chandler's helpers",
+     "of_which_set_aside_hours_R": 1.0,
+     "set_aside_basis": "R: RECIPE.md 30 Oct, the knitted top's hidden sleeve ends, two tries, about 1 h",
+     "finished": "no: hidden under the jacket"
     },
     {
      "name": "Tom's boots (Ron's pair carried over)",
      "hours": 2.95,
-     "usd": 68.11,
-     "usd_gap_filled": 88.23,
      "of_which_set_aside_hours": 1.45,
      "basis": "M/I: same rule",
      "tasks": [
@@ -226,22 +267,29 @@
       "C9 shoes: scan in, marks painted out, credits",
       "n02-3-2-toe-third: the soles' stand-ins for the light"
      ],
-     "game_judgments": "outfit gate 30 Oct"
+     "game_judgments": "outfit gate 30 Oct",
+     "usd_old_window_split_unreliable": {
+      "in_window": 68.11,
+      "gap_filled": 88.23
+     },
+     "usd": null,
+     "usd_note": "per-garment split unreliable (review fix 1): helpers' dollars sit in other windows and the outfit rows hold US$79.07 of the chandler's helpers",
+     "finished": "no: Ron's pair carried over"
     }
    ],
-   "median_hours": 2.88,
-   "median_hours_repeat_garments": 2.81,
-   "first_of_kind_hours": 6.78,
-   "first_of_kind_hours_with_unlogged_chain": 9.78,
-   "first_of_kind_basis": "I: the jacket bake chain (about 3 h, RECIPE.md 27 Oct) ran inside the time-log lapse of 26 Oct 11:03 to 27 Oct 02:58, so it is added to the logged 6.78 h; RECIPE.md Cost lines naming the jacket sum to about 7.7 h (R)",
-   "status": "passed its gate in the editor (3 fresh reviewers, 30 Oct); not yet packaged or passed by him (NOW.md)",
-   "usd_followers_median": 59.57,
+   "median_hours": null,
+   "first_of_kind_basis": "I: at least 9.8 h = the logged 6.78 h plus the jacket bake chain (about 3 h, RECIPE.md 27 Oct) that ran inside the log lapse of 26 Oct 11:03 to 27 Oct 02:58; the gap of 28 Oct 14:26 to 29 Oct 11:28 holds more jacket work, unlogged and uncounted. RECIPE.md Cost lines naming the jacket sum to about 7.7 h (R).",
+   "status": "unfinished, editor gate only: the outfit passed its gate in the editor (3 fresh reviewers, 30 Oct) but no garment is finished; the collar's third try is open (DECISIONS.md 1 Nov 21:32, 2 Nov 07:50; NOW.md item 2); not packaged, not passed by him",
+   "usd_followers_median": null,
    "total_outfit": {
     "hours": 14.15,
-    "usd": 405.83,
-    "usd_gap_filled": 543.99,
     "window_task_hours_unweighted": 16.5,
-    "wall_clock_union_hours": 15.69
+    "wall_clock_union_hours": 15.69,
+    "usd_old": 405.83,
+    "usd_gap_filled_old": 543.99,
+    "usd": 326.76,
+    "usd_gap_filled": 443.86,
+    "usd_note": "replaces 405.83 and 543.99: US$79.07 of the chandler's wear and joinery helpers sat in the outfit rows (26.87 in 'C9 jeans, jumper, boots'; 47.97 and 4.23 in the 'C9 outfit' rows). Per-garment splits unreliable. Not floors."
    },
    "set_aside": [
     {
@@ -259,9 +307,25 @@
      "name": "boots: scan shoes (his no) and toe band tries 2-3 (inside the boots row)",
      "hours": 1.45,
      "basis": "M"
+    },
+    {
+     "name": "jeans over boots (30 Oct), three tries",
+     "hours": 1.2,
+     "basis": "R: RECIPE.md 30 Oct"
+    },
+    {
+     "name": "jumper's hidden sleeve ends (30 Oct), two tries",
+     "hours": 1.0,
+     "basis": "R: RECIPE.md 30 Oct"
     }
    ],
-   "confidence": "medium"
+   "confidence": "low",
+   "row_heading": "unfinished, editor gate only",
+   "later_garments_n": 1,
+   "later_garments_hours": 1.61,
+   "later_garments_basis": "jeans only (n = 1); the jumper is hidden under the jacket and the boots are Ron's carried over, so no median stands",
+   "first_of_kind_hours_logged": 6.78,
+   "first_of_kind_hours_at_least": 9.78
   },
   "person_routine": {
    "examples": [],
@@ -273,26 +337,25 @@
    "examples": [
     {
      "name": "cited facts at the source (invented sentences)",
-     "hours": 1.0,
-     "usd": 6.42,
-     "usd_gap_filled": 12.9,
+     "hours": 1.5,
      "of_which_set_aside_hours": 0,
-     "basis": "M: time-log windows 27 Oct (183, 185, half of 189); RECIPE.md says about 1.5 h and US$17.86 of the game's own API credit",
+     "basis": "R: RECIPE.md about 1.5 h (the time-log windows read 1.0 h, an under-read; windows 27 Oct 183, 185, half of 189); game credit US$17.86",
      "tasks": [
       "27 Oct: blind readers (harm, labels) and a fresh review of the source test",
       "27 Oct: his order on invented sentences: harm sort, the source test (three versions, 412 rows), the hard rule on names in the game",
       "27 Oct: his page answers recorded; the cited facts into the game's prompt, braces never said; thirty real turns"
      ],
      "recipe_hours": 1.5,
-     "game_api_credit_usd": 17.86
+     "game_api_credit_usd": 17.86,
+     "window_hours_M": 1.0,
+     "usd_window_M": 6.42,
+     "usd_window_gap_filled": 12.9
     },
     {
      "name": "two copies of each check call (on in the game)",
-     "hours": 1.2,
-     "usd": 22.46,
-     "usd_gap_filled": 22.83,
+     "hours": 2.8,
      "of_which_set_aside_hours": 0,
-     "basis": "M/I: windows 135 (third), 139, 141 (half), 143 (half), 199 (half); RECIPE.md says about 2.5 h to build, 0.3 h for his condition test, about US$0.45",
+     "basis": "R: RECIPE.md about 2.5 h to build plus 0.3 h for his condition test (the time-log windows read 1.2 h, an under-read; windows 135 (third), 139, 141 (half), 143 (half), 199 (half)); game credit about US$0.45",
      "tasks": [
       "27 Oct: fresh review of two copies (a helper re-ran every scorer)",
       "27 Oct: item 4 the check's own time: early looks built and A/B; paired timing; two copies built and A/B",
@@ -300,16 +363,17 @@
       "27 Oct: the review's fixes: race on the model's beginning, the budget settles stopped streams; records, page data, commit and push",
       "28 Oct: item 4: his three speech answers in the game; two copies' wrong refusals measured; records"
      ],
-     "recipe_hours": 2.5,
-     "game_api_credit_usd": 0.45
+     "recipe_hours": 2.8,
+     "game_api_credit_usd": 0.45,
+     "window_hours_M": 1.2,
+     "usd_window_M": 22.46,
+     "usd_window_gap_filled": 22.83
     },
     {
      "name": "fast checker in the game behind a switch (off)",
-     "hours": 2.74,
-     "usd": 17.84,
-     "usd_gap_filled": 21.54,
+     "hours": 11.0,
      "of_which_set_aside_hours": 2.07,
-     "basis": "M/I: windows 165 (half), 167 (half), 177, 179, 191; of which 2.07 h is the failed fourth try; the first three tries (26 Oct, about 2.75 h of processor training) are not in the log; RECIPE.md says about 1 h and US$0.53 for the put-in-the-game step",
+     "basis": "R: about 11 h with four tries (5, 2.5, 2.5, 1; RECIPE.md 26-27 Oct); off in the game. The time-log windows (165 (half), 167 (half), 177, 179, 191) read 2.74 h, of which 2.07 h is the failed fourth try; the first three tries (26 Oct, about 2.75 h of processor training) are not in the log",
      "tasks": [
       "27 Oct: fresh review of the fourth try's numbers and the blind reading",
       "27 Oct: item 4, speech: the wording A/B and the checker's fourth try",
@@ -317,11 +381,21 @@
       "27 Oct: records of his answers; the checker's fourth try designed",
       "27 Oct: the fast checker into the game behind a switch; thirty real turns on and off; beside the packaged game with the voice"
      ],
-     "recipe_hours": 1.0,
-     "game_api_credit_usd": 0.53
+     "recipe_hours": 11.0,
+     "game_api_credit_usd": 0.53,
+     "window_hours_M": 2.74,
+     "tries_hours_R": [
+      5,
+      2.5,
+      2.5,
+      1
+     ],
+     "recipe_hours_put_in_game_step": 1.0,
+     "usd_window_M": 17.84,
+     "usd_window_gap_filled": 21.54
     }
    ],
-   "median_hours": 1.2,
+   "median_hours": 2.15,
    "usd_median": 17.84,
    "bundle_not_in_median": {
     "name": "7 Oct bundle: ladder, who-told-me, bait, successors (four small features, one window)",
@@ -336,12 +410,21 @@
      "basis": "M; overstated, the window also carried the Pocket-voice mend"
     },
     {
-     "name": "one-sentence rewrite, second looks, pipelined check, Haiku wording fix, fast checker tries 1-3",
+     "name": "one-sentence rewrite, second looks, pipelined check, Haiku wording fix",
      "hours": null,
-     "basis": "26-27 Oct, mostly inside the time-log lapse; RECIPE.md lines give about 3, 1.5, 2.5 and 5 h (R)"
+     "basis": "26-27 Oct, mostly inside the time-log lapse; RECIPE.md lines give about 3, 1.5, 2.5 and 5 h (R) (the fast checker's tries 1-3 are now counted in its 11 h above, not here)"
     }
    ],
-   "confidence": "low"
+   "confidence": "low",
+   "median_hours_basis": "I: median of the two features without a model (1.5 R, 2.8 R); the fast checker (about 11 R) is the case 'if a model is trained'",
+   "usd_median_basis": "median of the window dollars 6.42, 22.46, 17.84 (M, not floors)",
+   "game_credit_usd": {
+    "min": 0.45,
+    "median": 0.53,
+    "max": 17.86,
+    "basis": "R: RECIPE.md game-credit lines for the three features' tests (17.86, 0.45, 0.53)"
+   },
+   "planner": "1.5 to 2.8 h (R); about 11 h if a model is trained; game credit US$0.45 to 17.86, median 0.53"
   },
   "gate": {
    "examples": [
@@ -353,7 +436,8 @@
      "basis": "M: review-kind time-log window (session time; reviewers run in parallel)",
      "tasks": [
       "8 Oct: the office gate under the new light: eight fresh reviewers in two rounds (road reviews before)"
-     ]
+     ],
+     "reviewers": 8
     },
     {
      "name": "glass gate, 7 reviewers, 3 rounds (8 Oct)",
@@ -363,7 +447,8 @@
      "basis": "M: review-kind time-log window (session time; reviewers run in parallel)",
      "tasks": [
       "8 Oct: the glass gate: seven fresh reviewers over three rounds"
-     ]
+     ],
+     "reviewers": 7
     },
     {
      "name": "item 1.1 third review, 10 reviewers, shared with a walk-in test (8 Oct)",
@@ -373,7 +458,8 @@
      "basis": "M: review-kind time-log window (session time; reviewers run in parallel)",
      "tasks": [
       "8 Oct night: item 1.1's third review: package photographs, ten reviewers, the walk-in by coordinates, records"
-     ]
+     ],
+     "reviewers": 10
     },
     {
      "name": "Tom's outfit gate, 3 reviewers (30 Oct)",
@@ -383,14 +469,16 @@
      "basis": "M: review-kind time-log window (session time; reviewers run in parallel)",
      "tasks": [
       "C9 outfit gate: three fresh reviewers, one per view"
-     ]
+     ],
+     "reviewers": 3,
+     "hours_note": "0.07 h is a launch, not a gate; the gate itself ran longer"
     }
    ],
    "median_hours": 0.5,
    "rounds_recorded": {
-    "ironmonger": 7,
-    "newsagent": 2,
-    "tea_rooms": 8,
+    "ironmonger": 9,
+    "newsagent": 3,
+    "tea_rooms": 10,
     "grocer": 10,
     "chandler": 9,
     "launderette": 5,
@@ -399,21 +487,53 @@
     "tom_outfit": "2 or more",
     "office_gate_8_oct": 2,
     "glass_gate_8_oct": 3,
-    "source": "production/audits/gate-*/GATE.md; DECISIONS.md; time-log task texts"
+    "source": "production/audits/gate-*/GATE.md; DECISIONS.md; time-log task texts",
+    "note": "shop rounds include wear rounds (GATE.md)"
    },
-   "all_in_hours_per_round_ten_view_shop_gate": 0.5,
    "rounds_typical_ten_view_shop_gate": [
-    5,
+    3,
     10
    ],
    "usd_per_reviewer": {
-    "min": 0.72,
-    "median": 1.03,
-    "max": 1.58,
-    "n": 4,
-    "basis": "I: \"reviewing (helpers)\" dollars in four windows whose task text states the reviewer count (311, 201, 187, 205)"
+    "min": 0.59,
+    "median": 1.18,
+    "max": 1.66,
+    "basis": "M: reviewers measured on 30 Oct (review fix 12); replaces the earlier I figure 0.72 / 1.03 / 1.58 from four windows. The chandler's nine reviewers: US$9.86."
    },
-   "confidence": "low"
+   "confidence": "low",
+   "session_time_h_for_7_to_10_reviewers": [
+    0.5,
+    0.85
+   ],
+   "three_view_gate_session_time_h": null,
+   "three_view_gate_note": "unmeasured: the 0.07 h of the three-view outfit gate is only a launch; longer gates had 7 to 10 reviewers",
+   "hours_per_round_ten_view_shop_gate": {
+    "min": 0.44,
+    "median": 0.48,
+    "max": 1.0,
+    "basis": "I: shop hours over the corrected rounds (4.0/9, 3.0/3, 4.5/10, 4.5/10, 4.5/9, 3.58/5). The earlier 0.5 (0.36 to 0.72) did not follow: 0.36 was 3.58 h over ten views, not rounds. See review.fix_9_note."
+   },
+   "planner": "0.5 to 0.85 h session time for 7 to 10 reviewers; US$0.59 to 1.66 a reviewer, median 1.18 (M)"
   }
+ },
+ "review": {
+  "file": "production/research/unit-costs/UNIT-COSTS-REVIEW-2026-11-02.md",
+  "date": "2026-11-02",
+  "verdict": "PASS WITH FIXES",
+  "fixes_applied": 13,
+  "fix_9_note": "The review gave hours over rounds as 0.45 to 1.5, median 0.57, which is the shop hours over the draft's old rounds (7, 2, 8). On fix 8's corrected rounds (9, 3, 10, 10, 9, 5) the same division gives 0.44 to 1.0, median 0.48; the corrected figures are used here and in the draft."
+ },
+ "dollars_outside_windows": {
+  "week": "26 Oct-1 Nov",
+  "outside_any_window_usd": 915,
+  "audit_figure_usd": 917.4,
+  "of_which": {
+   "28 Oct 14:26 to 29 Oct 11:28 (log gap, jacket work)": 454,
+   "26 Oct to 27 Oct (log lapse)": 273,
+   "inside overlapping windows": 71,
+   "short breaks": 117
+  },
+  "share_of_week_total": 0.43,
+  "note": "The audit books parallel helpers to the window opened last, so per-piece dollars are not floors: dollars of one piece's helpers can sit in another piece's window."
  }
 }
