@@ -151,6 +151,7 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraActor.h"
 #include "Components/LODSyncComponent.h"
+#include "Engine/OverlapResult.h"
 #include "Camera/CameraComponent.h"
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SBox.h"
@@ -7465,6 +7466,36 @@ namespace
 		return (double)Hit.ImpactPoint.Z / 100.0;
 	}
 
+	// NOBODY OVERLAPPING (2 November, the corner plan's step 4; Ron stood inside the lamp column at the cab rank, the floor
+	// test seeing nothing there because its trace starts 1 m up, inside the column): a person-sized capsule at the spot
+	// (25 cm round, from 25 cm above the feet to 1.75 m) touching anything solid in the street, or another person within
+	// 0.6 m (Kingdom Come II's capped places, Mafia's slots: one to a place). Returns what is in the way, or empty.
+	std::string StandBlockedAt(UWorld* World, AActor* Self, double X, double Z, double FeetY)
+	{
+		if (World == nullptr) { return std::string(); }
+		FCollisionQueryParams Q(TEXT("LedgerStandClear"), false);
+		if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+		for (const char* C : { "lena", "sam", "rocco" }) { if (AActor* B = CardBody(C)) { Q.AddIgnoredActor(B); Q.AddIgnoredActor(GVisualFor(B)); } }
+		TArray<FOverlapResult> Hits;
+		const FVector At = ToUE(LedgerCrime::P3(X, FeetY + 1.0, Z));
+		if (World->OverlapMultiByObjectType(Hits, At, FQuat::Identity, FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionShape::MakeCapsule(25.0f, 75.0f), Q))
+		{
+			for (const FOverlapResult& H : Hits)
+			{
+				const UPrimitiveComponent* P = H.GetComponent();
+				if (P != nullptr && P->GetCollisionResponseToChannel(ECC_Pawn) == ECR_Block) { return BlockerName(H.GetActor()); }
+			}
+		}
+		for (const char* C : { "lena", "sam", "rocco" })
+		{
+			AActor* B = CardBody(C);
+			if (B == nullptr || B == Self || B->IsHidden()) { continue; }
+			const FVector O = B->GetActorLocation();
+			if (FVector::Dist2D(O, At) < 60.0) { return std::string(C); }
+		}
+		return std::string();
+	}
+
 	void PlaceBodyAt(AActor* Body, double X, double Z, double GroundY)
 	{
 		if (Body == nullptr) { return; }
@@ -7658,6 +7689,27 @@ namespace
 				// the feet on the floor the stand-place search finds beside the seat (a point fixed in
 				// front of it fell on the booking counter: Ron sat a metre up, 7 October)
 				Stand = { X, Z, Stand.FeetY, false };
+			}
+			// CLEAR OF THINGS AND PEOPLE (StandBlockedAt): the nearest clear point within 2 m, in rings of a quarter metre,
+			// on the same floor (within a step); none found, the spot stands and the log says so.
+			if (Seat == nullptr)
+			{
+				const std::string Blocker = StandBlockedAt(World, Body, Stand.X, Stand.Z, Stand.FeetY);
+				if (!Blocker.empty())
+				{
+					bool bFound = false;
+					for (int Ring = 1; Ring <= 8 && !bFound; ++Ring)
+					{
+						for (int K = 0; K < 16 && !bFound; ++K)
+						{
+							const double PX = Stand.X + Ring * 0.25 * std::cos(K * 3.14159265358979 / 8.0), PZ = Stand.Z + Ring * 0.25 * std::sin(K * 3.14159265358979 / 8.0);
+							const double PY = FeetYAt(World, PX, PZ);
+							if (std::abs(PY - Stand.FeetY) <= 0.3 && StandBlockedAt(World, Body, PX, PZ, PY).empty()) { Stand = { PX, PZ, PY, true }; bFound = true; }
+						}
+					}
+					UE_LOG(LogTemp, Display, TEXT("LedgerStand: %s at (%.2f, %.2f) was in %s; %s"), UTF8_TO_TCHAR(C), X, Z, UTF8_TO_TCHAR(Blocker.c_str()),
+					       bFound ? *FString::Printf(TEXT("stands at (%.2f, %.2f)"), Stand.X, Stand.Z) : TEXT("no clear spot within 2 m, left there"));
+				}
 			}
 			SeatPerson(Body, Seat != nullptr ? Seat->Seated : std::string());
 			if (Stand.bMoved)

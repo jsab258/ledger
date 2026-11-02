@@ -775,7 +775,7 @@ SightingOnlookerCount|quay-cast.json|6|22|1
 SightingOnlooker|quay-cast.json|6|22|0|rocco|mickeys_office|1|6|4.6|-90
 SightingOnlookerCount|quay-cast.json|6|23|0
 CastBodyX|hook-cast.json|mickeys_office|3.75
-CastBodyX|hook-cast.json|mickeys_rank|8.3
+CastBodyX|hook-cast.json|mickeys_rank|8.7
 CastBodyX|hook-cast.json|fish_counter|none
 CastBodyX|hook-cast.json|fish_front|none
 CastBodyX|hook-cast.json|ritas_counter|none
@@ -823,7 +823,7 @@ SightingOnlooker|hook-cast.json|0|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|0|7|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|0|7|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|0|8|9
-SightingOnlooker|hook-cast.json|0|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|0|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -833,7 +833,7 @@ SightingOnlooker|hook-cast.json|0|8|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|0|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|8|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|0|9|15
-SightingOnlooker|hook-cast.json|0|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|9|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|9|3|sam|cafe|1|25|-4.6|90
@@ -849,7 +849,7 @@ SightingOnlooker|hook-cast.json|0|9|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|9|13|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|9|14|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|0|10|19
-SightingOnlooker|hook-cast.json|0|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|10|3|june|mickeys_office|0|6|7.5|-90
@@ -869,7 +869,7 @@ SightingOnlooker|hook-cast.json|0|10|16|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|10|17|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|10|18|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|0|11|20
-SightingOnlooker|hook-cast.json|0|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|11|3|june|mickeys_office|0|6|7.5|-90
@@ -906,7 +906,7 @@ SightingOnlooker|hook-cast.json|0|12|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|12|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|12|14|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|0|13|14
-SightingOnlooker|hook-cast.json|0|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|13|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|13|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|13|3|sam|laundry_front|1|30|4.3|-90
@@ -921,7 +921,7 @@ SightingOnlooker|hook-cast.json|0|13|11|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|0|13|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|13|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|0|14|13
-SightingOnlooker|hook-cast.json|0|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|14|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|14|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|0|14|3|sam|laundry_front|1|30|4.3|-90
@@ -935,10 +935,10 @@ SightingOnlooker|hook-cast.json|0|14|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|0|14|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|14|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|0|15|13
-SightingOnlooker|hook-cast.json|0|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|15|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|15|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|0|15|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|15|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|15|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|15|5|victor|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|15|6|hal|hals_shop|0|39|-7.5|90
@@ -949,10 +949,10 @@ SightingOnlooker|hook-cast.json|0|15|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|0|15|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|15|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|0|16|12
-SightingOnlooker|hook-cast.json|0|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|16|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|16|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|0|16|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|16|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|0|16|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|0|16|5|hal|hals_shop|0|39|-7.5|90
 SightingOnlooker|hook-cast.json|0|16|6|iva|laundry_counter|0|30|7.5|-90
@@ -975,7 +975,7 @@ SightingOnlooker|hook-cast.json|0|18|2|sam|quay|1|-5|0|0
 SightingOnlookerCount|hook-cast.json|0|19|3
 SightingOnlooker|hook-cast.json|0|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|0|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|0|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|0|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|0|20|1
 SightingOnlooker|hook-cast.json|0|20|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlookerCount|hook-cast.json|0|21|1
@@ -1003,7 +1003,7 @@ SightingOnlooker|hook-cast.json|1|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|1|7|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|1|7|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|8|9
-SightingOnlooker|hook-cast.json|1|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|1|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -1013,7 +1013,7 @@ SightingOnlooker|hook-cast.json|1|8|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|1|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|8|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|9|14
-SightingOnlooker|hook-cast.json|1|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|9|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|9|3|sam|cafe|1|25|-4.6|90
@@ -1028,7 +1028,7 @@ SightingOnlooker|hook-cast.json|1|9|11|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|9|12|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|9|13|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|10|16
-SightingOnlooker|hook-cast.json|1|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|10|3|june|mickeys_office|0|6|7.5|-90
@@ -1045,7 +1045,7 @@ SightingOnlooker|hook-cast.json|1|10|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|10|14|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|10|15|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|11|17
-SightingOnlooker|hook-cast.json|1|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|11|3|june|mickeys_office|0|6|7.5|-90
@@ -1078,7 +1078,7 @@ SightingOnlooker|hook-cast.json|1|12|11|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|1|12|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|12|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|1|13|13
-SightingOnlooker|hook-cast.json|1|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|13|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|13|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|13|3|marla|fish_counter|0|12|7.5|-90
@@ -1092,7 +1092,7 @@ SightingOnlooker|hook-cast.json|1|13|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|1|13|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|13|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|1|14|12
-SightingOnlooker|hook-cast.json|1|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|14|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|14|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|1|14|3|rita|ritas_counter|0|18|7.5|-90
@@ -1105,10 +1105,10 @@ SightingOnlooker|hook-cast.json|1|14|9|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|1|14|10|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|14|11|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|1|15|13
-SightingOnlooker|hook-cast.json|1|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|15|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|15|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|1|15|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|15|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|15|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|15|5|victor|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|15|6|hal|hals_shop|0|39|-7.5|90
@@ -1119,10 +1119,10 @@ SightingOnlooker|hook-cast.json|1|15|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|1|15|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|15|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|1|16|11
-SightingOnlooker|hook-cast.json|1|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|16|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|16|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|1|16|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|16|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|16|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|1|16|5|hal|hals_shop|0|39|-7.5|90
 SightingOnlooker|hook-cast.json|1|16|6|iva|laundry_counter|0|30|7.5|-90
@@ -1145,7 +1145,7 @@ SightingOnlooker|hook-cast.json|1|18|3|goran|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|19|4
 SightingOnlooker|hook-cast.json|1|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|1|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|1|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|1|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|1|19|3|goran|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|1|20|3
 SightingOnlooker|hook-cast.json|1|20|0|rocco|mickeys_office|1|3.75|4.6|-90
@@ -1177,7 +1177,7 @@ SightingOnlooker|hook-cast.json|2|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|2|7|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|2|7|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|2|8|9
-SightingOnlooker|hook-cast.json|2|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|2|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -1187,7 +1187,7 @@ SightingOnlooker|hook-cast.json|2|8|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|8|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|2|9|15
-SightingOnlooker|hook-cast.json|2|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|9|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|9|3|sam|cafe|1|25|-4.6|90
@@ -1203,7 +1203,7 @@ SightingOnlooker|hook-cast.json|2|9|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|9|13|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|9|14|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|2|10|19
-SightingOnlooker|hook-cast.json|2|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|10|3|june|mickeys_office|0|6|7.5|-90
@@ -1223,7 +1223,7 @@ SightingOnlooker|hook-cast.json|2|10|16|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|10|17|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|10|18|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|2|11|20
-SightingOnlooker|hook-cast.json|2|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|11|3|june|mickeys_office|0|6|7.5|-90
@@ -1260,7 +1260,7 @@ SightingOnlooker|hook-cast.json|2|12|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|12|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|2|12|14|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|2|13|9
-SightingOnlooker|hook-cast.json|2|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|13|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|13|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|13|3|sam|kiosk|1|16.5|4.3|-90
@@ -1270,7 +1270,7 @@ SightingOnlooker|hook-cast.json|2|13|6|selma|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|13|7|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|13|8|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlookerCount|hook-cast.json|2|14|8
-SightingOnlooker|hook-cast.json|2|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|14|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|14|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|2|14|3|sam|kiosk|1|16.5|4.3|-90
@@ -1279,19 +1279,19 @@ SightingOnlooker|hook-cast.json|2|14|5|selma|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|14|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|14|7|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlookerCount|hook-cast.json|2|15|8
-SightingOnlooker|hook-cast.json|2|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|15|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|15|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|2|15|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|15|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|15|4|iva|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|15|5|selma|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|15|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|15|7|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlookerCount|hook-cast.json|2|16|7
-SightingOnlooker|hook-cast.json|2|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|16|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|16|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|2|16|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|16|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|2|16|4|iva|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|16|5|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|2|16|6|katarina|laundry_counter|0|30|7.5|-90
@@ -1308,7 +1308,7 @@ SightingOnlooker|hook-cast.json|2|18|2|sam|quay|1|-5|0|0
 SightingOnlookerCount|hook-cast.json|2|19|3
 SightingOnlooker|hook-cast.json|2|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|2|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|2|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|2|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|2|20|1
 SightingOnlooker|hook-cast.json|2|20|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlookerCount|hook-cast.json|2|21|1
@@ -1336,7 +1336,7 @@ SightingOnlooker|hook-cast.json|3|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|3|7|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|3|7|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|8|9
-SightingOnlooker|hook-cast.json|3|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|3|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -1346,7 +1346,7 @@ SightingOnlooker|hook-cast.json|3|8|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|3|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|8|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|9|16
-SightingOnlooker|hook-cast.json|3|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|9|1|lena|pension_counter|1|32|-4.6|90
 SightingOnlooker|hook-cast.json|3|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|9|3|sam|cafe|1|25|-4.6|90
@@ -1363,7 +1363,7 @@ SightingOnlooker|hook-cast.json|3|9|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|9|14|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|9|15|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|10|17
-SightingOnlooker|hook-cast.json|3|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|10|3|june|mickeys_office|0|6|7.5|-90
@@ -1381,7 +1381,7 @@ SightingOnlooker|hook-cast.json|3|10|14|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|10|15|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|10|16|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|11|19
-SightingOnlooker|hook-cast.json|3|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|11|3|june|mickeys_office|0|6|7.5|-90
@@ -1417,7 +1417,7 @@ SightingOnlooker|hook-cast.json|3|12|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|12|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|12|14|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|13|13
-SightingOnlooker|hook-cast.json|3|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|13|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|13|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|13|3|marla|fish_counter|0|12|7.5|-90
@@ -1431,7 +1431,7 @@ SightingOnlooker|hook-cast.json|3|13|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|3|13|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|13|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|3|14|12
-SightingOnlooker|hook-cast.json|3|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|14|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|14|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|3|14|3|rita|ritas_counter|0|18|7.5|-90
@@ -1444,10 +1444,10 @@ SightingOnlooker|hook-cast.json|3|14|9|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|3|14|10|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|14|11|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|3|15|13
-SightingOnlooker|hook-cast.json|3|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|15|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|15|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|3|15|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|15|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|15|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|15|5|victor|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|15|6|hal|hals_shop|0|39|-7.5|90
@@ -1458,10 +1458,10 @@ SightingOnlooker|hook-cast.json|3|15|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|3|15|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|15|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|3|16|11
-SightingOnlooker|hook-cast.json|3|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|16|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|16|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|3|16|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|16|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|16|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|3|16|5|hal|hals_shop|0|39|-7.5|90
 SightingOnlooker|hook-cast.json|3|16|6|iva|laundry_counter|0|30|7.5|-90
@@ -1484,7 +1484,7 @@ SightingOnlooker|hook-cast.json|3|18|3|goran|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|19|4
 SightingOnlooker|hook-cast.json|3|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|3|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|3|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|3|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|3|19|3|goran|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|3|20|3
 SightingOnlooker|hook-cast.json|3|20|0|rocco|mickeys_office|1|3.75|4.6|-90
@@ -1516,7 +1516,7 @@ SightingOnlooker|hook-cast.json|4|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|4|7|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|4|7|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|4|8|10
-SightingOnlooker|hook-cast.json|4|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|4|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -1527,7 +1527,7 @@ SightingOnlooker|hook-cast.json|4|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|8|8|franjo|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|4|8|9|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|4|9|14
-SightingOnlooker|hook-cast.json|4|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|9|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|9|3|sam|cafe|1|25|-4.6|90
@@ -1542,7 +1542,7 @@ SightingOnlooker|hook-cast.json|4|9|11|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|9|12|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|9|13|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|4|10|18
-SightingOnlooker|hook-cast.json|4|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|10|3|june|mickeys_office|0|6|7.5|-90
@@ -1561,7 +1561,7 @@ SightingOnlooker|hook-cast.json|4|10|15|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|10|16|hana|pension_counter|0|32|-7.5|90
 SightingOnlooker|hook-cast.json|4|10|17|danica|mickeys_office|0|6|7.5|-90
 SightingOnlookerCount|hook-cast.json|4|11|17
-SightingOnlooker|hook-cast.json|4|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|11|3|june|mickeys_office|0|6|7.5|-90
@@ -1595,7 +1595,7 @@ SightingOnlooker|hook-cast.json|4|12|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|12|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|12|14|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|4|13|15
-SightingOnlooker|hook-cast.json|4|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|13|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|13|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|13|3|sam|ritas_step|1|18|4.4|-90
@@ -1611,7 +1611,7 @@ SightingOnlooker|hook-cast.json|4|13|12|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|13|13|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|13|14|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|4|14|13
-SightingOnlooker|hook-cast.json|4|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|14|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|14|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|4|14|3|sam|ritas_step|1|18|4.4|-90
@@ -1625,10 +1625,10 @@ SightingOnlooker|hook-cast.json|4|14|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|4|14|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|14|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|4|15|13
-SightingOnlooker|hook-cast.json|4|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|15|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|15|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|4|15|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|15|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|15|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|15|5|victor|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|15|6|hal|hals_shop|0|39|-7.5|90
@@ -1639,10 +1639,10 @@ SightingOnlooker|hook-cast.json|4|15|10|katarina|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|4|15|11|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|15|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|4|16|11
-SightingOnlooker|hook-cast.json|4|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|16|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|16|2|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|4|16|3|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|16|3|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|4|16|4|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|4|16|5|hal|hals_shop|0|39|-7.5|90
 SightingOnlooker|hook-cast.json|4|16|6|iva|laundry_counter|0|30|7.5|-90
@@ -1664,7 +1664,7 @@ SightingOnlooker|hook-cast.json|4|18|2|sam|quay|1|-5|0|0
 SightingOnlookerCount|hook-cast.json|4|19|3
 SightingOnlooker|hook-cast.json|4|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|4|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|4|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|4|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|4|20|1
 SightingOnlooker|hook-cast.json|4|20|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlookerCount|hook-cast.json|4|21|1
@@ -1691,7 +1691,7 @@ SightingOnlooker|hook-cast.json|5|7|6|tomas|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|5|7|7|luka|cafe|0|24|-7.5|90
 SightingOnlooker|hook-cast.json|5|7|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|5|8|9
-SightingOnlooker|hook-cast.json|5|8|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|8|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|8|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|8|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|5|8|3|zora|laundry_counter|0|30|7.5|-90
@@ -1701,7 +1701,7 @@ SightingOnlooker|hook-cast.json|5|8|6|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|5|8|7|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|8|8|drago|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|5|9|13
-SightingOnlooker|hook-cast.json|5|9|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|9|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|9|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|5|9|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|9|3|marla|fish_counter|0|12|7.5|-90
@@ -1715,7 +1715,7 @@ SightingOnlooker|hook-cast.json|5|9|10|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|9|11|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|9|12|outfit_man|cafe|0|24|-7.5|90
 SightingOnlookerCount|hook-cast.json|5|10|15
-SightingOnlooker|hook-cast.json|5|10|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|10|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|10|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|5|10|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|10|3|marla|fish_counter|0|12|7.5|-90
@@ -1731,7 +1731,7 @@ SightingOnlooker|hook-cast.json|5|10|12|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|10|13|jelena|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|10|14|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|5|11|16
-SightingOnlooker|hook-cast.json|5|11|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|11|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|11|1|lena|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|5|11|2|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|11|3|ada|fish_counter|0|12|7.5|-90
@@ -1761,7 +1761,7 @@ SightingOnlooker|hook-cast.json|5|12|9|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|12|10|marta|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|12|11|hana|pension_counter|0|32|-7.5|90
 SightingOnlookerCount|hook-cast.json|5|13|10
-SightingOnlooker|hook-cast.json|5|13|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|13|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|13|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|13|2|marla|fish_counter|0|12|7.5|-90
 SightingOnlooker|hook-cast.json|5|13|3|victor|ritas_counter|0|18|7.5|-90
@@ -1772,7 +1772,7 @@ SightingOnlooker|hook-cast.json|5|13|7|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|5|13|8|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|13|9|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|5|14|10
-SightingOnlooker|hook-cast.json|5|14|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|14|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|14|1|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|5|14|2|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|14|3|victor|ritas_counter|0|18|7.5|-90
@@ -1783,9 +1783,9 @@ SightingOnlooker|hook-cast.json|5|14|7|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|5|14|8|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|14|9|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|5|15|11
-SightingOnlooker|hook-cast.json|5|15|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|15|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|15|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|5|15|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|15|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|15|3|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|15|4|victor|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|15|5|hal|hals_shop|0|39|-7.5|90
@@ -1795,9 +1795,9 @@ SightingOnlooker|hook-cast.json|5|15|8|tanja|laundry_counter|0|30|7.5|-90
 SightingOnlooker|hook-cast.json|5|15|9|ines|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|15|10|marta|ritas_counter|0|18|7.5|-90
 SightingOnlookerCount|hook-cast.json|5|16|9
-SightingOnlooker|hook-cast.json|5|16|0|rocco|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|16|0|rocco|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|16|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|5|16|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|16|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlooker|hook-cast.json|5|16|3|rita|ritas_counter|0|18|7.5|-90
 SightingOnlooker|hook-cast.json|5|16|4|hal|hals_shop|0|39|-7.5|90
 SightingOnlooker|hook-cast.json|5|16|5|iva|laundry_counter|0|30|7.5|-90
@@ -1817,10 +1817,10 @@ SightingOnlooker|hook-cast.json|5|18|2|sam|quay|1|-5|0|0
 SightingOnlookerCount|hook-cast.json|5|19|3
 SightingOnlooker|hook-cast.json|5|19|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlooker|hook-cast.json|5|19|1|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|5|19|2|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|19|2|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|5|20|2
 SightingOnlooker|hook-cast.json|5|20|0|rocco|mickeys_office|1|3.75|4.6|-90
-SightingOnlooker|hook-cast.json|5|20|1|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|5|20|1|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|5|21|1
 SightingOnlooker|hook-cast.json|5|21|0|rocco|mickeys_office|1|3.75|4.6|-90
 SightingOnlookerCount|hook-cast.json|5|22|1
@@ -1852,11 +1852,11 @@ SightingOnlooker|hook-cast.json|6|14|0|zlata|mickeys_office|0|6|7.5|-90
 SightingOnlooker|hook-cast.json|6|14|1|sam|kiosk|1|16.5|4.3|-90
 SightingOnlookerCount|hook-cast.json|6|15|2
 SightingOnlooker|hook-cast.json|6|15|0|zlata|mickeys_office|0|6|7.5|-90
-SightingOnlooker|hook-cast.json|6|15|1|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|6|15|1|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|6|16|1
-SightingOnlooker|hook-cast.json|6|16|0|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|6|16|0|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|6|17|1
-SightingOnlooker|hook-cast.json|6|17|0|sam|mickeys_rank|1|8.3|3.8|-90
+SightingOnlooker|hook-cast.json|6|17|0|sam|mickeys_rank|1|8.7|3.8|-90
 SightingOnlookerCount|hook-cast.json|6|18|0
 SightingOnlookerCount|hook-cast.json|6|19|1
 SightingOnlooker|hook-cast.json|6|19|0|rocco|mickeys_office|1|3.75|4.6|-90

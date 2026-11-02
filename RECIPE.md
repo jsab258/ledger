@@ -1644,3 +1644,11 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Tools: Blender in the background, posing by joint name, a skin-triangle-crosses-cloth-triangle test.
 - Target and check: crossings per pose before and after; nothing visible at rest changed.
 - Cost: about 0.5 h of a helper. Failed: the earlier reading that the skin under the collar was at fault; it was the skin above it. Evidence: production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md (2 November).
+
+## A shoe's toe reshaped toward a reference by measured silhouettes (2 November 2026)
+
+- Made: the toe of a skinned game boot lowered, narrowed and sprung, its points, UVs and weights kept, so nothing downstream changes.
+- Method: when a reference model looks right but cannot be worn (its skeleton or materials do not carry over), take its shape, not the model: photograph both from the same side in the same frame, read the silhouette's height above the sole's floor at fixed distances behind the tip (1, 3, 5 cm), the spring (how far the sole's front lifts) and the width near the tip, and set targets between the two that the foot inside allows (keep a clearance floor to the foot). Move only the toe's points with a smooth falloff; add spring by thinning the sole from below so the welt line stays. Check each target, the clearance, UV stretch (area and edge under 1.25), no flipped faces, the sole still closed, and that points, faces, UVs and weights are identical to the last version.
+- Tools: Blender in the background, a point-moving script with falloff, silhouette measurement on rendered pictures; the game's own outfit pictures for the gate.
+- Target and check: the measured heights within 1 mm of target; one fresh reviewer per view in the game's pictures: no new fault, the toe reads lighter.
+- Cost: about 0.7 h of a helper plus 0.3 h. What failed and why: the reference's own heights were only estimates from pictures (±20%); over the big toe the target could not be met without breaking the clearance; the heaviness then moved to the sole slab and welt ledge, which a toe reshape does not touch. Evidence: F:/LedgerTools/garments/tom/boots/maps/boot-toe-record.json, F:/LedgerTools/gate/new/tom-outfit/2026-11-02-toe3.

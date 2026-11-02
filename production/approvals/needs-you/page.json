@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Monday 2 November, 14:00",
+ "kicker": "LEDGER · Needs you · 2 open · updated Monday 2 November, 14:07",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -23,6 +23,24 @@
     [
      "no",
      "No, keep C: clear"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "boots-sole-fourth-try-2026-11-02",
+   "name": "Tom's boots still look heavy: the toe reshape (your yes of 31 October) passed review with no new fault, but the thick sole (17 to 20 mm) and the ledge round the toe now make them read clog-like. May I make one more try: the sole thinned to about 12 mm and the ledge trimmed at the toe (about 1 hour)?",
+   "links": [],
+   "recommendation": "Yes: it is the last thing keeping his feet heavy in both reviewers' eyes; points, weights and maps stay as they are, and it is judged the same way (pictures in the game, a fresh reviewer, the packaged walk). No web link: the answer is this page.",
+   "added": "2026-11-02 14:07",
+   "options": [
+    [
+     "yes",
+     "Yes, one more try"
+    ],
+    [
+     "no",
+     "No, leave the boots"
     ]
    ]
   }
