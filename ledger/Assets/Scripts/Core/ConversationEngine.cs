@@ -1758,7 +1758,7 @@ namespace Ledger.Core
             if (streaming == null)
             {
                 d.Response = await _llm.CompleteAsync(request, ct);
-                _cost?.Record(Model, d.Response.InputTokens, d.Response.OutputTokens);
+                _cost?.Record(request.Model, d.Response.InputTokens, d.Response.OutputTokens);
                 return;
             }
             // The first sentence's check is counted once, however the draft ends.
@@ -1891,7 +1891,7 @@ namespace Ledger.Core
                 {
                     // STOPPED: the first sentence failed, and the rest is not
                     // wanted; what the stream had used is still counted.
-                    if (e is LlmStreamStoppedException s && s.SoFar != null) _cost?.Record(Model, s.SoFar.InputTokens, s.SoFar.OutputTokens);
+                    if (e is LlmStreamStoppedException s && s.SoFar != null) _cost?.Record(request.Model, s.SoFar.InputTokens, s.SoFar.OutputTokens);
                     d.Response = null;
                 }
                 catch (LlmStreamBrokenException) when (!ct.IsCancellationRequested)
@@ -1917,7 +1917,7 @@ namespace Ledger.Core
                         d.Response = await _llm.CompleteAsync(request, ct);
                     }
                 }
-                if (d.Response != null) _cost?.Record(Model, d.Response.InputTokens, d.Response.OutputTokens);
+                if (d.Response != null) _cost?.Record(request.Model, d.Response.InputTokens, d.Response.OutputTokens);
                 if (d.FirstTask != null)
                 {
                     var early = await d.FirstTask;
@@ -2233,7 +2233,14 @@ namespace Ledger.Core
                         string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented, NarrowRedraft && ChooseFirst) + "\n" : "")
                                     + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "")
                                     + (realNames.Count > 0 ? RealWorld.SecondDraftNote(realNames) + "\n" : "");
-                        var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300, Thinking = ReplyThinking(Model) };
+                        // THE SECOND DRAFT ON THE BETTER MODEL WHEN SMALL TALK'S FAILS ITS CHECK (2 November 2026, speech's
+                        // second try in the packaged game, production/research/voice-latency/IN-GAME-2026-11-02.md): small
+                        // talk answered by the lighter model made up an answer to a question about something they never saw,
+                        // its check refused it twice and 5 of 23 replies fell back to "that's all I know". A first draft that
+                        // fails its check makes it a harder moment, so the second goes to the better model, the same for
+                        // everybody (his ruling D48: the model follows the kind of moment, never who is talking).
+                        string secondModel = Model == Models.Ambient ? Models.Core : Model;
+                        var second = new LlmRequest { Model = secondModel, System = system + note, MaxTokens = 300, Thinking = ReplyThinking(secondModel) };
                         second.Messages.AddRange(_transcript);
                         // The second draft is streamed the same way, its first
                         // sentence handed over as soon as it passes and repeats

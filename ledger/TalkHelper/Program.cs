@@ -475,7 +475,7 @@ static class Program
             bool knowsNameSent = false, gaveNameOut = false, callsSentByGame = false;
             List<string> present = null;
             string evidenceTopic = null;
-            bool evidenceSent = false; string momentSaid = null;
+            bool evidenceBears = false; string momentSaid = null;
             bool suggestAsked = false; var tomKnows = new List<string>(); string suggestWith = null; var suggestShown = new List<string>();
             try
             {
@@ -592,7 +592,6 @@ static class Program
                 }
                 if (r.TryGetProperty("evidence", out v) && v.ValueKind == JsonValueKind.Object)
                 {
-                    evidenceSent = true;
                     var acc = new DeedAccount();
                     var near = new Nearness();
                     double fam = 0.0;
@@ -618,6 +617,12 @@ static class Program
                         near.Summary = n.TryGetProperty("summary", out var ns) ? ns.GetString() : null;
                     }
                     if (v.TryGetProperty("familiarity", out var fv) && fv.ValueKind == JsonValueKind.Number) fam = fv.GetDouble();
+                    // EVIDENCE THAT BEARS (2 November 2026, the speech re-measure in the packaged game): the game sends
+                    // the window's evidence with every line, "held":false and nothing near when the person holds nothing
+                    // of it, and that empty record made every line real conversation on the slower model (a median 2.4 s
+                    // to first sound in the game against 1.2 s beside it). Evidence makes the moment real conversation
+                    // (D48) only when it carries something: an account they hold, or him seen or heard near.
+                    evidenceBears = acc.Held || sawHimNear;
                     // THE EVIDENCE IS ABOUT THE LINE'S DEED (the independent review of 1
                     // October, N1): an account of another deed is not used, so a witness
                     // is never told she holds nothing of what she saw; said on stderr.
@@ -1114,7 +1119,7 @@ static class Program
                     // deal is standing, or it is a newcomer's real question; else small talk.
                     bool dealStanding = askTonight || weekAsk || weekStands;
                     lock (_askedNo) if (_askedNo.ContainsKey(to) || _askedWeek.ContainsKey(to) || _askedNo.ContainsKey(key) || _askedWeek.ContainsKey(key)) dealStanding = true;
-                    engine.Model = TalkMoment.ModelFor(TalkMoment.Of(say, deedTopic != null || evidenceSent, dealStanding, momentSaid));
+                    engine.Model = TalkMoment.ModelFor(TalkMoment.Of(say, deedTopic != null || evidenceBears, dealStanding, momentSaid));
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
                     var timeout = Task.Delay(_patience);
@@ -1908,6 +1913,15 @@ static class Program
         bool gameWord = mf.Seen.Count > 0 && !Asked(Models.Core);
         Ok("the talk's model follows the kind of moment, the same for everybody: small talk lighter, a deed or a real question better, the game's word first",
            smallLight && deedBetter && questionBetter && gameWord, $"{smallLight} {deedBetter} {questionBetter} {gameWord}");
+        // AN EMPTY EVIDENCE RECORD IS NOT A DEED STANDING (2 November): the game sends one with every line.
+        mf.Seen.Clear(); await mh.Answer("{\"id\":405,\"to\":\"lena\",\"say\":\"Morning, Sheila.\",\"evidence\":{\"account\":{\"topic\":\"player.window_d1\",\"held\":false},\"near\":{},\"familiarity\":0.4}}");
+        bool emptyLight = mf.Seen.Count > 0 && !Asked(Models.Core);
+        mf.Seen.Clear(); await mh.Answer("{\"id\":406,\"to\":\"lena\",\"say\":\"Morning, Sheila.\",\"evidence\":{\"account\":{\"topic\":\"player.window_d1\",\"held\":true,\"seen\":true,\"rung\":1,\"names\":false,\"confidence\":0.8,\"summary\":\"someone broke Rita's window\"},\"near\":{},\"familiarity\":0.4}}");
+        bool heldBetter = Asked(Models.Core);
+        mf.Seen.Clear(); await mh.Answer("{\"id\":407,\"to\":\"rocco\",\"say\":\"Quiet night.\",\"evidence\":{\"account\":{\"held\":false},\"near\":{\"sawHim\":true,\"others\":0},\"familiarity\":0.4}}");
+        bool nearBetter = Asked(Models.Core);
+        Ok("evidence makes the moment real conversation only when it carries something: an empty record stays small talk, an account held or him seen near goes better",
+           emptyLight && heldBetter && nearBetter, $"{emptyLight} {heldBetter} {nearBetter}");
 
         var k = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
         LoadCards(k, cardsDir);
@@ -2136,6 +2150,14 @@ static class Program
            redraftEarly.llm.Stopped && redraftEarly.firsts.Count == 1 && Str(redraftEarly.firsts[0].line, "first") == "Can't say I did." && redraftEarly.firsts[0].at < 1500,
            redraftEarly.firsts.Count > 0 ? redraftEarly.firsts[0].at + " " + redraftEarly.firsts[0].line : redraftEarly.last);
         Ok("and its rest follows", Str(redraftEarly.last, "rest") == "Ask Rita." && Reply(redraftEarly.last) == "Can't say I did. Ask Rita.", redraftEarly.last);
+        // THE SECOND DRAFT ON THE BETTER MODEL (2 November): small talk's first draft on the lighter model fails its
+        // check, and the second draft is asked of the better one, for anybody.
+        var smallBad = await Early(new StreamFake("Dennis from the yard did it. Everyone knows.") { Redraft = "Can't say I did. Ask Rita." },
+                                   "Morning.", TimeSpan.FromSeconds(8));
+        List<string> smallModels; lock (smallBad.llm.DraftModels) smallModels = new List<string>(smallBad.llm.DraftModels);
+        Ok("small talk's second draft, after its first fails the check, goes to the better model",
+           smallModels.Count >= 2 && smallModels[0] == Models.Ambient && smallModels[1] == Models.Core && Reply(smallBad.last) == "Can't say I did. Ask Rita.",
+           string.Join(",", smallModels) + " " + smallBad.last);
 
         var late = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine.") { Pause = TimeSpan.FromSeconds(3) }, "See anything?", TimeSpan.FromMilliseconds(900));
         Ok("out of time after the first sentence: that sentence is the reply, nothing more is said",
@@ -2861,6 +2883,8 @@ static class Program
         public string Redraft = "Can't say I did.";
         /// Whether the first draft's stream was stopped before it finished.
         public bool Stopped;
+        /// The model each draft was asked of, in order (the second draft's escalation, 2 November).
+        public readonly List<string> DraftModels = new List<string>();
         public StreamFake(string reply) { _reply = reply; }
         static bool IsCheck(LlmRequest r) => r.System != null && r.System.StartsWith("You read one line");
         static bool IsSecondLook(LlmRequest r) => r.System != null && r.System.StartsWith("You check details");
@@ -2886,6 +2910,7 @@ static class Program
         public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
         {
             if (ThrowBeforeText) throw new LlmStreamBrokenException("Overloaded");
+            lock (DraftModels) DraftModels.Add(request.Model);
             bool first = _drafts++ == 0;
             var text = first ? _reply : Redraft;
             var cut = text.IndexOf(". ", StringComparison.Ordinal) + 2;
