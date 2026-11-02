@@ -148,7 +148,8 @@
      "No, keep C: clear"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-02 14:57, yes (14:56): 17 GB on C: for the build cache and kept compiled code; tonight's build measured first, the tries after the note's review"
   },
   {
    "id": "boots-sole-fourth-try-2026-11-02",
@@ -166,7 +167,8 @@
      "No, leave the boots"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-02 14:57, yes (14:56): the sole's fourth try started"
   },
   {
    "id": "marvelous-dna-import-2026-11-02",
@@ -188,7 +190,8 @@
      "Leave it"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-02 14:57, allow (14:56): done by Claude at the next 10 idle minutes"
   }
  ]
 }

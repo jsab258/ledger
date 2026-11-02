@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (2 Nov 13:42): the corner's people fidget (take 2 in review); Ron's moustache strands kept; Tom's toe, build speed with helpers. Next: reviews, toe, push.
+STATE (2 Nov 15:00): corner people: fidgets, clearance, the smash's looks done, walk-off next; 6.1, 7.2-7.4, study C done. Next: tonight's packaged walk.
 
 ## Handovers
 
