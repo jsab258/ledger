@@ -69,6 +69,15 @@ MAP_PNG = os.environ.get("LEDGER_HF_MAP", OUT + "/map/tom_body_hidden_faces.png"
 # The engine's defaults (MetaHumanGeometryRemovalTypes.h 26, 33, 50): black (<= 0.1) cut, white (>= 0.9) kept,
 # no shrinking; the build's combined map keeps these too (MetaHumanGeometryRemoval.cpp 30-32).
 SETTINGS = {"max_cull_value": 0.1, "min_keep_value": 0.9, "max_shrink_distance": 0.0}
+# THE HEAD'S MAP, 2 November 2026 (the collar's third try, his yes of 31 October; DECISIONS 1 November 21:32): the
+# throat that comes through the jacket's collar as his head tips down is the head mesh's, and the same item carries a
+# head hidden face map (HeadHiddenFaceMapTexture, MetaHumanSkeletalMeshEditorPipeline.h 25-41) that shrinks head
+# vertices opposite their normals by MaxShrinkDistance * (1 - (v - 0.1) / 0.8) (MetaHumanGeometryRemoval.cpp 404-676).
+# Painted by tools/ue/blender_head_hidden_face_map.py, grey only (never at or below 0.1, so nothing is cut).
+# LEDGER_HF_HEAD_MAP names the PNG and LEDGER_HF_HEAD_SHRINK_CM its MaxShrinkDistance; unset, no head map.
+HEAD_MAP_PNG = os.environ.get("LEDGER_HF_HEAD_MAP", "")
+HEAD_TEX_NAME = "T_TomL1_HeadHiddenFaces"
+HEAD_SETTINGS = dict(SETTINGS, max_shrink_distance=float(os.environ.get("LEDGER_HF_HEAD_SHRINK_CM", "0") or 0))
 MESHES = ["Body/SKM_MH_TomL1_BodyMesh", "Face/SKM_MH_TomL1_FaceMesh"]   # the *_DNA assets are DNA, not meshes
 TEXTURES = ["Face/Baked/T_Head_LOD1_BC", "Body/Baked/T_Body_BC", "Body/Baked/T_Body_N"]
 NEED_FREE_GB = 10.0
@@ -95,6 +104,8 @@ def selftest():
     check("one default garment: kept, ours added beside it", pick_swap(["a"]) == ("a", []))
     check("none: nothing kept", pick_swap([]) == (None, []))
     check("the engine's own thresholds", SETTINGS["max_cull_value"] == 0.1 and SETTINGS["min_keep_value"] == 0.9)
+    check("a head map shrinks and never cuts", not HEAD_MAP_PNG or (HEAD_SETTINGS["max_shrink_distance"] > 0
+          and HEAD_SETTINGS["max_cull_value"] == 0.1 and HEAD_SETTINGS["min_keep_value"] == 0.9))
     check("Tom's built folder", BUILT.endswith("/MH_TomL1") and CHARACTER.endswith("MH_TomL1"))
     check("a side build by default, the character left as it was",
           os.environ.get("LEDGER_HF_BUILD_ROOT") or (BUILD_ROOT != GAME_ROOT and not KEEP_CHARACTER))
@@ -157,6 +168,16 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 "struct": type(hf).__name__, "texture": tex.get_path_name() if tex else None,
                 "size": [tex.blueprint_get_size_x(), tex.blueprint_get_size_y()] if tex else None,
                 "srgb": bool(tex.get_editor_property("srgb")) if tex else None,
+                "settings": {k: s.get_editor_property(k) for k in SETTINGS}, "head": head_map_of(ep)}
+
+    def head_map_of(ep):
+        try:
+            hf, name = prop(ep, "head_hidden_face_map_texture", "HeadHiddenFaceMapTexture")
+        except Exception as e:
+            return {"error": repr(e)}
+        s = hf.get_editor_property("settings")
+        tex = hf.get_editor_property("texture")
+        return {"property_name": name, "texture": tex.get_path_name() if tex else None,
                 "settings": {k: s.get_editor_property(k) for k in SETTINGS}}
 
     def export_png(tex, dst):
@@ -288,22 +309,22 @@ def main_after_idle(seconds=20.0, settle=15.0):
         rep["before"] = record("before", BUILT_GAME)
         note("PROBED")
 
-    def make_item():
-        """The map as a linear texture, and the default garment's copy that carries it."""
-        if not os.path.exists(MAP_PNG):
-            note("NO-MAP " + MAP_PNG)
+    def import_map(png, name):
+        """One hidden face map as a linear texture in the wardrobe folder, or None (noted)."""
+        if not os.path.exists(png):
+            note("NO-MAP " + png)
             return None
         t = unreal.AssetImportTask()
-        t.set_editor_property("filename", MAP_PNG)
+        t.set_editor_property("filename", png)
         t.set_editor_property("destination_path", WARDROBE)
-        t.set_editor_property("destination_name", TEX_NAME)
+        t.set_editor_property("destination_name", name)
         t.set_editor_property("automated", True)
         t.set_editor_property("replace_existing", True)
         t.set_editor_property("save", False)
         unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([t])
-        tex = unreal.load_asset(WARDROBE + "/" + TEX_NAME)
+        tex = unreal.load_asset(WARDROBE + "/" + name)
         if tex is None:
-            note("NO-TEXTURE-IMPORTED")
+            note("NO-TEXTURE-IMPORTED " + name)
             return None
         # Linear, as the engine's own maps are (MetaHumanGeometryRemoval.cpp 217-218); no mips: the build
         # reads the source's top level only (184-207).
@@ -311,6 +332,18 @@ def main_after_idle(seconds=20.0, settle=15.0):
         tex.set_editor_property("compression_settings", unreal.TextureCompressionSettings.TC_GRAYSCALE)
         tex.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_NO_MIPMAPS)
         unreal.EditorAssetLibrary.save_loaded_asset(tex, only_if_is_dirty=False)
+        return tex
+
+    def make_item():
+        """The map as a linear texture, and the default garment's copy that carries it."""
+        tex = import_map(MAP_PNG, TEX_NAME)
+        if tex is None:
+            return None
+        head_tex = None
+        if HEAD_MAP_PNG:
+            head_tex = import_map(HEAD_MAP_PNG, HEAD_TEX_NAME)
+            if head_tex is None:
+                return None
         wi_path = WARDROBE + "/" + WI_NAME
         if not unreal.EditorAssetLibrary.does_asset_exist(wi_path):
             made = unreal.EditorAssetLibrary.duplicate_asset(GARMENT, wi_path)
@@ -327,6 +360,14 @@ def main_after_idle(seconds=20.0, settle=15.0):
             s.set_editor_property(k, v)
         hf.set_editor_property("settings", s)
         ep.set_editor_property(name, hf)
+        if head_tex is not None:
+            hh, hname = prop(ep, "head_hidden_face_map_texture", "HeadHiddenFaceMapTexture")
+            hh.set_editor_property("texture", head_tex)
+            hs = hh.get_editor_property("settings")
+            for k, v in HEAD_SETTINGS.items():
+                hs.set_editor_property(k, v)
+            hh.set_editor_property("settings", hs)
+            ep.set_editor_property(hname, hh)
         unreal.EditorAssetLibrary.save_loaded_asset(wi, only_if_is_dirty=False)
         rep["item"] = {"path": wi_path, "map": map_of(wi), "outer_of_editor_pipeline": ep.get_outer().get_path_name()}
         save_report()
