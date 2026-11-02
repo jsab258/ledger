@@ -1630,3 +1630,17 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Tools: a small page builder reusing the decision-page renderer; the page's database.
 - Target and check: every item has all six fields and full https links; a done item says when and how; only open items are drawn (selftest 8/8, run in every build check).
 - Cost: about 0.3 h. Failed: nothing yet. Evidence: tools/needs_you_page.py, production/approvals/needs-you/.
+
+### Measuring a talking character's delay inside the shipped game, and halving it (2 November 2026)
+- Made: the delay from a player's line to a character's first sound, measured in the packaged game itself on the real model, then cut from a median 2.40 s to 1.07 s in two changes.
+- Method: measure where the player is, not beside it: a scripted run inside the packaged game asks a fixed set of lines in turn, each once the last answer is heard, under a hard spend cap; the language program keeps a transcript of each reply's own stages. Before trusting a measure taken outside the game, compare what each sends (a free run logging every request's size and model with the stand-in). Here the sizes matched and the model did not: an always-present but empty evidence record had promoted every line to the slower model. Route by what the record carries; when the faster model's draft fails its claim check, write the second draft on the better model (escalation) rather than falling back to a stock line.
+- Tools: the game's own ask script and talk program, its transcript and size switches, a small reader script.
+- Target and check: median first sound 2.0 s or less; fallbacks no more than before; one run of 30 lines, a second on the night's build.
+- Cost: about 1.5 h and US$1.51 of API credit. Failed: a fix measured outside the game (1 November) used the wrong model; the first change alone made 5 of 23 replies fall back. Evidence: production/research/voice-latency/IN-GAME-2026-11-02.md.
+
+### A pose-driven fault that a hidden-geometry map cannot fix (2 November 2026)
+- Made: nothing shipped; a shrink map for skin under a stand collar, built and measured, and set aside before use.
+- Method: before building a garment fix, pose the body and the garment together offline and find which skin crosses the cloth, and where that skin sits at rest. Skin visible at rest cannot be hidden or shrunk without showing; such crossings need the garment to move with the pose (a corrective shape driven by the joint angles).
+- Tools: Blender in the background, posing by joint name, a skin-triangle-crosses-cloth-triangle test.
+- Target and check: crossings per pose before and after; nothing visible at rest changed.
+- Cost: about 0.5 h of a helper. Failed: the earlier reading that the skin under the collar was at fault; it was the skin above it. Evidence: production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md (2 November).

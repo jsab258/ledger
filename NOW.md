@@ -6,8 +6,8 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
 Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
-- [ ] 1. Speech: median 1.17 s beside the packaged game; lever 1 reverted; real talk in-game next (n02-3-1-speech).
-- [ ] 2. Tom's four pieces passed packaged: toe band set aside; collar's third try today (n02-3-2-*, n02-tom-*).
+- [ ] 1. Speech: in the packaged game 2.40 s as built, 1.07 s after two tries (19 of 30 under 2 s); tonight's build, then a second run (n02-3-1-speech).
+- [ ] 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).
 - [ ] 3. Sitting, Mickey's office, the Stutter passed packaged (n02-3-3-*).
 - [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
 
@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (2 Nov 07:14): Needs you page live; nightly read-back stuck (his page); walk 14 of 15.
+STATE (2 Nov 08:22): speech bar met in the game (one run); scheduled sessions stop at a permission question (his page).
 
 ## Handovers
 
