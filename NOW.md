@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (2 Nov 08:22): speech bar met in the game (one run); scheduled sessions stop at a permission question (his page).
+STATE (2 Nov 09:38): stopped at his word after pushing; next: Ron's sit loop seam, Tom's hair shadow, the plant, the jeans.
 
 ## Handovers
 
