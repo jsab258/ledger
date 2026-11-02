@@ -3,11 +3,23 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Friday 30 October, evening: stopped for the week)
+## Overview (Monday 2 November, 07:15)
+
+**The week's visible change, 26 October against this morning (the hook camera by day):**
+
+| 26 October | 2 November |
+|---|---|
+| ![26 October](production/previews/morning-hook-day-2026-10-26.jpg) | ![2 November](production/previews/morning-hook-day-2026-11-02.jpg) |
+
+- The road and pavement are now wet stone at real values (your ruling of 29 October): grey and dull where they were black and glossy; the puddles are gone. They read less wet than the Hook sheet's street; its two failing readings are listed, not hidden.
+- The brick is redder and stained; Mickey's office shows its shelves and fittings through the glass.
+- The people are unchanged: the same stiff poses, the woman still in the white base layer.
+
+Disk (11-02 03:31): C: 151.6 GB free, F: 24.5 GB free; grew most since yesterday: Pocket's voice files on F: +0.2 GB, the gate's new pictures +0.1 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Monday 2 November. Phase 1, Prove the bottlenecks. On: 1. Speech: packaged median 1.17 s (11 of 20 under 2.0 s); lever 1, one-sentence replies spoken early, in test (n02-3-1-speech). Next: 2. Tom's four pieces passed packaged: skill done; deep-dive reading; toe band's third try built (n02-3-2-*, n02-tom-*).**
+**Morning, Monday 2 November. Phase 1, Prove the bottlenecks. On: 1. Speech: median 1.17 s beside the packaged game; lever 1 reverted; real talk in-game next (n02-3-1-speech). Next: 2. Tom's four pieces passed packaged: toe band set aside; collar's third try today (n02-3-2-*, n02-tom-*).**
 
 | | Today, 02 Nov | Yesterday, 01 Nov |
 |---|---|---|
@@ -19,44 +31,59 @@ The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/
 
 No decision asked: these are for watching the street change.
 
-**The repository on Monday:** 3.41 GB on GitHub; 3.56 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push).
+**The repository on Monday:** 3.41 GB on GitHub; 3.57 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push).
 
 <!-- /morning pictures -->
 
-Disk (10-30 20:06): C: 145.9 GB free, F: 23.2 GB free.
+**Now and next** (your order of 2 November; production/orders/2026-11-02.md):
+- **Speech, first:** measured beside the packaged game, the first words come after a median 1.17 s, 11 of 20 lines under 2 s. The one change tried (speaking a one-sentence reply early) made no difference over 80 lines and was taken out. Next: the same measure on the real talk inside last night's packaged game, under a 50-cent cap.
+- **Tom:** the garment method and the clothing deep-dive are done. The pale line under his toes is set aside after its third try: it comes from the wet ground's water layer wherever anything touches it, not from the boots. Today: the collar's third try (your yes), by Epic's own way of hiding the throat under a collar.
+- **Then:** sitting, Mickey's office and the Stutter passed in the packaged walk; the phase's exit re-check aimed at 9 November, anything that cannot make it told to you by Wednesday.
+- **Beside it:** the corner's plan is reviewed and its baseline begun. Its size, plainly: at our own rates the corner is weeks of work; this week's 8 to 10 hours buys its list (people that walk off, the first layer of street dressing), not final quality, and the terrace kit (60 to 80 hours) waits. Study A is done; the token audit and the unit costs come by Wednesday; the progress page shows the 2027 line, 1.4 weeks behind (as of today).
 
-**Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
-- **Clothes:** Tom wears his zip jacket, the straight 16.5 in jeans, lightly faded, and Ron's black lace-up boots; his body is cut away under them, so no skin shows through. Three fresh reviewers passed him in the editor; tonight's build carries him; not yet walked in the packaged game. Three faults stay open, each after two tries, each a third try waiting for your word: a patch of his throat at the collar's zip, the boots' heavy, almost clog-like toe, and a pale band under the toes on wet paving. The jumper is made and left off, unseen under the zipped jacket.
-- **Sitting:** his face is held at most 25 degrees down as he sits and stands; it passes in the editor, not yet walked packaged.
-- **The look:** the chandler's front wear passed its gate. Its painted woodwork is held back: a brick pier beside it lights up at night; two tries, the likely cause its lighting data, unproven. Mickey's back door's third try is in tonight's build, not yet checked.
-- **Beside them:** speech: the faster first sentence is still no faster (31 of 42 trials); The Long Pause's number is from 25 October, its re-measure with the cast's own voices not done. The camera's talk, run and room rows are built; the room row waits for you to see it in the game. Marvelous's bridge now starts itself.
-
-**The tester (the night of 29 October, the last walk read):** 13 of 15 stages: Ron was lost as the tester walked up to him (the town moves a person out of sight after 12 s when their hour takes them elsewhere) and Darren was not on the street. "That's all I know" to 2 of 60 first questions. What broke the illusion: placeholder clothes and stiff poses, a man in the road with his arms held out and a second pair of legs through his, a woman walking past Rita's smashed window without a look, and "D0 20:00" on screen after loading (now "Monday, 8.00 pm"). Tonight's walk runs as scheduled; nobody reads it until Monday.
+**The tester (last night's walk, packaged):** 14 of 15 stages: Darren was lost from sight. "That's all I know" to 2 of 60 first questions. The cast's own voices came up in the packaged game for the first time since 29 October. What broke the illusion: Ron and the woman at Mickey's door in white underwear, she barefoot, both in the same stiff poses; a woman walking past Rita's smashed window without a look; two people standing inside each other in the road at night, under a flat brown sky.
 
 **Monday's risks:**
-1. Phase 1's exit needs speech under its bar; the faster first sentence shows no gain in 31 of 42 trials.
-2. Tom's three open faults each need your word for a third try; none of his four pieces counts as beaten yet.
-3. Nothing in tonight's build is walked packaged yet: the outfit, the sitting, the back door, the talk camera.
-4. People who vanish when their hour moves them: the professional answer is that they walk off, not yet built.
-5. The Long Pause's figure is five days old; its re-measure with the cast's voices waits.
+1. Speech meets its bar at the median only beside the game; the real talk inside the packaged game is not measured yet.
+2. Tom's toe shape waits on Epic's boots from Fab, which need your sign-in; the collar's third try is the last one.
+3. The pale line under everything on the wet street stays until you allow one more try in the ground itself.
+4. Nothing of this week is walked packaged yet; sitting, the office and the Stutter must pass there by 9 November.
+5. People who freeze, merge or vanish break the illusion every night; the corner's people step is the first answer.
 
 ### Needs you
 
-(This morning's four, the back door, fists, the bow and the shoes, are answered and recorded.)
-1. **Epic's own lace-up boots from Fab, for Tom's toe shape?** Two tries at the toe still read heavy, almost clogs. Free from Epic, but the download needs your sign-in, into F:\LedgerTools\fab. Yes (recommended), or keep these. No page yet.
-2. **Tom's collar, a third try?** A patch of his throat shows at the zip. Two tries used; the third would bend the collar with his head (a corrective shape), about 2 to 3 hours (my estimate). Yes (recommended), or leave it. No page yet.
-3. **The pale band under Tom's toes, a third try?** Two tries failed (the wet ground's water is a coat no decal reaches). The third: a hidden copy of each sole that only the light sees, Epic's own switch for this, about 1 to 2 hours (my estimate). Yes (recommended), or leave it. No page yet.
-After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).
+All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
+1. Epic's four footwear files from Fab (download all four, recommended).
+2. One more try at the pale line, in the wet ground (yes, recommended).
+3. Stop the stuck nightly session "LEDGER: read back page answers (nightly)" in the app's sidebar (recommended); I read your answers by hand meanwhile.
 
 ### Road to worth playing (PLAN.md)
 
 - **0. Recover control** (0.20W): done 6 October, passed by a fresh review with narrow points.
-- **1. Prove the bottlenecks** (1.00W): Mickey's front office (passed 8 October), then a complete Tom and one speaker, the voice under two seconds, and P1 packaged (closed 21 October). If a sample fails within its ceiling, I report the failed capability.
+- **1. Prove the bottlenecks** (1.00W): open again under your order of 2 November: speech, Tom's four pieces, sitting, the office and the Stutter, each passed packaged; the exit re-check aimed at 9 November.
 - **2. Quay Street from proved families** (2.00W): the brick, the facades, the wet street's seam and the hill return here.
 - **3. Thirty minutes that hold** (0.75W): N3 ported, the weather proof, P4's gaps.
-- **4. The friends' candidate** (0.50W): on your own account, $5 an evening.
+- **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Monday 2 November (morning)
+
+**Failed:**
+- Speaking a one-sentence reply early: no faster over 80 lines; taken out.
+- The pale line under Tom's toes, third try: hidden soles only the light sees changed nothing. Set aside; the cause is the wet ground.
+- The cast's own voices had been missing from the game since 29 October: the night clean-up deleted their model. Restored and protected.
+- The nightly read-back of your answers has been stuck since 26 October; read by hand today.
+
+**Done:**
+- Speech measured beside the packaged game: median 1.17 s.
+- The garment method rewritten with your text; the clothing deep-dive and study A done, each checked by a fresh reviewer.
+- The token audit's first pass; the corner's plan reviewed.
+- Your Needs you page, one link from now on.
+
+**Decided, yours to overturn:** the collar's third try uses Epic's own throat-hiding map, not a bent collar; the corner stops after its people and first dressing if hours run short.
+
+**Act on:** your Needs you page, three items: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Friday 30 October (evening, the week's end)
 

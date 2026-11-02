@@ -324,3 +324,5 @@
 {"event": "stop", "at": "2026-11-01T22:28:00", "note": ""}
 {"event": "start", "at": "2026-11-02T06:50:00", "task": "n02-needs-you: his one permanent page built, published, its list in the page's data", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-02T07:05:00", "note": ""}
+{"event": "start", "at": "2026-11-02T07:05:00", "task": "daily: Monday's overview and summary; the answers read back by hand; the progress page's pictures", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-02T07:14:00", "note": ""}

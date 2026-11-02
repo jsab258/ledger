@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-30
+Read back: 2026-11-02
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -55,5 +55,6 @@ Read back: 2026-10-30
 | [Camera distance](https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) | 2026-10-28 | 3 | camera-distance-2026-10-28: between, 2026-10-28 (Between, nudged so his feet are fully in frame. Keep Mafia's idea of the camera ); camera-pullback-2026-10-28: 3.1, 2026-10-29; camera-result-2026-10-28: ?, 2026-10-28 (Too low and too big now: he blocks the end of the street. Go back to the Between) |
 | [The day a stop too bright](https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg) | 2026-10-29 | 2 | delete-jacket-leftovers-2026-10-29: yes, 2026-10-29; look-day-exposure-2026-10-29: down1, 2026-10-29 (Kept one stop darker. But the street is now much darker than the Hook sheet. Don) |
 | [The street at real values, and the camera when he runs](https://claude.ai/artifact/YMW4gWcUvWV2i4qoWZDxgs) | 2026-10-30 | 3 | back-door-third-2026-10-30: yes, 2026-10-30; camera-run-row-2026-10-30: keep, 2026-10-30; look-street-real-values-2026-10-30: keep, 2026-10-30 |
+| [LEDGER: Needs you](https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8) | 2026-11-02 | 3 | fab-footwear-2026-11-01: ?, ; pale-line-further-try-2026-11-01: ?, ; stop-stuck-readback-2026-11-02: ?,  |
 
-49 pages, 183 answers.
+50 pages, 186 answers.

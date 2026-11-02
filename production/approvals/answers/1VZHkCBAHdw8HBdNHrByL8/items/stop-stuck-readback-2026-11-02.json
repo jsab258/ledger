@@ -1,0 +1,8 @@
+{
+  "added": "2026-11-02 07:12",
+  "id": "stop-stuck-readback-2026-11-02",
+  "links": [],
+  "recommendation": "Stop it: it has blocked every nightly run since 27 October; I read your answers by hand meanwhile. There is no web link for a session; it is in the app's sidebar.",
+  "state": "open",
+  "text": "In the Claude app's sidebar, open the session \"LEDGER: read back page answers (nightly)\" (stuck since 26 October) and press Stop, so the nightly read-back of your answers can run again."
+}
