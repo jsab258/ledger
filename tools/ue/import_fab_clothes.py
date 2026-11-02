@@ -18,14 +18,11 @@ import time
 
 
 def main_after_idle(seconds=20.0):
-    # REFUSED SINCE 3 OCTOBER (Jafar's licence ruling): every one of Epic's
-    # MetaHuman garment packages is marked on Fab "Allows usage with AI: No",
-    # and nothing NoAI is used in the game or the project. This importer runs
-    # no more; the packages are in F:/LedgerTools/quarantine-noai-2026-10-03.
+    # REFUSED 3 TO 13 OCTOBER, ALLOWED AGAIN (RULINGS.md, "3 Oct, narrowed 13 Oct": content Epic itself publishes on
+    # Fab, the MetaHuman garments among it, may be used inside the game though tagged NoAI, our AI only placing and
+    # setting it up; his yes of 31 October to Epic's boots for Tom, downloaded by him on 2 November). One package a
+    # run: LEDGER_FAB_DIR names its own folder (F:/LedgerTools/fab/<name>).
     import unreal
-    print("import_fab_clothes: REFUSED, Epic's garment packages are NoAI (3 October); nothing imported")
-    unreal.SystemLibrary.quit_editor()
-    return
     st = {"t0": time.time(), "h": None, "done": False}
     out = os.path.join(unreal.Paths.project_dir(), "fab-clothes.json")
     src = os.environ.get("LEDGER_FAB_DIR", r"F:\LedgerTools\fab")

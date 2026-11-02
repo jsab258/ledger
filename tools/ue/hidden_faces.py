@@ -76,6 +76,11 @@ SETTINGS = {"max_cull_value": 0.1, "min_keep_value": 0.9, "max_shrink_distance":
 # Painted by tools/ue/blender_head_hidden_face_map.py, grey only (never at or below 0.1, so nothing is cut).
 # LEDGER_HF_HEAD_MAP names the PNG and LEDGER_HF_HEAD_SHRINK_CM its MaxShrinkDistance; unset, no head map.
 HEAD_MAP_PNG = os.environ.get("LEDGER_HF_HEAD_MAP", "")
+# MORE OF EPIC'S WARDROBE ITEMS WORN IN THE SAME SLOT (2 November 2026, Epic's boots for Tom's toe, his yes of 31 October;
+# production/research/clothing-pipeline/EPIC-BOOTS-ON-TOM-2026-11-02.md): LEDGER_HF_EXTRA_ITEMS names wardrobe item paths,
+# comma-separated (e.g. /Game/Fab/oa_boots/WI_OA_Boots, imported by tools/ue/import_fab_clothes.py); each is added to
+# the Outfits slot beside what he wears, and the build fits it to his body as it does his own items.
+EXTRA_ITEMS = [x.strip() for x in os.environ.get("LEDGER_HF_EXTRA_ITEMS", "").split(",") if x.strip()]
 HEAD_TEX_NAME = "T_TomL1_HeadHiddenFaces"
 HEAD_SETTINGS = dict(SETTINGS, max_shrink_distance=float(os.environ.get("LEDGER_HF_HEAD_SHRINK_CM", "0") or 0))
 MESHES = ["Body/SKM_MH_TomL1_BodyMesh", "Face/SKM_MH_TomL1_FaceMesh"]   # the *_DNA assets are DNA, not meshes
@@ -400,7 +405,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         ours = [k for k in outfits if WI_NAME in str(k)]
         if ours:
             note("already-worn")
-            return True
+            return wear_extras(ch)
         keep, replaced = pick_swap(outfits)
         st["replaced"] = replaced
         got = col.try_add_item_from_wardrobe_item("Outfits", wi)
@@ -415,7 +420,32 @@ def main_after_idle(seconds=20.0, settle=15.0):
                        "added": key_info(new_key), "added_ok": bool(added)}
         rep["selections_after"] = [{"slot": s, "item": key_info(k)} for s, k in selections(ch)]
         save_report()
-        return bool(added)
+        return bool(added) and wear_extras(ch)
+
+    def wear_extras(ch):
+        """Each of EXTRA_ITEMS added to the Outfits slot beside what he wears (once); True when every one is worn."""
+        col = ch.internal_collection
+        inst = col.default_instance
+        ok = True
+        worn = [str(k) for s_, k in selections(ch) if s_ == "Outfits"]
+        for path in EXTRA_ITEMS:
+            leaf = path.split("/")[-1].split(".")[0]
+            if any(leaf in w for w in worn):
+                note("extra-already-worn " + leaf)
+                continue
+            item = unreal.load_asset(path)
+            if item is None:
+                note("NO-EXTRA-ITEM " + path)
+                ok = False
+                continue
+            got = col.try_add_item_from_wardrobe_item("Outfits", item)
+            key = got[-1] if isinstance(got, tuple) else got
+            added = inst.try_add_slot_selection(unreal.MetaHumanPipelineSlotSelection(slot_name="Outfits", selected_item=key))
+            note("extra-%s %s" % ("worn" if added else "REFUSED", leaf))
+            ok = ok and bool(added)
+        rep["selections_after_extras"] = [{"slot": s_, "item": key_info(k)} for s_, k in selections(ch)]
+        save_report()
+        return ok
 
     def build():
         import make_cast_metahumans as mc
