@@ -1,8 +1,9 @@
 {
   "added": "2026-11-02 07:12",
+  "closed": "done (08:15): the stuck nightly session stopped",
   "id": "stop-stuck-readback-2026-11-02",
   "links": [],
-  "recommendation": "Stop it: it has blocked every nightly run since 27 October; I read your answers by hand meanwhile. There is no web link for a session; it is in the app's sidebar.",
-  "state": "open",
-  "text": "In the Claude app's sidebar, open the session \"LEDGER: read back page answers (nightly)\" (stuck since 26 October) and press Stop, so the nightly read-back of your answers can run again."
+  "recommendation": "Allow: both only read (your page answers; the project's files). A scheduled session stops at its first question with nobody there, which has blocked the nightly read-back since 26 October; an answer given once is kept for its later runs. There is no web link for a session; both are in the app's sidebar.",
+  "state": "done",
+  "text": "In the Claude app's sidebar, open the two sessions \"LEDGER: read back page answers (nightly)\" and \"LEDGER: fresh-session test (once)\"; where either waits on a permission question, choose to always allow it; where one shows no question, press Stop."
 }
