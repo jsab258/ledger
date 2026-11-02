@@ -35,6 +35,15 @@ TARGET_RIG = "/MetaHumanCharacter/Animation/Retargeting/IK_MH_IKRig"
 WORK_DIR = "/Game/Retarget/Sit"
 OUT_DIR = "/Game/Ledger/Anim/Sit"
 SUFFIX = "_MH"
+# EPIC'S OWN BENCH IDLE, FOR THE PEOPLE THE DAY SEATS (2 November 2026, the bench film's review: Ron's arms jumped
+# from chest to knees in one frame, his seated loop being Mixamo's sit_talk, which was never made to loop; Epic's
+# Game Animation Sample's bench idle is, and Tom already sits with it): carried onto the cast's body skeleton by the
+# sample's own retargeter, as A_bench_idle_MH beside the others. Reuse first: the clip and the retargeter are in the
+# project already.
+EPIC_IDLE = "/Game/Characters/UEFN_Mannequin/Animations/Interactions/Bench/M_interaction_bench_idle_loop"
+EPIC_MESH = "/Game/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin"
+EPIC_RTG = "/Game/MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw"
+EPIC_OUT = "bench_idle"
 
 
 # Which Mixamo character's skeleton each clip moves (tools/meshgen/blender/sitting_clips.py CLIPS).
@@ -289,10 +298,45 @@ def main():
                 notes.append(note)
             else:
                 notes.append("%s:not-made" % clip)
+    notes.append(epic_bench_idle(unreal, lib))
     lib.save_directory(WORK_DIR, only_if_is_dirty=False, recursive=True)
     if lib.does_directory_exist(OUT_DIR):
         lib.save_directory(OUT_DIR, only_if_is_dirty=False, recursive=True)
     write("MADE" if made == len(CLIPS) else ("PARTIAL" if made else "NOT-MADE"), made, ",".join(notes))
+
+
+def epic_bench_idle(unreal, lib):
+    """Epic's bench idle loop onto the cast's body skeleton as A_bench_idle_MH; one note token, never raises."""
+    try:
+        seq = unreal.load_asset(EPIC_IDLE)
+        src = unreal.load_asset(EPIC_MESH)
+        tgt = unreal.load_asset(TARGET_MESH)
+        rtg = unreal.load_asset(EPIC_RTG)
+        if None in (seq, src, tgt, rtg):
+            return "bench_idle:missing-%s" % "".join(k for k, v in (("seq", seq), ("src", src), ("tgt", tgt), ("rtg", rtg)) if v is None)
+        inputs = unreal.IKRetargetBatchOperationInputs()
+        inputs.set_editor_property("assets_to_retarget", [unreal.AssetRegistryHelpers.create_asset_data(seq)])
+        inputs.set_editor_property("source_mesh", src)
+        inputs.set_editor_property("target_mesh", tgt)
+        inputs.set_editor_property("ik_retarget_asset", rtg)
+        inputs.set_editor_property("suffix", SUFFIX)
+        inputs.set_editor_property("target_path", OUT_DIR)
+        inputs.set_editor_property("include_referenced_assets", False)
+        inputs.set_editor_property("overwrite_existing_files", True)
+        result = unreal.IKRetargetBatchOperation.run_batch_retarget(inputs)
+        names = [str(a.package_name) for a in result] if result else []
+        want = out_path(EPIC_OUT)
+        hit = next((n for n in names if n.startswith(OUT_DIR) and "bench_idle" in n), None)
+        if hit and hit != want:
+            if lib.does_asset_exist(want):
+                lib.delete_asset(want)
+            lib.rename_asset(hit, want)
+        if not lib.does_asset_exist(want):
+            return "bench_idle:not-made"
+        done = unreal.load_asset(want)
+        return "bench_idle:%.1fs/epic" % (done.get_play_length() if done else -1.0)
+    except Exception as e:
+        return "bench_idle:RAISED-%s" % str(e)[:60].replace(" ", "~")
 
 
 def selftest():
@@ -315,6 +359,7 @@ def selftest():
     whole = qmul(qyaw(90.0), q)
     check("and its turn in the world", abs(whole[3] - 1.0) < 1e-6 or abs(whole[3] + 1.0) < 1e-6)
     check("a fixed name the game loads", out_path("sit_down") == "/Game/Ledger/Anim/Sit/A_sit_down_MH")
+    check("Epic's bench idle under the same folder and name pattern", out_path(EPIC_OUT) == "/Game/Ledger/Anim/Sit/A_bench_idle_MH")
     check("it lands where the build cooks", out_path("stand_up").startswith("/Game/Ledger/"))
     check("the work stays out of the cook", not WORK_DIR.startswith("/Game/Ledger/"))
     check("the source is a game input on F:", source_fbx("sit_down", r"F:\X").endswith(os.path.join("anim", "sit", "sit_down.fbx")))
