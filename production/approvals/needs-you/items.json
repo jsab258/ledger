@@ -1,0 +1,28 @@
+{
+ "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
+ "items": [
+  {
+   "id": "fab-footwear-2026-11-01",
+   "added": "2026-11-01 21:00",
+   "text": "While signed in to Fab, press Download on each of Epic's four free MetaHuman footwear files and save them in F:\\LedgerTools\\fab (about 1.2 GB in all).",
+   "links": [
+    {"label": "Boots (Epic calls them combat boots)", "url": "https://www.fab.com/listings/c6596c37-e34f-46d4-a44e-fc360cc079c4"},
+    {"label": "Oxfords", "url": "https://www.fab.com/listings/25b79aec-45c7-4f9a-88eb-5c3220d975bd"},
+    {"label": "Chelsea boots", "url": "https://www.fab.com/listings/b910abee-3189-4396-9bd2-d8ce57b7bb88"},
+    {"label": "Loafers", "url": "https://www.fab.com/listings/2f631109-17ab-4c87-a78c-5148927de957"}
+   ],
+   "recommendation": "Download all four: Epic's boots for Tom's toe shape (your yes of 31 October), the others for the cast. I look at each before using it.",
+   "options": [["done", "Done, all four downloaded"], ["later", "Not yet"]],
+   "state": "open"
+  },
+  {
+   "id": "pale-line-further-try-2026-11-01",
+   "added": "2026-11-01 22:21",
+   "text": "May I make one more try at the pale line where anything meets the wet street? Three tries on Tom's boots failed; it comes from the wet ground's water layer at every contact, so this try would be in the ground's material.",
+   "links": [],
+   "recommendation": "Yes: the line shows under every foot and object on the wet street, and the corner's wet ground needs it gone.",
+   "options": [["yes", "Yes, one more try (recommended)"], ["no", "No, leave it"]],
+   "state": "open"
+  }
+ ]
+}

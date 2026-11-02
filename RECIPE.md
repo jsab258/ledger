@@ -1623,3 +1623,10 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Both games' set-up is done; Mafia's mappings predate the installed build, so kinds not yet tried may fail. production/research/aaa-reference/REFERENCE.md
 - Whether one family's cost and reuse time can carry a town: phase 1 was to measure it. PLAN.md (opening); CLAUDE.md (How the work is done)
 - Three shipped libraries have no licence read. FINDINGS.md (libraries)
+
+### One standing page for the owner's open decisions (2 November 2026)
+- Made: one permanent page listing only what is open for the owner, each item one line with its links, recommendation and time added; it replaces a page a day.
+- Method: one data file is the home of the items (open or done, with when and how each closed); the page is rebuilt from it and republished at the same link; the same list is copied into the page's own store so another program can read it without parsing the page; the owner's taps are stored per item and read before anything is asked again.
+- Tools: a small page builder reusing the decision-page renderer; the page's database.
+- Target and check: every item has all six fields and full https links; a done item says when and how; only open items are drawn (selftest 8/8, run in every build check).
+- Cost: about 0.3 h. Failed: nothing yet. Evidence: tools/needs_you_page.py, production/approvals/needs-you/.

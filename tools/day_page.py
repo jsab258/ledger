@@ -233,6 +233,16 @@ function render(){
       }
       sec.append(picks(s.key, s.options, st.pick));
       if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
+    } else if (s.kind === "need") {
+      // NEEDS YOU (2 November 2026, his permanent page): what to do, every link it needs, the recommendation, when added
+      if (s.links && s.links.length) {
+        const ul = el("ul", {class:"links"});
+        for (const l of s.links) ul.append(el("li", {}, el("a", {href:l.url, target:"_blank", rel:"noopener", text:l.label})));
+        sec.append(ul);
+      }
+      if (s.recommendation) sec.append(el("p", {class:"how", text:"Recommended: " + s.recommendation}));
+      if (s.added) sec.append(el("p", {class:"was", text:"Added " + s.added}));
+      if (s.options && s.options.length) sec.append(picks(s.key, s.options, st.pick));
     } else if (s.kind === "decide") {
       sec.append(picks(s.key, s.options, st.pick));
       if (s.note) sec.append(el("details", {}, el("summary", {text:"Why, and what was measured"}), el("p", {class:"was", text:s.note})));

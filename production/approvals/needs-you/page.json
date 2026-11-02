@@ -1,0 +1,65 @@
+{
+ "tab": "LEDGER: Needs you",
+ "kicker": "LEDGER · Needs you · 2 open · updated Monday 2 November, 7:00",
+ "title": "Needs you",
+ "how": [
+  "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
+  "Pick an answer under each item; a note is optional."
+ ],
+ "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
+ "sections": [
+  {
+   "kind": "need",
+   "key": "fab-footwear-2026-11-01",
+   "name": "While signed in to Fab, press Download on each of Epic's four free MetaHuman footwear files and save them in F:\\LedgerTools\\fab (about 1.2 GB in all).",
+   "links": [
+    {
+     "label": "Boots (Epic calls them combat boots)",
+     "url": "https://www.fab.com/listings/c6596c37-e34f-46d4-a44e-fc360cc079c4"
+    },
+    {
+     "label": "Oxfords",
+     "url": "https://www.fab.com/listings/25b79aec-45c7-4f9a-88eb-5c3220d975bd"
+    },
+    {
+     "label": "Chelsea boots",
+     "url": "https://www.fab.com/listings/b910abee-3189-4396-9bd2-d8ce57b7bb88"
+    },
+    {
+     "label": "Loafers",
+     "url": "https://www.fab.com/listings/2f631109-17ab-4c87-a78c-5148927de957"
+    }
+   ],
+   "recommendation": "Download all four: Epic's boots for Tom's toe shape (your yes of 31 October), the others for the cast. I look at each before using it.",
+   "added": "2026-11-01 21:00",
+   "options": [
+    [
+     "done",
+     "Done, all four downloaded"
+    ],
+    [
+     "later",
+     "Not yet"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "pale-line-further-try-2026-11-01",
+   "name": "May I make one more try at the pale line where anything meets the wet street? Three tries on Tom's boots failed; it comes from the wet ground's water layer at every contact, so this try would be in the ground's material.",
+   "links": [],
+   "recommendation": "Yes: the line shows under every foot and object on the wet street, and the corner's wet ground needs it gone.",
+   "added": "2026-11-01 22:21",
+   "options": [
+    [
+     "yes",
+     "Yes, one more try (recommended)"
+    ],
+    [
+     "no",
+     "No, leave it"
+    ]
+   ]
+  }
+ ]
+}

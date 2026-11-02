@@ -449,6 +449,17 @@
     "verdicts"
    ],
    "note": "the street's wet stone and real brick beside the Hook sheet (his order D11); the camera's run row (Mafia's numbers); a third try at Mickey's back door after two"
+  },
+  {
+   "id": "1VZHkCBAHdw8HBdNHrByL8",
+   "title": "LEDGER: Needs you",
+   "updated": "2026-11-02",
+   "storage": "db",
+   "collections": [
+    "verdicts",
+    "items"
+   ],
+   "note": "his one permanent page of what is open for him (his order of 2 November 2026); replaces the daily decision pages for good; items is the plain list (id, added, text, links, recommendation, state) for the advisor's checker, its home production/approvals/needs-you/items.json"
   }
  ]
 }
