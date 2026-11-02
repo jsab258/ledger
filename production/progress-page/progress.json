@@ -162,12 +162,12 @@
       "what": "The worst single frame on a walk down the street.",
       "unit": "ms",
       "start": 87,
-      "now": 55,
+      "now": 32.9,
       "target": 33.3,
       "start_label": "22 Oct",
-      "now_label": "24 Oct",
+      "now_label": "2 Nov, packaged, voices speaking (3 of 4 walks)",
       "state": "fighting",
-      "last": "23 Oct: the 87 ms stall is gone. One frame per walk still reaches 42 to 55 ms when the voice speaks; without the voice the worst is 24 ms."
+      "last": "2 Nov: four packaged walks with the cast's voices speaking throughout: worst frames 25.2, 61.5, 32.9 and 28.7 ms. The old stall is gone from all four; the 61.5 ms frame came in one capture's last second with the game itself idle (an outside wait). Re-walked on tonight's build before it falls."
     },
     {
       "name": "The Tailor",

@@ -313,6 +313,8 @@ GROUND = False
 GROUND_COAT_ROUGHNESS = 0.15
 # The contact decal's roughness (tools/ue/make_contact_material.py ROUGH_DEFAULT): the ground reads it back to cut its coat (2 November).
 CONTACT_COAT_ROUGHNESS = 0.6
+# How fast the coat's cut fades toward the contact decal's rim (2 November: 1 even, 2 too fast).
+CONTACT_CUT_EXPONENT = 1.5
 GROUND_STONE_SPECULAR = 0.5
 
 # DEFAULT TEXTURES ARE TRIED IN ORDER AND THE ONE THAT ANSWERED IS NAMED. A
@@ -4133,9 +4135,10 @@ def main():
                     wear_const(dbr, ch, on)
                 cdiv = wear_const(expr(unreal.MaterialExpressionDivide, -380, 2950), "const_b", CONTACT_COAT_ROUGHNESS)
                 csat = expr(unreal.MaterialExpressionSaturate, -260, 2950)
-                # SQUARED (2 November, the first pictures: at 4 cm the cut read as a dark halo round a boot seen whole;
-                # the line lies within a couple of centimetres of the sole): the cut falls off fast toward the decal's rim
-                csq = wear_const(expr(unreal.MaterialExpressionPower, -200, 3000), "const_exponent", 2.0)
+                # A FASTER FADE (2 November, the first pictures: at 4 cm and fading evenly the cut read as a dark halo round a
+                # boot seen whole; at 2.5 cm squared a faint arc of the line came back 2 cm before the toes): 3.25 cm, the
+                # cut raised to the power 1.5 so it fades a little faster than evenly toward the decal's rim
+                csq = wear_const(expr(unreal.MaterialExpressionPower, -200, 3000), "const_exponent", CONTACT_CUT_EXPONENT)
                 cone = expr(unreal.MaterialExpressionOneMinus, -140, 2950)
                 ccut = expr(unreal.MaterialExpressionMultiply, -20, 2900)
                 if (connect(dbc, "", dbr, "", "contact-dbuffer-to-mask") and connect(dbr, "", cdiv, "A", "contact-mask-to-divide")

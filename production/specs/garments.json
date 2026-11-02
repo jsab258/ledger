@@ -33,7 +33,7 @@
    "maps_note": "30 October: leather maps (tools/meshgen/blender/footwear_maps.py): UVs cut along a derby's seams, pebbled grain, stitched quarters and welt, the sole edge, scuffs; the weights unchanged (re-exported with UVs, the 30 September file kept)",
    "soles": {
     "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October): each half sole's footprint, along and across the foot from the ball joint, and the sole's floor",
-    "margin_cm": 2.5,
+    "margin_cm": 3.25,
     "depth_cm": 3.0,
     "sides": [
      {
@@ -101,7 +101,7 @@
      "lift_cm": 0.6,
      "held": "1 November: no change to the band, standing on the floor or lifted 6 mm; and the band shows under a drawn, solid stand-in too, so it belongs to the wet ground's coat at any contact, not to the boots (the shoes plan, its last section); kept, not laid"
     },
-    "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 2.5 cm past each half sole (4 cm on the first pictures read as a dark halo), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
+    "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 3.25 cm past each half sole (4 cm read as a dark halo seen whole; 2.5 cm let an arc of the line back before the toes), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
    }
   },
   {
@@ -299,7 +299,7 @@
    "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next",
    "soles": {
     "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October): each half sole's footprint, along and across the foot from the ball joint, and the sole's floor",
-    "margin_cm": 2.5,
+    "margin_cm": 3.25,
     "depth_cm": 3.0,
     "sides": [
      {
@@ -367,7 +367,7 @@
      "lift_cm": 0.6,
      "held": "1 November: no change to the band, standing on the floor or lifted 6 mm; and the band shows under a drawn, solid stand-in too, so it belongs to the wet ground's coat at any contact, not to the boots (the shoes plan, its last section); kept, not laid"
     },
-    "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 2.5 cm past each half sole (4 cm on the first pictures read as a dark halo), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
+    "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 3.25 cm past each half sole (4 cm read as a dark halo seen whole; 2.5 cm let an arc of the line back before the toes), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
    }
   }
  ]

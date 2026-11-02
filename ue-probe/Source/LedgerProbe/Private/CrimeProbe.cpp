@@ -9911,6 +9911,20 @@ namespace
 		return true;
 	}
 
+	// A WORLD POINT ON THE 1080-HIGH LAYOUT the prompt is placed in (as PromptScreenAt's own last step), or false.
+	bool ScreenAt1080(const FVector& Where, FVector2D& Out)
+	{
+		APlayerController* PC = GPawn != nullptr ? Cast<APlayerController>(GPawn->GetController()) : nullptr;
+		FVector2D Px;
+		int32 VX = 0, VY = 0;
+		if (PC == nullptr) { return false; }
+		PC->GetViewportSize(VX, VY);
+		if (VY <= 0 || !PC->ProjectWorldLocationToScreen(Where, Px)) { return false; }
+		const double K = 1080.0 / VY;
+		Out = FVector2D(Px.X * K, Px.Y * K);
+		return true;
+	}
+
 	void PromptPlace()
 	{
 		if (!GPromptAt.IsValid()) { return; }
@@ -9930,7 +9944,23 @@ namespace
 		if (bShow)
 		{
 			// to the right of the head, the line starting a hand's width from it
-			GPromptAt->SetPadding(FMargin((float)At.X + 26.0f, (float)At.Y - 22.0f, 0.0f, 0.0f));
+			float X = (float)At.X + 26.0f, Y = (float)At.Y - 22.0f;
+			// NEVER OVER HIS OWN FACE (2 November, the bench film's review: "Talk to Ron" lay over Tom's mouth, chin and
+			// collar once he stood between the camera and Ron): where the line would cover his head and shoulders it goes
+			// to the other side of the speaker's head, and where that covers him too, above both heads
+			FVector2D Him;
+			const float W = FMath::Max(GPromptAt->GetDesiredSize().X, 120.0f), H = FMath::Max(GPromptAt->GetDesiredSize().Y, 36.0f);
+			if (GPawn != nullptr && ScreenAt1080(GPawn->GetActorLocation() + FVector(0.0f, 0.0f, GPawn->BaseEyeHeight), Him))
+			{
+				const FBox2D His(FVector2D(Him.X - 110.0, Him.Y - 80.0), FVector2D(Him.X + 110.0, Him.Y + 260.0));
+				auto Covers = [&His, W, H](float Lx, float Ly) { return FBox2D(FVector2D(Lx, Ly), FVector2D(Lx + W, Ly + H)).Intersect(His); };
+				if (Covers(X, Y))
+				{
+					if (!Covers((float)At.X - 26.0f - W, Y)) { X = (float)At.X - 26.0f - W; }
+					else { X = (float)At.X - W * 0.5f; Y = (float)FMath::Min(At.Y, His.Min.Y) - H - 24.0f; }
+				}
+			}
+			GPromptAt->SetPadding(FMargin(FMath::Max(X, 8.0f), FMath::Max(Y, 8.0f), 0.0f, 0.0f));
 			const float A = LedgerPaper::ReduceMotion() ? 1.0f : FMath::Clamp((float)((NowS() - GPromptSince) / 0.15), 0.0f, 1.0f);
 			GPromptAt->SetRenderOpacity(A);
 		}
