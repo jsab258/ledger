@@ -154,9 +154,9 @@
       "now": 1.07,
       "target": 2.0,
       "start_label": "8 Oct",
-      "now_label": "2 Nov, inside the packaged game, real talk (median of 30)",
+      "now_label": "small talk only",
       "state": "fighting",
-      "last": "2 Nov: measured inside the packaged game itself on the real talk: 2.40 s as built (every line on the slower model); after two tries 1.07 s, 19 of 30 under 2.0 s, one fallback in 23. The bar is met on one run; tonight's build carries it and a second run confirms. 1 Nov's 1.17 s beside the game was the faster model's, not the game's. The tail stays long: one line in five takes 4 to 9 s."
+      "last": "2 Nov: measured inside the packaged game itself: 2.40 s as built (every line on the slower model); after two tries 1.07 s, 19 of 30 under 2.0 s, but on small talk only (the script's lines are small talk, all answered by the faster model). Real questions, on the slower model, are not yet shown under 2 s; they are measured next."
     },
     {
       "name": "The Stutter",

@@ -17,8 +17,9 @@ Source: the talk program's own end line (its CostTracker, real input and output 
 | C (try 2) | 30 | 74 | 30 calls, 187,957 in / 1,045 out: $0.193 | 44 calls, 226,040 / 4,954: $0.025 | none | $0.218 | $0.0073 |
 | D (try 2 with the escalation, as built) | 30 | 86 | 25 calls, 155,466 / 1,100: $0.161 | 58 calls, 268,603 / 6,329: $0.030 | 3 calls, 23,761 / 298: $0.051 | $0.241 | $0.0080 |
 
-- **Per hour at 15 replies (run D, as built): about $0.12.** Run C, without the escalation: $0.11. The budget counter's own figure is higher ($0.327 for run D) because it reserves each call's full allowance of output; the bill follows the real tokens.
+- **Per hour at 15 replies (run D, as built): about $0.12.** Run C, without the escalation: $0.11. The budget counter's own figure is higher ($0.327 for run D); why is unexplained (the speech-bench skill's review, 2 November: the code settles each reserve to the tokens used, so reserving does not explain it; unverified which figure the bill follows).
 - Against the target of $0.05 an hour: about 2.4 times over (September's figure was 7 to 20 times).
+- **Small talk only:** the runs' lines are small talk (the speech-bench review, 2 November), so nearly every reply went to Haiku 4.5. Real questions go to Sonnet 5 at twice its price per token; an hour with real questions costs more, measured with the next run of real questions.
 - **Input is almost all of it:** a reply call on Haiku 4.5 sends about 6,200 tokens and gets back about 44; the briefing (rules and character card) is the bulk and is sent again with every call. Nothing is cached: the client sets no cache marker (LlmClient.cs).
 
 ## What would bring it down, ranked
