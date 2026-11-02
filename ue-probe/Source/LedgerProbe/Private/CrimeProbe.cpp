@@ -391,6 +391,7 @@ namespace
 
 	// ---- the mill --------------------------------------------------------
 	GameTime GNow(1, 12, 0);
+	long long GSmashGlanceUntilM = -1;   // set when Rita's window goes in (the hour after it, SmashGlanceTick); -1 before
 	GameTime GLastSavedAt;
 	bool bEverSavedLive = false;
 	// THE CLOCK THAT RUNS WITH PLAY (LiveClock.h; Jafar's list of 30 September,
@@ -6551,7 +6552,40 @@ namespace
 			GAsk.Left = N;
 		}
 		if (GAsk.N < 0) { return; }
-		if (bAskAfterDeed && GPhase != ECrimePhase::LiveRoam) { return; }
+		// THE DEED, SCRIPTED AGAIN (2 November: since the day-one walk-round the waiting phase's own script never fires,
+		// its step counter already moved on by the walk-round's stops, so run E sat two game days with nothing asked):
+		// Tom put at the window and the act key pressed, as the waiting phase's script and -SmashShot do; the lines
+		// are asked once the window is in, so those who hold the deed answer as they would in play.
+		if (bAskAfterDeed && GSmashGlanceUntilM < 0)
+		{
+			static double Since = -1.0;
+			static int32 Step = 0;
+			UWorld* W = GPawn != nullptr ? GPawn->GetWorld() : nullptr;
+			if (W == nullptr || (GPhase != ECrimePhase::LiveRoam && GPhase != ECrimePhase::LiveWaitDeed)) { return; }
+			if (Since < 0.0) { Since = Now; }
+			if (Step == 0 && Now - Since > 8.0 && GGlass[0] != nullptr)
+			{
+				// at the glass itself, facing it, as -SmashShot stands him (the September spot no longer gave the prompt)
+				const FVector G = GGlass[0]->GetActorLocation() / 100.0;
+				const double Out = G.Y > 0.0 ? -1.0 : 1.0;
+				const FVector At(G.X * 100.0, (G.Y + Out * 1.3) * 100.0, GPawn->GetActorLocation().Z);
+				GPawn->SetActorLocation(At, false, nullptr, ETeleportType::TeleportPhysics);
+				if (APlayerController* PC = W->GetFirstPlayerController())
+				{
+					PC->SetControlRotation(FRotator(-6.0f, (float)(FVector(G.X * 100.0, G.Y * 100.0, 0.0) - FVector(At.X, At.Y, 0.0)).GetSafeNormal2D().Rotation().Yaw, 0.0f));
+				}
+				Step = 1; Since = Now;
+			}
+			else if (Step == 1 && Now - Since > 2.0)
+			{
+				const TCHAR* Landed = PressActKey(W);
+				UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: the deed in free play, the act key pressed at the window (%s)"), Landed != nullptr ? Landed : TEXT("?"));
+				Step = 2; Since = Now;
+			}
+			else if (Step == 2 && Now - Since > 10.0) { UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: the window did not go in; trying again")); Step = 0; Since = Now; }
+			return;
+		}
+		if (bAskAfterDeed && GPhase != ECrimePhase::LiveRoam && GPhase != ECrimePhase::LiveAfterDeed) { return; }
 		static const char* Lines[] = { "What are you selling today, then?", "Evening. Anything going on round here?",
 			"You look like you've been stood there a while.", "Who's the new owner, then?", "Is it always this quiet?",
 			"Did you hear the glass go last night?" };
@@ -6662,7 +6696,6 @@ namespace
 	// THE HOUR AFTER THE SMASH (his ruling of 23 September, "the minute after"; the corner plan's step 12 check:
 	// nobody passes within 8 m without a look): for an hour of the game's clock after the window goes in, anyone who
 	// comes within 8 m of it looks at it once, for 2 to 4 s (ULedgerPersonAnim::LookToward), and the log says so.
-	long long GSmashGlanceUntilM = -1;
 	FVector GSmashWhere = FVector::ZeroVector;
 	TSet<TWeakObjectPtr<ULedgerPersonAnim>> GSmashGlanced;
 	void SmashGlanceTick(UWorld* World)
