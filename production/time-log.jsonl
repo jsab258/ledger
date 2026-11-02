@@ -337,3 +337,5 @@
 {"event": "start", "at": "2026-11-02T13:36:03", "task": "n02-4-corner-people: idle breaks on the arms, the motion line, the idle film; Ron's moustache strands kept (research lever 1); n02-6-3 research helper", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-02T14:24:30", "note": "fidgets two tries (take 4 reviewed); clearance test; boots v3 gated; talk cost (7.3) and the 2027 line (7.2) done; build-speed asked; pushed 14:17"}
 {"event": "start", "at": "2026-11-02T14:24:30", "task": "n02-4-corner-people: Sheila's hand into her hip (the cycle test), Ron's spot; study C and the design rulings (helper); deep-dive trial 2 when idle", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-02T14:48:07", "note": "study C and 7.4 done (reviewed, three fixes); skill 2 done; baseline, token reading; Marvelous step to his page (computer use declined); Sheila's hip clip out"}
+{"event": "start", "at": "2026-11-02T14:48:07", "task": "n02-4-corner-people: the hour after the smash (glances), walk-off research (helper); n02-6-5 skill 3 (helper); n02-6-3 the note's review", "phase": "1", "kind": "production"}

@@ -6659,6 +6659,30 @@ namespace
 	// come through the ledger, so a bank does not repeat itself before he has
 	// heard it through (town list 6k), and the ledger is kept in the save
 	// (6o). NOT YET: the coat (the outfit's ask brings it, town list 6z).
+	// THE HOUR AFTER THE SMASH (his ruling of 23 September, "the minute after"; the corner plan's step 12 check:
+	// nobody passes within 8 m without a look): for an hour of the game's clock after the window goes in, anyone who
+	// comes within 8 m of it looks at it once, for 2 to 4 s (ULedgerPersonAnim::LookToward), and the log says so.
+	long long GSmashGlanceUntilM = -1;
+	FVector GSmashWhere = FVector::ZeroVector;
+	TSet<TWeakObjectPtr<ULedgerPersonAnim>> GSmashGlanced;
+	void SmashGlanceTick(UWorld* World)
+	{
+		if (World == nullptr || GSmashGlanceUntilM < 0 || GNow.TotalMinutes() > GSmashGlanceUntilM) { return; }
+		static double Next = 0.0;
+		if (World->GetTimeSeconds() < Next) { return; }
+		Next = World->GetTimeSeconds() + 0.5;
+		for (TObjectIterator<ULedgerPersonAnim> It; It; ++It)
+		{
+			const USkeletalMeshComponent* M = It->GetSkelMeshComponent();
+			if (M == nullptr || M->GetWorld() != World || !It->bLook || GSmashGlanced.Contains(*It)) { continue; }
+			if (FVector::Dist2D(M->GetComponentLocation(), GSmashWhere) > 800.0f) { continue; }
+			GSmashGlanced.Add(*It);
+			It->LookToward(GSmashWhere, 0.0f, FMath::FRandRange(2.0f, 4.0f));
+			UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %s's %s passes the broken window and looks at it"),
+			       M->GetOwner() != nullptr ? *M->GetOwner()->GetName() : TEXT("?"), *M->GetName());
+		}
+	}
+
 	// NO FROZEN POSES, MEASURED (2 November, the corner plan's step 3 check: everyone within 30 m moves a head,
 	// hand or chest bone 1 cm in any 4 s, inferred): every 4 s, each of the cast near him and in view, how far the head, the
 	// hands and the chest moved in the body's own space since the last look, in cm; "frozen" when none reached 1.
@@ -9305,6 +9329,7 @@ namespace
 		RegardTick(World, Now);
 		MotionTick(World);
 		IdleFilmTick(World);
+		SmashGlanceTick(World);
 		TownHoursTick();
 		LookScriptTick(World, Now);
 		AskScriptTick(Now);
@@ -11364,6 +11389,9 @@ namespace
 					++Turned;
 				}
 				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %d head(s) turn to the smash"), Turned);
+				GSmashGlanceUntilM = GNow.TotalMinutes() + 60;
+				GSmashWhere = Where;
+				GSmashGlanced.Reset();
 			}
 			// THE ERRAND IS DONE, so its instruction goes (the tester, 30
 			// September: "Walk to Mickey's front window" stayed up after it).
