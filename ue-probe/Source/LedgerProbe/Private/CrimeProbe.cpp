@@ -1088,6 +1088,17 @@ namespace
 		const bool bStand = FParse::Param(FCommandLine::Get(), TEXT("StandIdle"));
 		ULedgerPersonAnim* BreakLead = nullptr;   // the first part given breaks (the body); the clothes follow it
 		USkeletalMeshComponent* BreakLeadPart = nullptr;
+		// THE CLOTHES FOLLOW THE BODY (2 November, the walk-off): a part on the body's skeleton other than
+		// the body copies the body's pose, as Epic's MetaHumans wear theirs and LedgerGarments.h wears ours.
+		// With its own copy of the idle the outfit stood still while the body walked or took a montage.
+		// -OwnPartAnims for the old way (each part its own idle).
+		USkeletalMeshComponent* BodyPart = nullptr;
+		if (!FParse::Param(FCommandLine::Get(), TEXT("OwnPartAnims")))
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			A->GetComponents(Parts);
+			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->GetName() == TEXT("Body") && C->GetSkeletalMeshAsset() != nullptr) { BodyPart = C; break; } }
+		}
 		for (const TCHAR* IdlePath : kLiveIdles)
 		{
 			if (bStand && FCString::Strstr(IdlePath, TEXT("Technical_Loops/Idle/mhc_mh001_fmn_b")) != nullptr) { continue; }
@@ -1100,6 +1111,12 @@ namespace
 				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
 				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton() || Done.Contains(C)) { continue; }
 				Done.Add(C);
+				if (BodyPart != nullptr && C != BodyPart && M->GetSkeleton() == BodyPart->GetSkeletalMeshAsset()->GetSkeleton())
+				{
+					C->SetLeaderPoseComponent(BodyPart);
+					UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s follows the body's pose"), Who, *C->GetName());
+					continue;
+				}
 				// Not all in step: each starts at its own point in the loop, and plays at
 				// its own pace, 0.92 to 1.08 (the research: no two people in step).
 				const float Start = FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f));
