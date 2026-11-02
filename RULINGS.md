@@ -29,6 +29,7 @@ His binding rulings; the later stands; canon.md outranks them.
   11. His orders stay small: about 1,200 words at most, rules referenced and not restated, every item with its estimated cost, the total within the week; what does not fit waits.
   12. API use: under Sources, licences and money (1 Nov).
 - 1 Nov: The friends' evening stays after the whole street.
+- 2 Nov (08:00): While working, the Needs-you page's answers are read at least once an hour and acted on; never left for the night's read-back.
 - 2 Nov: One permanent page, "LEDGER: Needs you", at one link that never changes, replaces the daily decision pages for good. It lists only what is open for him, each item with what to do in one line, every link it needs, the recommendation, and the date and time it was added; an item leaves when he has answered it or done it. The items are also kept as a plain list in the page's data (id, added, text, links, recommendation, open or done) for the advisor's hourly checker. The same link is updated from then on.
 - 1 Nov: Anything needed from him goes in its own message, sent before any report, starting "NEEDS YOU:" followed by exactly what to do and every link; nothing else in that message. Reports come separately and contain no asks.
 - 28 Oct: Any message asking him to tap, click or answer ends with its page's full link, or says plainly there is none; results go on his page as they land.

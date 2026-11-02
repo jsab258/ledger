@@ -14,3 +14,10 @@ Hours are the time log's tasks whose names name the piece (tools/timelog.py, sum
 ## Exports before a Marvelous month ends
 
 None yet. The subscription began 26 October, billed monthly (RULINGS, Clothes), so the first month ends about 26 November (unverified: the renewal date on his account is not read).
+
+## 2 November 2026: Epic's four MetaHuman footwear outfits, from Fab (his download, his yes of 31 October)
+
+- Taken from his Downloads to F:/LedgerTools/fab/<name>/ (oa_boots 471 MB, oa_chelseaboots 240, oa_loafers 251, oa_oxfords 262; byte counts checked against the originals; his copies left where they are).
+- Looked at inside, before any use: each a .mhpkg (a zip) of Unreal assets and two lists (Manifest.json, FileList.json), nothing that runs. Each holds an outfit asset (OA_), its wardrobe item (WI_OA_), cloth assets and combined meshes for women's and men's medium bodies, normal and overweight (f/m_med_nrw/ovw).
+- Seen: the boots' own preview (256 px, in OA_Boots.uasset; F:/LedgerTools/fab/thumbs/oa_boots-0.jpg): black leather lace-ups, eight eyelets, ankle-high, a rounded toe on a stitched welt, contrasting laces; the toe shape Tom's boots lack. The chelsea boots, loafers and oxfords carry no readable preview: each is looked at in the MetaHuman project, rendered, before it is used.
+- Licence: Epic's own MetaHuman garments on Fab, in by the licence allowlist (item 3, his ruling of 13 October, although NoAI-tagged, on the same terms).

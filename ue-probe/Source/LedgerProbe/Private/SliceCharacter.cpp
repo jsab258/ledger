@@ -108,6 +108,8 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	WalkProofTick(DeltaSeconds);
+	// HIS GARMENTS' CORRECTIVE SHAPES (2 November 2026, the collar's third try): weighted from his head's tilt and turn.
+	if (WornBody != nullptr) { LedgerGarments::DriveCorrectives(WornBody->GetOwner()); }
 	if (const APlayerController* KeysPC = Cast<APlayerController>(GetController()))
 	{
 		// A CONTROLLER, 1 October (the interface: the design's suggested lines are for a
@@ -699,7 +701,9 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	// -TomHeadUp (30 October, his order D10, the sit's head held up while it is tried; SIT-BOW-2026-10-30.md route
 	// (ii)): the same copy through the same retargeter, made by the engine's own node in our native class, which can
 	// hold his head up over it while he sits and stands (MotionMatchAnim.h, HeadUpWeight)
-	static const bool bHeadUp = FParse::Param(FCommandLine::Get(), TEXT("TomHeadUp"));
+	// ON BY DEFAULT since 2 November (n02-3-3-sitting: a piece passes only packaged, and a player passes no switch;
+	// the third try passed the editor's sit walk and its fresh reviewer on 30 October); -NoTomHeadUp for the old way.
+	static const bool bHeadUp = !FParse::Param(FCommandLine::Get(), TEXT("NoTomHeadUp"));
 	UIKRetargeter* HeadUpRtg = bHeadUp ? LoadObject<UIKRetargeter>(nullptr, TEXT("/Game/MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw.RTG_UEFN_to_Metahuman_nrw")) : nullptr;
 	if (HeadUpRtg != nullptr) { WornAnimClass = ULedgerRetargetAnim::StaticClass(); }
 	WornBody->SetAnimInstanceClass(WornAnimClass);

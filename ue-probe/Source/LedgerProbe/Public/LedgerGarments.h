@@ -202,6 +202,56 @@ namespace LedgerGarments
 		return Laid;
 	}
 
+	// THE HEAD'S TILT AND TURN AGAINST THE CHEST (2 November 2026, Tom's collar's corrective shape): degrees, pitch
+	// down positive and yaw either way, from the body's pose now against its reference pose: the head's rotation since
+	// rest with the chest's own (spine_05) taken out, applied to the body's forward, which is +Y in a MetaHuman
+	// skeleton's own space.
+	inline bool HeadAgainstChest(USkeletalMeshComponent* Body, float& PitchDown, float& Yaw)
+	{
+		if (Body == nullptr || Body->GetSkeletalMeshAsset() == nullptr) { return false; }
+		const FReferenceSkeleton& Ref = Body->GetSkeletalMeshAsset()->GetRefSkeleton();
+		const int32 Head = Ref.FindBoneIndex(TEXT("head"));
+		const int32 Chest = Ref.FindBoneIndex(TEXT("spine_05"));
+		if (Head == INDEX_NONE || Chest == INDEX_NONE || Body->GetComponentSpaceTransforms().Num() <= FMath::Max(Head, Chest)) { return false; }
+		const FQuat HeadRest = FAnimationRuntime::GetComponentSpaceTransformRefPose(Ref, Head).GetRotation();
+		const FQuat ChestRest = FAnimationRuntime::GetComponentSpaceTransformRefPose(Ref, Chest).GetRotation();
+		const FQuat HeadDelta = Body->GetComponentSpaceTransforms()[Head].GetRotation() * HeadRest.Inverse();
+		const FQuat ChestDelta = Body->GetComponentSpaceTransforms()[Chest].GetRotation() * ChestRest.Inverse();
+		const FVector F = (ChestDelta.Inverse() * HeadDelta).RotateVector(FVector(0.0, 1.0, 0.0));
+		PitchDown = FMath::RadiansToDegrees(FMath::Asin(FMath::Clamp(-F.Z, -1.0, 1.0)));
+		Yaw = FMath::RadiansToDegrees(FMath::Atan2(F.X, F.Y));
+		return true;
+	}
+
+	// A GARMENT'S CORRECTIVE SHAPES, WEIGHTED EACH FRAME (2 November 2026; garments.json "correctives", tagged by
+	// Wear): nil at rest, full at the head tilted down by "pitch_full_deg" or turned by "yaw_full_deg", whichever is
+	// more, as MetaHumans' own correctives follow the pose. A follower garment applies its own morph weights after its
+	// leader's (SkeletalMeshComponent.cpp, UpdateFollowerComponent). Called by the wearer's tick.
+	inline void DriveCorrectives(AActor* A)
+	{
+		if (A == nullptr) { return; }
+		TInlineComponentArray<USkeletalMeshComponent*> Parts;
+		A->GetComponents(Parts);
+		for (USkeletalMeshComponent* P : Parts)
+		{
+			if (P == nullptr) { continue; }
+			for (const FName& Tag : P->ComponentTags)
+			{
+				const FString S = Tag.ToString();
+				if (!S.StartsWith(TEXT("LedgerCorrective:"))) { continue; }
+				TArray<FString> F;
+				S.ParseIntoArray(F, TEXT(":"));
+				const float FullPitch = F.Num() >= 4 ? FCString::Atof(*F[2]) : 0.0f;
+				const float FullYaw = F.Num() >= 4 ? FCString::Atof(*F[3]) : 0.0f;
+				float Pitch = 0.0f, Yaw = 0.0f;
+				USkeletalMeshComponent* Leader = Cast<USkeletalMeshComponent>(P->LeaderPoseComponent.Get());
+				if (FullPitch <= 0.0f || FullYaw <= 0.0f || !HeadAgainstChest(Leader, Pitch, Yaw)) { continue; }
+				const float W = FMath::Clamp(FMath::Max(Pitch / FullPitch, FMath::Abs(Yaw) / FullYaw), 0.0f, 1.0f);
+				P->SetMorphTarget(FName(*F[1]), W, false);
+			}
+		}
+	}
+
 	inline int32 Wear(AActor* A, const TCHAR* Who)
 	{
 		if (A == nullptr) { return 0; }
@@ -257,6 +307,26 @@ namespace LedgerGarments
 			Piece->RegisterComponent();
 			Piece->SetLeaderPoseComponent(Body);
 			++Worn;
+			// ITS CORRECTIVE SHAPES (2 November 2026), tagged for DriveCorrectives: "correctives": [{"morph",
+			// "pitch_full_deg", "yaw_full_deg"}], each a morph target the import kept (tools/ue/import_garments.py).
+			const TArray<TSharedPtr<FJsonValue>>* Correctives = nullptr;
+			if (G->TryGetArrayField(TEXT("correctives"), Correctives))
+			{
+				for (const TSharedPtr<FJsonValue>& CV : *Correctives)
+				{
+					const TSharedPtr<FJsonObject> CO = CV.IsValid() ? CV->AsObject() : nullptr;
+					if (!CO.IsValid()) { continue; }
+					const FString Morph = CO->GetStringField(TEXT("morph"));
+					const bool bHas = Mesh->FindMorphTarget(FName(*Morph)) != nullptr;
+					if (bHas)
+					{
+						Piece->ComponentTags.Add(FName(*FString::Printf(TEXT("LedgerCorrective:%s:%g:%g"), *Morph,
+							CO->GetNumberField(TEXT("pitch_full_deg")), CO->GetNumberField(TEXT("yaw_full_deg")))));
+					}
+					UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s corrective %s %s"), Who, *Name, *Morph,
+						bHas ? TEXT("weighted by the head's tilt and turn") : TEXT("NOT in this copy's mesh, left off"));
+				}
+			}
 			// SPECTACLE LENSES SEE-THROUGH (their README: one thin light brown
 			// tint, darker in the top third, so her eyes show through): the
 			// street's own glass material, tinted, on any "Lens" slot; the FBX

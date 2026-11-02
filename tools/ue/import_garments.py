@@ -305,7 +305,10 @@ def main_after_idle(seconds=20.0):
         if skel is not None:
             ui.set_editor_property("skeleton", skel)
         sk = ui.get_editor_property("skeletal_mesh_import_data")
-        sk.set_editor_property("import_morph_targets", False)
+        # A GARMENT'S CORRECTIVE SHAPES (2 November 2026, Tom's collar, the third try his yes of 31 October named): a
+        # garment whose spec lists "correctives" keeps its shape keys as morph targets, which the game weights each
+        # frame from the pose (LedgerGarments.h); every other garment imports none, as before.
+        sk.set_editor_property("import_morph_targets", bool(g.get("correctives")))
         sk.set_editor_property("convert_scene", True)
         task = unreal.AssetImportTask()
         task.set_editor_property("filename", g["fbx"])
