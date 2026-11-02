@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from (his order of 2 November, 6.2: start each day fresh from a handover file, since a long session's history is about half of each step's cost, production/research/token-audit). Rewritten, not appended, at the end of each working stretch. Rules are CLAUDE.md's and RULINGS.md's; the phase's items are NOW.md's; this file holds only what is in flight.
 
-**As of:** Monday 2 November 2026, 07:55 (Swiss time).
+**As of:** Monday 2 November 2026, 12:05 (Swiss time). Rewrite every line below at each stop.
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), item by item, until 13:00 Monday 9 November or until he says stop.
 
@@ -12,6 +12,12 @@ The one file a fresh session starts from (his order of 2 November, 6.2: start ea
 - Sitting (n02-3-3): the face hold made the default (SliceCharacter.cpp, -NoTomHeadUp); not compiled; the packaged sit walk follows (tools/route_walk.py --sit).
 - Unit costs (n02-7-1): a helper's draft at production/research/unit-costs/; a fresh review before Wednesday.
 - The fresh-session test (6.2): a one-time scheduled task at 07:50, read-only; its result decides 6.2.
+
+**Uncommitted work:** none (state each time: files changed and not yet pushed, and why).
+
+**Tries used:** speech 2 of 2 (passed on one run); the collar 3 of 3, a fourth his yes of 11:47 (one, about 2 hours); the pale line's halo 2 of 2 (settled); the Stutter none needed.
+
+**Reviews:** the gate skill's (13 fixes applied); the unit costs' (13 applied, done); the sit film's (bench fixed, five faults open, DECISIONS 2 November).
 
 **Next, in order:** compile both targets; the Stutter re-measured packaged with the Pocket voices (tools/p1-packaged.ps1 -Only day-walk -Voice pocket); Mickey's office's packaged pictures; the corner's baseline and people; the token audit for Wednesday.
 

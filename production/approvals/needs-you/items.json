@@ -129,7 +129,8 @@
      "Not yet"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-02 12:00, done (about 12:00): both answered; the read-back ran and wrote 11 answers (5ed6f9fb6); the test finished"
   }
  ]
 }
