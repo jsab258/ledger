@@ -16,6 +16,7 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 - Accurate to Britain in 1990; plain everyday makes, every one fictional; no real brand mark anywhere.
 - Nothing of CLO's ships or enters git: Marvelous's avatars, sample garments, patterns and trims stay on this PC. Nothing of Mafia's or Kingdom Come's either: their published method, never their files.
 - Computer use is for Marvelous only, and only the builder uses it; helpers never click.
+- His 8 October rulings, moved here from RULINGS.md on 3 November: an outfit stays an outfit until the character is assembled (saving bakes it); a garment review first counts the body points showing through; every target is tested against its body or model and its source before building; tailored jackets are never draped in Blender (drafting by code works). His 2 October ruling: clothing work handed to a helper buys nothing and never opens Unreal; the import is the builder's (step 9).
 - A garment passes only in the packaged game, walked by the tester; offline checks are necessary, never enough.
 - Whole-person looks go to Jafar at their checkpoint (see "Checkpoints and measures"); a single piece does not.
 
