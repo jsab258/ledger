@@ -345,3 +345,7 @@
 {"event": "stop", "at": "2026-11-02T21:42:00", "note": "clothes follow the body by leader pose; the walk-off built and proved in the editor (eleven runs)"}
 {"event": "start", "at": "2026-11-02T20:44:00", "task": "n02-3-4-exit", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-02T20:52:00", "note": "draft of what may miss 9 November"}
+{"event": "start", "at": "2026-11-03T06:15:00", "task": "n02-walk-night-fault", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T06:30:00", "note": "the night walk's cause found (clipboard panel), route_walk and play.py mended, summary, overview, progress page"}
+{"event": "start", "at": "2026-11-03T06:30:00", "task": "n02-4-corner", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T06:38:00", "note": "step 2's outliers traced to their materials"}
