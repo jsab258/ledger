@@ -13,7 +13,7 @@
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
 param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660,
-      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "2", [string[]]$Only = @(), [string[]]$GameArgs = @(), [string]$Voice = "")
+      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "2", [string[]]$Only = @(), [string[]]$GameArgs = @(), [string]$Voice = "pocket")
 # THE PICTURE LEVEL IS SET AND WRITTEN DOWN, 23 October (production/research/frame-headroom/CARD-TIME-2026-10-23.md): with
 # -NoTitle the title screen's picture budget never runs, so each capture took whatever level the copy had saved, and the 21 October
 # captures ran at Highest (a 1000 MB texture pool) against 7 October's High: about 2.1 ms of the card's "lost" spare time was that.
@@ -43,6 +43,9 @@ $py = "python"
 
 # THE VOICE, SPEAKING THROUGHOUT: started once, warmed, and left running for all three captures.
 # -Voice pocket (21 October, item 8): Pocket TTS on the processor instead of the cast voice on the card.
+# POCKET BY DEFAULT since 3 November: the cast's voices have run on Pocket, on the processor, since 26 October
+# (production/specs/voice-engines.json), so the old default, the cast voice on the card, measured a voice the game no longer
+# has (3 November: 13 to 30 slow frames a capture beside it, against 0 or 1 with Pocket on 2 November). -Voice card for the old.
 # -Voice none (23 October, frame headroom): no voice beside the game, to tell the game's own slow frames from those the
 # voice's processor load causes (slow frames with every one of the game's threads short).
 $voiceProc = $null

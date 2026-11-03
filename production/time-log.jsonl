@@ -355,3 +355,7 @@
 {"event": "stop", "at": "2026-11-03T06:46:00", "note": "try 1: the cache on C: at 10 GiB, copied warm"}
 {"event": "start", "at": "2026-11-03T06:52:00", "task": "n02-8-review", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-11-03T06:58:00", "note": "fresh reviewer, the corner's start view (tiles)"}
+{"event": "start", "at": "2026-11-03T07:17:00", "task": "n02-packaged-walks", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T07:50:00", "note": "Marvelous closed; two route walks by day (9 of 14 lost the front; 14 of 15); the tester's front logging"}
+{"event": "start", "at": "2026-11-03T07:44:00", "task": "n02-3-1-speech", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T07:58:00", "note": "run E prepared, run, read; the bar on real questions missed (2.33 s)"}
