@@ -6917,8 +6917,13 @@ int main(int argc, char** argv)
 		// checklist) - so it stands in for them. Twenty-two pieces: four
 		// columns of four, four lanterns, the kiosk's eleven, the pillar box's
 		// four, the dustbins' four, less none. What it still keeps is the rest.
-		Check(GoneFurniture >= 30 && Kept > 100,
-		      "and stands in for the lamps, the kiosk and the pillar box, which it now builds");
+		// 3 November: the street draws the scene file's litter and gum too (_ground_scatter), so it stands in
+		// for their 94 stand-ins as well, and what it keeps is the railing, the lamp posts, the yard's crates,
+		// barrel and barrier, and a grate: 18 pieces (112 with the stand-ins).
+		Check(GoneFurniture >= 30 && Kept >= 15
+		      && LedgerStreet::Replaced(Sc.Replaced, "litter0", "box", "")
+		      && LedgerStreet::Replaced(Sc.Replaced, "gum0", "cyl", ""),
+		      "and stands in for the lamps, the kiosk, the pillar box and the scatter, which it now builds");
 		Check(LedgerStreet::Replaced(Sc.Replaced, "prop_roll_top_chimney_0", "mesh", "roll_top_chimney")
 		      && !LedgerStreet::Replaced(Sc.Replaced, "prop_skip_0", "mesh", "skip")
 		      && LedgerStreet::Replaced(Sc.Replaced, "decal_anything", "decal", ""),
