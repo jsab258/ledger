@@ -58,6 +58,7 @@
   "C:/LedgerTools/mh-assemble-before-dressing-2026-09-24",
   "C:/LedgerTools/chatterbox-nano",
   "C:/LedgerTools/blender",
+  "C:/LedgerTools/zen",
   "C:/LedgerTools/python312",
   "C:/LedgerTools/parler-tts",
   "C:/LedgerTools/slr83",
@@ -162,10 +163,11 @@
  "caches": [
   {
    "name": "Unreal's cache server (Zen)",
-   "writes": "F:/LedgerTools/zen/Data",
-   "capGb": 6.4,
-   "setting": "tools/ue/UserEngine.ini: --gc-disksize-softlimit 6442450944 and 7 days (installed into the real AppData by the build machine's workflow; Unreal trims itself)",
+   "writes": "C:/LedgerTools/zen/Data",
+   "capGb": 10.7,
+   "setting": "tools/ue/UserEngine.ini: --gc-disksize-softlimit 10737418240 and 7 days (installed into the real AppData by the build machine's workflow, and into Claude's own copy for the session's runs; Unreal trims itself). On C: since 3 November, his yes of 2 November 14:56 (about 10 GB of 17 for faster builds)",
    "mustStayEmpty": [
+    "F:/LedgerTools/zen/Data",
     "C:/Users/Jafar/AppData/Local/UnrealEngine/Common/Zen/Data",
     "C:/Users/Jafar/AppData/Local/UnrealEngine/Common/DerivedDataCache"
    ]

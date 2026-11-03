@@ -314,7 +314,7 @@ jobs:
         run: bash tools/port-golden-check.sh --accept
 
       # UNREAL'S CACHE SETTINGS WHERE EVERY PROGRAM SEES THEM, 30 September.
-      # tools/ue/UserEngine.ini (the cache server on drive F, capped at 10 GiB,
+      # tools/ue/UserEngine.ini (the cache server on drive F until 3 November, then on C: at 10 GiB for faster builds,
       # the old file cache draining; Jafar's yes on 28 and 29 September and on
       # the 30 September cleanup page) was installed by the builder from inside
       # Claude's desktop app, which is a packaged app: Windows kept that copy
@@ -341,7 +341,7 @@ jobs:
           # THE OLD STORE ON C: GOES (Jafar's yes of 30 September on the cleanup
           # page, group unreal-cache-to-f: "delete the copy on C:"). Only this
           # machine can: files under AppData that Claude deletes stay for every
-          # other program. The cache itself lives on F: (DataPath above); Zen's
+          # other program. The cache itself lives on C:/LedgerTools since 3 November (DataPath above); Zen's
           # own install folder beside it stays.
           $old = Join-Path $env:LOCALAPPDATA "UnrealEngine\Common\DerivedDataCache"
           foreach ($part in @("Content", "Buckets")) {
