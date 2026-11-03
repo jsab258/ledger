@@ -7384,7 +7384,9 @@ namespace
 				bool bRepo = false;
 				const FString Leaf(UTF8_TO_TCHAR(LedgerStreet::PictureLeaf(Rw, bRepo).c_str()));
 				TArray<FString> Where;
-				if (bRepo) { Where.Add(FPaths::Combine(GStreetRepoRoot, Leaf)); }
+				// the checkout's, else the game inputs' (3 November: the A-board's face, a new picture kept out of git;
+				// a packaged copy has it staged beside the rest, so there both read the same file)
+				if (bRepo) { Where.Add(RepoOrGameInputs(Leaf)); }
 				else
 				{
 					if (!GDecalRoot.IsEmpty()) { Where.Add(FPaths::Combine(GDecalRoot, Leaf)); }
