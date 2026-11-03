@@ -230,6 +230,24 @@
    ],
    "state": "done",
    "closed": "2026-11-03 06:55, answered in chat (06:53): the panel was frozen since 2 November and would not close; Claude ended Windows' text-input process at 06:54 (Windows restarted it), the tester now does the same itself if it ever holds the front again, and Claude closes Marvelous itself when the PC is idle"
+  },
+  {
+   "id": "tom-crown-third-try-2026-11-03",
+   "added": "2026-11-03 10:39",
+   "text": "Tom's crown looks pale, as if thinning, since yesterday's fix of a black hair shadow on the office wall. Two tries are spent: one brought the black shadow back, one left the crown half pale. May I try a third way, the engine's smoother hair shadows on the office lights?",
+   "links": [],
+   "recommendation": "Yes, one try, about 2 hours; if it fails, the crown stays as now and it is listed. It may cost up to about 2 ms a frame in the office, measured before it is kept. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, one try (recommended)"
+    ],
+    [
+     "no",
+     "No, leave it"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

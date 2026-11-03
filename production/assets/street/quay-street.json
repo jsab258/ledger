@@ -1439,9 +1439,9 @@
    "material": "cl_a_board_ply_paint",
    "base_material": "cl_a_board_ply_paint",
    "linear_rgb": [
-    0.658,
-    0.665,
-    0.617
+    0.262,
+    0.254,
+    0.223
    ],
    "roughness": 0.6,
    "surface_map": null,
@@ -3946,9 +3946,9 @@
    "material": "sign_production/assets/vignette/decals2d/a_board_fish",
    "base_material": "cl_a_board_ply_paint",
    "linear_rgb": [
-    0.658,
-    0.665,
-    0.617
+    0.262,
+    0.254,
+    0.223
    ],
    "roughness": 0.6,
    "surface_map": null,

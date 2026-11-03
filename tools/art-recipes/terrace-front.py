@@ -509,9 +509,11 @@ MATERIALS = (
     ("cl_telegraph_pole_galvanised", (0.114, 0.118, 0.114), 0.50),
     ("cl_telegraph_pole_wire_black", (0.002, 0.002, 0.002), 0.60),
     ("cl_telegraph_pole_plate", (0.652, 0.652, 0.586), 0.50),
-    # THE FISH MARKET'S A-BOARD, 3 November (the corner plan's step 10; its model's own, as above): the ply's
-    # paint the ground of its painted face (sRGB 212, 213, 206), its leaves wearing the face itself (CLUTTER_DECAL)
-    ("cl_a_board_ply_paint", (0.658, 0.665, 0.617), 0.60),
+    # THE FISH MARKET'S A-BOARD, 3 November (the corner plan's step 10; its model's own, as above): its leaves wear
+    # the painted face itself (CLUTTER_DECAL), so the ply's flat paint is its feet's, and the feet stand in the
+    # splash, the grey the face's foot fades to (sRGB 140, 138, 130; at the paint's own white they read as clean
+    # white blocks under a dirty face, its first gate)
+    ("cl_a_board_ply_paint", (0.262, 0.254, 0.223), 0.60),
     ("cl_a_board_timber", (0.434, 0.262, 0.117), 0.80),
     ("cl_a_board_zinc", (0.131, 0.135, 0.131), 0.50),
     ("cl_a_board_steel", (0.091, 0.091, 0.084), 0.45),
