@@ -268,6 +268,17 @@ WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
 # lifted burnt brick shows the blue under its black. The sample is inside a branch: at BrickRetone 0, the default and
 # every row but the brick scans', it is not taken and the colour passes through exactly (the game sets it,
 # VignetteShot.cpp DriveCornerSurfaces; SurfaceBind.h BrickRetoneParam). The arithmetic is brick_ids.py retone()'s.
+# THE WALL'S TONE OVER METRES, 3 November (the corner's step 6, its second part: "world-space variation at 2 to 10 m";
+# BRICK-2026-10-04.md, method 4; Mafia's facade masters vary their colour by a world-position noise on 31% of plaster
+# placements, MAFIA-KIT-2026-10-28.md section 3): the colour after the streaks times 1 + MacroAmount x a world noise in
+# -1..1 whose lattice is 1/MacroScale cm (0.0025: 4 m), so a wall is a little lighter and darker over metres, as batches
+# and weather leave a real one. 0, the default, is the material as it was (the game sets it on the brick-scan rows from
+# ps5-corner.json's "macro"; SurfaceBind.h MacroParam).
+MACRO_PARAM = "MacroAmount"
+MACRO_PARAM_DEFAULT = 0.0
+MACRO_SCALE_PARAM = "MacroScale"
+MACRO_SCALE_DEFAULT = 0.0025
+MACRO_LEVELS = 3
 BRICK_RETONE_PARAM = "BrickRetone"
 BRICK_RETONE_DEFAULT = 0.0
 BRICK_IDS_PARAM = "BrickIds"
@@ -1247,6 +1258,7 @@ WIRE_SERIES = (
     (78, "8-october-the-road's-film-specular-1-wire"),
     (89, "30-october-the-brick's-streaks-11-wires"),
     (95, "3-november-the-bricks'-own-tones-6-wires"),
+    (103, "3-november-the-wall's-tone-over-metres-9-wires-one-moved-from-the-streaks"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1281,8 +1293,9 @@ def wire_plan(texture_params=None):
         ("wear", 26, 26, "one-site-one-connection"),
         ("water", 27, 27, "one-site-one-connection"),
         ("emissivemap", 5, 5, "one-site-one-connection"),
-        ("streaks", 11, 11, "one-site-one-connection"),
+        ("streaks", 10, 10, "one-site-one-connection/its-last-wire-now-into-the-macro-multiply"),
         ("bricktones", 6, 6, "one-site-one-connection"),
+        ("macro", 9, 9, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -2830,6 +2843,9 @@ def selftest():
             or BRICK_TONE_HLSL.index("return Col;") > BRICK_TONE_HLSL.index("Texture2DSample")):
         bad.append("the bricks' tones must default to off (BrickRetone 0) and take no sample when off")
     checks += 1
+    if MACRO_PARAM_DEFAULT != 0.0:
+        bad.append("the wall's tone over metres must default to off (MacroAmount 0)")
+    checks += 1
     try:
         import importlib.util as _ilu
         _spec = _ilu.spec_from_file_location("brick_ids", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "brick_ids.py"))
@@ -2843,7 +2859,8 @@ def selftest():
     checks += 1
     _hdr = open(header, "r", encoding="utf-8").read()
     for _fn, _name in (("BrickRetoneParam", BRICK_RETONE_PARAM), ("BrickIdsParam", BRICK_IDS_PARAM),
-                       ("BrickTonesParam", BRICK_TONES_PARAM), ("BrickHueParam", BRICK_HUE_PARAM)):
+                       ("BrickTonesParam", BRICK_TONES_PARAM), ("BrickHueParam", BRICK_HUE_PARAM),
+                       ("MacroParam", MACRO_PARAM), ("MacroScaleParam", MACRO_SCALE_PARAM)):
         if '%s() { return "%s"; }' % (_fn, _name) not in _hdr:
             bad.append("SurfaceBind.h has no %s returning %s, so the game's set site and the material can drift" % (_fn, _name))
     print("    %s" % line)
@@ -4018,7 +4035,36 @@ def main():
     connect(streak_amt, "", s_lerp, "Alpha", "streak-amount-to-lerp")
     connect(grade_mul, "", s_mul, "A", "grade-to-streak")
     connect(s_lerp, "", s_mul, "B", "streak-factor-to-streak")
-    connect(s_mul, "", col_lerp, "A", "streak-to-wearlerp")
+
+    # ---- THE WALL'S TONE OVER METRES, 3 November (MACRO_PARAM above) ----
+    # factor = 1 + MacroAmount x noise(world cm x MacroScale), the noise in -1..1; the streaked colour times it goes on into
+    # the wear's colour lerp. At MacroAmount 0, the default, the factor is 1 exactly.
+    macro_amt = streak_scalar(MACRO_PARAM, MACRO_PARAM_DEFAULT, -1200, -1400)
+    macro_scale = streak_scalar(MACRO_SCALE_PARAM, MACRO_SCALE_DEFAULT, -1650, -1400)
+    m_wp = expr(unreal.MaterialExpressionWorldPosition, -1850, -1450)
+    m_scale = expr(unreal.MaterialExpressionMultiply, -1450, -1450)
+    m_noise = expr(unreal.MaterialExpressionNoise, -1200, -1300)
+    for prop, value in (("scale", 1.0), ("levels", MACRO_LEVELS), ("output_min", -1.0), ("output_max", 1.0)):
+        try:
+            m_noise.set_editor_property(prop, value)
+        except Exception:
+            w.notes.append("macro-noise-%s-refused" % prop)
+    m_amt = expr(unreal.MaterialExpressionMultiply, -950, -1350)
+    m_add = expr(unreal.MaterialExpressionAdd, -800, -1350)
+    try:
+        m_add.set_editor_property("const_b", 1.0)
+    except Exception:
+        w.notes.append("macro-add-constb-refused")
+    m_mul = expr(unreal.MaterialExpressionMultiply, 60, -420)
+    connect(m_wp, "", m_scale, "A", "macro-worldpos-to-scale")
+    connect(macro_scale, "", m_scale, "B", "macro-scale-to-scale")
+    connect(m_scale, "", m_noise, "World Position", "macro-position-to-noise")
+    connect(m_noise, "", m_amt, "A", "macro-noise-to-amount")
+    connect(macro_amt, "", m_amt, "B", "macro-amount-to-amount")
+    connect(m_amt, "", m_add, "A", "macro-amount-to-add")
+    connect(s_mul, "", m_mul, "A", "streak-to-macro")
+    connect(m_add, "", m_mul, "B", "macro-factor-to-macro")
+    connect(m_mul, "", col_lerp, "A", "macro-to-wearlerp")
 
     # The other three wires of the wetness lerp. A is the roughness sampler,
     # taken above; B is the wet floor; Alpha is the parameter. THE PIN NAMES

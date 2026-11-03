@@ -373,7 +373,10 @@
         0.7844,
         0.4123
       ],
-      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL",
+      "macro": 0.08,
+      "macro_scale": 0.0025,
+      "macro_note": "3 November, the corner's step 6, its second part (world-space variation at 2 to 10 m; Mafia's world noise on 31% of plaster placements): the brick lighter and darker by up to 8% over a 4 m lattice (make_base_material.py MACRO_PARAM); the plan's check, 5 to 15% across a bay"
     },
     {
       "base": "brick_grey",
@@ -404,7 +407,10 @@
         0.8271,
         0.5437
       ],
-      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL",
+      "macro": 0.08,
+      "macro_scale": 0.0025,
+      "macro_note": "3 November, the corner's step 6, its second part (world-space variation at 2 to 10 m; Mafia's world noise on 31% of plaster placements): the brick lighter and darker by up to 8% over a 4 m lattice (make_base_material.py MACRO_PARAM); the plan's check, 5 to 15% across a bay"
     },
     {
       "base": "asphalt",
@@ -486,7 +492,10 @@
         0.7844,
         0.4123
       ],
-      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL",
+      "macro": 0.08,
+      "macro_scale": 0.0025,
+      "macro_note": "3 November, the corner's step 6, its second part (world-space variation at 2 to 10 m; Mafia's world noise on 31% of plaster placements): the brick lighter and darker by up to 8% over a 4 m lattice (make_base_material.py MACRO_PARAM); the plan's check, 5 to 15% across a bay"
     }
   ],
   "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",

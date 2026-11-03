@@ -1430,9 +1430,12 @@ namespace
 		double Hue[3] = {1.0, 1.0, 1.0};
 		UTexture2D* IdsTex = nullptr;
 		bool bIdsTried = false;
+		// THE WALL'S TONE OVER METRES (3 November, step 6's second part): how far a world noise lightens and darkens the
+		// rows wearing this scan ("macro"), and its lattice ("macro_scale", per cm); 0 leaves the material as it was
+		double MacroAmount = 0.0, MacroScale = 0.0025;
 	};
 	std::vector<ScanSurface> GScan;
-	int32 GBrickToneRows = 0;
+	int32 GBrickToneRows = 0, GWallMacroRows = 0;
 	bool GScanPrimed = false;
 	// WHAT EACH STREET ROW WORE AT BIND TIME, so a scanned shot can be put
 	// back exactly, and which scan it wears now (-1 none).
@@ -1605,6 +1608,8 @@ namespace
 				}
 				Sc.Ids = LedgerStreet::StrOr(V, "ids");
 				Sc.Retone = LedgerStreet::NumOr(V, "retone", 0.0);
+				Sc.MacroAmount = LedgerStreet::NumOr(V, "macro", 0.0);
+				Sc.MacroScale = LedgerStreet::NumOr(V, "macro_scale", 0.0025);
 				const Value* Tn = V.Find("tones");
 				for (size_t K = 0; Tn != 0 && Tn->Type == T_ARR && K < 3 && K < Tn->Arr.size(); ++K)
 				{
@@ -8788,11 +8793,18 @@ namespace
 					++GBrickToneRows;
 				}
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickRetoneParam())), bTones ? (float)Sc.Retone : 0.0f);
+				// THE WALL'S TONE OVER METRES (3 November); -NoWallMacro leaves it off, for the picture without
+				static const bool bNoMacro = FParse::Param(FCommandLine::Get(), TEXT("NoWallMacro"));
+				const float Macro = bNoMacro ? 0.0f : (float)Sc.MacroAmount;
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MacroParam())), Macro);
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MacroScaleParam())), (float)Sc.MacroScale);
+				if (Macro > 0.0f) { ++GWallMacroRows; }
 			}
 			else
 			{
 				GRowScan[I] = -1;
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickRetoneParam())), 0.0f);
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MacroParam())), 0.0f);
 			}
 			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))), T[0]);
 			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
@@ -8804,8 +8816,9 @@ namespace
 			if (I < GStreetNormals.Num()) { GStreetNormals[I] = T[1]; }
 			++Rows;
 		}
-		UE_LOG(LogTemp, Display, TEXT("LedgerBrickTones: %d row(s) wear their bricks' own tones"), GBrickToneRows);
+		UE_LOG(LogTemp, Display, TEXT("LedgerBrickTones: %d row(s) wear their bricks' own tones, %d their tone over metres"), GBrickToneRows, GWallMacroRows);
 		GBrickToneRows = 0;
+		GWallMacroRows = 0;
 		GScanOn = bWant;
 		GScanPrimed = true;
 		if (bWant)

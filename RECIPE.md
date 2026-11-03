@@ -1725,3 +1725,4 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 2.5 h, the staging fault's finding included.
 - What failed: classing joints by colour alone; tones measured in stored rather than linear values; a hue pull scaled to the whole lift; a lopsided tone spread that moved the wall's mean by 3 to 12%.
 - Evidence: F:/LedgerTools/gate/new/brick-tones (pictures on and off, review-*.json); F:/LedgerTools/tmp/brick-packaged-start and -2 (the shipped build before and after its staging).
+- And the masonry's tone over metres (same day, about 0.5 h with one small review): a world-position noise of a few metres multiplied into the colour after every other layer, mean-zero and capped at a few percent, hue untouched, off by default; a frame's own brightness spread is dominated by light and stains, so measure the change against the same frame without it, not the frame alone. Evidence: F:/LedgerTools/gate/new/wall-macro/review.json.

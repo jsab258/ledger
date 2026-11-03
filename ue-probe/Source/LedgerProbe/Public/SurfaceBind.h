@@ -878,6 +878,11 @@ namespace LedgerSurface
 	inline const char* BrickIdsParam() { return "BrickIds"; }
 	inline const char* BrickTonesParam() { return "BrickTones"; }
 	inline const char* BrickHueParam() { return "BrickHue"; }
+	// THE WALL'S TONE OVER METRES, 3 November (tools/ue/make_base_material.py MACRO_PARAM; the corner's step 6, its second
+	// part): how far a world noise of metres lightens and darkens the colour; 0, the default, is the material as it was.
+	// The game sets both on the brick-scan rows from the corner file's "macro" (VignetteShot.cpp DriveCornerSurfaces).
+	inline const char* MacroParam() { return "MacroAmount"; }
+	inline const char* MacroScaleParam() { return "MacroScale"; }
 
 	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
 	// sets this parameter renders exactly what it renders today, bit for bit,
