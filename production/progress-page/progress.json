@@ -1,5 +1,5 @@
 {
-  "updated": "Tuesday 3 November 2026, 6:26",
+  "updated": "Tuesday 3 November 2026, 21:51",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -156,19 +156,19 @@
       "start_label": "8 Oct",
       "now_label": "small talk only",
       "state": "fighting",
-      "last": "2 Nov: measured inside the packaged game itself: 2.40 s as built (every line on the slower model); after two tries 1.07 s, 19 of 30 under 2.0 s, but on small talk only (the script's lines are small talk, all answered by the faster model). Real questions, on the slower model, are not yet shown under 2 s; they are measured next."
+      "last": "3 Nov: run E inside the packaged game asked real questions after the deed: what goes to the better model took a median 2.33 s, 4 of 10 under 2.0 s; small talk 1.02 s, 18 of 20; no fall-backs. It rested on two questions asked five times each, so it cannot settle the bar: run F, twenty different newcomer questions, on the 3 to 4 November build."
     },
     {
       "name": "The Stutter",
       "what": "The worst single frame on a walk down the street.",
       "unit": "ms",
       "start": 87,
-      "now": 32.9,
+      "now": 30.0,
       "target": 33.3,
       "start_label": "22 Oct",
-      "now_label": "2 Nov, packaged, voices speaking (3 of 4 walks)",
+      "now_label": "3 Nov, packaged, voices speaking (3 captures)",
       "state": "fighting",
-      "last": "2 Nov: four packaged walks with the cast's voices speaking throughout: worst frames 25.2, 61.5, 32.9 and 28.7 ms. The old stall is gone from all four; the 61.5 ms frame came in one capture's last second with the game itself idle (an outside wait). Re-walked on tonight's build before it falls."
+      "last": "3 Nov: three more packaged captures with the cast's voices: no frame over 33 ms, the worst 22 to 30 ms; absent in seven captures since 2 November. If the 3 to 4 November walk finds none either, it closes as not reproduced."
     },
     {
       "name": "The Tailor",
@@ -209,7 +209,7 @@
       "display": "Sits and stands in the packaged game; new faults found and being fixed",
       "hp": 100,
       "state": "fighting",
-      "last": "2 Nov: walked in the packaged game, 13 of 13, his face held at most 25 degrees down. Its fresh reviewer found Tom and Ron pressed into each other on the bench: Ron now waits at the door end and a seat beside anyone seated is not offered (the editor walk passes; its review and tonight's packaged walk to come). The jeans catch at the knee when he sits."
+      "last": "3 Nov: walked in the packaged game with the 2 November fixes in: his face at most 25 degrees down, nobody touching, Ron waiting at the door end; a fresh reviewer of the packaged pictures next."
     },
     {
       "name": "The Clean Room",
@@ -217,7 +217,7 @@
       "display": "Wear passed in the editor; packaged faults open",
       "hp": 100,
       "state": "fighting",
-      "last": "29 Oct: the tobacco staining on the walls and ceiling passed its gate. Every wall mark had printed upside down since 2 October; turned, they passed again in four views. One tea ring on a loose sheet set aside after two tries."
+      "last": "3 Nov: packaged pictures by day and night, two fresh reviewers: the room holds; five small faults then fixed in the editor (the taken-down notices' edges and tape, the damp patch clear of the corner, a written message pad, the cars board naming places, a wall clock the game turns to its own time); packaged pictures again on the 3 to 4 November build."
     },
     {
       "name": "The Memory Hog",
