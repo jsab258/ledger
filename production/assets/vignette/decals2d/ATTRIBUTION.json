@@ -241,6 +241,15 @@
    "measured": "900x260 colourType=2",
    "blankCheck": "varied",
    "why": "luminance spread 221/255, stdev 71.158, 191 distinct levels over 26100 of 234000 pixels"
+  },
+  {
+   "file": "a_board_fish.png",
+   "bom": "E12_a_board_posters (G6, what the board carries)",
+   "note": "the fish market's A-board's painted face, one leaf from the top of its feet's arch to the ridge (600 x 933 mm), 1024x2048; made by tools/meshgen/blender/clutter/a_board_paint.py (lettering in Oswald, production/fonts/oswald, SIL OFL 1.1, rendered into the picture) and cut by a_board_face.py; lives in the game inputs on F: under this path, not in git (3 November)",
+   "bytes": 1459069,
+   "measured": "1024x2048",
+   "blankCheck": "varied",
+   "why": "luminance spread 236/255, stdev 50.981"
   }
  ]
 }

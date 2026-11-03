@@ -472,10 +472,10 @@
       },
       {
         "bom": "E12_a_board_posters", "asset": "pavement_sign",
-        "dims_m": [0.6811, 0.9038, 0.3569], "surface": "wood",
-        "side": "east", "x_m": 15.2, "place": "ground", "z_from_kerb_face_m": 1.1,
+        "dims_m": [0.627, 0.972, 0.435], "surface": "wood",
+        "side": "east", "x_m": 14.45, "place": "ground", "z_from_kerb_face_m": 1.6,
         "yaw_deg": 90,
-        "note": "DRESSING. An A-board outside the fish market, turned so its two faces look up and down the pavement at the people who read them. What it CARRIES is BOM line G6 and is a decal, not this mesh; see the decals block."
+        "note": "DRESSING. An A-board outside the fish market, turned so its two faces look up and down the pavement at the people who read them. 3 November (the corner plan's step 10): the fish market's painted ply board of production/cloud-week/targets/street-dressing/a-board (AB1), made by tools/meshgen/blender/clutter/a_board.py and placed by the street's recipe as clutter (terrace-front.py CLUTTER_FOR_HELD), its fish list a picture on its two leaves (a_board_face.py); at the target's mended slot, x 14.45 and 1.6 m from the kerb face against the stallriser (it was x 15.2 and 1.1 m, leaving under 0.68 m to walk past on either side); dims its model's measured size, the eyes and chain included."
       },
       {
         "bom": "E12_a_board_posters", "asset": "poster",

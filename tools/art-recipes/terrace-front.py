@@ -509,6 +509,12 @@ MATERIALS = (
     ("cl_telegraph_pole_galvanised", (0.114, 0.118, 0.114), 0.50),
     ("cl_telegraph_pole_wire_black", (0.002, 0.002, 0.002), 0.60),
     ("cl_telegraph_pole_plate", (0.652, 0.652, 0.586), 0.50),
+    # THE FISH MARKET'S A-BOARD, 3 November (the corner plan's step 10; its model's own, as above): the ply's
+    # paint the ground of its painted face (sRGB 212, 213, 206), its leaves wearing the face itself (CLUTTER_DECAL)
+    ("cl_a_board_ply_paint", (0.658, 0.665, 0.617), 0.60),
+    ("cl_a_board_timber", (0.434, 0.262, 0.117), 0.80),
+    ("cl_a_board_zinc", (0.131, 0.135, 0.131), 0.50),
+    ("cl_a_board_steel", (0.091, 0.091, 0.084), 0.45),
     # THE SMASHED WINDOW'S GLASS (_broken_windows): opaque, near-black
     # grey-green and nearly mirror-smooth in the frame, its broken edges a
     # pale green (the thickness of float glass catching the light), and the
@@ -2996,7 +3002,15 @@ CLUTTER_DIR = os.path.join("production", "assets", "street", "clutter")
 CLUTTER_SAME_AS = {("kx100-kiosk", "glass"): "glass"}
 #: Which clutter model stands where the scene file puts a held prop.
 CLUTTER_FOR_HELD = {"decorative_bollard_02": "bollard", "swing_bin": "litter-bin",
-                    "outdoor_bin": "litter-bin"}
+                    "outdoor_bin": "litter-bin", "pavement_sign": "a-board"}
+#: A CLUTTER PIECE TURNED FROM FACING THE FOOTWAY, 3 November (the corner plan's step 10): the fish market's A-board
+#: stands with its two faces up and down the pavement, as the scene file's yaw 90 for it says, so it turns a quarter.
+CLUTTER_EXTRA_TURN = {"a-board": math.pi / 2.0}
+#: A CLUTTER PART THAT WEARS A PICTURE, 3 November: the street letters a face only through a sign picture laid once
+#: across that part's own face, so the A-board's two leaves (its model's parts f_main and r_main) wear its painted
+#: face (tools/meshgen/blender/clutter/a_board_face.py), and the rest of it its flat paint.
+CLUTTER_DECAL = {("a-board", "f_main"): "production/assets/vignette/decals2d/a_board_fish",
+                 ("a-board", "r_main"): "production/assets/vignette/decals2d/a_board_fish"}
 #: The two the scene file has no line for: (piece, x, side, kerb face to the
 #: piece's centre, why here).
 #: THE TELEGRAPH POLE IS OFF THE STREET, 3 October (the proof view, step 2.1,
@@ -3038,8 +3052,9 @@ DROP_SAG = 0.05
 DROP_TO = ((5.2, "west"), (11.2, "west"), (17.2, "west"), (10.2, "east"), (16.2, "east"))
 
 
-def _read_glb(path):
-    """[(material, verts, triangles)] from a .glb, in Blender's frame (z up).
+def _read_glb(path, named=False):
+    """[(material, verts, triangles)] from a .glb, in Blender's frame (z up); with named, [(mesh name, material,
+    verts, triangles)] (3 November: a part that wears a picture is found by its name, CLUTTER_DECAL).
 
     PURE PYTHON, because this layer imports without Blender. It reads what the
     clutter scripts write - nodes without transforms, triangle primitives,
@@ -3080,7 +3095,8 @@ def _read_glb(path):
             mat = doc["materials"][prim["material"]]["name"] if "material" in prim else "none"
             # glTF is y up with -z forward; Blender z up with +y forward.
             verts = [(p[0], -p[2], p[1]) for p in pos]
-            parts.append((mat, verts, [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)]))
+            tris = [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)]
+            parts.append((mesh.get("name", ""), mat, verts, tris) if named else (mat, verts, tris))
     return parts
 
 
@@ -3487,28 +3503,34 @@ def _place_clutter(out, root, piece, n, cx, cy, note="", skip=()):
     THE GROUND IS THE FOOTWAY'S AT THE PIECE'S KERB EDGE, the lowest point of
     its footprint on the 1 in 40 fall, so nothing floats; the far edge sinks
     into the flags by the fall across it, 2 cm under the kiosk."""
-    parts = _read_glb(os.path.join(root or ROOT, CLUTTER_DIR, piece + ".glb"))
-    turn = 0.0 if cy > 0 else math.pi
+    parts = _read_glb(os.path.join(root or ROOT, CLUTTER_DIR, piece + ".glb"), named=True)
+    turn = (0.0 if cy > 0 else math.pi) + CLUTTER_EXTRA_TURN.get(piece, 0.0)
     c, s = math.cos(turn), math.sin(turn)
     placed = []
-    for mat, verts, tris in parts:
+    for name, mat, verts, tris in parts:
         if mat in skip:
             continue
         # mirror (x, y) -> (x, -y), then turn, then stand at (cx, cy)
         xy = [(cx + c * v[0] + s * v[1], cy + s * v[0] - c * v[1], v[2]) for v in verts]
-        placed.append((mat, xy, tris))
-    base = [p for _m, xy, _t in placed for p in xy if p[2] < 0.02] or [(cx, cy, 0.0)]
+        placed.append((name, mat, xy, tris))
+    base = [p for _n, _m, xy, _t in placed for p in xy if p[2] < 0.02] or [(cx, cy, 0.0)]
     ground = min(footway_z(p[1]) for p in base)
     lo = [1e9, 1e9]
     hi = [-1e9, -1e9]
-    for mat, xy, tris in placed:
+    for name, mat, xy, tris in placed:
         vs = [(x, y, ground + z) for x, y, z in xy]
         for x, y, _z in vs:
             lo[0], hi[0] = min(lo[0], x), max(hi[0], x)
             lo[1], hi[1] = min(lo[1], y), max(hi[1], y)
-        out.append({"id": "furn_cl_%s%d_%s" % (piece.replace("-", "_"), n, mat.replace("-", "_")),
-                    "material": _clutter_material(piece, mat), "kind": "mesh",
-                    "verts": vs, "faces": [tuple(reversed(t)) for t in tris], "note": note})
+        decal = CLUTTER_DECAL.get((piece, name))
+        row = {"id": "furn_cl_%s%d_%s" % (piece.replace("-", "_"), n, (name if decal else mat).replace("-", "_")),
+               "material": _clutter_material(piece, mat), "kind": "mesh",
+               "verts": vs, "faces": [tuple(reversed(t)) for t in tris], "note": note}
+        if decal:
+            # its own id (the export finds a part's picture by its object's name, and two parts of one
+            # material would share one), and the picture across its face (the export's lettered faces)
+            row["decal"] = decal
+        out.append(row)
     return (lo[0], hi[0], lo[1], hi[1])
 
 
@@ -6314,6 +6336,11 @@ def _decal_path(root, image_name):
     path from the repository root; anything else is a spec id, which is a
     path under StreamingAssets/Decals as the spec's own blend_kinds says."""
     if image_name.startswith("production/"):
+        # THE CHECKOUT'S, ELSE THE GAME INPUTS' ON F: (3 November: new pictures stay out of git, as the kit's
+        # pieces and the rooms do, _kit_glb; the game's staging looks in both, stage_game_data.py)
+        for base in (root, os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")):
+            if os.path.isfile(os.path.join(base, image_name + ".png")):
+                return os.path.join(base, image_name + ".png")
         return os.path.join(root, image_name + ".png")
     return os.path.join(root, DECAL_DIR, image_name + ".png")
 
@@ -9793,9 +9820,16 @@ def selftest():
           _mickeys_leaf("east_parade_shop_door_leaf_bay0") and _mickeys_leaf("east_parade_shop_door_light_bay0")
           and not _mickeys_leaf("east_parade_shop_door_fanlight_bay0")
           and not _mickeys_leaf("east_parade_shop_door_leaf_bay1"))
-    check("accept/six-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October",
-          placed_kinds == ["bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
+    check("accept/seven-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October/the-a-board-since-3-November",
+          placed_kinds == ["a-board", "bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
                            "pillar-box"], "%s %s" % (placed_kinds, cnotes))
+    # THE A-BOARD'S LEAVES WEAR ITS FACE, each its own part, and nothing else of it does (3 November)
+    probe = []
+    _place_clutter(probe, ROOT, "a-board", 0, 14.45, 4.6)
+    pictured = sorted(r["id"] for r in probe if r.get("decal"))
+    check("accept/the-a-board's-two-leaves-wear-its-face-and-nothing-else",
+          pictured == ["furn_cl_a_board0_f_main", "furn_cl_a_board0_r_main"]
+          and len({r["id"] for r in probe if r.get("decal")}) == 2, "%s of %d parts" % (pictured, len(probe)))
     try:
         with open(os.path.join(ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
             _held = json.load(fh)["held_props"]["items"]
