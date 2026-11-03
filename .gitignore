@@ -216,3 +216,6 @@ game-design/pocket-voices/
 # the brick scans' per-brick maps (tools/brick_ids.py, 3 November): pictures, so the lasting copy is on F: game inputs
 production/assets/scanned/**/*_ids.png
 production/assets/scanned/**/*_ids.json
+
+# his page's pictures for an open item (tools/needs_you_page.py PICTURES_REL): published beside the page, never in git
+production/approvals/needs-you/pictures/

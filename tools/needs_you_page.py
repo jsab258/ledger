@@ -29,13 +29,14 @@ DIR = os.path.join(REPO, "production", "approvals", "needs-you")
 ITEMS = os.path.join(DIR, "items.json")
 URL = "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"   # his one permanent link (published 2 November 2026)
 FIELDS = ("id", "added", "text", "links", "recommendation", "state")
+PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
 
 
 def load(path=ITEMS):
     return json.load(open(path, encoding="utf-8"))
 
 
-def faults(data):
+def faults(data, check_files=True):
     out = []
     seen = set()
     for it in data.get("items", []):
@@ -54,6 +55,13 @@ def faults(data):
                 out.append("%s: link %r is not a full https link" % (it.get("id"), l.get("url")))
         if it.get("state") == "done" and not it.get("closed"):
             out.append("%s is done with no 'closed' (when, and how)" % it.get("id"))
+        for p in it.get("pictures", []) if it.get("state") == "open" else []:
+            # the page publishes only files inside the checkout: an open item's pictures live in pictures/ beside it
+            src = str(p.get("src", "")).replace("\\", "/")
+            if not src.startswith(PICTURES_REL + "/") or not p.get("alt"):
+                out.append("%s: picture %r is not under %s/ with its words" % (it.get("id"), src, PICTURES_REL))
+            elif check_files and not os.path.isfile(os.path.join(REPO, src)):
+                out.append("%s: picture %s is missing" % (it.get("id"), src))
     return out
 
 
@@ -79,8 +87,11 @@ def spec(data, now=None):
         "how": ["Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
                 "Nothing open: the page says so." if not open_items else "Pick an answer under each item; a note is optional."],
         "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
+        # an item may carry pictures, judged on the page itself at full size (a whole street frame or a person at its
+        # gate, 3 November: the corner's midweek page is the first); their files sit in pictures/ beside the page, out of git
         "sections": [{"kind": "need", "key": it["id"], "name": it["text"], "links": it["links"],
                       "recommendation": it["recommendation"], "added": it["added"],
+                      "pictures": it.get("pictures", []),
                       "options": it.get("options", [["done", "Done"]])} for it in sorted(open_items, key=lambda x: x["added"])],
     }
 
@@ -120,6 +131,10 @@ def selftest():
     check("a link must be a full https link", faults({"items": [dict(good["items"][0], links=[{"label": "A", "url": "fab.com/x"}])]}) != [])
     check("a done item must say when and how it closed", faults({"items": [dict(good["items"][1], closed="")]}) != [])
     check("the tab is his page's name", spec(good)["tab"] == "LEDGER: Needs you")
+    pic = dict(good["items"][0], pictures=[{"src": PICTURES_REL + "/hook-day.jpg", "alt": "the hook by day"}])
+    check("an open item's pictures reach its section", spec({"items": [pic]})["sections"][0]["pictures"][0]["alt"] == "the hook by day")
+    check("a picture outside the page's folder is a fault", faults({"items": [dict(pic, pictures=[{"src": "F:/x.png", "alt": "x"}])]}, check_files=False) != [])
+    check("a picture in the page's folder passes", faults({"items": [pic]}, check_files=False) == [])
     d = json.loads(json.dumps(good))
     it = close(d, "a", "answered done", datetime.datetime(2026, 11, 2, 9, 5))
     check("a closed item is done with when and how", it and it["state"] == "done" and it["closed"] == "2026-11-02 09:05, answered done")

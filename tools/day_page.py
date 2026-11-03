@@ -234,7 +234,13 @@ function render(){
       sec.append(picks(s.key, s.options, st.pick));
       if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "need") {
-      // NEEDS YOU (2 November 2026, his permanent page): what to do, every link it needs, the recommendation, when added
+      // NEEDS YOU (2 November 2026, his permanent page): what to do, every link it needs, the recommendation, when added;
+      // a frame or a person at its gate brings its pictures, one to a row, opened full size by the page's viewer
+      if (s.pictures && s.pictures.length) {
+        const g = el("div", {class:"capgrid"});
+        for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
+        sec.append(g);
+      }
       if (s.links && s.links.length) {
         const ul = el("ul", {class:"links"});
         for (const l of s.links) ul.append(el("li", {}, el("a", {href:l.url, target:"_blank", rel:"noopener", text:l.label})));
