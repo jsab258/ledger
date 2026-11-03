@@ -367,3 +367,17 @@
 {"event": "stop", "at": "2026-11-03T10:50:00", "note": "corner step 10: the A-board built (helper 18 min), placed by the street recipe, exported, imported, weathered twice, three fresh reviews"}
 {"event": "start", "at": "2026-11-03T11:13:00", "task": "n02-tom-hair-crown", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-03T11:59:00", "note": "third try (deep shadows) and fourth (scalp paint), filmed and pictured, three fresh reviews; his rulings recorded"}
+{"event": "start", "at": "2026-11-03T12:56:00", "task": "n02-rulings-cleanup", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T13:11:00", "note": ""}
+{"event": "start", "at": "2026-11-03T13:19:00", "task": "n02-4-corner", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T14:05:00", "note": ""}
+{"event": "start", "at": "2026-11-03T13:49:00", "task": "n02-4-corner helper: crates day review", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T13:57:00", "note": ""}
+{"event": "start", "at": "2026-11-03T13:49:00", "task": "n02-4-corner helper: crates night review", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T13:59:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:05:57", "task": "n02-4-corner", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T14:16:07", "note": "corner step 10: the milk crates (one try on the rack look, two reviews PASS) and the kiosk rebuilt to its target (two reviews PASS); records"}
+{"event": "start", "at": "2026-11-03T14:05:00", "task": "n02-4-corner helper: kiosk day review", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T14:12:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:05:00", "task": "n02-4-corner helper: kiosk night review", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T14:16:00", "note": ""}

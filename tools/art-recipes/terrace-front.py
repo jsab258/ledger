@@ -493,10 +493,15 @@ MATERIALS = (
     ("cl_dustbin_galvanised", (0.156, 0.160, 0.156), 0.55),
     ("cl_grit_bin_grit_yellow", (0.812, 0.465, 0.004), 0.55),
     ("cl_grit_bin_grit_black", (0.006, 0.006, 0.006), 0.60),
-    ("cl_kx100_kiosk_black", (0.003, 0.003, 0.003), 0.60),
-    ("cl_kx100_kiosk_stainless", (0.293, 0.300, 0.310), 0.35),
-    ("cl_kx100_kiosk_phone_grey", (0.157, 0.164, 0.173), 0.50),
-    ("cl_kx100_kiosk_yellow", (0.916, 0.586, 0.000), 0.45),
+    # THE KIOSK REBUILT TO ITS TARGET, 3 November (the corner plan's step 10; production/cloud-week/targets/
+    # street-dressing/phone-box): its faded black plastic (26, 26, 27), brushed stainless (196, 198, 200), the
+    # dulled handle yellow (232, 188, 22), the payphone's cream-grey (168, 164, 150) and the header's pale
+    # yellow-white word (240, 224, 150)
+    ("cl_kx100_kiosk_black", (0.007, 0.007, 0.007), 0.55),
+    ("cl_kx100_kiosk_stainless", (0.280, 0.287, 0.293), 0.38),
+    ("cl_kx100_kiosk_phone_grey", (0.399, 0.379, 0.311), 0.50),
+    ("cl_kx100_kiosk_yellow", (0.812, 0.511, 0.005), 0.45),
+    ("cl_kx100_kiosk_letter", (0.875, 0.752, 0.311), 0.50),
     ("cl_litter_bin_council_green", (0.009, 0.045, 0.017), 0.50),
     ("cl_litter_bin_inside_dark", (0.001, 0.001, 0.001), 0.90),
     ("cl_litter_bin_letters_white", (0.836, 0.836, 0.782), 0.50),
@@ -517,6 +522,12 @@ MATERIALS = (
     ("cl_a_board_timber", (0.434, 0.262, 0.117), 0.80),
     ("cl_a_board_zinc", (0.131, 0.135, 0.131), 0.50),
     ("cl_a_board_steel", (0.091, 0.091, 0.084), 0.45),
+    # THE GROCER'S MILK CRATES, 3 November (the corner plan's step 10; its model's own): the target's faded red
+    # (sRGB 168, 40, 36) and the chalkier rim and lugs (184, 74, 66); the bottles their own milk-filmed glass
+    # (150, 165, 158), since in the street's window glass they all but vanished (its first editor pictures)
+    ("cl_milk_crates_crate_plastic", (0.399, 0.017, 0.013), 0.50),
+    ("cl_milk_crates_crate_rim", (0.488, 0.066, 0.051), 0.65),
+    ("cl_milk_crates_bottle_glass", (0.311, 0.384, 0.349), 0.08),
     # THE SMASHED WINDOW'S GLASS (_broken_windows): opaque, near-black
     # grey-green and nearly mirror-smooth in the frame, its broken edges a
     # pale green (the thickness of float glass catching the light), and the
@@ -3023,6 +3034,11 @@ CLUTTER_DECAL = {("a-board", "f_main"): "production/assets/vignette/decals2d/a_b
 CLUTTER_ADDED = (
     ("grit-bin", 41.0, "west", 0.55,
      "at the top of the street where it meets the rise, where a council puts one"),
+    # 3 November (the corner plan's step 10): the dairy's empties put out at the grocer, who takes its daily
+    # delivery; the target's slot (production/cloud-week/targets/street-dressing/milk-crates, placement): x 37.30,
+    # 50 mm off the stallriser line at 4.975, so 1.776 from the kerb face, 0.14 m clear of the shop door's jamb.
+    ("milk-crates", 37.3, "east", 1.776,
+     "the dairy's empties against the grocer's stallriser, clear of its door"),
 )
 #: HELD PROPS OFF THE STREET, 3 October (the proof view, step 2.1): the scene
 #: file's two traffic cones by the west bollards came into Unreal without their
@@ -9822,9 +9838,9 @@ def selftest():
           _mickeys_leaf("east_parade_shop_door_leaf_bay0") and _mickeys_leaf("east_parade_shop_door_light_bay0")
           and not _mickeys_leaf("east_parade_shop_door_fanlight_bay0")
           and not _mickeys_leaf("east_parade_shop_door_leaf_bay1"))
-    check("accept/seven-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October/the-a-board-since-3-November",
+    check("accept/eight-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October/the-a-board-and-crates-since-3-November",
           placed_kinds == ["a-board", "bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
-                           "pillar-box"], "%s %s" % (placed_kinds, cnotes))
+                           "milk-crates", "pillar-box"], "%s %s" % (placed_kinds, cnotes))
     # THE A-BOARD'S LEAVES WEAR ITS FACE, each its own part, and nothing else of it does (3 November)
     probe = []
     _place_clutter(probe, ROOT, "a-board", 0, 14.45, 4.6)

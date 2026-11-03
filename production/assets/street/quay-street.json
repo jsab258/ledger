@@ -1631,11 +1631,11 @@
    "material": "cl_kx100_kiosk_black",
    "base_material": "cl_kx100_kiosk_black",
    "linear_rgb": [
-    0.003,
-    0.003,
-    0.003
+    0.007,
+    0.007,
+    0.007
    ],
-   "roughness": 0.6,
+   "roughness": 0.55,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1648,16 +1648,40 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 180
+   "faces": 192
+  },
+  {
+   "mesh": "street_cl_kx100_kiosk_letter",
+   "material": "cl_kx100_kiosk_letter",
+   "base_material": "cl_kx100_kiosk_letter",
+   "linear_rgb": [
+    0.875,
+    0.752,
+    0.311
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 1329
   },
   {
    "mesh": "street_cl_kx100_kiosk_phone_grey",
    "material": "cl_kx100_kiosk_phone_grey",
    "base_material": "cl_kx100_kiosk_phone_grey",
    "linear_rgb": [
-    0.157,
-    0.164,
-    0.173
+    0.399,
+    0.379,
+    0.311
    ],
    "roughness": 0.5,
    "surface_map": null,
@@ -1679,11 +1703,11 @@
    "material": "cl_kx100_kiosk_stainless",
    "base_material": "cl_kx100_kiosk_stainless",
    "linear_rgb": [
-    0.293,
-    0.3,
-    0.31
+    0.28,
+    0.287,
+    0.293
    ],
-   "roughness": 0.35,
+   "roughness": 0.38,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1696,16 +1720,16 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 84
+   "faces": 324
   },
   {
    "mesh": "street_cl_kx100_kiosk_yellow",
    "material": "cl_kx100_kiosk_yellow",
    "base_material": "cl_kx100_kiosk_yellow",
    "linear_rgb": [
-    0.916,
-    0.586,
-    0.0
+    0.812,
+    0.511,
+    0.005
    ],
    "roughness": 0.45,
    "surface_map": null,
@@ -1720,7 +1744,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 7709
+   "faces": 24
   },
   {
    "mesh": "street_cl_litter_bin_council_green",
@@ -1793,6 +1817,78 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 1536
+  },
+  {
+   "mesh": "street_cl_milk_crates_bottle_glass",
+   "material": "cl_milk_crates_bottle_glass",
+   "base_material": "cl_milk_crates_bottle_glass",
+   "linear_rgb": [
+    0.311,
+    0.384,
+    0.349
+   ],
+   "roughness": 0.08,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 1440
+  },
+  {
+   "mesh": "street_cl_milk_crates_crate_plastic",
+   "material": "cl_milk_crates_crate_plastic",
+   "base_material": "cl_milk_crates_crate_plastic",
+   "linear_rgb": [
+    0.399,
+    0.017,
+    0.013
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 900
+  },
+  {
+   "mesh": "street_cl_milk_crates_crate_rim",
+   "material": "cl_milk_crates_crate_rim",
+   "base_material": "cl_milk_crates_crate_rim",
+   "linear_rgb": [
+    0.488,
+    0.066,
+    0.051
+   ],
+   "roughness": 0.65,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 288
   },
   {
    "mesh": "street_cl_pillar_box_base_black",
