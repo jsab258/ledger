@@ -46,6 +46,8 @@ FIXED = [
     "production/specs/street-wear.json",   # the street's wear layer, D53, placed by tools/street_wear.py (1 October, VignetteShot.cpp SpawnWear)
     "production/specs/kit-materials.json",   # the kit pieces' glowing slots, driven with the lanterns (21 October, VignetteShot.cpp BindKitPiece)
     "production/specs/vignette-scene.json",   # the scene's cameras, for the packaged copy's perf hook and page shots (7 October: P1 found "no cam_hook" and waited all night)
+    "production/specs/ps5-corner.json",   # its "scanned" list, the brick scans always worn (3 November: never staged, so since 4 October the played copy wore the drawn brick the editor had replaced; VignetteShot.cpp DriveCornerSurfaces)
+    "production/specs/facade-shots.json",   # the facade cameras beside the corner's (VignetteShot.cpp AppendShotsFile; found unstaged by the selftest's source check, 3 November)
     "production/specs/seats.json",   # where Tom can sit (25 October, item 2; SliceCharacter.cpp TryStartSit)
     "production/specs/seat-clips.json",   # the bench clips measured, for the sit entry test (28 October, D10 step 3)
     "production/specs/camera.json",   # Tom's camera, his pick of 28 October (SliceCharacter.cpp BeginPlay)
@@ -107,11 +109,13 @@ def wanted():
         dm = row.get("drawn_map")
         if dm:
             files += [dm + s + ".png" for s in MAP_SUFFIXES]
-    pieces = _load("production/specs/vignette-pieces.json")
-    for sc in pieces.get("scanned", []) or []:
-        for f in sc.get("files", []) or []:
-            if isinstance(f, str) and f:
-                files.append(f)
+    # THE SCANS' PICTURES, from the file the game reads them from (3 November: this read vignette-pieces.json, which
+    # carries no "scanned" list, so none was ever staged; the game's list is ps5-corner.json's)
+    for spec in ("production/specs/vignette-pieces.json", "production/specs/ps5-corner.json"):
+        for sc in _load(spec).get("scanned", []) or []:
+            for f in sc.get("files", []) or []:
+                if isinstance(f, str) and f:
+                    files.append(f)
     sounds = _load("production/specs/street-sounds.json")
     for v in sounds.get("voices", []) or []:
         for c in v.get("clips", []) or []:
@@ -218,6 +222,24 @@ def build_commit():
         return ""
 
 
+def specs_named_unstaged(files):
+    """Each production/specs/*.json the game's C++ names (a quoted file name) that the staging list leaves out: the
+    rule "a new spec the game reads goes into this list" did not hold twice (30 September's golden row; 3 November's
+    corner file, so the played copy wore the drawn brick for a month), so it is a check now."""
+    import glob
+    import re
+    named = set()
+    for src in glob.glob(os.path.join(REPO, "ue-probe", "Source", "LedgerProbe", "**", "*.*"), recursive=True):
+        if not src.endswith((".cpp", ".h")):
+            continue
+        with open(src, encoding="utf-8", errors="ignore") as fh:
+            for m in re.finditer(r'"((?:production/specs/)?[a-z0-9][a-z0-9_.-]*[.]json)"', fh.read()):
+                leaf = m.group(1).split("/")[-1]
+                if os.path.isfile(os.path.join(REPO, "production", "specs", leaf)):
+                    named.add("production/specs/" + leaf)
+    return sorted(n for n in named if n not in files)
+
+
 def selftest():
     ok = bad = 0
 
@@ -244,6 +266,11 @@ def selftest():
               for s in ("day", "night_lit", "night_dark")))
     check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
     check("the photographed surfaces are staged", any(f.startswith("ledger/Assets/StreamingAssets/CityPack/textures/") for f in files))
+    check("the corner file and every scan it lists are staged (the played copy wore the drawn brick without them)",
+          "production/specs/ps5-corner.json" in files
+          and all(f in files for sc in _load("production/specs/ps5-corner.json").get("scanned", []) for f in sc.get("files", [])))
+    unstaged = specs_named_unstaged(files)
+    check("every spec file the game's source names is staged (none: %s)" % ",".join(unstaged), not unstaged)
     check("the staging folder is inside the game's content", DEST.replace("\\", "/").endswith("ue-probe/Content/LedgerData"))
     check("the build's commit is read for the save's check", len(build_commit()) == 7)
     print("stage_game_data selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
