@@ -18,7 +18,7 @@ ANSWERS gets one a line: {"id", "model", "text", "input_tokens", "output_tokens"
 (default 60), then leaves the batch's id in production/api-batches.jsonl for --fetch.
 
 THE KEY, as tools/talk_cost_sample.py: read from LEDGER's own file and never printed or written; refused under CI or
-GitHub Actions. THE CEILING, checked before anything is sent: the run's worst case (each request's input at about 3.5
+GitHub Actions. THE CEILING, checked before anything is sent: the run's worst case (each request's input at 2.5
 characters a token plus its whole max_tokens, at the model's price, halved for a batch) must fit what is left of
 today's ceiling, worked out from production/api-spend.jsonl. Each run, sent or refused, is one line there.
 """
@@ -43,7 +43,9 @@ BILLING_DAY = 12
 # with Opus 5.5 from Anthropic's model list (read 2 November 2026).
 PRICE = {"claude-haiku-5-5": (0.10, 0.50), "claude-haiku-4-5": (1.0, 5.0), "claude-sonnet-5": (2.0, 10.0),
          "claude-sonnet-5-5": (2.0, 10.0), "claude-opus-5-5": (4.0, 20.0)}
-CHARS_PER_TOKEN = 3.5
+#: 2.5, not the first 3.5 (3 November: the harm reader's 64 requests measured 2.84 characters a token, 495,828
+#: characters for 174,565 tokens, so the "worst case" read US$0.39 for a run that cost US$0.44; 2.5 keeps it a worst case)
+CHARS_PER_TOKEN = 2.5
 
 
 def month_start(day):
@@ -271,7 +273,7 @@ def selftest():
     ceiling, today, left = ceiling_today(lines, d(2026, 11, 2))
     check("the ceiling is what remains over the days left", abs(ceiling - (200.0 - 0.99) / 10) < 1e-9)
     check("today's spend and what is left", abs(today - 1.51) < 1e-9 and abs(left - (ceiling - 1.51)) < 1e-9)
-    r = {"id": "a", "model": "claude-haiku-5-5", "messages": [{"role": "user", "content": "x" * 3500}], "max_tokens": 1000}
+    r = {"id": "a", "model": "claude-haiku-5-5", "messages": [{"role": "user", "content": "x" * 2500}], "max_tokens": 1000}
     check("worst case: input and the whole output", abs(worst_cost(r) - (1000 / 1e6 * 0.10 + 1000 / 1e6 * 0.50)) < 1e-12)
     check("a batch is half price", abs(worst_cost(r, True) - worst_cost(r) / 2) < 1e-12)
     try:
