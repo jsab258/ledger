@@ -111,6 +111,7 @@
    "days": 7,
    "folders": [
     "F:/LedgerTools/tmp",
+  "F:/LedgerTools/latency",
     "F:/LedgerTools/town-scratch/breaker",
     "F:/LedgerTools/review-voice-*",
     "C:/Users/Jafar/ledger-local/.claude/worktrees",

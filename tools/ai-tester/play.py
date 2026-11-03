@@ -646,7 +646,18 @@ def act(verb, rest):
     hwnd = st["hwnd"]
     focus(hwnd)
     if not game_in_front(hwnd):
-        print("aiTester status=NOT-IN-FRONT (no keys sent) front=%s" % front_title()[:60])
+        # WHO HOLDS THE FRONT, BY PROGRAM (3 November: the day's first route walk lost the front for six minutes and
+        # nothing said to what); the frozen clipboard panel's process is ended once, as at the start, and tried again
+        fg = user32.GetForegroundWindow()
+        front = os.path.basename(process_image(window_pid(fg)) or "") if fg else ""
+        if front.lower() == "textinputhost.exe":
+            subprocess.run(["taskkill", "/F", "/IM", "TextInputHost.exe"], capture_output=True)
+            time.sleep(2)
+            focus(hwnd)
+    if not game_in_front(hwnd):
+        fg = user32.GetForegroundWindow()
+        front = os.path.basename(process_image(window_pid(fg)) or "") if fg else ""
+        print("aiTester status=NOT-IN-FRONT (no keys sent) front=%s program=%s" % (front_title()[:60], front or "none"))
         return 1
     if verb == "walk":
         direction = rest[0] if rest else "forward"

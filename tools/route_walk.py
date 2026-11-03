@@ -77,7 +77,11 @@ def SEATS():
 def play(*args):
     r = subprocess.run(PLAY + [str(a) for a in args], capture_output=True, text=True, cwd=REPO)
     out = (r.stdout or "").strip().splitlines()
-    return out[-1] if out else ""
+    last = out[-1] if out else ""
+    # NO KEYS SENT, SAID ALOUD (3 November: six minutes of a walk went unanswered with nothing in its log)
+    if "NOT-IN-FRONT" in last:
+        print("route %s %s: %s" % (time.strftime("%H:%M:%S"), args[0] if args else "?", last))
+    return last
 
 
 # THE CAMERA'S ROWS ON FILM (29 October, his order D11's camera: talk, low rooms, running and fights, "each shown to
