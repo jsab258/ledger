@@ -89,7 +89,7 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
   <footer id="foot"></footer>
 </div>
 <script>
-const PAGE = {"tab": "LEDGER: Needs you", "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 3 November, 20:53", "title": "Needs you", "how": ["Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.", "Pick an answer under each item; a note is optional."], "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.", "sections": [{"kind": "need", "key": "fresh-session-mode-2026-11-03", "name": "For tomorrow's switch to a fresh session each day: in the Claude app, open Scheduled in the sidebar, open \"LEDGER: the day's fresh session\" and set its permission mode to Auto (not Bypass), then save. The app would not let the session set it: your message came from another device. Without it the 05:21 session stops at its first file write until you approve it.", "links": [], "recommendation": "Auto, as this session runs now; it is not bypassing permissions. Optional: in the waiting session \"LEDGER: the day's fresh session, test (once)\", allow its one file write so tonight's test finishes. No web link: the setting is in the app.", "added": "2026-11-03 21:00", "options": [["done", "Done, set to Auto (recommended)"], ["not-now", "Not now: keep one long session another day"]]}]};
+const PAGE = {"tab": "LEDGER: Needs you", "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 3 November, 21:38", "title": "Needs you", "how": ["Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.", "Nothing open: the page says so."], "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.", "sections": []};
 const state = {};
 let db = null, canWrite = true, audio = null, playing = null, raf = 0;
 function el(tag, attrs, ...kids){
@@ -219,7 +219,13 @@ function render(){
       sec.append(picks(s.key, s.options, st.pick));
       if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "need") {
-      // NEEDS YOU (2 November 2026, his permanent page): what to do, every link it needs, the recommendation, when added
+      // NEEDS YOU (2 November 2026, his permanent page): what to do, every link it needs, the recommendation, when added;
+      // a frame or a person at its gate brings its pictures, one to a row, opened full size by the page's viewer
+      if (s.pictures && s.pictures.length) {
+        const g = el("div", {class:"capgrid"});
+        for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
+        sec.append(g);
+      }
       if (s.links && s.links.length) {
         const ul = el("ul", {class:"links"});
         for (const l of s.links) ul.append(el("li", {}, el("a", {href:l.url, target:"_blank", rel:"noopener", text:l.label})));
