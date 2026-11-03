@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from (his order of 2 November, 6.2: start each day fresh from a handover file, since a long session's history is about half of each step's cost, production/research/token-audit). Rewritten, not appended, at the end of each working stretch. Rules are CLAUDE.md's and RULINGS.md's; the phase's items are NOW.md's; this file holds only what is in flight.
 
-**As of:** Tuesday 3 November 2026, 06:25 (Swiss time). Rewrite every line below at each stop.
+**As of:** Tuesday 3 November 2026, 08:22 (Swiss time). Rewrite every line below at each stop.
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), item by item, until 13:00 Monday 9 November or until he says stop.
 
@@ -19,11 +19,13 @@ The one file a fresh session starts from (his order of 2 November, 6.2: start ea
 
 **Since 06:55:** the tiles passed the editor gate and are pushed with a fresh glass bake (db1bc52bd, checks 90 of 90; the bake stamps the look file, so every look change needs `python tools/glass_bake.py` before the push). A background waiter fires at 10 idle minutes: then close Marvelous (screenshot first), then, with the panel gone, the day's packaged runs in this order: route_walk.py --town --sit on the played copy; p1-packaged.ps1 (the Stutter, card memory); office_look.py packaged (the office); speech run E (speech-bench skill, the day's API ceiling first). Corner step 10 (the A-board: 23 parts in target.json, no builder yet; the asset-import skill) after them.
 
+**Done this morning, after 07:20:** the 2 November pieces walked packaged by day (14 of 15; DECISIONS 07:50); speech run E (DECISIONS 07:58 and 08:09: it cannot settle the bar; run F needs tonight's build, then `-AskSet=C:/Users/Jafar/ledger-local/production/research/invented-claims/bench/firsts-held.txt -AskNear`, no -AskAfterDeed, cap 0.80, raw to F:/LedgerTools/latency/askreal-2026-11-04f); the frame and memory captures clean with Pocket (DECISIONS 08:22). Building both targets for the -AskSet/-AskNear/walk-away change, then checks and push before 01:15. Next: the office's packaged pictures (tools/office_look.py, by day and --night), then the corner's step 10.
+
 **For tomorrow's summary (computer use, mistakes):** Marvelous closed by computer use at 07:17 (File, Quit; no save asked), after 10 idle minutes, the panel gone. Windows' text-input process ended 06:54. A walk started by mistake at 07:17 (route_walk.py --help) and its game closed at once; --help is now safe in route_walk.py and play.py.
 
 **Running since 07:20:** route_walk.py --town --sit on the played copy 33dedf5 (wip 13c2e1da): the 2 November pieces' packaged walk by day.
 
-**His page last read:** 06:53 (8 verdicts, none new). Open: nothing (the clipboard item answered in chat at 06:53 and closed).
+**His page last read:** 08:22 (8 verdicts, none new; nothing open).
 
 **In flight:** the tiles' fresh reviewer (writes F:/LedgerTools/gate/new/look/2026-11-03-tiles-x1.3/review.json); the tiles read 0.71 to 0.73 on their body (band 0.67 to 0.82), the door frame unchanged at 0.805. Next on the corner after it: step 10 (tier 1 dressing: the A-board AB1 and the milk crates from production/cloud-week/targets/street-dressing, and the kiosk's see-through side); no builder exists for these targets yet. Marvelous (pid 12140) still open, holding about 2.4 GB of the card, the clipboard panel in front of it.
 

@@ -4784,6 +4784,7 @@ namespace
 	// off screen at the size wanted (-RenderOffScreen -ResX=2560 -ResY=1440).
 	void ClockLight();
 	double FeetYAt(UWorld* World, double X, double Z);
+	std::string StandBlockedAt(UWorld* World, AActor* Self, double X, double Z, double FeetY);
 	// -PageShots=dress (1 October): what the clothing session made, on the page at
 	// full size: Ron and Sheila each whole from the front and close (Ron's boots,
 	// Sheila's right hand and the bag in it), in the street's own light and
@@ -5587,6 +5588,9 @@ namespace
 		GLive.HeardSoFar.clear();
 		GLive.bWalkedSent = false;
 		GLive.bWasNear = false;
+		// THE ONE ASKED, NOT THE ONE BEFORE (3 November, run E's review): the walk-away check measured the last answer's
+		// body until the new one's first words came, so a line put to someone else counted as walking away from them
+		GLive.AnswerBody = nullptr;
 		GLive.AskedAt = NowS();
 		return true;
 	}
@@ -6690,7 +6694,57 @@ namespace
 		if (I == 1 && FParse::Param(FCommandLine::Get(), TEXT("AskReport")) && GAsk.Rows.Len() > 0 && !GAsk.bReported) { LiveReportLast(); GAsk.bReported = true; }
 		const Who& P = People[I % 3];
 		if (P.Body == nullptr || !P.G) { return; }
-		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Lines[I % 6]))
+		// A NEWCOMER'S REAL QUESTIONS (3 November, run E's review: the six lines above made ten "real questions" two
+		// questions asked five times, and the deed's question went to Ron, on the small-talk model): -AskSet=FILE asks
+		// its lines in order, one a line, round the three in turn (the held newcomer set,
+		// production/research/invented-claims/bench/firsts-held.txt, so no person hears the same question twice in 30)
+		static TArray<FString> Set;
+		static bool bSetRead = false;
+		if (!bSetRead)
+		{
+			bSetRead = true;
+			FString Path, Text;
+			if (FParse::Value(FCommandLine::Get(), TEXT("AskSet="), Path) && FFileHelper::LoadFileToString(Text, *Path))
+			{
+				TArray<FString> Rows;
+				Text.ParseIntoArrayLines(Rows);
+				for (FString& R : Rows) { R.TrimStartAndEndInline(); if (!R.IsEmpty()) { Set.Add(R); } }
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: %d questions from the set (%s)"), Set.Num(), Set.Num() > 0 ? *Path : TEXT("the six built-in lines"));
+		}
+		const std::string Said = Set.Num() > 0 ? std::string(TCHAR_TO_UTF8(*Set[I % Set.Num()])) : std::string(Lines[I % 6]);
+		// WITHIN EARSHOT (3 November, run E's review: Sheila was asked from 15.1 m and Ron from 9.8 m, past the 6 m earshot):
+		// with -AskNear, Tom is put 1.5 m from the one asked, facing them, on the first of eight spots round them that the
+		// clearance test finds clear on their floor, before each line
+		static const bool bAskNear = FParse::Param(FCommandLine::Get(), TEXT("AskNear"));
+		if (bAskNear && GPawn != nullptr)
+		{
+			UWorld* W = GPawn->GetWorld();
+			AActor* Shown = GVisualFor(P.Body);
+			const FVector Them = (Shown != nullptr ? Shown : P.Body)->GetActorLocation();
+			const FVector Me = GPawn->GetActorLocation();
+			const double Base = FMath::Atan2(Me.Y - Them.Y, Me.X - Them.X);
+			bool bPut = false;
+			for (int32 K = 0; K < 8 && !bPut; ++K)
+			{
+				const double A = Base + (K % 2 == 0 ? 1.0 : -1.0) * (double)((K + 1) / 2) * PI / 4.0;
+				const double SX = (Them.X + 150.0 * FMath::Cos(A)) / 100.0, SZ = (Them.Y + 150.0 * FMath::Sin(A)) / 100.0;
+				const double FeetY = FeetYAt(W, SX, SZ);
+				if (!StandBlockedAt(W, P.Body, SX, SZ, FeetY).empty()) { continue; }
+				// his capsule's centre above the floor as it stands now (the floor under him, from the same test)
+				const double Lift = Me.Z - FeetYAt(W, Me.X / 100.0, Me.Y / 100.0) * 100.0;
+				const FVector At(SX * 100.0, SZ * 100.0, FeetY * 100.0 + Lift);
+				GPawn->SetActorLocation(At, false, nullptr, ETeleportType::TeleportPhysics);
+				if (APlayerController* PC = W->GetFirstPlayerController())
+				{
+					PC->SetControlRotation(FRotator(-6.0f, (float)FVector(Them.X - At.X, Them.Y - At.Y, 0.0).Rotation().Yaw, 0.0f));
+				}
+				bPut = true;
+				UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: Tom put 1.5 m from %s (spot %d of 8)"), P.Name, K + 1);
+			}
+			if (!bPut) { UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: no clear spot 1.5 m round %s; asked from %.1f m"), P.Name, FVector::Dist2D(Me, Them) / 100.0); }
+		}
+		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Said))
 		{
 			GLive.PendingBody = P.Body;
 			// Filmed (-MouthFilm), the camera settles on them from the line on, so the
