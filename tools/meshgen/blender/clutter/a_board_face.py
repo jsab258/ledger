@@ -75,18 +75,38 @@ def weather(face):
     yy = np.linspace(0.0, 1.0, h)[:, None]          # 0 at the ridge, 1 at the foot
     xx = np.linspace(0.0, 1.0, w)[None, :]
     a *= GROUND_GAIN * (1.0 + MOTTLE * (2.0 * _smooth_noise(rng, h, w, (3, 6, 12)) - 1.0))[:, :, None]
-    # the splash band: strongest at the foot, streaked upward, fading out by SPLASH_FROM_FOOT
-    streaks = _smooth_noise(rng, h, w, (1, 2))[0:1, :] * 0.0 + np.asarray(
-        Image.fromarray((rng.random((1, 96)) * 255).astype("uint8")).resize((w, 1), Image.BILINEAR)).astype(float) / 255.0
-    rise = np.clip((yy - (1.0 - SPLASH_FROM_FOOT * (0.6 + 0.6 * streaks))) / (SPLASH_FROM_FOOT * 0.9), 0.0, 1.0)
-    k = (0.55 * rise ** 1.4)[:, :, None]
+    # THE SPLASH, NOT A COMB (3 November, the re-check, F:/LedgerTools/gate/new/look/2026-11-03-a-board-d/review.json:
+    # the first draw stretched one row of random values down the face, an even comb of stripes to a level line, read
+    # close to as curtain folds): a ragged line at uneven heights (broad noise along the width), under it a soft
+    # gradient and splatter, specks thickening toward the foot, each a blot of its own size
+    line = SPLASH_FROM_FOOT * (0.55 + 0.9 * _smooth_noise(rng, 1, w, (3, 7))[0])[None, :]
+    rise = np.clip((yy - (1.0 - line)) / np.maximum(line, 1e-3), 0.0, 1.0)
+    speck = np.zeros((h, w))
+    for _ in range(2600):
+        y = 1.0 - SPLASH_FROM_FOOT * 1.3 * rng.random() ** 2.2
+        cy, cx = int(y * (h - 1)), int(rng.random() * (w - 1))
+        r_ = 1.0 + rng.random() ** 3 * 7.0
+        ry, rx = r_ * (0.7 + 0.6 * rng.random()), r_ * (0.7 + 0.6 * rng.random())   # a blot, round to oval
+        y0, y1, x0, x1 = max(0, int(cy - ry)), min(h, int(cy + ry) + 1), max(0, int(cx - rx)), min(w, int(cx + rx) + 1)
+        gy, gx = np.mgrid[y0:y1, x0:x1]
+        d = ((gy - cy) / ry) ** 2 + ((gx - cx) / rx) ** 2
+        speck[y0:y1, x0:x1] = np.maximum(speck[y0:y1, x0:x1], (0.35 + 0.5 * rng.random()) * np.clip(1.2 - d, 0.0, 1.0))
+    from PIL import ImageFilter
+    speck = np.asarray(Image.fromarray((speck * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8))).astype(float) / 255.0
+    k = np.clip(0.45 * rise ** 1.6 + 0.5 * speck, 0.0, 0.75)[:, :, None]
     a = a * (1.0 - k) + np.array(SPLASH_GREY)[None, None, :] * k
-    # rust weeping from the glue line at the top edge and down the right arris
-    top = np.clip(1.0 - yy / (0.05 + 0.10 * np.asarray(Image.fromarray((rng.random((1, 40)) * 255).astype("uint8"))
-                                                         .resize((w, 1), Image.BILINEAR)).astype(float) / 255.0), 0.0, 1.0)
-    right = np.clip(1.0 - (1.0 - xx) / 0.035, 0.0, 1.0) * (0.5 + 0.5 * _smooth_noise(rng, h, w, (8, 16)))
-    r = (np.maximum(0.45 * top ** 2.0, 0.6 * right ** 1.5))[:, :, None]
-    a = a * (1.0 - r) + np.array(RUST)[None, None, :] * r
+    # RUST WEEPING FROM THE GLUE LINE: a broken band along the top edge, a few runs down from it of their own length,
+    # width and spacing (not a row of drips), and the right arris's line, uneven along its length
+    r = np.zeros((h, w))
+    r += np.clip(1.0 - yy / 0.018, 0.0, 1.0) * (0.25 + 0.5 * _smooth_noise(rng, 1, w, (5, 11))[0])[None, :]
+    for _ in range(int(rng.integers(4, 7))):
+        x0, wid = rng.random(), 0.004 + 0.012 * rng.random()
+        length, strength = 0.03 + 0.14 * rng.random() ** 1.5, 0.25 + 0.35 * rng.random()
+        across = np.clip(1.0 - np.abs(xx - x0) / wid, 0.0, 1.0)
+        r = np.maximum(r, strength * across * np.clip(1.0 - yy / length, 0.0, 1.0) ** 1.5)
+    right = np.clip(1.0 - (1.0 - xx) / 0.02, 0.0, 1.0) * _smooth_noise(rng, h, 1, (6, 14))[:, :1]
+    r = np.maximum(r, 0.55 * right ** 1.3)
+    a = a * (1.0 - r[:, :, None]) + np.array(RUST)[None, None, :] * r[:, :, None]
     # grime toward the edges, where hands and weather reach first
     edge = np.minimum(np.minimum(xx, 1.0 - xx), np.minimum(yy, 1.0 - yy) * 0.5)
     a *= (1.0 - 0.18 * np.clip(1.0 - edge / 0.04, 0.0, 1.0))[:, :, None]
