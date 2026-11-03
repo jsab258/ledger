@@ -570,6 +570,10 @@ GAME_ARGS = [sys.argv[i + 1] for i, x in enumerate(sys.argv[:-1]) if x == "--gam
 
 
 if __name__ == "__main__":
+    # HELP WALKS NOTHING (3 November: "--help" was ignored and a walk started, as play.py's start did)
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print(__doc__)
+        sys.exit(0)
     if "--selftest" in sys.argv:
         sys.exit(selftest())
     editor = "--editor" in sys.argv
