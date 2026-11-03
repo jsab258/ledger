@@ -539,6 +539,13 @@ MATERIALS = (
     ("shard_a_glass", (0.018, 0.026, 0.024), 0.04),
     ("shard_a_edge",  (0.320, 0.460, 0.400), 0.20),
     ("shard_a_ground", (0.090, 0.120, 0.110), 0.03),
+    # THE GROUND'S LITTER AND GUM (_ground_scatter, 3 November): wet, dirtied paper (sRGB about 164), brown
+    # kraft, two plain wrapper colours with no print, and trodden gum a shade darker than the wet flags
+    ("litter_paper", (0.360, 0.355, 0.330), 0.55),
+    ("litter_kraft", (0.260, 0.170, 0.080), 0.60),
+    ("litter_red", (0.220, 0.025, 0.020), 0.50),
+    ("litter_blue", (0.025, 0.045, 0.130), 0.50),
+    ("gum_trodden", (0.050, 0.048, 0.044), 0.75),
     ("shard_r_glass", (0.018, 0.026, 0.024), 0.04),
     ("shard_r_edge",  (0.320, 0.460, 0.400), 0.20),
     ("shard_r_ground", (0.090, 0.120, 0.110), 0.03),
@@ -2271,6 +2278,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_approach(out)
     _pavement_dressing(out)
     _street_furniture(out, root)
+    _ground_scatter(out, root)
     _name_plate(out)
     _broken_windows(out)
     # EVERY THIRD UPSTAIRS WINDOW HAS A LIT ROOM BEHIND ITS NET AT NIGHT.
@@ -3969,6 +3977,111 @@ def _standing_water(out, root=None):
     return "puddles=%d dropped=%d gutterStrips=%d" % (made, dropped, strips)
 
 
+#: THE GROUND'S LITTER AND GUM, 3 November (the corner plan's step 11; reference: Mafia's 73 m street carries 91
+#: pieces of ground dressing, studies/04-street-world.md). The scene file's scatter block is their one home (its
+#: seed, counts, sizes and the litter's share in the channel); its emitter was Unity's and never reached Unreal,
+#: so the street draws them here. Litter: a paper scrap lying flat with one corner lifted, or a crumpled ball,
+#: in plain colours with no print; the channel's share lies on its wet strip, the rest against the wall feet.
+#: Gum: flattened grey-black discs on the flags, thickest along the walked line. Nothing within SCATTER_CLEAR_M
+#: of a clutter piece's centre, so none lies under a kiosk's post or a stack of crates.
+SCATTER_X = (-1.0, 43.5)
+SCATTER_CLEAR_M = 0.7
+LITTER_MATERIALS = ("litter_paper", "litter_paper", "litter_paper", "litter_kraft", "litter_red", "litter_blue")
+LITTER_BALL_SHARE = 0.35
+WALL_FOOT_Y = (4.62, 4.92)       # clear of the stallrisers' line at 4.975
+GUM_WALK_Y, GUM_WALK_SD = 4.05, 0.35
+GUM_Y = (3.25, 4.92)
+
+
+def _ground_scatter(out, root=None):
+    """The scene file's litter and gum on the street's surface: (litter, gum) drawn."""
+    import json
+    import random
+    try:
+        with open(os.path.join(root or ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
+            sc = json.load(fh)["scatter"]
+        lit, gum = sc["litter"], sc["gum"]
+        rnd = random.Random(int(sc["seed"]))
+    except (OSError, ValueError, KeyError, TypeError):
+        return 0, 0
+    spots, _notes = clutter_placements(root)
+    taken = [(x, y) for _p, x, y, _n in spots]
+
+    def clear(x, y):
+        return all(math.hypot(x - a, y - b) > SCATTER_CLEAR_M for a, b in taken)
+
+    made = 0
+    tries = 0
+    while made < int(lit["count"]) and tries < 2000:
+        tries += 1
+        side = rnd.choice((-1.0, 1.0))
+        x = rnd.uniform(*SCATTER_X)
+        size = rnd.uniform(float(lit["min_size_m"]), float(lit["max_size_m"]))
+        reach = size * 0.5 if rnd.random() >= LITTER_BALL_SHARE else size * 0.3 * 1.2
+        # EACH PIECE WHOLLY IN ITS OWN STRIP, ITS HEIGHT FROM THAT SURFACE ONLY (its first night review: a
+        # channel scrap's corner past the kerb face took the kerb top's height and stood up the kerb like a
+        # marker, and balls whose reach crossed it floated at the kerb's height): in the channel, inside the
+        # kerb face; at the wall feet, inside the shopfronts' line
+        if rnd.random() < float(lit["gutter_share"]):
+            lo, hi = ROAD_HALF_M - CHANNEL_WATER_W_M - 0.05 + reach, ROAD_HALF_M - 0.01 - reach
+            surface = lambda v: road_z(v) + WATER_LIFT_M + 0.001
+        else:
+            lo, hi = WALL_FOOT_Y[0], WALL_FOOT_Y[1] + 0.03 - reach
+            surface = lambda v: footway_z(v) + 0.001
+        y = side * rnd.uniform(min(lo, hi), hi)
+        if not clear(x, y):
+            continue
+        mat = rnd.choice(LITTER_MATERIALS)
+        pid = "ground_litter_%02d" % made
+        thick = float(lit["thickness_m"])
+        if reach < size * 0.5:
+            # its lowest point (0.85 of the radius below the centre at the widest push, squashed) on the
+            # higher side of the ground under it
+            r = size * 0.3
+            _clump(out, pid, mat, x, y, max(surface(y - reach), surface(y + reach)) + r * 0.62, r, rnd,
+                   squash=0.6, note="crumpled-paper")
+            # THEN DOWN ONTO ITS OWN LOWEST POINT (the second night review: the jittered balls rested 6 to 19 mm
+            # up, a gap under each that showed by day as a shadow apart from the ball)
+            ball = out[-1]
+            dz = min(v[2] - surface(v[1]) for v in ball["verts"])
+            ball["verts"] = [(a, b, c - dz) for a, b, c in ball["verts"]]
+        else:
+            ground = surface
+            n = 6
+            a0 = rnd.uniform(0.0, 2.0 * math.pi)
+            ring = []
+            for i in range(n):
+                vx = x + size * 0.5 * rnd.uniform(0.6, 1.0) * math.cos(a0 + 2.0 * math.pi * i / n)
+                vy = y + size * 0.5 * rnd.uniform(0.6, 1.0) * math.sin(a0 + 2.0 * math.pi * i / n)
+                ring.append((vx, vy, ground(vy) + thick))
+            k = rnd.randrange(n)
+            ring[k] = (ring[k][0], ring[k][1], ring[k][2] + size * rnd.uniform(0.06, 0.15))
+            verts = [(x, y, ground(y) + thick)] + ring
+            # anticlockwise seen from above, so each face looks up
+            out.append({"id": pid, "material": mat, "kind": "mesh", "verts": verts,
+                        "faces": [(0, 1 + i, 1 + (i + 1) % n) for i in range(n)], "note": "a-paper-scrap"})
+        made += 1
+    spots_gum = 0
+    tries = 0
+    while spots_gum < int(gum["count"]) and tries < 2000:
+        tries += 1
+        side = rnd.choice((-1.0, 1.0))
+        x = rnd.uniform(*SCATTER_X)
+        y = side * min(max(rnd.gauss(GUM_WALK_Y, GUM_WALK_SD), GUM_Y[0]), GUM_Y[1])
+        if not clear(x, y):
+            continue
+        r = rnd.uniform(float(gum["min_size_m"]), float(gum["max_size_m"])) / 2.0
+        z = footway_z(y) + 0.003
+        n = 8
+        ring = [(x + r * rnd.uniform(0.8, 1.0) * math.cos(2.0 * math.pi * i / n),
+                 y + r * rnd.uniform(0.8, 1.0) * math.sin(2.0 * math.pi * i / n), z) for i in range(n)]
+        out.append({"id": "ground_gum_%02d" % spots_gum, "material": "gum_trodden", "kind": "mesh",
+                    "verts": [(x, y, z)] + ring, "faces": [(0, 1 + i, 1 + (i + 1) % n) for i in range(n)],
+                    "note": "trodden-gum"})
+        spots_gum += 1
+    return made, spots_gum
+
+
 def _pavement_dressing(out):
     """The utility cover and the extra gully grates, flush."""
     for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
@@ -4626,10 +4739,11 @@ def _stack(out, pid, wall, xm, y, top, rnd):
              xm - 0.11, xm + 0.11, py - 0.1, py + 0.1, top + 1.0, top + 1.0 + rnd.uniform(0.35, 0.6), "a-pot")
 
 
-def _clump(out, pid, material, cx, cy, cz, r, rnd):
+def _clump(out, pid, material, cx, cy, cz, r, rnd, squash=0.8, note="leaves"):
     """One mass of leaves: an icosahedron, each point pushed in or out, squashed. Many small
     ones make a crown whose outline breaks up as leaves do; a few big balls read as blobs
-    (the hill's fresh review, 4 October)."""
+    (the hill's fresh review, 4 October). Squashed flatter, a ball of crumpled paper (the
+    ground's litter, 3 November)."""
     t = (1.0 + math.sqrt(5.0)) / 2.0
     base = [(-1, t, 0), (1, t, 0), (-1, -t, 0), (1, -t, 0), (0, -1, t), (0, 1, t),
             (0, -1, -t), (0, 1, -t), (t, 0, -1), (t, 0, 1), (-t, 0, -1), (-t, 0, 1)]
@@ -4640,8 +4754,8 @@ def _clump(out, pid, material, cx, cy, cz, r, rnd):
     verts = []
     for (x, y, z) in base:
         k = r * rnd.uniform(0.7, 1.2) / n
-        verts.append((cx + x * k, cy + y * k, cz + z * k * 0.8))
-    out.append({"id": pid, "material": material, "kind": "mesh", "verts": verts, "faces": f, "note": "leaves"})
+        verts.append((cx + x * k, cy + y * k, cz + z * k * squash))
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": verts, "faces": f, "note": note})
 
 
 def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False):
@@ -8202,8 +8316,10 @@ def _street_mesh_name(key, decal):
 #: columns, and (29 September) the kiosk, pillar box, dustbins, bollards and
 #: public bins from the gated clutter; the railing, the litter and the other
 #: ground props stay the scene file's.
+#: "litter" and "gum" since 3 November: the street draws the scene file's scatter itself (_ground_scatter), and
+#: the scene's own stand-ins (litter0 to 33 as wooden boxes, gum0 to 59 as discs) stood beside it twice.
 STREET_REPLACES_PREFIXES = ("east_", "west_", "ground_", "kerb", "yellow_", "gully_",
-                            "column", "lantern", "kiosk", "pillarbox", "dustbin")
+                            "column", "lantern", "kiosk", "pillarbox", "dustbin", "litter", "gum")
 STREET_REPLACES_SHAPES = ("decal",)
 
 
@@ -8230,8 +8346,9 @@ def _street_replaces(args):
             "piece_shapes": list(STREET_REPLACES_SHAPES),
             "held_prop_assets": sorted(a for a in assets if a),
             "why": "the recipe builds these itself, the kiosk, pillar box, dustbins, bollards "
-                   "and public bins from the gated 1990 clutter; lamps, railing, litter and "
-                   "the other ground props are the scene file's and stay"}
+                   "and public bins from the gated 1990 clutter, and the ground's litter and gum "
+                   "from the scene file's scatter; lamps, railing and the other ground props are "
+                   "the scene file's and stay"}
 
 
 def _street_emit(key, lettered, night):
@@ -9848,6 +9965,32 @@ def selftest():
     check("accept/the-a-board's-two-leaves-wear-its-face-and-nothing-else",
           pictured == ["furn_cl_a_board0_f_main", "furn_cl_a_board0_r_main"]
           and len({r["id"] for r in probe if r.get("decal")}) == 2, "%s of %d parts" % (pictured, len(probe)))
+    # THE SCENE FILE'S LITTER AND GUM LIE ON THE STREET (3 November): its counts, on the surface, none near clutter
+    probe = []
+    drawn = _ground_scatter(probe, ROOT)
+    try:
+        with open(os.path.join(ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
+            _sc = json.load(fh)["scatter"]
+        want = (int(_sc["litter"]["count"]), int(_sc["gum"]["count"]))
+    except (OSError, ValueError, KeyError):
+        want = None
+    # every point on its own surface, none lower and none more than 0.10 m above it, and no piece across the
+    # kerb or into the shopfronts' line (its first night review: a scrap up the kerb face, balls at kerb height)
+    low = []
+    for r in probe:
+        road = [abs(v[1]) < ROAD_HALF_M for v in r["verts"]]
+        if any(road) and not all(road):
+            low.append(r["id"] + "/across-the-kerb")
+            continue
+        for v in r["verts"]:
+            under = road_z(v[1]) if road[0] else footway_z(v[1])
+            if not under - 0.0005 <= v[2] <= under + 0.10 or (not road[0] and abs(v[1]) > 4.95):
+                low.append(r["id"])
+    near = [r["id"] for r in probe for _p, a, b, _n in clutter_placements(ROOT)[0]
+            if math.hypot(r["verts"][0][0] - a, r["verts"][0][1] - b) < SCATTER_CLEAR_M - 0.05]
+    check("accept/the-scene-file's-litter-and-gum-lie-on-the-street/since-3-November",
+          drawn == want and not low and not near, "drawn=%s want=%s below=%s near-clutter=%s"
+          % (drawn, want, sorted(set(low))[:3], sorted(set(near))[:3]))
     try:
         with open(os.path.join(ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
             _held = json.load(fh)["held_props"]["items"]

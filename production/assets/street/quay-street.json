@@ -16,7 +16,9 @@
    "lantern",
    "kiosk",
    "pillarbox",
-   "dustbin"
+   "dustbin",
+   "litter",
+   "gum"
   ],
   "piece_shapes": [
    "decal"
@@ -35,7 +37,7 @@
    "traffic_cone_01",
    "traffic_cone_02"
   ],
-  "why": "the recipe builds these itself, the kiosk, pillar box, dustbins, bollards and public bins from the gated 1990 clutter; lamps, railing, litter and the other ground props are the scene file's and stay"
+  "why": "the recipe builds these itself, the kiosk, pillar box, dustbins, bollards and public bins from the gated 1990 clutter, and the ground's litter and gum from the scene file's scatter; lamps, railing and the other ground props are the scene file's and stay"
  },
  "meshes": [
   {
@@ -3167,6 +3169,30 @@
    "faces": 1813
   },
   {
+   "mesh": "street_gum_trodden",
+   "material": "gum_trodden",
+   "base_material": "gum_trodden",
+   "linear_rgb": [
+    0.05,
+    0.048,
+    0.044
+   ],
+   "roughness": 0.75,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 480
+  },
+  {
    "mesh": "street_harbour_water",
    "material": "harbour_water",
    "base_material": "harbour_water",
@@ -3320,6 +3346,102 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 1664
+  },
+  {
+   "mesh": "street_litter_blue",
+   "material": "litter_blue",
+   "base_material": "litter_blue",
+   "linear_rgb": [
+    0.025,
+    0.045,
+    0.13
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 52
+  },
+  {
+   "mesh": "street_litter_kraft",
+   "material": "litter_kraft",
+   "base_material": "litter_kraft",
+   "linear_rgb": [
+    0.26,
+    0.17,
+    0.08
+   ],
+   "roughness": 0.6,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 38
+  },
+  {
+   "mesh": "street_litter_paper",
+   "material": "litter_paper",
+   "base_material": "litter_paper",
+   "linear_rgb": [
+    0.36,
+    0.355,
+    0.33
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 246
+  },
+  {
+   "mesh": "street_litter_red",
+   "material": "litter_red",
+   "base_material": "litter_red",
+   "linear_rgb": [
+    0.22,
+    0.025,
+    0.02
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 92
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",

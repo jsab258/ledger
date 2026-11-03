@@ -1694,3 +1694,13 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: the board about 2 h (its painted face took five reviews), the crates about 1 h, the kiosk about 1 h, reviewers included.
 - What failed: the board read as a clean white panel, then its dirt as an even comb of strokes, until drawn as clustered splash and uneven rust; the crates' full-height slots read as an open rack until a lower bar crossed every wall, and their bottles vanished in the street's dark window glass until given their own pale glass; the kiosk's words, extruded at the tool's default curve resolution, were 29,000 triangles, four times the whole old kiosk, until flattened and coarsened to 1,953 for the whole piece.
 - Evidence: F:/LedgerTools/gate/new/look/2026-11-03-a-board-g, 2026-11-03-milk-crates-{day,night}-2, 2026-11-03-kiosk-{day,night} (review.json in each); the three targets in production/cloud-week/targets/street-dressing.
+
+## Ground litter drawn from a scene's own scatter numbers, and the stand-ins it replaces (3 November 2026)
+
+- Made: litter and trodden gum on a street's ground, from counts, sizes and a seed the scene file already held.
+- Method: lay each piece wholly inside one strip (the road's channel against the kerb, or the wall feet) and take every point's height from that strip's surface alone, never from whichever surface its point happens to be over; rest a jittered shape on its own lowest point, not on a nominal radius; keep clear of the props the same build places. Before drawing anything new, find what the engine already draws for the same thing: an older stand-in drawn beside the new piece is a fault only a picture shows.
+- Tools: the street recipe, its export and the engine import, editor pictures from the player's camera by day and night, one fresh reviewer per view.
+- Target and check: the scene file's counts exactly; every point on its own surface within 0.10 m and none across the kerb (a self-test); the ground-dressing density against a reference street's; reviewers per view.
+- Cost: about 1.5 h with three rounds of reviews.
+- What failed: a height rule chosen by the point's position put the corner of a gutter scrap at the kerb's top, standing it up like a marker, and floated paper balls at kerb height; the old stand-ins (wooden boxes, discs) kept drawing until the build's replace list named them; jittered balls rested up to 19 mm above the road.
+- Evidence: F:/LedgerTools/gate/new/look/2026-11-03-scatter-west-{day,night}{,-2,-4} (review.json in each).

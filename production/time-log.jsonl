@@ -381,3 +381,17 @@
 {"event": "stop", "at": "2026-11-03T14:12:00", "note": ""}
 {"event": "start", "at": "2026-11-03T14:05:00", "task": "n02-4-corner helper: kiosk night review", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-11-03T14:16:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:20:00", "task": "n02-4-corner", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T15:38:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:43:00", "task": "n02-4-corner helper: litter review round 1, day", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T14:51:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:43:00", "task": "n02-4-corner helper: litter review round 1, night", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T14:48:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:59:00", "task": "n02-4-corner helper: litter review round 2, day", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T15:09:00", "note": ""}
+{"event": "start", "at": "2026-11-03T14:59:00", "task": "n02-4-corner helper: litter review round 2, night", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T15:12:00", "note": ""}
+{"event": "start", "at": "2026-11-03T15:32:00", "task": "n02-4-corner helper: litter review round 3, day", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T15:37:00", "note": ""}
+{"event": "start", "at": "2026-11-03T15:32:00", "task": "n02-4-corner helper: litter review round 3, night", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T15:38:00", "note": ""}
