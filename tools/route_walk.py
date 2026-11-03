@@ -283,21 +283,40 @@ class Route:
         return verdict
 
 
+START_SAID = [""]               # the tester's last word on a start that failed, for the verdict
+
+
 def start(editor, save_dir, extra=()):
     args = ["start", "--save", save_dir, "--wait", "5", "--game-arg", "-RouteWalk"]
     for x in extra:
         args += ["--game-arg", x]
     if editor:
         args.insert(1, "--editor")
+    unseen = 0
     for _ in range(30):
         r = play(*args)
+        START_SAID[0] = r
         if "did=started" in r:
             return True
         if "BUSY" in r or "REFUSED" in r:
             print("route start: " + r)
             return False
+        # THE GAME OPEN BUT NOT IN FRONT (3 November: the Windows clipboard panel held the front all night): the
+        # start left the game running, so each retry met ALREADY-RUNNING and the verdict said only "did not start".
+        # Close it before trying again, and give up after three, naming what held the front.
+        if "NOT-IN-FRONT" in r or "NO-PICTURE" in r:
+            print("route start: " + r)
+            play("close")
+            unseen += 1
+            if unseen >= 3:
+                return False
         time.sleep(60)          # the PC was in use: the tester waits for two idle minutes
     return False
+
+
+def not_started(again=False):
+    said = START_SAID[0].replace("aiTester status=", "")
+    return "the game did not start" + (" again" if again else "") + (" (%s)" % said[:120] if said else "")
 
 
 def greet(r, key, name):
@@ -402,7 +421,7 @@ def walk(editor, out, town=False, sit=False):
     extra += GAME_ARGS                                              # --game-arg X (29 October: -CollisionAudit beside a walk)
     play("close")
     if not start(editor, save_dir, extra):
-        r.record("street", False, "the game did not start")
+        r.record("street", False, not_started())
         return r.write()
     play("press", "Enter")                                          # New game
     if not r.expect("street", 60):
@@ -506,7 +525,7 @@ def walk(editor, out, town=False, sit=False):
         except OSError:
             pass
     if not start(editor, save_dir, extra):
-        r.record("street", False, "the game did not start again")
+        r.record("street", False, not_started(again=True))
         return r.write()
     play("press", "Enter")                                          # Continue
     c = r.wait_stage("street", 60)

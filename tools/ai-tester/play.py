@@ -906,6 +906,10 @@ if __name__ == "__main__":
         sys.exit(selftest())
     verb = argv[0] if argv else ""
     rest = argv[1:]
+    # HELP STARTS NOTHING (3 November: "start --help" launched the packaged game, since unknown flags were ignored)
+    if "--help" in argv or "-h" in argv:
+        print(__doc__)
+        sys.exit(0)
     if verb == "start":
         a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "bare": "--bare" in rest, "noraw": "--no-raw" in rest,
              "realtalk": "--real-talk" in rest}
