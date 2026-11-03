@@ -10602,12 +10602,35 @@ namespace
 			const bool bHasClock = FFileHelper::LoadFileToString(PreClock, *(Dir / TEXT("clock.txt")));
 			const bool bHasAgents = FFileHelper::LoadFileToString(PreAgents, *(Dir / TEXT("agents.json")));
 			FString SavedBy;
+			// THE DAY AND THE CLOCK AS THE CORE'S GATE READS THEM (SaveCodec.cs Restore; port audit U8):
+			// a whole day from 0 to 100,000 is required, a missing hour or minute is midnight's, and a
+			// present one that is not a time refuses, never clamped behind the player's back.
+			bool bDayRead = false;
+			int PreDay = 0, PreHour = 0, PreMinute = 0;
+			bool bWhole = true;
+			auto WholeOf = [&bWhole](const FString& V)
+			{
+				const int32 From = V.StartsWith(TEXT("-")) ? 1 : 0;
+				bWhole = V.Len() > From && V.Len() <= From + 9;   // nine digits, inside an int
+				for (int32 I = From; bWhole && I < V.Len(); ++I) { bWhole = FChar::IsDigit(V[I]); }
+				return bWhole ? FCString::Atoi(*V) : 0;
+			};
+			bool bClockWhole = true;
 			if (bHasClock)
 			{
 				TArray<FString> PreLines;
 				PreClock.ParseIntoArrayLines(PreLines);
-				for (const FString& L : PreLines) { if (L.StartsWith(TEXT("commit="))) { SavedBy = L.Mid(7); } }
+				for (const FString& L : PreLines)
+				{
+					if (L.StartsWith(TEXT("commit="))) { SavedBy = L.Mid(7); }
+					else if (L.StartsWith(TEXT("day="))) { PreDay = WholeOf(L.Mid(4)); bDayRead = bWhole; }
+					else if (L.StartsWith(TEXT("hour="))) { PreHour = WholeOf(L.Mid(5)); bClockWhole = bClockWhole && bWhole; }
+					else if (L.StartsWith(TEXT("minute="))) { PreMinute = WholeOf(L.Mid(7)); bClockWhole = bClockWhole && bWhole; }
+				}
 			}
+			std::string ClockWords;
+			const bool bDayOk = bDayRead && Save::DayPlayable(PreDay);
+			const bool bClockOk = bClockWhole && Save::ClockIsTime(PreHour, PreMinute, ClockWords);
 			bool bHasMemories = true;
 			for (const GossiperPtr& G : { GW1, GN2, GR3 })
 			{
@@ -10615,7 +10638,8 @@ namespace
 			}
 			const TCHAR* Why = !bHasClock ? TEXT("no clock file") : !bHasAgents ? TEXT("no agents file")
 				: !bHasMemories ? TEXT("a memory file missing")
-				: (Utf8(SavedBy) != Utf8(CrimeSha()) ? TEXT("another build's save") : nullptr);
+				: Utf8(SavedBy) != Utf8(CrimeSha()) ? TEXT("another build's save")
+				: !bDayOk ? TEXT("no readable day") : !bClockOk ? TEXT("a clock that is not a time") : nullptr;
 			if (Why != nullptr)
 			{
 				bLoadedFromDisk = false;

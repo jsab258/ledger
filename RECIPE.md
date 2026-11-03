@@ -1726,3 +1726,11 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - What failed: classing joints by colour alone; tones measured in stored rather than linear values; a hue pull scaled to the whole lift; a lopsided tone spread that moved the wall's mean by 3 to 12%.
 - Evidence: F:/LedgerTools/gate/new/brick-tones (pictures on and off, review-*.json); F:/LedgerTools/tmp/brick-packaged-start and -2 (the shipped build before and after its staging).
 - And the masonry's tone over metres (same day, about 0.5 h with one small review): a world-position noise of a few metres multiplied into the colour after every other layer, mean-zero and capped at a few percent, hue untouched, off by default; a frame's own brightness spread is dominated by light and stains, so measure the change against the same frame without it, not the frame alone. Evidence: F:/LedgerTools/gate/new/wall-macro/review.json.
+
+## Two engines, one rule for refusing a save: the shipped game's load check calls the reference's own gate (3 November 2026)
+
+- Made: the shipped game's check before a load now refuses a save whose day is missing, not whole or past the playable range, or whose clock is not a time, by calling the ported functions the reference simulation's goldens already pin, instead of only the build-stamp and missing-file checks.
+- Method: when a port has the reference's gate as pure functions with golden rows, the game's own load path calls those functions on its own file format before it touches any state, in the reference's order of refusals; the file's numbers parsed strictly (digits only, capped to fit the integer) so a malformed value refuses rather than reading as zero.
+- Tools: the port audit's table (which rows the game does not yet call), the game target's command-line build.
+- Target and check: the game target compiles; valid saves (every save writes a whole day, hour and minute) still load in the night's save, quit and Continue walk.
+- Cost: about 0.4 h. What failed: nothing yet; the packaged walk is its check. Evidence: production/audits/sweep-2026-10-05/port-vs-core.md, row U8.
