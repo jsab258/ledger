@@ -258,6 +258,39 @@ STREAK_POWER = 0.56
 STREAK_LEVELS = 2
 WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
 WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
+# THE BRICKS' OWN TONES, 3 November (the corner's step 6, brick that does not repeat; production/research/aaa-street/
+# BRICK-2026-10-04.md, method 2, a brick-ID channel): the brick scans tile every 1.05 m and their darkest bricks come
+# back as the same rows a metre apart. tools/brick_ids.py finds each brick of a scan and writes BrickIds (R a random
+# value per brick, G its tone over the median brick's halved, B and A which copy of the tile its centre lies in); here
+# each brick of each copy takes a tone from the bricks' own spread (BrickTones: the 2, 50 and 98% tones) by its value
+# and its copy's hash, scaled by BrickRetone, so no two copies of the tile agree and nothing moves (the bond, the relief
+# and the mortar untouched). A brick lifted past half again lighter takes the common brick's hue (BrickHue), or a
+# lifted burnt brick shows the blue under its black. The sample is inside a branch: at BrickRetone 0, the default and
+# every row but the brick scans', it is not taken and the colour passes through exactly (the game sets it,
+# VignetteShot.cpp DriveCornerSurfaces; SurfaceBind.h BrickRetoneParam). The arithmetic is brick_ids.py retone()'s.
+BRICK_RETONE_PARAM = "BrickRetone"
+BRICK_RETONE_DEFAULT = 0.0
+BRICK_IDS_PARAM = "BrickIds"
+BRICK_TONES_PARAM = "BrickTones"
+BRICK_TONES_DEFAULT = (1.0, 1.0, 1.0, 0.0)
+BRICK_HUE_PARAM = "BrickHue"
+BRICK_HUE_DEFAULT = (1.0, 1.0, 1.0, 0.0)
+BRICK_FACTOR = (0.35, 3.0)    # brick_ids.py FACTOR_MIN, FACTOR_MAX
+BRICK_HUE_FULL = 1.5          # brick_ids.py HUE_FULL_AT
+BRICK_TONE_HLSL = """
+[branch] if (Amount <= 0.0) { return Col; }
+float4 id = Texture2DSample(Ids, IdsSampler, UV);
+float brick = saturate(id.g * 20.0);
+float2 cell = floor(UV) + float2(round(id.b * 2.0 - 1.0), round(id.a * 2.0 - 1.0));
+float h = frac(sin(cell.x * 12.9898 + cell.y * 78.233) * 43758.5453);
+float r = frac(id.r + h);
+float t = r < 0.5 ? lerp(Tones.x, Tones.y, r * 2.0) : lerp(Tones.y, Tones.z, (r - 0.5) * 2.0);
+float f = 1.0 + (clamp(t / max(id.g * 2.0, 0.001), %(fmin)s, %(fmax)s) - 1.0) * Amount * brick;
+float3 c = Col * f;
+float k = saturate((f - 1.0) / (%(hfull)s - 1.0));
+float l = dot(c, float3(0.2126, 0.7152, 0.0722));
+return lerp(c, l * Hue.rgb, k);
+""" % {"fmin": BRICK_FACTOR[0], "fmax": BRICK_FACTOR[1], "hfull": BRICK_HUE_FULL}
 
 # THE ROUGHNESS A FULLY WET SURFACE APPROACHES, and this file does not get to
 # have an opinion about it. It is 1 - 0.92 where 0.92 is
@@ -1213,6 +1246,7 @@ WIRE_SERIES = (
     (77, "8-october-a-lit-net-glows-as-its-picture-5-wires"),
     (78, "8-october-the-road's-film-specular-1-wire"),
     (89, "30-october-the-brick's-streaks-11-wires"),
+    (95, "3-november-the-bricks'-own-tones-6-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1248,6 +1282,7 @@ def wire_plan(texture_params=None):
         ("water", 27, 27, "one-site-one-connection"),
         ("emissivemap", 5, 5, "one-site-one-connection"),
         ("streaks", 11, 11, "one-site-one-connection"),
+        ("bricktones", 6, 6, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -2788,6 +2823,29 @@ def selftest():
     checks += 1
     if 'StreakParam() { return "%s"; }' % STREAK_PARAM not in open(header, "r", encoding="utf-8").read():
         bad.append("SurfaceBind.h has no StreakParam returning %s, so the game's set site and the material can drift" % STREAK_PARAM)
+    # THE BRICKS' OWN TONES (3 November): off unless set, its sample inside the branch, brick_ids.py's clamp and hue
+    # point, and every name the game sets spelled once in the header
+    checks += 1
+    if (BRICK_RETONE_DEFAULT != 0.0 or "[branch] if (Amount <= 0.0) { return Col; }" not in BRICK_TONE_HLSL
+            or BRICK_TONE_HLSL.index("return Col;") > BRICK_TONE_HLSL.index("Texture2DSample")):
+        bad.append("the bricks' tones must default to off (BrickRetone 0) and take no sample when off")
+    checks += 1
+    try:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location("brick_ids", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "brick_ids.py"))
+        _bi = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_bi)
+        if (_bi.FACTOR_MIN, _bi.FACTOR_MAX) != BRICK_FACTOR or _bi.HUE_FULL_AT != BRICK_HUE_FULL:
+            bad.append("the material's brick clamp %s and hue point %s differ from tools/brick_ids.py's %s and %s"
+                       % (BRICK_FACTOR, BRICK_HUE_FULL, (_bi.FACTOR_MIN, _bi.FACTOR_MAX), _bi.HUE_FULL_AT))
+    except Exception as e:  # noqa: BLE001
+        bad.append("tools/brick_ids.py could not be read for its clamp: %s" % e)
+    checks += 1
+    _hdr = open(header, "r", encoding="utf-8").read()
+    for _fn, _name in (("BrickRetoneParam", BRICK_RETONE_PARAM), ("BrickIdsParam", BRICK_IDS_PARAM),
+                       ("BrickTonesParam", BRICK_TONES_PARAM), ("BrickHueParam", BRICK_HUE_PARAM)):
+        if '%s() { return "%s"; }' % (_fn, _name) not in _hdr:
+            bad.append("SurfaceBind.h has no %s returning %s, so the game's set site and the material can drift" % (_fn, _name))
     print("    %s" % line)
     print("    %s" % good_line)
     print("    %s" % prop_line)
@@ -3819,6 +3877,48 @@ def main():
     mp = unreal.MaterialProperty
     normal_lerp = expr(unreal.MaterialExpressionLinearInterpolate, 120, 60)
     base_smp = None
+
+    # ---- THE BRICKS' OWN TONES, 3 November (BRICK_RETONE_PARAM above): the base colour goes through one custom node
+    # before the grade, which passes it through untouched at BrickRetone 0 ----
+    brick_tone = expr(unreal.MaterialExpressionCustom, -260, -620)
+    try:
+        brick_tone.set_editor_property("code", BRICK_TONE_HLSL)
+        brick_tone.set_editor_property("output_type", unreal.CustomMaterialOutputType.CMOT_FLOAT3)
+        brick_tone.set_editor_property("description", "BrickTones")
+        ins = []
+        for name in ("Col", "UV", "Ids", "Amount", "Tones", "Hue"):
+            ci = unreal.CustomInput()
+            ci.set_editor_property("input_name", name)
+            ins.append(ci)
+        brick_tone.set_editor_property("inputs", ins)
+    except Exception:
+        w.notes.append("bricktone-custom-node-refused")
+    brick_ids = expr(unreal.MaterialExpressionTextureObjectParameter, -620, -700)
+    try:
+        brick_ids.set_editor_property("parameter_name", BRICK_IDS_PARAM)
+        default_ids = unreal.load_asset("/Engine/EngineResources/DefaultTexture") or resolved[0][0]
+        if default_ids is not None:
+            brick_ids.set_editor_property("texture", default_ids)
+    except Exception:
+        w.notes.append("brickids-parameter-refused")
+    brick_amt = expr(unreal.MaterialExpressionScalarParameter, -620, -560)
+    brick_tones = expr(unreal.MaterialExpressionVectorParameter, -620, -500)
+    brick_hue = expr(unreal.MaterialExpressionVectorParameter, -620, -440)
+    try:
+        brick_amt.set_editor_property("parameter_name", BRICK_RETONE_PARAM)
+        brick_amt.set_editor_property("default_value", BRICK_RETONE_DEFAULT)
+        brick_tones.set_editor_property("parameter_name", BRICK_TONES_PARAM)
+        brick_tones.set_editor_property("default_value", unreal.LinearColor(*BRICK_TONES_DEFAULT))
+        brick_hue.set_editor_property("parameter_name", BRICK_HUE_PARAM)
+        brick_hue.set_editor_property("default_value", unreal.LinearColor(*BRICK_HUE_DEFAULT))
+    except Exception:
+        w.notes.append("bricktone-parameters-refused")
+    connect(app, "", brick_tone, "UV", "uv-to-bricktone")
+    connect(brick_ids, "", brick_tone, "Ids", "brickids-to-bricktone")
+    connect(brick_amt, "", brick_tone, "Amount", "brickretone-to-bricktone")
+    connect(brick_tones, "", brick_tone, "Tones", "bricktones-to-bricktone")
+    connect(brick_hue, "", brick_tone, "Hue", "brickhue-to-bricktone")
+    connect(brick_tone, "", grade_mul, "A", "bricktone-to-grade")
     # THE DECLARED TYPE IS THE TYPE THE RESOLVED TEXTURE DERIVES, and only
     # falls back to the intended one when nothing resolved at all. Unreal
     # compares those two and refuses the mismatch, so taking the texture's
@@ -3835,16 +3935,17 @@ def main():
         # through the wetness lerp. The hop from that node to the property is
         # its own counted connection below, so a map that never reaches the
         # pin still shows as a short materialConnections.
-        via_node, via_name = None, "grade"
+        via_node, via_name, via_pin = None, "grade", "A"
         if prop == mp.MP_BASE_COLOR:
-            via_node = grade_mul
+            # through the bricks' own tones first (3 November), which hand it on to the grade multiply
+            via_node, via_name, via_pin = brick_tone, "bricktone", "Col"
         elif prop == mp.MP_ROUGHNESS:
             via_node, via_name = wet_lerp, "wetlerp"
         elif prop == mp.MP_NORMAL:
             via_node, via_name = normal_lerp, "waterlerp"
         smp = sampler(TEXTURE_PARAMS[I], y,
                       _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
-                      via=via_node, via_what=via_name)
+                      via=via_node, via_pin=via_pin, via_what=via_name)
         if prop == mp.MP_BASE_COLOR:
             base_smp = smp
 

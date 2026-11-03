@@ -360,7 +360,20 @@
       ],
       "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour",
       "always": true,
-      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md."
+      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md.",
+      "ids": "production/assets/scanned/polyhaven/brick_4/brick_4_ids.png",
+      "retone": 1.0,
+      "tones": [
+        0.585,
+        1.019,
+        1.348
+      ],
+      "hue": [
+        1.9249,
+        0.7844,
+        0.4123
+      ],
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
     },
     {
       "base": "brick_grey",
@@ -378,7 +391,20 @@
       ],
       "always": true,
       "why": "the west rows' soot-darkened brick (their roof note: 'a run of soot-blackened commercial terrace'), 24 September; covers_m COUNTED from the map, 14 courses at 75 mm, not the 3.0 first recorded; the scan's mean brought to the drawn brick_grey map's, so it adds brick, mortar and soot, not a new colour",
-      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md."
+      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md.",
+      "ids": "production/assets/scanned/polyhaven/brick_wall_001/brick_wall_001_ids.png",
+      "retone": 1.0,
+      "tones": [
+        0.481,
+        0.935,
+        1.823
+      ],
+      "hue": [
+        1.7366,
+        0.8271,
+        0.5437
+      ],
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
     },
     {
       "base": "asphalt",
@@ -447,7 +473,20 @@
         0.24
       ],
       "always": true,
-      "why": "4 October, the proof view, step 2.5: the window arches' rubbed brick, the same scan as the walls graded a deeper orange-red, as the sheet's gauged arches stand out from their walls"
+      "why": "4 October, the proof view, step 2.5: the window arches' rubbed brick, the same scan as the walls graded a deeper orange-red, as the sheet's gauged arches stand out from their walls",
+      "ids": "production/assets/scanned/polyhaven/brick_4/brick_4_ids.png",
+      "retone": 1.0,
+      "tones": [
+        0.585,
+        1.019,
+        1.348
+      ],
+      "hue": [
+        1.9249,
+        0.7844,
+        0.4123
+      ],
+      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL"
     }
   ],
   "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",

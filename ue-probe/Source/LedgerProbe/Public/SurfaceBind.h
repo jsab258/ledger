@@ -870,6 +870,14 @@ namespace LedgerSurface
 	// world-noise streaks darken a brick row's colour; 0, the default, is the material as it was. The game sets it on the
 	// brick rows of a house the wear file gives a "streak" (VignetteShot.cpp BrickStreakFor).
 	inline const char* StreakParam() { return "StreakAmount"; }
+	// THE BRICKS' OWN TONES, 3 November (tools/ue/make_base_material.py BRICK_RETONE_PARAM; the corner's step 6): each
+	// brick of each copy of a brick scan takes its own tone, read from the scan's brick map (tools/brick_ids.py); 0, the
+	// default, takes no sample and passes the colour through. The game sets them on the rows wearing a brick scan whose
+	// corner-file entry names its "ids" (VignetteShot.cpp DriveCornerSurfaces).
+	inline const char* BrickRetoneParam() { return "BrickRetone"; }
+	inline const char* BrickIdsParam() { return "BrickIds"; }
+	inline const char* BrickTonesParam() { return "BrickTones"; }
+	inline const char* BrickHueParam() { return "BrickHue"; }
 
 	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
 	// sets this parameter renders exactly what it renders today, bit for bit,

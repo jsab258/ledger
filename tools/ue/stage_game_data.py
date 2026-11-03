@@ -113,7 +113,7 @@ def wanted():
     # carries no "scanned" list, so none was ever staged; the game's list is ps5-corner.json's)
     for spec in ("production/specs/vignette-pieces.json", "production/specs/ps5-corner.json"):
         for sc in _load(spec).get("scanned", []) or []:
-            for f in sc.get("files", []) or []:
+            for f in (sc.get("files", []) or []) + [sc.get("ids")]:   # and a brick scan's map (tools/brick_ids.py)
                 if isinstance(f, str) and f:
                     files.append(f)
     sounds = _load("production/specs/street-sounds.json")

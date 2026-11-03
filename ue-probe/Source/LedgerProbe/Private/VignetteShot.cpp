@@ -1422,8 +1422,17 @@ namespace
 		// shots: the corner file's "always" (24 September, after the brick and
 		// the paint were judged better at true size and the flags worse).
 		bool bAlways = false;
+		// THE BRICKS' OWN TONES, 3 November (the corner's step 6): the scan's brick map (tools/brick_ids.py, "ids"),
+		// how far each brick is re-toned ("retone"), the bricks' 2, 50 and 98% tones and their common hue, linear
+		std::string Ids;
+		double Retone = 0.0;
+		double Tones[3] = {1.0, 1.0, 1.0};
+		double Hue[3] = {1.0, 1.0, 1.0};
+		UTexture2D* IdsTex = nullptr;
+		bool bIdsTried = false;
 	};
 	std::vector<ScanSurface> GScan;
+	int32 GBrickToneRows = 0;
 	bool GScanPrimed = false;
 	// WHAT EACH STREET ROW WORE AT BIND TIME, so a scanned shot can be put
 	// back exactly, and which scan it wears now (-1 none).
@@ -1593,6 +1602,18 @@ namespace
 				for (size_t K = 0; M != 0 && M->Type == T_ARR && K < 3 && K < M->Arr.size(); ++K)
 				{
 					if (M->Arr[K].Type == T_NUM && M->Arr[K].Num > 0.0) { Sc.Match[K] = M->Arr[K].Num; }
+				}
+				Sc.Ids = LedgerStreet::StrOr(V, "ids");
+				Sc.Retone = LedgerStreet::NumOr(V, "retone", 0.0);
+				const Value* Tn = V.Find("tones");
+				for (size_t K = 0; Tn != 0 && Tn->Type == T_ARR && K < 3 && K < Tn->Arr.size(); ++K)
+				{
+					if (Tn->Arr[K].Type == T_NUM && Tn->Arr[K].Num > 0.0) { Sc.Tones[K] = Tn->Arr[K].Num; }
+				}
+				const Value* Hu = V.Find("hue");
+				for (size_t K = 0; Hu != 0 && Hu->Type == T_ARR && K < 3 && K < Hu->Arr.size(); ++K)
+				{
+					if (Hu->Arr[K].Type == T_NUM && Hu->Arr[K].Num > 0.0) { Sc.Hue[K] = Hu->Arr[K].Num; }
 				}
 				if (Sc.Base.empty() || Sc.Files[0].empty() || Sc.CoversM <= 0.0) { continue; }
 				GScan.push_back(Sc);
@@ -8731,10 +8752,47 @@ namespace
 				Gc = FLinearColor((float)(Sc.Match[0] * Sg.R * Ht.R), (float)(Sc.Match[1] * Sg.G * Ht.G),
 				                  (float)(Sc.Match[2] * Sg.B * Ht.B), 1.0f);
 				GRowScan[I] = K;
+				// THE BRICKS' OWN TONES (3 November): the scan's brick map, read once, nearest (a brick's edge never takes
+				// its neighbour's value); -NoBrickTones leaves the plain tiling, for the picture without
+				static const bool bNoTones = FParse::Param(FCommandLine::Get(), TEXT("NoBrickTones"));
+				if (!Sc.Ids.empty() && !Sc.bIdsTried)
+				{
+					// one texture a map, whichever rows share it (brick_4 is worn by the walls and the rubbed arches)
+					static TMap<FString, UTexture2D*> IdsByFile;
+					Sc.bIdsTried = true;
+					const FString File = FPaths::Combine(GStreetRepoRoot, FString(UTF8_TO_TCHAR(Sc.Ids.c_str())));
+					FString LoadedAs = TEXT("shared");
+					if (UTexture2D** Had = IdsByFile.Find(File)) { Sc.IdsTex = *Had; }
+					else
+					{
+						int32 FW = 0, FH = 0;
+						if (IFileManager::Get().FileSize(*File) > 0) { Sc.IdsTex = ImportTexture(File, false, FW, FH, LoadedAs); }
+						if (Sc.IdsTex != nullptr)
+						{
+							Sc.IdsTex->Filter = TF_Nearest;
+							Sc.IdsTex->UpdateResource();
+						}
+						IdsByFile.Add(File, Sc.IdsTex);
+					}
+					UE_LOG(LogTemp, Display, TEXT("LedgerBrickTones: %s's brick map %s (%s)"), UTF8_TO_TCHAR(Sc.Asset.c_str()),
+					       Sc.IdsTex != nullptr ? TEXT("read") : TEXT("NOT READ, the plain tiling"), *LoadedAs);
+				}
+				const bool bTones = !bNoTones && Sc.IdsTex != nullptr && Sc.Retone > 0.0;
+				if (bTones)
+				{
+					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickIdsParam())), Sc.IdsTex);
+					Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickTonesParam())),
+					                             FLinearColor((float)Sc.Tones[0], (float)Sc.Tones[1], (float)Sc.Tones[2], 0.0f));
+					Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickHueParam())),
+					                             FLinearColor((float)Sc.Hue[0], (float)Sc.Hue[1], (float)Sc.Hue[2], 0.0f));
+					++GBrickToneRows;
+				}
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickRetoneParam())), bTones ? (float)Sc.Retone : 0.0f);
 			}
 			else
 			{
 				GRowScan[I] = -1;
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::BrickRetoneParam())), 0.0f);
 			}
 			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))), T[0]);
 			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
@@ -8746,6 +8804,8 @@ namespace
 			if (I < GStreetNormals.Num()) { GStreetNormals[I] = T[1]; }
 			++Rows;
 		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerBrickTones: %d row(s) wear their bricks' own tones"), GBrickToneRows);
+		GBrickToneRows = 0;
 		GScanOn = bWant;
 		GScanPrimed = true;
 		if (bWant)

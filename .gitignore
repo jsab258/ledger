@@ -212,3 +212,7 @@ ledger/Assets/StreamingAssets/Decals/ours/wear_pale_rim/
 ledger/Assets/StreamingAssets/Decals/ours/wear_smoke/
 # POCKET-ONLY VOICE REFERENCES, 26 October: audio stays out of git; F:\LedgerTools\game-inputs holds them
 game-design/pocket-voices/
+
+# the brick scans' per-brick maps (tools/brick_ids.py, 3 November): pictures, so the lasting copy is on F: game inputs
+production/assets/scanned/**/*_ids.png
+production/assets/scanned/**/*_ids.json

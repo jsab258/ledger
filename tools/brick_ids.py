@@ -38,10 +38,14 @@ SPEC = os.path.join(REPO, "production", "specs", "ps5-corner.json")
 OUT_ROOT = "F:/LedgerTools/game-inputs"
 MIN_BRICK_PX = 400
 OPEN_PX = 3
-#: HOW FAR ONE BRICK MAY BE MOVED (3 November, the grey scan's first preview: its near-black burnt bricks lifted to the
-#: median came out an unnatural blue-grey): at most half again lighter or a third darker, so a burnt brick stays a dark
-#: one and a pale one a pale one, only in other places; the material's own clamp (make_base_material.py) is the same
-FACTOR_MIN, FACTOR_MAX = 0.67, 1.5
+#: HOW FAR ONE BRICK MAY BE MOVED, in linear light, and the tones it may take: the bricks' own from 2 to 98% (3 November:
+#: at 5 to 95% and 0.45 to 2.2 the red scan's grey bricks stayed grey and in step, the repeat unbroken; a darker few have
+#: to become ordinary and an ordinary few dark for the pattern to move). The material's clamp (make_base_material.py
+#: BRICK_FACTOR) is the same pair.
+FACTOR_MIN, FACTOR_MAX = 0.35, 3.0
+#: A LIFTED BRICK TAKES THE COMMON BRICK'S HUE, wholly by half again lighter (3 November: pulled only in step with the
+#: whole lift, a lifted grey brick stayed grey); the material's BRICK_HUE_FULL
+HUE_FULL_AT = 1.5
 
 
 def _otsu(v):
@@ -66,13 +70,29 @@ def ao_file(diff_rel):
     return diff_rel.replace("_diffuse_2k", "_ao_2k").replace("_diff_2k", "_ao_2k")
 
 
+def to_linear(c):
+    import numpy as np
+    c = np.asarray(c, dtype=float)
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+
+def to_srgb(c):
+    import numpy as np
+    c = np.clip(np.asarray(c, dtype=float), 0, 1)
+    return np.where(c <= 0.0031308, c * 12.92, 1.055 * c ** (1 / 2.4) - 0.055)
+
+
 def brick_ids(rgb, ao=None):
-    """rgb: H x W x 3 floats 0..1, a seamless tile; ao, its shading map (H x W), when the joints are to be told by it.
-    Returns (ids H x W x 4 floats, info)."""
+    """rgb: H x W x 3 floats 0..1 as stored (sRGB), a seamless tile; ao, its shading map (H x W), when the joints are
+    to be told by it. Returns (ids H x W x 4 floats, info). The joints are told on the stored values; every tone and the
+    hue are measured in linear light, as the material multiplies them (3 November: measured on the stored values, a
+    brick's ratio is about its linear one to the power 1/2.2, so the material would re-tone by the wrong amount)."""
     import numpy as np
     from scipy import ndimage
     h, w = rgb.shape[:2]
     lum = rgb @ np.array([0.2126, 0.7152, 0.0722])
+    lin = to_linear(rgb)
+    lum_lin = lin @ np.array([0.2126, 0.7152, 0.0722])
     if ao is not None:
         t = _otsu(ao)
         brick = ao > t
@@ -88,7 +108,7 @@ def brick_ids(rgb, ao=None):
     big = np.tile(brick, (3, 3))
     big = ndimage.binary_opening(big, structure=np.ones((OPEN_PX, OPEN_PX)))
     lab, n = ndimage.label(big)
-    lum_big = np.tile(lum, (3, 3))
+    lum_big = np.tile(lum_lin, (3, 3))
     idx = np.arange(1, n + 1)
     size = ndimage.sum(np.ones_like(lum_big), lab, idx)
     mean = ndimage.mean(lum_big, lab, idx)
@@ -114,21 +134,37 @@ def brick_ids(rgb, ao=None):
     out[..., 1][keep] = ratio[kk] / 2.0
     out[..., 2][keep] = (np.floor(cx[kk] / w) - 1 + 1) / 2.0
     out[..., 3][keep] = (np.floor(cy[kk] / h) - 1 + 1) / 2.0
-    q = np.percentile(ratio[once], [5, 50, 95]) if len(once) else [1.0, 1.0, 1.0]
+    q = np.percentile(ratio[once], [2, 50, 98]) if len(once) else [1.0, 1.0, 1.0]
     # THE COMMON BRICK'S HUE: the mean colour of the middle half of the bricks by tone, over its own luminance
-    rgb_big = np.tile(rgb, (3, 3, 1))
+    rgb_big = np.tile(lin, (3, 3, 1))
     mid = once[(ratio[once] >= np.percentile(ratio[once], 25)) & (ratio[once] <= np.percentile(ratio[once], 75))] if len(once) else once
     sel = np.isin(lab, mid + 1)
     mrgb = rgb_big[sel].mean(axis=0) if sel.any() else np.array([1.0, 1.0, 1.0])
     hue = mrgb / max(float(mrgb @ np.array([0.2126, 0.7152, 0.0722])), 1e-6)
+    # THE WALL'S OWN MEAN KEPT (3 November: the tones' spread is lopsided and the clamp cuts it, so re-toned the red scan
+    # came out about 3% darker and the grey about 12% lighter than its walls' measured values): the tones are scaled
+    # until a re-toned 4 by 4 wall's mean brick luminance is the plain one's, within 0.5%
+    q = np.asarray(q, dtype=float)
+    small, ids_s = lin[::4, ::4], out[::4, ::4]
+    bricks = np.tile(ids_s[..., 1] > 0, (4, 4))
+    plain = float((retone(small, ids_s, 4, 4, q, amount=0.0) @ np.array([0.2126, 0.7152, 0.0722]))[bricks].mean())
+    mean_kept = 1.0
+    for _ in range(6):
+        toned = float((retone(small, ids_s, 4, 4, q, amount=1.0, hue=hue) @ np.array([0.2126, 0.7152, 0.0722]))[bricks].mean())
+        mean_kept = toned / max(plain, 1e-9)
+        if abs(mean_kept - 1.0) < 0.005:
+            break
+        q = q / mean_kept
     info = {"bricks": int(len(once)), "mortar_share": round(float(1.0 - keep.mean()), 3), "threshold": round(t, 4),
-            "tone_q05_q50_q95": [round(float(v), 3) for v in q], "brick_hue": [round(float(v), 4) for v in hue]}
+            "tone_q05_q50_q95": [round(float(v), 3) for v in q], "brick_hue": [round(float(v), 4) for v in hue],
+            "mean_kept": round(mean_kept, 4)}
     return out, info
 
 
 def retone(rgb, ids, cells_u, cells_v, q, amount=1.0, seed=0, hue=None):
-    """What the material will do, in numpy: a cells_v x cells_u wall of copies of the tile, each brick's tone
-    taken from the bricks' own spread by its random value and its copy's hash (amount 0: the plain tiling)."""
+    """What the material will do (make_base_material.py BRICK_TONE_HLSL), in numpy, on LINEAR colour: a cells_v x
+    cells_u wall of copies of the tile, each brick's tone taken from the bricks' own spread by its random value and
+    its copy's hash (amount 0: the plain tiling)."""
     import numpy as np
     h, w = rgb.shape[:2]
     rows = []
@@ -148,7 +184,7 @@ def retone(rgb, ids, cells_u, cells_v, q, amount=1.0, seed=0, hue=None):
             if hue is not None:
                 # A LIFTED BRICK TAKES THE COMMON BRICK'S HUE as it is lifted (the grey scan's second preview: its
                 # burnt bricks, lifted, showed the blue under the black): the share lifted, toward the median brick
-                k = np.clip((f - 1.0) / (FACTOR_MAX - 1.0), 0, 1)[..., None]
+                k = np.clip((f - 1.0) / (HUE_FULL_AT - 1.0), 0, 1)[..., None]
                 lum = (col @ np.array([0.2126, 0.7152, 0.0722]))[..., None]
                 col = col + (lum * np.asarray(hue) - col) * k
             row.append(np.clip(col, 0, 1))
@@ -182,6 +218,7 @@ def run(assets, out_root, preview):
     from PIL import Image
     done = 0
     seen = set()
+    made = {}
     for s in scans():
         # brick_4 is worn by two rows (brick_red and the rubbed arches): one map serves both
         if (assets and s["asset"] not in assets) or s["asset"] in seen:
@@ -198,13 +235,17 @@ def run(assets, out_root, preview):
         dest = os.path.join(out_root, rel_dir)
         os.makedirs(dest, exist_ok=True)
         png = os.path.join(dest, s["asset"] + "_ids.png")
-        Image.fromarray((np.clip(ids, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA").save(png)
+        pic = Image.fromarray((np.clip(ids, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+        pic.save(png)
+        # AND IN THE CHECKOUT, where the editor's game reads it (ignored by git, which takes no picture outside the
+        # previews: the lasting copy is the game inputs' one, which the build's staging reads)
+        pic.save(os.path.join(REPO, rel_dir, s["asset"] + "_ids.png"))
         info.update({"asset": s["asset"], "base": s["base"], "from": s["files"][0], "covers_m": s.get("covers_m"),
                      "made_by": "tools/brick_ids.py", "channels": "R random, G tone over the median brick halved, "
                      "B and A the copy of the tile the brick's centre lies in (0, 0.5, 1), linear"})
         if preview:
             os.makedirs(preview, exist_ok=True)
-            small = rgb[::4, ::4]
+            small = to_linear(rgb[::4, ::4])
             ids_s = ids[::4, ::4]
             h, w = small.shape[:2]
             q = info["tone_q05_q50_q95"]
@@ -213,15 +254,40 @@ def run(assets, out_root, preview):
             info["neighbours_alike_before"] = neighbour_alike(before, h, w)
             info["neighbours_alike_after"] = neighbour_alike(after, h, w)
             for name, img in (("before", before), ("after", after)):
-                Image.fromarray((img * 255 + 0.5).astype(np.uint8)).save(os.path.join(preview, "%s-%s.jpg" % (s["asset"], name)),
-                                                                          quality=88)
+                Image.fromarray((to_srgb(img) * 255 + 0.5).astype(np.uint8)).save(
+                    os.path.join(preview, "%s-%s.jpg" % (s["asset"], name)), quality=88)
         with open(os.path.join(dest, s["asset"] + "_ids.json"), "w", encoding="utf-8") as fh:
             json.dump(info, fh, indent=1)
         print("brickIds asset=%s bricks=%d mortar=%.3f tones=%s alike=%s->%s out=%s" % (
             s["asset"], info["bricks"], info["mortar_share"], info["tone_q05_q50_q95"],
             info.get("neighbours_alike_before"), info.get("neighbours_alike_after"), png))
+        made[s["asset"]] = (rel_dir.replace("\\", "/") + "/" + s["asset"] + "_ids.png", info)
         done += 1
+    write_spec(made)
     return 0 if done else 1
+
+
+def write_spec(made, spec_path=SPEC):
+    """The corner file, the one home of what the game wears, takes each scan's map and numbers (its "retone" is kept
+    as set, 1.0 when new): every entry wearing one of the scans made, brick_4's two rows alike."""
+    if not made:
+        return
+    with open(spec_path, encoding="utf-8") as fh:
+        text = fh.read()
+    spec = json.loads(text)
+    for s in spec.get("scanned", []):
+        if s.get("asset") in made:
+            ids, info = made[s["asset"]]
+            s["ids"] = ids
+            s.setdefault("retone", 1.0)
+            s["tones"] = info["tone_q05_q50_q95"]
+            s["hue"] = info["brick_hue"]
+            s["ids_note"] = ("3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, "
+                             "ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the "
+                             "common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL")
+    with open(spec_path, "w", encoding="utf-8", newline="") as fh:
+        json.dump(spec, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
 
 
 def selftest():
@@ -247,15 +313,18 @@ def selftest():
     ok.append(("both parts of an edge brick share its random value", abs(a[0] - b[0]) < 1e-9 and a[0] > 0))
     ok.append(("its parts name copies one apart along u", abs((a[2] - b[2]) * 2 - 1) < 1e-9 or abs((b[2] - a[2]) * 2 - 1) < 1e-9))
     ok.append(("a brick inside the tile names this copy", ids[10, 30, 2] == 0.5 and ids[10, 30, 3] == 0.5))
-    ok.append(("tones are relative to the median brick", abs(ids[10, 30, 1] * 2 - 0.30 / np.median([0.30, 0.45, 0.60, 0.40])) < 0.05))
+    lums = [float(to_linear(np.array([t, t * 0.4, t * 0.35])) @ np.array([0.2126, 0.7152, 0.0722])) for t in (0.30, 0.45, 0.60, 0.40)]
+    ok.append(("tones are linear and relative to the median brick", abs(ids[10, 30, 1] * 2 - lums[0] / np.median(lums)) < 0.02))
     q = info["tone_q05_q50_q95"]
-    plain = retone(rgb, ids, 2, 2, q, amount=0.0)
-    ok.append(("amount 0 is the plain tiling", np.allclose(plain[:h, :w], rgb)))
-    wall = retone(rgb, ids, 3, 1, q, amount=1.0)
+    lin = to_linear(rgb)
+    plain = retone(lin, ids, 2, 2, q, amount=0.0)
+    ok.append(("amount 0 is the plain tiling", np.allclose(plain[:h, :w], lin)))
+    wall = retone(lin, ids, 3, 1, q, amount=1.0, hue=info["brick_hue"])
     # the edge brick's left part at the end of copy 1 and its right part at the start of copy 2 are one brick
     left, right = wall[40, w + 120], wall[40, 2 * w + 10]
     ok.append(("an edge brick takes one tone across the copies' seam", np.allclose(left, right, atol=1e-6)))
-    ok.append(("the mortar is never re-toned", np.allclose(wall[1, w + 1], rgb[1, 1])))
+    ok.append(("the mortar is never re-toned", np.allclose(wall[1, w + 1], lin[1, 1])))
+    ok.append(("to_srgb undoes to_linear", np.allclose(to_srgb(to_linear(rgb)), rgb, atol=1e-6)))
     ok.append(("the spec's brick rows wear two scans", sorted({s["asset"] for s in scans()}) == ["brick_4", "brick_wall_001"]))
     for name, good in ok:
         print("  %s %s" % ("ok  " if good else "FAIL", name))

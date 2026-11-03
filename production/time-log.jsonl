@@ -421,3 +421,5 @@
 {"event": "stop", "at": "2026-11-03T19:18:00", "note": ""}
 {"event": "start", "at": "2026-11-03T19:30:00", "task": "n02-4-corner step 6: the brick's repeat measured, its brick maps made; the played copy's missing brick scans found and staged", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-03T19:41:00", "note": ""}
+{"event": "start", "at": "2026-11-03T19:42:00", "task": "n02-4-corner step 6: the bricks' own tones built, screened and reviewed in the editor", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T20:31:00", "note": ""}
