@@ -2786,6 +2786,15 @@ namespace
 	}
 
 	// ---- filing what a witness got ---------------------------------------
+	// THE REACTION LADDER AT THE WINDOW, 3 November (the sweep's U3, ported 27 to 29 October; the corner plan's step 12): each
+	// witness's own reading decides what they do, by the Core's Reaction.Decide on its Severity and the witness's temperament
+	// from the cast file (hook-cast.json "temperament", read from their cards: production/audits/sweep-2026-10-05/
+	// U3-DESIGN-2026-10-27.md). Investigate walks the body to a clear spot 1.5 m out from the glass, facing it (the cast's
+	// walk, StartWalkOff), and the hour's routine takes them back; Alarm is the shout ResolveAndFile already plays for the
+	// first witness; Notice is the turned head the smash already gives. At the window by the Core's own rules nobody flees,
+	// fetches the law or steps in. -NoReactionLadder for the old way.
+	void WitnessReacts(const LedgerCrime::Reading& R);
+
 	void ResolveAndFile(int Index)
 	{
 		const std::string EventId = (Index == 0) ? "A" : "B";
@@ -2919,6 +2928,8 @@ namespace
 					if (LedgerCrime::WitnessShouts(R.O.Rung)) { PlayShout(); }
 				}
 			}
+			// the ladder: what each witness of Rita's window does about what they got (WitnessReacts, above)
+			if (bRitasWindow && Index == 0 && GEnc == EEncounter::Live) { WitnessReacts(R); }
 		}
 
 		// THE ARREST, ASKED OF THE CONSTABLE, WITH THIS SAME DEED. This is the
@@ -7839,6 +7850,10 @@ namespace
 		float Slip[2] = { 0.0f, 0.0f }, WorstSlip = 0.0f, Along[2] = { 0.0f, 0.0f };
 		double DownAt[2] = { 0.0, 0.0 };
 		int32 Contacts = 0;
+		// NOT DRAWN while down: AlwaysTickPose ticks the pose but refreshes the bones only when the body is drawn, so the
+		// sockets stand still while the figure moves and the drift read is the measure's, not the feet's (3 November: an 8 m
+		// "slide" by a walker out of the camera's view); such a plant is named and kept out of the worst slip
+		bool bUnseen[2] = { false, false };
 		// A TURN OVER 50 DEGREES BY A TURNING CLIP (TurnTick's way: the clip's own yaw, warped to the angle, turns the
 		// figure): before setting off (bPreTurn, the path kept until it ends) and at the end (bEndTurn)
 		TArray<FVector> Path;
@@ -8006,6 +8021,91 @@ namespace
 		return true;
 	}
 
+	// THE REACTION LADDER AT THE WINDOW (declared above ResolveAndFile, which calls it; its note there)
+	struct FTemperament { double Nerve = 0.5, Dutiful = 0.5, Willingness = 0.5; bool bRead = false; };
+	struct FInvestigate { double X = 0.0, Z = 0.0, Yaw = 0.0, Due = 0.0; };
+	std::map<std::string, FInvestigate> GInvestigate;
+	FTemperament TemperamentOf(const std::string& Id)
+	{
+		static TMap<FString, FTemperament> Cache;
+		static bool bLoaded = false;
+		if (!bLoaded)
+		{
+			bLoaded = true;
+			FString Text;
+			TSharedPtr<FJsonObject> Root;
+			const TArray<TSharedPtr<FJsonValue>>* People = nullptr;
+			if (FFileHelper::LoadFileToString(Text, *SessionCastFile()) && FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text), Root)
+			    && Root.IsValid() && Root->TryGetArrayField(TEXT("people"), People))
+			{
+				for (const TSharedPtr<FJsonValue>& V : *People)
+				{
+					const TSharedPtr<FJsonObject>* P = nullptr;
+					const TSharedPtr<FJsonObject>* T = nullptr;
+					if (!V->TryGetObject(P) || !(*P)->TryGetObjectField(TEXT("temperament"), T)) { continue; }
+					FTemperament F;
+					(*T)->TryGetNumberField(TEXT("nerve"), F.Nerve);
+					(*T)->TryGetNumberField(TEXT("dutiful"), F.Dutiful);
+					(*T)->TryGetNumberField(TEXT("willingness"), F.Willingness);
+					F.bRead = true;
+					Cache.Add((*P)->GetStringField(TEXT("id")), F);
+				}
+			}
+		}
+		const FTemperament* F = Cache.Find(UTF8_TO_TCHAR(Id.c_str()));
+		return F != nullptr ? *F : FTemperament();
+	}
+
+	void WitnessReacts(const LedgerCrime::Reading& R)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoReactionLadder"));
+		// -ReactionLadderTest: every witness who filed walks over, so the walk is seen without staging a sighting
+		static const bool bTest = FParse::Param(FCommandLine::Get(), TEXT("ReactionLadderTest"));
+		const FTemperament T = TemperamentOf(R.WitnessId);
+		const double Sev = Reaction::Severity(&R.O);
+		const Reaction::Reacted Act = bTest ? Reaction::Reacted::Investigate
+		                                    : Reaction::Decide(Sev, T.Nerve, T.Dutiful, T.Willingness, false, false);
+		UE_LOG(LogTemp, Display, TEXT("LedgerReact: %s got severity %.2f (nerve %.2f%s): %s"), *Un(R.WitnessId), Sev, T.Nerve,
+		       T.bRead ? TEXT("") : TEXT(", no temperament in the cast file"), UTF8_TO_TCHAR(Reaction::NameOf(Act)));
+		LedgerSession::Write(TEXT("reacted"), FString::Printf(TEXT("\"who\":\"%s\",\"severity\":%.2f,\"reacted\":\"%s\""),
+			*Un(R.WitnessId), Sev, UTF8_TO_TCHAR(Reaction::NameOf(Act))));
+		if (bOff || !T.bRead || Act != Reaction::Reacted::Investigate || GGlass[0] == nullptr || GAway.count(R.WitnessId)) { return; }
+		AActor* Body = CardBody(R.WitnessId);
+		if (Body == nullptr || Body->GetWorld() == nullptr) { return; }
+		// out from the glass toward the road (the frontage is the larger |z|), level with the window, a little toward where
+		// they came from
+		const FVector GlassUE = GGlass[0]->GetComponentsBoundingBox(true).GetCenter();
+		const LedgerCrime::P3 G = ToStreet(GlassUE);
+		const LedgerCrime::P3 B = ToStreet(Body->GetActorLocation());
+		const double SX = G.X + FMath::Clamp(B.X - G.X, -1.0, 1.0);
+		const double SZ = G.Z + (G.Z > 0.0 ? -1.5 : 1.5);
+		const FVector SpotUE = ToUE(LedgerCrime::P3(SX, G.Y, SZ));
+		const double Yaw = (GlassUE - SpotUE).Rotation().Yaw;
+		// NOT AT ONCE: the look first, then the walk, after the smash's head turn (up to about a second's delay, then
+		// 3.5 s). The first screen's 8 m "slide" was the foot measure off camera (WalkOffTick, NOT DRAWN), not this. The
+		// player stands at the glass, so the walk stops short of him (GoTo: he waits for the player) and ends once he moves.
+		GInvestigate[R.WitnessId] = { SX, SZ, Yaw, NowS() + 4.5 };
+		UE_LOG(LogTemp, Display, TEXT("LedgerReact: %s will walk toward the broken window (%.2f, %.2f) once the head turn ends"),
+		       *Un(R.WitnessId), SX, SZ);
+	}
+
+	// The walks the ladder asked for, each begun once its time comes (ClockTick).
+	void InvestigateTick(UWorld* World)
+	{
+		if (World == nullptr || GInvestigate.empty()) { return; }
+		for (auto It = GInvestigate.begin(); It != GInvestigate.end();)
+		{
+			if (NowS() < It->second.Due) { ++It; continue; }
+			AActor* Body = CardBody(It->first);
+			const bool bGo = Body != nullptr && !GAway.count(It->first)
+				&& StartWalkOff(World, It->first.c_str(), Body, It->second.X, It->second.Z, It->second.Yaw, false);
+			UE_LOG(LogTemp, Display, TEXT("LedgerReact: %s %s toward the broken window (%.2f, %.2f)"), *Un(It->first),
+			       bGo ? TEXT("walks") : TEXT("cannot walk"), It->second.X, It->second.Z);
+			It = GInvestigate.erase(It);
+		}
+	}
+
+
 	// Each frame: a talk stops a walker; one arrived stands there (the body takes the figure's place); one leaving is
 	// taken off out of his view, or after 12 s stood at the end of their way (the old cut-off, now only there).
 	void WalkOffTick(UWorld* World)
@@ -8047,6 +8147,7 @@ namespace
 			{
 				const float Floor = Visual->GetActorLocation().Z;
 				const FName Balls[2] = { FName(TEXT("ball_l")), FName(TEXT("ball_r")) };
+				const bool bDrawn = Mesh->WasRecentlyRendered(0.1f);
 				for (int32 I = 0; I < 2; ++I)
 				{
 					const FVector P = Mesh->GetSocketLocation(Balls[I]);
@@ -8055,15 +8156,17 @@ namespace
 					if (!bDown && W.bDown[I] && W.Slip[I] > 3.0f)
 					{
 						// along: + the foot drifted the way they walk (carried too fast), - backward (too slow)
-						UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s's %s foot slid %.1f cm while down, %.1f cm along the walk, over %.2f s (walking %.2f, step %d)"), UTF8_TO_TCHAR(C),
-						       I == 0 ? TEXT("left") : TEXT("right"), W.Slip[I], W.Along[I], World->GetTimeSeconds() - W.DownAt[I], A->WalkWeight, A->GoPhase);
+						UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s's %s foot slid %.1f cm while down, %.1f cm along the walk, over %.2f s (walking %.2f, step %d)%s"), UTF8_TO_TCHAR(C),
+						       I == 0 ? TEXT("left") : TEXT("right"), W.Slip[I], W.Along[I], World->GetTimeSeconds() - W.DownAt[I], A->WalkWeight, A->GoPhase,
+						       W.bUnseen[I] ? TEXT(", NOT DRAWN while down: the bones not refreshed, the measure's drift, not the feet's") : TEXT(""));
 					}
-					if (bDown && !W.bDown[I]) { W.Planted[I] = P; W.Slip[I] = 0.0f; W.Along[I] = 0.0f; W.DownAt[I] = World->GetTimeSeconds(); ++W.Contacts; }
+					if (bDown && !W.bDown[I]) { W.Planted[I] = P; W.Slip[I] = 0.0f; W.Along[I] = 0.0f; W.DownAt[I] = World->GetTimeSeconds(); W.bUnseen[I] = false; ++W.Contacts; }
+					if (bDown && !bDrawn) { W.bUnseen[I] = true; }
 					if (bDown) { W.Along[I] = (float)FVector::DotProduct(P - W.Planted[I], FRotator(0.0f, Visual->GetActorRotation().Yaw + 90.0f, 0.0f).Vector()); }
 					if (bDown && W.bDown[I])
 					{
 						W.Slip[I] = FMath::Max(W.Slip[I], (float)FVector::Dist2D(P, W.Planted[I]));
-						W.WorstSlip = FMath::Max(W.WorstSlip, W.Slip[I]);
+						if (!W.bUnseen[I]) { W.WorstSlip = FMath::Max(W.WorstSlip, W.Slip[I]); }
 					}
 					W.bDown[I] = bDown;
 				}
@@ -8554,7 +8657,7 @@ namespace
 	void ClockTick(double Delta)
 	{
 		// the office clock's hands to the game's time, every phase that keeps a clock, running or not (3 November)
-		if (GPawn != nullptr) { OfficeClockHands(GPawn->GetWorld()); }
+		if (GPawn != nullptr) { OfficeClockHands(GPawn->GetWorld()); InvestigateTick(GPawn->GetWorld()); }
 		if (!bClockRuns) { return; }
 		const bool bHeld = bSayOpen || GLive.PendingId != 0 || GPhase == ECrimePhase::LiveWalkRound;
 		const std::vector<GameTime> Hours = GClock.Advance(Delta, bHeld);

@@ -301,6 +301,7 @@
  "people": [
   {
    "id": "rocco",
+   "temperament": {"nerve": 0.7, "dutiful": 0.2, "willingness": 0.3, "from": "Ron's card: big, slow-moving, sees everything and forgets none of it; no appetite for trouble that isn't paid for (production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md, 3 November)"},
    "keepsQuiet": "owner",
    "called": "Ron Kirby, who keeps Mickey's door and the rank",
    "name": "Ron Kirby",
@@ -366,6 +367,7 @@
   },
   {
    "id": "lena",
+   "temperament": {"nerve": 0.35, "dutiful": 0.3, "willingness": 0.5, "from": "Sheila's card: guarded but fair, dry, watchful; tired and quietly worried (production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md, 3 November)"},
    "keepsQuiet": "owner",
    "namesHim": "on-trust",
    "called": "Sheila Dunn, Mickey's bookkeeper",
@@ -619,6 +621,7 @@
   },
   {
    "id": "sam",
+   "temperament": {"nerve": 0.2, "dutiful": 0.3, "willingness": 0.8, "from": "Darren's card: cheerfully spineless, easily bought, easily scared (production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md, 3 November)"},
    "keepsQuiet": "anyone",
    "called": "Darren Milner, the street hustler, always on his rounds",
    "name": "Darren Milner",
