@@ -228,7 +228,8 @@
      "Done (recommended)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-03 06:55, answered in chat (06:53): the panel was frozen since 2 November and would not close; Claude ended Windows' text-input process at 06:54 (Windows restarted it), the tester now does the same itself if it ever holds the front again, and Claude closes Marvelous itself when the PC is idle"
   }
  ]
 }

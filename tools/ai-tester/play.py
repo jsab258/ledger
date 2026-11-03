@@ -614,11 +614,23 @@ def start(args):
         game.terminate()
         return 1
     time.sleep(25)                                   # the street builds and the encounter places its people
-    for _ in range(10):                              # the first time the window may not take the front at once
-        focus(hwnd)
-        if game_in_front(hwnd):
+    for attempt in range(2):
+        for _ in range(10):                          # the first time the window may not take the front at once
+            focus(hwnd)
+            if game_in_front(hwnd):
+                break
+            time.sleep(1.0)
+        # A FROZEN CLIPBOARD PANEL (3 November): Windows' clipboard history, a window of its text-input process
+        # (TextInputHost.exe, "Windows Input Experience"), hung open in front of every window from 2 November and
+        # Jafar could not close it, so the night walk never started. Only that process is ended, and only when it
+        # holds the front; Windows starts it again when it is next needed.
+        fg = user32.GetForegroundWindow()
+        front = os.path.basename(process_image(window_pid(fg)) or "") if fg else ""
+        if attempt or game_in_front(hwnd) or front.lower() != "textinputhost.exe":
             break
-        time.sleep(1.0)
+        subprocess.run(["taskkill", "/F", "/IM", "TextInputHost.exe"], capture_output=True)
+        print("aiTester frontHeldBy=TextInputHost.exe ended (a frozen clipboard panel); trying the front again")
+        time.sleep(3)
     st = {"pid": game.pid, "hwnd": int(hwnd), "folder": folder.replace("\\", "/"), "stamp": stamp, "started": time.time(),
           "build": build, "selfContained": self_contained, "realTalk": bool(args.get("realtalk")), "step": 0, "log": [], "notes": [], "picture": None, "finished": False}
     save_state(st)
