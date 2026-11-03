@@ -1,11 +1,27 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 3 November, 21:38",
+ "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 3 November, 22:07",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "handoff-task-mode-2026-11-03",
+   "name": "For your switch by the history's size: in the Claude app, open Scheduled, open \"LEDGER: fresh session at a handover\", press the pencil, click the small shield marked Manual under its instructions, choose Auto (not Bypass), and Save. As before, the app would not let the session set it.",
+   "links": [],
+   "recommendation": "Auto, as on the daily task. Without it, a session handing over through this task stops at its first file write until you approve it. No web link: the setting is in the app.",
+   "added": "2026-11-03 22:15",
+   "pictures": [],
+   "options": [
+    [
+     "done",
+     "Done, set to Auto (recommended)"
+    ]
+   ]
+  }
+ ]
 }

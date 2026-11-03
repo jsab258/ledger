@@ -172,6 +172,7 @@ real_table() {
     asset-checks-selftest "$REPO"                 "$PY tools/ue/asset_checks.py --selftest" \
     stage-data-selftest   "$REPO"                 "$PY tools/ue/stage_game_data.py --selftest" \
     brick-ids-selftest    "$REPO"                 "$PY tools/brick_ids.py --selftest" \
+    history-check-selftest "$REPO"                "$PY tools/history_check.py --selftest" \
     asset-budgets         "$REPO"                 "$PY tools/ue/asset_checks.py --check-spec" \
     stain-selftest        "$REPO"                 "$PY tools/ue/make_stain_material.py --selftest" \
     contact-selftest      "$REPO"                 "$PY tools/ue/make_contact_material.py --selftest" \

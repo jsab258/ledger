@@ -2,6 +2,20 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "handoff-task-mode-2026-11-03",
+   "added": "2026-11-03 22:15",
+   "text": "For your switch by the history's size: in the Claude app, open Scheduled, open \"LEDGER: fresh session at a handover\", press the pencil, click the small shield marked Manual under its instructions, choose Auto (not Bypass), and Save. As before, the app would not let the session set it.",
+   "links": [],
+   "recommendation": "Auto, as on the daily task. Without it, a session handing over through this task stops at its first file write until you approve it. No web link: the setting is in the app.",
+   "options": [
+    [
+     "done",
+     "Done, set to Auto (recommended)"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "fresh-session-mode-2026-11-03",
    "added": "2026-11-03 21:00",
    "text": "For tomorrow's switch to a fresh session each day: in the Claude app, open Scheduled in the sidebar, open \"LEDGER: the day's fresh session\" and set its permission mode to Auto (not Bypass), then save. The app would not let the session set it: your message came from another device. Without it the 05:21 session stops at its first file write until you approve it.",
