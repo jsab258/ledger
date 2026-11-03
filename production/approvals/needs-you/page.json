@@ -1,30 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 3 November, 10:38",
+ "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 3 November, 11:11",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "tom-crown-third-try-2026-11-03",
-   "name": "Tom's crown looks pale, as if thinning, since yesterday's fix of a black hair shadow on the office wall. Two tries are spent: one brought the black shadow back, one left the crown half pale. May I try a third way, the engine's smoother hair shadows on the office lights?",
-   "links": [],
-   "recommendation": "Yes, one try, about 2 hours; if it fails, the crown stays as now and it is listed. It may cost up to about 2 ms a frame in the office, measured before it is kept. No web link: the answer is this page.",
-   "added": "2026-11-03 10:39",
-   "options": [
-    [
-     "yes",
-     "Yes, one try (recommended)"
-    ],
-    [
-     "no",
-     "No, leave it"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

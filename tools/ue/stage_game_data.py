@@ -49,6 +49,7 @@ FIXED = [
     "production/specs/seats.json",   # where Tom can sit (25 October, item 2; SliceCharacter.cpp TryStartSit)
     "production/specs/seat-clips.json",   # the bench clips measured, for the sit entry test (28 October, D10 step 3)
     "production/specs/camera.json",   # Tom's camera, his pick of 28 October (SliceCharacter.cpp BeginPlay)
+    "production/assets/people/tom/T_Head_LOD1_BC_scalp.png",   # his scalp in his hair's colour, his ruling of 3 November (SliceCharacter.cpp StartGaspMover; on F: in the game inputs)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"

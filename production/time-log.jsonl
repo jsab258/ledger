@@ -365,3 +365,5 @@
 {"event": "stop", "at": "2026-11-03T10:40:00", "note": "the pale crown: measured, two tries filmed and reviewed, set aside, his page"}
 {"event": "start", "at": "2026-11-03T09:18:00", "task": "n02-4-corner", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-03T10:50:00", "note": "corner step 10: the A-board built (helper 18 min), placed by the street recipe, exported, imported, weathered twice, three fresh reviews"}
+{"event": "start", "at": "2026-11-03T11:13:00", "task": "n02-tom-hair-crown", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T11:59:00", "note": "third try (deep shadows) and fourth (scalp paint), filmed and pictured, three fresh reviews; his rulings recorded"}

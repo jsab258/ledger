@@ -11,6 +11,9 @@
 #include "PoseSearch/PoseSearchDatabase.h"
 #include "Retargeter/IKRetargeter.h"
 #include "Misc/FileHelper.h"
+#include "ImageUtils.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Engine/Texture2D.h"
 
 #include "Animation/AnimSequenceBase.h"
 #include "Camera/CameraComponent.h"
@@ -698,6 +701,51 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	}
 	WornBody->ComponentTags.AddUnique(FName(TEXT("RTG_UEFN_to_Metahuman_nrw")));
 	WornAnimClass = CopyClass;
+	// HIS SCALP IN HIS HAIR'S COLOUR (3 November, his ruling on hair, 3; tools/meshgen/tom_scalp_paint.py): his crown read
+	// bleached, his scalp's skin lit through the strands since the hair's voxel shadow on surfaces went to 0 (the office
+	// wall's black "ponytail"), and three tries at the shadow failed. So his near head wears a copy of its baked colour
+	// with the scalp painted dark brown through the MetaHuman plugin's own scalp region; the face itself is untouched.
+	// The picture lives in the game inputs on F: (staged into a packaged copy); -NoTomScalpPaint for his own colour.
+	if (!FParse::Param(FCommandLine::Get(), TEXT("NoTomScalpPaint")))
+	{
+		static UTexture2D* Painted = nullptr;
+		if (Painted == nullptr)
+		{
+			const FString Rel = TEXT("production/assets/people/tom/T_Head_LOD1_BC_scalp.png");
+			TArray<FString> Cands;
+			FString Repo, Inputs = FPlatformMisc::GetEnvironmentVariable(TEXT("LEDGER_GAME_INPUTS"));
+			if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, Rel)); }
+			Cands.Add(FPaths::Combine(FPaths::ProjectDir(), TEXT(".."), Rel));
+			Cands.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"), Rel));
+			Cands.Add(FPaths::Combine(Inputs.IsEmpty() ? FString(TEXT("F:/LedgerTools/game-inputs")) : Inputs, Rel));
+			for (const FString& C : Cands)
+			{
+				if (IFileManager::Get().FileSize(*C) > 0 && (Painted = FImageUtils::ImportFileAsTexture2D(C)) != nullptr)
+				{
+					Painted->SRGB = true;
+					Painted->UpdateResource();
+					Painted->AddToRoot();
+					UE_LOG(LogTemp, Display, TEXT("LedgerWalk: his scalp painted in his hair's colour, from %s"), *C);
+					break;
+				}
+			}
+		}
+		int32 Swapped = 0;
+		for (USkeletalMeshComponent* P : Parts)
+		{
+			if (Painted == nullptr || P->GetName() != TEXT("Face")) { continue; }
+			for (int32 I = 0; I < P->GetNumMaterials(); ++I)
+			{
+				UMaterialInterface* Mi = P->GetMaterial(I);
+				UTexture* Was = nullptr;
+				if (Mi == nullptr || !Mi->GetTextureParameterValue(FHashedMaterialParameterInfo(TEXT("Basecolor Baked")), Was) || Was == nullptr
+				    || !Was->GetName().StartsWith(TEXT("T_Head_LOD1_BC"))) { continue; }
+				UMaterialInstanceDynamic* Mid = P->CreateDynamicMaterialInstance(I, Mi);
+				if (Mid != nullptr) { Mid->SetTextureParameterValue(TEXT("Basecolor Baked"), Painted); ++Swapped; }
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerWalk: his scalp paint on %d of his head's slots%s"), Swapped, Painted == nullptr ? TEXT(" (no picture found)") : TEXT(""));
+	}
 	// -TomHeadUp (30 October, his order D10, the sit's head held up while it is tried; SIT-BOW-2026-10-30.md route
 	// (ii)): the same copy through the same retargeter, made by the engine's own node in our native class, which can
 	// hold his head up over it while he sits and stands (MotionMatchAnim.h, HeadUpWeight)
