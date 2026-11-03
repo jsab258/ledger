@@ -8034,7 +8034,7 @@ namespace
 			}
 			const double Yaw = (ToUE(LedgerCrime::P3(Ahead, 0.0, 0.0)) - ToUE(LedgerCrime::P3(0.0, 0.0, 0.0))).Rotation().Yaw;
 			const bool bGo = StartWalkOff(World, "lena", Lena, Her.X + Ahead * 6.0, Her.Z, Yaw + (Ahead > 0.0 ? 60.0 : -60.0), false);
-			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Lena %s"), bGo ? TEXT("sets off") : TEXT("could not set off"));
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Sheila %s"), bGo ? TEXT("sets off") : TEXT("could not set off"));
 			Step = bGo ? 1 : 4;
 			if (!bGo && FParse::Param(FCommandLine::Get(), TEXT("WalkOffProofExit"))) { FPlatformMisc::RequestExit(false); }
 			NextShot = GameT + 0.2;
@@ -8061,13 +8061,13 @@ namespace
 				const LedgerCrime::P3 His = ToStreet(Visual->GetActorLocation());
 				bGo = StartWalkOff(World, "sam", Sam, His.X + 30.0, His.Z, 0.0, true) || StartWalkOff(World, "sam", Sam, His.X - 30.0, His.Z, 0.0, true);
 			}
-			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Sam %s"), bGo ? TEXT("leaves the street") : TEXT("could not leave"));
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: Darren %s"), bGo ? TEXT("leaves the street") : TEXT("could not leave"));
 			Step = 3;
 			At = Now;
 		}
 		else if (Step == 3 && (!GWalkOffs.count("sam") || Now - At > 40.0))
 		{
-			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: done, Sam %s, pictures %d"), GWalkOffs.count("sam") ? TEXT("still walking") : TEXT("off the street"), Shot);
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkOffProof: done, Darren %s, pictures %d"), GWalkOffs.count("sam") ? TEXT("still walking") : TEXT("off the street"), Shot);
 			Step = 4;
 			if (FParse::Param(FCommandLine::Get(), TEXT("WalkOffProofExit"))) { FPlatformMisc::RequestExit(false); }
 		}
