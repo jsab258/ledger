@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Monday 2 November, 07:15)
+## Overview (Tuesday 3 November, 06:22)
 
 **The week's visible change, 26 October against this morning (the hook camera by day):**
 
@@ -15,7 +15,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - The brick is redder and stained; Mickey's office shows its shelves and fittings through the glass.
 - The people are unchanged: the same stiff poses, the woman still in the white base layer.
 
-Disk (11-02 03:31): C: 151.6 GB free, F: 24.5 GB free; grew most since yesterday: Pocket's voice files on F: +0.2 GB, the gate's new pictures +0.1 GB.
+Disk (11-03 03:31): C: 139.5 GB free, F: 21.8 GB free; grew most since yesterday: the Fab downloads on F: +1.2 GB, my working files on C: +0.7 GB, Tom's body files on F: +0.7 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -34,12 +34,12 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Speech, first:** measured beside the packaged game, the first words come after a median 1.17 s, 11 of 20 lines under 2 s. The one change tried (speaking a one-sentence reply early) made no difference over 80 lines and was taken out. Next: the same measure on the real talk inside last night's packaged game, under a 50-cent cap.
-- **Tom:** the garment method and the clothing deep-dive are done. The pale line under his toes is set aside after its third try: it comes from the wet ground's water layer wherever anything touches it, not from the boots. Today: the collar's third try (your yes), by Epic's own way of hiding the throat under a collar.
-- **Then:** sitting, Mickey's office and the Stutter passed in the packaged walk; the phase's exit re-check aimed at 9 November, anything that cannot make it told to you by Wednesday.
-- **Beside it:** the corner's plan is reviewed and its baseline begun. Its size, plainly: at our own rates the corner is weeks of work; this week's 8 to 10 hours buys its list (people that walk off, the first layer of street dressing), not final quality, and the terrace kit (60 to 80 hours) waits. Study A is done; the token audit and the unit costs come by Wednesday; the progress page shows the 2027 line, 1.4 weeks behind (as of today).
+- **Speech, first:** small talk's first words come after a median 1.07 s, after two tries; real questions inside the packaged game are measured next, under an 80-cent cap.
+- **Tom and the people:** the clothing deep-dive is closed and Tom keeps his own body. Yesterday's pieces (the speakers' small movements, Tom's boots, Ron's moustache) were in last night's build but not walked; they go into tonight's walk with the people who now walk off.
+- **Then:** sitting, Mickey's office and the Stutter passed in the packaged walk; the exit re-check aimed at 9 November; what may miss it reaches you by Wednesday.
+- **Beside it:** the corner's people now walk where the hour sends them (passed in the editor). Its surfaces were read against real ranges: three right; the gilt and the tiles too dark and the phone kiosk too bright, mended today. The brick needs a real reference, likely a choice on Wednesday's page.
 
-**The tester (last night's walk, packaged):** 14 of 15 stages: Darren was lost from sight. "That's all I know" to 2 of 60 first questions. The cast's own voices came up in the packaged game for the first time since 29 October. What broke the illusion: Ron and the woman at Mickey's door in white underwear, she barefoot, both in the same stiff poses; a woman walking past Rita's smashed window without a look; two people standing inside each other in the road at night, under a flat brown sky.
+**The tester (last night's walk, packaged):** it never started. A Windows clipboard panel stayed in front of every window, so the game could not come forward, and the tester gave up after 30 minutes. The build itself passed. "That's all I know" to 4 of 60 first questions (2 the night before). Nothing was looked at, so no new faults are known.
 
 **Monday's risks:**
 1. Speech meets its bar at the median only beside the game; the real talk inside the packaged game is not measured yet.
@@ -51,9 +51,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-1. Epic's four footwear files from Fab (download all four, recommended).
-2. One more try at the pale line, in the wet ground (yes, recommended).
-3. Stop the stuck nightly session "LEDGER: read back page answers (nightly)" in the app's sidebar (recommended); I read your answers by hand meanwhile.
+1. At the PC: shut the clipboard panel (Esc), then quit Marvelous without saving (done, recommended).
 
 ### Road to worth playing (PLAN.md)
 
@@ -64,6 +62,24 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Tuesday 3 November (morning)
+
+**Failed:**
+- Last night's walk never started: a Windows clipboard panel kept the game from the front. Yesterday's work goes into tonight's walk.
+- Marvelous could not be closed for the same reason; it held the graphics card all night.
+- I started the game by mistake at 06:16; closed at once.
+
+**Done:**
+- People the hour moves now walk there; those leaving walk away out of your view instead of vanishing; their clothes move with them. Passed in the editor and by two fresh reviewers; feet still slide a little.
+- Marvelous's own body import tried on Tom: 2.4 mm off at the neck, so his body stays.
+- The corner's surfaces read against reviewed ranges.
+
+**Decided, yours to overturn:** people walk at 85% of Epic's walk; anyone leaving is removed once out of view and 6 m away.
+
+**Computer use:** Marvelous 20:17 to 20:19 (the import, your yes); a second copy opened by mistake, closed; your clipboard used to type; the bridge started 20:19. At 00:51 both close clicks were refused. A research helper tried a cookie on a refused page; blocked, now forbidden.
+
+**Act on:** your page, one item: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Monday 2 November (morning)
 

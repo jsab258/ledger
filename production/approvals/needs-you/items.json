@@ -215,6 +215,20 @@
    ],
    "state": "done",
    "closed": "2026-11-02 20:20, allowed in chat (20:15) and done by Claude at 20:19 with his one-time 1-minute wait; avatar exported and compared: same body below the shoulders, 2.4 mm off at the neck (above the 2 mm bar), so Tom keeps his own avatar"
+  },
+  {
+   "id": "clipboard-panel-marvelous-2026-11-03",
+   "added": "2026-11-03 06:20",
+   "text": "At the PC: press Esc (or click the desktop) to shut the Windows clipboard panel at the bottom left; then in Marvelous, File, Quit, and No to saving. Then tap Done.",
+   "links": [],
+   "recommendation": "Do it when you are next at the PC: about a minute. The panel keeps the game from coming to the front, so last night's walk never started and today's game runs wait on it. No web link: the answer is this page.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
