@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from (his order of 2 November, 6.2: start each day fresh from a handover file, since a long session's history is about half of each step's cost, production/research/token-audit). Rewritten, not appended, at the end of each working stretch. Rules are CLAUDE.md's and RULINGS.md's; the phase's items are NOW.md's; this file holds only what is in flight.
 
-**As of:** Tuesday 3 November 2026, 08:22 (Swiss time). Rewrite every line below at each stop.
+**As of:** Tuesday 3 November 2026, 10:51 (Swiss time). Rewrite every line below at each stop.
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), item by item, until 13:00 Monday 9 November or until he says stop.
 
@@ -21,11 +21,13 @@ The one file a fresh session starts from (his order of 2 November, 6.2: start ea
 
 **Done this morning, after 07:20:** the 2 November pieces walked packaged by day (14 of 15; DECISIONS 07:50); speech run E (DECISIONS 07:58 and 08:09: it cannot settle the bar; run F needs tonight's build, then `-AskSet=C:/Users/Jafar/ledger-local/production/research/invented-claims/bench/firsts-held.txt -AskNear`, no -AskAfterDeed, cap 0.80, raw to F:/LedgerTools/latency/askreal-2026-11-04f); the frame and memory captures clean with Pocket (DECISIONS 08:22). Building both targets for the -AskSet/-AskNear/walk-away change, then checks and push before 01:15. Next: the office's packaged pictures (tools/office_look.py, by day and --night), then the corner's step 10.
 
+**Since 08:22 (all pushed, bad8380b1, checks 90 of 90; tonight's build carries it):** the frame captures with Pocket clean, the Stutter absent in seven (DECISIONS 08:22); run F's script screened free in the editor (the editor needs -TalkHelper=F:/LedgerTools/played-game/Windows/LedgerTalk/LedgerTalk.exe); the office's packaged pictures and two reviews (F:/LedgerTools/gate/new/office/2026-11-03-packaged-*/review.json: the room holds; Tom's crown pale; older small faults listed: the clock and cars board on morning times, a blank pad, the damp stain cut at the corner, the old-notice patch read once as a missing picture); Tom's pale crown set aside after two tries, the hair setting back at 0, a third try asked on his page (tom-crown-third-try-2026-11-03); the A-board in the street (DECISIONS 09:53: a helper's model, the street recipe's clutter route, the face a sign picture on F:, the street exported with Blender 5.2, five rows new; re-imported; the glass re-baked; the derived piece and feet lists regenerated, their kept 'ahead of the Unity run' lines restored by hand). Its gate: shape and place passed; the face read clean (weathered), then its dirt read as a comb (redrawn as splash blots and rust runs); its re-check is running (F:/LedgerTools/gate/new/look/2026-11-03-a-board-e/review.json). The board's comb fault has had one try. The face picture is only on F:, so a change to it needs no export.
+
 **For tomorrow's summary (computer use, mistakes):** Marvelous closed by computer use at 07:17 (File, Quit; no save asked), after 10 idle minutes, the panel gone. Windows' text-input process ended 06:54. A walk started by mistake at 07:17 (route_walk.py --help) and its game closed at once; --help is now safe in route_walk.py and play.py.
 
 **Running since 07:20:** route_walk.py --town --sit on the played copy 33dedf5 (wip 13c2e1da): the 2 November pieces' packaged walk by day.
 
-**His page last read:** 08:22 (8 verdicts, none new; nothing open).
+**His page last read:** 10:21 (nothing new); open: tom-crown-third-try-2026-11-03 (added 10:39).
 
 **In flight:** the tiles' fresh reviewer (writes F:/LedgerTools/gate/new/look/2026-11-03-tiles-x1.3/review.json); the tiles read 0.71 to 0.73 on their body (band 0.67 to 0.82), the door frame unchanged at 0.805. Next on the corner after it: step 10 (tier 1 dressing: the A-board AB1 and the milk crates from production/cloud-week/targets/street-dressing, and the kiosk's see-through side); no builder exists for these targets yet. Marvelous (pid 12140) still open, holding about 2.4 GB of the card, the clipboard panel in front of it.
 

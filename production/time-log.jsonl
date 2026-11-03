@@ -359,3 +359,9 @@
 {"event": "stop", "at": "2026-11-03T07:50:00", "note": "Marvelous closed; two route walks by day (9 of 14 lost the front; 14 of 15); the tester's front logging"}
 {"event": "start", "at": "2026-11-03T07:44:00", "task": "n02-3-1-speech", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-03T07:58:00", "note": "run E prepared, run, read; the bar on real questions missed (2.33 s)"}
+{"event": "start", "at": "2026-11-03T08:45:00", "task": "n02-3-3-office", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T09:20:00", "note": "the office's packaged pictures, day and night; two fresh reviews"}
+{"event": "start", "at": "2026-11-03T09:20:00", "task": "n02-tom-hair-crown", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T10:40:00", "note": "the pale crown: measured, two tries filmed and reviewed, set aside, his page"}
+{"event": "start", "at": "2026-11-03T09:18:00", "task": "n02-4-corner", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T10:50:00", "note": "corner step 10: the A-board built (helper 18 min), placed by the street recipe, exported, imported, weathered twice, three fresh reviews"}
