@@ -2489,7 +2489,7 @@
   {
    "kind": "damp",
    "picture": "ours/wear_damp_patch",
-   "x_m": 8.3,
+   "x_m": 8.12,
    "y_m": 2.74,
    "z_m": 9.4,
    "w_m": 0.9,
@@ -2597,6 +2597,26 @@
    "rough": 0.55
   },
   {
+   "kind": "rim",
+   "picture": "ours/wear_pale_rim",
+   "tint": [
+    0.45,
+    0.3,
+    0.1
+   ],
+   "x_m": 8.65,
+   "y_m": 1.86,
+   "z_m": 5.8,
+   "w_m": 0.25,
+   "h_m": 0.33,
+   "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.7,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.6
+  },
+  {
    "kind": "pale",
    "picture": "ours/wear_pale",
    "tint": [
@@ -2615,6 +2635,26 @@
    "on": "mickeys_room",
    "material": "stain",
    "rough": 0.55
+  },
+  {
+   "kind": "rim",
+   "picture": "ours/wear_pale_rim",
+   "tint": [
+    0.45,
+    0.3,
+    0.1
+   ],
+   "x_m": 8.65,
+   "y_m": 1.6,
+   "z_m": 7.22,
+   "w_m": 0.22,
+   "h_m": 0.3,
+   "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.7,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.6
   },
   {
    "kind": "kick",

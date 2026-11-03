@@ -1704,3 +1704,13 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 1.5 h with three rounds of reviews.
 - What failed: a height rule chosen by the point's position put the corner of a gutter scrap at the kerb's top, standing it up like a marker, and floated paper balls at kerb height; the old stand-ins (wooden boxes, discs) kept drawing until the build's replace list named them; jittered balls rested up to 19 mm above the road.
 - Evidence: F:/LedgerTools/gate/new/look/2026-11-03-scatter-west-{day,night}{,-2,-4} (review.json in each).
+
+## A room's small faults from one review, and a fetched clock that cannot keep time (3 November 2026)
+
+- Made: five fixes to a game room from one packaged review: a taken-down notice's edge and tape, a stain moved clear of a wall corner, a blank pad given a printed, written-on top sheet, a board that names places instead of times, and a wall clock whose hands the game turns to its own time.
+- Method: read each fault for what it says is missing, not only what is wrong (a pale patch "with nothing that says so" needs its edge and tape, laid as a second, darkening mark); anything printed with a time or a date is wrong at some hour unless it follows the game's clock, so either drive it or write something time-free; a fetched model with a fixed state (hands at the catalogue's 10:10) is replaced by a stateless part plus the moving part the game drives; when replacing a placed model, carry over its placement rule (a base height is not a centre).
+- Tools: the room recipe and its print maker, the wear-mark maker and the wear file, a few lines of the game's own code, the engine import, editor pictures by day and night, one fresh reviewer per view.
+- Target and check: each listed fault gone or narrowed as described, no new fault by a fresh reviewer per view; then the packaged walk.
+- Cost: about 1 h, with two rounds of reviews.
+- What failed: the first edit replaced the wrong pad (the review named a place on the counter, two objects stood near it); the new clock's case was centred on the old model's base height and hung across the picture rail.
+- Evidence: F:/LedgerTools/gate/new/office/2026-11-03-fixes{2,3}-{day,night} (review.json in each).

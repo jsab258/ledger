@@ -395,3 +395,13 @@
 {"event": "stop", "at": "2026-11-03T15:37:00", "note": ""}
 {"event": "start", "at": "2026-11-03T15:32:00", "task": "n02-4-corner helper: litter review round 3, night", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-11-03T15:38:00", "note": ""}
+{"event": "start", "at": "2026-11-03T15:42:00", "task": "n02-3-3-office", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-03T16:42:00", "note": ""}
+{"event": "start", "at": "2026-11-03T16:19:00", "task": "n02-3-3-office helper: office review round 1, day", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T16:27:00", "note": ""}
+{"event": "start", "at": "2026-11-03T16:19:00", "task": "n02-3-3-office helper: office review round 1, night", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T16:27:00", "note": ""}
+{"event": "start", "at": "2026-11-03T16:38:00", "task": "n02-3-3-office helper: office review round 2, day", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T16:41:00", "note": ""}
+{"event": "start", "at": "2026-11-03T16:38:00", "task": "n02-3-3-office helper: office review round 2, night", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-03T16:42:00", "note": ""}

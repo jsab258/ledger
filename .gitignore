@@ -191,6 +191,9 @@ ledger/Assets/StreamingAssets/Decals/ours/wear_chips/
 production/assets/office-print/mickeys/district_map.png
 # the box files' spine labels (26 October): made by tools/props/make_office_print.py, pictures outside previews are not kept in git
 production/assets/office-print/mickeys/label_*.png
+# the counter's telephone message pad and the clock's dial without hands (3 November), the same way
+production/assets/office-print/mickeys/message_pad.png
+production/assets/office-print/mickeys/clock_face.png
 # the chandler's new wear pictures (30 October, his order D11 S1: the rust leak and the threshold grime, drawn by
 # tools/make_wear_masks.py --street-wear from ambientCG CC0): on F:/LedgerTools/game-inputs under the same path
 production/assets/street-wear/
@@ -205,6 +208,7 @@ production/previews/cloud-week/sound/*.ogg
 ledger/Assets/StreamingAssets/Decals/ours/wear_head/
 ledger/Assets/StreamingAssets/Decals/ours/wear_damp_patch/
 ledger/Assets/StreamingAssets/Decals/ours/wear_pale/
+ledger/Assets/StreamingAssets/Decals/ours/wear_pale_rim/
 ledger/Assets/StreamingAssets/Decals/ours/wear_smoke/
 # POCKET-ONLY VOICE REFERENCES, 26 October: audio stays out of git; F:\LedgerTools\game-inputs holds them
 game-design/pocket-voices/

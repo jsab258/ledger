@@ -4451,6 +4451,71 @@ namespace
 		}
 	}
 
+	// THE OFFICE CLOCK KEEPS THE GAME'S TIME, 3 November (the office's packaged reviews: the fetched wall clock's hands
+	// stood at 10:10 at 09:00 and at 20:00). The room now hangs a dial without hands (shop-room.py, make_office_print.py
+	// clock_face, on the back wall at room x 0.42, 2.40 up, its face 45.5 mm off the wall), and the game turns two hands
+	// over it to GNow. Street metres from the room's (x = 6.0 - room x, across = 5.27 + room y, up = room z + 0.12),
+	// so its centre is (5.58, 9.3745, 2.52); seen from the room (looking +Y, its right -X), twelve is up and three is -X.
+	struct FOfficeClock
+	{
+		TWeakObjectPtr<AStaticMeshActor> Hour, Minute;
+		TWeakObjectPtr<UWorld> World;
+		int Shown = -1;
+	};
+	FOfficeClock GOfficeClock;
+	const FVector kOfficeClockCentre(558.0, 937.45, 252.0);
+
+	void OfficeClockHands(UWorld* World)
+	{
+		if (World == nullptr) { return; }
+		if (GOfficeClock.World.Get() != World || !GOfficeClock.Hour.IsValid() || !GOfficeClock.Minute.IsValid())
+		{
+			UStaticMesh* Cube = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
+			UMaterialInterface* Basic = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+			if (Cube == nullptr || Basic == nullptr) { return; }
+			auto Make = [&](const TCHAR* Name) -> AStaticMeshActor*
+			{
+				FActorSpawnParameters SP;
+				SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(kOfficeClockCentre, FRotator::ZeroRotator, SP);
+				if (A == nullptr) { return nullptr; }
+				A->SetMobility(EComponentMobility::Movable);
+				A->GetStaticMeshComponent()->SetStaticMesh(Cube);
+				A->GetStaticMeshComponent()->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+				A->GetStaticMeshComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				A->GetStaticMeshComponent()->SetCastShadow(false);
+				PaintFlat(A, Basic, FLinearColor(0.012f, 0.012f, 0.013f));
+#if WITH_EDITOR
+				A->SetActorLabel(Name);
+#else
+				(void)Name;
+#endif
+				return A;
+			};
+			GOfficeClock.Hour = Make(TEXT("office_clock_hour"));
+			GOfficeClock.Minute = Make(TEXT("office_clock_minute"));
+			GOfficeClock.World = World;
+			GOfficeClock.Shown = -1;
+			if (!GOfficeClock.Hour.IsValid() || !GOfficeClock.Minute.IsValid()) { return; }
+			UE_LOG(LogTemp, Display, TEXT("LedgerOffice: the clock's hands made at (%.0f, %.0f, %.0f)"),
+				kOfficeClockCentre.X, kOfficeClockCentre.Y, kOfficeClockCentre.Z);
+		}
+		const int Minutes = (GNow.Hour % 12) * 60 + GNow.Minute;
+		if (Minutes == GOfficeClock.Shown) { return; }
+		GOfficeClock.Shown = Minutes;
+		// a hand: its length along its own Z from the centre outward (a little tail behind it), 2.5 mm thick toward the room
+		auto Set = [](AStaticMeshActor* A, double Degrees, double LenCm, double WidthCm, double Proud)
+		{
+			const double R = FMath::DegreesToRadians(Degrees);
+			const FVector Dir(-FMath::Sin(R), 0.0, FMath::Cos(R));
+			const FVector At = kOfficeClockCentre + Dir * (LenCm * 0.5 - 1.5) + FVector(0.0, -Proud, 0.0);
+			A->SetActorLocationAndRotation(At, FRotationMatrix::MakeFromZY(Dir, FVector(0.0, 1.0, 0.0)).Rotator());
+			A->SetActorScale3D(FVector(WidthCm / 100.0, 0.25 / 100.0, LenCm / 100.0));
+		};
+		Set(GOfficeClock.Hour.Get(), Minutes * 0.5, 7.5, 0.9, 0.35);
+		Set(GOfficeClock.Minute.Get(), GNow.Minute * 6.0, 11.0, 0.6, 0.65);
+	}
+
 	void BuildMickeysOffice(UWorld* World)
 	{
 		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MickeysInside"));
@@ -8488,6 +8553,8 @@ namespace
 
 	void ClockTick(double Delta)
 	{
+		// the office clock's hands to the game's time, every phase that keeps a clock, running or not (3 November)
+		if (GPawn != nullptr) { OfficeClockHands(GPawn->GetWorld()); }
 		if (!bClockRuns) { return; }
 		const bool bHeld = bSayOpen || GLive.PendingId != 0 || GPhase == ECrimePhase::LiveWalkRound;
 		const std::vector<GameTime> Hours = GClock.Advance(Delta, bHeld);

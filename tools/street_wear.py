@@ -353,7 +353,9 @@ def room_wear(spec_path=OFFICE):
         out.append({"kind": "grime", "picture": smudge, "x_m": round(d["x1"] + 0.22, 4), "y_m": round(ROOM_FLOOR_M + 1.0, 4),
                     "z_m": d["z0"], "w_m": 0.26, "h_m": 0.4, "yaw_deg": 0.0, "pitch_deg": 0.0,
                     "strength": 0.6, "on": "mickeys_room"})
-        out.append({"kind": "damp", "picture": damp, "x_m": 8.3, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
+        # its right side 8 cm short of the notice wall's corner at x 8.65 (3 November: at x 8.3 the 0.9 m patch ran
+        # past the corner and stopped dead there in a straight line, the office's packaged review)
+        out.append({"kind": "damp", "picture": damp, "x_m": 8.12, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
                     "z_m": d["z0"], "w_m": 0.9, "h_m": 0.6, "yaw_deg": 0.0, "pitch_deg": 0.0,
                     "strength": 0.7, "on": "mickeys_room"})   # 29 October: 0.6 left its sheen under 0.1 (D11)
     return out
@@ -365,6 +367,12 @@ PALE, KICK = "ours/wear_pale", "ours/wear_splash"
 #: the base-colour view (linear), a smoke-browned tan, so the cleaner paint behind a notice is about three fifths
 #: lighter and a little less yellow; the first tint, 0.66, lightened it 227% (tools/stain_check.py, run 2).
 PALE_TINT = [0.25, 0.165, 0.075]
+#: THE TAKEN-DOWN NOTICE'S EDGE AND TAPE, 3 November (the office's packaged review: a pale oblong with "no darker rim,
+#: no pin holes or tape scraps" read by day as a blank sheet): tools/make_wear_masks.py's wear_pale_rim laid darkening
+#: over each pale oblong, toward an aged tape's amber-brown (the grime material lays its grey 0.25 x this tint, so about
+#: 0.11, 0.075, 0.025 at full strength: darker than the pale paint, a little warmer than the smoke-browned wall)
+PALE_RIM = "ours/wear_pale_rim"
+PALE_RIM_TINT = [0.45, 0.30, 0.10]
 
 
 def office_marks(spec_path=OFFICE):
@@ -387,6 +395,10 @@ def office_marks(spec_path=OFFICE):
         out.append({"kind": "pale", "picture": PALE, "tint": PALE_TINT, "x_m": NOTICE_WALL_X, "y_m": y,
                     "z_m": round(z, 4), "w_m": w, "h_m": h, "yaw_deg": 270.0, "pitch_deg": 0.0,
                     "strength": round(0.45 + 0.1 * rnd(s, "pale%d" % k), 3), "on": "mickeys_room"})
+        # and over it, darkening, the edge the smoke crept under and the tape left at its corners (3 November)
+        out.append({"kind": "rim", "picture": PALE_RIM, "tint": PALE_RIM_TINT, "x_m": NOTICE_WALL_X, "y_m": y,
+                    "z_m": round(z, 4), "w_m": w, "h_m": h, "yaw_deg": 270.0, "pitch_deg": 0.0,
+                    "strength": 0.7, "on": "mickeys_room"})
     st = box.get("stair strip wall")
     if st:   # its room face (x 4.19, facing +x: yaw 90), at a shoe's height
         for k, z in enumerate((5.75, 6.85)):
@@ -709,8 +721,9 @@ def selftest():
     check("the office counter's scuffs read, at FRONT_WEAR or more (7 October)",
           counter and all(d["strength"] >= FRONT_WEAR for d in counter))
     office = [d for d in decals if d["on"] == "mickeys_room"]
-    # the smoke is O1's layer, not one of O2's marks
-    walls_floor = [d for d in office if d["picture"] not in (RINGS, BURNS) and d["kind"] != "smoke" and not (d["kind"] == "scuff" and d["yaw_deg"] == 0.0)]
+    # the smoke is O1's layer, not one of O2's marks; a pale oblong's rim and tape is part of that one mark
+    walls_floor = [d for d in office if d["picture"] not in (RINGS, BURNS) and d["kind"] not in ("smoke", "rim")
+                   and not (d["kind"] == "scuff" and d["yaw_deg"] == 0.0)]
     smoke = [d for d in office if d["kind"] == "smoke"]
     check("smoke on each of the office's three walls, from 1.2 m up to the ceiling (O1)",
           len(smoke) == 3 and len({d["wall"] for d in smoke}) == 3

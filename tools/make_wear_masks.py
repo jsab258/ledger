@@ -23,6 +23,7 @@ for sills and gables, splatter fading upward for the foot of a wall, mottled
 grime for soot (fading down) and algae (fading up), and a soft blob, made
 here like the puddles, for oil.
 """
+import math
 import os
 import sys
 
@@ -197,6 +198,32 @@ def marks(rng):
     # picture's first row at the mark's top, VignetteShot.cpp SpawnWear, so the smoke is drawn the right way up)
     smoke[-2:, :] = 0.0                                                  # nothing at the foot's own row
     out["wear_smoke"] = smoke
+    # THE TAKEN-DOWN NOTICE'S EDGE AND TAPE, 3 November (the office's packaged review: the pale oblong "has nothing
+    # that says so: no darker rim, no pin holes or tape scraps", and read by day as a blank sheet): laid darkening
+    # over the same place as wear_pale, a thin line where smoke crept under the notice's edge, broken and uneven, and
+    # an aged tape scrap at each corner, a little skew; drawn after every other mark so their seeded draws stay as
+    # they were
+    rim_w = 0.008
+    inner = 0.10
+    dx = np.minimum(np.abs(xx - inner), np.abs(xx - (1 - inner)))
+    dy = np.minimum(np.abs(yy - inner), np.abs(yy - (1 - inner)))
+    on_x = (yy > inner - rim_w) & (yy < 1 - inner + rim_w)
+    on_y = (xx > inner - rim_w) & (xx < 1 - inner + rim_w)
+    line = np.maximum(np.where(on_x, np.clip(1.0 - dx / rim_w, 0.0, 1.0), 0.0),
+                      np.where(on_y, np.clip(1.0 - dy / rim_w, 0.0, 1.0), 0.0))
+    broken = np.clip(smooth_noise(rng, n, (8, 16, 32)) * 2.6 - 1.0, 0.0, 1.0)     # in places gone altogether
+    rim = line * 0.75 * broken
+    # the tape that stayed when the notice was pulled down: three corners of four, each its own size and skew
+    for k, (cx, cy) in enumerate(((inner, inner), (1 - inner, inner), (inner, 1 - inner), (1 - inner, 1 - inner))):
+        a = math.radians(rng.uniform(-25.0, 25.0))
+        long_, short_ = rng.uniform(0.03, 0.05), rng.uniform(0.012, 0.02)
+        if k == 2:
+            continue
+        u = (xx - cx) * math.cos(a) + (yy - cy) * math.sin(a)
+        v = -(xx - cx) * math.sin(a) + (yy - cy) * math.cos(a)
+        tape = (np.abs(u) < long_) & (np.abs(v) < short_)
+        rim = np.maximum(rim, np.where(tape, 0.55 + 0.25 * rng.random(), 0.0))
+    out["wear_pale_rim"] = soften(rim, 1)
     return out
 
 

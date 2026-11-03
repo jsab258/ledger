@@ -1625,7 +1625,11 @@ def build_and_render(argv):
         # (the second mug stands on the radio desk, below) and the stationery and pads of an office that works
         model("office_notepads", 0.10, 2.50, 0.985, turn=0.2, size=0.22)
         model("stationery_supplies", -1.48, 3.13 + 0.12, 0.74 + 0.02, turn=0.5, size=0.25)
-        box("pad", 0.15, 0.36, 2.36, 2.62, 0.985, 0.995, paper_yellow)
+        # THE TELEPHONE MESSAGE PAD, 3 November (the packaged review: "a pure white pad with no print, writing or
+        # edge wear ... a blank slab", the plain yellowed pad that stood here): an A5 pad 10 mm thick, its top sheet
+        # make_office_print.py's message_pad, the bookings rung in written on it
+        box("pad", 0.18, 0.33, 2.385, 2.595, 0.985, 0.995, paper_yellow)
+        print_plane("message_pad", "message_pad", 0.255, 2.49, 0.9955, 0.15, 0.21, "up")
         # a plastic letter tray at the counter's right end (set 3, modelled: foolscap, smoked brown)
         prop("letter_tray", 0.58, 2.49, 0.985, turn=0.1)
         # a metal bin on the customers' side
@@ -1739,8 +1743,13 @@ def build_and_render(argv):
         # stair wall beside the back corner (26 October: on the back wall it was hung across the
         # pinboard's top row of notes, a fresh reviewer's fault)
         prop("coat_rail", 1.80, D - 0.42, 1.64, turn=-math.pi / 2)
-        # THE OFFICE CLOCK over the back door (Poly Haven's wall clock, CC0)
-        model("wall_clock", 0.42, D - 0.03, 2.25, turn=0.0, size=0.30)
+        # THE OFFICE CLOCK over the back door. 3 November (the packaged reviews: Poly Haven's wall clock, CC0, held its
+        # hands at 10:10 at 09:00 and at 20:00): a square black case 300 mm a side and 40 deep, its dial
+        # make_office_print.py's clock_face with no hands, 45.5 mm off the wall; the game turns its hands to the game's
+        # time over it (CrimeProbe.cpp OfficeClockHands, which carries this centre). Its foot at 2.25, where the fetched
+        # clock's base stood (its first review: centred there, it hung across the picture rail at 2.18 to 2.22)
+        box("clock_case", 0.42 - 0.15, 0.42 + 0.15, D - 0.045, D - 0.005, 2.40 - 0.15, 2.40 + 0.15, black)
+        print_plane("clock_face", "clock_face", 0.42, D - 0.0455, 2.40, 0.27, 0.27, "-y")
         # SHEILA'S BACK ROOM through the half-open back door (8 October, item 1.1's third review,
         # NOT BUILT SINCE 27 October night: the back door stands shut on Mickey's locked room (above), so nothing of it
         # is seen; kept here, off, as the record of the room that was

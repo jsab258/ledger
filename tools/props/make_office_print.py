@@ -2,6 +2,7 @@
 """Mickey's office's printed matter, as pictures (the proof view's shopfronts step, 4 October).
 
     python tools/props/make_office_print.py            # writes production/assets/office-print/mickeys/
+    python tools/props/make_office_print.py --only drivers_board,message_pad   # just those
     python tools/props/make_office_print.py --selftest
 
 WHY. Two fresh reviews failed Mickey's room at 2 m on its notices and boards: 3D text too small
@@ -211,7 +212,57 @@ def drivers_board(rng):
         d.rectangle([mm(120), y, mm(560), y + mm(76)], fill=(244, 240, 228) if k % 3 else (232, 214, 150))
         d.text((mm(140), y + mm(38)), status, font=font(FRANKLIN_HEAVY, 30), fill=RED if status == "OUT" else INK, anchor="lm")
         if status == "OUT":
-            hand(d, (mm(400), y + mm(18)), "%d.%02d" % (rng.randint(9, 11), rng.choice((5, 10, 20, 35, 40, 50))), 18, rng, INK)
+            # WHERE THE CAR WENT, NOT WHEN, 3 November (the office's packaged reviews: the times out, 10.10 to
+            # 11.20, read wrong at 09:00 and again at 20:00, the board being the same at both): canon's places
+            hand(d, (mm(330), y + mm(18)), rng.choice(("Fairview", "Exchange", "Gullwing", "Tannery Row",
+                                                       "Weighhouse Ln", "Copper Row")), 18, rng, INK)
+    return img
+
+
+def clock_face(rng):
+    """THE OFFICE CLOCK'S DIAL WITHOUT HANDS, 3 November (the packaged reviews: the fetched wall clock's hands stood at
+    10:10 at 09:00 and at 20:00; the game now turns its own hands over this, CrimeProbe.cpp's office clock): a 270 mm
+    dial, white gone a little cream, black numerals and minute ticks, no maker's name; outside the dial the case's dark
+    grey, so the square picture's corners hide behind the round case."""
+    img = sheet(270, 270, (38, 38, 40))
+    d = ImageDraw.Draw(img)
+    c, r = mm(135), mm(132)
+    d.ellipse([c - r, c - r, c + r, c + r], fill=(236, 232, 218))
+    for k in range(60):
+        a = math.radians(k * 6)
+        r0 = r - (mm(14) if k % 5 == 0 else mm(7))
+        d.line([c + r0 * math.sin(a), c - r0 * math.cos(a), c + (r - mm(3)) * math.sin(a), c - (r - mm(3)) * math.cos(a)],
+               fill=INK, width=mm(2.2) if k % 5 == 0 else mm(0.8))
+    for h in range(1, 13):
+        a = math.radians(h * 30)
+        rr = r - mm(32)
+        d.text((c + rr * math.sin(a), c - rr * math.cos(a)), str(h), font=font(FRANKLIN, 22), fill=INK, anchor="mm")
+    d.ellipse([c - mm(5), c - mm(5), c + mm(5), c + mm(5)], fill=INK)
+    return img
+
+
+def message_pad(rng):
+    """THE TELEPHONE MESSAGE PAD on the counter, 3 November (the office's packaged review: the stationery model's
+    pad read as "a pure white pad with no print, writing or edge wear ... a blank slab"): an A6 pad, its top sheet's
+    printed form half filled in biro with the bookings rung in, places and fares and no times, so it reads true at
+    any hour; a tea ring and a thumb's grime at the corner."""
+    img = sheet(105, 148, (238, 233, 214))
+    d = ImageDraw.Draw(img)
+    d.text((mm(52), mm(10)), "TELEPHONE MESSAGE", font=font(FRANKLIN_HEAVY, 4.2), fill=RED, anchor="mm")
+    for k in range(9):
+        y = mm(24) + k * mm(13)
+        d.line([mm(8), y + mm(9), mm(97), y + mm(9)], fill=(150, 160, 190), width=mm(0.3))
+    rows = (("Copper Row", "Exchange", "2.40"), ("Weighhouse Ln", "Fairview", "3.10"), ("Tannery Row", "Gullwing", "acct"),
+            ("Quay St", "the Hook", "1.60"), ("Fairview", "Copper Row", "3.10"))
+    for k, (a, b, fare) in enumerate(rows):
+        y = mm(24) + k * mm(13)
+        hand(d, (mm(8), y + mm(2)), "%s - %s" % (a, b), 4.6, rng, BIRO)
+        hand(d, (mm(84), y + mm(2)), fare, 4.6, rng, BIRO)
+    d.ellipse([mm(58), mm(96), mm(92), mm(130)], outline=(196, 172, 128), width=mm(1.2))
+    for _ in range(250):
+        x, y = rng.uniform(mm(84), mm(105)), rng.uniform(mm(126), mm(148))
+        c = rng.randint(185, 215)
+        d.point((x, y), fill=(c, int(c * 0.94), int(c * 0.84)))
     return img
 
 
@@ -409,15 +460,19 @@ def district_map(rng):
 
 
 PIECES = (("fares", fares), ("licence", licence), ("accounts", accounts), ("calendar", calendar),
-          ("farebook", farebook), ("directory", directory), ("drivers_board", drivers_board),
+          ("farebook", farebook), ("directory", directory), ("drivers_board", drivers_board), ("message_pad", message_pad),
+          ("clock_face", clock_face),
           ("bookings", bookings), ("pinboard", pinboard), ("radio_faceplate", radio_faceplate), ("keypad", keypad),
           ("district_map", district_map)) + tuple(("label_%d" % n, label(n)) for n in range(len(LABELS)))
 
 
-def make():
+def make(only=None):
+    """Every picture, or with only, just those named (--only a,b: the rest of the folder left as it is)."""
     os.makedirs(OUT, exist_ok=True)
     rows = []
     for name, fn in PIECES:
+        if only and name not in only:
+            continue
         rng = random.Random("mickeys-" + name)
         img = fn(rng)
         path = os.path.join(OUT, name + ".png")
@@ -446,4 +501,5 @@ def selftest():
 
 
 if __name__ == "__main__":
-    sys.exit(selftest() if "--selftest" in sys.argv else (make() or 0))
+    sys.exit(selftest() if "--selftest" in sys.argv
+             else (make(sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None) or 0))

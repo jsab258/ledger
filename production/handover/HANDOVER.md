@@ -16,7 +16,9 @@ The one file a fresh session starts from (his order of 2 November, 6.2: start ea
 
 **Waiting list added today:** n02-9-hair-skill, n02-9-hair-cards-vs-strands, n02-9-dispatcher-voice (her ruled voice p280 never made into the game's clip).
 
-**Uncommitted work not mine:** his office prints (production/assets/office-print/mickeys/*.png), untouched.
+**Mickey's office (DECISIONS 16:42):** five of the morning's packaged-review faults fixed and PASS in the editor (notice patches' edge and tape, the damp patch clear of the corner, a written message pad, a clock the game turns to its time, the cars board naming places); tonight's walk and packaged office pictures next. The damp stain's outline would be a third try: his yes first.
+
+**Uncommitted on purpose:** the office prints changed in the checkout (calendar, fares, licence, and since today drivers_board): git refuses pictures outside previews; their lasting copies are on F:/LedgerTools/game-inputs under the same path, as are message_pad and clock_face (ignored).
 
 **Tries used:** the crates' rack look 1 of 2 (before review); Tom's crown 4 (his yeses), a known fault; Sheila's hip 1 of 2; Ron's moustache 1 of 2; speech 2 of 2.
 
