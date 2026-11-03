@@ -2,6 +2,24 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "fresh-session-mode-2026-11-03",
+   "added": "2026-11-03 21:00",
+   "text": "For tomorrow's switch to a fresh session each day: in the Claude app, open Scheduled in the sidebar, open \"LEDGER: the day's fresh session\" and set its permission mode to Auto (not Bypass), then save. The app would not let the session set it: your message came from another device. Without it the 05:21 session stops at its first file write until you approve it.",
+   "links": [],
+   "recommendation": "Auto, as this session runs now; it is not bypassing permissions. Optional: in the waiting session \"LEDGER: the day's fresh session, test (once)\", allow its one file write so tonight's test finishes. No web link: the setting is in the app.",
+   "options": [
+    [
+     "done",
+     "Done, set to Auto (recommended)"
+    ],
+    [
+     "not-now",
+     "Not now: keep one long session another day"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "fab-footwear-2026-11-01",
    "added": "2026-11-01 21:00",
    "text": "While signed in to Fab, press Download on each of Epic's four free MetaHuman footwear files and save them in F:\\LedgerTools\\fab (about 1.2 GB in all).",

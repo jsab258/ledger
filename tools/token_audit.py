@@ -2,6 +2,7 @@
 """WHAT EACH ITEM AND EACH KIND OF WORK COSTS, FROM THIS PC'S OWN CLAUDE CODE SESSION LOGS.
 
     python tools/token_audit.py [--since 2026-10-26] [--until 2026-11-02] [--out production/research/token-audit]
+    python tools/token_audit.py --shares 2026-11-03   # one line: the history's, Opus's and reviewing's shares of a day
     python tools/token_audit.py --selftest
 
 WHY, 1 November 2026 (his order of 2 November, 6.1: "a token audit from your own Claude Code session logs on this PC:
@@ -297,9 +298,25 @@ def selftest():
     return 1 if bad else 0
 
 
+def shares(out):
+    """The three shares his rulings of 3 November ask for on each morning's overview: the history's (re-reading the
+    conversation), Opus's (of all models) and reviewing's (every kind with review in its name), each of the day's cost."""
+    tot = out["usd"] or 1.0
+    opus = sum(u for k, (u, _n) in out["models"].items() if "opus" in k)
+    review = sum(u for k, (u, _n) in out["kinds"].items() if "review" in k)
+    return 100 * out["history"][0] / tot, 100 * opus / tot, 100 * review / tot
+
+
 def main(a):
     if "--selftest" in a:
         return selftest()
+    if "--shares" in a:
+        # python tools/token_audit.py --shares 2026-11-03: one line for the overview, nothing written
+        d = datetime.datetime.strptime(a[a.index("--shares") + 1], "%Y-%m-%d")
+        out = audit(d, d + datetime.timedelta(days=1))
+        h, o, r = shares(out)
+        print("tokenShares day=%s history=%.0f%% opus=%.0f%% reviewing=%.0f%% steps=%d usd=%.2f" % (d.strftime("%Y-%m-%d"), h, o, r, out["steps"], out["usd"]))
+        return 0
 
     def day(name):
         return datetime.datetime.strptime(a[a.index(name) + 1], "%Y-%m-%d") if name in a else None
