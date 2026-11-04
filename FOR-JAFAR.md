@@ -3,19 +3,11 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Tuesday 3 November, 06:22)
+## Overview (Wednesday 4 November, 06:20)
 
-**The week's visible change, 26 October against this morning (the hook camera by day):**
+**Tokens, Tuesday 3 November:** history 53% of the spend, Opus 98%, reviewing 27% (3,538 steps, US$351.80 at list prices; Monday 45%, 98%, 22%).
 
-| 26 October | 2 November |
-|---|---|
-| ![26 October](production/previews/morning-hook-day-2026-10-26.jpg) | ![2 November](production/previews/morning-hook-day-2026-11-02.jpg) |
-
-- The road and pavement are now wet stone at real values (your ruling of 29 October): grey and dull where they were black and glossy; the puddles are gone. They read less wet than the Hook sheet's street; its two failing readings are listed, not hidden.
-- The brick is redder and stained; Mickey's office shows its shelves and fittings through the glass.
-- The people are unchanged: the same stiff poses, the woman still in the white base layer.
-
-Disk (11-03 03:31): C: 139.5 GB free, F: 21.8 GB free; grew most since yesterday: the Fab downloads on F: +1.2 GB, my working files on C: +0.7 GB, Tom's body files on F: +0.7 GB.
+Disk (11-04 03:31): C: 134.5 GB free, F: 28.3 GB free; grew most since yesterday: the build cache on C: +8.9 GB, gate pictures on F: +0.5 GB, my working files on F: +0.5 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -39,19 +31,12 @@ No decision asked: these are for watching the street change.
 - **Then:** sitting, Mickey's office and the Stutter passed in the packaged walk; the exit re-check aimed at 9 November; what may miss it reaches you by Wednesday.
 - **Beside it:** the corner's people now walk where the hour sends them (passed in the editor). Its surfaces were read against real ranges: three right; the gilt and the tiles too dark and the phone kiosk too bright, mended today. The brick needs a real reference, likely a choice on Wednesday's page.
 
-**The tester (last night's walk, packaged):** it never started. A Windows clipboard panel stayed in front of every window, so the game could not come forward, and the tester gave up after 30 minutes. The build itself passed. "That's all I know" to 4 of 60 first questions (2 the night before). Nothing was looked at, so no new faults are known.
-
-**Monday's risks:**
-1. Speech meets its bar at the median only beside the game; the real talk inside the packaged game is not measured yet.
-2. Tom's toe shape waits on Epic's boots from Fab, which need your sign-in; the collar's third try is the last one.
-3. The pale line under everything on the wet street stays until you allow one more try in the ground itself.
-4. Nothing of this week is walked packaged yet; sitting, the office and the Stutter must pass there by 9 November.
-5. People who freeze, merge or vanish break the illusion every night; the corner's people step is the first answer.
+**The tester (last night's walk, packaged, Tuesday evening's build):** it ran this time. 14 of 15 stages; it lost sight of Darren after the window. One witness (Rocco) showed he knew, one more than the night before. "That's all I know" to 3 of 60 first questions (4 before). What broke the illusion: Ron and the woman by Mickey's still in the white base layer; Ron heard speaking while out of sight; the road ending in a grey slab and blank sky past the houses. The new brick, the A-board, crates, kiosk and the reaction at Rita's window are judged from its pictures today.
 
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-1. At the PC: shut the clipboard panel (Esc), then quit Marvelous without saving (done, recommended).
+1. In the app: set the task "LEDGER: fresh session at a handover" to Auto, as you did the daily one (done, recommended).
 
 ### Road to worth playing (PLAN.md)
 
@@ -62,6 +47,20 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Wednesday 4 November (morning)
+
+**Failed:**
+- The night walk lost Darren after the window (14 of 15 stages); the people's white base layer and the bare road's end still break the illusion.
+- The morning session waited 50 minutes to start: two older Builder sessions kept showing activity while doing nothing. Started 06:09.
+
+**Done:**
+- Last night's walk ran in full this time, on Tuesday evening's build, with the brick the game had been missing since 4 October.
+- The morning pictures were taken on time by the night job.
+
+**Today:** speech's run of twenty real questions in the packaged game; what may miss the 9 November exit, told to you today; the corner's midweek page.
+
+**Act on:** one item on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Tuesday 3 November (evening)
 
