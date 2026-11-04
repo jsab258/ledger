@@ -423,7 +423,7 @@ holds and has to be corrected or widened.
 | **Source** | **Poly Haven** (https://polyhaven.com), 2k JPG maps from dl.polyhaven.org via api.polyhaven.com/files, downloaded 23 September on Jafar's yes for the PS5 corner |
 | **Licence** | CC0 1.0 Universal — polyhaven.com/license |
 | **Where** | `production/assets/scanned/polyhaven/<asset>/`: `brick_4` (a warm red stretcher-bond brick, the Hook sheet's nearest), `brick_wall_001` (a darker variegated brick, the alternate), `concrete_pavement_02` (square concrete flags, the British footway's), `asphalt_01` (a coarse grey road) and `painted_concrete_02` (a smooth, lightly worn paint, the base the shopfront's navy is tinted over; the library's painted timber is all planking, which a shopfront is not); diffuse, DirectX normal, roughness and ambient occlusion each |
-| **What** | the corner's scanned brick, for the "best free scanned materials" half of the PS5 experiment |
+| **What** | the corner's scanned brick, for the "best free scanned materials" half of the PS5 experiment; and, made by us from Poly Haven's CC0 `kitchen_wood` (https://polyhaven.com/a/kitchen_wood, via the wood trim sheet, tools/art-recipes/wood_trim.py), the painted-timber tile `paint_wood_01` (tools/art-recipes/paint_wood_tile.py, 4 November 2026; git-ignored pictures, on F:/LedgerTools/game-inputs under the same path) worn by the street's frame_painted and paint_fascia rows |
 
 ## Footsteps — sturmankin and Joseph Sardin, CC0
 

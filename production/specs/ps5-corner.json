@@ -430,39 +430,39 @@
     },
     {
       "base": "frame_painted",
-      "asset": "painted_concrete_02",
+      "asset": "paint_wood_01",
       "files": [
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_diff_2k.jpg",
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_diff.png",
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_nor_dx.png",
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_rough.png"
       ],
-      "covers_m": 1.0,
+      "covers_m": 3.15,
       "match_rgb": [
-        0.675,
-        1.011,
-        1.62
+        0.74,
+        1.036,
+        1.4089
       ],
-      "why": "the scan's mean brought to its palette colour (frame_painted), so it adds detail and wear, not a new colour",
-      "always": false,
-      "covers_note": "4 October: off in play. A painted-CONCRETE scan on timber: at 4.0 m a repeat a fresh reviewer read Mickey's frame and pilasters as tarmac at 2 m, and at 1.0 they still read as rough render; the joinery keeps the street's own paint until a painted-timber surface is made."
+      "why": "4 November, the corner's step 9a: painted timber, not the painted-concrete scan set aside on 4 October. The tile is the wood trim sheet's boards strip (Poly Haven kitchen_wood, CC0) made by tools/art-recipes/paint_wood_tile.py: seamless, 1,536 px over 3.15 m (488 px a metre), the grain faint, a broad dirt, gloss paint roughness 0.32, a normal map turned well down (a row has no contrast field, so it is in the maps). match_rgb is the palette colour of the row (frame_painted, linear) over the tile's mean, as the other rows' are.",
+      "always": true,
+      "always_note": "4 November: on. Whether the joinery reads as painted timber, not render or tarmac (the 4 October fault), is the step reviewer's look at 2 m and 6 m, then the packaged walk."
     },
     {
       "base": "paint_fascia",
-      "asset": "painted_concrete_02",
+      "asset": "paint_wood_01",
       "files": [
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_diff_2k.jpg",
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
-        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_diff.png",
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_nor_dx.png",
+        "production/assets/scanned/polyhaven/paint_wood_01/paint_wood_01_rough.png"
       ],
-      "covers_m": 1.0,
+      "covers_m": 3.15,
       "match_rgb": [
-        0.675,
-        1.011,
-        1.62
+        0.74,
+        1.036,
+        1.4089
       ],
-      "why": "the scan's mean brought to its palette colour (fascia_slate_blue), so it adds detail and wear, not a new colour",
-      "always": false,
-      "covers_note": "4 October: off in play. A painted-CONCRETE scan on timber: at 4.0 m a repeat a fresh reviewer read Mickey's frame and pilasters as tarmac at 2 m, and at 1.0 they still read as rough render; the joinery keeps the street's own paint until a painted-timber surface is made."
+      "why": "4 November, the corner's step 9a: painted timber, not the painted-concrete scan set aside on 4 October. The tile is the wood trim sheet's boards strip (Poly Haven kitchen_wood, CC0) made by tools/art-recipes/paint_wood_tile.py: seamless, 1,536 px over 3.15 m (488 px a metre), the grain faint, a broad dirt, gloss paint roughness 0.32, a normal map turned well down (a row has no contrast field, so it is in the maps). match_rgb is the palette colour of the row (fascia_slate_blue, linear) over the tile's mean, as the other rows' are.",
+      "always": true,
+      "always_note": "4 November: on. Whether the joinery reads as painted timber, not render or tarmac (the 4 October fault), is the step reviewer's look at 2 m and 6 m, then the packaged walk."
     },
     {
       "base": "brick_rubbed",

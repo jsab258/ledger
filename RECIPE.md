@@ -1768,3 +1768,12 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.5 hours.
 - What failed and why: the first guess (a newer change to the walls) was wrong; older pictures showed the fault began with the bake itself.
 - Evidence: DECISIONS 4 November 15:55; F:/LedgerTools/game-inputs/glass-bake/manifest.json.
+
+## A painted-timber tile for shared joinery rows (4 November 2026)
+- Made: one seamless tile of paint over wood laid on every painted frame, door and fascia, by material row, with no mesh change.
+- Method: cut the wide-board strip of an existing wood trim sheet square at the target density; hold the grain's contrast low in the maps themselves (colour nearly flat, normal faint, gloss-paint roughness) because the row has no contrast control; cross-blend both seams; bring the mean to the row's palette colour with the row's existing multiply.
+- Tools: a numpy/PIL recipe script with a self-test; the game's run-time scan rows; the editor's shop-view photographs.
+- Target and check: 410 to 614 px a metre; contrast and seam numbers from the self-test; a fresh small reviewer at about 2 m and 6 m, day and night, beside the last good pictures; then the packaged walk.
+- Cost: about 0.6 hours (helper 7 minutes of work, photographs 5 minutes, review 1 minute, records).
+- What failed and why: nothing; the plain cut's seam failed across one axis only, so both axes were blended.
+- Evidence: F:/LedgerTools/gate/new/corner-9a/r1-review.md; tools/art-recipes/paint_wood_tile.py.
