@@ -1113,6 +1113,12 @@ namespace
 	// Lumen had lit the scene, the cube showed the street black again; so a round waits until the
 	// street has settled (six seconds after the last window is made, one after a change of light).
 	double GGlassCatchNotBefore = 0.0;
+	// AND NOT BEFORE THE STREET HAS BEEN DRAWN (4 November, Mickey's window black in its baked glass):
+	// the six seconds are wall-clock time, and the bake's 40 s load stall spent them with no frame drawn,
+	// so the first window (eg_bay0, always first) was caught on frame 0 with the street still unlit while
+	// every later one was lit. A round now also waits for this many frames drawn since its guard was set.
+	uint64 GGlassCatchNotBeforeFrame = 0;
+	const uint64 kGlassCatchSettleFrames = 90;
 	FTSTicker::FDelegateHandle GGlassCatchTicker;
 	// Twelve passes for each window, on consecutive frames (7 October; two round before): the first
 	// can find a texture still streaming in, and Lumen in a fresh capture gathers its light over them;
@@ -7199,7 +7205,7 @@ namespace
 				}
 			}
 		}
-		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0 || FPlatformTime::Seconds() < GGlassCatchNotBefore) { return true; }
+		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0 || FPlatformTime::Seconds() < GGlassCatchNotBefore || GFrameCounter < GGlassCatchNotBeforeFrame) { return true; }
 		FGlassCatch& Gc = GGlassCatches[GGlassCatchNext % GGlassCatches.Num()];
 		if (!Gc.Cap.IsValid())
 		{
@@ -7293,6 +7299,7 @@ namespace
 		// can come before the windows are, and its round found none to catch: the glass stayed black.
 		++GGlassCatchLeft;
 		GGlassCatchNotBefore = FPlatformTime::Seconds() + 6.0;
+		GGlassCatchNotBeforeFrame = GFrameCounter + kGlassCatchSettleFrames;
 		if (!GGlassCatchTicker.IsValid())
 		{
 			GGlassCatchTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickGlassCatch), 0.0f);
@@ -8593,6 +8600,7 @@ namespace
 		}
 		GGlassCatchLeft = GGlassCatches.Num();   // each window in turn, its passes on consecutive frames
 		GGlassCatchNotBefore = FMath::Max(GGlassCatchNotBefore, FPlatformTime::Seconds() + 1.0);
+		GGlassCatchNotBeforeFrame = FMath::Max(GGlassCatchNotBeforeFrame, GFrameCounter + 30);
 		for (const FRoomLight& RL : GRoomLights)
 		{
 			if (!RL.L.IsValid()) { continue; }

@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (4 Nov 14:25): take-over worked in rehearsal; corner midweek page sent; office passed packaged.
+STATE (4 Nov 15:55): first real take-over 15:21; Mickey's window black reflection mended (bake caught before the street was lit), to pass in tonight's packaged build.
 
 ## Handovers
 

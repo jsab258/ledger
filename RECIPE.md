@@ -1758,3 +1758,13 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.2 hours of session time and two reviews.
 - What failed and why: nothing new; the night room still reads like late afternoon (a hard warm light from the window side), which was in the last good pictures too.
 - Evidence: F:/LedgerTools/gate/new/office/2026-11-04-packaged-day/review.json and -night/review.json.
+
+## A baked reflection caught before the scene was lit (4 November 2026)
+
+- Made: nothing new; a fault in one window's baked reflection found and mended.
+- Method: when one baked picture in a set looks wrong, measure every picture of the set by the same number (here the median brightness of each cube's lower half) before guessing at a cause; the odd one out was the first caught. Read the bake's log for its frame number: it was caught on frame 0. A settle wait counted in wall-clock seconds can be used up by a loading stall with no frames drawn; wait for frames drawn as well as seconds.
+- Tools: a small HDR reader (numpy), the bake's own log, the engine's frame counter.
+- Target and check: every window's day cube within the set's range, the first window's street visibly lit; then the shipped build's picture and a fresh reviewer.
+- Cost: about 0.5 hours.
+- What failed and why: the first guess (a newer change to the walls) was wrong; older pictures showed the fault began with the bake itself.
+- Evidence: DECISIONS 4 November 15:55; F:/LedgerTools/game-inputs/glass-bake/manifest.json.
