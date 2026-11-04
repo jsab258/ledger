@@ -19,13 +19,13 @@ Disk (11-03 03:31): C: 139.5 GB free, F: 21.8 GB free; grew most since yesterday
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Tuesday 3 November. Phase 1, Prove the bottlenecks. On: 1. Speech: 1.07 s on small talk after two tries; real questions unmeasured since 2.40 s; next a run of real questions (n02-3-1-speech). Next: 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).**
+**Morning, Wednesday 4 November. Phase 1, Prove the bottlenecks. On: 1. Speech: 1.07 s on small talk after two tries; real questions unmeasured since 2.40 s; next a run of real questions (n02-3-1-speech). Next: 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).**
 
-| | Today, 03 Nov | Yesterday, 02 Nov |
+| | Today, 04 Nov | Yesterday, 03 Nov |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-11-03](production/previews/morning-hook-day-2026-11-03.jpg) | ![The hook camera by day, 2026-11-02](production/previews/morning-hook-day-2026-11-02.jpg) |
-| The reverse view | ![The reverse view, 2026-11-03](production/previews/morning-reverse-day-2026-11-03.jpg) | ![The reverse view, 2026-11-02](production/previews/morning-reverse-day-2026-11-02.jpg) |
-| The street at night | ![The street at night, 2026-11-03](production/previews/morning-night-2026-11-03.jpg) | ![The street at night, 2026-11-02](production/previews/morning-night-2026-11-02.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-11-04](production/previews/morning-hook-day-2026-11-04.jpg) | ![The hook camera by day, 2026-11-03](production/previews/morning-hook-day-2026-11-03.jpg) |
+| The reverse view | ![The reverse view, 2026-11-04](production/previews/morning-reverse-day-2026-11-04.jpg) | ![The reverse view, 2026-11-03](production/previews/morning-reverse-day-2026-11-03.jpg) |
+| The street at night | ![The street at night, 2026-11-04](production/previews/morning-night-2026-11-04.jpg) | ![The street at night, 2026-11-03](production/previews/morning-night-2026-11-03.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
@@ -62,6 +62,24 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Tuesday 3 November (evening)
+
+**Failed:**
+- Speech's run of real questions could not settle the bar (two questions asked five times each). Run F, twenty different questions, runs on tonight's build.
+- Tom's crown, the fourth try (your yes): still pale; a known fault now.
+- Found: since 4 October the game you play showed a plainer brick than every editor picture. Fixed tonight, with a check.
+
+**Done:**
+- Your rulings file cleaned; tonight's three efficiency rulings set up (helpers' models, a fresh session each morning, reviews sized to the piece).
+- The corner: A-board, milk crates, kiosk, litter, a reaction at Rita's window, and brick that no longer repeats every metre, with gentle tone over each wall. Editor-passed; tonight's walk checks them.
+- Mickey's office: five small faults fixed.
+
+**Decided, yours to overturn:** the crates have no dairy name; the kiosk says Telephone on three sides; the cars board names places; a witness looks, then walks over.
+
+**Computer use:** Marvelous closed 07:17 (File, Quit), after 10 idle minutes.
+
+**Act on:** set the daily session's task to Auto in the app: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Tuesday 3 November (morning)
 
