@@ -2571,6 +2571,17 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 			if (SitClock >= NextNeck)
 			{
 				NextNeck = SitClock + 0.1f;
+				// THE HEAD DRAWN AGAINST THE HEAD HELD (4 November, the packaged sit's review: the drop's head read 60 to 80
+				// degrees down while this line said 25): the Face part's own head bone against the held body's, in degrees
+				float FaceOff = -1.0f;
+				TInlineComponentArray<USkeletalMeshComponent*> Mine;
+				if (AActor* W = WornBody->GetOwner()) { W->GetComponents(Mine); }
+				for (USkeletalMeshComponent* P : Mine)
+				{
+					if (P->GetName() != TEXT("Face") || P->GetBoneIndex(TEXT("head")) == INDEX_NONE) { continue; }
+					FaceOff = (float)FMath::RadiansToDegrees(P->GetSocketQuaternion(TEXT("head")).AngularDistance(WornBody->GetSocketQuaternion(TEXT("head"))));
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerSitFaceDrawn: %.1f s: the face part's head %.1f deg from the held body's"), SitClock - SitPhaseAt, FaceOff);
 				UE_LOG(LogTemp, Display, TEXT("LedgerSitNeck: %s %.1f s: trunk %.1f deg on the mannequin, %.1f on him; upper back %.1f past standing as copied, %.1f as held; neck %.1f as copied, %.1f as held; face %.1f as copied, %.1f as held (weight %.2f)"),
 					SitPhase == ESitPhase::Entering ? TEXT("down") : TEXT("up"), SitClock - SitPhaseAt, MoverLean, R->TrunkLean(), R->BackBendCopied(), R->BackBendHeld(),
 					R->NeckBendCopied(), R->NeckBendHeld(), R->FacePitchCopied(), R->FacePitchHeld(), R->HeadUpWeight);

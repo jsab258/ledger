@@ -450,6 +450,8 @@
 {"event": "start", "at": "2026-11-04T14:19:00", "task": "n02-6-6 the take-over's rehearsal watched, passed", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-04T14:23:00", "note": ""}
 {"event": "start", "at": "2026-11-04T15:21:00", "task": "n02-4-corner Mickey's window reflection black: found and mended (take-over session)", "phase": "1", "kind": "production"}
-{"event": "stop", "at": "2026-11-04T15:57:00", "note": ""}
-{"event": "start", "at": "2026-11-04T15:58:00", "task": "n02-tom-jeans/boots and n02-3-3-sitting: packaged reviews (two fresh reviewers)", "phase": "1", "kind": "review"}
-{"event": "stop", "at": "2026-11-04T16:22:00", "note": ""}
+{"event": "stop", "at": "2026-11-04T15:37:00", "note": ""}
+{"event": "start", "at": "2026-11-04T15:38:00", "task": "n02-tom-jeans/boots and n02-3-3-sitting: packaged reviews (two fresh reviewers)", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-04T15:45:00", "note": ""}
+{"event": "start", "at": "2026-11-04T15:46:00", "task": "n02-3-3-sitting: the drop's bow measured (two editor sit walks, a drawn-head log line)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-04T16:09:00", "note": ""}
