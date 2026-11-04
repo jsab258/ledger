@@ -34,6 +34,7 @@ Why: Jafar is not a programmer; he reads LEDGER in the chat and on his pages onl
 ## 2. Read his answers first
 
 - His taps land in the page's database as verdicts/<item id> (pick, note, at; tools/day_page.py, which stores them; needs_you_page.py docstring). Read them with the ArtifactData tool (list, collection "verdicts", the page's url) before asking anything, before the overview or any summary, at least hourly while working, and at every pause (each background notification, before each commit); act on each at once (step 6); note the last read time in production/handover/HANDOVER.md (RULINGS 2 Nov 08:00; needs-you-one-page; approval-page-rules).
+- Each Monday: `python tools/needs_you_page.py --archive` moves items done over two days ago to archive.json beside the list, unpublished; the verdicts collection stays untouched (the advisor's housekeeping, 4 Nov).
 - A verdict's "at" is UTC: add Switzerland's offset before writing his time (his collar answer, stored at 10:47Z, is "11:47" in items.json and DECISIONS 2 Nov 11:50).
 - Read the store itself, never a session's summary of it: on 30 September an overview listed two taps as waiting that he had answered at 16:24 (needs-you-reads-every-page-store). An item that still points to another page: read that page's store too; pages.json names its collections.
 - **Check:** every open item's verdict looked up within the hour; no answer sits unacted.

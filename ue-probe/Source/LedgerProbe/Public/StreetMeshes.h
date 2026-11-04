@@ -353,6 +353,9 @@ namespace LedgerStreet
 		// night reference exists.
 		double SkySeenGainNight;
 		double SkyLightGainNight;
+		// THE NIGHT'S FILL (4 November, his corner note: at night the buildings stay readable, an overcast town sky's
+		// dull orange glow and a little fill, the lamp pools kept): the sky's light as one soft high light, lux; 0 is off.
+		double NightFillLux, NightFillR, NightFillG, NightFillB, NightFillYaw, NightFillPitch;
 		double NightExposureBias;
 		// THE SEE-THROUGH GLASS, when M_LedgerGlass is in the build: how much
 		// of a window is glass and how much is the room, and how smooth.
@@ -487,7 +490,7 @@ namespace LedgerStreet
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0), NetDayGain(0.0),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
-		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
+		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0), NightFillLux(0.0), NightFillR(1.0), NightFillG(0.6), NightFillB(0.35), NightFillYaw(0.0), NightFillPitch(-70.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
 		         GlassCubeStrength(0.0), GlassCubeStrengthNight(-1.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
 		         bStreetInPlay(false), bGroundCoat(false), WaterLevelFlags(0.0), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
@@ -893,6 +896,18 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.SkySeenGainNight = V->Num; ++Out.Read; }
 		V = Root.Find("sky_light_gain_night");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SkyLightGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("night_fill_lux");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillLux = V->Num; }
+		V = Root.Find("night_fill_r");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillR = V->Num; }
+		V = Root.Find("night_fill_g");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillG = V->Num; }
+		V = Root.Find("night_fill_b");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillB = V->Num; }
+		V = Root.Find("night_fill_yaw");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillYaw = V->Num; }
+		V = Root.Find("night_fill_pitch");
+		if (V != 0 && V->Type == T_NUM) { Out.NightFillPitch = V->Num; }
 		V = Root.Find("night_exposure_bias");
 		if (V != 0 && V->Type == T_NUM) { Out.NightExposureBias = V->Num; ++Out.Read; }
 		V = Root.Find("glass_opacity");

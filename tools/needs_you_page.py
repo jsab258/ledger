@@ -4,6 +4,7 @@
     python tools/needs_you_page.py            # writes production/approvals/needs-you/page.json and index.html
     python tools/needs_you_page.py --check    # fails when an item lacks a field, or a link is not a full https link
     python tools/needs_you_page.py --close ID "how"   # he answered or did it: the item is done and leaves the page
+    python tools/needs_you_page.py --archive  # each Monday: items done over two days ago move to archive.json, unpublished
     python tools/needs_you_page.py --selftest
 
 WHY, 2 November 2026. Jafar: "make one permanent page, 'LEDGER: Needs you', in the same format as your decision
@@ -148,6 +149,22 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     if "--selftest" in a:
         sys.exit(selftest())
+    if "--archive" in a:
+        # Each Monday (the advisor's housekeeping of 4 November): items done more than two days ago move to
+        # archive.json beside this list, not published; the last two days' stay so his answers stay visible.
+        cut = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime("%Y-%m-%d %H:%M")
+        data = load()
+        old = [x for x in data["items"] if x.get("state") == "done" and x.get("closed", "9")[:16] < cut]
+        data["items"] = [x for x in data["items"] if x not in old]
+        path = os.path.join(DIR, "archive.json")
+        kept = load(path) if os.path.exists(path) else {"about": "Items done more than two days ago, moved from items.json each Monday; not published.", "items": []}
+        kept["items"] += old
+        for p, d in ((path, kept), (ITEMS, data)):
+            with open(p, "w", encoding="utf-8", newline="\n") as fh:
+                json.dump(d, fh, indent=1, ensure_ascii=False)
+                fh.write("\n")
+        print("needs-you: %d archived, %d kept" % (len(old), len(data["items"])))
+        sys.exit(build())
     if "--close" in a:
         i = a.index("--close")
         data = load()

@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (4 Nov 19:37): corner step 1 begun (the undressed out of his pictures; one stand-in left); 9a packaged tonight; jacket set aside.
+STATE: the hill listed, third try asked; night's second review and the sky's second try next.
 
 ## Handovers
 

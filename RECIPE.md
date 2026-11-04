@@ -1786,3 +1786,22 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.4 hours for the second part (finding him 0.2, fix and builds 0.1, pictures and review 0.1).
 - What failed and why: the first try hid tagged people once, at the start; a schedule's own show call brought one back.
 - Evidence: ue-probe/Saved/PageShots (5 views, 4 Nov 20:28); DECISIONS 4 Nov 20:29.
+
+
+## Distant trees and houses as plain geometry (4 November 2026)
+- What was made: a hillside's trees and houses at 110 to 250 m, from faceted lumps to many small leaf triangles, limbs and front-of-house detail. Set aside at its review limit: better than before, not yet passed.
+- Method: scatter leaf triangles of 5 to 9 pixels at viewing distance round overlapping bough masses, shaded in three tiers from top to underside; add what makes a house a house at range (gutter line, sills, lintels, damp plinth) and dirty any near-white wall. Keep the old random draws so a reviewed layout stays put.
+- Tools: the street's Blender recipe, its export and import, editor pictures.
+- Target and check: no simple shapes at the frame's size; two reviews beside the last good picture.
+- Cost: about 0.6 hours, reviews included.
+- What failed and why: leaves alone read as a winter tree; tightly packed boughs read as pompoms; leaves let loose beyond the mass read as flecks; large leaves read as triangles on the roofs below. Sky-coloured gaps may be haze on far ground rather than holes: not established.
+- Evidence: F:/LedgerTools/gate/new/hill-2026-11-04.
+
+## A night that stays readable (4 November 2026)
+- What was made: buildings readable between lamp pools by one faint warm high light and a warm haze standing for lit low cloud. In second review.
+- Method: when sky light cannot reach the tone curve at any gain, use one soft directional fill by night, its colour less saturated than the lamps, and tint the haze rather than the sky picture; measure the near-black share and the clipped share together.
+- Tools: the look file; a picture script measuring luma under 10 and clipped red.
+- Target and check: near black well under the old share, pools unclipped, still night.
+- Cost: about 0.3 hours.
+- What failed and why: a saturated fill turned unlit brick pure red; too much haze read as dusk.
+- Evidence: F:/LedgerTools/gate/new/night-2026-11-04/r2.

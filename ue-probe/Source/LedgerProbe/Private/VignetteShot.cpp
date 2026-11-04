@@ -3698,6 +3698,20 @@ namespace
 		// row says.
 		SetDirectional(GSun, FLinearColor(0.95f, 0.96f, 1.0f, 1.0f),
 		               C.SunOn ? (float)(C.SunIntensity * GLook.SunGain) : 0.0f);
+		// THE NIGHT'S FILL (the look file's night_fill_*; his corner note of 4 November). The day's light, kept from the
+		// day's rotation only by day: Condition changes put it back below.
+		if (ULightComponent* SunC = GSun != nullptr ? GSun->GetLightComponent() : nullptr)
+		{
+			static bool bHaveDayRot = false;
+			static FRotator DayRot;
+			if (!bHaveDayRot) { DayRot = SunC->GetComponentRotation(); bHaveDayRot = true; }
+			if (!C.SunOn && GLook.NightFillLux > 0.0)
+			{
+				SetDirectional(GSun, FLinearColor((float)GLook.NightFillR, (float)GLook.NightFillG, (float)GLook.NightFillB, 1.0f), (float)GLook.NightFillLux);
+				SunC->SetWorldRotation(FRotator((float)GLook.NightFillPitch, (float)GLook.NightFillYaw, 0.0f));
+			}
+			else { SunC->SetWorldRotation(DayRot); }
+		}
 		// -PlayNightMoon=<lux> (29 October, a trial for the look's page; nothing in the look file, and the night above
 		// stays a hard zero by default): through the player's camera 87% of the night was near black between the lamps,
 		// and the night sky's own light adds almost nothing at any gain (a dark night sky). Mafia keeps a faint moon by

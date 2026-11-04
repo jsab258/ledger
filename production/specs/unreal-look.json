@@ -1,13 +1,13 @@
 {
  "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
- "sky_seen_gain": 13.0,
+ "sky_seen_gain": 7.0,
  "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street: the sheet's sky is white over a dark street. Tuned 23 September against the sheet at the approved lens with the probe's own frame measured by region; 1.0 was the probe's constant.",
  "street_glow_gain": 0.02,
  "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
  "fog_day_colour": [
-  2.06,
-  2.12,
-  2.24
+  1.3,
+  1.33,
+  1.38
  ],
  "fog_height_falloff": 0.003,
  "wet_film_from": 0.5,
@@ -18,7 +18,7 @@
  "glass_see_through_note": "The display glass wears M_LedgerGlass (tools/ue/make_glass_material.py): translucent, lit in the forward pass so the sky lands on it as a sheen, tinted by the glass colour. If the build lacks that material the glass is left out, as it was before it existed; the verdict line counts both.",
  "sun_gain": 0.1,
  "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
- "sky_light_gain": 1.4286,
+ "sky_light_gain": 2.653,
  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
  "surface_gain": {
   "brick_red": [
@@ -99,6 +99,13 @@
  "surface_gain_note_4_october": "The proof view, step 2.4: the brick's gains x1.25, because each house's own look (terrace-front.py HOUSE_LOOKS, multiplied in by the game) is at most one and averages about 0.76, so the street's mean brick stays where it was while the houses differ.",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
+ "night_fill_lux": 0.4,
+ "night_fill_r": 1.0,
+ "night_fill_g": 0.74,
+ "night_fill_b": 0.54,
+ "night_fill_yaw": 0.0,
+ "night_fill_pitch": -70.0,
+ "night_fill_note": "4 November, his corner note, overriding 29 October's stop on night fills: at night the buildings stay readable, the dull orange glow of an overcast town sky and a little fill, the pools of lamp light kept. One soft high light standing for the cloud's own glow, warm because the street lamps light that cloud (production/research/street-wear/NIGHT-GAPS-2026-10-29.md: 1.5 lux of moon gave 39% near black, 87% with none).",
  "night_exposure_bias": 0.0,
  "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
  "glass_opacity": 0.06,
@@ -174,9 +181,9 @@
  "lantern_pool_cone_note_8_october": "42 -> 46 (production/research/shop-glass-reflections/NIGHT-2026-10-08.md, step 4): Mickey's gilt fascia sits about 44 degrees off the near lamp's axis, just outside its pool, and read dark at night; the same lumens spread a little wider, which also cools the near pool's hot centre. Verify: the letters at least 2:1 against their surround.",
  "lantern_pool_note": "3 October, morning: 1100 -> 750, the light shopfronts under the lamps (stallrisers, piers, sills, the grit bin) burnt to flat orange in every night frame of the shopfronts' three fresh reviews; to be measured against 12% burnt. Before, 3 October: 1800 -> 1100, the pavement under the near lamp burnt out (more than half its pixels red at 250 or more, the fresh review); the pools still fall off between lamps. Before: 1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. The pool is narrowed to 22 to 42 degrees from straight down (about 4.3 m across at the lamp's 4.78 m), so the lamps, ten metres apart staggered, make pools with darkness between them, as Jafar asked; and brighter, 1,800 lumens, since the glow no longer adds to it. Before: 29 September. The pool under each lamp: a downward cone of light beside the lantern's point light, inner and outer half-angles in degrees. The blind review of the first sodium night: 'the lamps light the house fronts more than the pavement ... the pools on the ground are weak'. Low-pressure sodium lanterns throw their light down and along the road (production/research/evening-light-1990). Chosen from night frames at 1600, 2400 and 1200 lumens with glows of 800, 400 and 300: 1200 gives a clear pool without the near pavement blowing out; -LanternPoolLumens= overrides it for a series.",
  "fog_night_colour": [
-  0.03,
-  0.02,
-  0.012
+  0.078,
+  0.04,
+  0.017
  ],
  "fog_night_colour_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. Darker and less orange (a faint warm sky glow, not a wash). Before: 29 September. The night haze's colour, linear: a dull orange-brown, as a town's sodium lamps light low cloud and haze (Kyba and others via Live Science 2015, in production/research/evening-light-1990). The blind review of the first sodium night: the sky was charcoal, 'without the dull orange glow a town's lamps throw on low cloud'. It was a fixed (0.06, 0.05, 0.05).",
  "room_glow_gain_night": 0.4,

@@ -36,221 +36,6 @@
    "closed": "2026-11-03 21:38, done (21:38, in chat): the daily task's permission mode set to Auto in the app (the shield marked Manual under its instructions); tomorrow's 05:21 session runs unattended"
   },
   {
-   "id": "fab-footwear-2026-11-01",
-   "added": "2026-11-01 21:00",
-   "text": "While signed in to Fab, press Download on each of Epic's four free MetaHuman footwear files and save them in F:\\LedgerTools\\fab (about 1.2 GB in all).",
-   "links": [
-    {
-     "label": "Boots (Epic calls them combat boots)",
-     "url": "https://www.fab.com/listings/c6596c37-e34f-46d4-a44e-fc360cc079c4"
-    },
-    {
-     "label": "Oxfords",
-     "url": "https://www.fab.com/listings/25b79aec-45c7-4f9a-88eb-5c3220d975bd"
-    },
-    {
-     "label": "Chelsea boots",
-     "url": "https://www.fab.com/listings/b910abee-3189-4396-9bd2-d8ce57b7bb88"
-    },
-    {
-     "label": "Loafers",
-     "url": "https://www.fab.com/listings/2f631109-17ab-4c87-a78c-5148927de957"
-    }
-   ],
-   "recommendation": "Download all four: Epic's boots for Tom's toe shape (your yes of 31 October), the others for the cast. I look at each before using it.",
-   "options": [
-    [
-     "done",
-     "Done, all four downloaded"
-    ],
-    [
-     "later",
-     "Not yet"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 07:57, done (07:54): the four files saved to his Downloads folder; taken from there and looked at before use"
-  },
-  {
-   "id": "pale-line-further-try-2026-11-01",
-   "added": "2026-11-01 22:21",
-   "text": "May I make one more try at the pale line where anything meets the wet street? Three tries on Tom's boots failed; it comes from the wet ground's water layer at every contact, so this try would be in the ground's material.",
-   "links": [],
-   "recommendation": "Yes: the line shows under every foot and object on the wet street, and the corner's wet ground needs it gone.",
-   "options": [
-    [
-     "yes",
-     "Yes, one more try (recommended)"
-    ],
-    [
-     "no",
-     "No, leave it"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 07:57, answered yes on the page (07:54): one more try, in the ground's material"
-  },
-  {
-   "id": "stop-stuck-readback-2026-11-02",
-   "added": "2026-11-02 07:12",
-   "text": "In the Claude app's sidebar, open the two sessions \"LEDGER: read back page answers (nightly)\" and \"LEDGER: fresh-session test (once)\"; where either waits on a permission question, choose to always allow it; where one shows no question, press Stop.",
-   "links": [],
-   "recommendation": "Allow: both only read (your page answers; the project's files). A scheduled session stops at its first question with nobody there, which has blocked the nightly read-back since 26 October; an answer given once is kept for its later runs. There is no web link for a session; both are in the app's sidebar.",
-   "options": [
-    [
-     "done",
-     "Done"
-    ],
-    [
-     "later",
-     "Not yet"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 08:48, done (08:15): the stuck nightly session stopped"
-  },
-  {
-   "id": "collar-fourth-try-2026-11-02",
-   "added": "2026-11-02 08:31",
-   "text": "May I make a fourth try at Tom's collar, with the zip worn about 6 cm lower so the collar's front stands open and his chin falls between its tips when he looks down?",
-   "links": [],
-   "recommendation": "Yes: measured this morning, his chin and jaw come through the collar's top front from 10 degrees down; a shape that pushes the collar out would have to flare it 52 mm into a funnel, and hiding skin cannot work because the skin that crosses shows above the collar. Many 1990 blousons were worn open at the neck. The other choice is to leave it as a known fault.",
-   "options": [
-    [
-     "yes",
-     "Yes, the zip lower (recommended)"
-    ],
-    [
-     "no",
-     "No, leave it as it is"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 11:50, answered yes (11:47): one try, about 2 hours; if it fails, leave it and move on to the jeans and boots"
-  },
-  {
-   "id": "allow-scheduled-reads-2026-11-02",
-   "added": "2026-11-02 08:48",
-   "text": "In the Claude app's Scheduled list, open \"LEDGER: read back page answers (nightly)\", press Run now and allow its page reads always; then open the session \"LEDGER: fresh-session test (once)\" in the sidebar and allow its question, or press Stop.",
-   "links": [],
-   "recommendation": "Allow: both only read. A scheduled run stops at its first question with nobody there; an answer given once is kept for its later runs, so tonight's 04:46 read-back then runs on its own. There is no web link for these; both are in the app.",
-   "options": [
-    [
-     "done",
-     "Done"
-    ],
-    [
-     "later",
-     "Not yet"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 11:50, answered done (11:47); checked 11:50: both sessions still waiting (the nightly's run of 08:15 since 08:17; the test since 07:51)"
-  },
-  {
-   "id": "sessions-still-waiting-2026-11-02",
-   "added": "2026-11-02 11:50",
-   "text": "In the Claude app's sidebar, open \"LEDGER: read back page answers (nightly)\" (the run started 08:15) and \"LEDGER: fresh-session test (once)\": each still waits on a question; answer it with always allow, or press Stop.",
-   "links": [],
-   "recommendation": "Allow: both only read; the nightly run stopped at 08:17 after reading your pages, most likely at its one command that writes the answers into the project. There is no web link for a session.",
-   "options": [
-    [
-     "done",
-     "Done"
-    ],
-    [
-     "later",
-     "Not yet"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 12:00, done (about 12:00): both answered; the read-back ran and wrote 11 answers (5ed6f9fb6); the test finished"
-  },
-  {
-   "id": "build-cache-space-2026-11-02",
-   "added": "2026-11-02 14:00",
-   "text": "Faster builds: may the build machine keep about 17 GB more on C: (a bigger cache of compiled shaders and textures, about 10 GB, and the compiled code kept between builds, about 7 GB)? It should take about 14 minutes off each 40-minute build.",
-   "links": [],
-   "recommendation": "Yes, on C: (144 GB free; F: is already just under your 20 GB floor, so not there). Tonight's build is measured first; if the full cache turns out not to be what slows it, I withdraw this. No web link: the answer is this page.",
-   "options": [
-    [
-     "yes",
-     "Yes, on C:"
-    ],
-    [
-     "no",
-     "No, keep C: clear"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 14:57, yes (14:56): 17 GB on C: for the build cache and kept compiled code; tonight's build measured first, the tries after the note's review"
-  },
-  {
-   "id": "boots-sole-fourth-try-2026-11-02",
-   "added": "2026-11-02 14:07",
-   "text": "Tom's boots still look heavy: the toe reshape (your yes of 31 October) passed review with no new fault, but the thick sole (17 to 20 mm) and the ledge round the toe now make them read clog-like. May I make one more try: the sole thinned to about 12 mm and the ledge trimmed at the toe (about 1 hour)?",
-   "links": [],
-   "recommendation": "Yes: it is the last thing keeping his feet heavy in both reviewers' eyes; points, weights and maps stay as they are, and it is judged the same way (pictures in the game, a fresh reviewer, the packaged walk). No web link: the answer is this page.",
-   "options": [
-    [
-     "yes",
-     "Yes, one more try"
-    ],
-    [
-     "no",
-     "No, leave the boots"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 14:57, yes (14:56): the sole's fourth try started"
-  },
-  {
-   "id": "marvelous-dna-import-2026-11-02",
-   "added": "2026-11-02 14:42",
-   "text": "The clothing deep-dive's last trial needs one import in Marvelous (open on your PC now): Tom's MetaHuman head and body brought in by Marvelous's own MetaHuman import. Either allow me when the computer-use box asks next time (you declined it at 14:37), or do it yourself: File, Import (Add), DNA; pick head.dna and body.dna in F:\\LedgerTools\\bodies\\MH_TomL1\\dna\\MH_TomL1\\MH_TomL1; centimetres, 100%; leave the automatic options on; OK. Then tap Done.",
-   "links": [],
-   "recommendation": "Allow me: one import, about 2 minutes, only in Marvelous, only when your PC has been idle 10 minutes. It tells us whether Marvelous's own route gives Tom's body with his neck and head better than our workaround. No web link: the answer is this page.",
-   "options": [
-    [
-     "allow",
-     "Allow you"
-    ],
-    [
-     "done",
-     "Done, I did it"
-    ],
-    [
-     "no",
-     "Leave it"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 14:57, allow (14:56): done by Claude at the next 10 idle minutes"
-  },
-  {
-   "id": "marvelous-dna-import-hands-2026-11-02",
-   "added": "2026-11-02 15:26",
-   "text": "The Marvelous import you allowed at 14:56 cannot start: the computer-use permission box declined three times (14:37, 15:19 and 15:25, the last while you were at the PC). Either do the import yourself in Marvelous (open now): File, Import (Add), DNA; pick head.dna and body.dna in F:\\LedgerTools\\bodies\\MH_TomL1\\dna\\MH_TomL1\\MH_TomL1; centimetres, 100%; automatic options left on; OK; then tap Done. Or check that computer use is on in the Claude app (Settings, This computer, Computer use) and tap Try again.",
-   "links": [],
-   "recommendation": "Do it yourself: about 2 minutes, and it does not depend on the permission box. No web link: the answer is this page.",
-   "options": [
-    [
-     "done",
-     "Done, I did it"
-    ],
-    [
-     "retry",
-     "Try again"
-    ],
-    [
-     "no",
-     "Leave it"
-    ]
-   ],
-   "state": "done",
-   "closed": "2026-11-02 20:20, allowed in chat (20:15) and done by Claude at 20:19 with his one-time 1-minute wait; avatar exported and compared: same body below the shoulders, 2.4 mm off at the neck (above the 2 mm bar), so Tom keeps his own avatar"
-  },
-  {
    "id": "clipboard-panel-marvelous-2026-11-03",
    "added": "2026-11-03 06:20",
    "text": "At the PC: press Esc (or click the desktop) to shut the Windows clipboard panel at the bottom left; then in Marvelous, File, Quit, and No to saving. Then tap Done.",
@@ -354,6 +139,30 @@
    ],
    "state": "done",
    "closed": "2026-11-04 18:22, 2026-11-04 18:21, answered keep (his note, 18:21): keep going in his order: nobody in a white base layer in any frame; the hill's real trees and houses; night buildings readable (an overcast town sky's dull orange glow and a little fill, lamp pools kept); the sky and quay end no longer white; more wear and dirt at street level"
+  },
+  {
+   "id": "hill-third-try-2026-11-04",
+   "added": "2026-11-04 23:06",
+   "text": "The hill you asked for: real leaves and detailed houses are in, and a fresh reviewer calls it clearly better than the old lumps, but both allowed rounds are spent and it still fails on specks of leaf floating off the crowns, some sky-coloured gaps in the hillside, and dark triangles on a few roofs. May I make a third try at those three faults?",
+   "links": [],
+   "recommendation": "Yes, one try, about 1 hour, then one review. Without it the better hill stays in the game with these faults listed. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, one more try (recommended)"
+    ],
+    [
+     "no",
+     "No, leave it listed"
+    ]
+   ],
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/hill-second-round-2026-11-04.jpg",
+     "alt": "The street by day with the new hill, upper left"
+    }
+   ],
+   "state": "open"
   }
  ]
 }

@@ -397,6 +397,15 @@ MATERIALS = (
     # A darker, bluer green for the other half of the rise's trees, so a
     # hillside of them is not one colour (_tree, 23 September).
     ("foliage_dark", (0.016, 0.027, 0.016), 0.90),
+    # THE HILL'S LEAVES BY HOW MUCH SKY THEY SEE (4 November, his corner note: "real trees and houses
+    # at its distance, not simple shapes"): the crown's top, a yellower green, and the bark.
+    ("foliage_top", (0.052, 0.070, 0.028), 0.85),
+    ("bark_wet",    (0.022, 0.019, 0.017), 0.90),
+    # AND ITS WALLS AS THEY ARE AT A DISTANCE, ten and more years off a repaint: paint_white on a whole
+    # house read as a cut-out against the brick (the same note); dirtied cream, grey pebbledash.
+    ("hill_render_buff", (0.300, 0.265, 0.190), 0.90),
+    ("hill_render_grey", (0.270, 0.245, 0.200), 0.95),
+    ("hill_ridge",  (0.060, 0.042, 0.036), 0.85),
     # A CEMENT REPAIR PATCH on old brick, sampled off the new sheet's near
     # gable at 175/141/93 and pulled back a little from the orange its light
     # puts in it.
@@ -784,6 +793,11 @@ SURFACE_OF = {
     "grass":        (None, 0.0),
     "foliage":      (None, 0.0),
     "foliage_dark": (None, 0.0),
+    "foliage_top":  (None, 0.0),
+    "bark_wet":     (None, 0.0),
+    "hill_render_buff": ("plaster", 1.0),
+    "hill_render_grey": ("plaster", 1.0),
+    "hill_ridge":   (None, 0.0),
     "figure":       (None, 0.0),
     "figure_c":     (None, 0.0),
     "figure_b":     (None, 0.0),
@@ -4727,6 +4741,19 @@ def _framed_window(out, pid, xf, ya, yb, za, zb, lit):
     f = [(0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7), (8, 9, 10, 11)]
     out.append({"id": pid + "_frame", "material": "paint_white", "kind": "mesh", "verts": v, "faces": f,
                 "note": "white-frame-and-meeting-rail"})
+    # THE SILL AND THE LINTEL (4 November): stone, proud of the wall; at this range they are what
+    # makes a window a window in a wall and not a sticker on a box.
+    _box(out, pid + "_sill", "hill_render_grey", xf - 0.12, xf, ya - fw - 0.05, yb + fw + 0.05, za - fw - 0.09, za - fw, "a-sill")
+    _box(out, pid + "_lintel", "hill_render_grey", xf - 0.05, xf, ya - fw - 0.08, yb + fw + 0.08, zb + fw, zb + fw + 0.17, "a-lintel")
+
+
+def _hill_house_edges(out, pid, xa, y0, y1, ground, top, rnd):
+    """What a real house has along its front that a box does not: a gutter's shadow line under the
+    eaves and its downpipe at the party wall, and the damp dark plinth at the ground."""
+    _box(out, pid + "_gutter", "lead", xa - 0.3, xa - 0.12, y0, y1, top - 0.04, top + 0.08, "a-gutter")
+    _box(out, pid + "_soffit", "hill_ridge", xa - 0.12, xa, y0, y1, top - 0.22, top, "the-eaves-shadow")
+    _box(out, pid + "_downpipe", "lead", xa - 0.1, xa, y0 + 0.08, y0 + 0.18, ground, top, "a-downpipe")
+    _box(out, pid + "_plinth", "hill_ridge", xa - 0.03, xa, y0, y1, ground, ground + rnd.uniform(0.35, 0.6), "the-damp-plinth")
 
 
 def _stack(out, pid, wall, xm, y, top, rnd):
@@ -4758,25 +4785,80 @@ def _clump(out, pid, material, cx, cy, cz, r, rnd, squash=0.8, note="leaves"):
     out.append({"id": pid, "material": material, "kind": "mesh", "verts": verts, "faces": f, "note": note})
 
 
+def _leaf_cloud(tris, cx, cy, cz, r, n, size, rnd):
+    """One bough's leaves: n small triangles scattered in a ball, thicker toward its skin, each
+    turned its own way, so the edge breaks up as leaves do and the sky shows through it."""
+    for _ in range(n):
+        a = rnd.uniform(0.0, 2.0 * math.pi)
+        up = rnd.uniform(-1.0, 1.0)
+        ring = math.sqrt(1.0 - up * up)
+        d = r * rnd.uniform(0.55, 0.92)     # never loose beyond the bough: flecks read as confetti (first review)
+        px, py, pz = cx + d * ring * math.cos(a), cy + d * ring * math.sin(a), cz + d * up * 0.8
+        s = size * rnd.uniform(0.7, 1.3)
+        tris.append([(px + rnd.uniform(-s, s), py + rnd.uniform(-s, s), pz + rnd.uniform(-s, s) * 0.6)
+                     for _k in range(3)])
+
+
+def _limb(out, pid, x0, y0, z0, x1, y1, z1, r0, r1):
+    """A tapered four-sided limb from one point to another, wound outwards."""
+    v = [(x0 - r0, y0 - r0, z0), (x0 + r0, y0 - r0, z0), (x0 + r0, y0 + r0, z0), (x0 - r0, y0 + r0, z0),
+         (x1 - r1, y1 - r1, z1), (x1 + r1, y1 - r1, z1), (x1 + r1, y1 + r1, z1), (x1 - r1, y1 + r1, z1)]
+    f = [(0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+    out.append({"id": pid, "material": "bark_wet", "kind": "mesh", "verts": v, "faces": f, "note": "a-limb"})
+
+
+#: A TREE'S LEAVES, 4 November: about 1,300 triangles of 25 to 45 cm, 5 to 9 pixels at 125 m: small
+#: enough that no facet reads, with no new material, plugin or baking step (HILL-METHODS' impostors).
+HILL_TREE_LEAVES = 1300
+
+
 def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False):
-    """A broadleaf at the hill's range: a trunk that shows below the crown, and a crown of a
-    dozen small leaf masses scattered through an ellipsoid (tall and narrow for an ash or a
-    poplar), lighter or darker green tree by tree."""
+    """A broadleaf at the hill's range, real at its distance (his corner note, 4 November; the 4
+    October review's "faceted trees"): a trunk and limbs reaching into the crown, a dozen boughs
+    of small leaves round them, the sky through the gaps, the tops lighter and the undersides
+    dark as an overcast sky lights them. Tall for an ash, wide for a sycamore. The old crown's
+    random numbers are still drawn from rnd, so the hill's layout, whose composition was reviewed,
+    stays where it is; the leaves have their own stream."""
+    import random
     trunk_top = ground + height * (0.5 if tall else 0.42)
-    _box(out, pid + "_trunk", "prop_timber", cx - 0.15, cx + 0.15, cy - 0.15, cy + 0.15, ground, trunk_top, "a-trunk")
     colour = "foliage" if rnd.random() < 0.55 else "foliage_dark"
     rh = height * (0.32 if tall else 0.28)          # the crown's half-height
-    rw = height * (0.16 if tall else 0.3)           # its half-width
+    rw = height * (0.2 if tall else 0.3)            # its half-width
     cz = ground + height - rh
-    # THE CORE FIRST, then the masses round it: a crown is one body of leaves with a broken
-    # edge, not loose puffs (the third build's own check, 4 October).
-    _clump(out, pid + "_core", colour, cx, cy, cz, min(rw, rh) * 0.85, rnd)
+    scratch = []
+    _clump(scratch, pid + "_core", colour, cx, cy, cz, min(rw, rh) * 0.85, rnd)
     for k in range(rnd.randint(8, 11)):
-        a = rnd.uniform(0.0, 2.0 * math.pi)
-        d = rnd.uniform(0.25, 0.6)
-        dz = rnd.uniform(-0.6, 0.7)
-        _clump(out, "%s_l%d" % (pid, k), colour, cx + rw * d * math.cos(a), cy + rw * d * math.sin(a),
-               cz + rh * dz, rw * rnd.uniform(0.45, 0.62), rnd)
+        rnd.uniform(0.0, 2.0 * math.pi); rnd.uniform(0.25, 0.6); rnd.uniform(-0.6, 0.7)
+        _clump(scratch, "%s_l%d" % (pid, k), colour, cx, cy, cz, rw * rnd.uniform(0.45, 0.62), rnd)
+    lr = random.Random(pid)
+    _limb(out, pid + "_trunk", cx, cy, ground, cx + lr.uniform(-0.2, 0.2), cy + lr.uniform(-0.2, 0.2), trunk_top, 0.18, 0.11)
+    boughs = lr.randint(11, 15)
+    names = ["foliage_top", colour, "foliage_dark" if colour == "foliage" else "foliage"]
+    tiers = {name: [] for name in names}
+    for k in range(boughs):
+        a = 2.0 * math.pi * (k + lr.uniform(-0.3, 0.3)) / boughs
+        d = lr.uniform(0.2, 0.6)
+        up = lr.uniform(-0.6, 0.7)
+        bx, by, bz = cx + rw * d * math.cos(a), cy + rw * d * math.sin(a), cz + rh * up
+        if k % 2 == 0:
+            _limb(out, "%s_limb%d" % (pid, k), cx, cy, trunk_top - 0.2, bx, by, bz, 0.07, 0.025)
+        # Lit from above by the overcast: the top of the crown light, its middle the tree's own
+        # green, its underside the other.
+        tier = names[0] if up > 0.3 else (names[1] if up > -0.25 else names[2])
+        br = min(rw, rh) * lr.uniform(0.62, 0.85)   # boughs overlapping: one crown with a broken edge, not separate puffs
+        _leaf_cloud(tiers[tier], bx, by, bz, br, HILL_TREE_LEAVES // boughs, min(0.42, max(0.25, height * 0.05)), lr)
+        # THE BOUGH'S DARK HEART: leaves alone left the crown thin as a winter tree (the first picture,
+        # 4 November); a small dark mass inside each cloud, its facets never at the edge, gives it a body.
+        _clump(out, "%s_heart%d" % (pid, k), "foliage_dark", bx, by, bz, br * 0.6, lr)
+    for name, tris in tiers.items():
+        if tris:
+            v, f = [], []
+            for t in tris:
+                i = len(v)
+                v.extend(t)
+                f.append((i, i + 1, i + 2))
+                f.append((i + 2, i + 1, i))     # seen from both sides, as a leaf is
+            out.append({"id": "%s_leaves_%s" % (pid, name), "material": name, "kind": "mesh", "verts": v, "faces": f, "note": "leaves"})
 
 
 def _north_rise(out):
@@ -4796,12 +4878,14 @@ def _north_rise(out):
     import random
     rnd = random.Random(20261004)       # fixed: the same hill every render
     x0 = RISE_FIRST_X
+    steps = []
     zb = APPROACH_OPEN_Z + RISE_FIRST_WALL_M
     n_lit = 0
     for t in range(RISE_TIERS):
         if t > 0:
             x0 += RISE_TIER_STEP_X * rnd.uniform(0.9, 1.2)
             zb += RISE_TIER_STEP_Z * rnd.uniform(0.85, 1.15)
+        steps.append((x0, zb))
         below = zb - RISE_TIER_STEP_Z * 1.2 if t > 0 else APPROACH_OPEN_Z - 0.4
         next_x = x0 + RISE_TIER_STEP_X * 0.9
         wall_mat = "stone" if rnd.random() < 0.7 else "brick_grey"
@@ -4844,7 +4928,7 @@ def _north_rise(out):
                 w = rnd.uniform(5.0, 5.8)                  # each house's length up the slope
                 count = rnd.randint(2, 4)
                 h = rnd.uniform(5.2, 6.0)
-                wall = rnd.choice(("brick_red", "render_cream", "brick_rubbed", "paint_white"))
+                wall = rnd.choice(("brick_red", "hill_render_buff", "brick_rubbed", "hill_render_grey"))
                 for k in range(count):
                     hx0, hx1 = xa + k * w, xa + (k + 1) * w
                     hb = base + k * rnd.uniform(1.2, 1.8)
@@ -4867,7 +4951,7 @@ def _north_rise(out):
                 # A PAIR OF SEMIS under one hipped roof (the 1930s ones up the hill).
                 w = rnd.uniform(6.5, 7.8)
                 h = rnd.uniform(5.4, 6.0)
-                wall = rnd.choice(("render_cream", "paint_white", "render_patch", "brick_red"))
+                wall = rnd.choice(("hill_render_buff", "hill_render_grey", "render_patch", "brick_red"))
                 for k in range(2):
                     ya, yb = y + k * w, y + (k + 1) * w
                     _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
@@ -4881,6 +4965,7 @@ def _north_rise(out):
                     yd = ya + w * 0.72
                     _box(out, "backdrop_rise_%d_%d_door" % (t, n), "paint_door", xa - 0.04, xa,
                          yd - 0.45, yd + 0.45, base, base + 2.05, "a-door")
+                    _hill_house_edges(out, "backdrop_rise_%d_%d" % (t, n), xa, ya, yb, base, base + h, random.Random(n))
                     n += 1
                 _hipped_roof(out, "backdrop_rise_%d_%d_roof" % (t, n), roof_mat,
                              xa - 0.35, xb + 0.35, y - 0.35, y + 2 * w + 0.35, base + h, rnd.uniform(2.8, 3.4), "a-hipped-roof")
@@ -4898,9 +4983,9 @@ def _north_rise(out):
                     if y1 - y < 3.0:
                         break
                     if kind == "brick":
-                        wall = rnd.choices(("brick_red", "brick_rubbed", "brick_grey", "render_cream"), weights=(45, 25, 15, 15))[0]
+                        wall = rnd.choices(("brick_red", "brick_rubbed", "brick_grey", "hill_render_buff"), weights=(45, 25, 15, 15))[0]
                     elif kind == "render":
-                        wall = rnd.choice(("render_cream", "paint_white", "render_patch", "render_cream", "paint_white"))
+                        wall = rnd.choice(("hill_render_buff", "hill_render_grey", "render_patch", "hill_render_buff", "hill_render_grey"))
                     else:
                         wall = "stone"
                     top = base + h
@@ -4909,6 +4994,8 @@ def _north_rise(out):
                            "terraced-house/%d-of-%d/%s" % (k + 1, count, wall))
                     _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), roof_mat,
                            ((xb + 0.3, top), (xm, top + rise), (xa - 0.3, top)), y, y1, "pitched-roof")
+                    _box(out, "backdrop_rise_%d_%d_ridge" % (t, n), "hill_ridge", xm - 0.12, xm + 0.12, y, y1, top + rise - 0.06, top + rise + 0.1, "the-ridge-tiles")
+                    _hill_house_edges(out, "backdrop_rise_%d_%d" % (t, n), xa, y, y1, base, top, random.Random(n))
                     hw = y1 - y
                     for c in (0.28, 0.72):
                         yc = y + hw * c
@@ -4972,6 +5059,12 @@ def _north_rise(out):
     # build's review: "a hard line against flat sky; the sheet has a fainter wooded ridge").
     rx0 = x0 + RISE_TIER_STEP_X * 2.2
     rz = zb + RISE_TIER_STEP_Z * 0.6
+    # THE HILL'S OWN BODY (4 November, the first review: sky through the hillside between the tiers'
+    # short ground runs): a step of earth under each tier, hidden behind the next tier's wall.
+    steps.append((rx0, rz))
+    for k in range(len(steps) - 1):
+        _box(out, "backdrop_rise_body_%d" % k, "grass", steps[k][0] + 4.0, steps[k + 1][0] + 4.0,
+             RISE_Y_SPAN[0] - 40.0, RISE_Y_SPAN[1] + 40.0, APPROACH_OPEN_Z - 1.0, steps[k][1] - 0.6, "the-hill-body")
     _prism(out, "backdrop_rise_ridge_ground", "grass",
            ((rx0 + RISE_RIDGE_DEPTH_M, rz - 6.0), (rx0 + RISE_RIDGE_DEPTH_M, rz + RISE_RIDGE_RISE_M * 0.7),
             (rx0 + RISE_RIDGE_DEPTH_M * 0.55, rz + RISE_RIDGE_RISE_M), (rx0, rz), (rx0, rz - 6.0)),

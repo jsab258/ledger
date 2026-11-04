@@ -8,7 +8,7 @@ Third-person, never first-person. PC only, Windows. Britain, 1990 (canon's windo
 
 ## Read first
 
-At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's open items; the rest when an item needs it, canon.md (outranks everything) included. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md, RECIPE.md: append, never read whole.
+At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's open items, the advisor channel (RULINGS 4 Nov); the rest when an item needs it, canon.md (outranks everything) included. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md, RECIPE.md: append, never read whole.
 
 ## One session, a weekly budget
 
@@ -19,7 +19,7 @@ At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's ope
 ## Talking to Jafar
 
 - Not a programmer: plain words, short; no paths, hashes, flags or tool output unless asked.
-- Updates in the chat: plain, at most ten lines, no files, no promised times; never idle while the goal runs.
+- Updates in the chat, copied to the page's reports: plain, at most ten lines, no files, no promised times; never idle while the goal runs.
 - Ask him only for money, his sign-in or hands, licences outside the list, canon, story or scope, and whole-frame or whole-person looks at their gate; decide the rest (RULINGS 30 Oct). One multiple-choice question, recommendation marked; carry on meanwhile.
 - Anything needed from him: its own message, sent before any report, starting "NEEDS YOU:" with exactly what to do and every link, nothing else (RULINGS 1 Nov). Reports carry no asks; results reach his page as they land.
 - Wrong: one sentence; move on.
@@ -40,7 +40,7 @@ At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's ope
 - Each kind of fact has one home (CATALOGUE.md's homes table); all else derives from it and is checked against it.
 - Reuse first starts at home: before making anything new, search the garment list, CATALOGUE.md, the game, canon, the research library and every branch; then Epic's MetaHuman clothing; then outside. Anything fetched is looked at before it is used; else say in DECISIONS.md why it is replaced.
 - Anything touching taste or identity (a map, a face, a voice, the look) reaches him on one page before merging.
-- Rules alone have not held, so each gets a check failing the build where possible: a branch over a week old neither merged nor archived; a derived thing disagreeing with its home; new art or research without a catalogue line.
+- Each rule gets a check failing the build where possible: a branch over a week old neither merged nor archived; a derived thing disagreeing with its home; new art or research without a catalogue line.
 
 ## How the work is done
 
@@ -61,7 +61,7 @@ At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's ope
 
 ## Builds, git and disk
 
-- Unfinished work goes to branch wip daily and after each finished piece, with previews; main gets only what passed review (fetch and rebase first), never on a failing check. Two Unreal builds never overlap. Commits say plainly what changed and why.
+- Unfinished work goes to branch wip daily and after each finished piece, with previews; main gets only what passed review (fetch and rebase first), never on a failing check. Two Unreal builds never overlap. Commits say what changed and why.
 - Git holds text, small files and previews (JPEG, ~1600 px, under 500 KB) in production/previews/; guards check every commit and push; never --no-verify.
 - Unreal editor tools (Epic's MCP and its Claude Code plugin): commit before every editor session; save before and after any bulk change; never run with permissions bypassed while the plugin is loaded; wait for compiles to finish; read every tool's result and treat anything but an explicit success as a stop; no edits while Play-in-Editor runs.
 - Write only where production/retention.json names; lasting inputs in F:\LedgerTools; nothing large on C:. Before any build or render: `python tools/retention.py space --job "what" --drives CF`; a full disk: stop and wait.

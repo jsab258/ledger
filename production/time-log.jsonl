@@ -463,3 +463,5 @@
 {"event": "stop", "at": "2026-11-04T19:45:00", "note": ""}
 {"event": "start", "at": "2026-11-04T20:21:00", "task": "n02-4-corner step 1: the Tea Rooms man (Darren) kept out of page pictures", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-04T20:30:00", "note": ""}
+{"event": "start", "at": "2026-11-04T22:21:00", "task": "n02-4-corner: hill, night, sky (his steps 2 to 4), helpers included", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-04T23:07:00", "note": ""}
