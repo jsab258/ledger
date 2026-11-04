@@ -339,11 +339,21 @@
     ]
    ],
    "pictures": [
-    {"src": "production/approvals/needs-you/pictures/corner-hook-day-2026-11-04.jpg", "alt": "The corner from Tom's start, by day"},
-    {"src": "production/approvals/needs-you/pictures/corner-hook-night-2026-11-04.jpg", "alt": "The same, at night"},
-    {"src": "production/approvals/needs-you/pictures/corner-reverse-day-2026-11-04.jpg", "alt": "Looking back towards the quay, by day"}
+    {
+     "src": "production/approvals/needs-you/pictures/corner-hook-day-2026-11-04.jpg",
+     "alt": "The corner from Tom's start, by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-hook-night-2026-11-04.jpg",
+     "alt": "The same, at night"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-reverse-day-2026-11-04.jpg",
+     "alt": "Looking back towards the quay, by day"
+    }
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-04 18:22, 2026-11-04 18:21, answered keep (his note, 18:21): keep going in his order: nobody in a white base layer in any frame; the hill's real trees and houses; night buildings readable (an overcast town sky's dull orange glow and a little fill, lamp pools kept); the sky and quay end no longer white; more wear and dirt at street level"
   }
  ]
 }
