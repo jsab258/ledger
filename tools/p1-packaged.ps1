@@ -63,11 +63,15 @@ if ($Voice -ne "none") {
 function Sample-Memory($gamePid, $voicePids) {
   # Windows' own counters: the card's dedicated memory per process and in all, and each process's memory.
   $s = @{ at = (Get-Date).ToString("s") }
+  # ONE CALL FOR BOTH COUNTERS, 4 November (F:/LedgerTools/scratch/card-peak-2026-11-04/DIAGNOSIS.md): read a second apart,
+  # the game alone once beat the whole card's reading; and the game's own children (its voice on the card) count as the game's.
   try {
-    $all = (Get-Counter '\GPU Adapter Memory(*)\Dedicated Usage' -ErrorAction Stop).CounterSamples | Measure-Object CookedValue -Sum
-    $s.cardAllMB = [math]::Round($all.Sum / 1MB)
-    $per = (Get-Counter '\GPU Process Memory(*)\Dedicated Usage' -ErrorAction Stop).CounterSamples
-    $s.cardGameMB = [math]::Round((($per | Where-Object { $_.InstanceName -like "pid_$($gamePid)_*" } | Measure-Object CookedValue -Sum).Sum) / 1MB)
+    $cs = (Get-Counter '\GPU Adapter Memory(*)\Dedicated Usage', '\GPU Process Memory(*)\Dedicated Usage' -ErrorAction Stop).CounterSamples
+    $s.cardAllMB = [math]::Round((($cs | Where-Object { $_.Path -like '*gpu adapter memory*' } | Measure-Object CookedValue -Sum).Sum) / 1MB)
+    $per = $cs | Where-Object { $_.Path -like '*gpu process memory*' }
+    $tree = @($gamePid) + @(Get-CimInstance Win32_Process -Filter "ParentProcessId=$gamePid" -ErrorAction SilentlyContinue | ForEach-Object { $_.ProcessId })
+    $s.cardGameMB = [math]::Round((($per | Where-Object { $ip = $_.InstanceName; $tree | Where-Object { $ip -like "pid_$($_)_*" } } | Measure-Object CookedValue -Sum).Sum) / 1MB)
+    $s.tree = $tree
     $s.cardVoiceMB = [math]::Round((($per | Where-Object { $ip = $_.InstanceName; $voicePids | Where-Object { $ip -like "pid_$($_)_*" } } | Measure-Object CookedValue -Sum).Sum) / 1MB)
   } catch { $s.cardError = "$_".Substring(0, [Math]::Min(80, "$_".Length)) }
   $g = Get-Process -Id $gamePid -ErrorAction SilentlyContinue
@@ -105,9 +109,16 @@ foreach ($m in $matrix) {
   }
   if (-not $p) { "p1Packaged $label status=NO-GAME-PROCESS"; continue }
   $samples = @()
-  while (-not $p.HasExited -and ((Get-Date) - $t0).TotalMinutes -lt 8) { Start-Sleep 2; $samples += ,(Sample-Memory $p.Id $voicePids) }
+  # THE SERIES KEPT, one sample a second (4 November): a peak is then placed against the log's times, not guessed
+  $series = "$tmp\$label-memory.jsonl"; Remove-Item $series -ErrorAction SilentlyContinue
+  while (-not $p.HasExited -and ((Get-Date) - $t0).TotalMinutes -lt 8) {
+    Start-Sleep 1; $one = Sample-Memory $p.Id $voicePids; $samples += ,$one
+    ($one | ConvertTo-Json -Compress) | Add-Content $series
+  }
   if ($stub -and -not $stub.HasExited) { Stop-Process -Id $stub.Id -Force -ErrorAction SilentlyContinue }
-  if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
+  if (-not $p.HasExited) { & taskkill /PID $p.Id /T /F 2>&1 | Out-Null }   # the game and its children (its voice), 4 November
+  # a child that outlives a game which exited by itself (the voice held 2.1 GB into the next capture, 4 November)
+  $samples | ForEach-Object { $_.tree } | Where-Object { $_ -and $_ -ne $p.Id } | Sort-Object -Unique | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }
   Get-Process LedgerProbe -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue   # nothing of this capture outlives it
   Start-Sleep 2
   $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
