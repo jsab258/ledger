@@ -6,7 +6,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
 Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
-- [ ] 1. Speech: 1.07 s on small talk after two tries; real questions unmeasured since 2.40 s; next a run of real questions (n02-3-1-speech).
+- [ ] 1. Speech: real questions packaged 2.02 s (run F); tries spent, a third is his call (n02-3-1-speech).
 - [ ] 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).
 - [ ] 3. Sitting, Mickey's office, the Stutter passed packaged (n02-3-3-*).
 - [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
