@@ -31,6 +31,7 @@ CAPS = [
     ("CLAUDE.md", 1625),    # 2 Nov: +30, his ruling of one permanent Needs you page in place of the daily pages; 1 Nov: +7, his ruling that asks go in their own NEEDS YOU message; +193, his order of 2 November ordered section 2's week rules into this file (and rule 12, the API credit); 29 Oct: +16, his ruling on deleting what Claude made itself (RULINGS.md); 13 Oct: +100, his ruling C adds the RECIPE.md rule (92 words) and he ordered it into this file; 21 Oct: +170, his research-method and editor-tools rules (169 words), written as he gave them; 28 Oct: +109, his standing rules A1 to A3 (reference first, game extracts, the page link), ordered into this file
     ("RULINGS.md", 4800),   # 3 Nov: his ruling: the advisor's cleaned file (4,356 words) replaces it and the cap falls to 4,800; a ruling done, repeated or replaced leaves the file the same day (DECISIONS.md and git keep it); never raised without his yes (the history of raises is in git)
     ("NOW.md", 200),
+    ("FINDINGS.md", 2000),  # 4 Nov: his ruling B, its twenty faults under a word cap (about 90 words a fault); the full text of that day in production/archive/FINDINGS-full-2026-11-04.md
     ("TOWN.md", 300),
     ("CLOTHES.md", 300),
     # Adopted 5 October from the outside audit's drafts (production/audits/2026-10-04-*).

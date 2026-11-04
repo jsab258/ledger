@@ -8,7 +8,7 @@ Third-person, never first-person. PC only, Windows. Britain, 1990 (canon's windo
 
 ## Read first
 
-canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOGUE.md. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md: append, don't read to start.
+At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's open items; the rest when an item needs it, canon.md (outranks everything) included. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md, RECIPE.md: append, never read whole.
 
 ## One session, a weekly budget
 
@@ -31,7 +31,6 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - NOW.md: the current phase's items from PLAN.md, one line each naming its file, a line of state, open handovers. tools/doc-caps.py sets and fails the word caps (this file 1,000).
 - FOR-JAFAR.md: the day's summary by 07:00, under 200 words, what failed named, ending in something to act on. Above it the overview (by 07:30 and on change; Mondays opening with the week's visible change, before and after): retention's line, current and next item, the tester's paragraph, Mondays risks in five lines, Needs you (at most five, recommended, gone once answered), Road to worth playing; every number real or marked not.
 - Morning pictures: by 07:30 daily, the same three views (hook camera by day, reverse view, street at night) as previews, in the overview beside yesterday's and the Hook sheet; no decision.
-- The approval pages' answers are read at least hourly while working and before any summary.
 - FINDINGS.md: open faults only, at most twenty. No notes-only commits except the day's summary, whose commit runs the backup.
 - Audits in production/audits/; each finding ends as a ruling, a rule or a list item.
 - RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests.
@@ -57,7 +56,7 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - His page, "LEDGER: Needs you" (one permanent link, RULINGS 2 Nov; no daily pages): only what is open (people, street frames, story, menace, canon, money, licences, scope, taste, identity), each item its one line, links, recommendation and time added, gone once answered or done; one phone screen, at most three one-line decisions with recommendations, picks stored; pictures full size; shortfalls first; yes only for 2026-grade work; nothing his rulings settle.
 - Approvals live beside what they approve and lapse with their basis (tools/approvals.py).
 - Simulation: CoreTests, Soak, SaveChaos, PerceptionGolden, StrangerTest and a regression test before committing; the port matches the C# goldens.
-- Subagents for bounded tasks and independent checks, never as director; of two fine ways, the cheaper. Computer use only in Marvelous, by me; helpers never send clicks or keys; the one UI Automation use is the bridge's menu item.
+- Subagents for bounded tasks and independent checks, never as director; of two fine ways, the cheaper. Helpers never send clicks or keys; computer use as RULINGS 29 and 30 Oct.
 - API calls only within his plan's monthly credit: the day's ceiling is the credit left divided by the days left in its month; no bought credits, no automatic reload; each day's spend logged; the key never printed, copied or committed (RULINGS 1 Nov).
 
 ## Builds, git and disk

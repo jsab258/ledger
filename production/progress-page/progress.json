@@ -1,5 +1,5 @@
 {
-  "updated": "Wednesday 4 November 2026, 6:18",
+  "updated": "Wednesday 4 November 2026, 11:23",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -434,18 +434,6 @@
       "his": false
     },
     {
-      "id": "o25-progress-page",
-      "status": "open",
-      "text": "This page, kept current every night",
-      "his": false
-    },
-    {
-      "id": "o25-daily",
-      "status": "open",
-      "text": "The daily summary and overview",
-      "his": false
-    },
-    {
       "id": "o28d-camera-modes",
       "status": "carried over",
       "text": "The camera by situation: the room row waits for you to see it; fights next",
@@ -605,6 +593,18 @@
       "id": "f-sash-windows",
       "status": "set aside",
       "text": "The sash windows beyond Mickey's row",
+      "his": false
+    },
+    {
+      "id": "o25-progress-page",
+      "status": "open",
+      "text": "This page, kept current every night",
+      "his": false
+    },
+    {
+      "id": "o25-daily",
+      "status": "open",
+      "text": "The daily summary and overview",
       "his": false
     }
   ],

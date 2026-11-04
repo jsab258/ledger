@@ -81,9 +81,9 @@ FOLDED = ("now item", "now part of", "worked again as", "worked again in", "work
 
 
 def newest_order():
-    d = os.path.join(ROOT, order_ledger.ORDERS)
-    name = sorted(f for f in os.listdir(d) if re.match(r"^\d{4}-\d\d-\d\d.*\.md$", f))[-1]
-    return name, order_ledger.parse(open(os.path.join(d, name), encoding="utf-8").read())[0]
+    files = order_ledger.files_at(None)  # each order joined to its archive (his ruling of 4 November)
+    name = sorted(f for f in files if re.match(r"^\d{4}-\d\d-\d\d.*\.md$", f))[-1]
+    return name, order_ledger.parse(files[name])[0]
 
 
 def derived():
@@ -95,10 +95,15 @@ def derived():
         week = "this week" if "this week" in rest else "next week" if "next week" in rest else ""
         studies.append({"n": i, "name": NAMES[sid], "status": status, "week": week})
     carried = []
-    text_all = open(os.path.join(ROOT, order_ledger.ORDERS, name), encoding="utf-8").read()
-    section = text_all.split(CARRIED_SECTION, 1)[1].split("\n## ", 1)[0] if CARRIED_SECTION in text_all else ""
+    text_all = order_ledger.files_at(None)[name]
+    # since 4 November this section is in the order's archive, and the carried items still open stand short in the order's
+    # "## Carried still open", their full lines kept in the archive's history (read for FOLDED)
+    section = "\n".join(text_all.split(head, 1)[1].split("\n## ", 1)[0] for head in (CARRIED_SECTION, "## Carried still open")
+                        if head in text_all)
     for iid in re.findall(r"^- `([^`]+)`", section, re.M):
         status, rest = items.get(iid, ("missing", ""))
+        full = re.search(r"^  - `%s` \*\*[a-z ]+\*\*(.*)$" % re.escape(iid), text_all, re.M)
+        rest = full.group(1) if full else rest
         if status in ("done", "dropped") or any(f in rest for f in FOLDED):
             continue
         carried.append({"id": iid, "status": status, "text": PLAIN.get(iid, ""), "his": iid.startswith("his-")})

@@ -25,7 +25,7 @@ import os
 import sys
 
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
-THRESHOLD = 200000
+THRESHOLD = 300000  # 4 Nov, his ruling A3: about 300,000 while the start is heavy; reset from the cost per step once it is lean
 TAIL_BYTES = 4 * 1024 * 1024
 
 
@@ -64,12 +64,12 @@ def selftest():
             fh.write(json.dumps({"type": "assistant", "message": {"usage": {"input_tokens": 5, "cache_read_input_tokens": 100}}}) + "\n")
         with open(b, "w", encoding="utf-8") as fh:
             fh.write(json.dumps({"type": "assistant", "message": {"usage": {"input_tokens": 1, "cache_read_input_tokens": 150000,
-                                                                            "cache_creation_input_tokens": 60000}}}) + "\n")
+                                                                            "cache_creation_input_tokens": 160000}}}) + "\n")
             fh.write(json.dumps({"type": "user", "message": {"content": "x"}}) + "\n")
         os.utime(a, (1, 1))
         ok.append(("the newest log is the working session's", newest_log(d) == b))
-        ok.append(("its last step's context counts input, cache reads and writes", last_context(b) == 210001))
-        ok.append(("a step past 200,000 is over", last_context(b) >= THRESHOLD and last_context(a) < THRESHOLD))
+        ok.append(("its last step's context counts input, cache reads and writes", last_context(b) == 310001))
+        ok.append(("a step past the threshold is over", last_context(b) >= THRESHOLD and last_context(a) < THRESHOLD))
         ok.append(("no log, no answer", newest_log(os.path.join(d, "none")) is None))
     for name, good in ok:
         print("  %s %s" % ("ok  " if good else "FAIL", name))

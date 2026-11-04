@@ -14,6 +14,37 @@
     ]
   },
   "enabledPlugins": {
-    "unreal-engine-skills-for-claude-code@claude-plugins-official": true
+    "unreal-engine-skills-for-claude-code@claude-plugins-official": true,
+    "cowork-plugin-management@knowledge-work-plugins": false
+  },
+  "skillOverrides": {
+    "2bcs-pptx": "user-invocable-only",
+    "anthropic-skills:2bcs-pptx": "user-invocable-only",
+    "config-sheet-reader": "user-invocable-only",
+    "anthropic-skills:config-sheet-reader": "user-invocable-only",
+    "deck-storyline": "user-invocable-only",
+    "anthropic-skills:deck-storyline": "user-invocable-only",
+    "erp-lastenheft-merger": "user-invocable-only",
+    "anthropic-skills:erp-lastenheft-merger": "user-invocable-only",
+    "golf-journal-entry": "user-invocable-only",
+    "anthropic-skills:golf-journal-entry": "user-invocable-only",
+    "google-workspace": "user-invocable-only",
+    "anthropic-skills:google-workspace": "user-invocable-only",
+    "ifs-permission-sets": "user-invocable-only",
+    "anthropic-skills:ifs-permission-sets": "user-invocable-only",
+    "ifs-permissions-webinar-prep": "user-invocable-only",
+    "anthropic-skills:ifs-permissions-webinar-prep": "user-invocable-only",
+    "import-memory": "user-invocable-only",
+    "anthropic-skills:import-memory": "user-invocable-only",
+    "initialschulung": "user-invocable-only",
+    "anthropic-skills:initialschulung": "user-invocable-only",
+    "morning": "user-invocable-only",
+    "anthropic-skills:morning": "user-invocable-only",
+    "n8n-workflow-json": "user-invocable-only",
+    "anthropic-skills:n8n-workflow-json": "user-invocable-only",
+    "process-profile-merger": "user-invocable-only",
+    "anthropic-skills:process-profile-merger": "user-invocable-only",
+    "handoff-prompt": "user-invocable-only",
+    "anthropic-skills:handoff-prompt": "user-invocable-only"
   }
 }

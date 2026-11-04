@@ -13,7 +13,8 @@
      "Done, set to Auto (recommended)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-04 11:11, answered done (08:47); the handover task is retired since his ruling of 4 November (the hourly task replaces it)"
   },
   {
    "id": "fresh-session-mode-2026-11-03",
@@ -308,8 +309,18 @@
    "text": "Speech misses its bar by a hair: inside the packaged game a newcomer's question is answered in 2.02 s at the median, against your 2.0 s, and both tries are spent. The slow lines are the ones where the fact check refuses the first sentence and the reply is written again (7 of 30 took 4 s or more). May I spend a third try on exactly that?",
    "links": [],
    "recommendation": "Yes, one try, about 2 hours and under US$1 of the month's credit, measured the same way, old against new. If it fails, speech is reported as missing its bar at the exit. Your cut-off for the fast checker and prepared openers stay as you set them. No web link: the answer is this page.",
-   "options": [["yes", "Yes, one try (recommended)"], ["no", "No, report it as missed"]],
-   "state": "open"
+   "options": [
+    [
+     "yes",
+     "Yes, one try (recommended)"
+    ],
+    [
+     "no",
+     "No, report it as missed"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-04 11:11, answered yes (08:47): one try at the refused first sentences, under US$1, old against new; started 11:15"
   }
  ]
 }

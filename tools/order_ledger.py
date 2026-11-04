@@ -36,6 +36,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORDERS = "production/orders"
+ARCHIVE = "archive"
 STATUSES = ("open", "done", "set aside", "carried over", "dropped")
 ITEM = re.compile(r"^- `([A-Za-z0-9._-]+)` \*\*([a-z ]+)\*\*(.*)$")
 SECTION = re.compile(r"^## (Items|Studies|Carried)")
@@ -125,12 +126,28 @@ def git(*args, check=True):
 
 
 def files_at(rev):
+    """{order file: its text}, each order's archive (production/orders/archive/<the same name>) joined to it, so the
+    ledger reads both as one order. His ruling of 4 November: the order keeps this week's order and a short status
+    table; the carried items' history moves to an archive read only when needed."""
+    out, arch = {}, {}
     if rev is None:
         d = os.path.join(ROOT, ORDERS)
-        return {f: open(os.path.join(d, f), encoding="utf-8").read() for f in os.listdir(d)} if os.path.isdir(d) else {}
-    out = {}
-    for name in git("ls-tree", "--name-only", rev, ORDERS + "/", check=False).split():
-        out[os.path.basename(name)] = git("show", "%s:%s" % (rev, name))
+        if not os.path.isdir(d):
+            return {}
+        out = {f: open(os.path.join(d, f), encoding="utf-8").read() for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))}
+        a = os.path.join(d, ARCHIVE)
+        if os.path.isdir(a):
+            arch = {f: open(os.path.join(a, f), encoding="utf-8").read() for f in os.listdir(a)}
+    else:
+        for name in git("ls-tree", "-r", "--name-only", rev, ORDERS + "/", check=False).splitlines():
+            rel = name[len(ORDERS) + 1:]
+            if rel.startswith(ARCHIVE + "/"):
+                arch[os.path.basename(rel)] = git("show", "%s:%s" % (rev, name))
+            elif "/" not in rel:
+                out[rel] = git("show", "%s:%s" % (rev, name))
+    for f, text in arch.items():
+        if f in out:
+            out[f] += "\n" + text
     return out
 
 

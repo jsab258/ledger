@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (3 Nov 21:20): run F on tonight's build; corner steps 6, 10, 11, 12 passed in the editor, packaged tonight; fresh sessions from 4 Nov; at-risk list Wednesday.
+STATE (4 Nov 11:14): at-risk list told him; speech's third try his yes; his 4 Nov rulings: lean start, hourly fresh-session task (live, tested idle).
 
 ## Handovers
 
