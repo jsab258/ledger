@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """MAY THIS HOURLY RUN START LEDGER'S WORK? The first thing each run of the hourly fresh-session task does.
 
-    python tools/fresh_gate.py            # one line: GO, or WAIT and why
+    python tools/fresh_gate.py            # one line: GO, WAIT or REHEARSAL GO/WAIT, and why
     python tools/fresh_gate.py --selftest
 
 WHY, 4 November 2026 (his ruling A2): "Replace the chaining with a recurring scheduled task, hourly from 05:15 to
@@ -11,24 +11,40 @@ read nothing else." The chaining of 3 November failed at 09:38 that morning: a s
 
 WHAT IT CHECKS, cheaply, before the run reads anything: the Swiss time (no work from 00:45 to 05:10, the night's jobs);
 the handover's "**Started:**" and "**Stopped:**" lines (the last session has stopped when Stopped is later); the
-project's session logs (no main log but this run's own written in the last 15 minutes). The app's session list is
-the run's second check (mcp__ccd_session_mgmt__list_sessions), since only the app knows a session that is open but
-not writing. A session that died without its Stopped line: when Started is later but no log has been written for
-120 minutes, the last session is taken as stopped, and GO says so, for the handover.
+project's own activity: the newest real turn (a user or assistant line with its timestamp) in any of the project's
+session logs and their helpers' logs, this run's own log left out (CLAUDE_CODE_SESSION_ID). A session that died
+without its Stopped line: when Started is later but no turn has been written for 120 minutes, the last session is
+taken as stopped, and GO says so, for the handover.
+
+WHY NOT A FILE'S TIME OR THE APP'S SESSION LIST (4 November, his message at 13:38): the 12:15 run stood aside because
+the app listed an idle "Ledger Builder" session under remote control as active three minutes before (its
+lastActivityAt moves without any turn); the 13:15 run stood aside because the app had appended bookkeeping lines
+(artifact-autoreact-ledger, untimed) to two idle old logs fourteen minutes before, which moved their file times.
+Neither was work. So only timed turns count, and the app's list is not consulted.
+
+THE REHEARSAL (his message of 4 November: test the take-over itself, not only standing aside): while
+production/handover/takeover-rehearsal.json exists and has not expired, the gate decides from the rehearsal's
+handover instead and leaves out the logs it names (the working session standing in for the stopped one); its line
+then begins REHEARSAL, and the task's prompt says what a rehearsal run does. The production session writes the file
+and deletes it afterwards.
 """
 import datetime
 import glob
+import json
 import os
 import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HANDOVER = os.path.join(ROOT, "production", "handover", "HANDOVER.md")
+REHEARSAL = os.path.join(ROOT, "production", "handover", "takeover-rehearsal.json")
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
 QUIET_MIN = 15
 DEAD_MIN = 120
 OWN_RUN_MIN = 10
+TAIL = 1 << 20
 STAMP = re.compile(r"(\d{4}-\d\d-\d\d) (\d\d:\d\d)")
+TURNS = (b'"type":"user"', b'"type":"assistant"')
 
 
 def line_time(text, key):
@@ -39,14 +55,48 @@ def line_time(text, key):
     return None
 
 
-def last_write_minutes(now_ts, logs=LOGS):
-    """Minutes since any main session log was written, this run's own (created in the last minutes) left out."""
-    ages = []
-    for p in glob.glob(os.path.join(logs, "*.jsonl")):
-        if now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
+def last_turn(path, size_cap=64 << 20):
+    """The newest timed user or assistant line in a log, as a UTC timestamp, read from the end; None if none."""
+    size = os.path.getsize(path)
+    with open(path, "rb") as fh:
+        end, block = size, TAIL
+        while end > 0 and size - end < size_cap:
+            start = max(0, end - block)
+            fh.seek(start)
+            lines = fh.read(end - start).split(b"\n")
+            if start > 0:
+                lines = lines[1:]
+            for raw in reversed(lines):
+                if not any(t in raw.replace(b" ", b"") for t in TURNS):
+                    continue
+                try:
+                    d = json.loads(raw)
+                except ValueError:
+                    continue
+                if d.get("type") in ("user", "assistant") and d.get("timestamp"):
+                    return datetime.datetime.strptime(d["timestamp"][:19], "%Y-%m-%dT%H:%M:%S").replace(
+                        tzinfo=datetime.timezone.utc).timestamp()
+            end = start
+    return None
+
+
+def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
+    """Minutes since the project's newest real turn, this run's own log and those named left out."""
+    paths = glob.glob(os.path.join(logs, "*.jsonl")) + glob.glob(os.path.join(logs, "*", "subagents", "*.jsonl"))
+    newest = None
+    for p in paths:
+        sid = os.path.basename(p)[:-6] if os.path.dirname(p) == logs else os.path.basename(os.path.dirname(os.path.dirname(p)))
+        if sid in leave_out or (own and sid == own):
             continue
-        ages.append((now_ts - os.path.getmtime(p)) / 60)
-    return min(ages) if ages else None
+        if not own and os.path.dirname(p) == logs and now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
+            continue
+        if now_ts - os.path.getmtime(p) > DEAD_MIN * 60 * 2:
+            t = os.path.getmtime(p)  # no turn is newer than the file; reading old giants would cost seconds
+        else:
+            t = last_turn(p)
+        if t is not None and (newest is None or t > newest):
+            newest = t
+    return None if newest is None else (now_ts - newest) / 60
 
 
 def decide(now, text, idle_min):
@@ -57,31 +107,75 @@ def decide(now, text, idle_min):
     if started is None or stopped is None:
         return "WAIT the handover has no Started or Stopped line: a session must set them"
     if idle_min is not None and idle_min < QUIET_MIN:
-        return "WAIT a session log was written %.0f minutes ago (under %d)" % (idle_min, QUIET_MIN)
+        return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), QUIET_MIN)
     if stopped >= started:
-        return "GO the last session stopped at %s; no log written for %s minutes" % (
-            stopped.strftime("%H:%M"), "?" if idle_min is None else "%.0f" % idle_min)
+        return "GO the last session stopped at %s; no turn written for %s minutes" % (
+            stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min))
     if idle_min is not None and idle_min >= DEAD_MIN:
-        return "GO the last session (started %s) set no Stopped line but no log has been written for %.0f minutes: " \
-               "taken as stopped; say so in the handover" % (started.strftime("%d %b %H:%M"), idle_min)
+        return "GO the last session (started %s) set no Stopped line but no turn has been written for %d minutes: " \
+               "taken as stopped; say so in the handover" % (started.strftime("%d %b %H:%M"), int(idle_min))
     return "WAIT the last session (started %s) has not stopped" % started.strftime("%d %b %H:%M")
 
 
+def rehearsal(now):
+    """The rehearsal's settings while its file exists and has not expired, else None."""
+    if not os.path.isfile(REHEARSAL):
+        return None
+    r = json.load(open(REHEARSAL, encoding="utf-8"))
+    if now > datetime.datetime.strptime(r["expires"], "%Y-%m-%d %H:%M"):
+        return None
+    return r
+
+
 def selftest():
+    import tempfile
     h = "**Started:** 2026-11-04 08:43 (x)\n**Stopped:** 2026-11-04 09:38 (y)\n"
     r = "**Started:** 2026-11-04 11:00 (x)\n**Stopped:** 2026-11-04 09:38 (y)\n"
     d = datetime.datetime(2026, 11, 4, 12, 15)
     cases = [
         ("stopped and quiet: GO", decide(d, h, 40), "GO"),
-        ("stopped, a log 5 min ago: WAIT", decide(d, h, 5), "WAIT"),
+        ("stopped, a turn 5 min ago: WAIT", decide(d, h, 5), "WAIT"),
+        ("stopped, a turn 14.6 min ago: WAIT", decide(d, h, 14.6), "WAIT"),
         ("running: WAIT", decide(d, r, 40), "WAIT"),
         ("died without Stopped, quiet 3 h: GO", decide(d, r, 180), "GO"),
         ("the night: WAIT", decide(datetime.datetime(2026, 11, 5, 2, 15), h, 400), "WAIT"),
         ("00:15 still works: GO", decide(datetime.datetime(2026, 11, 5, 0, 15), h, 40), "GO"),
         ("no lines: WAIT", decide(d, "nothing", 40), "WAIT"),
     ]
+    # The project's own activity, from logs made here: an idle log the app keeps appending untimed bookkeeping to
+    # (13:15's fault) must not count; a real turn must; this run's own log and a left-out log must not.
+    tmp = tempfile.mkdtemp(prefix="fresh_gate_")
+    now_ts = datetime.datetime(2026, 11, 4, 12, 21, tzinfo=datetime.timezone.utc).timestamp()
+
+    def log(name, turn_utc, untimed=0, sub=False):
+        p = os.path.join(tmp, name, "subagents", "agent-x.jsonl") if sub else os.path.join(tmp, name + ".jsonl")
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({"type": "user", "timestamp": turn_utc + ".000Z", "message": {"content": "x"}}) + "\n")
+            fh.write(json.dumps({"type": "assistant", "timestamp": turn_utc + ".500Z", "message": {"content": []}}) + "\n")
+            for _ in range(untimed):
+                fh.write(json.dumps({"type": "artifact-autoreact-ledger", "v": 1, "artifacts": {}}) + "\n")
+        os.utime(p, (now_ts - 60, now_ts - 60))
+        return p
+
+    log("idle-builder", "2026-11-04T09:04:12", untimed=5)
+    m1 = last_turn_minutes(now_ts, tmp, own="none-such")
+    log("own-run", "2026-11-04T12:20:00")
+    m2 = last_turn_minutes(now_ts, tmp, own="own-run")
+    log("standing-in", "2026-11-04T12:19:00")
+    m3 = last_turn_minutes(now_ts, tmp, leave_out=("standing-in",), own="own-run")
+    m4 = last_turn_minutes(now_ts, tmp, own="own-run")
+    log("helper", "2026-11-04T12:18:00", sub=True)
+    m5 = last_turn_minutes(now_ts, tmp, leave_out=("standing-in",), own="own-run")
+    cases += [
+        ("untimed bookkeeping on an idle log does not count: 196 min", "%s" % (m1 is not None and 190 < m1 < 200), "True"),
+        ("this run's own log left out", "%s" % (m2 is not None and m2 > 190), "True"),
+        ("a left-out log does not count", "%s" % (m3 is not None and m3 > 190), "True"),
+        ("a real turn 2 min ago counts", "%s" % (m4 is not None and m4 < 3), "True"),
+        ("a helper's turn counts", "%s" % (m5 is not None and m5 < 4), "True"),
+    ]
     bad = [n for n, got, want in cases if not got.startswith(want)]
-    print("fresh_gate selftest:", "passed" if not bad else "FAILED " + ", ".join(bad))
+    print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
     return 1 if bad else 0
 
 
@@ -89,8 +183,13 @@ def main(a):
     if "--selftest" in a:
         return selftest()
     now = datetime.datetime.now()
-    text = open(HANDOVER, encoding="utf-8").read() if os.path.isfile(HANDOVER) else ""
-    print(decide(now, text, last_write_minutes(now.timestamp())))
+    own = os.environ.get("CLAUDE_CODE_SESSION_ID")
+    r = rehearsal(now)
+    path = os.path.join(ROOT, r["handover"]) if r else HANDOVER
+    text = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
+    line = decide(now, text, last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own))
+    print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
+          if r else line)
     return 0
 
 

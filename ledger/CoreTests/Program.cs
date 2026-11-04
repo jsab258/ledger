@@ -4882,8 +4882,18 @@ namespace Ledger.CoreTests
             int seals = 0; for (int i = body1.IndexOf("KNOWN-abc12345"); i >= 0; i = body1.IndexOf("KNOWN-abc12345", i + 1)) seals++;
             Check(body1.StartsWith("KNOWN-abc12345:\n") && seals == 1 && sealed1.System.Contains("KNOWN-abc12345") && sealed1.System.Contains("nothing else is"),
                 "only the sealed list is what they know, and the seal cannot appear inside the line (" + seals + " seals)");
+            // One seal a run while the check's fixed text is cached (ClaimCheck.CacheChecks, speech's third try, 4 November
+            // 2026): a seal new each call would change the cached text. Nobody sees it, and a line carrying it loses it.
+            bool cacheWas = ClaimCheck.CacheChecks;
+            ClaimCheck.CacheChecks = false;
             Check(ClaimCheck.RequestItems("m", known, "y").System != ClaimCheck.RequestItems("m", known, "y").System,
-                "the seal is new for every request, so nobody can learn it");
+                "uncached, the seal is new for every request, so nobody can learn it");
+            ClaimCheck.CacheChecks = true;
+            var runSealed = ClaimCheck.RequestItems("m", known, "KNOWN-" + ClaimCheck.RunSeal + ":\nM9: [D2 21:41] A white Transit. Aye.").Messages[0].Content;
+            int runSeals = 0; for (int i = runSealed.IndexOf("KNOWN-" + ClaimCheck.RunSeal); i >= 0; i = runSealed.IndexOf("KNOWN-" + ClaimCheck.RunSeal, i + 1)) runSeals++;
+            Check(ClaimCheck.RequestItems("m", known, "y").System == ClaimCheck.RequestItems("m", known, "z").System && runSeals == 1,
+                "cached, one seal a run, and a line that somehow carried it still loses it (" + runSeals + " seals)");
+            ClaimCheck.CacheChecks = cacheWas;
             Check(sealed1.System.Contains("TIMES ARE CLAIMS") && sealed1.System.Contains("[D2 21:40]"),
                 "the checker is told how to read the memories' times against the time now");
             // A REDRAFT THAT REPEATS A FLAGGED PHRASE (the third independent

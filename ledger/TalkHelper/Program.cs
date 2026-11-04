@@ -1590,6 +1590,9 @@ static class Program
             };
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
+        // THE CHECK'S FIXED TEXT CACHED, OFF BY DEFAULT (speech's third try, 4 November 2026: no time saved; ClaimCheck.
+        // CacheChecks): LEDGER_CHECK_CACHE=1 switches it on, for the cost lever's measured run.
+        if (Environment.GetEnvironmentVariable("LEDGER_CHECK_CACHE") == "1") ClaimCheck.CacheChecks = true;
         // THE FAST CHECKER, ON BY DEFAULT (his answer of 28 October 2026: "the fast checker on, at the open cut-off";
         // measured live 27 October night, production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md): the talk
         // program as published carries checker/fast-checker.json and its server beside it (tools/publish-talk-helper.ps1);
@@ -2866,6 +2869,20 @@ static class Program
             }
         }
         finally { try { Directory.Delete(talkDir, true); } catch (Exception) { } }
+
+        // THE CHECK'S FIXED TEXT CACHED (speech's third try, 4 November 2026): shipped off (it saved no time), so the check
+        // goes as before; switched on, what the game's own client sends marks the instructions and the facts' head.
+        using (var cacher = new AnthropicClient("not-a-key-never-sent"))
+        {
+            bool shipped = ClaimCheck.CacheChecks;
+            var plainBody = MiniJson.Serialize(cacher.Body(ClaimCheck.RequestItems(Helper.CheckerDefault, "C1: Sheila keeps the books.\nM1: [D1 09:00] A van.\n", "Sheila keeps the books."), true));
+            ClaimCheck.CacheChecks = true;
+            var req = ClaimCheck.RequestItems(Helper.CheckerDefault, "C1: Sheila keeps the books.\nM1: [D1 09:00] A van.\n", "Sheila keeps the books.");
+            var cachedBody = MiniJson.Serialize(cacher.Body(req, true));
+            ClaimCheck.CacheChecks = shipped;
+            Ok("the check goes uncached as shipped; switched on, its instructions and the facts' head go marked for caching",
+               !shipped && !plainBody.Contains("\"cache_control\"") && cachedBody.Contains("\"cache_control\"") && cachedBody.Contains("C1: Sheila keeps the books.") && cachedBody.Contains("M1:"), cachedBody.Length.ToString());
+        }
 
         Console.WriteLine($"talkhelper selftest: passed={passed}/{passed + failed} failed={failed}");
         return failed == 0 ? 0 : 1;

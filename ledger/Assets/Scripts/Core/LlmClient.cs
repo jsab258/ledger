@@ -11,7 +11,13 @@ namespace Ledger.Core
     {
         public string Role;
         public string Content;
+        /// A HEAD KEPT IN THE SERVICE'S CACHE (speech's third try, 4 November 2026): the start of Content, which the
+        /// Anthropic client sends as its own block marked for caching, so the request up to and including it (the system
+        /// text, then this) is read from the cache when the same head was sent in the last five minutes. Content stays the
+        /// whole text, so every other client (the stand-in, Claude Code, the relay) reads the message as before.
+        public string CachedHead;
         public LlmMessage(string role, string content) { Role = role; Content = content; }
+        public LlmMessage(string role, string cachedHead, string rest) { Role = role; CachedHead = cachedHead; Content = cachedHead + rest; }
     }
 
     public class LlmRequest
@@ -28,6 +34,9 @@ namespace Ledger.Core
         public string Thinking;
         /// The effort ("low" ... "max"), sent as `output_config.effort`; null sends nothing.
         public string Effort;
+        /// The system text marked for caching (speech's third try, 4 November 2026): the same instructions sent again
+        /// within five minutes are read from the service's cache, which is quicker to begin and costs a tenth.
+        public bool CacheSystem;
     }
 
     public class LlmResponse
@@ -37,6 +46,14 @@ namespace Ledger.Core
         public int InputTokens;
         public int OutputTokens;
         public string Model = "";
+        /// What the cache held (speech's third try, 4 November 2026): tokens read from it and tokens written to it, as
+        /// the service reports them. InputTokens counts them at their price as plain input (a read a tenth, a write a
+        /// quarter more; Anthropic's prompt caching prices), so every cost and budget figure built on it stays right.
+        public int CacheReadTokens;
+        public int CacheWriteTokens;
+        /// The input tokens as the service bills them: the uncached ones, plus the cache's writes and reads at their price.
+        public static int Billed(int uncached, int written, int read) =>
+            uncached + (written * 5 + 3) / 4 + (read + 9) / 10;
     }
 
     public interface ILlmClient
@@ -149,18 +166,7 @@ namespace Ledger.Core
 
         public async Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
         {
-            var messages = new List<object>();
-            foreach (var m in request.Messages)
-                messages.Add(new Dictionary<string, object> { { "role", m.Role }, { "content", m.Content } });
-
-            var body = new Dictionary<string, object>
-            {
-                { "model", ModelFor(request.Model) },
-                { "max_tokens", request.MaxTokens },
-                { "messages", messages },
-            };
-            if (!string.IsNullOrEmpty(request.System)) body["system"] = request.System;
-            AddOptions(body, request);
+            var body = Body(request, false);
 
             var json = MiniJson.Serialize(body);
 
@@ -217,18 +223,7 @@ namespace Ledger.Core
         /// stands in for a stream that would not start.
         public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart, CancellationToken ct = default)
         {
-            var messages = new List<object>();
-            foreach (var m in request.Messages)
-                messages.Add(new Dictionary<string, object> { { "role", m.Role }, { "content", m.Content } });
-            var body = new Dictionary<string, object>
-            {
-                { "model", ModelFor(request.Model) },
-                { "max_tokens", request.MaxTokens },
-                { "messages", messages },
-                { "stream", true },
-            };
-            if (!string.IsNullOrEmpty(request.System)) body["system"] = request.System;
-            AddOptions(body, request);
+            var body = Body(request, true);
             var msg = new HttpRequestMessage(HttpMethod.Post, MessagesUrl);
             Authorise(msg);
             msg.Content = new StringContent(MiniJson.Serialize(body), Encoding.UTF8, "application/json");
@@ -295,7 +290,7 @@ namespace Ledger.Core
                         case "message_start":
                             var start = MiniJson.GetObject(ev, "message");
                             result.Model = MiniJson.GetString(start, "model") ?? "";
-                            result.InputTokens = MiniJson.GetInt(MiniJson.GetObject(start, "usage"), "input_tokens");
+                            ReadInput(result, MiniJson.GetObject(start, "usage"));
                             break;
                         case "content_block_start":
                             Begin();
@@ -361,6 +356,45 @@ namespace Ledger.Core
             catch { return body; }
         }
 
+        /// The Messages API's body for a request: a cached system text or message head goes as its own text block marked
+        /// for caching (CacheSystem, CachedHead); anything else as plain text, as before. Through the relay (CopyCode)
+        /// always plain text: it takes nothing else (ledger/Relay, Relay.cs: "The system prompt must be text").
+        public Dictionary<string, object> Body(LlmRequest request, bool stream)
+        {
+            static Dictionary<string, object> Block(string text, bool cached)
+            {
+                var b = new Dictionary<string, object> { { "type", "text" }, { "text", text } };
+                if (cached) b["cache_control"] = new Dictionary<string, object> { { "type", "ephemeral" } };
+                return b;
+            }
+            bool cache = string.IsNullOrEmpty(CopyCode);
+            var messages = new List<object>();
+            foreach (var m in request.Messages)
+                messages.Add(new Dictionary<string, object> { { "role", m.Role }, { "content",
+                    !cache || string.IsNullOrEmpty(m.CachedHead) || m.Content == null || !m.Content.StartsWith(m.CachedHead, StringComparison.Ordinal)
+                        ? (object)m.Content
+                        : new List<object> { Block(m.CachedHead, true), Block(m.Content.Substring(m.CachedHead.Length), false) } } });
+            var body = new Dictionary<string, object>
+            {
+                { "model", ModelFor(request.Model) },
+                { "max_tokens", request.MaxTokens },
+                { "messages", messages },
+            };
+            if (stream) body["stream"] = true;
+            if (!string.IsNullOrEmpty(request.System))
+                body["system"] = cache && request.CacheSystem ? (object)new List<object> { Block(request.System, true) } : request.System;
+            AddOptions(body, request);
+            return body;
+        }
+
+        /// The usage's input tokens as billed, the cache's writes and reads counted at their price (LlmResponse.Billed).
+        static void ReadInput(LlmResponse r, Dictionary<string, object> usage)
+        {
+            r.CacheWriteTokens = MiniJson.GetInt(usage, "cache_creation_input_tokens");
+            r.CacheReadTokens = MiniJson.GetInt(usage, "cache_read_input_tokens");
+            r.InputTokens = LlmResponse.Billed(MiniJson.GetInt(usage, "input_tokens"), r.CacheWriteTokens, r.CacheReadTokens);
+        }
+
         /// The request's thinking and effort, when it sets them (LlmRequest.Thinking).
         static void AddOptions(Dictionary<string, object> body, LlmRequest request)
         {
@@ -377,7 +411,7 @@ namespace Ledger.Core
                 Model = MiniJson.GetString(root, "model") ?? "",
             };
             var usage = MiniJson.GetObject(root, "usage");
-            result.InputTokens = MiniJson.GetInt(usage, "input_tokens");
+            ReadInput(result, usage);
             result.OutputTokens = MiniJson.GetInt(usage, "output_tokens");
 
             var content = MiniJson.GetList(root, "content");

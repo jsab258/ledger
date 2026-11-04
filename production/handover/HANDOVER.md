@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop. Rules are CLAUDE.md's and RULINGS.md's (his rulings of 4 November: the lean start; the hourly task); the phase's items are NOW.md's and the order's; this file holds only what is in flight, what was tried and failed and why, the next steps in order, and the tries used.
 
-**Started:** 2026-11-04 11:00 (started by Jafar himself with the goal; his rulings of 4 November came in at 11:02)
+**Started:** 2026-11-04 13:41 (started by Jafar himself with the goal; his message at 13:38: the hourly take-over failed, fix and test it, no stop at the size until a take-over has worked)
 **Stopped:** 2026-11-04 11:26 (an item's end, history about 300,000 tokens; the first live test of the hourly task's start)
 (His rulings of 4 November, RULINGS.md: the hourly task "LEDGER: the hourly fresh session" (ledger-daily-fresh-session) runs at :15 from 05:15 to 00:15; each run first runs `python tools/fresh_gate.py` and checks the app's session list, and works only when Stopped is later than Started and no LEDGER session has been active for 15 minutes. Each session runs `python tools/history_check.py` at the end of each item; past its threshold (300,000 tokens while the start is heavy) it rewrites this file, sets Stopped from Get-Date and stops; the next hourly run takes over. Nothing works from 00:45 to 05:10.)
 

@@ -48,6 +48,7 @@ namespace Ledger.TalkTests
                 TestRumourTeller();
                 TestAccountNamesTeller();
                 await TestCapPrices();
+                TestCheckCache();
                 Console.WriteLine($"\nALL {_passed} TALK CHECKS PASSED");
                 return 0;
             }
@@ -582,6 +583,57 @@ namespace Ledger.TalkTests
                   "a story one telling from the witness saves exactly as before: the witness told it");
             Check(olderMill.Get("rocco").Rumors.TrueForAll(r => r.ToldById == null) && olderMill.Get("lena").Best("player.window_d1").ToldById == "rita",
                   "and a save from before it was kept: one telling out, the witness told them; further out, nobody known");
+        }
+
+        /// THE CHECK'S FIXED TEXT CACHED (speech's third try, 4 November 2026): the instructions and the head of what the
+        /// speaker knows go marked for caching, the same from one line to the next; the model reads the same words; the
+        /// cache's tokens are billed at their price; the relay and every other client see the message as before.
+        static void TestCheckCache()
+        {
+            Console.WriteLine("The check's fixed text, cached:");
+            var known = ClaimCheck.NumberedKnown(new List<(string, string)> {
+                ("C1", "Sheila keeps the books at Mickey's cab office."), ("H1", "Mickey died three weeks ago."),
+                ("B1", "The new owner means well."), ("M1", "[D1 09:00] I saw a van."), ("T1", "It is now day 1, 09:05.") });
+            var (head, rest) = ClaimCheck.KnownHead(known);
+            Check(head.Contains("C1:") && head.Contains("H1:") && head.Contains("B1:") && !head.Contains("M1") && rest.StartsWith("M1:")
+                  && head + rest == known, "the head is the card, hard facts and beliefs; memories and the time now follow");
+            bool was = ClaimCheck.CacheChecks;
+            try
+            {
+                ClaimCheck.CacheChecks = true;
+                var a = ClaimCheck.RequestItems("claude-haiku-5-5", known, "Mickey died last month.");
+                var b = ClaimCheck.RequestItems("claude-haiku-5-5", known, "Sheila does the books.");
+                var v = ClaimCheck.RequestVerify("claude-haiku-5-5", known, new List<string> { "last month" });
+                Check(a.CacheSystem && a.System == b.System && a.Messages[0].CachedHead == b.Messages[0].CachedHead
+                      && a.Messages[0].CachedHead.Contains("C1:") && !a.Messages[0].CachedHead.Contains("M1:")
+                      && a.Messages[0].Content.StartsWith(a.Messages[0].CachedHead) && a.Messages[0].Content.Contains("M1:")
+                      && a.Messages[0].Content.Contains("Mickey died last month."),
+                      "two lines' checks share the same cached text, and the message still holds the whole text");
+                Check(v.CacheSystem && v.Messages[0].CachedHead != null && v.Messages[0].Content.Contains("DETAILS:")
+                      && v.Messages[0].CachedHead.Contains("KNOWN-" + ClaimCheck.RunSeal),
+                      "the second look's instructions and head are cached too, under the run's one seal");
+                var client = new AnthropicClient("test");
+                var body = client.Body(a, true);
+                var sys = body["system"] as List<object>;
+                var content = ((body["messages"] as List<object>)[0] as Dictionary<string, object>)["content"] as List<object>;
+                Check(sys != null && ((Dictionary<string, object>)sys[0]).ContainsKey("cache_control") && content != null && content.Count == 2
+                      && ((Dictionary<string, object>)content[0]).ContainsKey("cache_control") && !((Dictionary<string, object>)content[1]).ContainsKey("cache_control")
+                      && (string)((Dictionary<string, object>)content[0])["text"] + (string)((Dictionary<string, object>)content[1])["text"] == a.Messages[0].Content,
+                      "the Anthropic client sends the system and the head as cached blocks, the rest after, nothing lost");
+                var relay = new AnthropicClient("test") { CopyCode = "copy" };
+                var plain = relay.Body(a, false);
+                Check(plain["system"] is string && ((plain["messages"] as List<object>)[0] as Dictionary<string, object>)["content"] is string,
+                      "through the relay, plain text as before (it takes nothing else)");
+                ClaimCheck.CacheChecks = false;
+                var c = ClaimCheck.RequestItems("claude-haiku-5-5", known, "Mickey died last month.");
+                var d = ClaimCheck.RequestItems("claude-haiku-5-5", known, "Mickey died last month.");
+                Check(!c.CacheSystem && c.Messages[0].CachedHead == null && c.System != d.System,
+                      "switched off, the check is as it was: no cache, a fresh seal each call");
+            }
+            finally { ClaimCheck.CacheChecks = was; }
+            var r = AnthropicClient.ParseResponse("{\"stop_reason\":\"end_turn\",\"model\":\"m\",\"usage\":{\"input_tokens\":50,\"cache_creation_input_tokens\":400,\"cache_read_input_tokens\":3000,\"output_tokens\":40},\"content\":[{\"type\":\"text\",\"text\":\"{}\"}]}");
+            Check(r.InputTokens == 50 + 500 + 300 && r.CacheReadTokens == 3000 && r.CacheWriteTokens == 400 && r.OutputTokens == 40,
+                  "the cache's tokens billed at their price: a write a quarter more, a read a tenth", r.InputTokens.ToString());
         }
 
         static void TestAccountNamesTeller()
