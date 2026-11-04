@@ -457,3 +457,5 @@
 {"event": "stop", "at": "2026-11-04T16:09:00", "note": ""}
 {"event": "start", "at": "2026-11-04T16:18:00", "task": "phase 1 exit CLOSE-D: the launch peak with the capture's steps (three packaged boot profiles)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-04T16:21:00", "note": ""}
+{"event": "start", "at": "2026-11-04T16:21:00", "task": "n02-6-6-lean-start A3: the hand-over point from the cost per step", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-04T16:26:00", "note": ""}

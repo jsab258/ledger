@@ -25,7 +25,11 @@ import os
 import sys
 
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
-THRESHOLD = 300000  # 4 Nov, his ruling A3: about 300,000 while the start is heavy; reset from the cost per step once it is lean
+THRESHOLD = 200000  # 4 Nov, his ruling A3: about 300,000 while the start was heavy; set 4 Nov 16:25 from the cost per step
+# (the first real take-over's own log: a start of about 542,000 tokens summed over its 6 steps, the handover's writing about
+# as much again, so R = 1.1 M a switch; the history grew 1,488 tokens a step from 101,559. The mean cost a step over T steps,
+# (R + 101,559 T + 1,488 T^2 / 2) / T, is least at T = sqrt(2R / 1,488) = 38 steps, about 158,000 a step at about 160,000 of
+# history; 200,000 leaves room for an item to end and costs about 6% over that, against about 25% at 300,000)
 TAIL_BYTES = 4 * 1024 * 1024
 
 
