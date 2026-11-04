@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop. Rules are CLAUDE.md's and RULINGS.md's (his rulings of 4 November: the lean start; the hourly task); the phase's items are NOW.md's and the order's; this file holds only what is in flight, what was tried and failed and why, the next steps in order, and the tries used.
 
-**Started:** 2026-11-04 15:21 (the hourly take-over, gate GO: "the last session stopped at 14:32; no turn written for 49 minutes")
+**Started:** 2026-11-04 17:21 (the hourly take-over, gate GO: "the last session stopped at 16:25; no turn written for 53 minutes")
 **Stopped:** 2026-11-04 16:25 (an item's end, history 279,000 tokens, past the new 200,000 point)
 (His rulings of 4 November, RULINGS.md: the hourly task "LEDGER: the hourly fresh session" (ledger-daily-fresh-session) runs at :15 from 05:15 to 00:15; each run first runs `python tools/fresh_gate.py`, which reads only this file and the project's own activity (real turns in the project's session logs; since 4 November 13:46 never the app's session list, which shows idle remote-controlled sessions as active), and works only when Stopped is later than Started and no turn has been written for 15 minutes. Each session runs `python tools/history_check.py` (its own log, by its id) at the end of each item; past 200,000 tokens (set 4 Nov 16:25 from the cost per step) it rewrites this file, sets Stopped from Get-Date and stops. Nothing works from 00:45 to 05:10.)
 
