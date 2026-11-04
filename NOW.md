@@ -7,7 +7,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [x] 1. Speech: set aside, bar missed (run F 2.02 s); the third try saved no time (n02-3-1-speech).
-- [ ] 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).
+- [ ] 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*).
 - [ ] 3. Office passed packaged (4 Nov); sitting, the Stutter to go (n02-3-3-*).
 - [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
 
@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (4 Nov 15:55): first real take-over 15:21; Mickey's window black reflection mended (bake caught before the street was lit), to pass in tonight's packaged build.
+STATE (4 Nov 16:20): first real take-over 15:21; Mickey's window mended, to pass packaged tonight; Tom's jeans and boots passed packaged; sitting failed packaged (head bows in the drop).
 
 ## Handovers
 

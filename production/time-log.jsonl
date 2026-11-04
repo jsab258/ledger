@@ -451,3 +451,5 @@
 {"event": "stop", "at": "2026-11-04T14:23:00", "note": ""}
 {"event": "start", "at": "2026-11-04T15:21:00", "task": "n02-4-corner Mickey's window reflection black: found and mended (take-over session)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-04T15:57:00", "note": ""}
+{"event": "start", "at": "2026-11-04T15:58:00", "task": "n02-tom-jeans/boots and n02-3-3-sitting: packaged reviews (two fresh reviewers)", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-04T16:22:00", "note": ""}
