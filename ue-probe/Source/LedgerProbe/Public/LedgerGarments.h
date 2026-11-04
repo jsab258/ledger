@@ -272,6 +272,7 @@ namespace LedgerGarments
 		if (Body == nullptr) { return 0; }
 		int32 Worn = 0;
 		float RaiseCm = 0.0f;
+		TArray<FString> Covered;
 		for (const TSharedPtr<FJsonValue>& V : Root->GetArrayField(TEXT("garments")))
 		{
 			const TSharedPtr<FJsonObject> G = V->AsObject();
@@ -370,6 +371,7 @@ namespace LedgerGarments
 			FString Hidden;
 			if (G->TryGetArrayField(TEXT("hides"), Hides))
 			{
+				for (const TSharedPtr<FJsonValue>& H : *Hides) { Covered.AddUnique(H->AsString()); }
 				// "shoes": the outfit part whose top is within 25 cm of the soles.
 				// Epic's outfit pieces are named only Outfits, _2 and _3, so the
 				// boots Ron already wore were found by where they sit.
@@ -474,6 +476,15 @@ namespace LedgerGarments
 		{
 			Body->SetRelativeLocation(Body->GetRelativeLocation() + FVector(0.0, 0.0, RaiseCm));
 			UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s raised %.1f cm for the soles"), Who, RaiseCm);
+		}
+		// UNDRESSED (4 November 2026, his midweek answer: nobody in the white base layer in any frame he
+		// sees): a body whose worn garments do not replace both Epic's top and its lower part is tagged
+		// LedgerUndressed, and his page's street pictures leave it out (CrimeProbe.cpp PageShotsTick) until
+		// its clothes are made; play and the tester's walk keep it.
+		if (!Covered.Contains(TEXT("top")) || !Covered.Contains(TEXT("lower")))
+		{
+			A->Tags.AddUnique(FName(TEXT("LedgerUndressed")));
+			UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s is undressed (the base layer shows): left out of the page's pictures"), Who);
 		}
 		return Worn;
 	}

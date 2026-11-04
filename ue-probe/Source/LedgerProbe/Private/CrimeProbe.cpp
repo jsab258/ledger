@@ -5095,6 +5095,18 @@ namespace
 				}
 				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %d people hidden (-PageNoPeople)"), Hid);
 			}
+			// THE UNDRESSED LEFT OUT (4 November, his midweek answer: nobody in the white base layer in any
+			// frame he sees, kept out of frame until dressed): LedgerGarments.h tags them; -PageUndressed
+			// (or the dress pictures) keeps them, for judging the clothes themselves.
+			else if (Mode != TEXT("dress") && !FParse::Param(FCommandLine::Get(), TEXT("PageUndressed")))
+			{
+				int32 Hid = 0;
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (It->ActorHasTag(FName(TEXT("LedgerUndressed")))) { It->SetActorHiddenInGame(true); ++Hid; }
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %d undressed people left out (-PageUndressed keeps them)"), Hid);
+			}
 			// THE SIZE ASKED, drawn whole: the view resized (the game keeps its own
 			// saved size otherwise, off screen too) and at its full screen percentage.
 			if (GEngine != nullptr)
