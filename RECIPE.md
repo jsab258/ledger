@@ -1777,3 +1777,12 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.6 hours (helper 7 minutes of work, photographs 5 minutes, review 1 minute, records).
 - What failed and why: nothing; the plain cut's seam failed across one axis only, so both axes were blended.
 - Evidence: F:/LedgerTools/gate/new/corner-9a/r1-review.md; tools/art-recipes/paint_wood_tile.py.
+
+## Keeping unfinished people out of review pictures (4 November 2026)
+- What was made: a rule that people still in an engine's base layer never appear in pictures meant for the director, while play keeps them.
+- Method: tag a body as undressed when its worn garments do not cover both top and lower body; the picture mode hides tagged actors; every later code path that shows a person again (a schedule moving them, a walk-off) checks the same tag while that mode runs. Look at the frame itself, not the logs: a figure hidden at the start was shown again by a later move.
+- Tools: the game's page-picture mode; the run log's hide count; one first-round reviewer on all views.
+- Target and check: nobody undressed in any page view; one small reviewer, one round, all views.
+- Cost: about 0.4 hours for the second part (finding him 0.2, fix and builds 0.1, pictures and review 0.1).
+- What failed and why: the first try hid tagged people once, at the start; a schedule's own show call brought one back.
+- Evidence: ue-probe/Saved/PageShots (5 views, 4 Nov 20:28); DECISIONS 4 Nov 20:29.

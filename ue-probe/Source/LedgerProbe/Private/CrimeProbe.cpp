@@ -197,6 +197,10 @@ CSV_DEFINE_CATEGORY(Ledger, true);
 
 namespace
 {
+	// Set while his page's pictures leave the undressed out (PageShotsTick), so the day's moves
+	// (ShowPerson) never show one again: Darren at the cafe, 4 November.
+	bool GPageLeavesUndressed = false;
+
 	// ---- ceilings and durations, none of them a threshold ----------------
 	const double kWorldCeiling          = 45.0;
 	const double kPawnCeiling           = 30.0;
@@ -5100,6 +5104,7 @@ namespace
 			// (or the dress pictures) keeps them, for judging the clothes themselves.
 			else if (Mode != TEXT("dress") && !FParse::Param(FCommandLine::Get(), TEXT("PageUndressed")))
 			{
+				GPageLeavesUndressed = true;
 				int32 Hid = 0;
 				for (TActorIterator<AActor> It(World); It; ++It)
 				{
@@ -7820,6 +7825,8 @@ namespace
 	{
 		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
 		if (V == nullptr || !V->IsValid()) { return; }
+		if (bShow && GPageLeavesUndressed && ((*V)->ActorHasTag(FName(TEXT("LedgerUndressed")))
+		                                      || (Body != nullptr && Body->ActorHasTag(FName(TEXT("LedgerUndressed")))))) { return; }
 		(*V)->SetActorHiddenInGame(!bShow);
 		TArray<AActor*> Worn;
 		(*V)->GetAttachedActors(Worn, true, true);
