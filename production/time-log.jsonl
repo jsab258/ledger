@@ -446,3 +446,6 @@
 {"event": "start", "at": "2026-11-04T13:50:00", "task": "n02-3-1-speech third try: the check cached, screen, set aside", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-04T14:06:00", "note": ""}
 {"event": "start", "at": "2026-11-04T14:05:58", "task": "n02-4-corner-pages the midweek page", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-04T14:24:10", "note": "corner midweek page published (3 views passed, 2 held back); office passed packaged; launch peak profiled"}
+{"event": "start", "at": "2026-11-04T14:19:00", "task": "n02-6-6 the take-over's rehearsal watched, passed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-04T14:23:00", "note": ""}

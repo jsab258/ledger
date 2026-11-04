@@ -1748,3 +1748,13 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.3 hours, US$0.16.
 - What failed and why: the cache was read (about 4,300 tokens a call) and saved nothing; a short prompt's wait is the provider's before its first word, not the reading of the prompt. Prompt caching is a cost lever at this size, not a latency lever.
 - Evidence: production/research/voice-latency/IN-GAME-2026-11-02.md (the third try's screen).
+
+## A room's fixes, passed in the shipped build (4 November 2026)
+
+- Made: a small room's five fixes (a notice's dirt edge and tape, a stain moved clear of a corner, a written pad, a board naming places, a clock that follows the game's time), first passed in the editor, then checked in the shipped build.
+- Method: photograph the room through the player's own camera in the shipped build by day and night with the same switches as the editor round; one fresh reviewer a view, given the new pictures, the last good ones, what changed and why, and the known shortfalls by name, asked first whether each fix holds; then the shipped pictures become the last good.
+- Tools: the game's own look switch (-OfficeLook, -OfficeLookNight), the gate's brief format, a reviewer on the strongest model.
+- Target and check: no new fault, every fix holding; known shortfalls listed, failing nothing alone.
+- Cost: about 0.2 hours of session time and two reviews.
+- What failed and why: nothing new; the night room still reads like late afternoon (a hard warm light from the window side), which was in the last good pictures too.
+- Evidence: F:/LedgerTools/gate/new/office/2026-11-04-packaged-day/review.json and -night/review.json.

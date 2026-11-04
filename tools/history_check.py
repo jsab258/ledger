@@ -29,7 +29,13 @@ THRESHOLD = 300000  # 4 Nov, his ruling A3: about 300,000 while the start is hea
 TAIL_BYTES = 4 * 1024 * 1024
 
 
-def newest_log(logs=LOGS):
+def newest_log(logs=LOGS, own=None):
+    """This session's own log when its id is known (CLAUDE_CODE_SESSION_ID), else the newest. 4 November: the app
+    appends untimed bookkeeping to idle old logs, which moves their file times, so the newest file can be another's."""
+    if own:
+        p = os.path.join(logs, own + ".jsonl")
+        if os.path.isfile(p):
+            return p
     paths = [p for p in glob.glob(os.path.join(logs, "*.jsonl")) if os.path.isfile(p)]
     return max(paths, key=os.path.getmtime) if paths else None
 
@@ -71,6 +77,7 @@ def selftest():
         ok.append(("its last step's context counts input, cache reads and writes", last_context(b) == 310001))
         ok.append(("a step past the threshold is over", last_context(b) >= THRESHOLD and last_context(a) < THRESHOLD))
         ok.append(("no log, no answer", newest_log(os.path.join(d, "none")) is None))
+        ok.append(("its own log by its id, even when another was touched since", newest_log(d, own="a") == a))
     for name, good in ok:
         print("  %s %s" % ("ok  " if good else "FAIL", name))
     n = sum(1 for _, g in ok if g)
@@ -81,7 +88,7 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv[1:]:
         sys.exit(selftest())
-    path = newest_log()
+    path = newest_log(own=os.environ.get("CLAUDE_CODE_SESSION_ID"))
     ctx = last_context(path) if path else None
     if ctx is None:
         print("historyCheck verdict=UNREAD log=%s" % path)

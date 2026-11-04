@@ -321,6 +321,29 @@
    ],
    "state": "done",
    "closed": "2026-11-04 11:11, answered yes (08:47): one try at the refused first sentences, under US$1, old against new; started 11:15"
+  },
+  {
+   "id": "corner-midweek-2026-11-04",
+   "added": "2026-11-04 14:14",
+   "text": "The corner at midweek, as the game you play draws it (three pictures below; tap one for full size). Still short of the Hook sheet: people in white base layers and stiff poses, plain brick without burnt headers, the quay end fading to white, simple trees on the hill, very deep dark between night lamps. Held back, being fixed: the view at Rita's (flat roof, plain phone-box side, even brick streaks) and Mickey's window (its street reflection has gone black). New: the brick no longer repeats and varies over each wall. Is the direction right?",
+   "links": [],
+   "recommendation": "Keep going: each shortfall is a later step of the corner (trims, people, the far end). Not yet a 2026 frame, so this asks the direction, not a yes to the look. No web link: the answer is this page.",
+   "options": [
+    [
+     "keep",
+     "Keep going (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ],
+   "pictures": [
+    {"src": "production/approvals/needs-you/pictures/corner-hook-day-2026-11-04.jpg", "alt": "The corner from Tom's start, by day"},
+    {"src": "production/approvals/needs-you/pictures/corner-hook-night-2026-11-04.jpg", "alt": "The same, at night"},
+    {"src": "production/approvals/needs-you/pictures/corner-reverse-day-2026-11-04.jpg", "alt": "Looking back towards the quay, by day"}
+   ],
+   "state": "open"
   }
  ]
 }

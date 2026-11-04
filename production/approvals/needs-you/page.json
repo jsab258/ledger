@@ -1,11 +1,44 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Wednesday 4 November, 11:11",
+ "kicker": "LEDGER · Needs you · 1 open · updated Wednesday 4 November, 14:16",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "corner-midweek-2026-11-04",
+   "name": "The corner at midweek, as the game you play draws it (three pictures below; tap one for full size). Still short of the Hook sheet: people in white base layers and stiff poses, plain brick without burnt headers, the quay end fading to white, simple trees on the hill, very deep dark between night lamps. Held back, being fixed: the view at Rita's (flat roof, plain phone-box side, even brick streaks) and Mickey's window (its street reflection has gone black). New: the brick no longer repeats and varies over each wall. Is the direction right?",
+   "links": [],
+   "recommendation": "Keep going: each shortfall is a later step of the corner (trims, people, the far end). Not yet a 2026 frame, so this asks the direction, not a yes to the look. No web link: the answer is this page.",
+   "added": "2026-11-04 14:14",
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/corner-hook-day-2026-11-04.jpg",
+     "alt": "The corner from Tom's start, by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-hook-night-2026-11-04.jpg",
+     "alt": "The same, at night"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-reverse-day-2026-11-04.jpg",
+     "alt": "Looking back towards the quay, by day"
+    }
+   ],
+   "options": [
+    [
+     "keep",
+     "Keep going (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  }
+ ]
 }
