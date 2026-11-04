@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 3 November, 22:07",
+ "kicker": "LEDGER · Needs you · 2 open · updated Wednesday 4 November, 8:45",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -20,6 +20,25 @@
     [
      "done",
      "Done, set to Auto (recommended)"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "speech-third-try-2026-11-04",
+   "name": "Speech misses its bar by a hair: inside the packaged game a newcomer's question is answered in 2.02 s at the median, against your 2.0 s, and both tries are spent. The slow lines are the ones where the fact check refuses the first sentence and the reply is written again (7 of 30 took 4 s or more). May I spend a third try on exactly that?",
+   "links": [],
+   "recommendation": "Yes, one try, about 2 hours and under US$1 of the month's credit, measured the same way, old against new. If it fails, speech is reported as missing its bar at the exit. Your cut-off for the fast checker and prepared openers stay as you set them. No web link: the answer is this page.",
+   "added": "2026-11-04 08:58",
+   "pictures": [],
+   "options": [
+    [
+     "yes",
+     "Yes, one try (recommended)"
+    ],
+    [
+     "no",
+     "No, report it as missed"
     ]
    ]
   }

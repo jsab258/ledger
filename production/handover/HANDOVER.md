@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from (his rulings of 3 November: a fresh session every day, never two at once). Rewritten, not appended, at each stop. Rules are CLAUDE.md's and RULINGS.md's; the phase's items are NOW.md's; this file holds only what is in flight.
 
-**Started:** 2026-11-04 06:09 (the 05:15 run of ledger-daily-fresh-session; held from 05:21 until both Builder sessions had been quiet 15 minutes)
-**Stopped:** 2026-11-04 06:33 (history at about 175,000 tokens after speech run F, close to the switch; the next session started by the app's run of ledger-fresh-session-handoff, or ledger-daily-fresh-session if that is refused)
+**Started:** 2026-11-04 08:43 (a run of ledger-fresh-session-handoff; held from 08:05 until both Builder sessions had been quiet 15 minutes)
+**Stopped:** 2026-11-04 06:33 (history at about 175,000 tokens after speech run F, close to the switch; at 06:36 starting the next session was refused for both tasks, since a run needs a person's approval in an unattended run: the 05:15 run is the backstop; this note uncommitted)
 (His rulings of 3 November: a fresh session by the history's size, never two at once. Each session runs `python tools/history_check.py` at the end of each item; past 200,000 tokens it rewrites this file, sets Stopped from Get-Date, starts the next session with the app's run of the task ledger-fresh-session-handoff (or ledger-daily-fresh-session when the first is its own run), and stops; the next begins only when Stopped is later than Started and no session in the checkout has been active for 15 minutes, then sets Started. The 05:15 daily run is the backstop; nothing works from 00:45 to 05:10.)
 
 **As of:** Wednesday 4 November 2026, 06:33 (Swiss time). A fresh session starts with a history of about 145,000 tokens (the system prompt and rules), so expect each session to hold only an item or two.

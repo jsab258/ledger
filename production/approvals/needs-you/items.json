@@ -301,6 +301,15 @@
    ],
    "state": "done",
    "closed": "2026-11-03 13:04, answered by his order of 3 November (chat): the advisor's cleaned RULINGS.md applied, the hair ruling in it, the cap 4,800"
+  },
+  {
+   "id": "speech-third-try-2026-11-04",
+   "added": "2026-11-04 08:58",
+   "text": "Speech misses its bar by a hair: inside the packaged game a newcomer's question is answered in 2.02 s at the median, against your 2.0 s, and both tries are spent. The slow lines are the ones where the fact check refuses the first sentence and the reply is written again (7 of 30 took 4 s or more). May I spend a third try on exactly that?",
+   "links": [],
+   "recommendation": "Yes, one try, about 2 hours and under US$1 of the month's credit, measured the same way, old against new. If it fails, speech is reported as missing its bar at the exit. Your cut-off for the fast checker and prepared openers stay as you set them. No web link: the answer is this page.",
+   "options": [["yes", "Yes, one try (recommended)"], ["no", "No, report it as missed"]],
+   "state": "open"
   }
  ]
 }
