@@ -25,7 +25,9 @@ import os
 import sys
 
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
-THRESHOLD = 200000  # 4 Nov, his ruling A3: about 300,000 while the start was heavy; set 4 Nov 16:25 from the cost per step
+THRESHOLD = 250000  # 5 Nov 20:25, from 5 Nov's twelve take-overs (tools/handover_cost.py): the start now reaches 140,000, so 200,000
+# left 23 steps; best by tokens about 261,000, by dollars about 302,000, flat from 250,000 to 400,000; items end about 40,000 past it
+# Before: 4 Nov, his ruling A3: about 300,000 while the start was heavy; set 4 Nov 16:25 from the cost per step
 # (the first real take-over's own log: a start of about 542,000 tokens summed over its 6 steps, the handover's writing about
 # as much again, so R = 1.1 M a switch; the history grew 1,488 tokens a step from 101,559. The mean cost a step over T steps,
 # (R + 101,559 T + 1,488 T^2 / 2) / T, is least at T = sqrt(2R / 1,488) = 38 steps, about 158,000 a step at about 160,000 of
