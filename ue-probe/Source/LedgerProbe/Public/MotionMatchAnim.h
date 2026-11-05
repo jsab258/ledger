@@ -93,7 +93,9 @@ public:
 	// about 10. While the weight is above nil the head bone's face direction is turned up until it is no lower than
 	// FaceFloorDeg below the horizontal: 40% at neck_01, 30% at neck_02, 30% at the head. With FaceFloorDeg above nil the
 	// two holds above are measured only, not applied (both set aside after two tries).
-	float FaceFloorDeg = 25.0f;
+	// 25 until 5 November; 10 is what people average. Not what cured the edge-on face in the drop: the eyes' line was
+	// (LevelEyes in the .cpp; F:/LedgerTools/gate/new/sit-drop-2026-11-05)
+	float FaceFloorDeg = 10.0f;
 	// the face's pitch against the horizontal (degrees, negative looking down) as copied and as held
 	float FacePitchCopied() const;
 	float FacePitchHeld() const;

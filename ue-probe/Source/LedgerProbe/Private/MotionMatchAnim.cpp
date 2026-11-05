@@ -43,10 +43,13 @@ namespace
 	struct FLedgerHeadUpNode : public FAnimNode_Base
 	{
 		FAnimNode_RetargetPoseFromMesh Retarget;
-		float Weight = 0.0f, AllowDeg = 15.0f, BackAllowDeg = 10.0f, FaceFloorDeg = 25.0f;
+		float Weight = 0.0f, AllowDeg = 15.0f, BackAllowDeg = 10.0f, FaceFloorDeg = 10.0f;
 		// the head's face direction in its own frame (the reference pose looks along the component's +Y, as
 		// tools/ue/clip_frames.py measures it), and the face's pitch on the last pose, as copied and as held
 		FVector FaceLocal = FVector(0.0, 1.0, 0.0);
+		// and across the face, for the eyes' line (the reference pose's +X)
+		FVector SideLocal = FVector(1.0, 0.0, 0.0);
+		float RollAllowDeg = 8.0f;
 		float FaceCopied = 0.0f, FaceHeld = 0.0f;
 		FLedgerHold Back = { FBoneReference(TEXT("spine_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("spine_04")) };
 		FLedgerHold Neck = { FBoneReference(TEXT("spine_05")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("head")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("neck_02")) };
@@ -78,6 +81,7 @@ namespace
 				H->RefBend = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((b - a).GetSafeNormal(), (c - b).GetSafeNormal()), -1.0, 1.0)));
 			}
 			FaceLocal = RefT(Neck.C.BoneIndex).GetRotation().UnrotateVector(FVector(0.0, 1.0, 0.0));
+			SideLocal = RefT(Neck.C.BoneIndex).GetRotation().UnrotateVector(FVector(1.0, 0.0, 0.0));
 		}
 		// the hold's bend past standing on this pose, and the axis that straightens it
 		static float BendOf(FCSPose<FCompactPose>& CS, const FBoneContainer& Bc, const FLedgerHold& H, FVector& Axis)
@@ -121,6 +125,24 @@ namespace
 			TurnAt(Output, CS, Neck.P2, Axis, Lift * 0.3f);
 			TurnAt(Output, CS, Neck.C, Axis, Lift * 0.3f);
 			FaceHeld = PitchOf(CS, Bc, Face);
+			LevelEyes(Output, CS, Face);
+		}
+		// HIS EYES KEPT LEVEL (5 November, the sit's second try on this fault): the clips' face, near straight down, is
+		// also turned on the neck, so lifting it about the horizontal alone stands the head on its side: the eyes' line
+		// 70 degrees off level at the drop's lowest while the pitch figure read as held. Turned about the face's own line
+		// back to within RollAllowDeg of level, as far as the weight asks, by the same shares.
+		void LevelEyes(FPoseContext& Output, FCSPose<FCompactPose>& CS, const FVector& Face)
+		{
+			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
+			FVector Side = CS.GetComponentSpaceTransform(Neck.C.GetCompactPoseIndex(Bc)).GetRotation().RotateVector(SideLocal).GetSafeNormal();
+			FVector Top = FVector::CrossProduct(Face, Side);
+			if (Top.Z < 0.0) { Side = -Side; Top = -Top; }
+			const float Off = (float)FMath::RadiansToDegrees(FMath::Atan2(-Side.Z, Top.Z));
+			const float Turn = FMath::Sign(Off) * FMath::Max(0.0f, FMath::Abs(Off) - RollAllowDeg) * FMath::Clamp(Weight, 0.0f, 1.0f);
+			if (FMath::Abs(Turn) <= 0.01f) { return; }
+			TurnAt(Output, CS, Neck.P1, Face, Turn * 0.4f);
+			TurnAt(Output, CS, Neck.P2, Face, Turn * 0.3f);
+			TurnAt(Output, CS, Neck.C, Face, Turn * 0.3f);
 		}
 		void Apply(FPoseContext& Output, FCSPose<FCompactPose>& CS, FLedgerHold& H, float Allow)
 		{

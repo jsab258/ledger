@@ -16,6 +16,10 @@ session logs and their helpers' logs, this run's own log left out (CLAUDE_CODE_S
 without its Stopped line: when Started is later but no turn has been written for 120 minutes, the last session is
 taken as stopped, and GO says so, for the handover.
 
+THREE MINUTES AFTER A WRITTEN STOP (5 November, his yes on his page): a session that stopped just before the quarter
+past made the next run stand aside for an hour, his answers waiting up to about 75 minutes. Stopped later than Started
+means the old session has declared itself finished, so 3 quiet minutes are enough; 15 stay when it has not.
+
 WHY NOT A FILE'S TIME OR THE APP'S SESSION LIST (4 November, his message at 13:38): the 12:15 run stood aside because
 the app listed an idle "Ledger Builder" session under remote control as active three minutes before (its
 lastActivityAt moves without any turn); the 13:15 run stood aside because the app had appended bookkeeping lines
@@ -40,6 +44,7 @@ HANDOVER = os.path.join(ROOT, "production", "handover", "HANDOVER.md")
 REHEARSAL = os.path.join(ROOT, "production", "handover", "takeover-rehearsal.json")
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
 QUIET_MIN = 15
+QUIET_STOPPED_MIN = 3
 DEAD_MIN = 120
 OWN_RUN_MIN = 10
 TAIL = 1 << 20
@@ -106,8 +111,9 @@ def decide(now, text, idle_min):
     started, stopped = line_time(text, "Started"), line_time(text, "Stopped")
     if started is None or stopped is None:
         return "WAIT the handover has no Started or Stopped line: a session must set them"
-    if idle_min is not None and idle_min < QUIET_MIN:
-        return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), QUIET_MIN)
+    quiet = QUIET_STOPPED_MIN if stopped >= started else QUIET_MIN
+    if idle_min is not None and idle_min < quiet:
+        return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), quiet)
     if stopped >= started:
         return "GO the last session stopped at %s; no turn written for %s minutes" % (
             stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min))
@@ -134,8 +140,10 @@ def selftest():
     d = datetime.datetime(2026, 11, 4, 12, 15)
     cases = [
         ("stopped and quiet: GO", decide(d, h, 40), "GO"),
-        ("stopped, a turn 5 min ago: WAIT", decide(d, h, 5), "WAIT"),
-        ("stopped, a turn 14.6 min ago: WAIT", decide(d, h, 14.6), "WAIT"),
+        ("stopped, a turn 2.9 min ago: WAIT", decide(d, h, 2.9), "WAIT"),
+        ("stopped, a turn 3 min ago: GO", decide(d, h, 3), "GO"),
+        ("not stopped, a turn 5 min ago: WAIT, 15", decide(d, r, 5), "WAIT a session wrote"),
+        ("not stopped, a turn 14.6 min ago: WAIT, 15", decide(d, r, 14.6), "WAIT a session wrote"),
         ("running: WAIT", decide(d, r, 40), "WAIT"),
         ("died without Stopped, quiet 3 h: GO", decide(d, r, 180), "GO"),
         ("the night: WAIT", decide(datetime.datetime(2026, 11, 5, 2, 15), h, 400), "WAIT"),

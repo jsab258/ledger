@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"$CLAUDE_PROJECT_DIR/tools/page_read_hook.py\"",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/tools/page_read_hook.sh\"",
             "timeout": 10
           }
         ]

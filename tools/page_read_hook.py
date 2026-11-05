@@ -3,8 +3,8 @@
 
 His ruling of 2 November: the page's answers are read at least once an hour
 while working; the advisor channel with them (4 November). Claude Code runs this
-as a PostToolUse hook (.claude/settings.json; page_read_hook.sh is its faster
-front, written but not yet switched on there). It notes every read of the page's
+as a PostToolUse hook, through its faster front page_read_hook.sh (.claude/settings.json).
+It notes every read of the page's
 verdicts and advisor collections in .claude/page-read-stamp.json, and when either
 is over 45 minutes old it tells the production session to read them before its
 next step. Silent otherwise, so it costs no tokens when the reads are on time.

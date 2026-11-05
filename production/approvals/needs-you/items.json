@@ -181,7 +181,46 @@
      "No, keep the slower check"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-05 11:23, answered yes (10:04): the one try made at 11:23, refused again; the line goes to him by hand, or stays off"
+  },
+  {
+   "id": "page-check-hand-2026-11-05",
+   "added": "2026-11-05 11:23",
+   "text": "The one line for the faster page check was refused again; only your own hands can change it. It saves about 20 minutes of waiting a day and no tokens; the advisor says it is not worth your trouble. To do it: in Notepad open C:\\Users\\Jafar\\ledger-local\\.claude\\settings.json, and on line 22 replace page_read_hook.py with page_read_hook.sh and the word python with sh, then save.",
+   "links": [],
+   "recommendation": "Leave it off. No web link: the answer is this page.",
+   "options": [
+    [
+     "leave",
+     "Leave it off (recommended)"
+    ],
+    [
+     "done",
+     "I changed the line"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-05 12:23, He changed the line by hand (12:15); settings valid, hook fired late and stayed silent on time in the 12:21 session, 0.13 s a step"
+  },
+  {
+   "id": "gate-three-minutes-2026-11-05",
+   "added": "2026-11-05 11:23",
+   "text": "Your ruling has the next session wait for 15 quiet minutes before it takes over, so a session that stops just before the quarter past leaves the work and your answers waiting up to about 75 minutes. The advisor asks for 3 quiet minutes when the old session has written that it has stopped, keeping 15 when it has not. This changes your ruling's number. Never two sessions at once still holds. Change it?",
+   "links": [],
+   "recommendation": "Yes. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, 3 minutes after a written stop (recommended)"
+    ],
+    [
+     "no",
+     "No, keep 15"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-05 12:23, His yes: 3 quiet minutes after a written stop, 15 without; tools/fresh_gate.py and RULINGS changed, selftest passed"
   }
  ]
 }
