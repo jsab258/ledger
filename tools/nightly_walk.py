@@ -88,9 +88,12 @@ def summarise(events, verdict, bench, eyes):
     deeds = [e for e in events if ev_kind(e) == "deed"]
     # WHO SAW IT is the game's witness events, one a person, saw true or false (4 October: the
     # first report read a "seen" field the deed event never carried and said nobody).
+    # "saw" is the game's filed; rung 0 filed the glass only, with no story about him (5 November).
     seen = sorted({TOWN.get(e.get("who"), str(e.get("who", "?")).capitalize())
-                   for e in events if ev_kind(e) == "witness" and e.get("saw") is True}
+                   for e in events if ev_kind(e) == "witness" and e.get("saw") is True and e.get("rung") != 0}
                   | {w for e in deeds for w in (e.get("seen") or [])})
+    only_heard = sorted({TOWN.get(e.get("who"), str(e.get("who", "?")).capitalize())
+                         for e in events if ev_kind(e) == "witness" and e.get("saw") is True and e.get("rung") == 0})
     onlookers = [e for e in events if ev_kind(e) == "onlookers"]
     known = [e for e in events if ev_kind(e) == "known"]
     knew = {}
@@ -104,7 +107,7 @@ def summarise(events, verdict, bench, eyes):
     return {
         "walk": {"passed": (verdict or {}).get("passed", 0), "stages": (verdict or {}).get("stages", 0),
                  "failed": [r["stage"] + ": " + r["detail"] for r in rows if not r["ok"]][:6]},
-        "noticed": {"saw_the_deed": seen, "onlooker_lines": [o.get("who") or o.get("n") or o for o in onlookers][:6]},
+        "noticed": {"saw_the_deed": seen, "only_heard": only_heard, "onlooker_lines": [o.get("who") or o.get("n") or o for o in onlookers][:6]},
         "knew_later": {k: sorted(v) for k, v in sorted(knew.items())},
         "greeted": [{"who": r["stage"][5:], "reached": r["ok"], "detail": r["detail"]} for r in town_rows],
         "replies": {"n": len(replies), "broke": sum(1 for e in replies if e.get("how") in BROKE),
@@ -233,6 +236,9 @@ def paragraph(rep, prev):
     parts.append("the route %d of %d stages%s." % (w["passed"], w["stages"], "" if not w["failed"] else "; failed: " + "; ".join(w["failed"][:2])))
     seen = s["noticed"]["saw_the_deed"]
     parts.append("Who saw him break Rita's window: %s." % (", ".join(seen) if seen else "nobody the record names"))
+    heard = s["noticed"].get("only_heard") or []
+    if heard:
+        parts.append("Took in the glass with no story about him: %s." % ", ".join(heard))
     kl = s["knew_later"]
     parts.append("Who showed they knew afterwards, and how: %s." % (
         "; ".join("%s (%s)" % (k, ", ".join(v)) for k, v in kl.items()) if kl else "nobody"))
@@ -337,6 +343,10 @@ def selftest():
           {"e": "witness", "who": "marta", "saw": True}, {"e": "deed", "what": "player.window_d0"}]
     check("the witnesses who saw it are named, those who did not are not",
           summarise(wv, None, None, None)["noticed"]["saw_the_deed"] == ["Marta", "Sheila"])
+    wh = [{"e": "witness", "who": "lena", "saw": True, "rung": 2}, {"e": "witness", "who": "marta", "saw": True, "rung": 0}]
+    nh = summarise(wh, None, None, None)["noticed"]
+    check("one who only took in the glass is not told as having seen him",
+          nh["saw_the_deed"] == ["Sheila"] and nh["only_heard"] == ["Marta"])
     ev = [{"e": "deed", "what": "player.window_d0", "seen": ["Ada", "Rita"]},
           {"e": "known", "who": "Sheila", "how": "question", "story": "player.window_d0"},
           {"e": "known", "who": "Sheila", "how": "look", "story": "player.window_d0"},
