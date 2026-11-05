@@ -366,14 +366,40 @@ def greet(r, key, name):
                                                        "" if said == TOWN_LINE else " said=%r not as typed" % said))
 
 
-def to_next_morning(r, tries=8):
+MORNING_FROM, MORNING_UNTIL = 9 * 60 + 5, 13 * 60
+
+
+def morning_step(day, clock):
+    """What to_next_morning does at this clock: "here", "z", or the real seconds to wait.
+    Z moves 8 hours, so one of any three landings falls between 04:00 and 12:00, and the clock runs
+    2 game minutes a real second (LiveClock.h MinutesPerRealSecond)."""
+    if day == "D0":
+        return "z"
+    hour, minute = clock.split(":")
+    at = int(hour) * 60 + int(minute)
+    if MORNING_FROM <= at < MORNING_UNTIL:
+        return "here"
+    if 4 * 60 <= at < MORNING_FROM:
+        return max(1, min(30, (MORNING_FROM - at + 1) // 2))
+    return "z"
+
+
+def to_next_morning(r, tries=20):
     """Z, as a player would, until the next day's working hours (4 October: the first nightly
     walk greeted the three at 20:00, when Sheila and Darren had gone home, and no night had
-    passed for the street's talk to travel). Recorded as its own stage, "morning"."""
+    passed for the street's talk to travel). Recorded as its own stage, "morning".
+    A REAL MORNING (5 November: every walk since 30 October landed at about 15:12, 07:12 being just short of the old
+    08:00 to 17:00, and at 2 game minutes a second 17:00 came during Sheila's greeting, when the cast file sends Ron
+    and Darren to the quay and Darren home at 19:00: "lost sight of" and "not on the street" were the tester's lateness).
+    So from 04:00 it waits on the street, as a player would, to 09:05, when all three are out till 17:00."""
     for _ in range(tries):
         t = r.where().get("tom")
-        if t and len(t) >= 5 and t[3] != "D0" and "08:00" <= t[4] < "17:00":
+        step = morning_step(t[3], t[4]) if t and len(t) >= 5 else "z"
+        if step == "here":
             return r.record("morning", True, "clock=%s %s" % (t[3], t[4]))
+        if step != "z":
+            play("wait", str(step))
+            continue
         play("press", "Z")
         play("wait", "8")
     t = r.where().get("tom")
