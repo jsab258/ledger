@@ -21,12 +21,12 @@
     },
     {
       "glb": "martha-idle",
-      "x_m": 19.6,
-      "z_m": 4.6,
+      "x_m": 20.2,
+      "z_m": 4.1,
       "face_deg": -90,
       "phase": 0.3,
-      "why": "standing by a shop window, looking out into the street",
-      "y_m": 0.0869
+      "why": "standing on the pavement past Rita's front, looking out into the street. Moved 5 November from x 19.6, z 4.6: the night walk's reviewer saw her half in the door frame of the flat beside Rita's; here she stands clear of that door and of the dustbins at 21.17",
+      "y_m": 0.0745
     },
     {
       "glb": "leonard-idle",

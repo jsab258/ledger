@@ -6932,14 +6932,30 @@ namespace
 	}
 
 	// NO FROZEN POSES, MEASURED (2 November, the corner plan's step 3 check: everyone within 30 m moves a head,
-	// hand or chest bone 1 cm in any 4 s, inferred): every 4 s, each of the cast near him and in view, how far the head, the
-	// hands and the chest moved in the body's own space since the last look, in cm; "frozen" when none reached 1.
-	TMap<AActor*, TArray<FVector>> GMotionPrev;
+	// hand or chest bone 1 cm in any 4 s, inferred): each of the cast near him and in view, how far the head, the
+	// hands and the chest got in the body's own space within each 4 s, looked at every half second; "frozen" when none
+	// reached 1. 5 November: the two ends of the 4 s alone read a swaying idle as frozen whenever it came back to the
+	// same place (one woman 6.8, 0.5, 5.2 cm in turn; a walker 35, 0.7, 35), so the ends' figure is kept beside it in the log.
+	struct FMotionWindow { double From = 0.0; TArray<FVector> Start; float Most[3] = { 0.0f, 0.0f, 0.0f }; };
+	TMap<AActor*, FMotionWindow> GMotionPrev;
 	double GMotionAt = 0.0;
+	// True when this look ends the actor's 4 s: Most and Ends are its head, hands and chest.
+	bool MotionLook(AActor* Key, const TArray<FVector>& Now4, double Now, float Most[3], float Ends[3])
+	{
+		FMotionWindow* W = GMotionPrev.Find(Key);
+		if (W == nullptr) { FMotionWindow Fresh; Fresh.From = Now; Fresh.Start = Now4; GMotionPrev.Add(Key, Fresh); return false; }
+		Ends[0] = FVector::Dist(W->Start[0], Now4[0]);
+		Ends[1] = FMath::Max(FVector::Dist(W->Start[1], Now4[1]), FVector::Dist(W->Start[2], Now4[2]));
+		Ends[2] = FVector::Dist(W->Start[3], Now4[3]);
+		for (int32 I = 0; I < 3; ++I) { W->Most[I] = FMath::Max(W->Most[I], Ends[I]); Most[I] = W->Most[I]; }
+		if (Now - W->From < 3.99) { return false; }
+		W->From = Now; W->Start = Now4; W->Most[0] = W->Most[1] = W->Most[2] = 0.0f;
+		return true;
+	}
 	void MotionTick(UWorld* World)
 	{
 		const double Now = World != nullptr ? World->GetTimeSeconds() : 0.0;   // the game's clock: a fixed-step film keeps it
-		if (GPawn == nullptr || World == nullptr || Now - GMotionAt < 4.0) { return; }
+		if (GPawn == nullptr || World == nullptr || Now - GMotionAt < 0.5) { return; }
 		GMotionAt = Now;
 		static const FName Bones[4] = { FName(TEXT("head")), FName(TEXT("hand_l")), FName(TEXT("hand_r")), FName(TEXT("spine_05")) };
 		const TPair<AActor*, const TCHAR*> People[3] = { { GW1Body, TEXT("Sheila") }, { GN2Body, TEXT("Darren") }, { GR3Body, TEXT("Ron") } };
@@ -6956,15 +6972,12 @@ namespace
 				if (!C->WasRecentlyRendered(0.5f)) { GMotionPrev.Remove(P.Key); break; }
 				TArray<FVector> Now4;
 				for (const FName& B : Bones) { Now4.Add(C->GetBoneLocation(B, EBoneSpaces::ComponentSpace)); }
-				if (TArray<FVector>* Prev = GMotionPrev.Find(P.Key))
+				float Most[3], Ends[3];
+				if (MotionLook(P.Key, Now4, Now, Most, Ends))
 				{
-					const float Head = FVector::Dist((*Prev)[0], Now4[0]);
-					const float Hands = FMath::Max(FVector::Dist((*Prev)[1], Now4[1]), FVector::Dist((*Prev)[2], Now4[2]));
-					const float Chest = FVector::Dist((*Prev)[3], Now4[3]);
-					UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s, break %.2f, %s"), P.Value,
-					       Head, Hands, Chest, L->BreakWeight, FMath::Max3(Head, Hands, Chest) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
+					UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s (ends alone %.1f), break %.2f, %s"), P.Value,
+					       Most[0], Most[1], Most[2], FMath::Max3(Ends[0], Ends[1], Ends[2]), L->BreakWeight, FMath::Max3(Most[0], Most[1], Most[2]) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
 				}
-				GMotionPrev.Add(P.Key, Now4);
 				break;
 			}
 		}
@@ -7003,15 +7016,12 @@ namespace
 			if (!C->WasRecentlyRendered(0.5f)) { GMotionPrev.Remove(*It); continue; }
 			TArray<FVector> Now4;
 			for (int32 I = 0; I < 4; ++I) { Now4.Add(C->GetBoneLocation(Names[I], EBoneSpaces::ComponentSpace)); }
-			if (TArray<FVector>* Prev = GMotionPrev.Find(*It))
+			float Most[3], EndToEnd[3];
+			if (MotionLook(*It, Now4, Now, Most, EndToEnd))
 			{
-				const float Head = FVector::Dist((*Prev)[0], Now4[0]);
-				const float Hands = FMath::Max(FVector::Dist((*Prev)[1], Now4[1]), FVector::Dist((*Prev)[2], Now4[2]));
-				const float Chest = FVector::Dist((*Prev)[3], Now4[3]);
-				UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s, extra, %s"), *It->GetName(),
-				       Head, Hands, Chest, FMath::Max3(Head, Hands, Chest) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
+				UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s (ends alone %.1f), extra, %s"), *It->GetName(),
+				       Most[0], Most[1], Most[2], FMath::Max3(EndToEnd[0], EndToEnd[1], EndToEnd[2]), FMath::Max3(Most[0], Most[1], Most[2]) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
 			}
-			GMotionPrev.Add(*It, Now4);
 		}
 	}
 

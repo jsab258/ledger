@@ -607,7 +607,15 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 		}
 		if (Owner != nullptr && !bGatherStep && bPaces)
 		{
-			if (PauseLeft > 0.0f) { PauseLeft -= DeltaSeconds; }
+			if (PauseLeft > 0.0f)
+			{
+				PauseLeft -= DeltaSeconds;
+				// A WALKER WHO STOPS TURNS TO THE ROAD (5 November, the walk's "pressed to the wall, facing it": stopped
+				// still facing along the pavement beside a lit window, he read as peering in). The road's middle is Y 0.
+				FRotator R = Owner->GetActorRotation();
+				R.Yaw = FMath::FixedTurn(R.Yaw, (Owner->GetActorLocation().Y > 0.0f ? -90.0f : 90.0f) + WalkYawOffset, 120.0f * DeltaSeconds);
+				Owner->SetActorRotation(R);
+			}
 			else
 			{
 				FVector At = Owner->GetActorLocation();
