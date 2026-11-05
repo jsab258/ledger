@@ -221,6 +221,7 @@ production/assets/scanned/polyhaven/paint_wood_01/
 # the stone dressings' and the rainwater goods' tiles (5 November, step 9b: tools/art-recipes/dressing_tiles.py), the same way
 production/assets/scanned/polyhaven/large_sandstone_blocks/
 production/assets/scanned/polyhaven/rusty_metal_02/
+production/assets/scanned/polyhaven/roof_slates_03/
 
 # his page's pictures for an open item (tools/needs_you_page.py PICTURES_REL): published beside the page, never in git
 production/approvals/needs-you/pictures/

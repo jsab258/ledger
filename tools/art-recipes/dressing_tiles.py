@@ -15,6 +15,7 @@ SOURCES, both CC0 1.0 from Poly Haven by Rob Tuytel, 2k maps in F:/LedgerTools/p
     between them is cut (v 0.205 to 0.92, 2.14 m).
   rusty_metal_02 (https://polyhaven.com/a/rusty_metal_02, 1 m a tile): white paint with rust, its paint brought down to the
     row's near-black by match_rgb, so the rust reads as blotches in black paint, already periodic.
+  roof_slates_03 (https://polyhaven.com/a/roof_slates_03, 3 m a tile; step 9d): worn slate, the row's palette by match_rgb.
 
 METHOD. Cut, resample to about 512 px a metre, make periodic with paint_wood_tile.py's cross-blend, normal and roughness cut
 the same way. match_rgb is the row's palette colour over the tile's linear mean, as the other rows'.
@@ -43,6 +44,13 @@ TILES = (
      "palette": (0.240, 0.225, 0.200), "blend": 220},
     {"asset": "rusty_metal_02", "base": "rainwater", "source_m": 1.0, "v": (0.0, 1.0),
      "palette": (0.030, 0.030, 0.032), "blend": 96, "match_on_paint": True},
+    # THE ROOF (5 November, step 9d): a trim sheet too, a ridge and hip course across its top, so only the rows between the
+    # two course lines where it wraps cleanly are cut (366 to 1,995 of 2,048, found by search, the seam unseen when tiled),
+    # the whole width kept because it is already periodic across, never blended (a cross-blend smears regular courses).
+    # Squeezed to a square over 3.9 m: slates 26 cm wide at a 17 cm margin, the size of a Welsh terrace's (its source's
+    # 20 by 10 cm read small); its maps come as a glTF's, a GL normal and roughness in the green of a packed map
+    {"asset": "roof_slates_03", "base": "slate", "rows": (366, 1995), "side_px": 1536, "covers_m": 3.9, "seam_limit": 3.0,
+     "palette": (0.060, 0.058, 0.062), "blend": 0, "folder": "2k/textures", "packed": True},
 )
 
 
@@ -53,6 +61,8 @@ def to_linear(c):
 
 def want_px(t):
     """The square cut, side and blend together, at the target density, so the tile's metres are its pixels' metres."""
+    if "side_px" in t:
+        return t["side_px"]
     return int(round((t["v"][1] - t["v"][0]) * t["source_m"] * DENSITY))
 
 
@@ -65,6 +75,8 @@ def eight_bit(im):
 
 def cut(im, t, Image):
     n = im.size[0]
+    if "rows" in t:
+        return np.asarray(im.crop((0, t["rows"][0], n, t["rows"][1])).resize((want_px(t), want_px(t)), Image.LANCZOS))
     v0, v1 = int(t["v"][0] * n), int(t["v"][1] * n)
     im = im.crop((0, v0, v1 - v0, v1))
     return np.asarray(im.resize((want_px(t), want_px(t)), Image.LANCZOS))
@@ -72,12 +84,19 @@ def cut(im, t, Image):
 
 def make(t, Image):
     side = want_px(t) - t["blend"]
-    src = os.path.join(SOURCE, t["asset"], t["asset"])
+    src = os.path.join(SOURCE, t["asset"], t.get("folder", ""), t["asset"])
+    names = (("diff", "_diff_2k.jpg"), ("nor_dx", "_nor_gl_2k.jpg"), ("rough", "_arm_2k.jpg")) if t.get("packed") else (
+        ("diff", "_diff_2k.jpg"), ("nor_dx", "_nor_dx_2k.png"), ("rough", "_rough_2k.png"))
     out = {}
-    for key, name in (("diff", "_diff_2k.jpg"), ("nor_dx", "_nor_dx_2k.png"), ("rough", "_rough_2k.png")):
+    for key, name in names:
         with Image.open(src + name) as im:
             a = cut(eight_bit(im), t, Image)
-        out[key] = np.clip(np.rint(seamless(a, side, t["blend"])), 0, 255).astype(np.uint8)
+        if t.get("packed") and key == "nor_dx":
+            a = a.copy()
+            a[..., 1] = 255 - a[..., 1]
+        if t.get("packed") and key == "rough":
+            a = np.repeat(a[..., 1:2], 3, axis=2)
+        out[key] = np.clip(np.rint(seamless(a, side, t["blend"]) if t["blend"] else a), 0, 255).astype(np.uint8)
     return side, out
 
 
@@ -89,9 +108,9 @@ def numbers(t, side, maps):
     ref = to_linear(maps["diff"])[lum >= np.percentile(lum, 75)].mean(axis=0) if t.get("match_on_paint") else mean
     match = [round(float(p / m), 4) for p, m in zip(t["palette"], ref)]
     seam = seam_error(maps["diff"].astype(np.float64))
-    covers_m = side / DENSITY
+    covers_m = t.get("covers_m", side / DENSITY)
     return {"base": t["base"], "asset": t["asset"], "side": side, "covers_m": round(covers_m, 4),
-            "px_a_metre": DENSITY, "match_rgb": match, "mean_linear": [round(float(x), 4) for x in mean],
+            "px_a_metre": round(side / covers_m, 1), "match_rgb": match, "mean_linear": [round(float(x), 4) for x in mean],
             "contrast": round(float(lum.std() / lum.mean()), 3), "seam_u": round(seam["u"], 2), "seam_v": round(seam["v"], 2),
             "rough_mean": round(float(maps["rough"][..., 0].mean() / 255.0), 3)}
 
@@ -111,7 +130,8 @@ def main():
         os.makedirs(far, exist_ok=True)
         for key in maps:
             shutil.copyfile(os.path.join(here, "%s_%s.png" % (t["asset"], key)), os.path.join(far, "%s_%s.png" % (t["asset"], key)))
-        ok = n["seam_u"] <= 1.5 and n["seam_v"] <= 1.5
+        limit = t.get("seam_limit", 1.5)  # the slate's seam lies on a course line, darker by nature than a blended seam
+        ok = n["seam_u"] <= limit and n["seam_v"] <= limit
         failed += 0 if ok else 1
         print(json.dumps(n), "PASS" if ok else "FAIL")
     return 1 if failed else 0
@@ -125,7 +145,7 @@ def selftest():
     ok.append(abs(n["match_rgb"][0] - 0.24 / float(to_linear(128))) < 1e-3)
     ok.append(n["covers_m"] == 0.125)
     ok.append(want_px(TILES[0]) == 1098)
-    ok.append(all(x["v"][0] < x["v"][1] <= 1.0 for x in TILES))
+    ok.append(all(x["v"][0] < x["v"][1] <= 1.0 for x in TILES if "v" in x))
     print("dressing_tiles selftest: passed=%d/%d failed=%d" % (sum(ok), len(ok), len(ok) - sum(ok)))
     return 0 if all(ok) else 1
 

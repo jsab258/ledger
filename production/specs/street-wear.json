@@ -183,7 +183,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.795,
+   "strength": 0.527,
    "on": "east_chandler_bay0",
    "material": "stain",
    "rough": 0.7,
@@ -236,7 +236,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.664,
+   "strength": 0.441,
    "on": "east_parade_bay0"
   },
   {
@@ -275,7 +275,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.772,
+   "strength": 0.511,
    "on": "east_parade_bay1"
   },
   {
@@ -314,7 +314,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.643,
+   "strength": 0.427,
    "on": "east_parade_bay2"
   },
   {
@@ -353,7 +353,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.653,
+   "strength": 0.433,
    "on": "east_parade_bay3"
   },
   {
@@ -392,7 +392,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.794,
+   "strength": 0.526,
    "on": "east_parade_bay4"
   },
   {
@@ -431,7 +431,7 @@
    "h_m": 6.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.649,
+   "strength": 0.431,
    "on": "east_parade_bay5"
   },
   {
@@ -470,7 +470,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.694,
+   "strength": 0.46,
    "on": "west_north_bay0"
   },
   {
@@ -509,7 +509,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.681,
+   "strength": 0.452,
    "on": "west_north_bay1"
   },
   {
@@ -548,7 +548,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.688,
+   "strength": 0.456,
    "on": "west_north_bay2"
   },
   {
@@ -587,7 +587,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.737,
+   "strength": 0.489,
    "on": "west_south_bay0"
   },
   {
@@ -626,7 +626,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.705,
+   "strength": 0.467,
    "on": "west_south_bay1"
   },
   {
@@ -665,7 +665,7 @@
    "h_m": 6.2,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.722,
+   "strength": 0.478,
    "on": "west_south_bay2"
   },
   {

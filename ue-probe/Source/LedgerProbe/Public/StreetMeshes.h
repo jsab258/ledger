@@ -414,6 +414,9 @@ namespace LedgerStreet
 		// the gilt row as real metal, gold's own colour (5 November; empty keeps it paint in the street's material)
 		bool bGiltMetal = false;
 		double GiltMetalR = 0.0, GiltMetalG = 0.0, GiltMetalB = 0.0;
+		// the kiosk's stainless the same way (5 November)
+		bool bStainlessMetal = false;
+		double StainlessMetalR = 0.0, StainlessMetalG = 0.0, StainlessMetalB = 0.0;
 		double WaterLevelNight;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
@@ -963,6 +966,13 @@ namespace LedgerStreet
 		{
 			Out.GiltMetalR = V->Arr[0].Num; Out.GiltMetalG = V->Arr[1].Num; Out.GiltMetalB = V->Arr[2].Num;
 			Out.bGiltMetal = true;
+			++Out.Read;
+		}
+		V = Root.Find("stainless_metal_rgb");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)
+		{
+			Out.StainlessMetalR = V->Arr[0].Num; Out.StainlessMetalG = V->Arr[1].Num; Out.StainlessMetalB = V->Arr[2].Num;
+			Out.bStainlessMetal = true;
 			++Out.Read;
 		}
 		V = Root.Find("white_temp_day");

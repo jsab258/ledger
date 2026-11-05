@@ -136,6 +136,8 @@
  "sky_tree_clamp_deg": 38.0,
  "film_specular": 0.115,
  "sea_specular": 0.1,
+ "stainless_metal_rgb": [0.552, 0.565, 0.578],
+ "stainless_metal_rgb_note": "5 November, corner step 9d: the kiosk's stainless as real metal on the kit's opaque master, as the gilt; its colour the phone box target's brushed stainless (196, 198, 200 in sRGB, production/cloud-week/targets/street-dressing/phone-box). The sheet to the road is right by the target (door to the shops); as flat paint it read as a blank slab.",
  "gilt_metal_rgb": [1.0, 0.75, 0.34],
  "gilt_metal_rgb_note": "5 November, corner step 9 (DECISIONS 4 Nov 14:10): Mickey's raised letters as gold leaf, metallic 1, wearing the kit's opaque master; gold's F0 from the corner's band (tools/surface_values.py, base 0.77 to 0.81). Before: dielectric paint (0.76, 0.53, 0.19), which read 0.54. Removing this line puts the paint back.",
  "sea_specular_note": "5 November, his corner note (the sky and the quay end no longer white), second and last try: with the fog switched off the sea and sky measured the same, so the white is not haze. The flat sea mirrors the sky at a grazing angle, and the sky light keeps its product with the seen gain, so darkening the dome alone leaves the sea bright. Specular below 0.25 is under 2% F0, where the engine scales every reflection down (the same rule as film_specular): 0.1 is about 0.4 of the reflection, standing for a ruffled sea darker than an overcast sky. 3.5 and 5.306 on the two sky gains keep their product 18.57, so the street is unchanged.",

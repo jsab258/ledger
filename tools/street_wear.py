@@ -137,8 +137,10 @@ def build(pieces):
         top = b["y_m"] + b["sy_m"] / 2.0
         # THE WASH DOWN TO THE FOOT (4 October, the first fresh review of 2.4: its edge at a tenth
         # of the wall's height read as a straight line with clean brick below it).
+        # A THIRD LIGHTER (5 November, corner step 9d; 0.45 + 0.35 before): at full height it read as even dark streaks over
+        # every upper wall, hung from no sill, gutter or pipe; what reads at a glance is now the sills' runs and the street level.
         decals.append(wall_decal("wash", b["x_m"], top - b["sy_m"] * 0.5, zf, facing, b["sx_m"] * 1.02, b["sy_m"],
-                                 0.45 + 0.35 * h["wear"], b["name"]))
+                                 0.30 + 0.23 * h["wear"], b["name"]))
         decals.append(wall_decal("damp", b["x_m"], bottom + DAMP_M / 2.0, zf, facing, b["sx_m"] * 1.02, DAMP_M,
                                  0.40 + 0.30 * h["wear"], b["name"]))
     # THE GABLE ENDS (2 October: the stage-1 frame's biggest wall, the side of Mickey's block,

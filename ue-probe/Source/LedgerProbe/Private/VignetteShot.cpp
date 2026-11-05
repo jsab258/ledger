@@ -7421,7 +7421,9 @@ namespace
 			// kit's opaque master does, so the letters wear that rather than every surface's shaders changing for 13,000 faces
 			static UMaterialInterface* GiltMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/Kit/M_LedgerKit.M_LedgerKit"));
 			const bool bGilt = GLook.bGiltMetal && GiltMaterial != nullptr && Rw.Base == "gilt";
-			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(bGilt ? GiltMaterial : (bGround ? GroundMaterial : GBaseMaterial), A);
+			// THE KIOSK'S STAINLESS LIKEWISE (5 November, step 9d): flat paint, its back sheet to the road read as a blank grey slab
+			const bool bStainless = GLook.bStainlessMetal && GiltMaterial != nullptr && Rw.Base == "cl_kx100_kiosk_stainless";
+			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create((bGilt || bStainless) ? GiltMaterial : (bGround ? GroundMaterial : GBaseMaterial), A);
 			if (Mid == nullptr) { continue; }
 			if (bGround) { ++GStreetCoated; }
 			if (bGilt)
@@ -7430,6 +7432,13 @@ namespace
 				Mid->SetScalarParameterValue(FName(TEXT("Metallic")), 1.0f);
 				Mid->SetScalarParameterValue(FName(TEXT("Roughness")), Rw.Roughness >= 0.0 ? (float)Rw.Roughness : 0.3f);
 				UE_LOG(LogTemp, Display, TEXT("LedgerGilt: %s worn as metal"), UTF8_TO_TCHAR(Rw.Mesh.c_str()));
+			}
+			if (bStainless)
+			{
+				Mid->SetVectorParameterValue(FName(TEXT("BaseColor")), FLinearColor((float)GLook.StainlessMetalR, (float)GLook.StainlessMetalG, (float)GLook.StainlessMetalB, 1.0f));
+				Mid->SetScalarParameterValue(FName(TEXT("Metallic")), 1.0f);
+				Mid->SetScalarParameterValue(FName(TEXT("Roughness")), Rw.Roughness >= 0.0 ? (float)Rw.Roughness : 0.38f);
+				UE_LOG(LogTemp, Display, TEXT("LedgerStainless: %s worn as metal"), UTF8_TO_TCHAR(Rw.Mesh.c_str()));
 			}
 			UTexture2D* Albedo = nullptr;
 			UTexture2D* NormalMap = nullptr;
