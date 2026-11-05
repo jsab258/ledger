@@ -11,13 +11,13 @@ Disk (11-04 03:31): C: 134.5 GB free, F: 28.3 GB free; grew most since yesterday
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Wednesday 4 November. Phase 1, Prove the bottlenecks. On: 1. Speech: 1.07 s on small talk after two tries; real questions unmeasured since 2.40 s; next a run of real questions (n02-3-1-speech). Next: 2. Tom's four pieces passed packaged: collar's corrective shape building; pale line's try built (n02-3-2-*, n02-tom-*).**
+**Morning, Thursday 5 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 3. Office passed packaged (4 Nov); sitting, the Stutter to go (n02-3-3-*).**
 
-| | Today, 04 Nov | Yesterday, 03 Nov |
+| | Today, 05 Nov | Yesterday, 04 Nov |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-11-04](production/previews/morning-hook-day-2026-11-04.jpg) | ![The hook camera by day, 2026-11-03](production/previews/morning-hook-day-2026-11-03.jpg) |
-| The reverse view | ![The reverse view, 2026-11-04](production/previews/morning-reverse-day-2026-11-04.jpg) | ![The reverse view, 2026-11-03](production/previews/morning-reverse-day-2026-11-03.jpg) |
-| The street at night | ![The street at night, 2026-11-04](production/previews/morning-night-2026-11-04.jpg) | ![The street at night, 2026-11-03](production/previews/morning-night-2026-11-03.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-11-05](production/previews/morning-hook-day-2026-11-05.jpg) | ![The hook camera by day, 2026-11-04](production/previews/morning-hook-day-2026-11-04.jpg) |
+| The reverse view | ![The reverse view, 2026-11-05](production/previews/morning-reverse-day-2026-11-05.jpg) | ![The reverse view, 2026-11-04](production/previews/morning-reverse-day-2026-11-04.jpg) |
+| The street at night | ![The street at night, 2026-11-05](production/previews/morning-night-2026-11-05.jpg) | ![The street at night, 2026-11-04](production/previews/morning-night-2026-11-04.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
