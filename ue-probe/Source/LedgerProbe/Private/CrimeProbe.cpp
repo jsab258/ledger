@@ -2888,6 +2888,8 @@ namespace
 						G->Memory->Append(MemoryEvent(GNow, "observation", 0.6, LedgerCrime::GlassOnlyMemory(bSawGlass, bKeeper)));
 					}
 					GHeardOnly.insert(R.WitnessId);
+					// Glass going in is enough to go and look: the ladder needs no story about him.
+					WitnessReacts(R);
 				}
 				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %s heard it only (rung 0): the damage heard, no story about him"), *Un(R.WitnessId));
 				continue;
@@ -8534,7 +8536,7 @@ namespace
 	// Rita and her staff were blind behind street_card_int23_pawn).
 	bool TraceBlockedPastGlass(UWorld* World, const FVector& From, const FVector& To,
 	                           const AActor* IgnoreA, const AActor* IgnoreB,
-	                           std::string& OutBlocker, double& OutLenCm)
+	                           std::string& OutBlocker, double& OutLenCm, bool bPeopleHideNothing = false, bool bToWindow = false)
 	{
 		OutBlocker = "none";
 		OutLenCm = (double)FVector::Dist(From, To);
@@ -8543,12 +8545,28 @@ namespace
 		Params.bTraceComplex = false;
 		if (IgnoreA != nullptr) { Params.AddIgnoredActor(IgnoreA); }
 		if (IgnoreB != nullptr) { Params.AddIgnoredActor(IgnoreB); }
+		// A person in the line hides neither a window nor a man from an onlooker: a body's capsule is not a wall (-WitnessOldLines keeps the old way).
+		static const bool bOldLines = FParse::Param(FCommandLine::Get(), TEXT("WitnessOldLines"));
+		if (bPeopleHideNothing && !bOldLines)
+		{
+			for (AActor* Person : { (AActor*)GPawn, GW1Body, GN2Body, GR3Body })
+			{
+				if (Person == nullptr) { continue; }
+				Params.AddIgnoredActor(Person);
+				TArray<AActor*> Worn;
+				Person->GetAttachedActors(Worn, false, true);
+				for (AActor* A : Worn) { Params.AddIgnoredActor(A); }
+			}
+		}
 		for (int Pass = 0; Pass < 6; ++Pass)
 		{
 			FHitResult Hit;
 			if (!World->LineTraceSingleByChannel(Hit, From, To, ECC_Visibility, Params)) { return false; }
 			const std::string Name = BlockerName(Hit.GetActor());
 			if ((Un(Name).Contains(TEXT("glass")) || Un(Name).Contains(TEXT("_card_int"))) && Hit.GetActor() != nullptr) { Params.AddIgnoredActor(Hit.GetActor()); continue; }
+			// The shop front a window sits in is no wall between an onlooker and that window: its one collision box fills the pane.
+			if (bPeopleHideNothing && !bOldLines && bToWindow && Hit.GetActor() != nullptr && Un(Name).Contains(TEXT("-front-worn"))
+				&& Hit.GetActor()->GetComponentsBoundingBox(true).IsInside(To)) { Params.AddIgnoredActor(Hit.GetActor()); continue; }
 			OutBlocker = Name;
 			OutLenCm = (double)FVector::Dist(From, Hit.ImpactPoint);
 			return true;
@@ -8610,13 +8628,13 @@ namespace
 		const FVector EyeUE = ToUE(R.EyeAt);
 		R.ActorMetres = LedgerCrime::Metres(R.EyeAt, R.ActorHeadAt);
 		R.ActorOffAxisDeg = LedgerCrime::OffAxisDeg(R.EyeAt, R.WitnessYawDeg, R.ActorHeadAt);
-		R.bActorOccluded = TraceBlockedPastGlass(World, EyeUE, HeadUE, Body, GPawn, R.ActorBlocker, R.ActorTraceLenCm);
+		R.bActorOccluded = TraceBlockedPastGlass(World, EyeUE, HeadUE, Body, GPawn, R.ActorBlocker, R.ActorTraceLenCm, true);
 		if (Glass == nullptr) { R.VictimBlocker = "no-window-asked-for"; return R; }
 		const FVector VictimUE = Glass->GetComponentsBoundingBox(true).GetCenter();
 		R.VictimAt = ToStreet(VictimUE);
 		R.VictimMetres = LedgerCrime::Metres(R.EyeAt, R.VictimAt);
 		R.VictimOffAxisDeg = LedgerCrime::OffAxisDeg(R.EyeAt, R.WitnessYawDeg, R.VictimAt);
-		R.bVictimOccluded = TraceBlockedPastGlass(World, EyeUE, VictimUE, Body, Glass, R.VictimBlocker, R.VictimTraceLenCm);
+		R.bVictimOccluded = TraceBlockedPastGlass(World, EyeUE, VictimUE, Body, Glass, R.VictimBlocker, R.VictimTraceLenCm, true, true);
 		return R;
 	}
 
@@ -8638,9 +8656,9 @@ namespace
 			LedgerCrime::Reading R = MeasureOnlooker(World, O, Body, GGlass[0]);
 			R.Light = Light;
 			R.Familiarity = LedgerCrime::FamiliarityFromMeetings(GMet.DaysMet(O.Id));
-			UE_LOG(LogTemp, Display, TEXT("LedgerWitness: %s %s %s, %.1f m off-axis %.0f, sightline %s, light %.2f (lamp %s), met on %d day(s), familiarity %.2f"),
+			UE_LOG(LogTemp, Display, TEXT("LedgerWitness: %s %s %s, %.1f m off-axis %.0f, sightline %s, to the window %.1f m %s, light %.2f (lamp %s), met on %d day(s), familiarity %.2f"),
 				*Un(O.Id), Body != nullptr ? TEXT("where he sees them, their day says") : TEXT("behind the window at"), *Un(O.Place), R.ActorMetres, R.ActorOffAxisDeg,
-				*Un(R.bActorOccluded ? R.ActorBlocker : std::string("clear")), R.Light, *Un(Lamp), GMet.DaysMet(O.Id), R.Familiarity);
+				*Un(R.bActorOccluded ? R.ActorBlocker : std::string("clear")), R.VictimMetres, *Un(R.bVictimOccluded ? R.VictimBlocker : std::string("clear")), R.Light, *Un(Lamp), GMet.DaysMet(O.Id), R.Familiarity);
 			GReadings.push_back(R);
 			++Measured;
 		}
