@@ -17,8 +17,8 @@ Filled in before it is used (each marked "to add"): the night's build number, th
 ## Exit B: one complete Tom and one speaker, walking, sitting and turning
 
 - The outfit: F:/LedgerTools/gate/new/tom-outfit/2026-11-04-packaged/review.md; production/art/clothing/tom-outfit/COLLAR-BACK-DIAGNOSIS-2026-11-04.md; the order's lines n02-tom-jacket, -jumper, -jeans, -boots.
-- Sitting: the packaged film after the eyes' level (to add), beside F:/LedgerTools/gate/new/ film 2026-11-05-1135 (to add its path).
-- His walk: a film of the packaged walk for the slide (to add; on 22 October about half his steps slid).
+- Sitting: the packaged film after the eyes' level (to add), beside the film F:/LedgerTools/tmp/ai-tester/film/2026-11-05-1135.
+- His walk: F:/LedgerTools/gate/new/tom-walk-film-2026-11-05/walk.gif (packaged, the 5 November build; about 8 frames a second, 15 s; on 22 October about half his steps slid). Its first 8 s of walking are mostly against Ron's back, so judge the feet from the walk past Mickey's front, the walk back and the run. The cast's white base layers show; they are not for judging here. The walk's measure on the fixed step: F:/LedgerTools/tmp/tom-walk-proof-2026-11-05/result.txt (worst join 13.68 cm against the check's limit, failed; Epic's mannequin on the same route 13.94 at the stop, 20.23 on the loop, Tom 13.68 and 20.78, so the number is mostly the route and the reading: judge by eye).
 - Hair: RULINGS.md's 3 November line; the crown's tries in DECISIONS.md (search "crown").
 - The body and animation the game plays: the night walk's log lines (to add).
 

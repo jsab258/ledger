@@ -493,3 +493,9 @@
 {"event": "stop", "at": "2026-11-05T17:32:00", "note": ""}
 {"event": "start", "at": "2026-11-05T18:21:00", "task": "the walk's lost Ron and Darren traced to the tester's clock (n02-3-4-exit)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-05T18:28:00", "note": ""}
+{"event": "start", "at": "2026-11-05T19:22:41", "task": "fallback: film and phase 5 research", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-05T19:33:27", "note": "walk report wording, corner people's reader, packaged walk measure; film not made, PC in use"}
+{"event": "start", "at": "2026-11-05T20:22:00", "task": "advisor 09: handover cost, Sonnet question; Tom walk film", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-05T20:37:23", "note": "switch point 250,000; film made; exit brief filled"}
+{"event": "start", "at": "2026-11-05T22:23:37", "task": "advisor 10 and 11: the stop aligned with the hourly start, six measures in the token audit (n02-6-6-lean-start, n02-6-1-token-audit)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-05T22:28:37", "note": "history_check aligned, token_measures written, tested"}

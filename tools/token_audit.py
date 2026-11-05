@@ -5,6 +5,7 @@
     python tools/token_audit.py --shares 2026-11-03   # one line: the history's, Opus's and reviewing's shares of a day
     python tools/token_audit.py --models 2026-11-04   # who ran on which model that day: the session and each helper type, with shares
     python tools/token_audit.py --selftest
+    (six further measures for the morning's overview: tools/token_measures.py)
 
 WHY, 1 November 2026 (his order of 2 November, 6.1: "a token audit from your own Claude Code session logs on this PC:
 the cost of each item and of each kind of work (building, reviewing, reporting, research, helpers), records and reports

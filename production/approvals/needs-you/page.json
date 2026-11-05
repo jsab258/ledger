@@ -1,31 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Thursday 5 November, 20:24",
+ "kicker": "LEDGER · Needs you · 0 open · updated Thursday 5 November, 21:22",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "session-sonnet-trial-2026-11-05",
-   "name": "The production session's own work is about 80% of the cost and runs on Opus. The advisor proposes one normal day with the session on Sonnet, Opus kept for diagnosis, research synthesis and every final review, then kept or dropped by comparing cost per item, review faults per item, rework and rule slips against a normal day. Try it?",
-   "links": [],
-   "recommendation": "Yes: one day shows it with real numbers, and the risk is one day's rework. It would run under Monday's order, not this week. No web link: the answer is this page.",
-   "added": "2026-11-05 20:24",
-   "pictures": [],
-   "options": [
-    [
-     "yes",
-     "Yes, one day's trial (recommended)"
-    ],
-    [
-     "no",
-     "No, the session stays on Opus"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

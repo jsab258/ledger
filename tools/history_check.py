@@ -19,6 +19,7 @@ logs excluded), which is the working session's because two sessions never work a
 only (a long session's log runs to hundreds of MB): the last assistant step's input, cache-read and cache-written tokens,
 as token_audit.py counts a step's context.
 """
+import datetime
 import glob
 import json
 import os
@@ -33,6 +34,25 @@ THRESHOLD = 250000  # 5 Nov 20:25, from 5 Nov's twelve take-overs (tools/handove
 # (R + 101,559 T + 1,488 T^2 / 2) / T, is least at T = sqrt(2R / 1,488) = 38 steps, about 158,000 a step at about 160,000 of
 # history; 200,000 leaves room for an item to end and costs about 6% over that, against about 25% at 300,000)
 TAIL_BYTES = 4 * 1024 * 1024
+# 5 Nov, the advisor's message 10 (half the day idle between sessions; a step costs about the same from 250,000 to 400,000): past
+# THRESHOLD the size says a switch is due, and the clock only picks which item's end: one 5 to 15 minutes before the next run,
+# so it takes over at once. HARD_STOP ends the wait whatever the clock. RUN_MINUTE is when the hourly task really fires: :21 in all
+# 20 runs of 5 Nov (tools/handover_cost.py), though set for :15. The gate needs 3 quiet minutes, so 5 before leaves room.
+HARD_STOP = 400000
+RUN_MINUTE = 21
+WINDOW_MINUTES = (5, 15)
+
+
+def verdict(ctx, minute):
+    """OVER or UNDER for a context at a minute of the hour, with why."""
+    if ctx >= HARD_STOP:
+        return "OVER", "hard stop"
+    if ctx < THRESHOLD:
+        return "UNDER", "below the point"
+    left = (RUN_MINUTE - minute) % 60
+    if WINDOW_MINUTES[0] <= left <= WINDOW_MINUTES[1]:
+        return "OVER", "%d min before the next run" % left
+    return "UNDER", "past the point, %d min to the next run: take the next item or the next part of one" % left
 
 
 def newest_log(logs=LOGS, own=None):
@@ -81,7 +101,12 @@ def selftest():
         os.utime(a, (1, 1))
         ok.append(("the newest log is the working session's", newest_log(d) == b))
         ok.append(("its last step's context counts input, cache reads and writes", last_context(b) == 310001))
-        ok.append(("a step past the threshold is over", last_context(b) >= THRESHOLD and last_context(a) < THRESHOLD))
+        ok.append(("past the point inside the window is over", verdict(last_context(b), 10)[0] == "OVER"))
+        ok.append(("below the point is under, whatever the clock", verdict(last_context(a), 10)[0] == "UNDER"))
+        ok.append(("past the point outside the window takes the next item", verdict(300000, 30)[0] == "UNDER"))
+        ok.append(("the window's edges: 15 and 5 minutes before", verdict(300000, 6)[0] == "OVER" and verdict(300000, 16)[0] == "OVER"))
+        ok.append(("too close to the run to go quiet in time", verdict(300000, 18)[0] == "UNDER"))
+        ok.append(("the hard stop ignores the clock", verdict(400000, 30)[0] == "OVER"))
         ok.append(("no log, no answer", newest_log(os.path.join(d, "none")) is None))
         ok.append(("its own log by its id, even when another was touched since", newest_log(d, own="a") == a))
     for name, good in ok:
@@ -99,6 +124,7 @@ if __name__ == "__main__":
     if ctx is None:
         print("historyCheck verdict=UNREAD log=%s" % path)
         sys.exit(2)
-    print("historyCheck context=%dk threshold=%dk verdict=%s log=%s" % (ctx // 1000, THRESHOLD // 1000,
-                                                                       "OVER" if ctx >= THRESHOLD else "UNDER", os.path.basename(path)))
+    word, why = verdict(ctx, datetime.datetime.now().minute)
+    print("historyCheck context=%dk threshold=%dk hardStop=%dk verdict=%s (%s) log=%s" % (ctx // 1000, THRESHOLD // 1000, HARD_STOP // 1000,
+                                                                                         word, why, os.path.basename(path)))
     sys.exit(0)
