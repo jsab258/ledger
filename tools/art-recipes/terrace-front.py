@@ -318,6 +318,7 @@ MATERIALS = (
     ("glass",       (0.085, 0.092, 0.100), 0.0),   # 0.06 until 23 September: polished float glass has none
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # letterplates, a knob, the backdrop's bay roofs
     ("rainwater",   (0.030, 0.030, 0.032), 0.60),   # gutters and downpipes: their own row since 5 November (corner step 9b)
+    ("flashing",    (0.190, 0.200, 0.215), 0.55),   # weathered lead on the roofs, pale as the Hook sheet's (corner step 9d); the lead row is near-black
     ("brass",       (0.420, 0.300, 0.120), 0.35),   # door furniture, rubbed (4 October)
     ("gilt",        (0.760, 0.530, 0.190), 0.22),   # raised gilt letters (4 October; no metallic in the game's surface)
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
@@ -755,6 +756,7 @@ SURFACE_OF = {
     "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
     "rainwater":    ("metal", 0.35),
+    "flashing":     ("metal", 0.35),
     "brass":        ("metal", 0.35),
     "gilt":         (None, 0.0),
     # PAINTED, SO FLAT, 6 October (item 1.1's first gate: "the window reveal still in the black
@@ -1820,6 +1822,10 @@ def _sash(parts, i, a, b, sill_z, head_z, reveal, prefix="upper", kind="2/2"):
 GUTTER_W_M, GUTTER_H_M = 0.115, 0.075
 
 
+RIDGE_CAP_W_M, RIDGE_CAP_H_M = 0.18, 0.03
+PARTY_LEAD_W_M, PARTY_LEAD_PROUD_M = 0.10, 0.015
+
+
 def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
     """The roof this row has, its downpipe and, where the row carries one, its
     stack. Shared for the same reason the upper floor is."""
@@ -1869,6 +1875,18 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
                   "y_eaves": D + ov, "y_ridge": D / 2.0,
                   "z_eaves": EAVES, "z_ridge": p["ridge_m"],
                   "note": "built-though-unseen/a-half-roof-reads-as-a-fault-from-the-eye-camera"})
+    # THE ROOF'S BREAKS (5 November, the corner's step 9d): one flat slope along a whole row read as a slab. On the Hook
+    # sheet each house's roof ends in a thin pale lead line running down from its stack, and a dark ridge caps the slopes,
+    # so a lead strip proud of each slope at the party wall, and a capping along the ridge.
+    _box(parts, "ridge_cap", "slate", -ov * 0.5, W + ov * 0.5, D / 2.0 - RIDGE_CAP_W_M / 2.0, D / 2.0 + RIDGE_CAP_W_M / 2.0,
+         p["ridge_m"] - 0.04, p["ridge_m"] + RIDGE_CAP_H_M, "the-capping-along-the-ridge")
+    if party_wall:
+        for side, ye in (("front", -ov), ("back", D + ov)):
+            parts.append({"id": "party_lead_" + side, "material": "flashing", "kind": "slope",
+                          "x0": W - PARTY_LEAD_W_M / 2.0, "x1": W + PARTY_LEAD_W_M / 2.0,
+                          "y_eaves": ye, "y_ridge": D / 2.0,
+                          "z_eaves": EAVES + PARTY_LEAD_PROUD_M, "z_ridge": p["ridge_m"] + PARTY_LEAD_PROUD_M,
+                          "note": "a-lead-strip-down-the-slope-at-the-party-wall/the-hook-sheet's-break-between-houses"})
 
     # DOWNPIPE at the party wall, never at a row's outer end. This bay's
     # right-hand edge IS an internal party wall on a six-bay row.
