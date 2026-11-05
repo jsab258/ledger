@@ -522,6 +522,19 @@
       "match_rgb": [0.0678, 0.0779, 0.1248],
       "always": true,
       "why": "5 November, the corner's step 9b: gutters and downpipes as black paint with rust blotches, from Poly Haven rusty_metal_02 (CC0), by the same tool, match_rgb on the paint's brightest quarter (over the whole mean its paint turned blue); black-painted cast iron is a project choice, unverified until the reviewer's period check."
+    },
+    {
+      "base": "slate",
+      "asset": "roof_slates_03",
+      "files": [
+        "production/assets/scanned/polyhaven/roof_slates_03/roof_slates_03_diff.png",
+        "production/assets/scanned/polyhaven/roof_slates_03/roof_slates_03_nor_dx.png",
+        "production/assets/scanned/polyhaven/roof_slates_03/roof_slates_03_rough.png"
+      ],
+      "covers_m": 3.9,
+      "match_rgb": [0.3982, 0.3983, 0.4786],
+      "always": true,
+      "why": "5 November, the corner's step 9d: worn Welsh-sized slate, 26 cm wide at a 17 cm margin, from Poly Haven roof_slates_03 (CC0), by the same tool, its ridge course cut off; second try: the pale worn patches, also the tile's glossiest, flashed as white flecks at the roof's grazing angle, so tone above the median keeps 30% of its lift and roughness under it 20% of its drop."
     }
   ],
   "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",

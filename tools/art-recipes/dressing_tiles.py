@@ -49,14 +49,41 @@ TILES = (
     # the whole width kept because it is already periodic across, never blended (a cross-blend smears regular courses).
     # Squeezed to a square over 3.9 m: slates 26 cm wide at a 17 cm margin, the size of a Welsh terrace's (its source's
     # 20 by 10 cm read small); its maps come as a glTF's, a GL normal and roughness in the green of a packed map
+    # Its first try read as paint splashes: the pale worn patches are also the tile's glossiest (roughness 0.35 against 0.56
+    # on the dark slates, measured), so at the roof's grazing angle they flash white. Both are held down toward the median
     {"asset": "roof_slates_03", "base": "slate", "rows": (366, 1995), "side_px": 1536, "covers_m": 3.9, "seam_limit": 3.0,
-     "palette": (0.060, 0.058, 0.062), "blend": 0, "folder": "2k/textures", "packed": True},
+     "palette": (0.060, 0.058, 0.062), "blend": 0, "folder": "2k/textures", "packed": True,
+     "hold_pale": 0.3, "hold_pale_grey": 0.5, "hold_gloss": 0.2},
 )
 
 
 def to_linear(c):
     c = np.asarray(c, dtype=np.float64) / 255.0
     return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+
+def to_srgb8(c):
+    c = np.clip(c, 0.0, 1.0)
+    return np.where(c <= 0.0031308, c * 12.92, 1.055 * c ** (1.0 / 2.4) - 0.055) * 255.0
+
+
+def hold_pale(a, keep, grey):
+    """What is paler than the tile's median keeps only `keep` of its lift, and loses `grey` of its colour; the darks stay."""
+    lin = to_linear(a)
+    lum = lin.mean(axis=2)
+    mid = np.median(lum)
+    lift = np.clip(lum - mid, 0.0, None)
+    scale = (lum - lift * (1.0 - keep)) / np.maximum(lum, 1e-4)
+    part = np.where(lift > 0, lift / np.maximum(lift.max(), 1e-4), 0.0) ** 0.5 * grey
+    held = lin * scale[..., None]
+    held = held + (held.mean(axis=2, keepdims=True) - held) * part[..., None]
+    return to_srgb8(held)
+
+
+def hold_gloss(a, keep):
+    """Roughness under the tile's median keeps only `keep` of its drop, so no patch flashes at a grazing angle."""
+    mid = np.median(a[..., 0])
+    return np.where(a < mid, mid - (mid - a) * keep, a)
 
 
 def want_px(t):
@@ -96,6 +123,10 @@ def make(t, Image):
             a[..., 1] = 255 - a[..., 1]
         if t.get("packed") and key == "rough":
             a = np.repeat(a[..., 1:2], 3, axis=2)
+        if key == "diff" and "hold_pale" in t:
+            a = hold_pale(a, t["hold_pale"], t["hold_pale_grey"])
+        if key == "rough" and "hold_gloss" in t:
+            a = hold_gloss(a.astype(np.float64), t["hold_gloss"])
         out[key] = np.clip(np.rint(seamless(a, side, t["blend"]) if t["blend"] else a), 0, 255).astype(np.uint8)
     return side, out
 
@@ -146,6 +177,13 @@ def selftest():
     ok.append(n["covers_m"] == 0.125)
     ok.append(want_px(TILES[0]) == 1098)
     ok.append(all(x["v"][0] < x["v"][1] <= 1.0 for x in TILES if "v" in x))
+    b = np.zeros((4, 4, 3), dtype=np.uint8) + 60
+    b[0, 0] = 240
+    held = hold_pale(b, 0.3, 0.5)
+    ok.append(abs(float(held[3, 3, 0]) - 60) < 1 and float(held[0, 0, 0]) < 160)
+    r = np.array([[[0.2 * 255]] * 3, [[0.5 * 255]] * 3, [[0.5 * 255]] * 3, [[0.8 * 255]] * 3], dtype=np.float64)
+    g = hold_gloss(r, 0.2)
+    ok.append(abs(g[0, 0, 0] - 0.44 * 255) < 1 and abs(g[3, 0, 0] - 0.8 * 255) < 1)
     print("dressing_tiles selftest: passed=%d/%d failed=%d" % (sum(ok), len(ok), len(ok) - sum(ok)))
     return 0 if all(ok) else 1
 
