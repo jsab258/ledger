@@ -3,11 +3,11 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Wednesday 4 November, 06:20)
+## Overview (Thursday 5 November, 05:35)
 
-**Tokens, Tuesday 3 November:** history 53% of the spend, Opus 98%, reviewing 27% (3,538 steps, US$351.80 at list prices; Monday 45%, 98%, 22%).
+**Tokens, Wednesday 4 November:** history 35% of the spend, Opus 96%, reviewing 8% (1,636 steps, US$114.87 at list prices; Tuesday 53%, 98%, 27%).
 
-Disk (11-04 03:31): C: 134.5 GB free, F: 28.3 GB free; grew most since yesterday: the build cache on C: +8.9 GB, gate pictures on F: +0.5 GB, my working files on F: +0.5 GB.
+Disk (11-05 03:31): C: 134.1 GB free, F: 27.8 GB free; grew most since yesterday: the build cache on C: +0.9 GB, gate pictures on F: +0.3 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -26,17 +26,15 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Speech, first:** small talk's first words come after a median 1.07 s, after two tries; real questions inside the packaged game are measured next, under an 80-cent cap.
-- **Tom and the people:** the clothing deep-dive is closed and Tom keeps his own body. Yesterday's pieces (the speakers' small movements, Tom's boots, Ron's moustache) were in last night's build but not walked; they go into tonight's walk with the people who now walk off.
-- **Then:** sitting, Mickey's office and the Stutter passed in the packaged walk; the exit re-check aimed at 9 November; what may miss it reaches you by Wednesday.
-- **Beside it:** the corner's people now walk where the hour sends them (passed in the editor). Its surfaces were read against real ranges: three right; the gilt and the tiles too dark and the phone kiosk too bright, mended today. The brick needs a real reference, likely a choice on Wednesday's page.
+- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting and the Stutter are next, then the exit re-check aimed at 9 November.
+- **The corner, in your order:** the hill's new trees and houses are in, with three faults waiting on your answer; the night's warm sky and fill take their last review today; the sky and quay end get their second and last try; then wear at street level.
 
-**The tester (last night's walk, packaged, Tuesday evening's build):** it ran this time. 14 of 15 stages; it lost sight of Darren after the window. One witness (Rocco) showed he knew, one more than the night before. "That's all I know" to 3 of 60 first questions (4 before). What broke the illusion: Ron and the woman by Mickey's still in the white base layer; Ron heard speaking while out of sight; the road ending in a grey slab and blank sky past the houses. The new brick, the A-board, crates, kiosk and the reaction at Rita's window are judged from its pictures today.
+**The tester (last night's walk, packaged, last night's build with the new hill, night and sky):** 13 of 15 stages; it lost sight of Ron, and Darren was not on the street. One witness (Rocco) showed he knew, the same as the night before. "That's all I know" to 2 of 60 first questions (3 before). What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); Sheila speaking out of shot with the camera stuck behind Tom, and a stray quote mark in her subtitle; a woman stiff and wide-legged at Rita's door; figures at the cottage front at night pressed to the wall. The new hill cost no frame rate (57.9 fps, 57.5 the night before), but the card's memory rose to 5,952 MB of its 6 GB.
 
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-1. In the app: set the task "LEDGER: fresh session at a handover" to Auto, as you did the daily one (done, recommended).
+1. The hill: one more try at its three faults (yes, about 1 hour, recommended).
 
 ### Road to worth playing (PLAN.md)
 
@@ -47,6 +45,26 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Thursday 5 November (morning)
+
+**Failed:**
+- Speech missed its bar after its third try: 2.02 s against 2.0 s.
+- The sit's drop failed two review rounds; listed. The jacket set aside: its collar, front and back.
+- The hill: better, but failed its second round. The quay end is still near white.
+- The night walk lost Ron and Darren (13 of 15 stages).
+
+**Done:** the office, jeans and boots passed packaged; the take-over mended, rehearsed and real; the corner's page answered; 9a's fronts passed in the editor.
+
+**Decided, yours to overturn:**
+- Hand-over point 200,000 tokens; launch peak closed for the exit.
+- Gilt counted as metal; jumper made, held under the zip.
+- Painted timber on every front's joinery.
+- Undressed cast left out of your pictures; their clothes on Monday's list (the advisor).
+- Night's warm sky and fill replace 29 October's stop on fills.
+- Day's sky greyer.
+
+**Act on:** the hill, on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Wednesday 4 November (morning)
 

@@ -1,5 +1,5 @@
 {
-  "updated": "Wednesday 4 November 2026, 11:23",
+  "updated": "Thursday 5 November 2026, 5:25",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -30,7 +30,7 @@
         1.0,
         2.0
       ],
-      "actual_w": 4.1,
+      "actual_w": 4.3,
       "actual_note": "so far, open",
       "began": "2026-10-06"
     },
@@ -151,12 +151,12 @@
       "what": "Seconds from the end of your question to the character's first sound.",
       "unit": "s",
       "start": 3.25,
-      "now": 1.07,
+      "now": 2.02,
       "target": 2.0,
       "start_label": "8 Oct",
-      "now_label": "small talk only",
+      "now_label": "real questions, 4 Nov, packaged",
       "state": "fighting",
-      "last": "3 Nov: run E inside the packaged game asked real questions after the deed: what goes to the better model took a median 2.33 s, 4 of 10 under 2.0 s; small talk 1.02 s, 18 of 20; no fall-backs. It rested on two questions asked five times each, so it cannot settle the bar: run F, twenty different newcomer questions, on the 3 to 4 November build."
+      "last": "4 Nov: run F, twenty different newcomer questions in the packaged game: a median 2.02 s against 2.0 s, 7 of 30 at 4 s or more. Three tries spent; the bar is missed and reported at the exit."
     },
     {
       "name": "The Stutter",
@@ -271,7 +271,8 @@
       "2026-11-01",
       "2026-11-02",
       "2026-11-03",
-      "2026-11-04"
+      "2026-11-04",
+      "2026-11-05"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
@@ -609,8 +610,8 @@
     }
   ],
   "line2027": {
-    "as_of": "Wednesday 4 November",
-    "behind_w": 1.6,
+    "as_of": "Thursday 5 November",
+    "behind_w": 1.8,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   }
 }
