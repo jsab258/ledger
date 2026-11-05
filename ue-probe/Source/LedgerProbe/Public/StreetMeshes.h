@@ -411,6 +411,9 @@ namespace LedgerStreet
 		double FilmSpecular;
 		// THE SEA'S SPECULAR (5 November; the same engine rule as the film's); 0.5 is the default.
 		double SeaSpecular;
+		// the gilt row as real metal, gold's own colour (5 November; empty keeps it paint in the street's material)
+		bool bGiltMetal = false;
+		double GiltMetalR = 0.0, GiltMetalG = 0.0, GiltMetalB = 0.0;
 		double WaterLevelNight;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
@@ -955,6 +958,13 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.FilmSpecular = V->Num; ++Out.Read; }
 		V = Root.Find("sea_specular");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.SeaSpecular = V->Num; ++Out.Read; }
+		V = Root.Find("gilt_metal_rgb");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)
+		{
+			Out.GiltMetalR = V->Arr[0].Num; Out.GiltMetalG = V->Arr[1].Num; Out.GiltMetalB = V->Arr[2].Num;
+			Out.bGiltMetal = true;
+			++Out.Read;
+		}
 		V = Root.Find("white_temp_day");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 3000.0 && V->Num <= 12000.0) { Out.WhiteTempDay = V->Num; ++Out.Read; }
 		V = Root.Find("water_level_night");

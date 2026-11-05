@@ -7417,9 +7417,20 @@ namespace
 			// kerb, whose water is a clear coat over wet stone; every other surface keeps M_LedgerSurface
 			static UMaterialInterface* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerGround.M_LedgerGround"));
 			const bool bGround = GLook.bGroundCoat && GroundMaterial != nullptr && LedgerStreet::TakesWater(Rw.Base);
-			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(bGround ? GroundMaterial : GBaseMaterial, A);
+			// THE GILT IS GOLD LEAF, A METAL (5 November; DECISIONS 4 Nov 14:10): the street's material has no metallic input, the
+			// kit's opaque master does, so the letters wear that rather than every surface's shaders changing for 13,000 faces
+			static UMaterialInterface* GiltMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/Kit/M_LedgerKit.M_LedgerKit"));
+			const bool bGilt = GLook.bGiltMetal && GiltMaterial != nullptr && Rw.Base == "gilt";
+			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(bGilt ? GiltMaterial : (bGround ? GroundMaterial : GBaseMaterial), A);
 			if (Mid == nullptr) { continue; }
 			if (bGround) { ++GStreetCoated; }
+			if (bGilt)
+			{
+				Mid->SetVectorParameterValue(FName(TEXT("BaseColor")), FLinearColor((float)GLook.GiltMetalR, (float)GLook.GiltMetalG, (float)GLook.GiltMetalB, 1.0f));
+				Mid->SetScalarParameterValue(FName(TEXT("Metallic")), 1.0f);
+				Mid->SetScalarParameterValue(FName(TEXT("Roughness")), Rw.Roughness >= 0.0 ? (float)Rw.Roughness : 0.3f);
+				UE_LOG(LogTemp, Display, TEXT("LedgerGilt: %s worn as metal"), UTF8_TO_TCHAR(Rw.Mesh.c_str()));
+			}
 			UTexture2D* Albedo = nullptr;
 			UTexture2D* NormalMap = nullptr;
 			UTexture2D* RoughMap = nullptr;
