@@ -3,6 +3,7 @@
 
     python tools/token_audit.py [--since 2026-10-26] [--until 2026-11-02] [--out production/research/token-audit]
     python tools/token_audit.py --shares 2026-11-03   # one line: the history's, Opus's and reviewing's shares of a day
+    python tools/token_audit.py --models 2026-11-04   # who ran on which model that day: the session and each helper type, with shares
     python tools/token_audit.py --selftest
 
 WHY, 1 November 2026 (his order of 2 November, 6.1: "a token audit from your own Claude Code session logs on this PC:
@@ -202,7 +203,7 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
         steps = read_log(main)
         base = min((s["ctx"] for s in steps.values()), default=0)
         for s in steps.values():
-            rows.append(("main", sess, None, s, base))
+            rows.append(("main", sess, None, s, base, "session"))
         for sub in sorted(glob.glob(os.path.join(logs, sess, "subagents", "agent-*.jsonl"))):
             meta = {}
             mp = sub[:-len(".jsonl")] + ".meta.json"
@@ -214,18 +215,19 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
             hs = read_log(sub)
             hbase = min((s["ctx"] for s in hs.values()), default=0)
             for s in hs.values():
-                rows.append(("helper", sess, meta.get("description", ""), s, hbase))
+                rows.append(("helper", sess, meta.get("description", ""), s, hbase, meta.get("agentType", "unnamed helper")))
     out = {"items": defaultdict(lambda: [0.0, 0]), "kinds": defaultdict(lambda: [0.0, 0]), "days": defaultdict(lambda: [0.0, 0]),
            "models": defaultdict(lambda: [0.0, 0]), "history": [0.0, 0.0], "steps": 0, "usd": 0.0,
-           "itemKinds": defaultdict(lambda: defaultdict(float)), "itemsFilled": defaultdict(lambda: [0.0, 0]), "gapMin": gap_min}
-    for who, sess, desc, s, base in rows:
+           "itemKinds": defaultdict(lambda: defaultdict(float)), "itemsFilled": defaultdict(lambda: [0.0, 0]), "gapMin": gap_min,
+           "whoModels": defaultdict(lambda: [0.0, 0])}
+    for who, sess, desc, s, base, agent in rows:
         t = swiss(s["ts"])
         if since and t < since or until and t >= until:
             continue
         usd = step_cost(s["usage"], s["model"])
         item = item_at(windows, t)
         kind = kind_of_helper(desc) if who == "helper" else kind_of_main(s["tools"])
-        for key, name in (("items", item), ("kinds", kind), ("days", t.strftime("%Y-%m-%d")), ("models", price_of(s["model"])[1])):
+        for key, name in (("items", item), ("kinds", kind), ("days", t.strftime("%Y-%m-%d")), ("models", price_of(s["model"])[1]), ("whoModels", agent + " on " + price_of(s["model"])[1])):
             out[key][name][0] += usd
             out[key][name][1] += 1
         out["itemKinds"][item][kind] += usd
@@ -316,6 +318,14 @@ def main(a):
         out = audit(d, d + datetime.timedelta(days=1))
         h, o, r = shares(out)
         print("tokenShares day=%s history=%.0f%% opus=%.0f%% reviewing=%.0f%% steps=%d usd=%.2f" % (d.strftime("%Y-%m-%d"), h, o, r, out["steps"], out["usd"]))
+        return 0
+
+    if "--models" in a:
+        # his ruling of 3 November, checked: the session and each helper type by the model it really ran on
+        d = datetime.datetime.strptime(a[a.index("--models") + 1], "%Y-%m-%d")
+        out = audit(d, d + datetime.timedelta(days=1))
+        for k, (u, n) in sorted(out["whoModels"].items(), key=lambda kv: -kv[1][0]):
+            print("tokenModels day=%s %s steps=%d usd=%.2f share=%.1f%%" % (d.strftime("%Y-%m-%d"), k, n, u, 100 * u / (out["usd"] or 1)))
         return 0
 
     def day(name):

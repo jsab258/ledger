@@ -277,6 +277,7 @@ def build(pieces):
                        "yaw_deg": round(-10.0 + 20.0 * rnd(s, "yaw"), 2), "pitch_deg": 90.0,
                        "strength": round(0.7 + 0.2 * rnd(s, "st"), 3),
                        "on": "ground_" + ("east" if cz > 0 else "west") + ("_footway" if abs(cz) > CHANNEL_Z_M + 0.2 else "_carriageway")})
+    decals += street_level_wear(pieces)
     decals += chandler_marks(pieces, house)
     # Every ground mark stands at the ground's own height where it lies (ground_y).
     for d in decals:
@@ -612,6 +613,48 @@ def frontage_wear(pieces):
     return out
 
 
+#: STREET-LEVEL WEAR (5 November, his corner note, point 5: "more wear and dirt at street level"): the corner's
+#: 33 m only, nothing multiplied before he has seen it; every mark owned by one name, so -NoWearOn=street_level
+#: shows the street without them. From the Hook sheet's foot of the frame, read by eye: dirt where the flags meet
+#: the wall, silt along the kerb, a black foot on the gable. Stains on the flags themselves are left out: broad ones read
+#: as leaf shadows and small ones as stamps, grey under the wet coat, through both review rounds (DECISIONS 5 November).
+STREET_LEVEL_X_M = 33.0
+STREET_LEVEL = "street_level"
+#: A tint is multiplied by the picture's grey, a quarter (make_wear_masks.py STAIN_GREY), so these are four times the base colour meant
+FOOT_TINT, SILT_TINT = [0.08, 0.07, 0.055], [0.05, 0.045, 0.04]
+KERB_TOP_Y_M = 0.05         # the kerb's top (kerb_east_kerb: y -0.0775, 0.255 tall); its road face at 3.0 m out takes no flat mark, or it prints stretched
+
+
+def street_level_wear(pieces):
+    """THE CORNER'S GROUND, WORN BY USE, by rule. Ground marks take M_LedgerGrime, as the oil does, never M_LedgerStain:
+    its roughness near 0.6 would cut the wet coat (make_base_material.py CONTACT_COAT_ROUGHNESS). A ground mark's picture
+    runs its last row toward +z at yaw 0 (VignetteShot.cpp SpawnWear), so a band strongest at its foot faces the east
+    wall at yaw 0 and the west at 180. Pictures already held; no new file. Its first review (F:/LedgerTools/gate/new/
+    street-level-2026-11-05/r2): a flat mark climbs whatever stands in its box, 16 cm, so nothing rings a post or a bin
+    (dark socks) and the silt stops short of the kerb's face (streaks)."""
+    by = {p["name"]: p for p in pieces["pieces"]}
+    out = []
+
+    def flat(kind, pic, x, z, w, h, yaw, strength, tint, y=None):
+        out.append({"kind": kind, "picture": pic, "x_m": round(x, 4), "y_m": ground_y(z) if y is None else y, "z_m": round(z, 4),
+                    "w_m": round(w, 4), "h_m": round(h, 4), "yaw_deg": round(yaw, 2), "pitch_deg": 90.0,
+                    "strength": round(strength, 3), "on": STREET_LEVEL, "tint": tint})
+    for side, sign in (("east", 1.0), ("west", -1.0)):
+        s = seed_of("street_level_" + side)
+        yaw = 0.0 if sign > 0 else 180.0
+        for k in range(int(STREET_LEVEL_X_M // 2.5)):
+            x = 1.5 + 2.5 * k + 0.6 * rnd(s, "foot%d" % k)   # overlapping: at every 4 m the band read as dashes
+            flat("footdirt", PICTURE["splash"], x, sign * 4.80, 5.0, 0.65, yaw, 1.0, FOOT_TINT)
+            flat("silt", PICTURE["splash"], x, sign * 2.84, 5.0, 0.26, yaw, 0.8 + 0.2 * rnd(s, "silt%d" % k), SILT_TINT)
+            flat("kerbtop", PICTURE["splash"], x, sign * 3.075, 5.0, 0.11, yaw, 0.7 + 0.3 * rnd(s, "kerb%d" % k), SILT_TINT, KERB_TOP_Y_M)
+    for name in ("east_parade_bay0", "west_south_bay0"):
+        g = by[name]
+        d = gable_decal("damp", g["x_m"] - g["sx_m"] / 2.0 - END_WALL_T - STANDOFF_M, g["y_m"] - g["sy_m"] / 2.0 + 0.45, g["z_m"], g["sz_m"], 0.90, 0.85, STREET_LEVEL)   # flush with its corners, as the wash (4 October)
+        d.update({"kind": "gablefoot", "tint": SILT_TINT})
+        out.append(d)
+    return out
+
+
 def counter_marks(spec_path=OFFICE):
     """THE COUNTER'S TOP WORN BY USE (6 October; item 1.1's first gate: "the counter top clean: no
     scuffs, rings, burns"): tea rings where the mugs stand, cigarette burns along its customers'
@@ -768,6 +811,9 @@ def selftest():
     prints = [(6.32, 1.70, 0.30, 0.42), (6.89, 1.82, 0.21, 0.148), (5.75, 1.54, 0.30, 0.10), (6.89, 1.34, 0.30, 0.42)]   # shop-room.py, street metres
     check("the pale oblongs keep clear of the notices hanging now",
           len(pale) == 2 and all(abs(d["z_m"] - z) * 2 >= d["w_m"] + w or abs(d["y_m"] - y) * 2 >= d["h_m"] + h for d in pale for z, y, w, h in prints))
+    level = [d for d in decals if d["on"] == STREET_LEVEL]
+    check("street-level wear only in the corner, every kind present, never the stain material", all(d["x_m"] < STREET_LEVEL_X_M + 5.0 for d in level) and
+          {"footdirt", "silt", "kerbtop", "gablefoot"} == {d["kind"] for d in level} and not any("material" in d for d in level))
     pud = [d for d in decals if d["kind"] == "puddle"]
     check("puddles stand along both gutters", any(d["z_m"] > 2 for d in pud) and any(d["z_m"] < -2 for d in pud))
     print("street_wear selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
