@@ -27,7 +27,7 @@ No decision asked: these are for watching the street change.
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
 - **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting and the Stutter are next, then the exit re-check aimed at 9 November.
-- **The corner, in your order:** the hill's new trees and houses are in, with three faults waiting on your answer; the night's warm sky and fill take their last review today; the sky and quay end get their second and last try; then wear at street level.
+- **The corner, in your order:** the hill's new trees and houses are in, with three faults waiting on your answer; the night's warm sky and fill passed their last review with narrow points, Mickey's own front still too dark and listed; the sky and quay end are grey in the editor (their second and last try), packaged tonight; then wear at street level.
 
 **The tester (last night's walk, packaged, last night's build with the new hill, night and sky):** 13 of 15 stages; it lost sight of Ron, and Darren was not on the street. One witness (Rocco) showed he knew, the same as the night before. "That's all I know" to 2 of 60 first questions (3 before). What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); Sheila speaking out of shot with the camera stuck behind Tom, and a stray quote mark in her subtitle; a woman stiff and wide-legged at Rita's door; figures at the cottage front at night pressed to the wall. The new hill cost no frame rate (57.9 fps, 57.5 the night before), but the card's memory rose to 5,952 MB of its 6 GB.
 
@@ -51,7 +51,7 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 **Failed:**
 - Speech missed its bar after its third try: 2.02 s against 2.0 s.
 - The sit's drop failed two review rounds; listed. The jacket set aside: its collar, front and back.
-- The hill: better, but failed its second round. The quay end is still near white.
+- The hill: better, but failed its second round.
 - The night walk lost Ron and Darren (13 of 15 stages).
 
 **Done:** the office, jeans and boots passed packaged; the take-over mended, rehearsed and real; the corner's page answered; 9a's fronts passed in the editor.
@@ -62,7 +62,7 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - Painted timber on every front's joinery.
 - Undressed cast left out of your pictures; their clothes on Monday's list (the advisor).
 - Night's warm sky and fill replace 29 October's stop on fills.
-- Day's sky greyer.
+- Day's sky greyer, sea less shiny; the quay end now grey in the editor, packaged tonight. The sea's half first never ran (my slip); redone as the same second try.
 
 **Act on:** the hill, on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 

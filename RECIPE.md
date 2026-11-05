@@ -1805,3 +1805,12 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Cost: about 0.3 hours.
 - What failed and why: a saturated fill turned unlit brick pure red; too much haze read as dusk.
 - Evidence: F:/LedgerTools/gate/new/night-2026-11-04/r2.
+
+## A pale sky and a pale far water (5 November 2026)
+- Made: a sky and distant water no longer near white, the lit scene unchanged.
+- Method: first split the causes by switching the haze off in the shipped build and measuring. Lower the sky as seen and raise its lighting share by the same factor, so their product and the scene's light hold. Water mirrors the sky at a grazing angle, so it stays bright unless its own reflection is cut: a specular under the engine's 2% base reflectance scales reflections down.
+- Tools: the shipped game's picture switch, a show flag on its command line (quote it), region measurements.
+- Target and check: sky and far water clearly below white, street regions unchanged within a level; one fresh small reviewer per batch.
+- Cost: about 20 minutes by the clock, one small reviewer included.
+- Failed and why: an unquoted command-line switch silently did nothing, and looked like "haze has no effect" until the log was read; a setting placed inside a branch the object never enters changed nothing. After any setting, measure that the thing it names moved.
+- Evidence: F:/LedgerTools/gate/new/sky-2026-11-05/r2/review.md.

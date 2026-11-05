@@ -8668,6 +8668,11 @@ namespace
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::EmissiveFromMapParam())), 1.0f);
 				if (K > 0.0f) { ++GStreetGlowing; }
 			}
+			// THE SEA TAKES NO WET FLOOR, so it is set here, off the look file's sea_specular (5 November)
+			if (Rw.Base == "harbour_water")
+			{
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::FilmSpecularParam())), (float)GLook.SeaSpecular);
+			}
 			if (LedgerStreet::TakesWater(Rw.Base))
 			{
 				// A DRAWN SURFACE ALREADY CARRIES ITS COLOUR and is graded by
