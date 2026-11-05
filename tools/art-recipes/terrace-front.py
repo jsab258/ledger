@@ -4792,9 +4792,12 @@ def _leaf_cloud(tris, cx, cy, cz, r, n, size, rnd):
         a = rnd.uniform(0.0, 2.0 * math.pi)
         up = rnd.uniform(-1.0, 1.0)
         ring = math.sqrt(1.0 - up * up)
-        d = r * rnd.uniform(0.55, 0.92)     # never loose beyond the bough: flecks read as confetti (first review)
+        # On the dark heart's skin (its points 0.42 to 0.72 r out, squashed 0.8), covering its facets, none
+        # standing off it: further out read as flecks against the sky and dark triangles on the roofs,
+        # further in left the facets bare (third try, 5 Nov).
+        d = r * rnd.uniform(0.55, 0.78)
         px, py, pz = cx + d * ring * math.cos(a), cy + d * ring * math.sin(a), cz + d * up * 0.8
-        s = size * rnd.uniform(0.7, 1.3)
+        s = size * rnd.uniform(0.7, 1.0)
         tris.append([(px + rnd.uniform(-s, s), py + rnd.uniform(-s, s), pz + rnd.uniform(-s, s) * 0.6)
                      for _k in range(3)])
 
@@ -4810,9 +4813,10 @@ def _limb(out, pid, x0, y0, z0, x1, y1, z1, r0, r1):
 #: A TREE'S LEAVES, 4 November: about 1,300 triangles of 25 to 45 cm, 5 to 9 pixels at 125 m: small
 #: enough that no facet reads, with no new material, plugin or baking step (HILL-METHODS' impostors).
 HILL_TREE_LEAVES = 1300
+HILL_FAR_WOOD_LEAVES = 800
 
 
-def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False):
+def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False, leaves=HILL_TREE_LEAVES):
     """A broadleaf at the hill's range, real at its distance (his corner note, 4 November; the 4
     October review's "faceted trees"): a trunk and limbs reaching into the crown, a dozen boughs
     of small leaves round them, the sky through the gaps, the tops lighter and the undersides
@@ -4846,7 +4850,7 @@ def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False):
         # green, its underside the other.
         tier = names[0] if up > 0.3 else (names[1] if up > -0.25 else names[2])
         br = min(rw, rh) * lr.uniform(0.62, 0.85)   # boughs overlapping: one crown with a broken edge, not separate puffs
-        _leaf_cloud(tiers[tier], bx, by, bz, br, HILL_TREE_LEAVES // boughs, min(0.42, max(0.25, height * 0.05)), lr)
+        _leaf_cloud(tiers[tier], bx, by, bz, br, leaves // boughs, min(0.32, max(0.25, height * 0.05)), lr)
         # THE BOUGH'S DARK HEART: leaves alone left the crown thin as a winter tree (the first picture,
         # 4 November); a small dark mass inside each cloud, its facets never at the edge, gives it a body.
         _clump(out, "%s_heart%d" % (pid, k), "foliage_dark", bx, by, bz, br * 0.6, lr)
@@ -5078,6 +5082,21 @@ def _north_rise(out):
         _leafy_tree(out, "backdrop_rise_ridge_tree_%d" % k, gx, ty, gz, rnd.uniform(10.0, 16.0), rnd, tall=rnd.random() < 0.25)
         ty += rnd.uniform(6.0, 11.0)
         k += 1
+    # THE FAR WOOD (third try, 5 November): the sky-coloured gaps stayed with the haze off, so they
+    # are real holes: the ridge's ground lies below the line of sight over the top tier's roofs and
+    # only the crowns stand above it. Two close rows of the hill's own trees just behind that tier,
+    # low crowns before high ones, with fewer leaves since only their tops and gaps show (big single
+    # masses read at once as lumps, the first picture), below the old crest (taller ones stood on
+    # stilts, the second); their own random stream, so nothing else on the hill moves.
+    wood = random.Random("backdrop_rise_far_wood")
+    for row, (lift, tall_m) in enumerate(((1.0, 12.0), (3.0, 15.0))):
+        ty = RISE_Y_SPAN[0] - 38.0 + wood.uniform(0.0, 4.0)
+        k = 0
+        while ty < RISE_Y_SPAN[1] + 38.0:
+            _leafy_tree(out, "backdrop_rise_far_wood_%d_%d" % (row, k), rx0 + row * 6.0 + wood.uniform(0.0, 4.0), ty,
+                        rz + lift, tall_m * wood.uniform(0.9, 1.1), wood, leaves=HILL_FAR_WOOD_LEAVES)
+            ty += wood.uniform(7.0, 10.0)
+            k += 1
 
 
 # THE SOUTH QUAY KIT, 6 October (item 1.1's first gate: "the built world's edge shows from Mickey's

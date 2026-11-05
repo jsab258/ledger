@@ -221,3 +221,6 @@ production/assets/scanned/polyhaven/paint_wood_01/
 
 # his page's pictures for an open item (tools/needs_you_page.py PICTURES_REL): published beside the page, never in git
 production/approvals/needs-you/pictures/
+
+# his page read times (tools/page_read_hook.py)
+.claude/page-read-stamp.json

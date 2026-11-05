@@ -90,7 +90,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 5396
+   "faces": 7284
   },
   {
    "mesh": "street_brass",
@@ -2346,7 +2346,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 82712
+   "faces": 99554
   },
   {
    "mesh": "street_foliage_dark",
@@ -2370,7 +2370,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 121780
+   "faces": 153653
   },
   {
    "mesh": "street_foliage_top",
@@ -2394,7 +2394,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 69100
+   "faces": 84509
   },
   {
    "mesh": "street_frame_bronze",
