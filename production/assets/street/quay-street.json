@@ -3473,7 +3473,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2660
+   "faces": 1268
   },
   {
    "mesh": "street_litter_blue",
@@ -4064,6 +4064,34 @@
    "faces": 125
   },
   {
+   "mesh": "street_rainwater",
+   "material": "rainwater",
+   "base_material": "rainwater",
+   "linear_rgb": [
+    0.03,
+    0.03,
+    0.032
+   ],
+   "roughness": 0.6,
+   "surface_map": "metal",
+   "tile_m": 0.35,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": [
+    0.1972,
+    0.1862,
+    0.1853
+   ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 1392
+  },
+  {
    "mesh": "street_render_cream",
    "material": "render_cream",
    "base_material": "render_cream",
@@ -4581,7 +4609,35 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 11702
+   "faces": 10688
+  },
+  {
+   "mesh": "street_stone_dressing",
+   "material": "stone_dressing",
+   "base_material": "stone_dressing",
+   "linear_rgb": [
+    0.24,
+    0.225,
+    0.2
+   ],
+   "roughness": 0.8,
+   "surface_map": "concrete",
+   "tile_m": 0.8,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": [
+    0.2384,
+    0.2312,
+    0.1923
+   ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 1014
   },
   {
    "mesh": "street_tile_patterned",

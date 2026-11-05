@@ -218,6 +218,9 @@ production/assets/scanned/**/*_ids.png
 production/assets/scanned/**/*_ids.json
 # the painted-timber tile (4 November, the corner's step 9a: tools/art-recipes/paint_wood_tile.py from the wood trim sheet): pictures, so the lasting copy is on F: game inputs
 production/assets/scanned/polyhaven/paint_wood_01/
+# the stone dressings' and the rainwater goods' tiles (5 November, step 9b: tools/art-recipes/dressing_tiles.py), the same way
+production/assets/scanned/polyhaven/large_sandstone_blocks/
+production/assets/scanned/polyhaven/rusty_metal_02/
 
 # his page's pictures for an open item (tools/needs_you_page.py PICTURES_REL): published beside the page, never in git
 production/approvals/needs-you/pictures/

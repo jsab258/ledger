@@ -496,6 +496,32 @@
       "macro": 0.08,
       "macro_scale": 0.0025,
       "macro_note": "3 November, the corner's step 6, its second part (world-space variation at 2 to 10 m; Mafia's world noise on 31% of plaster placements): the brick lighter and darker by up to 8% over a 4 m lattice (make_base_material.py MACRO_PARAM); the plan's check, 5 to 15% across a bay"
+    },
+    {
+      "base": "stone_dressing",
+      "asset": "large_sandstone_blocks",
+      "files": [
+        "production/assets/scanned/polyhaven/large_sandstone_blocks/large_sandstone_blocks_diff.png",
+        "production/assets/scanned/polyhaven/large_sandstone_blocks/large_sandstone_blocks_nor_dx.png",
+        "production/assets/scanned/polyhaven/large_sandstone_blocks/large_sandstone_blocks_rough.png"
+      ],
+      "covers_m": 1.7148,
+      "match_rgb": [2.0827, 2.0954, 2.2735],
+      "always": true,
+      "why": "5 November, the corner's step 9b: sills, doorsteps and coping in coursed ashlar, from Poly Haven large_sandstone_blocks (CC0), its moulded bands cut off, made by tools/art-recipes/dressing_tiles.py, 512 px a metre; match_rgb the row's palette over the tile's mean. Joints on single-stone sills are the risk, judged in the first picture."
+    },
+    {
+      "base": "rainwater",
+      "asset": "rusty_metal_02",
+      "files": [
+        "production/assets/scanned/polyhaven/rusty_metal_02/rusty_metal_02_diff.png",
+        "production/assets/scanned/polyhaven/rusty_metal_02/rusty_metal_02_nor_dx.png",
+        "production/assets/scanned/polyhaven/rusty_metal_02/rusty_metal_02_rough.png"
+      ],
+      "covers_m": 0.8125,
+      "match_rgb": [0.0678, 0.0779, 0.1248],
+      "always": true,
+      "why": "5 November, the corner's step 9b: gutters and downpipes as black paint with rust blotches, from Poly Haven rusty_metal_02 (CC0), by the same tool, match_rgb on the paint's brightest quarter (over the whole mean its paint turned blue); black-painted cast iron is a project choice, unverified until the reviewer's period check."
     }
   ],
   "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",

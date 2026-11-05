@@ -164,7 +164,8 @@ MATERIALS = (
     # PAST the reference: +22.3 against its +18.5. The correction that was
     # right when the wall was a quarter of a squarer frame is wrong now.
     ("brick_grey",  (0.210, 0.092, 0.064), 0.92),   # was (0.268, 0.100, 0.062), same ratio
-    ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
+    ("stone",       (0.240, 0.225, 0.200), 0.80),   # terrazzo and grout, the backdrop's walls, the quay apron
+    ("stone_dressing", (0.240, 0.225, 0.200), 0.80),  # sills, doorsteps, coping: their own row since 5 November (corner step 9b)
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
     # near-white pavement. Wetting the road meant wetting every sill and
@@ -315,7 +316,8 @@ MATERIALS = (
     # window is not a black hole, it is a dark surface with the sky and the
     # opposite frontage lying in it.
     ("glass",       (0.085, 0.092, 0.100), 0.0),   # 0.06 until 23 September: polished float glass has none
-    ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
+    ("lead",        (0.030, 0.030, 0.032), 0.60),   # letterplates, a knob, the backdrop's bay roofs
+    ("rainwater",   (0.030, 0.030, 0.032), 0.60),   # gutters and downpipes: their own row since 5 November (corner step 9b)
     ("brass",       (0.420, 0.300, 0.120), 0.35),   # door furniture, rubbed (4 October)
     ("gilt",        (0.760, 0.530, 0.190), 0.22),   # raised gilt letters (4 October; no metallic in the game's surface)
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
@@ -708,6 +710,7 @@ SURFACE_OF = {
     # orange, and this town is slated. `roof_b` is the slate.
     "slate":        ("roof_b", 0.8),
     "stone":        ("concrete", 0.8),
+    "stone_dressing": ("concrete", 0.8),
     # PAINTED JOINERY TAKES PLASTER, NOT TIMBER, and the reason is a clamp
     # this file already carried. The tint gain is the authored colour over
     # the map's own average, bounded to 6.0 so a dark map cannot be driven
@@ -751,6 +754,7 @@ SURFACE_OF = {
     # from the scene now that raytracing is on.
     "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
+    "rainwater":    ("metal", 0.35),
     "brass":        ("metal", 0.35),
     "gilt":         (None, 0.0),
     # PAINTED, SO FLAT, 6 October (item 1.1's first gate: "the window reveal still in the black
@@ -1487,7 +1491,7 @@ def _plain_ground(parts, p, T, wall, bay):
     # A STONE STEP AT THE DOOR AND A PLINTH ALONG THE FOOT (4 October, the facades' first fresh
     # review: blank door slabs, no plinths): a worn stone step out onto the pavement, and a band
     # of blue engineering brick a little proud of the wall to sill-board height, the door left clear.
-    _box(parts, "doorstep", "stone", door_cx - door_w / 2.0 - 0.08, door_cx + door_w / 2.0 + 0.08,
+    _box(parts, "doorstep", "stone_dressing", door_cx - door_w / 2.0 - 0.08, door_cx + door_w / 2.0 + 0.08,
          -0.25, rec, 0.0, 0.07, "a-raised-stone-threshold/worn")
     dx0, dx1 = door_cx - door_w / 2.0, door_cx + door_w / 2.0
     for nm, x0, x1 in (("plinth_l", 0.0, dx0), ("plinth_r", dx1, W)):
@@ -1502,7 +1506,7 @@ def _plain_ground(parts, p, T, wall, bay):
             _box(parts, "gf_glass_%d" % n, "glass", cx - win_w / 2.0, cx + win_w / 2.0,
                  rec, rec + 0.02, sill_z, sill_z + win_h,
                  "set-back-one-half-brick/the-same-reveal-the-floor-above-uses")
-        _box(parts, "gf_sill_%d" % n, "stone", cx - sw, cx + sw,
+        _box(parts, "gf_sill_%d" % n, "stone_dressing", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - sill_t, sill_z, "the-window's-own-sill")
         _segmental_arch(parts, "gf_arch_%d" % n, cx - win_w / 2.0, cx + win_w / 2.0,
                         sill_z + win_h, "segmental-rubbed-brick-arch/as-upstairs")
@@ -1673,7 +1677,7 @@ def _upper_floor(parts, p, T, wall, bay=0):
         if HOUSE_PANE_TRANSLUCENT and kit is None:
             _box(parts, "upper_glass_%d" % i, "glass", a, b, p["reveal_m"], p["reveal_m"] + 0.02,
                  sill_z, head_z, "set-back-one-half-brick/102.5mm/the-depth-that-stops-it-reading-flat")
-        _box(parts, "upper_sill_%d" % i, "stone", cx - sw, cx + sw,
+        _box(parts, "upper_sill_%d" % i, "stone_dressing", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - p["sill_t_m"], sill_z,
              "0.95m-wide/window-plus-50mm-each-side")
         _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
@@ -1835,12 +1839,12 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
              EAVES, EAVES + p["parapet_h_m"],
              "one-British-brick-thick/215mm/the-row's-own-roofline")
         cw = p["coping_w_m"]
-        _box(parts, "coping", "stone", 0.0, W, -cw * 0.5, cw * 0.5,
+        _box(parts, "coping", "stone_dressing", 0.0, W, -cw * 0.5, cw * 0.5,
              EAVES + p["parapet_h_m"], EAVES + p["parapet_h_m"] + p["coping_t_m"],
              "the-stone-that-keeps-the-weather-out-of-the-wall-head")
         dr = p["downpipe_dia_m"] / 2.0
         if party_wall:
-            _box(parts, "downpipe", "lead", W - dr * 2.0, W, -p["downpipe_dia_m"], 0.0,
+            _box(parts, "downpipe", "rainwater", W - dr * 2.0, W, -p["downpipe_dia_m"], 0.0,
                  0.0, EAVES, "at-the-party-wall/never-at-a-row-end")
         return parts
 
@@ -1852,7 +1856,7 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
     # nothing pale at all.
     _box(parts, "eaves_course", wall, -ov * 0.5, W + ov * 0.5, -ov, T,
          EAVES, EAVES + 0.09, "the-line-the-roof-starts-from")
-    _box(parts, "gutter", "lead", -ov * 0.5, W + ov * 0.5, -ov - GUTTER_W_M, -ov,
+    _box(parts, "gutter", "rainwater", -ov * 0.5, W + ov * 0.5, -ov - GUTTER_W_M, -ov,
          EAVES - 0.03, EAVES - 0.03 + GUTTER_H_M,
          "a-115mm-half-round-cast-iron-gutter/black")
     parts.append({"id": "roof_front", "material": "slate", "kind": "slope",
@@ -1870,7 +1874,7 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
     # right-hand edge IS an internal party wall on a six-bay row.
     dr = p["downpipe_dia_m"] / 2.0
     if party_wall:
-        _box(parts, "downpipe", "lead", W - dr * 2.0, W, -p["downpipe_dia_m"], 0.0,
+        _box(parts, "downpipe", "rainwater", W - dr * 2.0, W, -p["downpipe_dia_m"], 0.0,
              0.0, EAVES, "at-the-party-wall/one-per-bay-boundary-never-at-a-row-end")
 
     # CHIMNEY STACK, on the party wall, top one metre above the ridge. A
@@ -4750,9 +4754,9 @@ def _framed_window(out, pid, xf, ya, yb, za, zb, lit):
 def _hill_house_edges(out, pid, xa, y0, y1, ground, top, rnd):
     """What a real house has along its front that a box does not: a gutter's shadow line under the
     eaves and its downpipe at the party wall, and the damp dark plinth at the ground."""
-    _box(out, pid + "_gutter", "lead", xa - 0.3, xa - 0.12, y0, y1, top - 0.04, top + 0.08, "a-gutter")
+    _box(out, pid + "_gutter", "rainwater", xa - 0.3, xa - 0.12, y0, y1, top - 0.04, top + 0.08, "a-gutter")
     _box(out, pid + "_soffit", "hill_ridge", xa - 0.12, xa, y0, y1, top - 0.22, top, "the-eaves-shadow")
-    _box(out, pid + "_downpipe", "lead", xa - 0.1, xa, y0 + 0.08, y0 + 0.18, ground, top, "a-downpipe")
+    _box(out, pid + "_downpipe", "rainwater", xa - 0.1, xa, y0 + 0.08, y0 + 0.18, ground, top, "a-downpipe")
     _box(out, pid + "_plinth", "hill_ridge", xa - 0.03, xa, y0, y1, ground, ground + rnd.uniform(0.35, 0.6), "the-damp-plinth")
 
 
@@ -7159,7 +7163,7 @@ STREAK_FROM_Z, STREAK_FULL_Z = 3.6, 6.4  # nothing below the sills, full at the 
 #: a pavement's wear is trodden into it rather than run down it, so it takes
 #: the patches and not the splash.
 WEARS = {"brick_red": True, "brick_grey": True, "paving": False,
-         "kerbstone": False, "slate": True, "stone": True}
+         "kerbstone": False, "slate": True, "stone": True, "stone_dressing": True}
 
 
 #: A FLAG'S SIZE, the common British 900 x 600 mm slab, laid in stretcher
