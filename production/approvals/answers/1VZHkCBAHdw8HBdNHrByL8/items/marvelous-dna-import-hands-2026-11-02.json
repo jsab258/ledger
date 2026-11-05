@@ -1,0 +1,9 @@
+{
+  "added": "2026-11-02 15:26",
+  "closed": "2026-11-02 20:20, allowed in chat (20:15) and done by Claude at 20:19 with his one-time 1-minute wait; avatar exported and compared: same body below the shoulders, 2.4 mm off at the neck (above the 2 mm bar), so Tom keeps his own avatar",
+  "id": "marvelous-dna-import-hands-2026-11-02",
+  "links": [],
+  "recommendation": "Do it yourself: about 2 minutes, and it does not depend on the permission box. No web link: the answer is this page.",
+  "state": "done",
+  "text": "The Marvelous import you allowed at 14:56 cannot start: the computer-use permission box declined three times (14:37, 15:19 and 15:25, the last while you were at the PC). Either do the import yourself in Marvelous (open now): File, Import (Add), DNA; pick head.dna and body.dna in F:\\LedgerTools\\bodies\\MH_TomL1\\dna\\MH_TomL1\\MH_TomL1; centimetres, 100%; automatic options left on; OK; then tap Done. Or check that computer use is on in the Claude app (Settings, This computer, Computer use) and tap Try again."
+}

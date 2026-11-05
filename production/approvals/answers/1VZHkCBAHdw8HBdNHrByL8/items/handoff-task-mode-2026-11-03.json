@@ -1,0 +1,9 @@
+{
+  "added": "2026-11-03 22:15",
+  "closed": "2026-11-04 11:15, answered done (08:47); the handover task is retired since his ruling of 4 November (the hourly task replaces it)",
+  "id": "handoff-task-mode-2026-11-03",
+  "links": [],
+  "recommendation": "Auto, as on the daily task. Without it, a session handing over through this task stops at its first file write until you approve it. No web link: the setting is in the app.",
+  "state": "done",
+  "text": "For your switch by the history's size: in the Claude app, open Scheduled, open \"LEDGER: fresh session at a handover\", press the pencil, click the small shield marked Manual under its instructions, choose Auto (not Bypass), and Save. As before, the app would not let the session set it."
+}

@@ -1,8 +1,9 @@
 {
   "added": "2026-11-02 11:50",
+  "closed": "done (about 12:00): both answered; the read-back ran and wrote 11 answers (5ed6f9fb6); the test finished",
   "id": "sessions-still-waiting-2026-11-02",
   "links": [],
   "recommendation": "Allow: both only read; the nightly run stopped at 08:17 after reading your pages, most likely at its one command that writes the answers into the project. There is no web link for a session.",
-  "state": "open",
+  "state": "done",
   "text": "In the Claude app's sidebar, open \"LEDGER: read back page answers (nightly)\" (the run started 08:15) and \"LEDGER: fresh-session test (once)\": each still waits on a question; answer it with always allow, or press Stop."
 }
