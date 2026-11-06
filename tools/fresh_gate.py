@@ -48,6 +48,9 @@ QUIET_STOPPED_MIN = 3
 DEAD_MIN = 120
 OWN_RUN_MIN = 10
 TAIL = 1 << 20
+ROUND_CLOCK_UNTIL = datetime.datetime(2026, 11, 9, 13, 0)
+WALK_HOLD_FROM, WALK_HOLD_UNTIL = 1 * 60 + 40, 3 * 60 + 30
+NIGHTLY = os.path.join(ROOT, "production", "playtest", "nightly")
 STAMP = re.compile(r"(\d{4}-\d\d-\d\d) (\d\d:\d\d)")
 TURNS = (b'"type":"user"', b'"type":"assistant"')
 
@@ -104,9 +107,15 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
     return None if newest is None else (now_ts - newest) / 60
 
 
-def decide(now, text, idle_min):
+def decide(now, text, idle_min, walk_reported=False):
     hm = now.hour * 60 + now.minute
-    if 45 <= hm < 5 * 60 + 10:
+    if now < ROUND_CLOCK_UNTIL:
+        # ROUND THE CLOCK until Monday's 13:00 (6 November, his yes on his page, whole-allowance-2026-11-06). Only the
+        # tester's walk stands everyone aside: the app's window takes the front from a working session and the walk then
+        # sends no keys (3 November, 07:20); a walk that lost its keys passes nothing. Its report, or 03:30, ends the wait.
+        if WALK_HOLD_FROM <= hm < WALK_HOLD_UNTIL and not walk_reported:
+            return "WAIT the night's walk has not reported: nothing runs beside it"
+    elif 45 <= hm < 5 * 60 + 10:
         return "WAIT the night (00:45 to 05:10): no work"
     started, stopped = line_time(text, "Started"), line_time(text, "Stopped")
     if started is None or stopped is None:
@@ -146,8 +155,12 @@ def selftest():
         ("not stopped, a turn 14.6 min ago: WAIT, 15", decide(d, r, 14.6), "WAIT a session wrote"),
         ("running: WAIT", decide(d, r, 40), "WAIT"),
         ("died without Stopped, quiet 3 h: GO", decide(d, r, 180), "GO"),
-        ("the night: WAIT", decide(datetime.datetime(2026, 11, 5, 2, 15), h, 400), "WAIT"),
-        ("00:15 still works: GO", decide(datetime.datetime(2026, 11, 5, 0, 15), h, 40), "GO"),
+        ("until Monday, 00:50: GO", decide(datetime.datetime(2026, 11, 7, 0, 50), h, 400), "GO"),
+        ("until Monday, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 7, 2, 15), h, 400), "WAIT the night's walk"),
+        ("until Monday, the walk reported, 02:45: GO", decide(datetime.datetime(2026, 11, 7, 2, 45), h, 400, True), "GO"),
+        ("until Monday, no report by 03:30: GO", decide(datetime.datetime(2026, 11, 7, 3, 30), h, 400), "GO"),
+        ("after Monday's 13:00, the night: WAIT", decide(datetime.datetime(2026, 11, 10, 2, 15), h, 400), "WAIT the night"),
+        ("after Monday's 13:00, 00:15 still works: GO", decide(datetime.datetime(2026, 11, 10, 0, 15), h, 40), "GO"),
         ("no lines: WAIT", decide(d, "nothing", 40), "WAIT"),
     ]
     # The project's own activity, from logs made here: an idle log the app keeps appending untimed bookkeeping to
@@ -195,7 +208,8 @@ def main(a):
     r = rehearsal(now)
     path = os.path.join(ROOT, r["handover"]) if r else HANDOVER
     text = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
-    line = decide(now, text, last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own))
+    reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
+    line = decide(now, text, last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own), reported)
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)
     return 0

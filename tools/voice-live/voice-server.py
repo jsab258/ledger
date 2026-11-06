@@ -335,11 +335,21 @@ def serve(args):
     out = pathlib.Path(args.get("out") or tempfile.mkdtemp(prefix="ledger-voice-", dir=str(scratch) if scratch.is_dir() else None))
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    torch, speaker, dev = load_models(args.get("cpu"))
+    # THE CARD'S MODEL ONLY WHEN A LINE NEEDS IT, 6 November (the Stutter, try 1;
+    # production/research/frame-headroom/STUTTER-2026-11-06-DIAGNOSIS.md): the whole cast is on Pocket, on the
+    # processor, yet Nano always loaded, about 2 GB onto the card just as play starts, and five walks without
+    # this program had no frame over 33 ms. It now loads at the first line Pocket and Sopro do not take.
+    torch = speaker = dev = None
+
+    def card_model():
+        nonlocal torch, speaker, dev
+        if speaker is None:
+            torch, speaker, dev = load_models(args.get("cpu"))
     import soundfile as sf
     voices = {}
 
     def ready_voice(who, clip):
+        card_model()
         if who not in voices:
             conds, _ = learn(torch, speaker, who, clip)
             voices[who] = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
@@ -362,6 +372,7 @@ def serve(args):
     streaming = os.environ.get("LEDGER_VOICE_STREAM") == "1"
     rates = {"tok": 0.045, "pass": 0.6}       # learned as it speaks
     if streaming:
+        card_model()    # its punc_norm comes from the model's own package, which loading puts on the path
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
         import nano_stream
         from chatterbox.tts_turbo import punc_norm
@@ -404,7 +415,7 @@ def serve(args):
                 if '"last":true' in answer or '"error"' in answer:
                     warmed.append(who + ":sopro")
                     break
-    print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed,
+    print(dumps({"ready": True, "device": str(dev) if speaker is not None else "not-loaded", "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed,
                  "sopro": sorted(by_sopro) if sopro else [], "pocket": sorted(by_pocket) if pocket else []}), flush=True)
     # THE GAME'S LINES ARE READ AS THEY COME, on their own thread, so a new
     # turn's first sentence is seen while an older reply is still being made.

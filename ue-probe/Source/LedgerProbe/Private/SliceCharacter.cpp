@@ -504,7 +504,10 @@ void ALedgerSliceCharacter::BeginPlay()
 				RowRun.bSet ? *FString::Printf(TEXT("%.2f m %.0f deg"), RowRun.BackCm / 100.0f, RowRun.Fov) : TEXT("none"));
 		}
 	}
-	MarkStreetWalkable();
+	// THE WALKING MAP ONLY FOR WHAT READS IT, 6 November (the Stutter, try 2 of 2; STUTTER-2026-11-06-DIAGNOSIS.md):
+	// nothing in the played game asks it for a path, yet rebuilding it around the player took up to 31 ms of the game
+	// thread in the walks left over from try 1. Walkers that path-find bring it back with -LedgerNav, their capsules off it.
+	if (FParse::Param(FCommandLine::Get(), TEXT("LedgerNav"))) { MarkStreetWalkable(); }
 	CloseStreetEnds();
 	USkeletalMesh* Body = LoadObject<USkeletalMesh>(nullptr, MeshPath());
 	UAnimSequenceBase* Clips[3] = { nullptr, nullptr, nullptr };

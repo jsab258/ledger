@@ -11,6 +11,8 @@ His ruling B of 4 November: for one week, against the week before, four counts; 
 
 Last week's column was counted once by an extraction helper (Sonnet) from the records alone, 4 November (QUALITY-LASTWEEK-2026-10-27.md, each case with its date and source; the faults per item are split by kind of record, since the notes' numbered items are not all faults); this week's is kept as it happens, one line per case below, with its date and link. The start each session read is measured by tools/start_size.py on its own log.
 
+Part week, 6 November (QUALITY-THISWEEK-2026-11-04-to-06.md, an extraction helper, Sonnet): gate JSON 13 faults in 9 rounds, 1.4 a round; research twice 1 (3 unsure); rule slips 3 (3 unsure); questions 0 (1 weak). Do not read the 1.4 as better than last week's 1.7: it leaves out this week's 17 Markdown reviews in the same folder (hill rounds 1 and 2, sky, street-level, corner 5 Nov, the jacket), several of them failing rounds, and the sit's two failing rounds of 4 Nov, which it names but does not count. Monday's count tallies those files too, and says what last week's left out in the same way.
+
 ## Cases this week
 
 - 4 Nov, rule slip, found by him (13:38): the 11:26 session stopped at the size threshold before a take-over had been seen to work, which his ruling of that morning said not to do; the hourly run then stood aside wrongly twice (DECISIONS 4 Nov 13:46).

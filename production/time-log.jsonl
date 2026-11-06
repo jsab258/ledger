@@ -504,3 +504,10 @@
 {"event": "start", "at": "2026-11-06T05:23:50", "task": "n02-4-corner-people and corner packaged pictures", "phase": "1", "kind": "production"}
 {"event": "start", "at": "2026-11-06T05:45:16", "task": "n02-3-3-sitting packaged film", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-06T06:01:40", "note": "sit set aside with its face met; corner views passed packaged"}
+{"event": "start", "at": "2026-11-06T06:24:00", "task": "n02-3-3-stutter: the walk re-measured on 3641d53, seven captures, two records", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T07:17:00", "note": ""}
+{"event": "start", "at": "2026-11-06T07:16:00", "task": "n02-3-3-stutter: diagnosis, helper's time", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T07:29:00", "note": ""}
+{"event": "start", "at": "2026-11-06T11:24:18", "task": "n02-3-3-stutter: try 1, the voice program loads the card model only when a line needs it", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T12:38:31", "note": "try 1 measured: worst 192 down to 38 ms; 3 of 5 still just over"}
+{"event": "start", "at": "2026-11-06T12:38:32", "task": "n02-3-3-stutter: try 2, the walking map only for what reads it", "phase": "1", "kind": "production"}
