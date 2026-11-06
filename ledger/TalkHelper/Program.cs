@@ -1687,6 +1687,8 @@ static class Program
             cost = helper.Cost.Report(),
             usd = helper.Cost.EstimateUsd(),
             calls = helper.Cost.TotalCalls,
+            cacheRead = AnthropicClient.CacheReadTotal,
+            cacheWrite = AnthropicClient.CacheWriteTotal,
             // Under a budget (--budget-usd): its spend with refused calls' reserves, and the calls it refused.
             budgetSpent = llm is BudgetedClient held ? held.SpentUsd : (double?)null,
             budgetRefused = llm is BudgetedClient refusing ? refusing.Refused : (int?)null,
