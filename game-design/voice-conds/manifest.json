@@ -663,5 +663,40 @@
    ]
   },
   "kilobytes": 117.4
+ },
+ "zlata": {
+  "clip": "zlata.p280.wav",
+  "tensors": {
+   "gen.embedding": [
+    1,
+    192
+   ],
+   "gen.prompt_feat": [
+    1,
+    500,
+    80
+   ],
+   "gen.prompt_token": [
+    1,
+    250
+   ],
+   "gen.prompt_token_len": [
+    1
+   ],
+   "t3.cond_prompt_speech_tokens": [
+    1,
+    150
+   ],
+   "t3.emotion_adv": [
+    1,
+    1,
+    1
+   ],
+   "t3.speaker_emb": [
+    1,
+    256
+   ]
+  },
+  "kilobytes": 139.7
  }
 }

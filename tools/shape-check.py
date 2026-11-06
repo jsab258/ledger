@@ -132,6 +132,11 @@ def clips():
         # sat right there under a different suffix — a guard failing on the
         # good case, which is the shape rule 5b exists about. The SPEAKER in
         # the name is the part that matters and it is still required.
+        # ON THE GAME INPUTS, 6 November: the size guard keeps a new clip off git, so a clean checkout lacks it;
+        # a pick marked "clipOnDrive" is a state there, as above, and still a fault wherever its copy should be
+        if pick.get("clipOnDrive") and not list(clip_dir.glob(f"{name}.{speaker}.*")):
+            pending.append(name)
+            continue
         hits = sorted(clip_dir.glob(f"{name}.{speaker}.*"))
         if not hits:
             check(False, f"{name} has its picked clip on disk",

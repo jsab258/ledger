@@ -95,6 +95,9 @@ def main():
     clips = ({q.name.split(".")[0] for q in CLIPS.iterdir()
               if q.is_file() and q.suffix.lower() in (".mp3", ".wav", ".flac")}
              if CLIPS.exists() else set())
+    # ON THE GAME INPUTS, 6 November: a pick marked "clipOnDrive" is off git by the size guard (shape-check.py)
+    picks = json.loads((ROOT / "game-design" / "voice-picks.json").read_text(encoding="utf-8"))["picks"]
+    clips |= {who for who, pick in picks.items() if pick.get("clipOnDrive")}
 
     print(f"voice-cast — {len(cards)} tier-1 principals, {len(cast)} cast voices, "
           f"{len(alias)} alias(es), {len(clips)} clip(s)\n")

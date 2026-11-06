@@ -140,11 +140,12 @@
       "accent": null
     },
     "zlata": {
-      "candidate": 3,
-      "picked": "2026-08-14",
-      "speaker": "p233",
-      "age": null,
-      "accent": null
+      "candidate": null,
+      "picked": "2026-09-24",
+      "speaker": "p280",
+      "age": "25",
+      "accent": "Unknown (France)",
+      "clipOnDrive": true
     }
   }
 }
