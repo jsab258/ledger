@@ -548,9 +548,9 @@ MATERIALS = (
     # day, so it reads as a window like its neighbours; a tungsten room at
     # night, when _street_emit lights it.
     ("window_far_lit", (0.110, 0.080, 0.045), 0.30),
-    ("shard_a_glass", (0.018, 0.026, 0.024), 0.04),
-    ("shard_a_edge",  (0.320, 0.460, 0.400), 0.20),
-    ("shard_a_ground", (0.090, 0.120, 0.110), 0.03),
+    ("shard_a_glass", (0.340, 0.400, 0.380), 0.0),
+    ("shard_a_edge",  (0.700, 0.820, 0.770), 0.20),
+    ("shard_a_ground", (0.620, 0.700, 0.670), 0.30),
     # THE GROUND'S LITTER AND GUM (_ground_scatter, 3 November): wet, dirtied paper (sRGB about 164), brown
     # kraft, two plain wrapper colours with no print, and trodden gum a shade darker than the wet flags
     ("litter_paper", (0.360, 0.355, 0.330), 0.55),
@@ -558,9 +558,9 @@ MATERIALS = (
     ("litter_red", (0.220, 0.025, 0.020), 0.50),
     ("litter_blue", (0.025, 0.045, 0.130), 0.50),
     ("gum_trodden", (0.050, 0.048, 0.044), 0.75),
-    ("shard_r_glass", (0.018, 0.026, 0.024), 0.04),
-    ("shard_r_edge",  (0.320, 0.460, 0.400), 0.20),
-    ("shard_r_ground", (0.090, 0.120, 0.110), 0.03),
+    ("shard_r_glass", (0.340, 0.400, 0.380), 0.0),
+    ("shard_r_edge",  (0.700, 0.820, 0.770), 0.20),
+    ("shard_r_ground", (0.620, 0.700, 0.670), 0.30),
     ("grime",       (0.078, 0.061, 0.048), 0.90),
     ("lens_amber",  (0.780, 0.360, 0.040), 0.20),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
@@ -3730,6 +3730,8 @@ BROKEN_SEED = 19900929
 #: How many pieces lie on the pavement, and how far out the fan reaches.
 PAVEMENT_SHARDS = 90
 PAVEMENT_REACH_M = 2.4
+DISPLAY_SHARDS = 45
+EDGE_RIM_M = 0.012
 
 
 def _outward(verts, face, centre):
@@ -3767,6 +3769,18 @@ def _slab(glass, edge, poly, yf, yb):
     a, b = poly[n - 1], poly[0]
     ev.extend([(a[0], yf, a[1]), (b[0], yf, b[1]), (b[0], yb, b[1]), (a[0], yb, a[1])])
     ef.append(_outward(ev, [e0, e0 + 1, e0 + 2, e0 + 3], centre))
+    # A RIM ON THE FRONT (6 November, n02-9-window-break): 8 mm of thickness is a hair at two metres, and
+    # the broken edge is what reads (the first try's pictures); on the road side, a hair proud of the piece.
+    ex, ez = b[0] - a[0], b[1] - a[1]
+    el = math.hypot(ex, ez) or 1.0
+    nx, nz = -ez / el, ex / el
+    if nx * (centre[0] - a[0]) + nz * (centre[2] - a[1]) < 0.0:
+        nx, nz = -nx, -nz
+    yr = yf - (yb - yf) * 0.15
+    e1 = len(ev)
+    ev.extend([(a[0], yr, a[1]), (b[0], yr, b[1]),
+               (b[0] + nx * EDGE_RIM_M, yr, b[1] + nz * EDGE_RIM_M), (a[0] + nx * EDGE_RIM_M, yr, a[1] + nz * EDGE_RIM_M)])
+    ef.append(_outward(ev, [e1, e1 + 1, e1 + 2, e1 + 3], (centre[0], yb, centre[2])))
 
 
 def _teeth(rng, glass, edge, xa, xb, za, zb, yf, yb):
@@ -3803,6 +3817,21 @@ def _teeth(rng, glass, edge, xa, xb, za, zb, yf, yb):
         _slab(glass, edge, [(x0 + w, zb), (x0, zb), (tipx, tip)], yf, yb)
 
 
+def _shard(gv, gf, rng, cx, cy, z, r):
+    """One flat piece lying tilted: an uneven outline of four to six sides, since three read as drawn triangles."""
+    sides = rng.choice((4, 4, 5, 5, 6))
+    a0 = rng.uniform(0.0, 2.0 * math.pi)
+    tx, ty = rng.uniform(-0.25, 0.25), rng.uniform(-0.25, 0.25)
+    stretch = rng.uniform(0.45, 1.0)
+    base = len(gv)
+    for k in range(sides):
+        a = a0 + k * 2.0 * math.pi / sides + rng.uniform(-0.35, 0.35)
+        rr = r * rng.uniform(0.65, 1.2)
+        dx, dy = rr * math.cos(a), rr * math.sin(a) * stretch
+        gv.append((cx + dx, cy + dy, z + r * 0.3 + tx * dx + ty * dy))
+    gf.append(_outward(gv, tuple(range(base, base + sides)), (cx, cy, z - 1.0)))
+
+
 def _pavement_glass(rng, ground, x0, x1, face_y, toward_road):
     """The fan of glass in front of the window: flat pieces, most small, a
     few large by the stall riser, dense at the shop front and thinning
@@ -3818,15 +3847,17 @@ def _pavement_glass(rng, ground, x0, x1, face_y, toward_road):
         cy = face_y + toward_road * d
         big = d < 0.45 and rng.random() < 0.25
         r = rng.uniform(0.06, 0.13) if big else rng.uniform(0.012, 0.045)
-        a0 = rng.uniform(0.0, 2.0 * math.pi)
-        z = footway_z(cy) + 0.004
-        base = len(gv)
-        for k in range(3):
-            a = a0 + k * 2.0 * math.pi / 3.0 + rng.uniform(-0.5, 0.5)
-            rr = r * rng.uniform(0.55, 1.25)
-            gv.append((cx + rr * math.cos(a), cy + rr * math.sin(a), z + rng.uniform(0.0, 0.004)))
-        face = (base, base + 1, base + 2)
-        gf.append(_outward(gv, face, (cx, cy, z - 1.0)))
+        _shard(gv, gf, rng, cx, cy, footway_z(cy) + 0.004, r)
+
+
+def _display_glass(rng, ground, x0, x1, pane_y, inward, floor_z):
+    """Most of a pane falls inward (the 29 September note): pieces on the display's floor behind it."""
+    gv, gf = ground
+    for _ in range(DISPLAY_SHARDS):
+        cx = rng.uniform(x0 + 0.05, x1 - 0.05)
+        cy = pane_y + inward * rng.uniform(0.03, 0.45)
+        r = rng.uniform(0.02, 0.09)
+        _shard(gv, gf, rng, cx, cy, floor_z + 0.004, r)
 
 
 def _broken_windows(out):
@@ -3871,6 +3902,7 @@ def _broken_windows(out):
         # the kit's stallriser stands 0.12 m in front of its glass (production/art/shopfront-kit)
         face_y = (riser["y0"] if east else riser["y1"]) if riser else (yf + (-0.12 if east else 0.12) if kit else yf)
         _pavement_glass(rng, ground, g["x0"], g["x1"], face_y, -1.0 if east else 1.0)
+        _display_glass(rng, ground, g["x0"], g["x1"], yf, 1.0 if east else -1.0, za)
         for kind, (vs, fs) in (("glass", glass), ("edge", edge), ("ground", ground)):
             out.append({"id": "shard_%s_%s" % (deed, kind), "material": "shard_%s_%s" % (deed, kind),
                         "kind": "mesh", "verts": vs, "faces": fs, "note": "the-smashed-window/" + deed})
@@ -10039,14 +10071,15 @@ def selftest():
     fan = byid.get("shard_a_ground")
     check("accept/the-smashed-window-has-glass-in-its-frame-and-on-the-pavement",
           gl is not None and teeth is not None and fan is not None
-          and len(teeth["faces"]) > 100 and len(fan["faces"]) == PAVEMENT_SHARDS,
+          and len(teeth["faces"]) > 100 and len(fan["faces"]) == PAVEMENT_SHARDS + DISPLAY_SHARDS,
           "glazing=%s teeth=%s fan=%s" % (gl is not None, teeth is not None, fan is not None))
     if gl is not None and teeth is not None and fan is not None:
         inside = all(gl["x0"] - 1e-6 <= v[0] <= gl["x1"] + 1e-6 and gl["z0"] - 1e-6 <= v[2] <= gl["z1"] + 1e-6
                      for v in teeth["verts"])
         check("accept/the-glass-left-in-the-frame-stays-inside-the-frame", inside)
         kerb = ROAD_HALF_M + KERB_W_M
-        onpave = all(kerb <= v[1] <= STREET_FRONTAGE_M for v in fan["verts"])
+        # or on the display's floor behind the pane (_display_glass, up to 0.45 m in, a piece's reach beyond)
+        onpave = all(kerb <= v[1] <= STREET_FRONTAGE_M + 0.6 for v in fan["verts"])
         check("accept/the-glass-on-the-ground-lies-on-the-pavement-before-the-window", onpave,
               "y range %.3f..%.3f" % (min(v[1] for v in fan["verts"]), max(v[1] for v in fan["verts"])))
     # THE GATED CLUTTER (29 September). Its colours here are the models' own,

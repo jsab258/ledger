@@ -9145,6 +9145,16 @@ namespace
 		}
 		else if (Step == 2 && T - At > 1.0)
 		{
+			Put(G.X - 1.2, G.Y + Out * 3.2, G.X, G.Y);   // the pavement, by day
+			Step = 20; At = T;
+		}
+		else if (Step == 20 && T - At > 3.0)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(SmashDir, FString::Printf(TEXT("smash-near-day-%d.png"), Sz.X)), true, false);
+			Step = 21; At = T;
+		}
+		else if (Step == 21 && T - At > 1.0)
+		{
 			Put(G.X - 4.0, G.Y + Out * 8.5, G.X, G.Y);   // across the road, looking at the window
 			Step = 3; At = T;
 		}
@@ -9155,7 +9165,18 @@ namespace
 			if (Step == 3) { At = T - 5.0; }
 			++Step;
 		}
+		// THE GLASS FROM THE PAVEMENT (6 November, n02-9-window-break): from across the road the kiosk hides it
 		else if (Step == 6 && T - At > 172.0)
+		{
+			Put(G.X - 1.2, G.Y + Out * 3.2, G.X, G.Y);
+			Step = 7; At = T;
+		}
+		else if (Step == 7 && T - At > 3.0)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(SmashDir, FString::Printf(TEXT("smash-near-%d.png"), Sz.X)), true, false);
+			Step = 8; At = T;
+		}
+		else if (Step == 8 && T - At > 2.0)
 		{
 			UE_LOG(LogTemp, Display, TEXT("LedgerSceneShot: smash done in %s"), *SmashDir);
 			FPlatformMisc::RequestExit(false);

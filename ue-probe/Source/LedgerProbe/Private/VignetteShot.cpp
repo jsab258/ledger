@@ -7392,14 +7392,18 @@ namespace
 			// THE SHOP GLASS, SEE-THROUGH: its own material, its colour as the
 			// tint the room is seen through, and the look file's opacity and
 			// roughness. Nothing else on this row applies to it.
-			if (GLook.bGlassSeeThrough && Rw.Base == "glass" && GGlassMaterial != nullptr)
+			// AND THE GLASS LEFT IN A SMASHED FRAME (6 November, n02-9-window-break): the pane's own, not an opaque near-black,
+			// which read as black zigzags; "glass" itself would let the mend's ShowStreetGlassNear bring it back.
+			const bool bLeftGlass = Rw.Base == "shard_a_glass" || Rw.Base == "shard_r_glass";
+			if (GLook.bGlassSeeThrough && (Rw.Base == "glass" || bLeftGlass) && GGlassMaterial != nullptr)
 			{
 				UMaterialInstanceDynamic* G = UMaterialInstanceDynamic::Create(GGlassMaterial, A);
 				if (G != nullptr)
 				{
 					G->SetVectorParameterValue(FName(TEXT("GlassTint")),
 						FLinearColor((float)Rw.R, (float)Rw.G, (float)Rw.B, 1.0f));
-					G->SetScalarParameterValue(FName(TEXT("GlassOpacity")), (float)GLook.GlassOpacity);
+					// what is left is dirty and catches the light, where a clean pane's own 0.06 left no teeth to see (the first try's pictures)
+					G->SetScalarParameterValue(FName(TEXT("GlassOpacity")), bLeftGlass ? 0.3f : (float)GLook.GlassOpacity);
 					G->SetScalarParameterValue(FName(TEXT("GlassRoughness")), (float)GLook.GlassRoughness);
 					G->SetScalarParameterValue(FName(TEXT("GlassSpecular")), 1.0f);
 					GGlassMids.Add(G);

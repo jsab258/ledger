@@ -4204,9 +4204,9 @@
    "material": "shard_a_edge",
    "base_material": "shard_a_edge",
    "linear_rgb": [
-    0.32,
-    0.46,
-    0.4
+    0.7,
+    0.82,
+    0.77
    ],
    "roughness": 0.2,
    "surface_map": null,
@@ -4221,18 +4221,18 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_a",
-   "faces": 143
+   "faces": 286
   },
   {
    "mesh": "street_shard_a_glass",
    "material": "shard_a_glass",
    "base_material": "shard_a_glass",
    "linear_rgb": [
-    0.018,
-    0.026,
-    0.024
+    0.34,
+    0.4,
+    0.38
    ],
-   "roughness": 0.04,
+   "roughness": 0.0,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -4252,11 +4252,11 @@
    "material": "shard_a_ground",
    "base_material": "shard_a_ground",
    "linear_rgb": [
-    0.09,
-    0.12,
-    0.11
+    0.62,
+    0.7,
+    0.67
    ],
-   "roughness": 0.03,
+   "roughness": 0.3,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -4269,16 +4269,16 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_a",
-   "faces": 90
+   "faces": 135
   },
   {
    "mesh": "street_shard_r_edge",
    "material": "shard_r_edge",
    "base_material": "shard_r_edge",
    "linear_rgb": [
-    0.32,
-    0.46,
-    0.4
+    0.7,
+    0.82,
+    0.77
    ],
    "roughness": 0.2,
    "surface_map": null,
@@ -4293,18 +4293,18 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 136
+   "faces": 272
   },
   {
    "mesh": "street_shard_r_glass",
    "material": "shard_r_glass",
    "base_material": "shard_r_glass",
    "linear_rgb": [
-    0.018,
-    0.026,
-    0.024
+    0.34,
+    0.4,
+    0.38
    ],
-   "roughness": 0.04,
+   "roughness": 0.0,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -4324,11 +4324,11 @@
    "material": "shard_r_ground",
    "base_material": "shard_r_ground",
    "linear_rgb": [
-    0.09,
-    0.12,
-    0.11
+    0.62,
+    0.7,
+    0.67
    ],
-   "roughness": 0.03,
+   "roughness": 0.3,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -4341,7 +4341,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 90
+   "faces": 135
   },
   {
    "mesh": "street_sign_a_board_fish",
