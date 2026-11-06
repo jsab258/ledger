@@ -1,11 +1,36 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Friday 6 November, 14:27",
+ "kicker": "LEDGER · Needs you · 1 open · updated Friday 6 November, 17:23",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "dispatcher-p280-fetch-2026-11-06",
+   "name": "The dispatcher's voice, your pick p280, needs that speaker's recordings, which are not on this PC. May a session download 16 short sound files for speaker p280 only, about 4 MB, from the University of Edinburgh's VCTK corpus (CC BY 4.0, on the allowed list)? Only those bytes are read from the 11.7 GB archive.",
+   "links": [
+    {
+     "label": "The corpus at Edinburgh",
+     "url": "https://datashare.ed.ac.uk/server/api/core/bitstreams/535f4286-e54c-4038-838c-a02285e32cb2/content"
+    }
+   ],
+   "recommendation": "Yes: same source and method as Darren's and the other voices, and the voice you picked. No means she keeps the August voice until asked again. Tapping starts nothing else.",
+   "added": "2026-11-06 17:23",
+   "pictures": [],
+   "options": [
+    [
+     "yes",
+     "Yes, download p280's 16 files (recommended)"
+    ],
+    [
+     "no",
+     "No, not now"
+    ]
+   ]
+  }
+ ]
 }

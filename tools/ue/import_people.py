@@ -28,6 +28,7 @@ import time
 
 PEOPLE_REL = "production/assets/people"
 PACKAGE_ROOT = "/Game/Ledger/People"
+GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
 
 
 def repo_root():
@@ -37,6 +38,13 @@ def repo_root():
 def stems(root):
     return sorted(os.path.splitext(os.path.basename(p))[0]
                   for p in glob.glob(os.path.join(root, PEOPLE_REL, "*.glb")))
+
+
+def glb_path(root, stem):
+    """The game inputs' copy when there is one (over 1 MB, git refuses a changed glb:
+    tools/art-recipes/person_recolour.py), else the checkout's. Never by date: a fresh checkout looks newest."""
+    there = os.path.join(GAME_INPUTS, PEOPLE_REL, stem + ".glb")
+    return there if os.path.isfile(there) else os.path.join(root, PEOPLE_REL, stem + ".glb")
 
 
 def extra_anim_path(stem, label):
@@ -114,7 +122,7 @@ def main():
             if lib.does_directory_exist(dest):
                 lib.delete_directory(dest)
             task = unreal.AssetImportTask()
-            task.set_editor_property("filename", os.path.join(root, PEOPLE_REL, stem + ".glb"))
+            task.set_editor_property("filename", glb_path(root, stem))
             task.set_editor_property("destination_path", dest)
             task.set_editor_property("automated", True)
             task.set_editor_property("replace_existing", True)

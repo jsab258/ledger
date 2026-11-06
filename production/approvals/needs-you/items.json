@@ -272,6 +272,29 @@
    ],
    "state": "done",
    "closed": "2026-11-05 21:22, answered yes (21:06): one day's trial, under Monday's order"
+  },
+  {
+   "id": "dispatcher-p280-fetch-2026-11-06",
+   "added": "2026-11-06 17:23",
+   "text": "The dispatcher's voice, your pick p280, needs that speaker's recordings, which are not on this PC. May a session download 16 short sound files for speaker p280 only, about 4 MB, from the University of Edinburgh's VCTK corpus (CC BY 4.0, on the allowed list)? Only those bytes are read from the 11.7 GB archive.",
+   "links": [
+    {
+     "label": "The corpus at Edinburgh",
+     "url": "https://datashare.ed.ac.uk/server/api/core/bitstreams/535f4286-e54c-4038-838c-a02285e32cb2/content"
+    }
+   ],
+   "recommendation": "Yes: same source and method as Darren's and the other voices, and the voice you picked. No means she keeps the August voice until asked again. Tapping starts nothing else.",
+   "options": [
+    [
+     "yes",
+     "Yes, download p280's 16 files (recommended)"
+    ],
+    [
+     "no",
+     "No, not now"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
