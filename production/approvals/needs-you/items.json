@@ -2,6 +2,28 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "keep-monday-share-2026-11-06",
+   "added": "2026-11-06 22:10",
+   "text": "Your idea of this evening, by the advisor: keep 10% of the week for Monday morning, every week? The session paces itself to a straight line from 0% at Monday 13:00 to 90% the next Monday 07:00 (about 58% at Friday 21:00), checked each hour. Up to 3 points ahead: carry on. 3 to 6 ahead: at most two helpers. More than 6 ahead: finish the item in hand and start no new session until back on the line. Behind: full pace within your rules. Monday 07:00 to 13:00: full pace, the last 10% shared with you.",
+   "links": [],
+   "recommendation": "Yes: the week reaches Monday without running out early. 62% at 22:10, against about 58% on the line.",
+   "options": [
+    [
+     "yes",
+     "Yes, keep 10% (recommended)"
+    ],
+    [
+     "five",
+     "Yes, but keep 5%"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "hourly-round-clock-2026-11-06",
    "added": "2026-11-06 12:45",
    "text": "At the PC: in the Claude app, Scheduled in the sidebar, open \"LEDGER: the hourly fresh session\", edit its schedule to every hour at 15 minutes past, save, then tap done. Sessions may not change a schedule themselves, and without this nothing starts between 00:15 and 05:15.",

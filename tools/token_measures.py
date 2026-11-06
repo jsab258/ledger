@@ -2,6 +2,7 @@
 """SIX MEASURES OF A DAY'S SPEND, READ FROM THE SESSION LOGS, FOR THE MORNING'S OVERVIEW. Measures only; nothing is changed by them.
 
     python tools/token_measures.py 2026-11-05 [--allowance 49]   # a short table for the overview, then the detail
+    python tools/token_measures.py --spend 21:22   # list-price dollars since then, for the hourly row
     python tools/token_measures.py --thrown "the hill's second crowns" --since 09:30 [--until 10:10]  # record a try thrown away
     python tools/token_measures.py --selftest
 
@@ -407,6 +408,14 @@ def record_thrown(a):
     return 0
 
 
+def spend_since(hhmm):
+    """The session's and helpers' list-price dollars from HH:MM today until now, for the hourly row (the advisor's message 18)."""
+    since = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d ") + hhmm, "%Y-%m-%d %H:%M")
+    steps = [s for path, _ in logs_touched(since) for s in read_events(path)["steps"] if s["t"] >= since]
+    print("spend since %s: US$%.2f" % (hhmm, sum(step_cost(s["u"], s["model"]) for s in steps)))
+    return 0
+
+
 def selftest():
     png = base64.b64encode(b"\x89PNG\r\n\x1a\n" + b"\0\0\0\rIHDR" + struct.pack(">II", 3136, 1568)).decode()
     usage = {"input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 100, "cache_creation_input_tokens": 0}
@@ -438,6 +447,8 @@ def main(a):
         return selftest()
     if "--thrown" in a:
         return record_thrown(a)
+    if "--spend" in a:
+        return spend_since(a[a.index("--spend") + 1])
     day = datetime.datetime.strptime(a[0], "%Y-%m-%d") if a else datetime.datetime.combine(datetime.date.today() - datetime.timedelta(days=1), datetime.time())
     return overview(day, a[a.index("--allowance") + 1] if "--allowance" in a else None)
 

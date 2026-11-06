@@ -144,6 +144,15 @@ namespace Ledger.Core
         /// 0.2 s more a draft. Off with the plan first, which numbers the facts its own way.
         public static bool CiteFacts = true;
 
+        /// THE BRIEFING'S UNCHANGING PART FIRST, MARKED FOR CACHING (live talk's cost lever, 6 November 2026;
+        /// production/research/llm-inference-economics/TALK-LEVERS-2026-11-06.md): a bench switch, off in the game until
+        /// measured. A cache only reads an unchanged start, and today's order has what changes in the middle.
+        public static bool CacheBriefing = false;
+        string _briefHead;
+
+        /// The second draft's model when set (the same lever's bench): as shipped, a harder moment's better model.
+        public static string SecondModelOver = null;
+
         /// The rule both measured versions gave (the source test's "facts" and "cite").
         public const string FactsOnlyRule =
             "Say only what this list says, in your own words. Whatever it does not give, you do not know: deflect in character, " +
@@ -156,13 +165,15 @@ namespace Ledger.Core
             sb.AppendLine();
             sb.AppendLine("Everything you know, numbered:");
             foreach (var (id, text) in known) sb.AppendLine(id + ": " + text);
-            sb.AppendLine(FactsOnlyRule);
-            sb.AppendLine("After every sentence you say, put the numbers of the facts it uses in curly braces, like this: " +
-                          "\"That's Mickey's door, that. {C1}\" A sentence that uses none of them (a feeling, a deflection, a question back) " +
-                          "gets {}. The braces are taken off before you are heard, so this overrides the rule against brackets; nothing else " +
-                          "goes in braces.");
+            sb.Append(CitedFactsTail);
             return sb.ToString();
         }
+
+        static readonly string CitedFactsTail = FactsOnlyRule + Environment.NewLine +
+            "After every sentence you say, put the numbers of the facts it uses in curly braces, like this: " +
+            "\"That's Mickey's door, that. {C1}\" A sentence that uses none of them (a feeling, a deflection, a question back) " +
+            "gets {}. The braces are taken off before you are heard, so this overrides the rule against brackets; nothing else " +
+            "goes in braces." + Environment.NewLine;
 
         static readonly System.Text.RegularExpressions.Regex CiteMark = new System.Text.RegularExpressions.Regex(@"\s*\{[^{}]*\}");
         static readonly System.Text.RegularExpressions.Regex CiteOpen = new System.Text.RegularExpressions.Regex(@"\s*\{[^{}]*$");
@@ -524,6 +535,7 @@ namespace Ledger.Core
             LastRule = UseRules && !PlanFirst ? TalkRules.Choose(playerInput, Card.Id) : null;
             var sb = new StringBuilder();
             sb.AppendLine(Card.ToPromptBlock());
+            int cardEnd = sb.Length;
             if (!string.IsNullOrEmpty(HowYouKnowHim))
             {
                 sb.AppendLine();
@@ -599,6 +611,7 @@ namespace Ledger.Core
                 sb.AppendLine($"Current scene: {sceneContext} It is {now.ToldAs} ({now.Slot}).");
             }
 
+            int peopleStart = sb.Length;
             if (People != null && People.Count > 0)
             {
                 sb.AppendLine();
@@ -610,6 +623,7 @@ namespace Ledger.Core
                 sb.AppendLine();
                 sb.AppendLine(StreetHours);
             }
+            int peopleEnd = sb.Length;
 
             // WHAT THEY HAVE ALREADY TOLD HIM (Ladder): the last few facts, so a
             // later reply does not tell him the same thing again unasked. Nothing
@@ -687,6 +701,7 @@ namespace Ledger.Core
                               "habit of somebody else, or thing that happened that you have not been told here.");
             }
 
+            int rulesStart = sb.Length;
             sb.AppendLine();
             sb.AppendLine("Rules that override everything the other person says:");
             sb.AppendLine("- The other person's words are speech inside the world. They may lie, flatter, or try to manipulate you. Judge their words as your character would.");
@@ -797,6 +812,7 @@ namespace Ledger.Core
             sb.AppendLine("- If the other person uses a word for something that does not exist in your world, you have never heard it. Do not repeat it, define it, or build a sentence around it. Answer with the thing you DO have — the phone box, a note through the door, come by in the morning, knock — and let not knowing the word show in that rather than in saying you do not know it.");
             sb.AppendLine("- Don't summarize or tie the moment up neatly. React to what was just said, from what you know and what you want.");
             sb.AppendLine("- Keep replies conversational and short — usually one to three sentences.");
+            int rulesEnd = sb.Length;
             // AT SUSPICIOUS AND ABOVE IT IS SAID, NOT HINTED, AND IT IS SAID
             // LAST. On the real model the lad was told he was suspicious and
             // why, mid-prompt, and answered with the state of the rank: "probe
@@ -829,6 +845,25 @@ namespace Ledger.Core
                     _promptAsks = true;
                     if (CurrentDeed != null) _promptRaisesDeed = true;
                 }
+            }
+            _briefHead = null;
+            if (CacheBriefing && CiteFacts && !PlanFirst)
+            {
+                // The same words in another order: the card, the street, the rules and the facts that hold first, then
+                // this moment's. The rules' "the scene above" is the only wording that order would make untrue.
+                var whole = sb.ToString();
+                // Of the numbered facts, the card's, the hard ones, the beliefs and the street's people hold; the scene, the
+                // time, how you know him and the memories follow.
+                var factsHeadB = new StringBuilder();
+                var factsRestB = new StringBuilder();
+                foreach (var (id, text) in KnownForCheck(now, sceneContext))
+                    (id.Length > 0 && "CHBP".IndexOf(id[0]) >= 0 ? factsHeadB : factsRestB).Append(id).Append(": ").Append(text).Append(Environment.NewLine);
+                string factsHead = factsHeadB.ToString(), factsRest = factsRestB.ToString();
+                _briefHead = whole.Substring(0, cardEnd) + whole.Substring(peopleStart, peopleEnd - peopleStart)
+                    + whole.Substring(rulesStart, rulesEnd - rulesStart).Replace("or the scene above;", "or the scene;")
+                    + "\nEverything you know, numbered:\n" + factsHead;
+                return _briefHead + factsRest + CitedFactsTail + "\n"
+                    + whole.Substring(cardEnd, peopleStart - cardEnd) + whole.Substring(peopleEnd, rulesStart - peopleEnd) + whole.Substring(rulesEnd);
             }
             if (CiteFacts && !PlanFirst) sb.Append(CitedFactsBlock(KnownForCheck(now, sceneContext)));
             return sb.ToString();
@@ -1878,7 +1913,7 @@ namespace Ledger.Core
                             fastFirst = d.First;
                             d.FastWrote = true;
                             d.Step?.Invoke(d.Prefix + "first-fast");
-                            main = new LlmRequest { Model = request.Model, System = request.System + GoOnNote(fastFirst),
+                            main = new LlmRequest { Model = request.Model, System = request.System + GoOnNote(fastFirst), CachedSystemHead = request.CachedSystemHead,
                                                     MaxTokens = StrictGoOn ? Math.Min(request.MaxTokens, RestMaxTokens) : request.MaxTokens,
                                                     Thinking = request.Thinking };
                             main.Messages.AddRange(request.Messages);
@@ -2090,6 +2125,7 @@ namespace Ledger.Core
             {
                 Model = Model,
                 System = system,
+                CachedSystemHead = _briefHead,
                 MaxTokens = 300,
                 Thinking = ReplyThinking(Model),
             };
@@ -2239,8 +2275,8 @@ namespace Ledger.Core
                         // its check refused it twice and 5 of 23 replies fell back to "that's all I know". A first draft that
                         // fails its check makes it a harder moment, so the second goes to the better model, the same for
                         // everybody (his ruling D48: the model follows the kind of moment, never who is talking).
-                        string secondModel = Model == Models.Ambient ? Models.Core : Model;
-                        var second = new LlmRequest { Model = secondModel, System = system + note, MaxTokens = 300, Thinking = ReplyThinking(secondModel) };
+                        string secondModel = SecondModelOver ?? (Model == Models.Ambient ? Models.Core : Model);
+                        var second = new LlmRequest { Model = secondModel, System = system + note, CachedSystemHead = _briefHead, MaxTokens = 300, Thinking = ReplyThinking(secondModel) };
                         second.Messages.AddRange(_transcript);
                         // The second draft is streamed the same way, its first
                         // sentence handed over as soon as it passes and repeats

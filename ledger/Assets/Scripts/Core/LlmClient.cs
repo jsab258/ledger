@@ -37,6 +37,9 @@ namespace Ledger.Core
         /// The system text marked for caching (speech's third try, 4 November 2026): the same instructions sent again
         /// within five minutes are read from the service's cache, which is quicker to begin and costs a tenth.
         public bool CacheSystem;
+        /// The start of the system text marked for caching, the rest following uncached (live talk's cost lever,
+        /// 6 November 2026): System stays the whole text, so every other client reads it as before.
+        public string CachedSystemHead;
     }
 
     public class LlmResponse
@@ -382,16 +385,23 @@ namespace Ledger.Core
             };
             if (stream) body["stream"] = true;
             if (!string.IsNullOrEmpty(request.System))
-                body["system"] = cache && request.CacheSystem ? (object)new List<object> { Block(request.System, true) } : request.System;
+                body["system"] = cache && !string.IsNullOrEmpty(request.CachedSystemHead) && request.System.StartsWith(request.CachedSystemHead, StringComparison.Ordinal)
+                    ? new List<object> { Block(request.CachedSystemHead, true), Block(request.System.Substring(request.CachedSystemHead.Length), false) }
+                    : cache && request.CacheSystem ? (object)new List<object> { Block(request.System, true) } : request.System;
             AddOptions(body, request);
             return body;
         }
+
+        /// The cache's reads and writes over the run, for a bench's end line.
+        public static long CacheReadTotal, CacheWriteTotal;
 
         /// The usage's input tokens as billed, the cache's writes and reads counted at their price (LlmResponse.Billed).
         static void ReadInput(LlmResponse r, Dictionary<string, object> usage)
         {
             r.CacheWriteTokens = MiniJson.GetInt(usage, "cache_creation_input_tokens");
             r.CacheReadTokens = MiniJson.GetInt(usage, "cache_read_input_tokens");
+            System.Threading.Interlocked.Add(ref CacheReadTotal, r.CacheReadTokens);
+            System.Threading.Interlocked.Add(ref CacheWriteTotal, r.CacheWriteTokens);
             r.InputTokens = LlmResponse.Billed(MiniJson.GetInt(usage, "input_tokens"), r.CacheWriteTokens, r.CacheReadTokens);
         }
 

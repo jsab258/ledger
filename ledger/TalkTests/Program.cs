@@ -450,6 +450,28 @@ namespace Ledger.TalkTests
             }
             finally { ConversationEngine.Ladder = false; }
 
+            // THE BRIEFING'S UNCHANGING PART FIRST (live talk's cost lever, 6 November 2026): the same lines in another
+            // order, the head the same from line to line, and off as shipped.
+            {
+                string shipped = Relayed("lena").BuildSystemPrompt("Who's got the keys?", Now, Scene);
+                try
+                {
+                    ConversationEngine.CacheBriefing = true;
+                    var first = Relayed("lena");
+                    string moved = first.BuildSystemPrompt("Who's got the keys?", Now, Scene);
+                    var request = new LlmRequest { Model = Models.Ambient, System = moved, CachedSystemHead = moved.Substring(0, moved.IndexOf("Everything you know", StringComparison.Ordinal)) };
+                    using var cacher = new AnthropicClient("not-a-key-never-sent");
+                    Check(MiniJson.Serialize(cacher.Body(request, true)).Contains("\"cache_control\""), "a cached head goes marked for caching");
+                    var lines = new Func<string, List<string>>(s => s.Split('\n').Select(l => l.Trim().Replace("or the scene above;", "or the scene;")).Where(l => l.Length > 0).OrderBy(l => l, StringComparer.Ordinal).ToList());
+                    Check(lines(moved).SequenceEqual(lines(shipped)), "moved, the briefing holds the same lines");
+                    string other = Relayed("lena").BuildSystemPrompt("Anything else on tonight?", new GameTime(Now.Day, Now.Hour + 1, 0), Scene);
+                    string stable = moved.Substring(0, moved.IndexOf("Rules that override", StringComparison.Ordinal));
+                    Check(other.StartsWith(stable, StringComparison.Ordinal), "the head holds from line to line");
+                }
+                finally { ConversationEngine.CacheBriefing = false; }
+                Check(Relayed("lena").BuildSystemPrompt("Who's got the keys?", Now, Scene) == shipped, "off, the prompt is word for word as shipped");
+            }
+
             // 10. With the ladder off, nothing changes: "that's all I know", as today.
             var off = Relayed("rocco");
             string stock = await RefusedTurn(off, "Who's got the keys to this place?", H(Card("rocco"), StreetFacts.Held("door", "rocco")));

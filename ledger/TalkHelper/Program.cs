@@ -1590,9 +1590,10 @@ static class Program
             };
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
-        // THE CHECK'S FIXED TEXT CACHED, OFF BY DEFAULT (speech's third try, 4 November 2026: no time saved; ClaimCheck.
-        // CacheChecks): LEDGER_CHECK_CACHE=1 switches it on, for the cost lever's measured run.
-        if (Environment.GetEnvironmentVariable("LEDGER_CHECK_CACHE") == "1") ClaimCheck.CacheChecks = true;
+        // THE BRIEFING'S UNCHANGING PART AND THE CHECK'S FIXED TEXT CACHED, ON BY DEFAULT (live talk's cost lever, 6 November
+        // 2026: 60 held lines an arm, US$0.22 against 0.57, no time lost, a blind read level; production/research/
+        // llm-inference-economics/TALK-LEVERS-2026-11-06.md): LEDGER_TALK_CACHE=0 sends them as before.
+        if (Environment.GetEnvironmentVariable("LEDGER_TALK_CACHE") != "0") { ConversationEngine.CacheBriefing = true; ClaimCheck.CacheChecks = true; }
         // THE FAST CHECKER, ON BY DEFAULT (his answer of 28 October 2026: "the fast checker on, at the open cut-off";
         // measured live 27 October night, production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md): the talk
         // program as published carries checker/fast-checker.json and its server beside it (tools/publish-talk-helper.ps1);
