@@ -2058,7 +2058,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 130
+   "faces": 336
   },
   {
    "mesh": "street_fascia_bare_timber",
@@ -3512,7 +3512,7 @@
     0.045,
     0.13
    ],
-   "roughness": 0.5,
+   "roughness": 0.85,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -3536,7 +3536,7 @@
     0.17,
     0.08
    ],
-   "roughness": 0.6,
+   "roughness": 0.88,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -3560,7 +3560,7 @@
     0.355,
     0.33
    ],
-   "roughness": 0.55,
+   "roughness": 0.88,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -3584,7 +3584,7 @@
     0.025,
     0.02
    ],
-   "roughness": 0.5,
+   "roughness": 0.85,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -4609,7 +4609,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1812
+   "faces": 1818
   },
   {
    "mesh": "street_stone",

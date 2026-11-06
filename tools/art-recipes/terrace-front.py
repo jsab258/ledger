@@ -553,10 +553,11 @@ MATERIALS = (
     ("shard_a_ground", (0.620, 0.700, 0.670), 0.30),
     # THE GROUND'S LITTER AND GUM (_ground_scatter, 3 November): wet, dirtied paper (sRGB about 164), brown
     # kraft, two plain wrapper colours with no print, and trodden gum a shade darker than the wet flags
-    ("litter_paper", (0.360, 0.355, 0.330), 0.55),
-    ("litter_kraft", (0.260, 0.170, 0.080), 0.60),
-    ("litter_red", (0.220, 0.025, 0.020), 0.50),
-    ("litter_blue", (0.025, 0.045, 0.130), 0.50),
+    # 6 November: rougher, since the shine on each flat face read as hard faceted gems (two final reviewers)
+    ("litter_paper", (0.360, 0.355, 0.330), 0.88),
+    ("litter_kraft", (0.260, 0.170, 0.080), 0.88),
+    ("litter_red", (0.220, 0.025, 0.020), 0.85),
+    ("litter_blue", (0.025, 0.045, 0.130), 0.85),
     ("gum_trodden", (0.050, 0.048, 0.044), 0.75),
     ("shard_r_glass", (0.340, 0.400, 0.380), 0.0),
     ("shard_r_edge",  (0.700, 0.820, 0.770), 0.20),
@@ -2800,7 +2801,8 @@ RISE_FIRST_WALL_M = 2.5
 #: placed: the satellites a British dish looked at in 1990 sit low in the
 #: southern sky to the south-east, so on a front wall it looks along the
 #: wall to the south, tipped up about 25 degrees. No make and no mark.
-DISH_D_M, DISH_DEPTH_M, DISH_STANDOFF_M, DISH_SIDES = 0.60, 0.07, 0.35, 12
+# 6 November: 12 sides read as a faceted placeholder at the hook camera (two final reviewers); 48 reads round.
+DISH_D_M, DISH_DEPTH_M, DISH_STANDOFF_M, DISH_SIDES = 0.60, 0.07, 0.35, 48
 DISH_AT = (8.35, 5.60)          # street x and height, on east_parade bay 0
 DISH_AIM = (-0.85, -0.30, 0.43)  # along the wall to the south, out, and up
 
@@ -2914,8 +2916,10 @@ def _dish(out):
         # THE BOWL: the rim stands forward of the centre by the dish's depth,
         # so the back ring is the rim pulled back along the aim.
         ring_back.append(tuple(e[i] - DISH_DEPTH_M * n[i] for i in range(3)))
-    back_c = tuple(c[i] - DISH_DEPTH_M * 0.4 * n[i] for i in range(3))
-    verts = ring_front + ring_back + [c, back_c]
+    # THE BOWL'S CENTRE SET BACK from the rim (6 November): at the rim's own plane the dish drew as a flat disc.
+    bowl_c = tuple(c[i] - DISH_DEPTH_M * 0.65 * n[i] for i in range(3))
+    back_c = tuple(c[i] - DISH_DEPTH_M * 1.4 * n[i] for i in range(3))
+    verts = ring_front + ring_back + [bowl_c, back_c]
     m = DISH_SIDES
     faces = []
     for k in range(m):
@@ -2930,11 +2934,13 @@ def _dish(out):
     # holds the receiver out in front of it.
     _rod(out, "satellite_dish_bracket", "steel_dark",
          (x, wall_y, z - 0.05), back_c, 0.04, "the-wall-bracket")
-    lnb = tuple(c[i] + 0.42 * n[i] - 0.18 * v[i] for i in range(3))
+    # 6 November: from the rim to a dark receiver before the bowl's centre. Started inside the bowl and held off
+    # centre, the arm was seen end-on from the hook camera and read as a black wedge, a clock's hand.
+    lnb = tuple(c[i] + 0.30 * n[i] for i in range(3))
     _rod(out, "satellite_dish_arm", "steel_dark",
-         tuple(c[i] - 0.25 * v[i] for i in range(3)), lnb, 0.02, "the-receiver-arm")
-    _rod(out, "satellite_dish_receiver", "dish_grey",
-         lnb, tuple(lnb[i] - 0.10 * n[i] for i in range(3)), 0.06, "the-receiver")
+         tuple(c[i] - 0.98 * r * v[i] for i in range(3)), lnb, 0.018, "the-receiver-arm")
+    _rod(out, "satellite_dish_receiver", "steel_dark",
+         lnb, tuple(lnb[i] - 0.10 * n[i] for i in range(3)), 0.065, "the-receiver")
 
 
 #: REPAIR PATCHES IN OLDER MASONRY, which is D06's own phrase for the Hook -
