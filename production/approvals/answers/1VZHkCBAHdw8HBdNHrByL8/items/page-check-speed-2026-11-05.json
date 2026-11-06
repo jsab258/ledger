@@ -1,0 +1,9 @@
+{
+  "added": "2026-11-05 09:59",
+  "closed": "2026-11-05 11:23, answered yes (10:04): the one try made at 11:23, refused again; the line goes to him by hand, or stays off",
+  "id": "page-check-speed-2026-11-05",
+  "links": [],
+  "recommendation": "Yes. If it is refused again, you get the exact line to change by hand. No web link: the answer is this page.",
+  "state": "done",
+  "text": "The new check that makes the session read this page on time works, but every step now waits about a second, about 20 minutes a day. A faster version (about a tenth of a second) is ready and needs one line changed in the project's settings, which the permission check refused to let the session do alone. May the session try that one line again on your yes?"
+}

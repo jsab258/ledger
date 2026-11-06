@@ -1,0 +1,9 @@
+{
+  "added": "2026-11-05 11:23",
+  "closed": "2026-11-05 12:23, He changed the line by hand (12:15); settings valid, hook fired late and stayed silent on time, 0.13 s a step",
+  "id": "page-check-hand-2026-11-05",
+  "links": [],
+  "recommendation": "Leave it off. No web link: the answer is this page.",
+  "state": "done",
+  "text": "The one line for the faster page check was refused again; only your own hands can change it. It saves about 20 minutes of waiting a day and no tokens; the advisor says it is not worth your trouble. To do it: in Notepad open C:\\Users\\Jafar\\ledger-local\\.claude\\settings.json, and on line 22 replace page_read_hook.py with page_read_hook.sh and the word python with sh, then save."
+}
