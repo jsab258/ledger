@@ -8,14 +8,14 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [x] 1. Speech: set aside, bar missed (run F 2.02 s); the third try saved no time (n02-3-1-speech).
 - [ ] 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*).
-- [ ] 3. Office passed packaged (4 Nov); sitting, the Stutter to go (n02-3-3-*).
+- [ ] 3. Office passed packaged (4 Nov); sitting set aside, listed (6 Nov); the Stutter to go (n02-3-3-*).
 - [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
 
 ## Beside it
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE: packaged walk 15 of 15, nobody frozen; hook day and night passed review; people-apart mended, packaged tonight; the sit's film next.
+STATE: packaged walk 15 of 15, nobody frozen; the corner's views passed review; people-apart mended, packaged tonight; the exit's brief filled.
 
 ## Handovers
 

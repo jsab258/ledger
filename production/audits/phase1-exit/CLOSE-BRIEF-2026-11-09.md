@@ -10,14 +10,14 @@ Filled in before it is used (each marked "to add"): the night's build number, th
 
 - The office, packaged, by day and by night, with their reviews: F:/LedgerTools/gate/new/office/2026-11-04-packaged-day and -night.
 - The frontage: production/audits/gate-ritas-front/GATE.md and his answer (the 22 October brief's paths).
-- The three views: the latest production/previews/morning-hook-day-, morning-reverse-day- and morning-night- pictures (to add: whether editor or packaged), beside production/previews/hook-sheet-2026-10-05.jpg.
-- The corner's packaged pictures from its midweek page on: to add.
-- The tester's latest walk: production/playtest/nightly/ (to add), FINDINGS.md.
+- The three views: the latest production/previews/morning-hook-day-, morning-reverse-day- and morning-night- pictures (taken in the editor, so screens; the corner's packaged pictures below count), beside production/previews/hook-sheet-2026-10-05.jpg.
+- The corner's packaged pictures, all five cameras by day and night, on the build of 3641d53: F:/LedgerTools/gate/new/corner-packaged-2026-11-06, with its reviews review-hook-day.json, review-hook-night.json, review-reverse.json. A later build's: to add on the 9th.
+- The tester's latest walk: production/playtest/nightly/2026-11-06.md (15 of 15; the latest on the 9th to add), FINDINGS.md.
 
 ## Exit B: one complete Tom and one speaker, walking, sitting and turning
 
 - The outfit: F:/LedgerTools/gate/new/tom-outfit/2026-11-04-packaged/review.md; production/art/clothing/tom-outfit/COLLAR-BACK-DIAGNOSIS-2026-11-04.md; the order's lines n02-tom-jacket, -jumper, -jeans, -boots.
-- Sitting: the packaged film after the eyes' level (to add), beside the film F:/LedgerTools/tmp/ai-tester/film/2026-11-05-1135.
+- Sitting: the packaged film after the eyes' level, F:/LedgerTools/tmp/ai-tester/film/2026-11-06-0553 (F:/LedgerTools/gate/new/sit-packaged-2026-11-06, verdict.json, film-marks.json; its talk-open stage fails on the sit's own route, Sheila out of reach, as in the editor; the night walk's passes), beside the film F:/LedgerTools/tmp/ai-tester/film/2026-11-05-1135.
 - His walk: F:/LedgerTools/gate/new/tom-walk-film-2026-11-05/walk.gif (packaged, the 5 November build; about 8 frames a second, 15 s; on 22 October about half his steps slid). Its first 8 s of walking are mostly against Ron's back, so judge the feet from the walk past Mickey's front, the walk back and the run. The cast's white base layers show; they are not for judging here. The walk's measure on the fixed step: F:/LedgerTools/tmp/tom-walk-proof-2026-11-05/result.txt (worst join 13.68 cm against the check's limit, failed; Epic's mannequin on the same route 13.94 at the stop, 20.23 on the loop, Tom 13.68 and 20.78, so the number is mostly the route and the reading: judge by eye).
 - Hair: RULINGS.md's 3 November line; the crown's tries in DECISIONS.md (search "crown").
 - The body and animation the game plays: the night walk's log lines (to add).
@@ -29,7 +29,7 @@ Filled in before it is used (each marked "to add"): the night's build number, th
 
 ## Exit D: P1 packaged and the render and voice pairing's headroom
 
-- production/research/pre-production/p1-packaged/runs.jsonl: every capture; the raw frames under F:/LedgerTools/tmp/p1-packaged/. Tonight's perf step: to add.
+- production/research/pre-production/p1-packaged/runs.jsonl: every capture; the raw frames under F:/LedgerTools/tmp/p1-packaged/. The 5 to 6 November perf step, build 3641d53: production/d1-probe/ue-perf-verdict.txt (57.7 fps, worst frame 23.27 ms, none over 33.3, card 5,960 MB); the latest on the 9th to add.
 - The Stutter (one frame of 42 to 55 ms when the voice speaks; a repeat at 87 ms on 22 October): the captures since 2 November, and the worst frame of the 4 to 5 November perf step (read it from the log).
 - Card memory: production/research/frame-headroom/LAUNCH-PEAK-2026-11-04.md; F:/LedgerTools/scratch/card-peak-2026-11-04/DIAGNOSIS.md. Requirement's 6 GB line (RULINGS.md, 24 October): say whether the raw figures meet it as steady use and as a peak, both.
-- The card figures after the hill's added geometry (to add).
+- The card figures after the hill's added geometry: the same perf line, 5,960 MB, against 5,952 before it.

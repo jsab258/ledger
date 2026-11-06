@@ -8019,7 +8019,14 @@ namespace
 		bool bWhole = false;
 		if (!WalkPath(World, Body, Visual->GetActorLocation(), ToX, ToZ, Path, bWhole) || FVector::Dist2D(Path.Last(), Visual->GetActorLocation()) < 60.0)
 		{
-			UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s cannot walk from where they stand toward (%.2f, %.2f): blocked at once"), UTF8_TO_TCHAR(C), ToX, ToZ);
+			// what stops them, here and at the line's first sample (6 November: Sam was shut in both ways at Rita's step, cause unread)
+			const LedgerCrime::P3 Here = ToStreet(Visual->GetActorLocation());
+			const double Len = FMath::Max(0.01, std::hypot(ToX - Here.X, ToZ - Here.Z));
+			const double NextX = Here.X + (ToX - Here.X) / Len * 0.6, NextZ = Here.Z + (ToZ - Here.Z) / Len * 0.6;
+			const std::string AtHere = StandBlockedAt(World, Body, Here.X, Here.Z, FeetYAt(World, Here.X, Here.Z));
+			const std::string AtNext = StandBlockedAt(World, Body, NextX, NextZ, FeetYAt(World, NextX, NextZ));
+			UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: %s cannot walk from where they stand (%.2f, %.2f) toward (%.2f, %.2f): blocked at once, here by %s, 0.6 m on by %s"), UTF8_TO_TCHAR(C), Here.X, Here.Z, ToX, ToZ,
+			       AtHere.empty() ? TEXT("nothing") : UTF8_TO_TCHAR(AtHere.c_str()), AtNext.empty() ? TEXT("nothing") : UTF8_TO_TCHAR(AtNext.c_str()));
 			return false;
 		}
 		const LedgerCrime::P3 End = ToStreet(Path.Last());

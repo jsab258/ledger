@@ -502,3 +502,5 @@
 {"event": "start", "at": "2026-11-05T22:32:00", "task": "lean start baseline, helper: duplicate of the 4 Nov file, deleted (n02-6-6-lean-start)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-05T22:34:00", "note": ""}
 {"event": "start", "at": "2026-11-06T05:23:50", "task": "n02-4-corner-people and corner packaged pictures", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-11-06T05:45:16", "task": "n02-3-3-sitting packaged film", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T06:01:40", "note": "sit set aside with its face met; corner views passed packaged"}

@@ -35,8 +35,8 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. The Stutter did not come back last night (worst frame 23.27 ms against the old 42 to 55). Today the sit's packaged film, then the exit re-check aimed at 9 November.
-- **The corner, in your order:** the day's sky, hill, wear, gilt, sills and pipes, wash, kiosk and slate roof are all in last night's packaged game; reviews of them run this morning. Its end page follows.
+- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting: his face stays up in the packaged game, but his head swings round in the drop; set aside and listed. The Stutter did not come back last night (worst frame 23.27 ms against the old 42 to 55). Next, the exit re-check aimed at 9 November.
+- **The corner, in your order:** the day's sky, hill, wear, gilt, sills and pipes, wash, kiosk and slate roof are all in last night's packaged game, and the hook and reverse views passed fresh reviews by day and night. Next, tonight's walk for the people, then its end page.
 
 **The tester (last night's walk, packaged, with all of Thursday's work):** 15 of 15 stages, for the first time this week. Nobody saw Tom break Rita's window; Sheila took in the glass with no story about him; Rocco and Sam showed they knew him (two, one more than before). "That's all I know" to 2 of 60 first questions (the same). None of the corner's people froze (0 of 163 readings); two came to look at the window. What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); a woman stiff and wide-legged near Rita's window; the broken window itself, flat black shards with the goods behind untouched. Frame rate 57.7 fps; the card's memory 5,960 MB of its 6 GB (5,952 before).
 
@@ -60,12 +60,13 @@ Nothing open.
 **Failed:**
 - The hill's crowns read as clean lumps after its third try: kept, listed.
 - Stains on the wet flags stay grey: listed. The kiosk's sheet: listed.
+- The sit: his face stays up, at most 10 degrees down, but his head turns side-on then swings round in the drop. Tries spent; set aside, listed at the exit.
 - A slip: a tool run the forbidden way this morning; it asked for no build.
 
 **Done:**
 - The night walk: 15 of 15 stages; nobody frozen; the street now hears Rita's window.
 - No Stutter last night; 57.7 fps; card memory 5,960 MB.
-- Slate roof, its breaks, gilt, sills and pipes, wash: in the packaged game; reviews running.
+- Slate roof, its breaks, gilt, sills and pipes, wash: in the packaged game; the hook and reverse views passed fresh reviews.
 
 **Decided, yours to overturn:**
 - The woman at Rita's door moved clear of the flat's door; walkers face the road when they pause.

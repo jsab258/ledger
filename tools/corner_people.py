@@ -6,8 +6,10 @@
 
 The plan's four checks as the game logs them: no frozen poses (LedgerMotion), people walk off
 (LedgerWalkOff, with each walk's worst foot slip), someone reacts (LedgerReact, LedgerAfter), and
-who could take in the window (LedgerWitness, what blocks each line). Nobody overlapping is not
-logged: that one stays with the step pictures. A screen for the reader, not a pass.
+who could take in the window (LedgerWitness, what blocks each line). Nobody overlapping: the
+closest two of those who walk came to each other standing, from where each walk ended; the extras
+never walk into anyone by their own lines, and those stay with the step pictures. A screen for the
+reader, not a pass.
 """
 import collections, glob, os, re, sys
 
@@ -25,7 +27,8 @@ def newest():
 
 def read(lines):
     r = {"motion": collections.Counter(), "frozen": collections.Counter(), "unmeasured": set(), "walks": 0,
-         "ends": collections.Counter(), "blocked": [], "slips": [], "react": [], "after": [], "witness": []}
+         "ends": collections.Counter(), "blocked": [], "slips": [], "react": [], "after": [], "witness": [], "closest": {}}
+    stood = {}
     for l in lines:
         m = LINE.search(l)
         if not m:
@@ -46,11 +49,22 @@ def read(lines):
                 r["ends"]["off the street"] += 1
             elif " stands at " in t:
                 r["ends"]["stood at the end"] += 1
+                p = re.search(r"^(\w+) stands at \(([-\d.]+), ([-\d.]+)\)", t)
+                if p:
+                    who, x, z = p.group(1), float(p.group(2)), float(p.group(3))
+                    stood.pop(who, None)
+                    for other, (ox, oz) in stood.items():
+                        d = ((x - ox) ** 2 + (z - oz) ** 2) ** 0.5
+                        key = tuple(sorted((who, other)))
+                        if key not in r["closest"] or d < r["closest"][key]:
+                            r["closest"][key] = d
+                    stood[who] = (x, z)
                 s = re.search(r"worst slip ([\d.]+) cm", t)
                 if s:
                     r["slips"].append((float(s.group(1)), t.split(" stands at ")[0]))
             elif re.search(r" from \(.*\) to \(", t):
                 r["walks"] += 1
+                stood.pop(t.split(" ")[0], None)
         elif kind == "LedgerReact":
             r["react"].append(t)
         elif kind == "LedgerAfter":
@@ -72,6 +86,11 @@ def show(r):
         "%d %s" % (v, k) for k, v in r["ends"].items()) or "none ended", len(r["blocked"])))
     if r["slips"]:
         print("worst foot slips: " + ", ".join("%s %.1f cm" % (w, s) for s, w in sorted(r["slips"], reverse=True)[:4]))
+    for t in r["blocked"][:6]:
+        print("  " + t[:170])
+    if r["closest"]:
+        print("closest standing: " + ", ".join("%s and %s %.2f m" % (k[0], k[1], d) for k, d in sorted(r["closest"].items(), key=lambda kv: kv[1])[:4])
+              + (" (under 0.60 m: overlapping)" if min(r["closest"].values()) < 0.6 else ""))
     print("reacts: %d lines" % len(r["react"]))
     for t in r["react"][:12] + r["after"][:8]:
         print("  " + t[:150])
@@ -85,9 +104,12 @@ def selftest():
              "x LogTemp: Display: LedgerMotion: A head 3.3 hands 3.7 chest 0.2 cm in 4 s, extra, moving",
              "x LogTemp: Display: LedgerWalkOff: sam walks from (1.00, 1.00) to (2.00, 2.00), 1.6 m in 1 leg(s), at D0 13:00",
              "x LogTemp: Display: LedgerWalkOff: sam stands at (2.00, 2.00), 4 cm from the walk's end, 3.5 s after setting off; feet down 2 times, worst slip 51.0 cm",
+             "x LogTemp: Display: LedgerWalkOff: rocco stands at (2.30, 2.40), 4 cm from the walk's end, 3.5 s after setting off; feet down 2 times, worst slip 1.0 cm",
              "x LogTemp: Display: LedgerWitness: ron where he sees them, their day says quay, 3.0 m off-axis 10, sightline clear, to the window 4.0 m clear, light 0.50 (lamp none), met on 1 day(s), familiarity 0.20"]
     r = read(lines)
-    ok = (sum(r["motion"].values()) == 2 and sum(r["frozen"].values()) == 1 and r["walks"] == 1
+    r["slips"] = [s for s in r["slips"] if s[1] == "sam"]
+    ok = (abs(r["closest"][("rocco", "sam")] - 0.5) < 0.001
+          and sum(r["motion"].values()) == 2 and sum(r["frozen"].values()) == 1 and r["walks"] == 1
           and r["slips"] == [(51.0, "sam")] and r["witness"] == [("ron", "clear", "4.0", "clear")])
     print("corner_people selftest: %s" % ("passed" if ok else "FAILED"))
     return 0 if ok else 1

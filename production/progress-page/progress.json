@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 6 November 2026, 5:38",
+  "updated": "Friday 6 November 2026, 5:50",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -163,69 +163,69 @@
       "what": "The worst single frame on a walk down the street.",
       "unit": "ms",
       "start": 87,
-      "now": 30.0,
+      "now": 23.27,
       "target": 33.3,
       "start_label": "22 Oct",
-      "now_label": "3 Nov, packaged, voices speaking (3 captures)",
+      "now_label": "5 to 6 Nov night, packaged, voice speaking",
       "state": "fighting",
-      "last": "3 Nov: three more packaged captures with the cast's voices: no frame over 33 ms, the worst 22 to 30 ms; absent in seven captures since 2 November. If the 3 to 4 November walk finds none either, it closes as not reproduced."
+      "last": "6 Nov: the night's packaged frame test: worst frame 23.27 ms, none over 33 ms, 57.7 fps; absent in every capture since 2 November. Proposed to close as not reproduced; the exit's fresh reviewer decides."
     },
     {
       "name": "The Tailor",
       "what": "Period clothes on the cast, counted by pieces, starting with Tom's four. A piece is beaten when it passes in the packaged game with no open fault.",
       "unit": "pieces to go",
       "start": 4,
-      "now": 4,
+      "now": 1,
       "target": 0,
-      "display": "0 of 4 pieces beaten",
+      "display": "3 of 4 pieces settled; the jacket set aside",
       "state": "fighting",
-      "last": "2 Nov: the collar set aside after three tries (a fourth asked on your page); the pale line under the boots gone in four reviewed views with the ground's own fix, its halo tightened; Epic's boots in for the toe. No piece beaten yet.",
+      "last": "4 Nov: jeans and boots passed in the packaged game; the jumper is made and held unseen under the zipped jacket, a place decided for you to overturn; the jacket set aside and listed at the exit (your word of 2 Nov on the collar).",
       "pieces": [
         {
           "name": "Jacket",
           "state": "fighting",
-          "line": "In the packaged game; one open fault: a patch of his throat shows at the zip (two tries used; a third waits on your yes)."
+          "line": "Set aside after four tries: his neck shows at the collar, front and back, when his head turns. Listed at the exit."
         },
         {
           "name": "Jumper",
-          "state": "fighting",
-          "line": "Made, and held back: under the zipped jacket it is never seen, and its neckband showed outside the collar."
+          "state": "beaten",
+          "line": "Made and held: unseen under the zipped jacket, its place decided 4 Nov."
         },
         {
           "name": "Jeans",
-          "state": "fighting",
-          "line": "The straight 16.5 in cut, faded, worn over his boots in tonight's build; a fresh reviewer passed them in the editor; packaged walk tomorrow."
+          "state": "beaten",
+          "line": "Passed packaged 4 Nov: the straight cut over his boots, no new fault."
         },
         {
           "name": "Boots",
-          "state": "fighting",
-          "line": "Ron's black lace-up boots on Tom, with leather maps; passed in the editor; open faults: a heavy, almost clog-like toe, and a pale band under the toes on wet paving (two tries each)."
+          "state": "beaten",
+          "line": "Passed packaged 4 Nov. Known: no toe-cap seam or lacing; the toe's shape and the pale band stay listed."
         }
       ]
     },
     {
       "name": "The Empty Chair",
       "what": "Someone sits down in the game as you play it.",
-      "display": "Sits and stands in the packaged game; new faults found and being fixed",
+      "display": "Sits and stands packaged; the last fault's fix being checked",
       "hp": 100,
       "state": "fighting",
-      "last": "3 Nov: walked in the packaged game with the 2 November fixes in: his face at most 25 degrees down, nobody touching, Ron waiting at the door end; a fresh reviewer of the packaged pictures next."
+      "last": "5 Nov: the drop's edge-on face mended in the editor by levelling his eyes; it reached the packaged game in the 5 to 6 Nov build; one fresh review of its packaged film to come."
     },
     {
       "name": "The Clean Room",
       "what": "Mickey's office worn, lived in and free of glitches, at the Hook sheet's bar.",
-      "display": "Wear passed in the editor; packaged faults open",
+      "display": "Passed packaged 4 Nov; the exit re-check to come",
       "hp": 100,
-      "state": "fighting",
-      "last": "3 Nov: packaged pictures by day and night, two fresh reviewers: the room holds; five small faults then fixed in the editor (the taken-down notices' edges and tape, the damp patch clear of the corner, a written message pad, the cars board naming places, a wall clock the game turns to its own time); packaged pictures again on the 3 to 4 November build."
+      "state": "unchecked",
+      "last": "4 Nov: the packaged game by day and night, two fresh reviewers, no new fault. Listed: Tom's pale crown, the room's light wear, the night room lit like late afternoon."
     },
     {
       "name": "The Memory Hog",
       "what": "Graphics card memory.",
-      "display": "Game alone 5.9 GB, under the 6 GB line",
+      "display": "Game alone 5.96 GB, under the 6 GB line (6 Nov)",
       "state": "defeated",
       "when": "24 Oct",
-      "last": "Down from 9.9 GB with the voice. Your ruling of 24 Oct: the 6 GB line counts the game alone; game and voice peak at 8.7 GB on your 10 GB card."
+      "last": "6 Nov: 5,960 MB, close to the line and watched. Your ruling of 24 Oct: the 6 GB line counts the game alone."
     },
     {
       "name": "The Shadow Tax",
