@@ -16,8 +16,9 @@
 // (game-design/decision-2026-09-08-the-crime-the-witness-and-the-overheard-
 // consequence.md section 1 item 1): the HEARING half that Observe.Resolve
 // reads. Named there line by line, and nothing else from Perception.cs came
-// with it. Attention, IdentifySeconds, RingDraw, HeardAs, BelievedAt and
-// Traces are OUT OF SCOPE and are not here.
+// with it. Attention, IdentifySeconds, HeardAs, BelievedAt and
+// Traces are OUT OF SCOPE and are not here (RingDraw and the remaining
+// loudnesses came 7 November 2026, the sweep's U7, not wired).
 #pragma once
 
 #include "CoreMinimal.h"
@@ -111,7 +112,8 @@ namespace LedgerCore
 		// is what lets a shot inside a loud bar still be heard by the quiet
 		// street outside once the wall has taken its cut.
 		//
-		// ONLY THE TWO FLOORS THE CRIME RUN USES ARE HERE, by the ruling's
+		// (Since 7 November 2026 the other floors are below too, not wired.)
+// ONLY THE TWO FLOORS THE CRIME RUN USES ARE HERE, by the ruling's
 		// list: AmbientNight3am (227) and AmbientDaytimeStreet (228).
 		// AmbientMarketNoon, AmbientBarBusy and AmbientRainAdds (229 to 232)
 		// were not named and are not ported, so a caller cannot reach for one
@@ -155,6 +157,41 @@ namespace LedgerCore
 		// escalation. A calm man ignores a bang two streets away; a
 		// frightened one hears a footstep.
 		static constexpr double AlertFloorDrop = 8.0;
+
+
+
+		// THE REST OF THE SOUNDS (the sweep's U7, 7 November 2026): ported and pinned,
+		// NOT WIRED into the game, which still uses only the window's smash and the
+		// shout and the remark. Perception.cs 229 to 232, 240 to 246 and 272, in the
+		// C#'s own values. Footsteps, the door slam and the suppressed shot are
+		// what the player makes; the noise ring's rule follows.
+		static constexpr double AmbientMarketNoon  = 58.0;
+		static constexpr double AmbientBarBusy     = 68.0;
+		static constexpr double AmbientRainAdds    = 12.0;
+		static constexpr double LoudFootstepWalk   = 25.0;
+		static constexpr double LoudFootstepRun    = 38.0;
+		static constexpr double LoudDoorSlam       = 55.0;
+		static constexpr double LoudSuppressed22   = 62.0;
+		static constexpr double LoudSnub38         = 100.0;
+		static constexpr double LoudConversation   = 42.0;
+
+		// Perception.cs 316 to 327 and 345 to 352: WHETHER TO DRAW THE RING. The
+		// order of the two clauses is the C#'s bug-fix: asking whether the last
+		// ring has finished before asking whether this one is louder lets a
+		// footstep swallow a gunshot.
+		static constexpr double RingMinRadiusMetres    = 6.0;
+		static constexpr double RingPreemptBy          = 10.0;
+		static constexpr double RingRepeatQuietSeconds = 3.0;
+
+		enum class ERingVerdict : int { TooSmall = 0, Shadowed = 1, Draw = 2 };
+
+		static ERingVerdict RingDraw(double Radius, double Loudness,
+		                             double LastDrawnLoudness, double SecondsSinceDrawn)
+		{
+			if (Radius < RingMinRadiusMetres) { return ERingVerdict::TooSmall; }
+			if (Loudness >= LastDrawnLoudness + RingPreemptBy) { return ERingVerdict::Draw; }
+			return SecondsSinceDrawn >= RingRepeatQuietSeconds ? ERingVerdict::Draw : ERingVerdict::Shadowed;
+		}
 
 		static double WalkPace() { return WalkSpeed; }
 		static double RunPace()  { return RunSpeed; }

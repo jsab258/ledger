@@ -27,8 +27,8 @@
 // section (StoryHalfRemembered, Stance's knowsALittle, the look, the faint
 // remark, RegardFor) and Recognition (the sections at the end). OUT OF SCOPE
 // AND NOT HERE, so a reader can tell a missing member from a forgotten one:
-// Ambient, ChatterLevel, AmbientEverySeconds, RemarkLedger's Fresh and its
-// save (town list 6k and 6o), Clamp01 (LedgerCore::Clamp01 in Perception.h
+// Ambient, RemarkLedger's Fresh and its
+// save (town list 6k and 6o), ChatterLevel and AmbientEverySeconds (StreetPace.h since 7 November 2026, not wired), Clamp01 (LedgerCore::Clamp01 in Perception.h
 // is the same arithmetic).
 //
 // THE DEVIATIONS FROM THE C#, NAMED, in the shape the eight of

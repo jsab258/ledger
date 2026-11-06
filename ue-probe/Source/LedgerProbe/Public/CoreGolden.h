@@ -46,6 +46,7 @@
 #include "Perception.h"
 #include "Reaction.h"
 #include "Telling.h"
+#include "StreetPace.h"
 #include "CastDay.h"
 #include "Schedule.h"
 #include "StreetVoice.h"
@@ -5419,6 +5420,87 @@ namespace Golden
 		return S;
 	}
 
+	// THE STREET'S PACE OF TALK AND THE SOUNDS HE MAKES (the sweep's U6 and U7, 6 November 2026),
+	// answered from StreetPace.h and Perception.h as PerceptionGolden's EmitStreetPace and
+	// EmitSounds ask:
+	//   WPaceConst|ClearWordsEverySeconds|value
+	//   WPaceChatter|heat|people|value
+	//   WPaceAmbient|heat|people|floor ("default" = the two-argument form)|value ("max" = double.MaxValue)
+	//   WSoundConst|name|value
+	//   WSoundRadius|loudness name|floor|occluded|radius
+	//   WSoundRing|radius|loudness|lastDrawn|secondsSince|0 too small, 1 shadowed, 2 draw
+	inline std::string PaceNum(double V)
+	{
+		return V == DBL_MAX ? std::string("max") : TellNum(V);
+	}
+
+	inline double SoundLoudness(const std::string& Name, bool& bKnown)
+	{
+		bKnown = true;
+		if (Name == "LoudFootstepWalk")  { return Perception::LoudFootstepWalk; }
+		if (Name == "LoudFootstepRun")   { return Perception::LoudFootstepRun; }
+		if (Name == "LoudDoorSlam")      { return Perception::LoudDoorSlam; }
+		if (Name == "LoudSuppressed22")  { return Perception::LoudSuppressed22; }
+		if (Name == "LoudSnub38")        { return Perception::LoudSnub38; }
+		if (Name == "LoudConversation")  { return Perception::LoudConversation; }
+		bKnown = false;
+		return 0.0;
+	}
+
+	inline Answer SoundPaceRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		if (Fn == "WPaceConst" && F.size() >= 3 && F[1] == "ClearWordsEverySeconds")
+		{
+			A.Known = true;
+			A.Got = TellNum(StreetPace::ClearWordsEverySeconds);
+		}
+		else if (Fn == "WPaceChatter" && F.size() >= 4)
+		{
+			A.Known = true;
+			A.Got = PaceNum(StreetPace::ChatterLevel(D(F[1]), I(F[2])));
+		}
+		else if (Fn == "WPaceAmbient" && F.size() >= 5)
+		{
+			A.Known = true;
+			A.Got = PaceNum(F[3] == "default"
+				? StreetPace::AmbientEverySeconds(D(F[1]), I(F[2]))
+				: StreetPace::AmbientEverySeconds(D(F[1]), I(F[2]), D(F[3])));
+		}
+		else if (Fn == "WSoundConst" && F.size() >= 3)
+		{
+			A.Known = true;
+			const std::string& N = F[1];
+			bool bLoud = false;
+			const double L = SoundLoudness(N, bLoud);
+			if (bLoud)                                  { A.Got = TellNum(L); }
+			else if (N == "AmbientMarketNoon")          { A.Got = TellNum(Perception::AmbientMarketNoon); }
+			else if (N == "AmbientBarBusy")             { A.Got = TellNum(Perception::AmbientBarBusy); }
+			else if (N == "AmbientRainAdds")            { A.Got = TellNum(Perception::AmbientRainAdds); }
+			else if (N == "RingMinRadiusMetres")        { A.Got = TellNum(Perception::RingMinRadiusMetres); }
+			else if (N == "RingPreemptBy")              { A.Got = TellNum(Perception::RingPreemptBy); }
+			else if (N == "RingRepeatQuietSeconds")     { A.Got = TellNum(Perception::RingRepeatQuietSeconds); }
+			else                                        { A.Known = false; }
+		}
+		else if (Fn == "WSoundRadius" && F.size() >= 5)
+		{
+			bool bLoud = false;
+			const double L = SoundLoudness(F[1], bLoud);
+			if (bLoud)
+			{
+				A.Known = true;
+				A.Got = TellNum(Perception::AudibleRadius(L, D(F[2]), B(F[3])));
+			}
+		}
+		else if (Fn == "WSoundRing" && F.size() >= 6)
+		{
+			A.Known = true;
+			A.Got = FromInt((int)Perception::RingDraw(D(F[1]), D(F[2]), D(F[3]), D(F[4])));
+		}
+		return A;
+	}
+
 inline Answer TellRow(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5651,6 +5733,11 @@ inline Answer TellRow(const std::vector<std::string>& F)
 		else if (Fn == "ReactWitness" || Fn == "ReactAsVictim" || Fn == "ReactFleeingVictim")
 		{
 			A = ReactSurvivorRow(F);
+		}
+		// The street's pace of talk and the sounds he makes (U6 and U7, 6 November 2026).
+		else if (Fn.compare(0, 5, "WPace") == 0 || Fn.compare(0, 6, "WSound") == 0)
+		{
+			A = SoundPaceRow(F);
 		}
 		// The witness who tells (U4, 6 November 2026).
 		else if (Fn.compare(0, 5, "WTell") == 0)

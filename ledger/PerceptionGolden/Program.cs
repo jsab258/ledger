@@ -4107,9 +4107,85 @@ namespace Ledger.PerceptionGolden
             EmitLadder(sb);
             EmitLadderEdgesAndSurvivor(sb);
             EmitTelling(sb);
+            EmitSounds(sb);
+            EmitStreetPace(sb);
             EmitStance(sb);
             EmitScenarios(sb);
             EmitSchedule(sb);
+        }
+
+        /// THE STREET'S PACE OF TALK (the sweep's U6, 6 November 2026): StreetVoice.ChatterLevel
+        /// and AmbientEverySeconds in both forms. Rows (a pace of double.MaxValue is "max"):
+        ///   WPaceConst|ClearWordsEverySeconds|value
+        ///   WPaceChatter|heat|people|value
+        ///   WPaceAmbient|heat|people|floor ("default" = the two-argument form)|value
+        /// Heat on each side of 0 and 1 and as NaN and the infinities; people on each side of
+        /// 2 (the "nobody to talk" cut), at 6 (the chatter's top) and at the int limits; the
+        /// floor above, below and equal to the computed pace, and NaN.
+        static string PaceNum(double v) => v == double.MaxValue ? "max" : D(v);
+
+        static void EmitStreetPace(StringBuilder sb)
+        {
+            double nan = double.NaN, inf = double.PositiveInfinity, ninf = double.NegativeInfinity;
+            Row(sb, "WPaceConst", "ClearWordsEverySeconds", D(StreetVoice.ClearWordsEverySeconds));
+            var heats = new List<double> { -1.0, -0.0001, 0.0, 0.0001, 0.25, 0.5, 0.75, 0.9999, 1.0, 1.0001, 1.5, nan, inf, ninf };
+            for (int i = 1; i <= 9; i++) heats.Add(i / 10.0);
+            var people = new[] { int.MinValue, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 12, 100, 1000, int.MaxValue };
+            foreach (var h in heats) foreach (var n in people)
+                Row(sb, "WPaceChatter", D(h), n.ToString(Inv), PaceNum(StreetVoice.ChatterLevel(h, n)));
+            foreach (var h in heats) foreach (var n in people)
+            {
+                Row(sb, "WPaceAmbient", D(h), n.ToString(Inv), "default", PaceNum(StreetVoice.AmbientEverySeconds(h, n)));
+                foreach (var fl in new[] { -5.0, 0.0, 6.0, 26.0, 39.0, 45.0, 52.0, 1000.0, nan, inf })
+                    Row(sb, "WPaceAmbient", D(h), n.ToString(Inv), D(fl), PaceNum(StreetVoice.AmbientEverySeconds(h, n, fl)));
+            }
+        }
+
+        /// SOUNDS THE PLAYER MAKES AND THE NOISE RING (the sweep's U7, 6 November 2026):
+        /// Perception's remaining loudness and floor constants, and RingDraw. Rows:
+        ///   WSoundConst|name|value
+        ///   WSoundRadius|loudness name|floor|occluded|radius   (each named loudness over each floor)
+        ///   WSoundRing|radius|loudness|lastDrawn|secondsSince|0 too small, 1 shadowed, 2 draw
+        /// The radius on each side of 6, the loudness on each side of last+10, the wait on
+        /// each side of 3 s, and NaN and infinity in each of the four.
+        static void EmitSounds(StringBuilder sb)
+        {
+            double nan = double.NaN, inf = double.PositiveInfinity, ninf = double.NegativeInfinity;
+            var consts = new (string, double)[]
+            {
+                ("AmbientMarketNoon", Perception.AmbientMarketNoon), ("AmbientBarBusy", Perception.AmbientBarBusy),
+                ("AmbientRainAdds", Perception.AmbientRainAdds), ("LoudFootstepWalk", Perception.LoudFootstepWalk),
+                ("LoudFootstepRun", Perception.LoudFootstepRun), ("LoudDoorSlam", Perception.LoudDoorSlam),
+                ("LoudSuppressed22", Perception.LoudSuppressed22), ("LoudSnub38", Perception.LoudSnub38),
+                ("LoudConversation", Perception.LoudConversation), ("RingMinRadiusMetres", Perception.RingMinRadiusMetres),
+                ("RingPreemptBy", Perception.RingPreemptBy), ("RingRepeatQuietSeconds", Perception.RingRepeatQuietSeconds),
+            };
+            foreach (var (name, v) in consts) Row(sb, "WSoundConst", name, D(v));
+
+            var louds = new (string, double)[]
+            {
+                ("LoudFootstepWalk", Perception.LoudFootstepWalk), ("LoudFootstepRun", Perception.LoudFootstepRun),
+                ("LoudDoorSlam", Perception.LoudDoorSlam), ("LoudSuppressed22", Perception.LoudSuppressed22),
+                ("LoudSnub38", Perception.LoudSnub38), ("LoudConversation", Perception.LoudConversation),
+            };
+            var floors = new[] { Perception.AmbientNight3am, Perception.AmbientDaytimeStreet, Perception.AmbientMarketNoon,
+                Perception.AmbientBarBusy, Perception.AmbientNight3am + Perception.AmbientRainAdds,
+                Perception.AmbientDaytimeStreet + Perception.AmbientRainAdds,
+                Perception.AmbientMarketNoon + Perception.AmbientRainAdds, Perception.AmbientBarBusy + Perception.AmbientRainAdds };
+            foreach (var (name, l) in louds) foreach (var fl in floors) foreach (var occ in new[] { false, true })
+                Row(sb, "WSoundRadius", name, D(fl), Bit(occ), D(Perception.AudibleRadius(l, fl, occ)));
+
+            var radii = new[] { -1.0, 0.0, 5.99, 5.9999999, 6.0, 6.0000001, 6.01, 86.0, 250.0, nan, inf, ninf };
+            var loud = new[] { 25.0, 38.0, 54.9, 55.0, 55.1, 62.0, 64.9, 65.0, 100.0, nan, inf, ninf };
+            var last = new[] { -1.0, 0.0, 15.0, 45.0, 52.0, 55.0, 90.0, nan, inf, ninf };
+            var since = new[] { -1.0, 0.0, 2.9, 2.9999999, 3.0, 3.0000001, 3.1, 100.0, nan, inf, ninf };
+            foreach (var r in radii) foreach (var l in loud) foreach (var la in last) foreach (var se in since)
+                Row(sb, "WSoundRing", D(r), D(l), D(la), D(se), ((int)Perception.RingDraw(r, l, la, se)).ToString(Inv));
+            // The loudness boundary exactly, at several last values (last + 10 is exact in doubles here).
+            foreach (var la in new[] { -1.0, 0.0, 15.0, 30.0, 45.0, 52.0, 90.0 })
+                foreach (var d in new[] { 9.99, 9.9999999, 10.0, 10.0000001, 10.01 })
+                    foreach (var se in new[] { 0.0, 3.0 })
+                        Row(sb, "WSoundRing", D(20.0), D(la + d), D(la), D(se), ((int)Perception.RingDraw(20.0, la + d, la, se)).ToString(Inv));
         }
 
         /// THE SCHEDULE, 23 September: who in the crowd is out of doors at a
