@@ -45,6 +45,7 @@
 #include "Observation.h"
 #include "Perception.h"
 #include "Reaction.h"
+#include "Telling.h"
 #include "CastDay.h"
 #include "Schedule.h"
 #include "StreetVoice.h"
@@ -5385,6 +5386,110 @@ namespace Golden
 		return A;
 	}
 
+	// THE WITNESS WHO TELLS (the sweep's U4, 6 November 2026), answered from Telling.h as
+	// PerceptionGolden's EmitTelling asks:
+	//   WTellWilling|nerve|loyalty|secret|fear|sympathy|value
+	//   WTellRandom|seed|first NextDouble of Random(seed)
+	//   WTellMisattribute|rung|accused|expected|seed|who   ("none" = null or empty, here empty)
+	//   WTellRetell|slots|rung|certainty|retellings|accused|expected|retellings,certainty,rung,accused
+	//   WTellRetellNull|null|ok
+	//   WTellBegin|nerve|willingness|walk|running,minutes
+	//   WTellDelivery|nerve|willingness|walk|script|results/final state
+	// "null" and "empty" in an id column both mean the empty string, as everywhere in the
+	// port's Observation.
+	inline std::string TellId(const std::string& S)
+	{
+		return (S == "null" || S == "empty" || S == "none") ? std::string() : Unescape(S);
+	}
+
+	inline std::string TellNone(const std::string& S) { return S.empty() ? std::string("none") : Escape(S); }
+
+		// A number as C# "R" writes it. The shared FromDouble writes infinity as inf and 90 as 9e+01
+	// (found 6 November 2026 on WTellBegin's rows; no earlier row held either), so those two are
+	// written here as C# does; every other value goes through FromDoubleR as before.
+	inline std::string TellNum(double V)
+	{
+		if (V > 1.7976931348623157e308)  { return "Infinity"; }
+		if (V < -1.7976931348623157e308) { return "-Infinity"; }
+		const std::string S = FromDoubleR(V);
+		if (S.find('e') != std::string::npos && V == (double)(long long)V && V < 1e15 && V > -1e15)
+		{
+			return FromInt((long long)V);
+		}
+		return S;
+	}
+
+inline Answer TellRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		if (Fn == "WTellWilling" && F.size() >= 7)
+		{
+			A.Known = true;
+			A.Got = TellNum(Telling::Willingness(D(F[1]), D(F[2]), D(F[3]), D(F[4]), D(F[5])));
+		}
+		else if (Fn == "WTellRandom" && F.size() >= 3)
+		{
+			A.Known = true;
+			Telling::SeededRandom R(I(F[1]));
+			A.Got = TellNum(R.NextDouble());
+		}
+		else if (Fn == "WTellMisattribute" && F.size() >= 6)
+		{
+			Observation O;
+			O.Rung = I(F[1]);
+			O.AccusedId = TellId(F[2]);
+			A.Known = true;
+			A.Got = TellNone(Telling::Misattribute(O, TellId(F[3]), I(F[4])));
+		}
+		else if (Fn == "WTellRetell" && F.size() >= 8)
+		{
+			Observation O;
+			O.Slots = (Slot)I(F[1]);
+			O.Rung = I(F[2]);
+			O.Certainty = D(F[3]);
+			O.Retellings = I(F[4]);
+			O.AccusedId = TellId(F[5]);
+			Telling::Retell(&O, TellId(F[6]));
+			A.Known = true;
+			A.Got = FromInt(O.Retellings) + "," + TellNum(O.Certainty) + "," + FromInt(O.Rung) + ","
+			      + TellNone(O.AccusedId);
+		}
+		else if (Fn == "WTellRetellNull" && F.size() >= 3)
+		{
+			Telling::Retell(nullptr, std::string());
+			A.Known = true;
+			A.Got = "ok";
+		}
+		else if (Fn == "WTellBegin" && F.size() >= 5)
+		{
+			const Telling::Delivery Dv = Telling::Delivery::Begin("w1", "d1", D(F[3]), D(F[1]), D(F[2]));
+			A.Known = true;
+			A.Got = FromBool(Dv.Running) + "," + TellNum(Dv.MinutesRemaining);
+		}
+		else if (Fn == "WTellDelivery" && F.size() >= 6)
+		{
+			Telling::Delivery Dv = Telling::Delivery::Begin("w1", "d1", D(F[3]), D(F[1]), D(F[2]));
+			std::string Res;
+			const std::string& Script = F[4];
+			std::string::size_type Pos = 0;
+			while (Pos <= Script.size())
+			{
+				std::string::size_type End = Script.find(';', Pos);
+				if (End == std::string::npos) { End = Script.size(); }
+				const std::string Tok = Script.substr(Pos, End - Pos);
+				if (!Res.empty()) { Res += ","; }
+				if (!Tok.empty() && Tok[0] == 't') { Res += FromBool(Dv.Tick(D(Tok.substr(1)))); }
+				else                               { Res += FromBool(Dv.Intercept()); }
+				Pos = End + 1;
+			}
+			A.Known = true;
+			A.Got = Res + "/" + FromBool(Dv.Running) + "," + TellNum(Dv.MinutesRemaining) + ","
+			      + FromBool(Dv.Arrived) + "," + FromBool(Dv.Intercepted) + "," + FromBool(Dv.InFlight());
+		}
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5546,6 +5651,11 @@ namespace Golden
 		else if (Fn == "ReactWitness" || Fn == "ReactAsVictim" || Fn == "ReactFleeingVictim")
 		{
 			A = ReactSurvivorRow(F);
+		}
+		// The witness who tells (U4, 6 November 2026).
+		else if (Fn.compare(0, 5, "WTell") == 0)
+		{
+			A = TellRow(F);
 		}
 		else if ((Fn == "CataloguesYourCoat" || Fn == "IsPublicEvent") && F.size() >= 3)
 		{

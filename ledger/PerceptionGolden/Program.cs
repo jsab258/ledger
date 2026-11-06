@@ -503,6 +503,116 @@ namespace Ledger.PerceptionGolden
                 }
         }
 
+        /// THE WITNESS WHO TELLS (the sweep's U4, 6 November 2026): Observe.Willingness,
+        /// the seeded draw and Observe.Misattribute, Observe.Retell, and Delivery. Rows:
+        ///   WTellWilling|nerve|loyalty|secret|fear|sympathy|value
+        ///   WTellRandom|seed|first NextDouble of Random(seed)
+        ///   WTellMisattribute|rung|accused|expected|seed|who   (none = null or empty)
+        ///   WTellRetell|slots|rung|certainty|retellings|accused|expected|retellings,certainty,rung,accused
+        ///   WTellRetellNull|null|ok
+        ///   WTellBegin|nerve|willingness|walk|running,minutes
+        ///   WTellDelivery|nerve|willingness|walk|script|results/final state
+        /// Each branch's boundary is on both sides: willingness 0 and 1 clamps, nerve 0.35,
+        /// willingness 0.5, rungs 1 and 4, the draw against 0.45 and 0.25 (seeds found by
+        /// scanning for the draws nearest each side), the fourth retelling, the 0.94 cap.
+        static void EmitTelling(StringBuilder sb)
+        {
+            double nan = double.NaN, inf = double.PositiveInfinity, ninf = double.NegativeInfinity;
+
+            var vs = new[] { -0.1, 0.0, 0.3, 1.0, 1.2, nan };
+            foreach (var n in vs) foreach (var l in vs) foreach (var sec in vs) foreach (var f in vs) foreach (var sy in vs)
+                Row(sb, "WTellWilling", D(n), D(l), D(sec), D(f), D(sy), D(Observe.Willingness(n, l, sec, f, sy)));
+            // The clamps' own edges, a few levers at a time.
+            var fine = new[] { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0 };
+            foreach (var n in fine) foreach (var sy in fine) foreach (var l in fine)
+                Row(sb, "WTellWilling", D(n), D(l), D(0.0), D(0.0), D(sy), D(Observe.Willingness(n, l, 0.0, 0.0, sy)));
+            foreach (var sec in fine) foreach (var f in fine) foreach (var n in new[] { 0.0, 0.5, 1.0 })
+                Row(sb, "WTellWilling", D(n), D(0.0), D(sec), D(f), D(0.5), D(Observe.Willingness(n, 0.0, sec, f, 0.5)));
+            foreach (var v in new[] { inf, ninf })
+                Row(sb, "WTellWilling", D(v), D(0.0), D(0.0), D(0.0), D(0.5), D(Observe.Willingness(v, 0.0, 0.0, 0.0, 0.5)));
+
+            // The draws nearest each threshold, found by scanning, so the < is tested each side.
+            var seeds = new List<int> { 0, 1, 2, -1, 42, 12345, 1990, int.MinValue, int.MinValue + 1, int.MaxValue, int.MaxValue - 1 };
+            foreach (var p in new[] { 0.45, 0.25 })
+            {
+                int below = 0, above = 0; double bestBelow = -1, bestAbove = 2;
+                for (int sd = 0; sd < 400000; sd++)
+                {
+                    double x = new Random(sd).NextDouble();
+                    if (x < p && x > bestBelow) { bestBelow = x; below = sd; }
+                    if (x >= p && x < bestAbove) { bestAbove = x; above = sd; }
+                }
+                seeds.Add(below); seeds.Add(above);
+            }
+            foreach (var sd in seeds)
+                Row(sb, "WTellRandom", sd.ToString(Inv), D(new Random(sd).NextDouble()));
+            // The raw draw over a run of seeds, so the generator itself is pinned.
+            for (int sd = -20; sd <= 60; sd++)
+                Row(sb, "WTellRandom", sd.ToString(Inv), D(new Random(sd).NextDouble()));
+
+            string Nm(string x) => string.IsNullOrEmpty(x) ? "none" : x;
+            for (int rung = -1; rung <= 5; rung++)
+                foreach (var accused in new[] { null, "", "a1" })
+                    foreach (var expected in new[] { null, "", "e1" })
+                        foreach (var sd in seeds)
+                        {
+                            var o = new Observation { Rung = rung, AccusedId = accused };
+                            Row(sb, "WTellMisattribute", rung.ToString(Inv), accused == null ? "null" : accused == "" ? "empty" : accused,
+                                expected == null ? "null" : expected == "" ? "empty" : expected, sd.ToString(Inv),
+                                Nm(Observe.Misattribute(o, expected, sd)));
+                        }
+
+            foreach (var slots in new[] { 0, 4 })
+                foreach (var rung in new[] { 0, 1, 2, 3, 4, 5 })
+                    foreach (var cert in new[] { -1.0, 0.0, 0.83, 0.84, 0.94, nan })
+                        foreach (var ret in new[] { -4, -1, 0, 3, 4, 7, 8, int.MaxValue })
+                            foreach (var accused in new[] { null, "a1" })
+                                foreach (var expected in new[] { null, "e1" })
+                                {
+                                    var o = new Observation { Slots = (Slot)slots, Rung = rung, Certainty = cert, Retellings = ret, AccusedId = accused };
+                                    unchecked { Observe.Retell(o, expected); }
+                                    Row(sb, "WTellRetell", slots.ToString(Inv), rung.ToString(Inv), D(cert), ret.ToString(Inv),
+                                        accused == null ? "null" : accused, expected == null ? "null" : expected,
+                                        o.Retellings.ToString(Inv) + "," + D(o.Certainty) + "," + o.Rung.ToString(Inv) + "," + Nm(o.AccusedId));
+                                }
+            Observe.Retell(null);
+            Row(sb, "WTellRetellNull", "null", "ok");
+
+            var nerves = new[] { -0.1, 0.0, 0.34, Math.BitDecrement(0.35), 0.35, Math.BitIncrement(0.35), 0.5, 1.0, nan };
+            var wills = new[] { -1.0, 0.0, 0.49, Math.BitDecrement(0.5), 0.5, Math.BitIncrement(0.5), 1.0, 1.5, nan };
+            var walks = new[] { -3.0, 0.0, 0.2, 1.0, 12.5, 30.0, nan, inf };
+            foreach (var n in nerves) foreach (var w in wills) foreach (var walk in walks)
+            {
+                var d = Delivery.Begin("w1", "d1", walk, n, w);
+                Row(sb, "WTellBegin", D(n), D(w), D(walk), Bit(d.Running) + "," + D(d.MinutesRemaining));
+            }
+
+            var scripts = new[]
+            {
+                "t1", "t0", "t-1", "tNaN", "t1000", "t1000;t1000", "i", "i;t1000", "t1000;i", "t1;i;t1000", "i;i",
+                "t0.5", "t0.25;t0.25", "t0.25;t0.2;t0.05", "t0.2;t0.2", "t5;t5;t5;t5;t5;t5;t5;t5;t5;t5;t5;t5;t5;t5",
+                "t1;t0;t-1;tNaN;t1",
+            };
+            var begins = new[]
+            {
+                (0.5, 1.0, 0.5), (0.5, 1.0, 10.0), (0.2, 1.0, 10.0), (0.5, 0.4, 10.0), (0.2, 0.0, 10.0),
+                (0.35, 0.5, 3.0), (0.3, 0.5, 0.1), (0.5, 1.0, nan),
+            };
+            foreach (var (n, w, walk) in begins)
+                foreach (var script in scripts)
+                {
+                    var d = Delivery.Begin("w1", "d1", walk, n, w);
+                    var res = new List<string>();
+                    foreach (var tok in script.Split(';'))
+                    {
+                        if (tok[0] == 't') res.Add(Bit(d.Tick(tok.Substring(1) == "NaN" ? nan : double.Parse(tok.Substring(1), Inv))));
+                        else res.Add(Bit(d.Intercept()));
+                    }
+                    Row(sb, "WTellDelivery", D(n), D(w), D(walk), script,
+                        string.Join(",", res) + "/" + Bit(d.Running) + "," + D(d.MinutesRemaining) + "," + Bit(d.Arrived) + "," + Bit(d.Intercepted) + "," + Bit(d.InFlight));
+                }
+        }
+
         static void EmitStance(StringBuilder sb)
         {
             var sus = new[] { 0.0, 0.21, 0.22, 0.47, 0.48, 0.4910, 0.5, 0.5455, 0.76, 0.77, 1.0 };
@@ -3996,6 +4106,7 @@ namespace Ledger.PerceptionGolden
             EmitArrest(sb);
             EmitLadder(sb);
             EmitLadderEdgesAndSurvivor(sb);
+            EmitTelling(sb);
             EmitStance(sb);
             EmitScenarios(sb);
             EmitSchedule(sb);

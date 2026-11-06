@@ -528,3 +528,5 @@
 {"event": "start", "at": "2026-11-06T21:23:14", "task": "n02-9 study A and clothes: reviews of inZOI's notes, study B's corrections", "phase": "1", "kind": "review"}
 {"event": "start", "at": "2026-11-06T22:11:54", "task": "n02-9-talk-cost-levers", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-06T22:45:29", "note": "levers measured; caching on by default; studies closed"}
+{"event": "start", "at": "2026-11-06T23:38:00", "task": "phase 3 port: U4, the witness's walk to tell (helper)", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T23:50:00", "note": ""}
