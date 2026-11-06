@@ -499,3 +499,6 @@
 {"event": "stop", "at": "2026-11-05T20:37:23", "note": "switch point 250,000; film made; exit brief filled"}
 {"event": "start", "at": "2026-11-05T22:23:37", "task": "advisor 10 and 11: the stop aligned with the hourly start, six measures in the token audit (n02-6-6-lean-start, n02-6-1-token-audit)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-05T22:28:37", "note": "history_check aligned, token_measures written, tested"}
+{"event": "start", "at": "2026-11-05T22:32:00", "task": "lean start baseline, helper: duplicate of the 4 Nov file, deleted (n02-6-6-lean-start)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-05T22:34:00", "note": ""}
+{"event": "start", "at": "2026-11-06T05:23:50", "task": "n02-4-corner-people and corner packaged pictures", "phase": "1", "kind": "production"}

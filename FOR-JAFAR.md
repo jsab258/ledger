@@ -3,11 +3,20 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Thursday 5 November, 05:35)
+## Overview (Friday 6 November, 05:35)
 
-**Tokens, Wednesday 4 November:** history 35% of the spend, Opus 96%, reviewing 8% (1,636 steps, US$114.87 at list prices; Tuesday 53%, 98%, 27%).
+**Tokens, Thursday 5 November:** history 21% of the spend, Opus 98%, reviewing 10% (812 steps, US$68.89 at list prices; Wednesday 35%, 96%, 8%).
 
-Disk (11-05 03:31): C: 134.1 GB free, F: 27.8 GB free; grew most since yesterday: the build cache on C: +0.9 GB, gate pictures on F: +0.3 GB.
+| Measure, 5 Nov | Reading |
+|---|---|
+| 1 Tries thrown away, reviewer runs | none recorded (the record began 5 Nov evening); 17 reviewer runs on 8 items |
+| 2 Tool results' carrying cost | US$15.95 of US$68.89; pictures US$4.31, 6% of the day (estimated) |
+| 3 Prompt cache | 96.9% read from cache; writes US$30.91, of which starts US$13.60 in 21 runs |
+| 4 The start, tokens | tools 60,861, skills' list 8,309, memory and project files 6,387, system 3,543; never used this week: 20 tools 11,997, 45 skills 4,769 |
+| 5 Cycle time | change to its night walk: median 11.9 h; your answers: median 52 min over 5 |
+| 6 Week's allowance | read Monday 12:50 |
+
+Disk (11-06 03:31): C: 128.7 GB free, F: 27.4 GB free; grew most since yesterday: the build cache on C: +1.0 GB, gate pictures on F: +0.9 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -26,15 +35,15 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting and the Stutter are next, then the exit re-check aimed at 9 November.
-- **The corner, in your order:** the hill's new trees and houses are in, with three faults waiting on your answer; the night's warm sky and fill passed their last review with narrow points, Mickey's own front still too dark and listed; the sky and quay end are grey in the editor (their second and last try), packaged tonight; then wear at street level.
+- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. The Stutter did not come back last night (worst frame 23.27 ms against the old 42 to 55). Today the sit's packaged film, then the exit re-check aimed at 9 November.
+- **The corner, in your order:** the day's sky, hill, wear, gilt, sills and pipes, wash, kiosk and slate roof are all in last night's packaged game; reviews of them run this morning. Its end page follows.
 
-**The tester (last night's walk, packaged, last night's build with the new hill, night and sky):** 13 of 15 stages; it lost sight of Ron, and Darren was not on the street. One witness (Rocco) showed he knew, the same as the night before. "That's all I know" to 2 of 60 first questions (3 before). What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); Sheila speaking out of shot with the camera stuck behind Tom, and a stray quote mark in her subtitle; a woman stiff and wide-legged at Rita's door; figures at the cottage front at night pressed to the wall. The new hill cost no frame rate (57.9 fps, 57.5 the night before), but the card's memory rose to 5,952 MB of its 6 GB.
+**The tester (last night's walk, packaged, with all of Thursday's work):** 15 of 15 stages, for the first time this week. Nobody saw Tom break Rita's window; Sheila took in the glass with no story about him; Rocco and Sam showed they knew him (two, one more than before). "That's all I know" to 2 of 60 first questions (the same). None of the corner's people froze (0 of 163 readings); two came to look at the window. What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); a woman stiff and wide-legged near Rita's window; the broken window itself, flat black shards with the goods behind untouched. Frame rate 57.7 fps; the card's memory 5,960 MB of its 6 GB (5,952 before).
 
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-1. The hill: one more try at its three faults (yes, about 1 hour, recommended).
+Nothing open.
 
 ### Road to worth playing (PLAN.md)
 
@@ -45,6 +54,26 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Friday 6 November (morning)
+
+**Failed:**
+- The hill's crowns read as clean lumps after its third try: kept, listed.
+- Stains on the wet flags stay grey: listed. The kiosk's sheet: listed.
+- A slip: a tool run the forbidden way this morning; it asked for no build.
+
+**Done:**
+- The night walk: 15 of 15 stages; nobody frozen; the street now hears Rita's window.
+- No Stutter last night; 57.7 fps; card memory 5,960 MB.
+- Slate roof, its breaks, gilt, sills and pipes, wash: in the packaged game; reviews running.
+
+**Decided, yours to overturn:**
+- The woman at Rita's door moved clear of the flat's door; walkers face the road when they pause.
+- Heard-only witnesses have no story about Tom.
+- The session's stop now lines up with the next hourly start, past 250,000 tokens: the clock picks only which item's end.
+- The Sonnet trial waits for Monday's order, as you answered.
+
+**Act on:** nothing is open: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Thursday 5 November (morning)
 

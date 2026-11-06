@@ -1,5 +1,5 @@
 {
-  "updated": "Thursday 5 November 2026, 5:25",
+  "updated": "Friday 6 November 2026, 5:38",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -30,7 +30,7 @@
         1.0,
         2.0
       ],
-      "actual_w": 4.3,
+      "actual_w": 4.4,
       "actual_note": "so far, open",
       "began": "2026-10-06"
     },
@@ -272,7 +272,8 @@
       "2026-11-02",
       "2026-11-03",
       "2026-11-04",
-      "2026-11-05"
+      "2026-11-05",
+      "2026-11-06"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
@@ -610,8 +611,8 @@
     }
   ],
   "line2027": {
-    "as_of": "Thursday 5 November",
-    "behind_w": 1.8,
+    "as_of": "Friday 6 November",
+    "behind_w": 1.9,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   }
 }

@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE: the slate roof and breaks passed in the editor; the street hears Rita's window; the people's motion check corrected, two placings changed; all packaged tonight, reviewed tomorrow; the exit's brief drafted.
+STATE: packaged walk 15 of 15, nobody frozen; hook day and night passed review; people-apart mended, packaged tonight; the sit's film next.
 
 ## Handovers
 

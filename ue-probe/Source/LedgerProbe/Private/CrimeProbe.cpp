@@ -7786,7 +7786,9 @@ namespace
 		for (const char* C : { "lena", "sam", "rocco" })
 		{
 			AActor* B = CardBody(C);
-			if (B == nullptr || B == Self || B->IsHidden()) { continue; }
+			// away is the figure hidden, never the body: a dressed person's body is hidden from the start, so this
+			// test never saw any of them (6 November: Ron and Darren walked to 41 cm apart at the quay)
+			if (B == nullptr || B == Self || GVisualFor(B)->IsHidden()) { continue; }
 			const FVector O = B->GetActorLocation();
 			if (FVector::Dist2D(O, At) < 60.0) { return std::string(C); }
 		}
