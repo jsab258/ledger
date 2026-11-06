@@ -7,7 +7,8 @@
    "text": "At the PC: in the Claude app, Scheduled in the sidebar, open \"LEDGER: the hourly fresh session\", edit its schedule to every hour at 15 minutes past, save, then tap done. Sessions may not change a schedule themselves, and without this nothing starts between 00:15 and 05:15.",
    "links": [],
    "recommendation": "Do it when you are next at the PC; it takes about a minute. Your yes to A and B already runs. No web link: the steps are all in the app.",
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-06 14:27, done (14:10): the schedule now starts every hour round the clock, checked"
   },
   {
    "id": "whole-allowance-2026-11-06",

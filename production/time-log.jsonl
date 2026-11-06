@@ -511,3 +511,15 @@
 {"event": "start", "at": "2026-11-06T11:24:18", "task": "n02-3-3-stutter: try 1, the voice program loads the card model only when a line needs it", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-06T12:38:31", "note": "try 1 measured: worst 192 down to 38 ms; 3 of 5 still just over"}
 {"event": "start", "at": "2026-11-06T12:38:32", "task": "n02-3-3-stutter: try 2, the walking map only for what reads it", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-11-06T12:43:00", "task": "n02-9-study-recs-by-phase: helper's time", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T12:51:00", "note": ""}
+{"event": "start", "at": "2026-11-06T12:43:00", "task": "study B first scan: helper's time", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T12:46:00", "note": ""}
+{"event": "start", "at": "2026-11-06T12:43:00", "task": "n02-9-study-a-files: helper's time", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T12:46:00", "note": ""}
+{"event": "start", "at": "2026-11-06T12:52:00", "task": "n02-9-study-recs-by-phase: review, helper's time", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-11-06T12:57:00", "note": ""}
+{"event": "start", "at": "2026-11-06T14:27:00", "task": "n02-3-3-stutter: try 2 measured, the freeze read", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T15:50:00", "note": ""}
+{"event": "start", "at": "2026-11-06T15:50:00", "task": "n02-3-3-stutter: twenty walks, the count", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-06T16:40:00", "note": ""}

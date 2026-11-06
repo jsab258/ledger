@@ -11,7 +11,7 @@ Saved files only. [M] measured, [I] inferred, [U] unverified. Engine paths under
 ## 1. Kind A: the navigation rebuild on the game thread
 
 - 7 of 8 spikes hold about 20 to 75 ms in Navigation_TickAsyncBuild, the game thread not waiting [M]: named, inside the game.
-- The eighth (quietc, 192 ms): render thread 192, its stats total 11.5, card 8.3 [M]: a wait the stats do not name. Also 6c808a1-series (196, 273).
+- The eighth (quietc, 192 ms): render thread 192, its stats total 11.5, card 8.3 [M]: a wait the stats do not name. (Corrected 6 Nov 15:50: the render thread's own stats sit one row earlier again: that row holds EventWait/Visibility 184 ms [M]. So the wait is named, the same as nomapc's 219 ms.) Also 6c808a1-series (196, 273).
 - 13 of 15 stall moments fall while the voice program's memory jumps by gigabytes [M, windows drawn by eye]; the mechanism is [U].
 - Against it as sole cause: 3 and 4 November runs with card steps inside show no stalls [M].
 - Sampler: since 27161ea26 (4 November) about every 2.4 s, not 4.3, plus a process query. With card steps inside, old sampler 0 of 4 runs spiked, new 8 of 10 [M]; dates confound this. Whole-second stamps cannot place spikes; no frame-time peak at its cycle [M, weak].
@@ -48,3 +48,14 @@ The 40.5 ms frame's real row (1357) has 34.9 ms of navigation [M], during the lo
 ## Not checked
 
 Windows trace; other programs' card use; raw p4-walk-novoice-a,b and cache-novoice (summary lines only). Raw files used: 2 to 6 November.
+
+## The rare freeze after try 2 (6 November, 15:50)
+
+Scan of every frame file kept under F:/LedgerTools/tmp/p1-packaged for frames over 60 ms [M]. In a file, three rows belong together: the frame time at row n, the render and game threads' totals at n-1, the render thread's own named stats at n-2.
+
+- nomapc row 395: frame 231, render 230, Visibility 219. quietc row 1436: frame 192, render 192, Visibility 184.
+- The early captures (the voice on the card) show the same wait in runs of frames, 55 to 212 ms. novoicea, b, c: 74 to 90 ms. 6c808a1-series (196, 273 ms) does not: Visibility 6 and 7 there, a different wait.
+- The render thread is waiting for its visibility tasks, which run on the shared worker threads. Why those tasks are late is not read: nothing in the file says what the workers were doing [I]. Candidates, unproven: the voice program on four threads taking cores (the machine has 6 cores, 12 logical), or a page fault in a worker.
+- Five walks with the voice program off had none (gamenovoice), but one freeze in ten walks with the voice cannot be told from none in five. Twenty more walks count it (labels *-7bef7cf-rate*).
+
+The count (6 November, 16:40) [M]: of twenty more walks, 19 had none over, and rate16 had one frame of 39.2 ms, with no visibility wait. With the first five that is 25 walks, 45,000 frames: one freeze of 231 ms, one of 39 ms. The voice ran through each capture, without a break, harder than play. At this rate a fix could not be told from luck in under about 75 walks, some 3.5 hours of the machine, and the cause is still a guess.
