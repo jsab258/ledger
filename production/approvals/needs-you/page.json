@@ -1,11 +1,31 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Saturday 7 November, 20:11",
+ "kicker": "LEDGER · Needs you · 1 open · updated Saturday 7 November, 22:17",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "efficiency-philosophy-2026-11-07",
+   "name": "Your efficiency philosophy in force now, rather than with Monday's order? This line would go first under how the work runs in your rulings: \"Efficiency is a philosophy, not a wish (5 and 7 November): continuous and meticulous; every piece of work is also a chance to make the next cheaper. Look at everything: tokens, idle, handovers, rework and thrown tries, reviews, pictures, startup tools, build waits, and his time. Measured, not felt: the daily measures and the Monday audit; one change at a time, kept or dropped on its numbers; one waste noted at each item's end. The goal is falling cost per piece, each repeat of a kind clearly cheaper than the first. Never at quality's expense: waste goes, no bar is lowered. Its other half is full use of the week's allowance on useful work, no idle and no busywork, a tenth kept for Monday morning. Records and process stay under about 15% of spend, no bureaucracy; no extra money.\"",
+   "links": [],
+   "recommendation": "Yes. It costs nothing and replaces your 1 November efficiency line, folded into it. The advisor asked for this on your choice of 21:44. No web link: the answer is this page.",
+   "added": "2026-11-07 22:17",
+   "pictures": [],
+   "options": [
+    [
+     "yes",
+     "Yes (recommended)"
+    ],
+    [
+     "monday",
+     "Not now, with Monday's order"
+    ]
+   ]
+  }
+ ]
 }

@@ -3925,11 +3925,15 @@ namespace
 			// Twelve ways round, nearest the front first, at 2.6 m, 2 m then
 			// 1.6 m: Ron's yard is cramped.
 			bool bFound = false;
+			// -MouthFilmDeg=<degrees> (7 November, side and back for a whole person's review): start that far round from the front.
+			static float FromDeg = 0.0f;
+			static const bool bFromDeg = FParse::Value(FCommandLine::Get(), TEXT("MouthFilmDeg="), FromDeg);
+			(void)bFromDeg;
 			for (float Try : { 260.0f, 200.0f, 160.0f })
 			{
 				for (int32 K = 0; K < 12 && !bFound; ++K)
 				{
-					const float Deg = (K % 2 == 0 ? 1.0f : -1.0f) * 30.0f * ((K + 1) / 2);
+					const float Deg = FromDeg + (K % 2 == 0 ? 1.0f : -1.0f) * 30.0f * ((K + 1) / 2);
 					const FVector D = Toward.RotateAngleAxis(Deg, FVector::UpVector);
 					FHitResult Hit;
 					FCollisionQueryParams Q(TEXT("LedgerMouthFilm"), true, Who);
