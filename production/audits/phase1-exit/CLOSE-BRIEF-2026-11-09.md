@@ -24,7 +24,7 @@ Filled in before it is used (each marked "to add"): the night's build number, th
 
 ## Exit C: the voice and the speech line
 
-- production/research/voice-latency/IN-GAME-2026-11-02.md (runs E and F, and the third try's result), production/playtest/talk-runs.jsonl; the voice's frame cost in production/research/pre-production/p1-packaged/runs.jsonl.
+- production/research/voice-latency/IN-GAME-2026-11-02.md (runs E, F, H to K, and the third try's result), production/research/llm-inference-economics/TALK-LEVERS-2026-11-06.md's last section (raw: F:/LedgerTools/latency/askreal-2026-11-07h, i, j, k), production/playtest/talk-runs.jsonl; the voice's frame cost in production/research/pre-production/p1-packaged/runs.jsonl.
 - RULINGS.md, the Speech lines. The bar: median 2.0 s on a newcomer's real questions.
 
 ## Exit D: P1 packaged and the render and voice pairing's headroom

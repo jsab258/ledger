@@ -34,3 +34,23 @@ ClaimBench `firsts --set held --early` (20 held questions, Lena, Rocco, Sam: 60 
 ## Not reached
 
 Inside the packaged game: not run. It reaches the game on its first night's build, and a paid in-game run must confirm the time and the fall-backs, a second run settling it. A real hour's mix of talks. Whether the cache's minimum holds for characters with fewer facts: the head's size is not checked per card.
+
+## Inside the packaged game (7 November, build e998e06, the same hour, the bar's own measure)
+
+Each run: 30 lines from the held newcomer questions, -AskSet firsts-held.txt -AskNear, as run F; live on LEDGER's key, all three Pocket voices ready, no one walked away, nothing refused by the cap. Raw: F:/LedgerTools/latency/askreal-2026-11-07h, i, j, k. Questions, written before running: is the cache read inside the game; does the time or the fall-backs worsen; what does it cost.
+
+| Run | Talk | Median first sound | Under 2.0 s | 4 s or more | Worst | Fall-backs | Timed out | US$ (price card) | Cache read / written |
+|---|---|---|---|---|---|---|---|---|---|
+| F (4 Nov, build 6c808a1) | not cached | 2.02 | 14 of 30 | 7 | 8.22 | 0 | 2 | 0.366 | none |
+| J | not cached | 2.42 | 14 of 30 | 8 | 8.22 | 0 | 5 | 0.364 | none |
+| H | cached | 2.04 | 14 of 30 | 6 | 8.21 | 1 | 2 | 0.295 | 360,789 / 127,866 |
+| I | cached | 1.67 | 20 of 30 | 5 | 8.26 | 2 | 1 | 0.259 | 305,319 / 108,872 |
+| K | cached | 1.58 | 21 of 30 | 4 | 8.22 | 0 | 1 | 0.248 | 348,626 / 114,702 |
+
+Three cached runs pooled, 90 lines: median 1.78 s, 55 under 2.0 s, 15 at 4 s or more. Order: H, I, J, K; only J and K alternate, one run each, so the spread between runs (1.58 to 2.04 on the same talk) is as large as most of the gain.
+
+- **The cache works inside the game** and costs about 27% less: mean US$0.267 against 0.365, so an hour of 15 replies about US$0.13 against 0.18 by these runs, more than the beside-the-game $0.077 worked out for a four-line talk, since these runs pass between three people. Not yet a real hour's mix.
+- **Time did not worsen;** it read better in two of three runs. Why a saving in cost should save time was not read; fewer timed-out lines (4 in 90 against 7 in 60) may be part of it. The 8-second tail stays in every run.
+- **Fall-backs:** 3 of 113 replies cached against 0 of 76 not. Too few to tell apart, and the nightly bench, 60 first questions, read 2 of 60 on both the night before the cache and the night with it. Listed, watched in the nightly bench.
+- **The bar:** this was a cost lever, no try at the bar. Run F's miss stands as measured; these runs go to the exit's reviewer as raw numbers, who judges.
+

@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Saturday 7 November, 11:20; late: Windows restarted the PC at 00:14)
+## Overview (Saturday 7 November, 11:00; late: Windows restarted the PC at 00:14)
 
 **Tokens, Friday 6 November:** history 24% of the spend, Opus 87%, reviewing 14% (1,093 steps, US$84.01 at list prices; Thursday 21%, 98%, 10%).
 
@@ -14,7 +14,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 | 3 Prompt cache | 96.4% read from cache; writes US$40.09, of which starts US$11.47 in 19 runs; 4 rewrites mid-run US$2.07 |
 | 4 The start, tokens | tools 61,450, skills' list 8,329, memory and project files 6,489, system 4,041; never used this week: 20 tools 11,997, 43 skills 4,784 |
 | 5 Cycle time | change to its night walk: median 8.6 h over 7 commits; your answers: none dated that day in the read-back |
-| 6 Week's allowance | 65% at 10:55, the line 65.5%; the weekly figure read Monday 12:50 |
+| 6 Week's allowance | 65% at about 10:50, the line 65.5%; the weekly figure read Monday 12:50 |
 
 Disk (11-07 03:31): C: 122.6 GB free, F: 26.8 GB free; grew most since yesterday: a temporary folder on C: +2.9 GB, the build cache on C: +1.7 GB, gate pictures on F: +0.4 GB.
 
@@ -62,6 +62,7 @@ Nothing open.
 - The night's walk read 13 of 15, the tester's own misreading; mended, tonight's walk to confirm.
 - The day's summary, overview and progress page came about four hours late.
 - Card memory 6,089 MB, up 129.
+- A slip: a few times I wrote this morning were guessed; corrected.
 
 **Done:**
 - Your yes on keeping a tenth for Monday is in force, checked hourly: 65% against 65.5%.

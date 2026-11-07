@@ -535,4 +535,6 @@
 {"event": "start", "at": "2026-11-07T00:13:00", "task": "phase 5 research: three PCG questions from the source (helper)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-07T00:13:00", "note": ""}
 {"event": "start", "at": "2026-11-07T10:47:00", "task": "advisor 20: the start check after a killed session; his pacing yes; the night's route; the morning's records", "phase": "1", "kind": "production"}
-{"event": "stop", "at": "2026-11-07T11:30:00", "note": ""}
+{"event": "stop", "at": "2026-11-07T11:02:00", "note": ""}
+{"event": "start", "at": "2026-11-07T11:02:00", "task": "n02-9-talk-cost-levers: four paid runs inside the packaged game", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-07T11:40:00", "note": ""}
