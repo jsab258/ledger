@@ -22,6 +22,7 @@
   {"name": "stair strip wall", "kind": "wall", "x0": 4.05, "x1": 4.19, "y0": 0.10, "y1": 3.0, "z0": 5.12, "z1": 13.0},
   {"name": "stair strip (locked)", "kind": "nogo", "x0": 3.0, "x1": 4.05, "y0": 0.10, "y1": 3.0, "z0": 5.25, "z1": 13.0},
   {"name": "bench", "kind": "furniture", "x0": 8.14, "x1": 8.65, "y0": 0.10, "y1": 0.55, "z0": 5.65, "z1": 7.26},
+  {"name": "window board and heater", "kind": "furniture", "x0": 5.14, "x1": 8.62, "y0": 0.10, "y1": 0.78, "z0": 5.12, "z1": 5.62, "why": "7 November (the walk's step-070, step-085): the board had no box, so Tom walked into it, his knee and boot up through it and the directories; the recipe's board reaches z 5.51, 11 cm more keeps his feet off it"},
   {"name": "notices", "kind": "use", "x0": 8.93, "x1": 9.0, "y0": 1.2, "y1": 1.9, "z0": 5.8, "z1": 6.8},
   {"name": "counter", "kind": "furniture", "x0": 5.2, "x1": 9.0, "y0": 0.10, "y1": 1.05, "z0": 7.5, "z1": 8.0},
   {"name": "the book of every fare", "kind": "use", "x0": 7.0, "x1": 7.4, "y0": 1.05, "y1": 1.12, "z0": 7.55, "z1": 7.85},
