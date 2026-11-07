@@ -257,7 +257,7 @@ function render(){
       b.addEventListener("click", () => play(s.audio, b));
       sec.append(el("div", {class:"row"}, b, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
     }
-    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString("sv-SE", {timeZone:"Europe/Zurich", year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false}) : ""}));
     root.append(sec);
   }
   document.getElementById("tally").innerHTML = "<b>" + judged + " of " + total + "</b> picked" + (db ? "" : " · picks are not being stored on this view");

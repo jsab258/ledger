@@ -17,7 +17,8 @@
      "No, Darren stays held"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-07 20:11, answered yes (20:09): one third try on Darren's jumper, the next session makes it first"
   },
   {
    "id": "tester-third-try-2026-11-07",

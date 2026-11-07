@@ -89,7 +89,7 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
   <footer id="foot"></footer>
 </div>
 <script>
-const PAGE = {"tab": "LEDGER: Needs you", "kicker": "LEDGER · Needs you · 1 open · updated Saturday 7 November, 19:49", "title": "Needs you", "how": ["Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.", "Pick an answer under each item; a note is optional."], "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.", "sections": [{"kind": "need", "key": "darren-fit-third-try-2026-11-07", "name": "A third try at Darren's jumper? His two tries are spent and two small slits of skin still show at his breastbone. The cause is now measured: the lower edge of his head mesh stands about 3 mm through the cloth there. The try moves only the cloth at that spot, about 10 mm at most.", "links": [], "recommendation": "Yes. About 30 minutes and one more build, and he can be dressed for your look. Without it he stays in the white base layer on Monday and only Ron can be dressed. Whichever you pick, nothing shows in the game until you have looked. No web link: the answer is this page.", "added": "2026-11-07 19:25", "pictures": [], "options": [["yes", "Yes, a third try (recommended)"], ["no", "No, Darren stays held"]]}]};
+const PAGE = {"tab": "LEDGER: Needs you", "kicker": "LEDGER · Needs you · 0 open · updated Saturday 7 November, 20:11", "title": "Needs you", "how": ["Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.", "Nothing open: the page says so."], "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.", "sections": []};
 const state = {};
 let db = null, canWrite = true, audio = null, playing = null, raf = 0;
 function el(tag, attrs, ...kids){
@@ -242,7 +242,7 @@ function render(){
       b.addEventListener("click", () => play(s.audio, b));
       sec.append(el("div", {class:"row"}, b, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
     }
-    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString("sv-SE", {timeZone:"Europe/Zurich", year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false}) : ""}));
     root.append(sec);
   }
   document.getElementById("tally").innerHTML = "<b>" + judged + " of " + total + "</b> picked" + (db ? "" : " · picks are not being stored on this view");
