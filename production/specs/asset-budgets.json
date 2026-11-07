@@ -59,6 +59,7 @@
     ["/Game/Ledger/MetaHumans/Garments/RonJeans", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/RonJumper", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments/DarrenJeans", "garment_trousers"],
+    ["/Game/Ledger/MetaHumans/Garments/DarrenBoots", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments/DarrenJumper", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
@@ -126,6 +127,7 @@
   },
   "waiver_rule": "A set-aside fault is waived here, never in code: each waiver names the asset (name or path), the rule (one of the rules above), its DECISIONS.md line and its FINDINGS.md entry. A waived error is listed in the report and fails nothing alone (CLAUDE.md, 'The gate': known shortfalls are listed, failing nothing alone).",
   "waivers": [
+    {"asset": "SKM_DarrenBoots", "rule": "triangles", "decision": "DECISIONS.md, 2026-11-07 (Ron's passed boots carried to Darren, same 10,416 triangles a pair as Tom's)", "finding": "FINDINGS.md, Clothes (the boots over their triangle cap)"},
     {"asset": "SKM_TomBoots", "rule": "triangles", "decision": "DECISIONS.md, 2026-10-30 15:25 (Ron's passed boots carried to Tom: 10,416 triangles a pair, about 5,200 a boot, inside Mafia's footwear spread of 1,780 to 9,964; the cap of 6,000 is for low shoes)", "finding": "FINDINGS.md, Clothes (the boots over their triangle cap)"}
   ]
 }

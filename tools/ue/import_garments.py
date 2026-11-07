@@ -31,7 +31,7 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPEC = os.path.join(REPO, "production", "specs", "garments.json")
 DEST = "/Game/Ledger/MetaHumans/Garments"
-# (Darren's face moved to S6 on 30 September, his body the same as C5's; the project holds no C5, 7 November 2026.)
+# (Darren's face moved to S6 on 30 September, his body NOT the same as C5's, measured 7 November 2026 (F:/LedgerTools/bodies/MH_SamS6); the project holds no C5.)
 # Each wearer's approved MetaHuman, whose body the garments were made on
 # (the face take changes the face, never the body: F:/LedgerTools/bodies/README.md).
 BODY = {"Rocco": "MH_RoccoP2", "Lena": "MH_LenaS4", "Sam": "MH_SamS6",
