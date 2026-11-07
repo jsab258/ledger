@@ -2,6 +2,24 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "tester-third-try-2026-11-07",
+   "added": "2026-11-07 16:12",
+   "text": "A third try at the tester's greeting round? The tester, not the game: it reaches Ron but runs out of day before Darren and Sheila, because the office now costs it time. It would greet them two mornings on, when all three are close together till 13:00. A small change to the tester only.",
+   "links": [],
+   "recommendation": "Yes. Under ten minutes and no change to the game; without it tonight's walk and Monday's exit show two failed stages that are the tester's lateness, explained but not cleared. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, a third try (recommended)"
+    ],
+    [
+     "no",
+     "No, list it at the exit"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "firewall-dialog-2026-11-07",
    "added": "2026-11-07 14:30",
    "text": "At the PC: a Windows Security box has sat in front since 12:31, asking whether to allow \"UnrealGame\" through the firewall. Press Cancel. Then tap Done. It keeps the tester's game from coming to the front: this afternoon's walk could not start, and tonight's walk would fail the same way.",

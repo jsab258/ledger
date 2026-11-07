@@ -56,8 +56,10 @@ PLAY = [sys.executable, os.path.join(REPO, "tools", "ai-tester", "play.py")]
 PACKAGED_SAVED = "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved"
 EDITOR_SAVED = os.path.join(REPO, "ue-probe", "Saved")
 LINE = "Was it always this quiet and dead round here, Sheila?"   # w, a, s and d, typed into the box
-TOWN_LINE = "Morning. Anything going on round here?"            # the same neutral greeting to each, after the deed
-TOWN_WHO = (("lena", "Sheila"), ("rocco", "Ron"), ("sam", "Darren"))
+TOWN_LINE = "Afternoon. Anything going on round here?"            # the same neutral greeting to each, after the deed
+# RON AND DARREN FIRST (7 November, the day walk): the walk now leaves Tom in the office, and the door costs half a game
+# hour. Both are on Mickey's rank till 17:00; Sheila is reachable to 18:00, the office and then Rita's step.
+TOWN_WHO = (("rocco", "Ron"), ("sam", "Darren"), ("lena", "Sheila"))
 WALK_MPS = 1.6                                                  # measured 1 October: 3.2 m in 2 s
 # EPIC'S WALK, packaged since 27 October (SliceCharacter.cpp, the Game Animation Sample's character): it walks at the
 # sample's 2.0 m/s and glides about 0.45 m after the key is let go, where his own clips stopped dead. Read off that
@@ -138,6 +140,23 @@ def in_office(x, z):
 def approach(person, tom, m):
     """Where to stand to talk to someone: indoors the public side, since the straight line ends behind the counter."""
     return OFFICE_PUBLIC if in_office(person[0], person[1]) else stand_off(person, tom, m)
+
+
+def walk_to_person(r, key, m):
+    """To where one can talk to them, by the door if the office lies between (7 November, the day walk: Sheila went
+    indoors just after the tester set off, its next steps ran at the shop front for five game hours, and it read
+    "never in reach"). Her place is read again after the first leg, in case it changed on the way."""
+    for _ in range(2):
+        w = r.where()
+        if key not in w or "tom" not in w:
+            return
+        spot = approach(w[key][:2], w["tom"][:2], m)
+        r.by_road(spot[0], spot[1])
+        w = r.where()
+        if key in w and "tom" in w and in_office(w[key][0], w[key][1]) == in_office(w["tom"][0], w["tom"][1]):
+            break
+    r.go_to(0, 0, tol=0.5, legs=10,
+            follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], m) if key in ww and "tom" in ww else None)
 
 
 def stand_off(target, frm, m):
@@ -356,10 +375,7 @@ def greet(r, key, name):
     w = r.where()
     if key not in w or "tom" not in w:
         return r.record("town-" + name, False, "%s is not on the street" % name)
-    spot = approach(w[key][:2], w["tom"][:2], 1.1)
-    r.by_road(spot[0], spot[1])
-    r.go_to(0, 0, tol=0.5, legs=10,
-            follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], 1.1) if key in ww and "tom" in ww else None)
+    walk_to_person(r, key, 1.1)
     w = r.where()
     t = w.get("tom")
     if not (t and key in w):
@@ -394,7 +410,10 @@ def greet(r, key, name):
                                                        "" if said == TOWN_LINE else " said=%r not as typed" % said))
 
 
-MORNING_FROM, MORNING_UNTIL = 9 * 60 + 5, 13 * 60
+# THE HOUR THE THREE ARE ALL AT MICKEY'S (7 November, the day walk, whose 09:09 greeted people the day's hour had not yet
+# placed, 09:13 to 09:19, and whose Darren leaves for the docks at 10:00 on the next day, a Tuesday): 15:05, Ron and
+# Darren on the rank, Sheila in the office, by hook-cast.json.
+MORNING_FROM, MORNING_UNTIL = 15 * 60 + 5, 16 * 60
 
 
 def morning_step(day, clock):
@@ -407,7 +426,7 @@ def morning_step(day, clock):
     at = int(hour) * 60 + int(minute)
     if MORNING_FROM <= at < MORNING_UNTIL:
         return "here"
-    if 4 * 60 <= at < MORNING_FROM:
+    if MORNING_FROM - 120 <= at < MORNING_FROM:
         return max(1, min(30, (MORNING_FROM - at + 1) // 2))
     return "z"
 
@@ -419,7 +438,7 @@ def to_next_morning(r, tries=20):
     A REAL MORNING (5 November: every walk since 30 October landed at about 15:12, 07:12 being just short of the old
     08:00 to 17:00, and at 2 game minutes a second 17:00 came during Sheila's greeting, when the cast file sends Ron
     and Darren to the quay and Darren home at 19:00: "lost sight of" and "not on the street" were the tester's lateness).
-    So from 04:00 it waits on the street, as a player would, to 09:05, when all three are out till 17:00."""
+    So it waits on the street, as a player would, for the hour the three are at Mickey's (MORNING_FROM)."""
     for _ in range(tries):
         t = r.where().get("tom")
         step = morning_step(t[3], t[4]) if t and len(t) >= 5 else "z"
@@ -495,11 +514,8 @@ def walk(editor, out, town=False, sit=False):
     # TALK: to Sheila, wherever her day has her.
     w = r.where()
     if "lena" in w and "tom" in w:
-        spot = approach(w["lena"][:2], w["tom"][:2], 1.1)
-        r.by_road(spot[0], spot[1])
         # Wherever she has gone meanwhile.
-        r.go_to(0, 0, tol=0.5, legs=10,
-                follow=lambda ww: approach(ww["lena"][:2], ww["tom"][:2], 1.1) if "lena" in ww and "tom" in ww else None)
+        walk_to_person(r, "lena", 1.1)
         w = r.where()
         t = w.get("tom")
         if t and "lena" in w:
@@ -612,7 +628,10 @@ def selftest():
     s = stand_off([6.0, 4.6], [1.0, 4.6], 1.1)
     check("a talk spot stands off toward Tom", abs(s[0] - 4.9) < 1e-9 and abs(s[1] - 4.6) < 1e-9)
     check("the town round greets the three who talk, the same line to each",
-          [k for k, _ in TOWN_WHO] == ["lena", "rocco", "sam"] and "Morning" in TOWN_LINE)
+          [k for k, _ in TOWN_WHO] == ["rocco", "sam", "lena"] and "Afternoon" in TOWN_LINE)
+    check("the next day's hour: from early morning, Z; shortly before, a wait; in it, here; after it, Z",
+          morning_step("D1", "06:51") == "z" and morning_step("D1", "14:51") == 7 and morning_step("D1", "15:12") == "here"
+          and morning_step("D1", "17:00") == "z" and morning_step("D0", "15:12") == "z")
     seat = next(s for s in SEATS() if "middle" in s["name"])
     check("the sit spot is inside the office's public side and within the game's reach of the seat",
           4.19 < seat["x"] - SIT_FROM_M < 9.0 and 5.12 < seat["z"] < 7.5 and SIT_FROM_M < SIT_REACH_M)

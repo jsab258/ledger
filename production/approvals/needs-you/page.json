@@ -1,11 +1,31 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Saturday 7 November, 15:38",
+ "kicker": "LEDGER · Needs you · 1 open · updated Saturday 7 November, 16:12",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "tester-third-try-2026-11-07",
+   "name": "A third try at the tester's greeting round? The tester, not the game: it reaches Ron but runs out of day before Darren and Sheila, because the office now costs it time. It would greet them two mornings on, when all three are close together till 13:00. A small change to the tester only.",
+   "links": [],
+   "recommendation": "Yes. Under ten minutes and no change to the game; without it tonight's walk and Monday's exit show two failed stages that are the tester's lateness, explained but not cleared. No web link: the answer is this page.",
+   "added": "2026-11-07 16:12",
+   "pictures": [],
+   "options": [
+    [
+     "yes",
+     "Yes, a third try (recommended)"
+    ],
+    [
+     "no",
+     "No, list it at the exit"
+    ]
+   ]
+  }
+ ]
 }
