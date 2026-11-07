@@ -12,13 +12,15 @@ Do not read the REHEARSAL-2026-11-07 files in this folder: the verdict is to be 
 - The frontage: production/audits/gate-ritas-front/GATE.md and his answer (the 22 October brief's paths).
 - The three views: the latest production/previews/morning-hook-day-, morning-reverse-day- and morning-night- pictures (taken in the editor, so screens; the corner's packaged pictures below count), beside production/previews/hook-sheet-2026-10-05.jpg.
 - The corner's packaged pictures, all five cameras by day and night, on the build of 3641d53: F:/LedgerTools/gate/new/corner-packaged-2026-11-06, with its reviews review-hook-day.json, review-hook-night.json, review-reverse.json. A later build's: to add on the 9th.
-- The tester's latest walk: production/playtest/nightly/2026-11-06.md (15 of 15; the latest on the 9th to add), FINDINGS.md.
+- The tester's latest walks: production/playtest/nightly/2026-11-06.md (15 of 15), 2026-11-07.md (13 of 15; the first stood on a tester's misreading, checked); the latest on the 9th to add, FINDINGS.md.
+- Since 7 November the office and sitting are on in the game itself; before that they were only behind -MickeysInside and -TomSit, so every office and sit picture dated before the 8th is of a test launch. The new build's office pictures: to add.
 
 ## Exit B: one complete Tom and one speaker, walking, sitting and turning
 
 - The outfit: F:/LedgerTools/gate/new/tom-outfit/2026-11-04-packaged/review.md; production/art/clothing/tom-outfit/COLLAR-BACK-DIAGNOSIS-2026-11-04.md; the order's lines n02-tom-jacket, -jumper, -jeans, -boots.
 - Sitting: the packaged film after the eyes' level, F:/LedgerTools/tmp/ai-tester/film/2026-11-06-0553 (F:/LedgerTools/gate/new/sit-packaged-2026-11-06, verdict.json, film-marks.json; its talk-open stage fails on the sit's own route, Sheila out of reach, as in the editor; the night walk's passes), beside the film F:/LedgerTools/tmp/ai-tester/film/2026-11-05-1135.
 - His walk: F:/LedgerTools/gate/new/tom-walk-film-2026-11-05/walk.gif (packaged, the 5 November build; about 8 frames a second, 15 s; on 22 October about half his steps slid). Its first 8 s of walking are mostly against Ron's back, so judge the feet from the walk past Mickey's front, the walk back and the run. The cast's white base layers show; they are not for judging here. The walk's measure on the fixed step: F:/LedgerTools/tmp/tom-walk-proof-2026-11-05/result.txt (worst join 13.68 cm against the check's limit, failed; Epic's mannequin on the same route 13.94 at the stop, 20.23 on the loop, Tom 13.68 and 20.78, so the number is mostly the route and the reading: judge by eye).
+- Tom treads on the spot against Mickey's front in walk.gif (FINDINGS), so judge travel from the open street; the side-on full-rate film and a speaker's walk, sit-down and turn: to add.
 - Hair: RULINGS.md's 3 November line; the crown's tries in DECISIONS.md (search "crown").
 - The body and animation the game plays: the night walk's log lines (to add).
 
