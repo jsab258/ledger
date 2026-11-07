@@ -21,12 +21,13 @@ Do not read the REHEARSAL-2026-11-07 files in this folder: the verdict is to be 
 - Sitting: the packaged film after the eyes' level, F:/LedgerTools/tmp/ai-tester/film/2026-11-06-0553 (F:/LedgerTools/gate/new/sit-packaged-2026-11-06, verdict.json, film-marks.json; its talk-open stage fails on the sit's own route, Sheila out of reach, as in the editor; the night walk's passes), beside the film F:/LedgerTools/tmp/ai-tester/film/2026-11-05-1135.
 - His walk: F:/LedgerTools/gate/new/tom-walk-film-2026-11-05/walk.gif (packaged, the 5 November build; about 8 frames a second, 15 s; on 22 October about half his steps slid). Its first 8 s of walking are mostly against Ron's back, so judge the feet from the walk past Mickey's front, the walk back and the run. The cast's white base layers show; they are not for judging here. The walk's measure on the fixed step: F:/LedgerTools/tmp/tom-walk-proof-2026-11-05/result.txt (worst join 13.68 cm against the check's limit, failed; Epic's mannequin on the same route 13.94 at the stop, 20.23 on the loop, Tom 13.68 and 20.78, so the number is mostly the route and the reading: judge by eye).
 - Tom treads on the spot against Mickey's front in walk.gif (FINDINGS), so judge travel from the open street; the side-on full-rate film and a speaker's walk, sit-down and turn: to add.
+- The bar's frames, for Exits A and B: F:/LedgerTools/reference-other-games/production/reference/kcd2-town-arcades.jpg and kcd2-town-fountain.jpg (on F: only, never copied into the repository).
 - Hair: RULINGS.md's 3 November line; the crown's tries in DECISIONS.md (search "crown").
 - The body and animation the game plays: the night walk's log lines (to add).
 
 ## Exit C: the voice and the speech line
 
-- production/research/voice-latency/IN-GAME-2026-11-02.md (runs E, F, H to K, and the third try's result), production/research/llm-inference-economics/TALK-LEVERS-2026-11-06.md's last section (raw: F:/LedgerTools/latency/askreal-2026-11-07h, i, j, k), production/playtest/talk-runs.jsonl; the voice's frame cost in production/research/pre-production/p1-packaged/runs.jsonl.
+- production/research/voice-latency/IN-GAME-2026-11-02.md (runs E, F, H to K, and the third try's result), production/research/llm-inference-economics/TALK-LEVERS-2026-11-06.md's last section (raw: F:/LedgerTools/latency/askreal-2026-11-07h, i, j, k), production/playtest/talk-runs.jsonl (no 7 November rows: runs H to K are in the F: folders named above); the voice's frame cost in production/research/pre-production/p1-packaged/runs.jsonl.
 - RULINGS.md, the Speech lines. The bar: median 2.0 s on a newcomer's real questions.
 
 ## Exit D: P1 packaged and the render and voice pairing's headroom

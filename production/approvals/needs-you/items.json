@@ -2,6 +2,25 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "firewall-dialog-2026-11-07",
+   "added": "2026-11-07 14:30",
+   "text": "At the PC: a Windows Security box has sat in front since 12:31, asking whether to allow \"UnrealGame\" through the firewall. Press Cancel. Then tap Done. It keeps the tester's game from coming to the front: this afternoon's walk could not start, and tonight's walk would fail the same way.",
+   "links": [],
+   "recommendation": "Press Cancel, a few seconds. The program it asks about was a throwaway test copy from this morning, already deleted, and Windows already blocks it, so Cancel changes nothing. If you are away from the PC, the second answer lets the session end the box itself; no firewall setting changes either way. No web link: the answer is this page.",
+   "options": [
+    [
+     "done",
+     "Done, I pressed Cancel (recommended)"
+    ],
+    [
+     "end",
+     "I am away: the session may end the box"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-07 15:38, done (15:35): he pressed Cancel; the box is gone, checked"
+  },
+  {
    "id": "keep-monday-share-2026-11-06",
    "added": "2026-11-06 22:10",
    "text": "Your idea of this evening, by the advisor: keep 10% of the week for Monday morning, every week? The session paces itself to a straight line from 0% at Monday 13:00 to 90% the next Monday 07:00 (about 58% at Friday 21:00), checked each hour. Up to 3 points ahead: carry on. 3 to 6 ahead: at most two helpers. More than 6 ahead: finish the item in hand and start no new session until back on the line. Behind: full pace within your rules. Monday 07:00 to 13:00: full pace, the last 10% shared with you.",

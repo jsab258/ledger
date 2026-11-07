@@ -373,6 +373,140 @@
     },
     "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 3.25 cm past each half sole (4 cm read as a dark halo seen whole; 2.5 cm let an arc of the line back before the toes), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
    }
+  },
+  {
+   "who": "Rocco",
+   "name": "RonJeans",
+   "fbx": "F:/LedgerTools/garments/ron/from_tom/ron_jeans/skinned/ron_jeans_skinned.fbx",
+   "hides": [
+    "lower"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_packed.png",
+    "tint": [
+     0.155,
+     0.262,
+     0.456
+    ],
+    "tapecolour": [
+     0.155,
+     0.262,
+     0.456
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ],
+    "detail": "F:/LedgerTools/garments/tom/jeans/twill/twill_normal_dx.png",
+    "detail_tiling": 71.6,
+    "detail_strength": 1.0
+   },
+   "handed": "2026-11-07",
+   "made": "Tom's jeans carried point for point onto Ron's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Ron's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November)",
+   "two_sided": true,
+   "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py).",
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJeans"
+  },
+  {
+   "who": "Rocco",
+   "name": "RonJumper",
+   "fbx": "F:/LedgerTools/garments/ron/from_tom/ron_jumper/skinned/ron_jumper_skinned.fbx",
+   "hides": [
+    "top"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
+    "tint": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "tapecolour": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ]
+   },
+   "handed": "2026-11-07",
+   "made": "Tom's jumper carried point for point onto Ron's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Ron's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn",
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJumper"
+  },
+  {
+   "who": "Sam",
+   "name": "DarrenJeans",
+   "fbx": "F:/LedgerTools/garments/darren/from_tom/darren_jeans/skinned/darren_jeans_skinned.fbx",
+   "hides": [
+    "lower"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_packed.png",
+    "tint": [
+     0.155,
+     0.262,
+     0.456
+    ],
+    "tapecolour": [
+     0.155,
+     0.262,
+     0.456
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ],
+    "detail": "F:/LedgerTools/garments/tom/jeans/twill/twill_normal_dx.png",
+    "detail_tiling": 71.6,
+    "detail_strength": 1.0
+   },
+   "handed": "2026-11-07",
+   "made": "Tom's jeans carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November)",
+   "two_sided": true,
+   "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py).",
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJeans"
+  },
+  {
+   "who": "Sam",
+   "name": "DarrenJumper",
+   "fbx": "F:/LedgerTools/garments/darren/from_tom/darren_jumper/skinned/darren_jumper_skinned.fbx",
+   "hides": [
+    "top"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
+    "tint": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "tapecolour": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ]
+   },
+   "handed": "2026-11-07",
+   "made": "Tom's jumper carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn",
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper"
   }
  ]
 }

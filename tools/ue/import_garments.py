@@ -31,9 +31,10 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPEC = os.path.join(REPO, "production", "specs", "garments.json")
 DEST = "/Game/Ledger/MetaHumans/Garments"
+# (Darren's face moved to S6 on 30 September, his body the same as C5's; the project holds no C5, 7 November 2026.)
 # Each wearer's approved MetaHuman, whose body the garments were made on
 # (the face take changes the face, never the body: F:/LedgerTools/bodies/README.md).
-BODY = {"Rocco": "MH_RoccoP2", "Lena": "MH_LenaS4", "Sam": "MH_SamC5",
+BODY = {"Rocco": "MH_RoccoP2", "Lena": "MH_LenaS4", "Sam": "MH_SamS6",
         # Tom (28 October 2026, his page: his zip jacket worn in the game with drape 19's cuffs): his MetaHuman L1,
         # worn over Epic's sample character (SliceCharacter.cpp), the body the jacket was draped and skinned on
         "Tom": "MH_TomL1"}

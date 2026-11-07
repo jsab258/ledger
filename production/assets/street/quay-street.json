@@ -4745,54 +4745,6 @@
    "emit_night": 80.0,
    "reveal_on": null,
    "faces": 171
-  },
-  {
-   "mesh": "street_paint_chip_primer",
-   "material": "paint_chip_primer",
-   "base_material": "paint_chip_primer",
-   "linear_rgb": [
-    0.3,
-    0.29,
-    0.25
-   ],
-   "roughness": 0.8,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 9816
-  },
-  {
-   "mesh": "street_paint_chip_wood",
-   "material": "paint_chip_wood",
-   "base_material": "paint_chip_wood",
-   "linear_rgb": [
-    0.11,
-    0.075,
-    0.05
-   ],
-   "roughness": 0.85,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 4568
   }
  ]
 }

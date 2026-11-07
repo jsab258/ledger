@@ -1884,3 +1884,7 @@ Made: one claim read from an engine's source settled by count. Method: a throwaw
 
 ## Rehearsing a gate before it counts (7 Nov)
 Made: the phase's exit judged two days early by the same fresh reviewers' brief, in time to act. Method: check every path in the brief exists, then one reviewer per exit from raw evidence, keeping their reports from Monday's reviewers. Target and check: their findings checked in the code before acting. Cost: four reviewers, about five minutes each. Found: pieces that "passed" only behind test switches, never in the program a player starts; a check that must exist is that a pass's command line equals the player's. Evidence: production/audits/phase1-exit/REHEARSAL-2026-11-07-*.md.
+
+
+## Worn paint as geometry over edges, set aside (7 Nov)
+Made: nothing kept; small flakes laid half a millimetre proud over a painted front's outer edges, read from the exported model. Method: find convex edges between faces, drop grouped flakes along them, weighted low and to horizontal members, until a set share of the seen area is covered; a flat map of the result before any export. Tools: numpy on the exported model, one review per try. Target and check: 3% cover, about two thirds of the edge length clean, one small review. Cost: about 1.5 hours over two tries, one reviewer. Failed: polygons this small read as jagged confetti close up and vanish far off, and a flake's raised outline breaks a member's silhouette; a chip needs a mask in the material, not geometry. Evidence: the review beside the method's last version on the build drive.

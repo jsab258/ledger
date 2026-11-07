@@ -8928,10 +8928,6 @@ def _export_street(bpy, args, parts):
             "replaces_in_unreal": _street_replaces(args),
             "meshes": [info[k] for k in sorted(groups)],
         }, fh, indent=1)
-    # THE WORN PAINT AT THE EDGES OF MICKEY'S FRONT, read from what was just written (paint_chips.py).
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import paint_chips
-    paint_chips.append_to(out, side)
     size = os.path.getsize(out) if os.path.exists(out) else 0
     print("tfExport glb=%s bytes=%d meshes=%d faces=%d skipped=%d mirror=y-reflected sidecar=%s %s"
           % (args["export_glb"], size, len(made), sum(i["faces"] for i in info.values()),
