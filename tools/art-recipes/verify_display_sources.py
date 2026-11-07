@@ -20,6 +20,9 @@ RECIPE = os.path.join(REPO, "tools", "art-recipes", "shop-room.py")
 POLY = os.environ.get("LEDGER_POLYHAVEN", r"F:\LedgerTools\polyhaven")
 # The pawnbroker is the display builder's last branch ("else"); the others call a named function.
 BRANCH = {"pawnbroker": ("    else:\n        # THE BED: a board covered in red velvet", "\n    # ")}
+# The room behind the display shows through the same window, so its goods count too (7 November: the
+# boombox, the alarm clock and the projector stand on the room's shelves and this record missed them).
+ROOM = {"pawnbroker": "    # THE TRADE. A pawnbroker: a long glass counter"}
 
 
 def branch_text(shop, recipe_text):
@@ -27,7 +30,12 @@ def branch_text(shop, recipe_text):
         start, _ = BRANCH[shop]
         i = recipe_text.index(start)
         j = recipe_text.find("\ndef ", i)
-        return recipe_text[i:j if j > 0 else len(recipe_text)]
+        text = recipe_text[i:j if j > 0 else len(recipe_text)]
+        if ROOM[shop] in recipe_text:
+            i = recipe_text.index(ROOM[shop])
+            j = recipe_text.find("\ndef ", i)
+            text += recipe_text[i:j if j > 0 else len(recipe_text)]
+        return text
     m = re.search(r"\ndef %s_display\(.*?(?=\ndef )" % re.escape(shop), recipe_text, re.S)
     return m.group(0) if m else ""
 
@@ -85,6 +93,10 @@ def selftest():
     t(any("jug_01" in b for b in bad), "an asset whose record says another licence fails")
     t(any("brass_vase_01" in b for b in bad), "an asset with no source record fails")
     t(not any(r[0] == "velvet_red" for r in rows), "a material's name is not taken for an asset")
+    text = ('\n    # THE TRADE. A pawnbroker: a long glass counter\n    model("Camera_01", 0)\n\ndef a():\n    pass\n'
+            '\n    else:\n        # THE BED: a board covered in red velvet\n    model("jug_01", 0)\n\ndef b():\n    pass\n')
+    words = candidates(branch_text("pawnbroker", text))
+    t("Camera_01" in words and "jug_01" in words, "a pawnbroker's goods are read from both its room and its display")
     print("verify_display_sources selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
 

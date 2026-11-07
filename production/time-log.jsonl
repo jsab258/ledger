@@ -544,3 +544,8 @@
 {"event": "stop", "at": "2026-11-07T12:32:00", "note": ""}
 {"event": "start", "at": "2026-11-07T12:33:00", "task": "exit rehearsal and the office on", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-11-07T12:50:00", "note": ""}
+{"event": "start", "at": "2026-11-07T15:21:00", "task": "n02-9-dress-the-cast, n02-9-front-edge-wear, hair: session of 7 Nov 15:21", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-07T17:07:00", "note": ""}
+{"event": "start", "at": "2026-11-07T17:40:27", "task": "n02-9-dress-the-cast: Darren on his own body; office and sit pictures", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-07T18:08:43", "note": "Darren's clothes on S6, board's box; build asked 18:08"}
+{"event": "start", "at": "2026-11-07T18:42:14", "task": "n02-9-dress-the-cast: Darren's second fit, both hems; office board checked", "phase": "1", "kind": "production"}

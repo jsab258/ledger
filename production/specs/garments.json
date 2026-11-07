@@ -413,7 +413,7 @@
   {
    "who": "Rocco",
    "name": "RonJumper",
-   "fbx": "F:/LedgerTools/garments/ron/from_tom/ron_jumper/skinned/ron_jumper_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/ron/from_tom/ron_jumper_clear/skinned/ron_jumper_skinned.fbx",
    "hides": [
     "top"
    ],
@@ -480,7 +480,7 @@
   {
    "who": "Sam",
    "name": "DarrenJumper",
-   "fbx": "F:/LedgerTools/garments/darren/on_s6/darren_jumper/skinned/darren_jumper_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/darren/on_s6/darren_jumper_clear/skinned/darren_jumper_skinned.fbx",
    "hides": [
     "top"
    ],
