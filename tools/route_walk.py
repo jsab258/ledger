@@ -66,6 +66,8 @@ WALK_MPS = 1.6                                                  # measured 1 Oct
 GASP_MPS, GASP_GLIDE_M = 2.0, 0.45
 ROAD_Z = 1.2                                                    # the road's middle, clear of the cars at the kerb
 OFFICE_DOOR = (4.65, 5.0)                                       # production/specs/mickeys-office.json "door"
+OFFICE_BOX = (3.0, 9.0, 5.12, 16.5)                             # the same file's "inside": x0, x1, z0, z1
+OFFICE_PUBLIC = (7.6, 6.6)                                      # the public side, across the counter from Sheila's mark (8.15, 8.2)
 SIT_FROM_M, SIT_REACH_M = 1.25, 1.6                             # in front of the seat; the game's reach (SliceCharacter.cpp)
 
 
@@ -127,6 +129,15 @@ def wrap(deg):
 
 def bearing(x0, z0, x1, z1):
     return math.degrees(math.atan2(z1 - z0, x1 - x0))
+
+
+def in_office(x, z):
+    return OFFICE_BOX[0] < x < OFFICE_BOX[1] and OFFICE_BOX[2] < z < OFFICE_BOX[3]
+
+
+def approach(person, tom, m):
+    """Where to stand to talk to someone: indoors the public side, since the straight line ends behind the counter."""
+    return OFFICE_PUBLIC if in_office(person[0], person[1]) else stand_off(person, tom, m)
 
 
 def stand_off(target, frm, m):
@@ -279,6 +290,15 @@ class Route:
         """Out to the road's middle, along it, and in: the pavement is walled
         off in places by parked cars and the fish market's crate."""
         w = self.where().get("tom")
+        # THE OFFICE IS ON IN THE GAME ITSELF (7 November): its only way in or out is the door
+        if w and in_office(w[0], w[1]) and not in_office(x, z):
+            self.go_to(OFFICE_DOOR[0], OFFICE_DOOR[1] + 0.7, tol=0.35)
+            self.go_to(OFFICE_DOOR[0], OFFICE_DOOR[1] - 1.2, tol=0.4)
+            w = self.where().get("tom")
+        elif w and in_office(x, z) and not in_office(w[0], w[1]):
+            self.by_road(OFFICE_DOOR[0], OFFICE_DOOR[1] - 1.2)
+            self.go_to(OFFICE_DOOR[0], OFFICE_DOOR[1] + 0.7, tol=0.35)     # it opens as he comes
+            return self.go_to(x, z, tol)
         if w and abs(w[1]) > 2.0 and abs(w[0] - x) > 2.5:
             self.go_to(w[0], ROAD_Z)
             self.go_to(x, ROAD_Z)
@@ -336,10 +356,10 @@ def greet(r, key, name):
     w = r.where()
     if key not in w or "tom" not in w:
         return r.record("town-" + name, False, "%s is not on the street" % name)
-    spot = stand_off(w[key][:2], w["tom"][:2], 1.1)
+    spot = approach(w[key][:2], w["tom"][:2], 1.1)
     r.by_road(spot[0], spot[1])
     r.go_to(0, 0, tol=0.5, legs=10,
-            follow=lambda ww: stand_off(ww[key][:2], ww["tom"][:2], 1.1) if key in ww and "tom" in ww else None)
+            follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], 1.1) if key in ww and "tom" in ww else None)
     w = r.where()
     t = w.get("tom")
     if not (t and key in w):
@@ -351,7 +371,7 @@ def greet(r, key, name):
     # 3.5 m reach, the evening after a 15 of 15; Epic's walk glides on after each leg, so a leg can end a little short)
     if d > w[key][2] and "tom" in w:
         r.go_to(0, 0, tol=0.4, legs=6,
-                follow=lambda ww: stand_off(ww[key][:2], ww["tom"][:2], 0.9) if key in ww and "tom" in ww else None)
+                follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], 0.9) if key in ww and "tom" in ww else None)
         w = r.where()
         if not (w.get("tom") and key in w):
             return r.record("town-" + name, False, "lost sight of %s" % name)
@@ -455,8 +475,7 @@ def walk(editor, out, town=False, sit=False):
         except OSError:
             pass
     r = Route(saved, out)
-    extra = ["-TomSit", "-MickeysInside"] if sit else []          # the office is built only with -MickeysInside (CrimeProbe.cpp)
-    extra += GAME_ARGS                                              # --game-arg X (29 October: -CollisionAudit beside a walk)
+    extra = list(GAME_ARGS)                                              # --game-arg X (29 October: -CollisionAudit beside a walk)
     play("close")
     if not start(editor, save_dir, extra):
         r.record("street", False, not_started())
@@ -476,11 +495,11 @@ def walk(editor, out, town=False, sit=False):
     # TALK: to Sheila, wherever her day has her.
     w = r.where()
     if "lena" in w and "tom" in w:
-        spot = stand_off(w["lena"][:2], w["tom"][:2], 1.1)
+        spot = approach(w["lena"][:2], w["tom"][:2], 1.1)
         r.by_road(spot[0], spot[1])
         # Wherever she has gone meanwhile.
         r.go_to(0, 0, tol=0.5, legs=10,
-                follow=lambda ww: stand_off(ww["lena"][:2], ww["tom"][:2], 1.1) if "lena" in ww and "tom" in ww else None)
+                follow=lambda ww: approach(ww["lena"][:2], ww["tom"][:2], 1.1) if "lena" in ww and "tom" in ww else None)
         w = r.where()
         t = w.get("tom")
         if t and "lena" in w:
@@ -600,6 +619,8 @@ def selftest():
     with open(os.path.join(REPO, "production", "specs", "mickeys-office.json"), encoding="utf-8") as fh:
         door = json.load(fh)["door"]
     check("the door the sit walks through is the office spec's", (door["x"], door["z"]) == OFFICE_DOOR)
+    check("the talk's public spot is inside the office and within Sheila's 2.5 m", in_office(*OFFICE_PUBLIC) and math.hypot(OFFICE_PUBLIC[0] - 8.15, OFFICE_PUBLIC[1] - 8.2) <= 2.5)
+    check("someone indoors is talked to from the public side; on the street, from beside them", approach((8.15, 8.2), (1, 4), 1.1) == OFFICE_PUBLIC and approach((6.0, 4.6), (1, 4), 1.1) != OFFICE_PUBLIC)
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

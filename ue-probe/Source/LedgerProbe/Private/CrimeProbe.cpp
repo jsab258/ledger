@@ -4535,7 +4535,9 @@ namespace
 
 	void BuildMickeysOffice(UWorld* World)
 	{
-		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MickeysInside"));
+		// ON IN THE GAME ITSELF (7 November, the exit's rehearsal: his own shortcut and the night walk had only the block and
+		// its painted card; RULINGS 4 Oct: the front room Tom walks into); -NoMickeysInside turns it off for a comparison.
+		static const bool bWanted = !FParse::Param(FCommandLine::Get(), TEXT("NoMickeysInside"));
 		if (!bWanted || GOffice.bBuilt || World == nullptr) { return; }
 		GOffice.bBuilt = true;
 		const FString Path = OfficeSpecFile();

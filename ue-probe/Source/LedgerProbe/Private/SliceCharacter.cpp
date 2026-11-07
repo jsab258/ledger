@@ -1421,8 +1421,8 @@ void ALedgerSliceCharacter::RequestAct()
 {
 	// on Epic's route, E by a free seat sits him and E seated stands him (25 October, item 2); else it acts
 	if (SitPhase == ESitPhase::Seated) { bSitWantsUp = true; return; }
-	// sitting only with -TomSit until it passes (its third try set aside, 26 October: the window seat's sill)
-	static const bool bSitOn = FParse::Param(FCommandLine::Get(), TEXT("TomSit"));
+	// ON IN THE GAME ITSELF since 7 November (the exit's rehearsal: nobody could sit as played), its drop's faults listed; -NoTomSit for a comparison
+	static const bool bSitOn = !FParse::Param(FCommandLine::Get(), TEXT("NoTomSit"));
 	if (bSitOn && GaspMover != nullptr && SitPhase == ESitPhase::None && TryStartSit()) { return; }
 	++ActRequests;
 }

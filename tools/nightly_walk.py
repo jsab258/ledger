@@ -125,7 +125,7 @@ def summarise(events, verdict, bench, eyes):
 
 def run_walk(night):
     out = os.path.join(night, "route")
-    r = subprocess.run([sys.executable, os.path.join(REPO, "tools", "route_walk.py"), "--town", "--out", out],
+    r = subprocess.run([sys.executable, os.path.join(REPO, "tools", "route_walk.py"), "--town", "--sit", "--out", out],
                        capture_output=True, text=True, cwd=REPO, timeout=3600)
     with open(os.path.join(night, "walk.log"), "w", encoding="utf-8") as fh:
         fh.write((r.stdout or "") + (r.stderr or ""))
