@@ -551,3 +551,6 @@
 {"event": "start", "at": "2026-11-07T18:42:14", "task": "n02-9-dress-the-cast: Darren's second fit, both hems; office board checked", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-07T20:11:42", "note": ""}
 {"event": "start", "at": "2026-11-07T21:32:28", "task": "n02-9-dress-the-cast Darren's third try, Ron's collar points", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-11-07T22:41:13", "task": "n02-9 research for Monday (advisor 22-25): readings and proposals, helpers' time", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-11-07T22:41:14", "task": "n02-9-dress-the-cast whole-person films and review", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-07T23:19:13", "note": "Darren passed review; Ron fails on the head mesh through the collar's back; handover"}

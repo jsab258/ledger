@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Saturday 7 November, 22:17",
+ "kicker": "LEDGER · Needs you · 2 open · updated Saturday 7 November, 23:10",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -10,11 +10,30 @@
  "sections": [
   {
    "kind": "need",
-   "key": "efficiency-philosophy-2026-11-07",
-   "name": "Your efficiency philosophy in force now, rather than with Monday's order? This line would go first under how the work runs in your rulings: \"Efficiency is a philosophy, not a wish (5 and 7 November): continuous and meticulous; every piece of work is also a chance to make the next cheaper. Look at everything: tokens, idle, handovers, rework and thrown tries, reviews, pictures, startup tools, build waits, and his time. Measured, not felt: the daily measures and the Monday audit; one change at a time, kept or dropped on its numbers; one waste noted at each item's end. The goal is falling cost per piece, each repeat of a kind clearly cheaper than the first. Never at quality's expense: waste goes, no bar is lowered. Its other half is full use of the week's allowance on useful work, no idle and no busywork, a tenth kept for Monday morning. Records and process stay under about 15% of spend, no bureaucracy; no extra money.\"",
+   "key": "rulings-room-efficiency-2026-11-07",
+   "name": "Your rulings file is full (4,800 of 4,800 words), and your efficiency line is 118 words. Folding the old 1 November efficiency words and two dated phrases frees only about 25. May the cap rise by 100 words, to 4,900, for it?",
    "links": [],
-   "recommendation": "Yes. It costs nothing and replaces your 1 November efficiency line, folded into it. The advisor asked for this on your choice of 21:44. No web link: the answer is this page.",
-   "added": "2026-11-07 22:17",
+   "recommendation": "Yes, to 4,900. The other way is to cut about 90 words of rulings still in force, which loses some of what binds. Your yes already stands either way; this is only about where it is written. No web link: the answer is this page.",
+   "added": "2026-11-07 23:10",
+   "pictures": [],
+   "options": [
+    [
+     "yes",
+     "Raise it to 4,900 (recommended)"
+    ],
+    [
+     "no",
+     "No, cut other rulings instead"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "sonnet-blind-replay-2026-11-07",
+   "name": "Your 22:19 choice, by the advisor: test Sonnet properly first. On Sunday, about 5 recent finished items are done again from the same starting point, once on Opus and once on Sonnet. A fresh Opus reviewer scores both blind, with tests, faults and cost counted. Tuesday's real day on Sonnet goes ahead only if Sonnet matches on 4 of 5 at clearly lower cost. Cap: about 3% of the week. Go ahead?",
+   "links": [],
+   "recommendation": "Yes. One change from the advisor's method: each run gets its own copy of the project on drive F, not a second working copy on C, which fills C and needs your yes to clean. No Unreal while the night's walk runs. No web link: the answer is this page.",
+   "added": "2026-11-07 23:10",
    "pictures": [],
    "options": [
     [
@@ -22,8 +41,8 @@
      "Yes (recommended)"
     ],
     [
-     "monday",
-     "Not now, with Monday's order"
+     "no",
+     "No, keep the one real day as you said on 5 November"
     ]
    ]
   }
