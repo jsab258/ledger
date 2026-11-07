@@ -26,6 +26,12 @@ lastActivityAt moves without any turn); the 13:15 run stood aside because the ap
 (artifact-autoreact-ledger, untimed) to two idle old logs fourteen minutes before, which moved their file times.
 Neither was work. So only timed turns count, and the app's list is not consulted.
 
+A RUN THAT ENDED AT WAIT IS NOT ACTIVITY (7 November, the advisor's message 20): Windows restarted the PC at 00:14 and
+killed the 23:22 session before it wrote Stopped. Every hourly run after that ended at WAIT, and the next run counted
+its few turns as a session's, so the idle time never passed about 60 minutes, DEAD_MIN was never reached, and nothing
+started until he cleared it by hand, about 10:45. So a short log whose gate line says WAIT is left out. A log that went
+on working after it, or any bigger one, still counts.
+
 THE REHEARSAL (his message of 4 November: test the take-over itself, not only standing aside): while
 production/handover/takeover-rehearsal.json exists and has not expired, the gate decides from the rehearsal's
 handover instead and leaves out the logs it names (the working session standing in for the stopped one); its line
@@ -53,6 +59,8 @@ WALK_HOLD_FROM, WALK_HOLD_UNTIL = 1 * 60 + 40, 3 * 60 + 30
 NIGHTLY = os.path.join(ROOT, "production", "playtest", "nightly")
 STAMP = re.compile(r"(\d{4}-\d\d-\d\d) (\d\d:\d\d)")
 TURNS = (b'"type":"user"', b'"type":"assistant"')
+WAIT_RUN_TURNS = 12
+WAIT_RUN_BYTES = 4 << 20
 
 
 def line_time(text, key):
@@ -88,6 +96,34 @@ def last_turn(path, size_cap=64 << 20):
     return None
 
 
+def ended_at_wait(path):
+    """True for an hourly run that stood aside: a short log, its gate's line WAIT. Anything longer did real work."""
+    if os.path.getsize(path) > WAIT_RUN_BYTES:
+        return False
+    turns, waited = 0, False
+    with open(path, "rb") as fh:
+        for raw in fh:
+            if not any(t in raw.replace(b" ", b"") for t in TURNS):
+                continue
+            try:
+                d = json.loads(raw)
+            except ValueError:
+                continue
+            if d.get("type") not in ("user", "assistant"):
+                continue
+            turns += 1
+            if turns > WAIT_RUN_TURNS:
+                return False
+            content = (d.get("message") or {}).get("content")
+            for b in content if isinstance(content, list) else ():
+                if isinstance(b, dict) and b.get("type") == "tool_result":
+                    c = b.get("content")
+                    text = c if isinstance(c, str) else " ".join(x.get("text", "") for x in c or () if isinstance(x, dict))
+                    if text.startswith(("WAIT ", "REHEARSAL WAIT")):
+                        waited = True
+    return waited
+
+
 def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
     """Minutes since the project's newest real turn, this run's own log and those named left out."""
     paths = glob.glob(os.path.join(logs, "*.jsonl")) + glob.glob(os.path.join(logs, "*", "subagents", "*.jsonl"))
@@ -97,6 +133,8 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
         if sid in leave_out or (own and sid == own):
             continue
         if not own and os.path.dirname(p) == logs and now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
+            continue
+        if os.path.dirname(p) == logs and ended_at_wait(p):
             continue
         if now_ts - os.path.getmtime(p) > DEAD_MIN * 60 * 2:
             t = os.path.getmtime(p)  # no turn is newer than the file; reading old giants would cost seconds
@@ -188,7 +226,32 @@ def selftest():
     m4 = last_turn_minutes(now_ts, tmp, own="own-run")
     log("helper", "2026-11-04T12:18:00", sub=True)
     m5 = last_turn_minutes(now_ts, tmp, leave_out=("standing-in",), own="own-run")
+    # A killed session, then hourly runs that each ended at WAIT (7 November): the runs must not read as activity, so
+    # the idle time reaches DEAD_MIN and the next run goes; a run that said WAIT and then worked still counts.
+    tmp2 = tempfile.mkdtemp(prefix="fresh_gate_wait_")
+
+    def run_log(name, turn_utc, gate_line, extra=0):
+        with open(os.path.join(tmp2, name + ".jsonl"), "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({"type": "user", "timestamp": turn_utc + ".000Z", "message": {"content": "prompt"}}) + "\n")
+            fh.write(json.dumps({"type": "user", "timestamp": turn_utc + ".100Z", "message": {"content": [
+                {"type": "tool_result", "content": [{"type": "text", "text": gate_line}]}]}}) + "\n")
+            for _ in range(extra):
+                fh.write(json.dumps({"type": "assistant", "timestamp": turn_utc + ".500Z", "message": {"content": []}}) + "\n")
+        os.utime(os.path.join(tmp2, name + ".jsonl"), (now_ts - 60, now_ts - 60))
+
+    run_log("killed", "2026-11-04T08:00:00", "GO the last session stopped", extra=40)
+    run_log("wait-1", "2026-11-04T10:21:00", "WAIT the last session (started 04 Nov 09:00) has not stopped", extra=2)
+    run_log("wait-2", "2026-11-04T11:21:00", "WAIT the last session (started 04 Nov 09:00) has not stopped", extra=2)
+    m6 = last_turn_minutes(now_ts, tmp2, own="own-run")
+    run_log("rehearsal-wait", "2026-11-04T11:40:00", "REHEARSAL WAIT a session wrote a turn", extra=2)
+    m7 = last_turn_minutes(now_ts, tmp2, own="own-run")
+    run_log("waited-then-worked", "2026-11-04T11:50:00", "WAIT a session wrote a turn 2 minutes ago", extra=30)
+    m8 = last_turn_minutes(now_ts, tmp2, own="own-run")
     cases += [
+        ("killed, then WAIT runs: they are not activity, 261 min", "%s" % (m6 is not None and 255 < m6 < 265), "True"),
+        ("killed, then WAIT runs: the next run goes", decide(d, r, m6), "GO"),
+        ("a rehearsal's WAIT is not activity either", "%s" % (m7 is not None and 255 < m7 < 265), "True"),
+        ("a run that waited and then worked counts", "%s" % (m8 is not None and m8 < 32), "True"),
         ("untimed bookkeeping on an idle log does not count: 196 min", "%s" % (m1 is not None and 190 < m1 < 200), "True"),
         ("this run's own log left out", "%s" % (m2 is not None and m2 > 190), "True"),
         ("a left-out log does not count", "%s" % (m3 is not None and m3 > 190), "True"),

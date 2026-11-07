@@ -3,20 +3,20 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Friday 6 November, 05:35)
+## Overview (Saturday 7 November, 11:20; late: Windows restarted the PC at 00:14)
 
-**Tokens, Thursday 5 November:** history 21% of the spend, Opus 98%, reviewing 10% (812 steps, US$68.89 at list prices; Wednesday 35%, 96%, 8%).
+**Tokens, Friday 6 November:** history 24% of the spend, Opus 87%, reviewing 14% (1,093 steps, US$84.01 at list prices; Thursday 21%, 98%, 10%).
 
-| Measure, 5 Nov | Reading |
+| Measure, 6 Nov | Reading |
 |---|---|
-| 1 Tries thrown away, reviewer runs | none recorded (the record began 5 Nov evening); 17 reviewer runs on 8 items |
-| 2 Tool results' carrying cost | US$15.95 of US$68.89; pictures US$4.31, 6% of the day (estimated) |
-| 3 Prompt cache | 96.9% read from cache; writes US$30.91, of which starts US$13.60 in 21 runs |
-| 4 The start, tokens | tools 60,861, skills' list 8,309, memory and project files 6,387, system 3,543; never used this week: 20 tools 11,997, 45 skills 4,769 |
-| 5 Cycle time | change to its night walk: median 11.9 h; your answers: median 52 min over 5 |
-| 6 Week's allowance | read Monday 12:50 |
+| 1 Tries thrown away, reviewer runs | 2, US$3.31; 15 reviewer runs on 7 items |
+| 2 Tool results' carrying cost | US$20.71 of US$84.01; pictures US$4.34, 5% of the day (estimated) |
+| 3 Prompt cache | 96.4% read from cache; writes US$40.09, of which starts US$11.47 in 19 runs; 4 rewrites mid-run US$2.07 |
+| 4 The start, tokens | tools 61,450, skills' list 8,329, memory and project files 6,489, system 4,041; never used this week: 20 tools 11,997, 43 skills 4,784 |
+| 5 Cycle time | change to its night walk: median 8.6 h over 7 commits; your answers: none dated that day in the read-back |
+| 6 Week's allowance | 65% at 10:55, the line 65.5%; the weekly figure read Monday 12:50 |
 
-Disk (11-06 03:31): C: 128.7 GB free, F: 27.4 GB free; grew most since yesterday: the build cache on C: +1.0 GB, gate pictures on F: +0.9 GB.
+Disk (11-07 03:31): C: 122.6 GB free, F: 26.8 GB free; grew most since yesterday: a temporary folder on C: +2.9 GB, the build cache on C: +1.7 GB, gate pictures on F: +0.4 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -38,7 +38,7 @@ No decision asked: these are for watching the street change.
 - **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting: his face stays up in the packaged game, but his head swings round in the drop; set aside and listed. The Stutter did not come back last night (worst frame 23.27 ms against the old 42 to 55). Next, the exit re-check aimed at 9 November.
 - **The corner, in your order:** the day's sky, hill, wear, gilt, sills and pipes, wash, kiosk and slate roof are all in last night's packaged game, and the hook and reverse views passed fresh reviews by day and night. Next, tonight's walk for the people, then its end page.
 
-**The tester (last night's walk, packaged, with all of Thursday's work):** 15 of 15 stages, for the first time this week. Nobody saw Tom break Rita's window; Sheila took in the glass with no story about him; Rocco and Sam showed they knew him (two, one more than before). "That's all I know" to 2 of 60 first questions (the same). None of the corner's people froze (0 of 163 readings); two came to look at the window. What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); a woman stiff and wide-legged near Rita's window; the broken window itself, flat black shards with the goods behind untouched. Frame rate 57.7 fps; the card's memory 5,960 MB of its 6 GB (5,952 before).
+**The tester (last night's walk, packaged, with Friday's work):** 13 of 15 stages. Neither loss looks like the game's: the tester misread its own position file beside Sheila, 0.93 m from her, and skipping her talk brought Tom to Darren while he was at the docks, as his day says. Mended; tonight's walk tests it. Nobody saw Tom break Rita's window; six took in the glass with no story about him; nobody showed they knew him afterwards (0, down 2, with two of the three greetings lost). "That's all I know" to 2 of 60 first questions (the same). The corner's people: none froze (0 of 83 readings), closest two standing 2.86 m apart, two came to look at the window. What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); the woman by Rita's window not flinching; people standing stiffly. Frame rate 56.8 fps (57.7 before), worst frame 23.19 ms, none over 33.3 ms in that step; the card's memory 6,089 MB (5,960 before), the highest yet read here and to be looked at.
 
 ### Needs you
 
@@ -54,6 +54,25 @@ Nothing open.
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Saturday 7 November (morning, late)
+
+**Failed:**
+- Windows restarted the PC at 00:14 and killed the night's session; the hourly start then stood aside until you cleared it about 10:45. About ten hours lost, some of them the walk's. The start check is mended and tested.
+- The night's walk read 13 of 15, the tester's own misreading; mended, tonight's walk to confirm.
+- The day's summary, overview and progress page came about four hours late.
+- Card memory 6,089 MB, up 129.
+
+**Done:**
+- Your yes on keeping a tenth for Monday is in force, checked hourly: 65% against 65.5%.
+- People kept apart passed packaged: closest 2.86 m.
+- The Stutter's map removal walked: no frame over the line in the perf step.
+
+**Decided, yours to overturn:**
+- Your rulings' combat headlines cut, since the combat design holds them; a few kept.
+- Darren's docks hour stays; the tester adapts.
+
+**Act on:** nothing open: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Friday 6 November (night; tonight's walk not yet read)
 

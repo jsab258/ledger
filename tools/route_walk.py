@@ -155,11 +155,19 @@ class Route:
         return bool(getattr(self, "_epic", None))
 
     def where(self):
-        try:
-            with open(os.path.join(self.saved, "route-where.txt"), encoding="utf-8") as fh:
-                return parse_where(fh.read())
-        except OSError:
-            return {}
+        # THE GAME REWRITES THIS FILE FIVE TIMES A SECOND (7 November: Sheila, 0.93 m away and on the street, read as "lost
+        # sight of", the tester having caught the file open or empty; skipping her talk then put Tom at Darren at 11:47,
+        # while the cast file has him at the docks, so "not on the street" followed). A reading without Tom is no reading.
+        for _ in range(10):
+            try:
+                with open(os.path.join(self.saved, "route-where.txt"), encoding="utf-8") as fh:
+                    got = parse_where(fh.read())
+                if "tom" in got:
+                    return got
+            except OSError:
+                pass
+            time.sleep(0.05)
+        return {}
 
     def checks(self):
         try:
