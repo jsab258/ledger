@@ -408,9 +408,15 @@ def record_thrown(a):
     return 0
 
 
+def since_time(hhmm, now):
+    """HH:MM's latest moment not after now: 23:22 asked at 00:11 means last night (6 November: it read US$0.00 across midnight)."""
+    since = datetime.datetime.strptime(now.strftime("%Y-%m-%d ") + hhmm, "%Y-%m-%d %H:%M")
+    return since - datetime.timedelta(days=1) if since > now else since
+
+
 def spend_since(hhmm):
-    """The session's and helpers' list-price dollars from HH:MM today until now, for the hourly row (the advisor's message 18)."""
-    since = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d ") + hhmm, "%Y-%m-%d %H:%M")
+    """The session's and helpers' list-price dollars since HH:MM until now, for the hourly row (the advisor's message 18)."""
+    since = since_time(hhmm, datetime.datetime.now())
     steps = [s for path, _ in logs_touched(since) for s in read_events(path)["steps"] if s["t"] >= since]
     print("spend since %s: US$%.2f" % (hhmm, sum(step_cost(s["u"], s["model"]) for s in steps)))
     return 0
@@ -423,6 +429,8 @@ def selftest():
     cases = [
         ("a large picture is sized down as the API does", picture_tokens(png) == int(1568 * 784 / 750)),
         ("an unreadable picture gets the flat guess", picture_tokens("!!") == 1500),
+        ("a time later than now is last night's", since_time("23:22", datetime.datetime(2026, 11, 7, 0, 11)) == datetime.datetime(2026, 11, 6, 23, 22)),
+        ("a time earlier than now is today's", since_time("09:00", datetime.datetime(2026, 11, 7, 11, 0)) == datetime.datetime(2026, 11, 7, 9, 0)),
         ("text is characters over four", result_tokens("x" * 400) == (100, False)),
         ("a result with a picture counts as one", result_tokens([{"type": "image", "source": {"data": png}}])[1]),
         ("a read's kind", kind_of_result("Read", False) == "file read"),

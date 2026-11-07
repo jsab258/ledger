@@ -43,7 +43,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-Nothing open.
+- The corner's end pictures: tap which way next. Recommended: keep going; not a yes to the look.
 
 ### Road to worth playing (PLAN.md)
 
@@ -58,22 +58,24 @@ Nothing open.
 ## Builder, Saturday 7 November (morning, late)
 
 **Failed:**
-- Windows restarted the PC at 00:14 and killed the night's session; the hourly start then stood aside until you cleared it about 10:45. About ten hours lost, some of them the walk's. The start check is mended and tested.
+- Windows restarted the PC at 00:14 and killed the night's session; the hourly start stood aside until you cleared it about 10:45, about ten hours lost. Mended and tested.
 - The night's walk read 13 of 15, the tester's own misreading; mended, tonight's walk to confirm.
 - The day's summary, overview and progress page came about four hours late.
 - Card memory 6,089 MB, up 129.
-- A slip: a few times I wrote this morning were guessed; corrected.
+- A slip: some times written by guess; corrected.
 
 **Done:**
 - Your yes on keeping a tenth for Monday is in force, checked hourly: 65% against 65.5%.
 - People kept apart passed packaged: closest 2.86 m.
-- The Stutter's map removal walked: no frame over the line in the perf step.
+- Cached talk confirmed in the game, four paid runs, US$1.17: 27% cheaper; 2.04, 1.67, 1.58 s against 2.42 s. Speech's bar goes to the exit's reviewer.
+- The corner's end page is on your page.
+- The Stutter's map removal walked: no frame over the line.
 
 **Decided, yours to overturn:**
 - Your rulings' combat headlines cut, since the combat design holds them; a few kept.
 - Darren's docks hour stays; the tester adapts.
 
-**Act on:** nothing open: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
+**Act on:** the corner's end pictures: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Friday 6 November (night; tonight's walk not yet read)
 

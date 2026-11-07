@@ -15,7 +15,7 @@ Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
 - [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE: walk 15 of 15; corner's views passed; exit's brief filled; the Stutter: both causes out; 25 walks, 2 frames over; rare freeze listed.
+STATE: walk 13 of 15, the tester's misreading mended, tonight tests it; corner's end page on his page; cached talk confirmed; rare freeze listed; exit Monday.
 
 ## Handovers
 
