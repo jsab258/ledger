@@ -58,7 +58,7 @@
    "said": "the pavement outside the steam laundry"
   },
   "quay": {
-   "x_m": -5.0,
+   "x_m": 1.0,
    "z_m": 0.0,
    "from": "the quay apron at the street's south end",
    "said": "the quay at the bottom of Quay Street"

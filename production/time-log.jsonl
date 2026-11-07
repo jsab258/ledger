@@ -550,3 +550,4 @@
 {"event": "stop", "at": "2026-11-07T18:08:43", "note": "Darren's clothes on S6, board's box; build asked 18:08"}
 {"event": "start", "at": "2026-11-07T18:42:14", "task": "n02-9-dress-the-cast: Darren's second fit, both hems; office board checked", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-07T20:11:42", "note": ""}
+{"event": "start", "at": "2026-11-07T21:32:28", "task": "n02-9-dress-the-cast Darren's third try, Ron's collar points", "phase": "1", "kind": "production"}

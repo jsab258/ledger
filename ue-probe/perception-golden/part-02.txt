@@ -1,4 +1,3 @@
-WTellMisattribute|0|null|null|0|none
 WTellMisattribute|0|null|null|1|none
 WTellMisattribute|0|null|null|2|none
 WTellMisattribute|0|null|null|-1|none
@@ -25910,3 +25909,4 @@ Stance|0.22|0.1|0.2|1|0|1|0|Watches
 Stance|0.22|0.1|0.2|1|0|1|1|Watches
 Stance|0.22|0.1|0.2|1|1|0|0|Indifferent
 Stance|0.22|0.1|0.2|1|1|0|1|Indifferent
+Stance|0.22|0.1|0.2|1|1|1|0|Notices

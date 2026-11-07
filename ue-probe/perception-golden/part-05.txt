@@ -1,4 +1,3 @@
-CastPlaceOf|hook-cast.json|ada|3|2|off
 CastPlaceOf|hook-cast.json|ada|3|3|off
 CastPlaceOf|hook-cast.json|ada|3|4|off
 CastPlaceOf|hook-cast.json|ada|3|5|off

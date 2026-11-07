@@ -44,6 +44,8 @@ NECK_MARGIN = opt("--neck-margin", 0.03)
 ROUNDS = opt("--rounds", 24, int)
 MEASURE = "--measure" in argv
 OVER = opt("--over", "", str)
+RIM_CAP = opt("--rim-cap", 0.0)
+RIM_FADE = opt("--rim-fade", 0.03)
 HEAD = opt("--head", "", str)
 HEAD_CLEAR = opt("--head-clear", 0.007)
 HEAD_BELOW = opt("--head-below", 1.56)
@@ -203,6 +205,14 @@ if not MEASURE:
     Q = P + push
     if HEAD:
         Q, log["head"] = clear_head(Q, np.array([t for t in triangles(me)]))
+    if RIM_CAP:
+        # the neck ring's high corners at the sides read as two points in the film (Ron, build 76db411): its height eased
+        # toward the cap, softly, so the ring keeps its order and no step shows
+        base = RIM_CAP - RIM_FADE
+        ease = (Q[:, 2] > base) & (np.abs(Q[:, 0]) < 0.16)
+        rim_before = float(Q[ease, 2].max())
+        Q[ease, 2] = base + RIM_FADE * (1 - np.exp(-(Q[ease, 2] - base) / RIM_FADE))
+        log["rim"] = {"points": int(ease.sum()), "topBefore": round(rim_before, 4), "topAfter": round(float(Q[ease, 2].max()), 4)}
     push = Q - P
     inv = g.matrix_world.inverted()
     for i, v in enumerate(me.vertices):
