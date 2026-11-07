@@ -56,3 +56,7 @@ Material graphs; night; strand milliseconds; Tom's cause; the portrait's lights.
 ## The test, 7 November 16:25
 
 **Seen**, packaged, by eye on one middle frame of each person: with -dpcvars=r.HairStrands.SkyLighting.IntegrationType=1 the sides lift: Ron grey, Darren light brown, Sheila pale grey, indoors. Mechanism confirmed for all three; nothing measured in numbers yet. Frames: F:/LedgerTools/gate/new/hair-near-2026-11-07/integration1. The game ran only with the street's switches (-LedgerSlice -LedgerCrime -Encounter=live -LiveFresh -TalkFake -NoTitle); without them it sits on the title. Taken as try 2 of 2, lever 2, in place of lever 1: one line, near and far by the same light. Owed: its frame cost; Tom's crown; noise; Sheila against her approved S4, which may now be too pale; his look.
+
+## The result, 7 November 19:15
+
+**Seen,** packaged, build 5fd1310, the same film with the setting on and with it put back by -dpcvars: at IntegrationType 1 Darren's hair reads blond with dark roots and Sheila's carries white specks at about 2.6 m; at the engine's default 2 both are dark, as approved. Ron, grey, changes little. Judged by eye on two frames each, in one light (F:/LedgerTools/gate/new/dress-cast-2026-11-07/wide4 and wide4-sky2). The setting is out; try 2 of 2 failed. The near hair's darkness and the change where strands hand over to cards stay as they were, listed; night not looked at. Method lesson: the 16:25 test judged a near middle frame only; the same film at distance would have shown it.
