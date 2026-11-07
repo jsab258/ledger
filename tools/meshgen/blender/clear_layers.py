@@ -18,6 +18,11 @@ MetaHuman's head mesh runs down the chest and is not in the body file. --head FA
 wearer's face DNA (dna_mesh.py) and, on the front only, moves the cloth forward until it stands --head-clear in front
 of the head wherever the head is below --head-below; the amount is a soft spread (--head-spread metres) so no step
 shows. Both surfaces are drawn into a 1 mm front-on grid, since the head's lower edge can poke between cloth points.
+
+THE BACK, 8 November 2026 (Ron's collar try 2 of 2: skin through the back of the neck ring, right of centre from behind;
+the head mesh stood up to 9.6 mm through the jumper's back at z about 1.55). The same clearance from behind: the cloth's
+back (+Y) moved backward to stand --head-clear behind the head wherever the head shows below --head-back-below (1.60),
+for points with y > 0.02 only, so the neck ring's top, higher up, is left alone. --no-head-back turns it off.
 """
 import json
 import os
@@ -50,6 +55,8 @@ HEAD = opt("--head", "", str)
 HEAD_CLEAR = opt("--head-clear", 0.007)
 HEAD_BELOW = opt("--head-below", 1.56)
 HEAD_SPREAD = opt("--head-spread", 0.02)
+HEAD_BACK_BELOW = opt("--head-back-below", 1.60)
+HEAD_BACK = "--no-head-back" not in argv
 if HEAD:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
     import dna_mesh  # noqa: E402
@@ -133,8 +140,8 @@ def triangles(mesh):
     return [tuple(t.vertices) for t in mesh.loop_triangles]
 
 
-def front_grid(co, tri, xs, zs):
-    """The frontmost y (front is -Y) of a surface in each grid cell, nan where it has none."""
+def front_grid(co, tri, xs, zs, back=False):
+    """The frontmost y (front is -Y) of a surface in each grid cell, nan where it has none; with back, the rearmost."""
     H = np.full((len(zs), len(xs)), np.nan)
     dx, dz = xs[1] - xs[0], zs[1] - zs[0]
     a, b, c = co[tri[:, 0]], co[tri[:, 1]], co[tri[:, 2]]
@@ -154,33 +161,39 @@ def front_grid(co, tri, xs, zs):
         m = (u >= 0) & (v >= 0) & (1 - u - v >= 0)
         Y = A[1] + u * (B[1] - A[1]) + v * (C[1] - A[1])
         sub = H[j0:j1 + 1, i0:i1 + 1]
-        sub[m] = np.fmin(sub[m], Y[m])
+        sub[m] = np.fmax(sub[m], Y[m]) if back else np.fmin(sub[m], Y[m])
     return H
 
 
-def clear_head(co, tri):
-    """The front of the cloth moved forward of the head's lower edge, softly; the moved points and the clearance reported."""
+def clear_head(co, tri, back=False):
+    """The front (or, with back, the back) of the cloth moved clear of the head's lower part, softly; the moved points and
+    the clearance reported. sign is the way the cloth moves: -Y forward, +Y backward."""
     start = co.copy()
-    xs, zs = np.arange(-0.2, 0.2001, 0.001), np.arange(HEAD_BELOW - 0.12, HEAD_BELOW + 0.04, 0.001)
-    H = front_grid(HEAD_P, HEAD_T, xs, zs)
-    low = np.broadcast_to(zs[:, None] < HEAD_BELOW, H.shape)
-    gap0 = H - front_grid(co, tri, xs, zs)
-    idx = np.where((co[:, 1] < -0.02) & (co[:, 2] > HEAD_BELOW - 0.18) & (co[:, 2] < HEAD_BELOW + 0.06))[0]
+    below = HEAD_BACK_BELOW if back else HEAD_BELOW
+    sign = 1.0 if back else -1.0
+    xs, zs = np.arange(-0.2, 0.2001, 0.001), np.arange(below - 0.12, below + 0.04, 0.001)
+    H = front_grid(HEAD_P, HEAD_T, xs, zs, back)
+    low = np.broadcast_to(zs[:, None] < below, H.shape)
+    # the gap is how far the cloth stands outside the head, positive when clear
+    gap0 = sign * (front_grid(co, tri, xs, zs, back) - H)
+    side = co[:, 1] > 0.02 if back else co[:, 1] < -0.02
+    idx = np.where(side & (co[:, 2] > below - 0.18) & (co[:, 2] < below + 0.06))[0]
     with np.errstate(invalid="ignore"):
         for _ in range(6):
-            short = (front_grid(co, tri, xs, zs) - H) + HEAD_CLEAR
+            short = HEAD_CLEAR - sign * (front_grid(co, tri, xs, zs, back) - H)
             m = (short > 0) & low
             if not m.any():
                 break
             a, b = np.where(m)
             cells, amount = np.c_[xs[b], zs[a]], short[a, b]
             dist = np.linalg.norm(co[idx][:, [0, 2]][:, None, :] - cells[None, :, :], axis=2)
-            co[idx, 1] -= (amount[None, :] * np.exp(-0.5 * (dist / HEAD_SPREAD) ** 2)).max(axis=1)
-    gap = H - front_grid(co, tri, xs, zs)
+            co[idx, 1] += sign * (amount[None, :] * np.exp(-0.5 * (dist / HEAD_SPREAD) ** 2)).max(axis=1)
+    gap = sign * (front_grid(co, tri, xs, zs, back) - H)
     moved = np.linalg.norm(co - start, axis=1)
-    return co, {"points": len(HEAD_P), "beforeMinMm": round(float(np.nanmin(gap0[low])) * 1000, 1),
-                "afterMinMm": round(float(np.nanmin(gap[low])) * 1000, 1), "movedOver0_5mm": int((moved > 0.0005).sum()),
-                "mostMovedMm": round(float(moved.max()) * 1000, 1)}
+    with np.errstate(invalid="ignore"):
+        return co, {"points": len(HEAD_P), "below": below, "beforeMinMm": round(float(np.nanmin(gap0[low])) * 1000, 1),
+                    "afterMinMm": round(float(np.nanmin(gap[low])) * 1000, 1), "movedOver0_5mm": int((moved > 0.0005).sum()),
+                    "mostMovedMm": round(float(moved.max()) * 1000, 1)}
 
 
 log["offBody"] = report(off_body)
@@ -204,7 +217,10 @@ if not MEASURE:
         push = np.where((bigger & below)[:, None], avg, need)
     Q = P + push
     if HEAD:
-        Q, log["head"] = clear_head(Q, np.array([t for t in triangles(me)]))
+        tri = np.array([t for t in triangles(me)])
+        Q, log["head"] = clear_head(Q, tri)
+        if HEAD_BACK:
+            Q, log["headBack"] = clear_head(Q, tri, back=True)
     if RIM_CAP:
         # the neck ring's high corners at the sides read as two points in the film (Ron, build 76db411): its height eased
         # toward the cap, softly, so the ring keeps its order and no step shows
