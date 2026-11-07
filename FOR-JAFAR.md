@@ -20,13 +20,13 @@ Disk (11-06 03:31): C: 128.7 GB free, F: 27.4 GB free; grew most since yesterday
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Friday 6 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 3. Office passed packaged (4 Nov); sitting, the Stutter to go (n02-3-3-*).**
+**Morning, Saturday 7 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 3. Office passed packaged (4 Nov); sitting set aside, listed (6 Nov); the Stutter to go (n02-3-3-*).**
 
-| | Today, 06 Nov | Yesterday, 05 Nov |
+| | Today, 07 Nov | Yesterday, 06 Nov |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-11-06](production/previews/morning-hook-day-2026-11-06.jpg) | ![The hook camera by day, 2026-11-05](production/previews/morning-hook-day-2026-11-05.jpg) |
-| The reverse view | ![The reverse view, 2026-11-06](production/previews/morning-reverse-day-2026-11-06.jpg) | ![The reverse view, 2026-11-05](production/previews/morning-reverse-day-2026-11-05.jpg) |
-| The street at night | ![The street at night, 2026-11-06](production/previews/morning-night-2026-11-06.jpg) | ![The street at night, 2026-11-05](production/previews/morning-night-2026-11-05.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-11-07](production/previews/morning-hook-day-2026-11-07.jpg) | ![The hook camera by day, 2026-11-06](production/previews/morning-hook-day-2026-11-06.jpg) |
+| The reverse view | ![The reverse view, 2026-11-07](production/previews/morning-reverse-day-2026-11-07.jpg) | ![The reverse view, 2026-11-06](production/previews/morning-reverse-day-2026-11-06.jpg) |
+| The street at night | ![The street at night, 2026-11-07](production/previews/morning-night-2026-11-07.jpg) | ![The street at night, 2026-11-06](production/previews/morning-night-2026-11-06.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
@@ -54,6 +54,26 @@ Nothing open.
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Friday 6 November (night; tonight's walk not yet read)
+
+**Failed:**
+- The sign-out cost 3.5 hours (07:30 to 11:05).
+- The Stutter: 2 frames over the line in 45,000, one a rare freeze of 231 ms; tries spent, listed.
+- Rita's broken window, two tries: reads as smashed by day, the rim like a drawn outline, night hardly reads. Set aside.
+- The wall dish's black wedge: tries spent, listed.
+- A slip: four reports carried guessed times; replaced.
+
+**Done:**
+- Cached briefing in live talk: US$0.22 a run against 0.57, beside the game; a paid run inside the game still to confirm it.
+- inZOI's files and the clothes in both games read; Silent Hill 2 in part.
+- The dispatcher speaks with your pick, p280; unheard in the game.
+
+**Decided, yours to overturn:**
+- Live talk's replies stay on the dearer model: the cheaper fell back 7 or 8 times in 60 against 1 or 2.
+- The woman by the kiosk in charcoal trousers.
+
+**Act on:** one item on your page, keeping 10% for Monday: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Friday 6 November (morning)
 
