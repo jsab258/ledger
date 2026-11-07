@@ -1,6 +1,6 @@
 # People alive, standing and walking: first-pass reading (7 November 2026)
 
-First-pass notes for the faults: Tom treading on the spot at a shop front, foot sliding, stiff standing poses, a walker's turn at a pause. No synthesis, no recommendation. All outside pages read 7 Nov 2026 unless marked HOME (read earlier by the project; not re-read). Anything not read in full is marked unverified.
+First-pass notes for the faults: Tom treading on the spot at a shop front, foot sliding, stiff standing poses, a walker's turn at a pause. No synthesis, no recommendation. All outside pages read 7 Nov 2026 unless marked HOME (read earlier by the project; not re-read). Anything not read in full is marked unverified. Added 8 Nov after PROPOSALS-REVIEW-2026-11-08.md: the PoseSearch source reading and the empty 5.6 notes (section 4), two lines in the unreached list.
 
 ## What home already answers (do not re-read)
 
@@ -15,6 +15,8 @@ First-pass notes for the faults: Tom treading on the spot at a shop front, foot 
 - Epic forum, "Motion Matching Mesh ignores Walls", UE 5.4.1, thread Jan to Jun 2025, https://forums.unrealengine.com/t/motion-matching-mesh-ignores-walls/2264940 (read in full 7 Nov 2026): the capsule collides, the animated bones pass through the wall; one poster calls it a known issue in 5.5 (community claim, no Epic staff reply, unverified). Workarounds named: a larger capsule, mesh collision (called glitchy; neither worked for the poster), turning root motion off (loses turning), a line-trace "braking" system the last poster built. Unresolved at last post.
 - Orange Duck (Daniel Holden), "Code vs Data Driven Displacement", https://theorangeduck.com/page/code-vs-data-driven-displacement (read 7 Nov 2026; undated on the page): when a simulated body and the animated character drift apart, options are doing nothing, synchronising, damped adjustment, velocity-limited adjustment (example cap 0.5 of character velocity), clamping. Unlimited adjustment still slides feet when standing or planting and turning. It states walk animations look worse pushed against walls and foot locking cannot fix it. Pushing against a clamp feels "dragged along".
 - Research paper, arXiv 2510.22632v1, posted 26 Oct 2025, https://arxiv.org/html/2510.22632v1 (read 100,000 of 117,418 characters; last 17,000 unread): motion matching with obstacle features added to the pose query. A 36-dimension feature vector (27 query, 9 environment), search every 10 frames at 60 Hz, 184,553 poses, about 50 MB. In a dense cone field: standard motion matching 0.22 ms search, 0.88 s collision time; the method 0.80 ms and 0.08 s. Characters slow, turn the torso, sidestep (0.35 m corridor) or step back. Research result, not a shipped game's practice.
+- Installed 5.8 source, PoseSearch plugin, C:\Program Files\Epic Games\UE_5.8\Engine\Plugins\Animation\PoseSearch\Source (read 7 Nov, lines re-checked 8 Nov): in Runtime/Private/PoseSearchTrajectoryLibrary.cpp the only line traces are :932 (from above the sample down along gravity; comment at :934, "Only allow our trace to move trajectory along gravity direction") and :965 (from 3,000 units above straight down to the floor); both vertical. The header, Public/PoseSearch/PoseSearchTrajectoryLibrary.h:203-206, says the collision step does vertical collision only and marks it experimental since 5.6 for the CMC workflow. The prediction takes the mover's current acceleration (.cpp:79) beside its velocity (:78). A search of the plugin's source for "wall" and "obstacle" (7 Nov) found no sideways handling; "obstacle" appears as MaxObstacleHeight, a vertical setting; the other hits were not re-read one by one on 8 Nov.
+- Epic's 5.6 release notes: the page returned empty text on 7 Nov (unreached), so no 5.6 fix for the wall problem could be confirmed from them.
 - A search for a fix for "walk in place at an obstacle" found only the above and unrelated product forums (Reallusion, Godot). No studio write-up of the exact symptom was found. The question is open from outside sources.
 
 ## (4) Foot contact, locking, stride warping, slide correction
@@ -58,7 +60,9 @@ Only: Witcher 3 35 idles per type and about 2,400 dialogue animations; KCD2 gest
 ## Unreached or unverified
 
 - GDC Vault talks (Clavet 2016, Naughty Dog 2021): sign-in wall or slides not fetched.
+- Clavet's play-rate bounds (10% faster, 20% slower): second-hand, through Study 7's talk notes; the talk is unreached, so unverified.
 - Epic tech blogs (5.7, 5.8): 403 today.
+- Epic's 5.6 release notes: empty text.
 - Epic Foot Placement and Stride Warping user guides, Mass crowd docs: empty text.
 - Look-at limits: no primary source.
 - The "known issue fixed in 5.6" claim for the wall problem: unconfirmed.

@@ -1,6 +1,6 @@
 # CATALOGUE: what exists, and where each fact lives
 
-Search this first; reuse starts at home (CLAUDE.md). tools/catalogue.py fails the build when a folder of production/art or production/research has no line here. Method: production/research/catalogue-and-homes/NOTE.md. Branches, old repositories and drive folders: production/audits/sweep-2026-10-05/SWEEP.md.
+Search this first; reuse starts at home. tools/catalogue.py fails the build when a folder of production/art or production/research has no line here. Method: production/research/catalogue-and-homes/NOTE.md. Branches, old repositories and drive folders: production/audits/sweep-2026-10-05/SWEEP.md.
 
 ## One home for each kind of fact
 
@@ -78,7 +78,7 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - **Talk and voices**: voice-off-card, grounded-dialogue-selection, grounded-replies, invented-claims, conversation-model-capability, local-models, local-writers, llm-inference-economics, prompt-caching, live-speech-architecture, talk-helper, ambient-lines, street-lines-1990, holding-a-large-script, voice-alternatives-2026-09-24, voice-direction, voice-in-the-game, voice-latency, nano-listening-test, tts-licensing-and-consent, runtime-ai-business, ai-npc-demos-hollow, steam-ai-disclosure, player-data-notice, study-a-inzoi.
 - **People on screen**: tom-face, sit-and-turn, character-pipeline, metahuman-audio-driven-animation, lip-sync, talking-face-faults, natural-idles, people-alive, townspeople-animation, markerless-mocap, clothing-pipeline, clothing-assembly-line, game-clothing-pipeline, plain-1990-clothes, free-garments, wardrobe-at-scale.
 - **Play, testing and players**: baseline-features, qa-practice, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, aaa-reference, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
-- **How the work is done**: study-recs, study-b-silent-hill-2, pre-production, frame-headroom, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, asset-checks, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md, token-audit, unit-costs, skills, faster-builds, bulk-api.
+- **How the work is done**: study-recs, study-b-silent-hill-2, pre-production, frame-headroom, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, asset-checks, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md, token-audit, unit-costs, skills, faster-builds, bulk-api, PROPOSALS-REVIEW-2026-11-08.md.
 
 - **Lab**: production/lab, exact-target trials (LAB-REPORT.md).
 

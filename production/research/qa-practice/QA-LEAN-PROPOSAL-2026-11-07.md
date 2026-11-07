@@ -1,5 +1,7 @@
 # QA: a lean proposal (7 Nov 2026)
 
+Fixed 8 Nov after PROPOSALS-REVIEW-2026-11-08.md.
+
 A proposal for Monday's order; nothing is decided. Web links were read 7 Nov through a digest tool; [the reading](QA-READING-2026-11-07.md) keeps their limits. Dollars are API-price equivalents, not a bill; costs are estimates. No source gives a money cost per game hour of screen-watching agents, so none is given.
 
 ## 1. A studio's practices, done here
@@ -30,12 +32,11 @@ A proposal for Monday's order; nothing is decided. Web links were read 7 Nov thr
 - Caught? No better than now: the tester named it, and only he may answer it. Prevention is a habit (no packaged copy from a new folder).
 
 **Speaker in the base layer** (FINDINGS 24; Exit B).
-- Check: one report line counting the game's "is undressed" log lines.
-- Cost: none. Reuses: LedgerGarments.h's line. Saved: little.
-- Caught? Never missed: the eyes named it in at least 12 night reports from 23 Oct, and his 8 Oct ruling kept it through phase 1, reported failed. No check dresses anyone.
+- Check: none added; no fault slipped past, so the rules in part 3 give it no line.
+- Caught? Never missed: the eyes named it in 12 night reports from 23 Oct (F:/LedgerTools/nightly/2026-10-23 to 2026-11-07, each night's state.json), and his 8 Oct ruling (RULINGS.md, the clothes line; DECISIONS 21 Oct 12:35) kept it through phase 1, reported failed. No check dresses anyone.
 
 **Card memory at its peak** (FINDINGS 13; Exit D).
-- Check: the report compares the perf step's gpuMemMB and runs.jsonl's peaks with 6,000.
+- Check: the report compares the per-frame peak of `GPUMem/LocalUsedMB` at High (not slice-perf.py's median after 300 dropped frames) and runs.jsonl's peaks with the memory plan's line, 5,650 MB under Windows' budget of 5,771 ([MEMORY-PLAN](../frame-headroom/MEMORY-PLAN-2026-11-07.md), sections 1 and 4).
 - Cost: none. Reuses: both records.
 - Saved: the rehearsal's surprise: peaks of 6,161 to 8,481 MB (Windows' counter) in all 32 captures.
 - Caught? The peak yes, only after a capture, not nightly; the perf step stands still and speaks Nano, not Pocket. The morning summary had flagged the 6,089.
@@ -44,13 +45,15 @@ A proposal for Monday's order; nothing is decided. Web links were read 7 Nov thr
 - Check: a flag when a walk's legs run out before arriving (verdict.json's path); then one small review of a film there.
 - Cost: flag none; review US$0.59 to 1.66 (gate reviewer, measured, UNIT-COSTS), only when it fires.
 - Saved: a fault on the 5 Nov film, unrecorded until 7 Nov.
-- Caught? Partly: a path shows he stopped, not that his legs strode; the reviewer finds that. On 7 Nov's night path the flag fires: 14 legs towards (7.9, 4.6), never arriving, that stage passed; cause unread, false alarms unknown.
+- Caught? Partly: a path shows he stopped, not that his legs strode; the reviewer finds that. On 7 Nov's night path the flag fires: 14 legs towards (7.9, 4.6), never arriving (F:/LedgerTools/nightly/2026-11-07/route/verdict.json, counted 8 Nov), that stage passed; cause unread, false alarms unknown.
 
 **The quay's end wall** ([diagnosis](F:/LedgerTools/gate/new/quay-end-stop-2026-11-07/diagnosis.md): about 95% sure, code read, no human walk; mend unjudged, FINDINGS 28).
 - Check: the same flag, plus a startup log line per spot in hook-cast.json from the game's StandBlockedAt and WalkLineClear (not tried).
 - Cost: flag none; the line about 0.5 h once, US$11 to 19 at the stand-in US$22 to 38 an hour (UNIT-COSTS, inferred).
 - Saved: part of the tester's three tries (FINDINGS 30).
 - Caught? The flag probably, naming the place, not the wall; the line yes, for listed spots. Neither finds walls off the route ([Division's bots'](https://www.gamedeveloper.com/design/the-secret-ai-testers-inside-tom-clancy-s-the-division) limit too).
+
+**Already caught by eyes, no check.** This week's reviewers found Tom's knee and boot going through the office's window board and the camera cutting off seated Ron, both on films. The existing eyes caught them, so no check is needed.
 
 ## 3. The rules
 
@@ -61,12 +64,12 @@ A proposal for Monday's order; nothing is decided. Web links were read 7 Nov thr
 
 ## 4. The first step
 
-Four read-only lines in the night report (nightly_walk.py): launch switches, legs that never arrived, undressed count, memory against 6,000. No model, no game.
+Three read-only lines in the night report (nightly_walk.py): launch switches, legs that never arrived, memory's per-frame peak at High against the memory plan's 5,650. No model, no game.
 
 About 1 h of session, US$22 to 38, plus one small reviewer, US$0.59 to 1.66 (estimates). Method: Warhorse's objective marks; Mafia's QA unreached.
 
-Done when, fed 7 Nov's verdict.json, it names the 14 legs, and the next night's report carries all four lines.
+Done when, fed 7 Nov's verdict.json, it names the 14 legs, and the next night's report carries all three lines.
 
 ## Unverified, unreached
 
-The reading's section E: focus and feel, test-plan and regression primaries, Mafia. Its search-listing points stay unverified. Warhorse's digest is undated; TITAN's counts are inconsistent. Not read here: the 5 Nov path, the night walk's end time, his launch line.
+The reading's section E: focus and feel, test-plan and regression primaries, Mafia. Its search-listing points stay unverified. Warhorse's digest is undated; TITAN's counts are inconsistent. Not read here: the 5 Nov path, the night walk's end time, his launch line. The 12 night reports were counted by a word search of each state.json (8 Nov), not read in full.

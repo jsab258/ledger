@@ -1,19 +1,21 @@
 # People alive: proposal for Monday (7 November 2026)
 
-Nothing decided. Costs are rough estimates. Outside pages and local files read 7 Nov 2026 unless dated. Studies 1 and 7: 25 Oct. NOTE: natural-idles/NOTE.md, 1 Oct. WALK: sit-and-turn/WALK-2026-10-25.md. REHEARSAL: audits/phase1-exit/REHEARSAL-2026-11-07-B.md.
+Fixed 8 Nov after PROPOSALS-REVIEW-2026-11-08.md.
+
+Nothing decided. Costs are rough estimates. Outside pages and local files read 7 Nov 2026 unless dated. Studies 1 and 7: 25 Oct. NOTE: natural-idles/NOTE.md, 1 Oct. WALK: sit-and-turn/WALK-2026-10-25.md. REHEARSAL: audits/phase1-exit/REHEARSAL-2026-11-07-B.md. GASP idles: F:/LedgerTools/game-inputs/gasp/Content/Characters/UEFN_Mannequin/Animations/Idle/, listed 8 Nov.
 
 ## 1. Treading against an obstacle
 
-**Method:** before the push reaches the mover (SliceCharacter.cpp:842-848), sweep the capsule ahead and remove the part of the push going into the obstacle. Head-on he stops; glancing, he walks along it at his true speed. Reference: none found in Studies 1 or 7.
+**Method:** before the push reaches the mover (SliceCharacter.cpp:842-848), sweep the capsule ahead and remove the part of the push going into the obstacle. This push cut is the project's own design, untested. Predicted, not measured: head-on he stops; glancing, he walks along it at his true speed. Reference: none found in Studies 1 or 7.
 
 **Options weighed:**
 
-1. Line-trace braking, recommended: one poster's own fix, [forum](https://forums.unrealengine.com/t/motion-matching-mesh-ignores-walls/2264940), June 2025; no Epic reply.
+1. Line-trace braking, recommended: the nearest outside support is one poster's own workaround, [forum](https://forums.unrealengine.com/t/motion-matching-mesh-ignores-walls/2264940), June 2025, in a thread left unresolved; no Epic reply. The push cut above is not the forum's.
 2. Larger capsule, mesh collision: same thread; its reporter says neither worked.
 3. Clamping body against animation: [Holden](https://theorangeduck.com/page/code-vs-data-driven-displacement), undated: feels "dragged along"; foot locking cannot fix walking against walls.
 4. Obstacle features in the search: [arXiv](https://arxiv.org/html/2510.22632v1), 26 Oct 2025, last 17,000 characters unread: colliding 0.08 s against 0.88 s, searching 0.80 ms against 0.22 ms. Research only; not now.
 
-**"Fixed in 5.6":** stays unverified; nothing found supports it. The thread says only "known issue in 5.5. Wait for 5.6" (8 Jan 2025), a forecast; no post says fixed. Only 5.8 is installed, so no before-and-after; the 5.6 release notes returned empty text. In 5.8's PoseSearch plugin, PoseSearchTrajectoryLibrary.cpp:932 and :965 are that file's only traces, both vertical (:934; its header, :205). Searching the plugin's source for "wall" and "obstacle" shows no sideways handling.
+**"Fixed in 5.6":** stays unverified; nothing found supports it. The thread says only "known issue in 5.5. Wait for 5.6" (8 Jan 2025), a forecast; no post says fixed. Only 5.8 is installed, so no before-and-after; the 5.6 release notes returned empty text (the reading). In 5.8's PoseSearch plugin, PoseSearchTrajectoryLibrary.cpp:932 and :965 are that file's only traces, both vertical (:934; its header, :205). Searching the plugin's source for "wall" and "obstacle" shows no sideways handling.
 
 **Likely cause (inferred, unmeasured):** prediction takes acceleration (same file, :79); velocity reflects real travel (CharacterMovementComponent.cpp:5873); the sample's IsMoving needs both nonzero (F:/LedgerTools/game-inputs/gasp/exports/SandboxCharacter_CMC_ABP.t3d:15301-15365). So a dead-on block may stand, a glancing scrape keep striding.
 
@@ -21,13 +23,13 @@ Nothing decided. Costs are rough estimates. Outside pages and local files read 7
 
 ## 2. Foot slide
 
-**Method:** Tom: no more lock tuning; his third try is spent, and Epic's forward stops drag 11.3 and 17.6 cm in their own data (WALK). Speakers: body at the clip's own root speed, play rate within 10% faster, 20% slower (Clavet, through Study 7), then Kingdom Come II's per-foot stops.
+**Method:** Tom: no more lock tuning; his third try is spent, and Epic's forward stops drag 11.3 and 17.6 cm in their own data (WALK). Speakers: body at the clip's own root speed, play rate within 10% faster, 20% slower (Clavet, second-hand through Study 7's talk notes; the talk is unreached, so unverified), then Kingdom Come II's per-foot stops.
 
 **Cost:** a day. **Judged:** packaged, every 1/60 s step round each contact. Against: Tom worst 13.68 cm, Sheila 42.8, Ron 28.2 (REHEARSAL). **Risk:** the height reading over-counts swinging feet; MetaHuman's stops are unmeasured. The 21 mm perception figure stays unverified.
 
 ## 3. Stiff standing poses
 
-**Method:** one base idle with a weight shift, retargeted to each body; Epic's M_Relaxed_Stand_Idle_Loop is on F:, unviewed. Today's is the female template's (CrimeProbe.cpp:940), a suspect NOTE never rendered; "arms held away" was seen 7 Nov (REHEARSAL). Source: NOTE, Study 7.
+**Method:** one base idle with a weight shift, retargeted to each body. Epic's M_Relaxed_Stand_Idle_Loop on F: is unverified (no source found 8 Nov); the GASP idle folder holds M_Neutral_Stand_Idle_Loop instead. Today's is the female template's (CrimeProbe.cpp:940), a suspect NOTE never rendered; "arms held away" was seen 7 Nov (REHEARSAL). Source: NOTE, Study 7.
 
 **Cost:** a day on Ron; others after his look. **Judged:** 45 s packaged film at 2.6 m: arms hang, pelvis shifts within 10 s (NOTE). **Risk:** the head parting from the neck (DECISIONS 2 Nov 13:34).
 
@@ -39,7 +41,7 @@ Nothing decided. Costs are rough estimates. Outside pages and local files read 7
 
 ## 5. Idle variety
 
-**Method:** hold; add only on repetition seen. Epic's 18 standing breaks are on F:, five carried over. Vendor rule, not studio data: 4+ base idles ([MoCap Online](https://mocaponline.com/blogs/mocap-news/idle-animation-game-dev-guide), 11 Apr 2026, read 1 Oct).
+**Method:** hold; add only on repetition seen. "Epic's 18 standing breaks, five carried over" is unverified (no source found 8 Nov); the GASP idle folder holds five (M_Neutral_Stand_Idle_Break v01 to v04 and v06). Vendor rule, not studio data: 4+ base idles ([MoCap Online](https://mocaponline.com/blogs/mocap-news/idle-animation-game-dev-guide), 11 Apr 2026, read 1 Oct).
 
 **Cost:** about a day, if earned. **Judged:** section 3's film: neighbours never in step. **Risk:** misses the seen 2.3 s jump, the placeholders' (FINDINGS).
 
@@ -55,4 +57,4 @@ Nothing decided. Costs are rough estimates. Outside pages and local files read 7
 2. The push cut (section 1), if the film agrees.
 3. Ron's base idle (section 3), to his look.
 
-Unreached: GDC talks; Epic's Foot Placement guide.
+Unreached: GDC talks (Clavet 2016, Naughty Dog 2021); Epic's 5.8 GASP blog (403); the 5.6 release notes (empty text); Epic's Foot Placement and Stride Warping guides (empty text); the arXiv paper's last 17,000 characters.
