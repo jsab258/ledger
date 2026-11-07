@@ -1,11 +1,48 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Saturday 7 November, 11:21",
+ "kicker": "LEDGER · Needs you · 1 open · updated Saturday 7 November, 11:49",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "corner-end-2026-11-07",
+   "name": "The corner at the week's end, as the game you play draws it (four pictures; tap one for full size). Still short of a 2026 game: few people and no cars; plain brick without burnt headers; the road's pale band by day; a clean street with little litter; the hill's trees read as lumps; Mickey's front very dark at night. Done from your midweek list: nobody in a white base layer in these frames, though the cast still wear it elsewhere in the walk; the hill has trees and houses; night buildings readable; the sky and quay end grey; more wear at street level. Which way next?",
+   "links": [],
+   "recommendation": "Keep going: phase 1's exit first, then next week's order picks from these shortfalls. This asks the direction, not a yes to the look: these frames would not pass in a 2026 game. No web link: the answer is this page.",
+   "added": "2026-11-07 11:49",
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/corner-end-hook-day-2026-11-07.jpg",
+     "alt": "The corner from Tom's start, by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-end-hook-night-2026-11-07.jpg",
+     "alt": "The same, at night"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-end-reverse-day-2026-11-07.jpg",
+     "alt": "Looking back towards the quay, by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/corner-end-reverse-night-2026-11-07.jpg",
+     "alt": "The same, at night"
+    }
+   ],
+   "options": [
+    [
+     "keep",
+     "Keep going (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  }
+ ]
 }
