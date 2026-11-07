@@ -113,3 +113,4 @@ E = C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/PCG/Source/PCG.
 - **For this PC:** runtime generation's 5 ms budget is 30% of a 60 fps frame, which more than the pops rules it out; the baked town's worst view of 10 streets at 3440x1440 must be measured before it is adopted (about 3 GB free beside the game's 6.8 GB).
 - **A departure from P5:** P5 asked for a partitioned level streamed by cell; this recommends none at first (without World Partition there are no HLODs, so HLODs do not separate the options; WorldPartitionConvertCommandlet is the later path). Nothing is decided here: phase 5's design, written during phase 2, decides it with its own DECISIONS line.
 - **Decals:** an Add Component step can put a decal component per point onto one actor (inference).
+- **7 November, the packaged count (PCG-COUNT-2026-11-07.md):** meshes ship and the graph goes, measured; but one inert PCG component stayed, unlike the header's words.
