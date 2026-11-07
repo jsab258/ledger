@@ -56,10 +56,10 @@ PLAY = [sys.executable, os.path.join(REPO, "tools", "ai-tester", "play.py")]
 PACKAGED_SAVED = "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved"
 EDITOR_SAVED = os.path.join(REPO, "ue-probe", "Saved")
 LINE = "Was it always this quiet and dead round here, Sheila?"   # w, a, s and d, typed into the box
-TOWN_LINE = "Afternoon. Anything going on round here?"            # the same neutral greeting to each, after the deed
-# RON AND DARREN FIRST (7 November, the day walk): the walk now leaves Tom in the office, and the door costs half a game
-# hour. Both are on Mickey's rank till 17:00; Sheila is reachable to 18:00, the office and then Rita's step.
-TOWN_WHO = (("rocco", "Ron"), ("sam", "Darren"), ("lena", "Sheila"))
+TOWN_LINE = "Morning. Anything going on round here?"              # the same neutral greeting to each, after the deed
+# SHEILA, RON, DARREN, ON THE WEDNESDAY MORNING (7 November, his yes, the third try: the walk leaves Tom in the office and
+# the door costs half a game hour, so the afternoon's round ran out of day before Darren and Sheila). See MORNING_FROM.
+TOWN_WHO = (("lena", "Sheila"), ("rocco", "Ron"), ("sam", "Darren"))
 WALK_MPS = 1.6                                                  # measured 1 October: 3.2 m in 2 s
 # EPIC'S WALK, packaged since 27 October (SliceCharacter.cpp, the Game Animation Sample's character): it walks at the
 # sample's 2.0 m/s and glides about 0.45 m after the key is let go, where his own clips stopped dead. Read off that
@@ -410,23 +410,23 @@ def greet(r, key, name):
                                                        "" if said == TOWN_LINE else " said=%r not as typed" % said))
 
 
-# THE HOUR THE THREE ARE ALL AT MICKEY'S (7 November, the day walk, whose 09:09 greeted people the day's hour had not yet
-# placed, 09:13 to 09:19, and whose Darren leaves for the docks at 10:00 on the next day, a Tuesday): 15:05, Ron and
-# Darren on the rank, Sheila in the office, by hook-cast.json.
-MORNING_FROM, MORNING_UNTIL = 15 * 60 + 5, 16 * 60
+# THE MORNING THE THREE ARE CLOSE TOGETHER (7 November, his yes, the third try): D2, a Wednesday, 10:05 to 12:30: Sheila in
+# the office, Ron on the rank, Darren at Rita's step; 12:00 to 13:00 all at the fish front, by hook-cast.json. D0 and D1 are
+# skipped. Z moves 8 hours, so waiting from 335 game minutes before means no run of landings can step past the hours.
+MORNING_FROM, MORNING_UNTIL = 10 * 60 + 5, 12 * 60 + 30
+MORNING_WAIT = 335
 
 
 def morning_step(day, clock):
     """What to_next_morning does at this clock: "here", "z", or the real seconds to wait.
-    Z moves 8 hours, so one of any three landings falls between 04:00 and 12:00, and the clock runs
-    2 game minutes a real second (LiveClock.h MinutesPerRealSecond)."""
-    if day == "D0":
+    The clock runs 2 game minutes a real second (LiveClock.h MinutesPerRealSecond)."""
+    if day in ("D0", "D1"):
         return "z"
     hour, minute = clock.split(":")
     at = int(hour) * 60 + int(minute)
     if MORNING_FROM <= at < MORNING_UNTIL:
         return "here"
-    if MORNING_FROM - 120 <= at < MORNING_FROM:
+    if MORNING_FROM - MORNING_WAIT <= at < MORNING_FROM:
         return max(1, min(30, (MORNING_FROM - at + 1) // 2))
     return "z"
 
@@ -628,10 +628,12 @@ def selftest():
     s = stand_off([6.0, 4.6], [1.0, 4.6], 1.1)
     check("a talk spot stands off toward Tom", abs(s[0] - 4.9) < 1e-9 and abs(s[1] - 4.6) < 1e-9)
     check("the town round greets the three who talk, the same line to each",
-          [k for k, _ in TOWN_WHO] == ["rocco", "sam", "lena"] and "Afternoon" in TOWN_LINE)
-    check("the next day's hour: from early morning, Z; shortly before, a wait; in it, here; after it, Z",
-          morning_step("D1", "06:51") == "z" and morning_step("D1", "14:51") == 7 and morning_step("D1", "15:12") == "here"
-          and morning_step("D1", "17:00") == "z" and morning_step("D0", "15:12") == "z")
+          [k for k, _ in TOWN_WHO] == ["lena", "rocco", "sam"] and TOWN_LINE.startswith("Morning."))
+    check("the Wednesday's hour: D0 and D1, Z; before it, a wait; in it, here; after it, Z",
+          morning_step("D0", "10:30") == "z" and morning_step("D1", "10:30") == "z" and morning_step("D2", "09:51") == 7
+          and morning_step("D2", "05:00") == 30 and morning_step("D2", "10:30") == "here" and morning_step("D2", "13:00") == "z")
+    check("no run of 8-hour Z landings can step past the Wednesday's hours",
+          all(any(morning_step("D2", "%02d:%02d" % (((m + 480 * k) % 1440) // 60, (m + 480 * k) % 60)) != "z" for k in range(3)) for m in range(0, 1440, 5)))
     seat = next(s for s in SEATS() if "middle" in s["name"])
     check("the sit spot is inside the office's public side and within the game's reach of the seat",
           4.19 < seat["x"] - SIT_FROM_M < 9.0 and 5.12 < seat["z"] < 7.5 and SIT_FROM_M < SIT_REACH_M)
