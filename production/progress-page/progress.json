@@ -1,5 +1,5 @@
 {
-  "updated": "Sunday 8 November 2026, 20:35",
+  "updated": "Sunday 8 November 2026, 22:52",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -17,7 +17,9 @@
         0.6
       ],
       "actual_w": 0.1,
-      "actual_note": "done"
+      "actual_note": "done",
+      "short": "Recover",
+      "next_step": "Done."
     },
     {
       "n": 1,
@@ -32,7 +34,13 @@
       ],
       "actual_w": 4.7,
       "actual_note": "so far, open",
-      "began": "2026-10-06"
+      "began": "2026-10-06",
+      "short": "Bottlenecks",
+      "next_step": "Fresh reviewers re-run the exit check once the walk, the clothes and speech pass; phase 2 waits for it.",
+      "fc_w": [
+        0.5,
+        0.5
+      ]
     },
     {
       "n": 2,
@@ -149,6 +157,12 @@
             "Logged 2 to 8 Nov: 57.0 h, of them 3.5 h review"
           ]
         }
+      ],
+      "short": "Quay Street",
+      "next_step": "Starts when phase 1 passes. First: card memory and headroom, because they cap what may be copied.",
+      "fc_w": [
+        4,
+        5
       ]
     },
     {
@@ -160,6 +174,12 @@
       "planned_w": [
         1.0,
         2.0
+      ],
+      "short": "30 minutes",
+      "next_step": "Waits for Quay Street to pass.",
+      "fc_w": [
+        1.5,
+        2
       ]
     },
     {
@@ -173,6 +193,12 @@
       "planned_w": [
         1.0,
         1.0
+      ],
+      "short": "Friends",
+      "next_step": "Waits for phase 3; then your friends play thirty minutes.",
+      "fc_w": [
+        1,
+        1
       ]
     },
     {
@@ -184,44 +210,87 @@
       "planned_w": [
         13.0,
         26.0
+      ],
+      "short": "The Hook",
+      "next_step": "Waits for phase 4. Before it, the cost of one complete named person is measured on Ron, Sheila and Darren.",
+      "fc_w": [
+        15,
+        20
       ]
     },
     {
       "n": 6,
       "name": "Crime and combat",
       "get": "The escalation ladder: fists, improvised and carried weapons; guns rare, and last.",
-      "state": "sketch"
+      "state": "sketch",
+      "short": "Crime, combat",
+      "next_step": "Waits for the Hook. Its plan and bosses are written when it opens.",
+      "fc_w": [
+        6,
+        8
+      ],
+      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
     },
     {
       "n": 7,
       "name": "Empire",
       "get": "Your first business, first recruit and first racket, and a rival who reacts.",
-      "state": "sketch"
+      "state": "sketch",
+      "short": "Empire",
+      "next_step": "Waits for crime and combat. Its plan and bosses are written when it opens.",
+      "fc_w": [
+        4,
+        5
+      ],
+      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
     },
     {
       "n": 8,
       "name": "The docks",
       "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
-      "state": "sketch"
+      "state": "sketch",
+      "short": "The docks",
+      "next_step": "Waits for the Empire. Your ruling of 28 October makes it the first cut if time runs short; the advisor suggests moving it to the first update after release, your call at the 1 July check.",
+      "fc_w": [
+        6,
+        8
+      ],
+      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
     },
     {
       "n": 9,
       "name": "The story: 15 to 20 hours, one main story, two or three endings",
       "get": "Jobs, the main story and its endings.",
-      "state": "sketch"
+      "state": "sketch",
+      "short": "The story",
+      "next_step": "Waits for the earlier phases. The story's text is written on the monthly credit while the Hook is built.",
+      "fc_w": [
+        9,
+        12
+      ],
+      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
     },
     {
       "n": 10,
       "name": "Release, late 2027",
       "get": "Menus, music, polish and testing: one full release, not early access.",
-      "state": "sketch"
+      "state": "sketch",
+      "short": "Release",
+      "next_step": "Waits for the story. Menus, music, polish and testing.",
+      "fc_w": [
+        5,
+        7
+      ],
+      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
     },
     {
       "n": 11,
       "name": "After release: more districts, driving yourself",
       "get": "Updates after release: Meridian's other districts, and driving yourself.",
       "state": "sketch",
-      "terminus": true
+      "terminus": true,
+      "short": "After",
+      "next_step": "Not estimated: it starts after release."
     }
   ],
   "bosses_title": "Phase 1 bosses",
@@ -486,5 +555,38 @@
     "as_of": "Sunday 8 November",
     "behind_w": 2.2,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
+  },
+  "forecast": {
+    "made": "2026-11-08",
+    "label": "advisor's estimate, 5 Nov, re-forecast monthly",
+    "source": "The advisor's release plan of 5 November: each phase's weeks from the quick end (with this week's efficiency gain) to the slow end (today's efficiency). Phase 1 shows only its remaining weeks. One week of allowance is counted as one calendar week.",
+    "next_reforecast": "2026-12-07",
+    "release_target": {
+      "label": "Release target, late 2027",
+      "date": "2027-11-30"
+    },
+    "check_limit_w": 4,
+    "checks": [
+      {
+        "date": "2027-02-01",
+        "label": "1 Feb check",
+        "note": "More than about 4 weeks behind brings scope back to you."
+      },
+      {
+        "date": "2027-07-01",
+        "label": "1 Jul docks check",
+        "note": "The docks come back into 2027 only with at least 6 weeks in hand."
+      }
+    ],
+    "unit_costs": {
+      "person_hours": null,
+      "person_note": "One complete named person (Ron first, then Sheila and Darren): not measured yet.",
+      "named_people": 44,
+      "residents": [
+        50,
+        100
+      ],
+      "rule": "When Ron's cost is measured, the Hook's weeks are re-worked from it, never from phase 1's pace."
+    }
   }
 }

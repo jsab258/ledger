@@ -1301,7 +1301,12 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Reason: the packaged capture (section 6) and the plan's review, pass with fixes; reference: studies/12-tech-budgets.md.
 - Link: production/research/frame-headroom/COOK-PICTURES-PLAN-2026-11-08.md; COOK-PICTURES-REVIEW-2026-11-08.md.
 
-## 2026-11-08 23:12, n09-7: hair stays on strands as shipped
+## 2026-11-08 22:42, n09-7: hair stays on strands as shipped
 - Decision: the test's table, row 3: cards fail at Tom's own camera (a flat crown patch and hard white blotches, two severity 4) and in the talk close-ups (grey or light recolour, flat ribbons, a card edge); the mesh level is worse (helmets, a ginger moustache). Strands as shipped stay; the crown and the hand-over colour stay listed known faults; the hybrid is not recommended, since its cards would draw Tom at 3.1 m. One recommendation goes on his page in the morning batch (the order's done line). The hair gate stays open.
 - Reason: production/research/hair/HAIR-TEST-PLAN-2026-11-08.md's decision table, written before the runs; two fresh reviews; hair under 0.3 ms in every variant, so cost does not decide.
 - Link: production/research/hair/HAIR-TEST-RESULT-2026-11-08.md.
+
+## 2026-11-08 22:52, n09-4: the road to release on the progress page
+- Decision: the page carries the advisor's 5 Nov estimates on stations 6 to 10 (marked as such, re-forecast monthly), a forward forecast from those estimates only (release 8 Nov 2027 to 2 Mar 2028, middle case January 2028, docks before release as ruled; docks after: middle 18 Nov 2027), the distance from the 1 February check (2.2 to 3.7 weeks behind, inside his 4-week line) and a sideways-scrolling Gantt in the page's own code; the data stays in progress.json, and the check fails when the forecast's fields are missing. Phases 1 to 5 use the plan's own table. Checked by the session at 375 px wide (no page overflow, the chart scrolls in its own box); not checked in dark mode by eye.
+- Reason: advisor messages 35 and 36 (his questions of 22:08 and 22:12), inside n09-4; RULINGS 5 Nov (never extrapolate phase 1's pace).
+- Link: https://claude.ai/artifact/EEcWMTp5E9VqKrQsC8KBdk (version 39); production/progress-page/progress.json.

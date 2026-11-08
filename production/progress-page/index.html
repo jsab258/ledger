@@ -169,6 +169,49 @@ figcaption{font-size:14px;color:var(--muted)}
 .strip button[aria-pressed="true"]{border-color:var(--brick)}
 .strip button[aria-pressed="true"] span{color:var(--brick)}
 .stage.loading img{opacity:.55;transition:opacity .2s}
+/* The road to release: forecast and Gantt (8 Nov, n09-4) */
+.road{display:grid;gap:14px;min-width:0}
+.road .ticket{margin-top:0}
+.gantt{display:grid;grid-template-columns:108px minmax(0,1fr);border:1px solid var(--rule);background:var(--surface);min-width:0}
+.glabels{border-right:1px solid var(--rule);padding-top:44px}
+.glabels button{display:block;width:100%;height:40px;padding:0 6px 0 8px;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);font:600 13px/1.1 var(--display);text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.glabels button b{font:700 11px/1 var(--mono);color:var(--muted);margin-right:5px}
+.glabels button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.glabels button[aria-pressed="true"] b{color:var(--surface)}
+.gscroll{overflow-x:auto;overflow-y:hidden;min-width:0;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.gscroll svg{display:block}
+.gscroll svg text{font-family:var(--mono);fill:var(--muted)}
+.g-grid{stroke:var(--rule);stroke-width:1}
+.g-stripe{fill:var(--paper);opacity:.55}
+.g-sel{fill:var(--line);opacity:.12}
+.g-hit{fill:transparent;cursor:pointer}
+.g-plan-hi{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 2}
+.g-plan-lo{fill:var(--muted);opacity:.45}
+.g-act{fill:var(--brick)}
+.g-fc{fill:var(--line)}
+.g-fc.after{fill:none;stroke:var(--line);stroke-dasharray:4 3}
+.g-whisk{stroke:var(--line);stroke-width:2}
+.g-today{stroke:var(--brick);stroke-width:2;stroke-dasharray:5 3}
+.g-mark{stroke:var(--ink);stroke-width:1.5}
+.gscroll svg text.g-mtxt{fill:var(--ink);font-size:11px;font-weight:700}
+.gscroll svg text.g-ttxt{fill:var(--brick);font-size:11px;font-weight:700}
+.gscroll svg text.g-mon{font-size:10px}
+.g-diamond{fill:var(--line);stroke:var(--surface);stroke-width:2}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:18px;height:8px}
+.legend .k-plan{background:var(--muted);opacity:.5}
+.legend .k-act{background:var(--brick)}
+.legend .k-fc{background:var(--line)}
+.legend .k-today{height:0;border-top:2px dashed var(--brick)}
+.legend .k-mark{width:0;height:12px;border-left:2px solid var(--ink)}
+.rdetail{background:var(--surface);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:8px;min-width:0}
+.rdetail h3{font-size:18px}
+.rdetail dl{margin:0;display:grid;gap:8px}
+.rdetail dl div{display:grid;gap:2px}
+.rdetail dt{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rdetail dd{margin:0;font-size:14.5px}
+.rdetail dd small{color:var(--muted)}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
 .err{color:var(--brick);font-weight:600}
 </style>
@@ -200,6 +243,28 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       <div class="bosses" id="bosses"></div>
     </section>
   </div>
+
+  <section class="road" aria-labelledby="h-road">
+    <h2 id="h-road">The road to release</h2>
+    <p class="sub" id="roadSub">Each phase's expected start and end, worked out from the advisor's estimates of 5 November, never from how fast phase 1 ran. Re-forecast every month.</p>
+    <div class="ticket" id="roadCards" aria-label="Release forecast"></div>
+    <div class="controls">
+      <div class="seg" id="docksSeg" role="group" aria-label="The docks">
+        <button type="button" id="docks-in" aria-pressed="true">Docks before release (your ruling)</button>
+        <button type="button" id="docks-out" aria-pressed="false">Docks after release</button>
+      </div>
+    </div>
+    <div class="gantt" id="gantt">
+      <div class="glabels" id="glabels" role="group" aria-label="Phases"></div>
+      <div class="gscroll" id="gscroll" tabindex="0" aria-label="Timeline of phases 0 to 11; scroll sideways"><svg id="gsvg" role="img" aria-label="Plan, actual weeks and forecast for each phase"></svg></div>
+    </div>
+    <div class="legend" aria-hidden="true">
+      <span><i class="k-plan"></i>Plan range</span><span><i class="k-act"></i>Weeks so far</span><span><i class="k-fc"></i>Forecast (line: quick to slow end)</span><span><i class="k-today"></i>Today</span><span><i class="k-mark"></i>Checks and target</span>
+    </div>
+    <p class="small">Swipe the chart sideways. Tap a phase for its estimate, status, boss and next step.</p>
+    <div class="rdetail" id="rdetail" aria-live="polite"></div>
+    <p class="small" id="costNote"></p>
+  </section>
 
   <div class="ledger">
     <section class="col" aria-labelledby="h-study">
@@ -278,6 +343,49 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     return 100;
   }
 
+  // THE FORECAST (8 Nov, n09-4): dates are worked out here from progress.json, from the advisor's weeks; today's date is read at view time
+  const DAY = 864e5;
+  const iso = s => Date.parse(s + "T12:00:00Z");
+  const addW = (ms, w) => ms + Math.round(w * 7) * DAY;
+  const fdate = ms => new Date(ms).toLocaleDateString("en-GB", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"});
+  const fmon = ms => new Date(ms).toLocaleDateString("en-GB", {month:"short", year:"numeric", timeZone:"UTC"});
+  const todayMs = () => { const t = new Date(); return Date.UTC(t.getFullYear(), t.getMonth(), t.getDate(), 12); };
+  const span = (a, b, u) => (a === b ? a : a + " to " + b) + (u ? " " + u : "");
+  let D = null, docksIn = true, selected = 1;
+
+  function forecast(d, dockIn){
+    const F = d.forecast; if (!F) return null;
+    const base = iso(F.made);
+    const list = d.stations.filter(s => s.fc_w && s.n >= 1 && s.n <= 10).sort((a, b) => a.n - b.n);
+    let early = base, late = base, mid = base; const by = {};
+    for (const s of list.filter(s => dockIn || s.n !== 8)){
+      const a = s.fc_w[0], b = s.fc_w[1], m = (a + b) / 2;
+      by[s.n] = {start: mid, end: addW(mid, m), early: addW(early, a), late: addW(late, b)};
+      early = addW(early, a); late = addW(late, b); mid = addW(mid, m);
+    }
+    const rel = by[10];
+    if (!dockIn){
+      const s = list.find(s => s.n === 8), a = s.fc_w[0], b = s.fc_w[1];
+      by[8] = {start: rel.end, end: addW(rel.end, (a + b) / 2), early: addW(rel.early, a), late: addW(rel.late, b), after: true};
+    }
+    return {by, rel};
+  }
+
+  // how far the line will be from the 1 February check: today's weeks behind, plus what phases 1 to 4 are still expected to add
+  function checkLine(d, f){
+    const F = d.forecast, lim = F.check_limit_w || 4;
+    let lo = d.line2027.behind_w, hi = lo;
+    for (const n of [1, 2, 3, 4]){
+      const s = d.stations.find(x => x.n === n); if (!s || !s.fc_w) continue;
+      const top = n === 1 ? 0 : (s.planned_w ? s.planned_w[1] : 0);
+      lo += s.fc_w[0] - top; hi += s.fc_w[1] - top;
+    }
+    lo = Math.round(lo * 10) / 10; hi = Math.round(hi * 10) / 10;
+    const when = iso(F.checks[0].date);
+    return {lo, hi, lim, when, end4: [f.by[4].early, f.by[4].late], before: f.by[4].late <= when,
+            room: [Math.round((lim - hi) * 10) / 10, Math.round((lim - lo) * 10) / 10], days: Math.round((when - todayMs()) / DAY)};
+  }
+
   function renderTicket(d){
     const t = $("ticket"); t.replaceChildren();
     const here = d.stations.find(s => s.n === d.here) || d.stations[0];
@@ -296,6 +404,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       const w = d.line2027.behind_w;
       add("Against the plan", (w > 0 ? w + " weeks behind" : w < 0 ? (-w) + " weeks ahead" : "on time"), d.line2027.as_of);
     }
+    const f = forecast(d, true);
+    if (f) add("Release forecast", fmon(f.rel.early) + " to " + fmon(f.rel.late), "advisor's estimate, 5 Nov, re-forecast monthly; the target is late 2027");
   }
 
   function renderRoute(d){
@@ -314,7 +424,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (s.milestone) meta.append(el("span", "pill", "The big one"));
       if (s.size) meta.append(el("span", "pill", s.size));
       if (s.actual_w !== undefined && s.planned_w) meta.append(el("span", "pill", s.actual_w + " wk " + (s.actual_note || "") + ", planned " + (s.planned_w[0] === s.planned_w[1] ? s.planned_w[0] : s.planned_w[0] + " to " + s.planned_w[1])));
+      if (s.est_label && s.fc_w) meta.append(el("span", "pill", "Estimate " + span(s.fc_w[0], s.fc_w[1], "wk")));
       b.append(meta);
+      if (s.est_label && s.fc_w){
+        const f = forecast(d, true), r = f && f.by[s.n];
+        b.append(el("p", "note", "Estimate: " + span(s.fc_w[0], s.fc_w[1], "weeks") + " (" + s.est_label + ")." + (r ? " Forecast, middle case: " + fmon(r.start) + " to " + fmon(r.end) + "." : "")));
+      }
       if (s.note) b.append(el("p", "note", s.note));
       if (s.arrived && s.arrived.length){
         const c = el("div", "chips"); for (const a of s.arrived) c.append(el("span", "chip", a)); b.append(c);
@@ -412,6 +527,151 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     for (const x of items){
       const r = el("li"); const t = el("span"); if (x.his) t.append(el("span", "his", "Yours")); t.append(document.createTextNode(x.text));
       r.append(t); ul.append(r);
+    }
+  }
+
+  // THE ROAD: cards, Gantt and the tapped phase's detail
+  const NS = "http://www.w3.org/2000/svg", AX0 = iso("2026-09-28"), AX1 = iso("2028-04-24"), PXW = 16, ROWH = 40, TOP = 44;
+  const gx = ms => (ms - AX0) / (7 * DAY) * PXW;
+  const sv = (tag, attrs, parent, text) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; if (parent) parent.append(n); return n; };
+
+  function planStarts(d){
+    const out = {}; let cur = iso("2026-10-05");
+    for (const s of d.stations){
+      if (!s.planned_w) continue;
+      if (s.n === 1 && s.began) cur = iso(s.began);
+      out[s.n] = cur; cur = addW(cur, s.planned_w[1]);
+    }
+    return out;
+  }
+
+  function renderRoadCards(d){
+    const f = forecast(d, docksIn), c = checkLine(d, f), F = d.forecast, t = $("roadCards"); t.replaceChildren();
+    const add = (label, v, small, big) => {
+      const x = el("div", "field"); x.append(el("span", "label", label));
+      const vv = el("span", "v" + (big ? " big" : ""), v); if (small) vv.append(el("small", null, small));
+      x.append(vv); t.append(x);
+    };
+    const target = iso(F.release_target.date), midLate = Math.round((f.rel.end - target) / (7 * DAY));
+    add("Release forecast", fdate(f.rel.early) + " to " + fdate(f.rel.late),
+        "Middle case " + fmon(f.rel.end) + ", " + (midLate > 0 ? midLate + " weeks after" : midLate < 0 ? (-midLate) + " weeks before" : "on") + " the late-2027 target. " + (docksIn ? "With the docks before release." : "With the docks after release."));
+    add("From your 1 Feb check", c.lo === c.hi ? c.lo + " weeks behind" : c.lo + " to " + c.hi + " weeks behind",
+        c.before ? "Phase 4 should end " + fdate(c.end4[0]) + " to " + fdate(c.end4[1]) + ", before the check. The line is " + c.lim + " weeks, so " + (c.room[0] >= 0 ? "room is " + span(Math.max(0, c.room[0]), c.room[1], "weeks") : "the slow end is " + (-c.room[0]) + " weeks over it") + "; " + (c.days > 0 ? c.days + " days to go." : "the date has passed.")
+                 : "Phase 4 is not expected to end before the check, so it will see phase 5 half begun.");
+    const w = d.line2027.behind_w;
+    add("Backward count", (w > 0 ? w + " weeks behind" : w < 0 ? (-w) + " weeks ahead" : "on time"), "Weeks so far against the plan, " + d.line2027.as_of + ". It only adds overruns; the forecast looks forward.");
+  }
+
+  function renderLabels(d){
+    const L = $("glabels"); L.replaceChildren();
+    for (const s of d.stations){
+      const b = el("button"); b.type = "button"; b.dataset.n = s.n; b.append(el("b", null, String(s.n)), document.createTextNode(s.short || s.name));
+      b.setAttribute("aria-pressed", s.n === selected ? "true" : "false");
+      b.setAttribute("aria-label", "Phase " + s.n + ": " + s.name);
+      b.addEventListener("click", () => pick(s.n));
+      L.append(b);
+    }
+  }
+
+  function drawGantt(d){
+    const f = forecast(d, docksIn), svg = $("gsvg"), now = todayMs(), plans = planStarts(d), F = d.forecast;
+    svg.replaceChildren();
+    const W = Math.round(gx(AX1)), H = TOP + d.stations.length * ROWH;
+    svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    d.stations.forEach((s, i) => { if (i % 2) sv("rect", {x: 0, y: TOP + i * ROWH, width: W, height: ROWH, class: "g-stripe"}, svg); });
+    const sel = d.stations.findIndex(s => s.n === selected);
+    if (sel >= 0) sv("rect", {x: 0, y: TOP + sel * ROWH, width: W, height: ROWH, class: "g-sel"}, svg);
+    // month grid
+    for (let m = new Date(Date.UTC(2026, 9, 1)); m.getTime() < AX1; m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1))){
+      const x = Math.round(gx(m.getTime() + 12 * 36e5)), mo = m.getUTCMonth();
+      sv("line", {x1: x, x2: x, y1: 0, y2: H, class: "g-grid"}, svg);
+      sv("text", {x: x + 3, y: 13, class: "g-mon"}, svg, m.toLocaleDateString("en-GB", {month:"short", timeZone:"UTC"}) + (mo === 0 || m.getTime() < iso("2026-10-02") ? " " + m.getUTCFullYear() : ""));
+    }
+    d.stations.forEach((s, i) => {
+      const y = TOP + i * ROWH;
+      const hit = sv("rect", {x: 0, y, width: W, height: ROWH, class: "g-hit", "data-n": s.n}, svg); hit.addEventListener("click", () => pick(s.n));
+      if (plans[s.n] !== undefined && s.planned_w){
+        const x0 = gx(plans[s.n]);
+        sv("rect", {x: x0, y: y + 6, width: Math.max(2, s.planned_w[1] * PXW), height: 7, class: "g-plan-hi", "pointer-events": "none"}, svg);
+        sv("rect", {x: x0, y: y + 6, width: Math.max(2, s.planned_w[0] * PXW), height: 7, class: "g-plan-lo", "pointer-events": "none"}, svg);
+      }
+      if (s.actual_w !== undefined){
+        const st = s.n === 1 && s.began ? iso(s.began) : plans[s.n];
+        const en = s.state === "here" ? Math.max(now, st) : addW(st, s.actual_w);
+        sv("rect", {x: gx(st), y: y + 16, width: Math.max(3, gx(en) - gx(st)), height: 8, class: "g-act", "pointer-events": "none"}, svg);
+      }
+      const r = f.by[s.n];
+      if (r){
+        const after = !!r.after, cy = y + 31;
+        sv("rect", {x: gx(r.start), y: y + 27, width: Math.max(3, gx(r.end) - gx(r.start)), height: 8, class: "g-fc" + (after ? " after" : ""), "pointer-events": "none"}, svg);
+        if (r.late > r.early){
+          sv("line", {x1: gx(r.early), x2: gx(r.late), y1: cy, y2: cy, class: "g-whisk", "pointer-events": "none"}, svg);
+          sv("line", {x1: gx(r.early), x2: gx(r.early), y1: cy - 5, y2: cy + 5, class: "g-whisk", "pointer-events": "none"}, svg);
+          sv("line", {x1: gx(r.late), x2: gx(r.late), y1: cy - 5, y2: cy + 5, class: "g-whisk", "pointer-events": "none"}, svg);
+        }
+        if (s.n === 10){
+          const x = gx(r.end); sv("path", {d: "M" + x + " " + (y + 20) + " l8 8 l-8 8 l-8 -8 z", class: "g-diamond", "pointer-events": "none"}, svg);
+        }
+      }
+    });
+    // markers and today
+    const marks = [{ms: iso(F.checks[0].date), t: F.checks[0].label}, {ms: iso(F.checks[1].date), t: F.checks[1].label}, {ms: iso(F.release_target.date), t: F.release_target.label}];
+    for (const m of marks){
+      const x = Math.round(gx(m.ms));
+      sv("line", {x1: x, x2: x, y1: 20, y2: H, class: "g-mark", "pointer-events": "none"}, svg);
+      sv("text", {x: x + 4, y: 36, class: "g-mtxt", "pointer-events": "none"}, svg, m.t);
+    }
+    if (now >= AX0 && now <= AX1){
+      const x = Math.round(gx(now));
+      sv("line", {x1: x, x2: x, y1: 20, y2: H, class: "g-today", "pointer-events": "none"}, svg);
+      sv("text", {x: x + 4, y: 36, class: "g-ttxt", "pointer-events": "none"}, svg, "Today " + new Date(now).toLocaleDateString("en-GB", {day:"numeric", month:"short", timeZone:"UTC"}));
+    }
+  }
+
+  function renderDetail(d){
+    const s = d.stations.find(x => x.n === selected), f = forecast(d, docksIn), r = f.by[s.n], box = $("rdetail"); box.replaceChildren();
+    const label = {passed:"Passed", here:"You are here", next:"Next stop", ahead:"Ahead", sketch:"Sketch"}[s.state] || s.state;
+    const head = el("div", "stop-meta"); head.append(el("h3", null, "Phase " + s.n + ": " + s.name), el("span", "pill " + (s.state === "here" ? "here" : s.state === "passed" ? "done" : s.state === "next" ? "next" : ""), label));
+    box.append(head);
+    const dl = el("dl");
+    const row = (k, v, small) => { const w = el("div"); w.append(el("dt", null, k)); const dd = el("dd", null, v); if (small) { dd.append(document.createElement("br")); dd.append(el("small", null, small)); } w.append(dd); dl.append(w); };
+    if (s.fc_w) row("Estimate", span(s.fc_w[0], s.fc_w[1], "weeks") + (s.n === 1 ? " still to go" : ""), s.est_label ? s.est_label[0].toUpperCase() + s.est_label.slice(1) + "." : "From the advisor's plan of 5 Nov, re-forecast monthly.");
+    else row("Estimate", s.n === 0 ? "Done" : "None: it starts after release.");
+    if (s.planned_w) row("Original plan", span(s.planned_w[0], s.planned_w[1], "weeks"));
+    if (s.actual_w !== undefined){
+      const w = s.state === "here" && s.began ? Math.round((todayMs() - iso(s.began)) / DAY / 7 * 10) / 10 : s.actual_w;
+      row("Weeks so far", w + (s.state === "here" ? ", open" : ""));
+    }
+    if (r) row("Forecast", fdate(r.start) + " to " + fdate(r.end), "Earliest finish " + fdate(r.early) + ", latest " + fdate(r.late) + (r.after ? ". After release, in the first update." : "."));
+    else if (s.n >= 1) row("Forecast", "None.");
+    if (s.n === 1){
+      const down = d.bosses.filter(b => b.state === "defeated"), fight = d.bosses.filter(b => b.state !== "defeated");
+      row("Boss", down.length + " of " + d.bosses.length + " down (" + down.map(b => b.name).join(", ") + "). Still standing: " + fight.map(b => b.name).join(", ") + ".");
+    } else row("Boss", s.n === 0 ? "None." : "None named yet; its bosses are set when the phase opens.");
+    row("Next step", s.next_step || s.note || "");
+    box.append(dl);
+  }
+
+  function pick(n){
+    selected = n;
+    for (const b of $("glabels").children) b.setAttribute("aria-pressed", Number(b.dataset.n) === n ? "true" : "false");
+    drawGantt(D); renderDetail(D);
+  }
+
+  function renderRoad(d){
+    D = d;
+    const here = d.stations.find(s => s.n === d.here); selected = here ? here.n : 1;
+    const uc = d.forecast.unit_costs;
+    $("costNote").textContent = (uc.person_hours == null ? uc.person_note : "Ron's whole-person cost: " + uc.person_hours + " hours.") + " " + uc.rule + " Forecast made " + fdate(iso(d.forecast.made)) + "; next re-forecast " + fdate(iso(d.forecast.next_reforecast)) + ".";
+    renderLabels(d); renderRoadCards(d); drawGantt(d); renderDetail(d);
+    const sc = $("gscroll");
+    const toToday = () => { sc.scrollLeft = Math.max(0, gx(todayMs()) - sc.clientWidth * 0.25); };
+    toToday(); requestAnimationFrame(toToday);
+    for (const [id, v] of [["docks-in", true], ["docks-out", false]]){
+      $(id).addEventListener("click", () => {
+        docksIn = v; $("docks-in").setAttribute("aria-pressed", String(v)); $("docks-out").setAttribute("aria-pressed", String(!v));
+        renderRoadCards(D); drawGantt(D); renderDetail(D);
+      });
     }
   }
 
@@ -534,7 +794,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   }
 
   fetch("progress.json", {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-    renderTicket(d); renderRoute(d); renderBosses(d); renderStudies(d); renderCarried(d); renderStreet(d);
+    renderTicket(d); renderRoute(d); renderBosses(d); renderStudies(d); renderCarried(d); renderStreet(d); if (d.forecast) renderRoad(d);
     $("updated").textContent = "Updated " + d.updated + ".";
   }).catch(() => {
     const t = $("ticket"); t.replaceChildren();

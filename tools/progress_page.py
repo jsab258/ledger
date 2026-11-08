@@ -142,6 +142,18 @@ def main(argv):
             if not x["text"]:
                 print("progress-page FAIL carried item %s has no plain line in tools/progress_page.py PLAIN" % x["id"])
                 bad.append("plain")
+        # the forecast (8 Nov, n09-4): stations 1 to 10 carry weeks, 6 to 10 their label, and the forecast block its dates
+        fc = d.get("forecast", {})
+        for st in d["stations"]:
+            if 1 <= st["n"] <= 10 and not st.get("fc_w"):
+                print("progress-page FAIL phase %d has no forecast weeks (fc_w)" % st["n"])
+                bad.append("forecast")
+            if 6 <= st["n"] <= 10 and not st.get("est_label"):
+                print("progress-page FAIL phase %d's estimate has no label (est_label)" % st["n"])
+                bad.append("forecast")
+        if not (fc.get("made") and fc.get("checks") and fc.get("release_target") and "unit_costs" in fc):
+            print("progress-page FAIL the forecast block lacks made, checks, release_target or unit_costs")
+            bad.append("forecast")
         if missing:
             print("progress-page FAIL morning pictures not on the page: %s" % ", ".join(missing))
         # the 2027 line agrees with the stations' own weeks as written (not with today's date, which moves)
