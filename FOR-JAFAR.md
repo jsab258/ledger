@@ -20,13 +20,13 @@ Disk (11-08 03:30): C: 120.5 GB free, F: 23.1 GB free; grew most since yesterday
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Saturday 7 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 3. Office passed packaged (4 Nov); sitting set aside, listed (6 Nov); the Stutter to go (n02-3-3-*).**
+**Morning, Sunday 8 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 4. The exit re-check, its result on his page (n02-3-4-exit).**
 
-| | Today, 07 Nov | Yesterday, 06 Nov |
+| | Today, 08 Nov | Yesterday, 07 Nov |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-11-07](production/previews/morning-hook-day-2026-11-07.jpg) | ![The hook camera by day, 2026-11-06](production/previews/morning-hook-day-2026-11-06.jpg) |
-| The reverse view | ![The reverse view, 2026-11-07](production/previews/morning-reverse-day-2026-11-07.jpg) | ![The reverse view, 2026-11-06](production/previews/morning-reverse-day-2026-11-06.jpg) |
-| The street at night | ![The street at night, 2026-11-07](production/previews/morning-night-2026-11-07.jpg) | ![The street at night, 2026-11-06](production/previews/morning-night-2026-11-06.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-11-08](production/previews/morning-hook-day-2026-11-08.jpg) | ![The hook camera by day, 2026-11-07](production/previews/morning-hook-day-2026-11-07.jpg) |
+| The reverse view | ![The reverse view, 2026-11-08](production/previews/morning-reverse-day-2026-11-08.jpg) | ![The reverse view, 2026-11-07](production/previews/morning-reverse-day-2026-11-07.jpg) |
+| The street at night | ![The street at night, 2026-11-08](production/previews/morning-night-2026-11-08.jpg) | ![The street at night, 2026-11-07](production/previews/morning-night-2026-11-07.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
