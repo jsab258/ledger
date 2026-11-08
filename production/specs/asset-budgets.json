@@ -66,10 +66,23 @@
     ["/Game/MetaHumans", "exempt"],
     ["/Game/Fab", "exempt"],
     ["/Game/Megascans", "exempt"],
-    ["/Game/Characters", "exempt"]
+    ["/Game/Characters", "exempt"],
+    ["/Game/Ledger/Kit", "building_module"],
+    ["/Game/Ledger/Street", "frontage"],
+    ["/Game/Ledger/ShopFronts", "frontage"],
+    ["/Game/Ledger/ShopRooms", "real_room"],
+    ["/Game/Ledger/ShopDisplays", "display"],
+    ["/Game/Ledger/Props", "prop_medium"],
+    ["/Game/Ledger/Vehicles", "car"]
   ],
   "folders_rule": "The longest matching folder wins, so a garment's own folder is read before the MetaHumans' exemption. A folder with no entry has no kind: its meshes fail rule 2 inside a gated piece and are listed by the nightly sweep.",
   "pieces": {
+    "street-sweep": {
+      "folders": ["/Game/Ledger/Kit", "/Game/Ledger/Street", "/Game/Ledger/ShopFronts", "/Game/Ledger/ShopRooms", "/Game/Ledger/ShopDisplays", "/Game/Ledger/Props", "/Game/Ledger/Vehicles"],
+      "parts": [],
+      "report_dir": "F:/LedgerTools/asset-checks",
+      "source": "n02-9-asset-check-gaps (8 Nov): every street, kit, prop, shop and vehicle folder that reaches the game, swept as one piece; the folders' kinds above (Props as prop_medium until a prop is given its own entry)"
+    },
     "tom-jacket": {
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomZipJacket"],
       "parts": ["SKM_TomZipJacket", "MI_TomZipJacket", "T_TomZipJacket_ColourAO", "T_TomZipJacket_Normal", "T_TomZipJacket_Packed"],

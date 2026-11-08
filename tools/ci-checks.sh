@@ -174,6 +174,8 @@ real_table() {
     brick-ids-selftest    "$REPO"                 "$PY tools/brick_ids.py --selftest" \
     history-check-selftest "$REPO"                "$PY tools/history_check.py --selftest" \
     asset-budgets         "$REPO"                 "$PY tools/ue/asset_checks.py --check-spec" \
+    garments-shipped      "$REPO"                 "$PY tools/garments_shipped_check.py" \
+    garments-shipped-selftest "$REPO"             "$PY tools/garments_shipped_check.py --selftest" \
     stain-selftest        "$REPO"                 "$PY tools/ue/make_stain_material.py --selftest" \
     contact-selftest      "$REPO"                 "$PY tools/ue/make_contact_material.py --selftest" \
     token-audit-selftest  "$REPO"                 "$PY tools/token_audit.py --selftest"     needs-you-selftest    "$REPO"                 "$PY tools/needs_you_page.py --selftest"     needs-you-check       "$REPO"                 "$PY tools/needs_you_page.py --check" \

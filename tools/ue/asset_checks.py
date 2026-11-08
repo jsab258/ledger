@@ -170,6 +170,9 @@ def check_asset(spec, rec, in_piece=True):
             need = kind.get("collision")
             c = rec.get("collision") or {}
             simple, convex = c.get("simple", 0), c.get("convex", 0)
+            if simple is None or convex is None:
+                out.append(finding("collision", name, "collision shapes not read in this session", "note"))
+                simple, convex = simple or 0, convex or 0
             if c.get("complex_as_simple"):
                 out.append(finding("collision", name, "uses complex collision as simple", value="complex", limit="simple"))
             if need == "simple":
@@ -283,6 +286,19 @@ def report(piece, records, findings, line, when=None):
             "imports": {r["name"]: (r.get("import") or {}).get("md5") for r in records if r.get("import")},
             "measures": {r["name"]: {k: r[k] for k in keys if k in r} for r in records},
             "findings": findings}
+
+
+def summary(piece, records, findings, line, when, full_at):
+    """A sweep's counts: errors by rule and kind, and the worst triangle counts; the full report is at full_at."""
+    by = {}
+    for f in findings:
+        if f["severity"] == "error":
+            by[f["rule"]] = by.get(f["rule"], 0) + 1
+    worst = sorted(((f["value"], f["asset"], f.get("limit")) for f in findings
+                    if f["rule"] == "triangles" and f["severity"] == "error"), reverse=True)[:12]
+    return {"piece": piece, "line": line, "when": when, "full_report": full_at.replace("\\", "/") + "/" + piece + ".json",
+            "assets": len(records), "errors_by_rule": by,
+            "worst_triangles": [{"asset": a, "triangles": v, "cap": c} for v, a, c in worst]}
 
 
 def check_spec(spec, garments=None):
@@ -516,7 +532,8 @@ def selftest():
     check("the garments' shared folder", kind_of(spec, "/Game/Ledger/MetaHumans/Garments/M_LedgerGarmentPacked") == "shared")
     check("a body under MetaHumans is exempt", kind_of(spec, "/Game/Ledger/MetaHumans/MH_TomL1/Body/SKM_Body") == "exempt")
     check("a folder boundary, not a name prefix", kind_of(spec, "/Game/Ledger/MetaHumans/GarmentsOld/SKM_X") == "exempt")
-    check("an unmapped folder has no kind", kind_of(spec, "/Game/Ledger/Street/SM_Wall") is None)
+    check("an unmapped folder has no kind", kind_of(spec, "/Game/Ledger/Unmapped/SM_Wall") is None)
+    check("the street's folder is a frontage", kind_of(spec, "/Game/Ledger/Street/quay-street/SM_Wall") == "frontage")
 
     # the spec
     real = load_spec()
@@ -691,6 +708,33 @@ def skeletal_triangles(unreal, mesh, lods):
     return out, why
 
 
+def static_collision(unreal, asset, sme=None):
+    """Simple and convex counts and complex-as-simple. The editor subsystem is None in a -run=pythonscript
+    commandlet (found 8 Nov, the first static mesh ever checked), so the older library, then the body setup."""
+    cas = unreal.CollisionTraceFlag.CTF_USE_COMPLEX_AS_SIMPLE
+    for lib in (sme, getattr(unreal, "EditorStaticMeshLibrary", None)):
+        if lib is None:
+            continue
+        try:
+            s, c = lib.get_simple_collision_count(asset), lib.get_convex_collision_count(asset)
+            if s is None or c is None or s < 0 or c < 0:
+                continue  # -1 is the library's "not read" (8 Nov: every street mesh read -1 in a commandlet)
+            return {"simple": s, "convex": c, "complex_as_simple": lib.get_collision_complexity(asset) == cas}
+        except Exception:
+            continue
+    out = {"simple": None, "convex": None, "complex_as_simple": None}
+    try:
+        bs = asset.get_editor_property("body_setup")
+        out["complex_as_simple"] = bs.get_editor_property("collision_trace_flag") == cas
+        geom = bs.get_editor_property("agg_geom")
+        n = lambda k: len(geom.get_editor_property(k))
+        out["convex"] = n("convex_elems")
+        out["simple"] = n("box_elems") + n("sphere_elems") + n("sphyl_elems") + out["convex"]
+    except Exception:
+        pass
+    return out
+
+
 def editor_record(unreal, ad, subsystem=None):
     name = str(ad.asset_name)
     path = str(ad.package_name)
@@ -717,8 +761,7 @@ def editor_record(unreal, ad, subsystem=None):
         sme = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
         rec["triangles"] = [asset.get_num_triangles(i) for i in range(asset.get_num_lods())]
         rec["nanite"] = bool(asset.get_editor_property("nanite_settings").enabled)
-        rec["collision"] = {"simple": sme.get_simple_collision_count(asset), "convex": sme.get_convex_collision_count(asset),
-                            "complex_as_simple": sme.get_collision_complexity(asset) == unreal.CollisionTraceFlag.CTF_USE_COMPLEX_AS_SIMPLE}
+        rec["collision"] = static_collision(unreal, asset, sme)
         rec["materials"] = [dict(slot=str(m.material_slot_name), **material_facts(unreal, m.material_interface))
                             for m in asset.get_editor_property("static_materials")]
     elif isinstance(asset, unreal.SkeletalMesh):
@@ -809,9 +852,14 @@ def run(piece, folders=None):
     when = time.strftime("%Y-%m-%d %H:%M:%S")
     with open(os.path.join(unreal.Paths.project_dir(), "ue-material.txt"), "a", encoding="utf-8") as fh:
         fh.write(line + "\n")
-    os.makedirs(REPORTS, exist_ok=True)
-    with open(os.path.join(REPORTS, piece + ".json"), "w", encoding="utf-8") as fh:
+    out_dir = spec.get("pieces", {}).get(piece, {}).get("report_dir") or REPORTS
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, piece + ".json"), "w", encoding="utf-8") as fh:
         json.dump(report(piece, records, findings, line, when), fh, indent=1)
+    if out_dir != REPORTS:  # a big sweep's full report lives on F:; the repository keeps its counts
+        os.makedirs(REPORTS, exist_ok=True)
+        with open(os.path.join(REPORTS, piece + "-summary.json"), "w", encoding="utf-8") as fh:
+            json.dump(summary(piece, records, findings, line, when, out_dir), fh, indent=1)
     unreal.log("asset_checks: " + line)
     return line
 

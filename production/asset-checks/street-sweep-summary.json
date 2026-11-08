@@ -1,0 +1,80 @@
+{
+ "piece": "street-sweep",
+ "line": "assetChecks=FAIL piece=street-sweep assets=1849 errors=3340 warnings=28 waived=0 first=texture_role:T_KitDetail_brick:linear/sRGB",
+ "when": "2026-11-08 09:30:53",
+ "full_report": "F:/LedgerTools/asset-checks/street-sweep.json",
+ "assets": 1849,
+ "errors_by_rule": {
+  "texture_role": 382,
+  "placeholder": 216,
+  "lods": 243,
+  "collision": 373,
+  "names": 1838,
+  "triangles": 12,
+  "texture_size": 269,
+  "parts": 1,
+  "see_through": 6
+ },
+ "worst_triangles": [
+  {
+   "asset": "SM_grocer-display",
+   "triangles": 702264,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_mickeys_fittings",
+   "triangles": 478750,
+   "cap": 100000
+  },
+  {
+   "asset": "SM_chandler-display",
+   "triangles": 254121,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_pawnbroker-display",
+   "triangles": 203355,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_launderette-display",
+   "triangles": 193656,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_ritas-display",
+   "triangles": 189384,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_ironmonger-display",
+   "triangles": 173043,
+   "cap": 60000
+  },
+  {
+   "asset": "street_foliage_dark",
+   "triangles": 153725,
+   "cap": 150000
+  },
+  {
+   "asset": "SM_tea_room-display",
+   "triangles": 116156,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_tea-rooms-display",
+   "triangles": 114925,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_fishmonger-display",
+   "triangles": 74218,
+   "cap": 60000
+  },
+  {
+   "asset": "SM_lamp_post_C",
+   "triangles": 10848,
+   "cap": 5000
+  }
+ ]
+}
