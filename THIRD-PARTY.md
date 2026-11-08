@@ -582,3 +582,12 @@ Attribution not required; recorded anyway under this file's standing rule.
 Each crop was looked at at 100 per cent before use: no person, no sign, no modern building; it is tone-mapped (middle grey from its median, a soft shoulder, saturation 0.7, a slight warm or cool cast, a paper grain) and laid into a cover, front page, card or postcard whose words are the project's own invented titles and cover lines. Every picture used is recorded by id in `prints_used.json` beside the display (PRT-01 to PRT-04). The cork of the tea rooms' notice board, the sweets in the jars, the cotton weave of the curtains and the laminate are made by script from seeded noise, no fetched input. Attribution not required; recorded anyway under this file's standing rule.
 
 Tool of the shop windows' checks, not shipped (15 October 2026): rapidocr-onnxruntime 1.2.3 (Apache-2.0) with onnxruntime 1.31.0 (MIT), installed in a separate environment outside the repository (`/home/user/.ocrenv`) and run by `production/cloud-week/kit/shop-windows/ocr_words.py` for INV-08, the second reader of every placed model's base-colour map. Nothing of the package or its models is in the repository or in any build.
+
+## The jumpers' knit — a Poly Haven texture (8 November 2026)
+
+| | |
+|---|---|
+| **Source** | **Poly Haven**, "Knitted Fleece" (https://polyhaven.com/a/knitted_fleece), photographed by colormass, processed by Rico Cilliers, published 5 September 2025; fetched 8 November 2026 through its public API (api.polyhaven.com/files/knitted_fleece), 2k PNG: normal (DirectX), roughness, colour |
+| **Licence** | CC0 1.0 Universal (https://polyhaven.com/license), no attribution required |
+| **Where** | F:/LedgerTools/polyhaven/knitted_fleece (not in git); to become the tiling knit detail of Ron's and Darren's jumpers (production/research/game-clothing-pipeline/KNIT-PLAN-2026-11-08.md) |
+| **What** | a fine stockinette knit, about 266 mm square, looked at at 100 per cent: no mark, no brand, nothing but the knit |
