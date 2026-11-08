@@ -38,7 +38,17 @@ CAPS = [
     ("CHARTER.md", 400),
     ("PLAN.md", 1200),
     ("CATALOGUE.md", 1500),
+    # 8 Nov (n02-9-record-caps, the token audit: records and reports 8% of spend, twice the session's own
+    # research; his efficiency ruling: records under about 15%): the handover is read at every hourly start.
+    ("production/handover/HANDOVER.md", 1800),
 ]
+# Entries, not words: lines starting "- " (8 Nov: FINDINGS.md held 24 faults under its word cap; CLAUDE.md says
+# at most twenty).
+ENTRY_CAPS = [("FINDINGS.md", 20)]
+
+
+def entries(text):
+    return sum(1 for line in text.splitlines() if line.startswith("- "))
 # Measured and printed, not failed, until the session that owns the file has trimmed it under its
 # cap and removed it from here (handed over 3 October).
 NOT_YET = set()  # 5 October: TOWN.md and CLOTHES.md trimmed to bounded-task briefs; nothing exempt.
@@ -61,7 +71,7 @@ def sections(text):
     return sorted(parts, reverse=True)[:3]
 
 
-def check(root, caps=CAPS, out=sys.stdout, not_yet=frozenset()):
+def check(root, caps=CAPS, out=sys.stdout, not_yet=frozenset(), entry_caps=()):
     over = 0
     for rel, cap in caps:
         path = os.path.join(root, rel)
@@ -79,7 +89,14 @@ def check(root, caps=CAPS, out=sys.stdout, not_yet=frozenset()):
         if not ok:
             over += 1
             print("  largest sections: " + "; ".join("%s (%d)" % (s, w) for w, s in sections(text)), file=out)
-    print("doc-caps: %d of %d over cap or missing" % (over, len(caps)), file=out)
+    for rel, cap in entry_caps:
+        path = os.path.join(root, rel)
+        if not os.path.isfile(path):
+            continue  # a missing file is already failed above when it has a word cap
+        n = entries(open(path, encoding="utf-8").read())
+        print("doc-caps file=%s entries=%d cap=%d outcome=%s" % (rel, n, cap, "PASS" if n <= cap else "FAIL"), file=out)
+        over += 0 if n <= cap else 1
+    print("doc-caps: %d of %d over cap or missing" % (over, len(caps) + len(entry_caps)), file=out)
     return over
 
 
@@ -111,6 +128,16 @@ def selftest():
         ok = got == 0
         fails += 0 if ok else 1
         print("  %s ACCEPT a file over its cap whose session has not trimmed it yet: over=%d" % ("ok  " if ok else "FAIL", got))
+    with tempfile.TemporaryDirectory() as d:
+        open(os.path.join(d, "F.md"), "w", encoding="utf-8").write("# t\n\n- a\n- b\n- c\n  - not an entry\n")
+        got = check(d, [], out=io.StringIO(), entry_caps=[("F.md", 2)])
+        ok = got == 1
+        fails += 0 if ok else 1
+        print("  %s REFUSE three entries over a cap of two (indented lines are not entries): over=%d" % ("ok  " if ok else "FAIL", got))
+        got = check(d, [], out=io.StringIO(), entry_caps=[("F.md", 3)])
+        ok = got == 0
+        fails += 0 if ok else 1
+        print("  %s ACCEPT three entries at a cap of three: over=%d" % ("ok  " if ok else "FAIL", got))
     print("doc-caps selftest: %s" % ("passed" if fails == 0 else "FAILED (%d)" % fails))
     return 1 if fails else 0
 
@@ -127,6 +154,12 @@ def staged():
         if n > cap:
             over += 1
             print("doc-caps: this commit is refused: %s is %d words, over its cap of %d (CLAUDE.md, Records). Cut it; never --no-verify." % (rel, n, cap))
+    for rel, cap in ENTRY_CAPS:
+        if rel in names:
+            n = entries(subprocess.run(["git", "show", ":" + rel], capture_output=True, text=True, encoding="utf-8").stdout)
+            if n > cap:
+                over += 1
+                print("doc-caps: this commit is refused: %s holds %d entries, over its cap of %d. Merge or close some; never --no-verify." % (rel, n, cap))
     return over
 
 
@@ -136,4 +169,4 @@ if __name__ == "__main__":
     if "--staged" in sys.argv[1:]:
         sys.exit(1 if staged() else 0)
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.exit(1 if check(root, not_yet=NOT_YET) else 0)
+    sys.exit(1 if check(root, not_yet=NOT_YET, entry_caps=ENTRY_CAPS) else 0)
