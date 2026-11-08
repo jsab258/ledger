@@ -9,7 +9,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), until 13:00 Monday 9 November or until he says stop.
 
 ## Standing ways of working (carry across every rewrite)
-- His yes of 6 Nov 11:40, until 13:00 Mon 9 Nov: the waiting list's named items when the order's items wait; four helpers, none that may finish during a tester walk; the hourly start round the clock, nothing touching Unreal 01:15 to 04:30, stopping before 01:40.
+- Standing since his 8 Nov tap (RULINGS 6 Nov): the waiting list when the order's items wait; four helpers, none that may finish during a tester walk; the hourly start round the clock, nothing touching Unreal 01:15 to 04:30, stopping before 01:40.
 - A short row to 'reports' at least once an hour while working, even with nothing finished (message 15), ending 'Allowance: N% at HH:MM, pace X; my spend US$Y since HH:MM' (get_usage, Weekly all models; `python tools/pace_line.py <percent>`; `python tools/token_measures.py --spend HH:MM`; messages 17, 18). **Write the row with ArtifactData and see its version in the result; never record a row that was not written.** The "at" field is +01:00 (Swiss winter time).
 - The week's pace (his yes 7 Nov): over 6 points ahead, finish the item, write this file, stop. Now behind (77% at 15:50, 4.6 behind): full pace.
 - **Advisor 28 (his words 13:55):** until Monday 07:00 keep up to FOUR helpers busy on no-Unreal work Monday's order needs; no busywork. **Advisor 29 (14:32):** Monday at full speed, session plus four helpers, until the 13:00 reset; read the meter at 12:50.
@@ -17,23 +17,20 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - An advisor's standing way goes here the same hour, named in its ack (message 13); the six measures' table in each morning's overview (message 11).
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
-## Run 16:22 to 16:35 on 8 Nov
-- His page and the advisor read 16:22. **Advisor 30 (16:20):** the advisor's draft order of 9 November saved unchanged as production/orders/drafts/2026-11-09-draft.md (not orders/2026-11-09.md: the ledger tool would take it as the running order and fail every push); one item on his page, adopt-order-2026-11-09 (page version 59, the items row, the ack and a report row 16:25 all written). **On his yes:** move the draft to production/orders/2026-11-09.md with ledger lines (IDs n09-*, statuses, the sixteen studies, the 2 Nov order's open items carried), record its section 1 in RULINGS.md and CLAUDE.md within their caps, apply section 4, then work section 2 in order beside the old order's last hours. On "not yet": his note to the advisor's list; nothing changes. Before his tap nothing in it is acted on.
-- F: still 19.5 GB at 16:26: the sweep waits for tonight's retention. ci-checks 97/97; pushed (b233fd2c2). Stopped at the item's end with nothing real left before tonight's walk (no busywork; the new order's items wait for his tap).
-
-## Earlier session (15:22 to 16:06 on 8 Nov), done and pushed
-- n02-9-qa-lean step 2 done (the night report names the walk's launch; small review passed, one fix); step 3 (card memory at its peak) held for Monday.
-- The stuck-legs line's numbers corrected: fires on 16 of 20 nights; Sheila's spot missed on 6 of 13 mornings since 24 Oct.
-- **Ron's and Darren's clothes released into the player's game (16:30, his two yeses): tonight's walk is their first there; a fault there brings the hold back.**
-- Exit brief holds the office's and Tom's side-walk film's fresh reviews; Tom's turn foot old (24 Oct), a known narrow shortfall.
-- Ron's plan steps 1, 2, 5 measured; Monday notes: playbook/TRAPS-TO-CHECKS-2026-11-08.md, phase5-procedural/OPEN-QUESTIONS-ANSWERS-2026-11-08.md. Progress page version 34 (16:05).
+## Run 17:22 on 8 Nov: his new order adopted
+- **His yes to adopt-order-2026-11-09 at 17:17 (verdict 16:17Z).** Done and pushed (6bdf73ccb, ci 97/97): production/orders/2026-11-09.md is the running order (n09-1 to n09-14, to Mon 16 Nov 13:00); every older open, carried and set-aside line closed in production/orders/archive/2026-11-09.md naming the n09 item or waiting-list line it folded into; nine groups nothing covers (K1 to K9) carried for his one keep-or-drop tap, **keep-or-drop-2026-11-08** (page version 60; items, ack and report rows written). On his answer: "yes" drops K8 and K9 (dropped, naming Jafar) and keeps the rest carried over; "keep-all" keeps all nine; then close the item.
+- Section 1 is in RULINGS.md (4,894 of 4,900): tries up to four by the 7 Nov rule (none asks him), four helpers standing, models by the 8 Nov replay. **CLAUDE.md could not be edited from the automatic run (refused as self-modification):** its "70% production, 10% review, 20% kept" and "two tries means two" lines are stale; RULINGS wins meanwhile, as does it over the scheduled prompt's "a third needs his yes". Needs a desktop turn: put it with Monday's items on his page.
+- The progress page's carried list is now empty (progress.json refreshed from the new order); republish tonight.
+- n09-10 (skills) given to one helper at 17:40 (notes: production/research/skills/N09-10-SKILLS-2026-11-08.md; skills under .claude/skills).
+- Earlier today, done and pushed: n02-9-qa-lean step 2; the stuck-legs line corrected; Ron's and Darren's clothes released into the player's game (16:30, his two yeses: tonight's walk is their first; a fault there brings the hold back); exit brief holds the office's and Tom's side-walk reviews; Tom's turn foot old (24 Oct), narrow known shortfall.
 
 ## Next, in order
-1. His page and the advisor (his tap on adopt-order-2026-11-09 first: act on it at once, as above); the hourly row.
-2. Helpers (up to four, no Unreal), only real work: the turn's foot fault's fix candidates are for Monday's order (no try spent yet); the traps note's remaining proposals wait for the order; the waiting list's inZOI and Silent Hill 2 file reads need F: room (19.5 GB, floor 20). If nothing real remains, fewer helpers, not busywork.
-3. The street sweep's real editor run once F: has room (`python tools/retention.py space --job "asset sweep" --drives CF` first; after tonight's 03:30 retention, never 01:15 to 04:30): LEDGER_CHECK_PIECE=street-sweep through the commandlet (tools/ue/asset_checks.py docstring, full paths, MSYS_NO_PATHCONV=1), read its line (expect errors 0 and known about 788, or name the difference), then `python tools/ue/asset_checks.py --known-from F:/LedgerTools/asset-checks/street-sweep.json`; commit.
-4. Tonight (the progress page is done; republish only if the walk changes a boss): read the walk (the iron cover, Ron at 5.3, the office wall, the landing at the apron, Darren lost?, **the two men dressed in the player's game for the first time**, the legs line and the new launch line); Sunday night's log lines into the exit brief; publish the progress page with the Tailor's interim line (advisor 27: tailor boss standing); the day's summary's lines for today's decisions (jumper colours, Ron's sheet, the neckband, his two taps, the knit download, the sweep fitted, the skills, the clothes released, the launch line); stop before 01:40.
-5. Monday: full speed to 13:00 (advisor 29); n02-3-4-exit in the morning (the brief now holds the office's and the walk film's reviews); 12:50 the weekly figure; `needs_you_page.py --archive`; the Sonnet replay's folder on F:/LedgerTools/replay-2026-11-08 (about 0.5 GB, my own) deleted with one line after the order is written.
+1. His page and the advisor (keep-or-drop-2026-11-08 first); the hourly row with its Allowance line.
+2. The n09-10 helper's result, if not yet committed: check its skills against their evidence, small review, commit.
+3. Tonight (no Unreal 01:15 to 04:30): read the walk (the dressed men's first walk, the iron cover, the office wall, the legs and launch lines); the progress page republished; the day's summary's lines (the order adopted, jumper colours, the neckband, his taps, the clothes released, the launch line); stop before 00:45.
+4. Monday, full speed to 13:00: n09-1 the exit in the morning (one fresh reviewer per exit on the newest build; production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md); 12:50 the weekly figure; `needs_you_page.py --archive`; n09-14 before the credit ends about 11 Nov; then n09-2 (Tom on his page by Tuesday), n09-3 and on in order.
+5. The street sweep's editor run once F: has room (after tonight's retention; `python tools/retention.py space --job "asset sweep" --drives CF` first), as tools/ue/asset_checks.py's docstring says.
+6. F:/LedgerTools/replay-2026-11-08 (about 0.5 GB, my own) deleted with one line.
 
 ## Tried and failed, and why (newest; older ones in TRIED-ARCHIVE.md)
 - Counting nights from the folder list (8 Nov 15:00): count denominators from the files.
