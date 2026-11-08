@@ -325,13 +325,43 @@ class Route:
 
     def write(self):
         os.makedirs(self.out, exist_ok=True)
-        verdict = {"passed": sum(r["ok"] for r in self.rows), "stages": len(self.rows), "rows": self.rows, "path": self.trace}
+        verdict = {"passed": sum(r["ok"] for r in self.rows), "stages": len(self.rows), "rows": self.rows, "path": self.trace,
+                   "stuck": stuck_runs(self.trace)}
         with open(os.path.join(self.out, "verdict.json"), "w", encoding="utf-8") as fh:
             json.dump(verdict, fh, indent=1)
         if FILM_MARKS:
             with open(os.path.join(self.out, "film-marks.json"), "w", encoding="utf-8") as fh:
                 json.dump(FILM_MARKS, fh, indent=1)
         return verdict
+
+
+def stuck_runs(path, min_legs=6, tol=0.5):
+    """LEGS THAT NEVER ARRIVED (8 Nov, the lean QA's first step: production/research/qa-practice/
+    QA-FIRST-STEPS-2026-11-08.md, step 1). A run is a stretch of consecutive path entries with the same
+    "to". Each entry's "at" is read BEFORE its leg moves, so a run's end position is the next entry's "at";
+    a run that ends the path has no end read and never fires. A run fires when it took at least min_legs
+    legs (go_to's smallest cap is 6) and its end lies over tol from "to" (go_to's largest tol is 0.5).
+    A follow run changes "to" every leg, so it is one entry long and never fires. It shows that he never
+    arrived, not whether his legs strode: a fire is looked at in the walk's pictures."""
+    if not path:
+        return {"note": "no path", "fires": [], "end_unread": []}
+    fires, unread, i = [], [], 0
+    while i < len(path):
+        j = i
+        while j + 1 < len(path) and path[j + 1].get("to") == path[i].get("to"):
+            j += 1
+        n, to = j - i + 1, path[i].get("to") or [0, 0]
+        if n >= min_legs:
+            if j + 1 < len(path):
+                end = path[j + 1].get("at") or [0, 0]
+                left = math.hypot(to[0] - end[0], to[1] - end[1])
+                if left > tol:
+                    fires.append({"to": to, "legs": n, "from": path[i].get("clock", ""), "until": path[j].get("clock", ""),
+                                  "left_m": round(left, 2), "end": end})
+            else:
+                unread.append({"to": to, "legs": n, "from": path[i].get("clock", "")})
+        i = j + 1
+    return {"fires": fires, "end_unread": unread}
 
 
 START_SAID = [""]               # the tester's last word on a start that failed, for the verdict
@@ -642,6 +672,22 @@ def selftest():
     check("the door the sit walks through is the office spec's", (door["x"], door["z"]) == OFFICE_DOOR)
     check("the talk's public spot is inside the office and within Sheila's 2.5 m", in_office(*OFFICE_PUBLIC) and math.hypot(OFFICE_PUBLIC[0] - 8.15, OFFICE_PUBLIC[1] - 8.2) <= 2.5)
     check("someone indoors is talked to from the public side; on the street, from beside them", approach((8.15, 8.2), (1, 4), 1.1) == OFFICE_PUBLIC and approach((6.0, 4.6), (1, 4), 1.1) != OFFICE_PUBLIC)
+    # legs that never arrived (8 Nov)
+    def leg(to, at, c="D0 09:00"):
+        return {"to": list(to), "at": list(at), "clock": c}
+    arrive = [leg((5, 0), (0, 0)), leg((5, 0), (2, 0)), leg((5, 0), (4.8, 0))]
+    check("arriving on leg 3 does not fire", not stuck_runs(arrive)["fires"])
+    last_arrives = [leg((5, 0), (0, 0))] * 13 + [leg((5, 0), (4.2, 0))] + [leg((9, 9), (4.7, 0.1))]
+    check("a run that arrives on its last leg does not fire (its end is the next entry's 'at')", not stuck_runs(last_arrives)["fires"])
+    short = [leg((5, 0), (0, 0))] * 14 + [leg((9, 9), (3.0, 0))]
+    sr = stuck_runs(short)["fires"]
+    check("14 legs ending 2 m short fire, with legs and distance", len(sr) == 1 and sr[0]["legs"] == 14 and sr[0]["left_m"] == 2.0)
+    tail = stuck_runs([leg((5, 0), (0, 0))] * 14)
+    check("a run that ends the path is 'end unread', never a fire", not tail["fires"] and len(tail["end_unread"]) == 1)
+    follow = [leg((k, 0), (0, 0)) for k in range(10)] + [leg((99, 0), (0, 0))]
+    check("a follow run, its aim changing each leg, does not fire", not stuck_runs(follow)["fires"])
+    check("five legs short do not fire", not stuck_runs([leg((5, 0), (0, 0))] * 5 + [leg((9, 9), (0, 0))])["fires"])
+    check("no path says so", stuck_runs([]).get("note") == "no path" and stuck_runs(None).get("note") == "no path")
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

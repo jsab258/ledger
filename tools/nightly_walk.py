@@ -120,7 +120,22 @@ def summarise(events, verdict, bench, eyes):
         "police_told_by": police,
         "thats_all_i_know": bench,
         "illusion": eyes,
+        "legs_never_arrived": legs_never_arrived(verdict),
     }
+
+
+def legs_never_arrived(verdict):
+    """The lean QA's first step (8 Nov, QA-FIRST-STEPS-2026-11-08.md): runs of legs that ran out short of
+    their spot, from the walk's verdict ("stuck", or worked out from its path for older verdicts). Kept
+    while it catches something: "fired" is stored so a month's count can drop it."""
+    if not verdict:
+        return {"note": "no walk", "fired": False, "fires": []}
+    st = verdict.get("stuck")
+    if st is None:
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import route_walk
+        st = route_walk.stuck_runs(verdict.get("path"))
+    return dict(st, fired=bool(st.get("fires")))
 
 
 def run_walk(night):
@@ -251,6 +266,15 @@ def paragraph(rep, prev):
     pr = (p.get("replies") or {}).get("seconds_median") if p else None
     parts.append("Replies heard after a median %s s, at most %s s (stand-in words, real voice; not the real path), %d of %d broke." % (
         delta(r["seconds_median"], pr, "%s"), r["seconds_max"], r["broke"], r["n"]))
+    ln = s.get("legs_never_arrived") or {}
+    if ln.get("fires"):
+        parts.append("Legs that never arrived: %d (%s)." % (len(ln["fires"]), "; ".join(
+            "%d legs toward %s, %s to %s, %s m short" % (f["legs"], ", ".join("%g" % c for c in f["to"]), f["from"], f["until"], f["left_m"])
+            for f in ln["fires"][:3])))
+    elif ln.get("note"):
+        parts.append("Legs that never arrived: %s." % ln["note"])
+    else:
+        parts.append("Legs that never arrived: none.")
     ill = s["illusion"].get("lines") if s.get("illusion") else None
     parts.append("What broke the illusion: %s." % ("; ".join(ill[:3]) if ill else (s.get("illusion") or {}).get("note", "nothing named")))
     return " ".join(parts)
@@ -362,6 +386,13 @@ def selftest():
     para = paragraph(rep, prev)
     check("the paragraph compares with the night before", "(-3 on the night before)" in para and "(+1 on the night before)" in para)
     check("the paragraph says the reply times are not the real path", "not the real path" in para)
+    # legs that never arrived (8 Nov): from the verdict's path when it carries no "stuck"
+    pv = dict(v, path=[{"to": [7.9, 4.6], "at": [8.4, 2.5], "clock": "D0 09:50"}] * 14 + [{"to": [1, 1], "at": [8.45, 3.41], "clock": "D0 12:19"}])
+    ps = summarise(ev, pv, None, None)
+    check("a run of 14 legs short of its spot is counted and fired",
+          ps["legs_never_arrived"]["fired"] and ps["legs_never_arrived"]["fires"][0]["left_m"] == 1.31)
+    check("the paragraph names it", "Legs that never arrived: 1 (14 legs toward 7.9, 4.6, D0 09:50 to D0 09:50, 1.31 m short)" in paragraph({"date": "x", "summary": ps}, None))
+    check("no walk says so", summarise(ev, None, None, None)["legs_never_arrived"]["note"] == "no walk")
     check("the bench runs with the game's own talk settings", "--rules" in open(__file__, encoding="utf-8").read() and "--plain" in open(__file__, encoding="utf-8").read())
     # THE TESTER'S PICTURES ARE JPEGS (Jafar, 7 October: "the nightly report has never seen the
     # tester's pictures, because the tester saves .jpg and the report looks only for .png"; every
