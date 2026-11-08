@@ -485,7 +485,7 @@
   {
    "who": "Sam",
    "name": "DarrenJumper",
-   "fbx": "F:/LedgerTools/garments/darren/on_s6/darren_jumper_clear/skinned/darren_jumper_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/darren/on_s6/darren_jumper_band/skinned/darren_jumper_skinned.fbx",
    "hides": [
     "top"
    ],
@@ -514,7 +514,7 @@
     "detail_strength": 1.0
    },
    "handed": "2026-11-07",
-   "made": "Tom's jumper carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn; 7 November, carried again from C5 onto the game's own S6 body (tools/meshgen/blender/body_full_layout.py: S6 is not C5's body, pelvis 64 mm away, and skin showed through in the packaged film); 7 November, moved 7 mm clear of his head mesh below z 1.56 at the breastbone (tools/meshgen/blender/clear_layers.py --head; his yes for a third try)",
+   "made": "Tom's jumper carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn; 7 November, carried again from C5 onto the game's own S6 body (tools/meshgen/blender/body_full_layout.py: S6 is not C5's body, pelvis 64 mm away, and skin showed through in the packaged film); 7 November, moved 7 mm clear of his head mesh below z 1.56 at the breastbone (tools/meshgen/blender/clear_layers.py --head; his yes for a third try); 8 November, the neckband brought down to a crew neck's 22 mm above its seam, each column shortened toward its own seam (it stood 23 to 33 mm, reading as a stiff band with peaks at the sides; tools/meshgen/blender/lower_neckband.py, band.json beside the fbx; try 1 of 2)",
    "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper",
    "knit": "8 November: a wool knit as a tiling detail normal (Poly Haven's Knitted Fleece, CC0, resampled whole) and our own 1x1 rib on the rib part, about 66 cm a repeat of the 26.6 cm tile at this UV scale; the colour its own (Ron a dark docker's navy, Darren a maroon), decided within canon (KNIT-PLAN-2026-11-08.md, DECISIONS)"
   },
