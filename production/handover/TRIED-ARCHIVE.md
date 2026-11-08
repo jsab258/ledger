@@ -24,3 +24,7 @@ Moved out of HANDOVER.md on 8 Nov 2026 (its new 1,800-word cap, tools/doc-caps.p
 - The corner's -PageShots in the editor: tools/ue/stage_game_data.py, copy vignette-pieces.json to ue-probe, then F:/LedgerTools/gate/new/street-level-2026-11-05/final/command-day.txt, MSYS_NO_PATHCONV=1, in the background; pictures in ue-probe/Saved/PageShots.
 - The street's export: `--root C:/Users/Jafar/ledger-local --block street --out <folder> --export-glb production/assets/street/quay-street.glb` on Blender 5.2; glb and json to F:/LedgerTools/game-inputs, then import_street.py.
 - The rib tile ran round the bands (8 Nov 12:30): turn a normal tile with its vectors and check lit shading against the original turned. Times guessed (8 Nov): run Get-Date in the same command that writes a time. A -run=pythonscript commandlet has no StaticMeshEditorSubsystem.
+
+- (moved 8 Nov 19:49) Bulk batch on Sonnet 5.5 with no thinking setting (8 Nov 18:00): hidden thinking spent max_tokens; send thinking {"type": "between_tools"} (api_batch.py passes it).
+- (moved 8 Nov 19:49) A content rule told as "never spoken of" still got "does not drink" (8 Nov): denials count; tell the model so.
+- (moved 8 Nov 19:49) Rows claimed but never written (8 Nov 11:22 to 13:16): a row exists only when ArtifactData returns its version.

@@ -1973,3 +1973,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.5 h with one small review.
 - Failed and why: the first run on the real file read a 1.8-billion MB peak: a metadata row closing the file had passed the row filter; only the real file showed it.
 - Evidence: production/research/qa-practice/MEMORY-PEAK-REVIEW-2026-11-08.md.
+
+## A phase's plan with a gap list and a scoreboard (8 Nov 2026, n09-4)
+- Made: one phase's pieces with hour ranges, weekly measures, a per-element gap list against the target platform's look, and a table of each repeated kind of work, latest against first.
+- Method: a builder drafts the pieces; one fresh reviewer; open scope questions to the owner; a fresh visual reviewer judges stills of the current build per element (gap size and the single biggest missing thing, motion only by film); an extractor reads the time log for first and latest instances of each kind, every number tied to its source line.
+- Tools: subagents (visual reviewer on the strong model, extraction on the cheaper one); the progress page's data file.
+- Target and check: every element given a gap size; every scoreboard figure traceable; the owner's page carries it.
+- Cost: about 0.3 h of the session plus two helpers of a few minutes each (after the 5 h draft of the morning).
+- Failed and why: the time log had a two-week hole and one window with its stop before its start; recorded figures fill the hole and are marked as recorded, not measured.
+- Evidence: production/research/phase2-plan/PS5-GAP-LIST-2026-11-08.md, SCOREBOARD-2026-11-08.md.

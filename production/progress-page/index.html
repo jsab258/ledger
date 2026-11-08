@@ -334,6 +334,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
           const wl = el("ul", "pieces"); for (const w of s.weekly){ const it = el("li"); it.append(el("span", "pl", w)); wl.append(it); }
           det.append(wl);
         }
+        // THE GAP LIST AND THE SCOREBOARD (8 Nov, n09-4)
+        if (Array.isArray(s.note_lists)) for (const nl of s.note_lists){
+          det.append(el("p", "note", nl.title));
+          const ul2 = el("ul", "pieces"); for (const w of (nl.items || [])){ const it = el("li"); it.append(el("span", "pl", w)); ul2.append(it); }
+          det.append(ul2);
+        }
         b.append(det);
       }
       li.append(b); r.append(li);

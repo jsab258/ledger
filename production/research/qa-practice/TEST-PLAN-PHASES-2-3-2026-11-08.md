@@ -6,12 +6,12 @@ For n09-9 (orders/2026-11-09.md line 30); nothing decided. Base: QA-LEAN-PROPOSA
 
 Each check is marked **fails** (stops the build or the pass) or **reports** (a line read by the session, failing nothing alone).
 
-1. **ci-checks pass** (fails): CoreTests, TalkTests, Soak, SaveChaos, PerceptionGolden, StrangerTest (ci-checks.sh lines 235 to 241), canon and content gates, reach-check (line 148). Catches broken simulation, the port drifting from the C# goldens, brand words.
+1. **ci-checks pass** (fails): CoreTests, TalkTests, Soak, SaveChaos, PerceptionGolden, StrangerTest (ci-checks.sh lines 235 to 241), canon and content gates, reach-check (line 148), homes_check.py and the spec tests (lines 205, 220; study 13 line 59). Catches broken simulation, the port drifting from the C# goldens, brand words.
 2. **Asset checks before any reviewer** (fails for garments and the shipping project; the street's known list fails nothing alone) (tools/ue/asset_checks.py, D13 28 Oct): stale imports, placeholders, JPEG normals, triangle overruns (8 Nov sweep: shop displays 74,000 to 702,000 against 60,000, FINDINGS line 12). Editor side untested when written (asset_checks.py line 35).
 3. **Reviews sized to the piece** (fails on a new fault) (RULINGS line 36).
-4. **Passed on the player's launch** (reports today; the packaged-walk skill's pass needs PLAYER or PLAYER+WATCH, STEPS line 90): launch_line_check.py reads PLAYER, PLAYER+WATCH or TEST. Catches the office "passed" behind -MickeysInside (STEPS step 2). Open: a stale log can pass as tonight's (LAUNCH-LINE-REVIEW fault 1).
+4. **Passed on the player's launch** (reports today; the packaged-walk skill's pass needs PLAYER or PLAYER+WATCH, STEPS line 90): launch_line_check.py reads PLAYER, PLAYER+WATCH or TEST. Catches the office "passed" behind -MickeysInside (STEPS step 2). A stale log passing as tonight's (LAUNCH-LINE-REVIEW fault 1) was fixed on 8 Nov (commit cdaf03073).
 5. **The nightly packaged walk** (fails on route stages, the eyes on its pictures, save and Continue; the legs-never-arrived line reports only, firing 16 of 20 nights, section 5) (nightly_walk.py). A piece passes only there (CLAUDE.md).
-6. **Memory and frame** (reports; **not built yet**: no peak-memory line in tools/, STEPS step 3 lines 116 to 121, line 127): peak frame at High against 5,650 MB, worst frame against 33.3 ms (PIECES-DRAFT line 84). Catches medians read as peaks (STEPS lines 116 to 121; QA lines 38 to 42). Reads Highest until the perf step moves to High (STEPS, "Held").
+6. **Memory and frame** (reports; built 8 Nov in slice-perf.py and perf-hook.py, MEMORY-PEAK-REVIEW-2026-11-08.md): peak frame at High against 5,650 MB, worst frame against 33.3 ms (PIECES-DRAFT line 84). Catches medians read as peaks (STEPS lines 116 to 121; QA lines 38 to 42). Reads Highest until the perf step moves to High (STEPS, "Held").
 7. **His page only after the gate** (fails on a new fault): Hook sheet, last good picture beside (CLAUDE.md, "The gate").
 
 **The pass:** a build reaches him when every "fails" check above passes on it and the session has read every "reports" line, each new fault named in it blocking and each known shortfall listed.
@@ -49,14 +49,14 @@ Weekly measures stay on the progress page (PIECES-DRAFT section 4), not bars. No
 - Quay StandBlockedAt line: needs C++; only if the quay stop returns (STEPS line 16).
 - An agent driving free play: needs his ruling (QA line 63).
 - Testing tag: a record, not a check (STEPS step 4).
+- Study 13's naming check (lines 42, 69 to 73), a spec number duplicated as a C++ constant (lines 64 to 67) and Mafia's asset-registry tags (line 84): no fault of ours slipped past them; not added (TEST-PLAN-VS-STUDY13-2026-11-08.md).
 
 ## 5. Open, unverified, unreached
 
 - The legs line fires on 16 of 20 nights (STUCK-LEGS-REVIEW line 15): as a bar it would always fail. Sheila's spot, 1.31 m short on five nights, needs its cause read.
-- The launch line's stale-log fix is not made.
 - Perf step at High held for the order; two commands in one -ExecCmds on 5.8 unverified.
 - Unverified: clock-to-picture mapping; the asset checks' editor run.
-- Not reached: studies/13-pipeline.md (the order's reference), crime-verdict-check.py, encounter-verdict-check.py, Mafia's QA.
+- Study 13 read 8 Nov (TEST-PLAN-VS-STUDY13-2026-11-08.md): no budgets or build gate in it. Not reached: crime-verdict-check.py, encounter-verdict-check.py, Mafia's QA.
 
 ## Review (8 Nov)
 

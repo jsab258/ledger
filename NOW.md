@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE: order adopted 17:30; nine keep-or-drop groups on his page; phase 2's pieces on the progress page, the two shops on his page (19:40); tonight's walk tests the dressed men; exit Monday morning.
+STATE: his five taps of 19:34 acted on (rulings, order, page cleared 20:26); four field scans written; helpers on GarmentCode's pattern test, the PS5 gap list, the scoreboard, the cache writes; tonight's walk tests the dressed men; exit Monday morning.
 
 ## Handovers
 

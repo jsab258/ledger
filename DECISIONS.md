@@ -1222,20 +1222,50 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Reason: RULINGS 29 Oct (own leftovers nothing uses); the results are recorded in production/research/token-audit/SONNET-BLIND-REPLAY-2026-11-08.md; F: needs room for the street sweep.
 - Link: production/research/token-audit/SONNET-BLIND-REPLAY-2026-11-08.md.
 
-## 2026-11-08 19:36, phase 2's plan: five of its six open questions decided, one put to him
+## 2026-11-08 19:26, phase 2's plan: five of its six open questions decided, one put to him
 
 - Decision: of the pieces draft's six questions (n09-4), only the fishmonger and the empty unit (whether 28 October's "no new shops" still bars them) goes to him, as phase2-two-shops-2026-11-08 on his page, yes recommended. Decided: (2) cars wait for P9's blind silhouette before their 50 to 90 h; (3) the crowd's clothes only the Hook's rows 1 to 3 in phase 2, the 35-garment pool after the tailor's sample passes; (4) few lit upper rooms, only in camera, Mafia's method; (5) the overrun (240 to 385 h against about 240) moves nothing now: full scope, hours measured weekly, scope first and never quality only if cost per piece has not clearly fallen by 1 February; the hill and cars not moved; (6) the brick course 86 mm, decided before the bond, so each wall is touched once.
 - Reason: RULINGS 2 Oct (no cars until convincing cars pass); 5 and 6 Nov (full scope, no path on extrapolated numbers, deep before wide, the 1 February test); order rule 10 and RULINGS 6 to 8 Nov on clothing; the reference-first rule (Mafia's 24 fake rooms in about 8,100 windows); the period photograph's 85 to 88 mm (TERRACE-KIT-TABLE-2026-10-29.md §5). The two shops touch his standing 28 Oct ruling, so his.
 - Link: production/research/phase2-plan/PIECES-DRAFT-2026-11-08.md §6; production/approvals/needs-you/items.json.
 
-## 2026-11-08 19:50, n09-14: no more bulk text tonight; the rest of the month's credit goes to the game's own calls the week needs
+## 2026-11-08 19:30, n09-14: no more bulk text tonight; the rest of the month's credit goes to the game's own calls the week needs
 
 - Decision: the order's named texts (three backstories, 32 side-story outlines) are done (US$1.15). No further bulk text is generated for its own sake: a scan of the week's items finds none that needs more written text (Ron already has 159 street lines of his own; n09-5's talk part needs measured talk, not new lines). What is left of the month's credit before about 11 Nov pays for n09-5's paid talk runs on Ron inside the packaged game (the speech bench's capped runs) and any bench the week's items call for, inside each day's ceiling; the item stays open until the credit's month ends and is then closed with its spend.
 - Reason: RULINGS 1 Nov rule 12 (the credit is for the game's own calls and bulk text the work needs); RULINGS 5 and 7 Nov (full use of the allowance on useful work, no busywork); order n09-14's "after reading what is left".
 - Link: production/orders/2026-11-09.md n09-14; production/research/unit-costs/RON-END-TO-END-PLAN-2026-11-08.md line 39.
 
-## 2026-11-08 20:40, n09-9 step 3: the card-memory peak read beside the median, reporting only
+## 2026-11-08 19:45, n09-9 step 3: the card-memory peak read beside the median, reporting only
 
 - Decision: tools/slice-perf.py and tools/perf-hook.py now give the peak card memory (every frame, the launch frames included) beside the median, with a verdict against 5,650 MB that reports and never fails; slice-perf no longer reads the profiler's closing "[HasHeaderRowAtEnd]" row as a frame (it read as an 1,794,111,057 MB peak, and had been counted in the median's list). On the 3b3454e day walk: median 5,842.5, peak 6,126.5, OVER-LINE; the 3641d53 and 7bef7cf walks peak 6,104 to 6,163, all over the line (the review's reading).
 - Reason: QA-FIRST-STEPS-2026-11-08.md step 3 (medians had been read as peaks); MEMORY-PLAN-2026-11-07.md section 4; RULINGS 8 Nov (a fix to a tool that reads real files is checked on those files).
 - Link: production/research/qa-practice/MEMORY-PEAK-REVIEW-2026-11-08.md.
+
+## 2026-11-08 20:30, his five taps of 19:34 acted on
+
+- Decision: keep-or-drop: K1 to K7 kept for their phase, K8 and K9 dropped (order archive marked). Two shops: the fishmonger and the empty unit stay in phase 2's pieces. Story texts: the ten canon points as recommended; texts stay drafts. Clothing: the backbone and the GarmentCode lab test into n09-6. His notes made rulings within RULINGS' 4,900 cap (now 4,896): the field-scan rule, widened by him to any new discipline's method and any fault after two failed tries; story drafts and small canon details wait until built; page items at most two batches a day. To fit, cut only repeats and reasons (cars line duplicated in 2 Oct's, the page's field list, the progress page's field list, the study's helper models (RULINGS 8 Nov models), the acks' and reports' field lists, the NoAI exception's reason, the window frame numbers (their home is the window spec), the file's header sentence on where methods live).
+- Reason: his verdicts on the page, 8 Nov 18:34 to 18:35 UTC; RULINGS' own rule (done or repeated lines leave).
+- Link: production/approvals/needs-you/items.json; production/orders/2026-11-09.md.
+
+## 2026-11-08 20:30, the first parked car's route: our own scripted hatchback in Blender
+
+- Decision: the hatchback is built as our own parametric Blender model with Epic's materials, no purchase; City Sample's vehicles (Epic-published, allowed under the 13 Oct exception) are not reused because they are modern American shapes, not a 1980s British hatchback. Hours as the 8 Nov estimate (24 to 40 h), measured on this car. Main risk: a shape that reads as no era, or as one real model; a fresh reviewer checks it against period photographs of several makes for both.
+- Reason: his note of 8 Nov (one car first, the hatchback, after a one-hour scan); the scan found no CC0 or unmarked CC-BY 1980s hatchback and no free generator with a clear licence.
+- Link: production/research/field-scans/CARS-2026-11-08.md.
+
+## 2026-11-08 20:40, n09-6: GarmentCode's lab test uses its pattern code only
+
+- Decision: the lab test installs pygarment (MIT) without its simulator into its own folder on F: (LedgerTools), writes our four base patterns (trousers, shirt, jumper, jacket) as code, and exports them through our own small converter to DXF-AAMA for Marvelous, which drapes them as now. Not used: the NVIDIA Warp fork (NVIDIA Source Code License, research or evaluation only; CUDA, which the RX 6700 cannot run), cgal (GPLv3+) and CairoSVG (LGPL), all off the allowlist; if the pattern code cannot run without them, the test stops and that is its result. The dataset (CC BY 4.0) is not needed. Nothing from it ships; a lasting adoption gets its record by the allowlist's process.
+- Reason: the allowlist (nothing off it; a new tool enters only by its record); his clothing yes of 8 Nov (licence first, nothing bought); the licence read: production/research/clothing-pipeline/GARMENTCODE-LICENCE-2026-11-08.md.
+- Link: that file; production/orders/2026-11-09.md n09-6.
+
+## 2026-11-08 20:40, n09-9: study 13 read against the test plan
+
+- Decision: three changes, no check added: homes_check.py and the spec tests named under check 1 (ci-checks.sh runs them, lines 205 and 220); check 6 marked built; study 13's naming, duplicate-number and registry-tag checks listed as not added (no fault of ours slipped past them).
+- Reason: RULINGS 6 and 7 Nov (a check only after a fault slipped past).
+- Link: production/research/qa-practice/TEST-PLAN-VS-STUDY13-2026-11-08.md.
+
+## 2026-11-08 20:45, n09-6 and n09-11: two helper results taken
+
+- Decision: GarmentCode's pattern code runs without anything barred (pygarment 2.0.2 from its MIT source, ten MIT/BSD/PSF dependencies, two inert stand-ins for the barred CairoSVG and the unused plotting import); four base patterns and their DXF exports validated (48 panels closed, outseam 1,092.8 mm); next a Marvelous import trial of one pattern by the session (computer use only in Marvelous, his rules), then the pattern-library decision. n09-11: the overview's cache-write line prices every write at the 1-hour rate though helpers write at the 5-minute rate (7 Nov: US$35.28, not 42.06); fix token_measures.py's measure_day with token_audit's step cost, checked on 7 Nov's real logs. The unused connectors and skills (Chrome, Drive, Docs copies, Gmail, Calendar, n8n, the registry; 49 of 61 skills) are switched off only through his account, so they go to his page in the next batch.
+- Reason: the licence decision of 20:40; RULINGS 8 Nov (a fix to a tool that reads real files is checked on those files); RULINGS 30 Oct (account settings are his).
+- Link: production/research/clothing-pipeline/GARMENTCODE-LAB-2026-11-08.md; production/research/token-audit/N09-11-CACHE-AND-TOOLS-2026-11-08.md.

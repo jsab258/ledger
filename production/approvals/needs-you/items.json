@@ -713,7 +713,8 @@
     "8. Your old archive repository's two settings (keep its files 3 days, switch its Actions off): drop; it costs nothing as it is.",
     "9. Old launcher files that name retired things: drop; nothing that ships uses them."
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 20:26, His yes 8 Nov 19:34: K1 to K7 kept for their phase, K8 and K9 dropped; order archive updated"
   },
   {
    "id": "parked-cars-route-2026-11-08",
@@ -731,7 +732,8 @@
      "Other (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 20:26, His note 8 Nov 19:34: one car first, the hatchback, after a one-hour scan of the field (running); the other three after he has seen it"
   },
   {
    "id": "clothing-route-and-scans-2026-11-08",
@@ -749,7 +751,8 @@
      "Other (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 20:26, His yes 8 Nov 19:34 with his widening: added to n09-6; the scan rule in RULINGS covers any new discipline's method and any fault after two failed tries; three scans running"
   },
   {
    "id": "story-texts-canon-points-2026-11-08",
@@ -1097,11 +1100,12 @@
     "INVENTIONS:\n- Tom asks Rita, Grace or Wayne about Hal: his questions are the only reason they come into it [invented].\n- The back room of the coin shop as where Hal keeps the tape [invented].\n- Hal's price comes from the simulation's reading of the tape, not a fixed sum [invented].",
     "Fixed: A garbled INVENTIONS line (Hal asking about himself) now says Tom asks."
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 20:26, His yes 8 Nov 19:35: all ten as recommended; texts stay drafts; story drafts and small canon details now wait until built; page items at most two batches a day (RULINGS)"
   },
   {
    "id": "phase2-two-shops-2026-11-08",
-   "added": "2026-11-08 19:35",
+   "added": "2026-11-08 19:26",
    "text": "Phase 2's plan: may the fishmonger and the empty unit to let be built, though your ruling of 28 October says no new shops?",
    "links": [],
    "recommendation": "Yes: that ruling listed exactly these two under that week's order only, and your rulings of 2 and 3 October place both in the street. About 16 to 37 hours for the two, an estimate measured on the first. Without them two of Quay Street's ten shop fronts stay old or blank.",
@@ -1123,7 +1127,8 @@
      "Other (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 20:26, His yes 8 Nov 19:35: the fishmonger and the empty unit stay in phase 2's pieces (RULINGS)"
   }
  ]
 }
