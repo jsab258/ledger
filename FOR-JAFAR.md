@@ -16,7 +16,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 | 5 Cycle time | change to its night walk: median 7.5 h over 12 commits; your answers: none dated that day in the read-back |
 | 6 Week's allowance | 70% at 02:22, the line 74.1% (4.1 behind); the weekly figure read Monday 12:50 |
 
-Disk (11-07 03:31; tonight's reading comes at 03:30): C: 122.6 GB free, F: 26.8 GB free.
+Disk (11-08 03:30): C: 120.5 GB free, F: 23.1 GB free; grew most since yesterday: gate pictures on F: +3.5 GB, the build machine's renders on C: +1.2 GB, the build cache on C: +0.6 GB.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 

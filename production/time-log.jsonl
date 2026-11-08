@@ -561,4 +561,4 @@
 {"event": "start", "at": "2026-11-08T02:21:00", "task": "Sunday summary and overview", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T02:30:00", "note": ""}
 {"event": "start", "at": "2026-11-08T02:40:00", "task": "Office camera in the walls: diagnosis and box (try 1)", "phase": "1", "kind": "production"}
-{"event": "stop", "at": "2026-11-08T02:58:00", "note": ""}
+{"event": "stop", "at": "2026-11-08T02:52:00", "note": ""}
