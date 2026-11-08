@@ -408,7 +408,7 @@
    "made": "Tom's jeans carried point for point onto Ron's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Ron's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November)",
    "two_sided": true,
    "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py).",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJeans"
+   "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)"
   },
   {
    "who": "Rocco",
@@ -443,7 +443,7 @@
    },
    "handed": "2026-11-07",
    "made": "Tom's jumper carried point for point onto Ron's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Ron's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJumper",
+   "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)",
    "knit": "8 November: a wool knit as a tiling detail normal (Poly Haven's Knitted Fleece, CC0, resampled whole) and our own 1x1 rib on the rib part, about 66 cm a repeat of the 26.6 cm tile at this UV scale; the colour its own (Ron a dark docker's navy, Darren a maroon), decided within canon (KNIT-PLAN-2026-11-08.md, DECISIONS)"
   },
   {
@@ -480,7 +480,7 @@
    "made": "Tom's jeans carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); 7 November, carried again from C5 onto the game's own S6 body (tools/meshgen/blender/body_full_layout.py: S6 is not C5's body, pelvis 64 mm away, and skin showed through in the packaged film)",
    "two_sided": true,
    "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py).",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJeans"
+   "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)"
   },
   {
    "who": "Sam",
@@ -515,7 +515,7 @@
    },
    "handed": "2026-11-07",
    "made": "Tom's jumper carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn; 7 November, carried again from C5 onto the game's own S6 body (tools/meshgen/blender/body_full_layout.py: S6 is not C5's body, pelvis 64 mm away, and skin showed through in the packaged film); 7 November, moved 7 mm clear of his head mesh below z 1.56 at the breastbone (tools/meshgen/blender/clear_layers.py --head; his yes for a third try); 8 November, the neckband brought down to a crew neck's 22 mm above its seam, each column shortened toward its own seam (it stood 23 to 33 mm, reading as a stiff band with peaks at the sides; tools/meshgen/blender/lower_neckband.py, band.json beside the fbx; try 1 of 2)",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper",
+   "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)",
    "knit": "8 November: a wool knit as a tiling detail normal (Poly Haven's Knitted Fleece, CC0, resampled whole) and our own 1x1 rib on the rib part, about 66 cm a repeat of the 26.6 cm tile at this UV scale; the colour its own (Ron a dark docker's navy, Darren a maroon), decided within canon (KNIT-PLAN-2026-11-08.md, DECISIONS)"
   },
   {
@@ -548,7 +548,7 @@
     ]
    },
    "made": "Ron's passed boots (v2, with their maps) carried onto Darren's S6 feet point by point (tools/meshgen/blender/carry_footwear.py), Ron's weights kept, the leather 4.5 mm off his skin, the sole 20 mm under the bare floor; he was barefoot (n02-9-dress-the-cast)",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenBoots"
+   "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)"
   }
  ]
 }
