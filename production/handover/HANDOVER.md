@@ -28,7 +28,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 
 ## Next, in order
 1. His page and the advisor (keep-or-drop-2026-11-08 first); the hourly row with its Allowance line.
-2. n09-14's batch: fetch, review once, his page (above). n09-13 given to a research helper at 18:20 (production/research/period-vehicles-and-props/N09-13-CAR-COSTS-2026-11-08.md): read and commit.
+2. n09-14's batch: fetch, review once, his page (above). n09-13's notes written 18:40 (production/research/period-vehicles-and-props/N09-13-CAR-COSTS-2026-11-08.md): every Fab 1980s car tagged NoAI, refused; made route 0 money, about 50 to 90 h for four classes (estimates, unverified); Meshy about CHF 18 a month plus 50 to 120 h; TRELLIS.2 cannot run here; Tripo, Sketchfab CC-BY unreached. Next: one fresh reviewer (research-synthesis) against its sources, then his page as one line with the made route recommended.
 3. Tonight (no Unreal 01:15 to 04:30): read the walk (the dressed men's first walk, the iron cover, the office wall, the legs and launch lines); the progress page republished; the day's summary's lines (the order adopted, jumper colours, the neckband, his taps, the clothes released, the launch line); stop before 00:45.
 4. Monday, full speed to 13:00: n09-1 the exit in the morning (one fresh reviewer per exit on the newest build; production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md); 12:50 the weekly figure; `needs_you_page.py --archive`; n09-14 before the credit ends about 11 Nov; then n09-2 (Tom on his page by Tuesday), n09-3 and on in order.
 5. The street sweep's editor run once F: has room (after tonight's retention; `python tools/retention.py space --job "asset sweep" --drives CF` first), as tools/ue/asset_checks.py's docstring says.
