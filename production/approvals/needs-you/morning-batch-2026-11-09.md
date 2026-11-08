@@ -2,6 +2,9 @@
 
 The session publishes these as items on his page (LEDGER: Needs you) in the morning, one NEEDS YOU message first. At most two batches a day. Each item: one line, recommendation marked.
 
+## 0. More helpers when behind the line? (advisor 40, first in the batch)
+Your chat answer at 22:48 was A. A (recommended): up to six helpers whenever the meter is behind the line, only on the order's no-Unreal work in its sequence, back to four once on the line, standing week to week; B: six only until Monday 13:00, then four; C: keep four. Guards: the session reviews every helper's result before it counts; no two helpers on the same files; a short-term usage limit drops it back to four.
+
 ## 1. Hair: strands stay (n09-7, the order's done line)
 Cards were tried against strands in the game you play: cards fix Tom's pale crown only by a flat patch with white blotches, and turn Ron, Sam and Lena grey up close. Recommended: keep strands as they are; the crown stays a listed fault. Yes / No. (Pictures: Tom's head, strands left, cards right, day and night; from F:/LedgerTools/gate/new/hair-test-2026-11-08/day-pair-crop.png and night-pair-crop.png, copied full size to the page.)
 
@@ -29,4 +32,4 @@ Delete in "Records" the FOR-JAFAR.md line and the Morning pictures line, and add
 Replace in "Records" the RECIPE.md paragraph with
 `- NOTEBOOK.md (repository root) is the notebook: every unit that finishes or is set aside adds a few lines in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. RECIPE.md is the condensed recipe, the AAA playbook, rewritten from NOTEBOOK.md at each phase's end, each chapter linking the skills that carry it out; before a first try it counts as the research.`
 
-Not yet checked: tools and hooks that write to RECIPE.md or FOR-JAFAR.md (grep before the change; the doc-caps tool and the backup hook named), and CLAUDE.md's word cap after the paste.
+Checked 23:26, 8 Nov (grep of tools and hooks): what must change with it: tools/hooks/post-commit (the backup fires only on a commit touching FOR-JAFAR.md, line 9: move it to another daily commit); tools/morning_pictures.py (writes the overview's morning block into FOR-JAFAR.md, lines 19, 200, 242-248, 329: point it at the progress page); tools/token_audit.py (its records pattern, line 56: add NOTEBOOK and the archived DECISIONS); tools/doc-caps.py (caps for the new files). Mentions only, no change: ai-tester/launch.ps1, play.py, proof_progress_page.py, ue/make_cast_metahumans.py. CLAUDE.md now 1,622 of its 1,625 cap: the paste must not add words net; count after the paste before committing.

@@ -1310,3 +1310,8 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: the page carries the advisor's 5 Nov estimates on stations 6 to 10 (marked as such, re-forecast monthly), a forward forecast from those estimates only (release 8 Nov 2027 to 2 Mar 2028, middle case January 2028, docks before release as ruled; docks after: middle 18 Nov 2027), the distance from the 1 February check (2.2 to 3.7 weeks behind, inside his 4-week line) and a sideways-scrolling Gantt in the page's own code; the data stays in progress.json, and the check fails when the forecast's fields are missing. Phases 1 to 5 use the plan's own table. Checked by the session at 375 px wide (no page overflow, the chart scrolls in its own box); not checked in dark mode by eye.
 - Reason: advisor messages 35 and 36 (his questions of 22:08 and 22:12), inside n09-4; RULINGS 5 Nov (never extrapolate phase 1's pace).
 - Link: https://claude.ai/artifact/EEcWMTp5E9VqKrQsC8KBdk (version 39); production/progress-page/progress.json.
+
+## 2026-11-08 23:26 — n09-10: the two skill additions' review fixes made
+- Decision: the fresh small review's four fixes are made in game-garment (how the import is run, the launch check's command, a -WearHeld run never the night walk's pass, the 8 Nov release before its walk said plainly, the game reading only the "hold" field) and street-weathering (the room-light bullet kept setting-free, with what to measure in another room); facts checked against the import script's docstring and the office spec.
+- Reason: RULINGS 3 Nov (small piece, one review round); CLAUDE.md's recipe rule (method in setting-free words).
+- Link: production/research/skills/N09-10-SKILLS-REVIEW-2026-11-08.md.
