@@ -1,0 +1,9 @@
+{"verdict":"pass",
+"perPicture":{
+"step-066":"Before, first try. Tom stands in the room, camera inside the room looking along the window wall; blind, window and street read clean; no black or see-through frame.",
+"step-068":"After, first try. Tom faces the wall (cork board) a short way off, back to camera; blind and door frame at left edge intact; wall in front of him, not filling the frame; lit, no black.",
+"step-082":"Before, second try. Camera inside the room at the window; blind, glass lettering and street clean; Tom's head and shoulders in front of the wall.",
+"step-084":"After, second try. Tom stands in front of the wall with a clear gap, his shadow on it; blind fully visible and not clipped; camera well clear; no black or see-through frame.",
+"lastNight-step-150":"Fault confirmed: frame almost entirely black with the camera inside the wall; not repeated in any of the four new pictures."},
+"newFaults":[],
+"known":["room light wear","small 'Z wait a while' prompt","Tom's feet are out of frame in step-068 and step-084 (camera framing at close range, not hovering)"]}
