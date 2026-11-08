@@ -1167,3 +1167,6 @@ Ron passed review at 04:44; a fresh page check (F:/LedgerTools/gate/new/dress-ca
 
 ## 2026-11-08 05:31: The office camera in the walls passes (try 1 of 2)
 The east wall's box (production/specs/mickeys-office.json, x 8.65 to 8.92) on packaged build 3b3454e: Tom walked straight at the wall twice (F:/LedgerTools/gate/new/office-wall-2026-11-08/wall_test.py), stopped at x 8.35 both times (the box less his capsule), the camera clear of wall, blind and door frame, no black frame; one small reviewer passed it (production/audits/phase1-exit/OFFICE-WALL-REVIEW-2026-11-08.json). 8.35 against the 8.31 aimed for is his capsule against the box, not into the drawn wall: accepted. Tonight's walk is its last check.
+
+## 2026-11-08 07:05: Exit B's side-on film from the game's own walk course; the speaker's sit not tried again
+The side-on full-rate film is taken with the game's walk-course camera (-TomWalkProofShots, spans of 2 s, a picture each 1/30 s) on packaged build 3b3454e, since no camera mode beside the open street exists: F:/LedgerTools/gate/new/side-walk-2026-11-08. Ron's -SitProof failed "never-seated" on the same build; sitting was set aside on 6 Nov, so no second run or diagnosis before the exit: the gap is named in CLOSE-BRIEF-2026-11-09.md for the reviewers. Reason: the exit needs evidence, not a reopened item.

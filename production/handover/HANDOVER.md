@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop. Rules are CLAUDE.md's and RULINGS.md's (his rulings of 4 November: the lean start; the hourly task); the phase's items are NOW.md's and the order's; this file holds only what is in flight, what was tried and failed and why, the next steps in order, and the tries used.
 
-**Started:** 2026-11-08 04:22
-**Stopped:** 2026-11-08 04:11
+**Started:** 2026-11-08 06:22
+**Stopped:** 2026-11-08 05:52
 (His rulings of 4 November, RULINGS.md: the hourly task "LEDGER: the hourly fresh session" (ledger-daily-fresh-session) runs at :15 from 05:15 to 00:15; each run first runs `python tools/fresh_gate.py`, which reads only this file and the project's own activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop; his yes of 5 November). Each session runs `python tools/history_check.py` at the end of each item; when tools/history_check.py says OVER (since 5 Nov evening: past 250,000 tokens at an item's end falling 5 to 15 minutes before the next run, which really fires at :21; or past 400,000 whatever the clock; between the two it says UNDER, take the next item) it rewrites this file, sets Stopped from Get-Date and stops. Nothing works from 00:45 to 05:10.)
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), until 13:00 Monday 9 November or until he says stop; the scheduled task's prompt carries it.
@@ -19,7 +19,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop.
 - His yes of 7 Nov 07:07, the week's pace (RULINGS): at each start and each hourly row, read the usage tool and run `python tools/pace_line.py <percent>`. Over 6 points ahead: finish the item in hand, write the handover, stop; a session starting over 6 ahead sets Stopped and stops at once, one row saying so (the gate cannot read the meter).
 - Each hourly row to 'reports' ends with the week's allowance, 'Allowance: 62% at 21:30': the session's own usage tool (mcp__ccd_session_mgmt__get_usage, deferred, Weekly all models), no picture or click, so every row (message 17). His aim: the week used close to 100% by Monday 13:00, not running out early. The card is his whole account, so beside it each row gives this session's and its helpers' list-price spend since the last row, `python tools/token_measures.py --spend HH:MM` (message 18): 'Allowance: 62% at 22:10, 0 since 21:27; my spend US$2.71 in that time'. Message 19, pacing to a line: on his page (keep-monday-share-2026-11-06), nothing acted on until his tap.
 
-## The last session (04:22 to 05:4x on 8 Nov), done
+## The last session (04:22 to 05:52 on 8 Nov), done
 
 - **Ron's collar passed** (fresh final reviewer, 04:44): films on fa46ab0 at 180, 225, 135 and near in F:/LedgerTools/gate/new/dress-cast-2026-11-08 (review-ron.json); the skin at the collar's back gone, no new fault.
 - **Both dressed men are on his page** (item dressed-men-look-2026-11-08, added 05:10, yes recommended, judged on the clothes' floor, shortfalls first; four pictures; the "items" row written; NEEDS YOU sent). A page check (review-page-pictures.json) read the grey plate under Ron as a placeholder; a diagnoser (plate-diagnosis.md) found it the street's meant iron cover (terrace-front.py PAVEMENT_COVERS (6.4, 3.9)) reading as a mat, and Ron's free-play spot (CrimeProbe.cpp:3102, (6.0, 4.0)) on it: waiting list n02-9-iron-cover. A far walker on the street "rides a board": unlooked, a stand-in, FINDINGS' placeholder people.
@@ -29,8 +29,8 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop.
 
 ## First, in this order (the next session)
 
-1. **The hourly row** and his page (watch for his tap on dressed-men-look-2026-11-08: act at once, his-page step 6; a yes is recorded with tools/approvals.py beside the garments); `pace_line.py`, `--spend 05:26`.
-2. **The rest of Sunday's exit evidence** on the played build 3b3454e (no runner, no editor, never during a tester walk): the corner's five cameras done 05:43 (corner-packaged-2026-11-08, unreviewed, in the brief); the office's day and night done 05:46 (office/2026-11-08-packaged, unreviewed, in the brief); still to take: a side-on walk; a speaker's walk, sit-down and turn. Each into the exit brief's 9th lines.
+1. **The hourly row** (last 05:26) and his page (read 05:52, nothing new; watch for his tap on dressed-men-look-2026-11-08: act at once, his-page step 6; a yes is recorded with tools/approvals.py beside the garments); `pace_line.py`, `--spend 05:26`.
+2. **The rest of Sunday's exit evidence** on the played build 3b3454e (no runner, no editor, never during a tester walk): the corner's five cameras done 05:43 (corner-packaged-2026-11-08, unreviewed, in the brief); the office's day and night done 05:46 (office/2026-11-08-packaged, unreviewed, in the brief); still to take, first: the side-on full-rate film (no camera mode for it found yet; walk-pictures-need-fixed-step: -benchmark -fps=60; the packaged-walk skill's film lines) and a speaker's walk, sit-down and turn. Each into the exit brief's 9th lines.
 3. Tonight: read the walk (the office wall, Darren lost?), Sunday night's log lines into the brief; stop before 01:40, nothing touching Unreal 01:15 to 04:30.
 4. Monday: n02-3-4-exit in the morning; 12:50 the weekly figure; `needs_you_page.py --archive`; talk changes nothing before Monday.
 

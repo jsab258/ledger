@@ -562,3 +562,5 @@
 {"event": "stop", "at": "2026-11-08T02:30:00", "note": ""}
 {"event": "start", "at": "2026-11-08T02:40:00", "task": "Office camera in the walls: diagnosis and box (try 1)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T02:52:00", "note": ""}
+{"event": "start", "at": "2026-11-08T06:30:00", "task": "n02-3-4-exit Sunday's evidence: side-on walk film, speaker's sit", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T07:05:00", "note": ""}
