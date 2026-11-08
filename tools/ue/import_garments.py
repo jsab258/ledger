@@ -78,6 +78,10 @@ def packed_material(unreal, g, folder, lines):
     # knit's rib so): "detail" names a small tiling normal map (DirectX), "detail_tiling" its repeats a UV unit and
     # "detail_strength" how much of it is added; without them the strength is nil and the garment is drawn as before
     detail = texture(maps["detail"], "T_%s_Detail_Normal" % g["name"], "normal") if maps.get("detail") else None
+    # A KNIT'S RIB AS A SECOND DETAIL (8 November, Ron's and Darren's jumpers; KNIT-PLAN-2026-11-08.md step 3): "detail_rib"
+    # names a second tiling normal drawn where the packed map's part is the rib (0.25), switched on by its instance's
+    # DetailRibOn, so instances made before it (off by default) are drawn as they were
+    rib = texture(maps["detail_rib"], "T_%s_DetailRib_Normal" % g["name"], "normal") if maps.get("detail_rib") and detail else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
@@ -146,13 +150,24 @@ def packed_material(unreal, g, folder, lines):
     d = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 850, parameter_name="DetailNormal", texture=detail or flat,
              sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_NORMAL)
     mel.connect_material_expressions(uvt, "", d, "UVs")
+    dr = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 1150, parameter_name="DetailRibNormal", texture=rib or detail or flat,
+              sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_NORMAL)
+    mel.connect_material_expressions(uvt, "", dr, "UVs")
+    rib_on = node(unreal.MaterialExpressionScalarParameter, -1100, 1250, parameter_name="DetailRibOn", default_value=0.0)
+    rib_alpha = node(unreal.MaterialExpressionMultiply, -950, 1200)
+    mel.connect_material_expressions(is_part(0.25, 1200), "", rib_alpha, "A")
+    mel.connect_material_expressions(rib_on, "", rib_alpha, "B")
+    dl = node(unreal.MaterialExpressionLinearInterpolate, -1200, 950)
+    mel.connect_material_expressions(d, "RGB", dl, "A")
+    mel.connect_material_expressions(dr, "RGB", dl, "B")
+    mel.connect_material_expressions(rib_alpha, "", dl, "Alpha")
     strength = node(unreal.MaterialExpressionScalarParameter, -1100, 1000, parameter_name="DetailStrength", default_value=0.0)
     nrg = node(unreal.MaterialExpressionComponentMask, -1100, 550, r=True, g=True, b=False, a=False)
     mel.connect_material_expressions(n, "RGB", nrg, "")
     nb = node(unreal.MaterialExpressionComponentMask, -1100, 650, r=False, g=False, b=True, a=False)
     mel.connect_material_expressions(n, "RGB", nb, "")
     drg = node(unreal.MaterialExpressionComponentMask, -1100, 850, r=True, g=True, b=False, a=False)
-    mel.connect_material_expressions(d, "RGB", drg, "")
+    mel.connect_material_expressions(dl, "", drg, "")
     ds = node(unreal.MaterialExpressionMultiply, -950, 900)
     mel.connect_material_expressions(drg, "", ds, "A")
     mel.connect_material_expressions(strength, "", ds, "B")
@@ -211,6 +226,10 @@ def packed_material(unreal, g, folder, lines):
         mel.set_material_instance_scalar_parameter_value(mi, "DetailTiling", float(maps.get("detail_tiling", 1.0)))
         mel.set_material_instance_scalar_parameter_value(mi, "DetailStrength", float(maps.get("detail_strength", 0.5)))
         lines.append("  detail normal %s, %s repeats a UV unit, strength %s" % (detail.get_name(), maps.get("detail_tiling", 1.0), maps.get("detail_strength", 0.5)))
+        mel.set_material_instance_texture_parameter_value(mi, "DetailRibNormal", rib or detail)
+        mel.set_material_instance_scalar_parameter_value(mi, "DetailRibOn", 1.0 if rib is not None else 0.0)
+        if rib is not None:
+            lines.append("  rib detail normal %s on the rib part (0.25)" % rib.get_name())
     unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
     lines.append("  material %s on %s: tint %s, tape %s, teeth %s" % (mi_name, PACKED_BASE, maps["tint"], maps["tapecolour"], maps["teethcolour"]))
     return mi
@@ -269,6 +288,11 @@ def selftest():
         ("a garment its own words call held carries a hold",
          all("hold" in x for x in g if "held" in x.get("made", "") or "worn only" in x.get("made", "")),
          str([x["name"] for x in g if ("held" in x.get("made", "") or "worn only" in x.get("made", "")) and "hold" not in x])),
+        # 8 November: a rib detail is drawn only beside a detail map, whose tiling it shares
+        ("every rib detail has its detail map and its file",
+         all(x["maps"].get("detail") and (os.path.isfile(x["maps"]["detail_rib"]) or not os.path.isdir("F:/LedgerTools"))
+             for x in g if x.get("maps", {}).get("detail_rib")),
+         str([x["name"] for x in g if x.get("maps", {}).get("detail_rib")])),
         # 28 October: each garment's levels of detail come from its budget kind (Mafia's jacket, reference first)
         ("Tom's jacket finds its budget kind with four levels and their screen sizes",
          budget_kind(DEST + "/TomZipJacket").get("name") == "garment_jacket"

@@ -422,24 +422,29 @@
     "normal": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_normal_dx.png",
     "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
     "tint": [
-     0.115,
-     0.115,
-     0.127
+     0.021,
+     0.026,
+     0.061
     ],
     "tapecolour": [
-     0.115,
-     0.115,
-     0.127
+     0.021,
+     0.026,
+     0.061
     ],
     "teethcolour": [
      0.56,
      0.56,
      0.58
-    ]
+    ],
+    "detail": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_Knit_Detail_Normal.png",
+    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRib_Detail_Normal.png",
+    "detail_tiling": 2.0,
+    "detail_strength": 1.0
    },
    "handed": "2026-11-07",
    "made": "Tom's jumper carried point for point onto Ron's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Ron's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJumper"
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=RonJumper",
+   "knit": "8 November: a wool knit as a tiling detail normal (Poly Haven's Knitted Fleece, CC0, resampled whole) and our own 1x1 rib on the rib part, about 66 cm a repeat of the 26.6 cm tile at this UV scale; the colour its own (Ron a dark docker's navy, Darren a maroon), decided within canon (KNIT-PLAN-2026-11-08.md, DECISIONS)"
   },
   {
    "who": "Sam",
@@ -490,23 +495,28 @@
     "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
     "tint": [
      0.115,
-     0.115,
-     0.127
+     0.013,
+     0.019
     ],
     "tapecolour": [
      0.115,
-     0.115,
-     0.127
+     0.013,
+     0.019
     ],
     "teethcolour": [
      0.56,
      0.56,
      0.58
-    ]
+    ],
+    "detail": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_Knit_Detail_Normal.png",
+    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRib_Detail_Normal.png",
+    "detail_tiling": 1.8,
+    "detail_strength": 1.0
    },
    "handed": "2026-11-07",
    "made": "Tom's jumper carried point for point onto Darren's body (tools/meshgen/blender/carry_garment.py, sigma 0.06), skinned from Darren's own weights (skin_garment.py), the same maps as Tom's (n02-9-dress-the-cast, his yes of 7 November); the jumper shown whole, one slot, where on Tom only its neckband is drawn; 7 November, carried again from C5 onto the game's own S6 body (tools/meshgen/blender/body_full_layout.py: S6 is not C5's body, pelvis 64 mm away, and skin showed through in the packaged film); 7 November, moved 7 mm clear of his head mesh below z 1.56 at the breastbone (tools/meshgen/blender/clear_layers.py --head; his yes for a third try)",
-   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper"
+   "hold": "7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper",
+   "knit": "8 November: a wool knit as a tiling detail normal (Poly Haven's Knitted Fleece, CC0, resampled whole) and our own 1x1 rib on the rib part, about 66 cm a repeat of the 26.6 cm tile at this UV scale; the colour its own (Ron a dark docker's navy, Darren a maroon), decided within canon (KNIT-PLAN-2026-11-08.md, DECISIONS)"
   },
   {
    "who": "Sam",
