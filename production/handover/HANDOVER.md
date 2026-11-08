@@ -37,7 +37,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 ## Tried and failed, and why (newest; older ones in TRIED-ARCHIVE.md)
 - The editor commandlet from PowerShell (8 Nov 21:38): -EnablePlugins=A,B unquoted became an array and the editor never started; quote every argument. Not a try.
 - The Marvelous bridge from a scheduled run (8 Nov 20:56, 21:00): Marvelous opened by script showed something in front of its menu; a scheduled run cannot be granted computer use to see it.
-- Times guessed (8 Nov): up to an hour ahead of the clock; again at 20:50 and 21:15 (corrected).
+- Times guessed (8 Nov): up to an hour ahead of the clock; again at 20:50 and 21:15, and at 22:40 to 22:54 (stamps written 15 to 30 minutes ahead in DECISIONS, the order, five acks, a draft; all corrected). Get-Date before every stamp, no exceptions.
 - The perf reader on a real capture read a 1.8-billion MB peak (8 Nov): the profiler's closing metadata row; only the real file showed it.
 - The street sweep's editor run refused at 19.5 to 19.9 GB on F: (8 Nov): own leftovers only about 0.2 GB; left alone.
 
