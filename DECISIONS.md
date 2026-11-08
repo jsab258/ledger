@@ -1233,3 +1233,9 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: the order's named texts (three backstories, 32 side-story outlines) are done (US$1.15). No further bulk text is generated for its own sake: a scan of the week's items finds none that needs more written text (Ron already has 159 street lines of his own; n09-5's talk part needs measured talk, not new lines). What is left of the month's credit before about 11 Nov pays for n09-5's paid talk runs on Ron inside the packaged game (the speech bench's capped runs) and any bench the week's items call for, inside each day's ceiling; the item stays open until the credit's month ends and is then closed with its spend.
 - Reason: RULINGS 1 Nov rule 12 (the credit is for the game's own calls and bulk text the work needs); RULINGS 5 and 7 Nov (full use of the allowance on useful work, no busywork); order n09-14's "after reading what is left".
 - Link: production/orders/2026-11-09.md n09-14; production/research/unit-costs/RON-END-TO-END-PLAN-2026-11-08.md line 39.
+
+## 2026-11-08 20:40, n09-9 step 3: the card-memory peak read beside the median, reporting only
+
+- Decision: tools/slice-perf.py and tools/perf-hook.py now give the peak card memory (every frame, the launch frames included) beside the median, with a verdict against 5,650 MB that reports and never fails; slice-perf no longer reads the profiler's closing "[HasHeaderRowAtEnd]" row as a frame (it read as an 1,794,111,057 MB peak, and had been counted in the median's list). On the 3b3454e day walk: median 5,842.5, peak 6,126.5, OVER-LINE; the 3641d53 and 7bef7cf walks peak 6,104 to 6,163, all over the line (the review's reading).
+- Reason: QA-FIRST-STEPS-2026-11-08.md step 3 (medians had been read as peaks); MEMORY-PLAN-2026-11-07.md section 4; RULINGS 8 Nov (a fix to a tool that reads real files is checked on those files).
+- Link: production/research/qa-practice/MEMORY-PEAK-REVIEW-2026-11-08.md.

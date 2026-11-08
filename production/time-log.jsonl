@@ -592,3 +592,5 @@
 {"event": "stop", "at": "2026-11-08T19:28:00", "note": ""}
 {"event": "start", "at": "2026-11-08T19:50:00", "task": "n09-9 test plan for phases 2 and 3 (helper draft, small review, fixes)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T19:37:00", "note": ""}
+{"event": "start", "at": "2026-11-08T20:12:00", "task": "n09-9 step 3: memory peak in the perf readers", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T19:45:00", "note": ""}

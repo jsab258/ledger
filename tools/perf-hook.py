@@ -80,6 +80,7 @@ def med(xs):
 def summarise(header, body, label=""):
     frame = column(header, body, "FrameTime")
     gpu = column(header, body, "GPUTime")
+    mem = column(header, body, "GPUMem/LocalUsedMB")
     passes = {}
     for h in header:
         if h.startswith("GPU/"):
@@ -110,14 +111,17 @@ def summarise(header, body, label=""):
         "topPasses": sorted(passes.items(), key=lambda kv: -kv[1])[:8],
         "drawCalls": med(column(header, body, "RHI/DrawCalls")),
         "primitives": med(column(header, body, "RHI/PrimitivesDrawn")),
-        "gpuMemMB": med(column(header, body, "GPUMem/LocalUsedMB")),
+        "gpuMemMB": med(mem),
+        # THE PEAK, NOT ONLY THE MEDIAN (8 Nov, n09-9 step 3: medians had been read as peaks);
+        # the highest frame of the rows read, no drop rule of its own; reports, never fails
+        "gpuMemPeakMB": round(max(mem), 1) if mem else None,
         "systemMemMB": med(column(header, body, "PhysicalUsedMB")),
         "walkedM": round(max(column(header, body, "View/PosX") or [0]) / 100.0 - min(column(header, body, "View/PosX") or [0]) / 100.0, 1),
     }
 
 
 def table(rows):
-    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "frameWorstMs", "framesOver33", "gpuMedianMs", "gpuRoomMs", "verdict", "drawCalls", "primitives", "gpuMemMB"]
+    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "frameWorstMs", "framesOver33", "gpuMedianMs", "gpuRoomMs", "verdict", "drawCalls", "primitives", "gpuMemMB", "gpuMemPeakMB"]
     out = [" | ".join(keys)]
     for r in rows:
         out.append(" | ".join(str(r.get(k)) for k in keys))
@@ -145,6 +149,10 @@ def selftest():
     check("the median frame and GPU are read", s["frameMedianMs"] == 15.0 and s["gpuMedianMs"] == 12.5)
     check("the room under the planning line", s["gpuRoomMs"] == 1.5)
     check("the ruling's verdict", s["verdict"] == "MEETS")
+    mh = ["FrameTime", "GPUMem/LocalUsedMB"]
+    ms = summarise(mh, [["10", "6100"]] * 30 + [["10", "5500"]] * 70, "m")
+    check("the memory peak beside its median", ms["gpuMemPeakMB"] == 6100.0 and ms["gpuMemMB"] == 5500.0)
+    check("no memory column gives no peak", s["gpuMemPeakMB"] is None)
     check("passes fall into their budget groups, the rest into other",
           s["groups"]["base pass and prepass"] == 3.0 and s["groups"]["shadows"] == 2.0 and s["groups"]["lumen"] == 1.5 and s["groups"]["other"] == 0.5)
     check("the walk's distance is read from the view", s["walkedM"] == 19.9)

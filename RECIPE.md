@@ -1963,3 +1963,13 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: US$1.15 in API credit over two tries; about 1.5 hours of session time.
 - Failed and why: try 1 lost 32 of 35 answers to the token limit because the model thinks by default and its hidden thinking spent the limit; turning thinking off ("between_tools" on that model) fixed it. Lesson: on any model that thinks by default, set thinking explicitly in bulk requests and check output tokens against text length on a small sample first. Saying "has opinions on drink" is still speaking of drink: content rules need the model told that even denials count.
 - Evidence: production/research/bulk-api/n09-14/REVIEW-TRY2-2026-11-08.md.
+
+## 2026-11-08: a peak reading beside the typical one (card memory)
+
+- Made: the frame-capture readers report the highest memory of any frame, loading frames included, beside the median, with a reporting line against the budget.
+- Method: when a budget is a ceiling, read the maximum, not the median; keep the median for trend. Read the profiler file's own end markers before trusting every row as a frame; test the reader on a real capture, not only made-up rows.
+- Tools: Python readers of the engine's CSV profile.
+- Target and check: the review's hand count of a real capture (6,126.5 MB) matched; self-tests for a launch peak, a flat series and a missing column.
+- Cost: about 0.5 h with one small review.
+- Failed and why: the first run on the real file read a 1.8-billion MB peak: a metadata row closing the file had passed the row filter; only the real file showed it.
+- Evidence: production/research/qa-practice/MEMORY-PEAK-REVIEW-2026-11-08.md.
