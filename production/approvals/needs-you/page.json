@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 4 open · updated Sunday 8 November, 18:40",
+ "kicker": "LEDGER · Needs you · 5 open · updated Sunday 8 November, 19:23",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -425,6 +425,33 @@
     [
      "yes",
      "Yes, all ten as recommended (recommended)"
+    ],
+    [
+     "note",
+     "Other (add a note)"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "phase2-two-shops-2026-11-08",
+   "name": "Phase 2's plan: may the fishmonger and the empty unit to let be built, though your ruling of 28 October says no new shops?",
+   "links": [],
+   "recommendation": "Yes: that ruling listed exactly these two under that week's order only, and your rulings of 2 and 3 October place both in the street. About 16 to 37 hours for the two, an estimate measured on the first. Without them two of Quay Street's ten shop fronts stay old or blank.",
+   "added": "2026-11-08 19:35",
+   "pictures": [],
+   "detail": [
+    "The rest of phase 2's plan follows your rulings and is decided, yours to overturn: cars wait for the blind silhouette check, as you ruled on 2 October; few lit rooms behind upper windows, only where the camera sees, as Mafia does; the brick course at 86 mm, measured on a period photograph; the crowd's clothes only the Hook's first three rows until the tailor's sample passes (deep before wide, 5 November).",
+    "The plan is about 240 to 385 hours without cars against a ceiling of about 240, so it runs over on estimates. Under your rulings of 5 and 6 November full scope stays and nothing moves on estimated numbers; the hours are measured weekly and scope moves first, never quality, only if cost per piece has not clearly fallen by 1 February."
+   ],
+   "options": [
+    [
+     "yes",
+     "Yes, build both (recommended)"
+    ],
+    [
+     "no",
+     "No, leave them as they are"
     ],
     [
      "note",

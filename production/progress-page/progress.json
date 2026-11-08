@@ -1,5 +1,5 @@
 {
-  "updated": "Sunday 8 November 2026, 18:41",
+  "updated": "Sunday 8 November 2026, 19:40",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -51,6 +51,32 @@
         "The chandler's",
         "The launderette",
         "The west row's eaves"
+      ],
+      "plan_title": "Its pieces (first plan, 8 Nov; hours are estimates)",
+      "plan_note": "About 240 to 385 hours without cars against a ceiling of about 240, so it runs over on estimates. Full scope stays (your rulings of 5 and 6 Nov); hours are measured as pieces land.",
+      "plan": [
+        {"name": "Card memory and headroom first: they cap what may be copied", "hours": "about 14 h"},
+        {"name": "The street's checks (width, kit reuse, the street's ends)", "hours": "3 to 5 h"},
+        {"name": "Brick in Flemish bond with burnt headers, before the corner is copied", "hours": "4 to 8 h"},
+        {"name": "The corner's finish copied along the street (roofs already done)", "hours": "10 to 20 h"},
+        {"name": "The fishmonger and the empty unit (waits on your page)", "hours": "16 to 37 h"},
+        {"name": "Mickey's front at night, signs, upper windows, near shop rooms", "hours": "24 to 44 h"},
+        {"name": "The wet ground's seam and lane, about ten kinds of street furniture, lamps, plants", "hours": "33 to 53 h"},
+        {"name": "Props and dressing, the fish slab, food", "hours": "16 to 31 h"},
+        {"name": "The hill's crowns", "hours": "8 to 16 h"},
+        {"name": "Light by real values, weather life, dirt on shop glass, frame headroom", "hours": "11 to 20 h"},
+        {"name": "The street's sound (your ear needed)", "hours": "12 to 20 h"},
+        {"name": "People: Ron, clothing, hair, people alive (this week), the rest of the Hook's cast, walking, plain clothes at 8 m", "hours": "about 78 to 101 h"},
+        {"name": "Parked fictional cars, after the blind silhouette check (on your page)", "hours": "50 to 90 h"},
+        {"name": "The exit walk and its gate", "hours": "6 to 10 h"}
+      ],
+      "weekly": [
+        "Shop fronts passed in the packaged game, of ten",
+        "Props per 10 m (target 5); street furniture kinds passed",
+        "People in passed clothes; hours per garment, latest against first",
+        "Light against the chart; night burn-out at most 2%",
+        "Sound layers present; cars passed the blind check",
+        "The week's hours against this list; card memory; worst frame against 33.3 ms"
       ],
       "planned_w": [
         3.0,

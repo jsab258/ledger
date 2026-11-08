@@ -319,6 +319,23 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (s.arrived && s.arrived.length){
         const c = el("div", "chips"); for (const a of s.arrived) c.append(el("span", "chip", a)); b.append(c);
       }
+      // A PHASE'S PLANNED PIECES (8 Nov, n09-4): folded shut; each piece its hours, then what is measured weekly
+      if (Array.isArray(s.plan) && s.plan.length){
+        const det = el("details", "plan"); det.append(el("summary", "", s.plan_title || "The pieces"));
+        if (s.plan_note) det.append(el("p", "note", s.plan_note));
+        const ul = el("ul", "pieces");
+        for (const p of s.plan){
+          const it = el("li"); it.append(el("span", "pn", p.name)); it.append(el("span", "ps", p.hours || ""));
+          ul.append(it);
+        }
+        det.append(ul);
+        if (Array.isArray(s.weekly) && s.weekly.length){
+          det.append(el("p", "note", "Measured each week:"));
+          const wl = el("ul", "pieces"); for (const w of s.weekly){ const it = el("li"); it.append(el("span", "pl", w)); wl.append(it); }
+          det.append(wl);
+        }
+        b.append(det);
+      }
       li.append(b); r.append(li);
     }
     $("sketchNote").textContent = d.sketch_note || "";
