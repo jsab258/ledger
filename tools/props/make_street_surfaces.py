@@ -388,7 +388,44 @@ def kerb(tf):
     return img, normal_from_height(h, 1.5), r, (tw, tw)
 
 
-SURFACES = ("brick_red", "brick_grey", "paving", "tile_patterned", "kerbstone")
+#: THE COVER'S CAST CHEQUER, 8 November (the iron cover before Mickey's read as a flat mat): the
+#: raised diamond lugs of a British cast-iron access cover, about 40 mm apart, their tops worn
+#: smooth and a little brighter by feet, the grooves between them dark, rougher and rust-brown.
+#: The cover's UVs are world metres, so the tile is a whole number of lugs and the pattern needs
+#: no alignment with the cover's edge (the frame's plain steel makes the border).
+COVER_LUG_M = 0.04
+COVER_LUGS = 10
+
+
+def cover(tf):
+    import numpy as np
+    n = 512
+    tw = COVER_LUG_M * COVER_LUGS
+    xs = (np.arange(n) + 0.5) * tw / n
+    X, Y = np.meshgrid(xs, xs)
+    u = np.mod(X, COVER_LUG_M) / COVER_LUG_M - 0.5
+    v = np.mod(Y, COVER_LUG_M) / COVER_LUG_M - 0.5
+    # a long diamond lug filling most of its cell, turned a quarter in each neighbouring cell, as
+    # the tread of a cast cover is (the first draw, small lugs all one way, read as a printed tile)
+    turn = (np.floor(X / COVER_LUG_M) + np.floor(Y / COVER_LUG_M)).astype(int) % 2 == 1
+    a, b = np.where(turn, v, u), np.where(turn, u, v)
+    d = np.abs(a) / 0.47 + np.abs(b) / 0.20
+    lug = np.clip((1.0 - d) / 0.22, 0.0, 1.0)
+    I, J = np.meshgrid(np.arange(n), np.arange(n))
+    grain = 1.0 + 0.10 * (hash01(I, J, 71) * 2.0 - 1.0)
+    blotch = 1.0 + 0.12 * (periodic_noise(n, 4, SEED + 73) * 2.0 - 1.0)
+    base, rough = authored(tf, "cover_iron")
+    groove_tint = (1.05, 0.93, 0.82)       # a little rust and grime in the grooves
+    img = np.zeros((n, n, 3))
+    for c in range(3):
+        top = base[c] * 1.35
+        groove = base[c] * 0.70 * groove_tint[c]
+        img[..., c] = (groove + (top - groove) * lug) * grain * blotch
+    r = (rough + 0.20) + (rough - 0.15 - (rough + 0.20)) * lug
+    return img, normal_from_height(lug, 4.0), np.clip(r, 0.0, 1.0), (tw, tw)
+
+
+SURFACES = ("brick_red", "brick_grey", "paving", "tile_patterned", "kerbstone", "cover_iron")
 
 
 def make(out_dir):
@@ -410,6 +447,8 @@ def make(out_dir):
             img, nrm, r, tile = flags(tf)
         elif name == "kerbstone":
             img, nrm, r, tile = kerb(tf)
+        elif name == "cover_iron":
+            img, nrm, r, tile = cover(tf)
         else:
             img, nrm, r, tile = tiles(tf)
         Image.fromarray(to_srgb8(img)).save(os.path.join(out_dir, name + ".png"))

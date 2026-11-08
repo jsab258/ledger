@@ -475,6 +475,10 @@ MATERIALS = (
     # the column that was accepted. lens_amber is the spec's own sodium
     # colour and is emissive at night.
     ("steel_dark",  (0.021, 0.021, 0.024), 0.42),
+    # THE COVER'S CAST TOP, 8 November (the dressed men's page check read the flat steel_dark cover
+    # as a mat: one dark colour, no pattern): weathered cast iron a shade lighter than the painted
+    # steel, its raised chequer drawn by tools/props/make_street_surfaces.py (cover_iron).
+    ("cover_iron",  (0.030, 0.028, 0.027), 0.55),
     # THE STREET FURNITURE'S OWN, 23 September (_street_furniture): the
     # pillar box's red, gloss-painted cast iron; galvanised steel for the
     # dustbins; the kiosk's anodised frame and its dark fascia band.
@@ -765,6 +769,7 @@ SURFACE_OF = {
     # pack's machined-plate map, which reads as pitted black rock at arm's length). Lamp columns,
     # aerials and gully covers of the period are painted iron and steel: smooth, as the paints are.
     "steel_dark":   (None, 0.0),
+    "cover_iron":   (None, 0.0),                   # drawn (make_street_surfaces.py), no pack map
     "pillarbox_red": (None, 0.0),
     "standing_water": (None, 0.0),
     "standing_water_flags": (None, 0.0),
@@ -4156,6 +4161,19 @@ def _ground_scatter(out, root=None):
     return made, spots_gum
 
 
+def _fall_slab(out, pid, material, x0, x1, y0, y1, depth, lift, note=""):
+    """A flat slab let into the footway, its top `lift` above the footway's own surface at every
+    corner (footway_z), so it falls with the flags; `depth` below the top. Eight corners, twelve
+    triangles, each wound outward."""
+    zt = [footway_z(y0) + lift, footway_z(y1) + lift]
+    v = [(x0, y0, zt[0]), (x1, y0, zt[0]), (x1, y1, zt[1]), (x0, y1, zt[1]),
+         (x0, y0, zt[0] - depth), (x1, y0, zt[0] - depth), (x1, y1, zt[1] - depth), (x0, y1, zt[1] - depth)]
+    quads = [(0, 1, 2, 3), (7, 6, 5, 4), (4, 5, 1, 0), (5, 6, 2, 1), (6, 7, 3, 2), (7, 4, 0, 3)]
+    faces = [t for a, b, c, d in quads for t in ((a, b, c), (a, c, d))]
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": v, "faces": faces, "note": note})
+    return out[-1]
+
+
 def _pavement_dressing(out):
     """The utility cover and the extra gully grates, flush."""
     for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
@@ -4164,12 +4182,13 @@ def _pavement_dressing(out):
         # read it as a doormat by day and a glowing yellow-edged marker at night; the frame is the
         # cover's own, narrow and dark. Lost from this file once, by a commit that held only the
         # decision; the self-test below now holds it.)
-        _box(out, "dressing_cover_surround_%d" % k, "steel_dark",
-             cx - 0.37, cx + 0.37, cy - 0.29, cy + 0.29, top - 0.02, top + 0.001,
-             "a-cast-iron-frame/flush")
-        _box(out, "dressing_cover_%d" % k, "steel_dark",
-             cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, top - 0.02, top + 0.002,
-             "an-iron-utility-cover")
+        # THEIR TOPS FOLLOW THE FOOTWAY'S FALL (8 November: flat at the centre's height, the low
+        # side stood about 7 mm proud and read as a kerb edge round a mat), and the cover wears a
+        # drawn cast chequer (cover_iron) instead of the frame's plain steel.
+        _fall_slab(out, "dressing_cover_surround_%d" % k, "steel_dark",
+                   cx - 0.37, cx + 0.37, cy - 0.29, cy + 0.29, 0.02, 0.001, "a-cast-iron-frame/flush")
+        _fall_slab(out, "dressing_cover_%d" % k, "cover_iron",
+                   cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, 0.02, 0.002, "an-iron-utility-cover")
     for k, gx in enumerate(CHANNEL_GULLIES):
         _box(out, "dressing_gully_%d" % k, "steel_dark",
              gx - 0.22, gx + 0.22, 2.78, 2.98, road_z(2.98) - 0.03, road_z(2.78) + 0.004,
@@ -8964,6 +8983,10 @@ def selftest():
     rims = [q for q in dressed if q["id"].startswith("dressing_cover_surround_")]
     check("accept/the-cover-sits-in-an-iron-frame", rims and all(q["material"] == "steel_dark" for q in rims),
           ",".join(q["material"] for q in rims))
+    # AND ITS TOP FOLLOWS THE FOOTWAY (8 November): every top corner within 3 mm of the flags under it
+    tops = [c for q in dressed if q["id"].startswith("dressing_cover") for c in q["verts"][:4]]
+    check("accept/the-cover-falls-with-the-footway", tops and all(abs(c[2] - footway_z(c[1])) <= 0.003 for c in tops),
+          "%d top corner(s)" % len(tops))
 
     # MICKEY'S ROW'S WINDOWS ARE THE CHECKED SASH (8 October, his ruling): when the piece and its
     # target are in the checkout, each upper opening on the row holds it whole, spanning the
