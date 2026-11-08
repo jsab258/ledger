@@ -1,5 +1,5 @@
 {
- "updated": "Saturday 7 November, late: Windows restarted the PC at 00:14",
+ "updated": "Sunday 8 November, early morning",
  "here": 1,
  "friends_eta": "around January",
  "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -30,7 +30,7 @@
     1.0,
     2.0
    ],
-   "actual_w": 4.6,
+   "actual_w": 4.7,
    "actual_note": "so far, open",
    "began": "2026-10-06"
   },
@@ -163,12 +163,12 @@
    "what": "The worst single frame on a walk down the street.",
    "unit": "ms",
    "start": 87,
-   "now": 23.19,
+   "now": 22.37,
    "target": 33.3,
    "start_label": "22 Oct",
-   "now_label": "7 Nov, the build machine, packaged",
+   "now_label": "8 Nov, the build machine, packaged",
    "state": "fighting",
-   "last": "7 Nov: the night's perf step, the walking map gone: worst frame 23.19 ms, none over 33.3 ms. 25 walks on 6 Nov: 2 frames over in 45,000, one rare freeze of 231 ms, listed at the exit. Tries spent."
+   "last": "8 Nov: the night's walk, 16 of 17 stages: 58.2 fps, worst frame 22.37 ms, none over 33.3 ms. The rare freeze of 6 Nov stays listed at the exit. Tries spent."
   },
   {
    "name": "The Tailor",
@@ -222,10 +222,10 @@
   {
    "name": "The Memory Hog",
    "what": "Graphics card memory.",
-   "display": "6,089 MB on 7 Nov, up 129 in a night; being looked at",
+   "display": "6,005 MB on 8 Nov (a middle reading, not the peak); being looked at",
    "state": "fighting",
    "when": "24 Oct",
-   "last": "7 Nov: 6,089 MB in the night's perf step, against 5,960 the night before; the first reading over 6,000. Your ruling of 24 Oct: the 6 GB line counts the game alone; whether this reading is the game alone is being checked."
+   "last": "8 Nov: 6,005 MB in the night's walk, a middle reading, not a peak; 6,089 the night before. Your ruling of 24 Oct: the 6 GB line counts the game alone; whether these readings are the game alone is being checked."
   },
   {
    "name": "The Shadow Tax",
@@ -274,7 +274,8 @@
    "2026-11-04",
    "2026-11-05",
    "2026-11-06",
-   "2026-11-07"
+   "2026-11-07",
+   "2026-11-08"
   ],
   "gap_note": "No pictures from 9 to 20 October: the PC was off."
  },
@@ -612,8 +613,8 @@
   }
  ],
  "line2027": {
-  "as_of": "Saturday 7 November",
-  "behind_w": 2.1,
+  "as_of": "Sunday 8 November",
+  "behind_w": 2.2,
   "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
  }
 }

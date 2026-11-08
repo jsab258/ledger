@@ -491,6 +491,42 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "dressed-men-look-2026-11-08",
+   "added": "2026-11-08 05:10",
+   "text": "Ron and Darren dressed, as the game you play draws them (four pictures; tap one for full size). Short first: the knit reads smooth, one flat colour; Darren's neckband stands up stiffly with small peaks; Ron's collar has small bumps close up; no stitching on the jeans, no laces on the boots; hair at its default colour; the grey plate under Ron's boot is the street's iron cover, reading as a mat. No hole, no skin through the cloth, nothing modern. Do the clothes pass your look, judged on the clothes' floor?",
+   "links": [],
+   "recommendation": "Yes: they meet the clothes' floor (plain, 1990, no holes), which your rulings set for clothes instead of the 2026 bar. The shortfalls stay listed for when tailoring resumes. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, they pass (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ],
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/dressed-ron-whole-2026-11-08.jpg",
+     "alt": "Ron, whole, in front of Mickey's"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/dressed-ron-close-2026-11-08.jpg",
+     "alt": "Ron, close, as in talk"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/dressed-darren-whole-2026-11-08.jpg",
+     "alt": "Darren, whole, by the phone box"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/dressed-darren-close-2026-11-08.jpg",
+     "alt": "Darren, close, as in talk"
+    }
+   ],
+   "state": "open"
   }
  ]
 }

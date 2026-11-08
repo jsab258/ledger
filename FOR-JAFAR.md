@@ -35,7 +35,7 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s), reported as missed; the office, jeans and boots passed packaged; the jacket's collar, sitting's head swing and the Stutter's rare freeze are set aside and listed. Office and sitting now run in the game itself, and tonight's walk sat and stood with nothing touched. Next: Ron filmed on tonight's build (his collar's last try), then the exit re-check on Monday morning.
+- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s), reported as missed; the office, jeans and boots passed packaged; the jacket's collar, sitting's head swing and the Stutter's rare freeze are set aside and listed. Office and sitting now run in the game itself, and tonight's walk sat and stood with nothing touched. Ron's collar passed its fresh review on last night's build (04:44); both men go to your page once a clean whole picture of Ron is filmed. Then the exit re-check on Monday morning.
 - **The corner, in your order:** your "keep" on its end page stands; the people's last checks ride on Sunday's builds.
 
 **The tester (last night's walk, packaged, with Saturday's work):** 16 of 17 stages, two new (sit, stand). Lost: Darren again, the camera pressed into walls and blinds for long stretches in the office, three frames black. Nobody saw Tom break Rita's window; five took in the glass; Rocco showed he knew (1, up 1). "That's all I know" to 3 of 60 first questions (2 before). What broke the illusion: Ron and the woman inside Mickey's office in the white base layer (not in your pictures); a line from Ada captioned in the office where she isn't. Frame rate 58.2 fps (56.8 before), worst frame 22.37 ms, none over 33.3 ms; the card's memory 6,005 MB (6,089 before).
@@ -61,12 +61,12 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 **Failed:**
 - Hair's sky light, try 2 of 2: Darren turned blond, Sheila's hair speckled; out, listed.
 - Worn paint as flakes on Mickey's front, two tries: read as confetti; out, listed.
-- Ron's collar: Friday's "head through the back" reading was a false measurement; the real overlap mended, last try, unjudged.
 - The walk lost Darren again; the camera sat inside walls in the office.
 - One thrown try cost US$30.83.
 
 **Done:**
 - Darren's jumper passed its fresh review (third try, your yes); held for your look with Ron.
+- Ron's collar passed its fresh review this morning on last night's build (last try). Your look at both men waits for a whole picture of Ron without a stray plate on the pavement.
 - Office and sitting on in the game itself; the night walk sat and stood cleanly.
 - The exit rehearsed by four fresh reviewers.
 - Monday's research (testing, people alive, a district's memory) reviewed and fixed.
