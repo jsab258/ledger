@@ -246,6 +246,12 @@ function render(){
         for (const l of s.links) ul.append(el("li", {}, el("a", {href:l.url, target:"_blank", rel:"noopener", text:l.label})));
         sec.append(ul);
       }
+      // a written piece he rules on (8 Nov, the side stories) is read on the page itself, folded shut, one paragraph each
+      if (s.detail && s.detail.length) {
+        const d = el("details", {}, el("summary", {text:"Read it here"}));
+        for (const t of s.detail) d.append(el("p", {class:"how", text:t}));
+        sec.append(d);
+      }
       if (s.recommendation) sec.append(el("p", {class:"how", text:"Recommended: " + s.recommendation}));
       if (s.added) sec.append(el("p", {class:"was", text:"Added " + s.added}));
       if (s.options && s.options.length) sec.append(picks(s.key, s.options, st.pick));

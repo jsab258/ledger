@@ -93,6 +93,8 @@ def spec(data, now=None):
         "sections": [{"kind": "need", "key": it["id"], "name": it["text"], "links": it["links"],
                       "recommendation": it["recommendation"], "added": it["added"],
                       "pictures": it.get("pictures", []),
+                      # a written piece he rules on, folded shut on the page (8 Nov, the side stories)
+                      "detail": it.get("detail", []),
                       "options": it.get("options", [["done", "Done"]])} for it in sorted(open_items, key=lambda x: x["added"])],
     }
 
