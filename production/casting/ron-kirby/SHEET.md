@@ -10,7 +10,7 @@ character was called Rocco; the old name survives only as an internal id.
 | **Face** | Broad, weathered and ruddy; a nose broken long ago; heavy-lidded, patient eyes. |
 | **Body** | Big and heavy-set, about 6 ft 1 in, a thick neck; big hands with faded blue tattoos on the backs and forearms. |
 | **Hair** | Bald on top, a short grey fringe at the sides; a full grey-brown moustache. |
-| **Clothes, 1990** | A navy donkey jacket with a black shoulder panel over a grey knitted jumper; dark grey work trousers; scuffed black leather boots. |
+| **Clothes, 1990** | A navy donkey jacket with a black shoulder panel over a dark navy knitted jumper; jeans; scuffed black leather boots. (Jumper and jeans as Jafar passed them in the game, 8 Nov 2026 13:12; the sheet's first wording was a grey jumper and dark grey work trousers.) |
 | **Voice** | Low, worn, tired; decency without softness. |
 
 ## Concept portraits
