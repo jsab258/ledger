@@ -437,7 +437,7 @@
      0.58
     ],
     "detail": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_Knit_Detail_Normal.png",
-    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRib_Detail_Normal.png",
+    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRibAcross_Detail_Normal.png",
     "detail_tiling": 2.0,
     "detail_strength": 1.0
    },
@@ -509,7 +509,7 @@
      0.58
     ],
     "detail": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_Knit_Detail_Normal.png",
-    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRib_Detail_Normal.png",
+    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRibAcross_Detail_Normal.png",
     "detail_tiling": 1.8,
     "detail_strength": 1.0
    },
