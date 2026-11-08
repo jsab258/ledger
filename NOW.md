@@ -1,21 +1,18 @@
-GOAL (to Mon 9 Nov 13:00): his order of 2 November, item by item (production/orders/2026-11-02.md); anything new goes on its waiting list.
+GOAL (to Mon 16 Nov 13:00): his order of 9 November, adopted by his tap of 8 Nov 17:17, item by item (production/orders/2026-11-09.md); anything new goes on its waiting list.
 
 Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
 ## Phase 1: Prove the bottlenecks (open, not closed)
 
-Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
+- [ ] n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md).
+- [ ] n09-2. Tom as one whole person on his page by Tuesday.
 
-- [x] 1. Speech: set aside, bar missed (run F 2.02 s); the third try saved no time (n02-3-1-speech).
-- [ ] 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*).
-- [x] 3. Office passed packaged (4 Nov); sitting set aside, listed (6 Nov); the Stutter set aside, the rare freeze listed (7 Nov) (n02-3-3-*).
-- [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
+## Phase 2 begins beside it
 
-## Beside it
+- [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
+- [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-- [ ] The corner (n02-4-*: plan reviewed, baseline begun); study A done; his Needs you page made (one link); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
-
-STATE: walk 13 of 15, tonight tests the tester's mend; corner's end answered keep; cached talk confirmed; exit Monday.
+STATE: order adopted 17:30; nine keep-or-drop groups on his page; tonight's walk tests the dressed men; exit Monday morning.
 
 ## Handovers
 

@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-08 16:22
-**Stopped:** 2026-11-08 16:06
+**Started:** 2026-11-08 17:22
+**Stopped:** 2026-11-08 16:29
 (His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 5 to 15 minutes before the next run, which fires at :21; or past 400,000 whatever the clock) means rewrite this file, set Stopped from Get-Date, stop.)
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), until 13:00 Monday 9 November or until he says stop.
@@ -17,19 +17,19 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - An advisor's standing way goes here the same hour, named in its ack (message 13); the six measures' table in each morning's overview (message 11).
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
-## This session (15:22 to the stop on 8 Nov), done and pushed (last commit: the two self-tests in the build checks)
-- His page and the advisor read 15:24 and 15:50: nothing new, nothing open on his page. Row 15:30 written (version 2).
-- **n02-9-qa-lean step 2 done:** the night report says which launch the walk ran on (launch_line_check last_command_line/describe; route_walk's verdict "launch", only from a log written during this walk; nightly_walk's line). Real logs: the 4 Nov office log reads "a test launch: -mickeysinside", the 7 Nov walk PLAYER+WATCH. Small review passed with one fix, made. Step 3 (card memory at its peak) held for Monday (it changes the build's perf step).
-- **The stuck-legs line's review:** code passed; my 15:00 numbers were wrong, corrected everywhere: fires on 16 of 20 nights with a path; Sheila's spot missed on 6 of 13 mornings since 24 Oct (five at 1.31 m, one 1.44 m).
-- **Ron's and Darren's clothes were still held in the player's game** (garments.json hold "until a packaged walk and his page"; every dressed picture was a -WearHeld run), found by the office review. Released 16:30 after his two yeses: **tonight's walk is their first in the player's game; if it shows a fault, the hold returns.**
-- Fresh reviews for the exit, both in its brief: the office by day and night (no new fault); Tom's side-on walk film (no slide or pop; the turn into the run's flat left shoe).
-- Ron's plan: steps 1, 2 and 5 measured (unit-costs/RON-MEASURES, TALK-PER-PERSON); step 3, the audit's By person table.
-- Notes for Monday: playbook/TRAPS-TO-CHECKS-2026-11-08.md (the cheap two now in the build checks, 97); phase5-procedural/OPEN-QUESTIONS-ANSWERS-2026-11-08.md.
-- Tom's turn foot diagnosed: old (24 Oct), likely Epic's start clip; a known narrow shortfall.
-- Progress page published 16:05 (version 34; the Tailor's interim line, the office's review); progress.json uncommitted, rides with the next work commit. Rows 15:30 and 16:07 written.
+## Run 16:22 to 16:35 on 8 Nov
+- His page and the advisor read 16:22. **Advisor 30 (16:20):** the advisor's draft order of 9 November saved unchanged as production/orders/drafts/2026-11-09-draft.md (not orders/2026-11-09.md: the ledger tool would take it as the running order and fail every push); one item on his page, adopt-order-2026-11-09 (page version 59, the items row, the ack and a report row 16:25 all written). **On his yes:** move the draft to production/orders/2026-11-09.md with ledger lines (IDs n09-*, statuses, the sixteen studies, the 2 Nov order's open items carried), record its section 1 in RULINGS.md and CLAUDE.md within their caps, apply section 4, then work section 2 in order beside the old order's last hours. On "not yet": his note to the advisor's list; nothing changes. Before his tap nothing in it is acted on.
+- F: still 19.5 GB at 16:26: the sweep waits for tonight's retention. ci-checks 97/97; pushed (b233fd2c2). Stopped at the item's end with nothing real left before tonight's walk (no busywork; the new order's items wait for his tap).
+
+## Earlier session (15:22 to 16:06 on 8 Nov), done and pushed
+- n02-9-qa-lean step 2 done (the night report names the walk's launch; small review passed, one fix); step 3 (card memory at its peak) held for Monday.
+- The stuck-legs line's numbers corrected: fires on 16 of 20 nights; Sheila's spot missed on 6 of 13 mornings since 24 Oct.
+- **Ron's and Darren's clothes released into the player's game (16:30, his two yeses): tonight's walk is their first there; a fault there brings the hold back.**
+- Exit brief holds the office's and Tom's side-walk film's fresh reviews; Tom's turn foot old (24 Oct), a known narrow shortfall.
+- Ron's plan steps 1, 2, 5 measured; Monday notes: playbook/TRAPS-TO-CHECKS-2026-11-08.md, phase5-procedural/OPEN-QUESTIONS-ANSWERS-2026-11-08.md. Progress page version 34 (16:05).
 
 ## Next, in order
-1. His page and the advisor; the hourly row.
+1. His page and the advisor (his tap on adopt-order-2026-11-09 first: act on it at once, as above); the hourly row.
 2. Helpers (up to four, no Unreal), only real work: the turn's foot fault's fix candidates are for Monday's order (no try spent yet); the traps note's remaining proposals wait for the order; the waiting list's inZOI and Silent Hill 2 file reads need F: room (19.5 GB, floor 20). If nothing real remains, fewer helpers, not busywork.
 3. The street sweep's real editor run once F: has room (`python tools/retention.py space --job "asset sweep" --drives CF` first; after tonight's 03:30 retention, never 01:15 to 04:30): LEDGER_CHECK_PIECE=street-sweep through the commandlet (tools/ue/asset_checks.py docstring, full paths, MSYS_NO_PATHCONV=1), read its line (expect errors 0 and known about 788, or name the difference), then `python tools/ue/asset_checks.py --known-from F:/LedgerTools/asset-checks/street-sweep.json`; commit.
 4. Tonight (the progress page is done; republish only if the walk changes a boss): read the walk (the iron cover, Ron at 5.3, the office wall, the landing at the apron, Darren lost?, **the two men dressed in the player's game for the first time**, the legs line and the new launch line); Sunday night's log lines into the exit brief; publish the progress page with the Tailor's interim line (advisor 27: tailor boss standing); the day's summary's lines for today's decisions (jumper colours, Ron's sheet, the neckband, his two taps, the knit download, the sweep fitted, the skills, the clothes released, the launch line); stop before 01:40.
