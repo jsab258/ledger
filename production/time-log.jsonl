@@ -559,4 +559,6 @@
 {"event": "start", "at": "2026-11-08T00:24:00", "task": "n02-research-proposals", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T00:38:00", "note": "fresh review and fixes of three proposals"}
 {"event": "start", "at": "2026-11-08T02:21:00", "task": "Sunday summary and overview", "phase": "1", "kind": "production"}
-{"event": "stop", "at": "2026-11-08T02:55:00", "note": ""}
+{"event": "stop", "at": "2026-11-08T02:30:00", "note": ""}
+{"event": "start", "at": "2026-11-08T02:40:00", "task": "Office camera in the walls: diagnosis and box (try 1)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T02:58:00", "note": ""}

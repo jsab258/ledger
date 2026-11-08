@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Sunday 8 November, 02:50; written in the night, updated in the morning)
+## Overview (Sunday 8 November, 02:30; written in the night, updated in the morning)
 
 **Tokens, Saturday 7 November:** history 26% of the spend, Opus 96%, reviewing 3% (990 steps, US$94.16 at list prices; Friday 24%, 87%, 14%).
 
@@ -38,7 +38,7 @@ No decision asked: these are for watching the street change.
 - **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s), reported as missed; the office, jeans and boots passed packaged; the jacket's collar, sitting's head swing and the Stutter's rare freeze are set aside and listed. Office and sitting now run in the game itself, and tonight's walk sat and stood with nothing touched. Next: Ron filmed on tonight's build (his collar's last try), then the exit re-check on Monday morning.
 - **The corner, in your order:** your "keep" on its end page stands; the people's last checks ride on Sunday's builds.
 
-**The tester (last night's walk, packaged, with Saturday's work):** 16 of 17 stages, two new (sit, stand). Lost: Darren again, the camera pressed into walls and blinds for long stretches in the office, three frames black. Nobody saw Tom break Rita's window; five took in the glass; Rocco showed he knew (1, up 1). "That's all I know" to 3 of 60 first questions (2 before). What broke the illusion: Ron and the woman inside Mickey's office in the white base layer (not in your pictures); a line from Ada captioned in the office where she isn't; Sheila's "Morning" at 16:00. Frame rate 58.2 fps (56.8 before), worst frame 22.37 ms, none over 33.3 ms; the card's memory 6,005 MB (6,089 before).
+**The tester (last night's walk, packaged, with Saturday's work):** 16 of 17 stages, two new (sit, stand). Lost: Darren again, the camera pressed into walls and blinds for long stretches in the office, three frames black. Nobody saw Tom break Rita's window; five took in the glass; Rocco showed he knew (1, up 1). "That's all I know" to 3 of 60 first questions (2 before). What broke the illusion: Ron and the woman inside Mickey's office in the white base layer (not in your pictures); a line from Ada captioned in the office where she isn't. Frame rate 58.2 fps (56.8 before), worst frame 22.37 ms, none over 33.3 ms; the card's memory 6,005 MB (6,089 before).
 
 ### Needs you
 

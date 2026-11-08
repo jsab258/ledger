@@ -1,0 +1,73 @@
+The 8 Nov night walk's body, clothes, cast and office lines, its main run (packaged build fa46ab0 of wip d092848; log LedgerProbe-backup-2026.11.08-00.57.09.log, copied 8 Nov for the exit's Exit B, line 26 of CLOSE-BRIEF-2026-11-09.md). Time stamps cut; duplicates of a line kept once.
+LedgerWalk: his scalp painted in his hair's colour, from ../../../LedgerProbe/Content/LedgerData/production/assets/people/tom/T_Head_LOD1_BC_scalp.png
+LedgerWalk: his scalp paint on 2 of his head's slots
+LedgerWalk: his body copies the mover through our own class, his head held up while he sits (-TomHeadUp)
+LedgerGarments: Tom's parts: Body=SKM_MH_TomL1_BodyMesh Face=SKM_MH_TomL1_FaceMesh SkeletalMesh=MH_TomL1_Outfits_2 SkeletalMesh1=MH_TomL1_Outfits
+LedgerGarments: Tom's Body reaches 132 cm, from 9 cm
+LedgerGarments: Tom's Face reaches 190 cm, from 150 cm
+LedgerGarments: Tom's SkeletalMesh reaches 164 cm, from 74 cm
+LedgerGarments: Tom's SkeletalMesh1 reaches 164 cm, from 74 cm
+LedgerGarments: Tom wears TomZipJacket, hiding SkeletalMesh's top sections (4, its lower garment kept) SkeletalMesh1's top sections (4, its lower garment kept)
+LedgerGarments: Tom wears TomJeans, hiding SkeletalMesh's lower sections (4) SkeletalMesh1's lower sections (4)
+LedgerGarments: Tom's TomJumper held back: 30 October, 17:20: always under his zipped jacket, so never seen; drawing its ne
+LedgerGarments: Tom's TomBoots lays 4 contact decals under its soles
+LedgerGarments: Tom wears TomBoots
+LedgerGarments: Tom raised 1.2 cm for the soles
+LedgerWalk: Tom wears 3 garment(s) over his MetaHuman
+LedgerWalk: Epic's route: the sample's SandboxCharacter_CMC_C moves, he wears BP_MH_TomL1_C through ABP_GenericRetarget_C; foot placement mode 1, database level 0
+LedgerCast: Lena is MH_LenaS4
+LedgerCast: Lena's facial hair keeps its strands to the face's second level (2 groom)
+LedgerCast: Lena's Body takes 4 idle breaks
+LedgerCast: Lena's Body can walk off, 153 cm/s (the baked loop: 721.8 cm over its 4.00 s); its post-process: ABP_Body_PostProcess_C
+LedgerCast: Lena's Body plays mhc_mh001_fmn_b_idle at 0.92 and can speak
+LedgerCast: Lena's SkeletalMesh follows the body's pose
+LedgerCast: Lena's Face plays mhc_mh001_fmn_f_idle at 0.92 and can speak
+LedgerCast: Lena has 2 part(s) that can speak
+LedgerGarments: Lena's parts: Body=SKM_MH_LenaS4_BodyMesh Face=SKM_MH_LenaS4_FaceMesh SkeletalMesh=MH_LenaS4_Outfits
+LedgerGarments: Lena's SheilaSpectacles held back: 30 September: made on her C1 face; on her approved S4 face in the game they sit 
+LedgerGarments: Lena's SheilaGlassesChain held back: 30 September: made on her C1 face; on her approved S4 face in the game they sit 
+LedgerGarments: Lena wears SheilaHandbag
+LedgerGarments: Lena is undressed (the base layer shows): left out of the page's pictures
+LedgerCast: Lena's breaks move 1 arm(s): a hand holds something
+LedgerCast: Sam is MH_SamS6
+LedgerCast: Sam's facial hair keeps its strands to the face's second level (2 groom)
+LedgerCast: Sam's Body takes 4 idle breaks
+LedgerCast: Sam's Body can walk off, 153 cm/s (the baked loop: 721.8 cm over its 4.00 s); its post-process: ABP_Body_PostProcess_C
+LedgerCast: Sam's Body plays mhc_mh001_fmn_b_idle at 1.00 and can speak
+LedgerCast: Sam's SkeletalMesh follows the body's pose
+LedgerCast: Sam's Face plays mhc_mh001_fmn_f_idle at 1.00 and can speak
+LedgerCast: Sam has 2 part(s) that can speak
+LedgerGarments: Sam's parts: Body=SKM_MH_SamS6_BodyMesh Face=SKM_MH_SamS6_FaceMesh SkeletalMesh=MH_SamS6_Outfits
+LedgerGarments: Sam's DarrenBelt held back: 30 September: fitted and imported, but on Darren as the game dresses him now, Ep
+LedgerGarments: Sam's DarrenPager held back: 30 September: fitted and imported, but on Darren as the game dresses him now, Ep
+LedgerGarments: Sam's DarrenJeans held back: 7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJeans
+LedgerGarments: Sam's DarrenJumper held back: 7 November: until a packaged walk and his page; worn with -WearHeld=DarrenJumper
+LedgerGarments: Sam's DarrenBoots held back: 7 November: until a packaged walk and his page; worn with -WearHeld=DarrenBoots
+LedgerGarments: Sam is undressed (the base layer shows): left out of the page's pictures
+LedgerOffice: the shop door stands shut (3 mesh(es)), the room dark
+LedgerOffice: its own exposure, pinned 0.000 by day and 1.600 at night, local contrast 0.60 highlights 0.60 shadows, inside x 3.00-9.00 z 5.12-13.15
+LedgerOffice: its grade on: gamma 1.000 0.978 0.976, shadow gamma 1.000 0.936 0.855
+LedgerWalk: the mover follows where the game put him (100, 400)
+LedgerCast: Rocco is MH_RoccoP2
+LedgerCast: Rocco's facial hair keeps its strands to the face's second level (2 groom)
+LedgerCast: Rocco's Body takes 4 idle breaks
+LedgerCast: Rocco's Body can walk off, 153 cm/s (the baked loop: 721.8 cm over its 4.00 s); its post-process: ABP_Body_PostProcess_C
+LedgerCast: Rocco's Body plays mhc_mh001_fmn_b_idle at 1.08 and can speak
+LedgerCast: Rocco's SkeletalMesh follows the body's pose
+LedgerCast: Rocco's Face plays mhc_mh001_fmn_f_idle at 1.08 and can speak
+LedgerCast: Rocco has 2 part(s) that can speak
+LedgerGarments: Rocco's parts: Body=SKM_MH_RoccoP2_BodyMesh Face=SKM_MH_RoccoP2_FaceMesh SkeletalMesh=MH_RoccoP2_Outfits
+LedgerGarments: Rocco's Body reaches 147 cm, from -0 cm
+LedgerGarments: Rocco's Face reaches 194 cm, from 155 cm
+LedgerGarments: Rocco's SkeletalMesh reaches 168 cm, from 74 cm
+LedgerGarments: Rocco's RonBoots lays 4 contact decals under its soles
+LedgerGarments: Rocco wears RonBoots
+LedgerGarments: Rocco's RonJacket held back: 30 September: a method test, not for his page (production/art/clothing/jacket-bo
+LedgerGarments: Rocco's RonJacketB held back: 30 September: a method test, not for his page (production/art/clothing/jacket-bo
+LedgerGarments: Rocco's RonJeans held back: 7 November: until a packaged walk and his page; worn with -WearHeld=RonJeans
+LedgerGarments: Rocco's RonJumper held back: 7 November: until a packaged walk and his page; worn with -WearHeld=RonJumper
+LedgerGarments: Rocco raised 2.0 cm for the soles
+LedgerGarments: Rocco is undressed (the base layer shows): left out of the page's pictures
+LedgerOffice: the clock's hands made at (558, 937, 252)
+LedgerOffice: Tom unlocks the shop door at 4.84,3.42 (3 shut mesh(es) gone, 3 open shown)
+LedgerOffice: Tom puts the lights on at 4.76,5.44
