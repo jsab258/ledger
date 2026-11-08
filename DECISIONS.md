@@ -1275,3 +1275,9 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: tools/token_measures.py's prompt-cache line prices each write at its own rate (5-minute or 1-hour, as token_audit's step_cost) and names helper starts and step growth beside session starts and mid-run rewrites. On 7 Nov's real logs: US$35.28 (was 42.06), session starts 10.19 in 20 runs, helper starts 7.73 in 24, one rewrite 2.21, step growth 15.14, matching the helper's independent rebuild to the cent; self-test 13/13.
 - Reason: N09-11-CACHE-AND-TOOLS-2026-11-08.md finding 1; RULINGS 8 Nov (a fix to a tool that reads real files is checked on those files).
 - Link: tools/token_measures.py measure_day.
+
+## 2026-11-08 21:06, n09-3: where the card memory goes, and the next step
+
+- Decision: n09-3's next step is to cook and compress the pictures the game now decodes at run time (shop cards about 609 MB, street maps about 487 MB, inferred; about 406 MB from loading only each shop card's shown light state, game code alone), measured in one packaged day walk with the report's memreport capture first. The hair voxel texture (about 256 MB at the walk's peak, 448 cubed R32 pages) is decided inside n09-7's test, since lowering it changes the hair's look. The memory plan's table loses its shadow-page and ray-tracing rows (virtual shadow maps are off; the RT sum is bookkeeping). The peaks are day walks (6,041 to 6,192 MB over 42 walks), not night.
+- Reason: production/research/frame-headroom/MEMORY-WHERE-2026-11-08.md (a diagnosis helper, engine source cited); RULINGS 24 Oct (the 6 GB line counts the game alone: confirmed, the CSV figure is the game process's own).
+- Link: that file.
