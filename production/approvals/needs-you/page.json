@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Sunday 8 November, 10:33",
+ "kicker": "LEDGER · Needs you · 2 open · updated Sunday 8 November, 13:16",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -63,6 +63,43 @@
     [
      "no",
      "Not these"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "knit-jumpers-look-2026-11-08",
+   "name": "Ron's and Darren's jumpers after your note: a wool knit, ribbed cuffs, hem and neckband, Ron in dark navy and Darren in maroon, Darren's neckband now a plain low crew neck (four pictures from the game you play; tap one for full size). Short first: the hem rib is faint; the navy reads near black from a distance; a small step at the neckband's front; hair still its default colour; no stitching on the jeans or laces on the boots. No hole, no skin through the cloth. Do the jumpers pass your look, judged on the clothes' floor?",
+   "links": [],
+   "recommendation": "Yes: both pass two fresh reviews in the packaged game with no new fault, and they now read as knitted wool and as two different men. The shortfalls stay listed for when tailoring resumes. No web link: the answer is this page.",
+   "added": "2026-11-08 13:15",
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/knit-ron-whole-2026-11-08.jpg",
+     "alt": "Ron, whole, outside the cab office"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/knit-ron-close-2026-11-08.jpg",
+     "alt": "Ron, close, as in talk"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/knit-darren-whole-2026-11-08.jpg",
+     "alt": "Darren, whole, by the phone box"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/knit-darren-close-2026-11-08.jpg",
+     "alt": "Darren, close, as in talk"
+    }
+   ],
+   "detail": [],
+   "options": [
+    [
+     "yes",
+     "Yes, they pass (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
     ]
    ]
   }
