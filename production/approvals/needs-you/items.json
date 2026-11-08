@@ -586,7 +586,8 @@
     "31. Nothing moves but me (dark; Act II; micro). Found: Norman Dent, glad of company on his round, mentions lights in an empty warehouse: crates of car radios, Danny's crew's. He wants nothing but a flask of tea and someone to tell. Steps: the row at night; the warehouse; the crates. Ends: tip Ellis (the crew loses its stock, and Norman becomes a witness who saw Tom ask; who else saw is the simulation's); take the crates and sell them through the back of Rita's (money, and Danny's grudge); warn Danny (a favour owed). The cost Tom can see: Norman misses nothing on that row, Tom's own nights included. The town keeps: whatever Norman saw, which is everything.",
     "32. The camcorder (dark; any act; micro; offered only if Tom did something seen and filmed). Found: canon's one camcorder in town has Tom on a tape: whatever he did on the street that its owner filmed from a window (the simulation decides whether anything was). Its owner is minted when the camcorder is placed; the draft gives it to Hal. Ends: buy the tape (it is gone, and Hal knows its price); take it (Hal tells everyone a tape existed, which is worse); let it lie (it reaches Ellis or Alison, by the gossip's own routes). The town keeps: a picture, the one witness that does not forget."
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 14:23, answered yes (13:12): the thirty-two stand as the list phase 3's jobs are built from, as drafted; the three points at the top stay as drafted"
   },
   {
    "id": "knit-jumpers-look-2026-11-08",
@@ -622,7 +623,8 @@
      "alt": "Darren, close, as in talk"
     }
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 14:23, answered yes (13:12): both jumpers pass his look on the clothes' floor; the shortfalls stay listed for when tailoring resumes"
   }
  ]
 }

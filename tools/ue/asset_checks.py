@@ -4,6 +4,7 @@ fresh reviewer, so reviewers judge only the look").
 
     python tools/ue/asset_checks.py --selftest      # the eleven rules on plain data, without Unreal
     python tools/ue/asset_checks.py --check-spec    # production/specs/asset-budgets.json, without Unreal
+    python tools/ue/asset_checks.py --known-from <report.json>   # a fitted sweep's errors become its known list
     UnrealEditor-Cmd.exe <full path>/LedgerProbe.uproject -run=pythonscript
         -script=<full path>/tools/ue/asset_checks.py -EnablePlugins=PythonScriptPlugin,GeometryScripting
         -unattended -nopause -nosplash -stdout          (LEDGER_CHECK_PIECE=tom-jacket; no -nullrhi)
@@ -29,7 +30,7 @@ check_piece), so the selftest runs them on plain data. Inside the editor:
     production/asset-checks/<piece>.json. Read the line, never the exit code: the commandlet's exit code
     is no verdict (CHECKS, section 1).
 
-ONE LINE: assetChecks=PASS|FAIL piece=<piece> assets=<n> errors=<n> warnings=<n> waived=<n> first=<rule>:<asset>:<value>/<limit>
+ONE LINE: assetChecks=PASS|FAIL piece=<piece> assets=<n> errors=<n> warnings=<n> waived=<n> known=<n> first=<rule>:<asset>:<value>/<limit>
 
 UNTESTED IN UNREAL (28 October 2026: the build machine was building and no editor could run). The editor
 side follows the 5.8 headers read for CHECKS-2026-10-28.md; the Python names (k2_validate_loaded_asset,
@@ -50,7 +51,7 @@ REPORTS = os.path.join(REPO, "production", "asset-checks")
 RULES = ("engine", "triangles", "lods", "nanite", "texture_size", "texture_role", "placeholder", "parts",
          "see_through", "names", "collision")
 TAG = "[ledger] "
-SEVERITIES = ("error", "warning", "note", "waived")
+SEVERITIES = ("error", "warning", "note", "waived", "known")
 
 
 def load_spec(path=SPEC):
@@ -162,6 +163,8 @@ def check_asset(spec, rec, in_piece=True):
                 out.append(finding("placeholder", name, "slot %s has no material" % slot, value="none", limit="a material"))
                 continue
             if mat in defaults or s.get("default"):
+                if kind and kind.get("runtime_material"):
+                    continue  # the game binds this slot's material when it runs (the kind's source says where)
                 out.append(finding("placeholder", name, "slot %s draws the engine's default material %s" % (slot, mat),
                                    value=mat, limit="a material of ours"))
                 continue
@@ -229,8 +232,8 @@ def check_asset(spec, rec, in_piece=True):
         if rec.get("flat"):
             out.append(finding("placeholder", name, "the texture is one flat colour", value="flat", limit="an image"))
 
-    # 10. names, in the gated piece's own folders
-    if in_piece:
+    # 10. names, in the gated piece's own folders (a kind of imported pieces keeps its source names: study13)
+    if in_piece and not (kind and kind.get("import_names")):
         names = spec.get("names", {})
         if not re.match(names.get("allowed", r"^[A-Za-z0-9_]+$"), name):
             out.append(finding("names", name, "the name holds characters other than letters, digits and underscores",
@@ -274,7 +277,50 @@ def check_piece(spec, piece, records):
     for f in out:
         if f["severity"] == "error" and waived(spec, f):
             f["severity"] = "waived"
+    known = known_set(spec, piece)
+    for f in out:
+        if f["severity"] == "error" and (f["rule"], f["asset"]) in known:
+            f["severity"] = "known"
     return out
+
+
+def known_path(spec, piece):
+    rel = spec.get("pieces", {}).get(piece, {}).get("known_list")
+    return os.path.join(REPO, *rel.split("/")) if rel else None
+
+
+def known_set(spec, piece):
+    """A sweep's known list (8 Nov, n02-9-asset-check-gaps): the real faults found at its first fitted run, each
+    listed and failing nothing alone, so the sweep fails on new errors only (CLAUDE.md, 'The gate')."""
+    p = known_path(spec, piece)
+    if not p or not os.path.exists(p):
+        return set()
+    with open(p, encoding="utf-8") as fh:
+        return {(k["rule"], k["asset"]) for k in json.load(fh).get("known", [])}
+
+
+def write_known(report_path):
+    """--known-from <report>: the report's errors become its piece's known list (run once, after a fitted sweep)."""
+    spec = load_spec()
+    with open(report_path, encoding="utf-8") as fh:
+        rep_ = json.load(fh)
+    piece = rep_["piece"]
+    p = known_path(spec, piece)
+    if not p:
+        print("asset_checks: piece %s names no known_list in the spec" % piece)
+        return 2
+    seen, known = set(), []
+    for f in rep_["findings"]:
+        if f["severity"] in ("error", "known") and (f["rule"], f["asset"]) not in seen:
+            seen.add((f["rule"], f["asset"]))
+            known.append({"rule": f["rule"], "asset": f["asset"], "message": f["message"]})
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p, "w", encoding="utf-8") as fh:
+        json.dump({"piece": piece, "from": rep_.get("line"), "when": rep_.get("when"),
+                   "what": "Real faults listed, failing nothing alone; each fixed one leaves this list. "
+                           "A new error outside it fails the sweep.", "known": known}, fh, indent=1)
+    print("asset_checks: %d known (rule, asset) pairs written to %s" % (len(known), p))
+    return 0
 
 
 def status_line(piece, records, findings):
@@ -284,8 +330,9 @@ def status_line(piece, records, findings):
     if errors:
         f = errors[0]
         first = "%s:%s:%s/%s" % (f["rule"], f["asset"], f["value"], f["limit"])
-    return "assetChecks=%s piece=%s assets=%d errors=%d warnings=%d waived=%d first=%s" % (
-        "FAIL" if errors else "PASS", piece, len(records), len(errors), count("warning"), count("waived"), first)
+    return "assetChecks=%s piece=%s assets=%d errors=%d warnings=%d waived=%d known=%d first=%s" % (
+        "FAIL" if errors else "PASS", piece, len(records), len(errors), count("warning"), count("waived"),
+        count("known"), first)
 
 
 def report(piece, records, findings, line, when=None):
@@ -337,6 +384,8 @@ def check_spec(spec, garments=None):
         if not folder.startswith("/Game/"):
             bad.append("folder %s is not under /Game" % folder)
     for name, p in spec.get("pieces", {}).items():
+        if p.get("known_list") and not os.path.exists(os.path.join(REPO, *p["known_list"].split("/"))):
+            bad.append("piece %s: known_list %s is missing" % (name, p["known_list"]))
         if not p.get("folders"):
             bad.append("piece %s has no folders" % name)
         for f in p.get("folders", []):
@@ -541,7 +590,31 @@ def selftest():
     check("a body under MetaHumans is exempt", kind_of(spec, "/Game/Ledger/MetaHumans/MH_TomL1/Body/SKM_Body") == "exempt")
     check("a folder boundary, not a name prefix", kind_of(spec, "/Game/Ledger/MetaHumans/GarmentsOld/SKM_X") == "exempt")
     check("an unmapped folder has no kind", kind_of(spec, "/Game/Ledger/Unmapped/SM_Wall") is None)
-    check("the street's folder is a frontage", kind_of(spec, "/Game/Ledger/Street/quay-street/SM_Wall") == "frontage")
+    check("the street's folder holds street parts", kind_of(spec, "/Game/Ledger/Street/quay-street/SM_Wall") == "street_part")
+    # 8 Nov, the street fitted: a street part's run-time slot, imported names, one hull on a front, the known list
+    part = {"name": "wall_07", "class": "StaticMesh", "path": "/Game/Ledger/Street/quay-street/wall_07",
+            "triangles": [900], "collision": {"simple": 0, "convex": 1},
+            "materials": [{"slot": "-1", "material": "/Engine/EngineMaterials/WorldGridMaterial", "textures": 1}]}
+    pf = check_asset(spec, part)
+    check("a street part's run-time slot, its export name and one level pass", not [f for f in pf if f["severity"] == "error"], str(pf))
+    part2 = dict(part, path="/Game/Ledger/Kit/wall_07", name="wall_07")
+    check("the same in the kit still fails its name and slot",
+          {"names", "placeholder"} <= {f["rule"] for f in check_asset(spec, part2) if f["severity"] == "error"})
+    front = dict(part, path="/Game/Ledger/ShopFronts/ritas/SM_front", name="SM_front", triangles=[900, 400, 150])
+    front["materials"] = [{"slot": "paint", "material": "/Game/Ledger/ShopFronts/MI_paint", "textures": 1}]
+    check("a front with one hull passes collision", not [f for f in check_asset(spec, front) if f["rule"] == "collision"])
+    kspec = copy.deepcopy(spec)
+    real_known = known_set
+    try:
+        globals()["known_set"] = lambda sp, pc: {("names", "wall_07")} if pc == "selftest-known" else set()
+        kspec["pieces"]["selftest-known"] = {"folders": ["/Game/Ledger/Kit"], "parts": []}
+        kf = check_piece(kspec, "selftest-known", [part2])
+        line = status_line("selftest-known", [part2], kf)
+        check("a known fault is listed and fails nothing alone, a new one still fails",
+              "known=1" in line and "assetChecks=FAIL" in line
+              and not [f for f in kf if f["severity"] == "error" and f["rule"] == "names"], line)
+    finally:
+        globals()["known_set"] = real_known
     check("a scan's normal map with its size and copy number", texture_role(spec, "lifebuoy_nor_gl_1k_clean1") == "normal")
     check("a scan's packed map, lower case", texture_role(spec, "vintage_lighter_arm_1k") == "packed")
     check("a kit detail mask by its prefix", texture_role(spec, "T_KitDetail_brick") == "packed")
@@ -891,6 +964,8 @@ if __name__ == "__main__":
         sys.exit(selftest())
     if "--check-spec" in sys.argv:
         sys.exit(run_check_spec())
+    if "--known-from" in sys.argv:
+        sys.exit(write_known(sys.argv[sys.argv.index("--known-from") + 1]))
     try:
         import unreal  # noqa: F401
     except ImportError:

@@ -1,0 +1,2758 @@
+{
+ "piece": "street-sweep",
+ "from": "offline re-score of the 09:30 sweep, fitted rules, 8 Nov",
+ "when": "2026-11-08 09:30:53",
+ "what": "Real faults listed, failing nothing alone; each fixed one leaves this list. A new error outside it fails the sweep.",
+ "known": [
+  {
+   "rule": "texture_role",
+   "asset": "T_JoineryEdges_chandler_front_joinery_paint_navy",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "T_JoineryEdges_chandler_front_joinery_paint_side_door_navy",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "T_WoodTrim_FlatNormal",
+   "message": "a colour map with sRGB off"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_asphalt",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_bark_wet",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_east_chandler_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_east_chandler_bay_north",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_north_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_north_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_north_bay2",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_north_bay_north",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_south_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_south_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_south_bay2",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_grey_h_west_south_bay_north",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay2",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay4",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay5",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_red_h_east_parade_bay_north",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_chandler_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_parade_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_parade_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_parade_bay3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_parade_bay4",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_east_parade_bay5",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_west_south_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_west_south_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_brick_rubbed_h_west_south_bay2",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_chandler_day",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_int23_fish",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_int23_grocer",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_int23_laundry",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_int23_pawn",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_ironmonger_day",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_net_curtain_a",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_net_curtain_a_lit",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_net_curtain_b",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_net_curtain_b_lit",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_newsagent_day",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_card_tea_room_day",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_car_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_a_board_ply_paint",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_a_board_steel",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_a_board_timber",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_a_board_zinc",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_bollard_bollard_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_dustbin_galvanised",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_grit_bin_grit_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_grit_bin_grit_yellow",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_kx100_kiosk_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_kx100_kiosk_letter",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_kx100_kiosk_phone_grey",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_kx100_kiosk_stainless",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_kx100_kiosk_yellow",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_litter_bin_council_green",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_litter_bin_inside_dark",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_litter_bin_letters_white",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_milk_crates_bottle_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_milk_crates_crate_plastic",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_milk_crates_crate_rim",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_pillar_box_base_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_pillar_box_pillar_red",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_pillar_box_plate_ink",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_pillar_box_plate_white",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cl_pillar_box_slot_dark",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_cover_iron",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_dish_grey",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_bare_timber",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_cream",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_green",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_maroon",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_navy",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_door_red",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_masonry_cream",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_oxblood",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_plinth_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_fascia_slate_blue",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_flashing",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_foliage",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "triangles",
+   "asset": "street_foliage_dark",
+   "message": "153725 triangles over the street_part cap"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_foliage_dark",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_foliage_top",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_frame_bronze",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_frame_metal",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_frame_painted",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_galvanised",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_gilt",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay1",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay2",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay4",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay5",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay6",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_bay7",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eg_baym17",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_bay0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym13",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym15",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym16",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym17",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym21",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym25",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_eu_baym5",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_kx100_kiosk0",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_bay3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_bay4",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_bay5",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_bay6",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_baym13",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_baym19",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wg_baym3",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_whitened",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_glass_wu_baym8",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_grass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_gum_trodden",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_harbour_water",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_hill_render_buff",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_hill_render_grey",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_hill_ridge",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_interior",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_iron_black",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_kerbstone",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_lamp_red",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_lead",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_litter_blue",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_litter_kraft",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_litter_paper",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_litter_red",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysdoor_brass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysdoor_frame_painted",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysdoor_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysopen_brass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysopen_frame_painted",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeysopen_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeys_frame_painted",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeys_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_mickeys_interior",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_paint_door",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_paint_joinery",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_paint_white",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_paint_yellow",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_paving",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_pot_buff",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_pot_clay",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_prop_timber",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_quay_stone",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_rainwater",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_render_cream",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_render_patch",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_rope",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_a_edge",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_a_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_a_ground",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_r_edge",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_r_glass",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_shard_r_ground",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_a_board_fish",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_board_to_let",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_fascia_mickeys_plain",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_fascia_trade_fishmonger",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_plate_quay_street",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_poster_cant_pay",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_poster_jumble_sale",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_poster_march",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_sign_poster_no_poll_tax",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_slate",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_steel_dark",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_stone",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_stone_dressing",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_tile_patterned",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_tile_stall",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "collision",
+   "asset": "street_window_far_lit",
+   "message": "uses complex collision as simple"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_chandler-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tile_chandler",
+   "message": "1243x1050 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "21_est-1879_rgba",
+   "message": "475x121 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "22_13_rgba",
+   "message": "197x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "90_hours-chandler_rgba",
+   "message": "374x186 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_hanging_board_face_a_basecolour",
+   "message": "800x500 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_hanging_board_face_a_orm",
+   "message": "800x500 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "chandler_hanging_board_face_a_orm",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_hanging_board_face_b_basecolour",
+   "message": "800x500 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_hanging_board_face_b_orm",
+   "message": "800x500 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "chandler_hanging_board_face_b_orm",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "chandler_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "chandler_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "door-card-closed",
+   "message": "400x220 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "K03a_B_basecolour",
+   "message": "400x220 is not a power of two each side"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_chandler-front-joinery",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "chandler-front-worn_navy_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "chandler-front-worn_side_door_navy_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "door-card-closed1",
+   "message": "400x220 is not a power of two each side"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_chandler-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "lobby_floor_grocer",
+   "message": "1006x630 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "15_11_rgba",
+   "message": "180x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "90_hours-grocer_rgba",
+   "message": "450x186 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "grocer_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "grocer_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "grocer_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "grocer_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "grocer-front-worn_cream_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "grocer-front-worn_stallriser_slab_green_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ironmonger-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "18_est-1884_rgba",
+   "message": "478x121 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "19_16_rgba",
+   "message": "161x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "90_hours-ironmonger_rgba",
+   "message": "526x186 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_hanging_board_face_a_basecolour",
+   "message": "550x380 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_hanging_board_face_a_orm",
+   "message": "550x380 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ironmonger_hanging_board_face_a_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_hanging_board_face_b_basecolour",
+   "message": "550x380 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_hanging_board_face_b_orm",
+   "message": "550x380 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ironmonger_hanging_board_face_b_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ironmonger_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ironmonger_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ironmonger-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ironmonger-front-worn_dark_green_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ironmonger-front-worn_side_door_black_door_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "lobby_floor_steam_laundry",
+   "message": "1006x330 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tile_steam_laundry",
+   "message": "1243x1050 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "13_service-washes_rgba",
+   "message": "1067x144 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "14_9_rgba",
+   "message": "117x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "hours_steam_laundry_basecolour",
+   "message": "300x190 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_a_basecolour",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_a_emissive",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_a_orm",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "steam_laundry_box_face_a_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_b_basecolour",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_b_emissive",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_b_orm",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "steam_laundry_box_face_b_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_emissive",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "steam_laundry_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "launderette-front-worn_cream_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "launderette-front-worn_side_door_dark_brown_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_a_emissive1",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_box_face_b_emissive1",
+   "message": "620x450 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "steam_laundry_emissive1",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_newsagent-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "16_tobacconist--confectioner_rgba",
+   "message": "550x148 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "17_18_rgba",
+   "message": "200x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "25_hours-newsagent_rgba",
+   "message": "414x124 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "newsagent_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "newsagent_emissive",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "newsagent_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "newsagent_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "newsagent_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_newsagent-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "newsagent-front-worn_dove_grey_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "newsagent-front-worn_side_door_dark_blue_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "newsagent-front-worn_white_joinery_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "newsagent_emissive1",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ritas-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "07_watches_rgba",
+   "message": "744x168 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "08_jewellery_rgba",
+   "message": "907x168 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "09_loans_rgba",
+   "message": "499x168 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "10_5_rgba",
+   "message": "114x191 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "24_hours-ritas_rgba",
+   "message": "450x186 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_1_basecolour",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_1_orm",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ball_1_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_2_basecolour",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_2_orm",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ball_2_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_3_basecolour",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ball_3_orm",
+   "message": "817x409 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ball_3_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ritas_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ritas_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "ritas_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ritas_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ritas-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ritas-front-worn_buttermilk_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ritas-front-worn_oxblood_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ritas-front-worn_white_joinery_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_tea-rooms-front",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "20_14_rgba",
+   "message": "196x188 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "hours_tea_rooms_basecolour",
+   "message": "300x190 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tea_rooms_basecolour_worn",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tea_rooms_normal",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tea_rooms_orm",
+   "message": "5410x550 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tea_rooms_orm",
+   "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_tea-rooms-front-worn",
+   "message": "1 levels of detail, the frontage kind wants 3"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tea-rooms-front-worn_brown_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tea-rooms-front-worn_door_cream_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tea-rooms-front-worn_side_door_dark_brown_roughness",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_ceiling",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_fittings",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "CashRegister_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "CashRegister_01_glass_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "painted_plaster_wall_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_floor",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "old_linoleum_flooring_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_wall_back",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_wall_left",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer_wall_right",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_ceiling",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_fittings",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_monobloc_chair_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_monobloc_chair_01_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_monobloc_chair_01_arm_1k2",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "wall_clock_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "wall_clock_glass_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "wicker_basket_02_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_floor",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_wall_back",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_wall_left",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette_wall_right",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_ceiling",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_mickeys_fittings",
+   "message": "478750 triangles over the real_room cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_fittings",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "accounts",
+   "message": "512x170 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ash_veneer_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "bookings",
+   "message": "512x153 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "calendar",
+   "message": "512x716 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "cigarette_pack_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "clipboard_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "directory",
+   "message": "440x560 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "district_map",
+   "message": "512x384 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "drivers_board",
+   "message": "512x597 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "farebook",
+   "message": "512x354 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "fares",
+   "message": "512x716 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_0",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_1",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_10",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_11",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_13",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_2",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_3",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_4",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_5",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_6",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_7",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_8",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "label_9",
+   "message": "100x200 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "licence",
+   "message": "420x296 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "message_pad",
+   "message": "210x296 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "metal_office_desk_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "office_notepads_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "pinboard",
+   "message": "512x438 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "potted_plant_01_leaves_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "potted_plant_01_pot_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "potted_plant_02_leaves_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "potted_plant_02_pot_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "stationery_supplies_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_lighter_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_lighter_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_floor",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "dirty_carpet_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_wall_back",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_wall_left",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_mickeys_wall_right",
+   "message": "1 levels of detail, the real_room kind wants 2"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_chandler-display",
+   "message": "254121 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_chandler-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "brass_blowtorch_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Lantern_01_brass_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "lifebuoy_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "life_jacket_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "marine_tins",
+   "message": "512x192 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "oil_tin_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "rubber_boots_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "rubber_boots_dirty_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "seadogs_compass_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "small_oil_can_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "wooden_lantern_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_fishmonger-display",
+   "message": "74218 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_fishmonger-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_grocer-display",
+   "message": "702264 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_grocer-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "jar_labels",
+   "message": "512x640 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "bananas_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "food_apple_01_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "food_tins",
+   "message": "512x192 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "hamburger_buns_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "lemon_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_crate_02_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_crate_03_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "yellow_onion_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_ironmonger-display",
+   "message": "173043 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ironmonger-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "cleaner_labels",
+   "message": "819x1024 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "cleaner_tin_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "deal_strips",
+   "message": "1024x768 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "garden_gloves_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "garden_sprinkler_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "lightbulb_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "metal_toolbox_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_broom_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "plastic_broom_arm_1k_clean1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "shelf_strips",
+   "message": "1024x192 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "sledgehammer_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tire_pump_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "trowel_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "watering_can_metal_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_launderette-display",
+   "message": "193656 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_launderette-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "bottle_labels",
+   "message": "341x512 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "detergents",
+   "message": "512x398 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "service_card",
+   "message": "512x160 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "towel_tiles",
+   "message": "512x384 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "wicker_basket_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_newsagent-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "cartons",
+   "message": "1120x1620 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "magazines",
+   "message": "2048x1820 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "papers",
+   "message": "1160x1520 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "postcards",
+   "message": "1215x1120 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "sweets",
+   "message": "512x1920 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "cards",
+   "message": "1150x640 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "news_deal",
+   "message": "1024x384 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "news_grey",
+   "message": "1024x384 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "stationery_supplies_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_pawnbroker-display",
+   "message": "203355 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_pawnbroker-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "antique_ceramic_vase_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "binoculars_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "binoculars_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "brass_vase_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "brass_vase_02_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "brass_vase_03_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_body_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_lens_body_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_strap_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "carved_wooden_elephant_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ceramic_vase_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ceramic_vase_03_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "horse_statue_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "horse_statue_01_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "jug_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "magnifying_glass_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "magnifying_glass_01_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "mantel_clock_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "mantel_clock_01_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "measuring_tape_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "portable_cassette_player_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "portable_cassette_player_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "seadogs_compass_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_01_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_01_artwork_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_02_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_02_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "standing_picture_frame_02_artwork_rough_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_flashlight_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_flashlight_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_video_camera_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_video_camera_arm_1k1",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_ritas-display",
+   "message": "189384 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_ritas-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "alarm_clock_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "boombox_arm_1k_clean",
+   "message": "a packed map compressed as TC_NORMALMAP"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "boombox_speakers_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_body_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_lens_body_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "Camera_01_strap_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "cassette_player_body_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "cassette_player_tape_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "ceramic_vase_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "cigarette_case_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "filmstrip_projector_8mm_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "measuring_tape_01_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "pocket_watch_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "portable_cassette_player_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "round_spectacles_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_binocular_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_lighter_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_pocket_watch_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "vintage_video_camera_arm_1k_clean",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_tea-rooms-display",
+   "message": "114925 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_tea-rooms-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "menu_stand",
+   "message": "256x160 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "window_card",
+   "message": "512x320 is not a power of two each side"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "carrot_cake_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "painted_wooden_chair_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "potted_plant_04_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "strawberry_chocolate_cake_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "tea_set_01_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_tea_room-display",
+   "message": "116156 triangles over the display cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_tea_room-display",
+   "message": "1 levels of detail, the display kind wants 2"
+  },
+  {
+   "rule": "texture_role",
+   "asset": "croissant_arm_1k",
+   "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_awning_02",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_crowd_control_barrier",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_decorative_bollard_02",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_drainage_grate_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_fascia_console_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_fascia_cornice_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_framed_poster",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_lamp_post_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_oil_barrel",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_outdoor_bin",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_pallet",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_poster",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_roll_top_chimney",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_skip",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_swing_bin",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_traffic_cone_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_traffic_cone_02",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_wooden_crate_01",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "triangles",
+   "asset": "SM_lamp_post_C",
+   "message": "10848 triangles over the prop_medium cap"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_lamp_post_C",
+   "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_hatch-bluegrey",
+   "message": "1 levels of detail, the car kind wants 4"
+  },
+  {
+   "rule": "lods",
+   "asset": "SM_hatch-navy",
+   "message": "1 levels of detail, the car kind wants 4"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "T_WoodTrim_FlatNormal",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_202e1f",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_70624e",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_202e1f1",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "parts",
+   "asset": "_70624e",
+   "message": "imported from an older F:/LedgerTools/game-inputs/production/assets/shop-fronts/chandler-front-joinery.glb (MD5 2b4385f0, the file now 3aa31bcc)"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_70624e1",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "CashRegister_01_glass_nor_gl_1k",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_01_artwork_nor_gl_1k",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_01_artwork_rough_1k",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_02_artwork_rough_1k",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_awning_02",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_crowd_control_barrier",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_decorative_bollard_02",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_drainage_grate_01",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_fascia_console_01",
+   "message": "slot fascia_moulding_painted_timber has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_fascia_cornice_01",
+   "message": "slot fascia_moulding_painted_timber has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_framed_poster",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_lamp_post_01",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_oil_barrel",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_outdoor_bin",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_pallet",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_poster",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_roll_top_chimney",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_skip",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_swing_bin",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_traffic_cone_01",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_traffic_cone_02",
+   "message": "slot basic has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_wooden_crate_01",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_lamp_post_C",
+   "message": "slot bowl's material /Game/Ledger/Kit/MI_Kit_bowl samples no texture"
+  }
+ ]
+}
