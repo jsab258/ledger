@@ -1954,3 +1954,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.5 h of helpers.
 - Failed: the helper misquoted one review's tally and invented a credit conflict; the reviewer caught both. A whole store category can be closed by one licence tag: check it first.
 - Evidence: production/research/period-vehicles-and-props/N09-13-CAR-COSTS-2026-11-08.md.
+
+## 2026-11-08: bulk design text by half-price batch, second try (n09-14)
+- Made: three character backstories and 32 side-quest outlines from the canon, the outline and the casting sheets, as one batch of 35 requests to a mid-size model.
+- Method: build every request from the sources by script (quoted, never retyped); price the worst case before sending; send as a batch; one fresh reviewer against the sources; obvious fixes in place, named; open canon points to the producer as one tap.
+- Tools: tools/api_batch.py (now passes thinking settings through); the n09-14 build script; one Opus reviewer.
+- Target and check: every answer whole, headings and lists present, no content-rule or canon breach. Try 2: 35 of 35 whole, 34 passed, one cut fixed.
+- Cost: US$1.15 in API credit over two tries; about 1.5 hours of session time.
+- Failed and why: try 1 lost 32 of 35 answers to the token limit because the model thinks by default and its hidden thinking spent the limit; turning thinking off ("between_tools" on that model) fixed it. Lesson: on any model that thinks by default, set thinking explicitly in bulk requests and check output tokens against text length on a small sample first. Saying "has opinions on drink" is still speaking of drink: content rules need the model told that even denials count.
+- Evidence: production/research/bulk-api/n09-14/REVIEW-TRY2-2026-11-08.md.

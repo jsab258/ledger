@@ -139,6 +139,10 @@ def params(r):
     p = {"model": r["model"], "max_tokens": int(r["max_tokens"]), "messages": r["messages"]}
     if r.get("system"):
         p["system"] = r["system"]
+    # passed through when a request names them (8 Nov: Sonnet 5.5 thinks by default; {"type": "between_tools"} turns it off)
+    for k in ("thinking", "output_config"):
+        if r.get(k):
+            p[k] = r[k]
     return p
 
 

@@ -50,6 +50,7 @@ COMMON = """You write design text for LEDGER, a single-player third-person crime
 - Period: late-analog Britain. Landlines, phone boxes, pagers for a few, cash and paper; no mobiles in ordinary pockets, no internet. The dock labour scheme ended in July 1989 and more than half the registered dockers' jobs went; say that it happened, never explain why the docks went.
 - Leave open what canon leaves open: the truth of the warehouse fire, what Mickey's real book holds, who the outfit is, who the stranger in the yard was, how the story ends. Tom Nowak's life before the Hook is never told: nobody in Meridian knows it, and you must not invent it.
 - Mickey's is a minicab office (never a pub, never a former pub). Mickey (Michael Suddaby) died of his heart at the office early one morning three weeks before Tom came; Ron found him; nobody thinks otherwise.
+- Names: nobody on the street addresses or names Tom by name in a quoted line (never "Mr Nowak"); what each person calls him is decided by the game, by how well they know him. In quoted speech, write around his name.
 - British English, 1990 usage, plain and concrete; grounded noir with dry British wit, never American satire. Third person throughout."""
 
 BACK = COMMON + """
@@ -161,8 +162,14 @@ for key, name, idn, slug, side_facts, conflicts in PEOPLE:
            "\n\n=== SOURCE DISAGREEMENTS AND OPEN POINTS FOR THIS PERSON ===\n" + conflicts +
            "\n\nWrite " + name + "'s backstory now, 600 to 900 words, then INVENTIONS and GAPS.")
     reqs.append({"id": "backstory-" + key, "model": MODEL, "system": BACK,
-                 "messages": [{"role": "user", "content": msg}], "max_tokens": 4000})
+                 "messages": [{"role": "user", "content": msg}], "max_tokens": 4000,
+                 "thinking": {"type": "between_tools"}})
 
+# try 2 (8 Nov): her casting sheet's own line, so the notice is not read as her years at the laundry
+JULIE = ("\n\nFROM JULIE'S CASTING SHEET: she worked twelve years on the steam laundry's presses and was given twelve weeks' "
+         "notice; her line: \"Twelve years on them presses and twelve weeks' notice. Generous, they called it.\"")
+# try 2 (8 Nov): Sonnet 5.5 thinks by default and its hidden thinking spent try 1's max_tokens (32 of 35 cut off);
+# "between_tools" is its documented way to turn thinking off (the claude-api skill, read 8 Nov 2026)
 stories = re.findall(r"^\*\*(\d+)\. (.+?)\*\* (.+)$", side, flags=re.M)
 table = {m.group(1): (m.group(2).strip(), m.group(3).strip())
          for m in re.finditer(r"^\| (\d+) \| (.+?) \| (.+?) \|$", side, flags=re.M)}
@@ -171,9 +178,10 @@ for num, title, body in stories:
     when, waits = table[num]
     msg = ("THE SIDE STORY, as approved in the draft of 8 November:\n\n" + num + ". " + title + " " + body +
            "\n\nOFFERED WHEN: " + when + "\nWAITS: " + waits +
-           "\n\nWrite this story's outline now, 150 to 250 words, under the headings given.")
+           (JULIE if num == "9" else "") + "\n\nWrite this story's outline now, 150 to 250 words, under the headings given.")
     reqs.append({"id": "side-%02d" % int(num), "model": MODEL, "system": OUTL,
-                 "messages": [{"role": "user", "content": msg}], "max_tokens": 1500})
+                 "messages": [{"role": "user", "content": msg}], "max_tokens": 3000,
+                 "thinking": {"type": "between_tools"}})
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
