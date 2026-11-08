@@ -3,7 +3,7 @@
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-08 17:22
-**Stopped:** 2026-11-08 16:29
+**Stopped:** 2026-11-08 18:06
 (His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 5 to 15 minutes before the next run, which fires at :21; or past 400,000 whatever the clock) means rewrite this file, set Stopped from Get-Date, stop.)
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), until 13:00 Monday 9 November or until he says stop.
@@ -17,18 +17,18 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - An advisor's standing way goes here the same hour, named in its ack (message 13); the six measures' table in each morning's overview (message 11).
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
-## Run 17:22 on 8 Nov: his new order adopted
+## Run 17:22 to 18:06 on 8 Nov: his new order adopted
 - **His yes to adopt-order-2026-11-09 at 17:17 (verdict 16:17Z).** Done and pushed (6bdf73ccb, ci 97/97): production/orders/2026-11-09.md is the running order (n09-1 to n09-14, to Mon 16 Nov 13:00); every older open, carried and set-aside line closed in production/orders/archive/2026-11-09.md naming the n09 item or waiting-list line it folded into; nine groups nothing covers (K1 to K9) carried for his one keep-or-drop tap, **keep-or-drop-2026-11-08** (page version 60; items, ack and report rows written). On his answer: "yes" drops K8 and K9 (dropped, naming Jafar) and keeps the rest carried over; "keep-all" keeps all nine; then close the item.
 - Section 1 is in RULINGS.md (4,894 of 4,900): tries up to four by the 7 Nov rule (none asks him), four helpers standing, models by the 8 Nov replay. **CLAUDE.md could not be edited from the automatic run (refused as self-modification):** its "70% production, 10% review, 20% kept" and "two tries means two" lines are stale; RULINGS wins meanwhile, as does it over the scheduled prompt's "a third needs his yes". Needs a desktop turn: put it with Monday's items on his page.
 - The progress page's carried list is now empty (progress.json refreshed from the new order); republish tonight.
 - n09-10 (skills) given to one helper at about 17:40 (notes: production/research/skills/N09-10-SKILLS-2026-11-08.md; skills under .claude/skills).
-- n09-14: 35 requests (3 backstories, 32 side-story outlines, Sonnet 5.5) sent about 17:50 as one batch, worst case $0.66; its id in production/api-batches.jsonl: collect with `python tools/api_batch.py --fetch <id> production/research/bulk-api/n09-14/ANSWERS.jsonl --what "n09-14 ..."` (production/research/bulk-api/n09-14/BRIEF.md), then one review (Opus) against canon, then his page (story: the [invented] facts and five canon gaps: Ron's dock years 30 or 40, Sheila from 1959 before minicabs, Darren's bed, Mickey's age, a real town named in Darren's sheet). The text uses about $1 of about $190 left: 'credit near used' cannot be met by it; further use is a scope question for Monday's order.
+- n09-14: batch sent and collected (US$0.64); see Next, step 2.
 - Hourly row written (stamped 18:15 in error; written about 17:45) (78%, pace -4.7, US$7.91 since 17:22).
 - Earlier today, done and pushed: n02-9-qa-lean step 2; Ron's and Darren's clothes released into the player's game (16:30, his yeses): tonight's walk is their first; a fault brings the hold back.
 
 ## Next, in order
 1. His page and the advisor (keep-or-drop-2026-11-08 first); the hourly row with its Allowance line.
-2. n09-14's batch: fetch, review once, his page (above). n09-13 done: on his page as parked-cars-route-2026-11-08 (two open items now: that and keep-or-drop).
+2. n09-14, try 1 of 2 spent (US$0.64): 32 of 35 answers cut off at max_tokens 1500 (three empty, the budget probably spent on hidden reasoning, unverified); review: 1 pass, 13 with fixes, 21 fail (production/research/bulk-api/n09-14/REVIEW-2026-11-08.md, TEXTS.md). Try 2: rebuild REQUESTS with a higher max_tokens and no extended thinking (check build_requests.py and api_batch.py's request body), --dry, send --batch, review once, then his page: the texts plus the five canon gaps (Mickey's from 1959 to 1961; Ron's 30 or 40 dock years; where Darren sleeps; where the Tivoli is, parade against Parade; what Sheila knows of the fire). Fix in the prompts: Tom is not 'Mr Nowak' (the name ladder); Julie's twelve years. n09-13 done (on his page: parked-cars-route-2026-11-08).
 3. Tonight (no Unreal 01:15 to 04:30): read the walk (the dressed men's first walk, the iron cover, the office wall, the legs and launch lines); the progress page republished; the day's summary's lines (the order adopted, jumper colours, the neckband, his taps, the clothes released, the launch line); stop before 00:45.
 4. Monday, full speed to 13:00: n09-1 the exit in the morning (one fresh reviewer per exit on the newest build; production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md); 12:50 the weekly figure; `needs_you_page.py --archive`; n09-14 before the credit ends about 11 Nov; then n09-2 (Tom on his page by Tuesday), n09-3 and on in order.
 5. The street sweep's editor run once F: has room (after tonight's retention; `python tools/retention.py space --job "asset sweep" --drives CF` first), as tools/ue/asset_checks.py's docstring says.
