@@ -1982,3 +1982,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.3 h of the session plus two helpers of a few minutes each (after the 5 h draft of the morning).
 - Failed and why: the time log had a two-week hole and one window with its stop before its start; recorded figures fill the hole and are marked as recorded, not measured.
 - Evidence: production/research/phase2-plan/PS5-GAP-LIST-2026-11-08.md, SCOREBOARD-2026-11-08.md.
+
+## Finding where cache money goes (8 Nov 2026, n09-11)
+- Made: a breakdown of a week's prompt-cache writes by cause, and the daily measure corrected.
+- Method: read every session and helper log line by line, each step once by message id, classify each write (start, helper start, step growth, large addition, gap past the cache's life, compaction, header change); rebuild the daily measure's figures to the cent before blaming the work; then fix the measure and re-run it on the same real day.
+- Tools: Python over JSONL logs; a diagnosis helper on the strong model.
+- Target and check: the rebuilt total equal to the measure's; after the fix, the measure equal to the rebuild (35.28).
+- Cost: about 0.2 h of the session plus one helper run of about 12 minutes.
+- Failed and why: the "unexplained" share was mostly the measure itself, pricing every write at the long-cache rate and naming only the session's own starts.
+- Evidence: production/research/token-audit/N09-11-CACHE-AND-TOOLS-2026-11-08.md.

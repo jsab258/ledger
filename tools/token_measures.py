@@ -177,6 +177,7 @@ def measure_day(day):
     biggest, by_kind = [], collections.Counter()
     tokens = collections.Counter()
     start_write, rewrite = 0.0, 0.0
+    helper_start, helper_runs = 0.0, 0
     write_all, runs, broken, rewrites = 0.0, 0, 0, 0
     rounds = collections.Counter()
     for path, meta in logs_touched(since):
@@ -194,9 +195,17 @@ def measure_day(day):
             tokens["read"] += cr
             tokens["write"] += cw
             tokens["fresh"] += fresh
-            cost = cw * p[3] / 1e6
+            # each write at its own rate, as step_cost: helpers write at the 5-minute rate, the session at 1 hour (n09-11, 8 Nov)
+            w1h = (u.get("cache_creation") or {}).get("ephemeral_1h_input_tokens", 0) or 0
+            w5m = (u.get("cache_creation") or {}).get("ephemeral_5m_input_tokens", None)
+            if w5m is None:
+                w5m = max(cw - w1h, 0)
+            cost = (w5m * p[2] + w1h * p[3]) / 1e6
             write_all += cost
-            if meta is None and i < START_STEPS:
+            if meta is not None and i < START_STEPS:
+                helper_start += cost
+                helper_runs += 1 if i == 0 else 0
+            elif meta is None and i < START_STEPS:
                 start_write += cost
             elif meta is None and cw > 30000:
                 rewrite += cost
@@ -217,7 +226,8 @@ def measure_day(day):
             biggest.append((tok, kind, tool, cost, os.path.basename(path)[:14]))
     biggest.sort(key=lambda b: -b[0])
     return {"usd": usd, "biggest": biggest[:10], "byKind": by_kind, "tokens": tokens, "writeAll": write_all, "startWrite": start_write,
-            "rewrite": rewrite, "rewrites": rewrites, "runs": runs, "broken": broken, "rounds": rounds}
+            "rewrite": rewrite, "rewrites": rewrites, "runs": runs, "broken": broken, "rounds": rounds,
+            "helperStart": helper_start, "helperRuns": helper_runs}
 
 
 def thrown_of(day):
@@ -374,8 +384,9 @@ def overview(day, allowance=None):
     print("| 1 Tries thrown away, reviewer runs | %s; %d reviewer runs on %d items |" % (
         ("%d, US$%.2f" % (len(thrown), sum(u for _, u in thrown))) if thrown else "none recorded (the record began 5 Nov evening)", sum(m["rounds"].values()), len(m["rounds"])))
     print("| 2 Tool results' carrying cost | US$%.2f of US$%.2f; pictures US$%.2f, %.0f%% of the day (estimated) |" % (carried, tot, pic, 100 * pic / tot))
-    print("| 3 Prompt cache | %.1f%% of tokens read from cache; writes US$%.2f, of which starts US$%.2f in %d runs; %d rewrites mid-run US$%.2f; %d runs missed the shared start |" % (
-        100 * t["read"] / all_in, m["writeAll"], m["startWrite"], m["runs"], m["rewrites"], m["rewrite"], m["broken"]))
+    print("| 3 Prompt cache | %.1f%% of tokens read from cache; writes US$%.2f, of which session starts US$%.2f in %d runs, helper starts US$%.2f in %d, %d rewrites mid-run US$%.2f, the rest step growth US$%.2f; %d runs missed the shared start |" % (
+        100 * t["read"] / all_in, m["writeAll"], m["startWrite"], m["runs"], m["helperStart"], m["helperRuns"], m["rewrites"], m["rewrite"],
+        m["writeAll"] - m["startWrite"] - m["helperStart"] - m["rewrite"], m["broken"]))
     print("| 4 The start, tokens | tools %d (%d tools), skills' list %d (%d), memory and project files %d, system %d; never used this week: %d tools, %d tokens; %d skills, %d tokens |" % (
         sum(servers.values()), len(tools), parts["skill_listing"], len(skills), parts["instructions"], parts["system prompt"], len(idle_tools), sum(idle_tools.values()), len(idle_skills), sum(idle_skills.values())))
     print("| 5 Cycle time | change to its night walk: %s; his answers: %s |" % (
