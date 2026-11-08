@@ -1295,3 +1295,8 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: the fitted street sweep ran in the editor (1,849 assets): 766 known faults and 4 new, all one asset (price_cards, four sizes not powers of two); the report became the known list (551 rule-and-asset pairs, from 550), so the sweep now fails on new faults only. The fixes stay on the waiting list (the street's real asset faults by size), except the six worn fronts' uncompressed maps, which n09-3 takes after Monday's exit.
 - Reason: the 14:31 decision's plan; F: back over its floor at 21:24.
 - Link: production/asset-checks/street-sweep-summary.json; the full report F:/LedgerTools/asset-checks/street-sweep.json.
+
+## 2026-11-08 22:10, n09-3: the pictures' cooking plan adopted with its review's fixes
+- Decision: the run-time pictures become cooked, compressed textures by COOK-PICTURES-PLAN-2026-11-08.md (eight steps, about 15.5 h; peak expected about 4.6 GB from 6.15, inferred), with the fresh review's four fixes written into it. Work starts after Monday's exit, so the exit's build is unchanged; the look is judged at the gate and any visible change goes to his page.
+- Reason: the packaged capture (section 6) and the plan's review, pass with fixes; reference: studies/12-tech-budgets.md.
+- Link: production/research/frame-headroom/COOK-PICTURES-PLAN-2026-11-08.md; COOK-PICTURES-REVIEW-2026-11-08.md.

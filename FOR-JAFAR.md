@@ -43,7 +43,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-- Nothing open (08:25): your three answers of this morning are acted on (the rulings' room, the Sonnet replay, running today, and the two men, recorded as interim with your note).
+- Nothing open (20:26): the order of 9 November adopted by your tap (17:17); your five answers of 19:34 acted on.
 
 ### Road to worth playing (PLAN.md)
 
@@ -54,6 +54,22 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Monday 9 November (night, for Sunday)
+
+**Failed:**
+- The clothing-as-code test into Marvelous could not start: a scheduled run cannot see or click Marvelous's window. It waits for a session you start, or your setting.
+- The F: drive dipped under its floor and held builds; two of my own old scratch folders cleared it.
+
+**Done:**
+- Your five answers acted on; the page cleared.
+- Phase 2's plan on the progress page: the PS5 gap list (street life, distance, people) and the scoreboard (repeats a quarter to a third of the first).
+- Four field scans (people moving, hair, the crowd, cars); the hatchback by our own route.
+- Clothing as code: four base patterns written and exported cleanly.
+- Card memory measured in the packaged game: pictures unpacked at run time are 1.95 of the 6.15 GB peak; a plan to pack them properly, about 15 hours, expects about 4.6 GB (being reviewed).
+- The cost line's overcount fixed; the street's asset check run in full.
+
+**Act on:** the morning's questions on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Sunday 8 November (night, for Saturday)
 
