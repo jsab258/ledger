@@ -170,6 +170,7 @@ class Route:
         self.saved, self.out = saved, out
         self.rows, self.seen, self.pending, self.trace = [], 0, [], []
         self.detours = 0
+        self.began = time.time()  # a game log older than this is the previous run's (the launch line's review, 8 Nov)
 
     def epic_walk(self):
         """True when the running game logged Epic's walk (SliceCharacter.cpp: "LedgerWalk: Epic's route"), read once
@@ -331,7 +332,11 @@ class Route:
         try:
             sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
             import launch_line_check
-            verdict["launch"] = launch_line_check.last_command_line(os.path.join(self.saved, "Logs", "LedgerProbe.log"))
+            game_log = os.path.join(self.saved, "Logs", "LedgerProbe.log")
+            if os.path.exists(game_log) and os.path.getmtime(game_log) >= self.began:
+                verdict["launch"] = launch_line_check.last_command_line(game_log)
+            else:  # the game never wrote a log this run: last night's line would lie
+                verdict["launch"] = None
         except Exception as e:  # a report line, never the walk's failure
             verdict["launch_error"] = str(e)
         with open(os.path.join(self.out, "verdict.json"), "w", encoding="utf-8") as fh:
