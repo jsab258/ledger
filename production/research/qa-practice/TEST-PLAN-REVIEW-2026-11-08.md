@@ -1,0 +1,25 @@
+# Review of TEST-PLAN-PHASES-2-3-2026-11-08.md (fresh reviewer, 8 Nov 2026)
+
+Verdict: PASS WITH FIXES. Most citations check out; 7 findings (3 wrong or unsupported citations, 4 about the bar, the lean rule and wording). No confirmed-but-unconfirmed claims: the plan marks its doubts "unverified" and claims nothing as "confirmed".
+
+Checked and correct: RULINGS line 23 (99%, lean), 36 (sizes), 57 (kit pieces), 69 (voices by ear); FINDINGS lines 8, 9, 11, 12 (74,000 to 702,000), 18, 19, 24; asset_checks.py line 35 (untested in Unreal); STUCK-LEGS-REVIEW line 15 (16 of 20) and line 16 (Sheila's 1.31 m, five nights); LAUNCH-LINE-REVIEW fault 1 (stale log); STEPS steps 2, 3, 4 and "Held"; QA lines 11, 14, 32, 36, 44, 56, 63; PLAN lines 29, 30, 33, 34; PIECES-DRAFT lines 21, 81, 84; order rules 7 and 10; route_week_check.py checks 16 rows; the helper scripts named all exist. Length: about 980 words in dense bullets, roughly two pages; within the limit, with no room to add.
+
+## Findings
+
+1. **Wrong line range.** Plan line 7: "CoreTests, Soak, SaveChaos, PerceptionGolden, StrangerTest (ci-checks.sh lines 238 to 241)". Source tools/ci-checks.sh: core-tests 235, talk-tests 236, soak 237, save-chaos 238, perception-golden 239, perception-golden-selftest 240, stranger-test 241. Fix: write "lines 235 to 241" and add TalkTests, or drop the line numbers.
+
+2. **"gamecheck" is not in ci-checks.** Plan line 7 lists "canon and content gates, gamecheck" as ci-checks passes. Source tools/ci-checks.sh lines 155 to 158 (canon-gate, content-gate) are there; grep finds no gamecheck in it (tools/gamecheck.py exists, named only in container-setup.sh line 51). Fix: replace "gamecheck" with "reach-check" (ci-checks.sh line 148) or say gamecheck runs outside ci-checks and cite where.
+
+3. **Wrong source for "medians read as peaks".** Plan line 12: "Catches medians read as peaks (FINDINGS line 12)". FINDINGS line 12 gives only 6,089 MB and 7.4 to 8.7 GB, nothing about medians. The statement is in QA-FIRST-STEPS step 3 (lines 116 to 121) and QA-LEAN-PROPOSAL lines 38 to 42. Fix: cite "STEPS step 3, lines 116 to 121".
+
+4. **Unsupported evidence.** Plan line 21: "Mickey's dark front was caught by eyes (order waiting item 3)". Order line 39 only lists "Mickey's front too dark at night" as a waiting item; it does not say who caught it. FINDINGS line 8 (4 Nov, window reflects the street black, mended) is the nearest recorded fault. Fix: cite FINDINGS line 8's 4 Nov entry and say "caught at the gate", or delete the sentence; "Nothing added" stays.
+
+5. **The bar is not stated as pass or fail.** n09-9 asks for "the bar a build passes before it reaches him". Plan section 1 lists seven checks but never says which fail a build. STEPS step 2 says the launch line "reports and never fails" (line 90) and step 3 "reports, never fails" (line 127); the plan says so only for check 6. Check 5 lists "the legs-never-arrived line" while section 5 says that line fires on 16 of 20 nights and "as a bar would always fail", and the plan's own "working reading" of 99% is unverified. Fix: add a column "fails the build / reports only" (1, 2: fail; 3, 7: gate; 4, 5, 6: report only unless stated), remove the legs line from check 5's bar wording, and say plainly in one sentence what a build must show to reach him (for example: checks 1, 2, 3 green, the walk reached all route stages, the launch line not TEST, check 7 passed).
+
+6. **Not marked built or not.** Checks 4 and 6 read as present. Per git (commits 276d2f423, 2cad25a44) the legs and launch lines are built; no memory-peak code exists yet (no gpuMemPeak in tools/; nightly_walk.py has no peak line), and the worst-frame line (PIECES-DRAFT line 84) is a phase 2 measure that no STEPS step builds. Fix: mark check 6 "not yet built (STEPS step 3)" and the worst-frame part "a measure named in PIECES-DRAFT line 84, not built".
+
+7. **Lean rule: small additions and one loose cite.** (a) Section 2 adds measures (kit placements per mesh, props per 10 m, sound layers present) and section 3 adds "empty minutes" as a built exit measure (line 38). They are measures from PIECES-DRAFT section 4 or PLAN line 34 and not checks, so no fault-slipped case is needed, but the plan should say "measures from PIECES-DRAFT section 4, no check added" once instead of per line, and mark "empty minutes" as the only new thing, required by PLAN line 34 and to be costed by the order. (b) Line 28 cites PIECES-DRAFT line 52 for "P9's blind silhouette"; it is at lines 71 and 93 (line 52 says only "gated on P9"). Fix: cite lines 71 and 93. (c) Line 44 cites PROPOSALS-REVIEW line 21 for "never missed"; that wording is at PROPOSALS-REVIEW line 15 and QA-LEAN line 36, line 21 is the fix to drop the line. Fix: cite line 15 and QA line 36.
+
+## Does it answer n09-9's test-plan part?
+
+Mostly. Phases 2 and 3 are both covered by piece kind and exit (PLAN lines 30, 34), the lean rule is followed (every "nothing added" has a fault or none; the wrong-project import is held back as a candidate), and the length is within two pages. The gap is finding 5: the bar needs a clear pass/fail sentence.
