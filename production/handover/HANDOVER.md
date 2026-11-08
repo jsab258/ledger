@@ -20,15 +20,19 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - His page and the advisor read at 09:24: nothing new since 07:45 (message 27 acknowledged by the last session). Row 09:26 (73%, pace 5 behind).
 - The quay diagnosis's last two points read: quay-cast.json's -5 is the retired slice's, never loaded in play; the 8 Nov reverse picture shows nobody mid-road. Nothing to change.
 - **n02-9-asset-check-gaps**, pushed 58c2305: tools/garments_shipped_check.py in the push checks (17 of 17 pass); street, kit, prop, shop and vehicle folders have budget kinds and a street-sweep piece (full report F:/LedgerTools/asset-checks, summary production/asset-checks/street-sweep-summary.json): 1,849 assets, 3,340 errors, mostly rule misfits, so failing the build on it waits for Monday's order (about half a day). Two tool faults mended on real files (memory: commandlets lack editor subsystems).
-- **n02-9-record-caps** (in hand): doc-caps now fails FINDINGS.md over 20 entries and this file over 1,800 words; FINDINGS merged from 24 to 20 entries, nothing dropped; this file rewritten under the cap.
+- **n02-9-record-caps** done, pushed cbe0dc5: doc-caps fails FINDINGS.md over 20 entries and this file over 1,800 words; FINDINGS merged 24 to 20, nothing dropped.
+- The exit brief (CLOSE-BRIEF-2026-11-09.md) carries this morning's perf step (3b3454e: BELOW-60, 56.5 fps, 5,976 MB). Pushed.
+- The sweep's 3,340 errors sorted for Monday (production/research/asset-checks/STREET-SWEEP-FIT-2026-11-08.md): about 2,580 misfits, about 700 real faults; one small review passed it with fixes, applied. Texture roles now read case-blind (misreadings 275 to 1; 145 packed maps on the wrong compression show as real; garments unchanged), in this stop's commit.
+- Row 09:42 (74%, pace 4.2 behind). His page read 09:43: nothing new.
 
 ## Next, in order
-1. Finish n02-9-record-caps: its order line, DECISIONS, RECIPE, ci-checks, push. Then the hourly row (last 09:26).
+1. The hourly row (last 09:42) and his page; pace and spend.
 2. Waiting list under his weekend yes, nothing touching Unreal during the night's build and walk: candidates n02-9-flemish-brick (a look change: editor pictures and one review before tonight's build), n02-9-side-stories (25 to 40 for his page, Monday), or the fallback list.
 3. Tonight: read the walk (the iron cover, Ron at 5.3, the office wall, the landing at the apron, Darren lost?); Sunday night's log lines into the brief; publish the progress page with the Tailor's interim line (tailor boss standing, not defeated: advisor message 27); stop before 01:40, no Unreal 01:15 to 04:30.
 4. Monday: n02-3-4-exit in the morning; 12:50 the weekly figure; `needs_you_page.py --archive`; the Sonnet replay's folder on F:/LedgerTools/replay-2026-11-08 (about 0.5 GB, my own) deleted with one line after the order is written.
 
 ## Tried and failed, and why (newest; older ones in TRIED-ARCHIVE.md)
+- Times guessed three times this session (DECISIONS and the order got 09:45, 10:00, 10:05 when the clock read 09:35 to 09:56; all corrected). Run Get-Date in the same command that writes a time.
 - The asset sweep (8 Nov): a -run=pythonscript commandlet has no StaticMeshEditorSubsystem (crash on the first static mesh); EditorStaticMeshLibrary answers -1 for unread counts, which passed every collision rule silently. Check a tool's readings against a known real value.
 - Ron's back, 7 Nov: a signed nearest-surface distance to the head's open lower edge read 9.6 mm where the head is 6 cm away; check the unsigned distance first, measure from the side the fault is seen.
 - The collar: four tries, set aside; its back now seen in Sheila's talk, same cause.

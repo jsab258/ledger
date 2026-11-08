@@ -134,10 +134,7 @@
   "glass_words": ["glass"],
   "see_through_ok": [],
   "untextured_ok": [],
-  "texture_roles": {
-    "normal": ["_Normal", "_NormalDX", "_N"],
-    "packed": ["_Packed", "_ORM", "_Masks", "_Mask", "_M"]
-  },
+  "texture_roles": {"normal": ["_Normal", "_NormalDX", "_N", "_nor_gl", "_nor_dx"], "packed": ["_Packed", "_ORM", "_Masks", "_Mask", "_M", "_ARM", "_Roughness", "_rough"], "packed_prefixes": ["T_KitDetail_", "T_JoineryEdges_"], "note": "matched case-blind after a trailing resolution token (_1k to _8k); 8 Nov, n02-9-asset-check-gaps: scan maps named _nor_gl_1k and _arm_1k, and the kit detail masks, had read as colour"},
   "waiver_rule": "A set-aside fault is waived here, never in code: each waiver names the asset (name or path), the rule (one of the rules above), its DECISIONS.md line and its FINDINGS.md entry. A waived error is listed in the report and fails nothing alone (CLAUDE.md, 'The gate': known shortfalls are listed, failing nothing alone).",
   "waivers": [
     {"asset": "SKM_DarrenBoots", "rule": "triangles", "decision": "DECISIONS.md, 2026-11-07 (Ron's passed boots carried to Darren, same 10,416 triangles a pair as Tom's)", "finding": "FINDINGS.md, Clothes (the boots over their triangle cap)"},

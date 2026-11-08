@@ -80,9 +80,17 @@ def is_pow2(n):
 
 
 def texture_role(spec, name):
+    """By suffix, case-blind, after any resolution token (_1k, _2k, _4k, _8k): scans name their maps
+    'x_nor_gl_1k' and 'x_arm_1k' (8 Nov: 268 such maps read as colour); or by a prefix the spec names."""
     roles = spec.get("texture_roles", {})
+    low = name.lower()
+    low = re.sub(r"\d+$", "", low)          # an import's copy number: _1k1, normal2
+    low = re.sub(r"_clean$", "", low)       # the cleaned copies of a scan's maps
+    low = re.sub(r"_(1|2|4|8)k$", "", low)
     for role in ("normal", "packed"):
-        if any(name.endswith(s) for s in roles.get(role, [])):
+        if any(low.endswith(s.lower()) for s in roles.get(role, [])):
+            return role
+        if any(name.startswith(p) for p in roles.get(role + "_prefixes", [])):
             return role
     return "colour"
 
@@ -534,6 +542,10 @@ def selftest():
     check("a folder boundary, not a name prefix", kind_of(spec, "/Game/Ledger/MetaHumans/GarmentsOld/SKM_X") == "exempt")
     check("an unmapped folder has no kind", kind_of(spec, "/Game/Ledger/Unmapped/SM_Wall") is None)
     check("the street's folder is a frontage", kind_of(spec, "/Game/Ledger/Street/quay-street/SM_Wall") == "frontage")
+    check("a scan's normal map with its size and copy number", texture_role(spec, "lifebuoy_nor_gl_1k_clean1") == "normal")
+    check("a scan's packed map, lower case", texture_role(spec, "vintage_lighter_arm_1k") == "packed")
+    check("a kit detail mask by its prefix", texture_role(spec, "T_KitDetail_brick") == "packed")
+    check("a colour map stays colour", texture_role(spec, "T_TomJumper_ColourAO") == "colour")
 
     # the spec
     real = load_spec()
