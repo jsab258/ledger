@@ -132,3 +132,32 @@ Not checked or not reached:
 - whether -dpcvars reaches startup-only cvars (DeviceProfileManager.cpp:737-760 was not followed into the console manager);
 - Lumen's direct and final lighting atlas formats (sizes above assume 4 bytes a texel);
 - the build machine's perf CSVs (its step stands still at r.ScreenPercentage=50 with no scalability set, and keeps only the verdict line; .github/workflows/ledger-probe-unreal.yml:2060-2128).
+
+## 6. The capture, run 8 Nov 21:26 (measured)
+
+The section 5 run on the packaged copy of 8 Nov 12:48, High, game alone (p1-packaged.ps1 -Tag memwhere). Reports and the game log are in F:/LedgerTools/tmp/memwhere-2026-11-08 (seven-day scratch). Peak this run 6,152 MB (CSV), Windows' counter for the game 6,749 MB at its peak.
+
+rhi.DumpResourceMemory all at the peak, 5,138 named resources, 4,583 MB not transient (plus 3,698 MB of transient-heap bookkeeping):
+
+| Holder | MB | Count |
+|---|---|---|
+| Pictures the game decodes at run time (/Engine/Transient Texture2D) | **1,952** | 353 |
+| of which 30 MB each (4096x1855 BGRA8: the seven shop cards, three states each) | 630 | 21 |
+| of which 16 MB each (2048x2048 BGRA8; the street sidecar's maps and others, owners not named in the dump: inferred) | 960 | 60 |
+| of which 9, 8, 4 MB and smaller | 362 | 272 |
+| Cooked game textures and meshes (/Game/Ledger) | 866 | 3,506 |
+| of which six shop fronts' worn maps cooked uncompressed, one mip (5410x550 BGRA8, listtextures uncompressed) | 268 | 20 |
+| Lumen | 678 | 100 |
+| Distance fields and the global distance field | 461 | 35 |
+| TSR history | 156 | 4 |
+| Hair (outside the transient heap) | 89 | 549 |
+| MetaHuman shared content | 66 | 98 |
+| The template's logo texture, T_GameAnimationSample_Logo, resident | 18 | 1 |
+
+Findings:
+- The run-time pictures are 1,952 MB, not the 1,130 MB inferred in section 2: the 2048x2048 group alone is 960 MB. This is the largest single holder on the card.
+- listtextures uncompressed lists 85 cooked textures, 271 MB, almost all the six worn shop fronts' maps: their import left compression off.
+- Nanite 0.3 MB, shadows 41 MB, virtual textures 0.06 MB: confirms section 0 (no virtual shadow pool).
+- Ray-tracing acceleration structures 0.0 MB in rhi.DumpMemory: the 221 MB row was bookkeeping (confirms section 0).
+
+What a fix is worth (inferred from the sizes, to be measured packaged): the run-time pictures cooked as block-compressed textures with mips (BC7 or BC1, a quarter or an eighth of BGRA8) leave about 500 MB of the 1,952; compressing the six fronts' maps saves about 200 MB more. Together about 1.6 GB off the peak.

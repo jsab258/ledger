@@ -1281,3 +1281,12 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: n09-3's next step is to cook and compress the pictures the game now decodes at run time (shop cards about 609 MB, street maps about 487 MB, inferred; about 406 MB from loading only each shop card's shown light state, game code alone), measured in one packaged day walk with the report's memreport capture first. The hair voxel texture (about 256 MB at the walk's peak, 448 cubed R32 pages) is decided inside n09-7's test, since lowering it changes the hair's look. The memory plan's table loses its shadow-page and ray-tracing rows (virtual shadow maps are off; the RT sum is bookkeeping). The peaks are day walks (6,041 to 6,192 MB over 42 walks), not night.
 - Reason: production/research/frame-headroom/MEMORY-WHERE-2026-11-08.md (a diagnosis helper, engine source cited); RULINGS 24 Oct (the 6 GB line counts the game alone: confirmed, the CSV figure is the game process's own).
 - Link: that file.
+
+## 2026-11-08 21:24, deleted my own scratch pictures (about 620 MB on F:)
+- Decision: deleted F:/LedgerTools/tmp/walkoff (the walk-off's editor proof pictures, 2 Nov) and F:/LedgerTools/tmp/brick-pages (3 Nov page pictures); no record cites either; both made by the session.
+- Reason: RULINGS 29 Oct (own leftovers nothing uses); F: was 19.6 GB against its 20 GB floor and every build waited on it.
+
+## 2026-11-08 21:37, n09-3: the memory capture read; run-time pictures are the first fix
+- Decision: n09-3's next step stays the cooking of the run-time pictures, now measured at 1,952 MB of the 6,152 MB peak (353 pictures; shop cards 630 MB, the 2048 group 960 MB), plus turning compression on for the six worn shop fronts' maps (268 MB cooked uncompressed). The logo texture left from the template (18 MB) goes on the list. Each change is measured in one packaged day walk.
+- Reason: the packaged memreport capture (frame 560, High, game alone); reference: studies/12-tech-budgets.md, block-compressed cooked textures with mips as both reference games ship them.
+- Link: production/research/frame-headroom/MEMORY-WHERE-2026-11-08.md section 6.
