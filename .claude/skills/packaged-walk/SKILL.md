@@ -86,7 +86,8 @@ Why: CLAUDE.md ("How the work is done"): every piece changed in a day is walked 
 
 - In the morning, before any summary: the night's report, any tester run's report.md, and ue-build.txt when the build was red (its error lines come from the whole cook log). A frame rate that drops sharply: first ask whether local GPU work overlapped the run (local-renders-spoil-runner-fps).
 - A new fault in the piece blocks it: fix it (two tries), push, walk again. The piece is "done" only when a packaged walk names no new fault in it; a big item stays "ready for review" until Jafar passes it (CLAUDE.md).
-- **Check:** the walk that passed the piece played a copy whose build-commit holds the piece's commit (its time compared with the walk's, as in step 6).
+- The pass ran on the player's own launch line: `python tools/launch_line_check.py <the run's game log>` prints PLAYER or PLAYER+WATCH; TEST names the test switches and the run is not a pass (8 Nov: the office and sitting "passed" for days behind -MickeysInside and -TomSit). Its notes (stand-in talk, a camera mode) go beside the verdict.
+- **Check:** the walk that passed the piece played a copy whose build-commit holds the piece's commit (its time compared with the walk's, as in step 6); launch_line_check said PLAYER or PLAYER+WATCH for its log.
 
 ## Records
 

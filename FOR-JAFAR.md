@@ -43,8 +43,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-- Room in your rulings for the efficiency line: recommended yes.
-- A blind replay, Opus against Sonnet, on Sunday: recommended yes.
+- Nothing open (08:25): your three answers of this morning are acted on (the rulings' room, the Sonnet replay, running today, and the two men, recorded as interim with your note).
 
 ### Road to worth playing (PLAN.md)
 
@@ -74,6 +73,8 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 **Decided, yours to overturn:**
 - The quay's meeting spot moved to the street side of the end wall.
+
+**Left for you:** an empty folder, C:\c, made by a slip in a path this morning; the safety check stops me deleting it. Delete it whenever you like; nothing uses it.
 
 **Act on:** two questions on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 

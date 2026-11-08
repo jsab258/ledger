@@ -472,7 +472,8 @@
      "No, cut other rulings instead"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 08:25, answered yes (07:34): cap 4,900, his efficiency line first under How the work runs, the 1 Nov line folded in"
   },
   {
    "id": "sonnet-blind-replay-2026-11-07",
@@ -490,7 +491,8 @@
      "No, keep the one real day as you said on 5 November"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 08:25, answered yes (07:34): the blind replay runs today, copies on F, about 3% of the week"
   },
   {
    "id": "dressed-men-look-2026-11-08",
@@ -526,7 +528,8 @@
      "alt": "Darren, close, as in talk"
     }
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-08 08:25, answered yes (07:41), interim, his note: a real wool knit texture, a colour each, Darren's neckband; tailor boss standing, the three on the waiting list"
   }
  ]
 }
