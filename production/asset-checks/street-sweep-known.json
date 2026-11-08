@@ -1,7 +1,7 @@
 {
  "piece": "street-sweep",
- "from": "offline re-score of the 09:30 sweep, fitted rules, 8 Nov",
- "when": "2026-11-08 09:30:53",
+ "from": "assetChecks=FAIL piece=street-sweep assets=1849 errors=4 warnings=28 waived=0 known=766 first=texture_size:price_cards:512x192/powers of two",
+ "when": "2026-11-08 21:41:24",
  "what": "Real faults listed, failing nothing alone; each fixed one leaves this list. A new error outside it fails the sweep.",
  "known": [
   {
@@ -18,6 +18,11 @@
    "rule": "texture_role",
    "asset": "T_WoodTrim_FlatNormal",
    "message": "a colour map with sRGB off"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "T_WoodTrim_FlatNormal",
+   "message": "the texture is one flat colour"
   },
   {
    "rule": "collision",
@@ -926,11 +931,6 @@
   },
   {
    "rule": "texture_size",
-   "asset": "tile_chandler",
-   "message": "1243x1050 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
    "asset": "21_est-1879_rgba",
    "message": "475x121 is not a power of two each side"
   },
@@ -1005,6 +1005,21 @@
    "message": "400x220 is not a power of two each side"
   },
   {
+   "rule": "texture_size",
+   "asset": "tile_chandler",
+   "message": "1243x1050 is not a power of two each side"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_202e1f",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_70624e",
+   "message": "the texture is one flat colour"
+  },
+  {
    "rule": "lods",
    "asset": "SM_chandler-front-joinery",
    "message": "1 levels of detail, the frontage kind wants 3"
@@ -1025,6 +1040,21 @@
    "message": "400x220 is not a power of two each side"
   },
   {
+   "rule": "placeholder",
+   "asset": "_202e1f1",
+   "message": "the texture is one flat colour"
+  },
+  {
+   "rule": "parts",
+   "asset": "_70624e",
+   "message": "imported from an older F:/LedgerTools/game-inputs/production/assets/shop-fronts/chandler-front-joinery.glb (MD5 2b4385f0, the file now 3aa31bcc)"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "_70624e1",
+   "message": "the texture is one flat colour"
+  },
+  {
    "rule": "lods",
    "asset": "SM_chandler-front-worn",
    "message": "1 levels of detail, the frontage kind wants 3"
@@ -1033,11 +1063,6 @@
    "rule": "lods",
    "asset": "SM_grocer-front",
    "message": "1 levels of detail, the frontage kind wants 3"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "lobby_floor_grocer",
-   "message": "1006x630 is not a power of two each side"
   },
   {
    "rule": "texture_size",
@@ -1068,6 +1093,11 @@
    "rule": "texture_role",
    "asset": "grocer_orm",
    "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "lobby_floor_grocer",
+   "message": "1006x630 is not a power of two each side"
   },
   {
    "rule": "lods",
@@ -1176,16 +1206,6 @@
   },
   {
    "rule": "texture_size",
-   "asset": "lobby_floor_steam_laundry",
-   "message": "1006x330 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "tile_steam_laundry",
-   "message": "1243x1050 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
    "asset": "13_service-washes_rgba",
    "message": "1067x144 is not a power of two each side"
   },
@@ -1198,6 +1218,11 @@
    "rule": "texture_size",
    "asset": "hours_steam_laundry_basecolour",
    "message": "300x190 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "lobby_floor_steam_laundry",
+   "message": "1006x330 is not a power of two each side"
   },
   {
    "rule": "texture_size",
@@ -1263,6 +1288,11 @@
    "rule": "texture_role",
    "asset": "steam_laundry_orm",
    "message": "a packed map compressed as TC_EDITOR_ICON"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "tile_steam_laundry",
+   "message": "1243x1050 is not a power of two each side"
   },
   {
    "rule": "lods",
@@ -1553,6 +1583,11 @@
    "rule": "texture_role",
    "asset": "CashRegister_01_glass_arm_1k",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "CashRegister_01_glass_nor_gl_1k",
+   "message": "the texture is one flat colour"
   },
   {
    "rule": "texture_role",
@@ -1905,6 +1940,11 @@
    "message": "a packed map compressed as TC_DEFAULT"
   },
   {
+   "rule": "texture_size",
+   "asset": "price_cards",
+   "message": "512x192 is not a power of two each side"
+  },
+  {
    "rule": "texture_role",
    "asset": "rubber_boots_arm_1k_clean",
    "message": "a packed map compressed as TC_DEFAULT"
@@ -1950,11 +1990,6 @@
    "message": "1 levels of detail, the display kind wants 2"
   },
   {
-   "rule": "texture_size",
-   "asset": "jar_labels",
-   "message": "512x640 is not a power of two each side"
-  },
-  {
    "rule": "texture_role",
    "asset": "bananas_arm_1k",
    "message": "a packed map compressed as TC_DEFAULT"
@@ -1973,6 +2008,11 @@
    "rule": "texture_role",
    "asset": "hamburger_buns_arm_1k",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "jar_labels",
+   "message": "512x341 is not a power of two each side"
   },
   {
    "rule": "texture_role",
@@ -2116,6 +2156,11 @@
   },
   {
    "rule": "texture_size",
+   "asset": "cards",
+   "message": "1150x640 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
    "asset": "cartons",
    "message": "1120x1620 is not a power of two each side"
   },
@@ -2123,26 +2168,6 @@
    "rule": "texture_size",
    "asset": "magazines",
    "message": "2048x1820 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "papers",
-   "message": "1160x1520 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "postcards",
-   "message": "1215x1120 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "sweets",
-   "message": "512x1920 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "cards",
-   "message": "1150x640 is not a power of two each side"
   },
   {
    "rule": "texture_size",
@@ -2155,9 +2180,24 @@
    "message": "1024x384 is not a power of two each side"
   },
   {
+   "rule": "texture_size",
+   "asset": "papers",
+   "message": "1160x1520 is not a power of two each side"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "postcards",
+   "message": "1215x1120 is not a power of two each side"
+  },
+  {
    "rule": "texture_role",
    "asset": "stationery_supplies_arm_1k_clean",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "sweets",
+   "message": "512x1920 is not a power of two each side"
   },
   {
    "rule": "triangles",
@@ -2295,9 +2335,19 @@
    "message": "a packed map compressed as TC_DEFAULT"
   },
   {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_01_artwork_nor_gl_1k",
+   "message": "the texture is one flat colour"
+  },
+  {
    "rule": "texture_role",
    "asset": "standing_picture_frame_01_artwork_rough_1k",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_01_artwork_rough_1k",
+   "message": "the texture is one flat colour"
   },
   {
    "rule": "texture_role",
@@ -2313,6 +2363,11 @@
    "rule": "texture_role",
    "asset": "standing_picture_frame_02_artwork_rough_1k",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "standing_picture_frame_02_artwork_rough_1k",
+   "message": "the texture is one flat colour"
   },
   {
    "rule": "texture_role",
@@ -2450,19 +2505,14 @@
    "message": "1 levels of detail, the display kind wants 2"
   },
   {
-   "rule": "texture_size",
-   "asset": "menu_stand",
-   "message": "256x160 is not a power of two each side"
-  },
-  {
-   "rule": "texture_size",
-   "asset": "window_card",
-   "message": "512x320 is not a power of two each side"
-  },
-  {
    "rule": "texture_role",
    "asset": "carrot_cake_arm_1k",
    "message": "a packed map compressed as TC_DEFAULT"
+  },
+  {
+   "rule": "texture_size",
+   "asset": "menu_stand",
+   "message": "256x160 is not a power of two each side"
   },
   {
    "rule": "texture_role",
@@ -2485,6 +2535,11 @@
    "message": "a packed map compressed as TC_DEFAULT"
   },
   {
+   "rule": "texture_size",
+   "asset": "window_card",
+   "message": "512x320 is not a power of two each side"
+  },
+  {
    "rule": "triangles",
    "asset": "SM_tea_room-display",
    "message": "116156 triangles over the display cap"
@@ -2505,9 +2560,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_awning_02",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_crowd_control_barrier",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_crowd_control_barrier",
+   "message": "slot basic has no material"
   },
   {
    "rule": "lods",
@@ -2515,9 +2580,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_decorative_bollard_02",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_drainage_grate_01",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_drainage_grate_01",
+   "message": "slot basic has no material"
   },
   {
    "rule": "lods",
@@ -2525,9 +2600,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_fascia_console_01",
+   "message": "slot fascia_moulding_painted_timber has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_fascia_cornice_01",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_fascia_cornice_01",
+   "message": "slot fascia_moulding_painted_timber has no material"
   },
   {
    "rule": "lods",
@@ -2535,9 +2620,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_framed_poster",
+   "message": "slot basic has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_lamp_post_01",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_lamp_post_01",
+   "message": "slot DefaultMaterial has no material"
   },
   {
    "rule": "lods",
@@ -2545,9 +2640,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_oil_barrel",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_outdoor_bin",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_outdoor_bin",
+   "message": "slot DefaultMaterial has no material"
   },
   {
    "rule": "lods",
@@ -2555,9 +2660,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_pallet",
+   "message": "slot basic has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_poster",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_poster",
+   "message": "slot basic has no material"
   },
   {
    "rule": "lods",
@@ -2565,9 +2680,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_roll_top_chimney",
+   "message": "slot basic has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_skip",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_skip",
+   "message": "slot DefaultMaterial has no material"
   },
   {
    "rule": "lods",
@@ -2575,9 +2700,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_swing_bin",
+   "message": "slot DefaultMaterial has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_traffic_cone_01",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_traffic_cone_01",
+   "message": "slot basic has no material"
   },
   {
    "rule": "lods",
@@ -2585,9 +2720,19 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_traffic_cone_02",
+   "message": "slot basic has no material"
+  },
+  {
    "rule": "lods",
    "asset": "SM_wooden_crate_01",
    "message": "1 levels of detail, the prop_medium kind wants 3"
+  },
+  {
+   "rule": "placeholder",
+   "asset": "SM_wooden_crate_01",
+   "message": "slot DefaultMaterial has no material"
   },
   {
    "rule": "triangles",
@@ -2600,6 +2745,11 @@
    "message": "1 levels of detail, the prop_medium kind wants 3"
   },
   {
+   "rule": "placeholder",
+   "asset": "SM_lamp_post_C",
+   "message": "slot bowl's material /Game/Ledger/Kit/MI_Kit_bowl samples no texture"
+  },
+  {
    "rule": "lods",
    "asset": "SM_hatch-bluegrey",
    "message": "1 levels of detail, the car kind wants 4"
@@ -2608,151 +2758,6 @@
    "rule": "lods",
    "asset": "SM_hatch-navy",
    "message": "1 levels of detail, the car kind wants 4"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "T_WoodTrim_FlatNormal",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "_202e1f",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "_70624e",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "_202e1f1",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "parts",
-   "asset": "_70624e",
-   "message": "imported from an older F:/LedgerTools/game-inputs/production/assets/shop-fronts/chandler-front-joinery.glb (MD5 2b4385f0, the file now 3aa31bcc)"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "_70624e1",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "CashRegister_01_glass_nor_gl_1k",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "standing_picture_frame_01_artwork_nor_gl_1k",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "standing_picture_frame_01_artwork_rough_1k",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "standing_picture_frame_02_artwork_rough_1k",
-   "message": "the texture is one flat colour"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_awning_02",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_crowd_control_barrier",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_decorative_bollard_02",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_drainage_grate_01",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_fascia_console_01",
-   "message": "slot fascia_moulding_painted_timber has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_fascia_cornice_01",
-   "message": "slot fascia_moulding_painted_timber has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_framed_poster",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_lamp_post_01",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_oil_barrel",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_outdoor_bin",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_pallet",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_poster",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_roll_top_chimney",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_skip",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_swing_bin",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_traffic_cone_01",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_traffic_cone_02",
-   "message": "slot basic has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_wooden_crate_01",
-   "message": "slot DefaultMaterial has no material"
-  },
-  {
-   "rule": "placeholder",
-   "asset": "SM_lamp_post_C",
-   "message": "slot bowl's material /Game/Ledger/Kit/MI_Kit_bowl samples no texture"
   }
  ]
 }

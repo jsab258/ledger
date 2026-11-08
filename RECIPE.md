@@ -1991,3 +1991,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.2 h of the session plus one helper run of about 12 minutes.
 - Failed and why: the "unexplained" share was mostly the measure itself, pricing every write at the long-cache rate and naming only the session's own starts.
 - Evidence: production/research/token-audit/N09-11-CACHE-AND-TOOLS-2026-11-08.md.
+
+## 2026-11-08, sweeping every placed asset with fitted rules, and a known list
+- Made: one editor run of the asset checks over every world folder (1,849 assets), its faults turned into a known list so later runs fail only on new faults.
+- Method: fit the rules to the project's real kinds first (scored offline on a past report), then one full run, then freeze its errors as known; each fixed fault leaves the list.
+- Tools: the editor's Python commandlet, the project's asset check script. Target and check: the run's one result line; new errors 0 after the list.
+- Cost: about 0.3 h tonight. Failed: the first launch from PowerShell split the comma-joined plugin argument into an array and never started; quote each argument.
+- Evidence: production/asset-checks/street-sweep-summary.json.
