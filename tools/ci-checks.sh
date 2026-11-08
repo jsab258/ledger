@@ -205,6 +205,8 @@ real_table() {
     homes                 "$REPO"                 "$PY tools/homes_check.py" \
     homes-selftest        "$REPO"                 "$PY tools/homes_check.py --selftest" \
     route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \
+    launch-line-selftest  "$REPO"                 "$PY tools/launch_line_check.py --selftest" \
+    fresh-gate-selftest   "$REPO"                 "$PY tools/fresh_gate.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
     own-lines-page        "$REPO"                 "$PY tools/own_lines_md.py rocco --check" \
