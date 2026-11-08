@@ -111,6 +111,7 @@ The refit totals **about 3.3 to 3.6 h**: 2.0 to 2.2 logged, 1.15 from RECIPE lin
 ## Settled since writing
 
 - **Jumper and trousers against the sheet: settled.** Ron's casting sheet now reads a dark navy knitted jumper and jeans, as Jafar passed them in the game on 8 Nov 13:12 (DECISIONS 8 Nov, "RON'S SHEET FOLLOWS HIS LOOK"). Nothing is left for the session here.
+- **Steps 1, 2 and 5 measured; step 3 in place (8 Nov evening).** Step 1 and 2's tables: RON-MEASURES-2026-11-08.md; step 5's: TALK-PER-PERSON-2026-11-08.md (the talk's closing line splits by model only, so a person's talk cost is inferred from reply counts). Step 3: the token audit now has a "By person" table, reading "person <name>" in the time log's task text or a helper's description (tools/token_audit.py person_of; for example, a task started as "n02-x person ron: jacket"). Every task or helper brief that works on one person carries the tag from now on.
 
 ## For the session (found, not decided)
 

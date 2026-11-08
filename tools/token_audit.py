@@ -196,6 +196,20 @@ def read_log(path, helper_desc=None):
     return steps
 
 
+PERSON = re.compile(r"\bperson ([a-z]+)", re.I)
+
+
+def person_of(item, desc=None):
+    """Ron's end-to-end plan, step 3 (8 Nov, production/research/unit-costs/RON-END-TO-END-PLAN-2026-11-08.md): the
+    person a step works on, from "person <name>" in a helper's description first, else in the open task's text
+    (for example: python tools/timelog.py start "n02-x person ron: jacket"); None when neither names one."""
+    for text in (desc, item):
+        m = PERSON.search(text or "")
+        if m:
+            return m.group(1).lower()
+    return None
+
+
 def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
     windows = task_windows(timelog)
     rows = []
@@ -220,7 +234,7 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
     out = {"items": defaultdict(lambda: [0.0, 0]), "kinds": defaultdict(lambda: [0.0, 0]), "days": defaultdict(lambda: [0.0, 0]),
            "models": defaultdict(lambda: [0.0, 0]), "history": [0.0, 0.0], "steps": 0, "usd": 0.0,
            "itemKinds": defaultdict(lambda: defaultdict(float)), "itemsFilled": defaultdict(lambda: [0.0, 0]), "gapMin": gap_min,
-           "whoModels": defaultdict(lambda: [0.0, 0])}
+           "whoModels": defaultdict(lambda: [0.0, 0]), "persons": defaultdict(lambda: [0.0, 0])}
     for who, sess, desc, s, base, agent in rows:
         t = swiss(s["ts"])
         if since and t < since or until and t >= until:
@@ -232,6 +246,10 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
             out[key][name][0] += usd
             out[key][name][1] += 1
         out["itemKinds"][item][kind] += usd
+        who_for = person_of(item, desc)
+        if who_for:
+            out["persons"][who_for][0] += usd
+            out["persons"][who_for][1] += 1
         filled = item if item != "not in the time log" else (item_near(windows, t, gap_min) or "not in the time log")
         out["itemsFilled"][filled][0] += usd
         out["itemsFilled"][filled][1] += 1
@@ -262,6 +280,11 @@ def report(out, since, until):
               "| Item | US$ | Share | Steps |", "|---|---|---|---|"]
     for k, (u, n) in sorted(out["itemsFilled"].items(), key=lambda kv: -kv[1][0])[:25]:
         lines.append("| %s | %.2f | %.0f%% | %d |" % (k[:90], u, 100 * u / tot, n))
+    lines += ["", "## By person (\"person <name>\" in the task or the helper's description; from 8 Nov)", "", "| Person | US$ | Steps |", "|---|---|---|"]
+    for k, (u, n) in sorted(out["persons"].items(), key=lambda kv: -kv[1][0]):
+        lines.append("| %s | %.2f | %d |" % (k, u, n))
+    if not out["persons"]:
+        lines.append("| none tagged | | |")
     lines += ["", "## By day (Swiss time)", "", "| Day | US$ | Steps |", "|---|---|---|"]
     for k, (u, n) in sorted(out["days"].items()):
         lines.append("| %s | %.2f | %d |" % (k, u, n))
@@ -297,6 +320,9 @@ def selftest():
     check("an edit of code is building", kind_of_main([("Edit", "C:/x/tools/ue/import_garments.py")]) == "building")
     check("a step soon after a task's stop is inferred to be that task's", item_near(w, datetime.datetime(2026, 11, 1, 11, 30), 60) == "a")
     check("but not long after", item_near(w, datetime.datetime(2026, 11, 1, 13, 30), 60) is None)
+    check("a person is read from the task", person_of("n02-x person Ron: jacket") == "ron")
+    check("a helper's description names the person first", person_of("n02-x person ron: jacket", "Gate review person darren neckband") == "darren")
+    check("no person named is none", person_of("n02-9-qa-lean", "Review launch line") is None)
     print("token_audit selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
