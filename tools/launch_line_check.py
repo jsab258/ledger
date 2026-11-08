@@ -86,6 +86,31 @@ def from_log(path):
     return None
 
 
+def last_command_line(path):
+    """The LAST "Command Line:" in a log (8 Nov, the lean QA's step 2): a walk's log ends with its relaunch, the
+    Continue, so the night report judges the launch the walk finished on. None when the file or the line is missing."""
+    last = None
+    try:
+        with open(path, encoding="utf-8", errors="replace") as f:
+            for ln in f:
+                m = re.search(r"Command Line:\s*(.*)$", ln)
+                if m:
+                    last = m.group(1).strip()
+    except OSError:
+        return None
+    return last
+
+
+def describe(line):
+    """One plain sentence for the night report: what the walk ran on."""
+    if line is None:
+        return "launch line not found"
+    v, test, notes = judge(line)
+    if v == "TEST":
+        return "a test launch: " + ", ".join("-" + t for t in test)
+    return v + (" (" + "; ".join(notes) + ")" if notes else "")
+
+
 def selftest():
     cases = [
         ("a plain double-click", "", "PLAYER"),
@@ -112,7 +137,24 @@ def selftest():
     ok = set(test) == {"mickeysinside", "sitproof", "sitproofexit"}
     failed += 0 if ok else 1
     print("%s the sit proof names exactly its three test switches: %s" % ("ok  " if ok else "FAIL", ", ".join(test)))
-    print("launch_line_check selftest: passed=%d/%d failed=%d" % (len(cases) + 1 - failed, len(cases) + 1, failed))
+    # the lean QA's step 2 (8 Nov): the last line of a log, and the night report's sentence
+    import tempfile, os
+    extra = []
+    d = tempfile.mkdtemp()
+    two = os.path.join(d, "two.log")
+    with open(two, "w", encoding="utf-8") as fh:
+        fh.write("LogInit: Command Line: -LedgerSlice -MickeysInside\nother\nLogInit: Command Line: -LedgerSlice -RouteWalk\n")
+    extra.append(("two launches: the last is read", last_command_line(two) == "-LedgerSlice -RouteWalk"))
+    extra.append(("two launches: from_log keeps the first", from_log(two) == "-LedgerSlice -MickeysInside"))
+    extra.append(("no log: launch line not found", describe(last_command_line(os.path.join(d, "none.log"))) == "launch line not found"))
+    extra.append(("the sentence names the test switch", describe("-LedgerSlice -MickeysInside") == "a test launch: -mickeysinside"))
+    extra.append(("the sentence carries the stand-in note", describe("-LedgerSlice -TalkFake -RouteWalk")
+                  == "PLAYER+WATCH (talk is the stand-in: the run says nothing about talk)"))
+    for name, ok in extra:
+        failed += 0 if ok else 1
+        print("%s %s" % ("ok  " if ok else "FAIL", name))
+    n = len(cases) + 1 + len(extra)
+    print("launch_line_check selftest: passed=%d/%d failed=%d" % (n - failed, n, failed))
     return 1 if failed else 0
 
 

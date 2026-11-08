@@ -121,7 +121,20 @@ def summarise(events, verdict, bench, eyes):
         "thats_all_i_know": bench,
         "illusion": eyes,
         "legs_never_arrived": legs_never_arrived(verdict),
+        "launch": launch_sentence(verdict),
     }
+
+
+def launch_sentence(verdict):
+    """The lean QA's step 2 (8 Nov, QA-FIRST-STEPS-2026-11-08.md): what the walk really ran on, from the launch
+    line route_walk stores; it reports and never fails."""
+    if not verdict:
+        return "no walk"
+    if "launch" not in verdict:
+        return "not recorded (a walk from before 8 Nov)"
+    sys.path.insert(0, os.path.join(REPO, "tools"))
+    import launch_line_check
+    return launch_line_check.describe(verdict.get("launch"))
 
 
 def legs_never_arrived(verdict):
@@ -275,6 +288,8 @@ def paragraph(rep, prev):
         parts.append("Legs that never arrived: %s." % ln["note"])
     else:
         parts.append("Legs that never arrived: none.")
+    if s.get("launch"):
+        parts.append("The walk ran on: %s." % s["launch"])
     ill = s["illusion"].get("lines") if s.get("illusion") else None
     parts.append("What broke the illusion: %s." % ("; ".join(ill[:3]) if ill else (s.get("illusion") or {}).get("note", "nothing named")))
     return " ".join(parts)
@@ -393,6 +408,11 @@ def selftest():
           ps["legs_never_arrived"]["fired"] and ps["legs_never_arrived"]["fires"][0]["left_m"] == 1.31)
     check("the paragraph names it", "Legs that never arrived: 1 (14 legs toward 7.9, 4.6, D0 09:50 to D0 09:50, 1.31 m short)" in paragraph({"date": "x", "summary": ps}, None))
     check("no walk says so", summarise(ev, None, None, None)["legs_never_arrived"]["note"] == "no walk")
+    # the launch line (8 Nov, the lean QA's step 2)
+    tv = dict(v, launch="-LedgerSlice -LedgerCrime -Encounter=live -NoTitle -MickeysInside")
+    check("a test launch is named in the paragraph",
+          "The walk ran on: a test launch: -mickeysinside." in paragraph({"date": "x", "summary": summarise(ev, tv, None, None)}, None))
+    check("an older walk says the launch was not recorded", summarise(ev, v, None, None)["launch"].startswith("not recorded"))
     check("the bench runs with the game's own talk settings", "--rules" in open(__file__, encoding="utf-8").read() and "--plain" in open(__file__, encoding="utf-8").read())
     # THE TESTER'S PICTURES ARE JPEGS (Jafar, 7 October: "the nightly report has never seen the
     # tester's pictures, because the tester saves .jpg and the report looks only for .png"; every

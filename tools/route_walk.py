@@ -327,6 +327,13 @@ class Route:
         os.makedirs(self.out, exist_ok=True)
         verdict = {"passed": sum(r["ok"] for r in self.rows), "stages": len(self.rows), "rows": self.rows, "path": self.trace,
                    "stuck": stuck_runs(self.trace)}
+        # the launch the walk finished on (8 Nov, the lean QA's step 2): the log's last "Command Line:"
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import launch_line_check
+            verdict["launch"] = launch_line_check.last_command_line(os.path.join(self.saved, "Logs", "LedgerProbe.log"))
+        except Exception as e:  # a report line, never the walk's failure
+            verdict["launch_error"] = str(e)
         with open(os.path.join(self.out, "verdict.json"), "w", encoding="utf-8") as fh:
             json.dump(verdict, fh, indent=1)
         if FILM_MARKS:
