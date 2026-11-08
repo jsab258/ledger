@@ -564,3 +564,5 @@
 {"event": "stop", "at": "2026-11-08T02:52:00", "note": ""}
 {"event": "start", "at": "2026-11-08T06:30:00", "task": "n02-3-4-exit Sunday's evidence: side-on walk film, speaker's sit", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T07:05:00", "note": ""}
+{"event": "start", "at": "2026-11-08T06:50:00", "task": "n02-9-iron-cover: cast tread, fall, Ron's spot; quay-end diagnosis brief", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T07:25:00", "note": ""}

@@ -3099,7 +3099,9 @@ namespace
 		// the gap between the houses is shut by crates, so nobody could reach
 		// him to answer his envelope): just along from the door, three metres
 		// from Sheila, facing the street. The scripted story keeps its yard.
-		const double RX = bRitasWindow ? 6.0 : LedgerCrime::kR3X, RZ = bRitasWindow ? 4.0 : LedgerCrime::kR3Z;
+		// (8 November: at 6.0 he stood on the iron cover before the office, its frame x 6.03 to 6.77,
+		// and the dressed men's pictures read it as a mat under him; 5.3 keeps his feet off it)
+		const double RX = bRitasWindow ? 5.3 : LedgerCrime::kR3X, RZ = bRitasWindow ? 4.0 : LedgerCrime::kR3Z;
 		double GY = 0.0;
 		std::string On;
 		if (!GroundYAt(World, RX, RZ, GY, On)) { GY = 0.1; }

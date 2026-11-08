@@ -2037,6 +2037,33 @@
    "faces": 116
   },
   {
+   "mesh": "street_cover_iron",
+   "material": "cover_iron",
+   "base_material": "cover_iron",
+   "linear_rgb": [
+    0.03,
+    0.028,
+    0.027
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": "production/assets/street/surfaces/cover_iron",
+   "drawn_tile_m": [
+    0.4,
+    0.4
+   ],
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 60
+  },
+  {
    "mesh": "street_dish_grey",
    "material": "dish_grey",
    "base_material": "dish_grey",
@@ -4609,7 +4636,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1818
+   "faces": 1770
   },
   {
    "mesh": "street_stone",
