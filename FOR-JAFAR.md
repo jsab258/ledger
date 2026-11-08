@@ -3,20 +3,20 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Saturday 7 November, 11:00; late: Windows restarted the PC at 00:14)
+## Overview (Sunday 8 November, 02:50; written in the night, updated in the morning)
 
-**Tokens, Friday 6 November:** history 24% of the spend, Opus 87%, reviewing 14% (1,093 steps, US$84.01 at list prices; Thursday 21%, 98%, 10%).
+**Tokens, Saturday 7 November:** history 26% of the spend, Opus 96%, reviewing 3% (990 steps, US$94.16 at list prices; Friday 24%, 87%, 14%).
 
-| Measure, 6 Nov | Reading |
+| Measure, 7 Nov | Reading |
 |---|---|
-| 1 Tries thrown away, reviewer runs | 2, US$3.31; 15 reviewer runs on 7 items |
-| 2 Tool results' carrying cost | US$20.71 of US$84.01; pictures US$4.34, 5% of the day (estimated) |
-| 3 Prompt cache | 96.4% read from cache; writes US$40.09, of which starts US$11.47 in 19 runs; 4 rewrites mid-run US$2.07 |
-| 4 The start, tokens | tools 61,450, skills' list 8,329, memory and project files 6,489, system 4,041; never used this week: 20 tools 11,997, 43 skills 4,784 |
-| 5 Cycle time | change to its night walk: median 8.6 h over 7 commits; your answers: none dated that day in the read-back |
-| 6 Week's allowance | 65% at about 10:50, the line 65.5%; the weekly figure read Monday 12:50 |
+| 1 Tries thrown away, reviewer runs | 1, US$30.83; 10 reviewer runs on 5 items |
+| 2 Tool results' carrying cost | US$21.18 of US$94.16; pictures US$3.74, 4% of the day (estimated) |
+| 3 Prompt cache | 97.0% read from cache; writes US$42.06, of which starts US$10.19 in 20 runs; 1 rewrite mid-run US$2.21; 2 runs missed the shared start |
+| 4 The start, tokens | tools 61,297, skills' list 8,329, memory and project files 6,643, system 3,979; never used this week: 19 tools 11,841, 43 skills 4,784 |
+| 5 Cycle time | change to its night walk: median 7.5 h over 12 commits; your answers: none dated that day in the read-back |
+| 6 Week's allowance | 70% at 02:22, the line 74.1% (4.1 behind); the weekly figure read Monday 12:50 |
 
-Disk (11-07 03:31): C: 122.6 GB free, F: 26.8 GB free; grew most since yesterday: a temporary folder on C: +2.9 GB, the build cache on C: +1.7 GB, gate pictures on F: +0.4 GB.
+Disk (11-07 03:31; tonight's reading comes at 03:30): C: 122.6 GB free, F: 26.8 GB free.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -35,15 +35,16 @@ No decision asked: these are for watching the street change.
 <!-- /morning pictures -->
 
 **Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s) and is reported as missed; the office, jeans and boots passed packaged; the jacket's collar is set aside and listed. Sitting: his face stays up in the packaged game, but his head swings round in the drop; set aside and listed. The Stutter did not come back last night (worst frame 23.27 ms against the old 42 to 55). Next, the exit re-check aimed at 9 November.
-- **The corner, in your order:** the day's sky, hill, wear, gilt, sills and pipes, wash, kiosk and slate roof are all in last night's packaged game, and the hook and reverse views passed fresh reviews by day and night. Next, tonight's walk for the people, then its end page.
+- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s), reported as missed; the office, jeans and boots passed packaged; the jacket's collar, sitting's head swing and the Stutter's rare freeze are set aside and listed. Office and sitting now run in the game itself, and tonight's walk sat and stood with nothing touched. Next: Ron filmed on tonight's build (his collar's last try), then the exit re-check on Monday morning.
+- **The corner, in your order:** your "keep" on its end page stands; the people's last checks ride on Sunday's builds.
 
-**The tester (last night's walk, packaged, with Friday's work):** 13 of 15 stages. Neither loss looks like the game's: the tester misread its own position file beside Sheila, 0.93 m from her, and skipping her talk brought Tom to Darren while he was at the docks, as his day says. Mended; tonight's walk tests it. Nobody saw Tom break Rita's window; six took in the glass with no story about him; nobody showed they knew him afterwards (0, down 2, with two of the three greetings lost). "That's all I know" to 2 of 60 first questions (the same). The corner's people: none froze (0 of 83 readings), closest two standing 2.86 m apart, two came to look at the window. What broke the illusion: people in the white base layer in the walk (kept out of your pictures only); the woman by Rita's window not flinching; people standing stiffly. Frame rate 56.8 fps (57.7 before), worst frame 23.19 ms, none over 33.3 ms in that step; the card's memory 6,089 MB (5,960 before), the highest yet read here and to be looked at.
+**The tester (last night's walk, packaged, with Saturday's work):** 16 of 17 stages, two new (sit, stand). Lost: Darren again, the camera pressed into walls and blinds for long stretches in the office, three frames black. Nobody saw Tom break Rita's window; five took in the glass; Rocco showed he knew (1, up 1). "That's all I know" to 3 of 60 first questions (2 before). What broke the illusion: Ron and the woman inside Mickey's office in the white base layer (not in your pictures); a line from Ada captioned in the office where she isn't; Sheila's "Morning" at 16:00. Frame rate 58.2 fps (56.8 before), worst frame 22.37 ms, none over 33.3 ms; the card's memory 6,005 MB (6,089 before).
 
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-- The corner's end pictures: tap which way next. Recommended: keep going; not a yes to the look.
+- Room in your rulings for the efficiency line: recommended yes.
+- A blind replay, Opus against Sonnet, on Sunday: recommended yes.
 
 ### Road to worth playing (PLAN.md)
 
@@ -54,6 +55,27 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Sunday 8 November (night, for Saturday)
+
+**Failed:**
+- Hair's sky light, try 2 of 2: Darren turned blond, Sheila's hair speckled; out, listed.
+- Worn paint as flakes on Mickey's front, two tries: read as confetti; out, listed.
+- Ron's collar: Friday's "head through the back" reading was a false measurement; the real overlap mended, last try, unjudged.
+- The walk lost Darren again; the camera sat inside walls in the office.
+- One thrown try cost US$30.83.
+
+**Done:**
+- Darren's jumper passed its fresh review (third try, your yes); held for your look with Ron.
+- Office and sitting on in the game itself; the night walk sat and stood cleanly.
+- The exit rehearsed by four fresh reviewers.
+- Monday's research (testing, people alive, a district's memory) reviewed and fixed.
+- Port rows U6 and U7 (talk's pace, Tom's sounds) pinned by 20,159 golden rows.
+
+**Decided, yours to overturn:**
+- The quay's meeting spot moved to the street side of the end wall.
+
+**Act on:** two questions on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 ## Builder, Saturday 7 November (morning, late)
 

@@ -554,3 +554,9 @@
 {"event": "start", "at": "2026-11-07T22:41:13", "task": "n02-9 research for Monday (advisor 22-25): readings and proposals, helpers' time", "phase": "1", "kind": "production"}
 {"event": "start", "at": "2026-11-07T22:41:14", "task": "n02-9-dress-the-cast whole-person films and review", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-07T23:19:13", "note": "Darren passed review; Ron fails on the head mesh through the collar's back; handover"}
+{"event": "start", "at": "2026-11-08T00:22:00", "task": "n02-9-dress-the-cast", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T00:40:00", "note": "Ron's collar try 2: back clearance, import, push"}
+{"event": "start", "at": "2026-11-08T00:24:00", "task": "n02-research-proposals", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T00:38:00", "note": "fresh review and fixes of three proposals"}
+{"event": "start", "at": "2026-11-08T02:21:00", "task": "Sunday summary and overview", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-08T02:55:00", "note": ""}
