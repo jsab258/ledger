@@ -1300,3 +1300,8 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: the run-time pictures become cooked, compressed textures by COOK-PICTURES-PLAN-2026-11-08.md (eight steps, about 15.5 h; peak expected about 4.6 GB from 6.15, inferred), with the fresh review's four fixes written into it. Work starts after Monday's exit, so the exit's build is unchanged; the look is judged at the gate and any visible change goes to his page.
 - Reason: the packaged capture (section 6) and the plan's review, pass with fixes; reference: studies/12-tech-budgets.md.
 - Link: production/research/frame-headroom/COOK-PICTURES-PLAN-2026-11-08.md; COOK-PICTURES-REVIEW-2026-11-08.md.
+
+## 2026-11-08 23:12, n09-7: hair stays on strands as shipped
+- Decision: the test's table, row 3: cards fail at Tom's own camera (a flat crown patch and hard white blotches, two severity 4) and in the talk close-ups (grey or light recolour, flat ribbons, a card edge); the mesh level is worse (helmets, a ginger moustache). Strands as shipped stay; the crown and the hand-over colour stay listed known faults; the hybrid is not recommended, since its cards would draw Tom at 3.1 m. One recommendation goes on his page in the morning batch (the order's done line). The hair gate stays open.
+- Reason: production/research/hair/HAIR-TEST-PLAN-2026-11-08.md's decision table, written before the runs; two fresh reviews; hair under 0.3 ms in every variant, so cost does not decide.
+- Link: production/research/hair/HAIR-TEST-RESULT-2026-11-08.md.

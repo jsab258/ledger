@@ -1998,3 +1998,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: the editor's Python commandlet, the project's asset check script. Target and check: the run's one result line; new errors 0 after the list.
 - Cost: about 0.3 h tonight. Failed: the first launch from PowerShell split the comma-joined plugin argument into an array and never started; quote each argument.
 - Evidence: production/asset-checks/street-sweep-summary.json.
+
+## 2026-11-08, choosing a hair method by a side-by-side test in the shipped build
+- Made: strands against cards against the mesh level on four people, at the player's camera (day, room by day and night) and in talk close-ups, with cost; the method decided, nothing changed in the game.
+- Method: one global level-bias switch shows each level whole, with no rebuild; the same camera and moment per pair; a fixed patch's median grey per region, normalised by a skin patch; one fresh reviewer per distance; a decision table written before the runs.
+- Tools: the shipped build's camera switch and close-up film switch, its frame profile, Python image reads.
+- Target and check: the crown's grey in its band with no new fault; colour change under about 10 levels; hair passes under 1 ms.
+- Cost: about 0.8 h of the session, two reviewers about 4 minutes each.
+- Failed and why: cards met the band only through a flat patch and white blotches, recoloured close, and the mesh level turned heads into helmets; the profile is cut short when the film switch closes the game, so close-up costs are thin.
+- Evidence: production/research/hair/HAIR-TEST-RESULT-2026-11-08.md.
