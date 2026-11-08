@@ -1216,3 +1216,8 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: try 2 of the side stories' batch sends each request with thinking {"type": "between_tools"} (Sonnet 5.5's documented way to turn its default thinking off; the claude-api skill, read 8 Nov), max_tokens 3,000 for outlines (was 1,500) and 4,000 for backstories; api_batch.py passes "thinking" and "output_config" through. Prompts: nobody names Tom in a quoted line (the name ladder decides); side story 9 carries Julie's casting line (twelve years, twelve weeks' notice). Worst case US$0.90 inside today's US$46.95. Advisor 31 (the clothing route and four-weekly field scans) went on his page as clothing-route-and-scans-2026-11-08, yes recommended.
 - Reason: try 1's answers used all 1,500 tokens with little or no text (hidden thinking); the review's two prompt faults; advisor 31 asks for his tap.
 - Link: production/research/bulk-api/n09-14/build_requests.py; REVIEW-2026-11-08.md.
+
+## 2026-11-08 18:47, deleted my own replay copies (about 460 MB on F:)
+- Decision: deleted the ten run copies under F:/LedgerTools/replay-2026-11-08 (light clones made by the session for the 8 Nov model replay); kept BRIEFS.md, usage.txt and judge/ (verdict.json) there as the replay note's evidence.
+- Reason: RULINGS 29 Oct (own leftovers nothing uses); the results are recorded in production/research/token-audit/SONNET-BLIND-REPLAY-2026-11-08.md; F: needs room for the street sweep.
+- Link: production/research/token-audit/SONNET-BLIND-REPLAY-2026-11-08.md.
