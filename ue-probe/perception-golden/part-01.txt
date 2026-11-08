@@ -783,6 +783,7 @@ CastBodyX|hook-cast.json|ritas_step|none
 CastBodyX|hook-cast.json|kiosk|none
 CastBodyX|hook-cast.json|laundry_front|none
 CastBodyX|hook-cast.json|quay|none
+CastBodyX|hook-cast.json|quay_landing|none
 CastBodyX|hook-cast.json|laundry_counter|none
 CastBodyX|hook-cast.json|adas_step|none
 CastBodyX|hook-cast.json|cafe|25
@@ -22446,4 +22447,3 @@ WTellMisattribute|-1|a1|e1|375590|a1
 WTellMisattribute|-1|a1|e1|158447|a1
 WTellMisattribute|-1|a1|e1|20469|a1
 WTellMisattribute|-1|a1|e1|365414|a1
-WTellMisattribute|0|null|null|0|none

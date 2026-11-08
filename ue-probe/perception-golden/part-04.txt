@@ -1,3 +1,4 @@
+OutdoorsAt|1035|0|0|0|0|1|16|0
 OutdoorsAt|1035|0|0|0|0|1|17|0
 OutdoorsAt|1035|0|0|0|0|1|18|0
 OutdoorsAt|1035|0|0|0|0|1|19|1
@@ -15022,4 +15023,3 @@ CastPlaceOf|hook-cast.json|ada|2|22|off
 CastPlaceOf|hook-cast.json|ada|2|23|off
 CastPlaceOf|hook-cast.json|ada|3|0|off
 CastPlaceOf|hook-cast.json|ada|3|1|off
-CastPlaceOf|hook-cast.json|ada|3|2|off

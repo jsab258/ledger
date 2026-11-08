@@ -7677,7 +7677,9 @@ namespace
 		// Thursday, same again."; on an ask night without it, "Nothing for me?".
 		// Words only: no voice is cast for him without Jafar's yes.
 		static bool bAtLandingWas = false;
-		const bool bAtLanding = TheLanding::There(GNow) && NearPlace("quay", 8.0);
+		// The landing has its own place, the quay apron (hook-cast.json quay_landing): on 7 Nov the people's
+		// meeting spot "quay" moved 6 m up the street, and its 8 m circle then took in Mickey's door and Ada's step.
+		const bool bAtLanding = TheLanding::There(GNow) && NearPlace("quay_landing", 8.0);
 		const bool bArrived = bAtLanding && !bAtLandingWas;
 		bAtLandingWas = bAtLanding;
 		auto ManSays = [](LandingMoment M)
@@ -7690,7 +7692,7 @@ namespace
 			}
 		};
 		if (bArrived) { ManSays(LandingMoment::Comes); }
-		if (GWeek.Asks.AskStands(GNow) && (GNow.Hour >= Waiting::LandingFrom || GNow.Hour < Arrangement::GaveUpHour) && NearPlace("quay", 8.0))
+		if (GWeek.Asks.AskStands(GNow) && (GNow.Hour >= Waiting::LandingFrom || GNow.Hour < Arrangement::GaveUpHour) && NearPlace("quay_landing", 8.0))
 		{
 			if (GWeek.Tea && Night == GWeek.Tea->Day()) { GWeek.Tea->WentToTheLanding(GMill.get(), GNow, true); }
 			if (GWeek.AnswerAsk(Night, NightAnswer::Did, GMill.get(), GNow))

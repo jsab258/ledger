@@ -60,8 +60,14 @@
   "quay": {
    "x_m": 1.0,
    "z_m": 0.0,
-   "from": "the quay apron at the street's south end",
+   "from": "the road at the street's south end, on the street side of its end wall (moved 7 Nov from the apron, where people could not reach)",
    "said": "the quay at the bottom of Quay Street"
+  },
+  "quay_landing": {
+   "x_m": -5.0,
+   "z_m": 0.0,
+   "from": "the quay apron at the street's south end: the way down to the landing, its own place since 8 Nov so the meeting spot's move cannot bring the landing to Mickey's door",
+   "said": "the landing below the quay"
   },
   "laundry_counter": {"inside": true, 
    "x_m": 30.0,
@@ -214,6 +220,10 @@
    "places": ["laundry_front", "laundry_counter"],
    "names": ["the steam laundry", "the laundry", "the laundrette"],
    "hours": {"mon": [8, 17.5], "tue": [8, 17.5], "wed": [8, 17.5], "thu": [8, 17.5], "fri": [8, 17.5], "sat": [8, 17.5]}
+  },
+  "quay_landing": {
+   "places": ["quay_landing"],
+   "names": ["the landing"]
   },
   "quay": {"street": true, 
    "places": ["quay"],
