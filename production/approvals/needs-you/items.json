@@ -714,6 +714,24 @@
     "9. Old launcher files that name retired things: drop; nothing that ships uses them."
    ],
    "state": "open"
+  },
+  {
+   "id": "parked-cars-route-2026-11-08",
+   "added": "2026-11-08 17:56",
+   "text": "Parked 1990 cars for phase 2: every ready-made 1980s car on Fab forbids AI use, so they are out. Build our own fictional cars by script instead?",
+   "links": [],
+   "recommendation": "Yes: no money, about 50 to 90 hours for four kinds (hatchback, saloon, estate, van), right-hand drive, invented badges and plates; these hours are estimates, measured on the first car. Paid image-to-3D would need your yes to buy and risks copying a real car's design.",
+   "options": [
+    [
+     "yes",
+     "Yes, build them (recommended)"
+    ],
+    [
+     "note",
+     "Other (add a note)"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

@@ -1945,3 +1945,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: Python, the game's own log. Target and check: two real logs, one from a test-switch run, one from a real walk, classified as expected; self-tests 16 and 18.
 - Cost: about 0.3 h. Failed: the same day's previous step counted nights wrongly (verdicts with empty paths counted as nights with a path); a fresh reviewer recounting by hand caught it. Lesson: count the denominator from the files, not from the folder list.
 - Evidence: production/research/qa-practice/QA-FIRST-STEPS-2026-11-08.md; production/research/qa-practice/STUCK-LEGS-REVIEW-2026-11-08.md.
+
+## 2026-11-08: a cost estimate for a bought-or-made asset family (n09-13)
+- Made: a per-route cost table for one asset family (parked vehicles) before any work, ending as one question on the owner's page.
+- Method: licence first: read every candidate store page in full for its AI-use tag and licence before price; then the generative route (output licence, weights licence, hardware it needs); then the made route from the project's existing script; one fresh reviewer re-reads every cited page.
+- Tools: a research-reader helper (web pages), a research-synthesis reviewer.
+- Target and check: every price and tag matching its page; hours marked as estimates until the first piece measures them.
+- Cost: about 0.5 h of helpers.
+- Failed: the helper misquoted one review's tally and invented a credit conflict; the reviewer caught both. A whole store category can be closed by one licence tag: check it first.
+- Evidence: production/research/period-vehicles-and-props/N09-13-CAR-COSTS-2026-11-08.md.
