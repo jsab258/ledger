@@ -3,20 +3,29 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Sunday 8 November, 02:30; written in the night, updated in the morning)
+## Overview (Monday 9 November, 06:35)
 
-**Tokens, Saturday 7 November:** history 26% of the spend, Opus 96%, reviewing 3% (990 steps, US$94.16 at list prices; Friday 24%, 87%, 14%).
+**Tokens, Sunday 8 November:** history 30% of the spend, Opus 95%, reviewing 12% (4,084 steps, US$242.67 at list prices; Saturday 26%, 96%, 3%).
 
-| Measure, 7 Nov | Reading |
+**This week's visible change, before and after:** Ron and Darren walk the street in their own jumpers, jeans and boots in the packaged game (before: the white base layer); the tester saw them dressed this morning.
+
+| Measure, 8 Nov | Reading |
 |---|---|
-| 1 Tries thrown away, reviewer runs | 1, US$30.83; 10 reviewer runs on 5 items |
-| 2 Tool results' carrying cost | US$21.18 of US$94.16; pictures US$3.74, 4% of the day (estimated) |
-| 3 Prompt cache | 97.0% read from cache; writes US$42.06, of which starts US$10.19 in 20 runs; 1 rewrite mid-run US$2.21; 2 runs missed the shared start |
-| 4 The start, tokens | tools 61,297, skills' list 8,329, memory and project files 6,643, system 3,979; never used this week: 19 tools 11,841, 43 skills 4,784 |
-| 5 Cycle time | change to its night walk: median 7.5 h over 12 commits; your answers: none dated that day in the read-back |
-| 6 Week's allowance | 70% at 02:22, the line 74.1% (4.1 behind); the weekly figure read Monday 12:50 |
+| 1 Tries thrown away, reviewer runs | none recorded; 38 reviewer runs on 13 items |
+| 2 Tool results' carrying cost | US$56.19 of US$242.67; pictures US$4.01, 2% of the day (estimated) |
+| 3 Prompt cache | 97.7% read from cache; writes US$75.74, of which starts US$11.95 in 26 runs, helper starts US$19.18 in 87, 2 rewrites mid-run US$2.52 |
+| 4 The start, tokens | tools 61,297, skills' list 8,339, memory and project files 6,755, system 3,979; never used this week: 19 tools 11,841, 43 skills 4,185 |
+| 5 Cycle time | change to its night walk: median 15.5 h over 12 commits; your answers: median 98 min over 11 |
+| 6 Week's allowance | 84% at 06:29, the line 89.7% (5.7 behind); the weekly figure read at 12:50 |
 
-Disk (11-08 03:30): C: 120.5 GB free, F: 23.1 GB free; grew most since yesterday: gate pictures on F: +3.5 GB, the build machine's renders on C: +1.2 GB, the build cache on C: +0.6 GB.
+**Risks, Monday:**
+- Phase 1's exit: all four fresh reviews not met; your rulings per fault come in this morning's batch.
+- Card memory walks just over 6 GB; the packing plan (about 15 hours) is next in phase 2.
+- People inside Mickey's office cannot walk out (no door route); Ron misses the street.
+- F: sits near its 20 GB floor; one night's build was lost to it.
+- Speech stays at 2.02 s on the agreed run, its tries spent.
+
+Disk (11-09 06:35): C: 119.6 GB free, F: 21.6 GB free.
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -36,22 +45,23 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Now and next** (your order of 2 November; production/orders/2026-11-02.md):
-- **Phase 1's exit:** speech missed its bar (2.02 s against 2.0 s), reported as missed; the office, jeans and boots passed packaged; the jacket's collar, sitting's head swing and the Stutter's rare freeze are set aside and listed. Office and sitting now run in the game itself, and tonight's walk sat and stood with nothing touched. Ron's collar passed its fresh review on last night's build (04:44); both men go to your page once a clean whole picture of Ron is filmed. Then the exit re-check on Monday morning.
-- **The corner, in your order:** your "keep" on its end page stands; the people's last checks ride on Sunday's builds.
+**Now and next** (your order of 9 November):
+- **On:** phase 1's exit. All four fresh reviews on the newest build came back not met; each open fault goes to you this morning with a recommendation.
+- **Next:** Tom as one whole person on your page by Tuesday (walk, sit, talk close-up, outfit); Ron end to end, starting with people walking out of Mickey's office by the door.
+- **Beside it:** three helpers on Sheila's dressing plan, the pattern library and Ron's cost table.
 
-**The tester (last night's walk, packaged, with Saturday's work):** 16 of 17 stages, two new (sit, stand). Lost: Darren again, the camera pressed into walls and blinds for long stretches in the office, three frames black. Nobody saw Tom break Rita's window; five took in the glass; Rocco showed he knew (1, up 1). "That's all I know" to 3 of 60 first questions (2 before). What broke the illusion: Ron and the woman inside Mickey's office in the white base layer (not in your pictures); a line from Ada captioned in the office where she isn't. Frame rate 58.2 fps (56.8 before), worst frame 22.37 ms, none over 33.3 ms; the card's memory 6,005 MB (6,089 before).
+**The tester (this morning's walk, packaged, a fresh build at 04:52):** 13 of 15 stages. Ron and Darren dressed in the game, seen beside Tom. Lost: Sheila from sight; Ron never reached the street (he cannot leave the office). Replies began in 0.16 to 0.17 s on the stand-in voice. The night's own walk at 01:31 had replayed Sunday's copy, the build having stopped at F:'s floor; its report now says so plainly.
 
 ### Needs you
 
 All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
-- Nothing open (20:26): the order of 9 November adopted by your tap (17:17); your five answers of 19:34 acted on.
+- This morning's batch goes up next: the exit's open faults, hair, Marvelous running by itself, unused tools, one records paste.
 
 ### Road to worth playing (PLAN.md)
 
 - **0. Recover control** (0.20W): done 6 October, passed by a fresh review with narrow points.
-- **1. Prove the bottlenecks** (1.00W): open again under your order of 2 November: speech, Tom's four pieces, sitting, the office and the Stutter, each passed packaged; the exit re-check aimed at 9 November.
-- **2. Quay Street from proved families** (2.00W): the brick, the facades, the wet street's seam and the hill return here.
+- **1. Prove the bottlenecks** (1.00W): open; the exit re-checked 9 November, not met on four counts; your rulings per fault decide what moves into phase 2.
+- **2. Quay Street from proved families** (2.00W): begun beside phase 1 under your order of 9 November; card memory first; its plan and forecast on your progress page.
 - **3. Thirty minutes that hold** (0.75W): N3 ported, the weather proof, P4's gaps.
 - **4. The friends' candidate** (0.50W): after the whole street (your ruling of 1 November).
 - **5. The first town:** after the pilot.
@@ -61,15 +71,15 @@ All on one page, kept current: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 
 **Failed:**
 - The clothing-as-code test into Marvelous could not start: a scheduled run cannot see or click Marvelous's window. It waits for a session you start, or your setting.
-- The F: drive dipped under its floor and held builds; two of my own old scratch folders cleared it.
+- F: dipped under its floor twice; in the night the build never ran and the walk replayed Sunday's game. Cleared; a fresh build walked at 04:53.
 
 **Done:**
 - Your five answers acted on; the page cleared.
 - Phase 2's plan on the progress page: the PS5 gap list (street life, distance, people) and the scoreboard (repeats a quarter to a third of the first).
 - Four field scans (people moving, hair, the crowd, cars); the hatchback by our own route.
 - Clothing as code: four base patterns written and exported cleanly.
+- The men's clothes released: Ron and Darren dressed in this morning's packaged walk.
 - Card memory measured in the packaged game: pictures unpacked at run time are 1.95 of the 6.15 GB peak; a plan to pack them properly, about 15 hours, expects about 4.6 GB (being reviewed).
-- The cost line's overcount fixed; the street's asset check run in full.
 
 **Act on:** the morning's questions on your page: https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8
 

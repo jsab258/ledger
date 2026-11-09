@@ -600,3 +600,9 @@
 {"event": "stop", "at": "2026-11-08T21:06:00", "note": ""}
 {"event": "start", "at": "2026-11-08T22:24:00", "task": "n09-7 hair test: cards against strands", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-08T22:42:00", "note": ""}
+{"event": "start", "at": "2026-11-09T06:28:00", "task": "n09-5 helper: Ron's cost table", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T06:29:00", "note": ""}
+{"event": "start", "at": "2026-11-09T06:28:00", "task": "n09-6 helper: pattern library", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T06:32:00", "note": ""}
+{"event": "start", "at": "2026-11-09T06:28:00", "task": "n09-6 helper: Sheila refit plan", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T06:33:00", "note": ""}
