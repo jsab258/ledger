@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-09 06:22
+**Started:** 2026-11-09 08:58
 **Stopped:** 2026-11-09 08:17
-(His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 5 to 15 minutes before the next run, which fires at :21; or past 400,000 whatever the clock) means rewrite this file, set Stopped from Get-Date, stop.)
+(His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 10 to 20 minutes before the next run, which fires at :21; past 400,000 too unless under 10 minutes to the run; past 550,000 whatever the clock; 9 Nov, advisor 52) means rewrite this file, set Stopped from Get-Date, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November). The order of 2 November's time ends 13:00 Monday 9 November.
 
@@ -16,15 +16,14 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 33 (19:55):** any hourly reading over 2 points behind the line: at once the session on Unreal work and four helpers on the order's no-Unreal parts, pulled forward in order, round the clock; the hour's row names what was pulled forward; within 2 points carry on; over 3 ahead, two helpers.
 - Never stop for lack of work: the order's next item, then the waiting list, then the fallback list (message 12). Phase 3's port: its open rows (G5, W3 to W6) are all low and would change the game, so they wait for an order.
 - An advisor's standing way goes here the same hour, named in its ack (message 13); the six measures' table in each morning's overview (message 11).
+- **Never filmed (his word 08:35, 9 Nov, advisor 51):** he never films or performs anything; never propose it in any plan, item or report. Motion footage fallback and control: free online video whose licence allows commercial use and changes (Pexels, Pixabay; each site's licence read in full against the allowlist, each clip's source and licence recorded; nothing from sites forbidding download). Into RULINGS with his next tap.
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
-## Run 06:22 on 9 Nov (earlier runs: git log)
-- His taps 07:17 and 07:34 acted on: phase 1 closed with four faults carried (n09-1 done; progress page "Closed, faults carried"); six helpers while behind the line, standing; strands stay. RULINGS updated (4,899 of 4,900).
-- Second batch on his page 07:52, open: records-paste (five CLAUDE.md lines plus the night and clear-winner rules into RULINGS on his yes), marvelous-task (register the interactive Windows task, then the try), unused-connectors (his hands). Read verdicts first.
-- Advisor 41 to 45 acked 07:55. 42/44: the night rule (standing list above); space before the night build by 23:30. 43: research pulled forward until 12:50. 45: leads folded into n09-7, n09-8, n09-3.
-- Builds: 41bb9d7 packaged (tom-close reframed, the office door route, the seated flag); 941a2bb asked 08:00 with n09-8's patches A and B (runner build 21393aa).
-- Pushed: 941a2bb5f. Staged, uncommitted until this stop's commit: crown plan and review, the chest diagnosis, order lines.
-- Scans written (thin, many sources refused): crowd at distance, distance and detail, shop fronts at scale, Epic's sample update (blog 403), next pieces' references. Clothing drafts (pattern library, Sheila's plan) reviewed, corrections appended. Ron's cost table drafted, unreviewed.
+## Run 08:58 on 9 Nov (started by hand; earlier runs: git log)
+- His page: open confirm-chat-0813 (his 08:13 chat answers: no CLAUDE.md paste, connectors stay, the AI-video experiment local only) and markerless-plugin (Epic's capture plugin not installed; his sign-in). Records-paste and connectors closed; Marvelous task registered and proven 09:05 (tools/md-bridge/open_marvelous.ps1).
+- Advisor 46 to 52 acked 09:02; the two briefs in production/research/ai-video-motion/. PC: RX 6700, driver 32.0.21045.16010 (do not roll back), F 20 GB free.
+- The :15 gap mended: history_check stops 10 to 20 minutes before :21; page read every 15 minutes.
+- Builds: 941a2bb asked 08:00 (runner build 21393aa) with n09-8's patches A and B.
 
 ## Next, in order
 1. Read his page's verdicts (the three open items) and act at once: on records-paste yes, the RECIPE/NOTEBOOK rename, DECISIONS archived whole, FOR-JAFAR stopped, backup hook moved (tools/hooks/post-commit), morning_pictures.py pointed at the progress page, token_audit and doc-caps updated, RULINGS night and clear-winner lines (cap: trim first).

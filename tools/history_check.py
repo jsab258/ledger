@@ -38,18 +38,28 @@ TAIL_BYTES = 4 * 1024 * 1024
 # THRESHOLD the size says a switch is due, and the clock only picks which item's end: one 5 to 15 minutes before the next run,
 # so it takes over at once. HARD_STOP ends the wait whatever the clock. RUN_MINUTE is when the hourly task really fires: :21 in all
 # 20 runs of 5 Nov (tools/handover_cost.py), though set for :15. The gate needs 3 quiet minutes, so 5 before leaves room.
+# 9 Nov, the advisor's message 52 (an hour idle): the 06:22 session's Stopped line read 08:17, but its stop work (the handover,
+# the commit, the push) wrote real turns until 08:21:51, two seconds before the 08:21:53 start, which found it busy and waited;
+# nothing ran until a start by hand at 08:58. The stop work takes about 5 minutes and the gate wants 3 quiet ones, so an OVER
+# must land at least 10 minutes before the run; and the hard stop, which ignored the clock, now waits out that last 10 minutes
+# too (the next hour's window) unless the history is past ABSOLUTE_STOP, where each step costs about three times a fresh one.
 HARD_STOP = 400000
+ABSOLUTE_STOP = 550000
 RUN_MINUTE = 21
-WINDOW_MINUTES = (5, 15)
+WINDOW_MINUTES = (10, 20)
 
 
 def verdict(ctx, minute):
     """OVER or UNDER for a context at a minute of the hour, with why."""
+    left = (RUN_MINUTE - minute) % 60
+    if ctx >= ABSOLUTE_STOP:
+        return "OVER", "absolute stop"
     if ctx >= HARD_STOP:
-        return "OVER", "hard stop"
+        if left >= WINDOW_MINUTES[0]:
+            return "OVER", "hard stop, %d min before the next run" % left
+        return "UNDER", "past the hard stop but %d min to the next run, too close to go quiet: carry on past it" % left
     if ctx < THRESHOLD:
         return "UNDER", "below the point"
-    left = (RUN_MINUTE - minute) % 60
     if WINDOW_MINUTES[0] <= left <= WINDOW_MINUTES[1]:
         return "OVER", "%d min before the next run" % left
     return "UNDER", "past the point, %d min to the next run: take the next item or the next part of one" % left
@@ -104,9 +114,11 @@ def selftest():
         ok.append(("past the point inside the window is over", verdict(last_context(b), 10)[0] == "OVER"))
         ok.append(("below the point is under, whatever the clock", verdict(last_context(a), 10)[0] == "UNDER"))
         ok.append(("past the point outside the window takes the next item", verdict(300000, 30)[0] == "UNDER"))
-        ok.append(("the window's edges: 15 and 5 minutes before", verdict(300000, 6)[0] == "OVER" and verdict(300000, 16)[0] == "OVER"))
-        ok.append(("too close to the run to go quiet in time", verdict(300000, 18)[0] == "UNDER"))
-        ok.append(("the hard stop ignores the clock", verdict(400000, 30)[0] == "OVER"))
+        ok.append(("the window's edges: 20 and 10 minutes before", verdict(300000, 1)[0] == "OVER" and verdict(300000, 11)[0] == "OVER"))
+        ok.append(("too close to the run to go quiet in time", verdict(300000, 12)[0] == "UNDER" and verdict(300000, 17)[0] == "UNDER"))
+        ok.append(("the hard stop away from the run stops", verdict(400000, 30)[0] == "OVER"))
+        ok.append(("the hard stop at 08:17 (9 Nov) carries on", verdict(420000, 17)[0] == "UNDER"))
+        ok.append(("the absolute stop ignores the clock", verdict(550000, 17)[0] == "OVER"))
         ok.append(("no log, no answer", newest_log(os.path.join(d, "none")) is None))
         ok.append(("its own log by its id, even when another was touched since", newest_log(d, own="a") == a))
     for name, good in ok:

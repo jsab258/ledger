@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""After each tool call: has his page been read within the last 45 minutes?
+"""After each tool call: has his page been read within the last 15 minutes?
 
 His ruling of 2 November: the page's answers are read at least once an hour
 while working; the advisor channel with them (4 November). Claude Code runs this
 as a PostToolUse hook, through its faster front page_read_hook.sh (.claude/settings.json).
 It notes every read of the page's
 verdicts and advisor collections in .claude/page-read-stamp.json, and when either
-is over 45 minutes old it tells the production session to read them before its
+is over 15 minutes old it tells the production session to read them before its
 next step. Silent otherwise, so it costs no tokens when the reads are on time.
 
 It stays silent for helpers, for the fresh-session gate's own run (a WAIT must
@@ -25,7 +25,7 @@ STAMP = ROOT / ".claude" / "page-read-stamp.json"
 HANDOVER = ROOT / "production" / "handover" / "HANDOVER.md"
 PAGE_ID = "1VZHkCBAHdw8HBdNHrByL8"
 COLLECTIONS = ("verdicts", "advisor")
-LIMIT_S = 45 * 60
+LIMIT_S = 15 * 60  # 9 Nov, the advisor's message 52: every 15 minutes inside a session (was 45)
 
 
 def session_working() -> bool:
@@ -71,7 +71,7 @@ def run(event: dict, now: float) -> str:
     if not late:
         return ""
     return (
-        "His ruling of 2 November: over 45 minutes since his page was read. If you are "
+        "His ruling of 2 November: over 15 minutes since his page was read (advisor 52). If you are "
         "the production session, before your next step read these collections of "
         f"https://claude.ai/artifact/{PAGE_ID} through ArtifactData: {', '.join(late)}; "
         "act on anything new. A helper ignores this."

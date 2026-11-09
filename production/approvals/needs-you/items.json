@@ -1157,7 +1157,8 @@
      "Change one (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 07:51, answered yes (07:17): phase 1 closes with its four open faults carried into this week's phase 2 items, card memory first"
   },
   {
    "id": "hair-strands-2026-11-09",
@@ -1185,7 +1186,8 @@
      "alt": "Tom's head at night: strands left, cards right"
     }
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 07:51, answered yes (07:34): strands stay; the crown is this week's hair priority (advisor 41)"
   },
   {
    "id": "helpers-behind-line-2026-11-09",
@@ -1205,6 +1207,122 @@
     [
      "c",
      "C: keep four"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 07:51, answered A (07:17): up to six helpers whenever behind the line, on the order's no-Unreal work in its sequence, back to four once on the line, standing"
+  },
+  {
+   "id": "records-paste-2026-11-09",
+   "added": "2026-11-09 07:52",
+   "text": "Records and rules, one tap and one paste: open CLAUDE.md in the ledger-local folder, make the five replacements under 'Read it here' exactly as written, save. With your yes I also make the rest: the recipe notebook renamed, the old decision log archived whole, the daily summary and overview stopped (your page, the hourly rows and the advisor carry the day; the week's numbers go on the progress page each Monday), the night rule and the clear-winner rule written into the rulings.",
+   "links": [],
+   "recommendation": "Yes: records were 13% of last week's spend; this cuts what nobody reads, keeps every lesson, and makes the night rule permanent for every session. The paste adds no words to CLAUDE.md. No web link: the answer is this page.",
+   "detail": [
+    "1. In 'Read first', replace: DECISIONS.md, RECIPE.md: append, never read whole.   WITH: NOTEBOOK.md and DECISIONS.md: append, never read whole; RECIPE.md is read before any first try.",
+    "2. In 'One session, a weekly budget', replace the sentence that begins 'Town work (simulation, claim check, casting, story)' WITH: Town work (simulation, claim check, casting, story) and clothing work (Blender, in F:\\LedgerTools) are bounded tasks handed out with versioned inputs and acceptance cases, checked on return, never unattended lanes.",
+    "3. In 'Records', replace the DECISIONS.md line WITH: - DECISIONS.md: one line per material choice (date, decision, a few words of reason, who, link to the file holding the reasoning), about 40 words at most; the old file is archived whole, searched, never loaded.",
+    "4. In 'Records', delete the FOR-JAFAR.md line and the Morning pictures line, and add: - His page, the hourly rows and the advisor carry the day; the week's numbers (spend, process share, done, what failed, the risk register's five lines) go each Monday on the progress page, with the three morning pictures daily.",
+    "5. In 'Records', replace the RECIPE.md paragraph WITH: - NOTEBOOK.md (repository root) is the notebook: every unit that finishes or is set aside adds a few lines in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. RECIPE.md is the condensed recipe, the AAA playbook, rewritten from NOTEBOOK.md at each phase's end, each chapter linking the skills that carry it out; before a first try it counts as the research.",
+    "Written into the rulings on your yes (no paste): the night: 'Round the clock: during the night's build and walk only work touching Unreal and heavy local jobs pause; every session and all allowed helpers keep working on everything else; no session stops for the night.' The clear winner: a test with a clear winner on look and cost, fresh reviewers agreeing, is decided by me, recorded and shown in the hourly row with its pictures; your page keeps real trade-offs and your areas (money, scope, canon, licences, final looks of people)."
+   ],
+   "options": [
+    [
+     "yes",
+     "Yes, pasted (recommended)"
+    ],
+    [
+     "no",
+     "No, keep the records as they are"
+    ],
+    [
+     "note",
+     "Change something (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 09:00, replaced 08:59 by the confirm of his chat answers (his 06:58 tap was an accidental note)"
+  },
+  {
+   "id": "marvelous-task-2026-11-09",
+   "added": "2026-11-09 07:52",
+   "text": "Marvelous without you: may I register one Windows task that opens Marvelous on your desktop, only while you are signed in, so the night session can make garments? It can be deleted any time.",
+   "links": [],
+   "recommendation": "Yes: Marvelous has no command line or background mode, so this is the only way it runs unattended; it acts only in your own signed-in session. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, register it (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 09:05, answered yes (07:58): task 'LEDGER Marvelous open' registered 09:04 (interactive, no trigger); first run opened Marvelous and started the bridge (heartbeat fresh 09:05)"
+  },
+  {
+   "id": "unused-connectors-2026-11-09",
+   "added": "2026-11-09 07:52",
+   "text": "Switch off the connectors LEDGER never uses, in claude.ai's settings under Connectors: the second Google Drive and the second Google Docs (each is there twice), Gmail, Google Calendar and n8n (never signed in), and the MCP registry. Your skills stay: several serve your other work.",
+   "links": [
+    {
+     "label": "claude.ai settings",
+     "url": "https://claude.ai/settings"
+    }
+   ],
+   "recommendation": "Yes: none was called last week and each loads into every session and helper; a few dollars a week of the allowance (estimated), measured again next Monday. Keep any you use yourself outside LEDGER.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 09:00, answered no (08:10): connectors stay; folded into the confirm of 08:59"
+  },
+  {
+   "id": "confirm-chat-0813-2026-11-09",
+   "added": "2026-11-09 08:59",
+   "text": "Confirm your chat answers of 08:13? (1) No paste into CLAUDE.md: the five changes go into the rulings instead, and the rest of the records change is done as proposed. (2) The connectors stay as they are. (3) The AI-video motion experiment runs now, with video made only on your PC: no outside service, no payment; free stock clips whose licence allows commercial use serve as the real-footage control. You never film or perform anything.",
+   "links": [],
+   "recommendation": "Yes: it is what you said in the chat, written down once so every session works from it. HY-Motion is left out: it needs far more video memory than your card has. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, as written (recommended)"
+    ],
+    [
+     "note",
+     "Change something (add a note)"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "markerless-plugin-2026-11-09",
+   "added": "2026-11-09 09:10",
+   "text": "Install Epic's free motion-capture plugin (needs your sign-in): open the link, sign in, press 'Add to My Library'; then in the Epic Games Launcher go to Unreal Engine, Library, Fab Library, find 'MetaHuman Animator Markerless Motion Capture Plugin', press 'Install to Engine' and pick 5.8. If Windows asks about an unsigned file, allow it.",
+   "links": [
+    {
+     "label": "The plugin on Fab (Epic Games, free)",
+     "url": "https://www.fab.com/listings/4095b8e0-3eff-44f1-acb4-cb40b99228b9"
+    }
+   ],
+   "recommendation": "Done: the motion experiment's capture half needs it, and it is Epic's own, free, under the Fab licence the list allows. About three minutes of your time.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
     ]
    ],
    "state": "open"
