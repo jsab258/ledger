@@ -28,3 +28,9 @@ Moved out of HANDOVER.md on 8 Nov 2026 (its new 1,800-word cap, tools/doc-caps.p
 - (moved 8 Nov 19:49) Bulk batch on Sonnet 5.5 with no thinking setting (8 Nov 18:00): hidden thinking spent max_tokens; send thinking {"type": "between_tools"} (api_batch.py passes it).
 - (moved 8 Nov 19:49) A content rule told as "never spoken of" still got "does not drink" (8 Nov): denials count; tell the model so.
 - (moved 8 Nov 19:49) Rows claimed but never written (8 Nov 11:22 to 13:16): a row exists only when ArtifactData returns its version.
+
+- The editor commandlet from PowerShell (8 Nov 21:38): -EnablePlugins=A,B unquoted became an array and the editor never started; quote every argument. Not a try.
+- The Marvelous bridge from a scheduled run (8 Nov 20:56, 21:00): Marvelous opened by script showed something in front of its menu; a scheduled run cannot be granted computer use to see it.
+- Times guessed (8 Nov): up to an hour ahead of the clock; again at 20:50 and 21:15, and at 22:40 to 22:54 (all corrected). Get-Date before every stamp, no exceptions.
+- The perf reader on a real capture read a 1.8-billion MB peak (8 Nov): the profiler's closing metadata row; only the real file showed it.
+- The street sweep's editor run refused at 19.5 to 19.9 GB on F: (8 Nov): own leftovers only about 0.2 GB; left alone.
