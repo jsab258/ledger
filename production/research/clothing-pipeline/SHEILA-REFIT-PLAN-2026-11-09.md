@@ -69,3 +69,9 @@ Total about 15 h E (12.5 without steps 4 to 6). The whole n09-6 item is 18 h, so
 5. Can a tights tint reach her body's legs in the game, and do they matter at the counter?
 6. Did the 9 Nov pass walk a copy with Ron's and Darren's release in it?
 7. Is the Marvelous month's time free for a cardigan re-drape if the carry fails?
+
+## Corrections after review (9 Nov, DRAFTS-REVIEW-2026-11-09.md: pass with fixes)
+- Her seat of 964 mm is unsupported; her body files give hips 931 mm: use 931 until her game body is measured (step 1).
+- Mafia's "12 at the hem" is loosely worded; read its source before it sets a number.
+- Her age and height are uncited here; take them from her casting sheet.
+- The step total without steps 4 to 6 is 11.5 h, not 12.5 h.

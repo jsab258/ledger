@@ -89,3 +89,8 @@ Reference method: Mafia's, through the garment skill's refit section (.claude/sk
 | Handbag, Martha's trousers | other | not recorded | none found |
 
 Reading (I): a carried repeat outfit cost 5.81 h against the first outfit's 14.15 h (ratio 0.41, SCOREBOARD line 16); per-garment repeat hours cannot be given, because the dress-the-cast windows name men, not garments. The scoreboard needs time-log windows named by garment from now on.
+
+## Corrections after review (9 Nov, DRAFTS-REVIEW-2026-11-09.md: pass with fixes)
+- The jumper's shipped file sits under its chain-j3d/ folder; the path above lacks it.
+- The jacket's 13 pieces and 29 seams are cited to the wrong line of its spec; the count stands, its line to be found when the jacket is next used.
+- The jeans' hem, rise and leg figures are unverified.

@@ -4912,7 +4912,9 @@ namespace
 			Who->GetComponents(Parts);
 			FVector Head = Feet + FVector(0.0f, 0.0f, 165.0f);
 			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Head = C->GetSocketLocation(TEXT("head")); break; } }
-			Look = Head - FVector(0.0f, 0.0f, 12.0f); Up = 0.0f; HFov = 40.0f; Dists = { 130.0f, 110.0f };
+			// The head socket sits at the skull's base: centred 4 cm above it, the crown and the collar both in frame
+			// (the first run, centred 12 cm below it, cut the top of his head).
+			Look = Head + FVector(0.0f, 0.0f, 4.0f); Up = 0.0f; HFov = 40.0f; Dists = { 130.0f, 110.0f };
 		}
 		else
 		{
@@ -7826,6 +7828,9 @@ namespace
 	// (A_<clip>_MH, made by tools/ue/retarget_sitting.py in the import step) on each part whose
 	// skeleton it was made for, and their own idle comes back when they stand. Empty: standing.
 	TMap<TWeakObjectPtr<ULedgerPersonAnim>, TWeakObjectPtr<UAnimSequenceBase>> GStandingLoop;
+	// WHO IS SEATED (9 November, n09-5): set here from the clip asked for, not read from the loop's name, which since
+	// 2 November is A_bench_idle_MH for Ron and never matched "A_sit", so walks were tried from the bench with no stand-up.
+	TSet<TWeakObjectPtr<AActor>> GSeated;
 	void SeatPerson(AActor* Body, const std::string& Clip)
 	{
 		TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
@@ -7838,6 +7843,7 @@ namespace
 			Sit = LoadObject<UAnimSequenceBase>(nullptr, *Path);
 			if (Sit == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerSeat: no seated loop at %s, standing"), *Path); }
 		}
+		if (Sit != nullptr) { GSeated.Add(Body); } else { GSeated.Remove(Body); }
 		for (const TWeakObjectPtr<ULedgerPersonAnim>& W : *Parts)
 		{
 			ULedgerPersonAnim* A = W.Get();
@@ -7988,6 +7994,39 @@ namespace
 		return Out.Num() > 0;
 	}
 
+	// THROUGH THE OFFICE'S DOOR (9 November, n09-5; production/research/office-camera/RON-OFFICE-EXIT-2026-11-09.md):
+	// a straight line from inside Mickey's office to anywhere outside always meets a wall, so a walker inside going out
+	// is routed by two points, one inside the door and one outside it (Kingdom Come II's door points; the spec's door),
+	// each leg found by WalkPath as before. Every leg but the last must reach its point whole, or the walk is refused.
+	bool WalkPathOut(UWorld* World, AActor* Body, const FVector& FromFeet, double ToX, double ToZ, TArray<FVector>& Out, bool& bWhole)
+	{
+		const LedgerCrime::P3 From = ToStreet(FromFeet);
+		auto Inside = [](double X, double Z) { return X > GOffice.X0 && X < GOffice.X1 && Z > GOffice.Z0 && Z < GOffice.Z1; };
+		if (!GOffice.bOn || GOffice.DoorX == 0.0 || !Inside(From.X, From.Z) || Inside(ToX, ToZ))
+		{
+			return WalkPath(World, Body, FromFeet, ToX, ToZ, Out, bWhole);
+		}
+		const double Pts[3][2] = { { GOffice.DoorX, GOffice.Z0 + 0.85 }, { GOffice.DoorX, GOffice.DoorZ - 0.65 }, { ToX, ToZ } };
+		Out.Reset();
+		bWhole = false;
+		FVector At = FromFeet;
+		for (int I = 0; I < 3; ++I)
+		{
+			TArray<FVector> Leg;
+			bool bLeg = false;
+			if (!WalkPath(World, Body, At, Pts[I][0], Pts[I][1], Leg, bLeg) || (I < 2 && !bLeg))
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: the door route's leg %d to (%.2f, %.2f) is blocked"), I + 1, Pts[I][0], Pts[I][1]);
+				return false;
+			}
+			Out.Append(Leg);
+			At = Leg.Last();
+			bWhole = bLeg;
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerWalkOff: out through the office door in %d leg(s)"), Out.Num());
+		return true;
+	}
+
 	// The turning clip begun, toward the figure's yaw WantYaw; false when the angle is small or the clips are missing.
 	bool BeginClipTurn(UWorld* World, AActor* Body, FWalkOff& W, ULedgerPersonAnim* A, AActor* Visual, float WantYaw)
 	{
@@ -8034,10 +8073,10 @@ namespace
 		AActor* Visual = GVisualFor(Body);
 		ULedgerPersonAnim* A = WalkingPart(Body);
 		if (bOff || World == nullptr || Body == nullptr || Visual == nullptr || Visual == Body || A == nullptr || A->GoPhase != 0
-		    || A->IsMoving() || (A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit")))) { return false; }
+		    || A->IsMoving() || GSeated.Contains(Body) || (A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit")))) { return false; }
 		TArray<FVector> Path;
 		bool bWhole = false;
-		if (!WalkPath(World, Body, Visual->GetActorLocation(), ToX, ToZ, Path, bWhole) || FVector::Dist2D(Path.Last(), Visual->GetActorLocation()) < 60.0)
+		if (!WalkPathOut(World, Body, Visual->GetActorLocation(), ToX, ToZ, Path, bWhole) || FVector::Dist2D(Path.Last(), Visual->GetActorLocation()) < 60.0)
 		{
 			// what stops them, here and at the line's first sample (6 November: Sam was shut in both ways at Rita's step, cause unread)
 			const LedgerCrime::P3 Here = ToStreet(Visual->GetActorLocation());
