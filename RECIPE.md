@@ -58,8 +58,8 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 
 **Works.** Faces from the character system's presets, landmark moves and measured colours, judged blind, then by the owner. Undressed bodies hidden in review pictures, rechecked on every later show. Hair chosen by a side-by-side in the shipped build: one level-bias switch, same camera, a patch's grey normalised by skin, a decision table written first.
 **Cost.** 0.4 to 1.5 h a task.
-**Failed.** One face's blend route (six blind reviews); strand sky light read blond at middle distance; cards blotched, the mesh level read as helmets; iris colours rendered green (test a grid).
-**Links.** NB "What came before" (People), 4 Nov (unfinished people), 6 Nov (recoloured garment), 7 Nov (hair sky light), 8 Nov (hair method).
+**Failed.** One face's blend route (six blind reviews); strand sky light read blond at middle distance; cards blotched, the mesh level read as helmets; iris colours rendered green (test a grid). A pale strand crown set aside after a cause test: turning the suspected light off in the shipped build at the played level, measured by the same patch box re-checked against its old reading, left the patch pale, so the light was not the cause (0.3 h, four runs; note: one run's two pictures differed by up to 36 levels, so read several frames).
+**Links.** NB "What came before" (People), 4 Nov (unfinished people), 6 Nov (recoloured garment), 7 Nov (hair sky light), 8 Nov (hair method), 9 Nov (crown cause test: production/research/hair/CROWN-STEP0-2026-11-09.md).
 
 ## 8. Motion
 
