@@ -163,3 +163,7 @@ try:
     run()
 except Exception:
     note("exception", False, error=traceback.format_exc()[-1500:])
+# In the full editor (-ExecutePythonScript; the commandlet has no D3D12 device and the
+# Performance refuses to process: SOLVE-DISABLED-DIAGNOSIS-2026-11-09.md) close it when done.
+if os.environ.get("MOCAP_QUIT") == "1":
+    unreal.SystemLibrary.quit_editor()
