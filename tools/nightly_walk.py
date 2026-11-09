@@ -152,6 +152,67 @@ def legs_never_arrived(verdict):
     return dict(st, fired=bool(st.get("fires")))
 
 
+PERF_FILE = "production/d1-probe/ue-perf-verdict.txt"
+PERF_WORKFLOW = os.path.join(REPO, ".github", "workflows", "ledger-probe-unreal.yml")
+
+
+def parse_perf(text):
+    """The memory fields of slice-perf.py's line (8 Nov): peak, settled peak, median, line, verdict."""
+    f = dict(m.groups() for m in re.finditer(r"(\w+)=(\S+)", text or ""))
+    num = lambda k: float(f[k]) if re.match(r"^[\d.]+$", f.get(k, "")) else None
+    return {"peak": num("gpuMemPeakMB"), "settled": num("gpuMemPeakSettledMB"), "median": num("gpuMemMB"),
+            "line": num("memLine") or 5650.0, "verdict": f.get("memVerdict"), "status": f.get("status")}
+
+
+def perf_level():
+    """The perf step's picture level: High only when it carries "scalability 2"; it ran none until 9 Nov
+    (QA-FIRST-STEPS-2026-11-08.md, held for Monday's order), so its peak is at Highest."""
+    try:
+        y = open(PERF_WORKFLOW, encoding="utf-8").read()
+        i = y.find("csvprofile frames=")
+        step = y[max(0, i - 600):i + 200] if i >= 0 else ""
+        return "High" if "scalability 2" in step else "Highest, the perf step's level, not the played High"
+    except OSError:
+        return "level unread"
+
+
+def memory_peak(at_ts=None):
+    """The lean QA's third line (proposal 7 Nov, part 4): card memory's per-frame peak against the memory
+    plan's 5,650 MB, from the build machine's perf line (slice-perf.py, committed to origin/wip with each
+    build), the newest at or before at_ts. It reports and never fails; "fired" is OVER-LINE."""
+    def git(*a):
+        return subprocess.run(["git", "-C", REPO] + list(a), capture_output=True, text=True, timeout=60).stdout.strip()
+    try:
+        args = ["log", "-1", "--format=%H|%ci|%s"]
+        if at_ts:
+            args.append("--before=" + dt.datetime.fromtimestamp(at_ts).isoformat())
+        rev = git(*(args + ["origin/wip", "--", PERF_FILE]))
+        if not rev:
+            return {"fired": False, "note": "no perf line from the build machine found"}
+        h, when, subj = rev.split("|", 2)
+        p = parse_perf(git("show", "%s:%s" % (h, PERF_FILE)).splitlines()[0] if h else "")
+    except Exception as e:
+        return {"fired": False, "note": "the perf line could not be read (%s)" % type(e).__name__}
+    build = "%s, %s" % (subj.replace("UE machine probe from ", "build of "), when[:16])
+    if p["peak"] is None:
+        why = ("no memory column in the capture" if p["verdict"] == "absent" else
+               "the capture failed, " + p["status"] if (p["status"] or "").startswith("NO-") else "a line from before 8 Nov")
+        return {"fired": False, "build": build, "note": "the perf line carries no peak (%s)" % why}
+    return dict(p, fired=p["verdict"] == "OVER-LINE", build=build, level=perf_level())
+
+
+def memory_sentence(m):
+    if not m:
+        return None
+    if "peak" not in m or m.get("peak") is None:
+        return "Card memory's peak: not measured, %s%s; fired: no." % (m.get("note", "no line"), " (%s)" % m["build"] if m.get("build") else "")
+    return ("Card memory's peak in any frame (at %s): %s MB against the memory plan's %s, %s, fired: %s "
+            "(median %s, peak after the first 300 frames %s; %s)." % (
+                m["level"], "{:,.0f}".format(m["peak"]), "{:,.0f}".format(m["line"]), m["verdict"],
+                "yes" if m["fired"] else "no", "{:,.0f}".format(m["median"]) if m.get("median") else "?",
+                "{:,.0f}".format(m["settled"]) if m.get("settled") else "?", m["build"]))
+
+
 def run_walk(night):
     out = os.path.join(night, "route")
     r = subprocess.run([sys.executable, os.path.join(REPO, "tools", "route_walk.py"), "--town", "--sit", "--out", out],
@@ -293,14 +354,18 @@ def paragraph(rep, prev):
         parts.append("Legs that never arrived: none.")
     if s.get("launch"):
         parts.append("The walk ran on: %s." % s["launch"])
+    ms = memory_sentence(s.get("memory_peak"))
+    if ms:
+        parts.append(ms)
     ill = s["illusion"].get("lines") if s.get("illusion") else None
     parts.append("What broke the illusion: %s." % ("; ".join(ill[:3]) if ill else (s.get("illusion") or {}).get("note", "nothing named")))
     return " ".join(parts)
 
 
-def report(date, night, since_ts, verdict, bench, eyes):
+def report(date, night, since_ts, verdict, bench, eyes, at_ts=None):
     events = read_sessions(since_ts)
     summary = summarise(events, verdict, bench, eyes)
+    summary["memory_peak"] = memory_peak(at_ts)
     rep = {"date": date, "night": night, "events": len(events), "summary": summary}
     prev = previous(date)
     rep["paragraph"] = paragraph(rep, prev)
@@ -442,6 +507,18 @@ def selftest():
     check("a test launch is named in the paragraph",
           "The walk ran on: a test launch: -mickeysinside." in paragraph({"date": "x", "summary": summarise(ev, tv, None, None)}, None))
     check("an older walk says the launch was not recorded", summarise(ev, v, None, None)["launch"].startswith("not recorded"))
+    # card memory's peak (9 Nov, the lean QA's third line), from slice-perf.py's line as the build machine writes it
+    pl = parse_perf("slicePerf=uw-half status=BELOW-60 frames=1500 gpuMemMB=5864 target=60fps gpuMemPeakMB=6332 "
+                    "gpuMemPeakSettledMB=5868 memLine=5650 memVerdict=OVER-LINE")
+    check("the perf line's peak, median and verdict are read", pl["peak"] == 6332 and pl["median"] == 5864 and pl["verdict"] == "OVER-LINE")
+    mo = dict(pl, fired=True, build="build of 09701ac, 2026-11-09 11:03", level="Highest, the perf step's level, not the played High")
+    check("an over-line peak is said, with its level, and fired",
+          "Card memory's peak in any frame (at Highest, the perf step's level, not the played High): 6,332 MB against the memory plan's 5,650, OVER-LINE, fired: yes"
+          in paragraph({"date": "x", "summary": dict(s, memory_peak=mo)}, None))
+    check("a line from before 8 Nov has no peak", parse_perf("slicePerf=uw-half status=BELOW-60 gpuMemMB=5843 target=60fps")["peak"] is None)
+    check("a missing peak says not measured and not fired",
+          "Card memory's peak: not measured, the perf line carries no peak (a line from before 8 Nov); fired: no."
+          in paragraph({"date": "x", "summary": dict(s, memory_peak={"fired": False, "note": "the perf line carries no peak (a line from before 8 Nov)"})}, None))
     check("the bench runs with the game's own talk settings", "--rules" in open(__file__, encoding="utf-8").read() and "--plain" in open(__file__, encoding="utf-8").read())
     # THE TESTER'S PICTURES ARE JPEGS (Jafar, 7 October: "the nightly report has never seen the
     # tester's pictures, because the tester saves .jpg and the report looks only for .png"; every
