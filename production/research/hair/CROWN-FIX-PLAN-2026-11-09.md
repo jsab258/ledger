@@ -81,3 +81,10 @@ If both fail, the crown stays a known fault. Mafia's virtual-shadow route goes t
 - No Epic groom page covers root and tip colour or a scalp showing through. Read and not covering it: "Groom Asset Editor", "Groom Materials", "Hair Rendering and Simulation".
 - Unverified: Tom's built Whiteness; whether type 0 is noisy at 3.1 m; whether root scale holds when packaged; whether ScreenTraceOcclusion helps (it traces scene depth, not hair).
 - Kingdom Come II's hair figures are unverified.
+
+## Corrections after review (9 Nov, CROWN-FIX-PLAN-REVIEW-2026-11-09.md: pass with fixes)
+- Step 0's rule is weak: sky lighting off darkens hair whatever the cause, so "crown at or under 99" proves nothing alone. Add a control: the same reading on the street by day (where the crown already reads 28) and on another character's hair in the office; cause 1 leads only if the office crown falls toward the street's while the control barely moves.
+- "Broken and very dark" is the forum poster's words, not Epic's.
+- Try 1 uses the same cvar family as 7 Nov's type 1 (Darren turned blond, Sheila speckled): name that cast risk and check all three in the office.
+- The cvar's citation is HairStrandsEnvironment.cpp line 43, not 45.
+- Both tries would be the crown's fifth and sixth: his yes first, asked once with Step 0's result.
