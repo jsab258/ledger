@@ -1326,7 +1326,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 11:06, done (11:05): the plugin is in the engine's folder"
   },
   {
    "id": "experiment-space-2026-11-09",
@@ -1384,6 +1385,30 @@
     [
      "note",
      "Change something (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 11:06, answered yes (11:05): RULINGS 7 Nov tries line amended"
+  },
+  {
+   "id": "video-program-allow-2026-11-09",
+   "added": "2026-11-09 10:40",
+   "text": "The video experiment's program (free, open source, on drive C) was stopped by Claude's own safety check from running unattended. At the PC: open the LEDGER session running now in the Claude app, write 'run the video test', and press Allow when it asks once.",
+   "links": [
+    {
+     "label": "His page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done: the advisor's 09:56 plan needs the 33-frame test before 12:50; it runs only on your PC, nothing paid or sent out. About one minute of your time.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
     ]
    ],
    "state": "open"
