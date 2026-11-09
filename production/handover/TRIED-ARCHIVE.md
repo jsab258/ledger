@@ -39,3 +39,7 @@ Moved out of HANDOVER.md on 8 Nov 2026 (its new 1,800-word cap, tools/doc-caps.p
 - Tom's talk view by the tester (9 Nov): play.py captures at a fixed 1280x720 and a 2560x1440 window does not fit the 1440-tall screen; the game's own off-screen picture (tom-close) replaced it. Its first framing cut the head (centred below the head socket); fixed.
 - Times written without Get-Date (07:05, 07:20) in DECISIONS and the order; corrected from the clock and the commit's own time.
 - The night build stopped at F:'s floor and the walk replayed the old copy unannounced (9 Nov); the walk now names a stale copy.
+
+- An ack stamped 09:40 without Get-Date (9 Nov, true 09:29); corrected.
+- The office exit read from a sit walk: the route never sends anyone out of a room, so it proves nothing about the exit (9 Nov 12:24); read tonight's walk instead.
+- sd-cli run unattended: refused by the session's safety check (9 Nov 10:30); not worked round; he allowed it in the session.

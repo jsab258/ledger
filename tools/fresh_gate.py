@@ -14,8 +14,9 @@ the handover's "**Started:**" and "**Stopped:**" lines (the last session has sto
 project's own activity: the newest real turn (a user or assistant line with its timestamp) in any of the project's
 session logs and their helpers' logs, this run's own log left out (CLAUDE_CODE_SESSION_ID). A session that died
 without its Stopped line, or ended its turn idle without one: when Started is later but no turn has been written for
-30 minutes and none of its own background jobs is still running, the last session is taken as stopped, and GO says
-so, for the handover; 120 minutes while such a job runs.
+30 minutes, the last session is taken as stopped, and GO says so, for the handover; when a background job of its own
+still runs, GO names it, and the new session leaves the card alone until it ends and picks up its result (the
+advisor's message 68, 9 November: a 120-minute wait for such a job left nobody working while a clip rendered).
 
 30 MINUTES, NOT 120 (9 November, the advisor's message 64): his pasted message at about 15:31 resumed an old session,
 which worked a turn and ended it idle with no Stopped line and no goal loop; the 16:40 and 17:21 starts waited on it
@@ -58,7 +59,7 @@ LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Ja
 QUIET_MIN = 15
 QUIET_STOPPED_MIN = 3
 DEAD_MIN = 30
-DEAD_JOB_MIN = 120
+DEAD_JOB_MIN = 120  # only for the cheap file-time shortcut below
 JOB_START = re.compile(rb'"backgroundTaskId": ?"([A-Za-z0-9]+)"')
 JOB_DONE = re.compile(rb'<task-id>([A-Za-z0-9]+)</task-id>')
 OWN_RUN_MIN = 10
@@ -180,15 +181,15 @@ def decide(now, text, idle_min, walk_reported=False, job_running=False):
     quiet = QUIET_STOPPED_MIN if stopped >= started else QUIET_MIN
     if idle_min is not None and idle_min < quiet:
         return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), quiet)
+    job = "; a background job of the last session still runs: leave the card alone until it ends, then take its result" \
+        if job_running else ""
     if stopped >= started:
-        return "GO the last session stopped at %s; no turn written for %s minutes" % (
-            stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min))
-    dead = DEAD_JOB_MIN if job_running else DEAD_MIN
-    if idle_min is not None and idle_min >= dead:
+        return "GO the last session stopped at %s; no turn written for %s minutes%s" % (
+            stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min), job)
+    if idle_min is not None and idle_min >= DEAD_MIN:
         return "GO the last session (started %s) set no Stopped line but no turn has been written for %d minutes: " \
-               "taken as stopped; say so in the handover" % (started.strftime("%d %b %H:%M"), int(idle_min))
-    return "WAIT the last session (started %s) has not stopped%s" % (
-        started.strftime("%d %b %H:%M"), "; a background job of its own is still running" if job_running else "")
+               "taken as stopped; say so in the handover%s" % (started.strftime("%d %b %H:%M"), int(idle_min), job)
+    return "WAIT the last session (started %s) has not stopped" % started.strftime("%d %b %H:%M")
 
 
 def rehearsal(now):
@@ -216,8 +217,10 @@ def selftest():
         ("died without Stopped, quiet 3 h: GO", decide(d, r, 180), "GO"),
         ("ended its turn idle, no Stopped, quiet 29 min: WAIT", decide(d, r, 29), "WAIT"),
         ("ended its turn idle, no Stopped, quiet 30 min: GO", decide(d, r, 30), "GO"),
-        ("no Stopped, quiet 45 min, its own job running: WAIT", decide(d, r, 45, job_running=True), "WAIT"),
-        ("no Stopped, quiet 125 min, its job never reported: GO", decide(d, r, 125, job_running=True), "GO"),
+        ("no Stopped, quiet 29 min, its own job running: WAIT", decide(d, r, 29, job_running=True), "WAIT"),
+        ("no Stopped, quiet 30 min, its own job running: GO (advisor 68)", decide(d, r, 30, job_running=True), "GO"),
+        ("that GO names the running job", "%s" % ("background job" in decide(d, r, 30, job_running=True)), "True"),
+        ("stopped, its job still running: GO naming it", decide(d, h, 40, job_running=True), "GO the last session stopped"),
         ("until Monday, 00:50: GO", decide(datetime.datetime(2026, 11, 7, 0, 50), h, 400), "GO"),
         ("until Monday, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 7, 2, 15), h, 400), "WAIT the night's walk"),
         ("until Monday, the walk reported, 02:45: GO", decide(datetime.datetime(2026, 11, 7, 2, 45), h, 400, True), "GO"),
