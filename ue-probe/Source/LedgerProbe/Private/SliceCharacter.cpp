@@ -995,6 +995,18 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			}
 			return GetWorld()->SweepSingleByChannel(Hit, From, To, FQuat::Identity, ECC_Pawn, Shape, Q, R) ? Hit.Distance : 1500.0f;
 		};
+		// A START PLACE AND HEADING BY HAND (9 November, n09-8; production/research/people-alive/N09-8-FILM-PLAN-2026-11-08.md,
+		// patch A): -TomWalkProofFrom=X,Y (engine cm) and -TomWalkProofYaw=D, so the course can walk him into Mickey's front,
+		// which the clearest heading never meets. Test switches only.
+		static FString ProofFrom;
+		static float ProofFixedYaw = 0.0f;
+		static const bool bProofFrom = FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofFrom="), ProofFrom, false);
+		static const bool bProofYaw = FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofYaw="), ProofFixedYaw);
+		FString FromX, FromY;
+		if (bProofFrom && ProofFrom.Split(TEXT(","), &FromX, &FromY))
+		{
+			SetActorLocation(FVector(FCString::Atof(*FromX), FCString::Atof(*FromY), GetActorLocation().Z), false, nullptr, ETeleportType::TeleportPhysics);
+		}
 		float Best = -1.0f;
 		ProofYaw = GetActorRotation().Yaw;
 		for (int32 H = 0; H < 16; ++H)
@@ -1004,6 +1016,7 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			const float Score = Behind >= 300.0f ? Ahead : Ahead * 0.1f;
 			if (Score > Best) { Best = Score; ProofYaw = Yaw; }
 		}
+		if (bProofYaw) { ProofYaw = ProofFixedYaw; SetActorRotation(FRotator(0.0f, ProofFixedYaw, 0.0f)); }
 		const float AheadM = Clear(ProofYaw) / 100.0f;
 		const FString AheadBy = Blocker;
 		ProofLines += FString::Printf(TEXT("the route's heading %.0f degrees, %.1f m clear ahead (%s), %.1f m behind, from %.0f,%.0f") LINE_TERMINATOR,
@@ -1318,6 +1331,26 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 			ProofLines += FString::Printf(TEXT("traceRoot %.3f: root %.1f,%.1f, capsule %.1f,%.1f, off %.1f cm%s") LINE_TERMINATOR, ProofClock,
 				(float)Root.X, (float)Root.Y, (float)GaspMover->GetActorLocation().X, (float)GaspMover->GetActorLocation().Y,
 				(float)FVector::Dist2D(Root, GaspMover->GetActorLocation()), *Chosen);
+			// THE PUSH AND WHAT IT MEETS, each frame of a traced span (9 November, n09-8, patch B): the push, acceleration
+			// and velocity, and whether a wall lies within 10 cm the way he is pushed, so treading can be told from a push cut.
+			if (const UCharacterMovementComponent* MC = GaspMover->GetCharacterMovement())
+			{
+				const UCapsuleComponent* Cap = GaspMover->GetCapsuleComponent();
+				const FVector Vel = GaspMover->GetVelocity(), Acc = MC->GetCurrentAcceleration(), Dir = Acc.GetSafeNormal2D();
+				FCollisionQueryParams WQ(FName(TEXT("TomWalkProofWall")), false, GaspMover);
+				WQ.AddIgnoredActor(this);
+				if (WornBody != nullptr) { WQ.AddIgnoredActor(WornBody->GetOwner()); }
+				FCollisionResponseParams WR;
+				WR.CollisionResponse.SetResponse(ECC_Pawn, ECR_Ignore);
+				FHitResult W;
+				const FVector C = Cap != nullptr ? Cap->GetComponentLocation() : GaspMover->GetActorLocation();
+				const bool bW = Cap != nullptr && !Dir.IsNearlyZero() && GetWorld()->SweepSingleByChannel(W, C, C + Dir * 10.0, FQuat::Identity, ECC_Pawn,
+					FCollisionShape::MakeCapsule(Cap->GetScaledCapsuleRadius(), Cap->GetScaledCapsuleHalfHeight() - 5.0f), WQ, WR);
+				ProofLines += FString::Printf(TEXT("ledgerTomMove %.3f: push %.2f accel %.0f,%.0f vel %.1f,%.1f speed %.1f wall %s %.1f into %.2f mode %d%s") LINE_TERMINATOR,
+					ProofClock, GaspLastIn, (float)Acc.X, (float)Acc.Y, (float)Vel.X, (float)Vel.Y, (float)Vel.Size2D(),
+					bW && W.GetActor() != nullptr ? *W.GetActor()->GetName() : TEXT("none"), bW ? (float)W.Distance : -1.0f,
+					bW ? (float)-FVector::DotProduct(Dir, W.ImpactNormal.GetSafeNormal2D()) : 0.0f, (int32)MC->MovementMode, *Chosen);
+			}
 		}
 	}
 	if (bTrace && (Seg == 1 || Seg == 2) && T < 1.6f)

@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 9 November 2026, 6:23",
+  "updated": "Monday 9 November 2026, 15:40",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -48,7 +48,7 @@
       "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
       "size": "3 to 4 weeks",
       "state": "here",
-      "note": "Waits until phase 1 passes. The shops already in the street stay.",
+      "note": "Started 9 November, when your tap closed phase 1. The shops already in the street stay.",
       "arrived": [
         "Lamp posts",
         "Rita's pawnbroker",
@@ -60,12 +60,16 @@
         "The launderette",
         "The west row's eaves"
       ],
-      "plan_title": "Its pieces (first plan, 8 Nov; hours are estimates)",
-      "plan_note": "About 240 to 385 hours without cars against a ceiling of about 240, so it runs over on estimates. Full scope stays (your rulings of 5 and 6 Nov); hours are measured as pieces land.",
+      "plan_title": "Its pieces (plan revised 9 Nov; hours are estimates until measured)",
+      "plan_note": "In hours first: 266 to 437 hours on the plan's own figures, without cars; about 447 to 764 hours once its guesses are doubled, as past guesses ran 2 to 4 times over. At the planned 99 production hours a week that is about 4.5 to 7.7 weeks. Last week's broken pace (57 hours logged) would make it 8 to 13 weeks: a footnote, replaced by each week's measured hours as they come in. Not yet priced: distance beyond the hill and the crowd beyond the named people. Full scope stays (your rulings of 5 and 6 Nov).",
       "plan": [
         {
           "name": "Card memory and headroom first: they cap what may be copied",
           "hours": "about 14 h"
+        },
+        {
+          "name": "The street's budget and scale test, then a rough whole-street layout with routes and doors (added 9 Nov on the advisor's review)",
+          "hours": "26 to 52 h"
         },
         {
           "name": "The street's checks (width, kit reuse, the street's ends)",
@@ -134,6 +138,15 @@
       ],
       "note_lists": [
         {
+          "title": "Phase 2's estimate, re-measured every Monday (it must fall week by week)",
+          "items": [
+            "Remaining last Monday: no estimate yet (the plan was first made on 8 Nov)",
+            "Hours done on phase 2's pieces since: none measured yet (it began 9 Nov)",
+            "Remaining now (9 Nov): about 447 to 764 hours without cars, guesses doubled",
+            "Fell? First reading, the baseline; from 16 Nov each Monday says whether the same remaining pieces cost less"
+          ]
+        },
+        {
           "title": "Against a PS5-level game, by element (a fresh reviewer, 8 Nov stills; re-judged at each phase's end)",
           "items": [
             "Street life: large gap; not one car in any frame",
@@ -159,10 +172,10 @@
         }
       ],
       "short": "Quay Street",
-      "next_step": "Starts when phase 1 passes. First: card memory and headroom, because they cap what may be copied.",
+      "next_step": "First: card memory and headroom (the cooking plan is written and reviewed), then the street's budget and scale test.",
       "fc_w": [
-        4,
-        5
+        4.5,
+        7.7
       ],
       "began": "2026-11-09"
     },

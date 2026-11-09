@@ -4899,6 +4899,13 @@ namespace
 		{
 			Look = Feet + FVector(0.0f, 0.0f, 88.0f); Up = 20.0f; HFov = 70.0f; Dists = { 300.0f, 260.0f, 220.0f };
 		}
+		else if (Id.EndsWith(TEXT("backdrop")))
+		{
+			// THE VIDEO MODEL'S START FRAME (9 November, n09-8; SHOTS-AND-PROMPTS rules 1 to 4): whole body, straight on,
+			// chest height, one distance, before -PageBackdrop's plain wall. The view keeps its vertical angle as if 16:9 (the
+			// first try at 34 showed chest to knees on a portrait frame): 66 here is about 40 degrees high, a 50 mm lens on the long side.
+			Look = Feet + FVector(0.0f, 0.0f, 92.0f); Up = 18.0f; HFov = 66.0f; Dists = { 340.0f };
+		}
 		else if (Id == TEXT("ron-boots") || Id == TEXT("tom-boots"))
 		{
 			Look = Feet + FVector(0.0f, 0.0f, 12.0f); Up = 45.0f; HFov = 45.0f; Dists = { 120.0f, 95.0f };
@@ -4986,7 +4993,18 @@ namespace
 		{
 			if (Mode == TEXT("dress"))
 			{
-				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag"), TEXT("tom-whole"), TEXT("tom-boots"), TEXT("tom-close") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
+				// -PageDressIds=a/b/... (9 November, n09-8) takes only those, e.g. tom-backdrop for the video's start frame.
+				FString IdsArg;
+				if (FParse::Value(FCommandLine::Get(), TEXT("PageDressIds="), IdsArg, false))
+				{
+					TArray<FString> Ids;
+					IdsArg.ParseIntoArray(Ids, TEXT("/"));
+					for (const FString& Id : Ids) { FPageShot S; S.Id = Id; Shots.Add(S); }
+				}
+				else
+				{
+					for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag"), TEXT("tom-whole"), TEXT("tom-boots"), TEXT("tom-close") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
+				}
 			}
 			else if (Mode == TEXT("at") || Mode == TEXT("atnight"))
 			{
@@ -5195,6 +5213,40 @@ namespace
 				FVector Eye, Look; float HFov = 60.0f;
 				if (DressView(World, S.Id, Eye, Look, HFov)) { Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation()); Cam->GetCameraComponent()->SetFieldOfView(HFov); }
 				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %s from %s at %s"), *S.Id, *Eye.ToString(), *Look.ToString());
+				// -PageBackdrop (9 November, n09-8, the video model's start frame; SHOTS-AND-PROMPTS rules 3 and 4): a plain
+				// matte grey-brown wall 1.2 m behind the person and a darker matte floor under them, no wet ground, no street,
+				// no motion blur. Made once, at the first view, square to the camera. A test switch only.
+				static bool bBackdropMade = false;
+				if (!bBackdropMade && S.Id.EndsWith(TEXT("backdrop")) && FParse::Param(FCommandLine::Get(), TEXT("PageBackdrop")))
+				{
+					bBackdropMade = true;
+					UStaticMesh* Cube = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
+					UMaterialInterface* Basic = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+					if (Cube != nullptr && Basic != nullptr)
+					{
+						const FVector Dir = (Look - Eye).GetSafeNormal2D();
+						const double FeetZ = Look.Z - 92.0;
+						const FRotator Face(0.0f, (float)Dir.Rotation().Yaw, 0.0f);
+						auto Slab = [&](const FVector& At, const FVector& Scale, const FLinearColor& C)
+						{
+							FActorSpawnParameters SP;
+							SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+							AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(At, Face, SP);
+							if (A == nullptr) { return; }
+							A->SetMobility(EComponentMobility::Movable);
+							A->GetStaticMeshComponent()->SetStaticMesh(Cube);
+							A->GetStaticMeshComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+							A->GetStaticMeshComponent()->SetCastShadow(false);
+							A->SetActorScale3D(Scale);
+							PaintFlat(A, Basic, C);
+						};
+						// The cube is 100 cm a side about its centre; local X runs along the view.
+						Slab(FVector(Look.X, Look.Y, FeetZ + 300.0) + Dir * 120.0, FVector(0.1, 10.0, 6.0), FLinearColor(0.11f, 0.095f, 0.08f));
+						Slab(FVector(Look.X, Look.Y, FeetZ - 0.6) + Dir * -170.0, FVector(6.0, 10.0, 0.02), FLinearColor(0.035f, 0.032f, 0.03f));
+						if (GEngine != nullptr) { GEngine->Exec(World, TEXT("r.MotionBlurQuality 0")); }
+						UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: the plain backdrop made behind %s"), *S.Id);
+					}
+				}
 				PC->SetViewTargetWithBlend(Cam.Get(), 0.0f);
 				NextAt = Now;
 				++Step;

@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-09 10:22
-**Stopped:** 2026-11-09 12:29
+**Started:** 2026-11-09 15:31
+**Stopped:** 2026-11-09 18:18 (stopped on his word in the chat; the 15:31 session was stopped by him at 16:40 without a handover; this stop committed its finished work)
 (His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 10 to 20 minutes before the next run, which fires at :21; past 400,000 too unless under 10 minutes to the run; past 550,000 whatever the clock; 9 Nov, advisor 52) means rewrite this file, set Stopped from Get-Date, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November). The order of 2 November's time ends 13:00 Monday 9 November.
@@ -19,17 +19,17 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Never filmed (his word 08:35, 9 Nov, advisor 51):** he never films or performs anything; never propose it in any plan, item or report. Motion footage fallback and control: free online video whose licence allows commercial use and changes (Pexels, Pixabay; each site's licence read in full against the allowlist, each clip's source and licence recorded; nothing from sites forbidding download). Into RULINGS with his next tap.
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
-## Run 10:22 on 9 Nov (the hourly task; earlier runs: git log)
-- His page: nothing open. Answered and acted on: the tries rule (yes 11:05; RULINGS 7 Nov line amended, two done lines out), the markerless plugin (installed: MetaHumanBodyTracker_5.8 in the engine's Marketplace plugins), the video program (he ran it in the session at 11:19), RIFE for the experiment only (yes 11:59; DECISIONS). Advisor 54, 55 and the 12:09 pace note acked.
-- Played copy 09701ac (jacket v37-headclear, boots v5). Tom's close, whole and boots views passed fresh final reviews on it (F:/LedgerTools/gate/new/tom-whole-2026-11-09/r2 and r3, review-*.json).
-- The video runtime proven: two 33-frame clips, 22 min each (TOOLS-2026-11-09.md); C:/LedgerTools/ai-video/out; stills by Blender's sequencer (the frame script: Blender background, a movie strip, render frames to PNG; no ffmpeg or cv2 here).
-- Helpers' results, all committed: phase 2's plan revised on advisor 55, reviewed, 13 fixes (PIECES-DRAFT; FOR-ORDER-16-NOV); the cooking plan for n09-3, reviewed, 14 fixes (COOKING-PLAN-2026-11-09.md; first change the shop-front import pass, 294 to 311 MB); STREET-LIFE scan; DOOR-PASSAGE-METHOD; Ron's cost table reviewed and fixed; SHOTS-AND-PROMPTS; INTERPOLATOR-LICENCES. Also: GARMENTCODE-READING (code MIT; its Warp simulator non-commercial, not to be used; patterns export as JSON/SVG/PDF, no DXF; a 3-hour simple-garment test recommended) and PUBLISHED-NUMBERS (few rows; most sources unreached).
+## Runs on 9 Nov (earlier: git log)
+- To 12:30: Tom's close, whole and boots views passed fresh final reviews on played copy 09701ac (F:/LedgerTools/gate/new/tom-whole-2026-11-09/r3); the video runtime proven (TOOLS-2026-11-09.md); helpers' plans committed (phase 2 revised, the cooking plan, street life, door passage, Ron's costs, SHOTS-AND-PROMPTS, interpolator licences, GarmentCode, published numbers).
+- 13:00 to 15:31 nobody worked: the hourly task named the 2 Nov order, whose time had ended. On his yes (15:30) the task's prompt now follows the newest adopted order; its copy is HOURLY-TASK.md, checked by tools/order_current_check.py (in ci-checks). DECISIONS has the line.
+- 15:31 to 16:40 (stopped by him mid-run): the start-frame switches (-PageBackdrop, -PageDressIds, Tom's walk-proof start place and push lines), both targets built; Tom's start frame taken; motion 2 seed 1101 at 81 frames finished 17:30 (C:/LedgerTools/ai-video/out/m2-81f-s1101.webm, 6,015 s), not yet looked at. Four route notes from helpers (COMFYUI-ROUTES, PLUGIN-SOLVE-ROUTE, START-FRAME-ROUTE, WORKFLOW-STUDY). Progress page updated for phase 2. All committed at this stop (18:18) on his word.
+- His page and advisor not read since about 16:40.
 
 ## Next, in order
 1. Read his page's verdicts and advisor; act at once.
-2. n09-2, Tom by Tuesday: his page with the four views (close, whole, boots from r3; the talk view), the walk 8 Nov and sit 6 Nov films reused, shortfalls first (collar edge, crown, boots read as slip-ons, plain jeans, smooth cloth); every frame checked by a fresh reviewer already (r3); tonight's walk is the packaged pass.
-3. n09-5 the office exit: tonight's walk runs the town's hours; copy its game log (F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/Logs, backups too) before the morning pictures overwrite it, and grep LedgerWalkOff for "out through the office door" and "cannot walk" (the 12:24 sit walk passed 13 of 13 but nobody left a room: 0 walk-off lines).
-4. n09-8: the three start frames rendered from the game's scene (SHOTS-AND-PROMPTS section 1 and per motion: plain matte wall, flat light, no wet ground, feet with margin; never beside the video model or the runner), then motion 2 seed 1101 at 81 frames (about an hour), its check; then motions 3 and 1; RIFE (rife-ncnn-vulkan, MIT) fetched to C:/LedgerTools/ai-video for the 60 fps copies; the plugin's solve on the native and the 60 fps copy. Running sd-cli unattended was refused once by the safety check (11:19 he allowed it in the session); if refused again, his page.
+2. n09-2, Tom by Tuesday: his page with the four views (close, whole, boots from r3; the talk view), the walk 8 Nov and sit 6 Nov films reused, shortfalls first (collar edge, crown, boots read as slip-ons, plain jeans, smooth cloth); tonight's walk is the packaged pass.
+3. n09-5 the office exit: tonight's walk runs the town's hours; copy its game log (F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/Logs) before the morning pictures overwrite it; grep LedgerWalkOff for "out through the office door" and "cannot walk".
+4. n09-8: check the 81-frame motion 2 clip (stills by Blender's sequencer: identity, feet, camera), then motions 3 and 1 with their start frames; RIFE to C:/LedgerTools/ai-video for 60 fps; the plugin's solve. If sd-cli unattended is refused again, his page.
 5. n09-3: the cooking plan's step 3 (the shop-front import pass), then its packaged memreport check.
 6. n09-7 the crown: Step 0 with its control; tries 5 and 6 under the amended rule.
 7. The order's rest (n09-6 Sheila step 1 and the GarmentCode lab test, n09-9, n09-12).

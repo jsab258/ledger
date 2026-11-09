@@ -1,0 +1,36 @@
+# Start-frame route: how Tom's dress pictures were made, and the smallest change for a plain-wall frame (9 Nov 2026)
+
+Read-only extraction. Counted and quoted from files; nothing run. Unread or not recorded is marked.
+
+## 1. How the pictures were made
+
+- tom-whole-dress.png, tom-close-dress.png, tom-boots-dress.png (F:/LedgerTools/gate/new/tom-whole-2026-11-09/r3, all 2560x1440, written 11:09:44 on 9 Nov): the game's own page-picture switch `-PageShots=dress`, on the PACKAGED game, build 09701ac. Source: review-whole.json in r3 says "Tom whole, front, day, packaged 09701ac, 2560x1440"; HANDOVER.md:24 says "Played copy 09701ac ... F:/LedgerTools/gate/new/tom-whole-2026-11-09/r2 and r3".
+- The exact command line of r3 is NOT recorded in any file read (not in HANDOVER.md, DECISIONS, NOTEBOOK.md:2020, the gate skill). Unread: the run's own log. The recipe the code and skills give: street switches `-LedgerSlice -LedgerCrime -Encounter=live -LiveFresh -TalkFake -NoTitle` (tools/shop_views.py:27, "tools/p1-packaged.ps1's list"), `-PageShots=dress`, `-PageShotSize=2560x1440 -ResX=2560 -ResY=1440` (shop_views.py:34-36), `-ExecCmds="scalability 2"` (gate SKILL.md:27), copy from ue-probe/Saved/PageShots/ (file names `<id>-dress.png`, CrimeProbe.cpp:5229) to F:/LedgerTools/gate/new/<piece>-<date>/rN (SKILL.md:27). Packaged runs are not named in these files.
+- The three ids come from the fixed dress list `ron-whole, ron-boots, sheila-whole, sheila-handbag, tom-whole, tom-boots, tom-close` (CrimeProbe.cpp:4989). Tom's outfit is worn as released rows of production/specs/garments.json (LedgerGarments.h:282-295: `-WearHeld=Name,...` only for held rows; handover shows jacket v37, boots v5 released, no flag recorded).
+- Level: the project has no .umap in ue-probe/Content (find returned none); DefaultEngine.ini:18 sets /Engine/Maps/Entry; the street is built by game code under `-LedgerSlice -LedgerCrime`. Camera: DressView (CrimeProbe.cpp:4883-4951), Tom's own pawn (GPawn) at its capsule foot.
+  - whole: look at feet + 88 cm, camera up 20 cm, HFov 70, tries 300, 260, 220 cm out (4898-4901).
+  - boots: look at feet + 12 cm, up 45 cm, HFov 45, 120 or 95 cm, first side turned 30 deg (4902-4906).
+  - close: head socket + 4 cm, HFov 40, 130 or 110 cm (4907-4918).
+  - Side chosen: nearest the pawn's forward first, alternating 30 deg steps, first with no hit on a 15 cm sphere sweep (4933-4948). The street decides the backdrop through this sweep; the camera is spawned with aspect unconstrained (5149) and set as view target (5198).
+  - The picture waits until the person stands still 2 s (4972-4981), 6 s settle by day (5157), then `FScreenshotRequest` (5230).
+- tom-stand-480x832.png (C:/LedgerTools/ai-video/inputs, written 09:48 on 9 Nov, 480x832): NOT from r3 (r3 is 11:09). Seen by eye: Tom whole on the street, brick wall left, wet flags, lighthouse right, so a crop and resize of an earlier tom-whole-dress picture (r1 or the 41bb9d7 round). Which file and the crop box are not recorded (unread). TOOLS-2026-11-09.md:19 only names it as the clip's start frame.
+
+## 2. Camera, light, background; any plain-backdrop option
+
+- Camera: placed by DressView only; no free-camera option for a person except `-PageShots=at` with `-PageAt=id@x@z@eye@yaw@pitch@vfov/...` in the scene file's frame (CrimeProbe.cpp:4991-4999, 5207-5211), which photographs the street at any place, not a person alone.
+- Light and exposure: the street's own (comment 4878-4882: "in the street's own light and exposure"); day clock; `-PageShots=night` jumps the clock to 22:00 (5097-5103). Exposure is pinned by the scene's override (4837-4842, `Pin`). The ground is the wet-flags coat (memory: wet-ground-coat-beyond-decals), which gave the reflections the reviewer lists.
+- Motion blur: set off to 0 only in film modes (CrimeProbe.cpp:3898, 7080, 7392: `r.MotionBlurQuality 0`); PageShots code has no such line (5137-5145 sets size and screen percentage only). Unread: whether a static pawn shows blur in the default project; the reviewer saw only TAA outline shift.
+- Plain backdrop: none exists. Grep of CrimeProbe.cpp for plain, backdrop, studio, booth, matte, turntable found only unrelated prose (lines 17, 843, 4429-4434 mickeys-office boxes, 6879 "studio"); no Level, no .umap. Unreal ships a colour calibrator scene in engine content (memory unreal-ships-color-calibrator: EditorMeshes/ColorCalibrator; unread here). `-PageNoPeople` (5115) and `-PageUndressed` (5127) hide other people; `-FaceAB` (4301) and `-MouthFilmWide` (3917, whole person from 2.6 m) hold the camera on a face or person but also use the street.
+- SHOTS-AND-PROMPTS-2026-11-09.md:44 asks for the plain matte wall start frame: "Flat grey-brown wall, darker matte floor ... Camera straight on, chest height ... 35 to 50 mm equivalent"; line 12: "motion blur off and a flat, overcast-style light".
+
+## 3. Smallest change (named, not made)
+
+Nothing in the repository gives a plain wall, so one small piece of new code is the minimum; no new level needed.
+
+1. ue-probe/Source/LedgerProbe/Private/CrimeProbe.cpp, inside the Step < 0 setup of PageShotsTick (after line 5145): when a new switch such as `-PageBackdrop` is set, spawn two static meshes (engine /Engine/BasicShapes/Plane or Cube, scaled; a matte grey-brown wall, 4 m wide and 3 m high, and a darker floor slab) at a fixed place under the dressed person's feet, with `-PageNoPeople`-style hiding of other people, plus `r.MotionBlurQuality 0` and `r.Lumen`-free flat light (a directional light kept, the street's sky lighting left as is; or the matte floor covering the wet ground's coat). Placing the backdrop needs the person where they stand: move GPawn (Tom) or the Ron CardBody actor onto the slab for the shot, as the sit-walk already does.
+2. In DressView (4883-4951), for a new id such as `ron-lean` or `tom-lean`: side-on view (Prefer = Toward rotated 90 deg), Look = Feet + 88 cm, HFov about 34 for a 480x832 frame (35 to 50 mm lens; whole is 70 now, 4900), Up about 0, one distance (about 3.2 m) so the sweep (4942) clears. The portrait size: `-PageShotSize=1440x2496` (5142; the engine's `r.SetRes` takes the string) and re-shoot, or render 1440x2496 then reduce to 480x832 (same 0.577 ratio).
+3. Pose: the lean and shoulder on the wall needs an animation or a held pose on the person; no pose switch exists for Ron in the files read (unread: LedgerGarments.h, SliceCharacter.cpp for a pose option). A standing pose against the slab, with the wall placed against his shoulder, is the nearest no-new-animation frame.
+4. Run: the editor `-game` command of shop_views.py:34 with `-PageShots=dress -PageBackdrop -PageNoPeople -PageShotSize=... -ResX=... -ResY=...`; the packaged game is needed only if a gate is wanted (the editor needs `-WearHeld` for any held row, and `-ExecCmds="scalability 2"`).
+5. Alternative with no game code: render Tom or Ron in Blender (blender-live, ron_jumper_game.blend per memory head-mesh-reaches-the-chest) against a plain wall; outside this extraction's sources.
+
+Files to touch: CrimeProbe.cpp (PageShotsTick setup near 5139-5145; DressView 4883-4951; shot list 4989). Parameters: PageShotSize, HFov, Dists, Up, Prefer rotation, motion blur, the backdrop's size and colour.
