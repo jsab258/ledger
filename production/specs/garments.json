@@ -271,8 +271,8 @@
   {
    "who": "Tom",
    "name": "TomBoots",
-   "fbx": "F:/LedgerTools/garments/tom/boots/maps/tom_boots_skinned_v4.fbx",
-   "fbx_why": "2 November, v4 (the fourth try, his yes of 14:56; tools/meshgen/blender/boot_sole.py, boot-sole-record.json beside the fbx): the sole thinned from 17 to 12 mm at the ball and 20 to 15 at the heel, the ledge at the toe from about 3.6 to 2 to 2.5 mm, so Tom is raised 12 mm (v3 17, the 3 mm sink kept); points, UVs and weights as v3. Before it, v3, the toe taken toward Epic's boots (his yes of 31 October; tools/meshgen/blender/boot_toe.py, F:/LedgerTools/garments/tom/boots/maps/boot-toe-record.json): toe 44/54/56 mm above the sole's floor at 1, 3 and 5 cm behind the tip (v2 58/62/63), spring 14 mm (v2 10), width 0.68 of the widest (v2 0.73); points, faces, UVs and weights as v2.",
+   "fbx": "F:/LedgerTools/garments/tom/boots/v5-no-low-bar/tom_boots_skinned_v5.fbx",
+   "fbx_why": "9 November, v5 (the fifth try, his yes of 09:55): the lowest lace bar, set lengthwise below the jeans hem and read as a stub, and its two eyelets taken out (96 points, 5,288 to 5,192; tom_boots_skinned_v5.json beside the fbx); all else as v4. Before it, 2 November, v4 (the fourth try, his yes of 14:56; tools/meshgen/blender/boot_sole.py, boot-sole-record.json beside the fbx): the sole thinned from 17 to 12 mm at the ball and 20 to 15 at the heel, the ledge at the toe from about 3.6 to 2 to 2.5 mm, so Tom is raised 12 mm (v3 17, the 3 mm sink kept); points, UVs and weights as v3. Before it, v3, the toe taken toward Epic's boots (his yes of 31 October; tools/meshgen/blender/boot_toe.py, F:/LedgerTools/garments/tom/boots/maps/boot-toe-record.json): toe 44/54/56 mm above the sole's floor at 1, 3 and 5 cm behind the tip (v2 58/62/63), spring 14 mm (v2 10), width 0.68 of the widest (v2 0.73); points, faces, UVs and weights as v2.",
    "hides": [
     "shoes"
    ],
