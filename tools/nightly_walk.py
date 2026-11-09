@@ -122,6 +122,7 @@ def summarise(events, verdict, bench, eyes):
         "illusion": eyes,
         "legs_never_arrived": legs_never_arrived(verdict),
         "launch": launch_sentence(verdict),
+        "stale_copy": (verdict or {}).get("stale_copy", ""),
     }
 
 
@@ -261,6 +262,8 @@ def paragraph(rep, prev):
     s, p = rep["summary"], (prev or {}).get("summary", {})
     w = s["walk"]
     parts = ["**The town and Tom (the AI tester's walk of %s, played as a player would, the stand-in's words):**" % rep["date"]]
+    if s.get("stale_copy"):
+        parts.append("**%s.**" % (s["stale_copy"][0].upper() + s["stale_copy"][1:]))
     parts.append("the route %d of %d stages%s." % (w["passed"], w["stages"], "" if not w["failed"] else "; failed: " + "; ".join(w["failed"][:2])))
     seen = s["noticed"]["saw_the_deed"]
     parts.append("Who saw him break Rita's window: %s." % (", ".join(seen) if seen else "nobody the record names"))
@@ -309,6 +312,27 @@ def report(date, night, since_ts, verdict, bench, eyes):
     return rep
 
 
+PLAYED_STAMP = "F:/LedgerTools/played-game/Windows/LedgerProbe/Content/LedgerData/build-commit.txt"
+
+
+def stale_copy():
+    """A walk of an old copy says so (9 Nov: the build stopped at its disk check and the walk replayed
+    the day before's copy unannounced, read as the release's first walk). '' when the copy is wip's."""
+    try:
+        played = open(PLAYED_STAMP, encoding="utf-8").read().strip()
+        head = subprocess.run(["git", "-C", REPO, "rev-parse", "origin/wip"], capture_output=True,
+                              text=True, timeout=60).stdout.strip()
+    except Exception as e:
+        return "the played copy's build could not be read (%s)" % e
+    if played and head and not head.startswith(played):
+        moved = subprocess.run(["git", "-C", REPO, "log", "--oneline", played + "..origin/wip", "--", "ue-probe",
+                                "production/specs", "production/assets"], capture_output=True, text=True,
+                               timeout=60).stdout.strip().splitlines()
+        if moved:
+            return "a STALE COPY: the walk played build %s, %d game commit(s) behind wip; tonight's changes are not in it" % (played, len(moved))
+    return ""
+
+
 def main():
     date = dt.date.today().isoformat()
     night = os.path.join(NIGHT_ROOT, date)
@@ -349,6 +373,9 @@ def main():
         if not runner_busy():
             break
         time.sleep(60)
+    stale = stale_copy()
+    if stale:
+        log(stale)
     log("walk")
     verdict = run_walk(night)
     pre = summarise(read_sessions(since_ts), verdict, None, None)
@@ -358,6 +385,8 @@ def main():
     eyes = run_eyes(night, since_ts, pre)
     with open(os.path.join(night, "state.json"), "w", encoding="utf-8") as fh:
         json.dump({"since": since_ts, "verdict": verdict, "bench": bench, "eyes": eyes}, fh)
+    if stale and isinstance(verdict, dict):
+        verdict["stale_copy"] = stale
     rep = report(date, night, since_ts, verdict, bench, eyes)
     log("done")
     print(rep["paragraph"])

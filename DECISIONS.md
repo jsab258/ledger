@@ -1315,3 +1315,7 @@ Decision: the advisor's text saved unchanged as production/orders/drafts/2026-11
 - Decision: the fresh small review's four fixes are made in game-garment (how the import is run, the launch check's command, a -WearHeld run never the night walk's pass, the 8 Nov release before its walk said plainly, the game reading only the "hold" field) and street-weathering (the room-light bullet kept setting-free, with what to measure in another room); facts checked against the import script's docstring and the office spec.
 - Reason: RULINGS 3 Nov (small piece, one review round); CLAUDE.md's recipe rule (method in setting-free words).
 - Link: production/research/skills/N09-10-SKILLS-REVIEW-2026-11-08.md.
+
+## 2026-11-09 03:48: n09-1 / n09-9: the stale walk named, F: cleared by a cache
+- Decision: the nightly walk now says at the top of its report when it played a copy older than wip's game commits (tools/nightly_walk.py stale_copy, checked on 9 Nov's real files: "5ed8f38, 3 game commits behind"); and Epic's Game Animation Sample's own regenerable cache (1.6 GB, made when the sample was opened on 22 Oct) deleted through retention.py's logged delete, F: 19.8 to 21.4 GB.
+- Reason: the 9 Nov build stopped at F:'s 20 GB floor and the walk replayed the 8 Nov copy unannounced; it was read as the clothes' release failing (production/research/clothing-pipeline/WHITE-LAYER-WALK-DIAGNOSIS-2026-11-09.md). One check added because a fault slipped past (order rule 5). The cache is Claude's own leftover; the sample itself stays (n09-8's idles).
