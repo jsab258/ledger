@@ -1,3 +1,5 @@
+Stopped 9 Nov 2026 (RULINGS 9 Nov, records): his page, the hourly rows and the advisor carry the day; the week's numbers go on the progress page each Monday.
+
 # For Jafar
 
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in

@@ -34,3 +34,8 @@ Moved out of HANDOVER.md on 8 Nov 2026 (its new 1,800-word cap, tools/doc-caps.p
 - Times guessed (8 Nov): up to an hour ahead of the clock; again at 20:50 and 21:15, and at 22:40 to 22:54 (all corrected). Get-Date before every stamp, no exceptions.
 - The perf reader on a real capture read a 1.8-billion MB peak (8 Nov): the profiler's closing metadata row; only the real file showed it.
 - The street sweep's editor run refused at 19.5 to 19.9 GB on F: (8 Nov): own leftovers only about 0.2 GB; left alone.
+
+## Moved from the handover, 9 Nov 09:45
+- Tom's talk view by the tester (9 Nov): play.py captures at a fixed 1280x720 and a 2560x1440 window does not fit the 1440-tall screen; the game's own off-screen picture (tom-close) replaced it. Its first framing cut the head (centred below the head socket); fixed.
+- Times written without Get-Date (07:05, 07:20) in DECISIONS and the order; corrected from the clock and the commit's own time.
+- The night build stopped at F:'s floor and the walk replayed the old copy unannounced (9 Nov); the walk now names a stale copy.

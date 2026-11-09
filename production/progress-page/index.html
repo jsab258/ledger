@@ -630,8 +630,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
 
   function renderDetail(d){
     const s = d.stations.find(x => x.n === selected), f = forecast(d, docksIn), r = f.by[s.n], box = $("rdetail"); box.replaceChildren();
-    const label = {passed:"Passed", here:"You are here", next:"Next stop", ahead:"Ahead", sketch:"Sketch"}[s.state] || s.state;
-    const head = el("div", "stop-meta"); head.append(el("h3", null, "Phase " + s.n + ": " + s.name), el("span", "pill " + (s.state === "here" ? "here" : s.state === "passed" ? "done" : s.state === "next" ? "next" : ""), label));
+    const label = {passed:"Passed", closed:"Closed, faults carried", here:"You are here", next:"Next stop", ahead:"Ahead", sketch:"Sketch"}[s.state] || s.state;
+    const head = el("div", "stop-meta"); head.append(el("h3", null, "Phase " + s.n + ": " + s.name), el("span", "pill " + (s.state === "here" ? "here" : s.state === "passed" || s.state === "closed" ? "done" : s.state === "next" ? "next" : ""), label));
     box.append(head);
     const dl = el("dl");
     const row = (k, v, small) => { const w = el("div"); w.append(el("dt", null, k)); const dd = el("dd", null, v); if (small) { dd.append(document.createElement("br")); dd.append(el("small", null, small)); } w.append(dd); dl.append(w); };

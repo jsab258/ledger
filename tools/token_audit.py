@@ -23,7 +23,7 @@ WHAT IT COUNTS:
 - each step's item: the task open in production/time-log.jsonl at that moment (helpers' steps too, rule 9: helpers'
   time counts against their item); a step in no task window is "not in the time log";
 - each step's kind: helpers by their own description (reviewing, research, building); the session's own steps by the
-  tools they used: records and reports (DECISIONS, FOR-JAFAR, RECIPE, NOW, FINDINGS, RULINGS, CLAUDE, the ledger, the
+  tools they used: records and reports (DECISIONS and its archive, FOR-JAFAR, RECIPE, NOTEBOOK, NOW, FINDINGS, RULINGS, CLAUDE, the ledger, the
   progress page, the time log, his pages, the task list), research (web, the engine's source, the research library),
   helpers (launching and reading them), building (everything else that edits, runs or reads), replies (no tool);
 - the history's share: each step re-reads the whole conversation; the part above the session's own first step (its
@@ -53,7 +53,7 @@ PRICES = {
     "claude-haiku-5-5": (0.10, 0.50, 0.125, 0.20, 0.01),
 }
 DEFAULT_PRICE = "claude-opus-5-5"
-RECORDS = re.compile(r"(DECISIONS|FOR-JAFAR|RECIPE|NOW|FINDINGS|RULINGS|CLAUDE|MEMORY)\.md|production[/\\](orders|progress-page|approvals)|"
+RECORDS = re.compile(r"(DECISIONS|FOR-JAFAR|RECIPE|NOTEBOOK|NOW|FINDINGS|RULINGS|CLAUDE|MEMORY)\.md|DECISIONS-to-[\d-]+\.md|production[/\\](orders|progress-page|approvals)|"
                      r"time-log\.jsonl|timelog\.py|progress_page\.py|day_page\.py|\.claude[/\\]projects[/\\].*memory", re.I)
 RESEARCH = re.compile(r"production[/\\]research|Epic Games[/\\]UE_|studies[/\\]|aaa-reference", re.I)
 REVIEW_WORDS = re.compile(r"review|gate|judge|check the|verify|reviewer", re.I)
@@ -149,7 +149,7 @@ def kind_of_main(tools):
         return "replies and thinking"
     names = [n for n, _ in tools]
     text = " ".join(x for _, x in tools)
-    if any(n.startswith("mcp__ccd_turn__") for n in names) or (RECORDS.search(text) and not re.search(r"\.(py|cpp|h|cs|ps1)\b(?!.*(DECISIONS|RECIPE))", text)):
+    if any(n.startswith("mcp__ccd_turn__") for n in names) or (RECORDS.search(text) and not re.search(r"\.(py|cpp|h|cs|ps1)\b(?!.*(DECISIONS|RECIPE|NOTEBOOK))", text)):
         return "records and reports"
     if any(n in ("WebFetch", "WebSearch") or n.startswith("mcp__Claude_Browser") for n in names) or RESEARCH.search(text):
         return "research"
@@ -315,6 +315,9 @@ def selftest():
     check("a step inside a task window is that task's", item_at(w, datetime.datetime(2026, 11, 1, 10, 30)) == "a")
     check("a step outside every window is not in the time log", item_at(w, datetime.datetime(2026, 11, 1, 12)) == "not in the time log")
     check("editing the decisions is records", kind_of_main([("Edit", "C:/x/DECISIONS.md")]) == "records and reports")
+    check("appending to the notebook is records", kind_of_main([("Edit", "C:/x/NOTEBOOK.md")]) == "records and reports")
+    check("grepping the decisions' archive is records",
+          kind_of_main([("Grep", "C:/x/production/archive/DECISIONS-to-2026-11-09.md")]) == "records and reports")
     check("a web search is research", kind_of_main([("WebSearch", "")]) == "research")
     check("a reviewer helper is reviewing", kind_of_helper("Gate review: Tom boots view") == "reviewing (helpers)")
     check("an edit of code is building", kind_of_main([("Edit", "C:/x/tools/ue/import_garments.py")]) == "building")

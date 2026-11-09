@@ -97,4 +97,4 @@ Why: CLAUDE.md ("One home per fact; reuse first"; "Builds, git and disk") and RU
 
 - DECISIONS.md one line per material choice: source, licence and its date, what was searched first, why anything found was replaced. THIRD-PARTY.md and credits.json for each third-party source; CATALOGUE.md for any new art or research; FINDINGS.md for each waiver or set-aside fault.
 - Deleting (RULINGS 29 Oct): Claude's own unused leftovers (an import's stray copies, test files) without asking, one line each; his yes for anything of his, page-approved, bought, downloaded at his request or not makeable again; never what the game or a build uses or what the backup holds. When in doubt, it is his.
-- RECIPE.md a few setting-free lines when the unit finishes; the time log against the item, helpers' time too.
+- NOTEBOOK.md a few setting-free lines when the unit finishes; the time log against the item, helpers' time too.

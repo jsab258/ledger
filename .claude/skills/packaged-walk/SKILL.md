@@ -92,4 +92,4 @@ Why: CLAUDE.md ("How the work is done"): every piece changed in a day is walked 
 ## Records
 
 - FINDINGS.md: each open fault the walk found, until fixed. FOR-JAFAR.md: the tester's paragraph from the night's report by 07:30, what failed named (CLAUDE.md; tools/nightly_walk.py). A build the night could not make, or a walk of an old copy, is said plainly there.
-- DECISIONS.md one line per material choice; the time against the item (tools/timelog.py), helpers' too; RECIPE.md a few setting-free lines when the unit finishes; reports and verdicts in production/playtest/ (the tester's pictures there are gitignored), films on F:/LedgerTools/tmp/ai-tester/film, previews for git only as production/previews/ JPEGs.
+- DECISIONS.md one line per material choice; the time against the item (tools/timelog.py), helpers' too; NOTEBOOK.md a few setting-free lines when the unit finishes; reports and verdicts in production/playtest/ (the tester's pictures there are gitignored), films on F:/LedgerTools/tmp/ai-tester/film, previews for git only as production/previews/ JPEGs.

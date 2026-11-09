@@ -1302,7 +1302,8 @@
      "Change something (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 09:43, answered yes (09:42): no CLAUDE.md paste, the records change done with its lines in RULINGS; connectors stay; the experiment local only; Pexels and Pixabay allowed for motion reference"
   },
   {
    "id": "markerless-plugin-2026-11-09",
@@ -1314,7 +1315,7 @@
      "url": "https://www.fab.com/listings/4095b8e0-3eff-44f1-acb4-cb40b99228b9"
     }
    ],
-   "recommendation": "Done: the motion experiment's capture half needs it, and it is Epic's own, free, under the Fab licence the list allows. About three minutes of your time.",
+   "recommendation": "Done: the motion experiment's capture half needs it; it is Epic's own and free. Its licence page could not be read from here (blank on Fab, tagged no AI use, which your 13 October ruling allows for Epic's own content used in the game), so the terms shown in the launcher are read before first use. About three minutes of your time.",
    "options": [
     [
      "done",
@@ -1341,6 +1342,48 @@
     [
      "note",
      "No, free room on F instead (say what, in a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 09:43, answered yes (09:42): the experiment's program and model on C:\\LedgerTools, removed once judged"
+  },
+  {
+   "id": "boots-fifth-try-2026-11-09",
+   "added": "2026-11-09 09:44",
+   "text": "Tom's boots, a fifth try (the rule needs your yes): the dark 'stub' on each instep is the lowest lace bar, set along the foot instead of across it and the only lacing showing below his jeans. Take that bar and its two eyelets out (about an hour, the jeans cover the rest), or redesign crossed laces over the toe area so the boots read as lace-ups (about half a day), or leave it listed?",
+   "links": [],
+   "recommendation": "Take the bar out: it removes a visible fault cheaply; the boots still read as slip-ons, which stays listed as a shortfall for the clothing week. No web link: the answer is this page.",
+   "options": [
+    [
+     "remove",
+     "Take the bar out (recommended)"
+    ],
+    [
+     "laces",
+     "Redesign crossed laces"
+    ],
+    [
+     "leave",
+     "Leave it listed"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 09:56, answered remove (09:55): the lowest lace bar and its two eyelets taken out, a fifth boot try"
+  },
+  {
+   "id": "tries-rule-2026-11-09",
+   "added": "2026-11-09 10:00",
+   "text": "The tries rule, your choice A of 09:56 in one tap: after the fourth try, a small fix of about an hour or less that only removes or simplifies something is my own call; anything bigger is listed as a known fault and never comes to you. Confirm?",
+   "links": [],
+   "recommendation": "Yes: it is what you chose; it ends asks like this morning's boots. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes (recommended)"
+    ],
+    [
+     "note",
+     "Change something (add a note)"
     ]
    ],
    "state": "open"

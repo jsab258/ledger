@@ -72,4 +72,4 @@ How a visual piece passes in LEDGER: CLAUDE.md ("How the work is done", the gate
 
 - DECISIONS.md one entry: the views, the rounds, the verdict, the shortfalls, the evidence folder. A gate record at most about 500 words (production/audits/gate-<piece>/GATE.md): a table of views and rounds, then the faults (25 October). Previews as JPEG (about 1600 px, under 500 KB) in production/previews/; the pictures stay on F:.
 - The measures the order asks for (D13): gate rounds and reviews a piece, against the median 9 and 26 before the automatic checks.
-- RECIPE.md gains what the gate taught (setting-free); the time log carries the reviewers' time against the piece.
+- NOTEBOOK.md gains what the gate taught (setting-free); the time log carries the reviewers' time against the piece.

@@ -41,6 +41,10 @@ CAPS = [
     # 8 Nov (n02-9-record-caps, the token audit: records and reports 8% of spend, twice the session's own
     # research; his efficiency ruling: records under about 15%): the handover is read at every hourly start.
     ("production/handover/HANDOVER.md", 1800),
+    # 9 Nov (RULINGS 9 Nov, records): RECIPE.md is the condensed recipe, read before any first try;
+    # the notebook (NOTEBOOK.md, the old RECIPE.md) and DECISIONS.md had no cap and have none;
+    # FOR-JAFAR.md is stopped and was never capped here.
+    ("RECIPE.md", 6000),
 ]
 # Entries, not words: lines starting "- " (8 Nov: FINDINGS.md held 24 faults under its word cap; CLAUDE.md says
 # at most twenty).

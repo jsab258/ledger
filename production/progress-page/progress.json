@@ -1,6 +1,6 @@
 {
   "updated": "Monday 9 November 2026, 6:23",
-  "here": 1,
+  "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
   "sketch_note": "Phases 6 to 10 and the stop after release are a sketch, shaped by your scope rulings of 28 October; the advisor writes the full plan after Monday's audit.",
@@ -26,17 +26,17 @@
       "name": "Prove the bottlenecks",
       "get": "One finished room, one complete Tom who walks, sits and turns, speech under 2 seconds, frame headroom.",
       "size": "1 to 2 weeks",
-      "state": "here",
-      "note": "Open, not closed: it failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it.",
+      "state": "closed",
+      "note": "Closed on 9 November by your tap, with four faults carried into phase 2, not passed: the office's black frame and its 1990 wear; the speakers' sitting, slips and the office exit; speech at 2.02 s against 2.0; card memory just over 6 GB.",
       "planned_w": [
         1.0,
         2.0
       ],
       "actual_w": 4.9,
-      "actual_note": "so far, open",
+      "actual_note": "closed with four faults carried",
       "began": "2026-10-06",
       "short": "Bottlenecks",
-      "next_step": "Fresh reviewers re-run the exit check once the walk, the clothes and speech pass; phase 2 waits for it.",
+      "next_step": "Its four faults are worked in phase 2's items, card memory first.",
       "fc_w": [
         0.5,
         0.5
@@ -47,7 +47,7 @@
       "name": "Quay Street",
       "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
       "size": "3 to 4 weeks",
-      "state": "next",
+      "state": "here",
       "note": "Waits until phase 1 passes. The shops already in the street stay.",
       "arrived": [
         "Lamp posts",
@@ -163,7 +163,8 @@
       "fc_w": [
         4,
         5
-      ]
+      ],
+      "began": "2026-11-09"
     },
     {
       "n": 3,

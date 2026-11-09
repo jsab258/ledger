@@ -16,14 +16,21 @@ WHAT IT DOES, run at 05:15 by Windows' Task Scheduler (the task "LEDGER morning 
     three: vign_hook_day, vign_reverse_day and vign_hook_night, full size on
     F:/LedgerTools/renders/morning/<date>;
  4. writes their previews, production/previews/morning-{hook-day,reverse-day,night}-<date>.jpg;
- 5. rewrites the overview's morning block in FOR-JAFAR.md: the phase, the current item and the
-    next (read from NOW.md, their home), today's three beside yesterday's, and the Hook sheet;
+ 5. writes the morning's record on his progress page's data (production/progress-page/progress.json,
+    its "street" block, read by tools/progress_page.py and the page): today's date added to
+    street.days when all three previews exist, and street.morning: the phase, the current item and
+    the next (read from NOW.md, their home), today's three and yesterday's, the Hook sheet, and on
+    Mondays the repository's size;
  6. commits only those files and pushes them to the branch wip when that is a fast-forward.
-Any failure is written into the block plainly ("no morning pictures today: ..."), never skipped.
+Any failure is written into the record plainly ("no morning pictures today: ..."), never skipped.
+
+9 NOV 2026 (RULINGS 9 Nov, records): the overview's summary file is stopped, so step 5 no longer
+rewrites a morning block there; the same content goes on the progress page's data instead. The
+pictures, the commit and the push are unchanged.
 
   python tools/morning_pictures.py               # the whole morning
   python tools/morning_pictures.py --no-film     # steps 4 to 6 from today's renders already on F:
-  python tools/morning_pictures.py --block-only  # only the overview's block (no film, no commit)
+  python tools/morning_pictures.py --block-only  # only the progress page's morning record (no film, no commit)
   python tools/morning_pictures.py --no-commit   # the whole morning but the commit (a trial run)
   python tools/morning_pictures.py --selftest
 """
@@ -51,7 +58,8 @@ VIEWS = [  # (shot, preview name, the line's words)
 HOOK_SHEET_PREVIEW = "production/previews/hook-sheet-2026-10-05.jpg"
 BUSY = ("runner.worker", "unrealeditor", "unrealbuildtool", "build.bat", "unrealeditor-cmd")
 GIVE_UP_AT = dt.time(6, 50)
-BEGIN, END = "<!-- morning pictures: written by tools/morning_pictures.py -->", "<!-- /morning pictures -->"
+PROGRESS_REL = "production/progress-page/progress.json"
+PROGRESS = os.path.join(REPO, *PROGRESS_REL.split("/"))
 
 
 def log(msg):
@@ -142,30 +150,33 @@ def now_items(now_text):
     return phase, cur, nxt
 
 
-def block(day, failure, now_text, exists=os.path.exists):
+def record(day, failure, now_text, exists=os.path.exists):
+    """The morning's record for the progress page's street.morning (until 9 Nov the overview's block in
+    the stopped summary file): the line naming the phase, the current item and the next, any failure
+    said plainly, today's three pictures beside yesterday's (None where there is none), the Hook sheet,
+    and on Mondays the repository's size."""
     phase, cur, nxt = now_items(now_text)
     y = day - dt.timedelta(days=1)
-    lines = [BEGIN, "",
-             "**Morning, %s. %s. On: %s. Next: %s.**" % (day.strftime("%A %d %B").replace(" 0", " "),
-                                                        (phase or "No phase open").replace(": ", ", ", 1),
-                                                        (cur or "nothing open").rstrip("."), (nxt or "nothing after it").rstrip(".")), ""]
-    if failure:
-        lines += ["No morning pictures today: %s. Yesterday's stand below." % failure, ""]
-    lines += ["| | Today, %s | Yesterday, %s |" % (day.strftime("%d %b"), y.strftime("%d %b")), "|---|---|---|"]
+    line = "Morning, %s. %s. On: %s. Next: %s." % (day.strftime("%A %d %B").replace(" 0", " "),
+                                                  (phase or "No phase open").replace(": ", ", ", 1),
+                                                  (cur or "nothing open").rstrip("."), (nxt or "nothing after it").rstrip("."))
+    views = []
     for _, name, words in VIEWS:
-        cells = []
-        for d in (day, y):
+        cells = {}
+        for key, d in (("today", day), ("yesterday", y)):
             p = "production/previews/%s-%s.jpg" % (name, d.isoformat())
-            cells.append("![%s, %s](%s)" % (words, d.isoformat(), p) if exists(os.path.join(REPO, p)) else "none")
-        lines.append("| %s | %s | %s |" % (words, cells[0], cells[1]))
-    lines += ["", "The Hook sheet, the bar they are held to: ![The Hook sheet](%s)" % HOOK_SHEET_PREVIEW, "",
-              "No decision asked: these are for watching the street change.", ""]
+            cells[key] = p if exists(os.path.join(REPO, p)) else None
+        views.append(dict(label=words, **cells))
+    rec = {"date": day.isoformat(), "line": line,
+           "failure": ("No morning pictures today: %s. Yesterday's stand." % failure) if failure else "",
+           "views": views, "hook_sheet": HOOK_SHEET_PREVIEW,
+           "note": "No decision asked: these are for watching the street change.",
+           "by": "tools/morning_pictures.py"}
     # MONDAYS, THE REPOSITORY'S SIZE (Jafar, 5 October 2026, after the history was cleaned from
     # 30.8 GB to about 3 GB: "the repository's size goes into the Monday review").
     if day.weekday() == 0:
-        lines += ["**The repository on Monday:** %s" % repo_size(), ""]
-    lines += [END]
-    return "\n".join(lines)
+        rec["repo_size"] = repo_size()
+    return rec
 
 
 def repo_size():
@@ -190,15 +201,23 @@ def repo_size():
     return "%s; %s (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push)." % (gh, local)
 
 
-def put_block(text, blk):
-    if BEGIN in text and END in text:
-        a = text.index(BEGIN)
-        b = text.index(END) + len(END)
-        return text[:a] + blk + text[b:]
-    m = re.search(r"^## Overview[^\n]*\n", text, re.M)
-    if not m:
-        raise SystemExit("morning: FOR-JAFAR.md has no overview heading")
-    return text[:m.end()] + "\n" + blk + "\n" + text[m.end():]
+def put_record(data, rec):
+    """The record into the progress page's data: street.morning replaced (never repeated), and the
+    day added to street.days when all three of its previews exist (the page's flipbook and
+    tools/progress_page.py --check read that list)."""
+    street = data.setdefault("street", {})
+    street["morning"] = rec
+    if all(v["today"] for v in rec["views"]):
+        street["days"] = sorted(set(street.get("days", [])) | {rec["date"]})
+    return data
+
+
+def write_record(day, failure, now_text):
+    import json
+    data = json.load(io.open(PROGRESS, encoding="utf-8"))
+    put_record(data, record(day, failure, now_text))
+    with io.open(PROGRESS, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def commit(paths, day):
@@ -239,13 +258,11 @@ def run(day, do_film=True, do_commit=True):
     made = previews(day)
     if not made and not failure:
         failure = "no renders were found for today"
-    fj = os.path.join(REPO, "FOR-JAFAR.md")
-    text = io.open(fj, encoding="utf-8").read()
     now_text = io.open(os.path.join(REPO, "NOW.md"), encoding="utf-8").read()
-    io.open(fj, "w", encoding="utf-8", newline="\n").write(put_block(text, block(day, failure, now_text)))
-    log("block written%s" % (": " + failure if failure else ""))
+    write_record(day, failure, now_text)
+    log("progress page's morning record written%s" % (": " + failure if failure else ""))
     if do_commit:
-        log(commit(made + ["FOR-JAFAR.md"], day))
+        log(commit(made + [PROGRESS_REL], day))
     return 0 if not failure else 1
 
 
@@ -261,14 +278,20 @@ def selftest():
     check(now_items(now_text) == ("Phase 0: recover control", "0.2 Time log.", "0.3 Sweep."), "the phase, the current item and the next come from NOW.md")
     check(now_items(now_text.replace("- [ ] 0.2", "- [x] 0.2").replace("- [ ] 0.3", "- [x] 0.3"))[0:2] == ("Phase 1: prove", "1.1 Mickey's."), "when phase 0 is done the block names phase 1")
     day = dt.date(2026, 10, 6)
-    b = block(day, "", now_text, exists=lambda p: "2026-10-06" in p)
-    check("Today, 06 Oct" in b and b.count("none") == 3 and "hook-sheet" in b, "today's three beside yesterday's (none yet) and the Hook sheet")
-    b2 = block(day, "the PC was still busy", now_text, exists=lambda p: False)
-    check("No morning pictures today: the PC was still busy" in b2, "a failure is said plainly, never skipped")
-    t = "# For Jafar\n\n## Overview (Monday)\n\nDisk line\n"
-    t1 = put_block(t, b)
-    t2 = put_block(t1, b2)
-    check(t2.count(BEGIN) == 1 and "No morning pictures today" in t2 and t2.startswith("# For Jafar\n\n## Overview (Monday)\n"), "the block goes under the overview's heading once and is replaced, not repeated")
+    b = record(day, "", now_text, exists=lambda p: "2026-10-06" in p)
+    check(b["date"] == "2026-10-06" and all(v["today"] and v["yesterday"] is None for v in b["views"]) and "hook-sheet" in b["hook_sheet"]
+          and "On: 0.2 Time log. Next: 0.3 Sweep." in b["line"] and "repo_size" not in b, "today's three beside yesterday's (none yet) and the Hook sheet")
+    b2 = record(day, "the PC was still busy", now_text, exists=lambda p: False)
+    check("No morning pictures today: the PC was still busy" in b2["failure"], "a failure is said plainly, never skipped")
+    data = {"street": {"days": ["2026-10-05"], "views": []}, "stations": []}
+    put_record(data, b)
+    check(data["street"]["days"] == ["2026-10-05", "2026-10-06"] and data["street"]["morning"]["date"] == "2026-10-06" and data["stations"] == [],
+          "the record goes on the progress page's street block and its day joins the flipbook's days")
+    put_record(data, b2)
+    check(data["street"]["morning"] is b2 and data["street"]["days"] == ["2026-10-05", "2026-10-06"],
+          "a second record replaces the first, and a day without its three pictures is not added")
+    check("FOR-" + "JAFAR" not in open(os.path.abspath(__file__), encoding="utf-8").read(),
+          "the stopped summary file is neither written nor required (RULINGS 9 Nov)")
     sink = io.StringIO()
     hook = "%s-2026-10-05.jpg" % VIEWS[0][1]
     check(fresh(2, dt.date(2026, 10, 7), [hook, "x.jpg"], sink) == 0, "pictures two days old pass")
@@ -326,10 +349,8 @@ def main():
             print("morning_pictures: close games failed: %s" % e)
     day = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
     if a.block_only:
-        fj = os.path.join(REPO, "FOR-JAFAR.md")
-        text = io.open(fj, encoding="utf-8").read()
         now_text = io.open(os.path.join(REPO, "NOW.md"), encoding="utf-8").read()
-        io.open(fj, "w", encoding="utf-8", newline="\n").write(put_block(text, block(day, "", now_text)))
+        write_record(day, "", now_text)
         return 0
     return run(day, do_film=not a.no_film, do_commit=not a.no_commit)
 

@@ -1,16 +1,24 @@
 #!/bin/sh
-# THE BACKUP AT EVERY SITTING'S END, 25 September (Jafar: "make it run at the
-# end of every sitting"). A sitting ends with its summary in FOR-JAFAR.md, so a
-# commit that changes that file runs tools/backup-to-dropbox.py, which only
-# ever adds to his Dropbox's "LEDGER backup" folder (it never deletes, never
-# overwrites, never writes outside it, never fills drive C:). Its line goes to
-# backup-to-dropbox.log in the shared git folder. Installed with:
+# THE BACKUP ONCE A DAY, ON THE DAY'S FIRST COMMIT (9 Nov 2026, RULINGS 9 Nov,
+# records: FOR-JAFAR.md's summary is stopped, so it can no longer set the
+# backup off). From 25 September to 9 November a commit changing FOR-JAFAR.md
+# ran it (Jafar: "make it run at the end of every sitting"). Now the first
+# commit of each local day runs tools/backup-to-dropbox.py: the day counts as
+# backed up once backup-to-dropbox.log (in the shared git folder) holds a line
+# stamped with today's date. The backup only ever adds to his Dropbox's
+# "LEDGER backup" folder (it never deletes, never overwrites, never writes
+# outside it, never fills drive C:). Installed with:
 #   cp tools/hooks/post-commit .git/hooks/post-commit
-if git diff-tree --no-commit-id --name-only -r HEAD | grep -qx "FOR-JAFAR.md"; then
+# The shared git folder, so a commit from a worktree (where .git is a file)
+# logs too; in the main checkout it is .git, as before.
+log="$(git rev-parse --git-common-dir)/backup-to-dropbox.log"
+# Local time from Python (Windows' own clock and zone), never Git Bash's date.
+today=$(python -c "import datetime; print(datetime.date.today().isoformat())" 2>/dev/null)
+[ -n "$today" ] || exit 0
+if ! grep -q "^$today" "$log" 2>/dev/null; then
   line=$(python tools/backup-to-dropbox.py 2>&1 | tail -1)
-  # The shared git folder, so a commit from a worktree (where .git is a file)
-  # logs too; in the main checkout it is .git, as before.
-  echo "$(date +%Y-%m-%dT%H:%M:%S) $(git rev-parse --short HEAD) $line" >> "$(git rev-parse --git-common-dir)/backup-to-dropbox.log"
+  stamp=$(python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))")
+  echo "$stamp $(git rev-parse --short HEAD) $line" >> "$log"
   echo "post-commit: $line"
 fi
 exit 0

@@ -36,9 +36,11 @@ ITS RULES, unchanged in spirit and tightened in fact:
   (the sources to rebuild from, the voices) go before the rest.
 - Every file it copies is read back and compared, byte for byte, by SHA-256.
 
-Runs at the end of every sitting: the closing summary's commit sets it off
-(tools/hooks/post-commit, installed into .git/hooks), and the summary carries
-its line: backupToDropbox=<status> copied=<n> unchanged=<n> deferred=<n> ...
+Runs once a day: since 9 Nov 2026 the day's first commit sets it off
+(tools/hooks/post-commit, installed into .git/hooks; until then the closing
+summary's commit in FOR-JAFAR.md did, now stopped), and its line goes to
+backup-to-dropbox.log in the shared git folder:
+backupToDropbox=<status> copied=<n> unchanged=<n> deferred=<n> ...
 """
 import datetime
 import hashlib

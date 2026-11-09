@@ -121,12 +121,12 @@ Proven once, on Ron and Darren (n02-9-dress-the-cast, 7 to 8 Nov); its next repe
 
 ## Records, every garment
 
-- DECISIONS.md one line per material choice; the garment's BAKE-PLAN with each try's numbers; RECIPE.md's clothing chapter gains what this garment taught (setting-free).
+- DECISIONS.md one line per material choice; the garment's BAKE-PLAN with each try's numbers; NOTEBOOK.md's clothing chapter gains what this garment taught (setting-free).
 - Nothing of Mafia's or CLO's in git or in any shipped file (the licence allowlist's never-ship list: Marvelous's own avatars, sample garments, patterns and trims; zipper parts read as trims); Marvelous open between garments, closed only for a build (step 3).
 
 ## Checkpoints and measures
 
 - **Jafar sees** each whole-person look (all of one character's pieces together, in the packaged game's camera at talk and street distance) before it is called done, and any third try. He is not an artist: show pictures side by side with the reference, say in one line what changed, and ask one question.
 - **Fresh reviewers** judge against RUBRIC.md line by line, pass or fail with the frame; the tester walks the packaged game last.
-- **A dressed man** is filmed in the packaged game close and at three angles (180, 225, 135 degrees; -MouthFilmDeg, DECISIONS 7 Nov 23:20), the last good film beside each round. One fresh reviewer per view as step 9 asks, or, for a medium piece, one per man covering all his views (RULINGS 3 Nov, reviewers sized to the piece; the knit's two rounds, F:/LedgerTools/gate/new/knit-2026-11-08). A side view can be blocked by a passer-by or another man, or seen through shop glass (Darren's 180 degree view showed only Ron's back): name a view that cannot judge rather than pass it. Frame the man off flat untextured ground props, or name the prop first; a meant flat dark cover was once called a placeholder (RECIPE 8 Nov).
+- **A dressed man** is filmed in the packaged game close and at three angles (180, 225, 135 degrees; -MouthFilmDeg, DECISIONS 7 Nov 23:20), the last good film beside each round. One fresh reviewer per view as step 9 asks, or, for a medium piece, one per man covering all his views (RULINGS 3 Nov, reviewers sized to the piece; the knit's two rounds, F:/LedgerTools/gate/new/knit-2026-11-08). A side view can be blocked by a passer-by or another man, or seen through shop glass (Darren's 180 degree view showed only Ron's back): name a view that cannot judge rather than pass it. Frame the man off flat untextured ground props, or name the prop first; a meant flat dark cover was once called a placeholder (NOTEBOOK 8 Nov).
 - **Measures**, one line per garment in production/art/clothing/LOG.md: hours including helpers' time, tries per step, faults first found in the packaged game, whether reviewers passed it first time, and Jafar's verdict. Read the last lines of the log before planning a new garment; the pattern of faults says which checks to add.
