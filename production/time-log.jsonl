@@ -606,3 +606,5 @@
 {"event": "stop", "at": "2026-11-09T06:32:00", "note": ""}
 {"event": "start", "at": "2026-11-09T06:28:00", "task": "n09-6 helper: Sheila refit plan", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-09T06:33:00", "note": ""}
+{"event": "start", "at": "2026-11-09T06:46:39", "task": "n09-2 Tom's talk view filmed packaged", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T06:56:00", "note": "try 1 of the talk view at page size: the tester captures 1280x720 only; game-side tom-close added"}

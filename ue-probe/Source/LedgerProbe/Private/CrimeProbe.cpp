@@ -4904,6 +4904,16 @@ namespace
 			Look = Feet + FVector(0.0f, 0.0f, 12.0f); Up = 45.0f; HFov = 45.0f; Dists = { 120.0f, 95.0f };
 			Prefer = Toward.RotateAngleAxis(30.0f, FVector::UpVector);
 		}
+		else if (Id.EndsWith(TEXT("close")))
+		{
+			// HEAD AND SHOULDERS AT TALK DISTANCE (9 November, n09-2: Tom as one whole person on his page, the
+			// talk close-up at 2560x1440; the tester's own pictures are 1280x720): face, hair, collar, from in front.
+			TArray<USkeletalMeshComponent*> Parts;
+			Who->GetComponents(Parts);
+			FVector Head = Feet + FVector(0.0f, 0.0f, 165.0f);
+			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Head = C->GetSocketLocation(TEXT("head")); break; } }
+			Look = Head - FVector(0.0f, 0.0f, 12.0f); Up = 0.0f; HFov = 40.0f; Dists = { 130.0f, 110.0f };
+		}
 		else
 		{
 			TArray<USkeletalMeshComponent*> Parts;
@@ -4974,7 +4984,7 @@ namespace
 		{
 			if (Mode == TEXT("dress"))
 			{
-				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag"), TEXT("tom-whole"), TEXT("tom-boots") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
+				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag"), TEXT("tom-whole"), TEXT("tom-boots"), TEXT("tom-close") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
 			}
 			else if (Mode == TEXT("at") || Mode == TEXT("atnight"))
 			{
