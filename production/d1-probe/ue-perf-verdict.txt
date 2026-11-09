@@ -1,3 +1,3 @@
-slicePerf=uw-half status=BELOW-60 frames=1500 medianMs=18.21 p95Ms=19.89 p99Ms=22.27 worstMs=25.19 fps=54.9 gpuMedianMs=15.74 over16.7=1440 over33.3=0 gpuMemMB=5840 target=60fps-at-3440x1440/never-below-30 gpuMemPeakMB=6105 gpuMemPeakSettledMB=5847 memLine=5650 memVerdict=OVER-LINE
-slicePerfVoice=nano-built-in-voice-on-the-card lines=12 nanoRtfMedian=1.42
+slicePerf=uw-half status=BELOW-60 frames=1500 medianMs=18.62 p95Ms=20.64 p99Ms=23.29 worstMs=26.96 fps=53.7 gpuMedianMs=16.54 over16.7=1478 over33.3=0 gpuMemMB=5864 target=60fps-at-3440x1440/never-below-30 gpuMemPeakMB=6332 gpuMemPeakSettledMB=5868 memLine=5650 memVerdict=OVER-LINE
+slicePerfVoice=nano-built-in-voice-on-the-card lines=14 nanoRtfMedian=1.32
 slicePerfResolution=3440x1440
