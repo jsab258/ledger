@@ -58,16 +58,31 @@ def run():
         return note("ingest", False, error=err)
     note("ingest", True, asset=capture.get_path_name())
 
-    # 2. Frame rate: the capture's image sequence must say 24, not 0 or 1
+    # 2. Frame rate: the ingest leaves the image sequence at 0/1000 (the forum's
+    # "0 fps" fault; the Performance then rejects the capture). Set the sequence's
+    # override and the capture's metadata to the clip's rate, both, then save.
     rates = []
+    want = unreal.FrameRate(int(round(FPS)), 1)
+    for seq in capture.get_editor_property("image_sequences"):
+        if not seq:
+            continue
+        before = seq.get_editor_property("frame_rate_override")
+        seq.set_editor_property("frame_rate_override", want)
+        after = seq.get_editor_property("frame_rate_override")
+        unreal.EditorAssetLibrary.save_loaded_asset(seq)
+        rates.append({"seq": seq.get_name(), "before": "%d/%d" % (before.numerator, before.denominator),
+                      "after": "%d/%d" % (after.numerator, after.denominator)})
     try:
-        for seq in capture.get_editor_property("image_sequences"):
-            if seq:
-                fr = seq.get_editor_property("frame_rate_override")
-                rates.append({"seq": seq.get_name(), "override": str(fr)})
-    except Exception as e:  # property names differ between versions: record, do not guess
-        rates.append({"read_error": str(e)})
-    note("frame_rate", True, read=rates, expected=FPS)
+        meta = capture.get_editor_property("metadata")
+        meta.set_editor_property("frame_rate", FPS)
+        capture.set_editor_property("metadata", meta)
+        rates.append({"metadata_frame_rate": capture.get_editor_property("metadata").get_editor_property("frame_rate")})
+    except Exception as e:
+        rates.append({"metadata_error": str(e)[:300]})
+    unreal.EditorAssetLibrary.save_loaded_asset(capture)
+    good = all(r.get("after", "%d/1" % int(FPS)) == "%d/1" % int(round(FPS)) for r in rates if "after" in r) and any("after" in r for r in rates)
+    if not note("frame_rate", good, read=rates, expected=FPS):
+        return False
 
     # 3. Performance: mono footage, body tracking on, face off
     tools = unreal.AssetToolsHelpers.get_asset_tools()
@@ -78,14 +93,37 @@ def run():
         return note("performance", False, error="create_asset returned None")
     perf.set_editor_property("input_type", unreal.DataInputType.MONO_FOOTAGE)
     perf.set_editor_property("footage_capture_data", capture)
-    perf.set_body_tracking(True)
+    if perf.get_editor_property("footage_capture_data") is None:
+        return note("performance", False, error="capture rejected (frame rate?)")
+    # SetBodyTracking is a BlueprintSetter, not exposed as a method; set_editor_property calls it
+    perf.set_editor_property("body_tracking", True)
     perf.set_editor_property("face_tracking", False)
     note("performance", True, asset=perf.get_path_name(),
          body=perf.get_editor_property("body_tracking"),
          face=perf.get_editor_property("face_tracking"),
          foot_locking=perf.get_editor_property("enable_foot_locking"))
 
-    # 4. Blocking pipeline
+    # 4. Blocking pipeline. StartPipeline answers DISABLED when CanProcess() is false
+    # and says no more (no .cpp ships), so record what the asset holds first.
+    diag = {}
+    for prop in ("camera", "focal_length", "start_frame_to_process", "end_frame_to_process", "input_type"):
+        try:
+            diag[prop] = str(perf.get_editor_property(prop))
+        except Exception as e:
+            diag[prop] = "unread: %s" % str(e)[:120]
+    diag["can_process_before"] = perf.can_process()
+    if not diag.get("camera") or diag["camera"] in ("", "None"):
+        try:
+            views = [str(v) for v in capture.get_editor_property("image_sequences") if v]
+            diag["views"] = views
+        except Exception as e:
+            diag["views"] = "unread: %s" % str(e)[:120]
+    try:
+        perf.set_processing_range(0, 81)
+    except Exception as e:
+        diag["range_error"] = str(e)[:200]
+    diag["can_process_after_range"] = perf.can_process()
+    note("diagnostics", True, **diag)
     perf.set_blocking_processing(True)
     t0 = time.time()
     perr = perf.start_pipeline()
