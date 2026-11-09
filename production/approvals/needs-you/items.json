@@ -1289,7 +1289,7 @@
   {
    "id": "confirm-chat-0813-2026-11-09",
    "added": "2026-11-09 08:59",
-   "text": "Confirm your chat answers of 08:13? (1) No paste into CLAUDE.md: the five changes go into the rulings instead, and the rest of the records change is done as proposed. (2) The connectors stay as they are. (3) The AI-video motion experiment runs now, with video made only on your PC: no outside service, no payment; free stock clips whose licence allows commercial use serve as the real-footage control. You never film or perform anything.",
+   "text": "Confirm your chat answers of 08:13? (1) No paste into CLAUDE.md: the five changes go into the rulings instead, and the rest of the records change is done as proposed. (2) The connectors stay as they are. (3) The AI-video motion experiment runs now, with video made only on your PC: no outside service, no payment; free stock clips from Pexels and Pixabay, whose licences allow commercial use and changes but are not yet on the allowed list, are added to it for motion reference only and serve as the real-footage control. You never film or perform anything.",
    "links": [],
    "recommendation": "Yes: it is what you said in the chat, written down once so every session works from it. HY-Motion is left out: it needs far more video memory than your card has. No web link: the answer is this page.",
    "options": [
@@ -1323,6 +1323,24 @@
     [
      "no",
      "Not now"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "experiment-space-2026-11-09",
+   "added": "2026-11-09 09:30",
+   "text": "Room for the motion experiment: the video program and its model need about 25 GB, and drive F is at its 20 GB floor with every large folder on it protected. May they go on drive C (in C:\\LedgerTools, as the live voice already is) for this week's experiment, removed once it is judged?",
+   "links": [],
+   "recommendation": "Yes, on C: C keeps about 79 GB above its 40 GB floor after it, and nothing of yours on F is touched. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, on C for the experiment (recommended)"
+    ],
+    [
+     "note",
+     "No, free room on F instead (say what, in a note)"
     ]
    ],
    "state": "open"

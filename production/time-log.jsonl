@@ -608,3 +608,9 @@
 {"event": "stop", "at": "2026-11-09T06:33:00", "note": ""}
 {"event": "start", "at": "2026-11-09T06:46:39", "task": "n09-2 Tom's talk view filmed packaged", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-09T06:56:00", "note": "try 1 of the talk view at page size: the tester captures 1280x720 only; game-side tom-close added"}
+{"event": "start", "at": "2026-11-09T08:58:00", "task": "his page answers and the advisor's 46 to 52; Marvelous task; take-over gap (n09-11)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T09:15:00", "note": ""}
+{"event": "start", "at": "2026-11-09T09:15:00", "task": "n09-8 AI-video experiment PC checks and the space ask", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T09:20:00", "note": ""}
+{"event": "start", "at": "2026-11-09T09:32:28", "task": "n09-2 Tom's chest skin try 1", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-09T09:33:59", "note": "try 1: cleared v37-headclear imported 09:33; packaged check next"}
