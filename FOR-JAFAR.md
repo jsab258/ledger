@@ -20,17 +20,19 @@ Disk (11-08 03:30): C: 120.5 GB free, F: 23.1 GB free; grew most since yesterday
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Sunday 8 November. Phase 1, Prove the bottlenecks. On: 2. Tom's four pieces passed packaged: jeans and boots passed (4 Nov); jacket (collar) and jumper to go (n02-3-2-*, n02-tom-*). Next: 4. The exit re-check, its result on his page (n02-3-4-exit).**
+**Morning, Monday 9 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.**
 
-| | Today, 08 Nov | Yesterday, 07 Nov |
+| | Today, 09 Nov | Yesterday, 08 Nov |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-11-08](production/previews/morning-hook-day-2026-11-08.jpg) | ![The hook camera by day, 2026-11-07](production/previews/morning-hook-day-2026-11-07.jpg) |
-| The reverse view | ![The reverse view, 2026-11-08](production/previews/morning-reverse-day-2026-11-08.jpg) | ![The reverse view, 2026-11-07](production/previews/morning-reverse-day-2026-11-07.jpg) |
-| The street at night | ![The street at night, 2026-11-08](production/previews/morning-night-2026-11-08.jpg) | ![The street at night, 2026-11-07](production/previews/morning-night-2026-11-07.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-11-09](production/previews/morning-hook-day-2026-11-09.jpg) | ![The hook camera by day, 2026-11-08](production/previews/morning-hook-day-2026-11-08.jpg) |
+| The reverse view | ![The reverse view, 2026-11-09](production/previews/morning-reverse-day-2026-11-09.jpg) | ![The reverse view, 2026-11-08](production/previews/morning-reverse-day-2026-11-08.jpg) |
+| The street at night | ![The street at night, 2026-11-09](production/previews/morning-night-2026-11-09.jpg) | ![The street at night, 2026-11-08](production/previews/morning-night-2026-11-08.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
 No decision asked: these are for watching the street change.
+
+**The repository on Monday:** 3.43 GB on GitHub; 4.58 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push).
 
 <!-- /morning pictures -->
 
