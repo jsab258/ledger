@@ -1411,7 +1411,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 11:17, done (11:20): he asked in the session; the test started"
   }
  ]
 }
