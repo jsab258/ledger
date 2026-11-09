@@ -13,8 +13,14 @@ WHAT IT CHECKS, cheaply, before the run reads anything: the Swiss time (no work 
 the handover's "**Started:**" and "**Stopped:**" lines (the last session has stopped when Stopped is later); the
 project's own activity: the newest real turn (a user or assistant line with its timestamp) in any of the project's
 session logs and their helpers' logs, this run's own log left out (CLAUDE_CODE_SESSION_ID). A session that died
-without its Stopped line: when Started is later but no turn has been written for 120 minutes, the last session is
-taken as stopped, and GO says so, for the handover.
+without its Stopped line, or ended its turn idle without one: when Started is later but no turn has been written for
+30 minutes and none of its own background jobs is still running, the last session is taken as stopped, and GO says
+so, for the handover; 120 minutes while such a job runs.
+
+30 MINUTES, NOT 120 (9 November, the advisor's message 64): his pasted message at about 15:31 resumed an old session,
+which worked a turn and ended it idle with no Stopped line and no goal loop; the 16:40 and 17:21 starts waited on it
+and nothing ran from about 16:00 to 18:15. A job of its own is a background command whose start ("backgroundTaskId")
+is in the newest session's log and whose finish ("<task-id>") is not; helpers' turns already count as activity.
 
 THREE MINUTES AFTER A WRITTEN STOP (5 November, his yes on his page): a session that stopped just before the quarter
 past made the next run stand aside for an hour, his answers waiting up to about 75 minutes. Stopped later than Started
@@ -51,7 +57,10 @@ REHEARSAL = os.path.join(ROOT, "production", "handover", "takeover-rehearsal.jso
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
 QUIET_MIN = 15
 QUIET_STOPPED_MIN = 3
-DEAD_MIN = 120
+DEAD_MIN = 30
+DEAD_JOB_MIN = 120
+JOB_START = re.compile(rb'"backgroundTaskId": ?"([A-Za-z0-9]+)"')
+JOB_DONE = re.compile(rb'<task-id>([A-Za-z0-9]+)</task-id>')
 OWN_RUN_MIN = 10
 TAIL = 1 << 20
 ROUND_CLOCK_UNTIL = datetime.datetime(2026, 11, 9, 13, 0)
@@ -124,10 +133,19 @@ def ended_at_wait(path):
     return waited
 
 
-def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
-    """Minutes since the project's newest real turn, this run's own log and those named left out."""
+def pending_jobs(path, cap=16 << 20):
+    """Background commands started in a log and not reported finished there (read from its last 16 MB)."""
+    with open(path, "rb") as fh:
+        fh.seek(max(0, os.path.getsize(path) - cap))
+        data = fh.read()
+    return set(JOB_START.findall(data)) - set(JOB_DONE.findall(data))
+
+
+def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False):
+    """Minutes since the project's newest real turn, this run's own log and those named left out; with_log also
+    gives the main session log that turn belongs to (a helper's turn gives its parent's log)."""
     paths = glob.glob(os.path.join(logs, "*.jsonl")) + glob.glob(os.path.join(logs, "*", "subagents", "*.jsonl"))
-    newest = None
+    newest, newest_log = None, None
     for p in paths:
         sid = os.path.basename(p)[:-6] if os.path.dirname(p) == logs else os.path.basename(os.path.dirname(os.path.dirname(p)))
         if sid in leave_out or (own and sid == own):
@@ -136,16 +154,17 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None):
             continue
         if os.path.dirname(p) == logs and ended_at_wait(p):
             continue
-        if now_ts - os.path.getmtime(p) > DEAD_MIN * 60 * 2:
+        if now_ts - os.path.getmtime(p) > DEAD_JOB_MIN * 60 * 2:
             t = os.path.getmtime(p)  # no turn is newer than the file; reading old giants would cost seconds
         else:
             t = last_turn(p)
         if t is not None and (newest is None or t > newest):
-            newest = t
-    return None if newest is None else (now_ts - newest) / 60
+            newest, newest_log = t, os.path.join(logs, sid + ".jsonl")
+    minutes = None if newest is None else (now_ts - newest) / 60
+    return (minutes, newest_log) if with_log else minutes
 
 
-def decide(now, text, idle_min, walk_reported=False):
+def decide(now, text, idle_min, walk_reported=False, job_running=False):
     hm = now.hour * 60 + now.minute
     if now < ROUND_CLOCK_UNTIL:
         # ROUND THE CLOCK until Monday's 13:00 (6 November, his yes on his page, whole-allowance-2026-11-06). Only the
@@ -164,10 +183,12 @@ def decide(now, text, idle_min, walk_reported=False):
     if stopped >= started:
         return "GO the last session stopped at %s; no turn written for %s minutes" % (
             stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min))
-    if idle_min is not None and idle_min >= DEAD_MIN:
+    dead = DEAD_JOB_MIN if job_running else DEAD_MIN
+    if idle_min is not None and idle_min >= dead:
         return "GO the last session (started %s) set no Stopped line but no turn has been written for %d minutes: " \
                "taken as stopped; say so in the handover" % (started.strftime("%d %b %H:%M"), int(idle_min))
-    return "WAIT the last session (started %s) has not stopped" % started.strftime("%d %b %H:%M")
+    return "WAIT the last session (started %s) has not stopped%s" % (
+        started.strftime("%d %b %H:%M"), "; a background job of its own is still running" if job_running else "")
 
 
 def rehearsal(now):
@@ -191,8 +212,12 @@ def selftest():
         ("stopped, a turn 3 min ago: GO", decide(d, h, 3), "GO"),
         ("not stopped, a turn 5 min ago: WAIT, 15", decide(d, r, 5), "WAIT a session wrote"),
         ("not stopped, a turn 14.6 min ago: WAIT, 15", decide(d, r, 14.6), "WAIT a session wrote"),
-        ("running: WAIT", decide(d, r, 40), "WAIT"),
+        ("running: WAIT", decide(d, r, 20), "WAIT"),
         ("died without Stopped, quiet 3 h: GO", decide(d, r, 180), "GO"),
+        ("ended its turn idle, no Stopped, quiet 29 min: WAIT", decide(d, r, 29), "WAIT"),
+        ("ended its turn idle, no Stopped, quiet 30 min: GO", decide(d, r, 30), "GO"),
+        ("no Stopped, quiet 45 min, its own job running: WAIT", decide(d, r, 45, job_running=True), "WAIT"),
+        ("no Stopped, quiet 125 min, its job never reported: GO", decide(d, r, 125, job_running=True), "GO"),
         ("until Monday, 00:50: GO", decide(datetime.datetime(2026, 11, 7, 0, 50), h, 400), "GO"),
         ("until Monday, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 7, 2, 15), h, 400), "WAIT the night's walk"),
         ("until Monday, the walk reported, 02:45: GO", decide(datetime.datetime(2026, 11, 7, 2, 45), h, 400, True), "GO"),
@@ -247,7 +272,23 @@ def selftest():
     m7 = last_turn_minutes(now_ts, tmp2, own="own-run")
     run_log("waited-then-worked", "2026-11-04T11:50:00", "WAIT a session wrote a turn 2 minutes ago", extra=30)
     m8 = last_turn_minutes(now_ts, tmp2, own="own-run")
+    # A background job of the newest session: pending until its <task-id> notification is in the same log.
+    jl = os.path.join(tmp2, "job-session.jsonl")
+    with open(jl, "w", encoding="utf-8") as fh:
+        fh.write(json.dumps({"type": "user", "timestamp": "2026-11-04T11:55:00.000Z", "toolUseResult": {
+            "backgroundTaskId": "bjob1"}, "message": {"content": "x"}}) + "\n")
+    os.utime(jl, (now_ts - 60, now_ts - 60))
+    m9, log9 = last_turn_minutes(now_ts, tmp2, own="own-run", with_log=True)
+    pend = pending_jobs(log9) if log9 else set()
+    with open(jl, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"type": "user", "timestamp": "2026-11-04T12:00:00.000Z", "message": {
+            "content": "<task-notification>\n<task-id>bjob1</task-id>\n<status>completed</status>"}}) + "\n")
+    os.utime(jl, (now_ts - 60, now_ts - 60))
+    done = pending_jobs(jl)
     cases += [
+        ("the newest session's log is named", "%s" % (log9 == jl), "True"),
+        ("a started job without its finish is pending", "%s" % (pend == {b"bjob1"}), "True"),
+        ("a job with its finish is not pending", "%s" % (done == set()), "True"),
         ("killed, then WAIT runs: they are not activity, 261 min", "%s" % (m6 is not None and 255 < m6 < 265), "True"),
         ("killed, then WAIT runs: the next run goes", decide(d, r, m6), "GO"),
         ("a rehearsal's WAIT is not activity either", "%s" % (m7 is not None and 255 < m7 < 265), "True"),
@@ -272,7 +313,9 @@ def main(a):
     path = os.path.join(ROOT, r["handover"]) if r else HANDOVER
     text = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
     reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
-    line = decide(now, text, last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own), reported)
+    idle, log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_log=True)
+    job = bool(log and os.path.isfile(log) and pending_jobs(log))
+    line = decide(now, text, idle, reported, job)
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)
     return 0

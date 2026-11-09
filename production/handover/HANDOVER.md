@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-09 15:31
+**Started:** 2026-11-09 19:07
 **Stopped:** 2026-11-09 18:18 (stopped on his word in the chat; the 15:31 session was stopped by him at 16:40 without a handover; this stop committed its finished work)
 (His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 10 to 20 minutes before the next run, which fires at :21; past 400,000 too unless under 10 minutes to the run; past 550,000 whatever the clock; 9 Nov, advisor 52) means rewrite this file, set Stopped from Get-Date, stop.)
 
@@ -17,6 +17,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - Never stop for lack of work: the order's next item, then the waiting list, then the fallback list (message 12). Phase 3's port: its open rows (G5, W3 to W6) are all low and would change the game, so they wait for an order.
 - An advisor's standing way goes here the same hour, named in its ack (message 13); the six measures' table in each morning's overview (message 11).
 - **Never filmed (his word 08:35, 9 Nov, advisor 51):** he never films or performs anything; never propose it in any plan, item or report. Motion footage fallback and control: free online video whose licence allows commercial use and changes (Pexels, Pixabay; each site's licence read in full against the allowlist, each clip's source and licence recorded; nothing from sites forbidding download). Into RULINGS with his next tap.
+- **Advisor 64 (9 Nov):** any session that ends a turn with no goal still running (a resumed old session, a pasted message answered) writes this file's Stopped line from Get-Date first. The gate now takes a session with no turn for 30 minutes and no background job of its own as stopped (120 while its job runs).
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
 ## Runs on 9 Nov (earlier: git log)
