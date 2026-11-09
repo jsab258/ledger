@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: production/handover/TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-09 20:17 (resumed on his message; the 19:07 run stopped 19:33)
-**Stopped:** 2026-11-09 19:33 (history 245k at an item's end, the next item the card's solve after about 21:05; work pushed to 0708411a2; this file and TRIED-ARCHIVE.md uncommitted, no notes-only commit)
+**Started:** 2026-11-09 21:17 (resumed for his ComfyUI install instruction in the chat; earlier runs 19:07 and 20:17)
+**Stopped:** 2026-11-09 21:37 (history OVER after his ComfyUI install and move to C:)
 (His rulings of 4 November: the hourly task (ledger-daily-fresh-session) first runs `python tools/fresh_gate.py`, which reads only this file and the project's activity, and works only when Stopped is later than Started and no turn has been written for 3 minutes (15 without a written stop). At each item's end `python tools/history_check.py`: OVER (past 250,000 tokens at an item's end 10 to 20 minutes before the next run, which fires at :21; past 400,000 too unless under 10 minutes to the run; past 550,000 whatever the clock; 9 Nov, advisor 52) means rewrite this file, set Stopped from Get-Date, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November). The order of 2 November's time ends 13:00 Monday 9 November.
@@ -20,24 +20,23 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - Helper briefs that work on one person carry "person <name>" (the token audit's By person table, from 8 Nov).
 
 ## Runs on 9 Nov (earlier: git log)
-- Idle 12:29 to 15:31 and about 16:00 to 19:07 (a resumed session idled with no Stopped line).
-- 19:07 to now: advisor 63 and 64 acked; fresh_gate.py: a session silent 30 minutes counts as stopped (120 while its own background job runs), pushed b02e19604. Tom's close r3 passed a fresh final review (r3/review-close.json); the three page JPEGs are in production/approvals/needs-you/pictures/tom-{close,whole,boots}-2026-11-09.jpg. Motion 2 seed 1101 passes (TOOLS-2026-11-09.md). Advisor 65, 66 acked.
-- **In flight at the stop:** (a) motion 2 seed 2202 on the card, started about 19:22 by C:/LedgerTools/ai-video/run_clip.ps1 (prompts now in inputs/m2.prompt.txt and m2.neg.txt; the old 1101 cmd record lacked them), about 100 minutes; output out/m2-81f-s2202.webm with .log and a final line in the run's own output. (b) Helper on n09-6's GarmentCode lab test (pattern part only; F:/LedgerTools/garmentcode-lab; its note production/research/clothing-pipeline/GARMENTCODE-LAB-2026-11-09.md; no commit: read it, ci-checks, commit). Landed: n09-9's memory-peak line in the night report (3934f3ced; tonight's report shows the first real peak; open: the launch check on every pass); the workflow mirrors (0708411a2; none addresses foot sliding or a still camera).
-- His page read 19:25, no new verdicts; rows 19:12, 19:26.
+- Idle today: 12:29-15:31, about 16:00-19:07, 19:33-20:17.
+- 19:07 to 21:10: gate fixes (30 quiet minutes, then 30 even while a job runs, naming it; c621d854e); Tom's three stills passed fresh reviews (page JPEGs in production/approvals/needs-you/pictures/tom-*-2026-11-09.jpg); motion 2 seed 1101 passes, seed 2202 weaker (holds the glance, face drifts; 1ad736110); n09-9's memory line in the night report (3934f3ced); the workflow mirrors (0708411a2); GarmentCode lab test (pattern part MIT, usable for simple garments; c621d854e); n09-3 step 3's code, not yet run in Unreal (34b1a2000; production/research/frame-headroom/COOK-STEP3-CODE-2026-11-09.md, its re-import command there). Advisor 63 to 68 acked.
+- His page: both items closed 21:20 (browser yes and ComfyUI by his chat words).
+- C:/LedgerTools/ai-video: run_clip.ps1, check_clip.py, blender_to_mp4.py; out/m2-81f-s1101.mp4 for the ingest. Card free from 21:02.
 
 ## Next, in order
-1. Read his page's verdicts and advisor; act at once. Write the hour's row.
-2. Advisor 65/66, the card's order tonight: when seed 2202 ends (check `Get-Process sd-cli`), the plugin's first solve on out/m2-81f-s1101.webm (and a stock clip) through the Performance asset's documented Python route, body tracking on, in an editor session (unreal-mcp did not connect this session); name the blocked export step and how it was passed (PLUGIN-SOLVE-ROUTE-2026-11-09.md). Then check 2202's stills (Blender sequencer script as used for 1101: render stills 1, 11 ... 80; floor line drift), then seed 3303 by run_clip.ps1. Nothing on the card from 01:15 to 04:30; from 04:30 motions 3 and 1 (motion 3 needs a dressed woman with cigarette and lighter: Sheila is in the white layer, so pick another or note it; motion 1 needs its seated start frame from the game).
-3. n09-2, Tom's page by Tuesday: after the night walk reports and from 04:30, film Tom's side walk and his sit on the new packaged build (route_walk.py with --sit, as 6 Nov; the side walk as 8 Nov), a fresh final reviewer each, then the page item with the three stills plus the two films, shortfalls first (collar edge, crown, boots read as slip-ons, plain jeans, smooth cloth); NEEDS YOU after it is published and looked at on the page.
-4. n09-5 the office exit: copy tonight's walk game log before the 04:15 morning pictures; grep LedgerWalkOff for "out through the office door" and "cannot walk".
-5. Advisor 66: ComfyUI by the documented main route, the README's rocBLAS step, no one-click scripts (install only, a helper may do it).
-6. n09-3 step 3, n09-7 crown Step 0, the order's rest (n09-6, n09-9 finish, n09-12).
+1. His yes in the chat 21:16: the reading with Claude in Chrome, read only (RULINGS; advisor 67's questions; item closed). ComfyUI v0.44.0 AMD portable installed per his 21:17 words with AMD's gfx103X torch 2.10 (COMFYUI-ROCM-INSTALL-2026-11-09.md); moved to C:/LedgerTools/ai-video/comfyui-rocm on his ok (21:34); F: 21.3 GB free, the night build's space check GO (only just: keep F: clear). Before ComfyUI's first run: the README's comfy_kitchen uninstall, put to him in the same ask as any other program step (advisor 69). Advisor 69: every program needing his approval in one ask, up front. Read his page's verdicts and the advisor every 15 minutes; act at once; a row each hour. His chat answer on the browser or ComfyUI: act on it.
+2. n09-8, advisor 65/66: the plugin's first solve now, on out/m2-81f-s1101.mp4, by PLUGIN-SOLVE-ROUTE-2026-11-09.md section 6 (ingest_mono_video_sync, frame rate 24 checked, Performance with body tracking on and face off, blocking pipeline, export_animation_sequence with export_body; name the blocked export step and how it was passed). Commit before the editor session; unreal-mcp did not connect at 19:07. Then a stock clip's solve beside it. Then seed 3303 (run_clip.ps1 -Seed 3303). Nothing on the card 01:15 to 04:30; from 04:30 motions 3 and 1 (motion 3 needs a dressed woman with cigarette and lighter: Sheila is in the white layer; motion 1 a seated start frame from the game).
+3. n09-3 step 3: the re-import (four commandlets, the order in the note; not beside the solve), then the cooked-picture test in a packaged walk.
+4. n09-2, Tom's page by Tuesday: after the night walk and from 04:30, film his side walk and his sit on the new build (route_walk.py --sit as 6 Nov; the side walk as 8 Nov), a fresh final reviewer each, then the page item with the three stills and two films, shortfalls first (collar edge, crown, boots read as slip-ons, plain jeans, smooth cloth); NEEDS YOU after it is published and looked at.
+5. n09-5 the office exit: copy tonight's walk game log before the 04:15 morning pictures; grep LedgerWalkOff for "out through the office door" and "cannot walk".
+6. n09-7 crown Step 0; n09-6 next: one bridge run of GarmentCode's md_job_workjacket.py (GARMENTCODE-LAB note), Sheila step 1; n09-9 the launch check on every pass; n09-12.
 
 ## Tried and failed, and why (newest; older ones in TRIED-ARCHIVE.md)
 - Seed 2202 first launched from the 1101 command record, which had dropped the prompt (9 Nov 19:20); stopped within a minute, relaunched by run_clip.ps1 reading the prompt files.
 
 ## In flight (carried)
-- Corner step 9: 9a to 9d passed packaged (6 Nov); 9c waits.
 - Walkers' turn at a pause unjudged; Sam's slip 51 cm, Lena's 49 cm unseen.
 
 ## Kept as they are

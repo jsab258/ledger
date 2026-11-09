@@ -1102,7 +1102,8 @@
      "No"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 21:17, answered yes on the page (20:18) and in the chat (21:16): the rule in RULINGS under computer use; the reading is the next session's first step"
   },
   {
    "id": "comfyui-install-2026-11-09",
@@ -1125,7 +1126,27 @@
      "No, keep the current tool"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-09 21:17, his instruction in the chat (21:17): the native AMD portable route into F:/LedgerTools/ai-video/comfyui-rocm instead; install running"
+  },
+  {
+   "id": "comfyui-move-to-c-2026-11-09",
+   "added": "2026-11-09 21:40",
+   "text": "ComfyUI is installed (14 GB) where you said, on F:, which leaves F: with 6.7 GB free; tonight's build needs 20 GB there, so it would stop. Move ComfyUI to C:\\LedgerTools\\ai-video\\comfyui-rocm instead (C: has 107 GB free; your 9 Nov ruling puts the experiment's programs on C:)?",
+   "links": [],
+   "recommendation": "Move it to C:: nothing is lost, F: gets its room back before tonight's build, and it matches your ruling. No web link: the answer is this page.",
+   "options": [
+    [
+     "move",
+     "Move it to C: (recommended)"
+    ],
+    [
+     "keep",
+     "Keep it on F:, skip tonight's build"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 21:36, answered ok in the chat (21:34): moved to C:/LedgerTools/ai-video/comfyui-rocm, 65,618 files, 13.5 GB"
   }
  ]
 }
