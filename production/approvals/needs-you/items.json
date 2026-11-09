@@ -1085,6 +1085,47 @@
    ],
    "state": "done",
    "closed": "2026-11-09 12:25, answered yes (11:59): RIFE for the experiment only, its MIT notices kept"
+  },
+  {
+   "id": "browser-civitai-reddit-2026-11-09",
+   "added": "2026-11-09 20:20",
+   "text": "You chose A in the chat with the advisor (19:35). Tap to make it a rule: the builder may read Civitai and Reddit pages in your Chrome on this PC, read only, to find the most-used Wan 2.2 video workflows for people moving. No posting, no accounts, no sign-ins; no download unless its licence is checked against your list first and recorded. The builder only, never helpers. This widens 'computer use only in Marvelous' by this one use.",
+   "links": [],
+   "recommendation": "Yes: both sites refuse automated readers, and they hold the community's rankings of which settings work; without them the study has a gap. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, as written (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "comfyui-install-2026-11-09",
+   "added": "2026-11-09 20:33",
+   "text": "The session's safety check refused installing ComfyUI (the advisor's step for the video experiment), because it runs code from outside. To allow it, type this in the session's chat: 'Install ComfyUI from patientx's ComfyUI-Zluda repository by its README's main steps, into C:\\LedgerTools\\ai-video\\comfyui, no one-click scripts.' Then tap Done here.",
+   "links": [
+    {
+     "label": "The repository it would install from",
+     "url": "https://github.com/patientx/ComfyUI-Zluda"
+    }
+   ],
+   "recommendation": "Allow it: ComfyUI runs the community's video workflows on this card where the current tool cannot; nothing from it ships in the game. If you would rather not, the experiment carries on with the current tool.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "no",
+     "No, keep the current tool"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

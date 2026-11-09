@@ -11,7 +11,8 @@ one object with its materials as sections, so it imports as one mesh.
 WHAT IT MAKES, under /Game/Ledger/Vehicles/<stem>/: SM_<stem>, renamed from
 whatever the importer called it so the probe loads it by a known name, with
 NANITE OFF and read back, as the street's are (the first street frame drew
-Nanite's simplified stand-in). Materials stay beside it.
+Nanite's simplified stand-in). Materials stay beside it. Since 9 November every picture
+the import makes is set explicitly by its glTF slot (texture_settings, tools/ue/glb_texture_settings.py).
 
 ONE LINE, appended to ue-material.txt: asked, made, and why not.
 """
@@ -60,6 +61,9 @@ def selftest():
     ok("the mesh is named where the probe loads it",
        mesh_path("hatch-navy") == "/Game/Ledger/Vehicles/hatch-navy/SM_hatch-navy")
     ok("the line carries its denominator", "vehiclesImported=1/2" in vehicles_line(2, 1, 1, 1.0, ["x"]))
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import glb_texture_settings
+    ok("the glb texture pass's own selftest", glb_texture_settings.selftest() == 0)
     print("import_vehicles selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 
@@ -95,8 +99,40 @@ def import_glb(unreal, glb, dest, mesh_asset):
     if m is None:
         return 0, 0, "%s-rename-did-not-take" % stem
     off = 1 if nanite_off_and_rebuilt(unreal, m) else 0
+    texture_settings(unreal, dest, m, glb)
     lib.save_directory(dest)
     return 1, off, None
+
+
+#: the last glb's texture summary line and the run's totals, for import_glb's callers to read
+LAST_TEXTURE_LINE = None
+TEXTURE_TOTALS = {}
+
+
+def texture_settings(unreal, dest, mesh, glb):
+    """EVERY PICTURE SET EXPLICITLY, 9 November (item n09-3 step 3; production/research/frame-headroom/
+    COOKING-PLAN-2026-11-09.md section 5 step 3): Interchange left the fronts' fascia boards and the small glb
+    pictures uncompressed with no mips, never streamed. tools/ue/glb_texture_settings.py sets each Texture2D under
+    dest by the glTF slot its material binds it to, or logs it and leaves it. Off with LEDGER_GLB_TEXTURE_SETTINGS=0.
+    One summary line printed and appended to ue-material.txt; a failure here never fails the mesh."""
+    global LAST_TEXTURE_LINE
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        import glb_texture_settings
+        line, counts = glb_texture_settings.apply(unreal, dest, mesh, glb)
+    except Exception as e:
+        line, counts = ("glbTextures=RAISED dest=%s reason=%s"
+                        % (dest, (str(e).splitlines()[0][:80] if str(e) else "?").replace(" ", "~"))), {"raised": 1}
+        print(line)
+    LAST_TEXTURE_LINE = line
+    for k, v in counts.items():
+        TEXTURE_TOTALS[k] = TEXTURE_TOTALS.get(k, 0) + v
+    try:
+        with open(os.path.join(unreal.Paths.project_dir(), "ue-material.txt"), "a", encoding="utf-8") as fh:
+            fh.write(line + "\n")
+    except Exception:
+        pass
+    return line
 
 
 def nanite_off_and_rebuilt(unreal, m):
