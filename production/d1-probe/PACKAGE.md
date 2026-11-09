@@ -75,3 +75,4 @@ One line per request: a step's evidence (the builder's commit carries [package])
 - 2026-11-09 nightly: wip at 3f16446b, the played copy at 30f4144
 - 2026-11-09 nightly: wip at 5555707b, the played copy at c4a845a
 - 2026-11-09 nightly: wip at 941a2bb5, the played copy at 41bb9d7
+- 2026-11-09 nightly: wip at 13e49f4b, the played copy at 21393aa
