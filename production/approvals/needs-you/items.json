@@ -2,6 +2,28 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "fable-verdict-2026-11-10",
+   "added": "2026-11-10 00:29",
+   "text": "The new model, Fable 5.2, against today's Opus 5.5, judged blind on three past clothing problems and one code fix: Opus was better on the cuffs, equal on the neckband and nearly equal on the skin-through fix; Fable was better on the code fix (right on all real logs). Fable cost about three times as much and took twice as long. Switch any work to Fable?",
+   "links": [],
+   "recommendation": "No switch: Opus stays for the session and for clothing. Fable is used only as the 'one different method' after two failed tries on code or tool faults, and re-tested at the next model. The test overshot its 5% cap by about 3 points; your two Fable resets are untouched. No web link: the answer is this page.",
+   "options": [
+    [
+     "escalate",
+     "No switch; Fable only for code after two failed tries (recommended)"
+    ],
+    [
+     "none",
+     "No Fable at all"
+    ],
+    [
+     "clothing",
+     "Switch clothing work to Fable"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "darren-fit-third-try-2026-11-07",
    "added": "2026-11-07 19:25",
    "text": "A third try at Darren's jumper? His two tries are spent and two small slits of skin still show at his breastbone. The cause is now measured: the lower edge of his head mesh stands about 3 mm through the cloth there. The try moves only the cloth at that spot, about 10 mm at most.",
