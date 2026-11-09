@@ -1413,6 +1413,33 @@
    ],
    "state": "done",
    "closed": "2026-11-09 11:17, done (11:20): he asked in the session; the test started"
+  },
+  {
+   "id": "rife-interpolator-2026-11-09",
+   "added": "2026-11-09 11:50",
+   "text": "A licence outside your list, for the motion experiment only: may the free frame-smoother RIFE (MIT licence, its model weights stated MIT by their author) be used to turn the video model's slow clips into 60 frames a second for Epic's capture plugin? Nothing of it ships in the game; its notice is kept.",
+   "links": [
+    {
+     "label": "RIFE's Vulkan program (licence in the repository)",
+     "url": "https://github.com/nihui/rife-ncnn-vulkan"
+    },
+    {
+     "label": "The weights' author (MIT stated in its README)",
+     "url": "https://github.com/hzwer/Practical-RIFE"
+    }
+   ],
+   "recommendation": "Yes: Epic's plugin wants 60 frames a second and our clips are 16 to 24; RIFE runs on your card and is the one option with a stated licence for its weights (the two others' weights state none). Ten seconds of your time.",
+   "options": [
+    [
+     "yes",
+     "Yes (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
