@@ -34,6 +34,11 @@ else:
         rng = lambda a, i: round(max(v[i] for v in a) - min(v[i] for v in a), 2)
         bones[b] = {"move_cm": [rng(locs, i) for i in range(3)], "turn_deg": [rng(rots, i) for i in range(3)]}
     res["bones"] = bones
+    if os.environ.get("ANIM_CURVE"):
+        res["curve"] = {}
+        for b in os.environ["ANIM_CURVE"].split(","):
+            if b in names:
+                res["curve"][b] = [[round(v, 1) for v in (lambda r: (r.roll, r.pitch, r.yaw))(unreal.AnimationLibrary.get_bone_pose_for_frame(anim, b, f, False).rotation.rotator())] for f in range(0, n, 5)]
 if OUT:
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(res, fh, indent=1)
