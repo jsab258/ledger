@@ -458,9 +458,35 @@
       "2026-11-06",
       "2026-11-07",
       "2026-11-08",
-      "2026-11-09"
+      "2026-11-09",
+      "2026-11-10"
     ],
-    "gap_note": "No pictures from 9 to 20 October: the PC was off."
+    "gap_note": "No pictures from 9 to 20 October: the PC was off.",
+    "morning": {
+      "date": "2026-11-10",
+      "line": "Morning, Tuesday 10 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
+      "failure": "",
+      "views": [
+        {
+          "label": "The hook camera by day",
+          "today": "production/previews/morning-hook-day-2026-11-10.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-09.jpg"
+        },
+        {
+          "label": "The reverse view",
+          "today": "production/previews/morning-reverse-day-2026-11-10.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-09.jpg"
+        },
+        {
+          "label": "The street at night",
+          "today": "production/previews/morning-night-2026-11-10.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-09.jpg"
+        }
+      ],
+      "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
+      "note": "No decision asked: these are for watching the street change.",
+      "by": "tools/morning_pictures.py"
+    }
   },
   "studies": {
     "done": 16,
