@@ -82,6 +82,7 @@ def packed_material(unreal, g, folder, lines):
     # names a second tiling normal drawn where the packed map's part is the rib (0.25), switched on by its instance's
     # DetailRibOn, so instances made before it (off by default) are drawn as they were
     rib = texture(maps["detail_rib"], "T_%s_DetailRib_Normal" % g["name"], "normal") if maps.get("detail_rib") and detail else None
+    wear_mask = texture(maps["wear_mask"], "T_%s_WearMask" % g["name"], "packed") if maps.get("wear_mask") else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
@@ -137,7 +138,55 @@ def packed_material(unreal, g, folder, lines):
     mel.connect_material_expressions(l1, "", l2, "A")
     mel.connect_material_expressions(teeth, "", l2, "B")
     mel.connect_material_expressions(on_teeth, "", l2, "Alpha")
-    mel.connect_material_property(l2, "", unreal.MaterialProperty.MP_BASE_COLOR)
+    # WEAR AND DIRT FROM A MASK (10 November, the texturing test, MAP-2026-11-10.md): "wear_mask" names a small RGBA mask
+    # made by a texturing tool from the garment's own bakes (R wear on folds and edges, G dirt in hollows, B rising from the
+    # hem, A cavities); the colour fades toward FadeMul times itself by R and dirties toward DirtColour by G, B and A. WearOn
+    # is 0 unless the row has a mask, so every garment without one is drawn exactly as before.
+    black = unreal.load_asset("/Engine/EngineResources/Black.Black")
+    wm = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, -800, parameter_name="WearMap", texture=wear_mask or black,
+              sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
+    wear_on = node(unreal.MaterialExpressionScalarParameter, -1000, -950, parameter_name="WearOn", default_value=0.0)
+    fade_amt = node(unreal.MaterialExpressionScalarParameter, -1000, -900, parameter_name="FadeAmount", default_value=0.0)
+    fade_mul = node(unreal.MaterialExpressionScalarParameter, -1000, -850, parameter_name="FadeMul", default_value=1.0)
+    dirt_c = node(unreal.MaterialExpressionVectorParameter, -1000, -1100, parameter_name="DirtColour")
+    faded = node(unreal.MaterialExpressionMultiply, -150, -500)
+    mel.connect_material_expressions(l2, "", faded, "A")
+    mel.connect_material_expressions(fade_mul, "", faded, "B")
+    fa = node(unreal.MaterialExpressionMultiply, -700, -800)
+    mel.connect_material_expressions(wm, "R", fa, "A")
+    mel.connect_material_expressions(fade_amt, "", fa, "B")
+    fa_on = node(unreal.MaterialExpressionMultiply, -550, -800)
+    mel.connect_material_expressions(fa, "", fa_on, "A")
+    mel.connect_material_expressions(wear_on, "", fa_on, "B")
+    l3 = node(unreal.MaterialExpressionLinearInterpolate, -50, -400)
+    mel.connect_material_expressions(l2, "", l3, "A")
+    mel.connect_material_expressions(faded, "", l3, "B")
+    mel.connect_material_expressions(fa_on, "", l3, "Alpha")
+
+    def weighted(pin, pname, y):
+        w = node(unreal.MaterialExpressionScalarParameter, -1000, y, parameter_name=pname, default_value=0.0)
+        m = node(unreal.MaterialExpressionMultiply, -700, y)
+        mel.connect_material_expressions(wm, pin, m, "A")
+        mel.connect_material_expressions(w, "", m, "B")
+        return m
+
+    dg, db, da = weighted("G", "DirtAmount", -700), weighted("B", "HemDirt", -650), weighted("A", "CavityDirt", -600)
+    s1 = node(unreal.MaterialExpressionAdd, -550, -700)
+    mel.connect_material_expressions(dg, "", s1, "A")
+    mel.connect_material_expressions(db, "", s1, "B")
+    s2 = node(unreal.MaterialExpressionAdd, -450, -680)
+    mel.connect_material_expressions(s1, "", s2, "A")
+    mel.connect_material_expressions(da, "", s2, "B")
+    s3 = node(unreal.MaterialExpressionSaturate, -350, -680)
+    mel.connect_material_expressions(s2, "", s3, "")
+    dirt_on = node(unreal.MaterialExpressionMultiply, -250, -680)
+    mel.connect_material_expressions(s3, "", dirt_on, "A")
+    mel.connect_material_expressions(wear_on, "", dirt_on, "B")
+    l4 = node(unreal.MaterialExpressionLinearInterpolate, 50, -400)
+    mel.connect_material_expressions(l3, "", l4, "A")
+    mel.connect_material_expressions(dirt_c, "", l4, "B")
+    mel.connect_material_expressions(dirt_on, "", l4, "Alpha")
+    mel.connect_material_property(l4, "", unreal.MaterialProperty.MP_BASE_COLOR)
     mel.connect_material_property(p, "R", unreal.MaterialProperty.MP_ROUGHNESS)
     mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
     mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
@@ -230,6 +279,15 @@ def packed_material(unreal, g, folder, lines):
         mel.set_material_instance_scalar_parameter_value(mi, "DetailRibOn", 1.0 if rib is not None else 0.0)
         if rib is not None:
             lines.append("  rib detail normal %s on the rib part (0.25)" % rib.get_name())
+    if wear_mask is not None:
+        w = maps.get("wear", {})
+        mel.set_material_instance_texture_parameter_value(mi, "WearMap", wear_mask)
+        mel.set_material_instance_scalar_parameter_value(mi, "WearOn", 1.0)
+        for k, pname in (("fade", "FadeAmount"), ("fade_mul", "FadeMul"), ("dirt", "DirtAmount"), ("hem_dirt", "HemDirt"), ("cavity", "CavityDirt")):
+            mel.set_material_instance_scalar_parameter_value(mi, pname, float(w.get(k, 1.0 if k == "fade_mul" else 0.0)))
+        r, gr, b = w.get("dirt_colour", [0.09, 0.075, 0.06])
+        mel.set_material_instance_vector_parameter_value(mi, "DirtColour", unreal.LinearColor(r, gr, b, 1.0))
+        lines.append("  wear mask %s: %s" % (wear_mask.get_name(), w))
     unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
     lines.append("  material %s on %s: tint %s, tape %s, teeth %s" % (mi_name, PACKED_BASE, maps["tint"], maps["tapecolour"], maps["teethcolour"]))
     return mi

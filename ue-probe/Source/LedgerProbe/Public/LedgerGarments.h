@@ -273,11 +273,35 @@ namespace LedgerGarments
 		int32 Worn = 0;
 		float RaiseCm = 0.0f;
 		TArray<FString> Covered;
+		// A TEST PIECE IN PLACE OF A WORN ONE (10 November, the texturing test's jeans): a held row with "replaces"
+		// worn by -WearHeld takes the named row's place for that run, so the two never draw over each other; the
+		// player's game (no -WearHeld) is unchanged.
+		TArray<FString> Replaced;
+		{
+			FString HeldNames;
+			FParse::Value(FCommandLine::Get(), TEXT("WearHeld="), HeldNames, false);
+			TArray<FString> HeldTests;
+			HeldNames.ParseIntoArray(HeldTests, TEXT(","), true);
+			for (const TSharedPtr<FJsonValue>& V : Root->GetArrayField(TEXT("garments")))
+			{
+				const TSharedPtr<FJsonObject> G = V->AsObject();
+				FString Rep;
+				if (G.IsValid() && G->GetStringField(TEXT("who")) == Who && G->TryGetStringField(TEXT("replaces"), Rep) && HeldTests.Contains(G->GetStringField(TEXT("name"))))
+				{
+					Replaced.Add(Rep);
+				}
+			}
+		}
 		for (const TSharedPtr<FJsonValue>& V : Root->GetArrayField(TEXT("garments")))
 		{
 			const TSharedPtr<FJsonObject> G = V->AsObject();
 			if (!G.IsValid() || G->GetStringField(TEXT("who")) != Who) { continue; }
 			const FString Name = G->GetStringField(TEXT("name"));
+			if (Replaced.Contains(Name))
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s replaced for this test run (-WearHeld)"), Who, *Name);
+				continue;
+			}
 			// HELD: handed over but not to be worn yet (its reason in the list).
 			// -WearHeld=RonJacket,... wears a held one for a test run (30
 			// September: the bound jacket filmed moving before Jafar sees it).

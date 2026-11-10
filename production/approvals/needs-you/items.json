@@ -1194,6 +1194,38 @@
    ],
    "state": "done",
    "closed": "2026-11-10 13:40, his note 11:30: his own tool, test it; tested 13:25 to 13:40, report via the advisor"
+  },
+  {
+   "id": "texture-pipeline-test-2026-11-10",
+   "added": "2026-11-10 15:23",
+   "text": "Run the full materials-and-texturing pipeline test now, beside the motion experiment? (Megascans, MaterialCraft, TextureCraft, our Blender bakes and Unreal's layering: a one-page map first, then four chains each beside today's method in the packaged game: Tom's jeans, a prop, a shop-front piece, the Flemish brick; first verdict Wednesday midday.) It is new work in a running week, so it waits for your yes.",
+   "links": [
+    {
+     "label": "Megascans free on Fab (Quixel, 5 Nov)",
+     "url": "https://quixel.com/news/update-megascans-are-going-free-again"
+    },
+    {
+     "label": "TextureCraft",
+     "url": "https://getartcraft.com/apps/texturecraft"
+    },
+    {
+     "label": "MaterialCraft",
+     "url": "https://getartcraft.com/apps/materialcraft"
+    }
+   ],
+   "recommendation": "Yes, run it now: the week is about 8 points ahead of its line, so there is room, and a free scanned library plus scriptable texture tools could save many hand-built hours in phase 2.",
+   "options": [
+    [
+     "yes",
+     "Yes, run it now (recommended)"
+    ],
+    [
+     "next",
+     "No, put it in next Monday's order"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 17:23, answered yes 16:58: the test started 17:22"
   }
  ]
 }
