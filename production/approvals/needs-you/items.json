@@ -1232,18 +1232,67 @@
    "added": "2026-11-10 18:35",
    "text": "For the texturing test's verdict on Wednesday: sign in on fab.com in your own browser, open each of the five links, and press 'Add to My Library' on each (all free). Then tap Done. Nothing is bought; the session downloads them into the test project itself.",
    "links": [
-    {"label": "Brick Wall Worn (the brick to beat)", "url": "https://www.fab.com/listings/499d9ba7-f361-491c-b66e-c16c89bac34a"},
-    {"label": "Leakage (the grime stain for both bricks)", "url": "https://www.fab.com/listings/ab46f137-ab5c-4f68-a2f5-508d7a04680e"},
-    {"label": "Wooden Storage Box (the prop)", "url": "https://www.fab.com/listings/53a6cf14-0cf5-46d0-b90b-71134b7c490e"},
-    {"label": "Industrial Junkyard Crate Metal (the second prop)", "url": "https://www.fab.com/listings/3e83258c-676f-48b0-860c-10f16e917684"},
-    {"label": "Flaked Paint Wall (chips for the shop front's paint)", "url": "https://www.fab.com/listings/b718e7f1-4f5e-4dc9-a950-4aa2cf937b64"}
+    {
+     "label": "Brick Wall Worn (the brick to beat)",
+     "url": "https://www.fab.com/listings/499d9ba7-f361-491c-b66e-c16c89bac34a"
+    },
+    {
+     "label": "Leakage (the grime stain for both bricks)",
+     "url": "https://www.fab.com/listings/ab46f137-ab5c-4f68-a2f5-508d7a04680e"
+    },
+    {
+     "label": "Wooden Storage Box (the prop)",
+     "url": "https://www.fab.com/listings/53a6cf14-0cf5-46d0-b90b-71134b7c490e"
+    },
+    {
+     "label": "Industrial Junkyard Crate Metal (the second prop)",
+     "url": "https://www.fab.com/listings/3e83258c-676f-48b0-860c-10f16e917684"
+    },
+    {
+     "label": "Flaked Paint Wall (chips for the shop front's paint)",
+     "url": "https://www.fab.com/listings/b718e7f1-4f5e-4dc9-a950-4aa2cf937b64"
+    }
    ],
    "recommendation": "Done, about five minutes: without these the brick and prop chains have nothing to be compared against, and the verdict would be half a test.",
    "options": [
-    ["done", "Done, all five added (recommended)"],
-    ["later", "Not now: judge the test without Megascans"]
+    [
+     "done",
+     "Done, all five added (recommended)"
+    ],
+    [
+     "later",
+     "Not now: judge the test without Megascans"
+    ]
    ],
    "state": "open"
+  },
+  {
+   "id": "pacing-and-discord-2026-11-10",
+   "added": "2026-11-10 19:31",
+   "text": "Your two answers to the advisor (18:53), as one tap. (1) Pacing: while the week is ahead of the line, your priority items and jobs that mostly use the card or the processor (clips, solves, bakes, builds, films, renders) still run; the ceiling only holds back new token-heavy work and helpers. (2) Discord: the builder alone may read the one channel below in your Chrome, read-only (no posting, reacting, messaging, joining or account changes), saving only useful links with a date and one line each, no usernames.",
+   "links": [
+    {
+     "label": "The Discord channel",
+     "url": "https://discord.com/channels/1359579021108842617/1550205610208002128"
+    }
+   ],
+   "recommendation": "Yes to both: the motion experiment and the texturing test stop waiting on the ceiling, and the channel's links feed the open problems at no cost.",
+   "options": [
+    [
+     "both",
+     "Yes to both (recommended)"
+    ],
+    [
+     "pacing",
+     "Pacing only, no Discord"
+    ],
+    [
+     "neither",
+     "Neither"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 19:36, answered both (19:28): pacing and Discord reading in RULINGS the same evening"
   }
  ]
 }
