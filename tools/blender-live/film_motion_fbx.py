@@ -55,7 +55,24 @@ for b in arm.data.bones:
         geom = bmesh.ops.create_uvsphere(bm, u_segments=12, v_segments=8, radius=rr)
         for v in geom["verts"]:
             v.co += head + up * rr
-        groups.append((b.name, len(geom["verts"])))
+        k = len(geom["verts"])
+        # A nose, so a film shows which way the head turns (the motion 2 reviewer could not tell, 10 Nov).
+        # Forward is taken from the rest feet (foot head to ball head), flattened against up.
+        fwd = Vector((0, 0, 0))
+        for s in ("l", "r"):
+            fb, bb = arm.data.bones.get(f"foot_{s}"), arm.data.bones.get(f"ball_{s}")
+            if fb and bb:
+                fwd += bb.head_local - fb.head_local
+        fwd -= up * fwd.dot(up)
+        if fwd.length > 1e-6:
+            fwd.normalize()
+            nl = rr * 0.9
+            nose = bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=rr * 0.28, radius2=0.0, depth=nl)
+            nrot = Vector((0, 0, 1)).rotation_difference(fwd).to_matrix().to_4x4()
+            for v in nose["verts"]:
+                v.co = nrot @ v.co + head + up * rr + fwd * (rr * 0.85 + nl * 0.5)
+            k += len(nose["verts"])
+        groups.append((b.name, k))
         continue
     if kids:
         tail = kids[0].head_local
