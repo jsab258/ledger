@@ -82,7 +82,7 @@ def packed_material(unreal, g, folder, lines):
     # names a second tiling normal drawn where the packed map's part is the rib (0.25), switched on by its instance's
     # DetailRibOn, so instances made before it (off by default) are drawn as they were
     rib = texture(maps["detail_rib"], "T_%s_DetailRib_Normal" % g["name"], "normal") if maps.get("detail_rib") and detail else None
-    wear_mask = texture(maps["wear_mask"], "T_%s_WearMask" % g["name"], "packed") if maps.get("wear_mask") else None
+    wear_mask = texture(maps["wear_mask"], "T_%s_Wear_Mask" % g["name"], "packed") if maps.get("wear_mask") else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)

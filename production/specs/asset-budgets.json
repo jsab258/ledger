@@ -54,6 +54,7 @@
   "folders": [
     ["/Game/Ledger/MetaHumans/Garments/TomZipJacket", "garment_jacket"],
     ["/Game/Ledger/MetaHumans/Garments/TomJeans", "garment_trousers"],
+    ["/Game/Ledger/MetaHumans/Garments/TomJeansTC", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/TomJumper", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments/TomBoots", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments/RonBoots", "garment_shoes"],
@@ -94,6 +95,11 @@
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJeans"],
       "parts": ["SKM_TomJeans", "MI_TomJeans", "T_TomJeans_ColourAO", "T_TomJeans_Normal", "T_TomJeans_Packed", "T_TomJeans_Detail_Normal"],
       "source": "production/specs/garments.json (TomJeans, three maps and the detail weave) and tools/ue/import_garments.py's names"
+    },
+    "tom-jeans-tc": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/TomJeansTC"],
+      "parts": ["SKM_TomJeansTC", "MI_TomJeansTC", "T_TomJeansTC_ColourAO", "T_TomJeansTC_Normal", "T_TomJeansTC_Packed", "T_TomJeansTC_Detail_Normal", "T_TomJeansTC_Wear_Mask"],
+      "source": "production/specs/garments.json (TomJeansTC, held: the texturing test's jeans, MAP-2026-11-10.md chain 1) and tools/ue/import_garments.py's names"
     },
     "tom-jumper": {
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJumper"],
