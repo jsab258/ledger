@@ -43,3 +43,12 @@ Moved out of HANDOVER.md on 8 Nov 2026 (its new 1,800-word cap, tools/doc-caps.p
 - An ack stamped 09:40 without Get-Date (9 Nov, true 09:29); corrected.
 - The office exit read from a sit walk: the route never sends anyone out of a room, so it proves nothing about the exit (9 Nov 12:24); read tonight's walk instead.
 - sd-cli run unattended: refused by the session's safety check (9 Nov 10:30); not worked round; he allowed it in the session.
+
+## Moved from the handover, 10 Nov 18:05
+- The solve as a commandlet (2 runs): Disabled, no D3D12 device (production/research/ai-video-motion/SOLVE-DISABLED-DIAGNOSIS-2026-11-09.md). In the full editor: GPU crash (log C:/LedgerTools/ai-video/out/solve-m2s1101d.editor.log): DirectML's first inference failed; read the first error, not the last. Passed on the processor 10 Nov.
+- Hour-row times written ahead of Get-Date (9 Nov 22:24, 22:26; 10 Nov 13:24): read the clock first.
+- Tries spent, moved 10 Nov: the tester's round 3 of 3 (his yes), spent; the dish 2 of 2, spent; the witnesses' sightlines 2 of 2, spent; the hill 3 of 3, spent; speech 3 of 3, spent; the sit's drop 2 of 2; the collar 4, set aside; 9d's roof 2 of 2; roof breaks 2 of 2; the undressed rule 2 of 2.
+- (10 Nov) TextureCraft masks from the game mesh alone (low.obj's 4,800 quads plus our normal map as a mesh map): blocky wear; the high-drape bake fixed it. Edge wear at the default level 0.5 shows nothing; 0.7 to 0.8 is the street's band.
+- (10 Nov) MaterialCraft 0.3.0: no brick, fabric or wood templates (file.new refuses them) and no noise nodes; the CLI's import command is file.importVector, not importSvg.
+- (10 Nov) A game-target build ran on a STOP space reading (chained after the check, F: 19.8 GB against 20): run the check alone first. My leftovers deleted, F: 21.2 GB.
+- (carried to 10 Nov) Walkers' turn at a pause unjudged; Sam's slip 51 cm, Lena's 49 cm unseen.

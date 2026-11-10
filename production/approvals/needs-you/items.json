@@ -1226,6 +1226,24 @@
    ],
    "state": "done",
    "closed": "2026-11-10 17:23, answered yes 16:58: the test started 17:22"
+  },
+  {
+   "id": "fab-megascans-five-2026-11-10",
+   "added": "2026-11-10 18:35",
+   "text": "For the texturing test's verdict on Wednesday: sign in on fab.com in your own browser, open each of the five links, and press 'Add to My Library' on each (all free). Then tap Done. Nothing is bought; the session downloads them into the test project itself.",
+   "links": [
+    {"label": "Brick Wall Worn (the brick to beat)", "url": "https://www.fab.com/listings/499d9ba7-f361-491c-b66e-c16c89bac34a"},
+    {"label": "Leakage (the grime stain for both bricks)", "url": "https://www.fab.com/listings/ab46f137-ab5c-4f68-a2f5-508d7a04680e"},
+    {"label": "Wooden Storage Box (the prop)", "url": "https://www.fab.com/listings/53a6cf14-0cf5-46d0-b90b-71134b7c490e"},
+    {"label": "Industrial Junkyard Crate Metal (the second prop)", "url": "https://www.fab.com/listings/3e83258c-676f-48b0-860c-10f16e917684"},
+    {"label": "Flaked Paint Wall (chips for the shop front's paint)", "url": "https://www.fab.com/listings/b718e7f1-4f5e-4dc9-a950-4aa2cf937b64"}
+   ],
+   "recommendation": "Done, about five minutes: without these the brick and prop chains have nothing to be compared against, and the verdict would be half a test.",
+   "options": [
+    ["done", "Done, all five added (recommended)"],
+    ["later", "Not now: judge the test without Megascans"]
+   ],
+   "state": "open"
   }
  ]
 }

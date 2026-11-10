@@ -109,3 +109,11 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 **Cost.** 0.2 to 1 h a tool.
 **Failed.** Chained scheduled runs; a gate counting its own runs; word caps hiding entry counts; rulings cited from memory.
 **Links.** [his-page](.claude/skills/his-page/SKILL.md); NB 25 Oct (order ledger), 30 Oct (accessibility invoke), 2 Nov (standing page), 4 to 9 Nov (lean start; take-over; caps; cache money; skills distilled; blind comparison; GUI tool unattended).
+
+### Texturing tools mapped and proved before any chain (10 Nov)
+- Made: a map of who does what in materials (scan library, procedural tile tool, per-asset painting tool, own bakes, engine masters, decals, the chart), with card memory per source, checked by one fresh reviewer (13 fixes) before any run; then both tools proved headless on a built-in mesh.
+- Method: read the makers' docs in full; install portable with checksums on the data drive; prove the command line on a stock mesh (bake, mask, engine preset export), run twice and compare pixels; read the export preset's channel order from the tool itself, not the docs. Hand per-asset painting into the engine as one small mask over a shared tile, never as a unique full set.
+- Tools: TextureCraft 0.5.0 and MaterialCraft 0.3.0 CLIs; Blender to export the high drape; Python for packing masks and seamless noise.
+- Target and check: same pixels twice (passed); the edge-wear generator's level against the street's 3 to 10% worn share (0.7 to 0.8; the default 0.5 shows nothing).
+- Cost: about 45 min. Failed: masks from the game mesh alone came out blocky; baking from the high drape fixed it. The procedural tool's 0.3 has no ready patterns or noise: patterns drawn as true-size SVG, noise made outside. A build was run on a STOP disk reading (chained after the check): check first, alone.
+- Evidence: production/research/texture-pipeline/ (MAP, MAP-REVIEW, PROOF).
