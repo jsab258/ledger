@@ -53,3 +53,5 @@ Total 23 tries over 16 closed faults: **mean 1.44**. Last week: not measured (th
 Last week: US$2,222.29, 21,633 steps, history 53%. Source: `python tools/token_audit.py --shares 2026-11-0N` for each day; full week in the audit's `AUDIT-2026-11-02_to_2026-11-08.md` (written to the session scratch folder, not the repository).
 
 Other week figures from the same audit: building 41%, reviewing (helpers) 18%, building (helpers) 14%, research (helpers) 5%, research 4%, replies 3%, helpers' briefing 1%; steps in no time-log task 33% (15% after gap-filling).
+
+For the 16 Nov audit (advisor 75, noted 10 Nov 07:23): the Fable 5.2 replay of 9 to 10 Nov overshot its 5% cap by about 3 points (the week 8% to 16% overnight, most of it the replay; production/research/model-replay/FABLE-REPLAY-2026-11-09.md).

@@ -1,0 +1,17 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Category": "",
+	"Description": "Scratch project for the markerless body solve (n09-8), outside the game. Its one module hides the DirectML runtime when run with -LedgerNNECpu, so Epic's body tracker takes its own CPU fallback. Copied to C:/LedgerTools/mocap-solve; source kept in tools/ue/mocap-solve-project.",
+	"Modules": [
+		{ "Name": "NNECpuSwitch", "Type": "Editor", "LoadingPhase": "PostEngineInit" }
+	],
+	"Plugins": [
+		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "EditorScriptingUtilities", "Enabled": true },
+		{ "Name": "MetaHuman", "Enabled": true },
+		{ "Name": "CaptureManagerEditor", "Enabled": true },
+		{ "Name": "MetaHumanBodyTracker", "Enabled": true },
+		{ "Name": "NNERuntimeORT", "Enabled": true }
+	]
+}
