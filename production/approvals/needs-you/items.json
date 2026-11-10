@@ -1170,6 +1170,30 @@
    ],
    "state": "done",
    "closed": "2026-11-09 21:36, answered ok in the chat (21:34): moved to C:/LedgerTools/ai-video/comfyui-rocm, 65,618 files, 13.5 GB"
+  },
+  {
+   "id": "drapestudio-licence-2026-11-10",
+   "added": "2026-11-10 10:23",
+   "text": "Drape Studio (C:\\DrapeStudio) was made by the Craft Anything tool from Marvelous Designer itself: its own log says the request was \"same app with no login\" and that it decompiled Marvelous and copied 59 of its preset values. CLO's terms, which your Marvelous plan accepts, forbid reverse engineering and any access other than the program CLO provides. Garments made with it could put the sold game at risk, so it has not been run. Use it for the game's clothes?",
+   "links": [
+    {
+     "label": "CLO General Terms, Use of the Services (c)(v), (c)(viii)",
+     "url": "https://legal.clo-set.com/modal-tou-general"
+    }
+   ],
+   "recommendation": "Set it aside and keep using Marvelous: the clone's whole basis is what CLO's terms forbid, and the risk would sit in every garment of a sold game. Its good ideas (runs with no window, jobs in and out as files, the same result every run, measures built in) are written down as what a tool the builder can use lawfully needs.",
+   "options": [
+    [
+     "aside",
+     "Set it aside, keep Marvelous (recommended)"
+    ],
+    [
+     "test",
+     "Test it anyway, your risk, not for shipped clothes"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 13:40, his note 11:30: his own tool, test it; tested 13:25 to 13:40, report via the advisor"
   }
  ]
 }
