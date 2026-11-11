@@ -63,3 +63,8 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - Film tool: a commandlet cannot export the preview mesh; Blender's factory cube and the importer's bone tails misled the first films (fixed).
 - TextureCraft edge wear on joinery: about 20% worn whatever the level, noise or bake size (narrow mouldings read as all edge); a levels cut on the mask sets the share. Thin-areas multiplied over it wipes door panels and leaves the cornice's blotches. MaterialCraft's warp at 3.0 scrambles a pattern; 0.05 to 0.1 is its useful range.
 - Motion 3 at 97 frames (text-to-video): sd-cli lost the card (Vulkan device lost) 20 s into sampling, and motion 1 straight after failed the same way; 81 frames is the proven length (try 2 of 2 for this fault, running). If it fails too: set aside, named in the row; Marvelous holds about 6 GB of card memory and is his to keep open, so do not close it.
+
+## Moved 11 Nov 15:20
+- Tom's surfaces by painted maps (11 Nov, try 3): denim streaks evenly spaced and continuous with no diagonal read as pinstripe close up; a dark jacket hides lightness speckle; a grain tile reaches the boot's welt. Three tuning passes on the welt changed nothing (cause misread). Listed for the next order.
+- Motion 1, rise from a chair (set aside 11 Nov 00:42 after 2 of 2).
+- Clips over 81 frames lose the card (Vulkan device lost).
