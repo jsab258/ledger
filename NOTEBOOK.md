@@ -2053,3 +2053,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.2 h.
 - What failed and why: one night (00:50 to 05:15) lost; a dated branch in code was not tied to the ruling it served, so nothing flagged its lapse.
 - Evidence: tools/fresh_gate.py (commit 15dccba12); the advisor's message 92.
+
+## A per-asset edge-wear generator against use-driven wear on painted joinery (11 November 2026)
+- Made: a variant of a shipped shop front whose paint carries a curvature edge-wear mask, filmed beside the shipped front from the same cameras.
+- Method: bake the mask on the mesh the game actually ships (its own UV set), cut to the target share measured inside the UV islands, composite as undercoat chips only inside the islands (padding grown outward from inside, never the generator's white padding), import beside the shipped asset and draw it for one run by a command-line swap; a blind fresh reviewer on near, mid and far pairs.
+- Tools: TextureCraft CLI (headless bake and mask), Python with PIL and SciPy, the importer, a one-run swap switch in the game.
+- Target and check: worn paint 3 to 10% near edges, irregular, where use reaches; no outlines or pattern. Result: 4.0% and 7.8% inside the islands, but it outlines every panel moulding evenly; the shipped use-driven wear wins slightly.
+- Cost: about 1 h (bake 21 s, compose and import minutes, two films 17 min, review 1 min).
+- What failed and why: curvature alone does not know where hands, feet and weather reach, so panelled joinery reads piped; the first bake was on a held-back mesh whose UVs differ from the shipped one, which a file trace caught before filming.
+- Evidence: F:/LedgerTools/gate/new/timber-tcwear-2026-11-11/review.json and crop-front.jpg; production/research/texture-pipeline/TIMBER-FILES-2026-11-11.md.
