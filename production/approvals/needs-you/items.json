@@ -390,7 +390,8 @@
      "Later"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): checked on disk 18:05, the task runs every 15 minutes with its new prompt"
   },
   {
    "id": "session-settings-2026-11-11",
@@ -408,7 +409,8 @@
      "No, leave settings as they are"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): Stop hook in place and already fired once; 14 skills hidden"
   },
   {
    "id": "houdini-cascadeur-accounts-2026-11-11",
@@ -443,7 +445,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): the tests start with a 15-minute check of each free version's limits"
   },
   {
    "id": "paid-tools-ruling-2026-11-11",
@@ -461,7 +464,8 @@
      "No"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 18:09, answered yes (18:00): in RULINGS 11 Nov"
   },
   {
    "id": "paid-tools-top-three-2026-11-11",
@@ -490,6 +494,30 @@
     [
      "none",
      "None for now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, answered free (18:00): MetaTailor free and FaceBuilder trial, once his accounts exist"
+  },
+  {
+   "id": "tool-tests-first-start-2026-11-11",
+   "added": "2026-11-11 18:15",
+   "text": "Your hands, about 10 minutes, so the free tool tests can start (both programs are installed, thank you). (1) Open Houdini 22 from the Start menu once; when it asks about a licence, pick 'Install my free Houdini Apprentice license', then close it. (2) Open Cascadeur from the Start menu once and sign in with your new account, then close it. (3) MetaTailor: make a free account on its site and install its free app (first link). FaceBuilder needs nothing from you: its 15-day trial starts when the session first runs it. Then tap Done.",
+   "links": [
+    {
+     "label": "MetaTailor (free account and app)",
+     "url": "https://www.metatailor.com/"
+    }
+   ],
+   "recommendation": "Done: the Houdini and Cascadeur tests you asked for can't start without the licence and sign-in.",
+   "options": [
+    [
+     "done",
+     "Done, all three (recommended)"
+    ],
+    [
+     "part",
+     "Done in part (say which in the note)"
     ]
    ],
    "state": "open"

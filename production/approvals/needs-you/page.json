@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 5 open · updated Wednesday 11 November, 17:27",
+ "kicker": "LEDGER · Needs you · 1 open · updated Wednesday 11 November, 18:10",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -10,131 +10,26 @@
  "sections": [
   {
    "kind": "need",
-   "key": "schedule-fifteen-minutes-2026-11-11",
-   "name": "Your hands, one minute at the PC: your 15-minute yes is in the rulings, but a scheduled run may not change its own schedule. In any Claude Code chat on this PC, type: 'Change the scheduled task ledger-daily-fresh-session to run every 15 minutes. In its prompt, replace the wait until minute 15 of the hour with: finish the piece, hand over, stop; and replace the full page reads with the filtered reads in the handover's standing ways.' Then tap Done.",
-   "links": [],
-   "recommendation": "Do it when next at the PC: until then sessions still start only hourly and the gaps stay.",
-   "added": "2026-11-11 12:49",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done, I typed it (recommended)"
-    ],
-    [
-     "later",
-     "Later"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "session-settings-2026-11-11",
-   "name": "Two waste cuts the session may not set itself, both for this project only. (1) A stop check: a session that ends its turn without handing over is sent back once to hand over (tested on real sessions). (2) never-used skills hidden in this project (about 2,000 tokens of reading saved at every start; his other work's skills stay); your other projects untouched. To allow both, type in any Claude Code chat on this PC: 'In ledger-local, add the Stop hook running python tools/stop_hook.py to .claude/settings.json, and hide the skills listed in production/research/token-audit/DAILY-2026-11-11.md in .claude/settings.local.json.' Then tap Done.",
-   "links": [],
-   "recommendation": "Yes, both: no session ends without a handover, and every start reads less.",
-   "added": "2026-11-11 12:49",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done, I typed it (recommended)"
-    ],
-    [
-     "no",
-     "No, leave settings as they are"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "houdini-cascadeur-accounts-2026-11-11",
-   "name": "Your hands, about 10 minutes, for the free tests you said yes to at 16:14. (1) Make a SideFX account (first link), then on the download page take Houdini 21 Apprentice and its launcher; (2) make a Cascadeur account (third link, Free plan's Get started). Tell nothing else; if an install is refused here, the exact line to type comes back to you. Known limits, to be confirmed in the tests: Apprentice runs Houdini Engine in Unreal only for paid licences and may not save to the formats Unreal reads; Cascadeur Free cannot export FBX (only its own format), so its results are judged inside Cascadeur, not in the game.",
+   "key": "tool-tests-first-start-2026-11-11",
+   "name": "Your hands, about 10 minutes, so the free tool tests can start (both programs are installed, thank you). (1) Open Houdini 22 from the Start menu once; when it asks about a licence, pick 'Install my free Houdini Apprentice license', then close it. (2) Open Cascadeur from the Start menu once and sign in with your new account, then close it. (3) MetaTailor: make a free account on its site and install its free app (first link). FaceBuilder needs nothing from you: its 15-day trial starts when the session first runs it. Then tap Done.",
    "links": [
     {
-     "label": "SideFX account",
-     "url": "https://www.sidefx.com/register/"
-    },
-    {
-     "label": "Houdini download",
-     "url": "https://www.sidefx.com/download/"
-    },
-    {
-     "label": "Cascadeur plans (Free: Get started)",
-     "url": "https://cascadeur.com/plans"
-    },
-    {
-     "label": "Cascadeur download",
-     "url": "https://cascadeur.com/download"
-    }
-   ],
-   "recommendation": "Done: both are free, test only, nothing made in them goes into the game.",
-   "added": "2026-11-11 17:25",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done, both accounts made (recommended)"
-    ],
-    [
-     "no",
-     "Not now"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "paid-tools-ruling-2026-11-11",
-   "name": "One tap to make it a standing ruling: any tool, paid or free, that would fix a standing problem (an open boss, a fault set aside, a try used up) reaches this page within a day as a decision with its cost, the expected gain and a recommendation; nothing waits in a research file as 'his decision'. Houdini and Cascadeur sat in research that way and never reached you.",
-   "links": [],
-   "recommendation": "Yes: you see every paid way out within a day, and you still decide every franc.",
-   "added": "2026-11-11 17:25",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "yes",
-     "Yes, make it a ruling (recommended)"
-    ],
-    [
-     "no",
-     "No"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "paid-tools-top-three-2026-11-11",
-   "name": "From today's sweep of tools our research left as 'your decision' (Houdini and Cascadeur already decided), the top three. Two can be tested free first: MetaTailor (fits a garment onto each MetaHuman body, the refit that took most of today for Sheila; free version, a few exports a month; Pro about US$35 a month) and KeenTools FaceBuilder (faces from photographs, for faces failing their casting sheets; 15-day free trial; US$20 a month). Both are licences outside your list and need accounts in your name (links below), tests only, nothing into the game unless you approve. The third costs money now: Marvelous Enterprise, US$199 for a month of unattended drapes, where today's layering test failed. The other 20 wait in a ranked list.",
-   "links": [
-    {
-     "label": "MetaTailor (free version)",
+     "label": "MetaTailor (free account and app)",
      "url": "https://www.metatailor.com/"
-    },
-    {
-     "label": "KeenTools FaceBuilder (15-day trial)",
-     "url": "https://keentools.io/products/facebuilder-for-blender"
     }
    ],
-   "recommendation": "Free tests of both, no money: they hit the two problems that cost us most hours.",
-   "added": "2026-11-11 17:42",
+   "recommendation": "Done: the Houdini and Cascadeur tests you asked for can't start without the licence and sign-in.",
+   "added": "2026-11-11 18:15",
    "pictures": [],
    "detail": [],
    "options": [
     [
-     "free",
-     "Free tests of both; I'll make the accounts (recommended)"
+     "done",
+     "Done, all three (recommended)"
     ],
     [
-     "free-and-mde",
-     "Those, and buy Marvelous Enterprise for a month"
-    ],
-    [
-     "none",
-     "None for now"
+     "part",
+     "Done in part (say which in the note)"
     ]
    ]
   }

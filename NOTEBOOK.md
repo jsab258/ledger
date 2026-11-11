@@ -2145,3 +2145,19 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Method: the importer refuses nothing that has no colour route, so a garment came in drawn with the file importer's own white; a selftest now fails any garment for the dressed person without maps, plain colours or materials.
 - Failed and why: found only in the packaged film; the import's own result line listed slots but nobody read them for colour.
 - Cost: about 0.5 h. Evidence: tools/ue/import_garments.py (plain_material), C:/LedgerTools/mh-assemble/import-garments.txt
+
+## Paid tools left in research files, swept and ranked (11 Nov 2026)
+- Made: a ranked list of every tool, service or licence our research had marked as the owner's money decision, matched to open problems; the top three put to him as one pick.
+- Method: grep the research, scans and audits for money words; merge per tool; check the owner's page history for each; rank by expected gain on an open problem against cost; before asking, read each vendor's current page: two of the three had free tiers or trials, which turned a money question into a free test.
+- Tools: one extraction helper (grep), the vendor pages read directly.
+- Target and check: every listed tool shows whether it ever reached him; the page item carries current prices.
+- Cost: about 0.5 h and one helper run. Failed and why: for six weeks tools sat as "his decision" because "no money without him" was read as "propose nothing that costs money"; now a ruling sends any fixing tool to him within a day.
+- Evidence: production/research/paid-tools-sweep-2026-11-11.md
+
+## A lofted trim band culled in the game; a layered garment poking through at a guard band (11 Nov 2026)
+- Made: a knit cardigan's two front bands both drawn in the packaged game; the shirt under it no longer through at the shoulders.
+- Method: a band lofted per side with one quad order faces opposite ways on the two sides; one-sided game materials cull the inward one. Orient every added face against the surface it lies on (dot of normals), and fail the build if any still oppose. For a trimmed under-layer, keep visible parts by mesh island (the collar's own islands), not by a height or distance guard, and measure the whole height range, guard included.
+- Tools: Blender headless (bmesh), the project's garment chain, the packaged game's close film.
+- Target and check: band faces against the knit = 0 (was 211 on one side); shoulder pokes past 15 cm from the centre 64 to 0; both bands seen in the packaged film.
+- Cost: about 1.2 h, both fixes passed at the first packaged try. Failed and why: Blender draws back faces, so its pictures never showed the culled band; a lift of the collar (try 1 on the collar faults) missed, since the shards are the cardigan's neckband above the collar, not under it.
+- Evidence: production/previews/sheila-held-film-2026-11-11b.jpg; production/research/clothing-pipeline/SHEILA-CARDIGAN-S4-2026-11-11.md
