@@ -620,3 +620,9 @@
 {"event": "stop", "at": "2026-11-11T06:46:07", "note": "Tom's page item up; jeans decided; evidence in F:/LedgerTools/gate/new/tom-films-2026-11-11-b"}
 {"event": "start", "at": "2026-11-11T06:46:09", "task": "texturing test: brick in the game, verdict", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-11T06:54:03", "note": "brick filmed and reviewed; verdict brick row done; handover written"}
+{"event": "start", "at": "2026-11-11T09:24:00", "task": "n09-6 Tom's surfaces try 3: painted colour maps", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T09:36:00", "note": ""}
+{"event": "start", "at": "2026-11-11T09:38:00", "task": "n09-9 launch check on every pass", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T09:42:00", "note": ""}
+{"event": "start", "at": "2026-11-11T09:43:30", "task": "n09-6 Tom's surfaces try 3: import and film", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T10:21:06", "note": "try 3 imported, reviewed, set aside; rows restored"}

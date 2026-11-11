@@ -1,0 +1,23 @@
+{
+  "view": "boots",
+  "verdict": "FAIL",
+  "changes": [
+    "Jeans: from flat plain blue cloth (before) to darker indigo with fine, dense, parallel vertical streaks over the whole leg; a tonal hem stitch line now visible on both hems.",
+    "Boot uppers: from matte dark-grey rubbery (before) to black, polished, with a fine pebble grain and toe creases; reads as leather at full size.",
+    "Sole edge: from matte dark (before) to a sole/welt carrying bright pale specular streaks along its upper lip, much as in the failed try 2."
+  ],
+  "new_faults": [
+    "Jeans read as pinstripe or wood-grain suit trousers: the vertical streaks are fine, evenly spaced, continuous and high-contrast, clearest on the left leg and both hem panels (crops at 600-950,500-820 and 1720-2120,700-980); no diagonal twill, no irregular slub, no denim weave visible. A wrong fabric is worse than the plain cloth seen this morning.",
+    "The glossy pale rim along the sole edge is still there: bright white highlight streaks run along the welt/sole lip on the left boot's inner side and the right boot's heel and outer side, contradicting the brief's matte sole and repeating the earlier fault."
+  ],
+  "known_shortfalls": [
+    "Boots still read as slip-ons or clogs: no laces, eyelets or tongue visible under the hems; the sole is a thick tray-like slab with a raised lip rather than a stitched welt.",
+    "Hems sit flat and stiff with a single clean edge; no denim hem roping, no fading at the fold, no break over the boot.",
+    "No contact shadow weight under the soles beyond the floor reflection; the boots look slightly placed rather than stood in."
+  ],
+  "boots_read_as": "polished leather uppers on a glossy rubber-tray sole",
+  "sole_rim": "A glossy pale rim is still visible along the sole's upper edge on both boots (strongest on the left boot's inner side and the right boot's heel), so the sole does not read matte.",
+  "jeans_read_as_denim": "no: the colour is indigo but the regular fine vertical lines read as pinstripe suiting or wood grain, not twill denim.",
+  "streaks_pattern_problem": "Yes: the slub streaks form an even, continuous pinstripe look across both legs, with no twill diagonal or irregularity to break it.",
+  "would_a_2026_game_ship_this": "No; the leather uppers would pass at a glance, but pinstriped 'jeans' and a shiny sole rim would not ship in a 2026 close-up."
+}

@@ -263,9 +263,21 @@ def packed_material(unreal, g, folder, lines):
     ds = node(unreal.MaterialExpressionMultiply, -950, 900)
     mel.connect_material_expressions(drg, "", ds, "A")
     mel.connect_material_expressions(strength, "", ds, "B")
+    # THE GRAIN KEPT OFF THE SOLE (11 November, Tom's boots, surfaces try 3): a leather grain tile over every slot read
+    # pale and grainy on the rubber sole's side, which is the tape part (0.5); "detail_off_tape" sets DetailOffTape to 1
+    # and the detail fades out there. Default 0, so every garment without it is drawn exactly as before.
+    off_tape = node(unreal.MaterialExpressionScalarParameter, -1100, 1100, parameter_name="DetailOffTape", default_value=0.0)
+    off_amt = node(unreal.MaterialExpressionMultiply, -950, 1050)
+    mel.connect_material_expressions(on_tape, "", off_amt, "A")
+    mel.connect_material_expressions(off_tape, "", off_amt, "B")
+    keep = node(unreal.MaterialExpressionOneMinus, -900, 1050)
+    mel.connect_material_expressions(off_amt, "", keep, "")
+    ds_kept = node(unreal.MaterialExpressionMultiply, -850, 950)
+    mel.connect_material_expressions(ds, "", ds_kept, "A")
+    mel.connect_material_expressions(keep, "", ds_kept, "B")
     sum_ = node(unreal.MaterialExpressionAdd, -800, 600)
     mel.connect_material_expressions(nrg, "", sum_, "A")
-    mel.connect_material_expressions(ds, "", sum_, "B")
+    mel.connect_material_expressions(ds_kept, "", sum_, "B")
     app = node(unreal.MaterialExpressionAppendVector, -650, 600)
     mel.connect_material_expressions(sum_, "", app, "A")
     mel.connect_material_expressions(nb, "", app, "B")
@@ -295,6 +307,10 @@ def packed_material(unreal, g, folder, lines):
     mi = unreal.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else tools.create_asset(
         mi_name, folder, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
     mel.set_material_instance_parent(mi, base)
+    # EVERY IMPORT STARTS FROM THE ROW ALONE (11 November): an existing instance kept the parameters an earlier import
+    # set (a detail tile, its strength, a variation), so a row restored without them still drew them; all overrides
+    # are cleared first and the row sets what it names
+    mel.clear_all_material_instance_parameters(mi)
     mel.set_material_instance_texture_parameter_value(mi, "ColourMap", colour)
     mel.set_material_instance_texture_parameter_value(mi, "PackedMap", packed)
     mel.set_material_instance_texture_parameter_value(mi, "NormalMap", normal)
@@ -327,7 +343,9 @@ def packed_material(unreal, g, folder, lines):
         mel.set_material_instance_texture_parameter_value(mi, "DetailNormal", detail)
         mel.set_material_instance_scalar_parameter_value(mi, "DetailTiling", float(maps.get("detail_tiling", 1.0)))
         mel.set_material_instance_scalar_parameter_value(mi, "DetailStrength", float(maps.get("detail_strength", 0.5)))
-        lines.append("  detail normal %s, %s repeats a UV unit, strength %s" % (detail.get_name(), maps.get("detail_tiling", 1.0), maps.get("detail_strength", 0.5)))
+        mel.set_material_instance_scalar_parameter_value(mi, "DetailOffTape", 1.0 if maps.get("detail_off_tape") else 0.0)
+        lines.append("  detail normal %s, %s repeats a UV unit, strength %s%s" % (detail.get_name(), maps.get("detail_tiling", 1.0), maps.get("detail_strength", 0.5),
+                                                                              ", kept off the tape part" if maps.get("detail_off_tape") else ""))
         mel.set_material_instance_texture_parameter_value(mi, "DetailRibNormal", rib or detail)
         mel.set_material_instance_scalar_parameter_value(mi, "DetailRibOn", 1.0 if rib is not None else 0.0)
         if rib is not None:

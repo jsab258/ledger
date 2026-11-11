@@ -179,31 +179,27 @@
     "top"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/jacket_cotton_colour.png",
+    "colour": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_colour_ao.png",
     "normal": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_normal_dx.png",
     "packed": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_packed.png",
     "tint": [
-     1.0,
-     1.0,
-     1.0
+     0.082,
+     0.107,
+     0.247
     ],
     "tapecolour": [
-     0.853,
-     0.709,
-     0.477
+     0.07,
+     0.076,
+     0.118
     ],
     "teethcolour": [
      0.56,
      0.56,
      0.58
-    ],
-    "detail": "F:/LedgerTools/garments/tom/surfaces-2026-11-11/stretch_poplin_nor_dx_1k.png",
-    "detail_tiling": 4.43,
-    "detail_strength": 2.0
+    ]
    },
    "handed": "2026-10-30",
-   "made": "Tom's zip jacket from Marvelous drape 19 with its cuffs built round his wrist in the bake (his order C9; tools/md/build_cuffs.py --edge-at-hand --gather; DECISIONS.md, 29 October), skinned again on 30 October as the jacket's own recipe says (skin_garment.py --piece-attr none --collar-attr piece:10 --keep-correctives): withdrawn on 29 October after holes and a right sleeve almost gone in the packaged game, it had been skinned without --piece-attr none, so its pattern piece 3, the right sleeve, was taken for a button and all its points given one averaged set of weights, and its export carried the flat pattern's UV layout first, so the game read the maps through it and the colour map's alpha cut holes. skin_garment.py now refuses a 'button' wider than 6 cm and puts the maps' layout first (uv_order.py). Every pose matches drape 19's (garment_pose_check.py); the editor's sit film passed a fresh reviewer. Maps from the built cuffs' bake. Known faults kept from drape 19: a small opening at the collar's front left of the zip seen standing, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour.",
-   "surface_why": "11 November 2026, try 3 of the surfaces (the one researched different method, RULINGS 7 Nov), after his look (no: boots read as rubber slippers, jacket no cloth texture, jeans no denim) and two failed tries with shared tiles: each garment's own colour map painted with its fabric's structure (tools/meshgen/paint_fabric_colour.py, its spec and record beside each map in F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/): denim as an indigo warp over a pale weft showing where the grey map's wear rises, slub and roping streaks along each pattern piece's grain in true mm, stonewash mottle, seams and hollows deep; cotton as a fine heather with the folds' and seams' crests faded; the tint white so the map carries the colour, its average kept at the colour he judged; no cloth shading or fuzz. Boots: the upper's polish (roughness 0.30) and leather grain in the boot's own packed map, the sole left at 0.81. The zip tape keeps its old colour: tapecolour is the old tape times the grey's median over the painted navy."
+   "made": "Tom's zip jacket from Marvelous drape 19 with its cuffs built round his wrist in the bake (his order C9; tools/md/build_cuffs.py --edge-at-hand --gather; DECISIONS.md, 29 October), skinned again on 30 October as the jacket's own recipe says (skin_garment.py --piece-attr none --collar-attr piece:10 --keep-correctives): withdrawn on 29 October after holes and a right sleeve almost gone in the packaged game, it had been skinned without --piece-attr none, so its pattern piece 3, the right sleeve, was taken for a button and all its points given one averaged set of weights, and its export carried the flat pattern's UV layout first, so the game read the maps through it and the colour map's alpha cut holes. skin_garment.py now refuses a 'button' wider than 6 cm and puts the maps' layout first (uv_order.py). Every pose matches drape 19's (garment_pose_check.py); the editor's sit film passed a fresh reviewer. Maps from the built cuffs' bake. Known faults kept from drape 19: a small opening at the collar's front left of the zip seen standing, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
   },
   {
    "who": "Tom",
@@ -213,18 +209,18 @@
     "lower"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/jeans_denim_colour.png",
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_colour_ao.png",
     "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_normal_dx.png",
     "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_packed.png",
     "tint": [
-     1.0,
-     1.0,
-     1.0
+     0.155,
+     0.262,
+     0.456
     ],
     "tapecolour": [
-     1.0,
-     1.0,
-     1.0
+     0.155,
+     0.262,
+     0.456
     ],
     "teethcolour": [
      0.56,
@@ -240,8 +236,7 @@
    "held_until": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
    "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next",
    "two_sided": true,
-   "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py).",
-   "surface_why": "11 November 2026, try 3 of the surfaces (the one researched different method, RULINGS 7 Nov), after his look (no: boots read as rubber slippers, jacket no cloth texture, jeans no denim) and two failed tries with shared tiles: each garment's own colour map painted with its fabric's structure (tools/meshgen/paint_fabric_colour.py, its spec and record beside each map in F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/): denim as an indigo warp over a pale weft showing where the grey map's wear rises, slub and roping streaks along each pattern piece's grain in true mm, stonewash mottle, seams and hollows deep; cotton as a fine heather with the folds' and seams' crests faded; the tint white so the map carries the colour, its average kept at the colour he judged; no cloth shading or fuzz. Boots: the upper's polish (roughness 0.30) and leather grain in the boot's own packed map, the sole left at 0.81."
+   "two_sided_why": "2 November: the packaged sit film showed a small hole behind the left knee as he sat (the cloth folding through itself, the body cut away under it); the back faces drawn too (tools/ue/import_garments.py)."
   },
   {
    "who": "Tom",
@@ -339,7 +334,7 @@
    "maps": {
     "colour": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_colour_ao.png",
     "normal": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/boots_packed_upper030.png",
+    "packed": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_packed_polished.png",
     "tint": [
      0.018,
      0.018,
@@ -354,10 +349,7 @@
      0.16,
      0.155,
      0.15
-    ],
-    "detail": "F:/LedgerTools/garments/tom/surfaces-2026-11-11/leather_red_03_nor_dx_1k.png",
-    "detail_tiling": 3.55,
-    "detail_strength": 2.5
+    ]
    },
    "held_until": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
    "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next",
@@ -432,8 +424,7 @@
      "held": "1 November: no change to the band, standing on the floor or lifted 6 mm; and the band shows under a drawn, solid stand-in too, so it belongs to the wet ground's coat at any contact, not to the boots (the shoes plan, its last section); kept, not laid"
     },
     "decal_note": "Held 30 October (30 October: a decal writing no shine under each half sole (L...); laid again 2 November, 3.25 cm past each half sole (4 cm read as a dark halo seen whole; 2.5 cm let an arc of the line back before the toes), for the ground's coat cut at contacts (his yes of 07:54 to one more try at the pale line; M_LedgerGround reads it through the decal buffer)."
-   },
-   "surface_why": "11 November 2026, try 3 of the surfaces (the one researched different method, RULINGS 7 Nov), after his look (no: boots read as rubber slippers, jacket no cloth texture, jeans no denim) and two failed tries with shared tiles: each garment's own colour map painted with its fabric's structure (tools/meshgen/paint_fabric_colour.py, its spec and record beside each map in F:/LedgerTools/garments/tom/surfaces-2026-11-11/painted/): denim as an indigo warp over a pale weft showing where the grey map's wear rises, slub and roping streaks along each pattern piece's grain in true mm, stonewash mottle, seams and hollows deep; cotton as a fine heather with the folds' and seams' crests faded; the tint white so the map carries the colour, its average kept at the colour he judged; no cloth shading or fuzz. Boots: the upper's polish (roughness 0.30) and leather grain in the boot's own packed map, the sole left at 0.81. The grain tile reaches the sole's side too (the material has no per-part detail); it shows little at 0.81."
+   }
   },
   {
    "who": "Rocco",

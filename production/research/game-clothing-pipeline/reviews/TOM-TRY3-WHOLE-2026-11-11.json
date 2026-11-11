@@ -1,0 +1,37 @@
+{
+  "view": "whole",
+  "picture": "F:/LedgerTools/gate/new/tom-surfaces-2026-11-11/try3/tom-whole-try3.jpg",
+  "compared_with": ["F:/LedgerTools/gate/new/tom-surfaces-2026-11-11/before/tom-whole-2026-11-11.jpg", "F:/LedgerTools/gate/new/tom-surfaces-2026-11-11/after/tom-whole-try2.jpg"],
+  "verdict": "PASS",
+  "verdict_note": "PASS only under the gate rule that new faults alone fail: nothing is worse than 'before'. His jacket complaint is NOT fixed (the jacket looks the same as this morning), so showing it to him as 'clothes up to the floor' would very likely draw the same remark about the jacket.",
+  "changes": [
+    "Jeans: the flat matte blue is now denim: a darker indigo with fine vertical streaks, whiskering and lighter wear on the thighs and fly, and a dark rolled hem. The mean colour of a leg patch is unchanged (about RGB 90,94,103 now against 89,93,103 before).",
+    "Boots: the dull grey-black matte has become a polished black leather with highlights, creases over the vamp and a thin welt line along the sole.",
+    "Jacket: no visible change at 2560x1440. The mean colour of a chest patch is RGB 28,29,44 now against 28,30,46 before. The speckle and faded fold crests cannot be seen, even at 4x enlargement.",
+    "Face, hair, hands, background and all four corners: unchanged. Pixel differences outside the figure are only noise (fewer than 100 pixels over the threshold)."
+  ],
+  "new_faults": [],
+  "known_shortfalls": [
+    "Jacket: still reads as smooth, untextured synthetic at eight metres and close up; no cloth weave, nap or speckle shows. This is his 'no cloth texture' complaint, carried over and not new.",
+    "Boots: the gloss is high and uniform, so they read nearer to wet patent or plastic than to worn street leather. The shape is still a low, laceless, rounded slipper-like last with a very thin sole, so the 'slipper' half of his complaint stays.",
+    "Boots: a thin pale specular line runs along the sole edge of both boots. It is small and dark-toned, not the glossy pale rim of try 2, but worth watching.",
+    "Jeans: close up, the vertical slub streaks are regular and even enough to read a little like pinstripe cloth rather than irregular denim slub. At eight metres they read as denim.",
+    "Jeans: the colour is a mid-to-dark greyish indigo. It is not the clear 'faded mid-blue' of a well-worn 1990 pair, though it is period-plausible for a newer pair.",
+    "A soft dark smear on the paving beside the left side of the right boot is in 'before' too (likely a contact shadow or reflection artefact); it is not new."
+  ],
+  "each_complaint": {
+    "boots_rubber": "better: they now read as polished black leather rather than grey rubber, but the gloss is plasticky and the slipper-like shape is unchanged.",
+    "jacket_no_cloth": "not fixed: the jacket looks the same as this morning, smooth navy with no visible cloth structure at any viewing distance.",
+    "jeans_no_denim": "fixed: streaks, whiskering and thigh wear make them read as denim both at eight metres and close up, though the streaks are a little too regular."
+  },
+  "colour_check": {
+    "jacket_still_navy": "yes: a deep navy, with no violet shift (unlike try 2).",
+    "jeans_faded_mid_blue": "partly: a mid-to-dark greyish indigo with lighter wear on the thighs; neither chalky nor pale like try 2, but darker and greyer than a clearly faded mid-blue."
+  },
+  "earlier_faults_watch": {
+    "chalky_pale_jeans": "absent",
+    "jacket_violet": "absent",
+    "glossy_pale_sole_rim": "absent as before; only a thin, dark-toned highlight line remains"
+  },
+  "would_a_2026_game_ship_this": "Not yet: the jeans would pass for background, but a shipping 2026 game would not put out a jacket with no cloth surface or boots that read as glossy slippers on a figure seen this close."
+}
