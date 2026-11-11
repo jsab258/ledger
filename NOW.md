@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (11 Nov, 09:45): Tom's surfaces try 3 painted (jeans denim, jacket cotton, boots polish), import waits for his launcher step; Sheila step 0 done, blouse with a helper; launch check on every picture pass; GarmentCode jacket in Marvelous (18 pieces, 35 seams).
+STATE (11 Nov, 12:51): Sheila's cardigan and shoes made (faults listed), her skirt as cloth under way (meshes and game code done, asset run next); Drape Studio on Tom's jacket and jeans next (advisor 100); his efficiency and 15-minute rulings in RULINGS.
 
 ## Handovers
 

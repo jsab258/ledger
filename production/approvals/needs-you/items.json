@@ -333,7 +333,8 @@
      "Spend about 4 hours this week on the real test with Tom's jumper"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered keep (12:33): carried garments stay; Epic's resizing tested in phase 5 for the crowd, cheapest route first"
   },
   {
    "id": "fifteen-minute-start-2026-11-11",
@@ -351,7 +352,8 @@
      "No, keep hourly"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered yes (12:28): RULINGS updated; the schedule itself needs his chat line (schedule-fifteen-minutes-2026-11-11)"
   },
   {
    "id": "efficiency-ruling-2026-11-11",
@@ -367,6 +369,43 @@
     [
      "edit",
      "Change the wording first"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered yes (12:28): RULINGS 11 Nov line replaces 5 and 7 Nov's, his words; DAILY file by 19:00"
+  },
+  {
+   "id": "schedule-fifteen-minutes-2026-11-11",
+   "added": "2026-11-11 12:49",
+   "text": "Your hands, one minute at the PC: your 15-minute yes is in the rulings, but a scheduled run may not change its own schedule. In any Claude Code chat on this PC, type: 'Change the scheduled task ledger-daily-fresh-session to run every 15 minutes. In its prompt, replace the wait until minute 15 of the hour with: finish the piece, hand over, stop; and replace the full page reads with the filtered reads in the handover's standing ways.' Then tap Done.",
+   "links": [],
+   "recommendation": "Do it when next at the PC: until then sessions still start only hourly and the gaps stay.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "later",
+     "Later"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "session-settings-2026-11-11",
+   "added": "2026-11-11 12:49",
+   "text": "Two waste cuts the session may not set itself, both for this project only. (1) A stop check: a session that ends its turn without handing over is sent back once to hand over (tested on real sessions). (2) never-used skills hidden in this project (about 2,000 tokens of reading saved at every start; his other work's skills stay); your other projects untouched. To allow both, type in any Claude Code chat on this PC: 'In ledger-local, add the Stop hook running python tools/stop_hook.py to .claude/settings.json, and hide the skills listed in production/research/token-audit/DAILY-2026-11-11.md in .claude/settings.local.json.' Then tap Done.",
+   "links": [],
+   "recommendation": "Yes, both: no session ends without a handover, and every start reads less.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "no",
+     "No, leave settings as they are"
     ]
    ],
    "state": "open"
