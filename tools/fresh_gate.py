@@ -9,7 +9,7 @@ WHY, 4 November 2026 (his ruling A2): "Replace the chaining with a recurring sch
 the last session has stopped and no LEDGER session has been active for 15 minutes; otherwise it ends at once, having
 read nothing else." The chaining of 3 November failed at 09:38 that morning: a scheduled run may not start another.
 
-WHAT IT CHECKS, cheaply, before the run reads anything: the Swiss time (no work from 00:45 to 05:10, the night's jobs);
+WHAT IT CHECKS, cheaply, before the run reads anything: the Swiss time (round the clock since 9 Nov; only the night walk, 01:40 until its report or 03:30, holds a run);
 the handover's "**Started:**" and "**Stopped:**" lines (the last session has stopped when Stopped is later); the
 project's own activity: the newest real turn (a user or assistant line with its timestamp) in any of the project's
 session logs and their helpers' logs, this run's own log left out (CLAUDE_CODE_SESSION_ID). A session that died
@@ -64,7 +64,6 @@ JOB_START = re.compile(rb'"backgroundTaskId": ?"([A-Za-z0-9]+)"')
 JOB_DONE = re.compile(rb'<task-id>([A-Za-z0-9]+)</task-id>')
 OWN_RUN_MIN = 10
 TAIL = 1 << 20
-ROUND_CLOCK_UNTIL = datetime.datetime(2026, 11, 9, 13, 0)
 WALK_HOLD_FROM, WALK_HOLD_UNTIL = 1 * 60 + 40, 3 * 60 + 30
 NIGHTLY = os.path.join(ROOT, "production", "playtest", "nightly")
 STAMP = re.compile(r"(\d{4}-\d\d-\d\d) (\d\d:\d\d)")
@@ -167,14 +166,13 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
 
 def decide(now, text, idle_min, walk_reported=False, job_running=False):
     hm = now.hour * 60 + now.minute
-    if now < ROUND_CLOCK_UNTIL:
-        # ROUND THE CLOCK until Monday's 13:00 (6 November, his yes on his page, whole-allowance-2026-11-06). Only the
-        # tester's walk stands everyone aside: the app's window takes the front from a working session and the walk then
-        # sends no keys (3 November, 07:20); a walk that lost its keys passes nothing. Its report, or 03:30, ends the wait.
-        if WALK_HOLD_FROM <= hm < WALK_HOLD_UNTIL and not walk_reported:
-            return "WAIT the night's walk has not reported: nothing runs beside it"
-    elif 45 <= hm < 5 * 60 + 10:
-        return "WAIT the night (00:45 to 05:10): no work"
+    # ROUND THE CLOCK, standing (his ruling of 9 November, RULINGS "the night: round the clock: only Unreal work and
+    # heavy local jobs pause for the night's build and walk; none stops"; the advisor's message 92, 11 November: the
+    # one-week branch that ended 9 Nov 13:00 brought the old 00:45 to 05:10 pause back). Only the tester's walk stands
+    # everyone aside: the app's window takes the front from a working session and the walk then sends no keys
+    # (3 November, 07:20); a walk that lost its keys passes nothing. Its report, or 03:30, ends the wait.
+    if WALK_HOLD_FROM <= hm < WALK_HOLD_UNTIL and not walk_reported:
+        return "WAIT the night's walk has not reported: nothing runs beside it"
     started, stopped = line_time(text, "Started"), line_time(text, "Stopped")
     if started is None or stopped is None:
         return "WAIT the handover has no Started or Stopped line: a session must set them"
@@ -225,7 +223,8 @@ def selftest():
         ("until Monday, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 7, 2, 15), h, 400), "WAIT the night's walk"),
         ("until Monday, the walk reported, 02:45: GO", decide(datetime.datetime(2026, 11, 7, 2, 45), h, 400, True), "GO"),
         ("until Monday, no report by 03:30: GO", decide(datetime.datetime(2026, 11, 7, 3, 30), h, 400), "GO"),
-        ("after Monday's 13:00, the night: WAIT", decide(datetime.datetime(2026, 11, 10, 2, 15), h, 400), "WAIT the night"),
+        ("after Monday's 13:00, the night, walk reported: GO (advisor 92)", decide(datetime.datetime(2026, 11, 10, 2, 15), h, 400, True), "GO"),
+        ("after Monday's 13:00, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 10, 2, 15), h, 400), "WAIT the night's walk"),
         ("after Monday's 13:00, 00:15 still works: GO", decide(datetime.datetime(2026, 11, 10, 0, 15), h, 40), "GO"),
         ("no lines: WAIT", decide(d, "nothing", 40), "WAIT"),
     ]
@@ -302,6 +301,16 @@ def selftest():
         ("a real turn 2 min ago counts", "%s" % (m4 is not None and m4 < 3), "True"),
         ("a helper's turn counts", "%s" % (m5 is not None and m5 < 4), "True"),
     ]
+    # Every minute from 00:45 to 05:10 on a day after the one-week branch: WAIT only inside the walk hold (advisor 92).
+    night_bad = []
+    for m in range(45, 5 * 60 + 10):
+        t = datetime.datetime(2026, 11, 12, m // 60, m % 60)
+        for rep in (False, True):
+            got = decide(t, h, 400, rep)
+            hold = WALK_HOLD_FROM <= m < WALK_HOLD_UNTIL and not rep
+            if got.startswith("WAIT") != hold:
+                night_bad.append("%02d:%02d" % (m // 60, m % 60))
+    cases.append(("no night WAIT outside the walk hold, 00:45 to 05:10", "none" if not night_bad else night_bad[0], "none"))
     bad = [n for n, got, want in cases if not got.startswith(want)]
     print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
     return 1 if bad else 0
