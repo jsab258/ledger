@@ -152,6 +152,30 @@ def legs_never_arrived(verdict):
     return dict(st, fired=bool(st.get("fires")))
 
 
+GAME_LOGS = "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/Logs"
+
+
+def cast_unmoved(since_ts, logs_dir=GAME_LOGS):
+    """11 Nov (the cast's bind pose, production/research/ron-apose/DIAGNOSIS-2026-11-11.md): a launcher update
+    dropped Epic's idle clips and the cast stood with arms out for two nights before a picture named it. The
+    game logs "LedgerCast: <who> has 0 part(s) that can speak" when no idle loaded on any part of a cast member;
+    any such line in a game log written since the walk began is named first in the report. Reports, never
+    fails a run; "fired" is kept so a month of silence can drop it (RULINGS 6 and 7 Nov, lean testing)."""
+    who = set()
+    for f in glob.glob(os.path.join(logs_dir, "*.log")):
+        try:
+            if os.path.getmtime(f) < since_ts:
+                continue
+            with open(f, encoding="utf-8", errors="replace") as fh:
+                for line in fh:
+                    m = re.search(r"LedgerCast: (\w+) has 0 part\(s\) that can speak", line)
+                    if m:
+                        who.add(m.group(1))
+        except OSError:
+            continue
+    return {"who": sorted(who), "fired": bool(who)}
+
+
 PERF_FILE = "production/d1-probe/ue-perf-verdict.txt"
 PERF_WORKFLOW = os.path.join(REPO, ".github", "workflows", "ledger-probe-unreal.yml")
 
@@ -325,6 +349,9 @@ def paragraph(rep, prev):
     parts = ["**The town and Tom (the AI tester's walk of %s, played as a player would, the stand-in's words):**" % rep["date"]]
     if s.get("stale_copy"):
         parts.append("**%s.**" % (s["stale_copy"][0].upper() + s["stale_copy"][1:]))
+    cu = s.get("cast_unmoved") or {}
+    if cu.get("who"):
+        parts.append("**The cast with no move at all (bind pose, no idle loaded): %s.**" % ", ".join(cu["who"]))
     parts.append("the route %d of %d stages%s." % (w["passed"], w["stages"], "" if not w["failed"] else "; failed: " + "; ".join(w["failed"][:2])))
     seen = s["noticed"]["saw_the_deed"]
     parts.append("Who saw him break Rita's window: %s." % (", ".join(seen) if seen else "nobody the record names"))
@@ -366,6 +393,7 @@ def report(date, night, since_ts, verdict, bench, eyes, at_ts=None):
     events = read_sessions(since_ts)
     summary = summarise(events, verdict, bench, eyes)
     summary["memory_peak"] = memory_peak(at_ts)
+    summary["cast_unmoved"] = cast_unmoved(since_ts)
     rep = {"date": date, "night": night, "events": len(events), "summary": summary}
     prev = previous(date)
     rep["paragraph"] = paragraph(rep, prev)
