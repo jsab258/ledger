@@ -1,11 +1,32 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Wednesday 11 November, 9:46",
+ "kicker": "LEDGER · Needs you · 1 open · updated Wednesday 11 November, 11:53",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "resizing-backbone-2026-11-11",
+   "name": "One tap. On 8 November you made Epic's resizable outfits the clothing backbone, to be decided by today's test. What was found: Epic's resizing is already in the game (the white base layer is Epic's own outfit fitted to each person), but it bakes an ordinary fixed garment per person, about the size of ours, and drops cloth movement (a skirt would not swing). Putting Tom's own jumper through it has no script route here; it needs a small piece of editor code first, about 4 hours, so that real test was not run. Pick one.",
+   "links": [],
+   "recommendation": "Keep our own garments, carried from body to body (it already works for Sheila: blouse and skirt in under an hour each), and try Epic's resizing later for the crowd, where one garment must fit dozens of people.",
+   "added": "2026-11-11 11:53",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "keep",
+     "Keep our garments; Epic's resizing later for the crowd (recommended)"
+    ],
+    [
+     "test",
+     "Spend about 4 hours this week on the real test with Tom's jumper"
+    ]
+   ]
+  }
+ ]
 }

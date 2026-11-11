@@ -2093,3 +2093,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Lesson kept: a check script must read every face-index form the file format allows (relative OBJ indices), or a tool is blamed for the reader's fault; and when a tool's checks change to a share of edges, report the worst edge too, or a few badly stretched edges pass unseen.
 - Tools: the tool's own runner, Blender 5.2.2 (check, pictures, FBX open). Target and check: hang height, cloth inside and body through, stretched edges against the reference drape. Cost: about 0.4 h, no helpers.
 - Evidence: production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-11.md, production/previews/drapestudio-jumper-2026-11-11.jpg.
+
+## A vendor's resizing route judged on what it already does (11 November 2026, verdict reached, his choice open)
+- Made: a verdict on whether an engine's build-time garment resizing should be the clothing backbone, from the engine's own source (what scripts can and cannot reach), its own already-built output in our project (size, detail levels, simulation kept or not) and our own carry route's measured times.
+- Method: before building a test rig, look for the route already running in the project (here the base layer was the vendor's resizable outfit, fitted per person at build time); read the output's numbers with a read-only commandlet; map script reach file by file; send the verdict to one fresh reviewer against its sources.
+- Lessons kept: a reviewer can be wrong against the project's own evidence (a call it called C++-only had been used from script in September); say plainly when the test a decision was tied to was not run, and put the choice to its owner.
+- Tools: tools/ue/resize_probe.py (commandlet). Cost: about 1.2 h, two helpers. Failed: vertex counts per detail level did not read in a commandlet (two tries).
+- Evidence: production/research/clothing-pipeline/RESIZING-VERDICT-2026-11-11.md.

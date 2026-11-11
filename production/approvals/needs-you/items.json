@@ -1373,6 +1373,24 @@
    ],
    "state": "done",
    "closed": "2026-11-11 09:23, answered yes (09:06): 29 old review folders deleted, 6.3 GB, F: back to 24.6 GB free; each logged"
+  },
+  {
+   "id": "resizing-backbone-2026-11-11",
+   "added": "2026-11-11 11:53",
+   "text": "One tap. On 8 November you made Epic's resizable outfits the clothing backbone, to be decided by today's test. What was found: Epic's resizing is already in the game (the white base layer is Epic's own outfit fitted to each person), but it bakes an ordinary fixed garment per person, about the size of ours, and drops cloth movement (a skirt would not swing). Putting Tom's own jumper through it has no script route here; it needs a small piece of editor code first, about 4 hours, so that real test was not run. Pick one.",
+   "links": [],
+   "recommendation": "Keep our own garments, carried from body to body (it already works for Sheila: blouse and skirt in under an hour each), and try Epic's resizing later for the crowd, where one garment must fit dozens of people.",
+   "options": [
+    [
+     "keep",
+     "Keep our garments; Epic's resizing later for the crowd (recommended)"
+    ],
+    [
+     "test",
+     "Spend about 4 hours this week on the real test with Tom's jumper"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
