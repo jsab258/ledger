@@ -38,3 +38,8 @@ Fresh venv (venv-1109, Python 3.10.6, 264 MB). The 8 Nov licence-checked package
 - For: MIT core; exact sizes in seconds; seams described; output fits our proven Marvelous script route.
 - Against: no openings, zips, pockets or yokes, so each period garment needs its own panel code; lengths are body fractions, so we need mm wrappers.
 - Next: one bridge run of md_job_workjacket.py, then write_pattern.py, to see the seams arrive untwisted.
+
+## Bridge run, 11 November 2026 (09:34)
+- md_job_workjacket.py run through the bridge (a copy with its output folder set, md_job_workjacket_out.py; the generated job had OUT empty and wrote nothing back): 18 pieces made in 3.5 s, none refused. write_pattern.py: 35 seam groups, 35 pairs, none turned. Imported back into a new project: 18 patterns, 35 groups, 35 of 35 pairs kept (md_job_import_sewn.py). Files: F:/LedgerTools/garmentcode-lab/lab/out1109/workjacket/md-out.
+- Length mismatches: body to waistband 30.8% (back) and 15.5% (front), cuff to sleeve 1.1%; the band's gathering is by design for a blouson only if the plan meant it: unverified.
+- Not yet seen: whether any seam arrives twisted (needs a drape on the avatar, the next step), and the generator's fix to write OUT itself.

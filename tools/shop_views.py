@@ -46,6 +46,8 @@ def run(out, night, shop, extra):
     cmd = command(night, shop, extra)
     line = " ".join('"%s"' % x if " " in x and '"' not in x else x for x in cmd)
     open(os.path.join(out, "command.txt"), "w", encoding="utf-8").write(line + "\n")
+    import launch_line_check  # the launch judged on every pass (n09-9): launch.txt beside command.txt
+    print("launch: " + launch_line_check.stamp(out, line))
     t0 = time.time()
     g = subprocess.Popen(line, cwd=REPO, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:

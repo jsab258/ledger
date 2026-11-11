@@ -2072,3 +2072,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - What failed and why: fuzz three times the cloth colour read as felt; fuzz equal to it still lifted the jeans to a chalky pale blue and the jacket from navy to violet (cloth shading adds its sheen on top, so the base must be darker to keep the colour); the weave tile is too fine to read beyond arm's length, and a scan's own variation is too faint to say "denim"; leather gloss worked, but one material over every slot made the sole glossy too. Denim and cotton read by colour structure (twill diagonal, indigo against pale weft, fades at wear points, tonal topstitching), which lives in the garment's own colour map, not in a shared tile. Leather needs the sole on its own values.
 - Evidence: F:/LedgerTools/gate/new/tom-surfaces-2026-11-11 (before, after, review.json); production/research/game-clothing-pipeline/MAFIA-CLOTH-SURFACES-2026-11-11.md.
 - A startup trap found on the way: a shared material whose empty mask slot defaults to a colour texture fails to compile whenever a garment without that mask is imported last; linear placeholder masks of one's own fix it.
+
+## Every pass says how it was launched (11 November 2026, finished)
+- Made: each picture-taking tool writes its launch verdict (player's game, player's game plus watch-only switches, or a test launch naming its switches) beside the command line it ran, so whoever judges the pictures sees it without asking.
+- Method: one shared judge of launch lines; a one-line stamp call wherever a tool writes its command line; walks and the night report already used the same judge.
+- Tools: tools/launch_line_check.py (stamp), office_look.py, shop_views.py, street_views.py. Target: every pass's folder carries launch.txt; check: the judge's selftest (16 of 16) and a stamp on a sample line.
+- Cost: about 0.3 h. Failed on the way: a shell heredoc dropped a backslash in a scripted patch, caught by the patch's own count check; patched by exact edits instead.
+- Evidence: production/orders/2026-11-09.md, n09-9's 11 Nov line.

@@ -111,6 +111,17 @@ def describe(line):
     return v + (" (" + "; ".join(notes) + ")" if notes else "")
 
 
+def stamp(out_dir, line):
+    """Every pass's launch judged where its pictures are kept (11 Nov, n09-9: the launch check on every pass): writes
+    launch.txt beside command.txt with the verdict sentence and returns it, so a reviewer or a page item reading the
+    folder sees at once whether the pictures came from the player's game or a test launch."""
+    import os
+    s = describe(line)
+    with open(os.path.join(out_dir, "launch.txt"), "w", encoding="utf-8") as f:
+        f.write(s + "\n")
+    return s
+
+
 def selftest():
     cases = [
         ("a plain double-click", "", "PLAYER"),

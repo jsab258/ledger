@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (11 Nov, 06:49): Tom as one whole person on his page (n09-2), waiting for his look; the cast's bind pose fixed by a fallback idle (packaged logs), tonight's walk to confirm, the launcher content his to restore; the texturing test's jeans decided (ours stays), brick to his look, timber and crate this evening.
+STATE (11 Nov, 09:45): Tom's surfaces try 3 painted (jeans denim, jacket cotton, boots polish), import waits for his launcher step; Sheila step 0 done, blouse with a helper; launch check on every picture pass; GarmentCode jacket in Marvelous (18 pieces, 35 seams).
 
 ## Handovers
 
