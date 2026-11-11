@@ -630,3 +630,7 @@
 {"event": "stop", "at": "2026-11-11T19:04:00", "note": "Sheila collar faults c/d try 2: cardigan neck cut, collar lift both islands, seen blouse body cut, import"}
 {"event": "start", "at": "2026-11-11T19:41:00", "task": "n09-6", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-11T19:46:00", "note": "Sheila collar try 2 filmed packaged: c pass, d set aside"}
+{"event": "start", "at": "2026-11-11T20:27:00", "task": "texture test: the crate's offline chain (TextureCraft repaint and wear)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T20:38:00", "note": ""}
+{"event": "start", "at": "2026-11-11T20:21:00", "task": "advisor 112: progress page for phase 2", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T20:26:00", "note": ""}

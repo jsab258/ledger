@@ -3,7 +3,7 @@
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-11 20:21 (hourly run)
-**Stopped:** 2026-11-11 20:01 (item ended with pace over 6 ahead and history past its point; no job, helper or game running)
+**Stopped:** 2026-11-11 20:39 (pace +7.1 ahead, over 6: nothing new and heavy; no job, helper or game running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -25,15 +25,14 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 11 Nov, 18:52 to 20:01
-- His taps acted on (tool tests, launcher ruling); page 0 open; advisor 107 to 111 and "eff" acked.
-- Sheila's collar, try 2 of 2: cardigan cut under the collar top (chain3n), both collar islands lifted 2.5 mm (try 1 lifted only the stand), seen blouse body beside the collar cut (blouse v4, trim4.py). Imported, pushed 319e1106, built e82fe35, filmed 19:44 (MouthFilm-close-1111d, preview sheila-held-film-2026-11-11c.jpg): (c) shards PASS; (d) NOT: the knit shows through the collar fall in strips at both shoulders (the lift reached only points within 12 mm; some 17 mm under). Set aside, in FINDINGS. Routes after the paid-tools check: MetaTailor free, a Marvelous drape.
-- Houdini step 0 (PLAN-2026-11-11.md): Vellum cooks headless, OBJ out; Alembic and FBX refused on Apprentice; 22 tried first for grooms (DECISIONS). Cascadeur: its script server (127.0.0.1:8765) starts from its menu; a startup event script could start it (DECISIONS first).
-- Texturing VERDICT and MAP corrected (Fab by the launcher). Pushed 831280295.
+## Run on 11 Nov, 20:21 to 20:40
+- Advisor 112 (his pick A, 20:18): progress page republished (version 42): phase 2's five bosses with routes, phase 1's in one closed line, five efficiency bosses (targets proposed), phase 2 hours to go (447 to 764 h, 9 Nov; next point Monday), tools in test. The live data had been 9 Nov morning's: keep it published nightly. Acked, row written, pushed 4e4b4c2dd.
+- The crate's offline chain done (VERDICT-2026-11-11.md, last section; F:/LedgerTools/texture-tools/crate): scan cut to 1024, TextureCraft green paint at 0.6 over the scan, edge wear (timber recipe) and dirt at 0.8, maps in out1024/; repeatable. Traps: dirt 0.5 shows nothing; paint at full opacity reads as plastic.
+- Space checked for tonight: C 58.6, F 25.3 GB, GO. Page and advisor: nothing new to 20:38. Stopped at +7.1 ahead (38% at 20:38).
 
 ## Next, in order
-1. FIRST: pace (stopped at +6.4: over 6 ahead, nothing new and heavy until back within 6), page verdicts (UTC filter after 19:00Z), advisor after 20:00 (Swiss).
-2. His five Megascans downloads (F:/LedgerTools/game-inputs/fab-megascans/VaultCache/FabLibrary: Brick_Wall_Worn, Flaked_Paint_Wall, three Leakage decals as glTF; Industrial_Junkyard_Crate_Metal and Wooden_Storage_Box as FBX, 4K jpg maps): import by the asset-import skill's scripts (check import_prop_meshes.py, glb_texture_settings.py first), then the prop chain beside today's method (texture-pipeline MAP section on the crate: TextureCraft repaint and wear, maps to 1024).
+1. FIRST: pace (stopped at +7.1: nothing new and heavy until back within 6), page verdicts (UTC filter after 19:38Z), advisor after 20:20 (Swiss).
+2. The crate in Unreal beside the scan as it comes (FBX at F:/LedgerTools/texture-tools/crate/in/crate.fbx, maps out1024/ and as-it-comes/; no generic prop importer: import_cap.py's FbxImportUI pattern into a test path, editor pictures as screens), one small reviewer, card memory in a packaged walk. Then the other four downloads (brick, flaked paint, three Leakage decals, the wooden box) by the brick's and timber's existing tests.
 3. Tool tests (PLAN-2026-11-11.md): Houdini Vellum test 2 (Tom's jumper against Marvelous, OBJ frames); MetaTailor (advisor 110: Sheila's blouse and cardigan carried from Tom's beside ours, same checks, time, clicks needed) once his account exists (check first; if not, a page item); Cascadeur tests 4 and 5 after deciding how its script server starts.
 4. Sheila (d): only the 7 Nov rule's one different method (MetaTailor or a Marvelous drape); then a fresh final reviewer and her page as a whole person, fault listed.
 5. Advisor "eff" (19:45) for tomorrow's DAILY file: row 1 split by each gap over 5 minutes with its cause, window to 19:00 (if handover waits pass 30 minutes a day, research an immediate next start, one tap with exact lines); pictures read (under 120 on a garment day, contact sheets of four frames at about 1600 px for helpers); shell reading tokens beside today's 238,000 in 398 calls (a one-tap guard if not down a third).
