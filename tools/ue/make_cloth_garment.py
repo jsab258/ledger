@@ -257,6 +257,14 @@ def main_after_idle(seconds=20.0):
         if sim is None or skinned is None:
             return
         slot_materials(sim, dest, src, name)
+        render = sim
+        # A COARSE SIMULATION MESH (11 Nov, Sheila's skirt): NAME_sim.fbx beside the others, if there, is what the cloth
+        # simulates and the static mesh only renders; the template's graph has no ProxyDeformer node, and with none the
+        # render mesh is fully deformed by the simulation mesh (ProxyDeformerNode.h, the v3 node's comment, 5.8.2).
+        coarse = os.path.join(src, name + "_sim.fbx")
+        if os.path.isfile(coarse):
+            sim = import_fbx(coarse, dest, "SM_" + name + "_SIM") or render
+            log("simulation mesh: %s" % sim.get_path_name())
         write_layer(sim, top, hem)
         lib = unreal.EditorAssetLibrary
         # LEDGER_CLOTH_FIXED=1 (11 Nov, Sheila's skirt route): fixed names a garment row can name, the old pair
@@ -277,7 +285,7 @@ def main_after_idle(seconds=20.0):
         inst.set_editor_property("dataflow_asset", df)
         ca.set_editor_property("dataflow_instance", inst)
         del_ = unreal.DataflowEditorBlueprintLibrary
-        settings = (("StaticMesh_Render", "StaticMesh", sim.get_path_name()),
+        settings = (("StaticMesh_Render", "StaticMesh", render.get_path_name()),
                     ("StaticMesh_SIM", "StaticMesh", sim.get_path_name()),
                     ("TransferSkinWeights", "SkeletalMesh", skinned.get_path_name()),
                     ("TransferSkinWeights", "TransferMethod", "ClosestPointOnSurface"),
