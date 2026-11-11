@@ -2161,3 +2161,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: band faces against the knit = 0 (was 211 on one side); shoulder pokes past 15 cm from the centre 64 to 0; both bands seen in the packaged film.
 - Cost: about 1.2 h, both fixes passed at the first packaged try. Failed and why: Blender draws back faces, so its pictures never showed the culled band; a lift of the collar (try 1 on the collar faults) missed, since the shards are the cardigan's neckband above the collar, not under it.
 - Evidence: production/previews/sheila-held-film-2026-11-11b.jpg; production/research/clothing-pipeline/SHEILA-CARDIGAN-S4-2026-11-11.md
+
+## A cut-out under-layer's collar ragged and the over-layer's neckband through it (11 Nov 2026)
+- Made: a knit cardigan's neck edge ended under a shirt collar; the collar laid over the knit instead of through it.
+- Method: measure first where the outer garment rises above the collar's top per angular sector round the neck, and cut those faces a few mm under it (then any slivers the cut leaves). Lift every point of the collar's islands that lies under the outer garment to a small clearance over it, smoothing the lift. Then cut what the camera's directions still see of the under-layer's body beside the collar, by rays, and check the rays' skin hits did not rise (no hole). Pick islands by their own test, never "all but the largest": the largest island here was the collar fall, and try 1 lifted only the stand.
+- Tools: Blender headless (bmesh, BVH rays), the garment importer.
+- Target and check: outer points above the collar 102 to 0; under-layer body first hits beside the collar 983 to 9; skin hits unchanged; the packaged close film.
+- Cost: about 0.3 h. Failed and why: try 1 (a lift) chose islands by size and missed the fall; and it was judged with the shards still there.
+- Evidence: production/research/clothing-pipeline/SHEILA-CARDIGAN-S4-2026-11-11.md (try 2)

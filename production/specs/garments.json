@@ -128,7 +128,7 @@
   {
    "who": "Lena",
    "name": "SheilaCardigan",
-   "fbx": "F:/LedgerTools/garments/sheila/cardigan-s4-2026-11-11/chain3/skinned/sheila_cardigan_s4_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/sheila/cardigan-s4-2026-11-11/chain3n/skinned/sheila_cardigan_s4_skinned.fbx",
    "hides": [
     "top"
    ],
@@ -164,7 +164,7 @@
   {
    "who": "Lena",
    "name": "SheilaBlouse",
-   "fbx": "F:/LedgerTools/garments/sheila/blouse-under-cardigan-2026-11-11/v2/sheila_blouse_under_cardigan_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/sheila/blouse-under-cardigan-2026-11-11/v4/sheila_blouse_under_cardigan_skinned.fbx",
    "hides": [],
    "handed": "2026-11-11",
    "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",

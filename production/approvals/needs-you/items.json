@@ -520,6 +520,25 @@
      "Done in part (say which in the note)"
     ]
    ],
+   "state": "done",
+   "closed": "2026-11-11 18:53, done (18:34): Houdini Apprentice licence confirmed by hython 18:53; Cascadeur and MetaTailor checked at their tests"
+  },
+  {
+   "id": "launcher-fab-clicks-ruling-2026-11-11",
+   "added": "2026-11-11 18:55",
+   "text": "A ruling, one tap, to save your hands (your pick A in chat, 18:24): the builder alone, never a helper, may also click in the Epic Games Launcher (already signed in) and on fab.com in your Chrome, only to (1) download items already in your Fab library, (2) press 'Add to My Library' on free items an adopted order names, (3) install Unreal engine updates and optional components (never the debugging symbols). Never buy, sign in, create accounts, accept paid terms or change account settings; each use one line in DECISIONS.",
+   "links": [],
+   "recommendation": "Yes: the phase 2 props batch and later launcher steps then need nothing from you.",
+   "options": [
+    [
+     "yes",
+     "Yes, as worded (recommended)"
+    ],
+    [
+     "no",
+     "No, I keep doing the launcher steps"
+    ]
+   ],
    "state": "open"
   }
  ]
