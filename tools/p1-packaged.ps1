@@ -99,6 +99,9 @@ foreach ($m in $matrix) {
   $a += $GameArgs   # -GameArgs: the game's own switches for a variant (-RoomShadowsAll, the old room shadows)
   $t0 = Get-Date
   $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$label.log" -RedirectStandardError "$tmp\$label.err"
+  # THE LAUNCH JUDGED BESIDE EACH CAPTURE (11 Nov, n09-9): the verdict on the switches this capture gave the game, so a
+  # reader of the folder sees whether its numbers came from the player's game or a test launch
+  (& $py tools/launch_line_check.py --line ($a -join " ")) | Set-Content "$tmp\$label-launch.txt" -Encoding utf8
   $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py|pocket-server.py" } | ForEach-Object { $_.ProcessId })
   # the game the launcher starts, found by its path (up to a minute)
   $p = $null
