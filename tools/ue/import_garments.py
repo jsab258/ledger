@@ -83,6 +83,7 @@ def packed_material(unreal, g, folder, lines):
     # DetailRibOn, so instances made before it (off by default) are drawn as they were
     rib = texture(maps["detail_rib"], "T_%s_DetailRib_Normal" % g["name"], "normal") if maps.get("detail_rib") and detail else None
     wear_mask = texture(maps["wear_mask"], "T_%s_Wear_Mask" % g["name"], "packed") if maps.get("wear_mask") else None
+    vary = texture(maps["detail_vary"], "T_%s_Detail_Vary" % g["name"], "packed") if maps.get("detail_vary") else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
@@ -130,8 +131,36 @@ def packed_material(unreal, g, folder, lines):
         return sat
 
     on_tape, on_teeth = is_part(0.5, -100), is_part(0.75, 0)
+    # A CLOTH'S COLOUR AND SHEEN AS A TILING VARIATION (11 November, his look at Tom: "the jacket has no cloth texture, the
+    # jeans no denim, the boots read as rubber"): a normal tile alone averages flat beyond arm's length, so "detail_vary"
+    # names a tiling mask on the detail's tiling (R the cloth's colour variation about 0.5, G its roughness), drawn by
+    # VaryColour (cloth colour times lerp(1, 2R, VaryColour)) and VaryRough (roughness lerp(packed R, G, VaryRough)); both
+    # nil by default, so every garment without it is drawn exactly as before
+    uv0 = node(unreal.MaterialExpressionTextureCoordinate, -1900, -1300)
+    vtile = node(unreal.MaterialExpressionScalarParameter, -1900, -1200, parameter_name="DetailTiling", default_value=1.0)
+    vuv = node(unreal.MaterialExpressionMultiply, -1750, -1250)
+    mel.connect_material_expressions(uv0, "", vuv, "A")
+    mel.connect_material_expressions(vtile, "", vuv, "B")
+    grey = unreal.load_asset("/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture")
+    vm = node(unreal.MaterialExpressionTextureSampleParameter2D, -1600, -1250, parameter_name="DetailVary", texture=vary or grey,
+              sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
+    mel.connect_material_expressions(vuv, "", vm, "UVs")
+    vary_c = node(unreal.MaterialExpressionScalarParameter, -1400, -1350, parameter_name="VaryColour", default_value=0.0)
+    two_r = node(unreal.MaterialExpressionMultiply, -1400, -1250, const_b=2.0)
+    mel.connect_material_expressions(vm, "R", two_r, "A")
+    vlerp = node(unreal.MaterialExpressionLinearInterpolate, -1250, -1300, const_a=1.0)
+    mel.connect_material_expressions(two_r, "", vlerp, "B")
+    mel.connect_material_expressions(vary_c, "", vlerp, "Alpha")
+    cloth_v = node(unreal.MaterialExpressionMultiply, -650, -450)
+    mel.connect_material_expressions(cloth, "", cloth_v, "A")
+    mel.connect_material_expressions(vlerp, "", cloth_v, "B")
+    vary_r = node(unreal.MaterialExpressionScalarParameter, -1400, -1150, parameter_name="VaryRough", default_value=0.0)
+    rlerp = node(unreal.MaterialExpressionLinearInterpolate, -1100, -1150)
+    mel.connect_material_expressions(p, "R", rlerp, "A")
+    mel.connect_material_expressions(vm, "G", rlerp, "B")
+    mel.connect_material_expressions(vary_r, "", rlerp, "Alpha")
     l1 = node(unreal.MaterialExpressionLinearInterpolate, -400, -350)
-    mel.connect_material_expressions(cloth, "", l1, "A")
+    mel.connect_material_expressions(cloth_v, "", l1, "A")
     mel.connect_material_expressions(tapec, "", l1, "B")
     mel.connect_material_expressions(on_tape, "", l1, "Alpha")
     l2 = node(unreal.MaterialExpressionLinearInterpolate, -250, -350)
@@ -187,7 +216,16 @@ def packed_material(unreal, g, folder, lines):
     mel.connect_material_expressions(dirt_c, "", l4, "B")
     mel.connect_material_expressions(dirt_on, "", l4, "Alpha")
     mel.connect_material_property(l4, "", unreal.MaterialProperty.MP_BASE_COLOR)
-    mel.connect_material_property(p, "R", unreal.MaterialProperty.MP_ROUGHNESS)
+    mel.connect_material_property(rlerp, "", unreal.MaterialProperty.MP_ROUGHNESS)
+    # A CLOTH'S SHEEN (11 November, the same look): the engine's cloth shading, its fuzz colour and amount as parameters;
+    # the shared material stays default-lit, where these pins are ignored, and a row asking "shading": "cloth" switches
+    # its own instance (MaterialInstanceBasePropertyOverrides.h, bOverride_ShadingModel), so no other garment changes
+    fuzz = node(unreal.MaterialExpressionVectorParameter, -400, -900, parameter_name="FuzzColour",
+                default_value=unreal.LinearColor(0.5, 0.5, 0.5, 1.0))
+    cloth_amt = node(unreal.MaterialExpressionScalarParameter, -400, -800, parameter_name="ClothAmount", default_value=0.0)
+    # under cloth shading the engine reads Fuzz Color from the subsurface colour pin and Cloth from custom data 0
+    mel.connect_material_property(fuzz, "", unreal.MaterialProperty.MP_SUBSURFACE_COLOR)
+    mel.connect_material_property(cloth_amt, "", unreal.MaterialProperty.MP_CUSTOM_DATA0)
     mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
     mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
     flat = unreal.load_asset("/Engine/EngineMaterials/FlatNormal.FlatNormal")
@@ -268,6 +306,16 @@ def packed_material(unreal, g, folder, lines):
         mi.set_editor_property("base_property_overrides", ov)
         if g.get("two_sided"):
             lines.append("  two-sided (its own instance's override)")
+        cloth_on = g.get("shading") == "cloth"
+        ov.set_editor_property("override_shading_model", cloth_on)
+        if cloth_on:
+            ov.set_editor_property("shading_model", unreal.MaterialShadingModel.MSM_CLOTH)
+        mi.set_editor_property("base_property_overrides", ov)
+        if cloth_on:
+            fr, fg, fb = maps.get("fuzz", maps["tint"])
+            mel.set_material_instance_vector_parameter_value(mi, "FuzzColour", unreal.LinearColor(fr, fg, fb, 1.0))
+            mel.set_material_instance_scalar_parameter_value(mi, "ClothAmount", float(maps.get("cloth_amount", 1.0)))
+            lines.append("  cloth shading (its own instance's override): fuzz %s, amount %s" % (maps.get("fuzz", maps["tint"]), maps.get("cloth_amount", 1.0)))
     except Exception as e:
         lines.append("  two-sided override refused: %r" % e)
     if detail is not None:
@@ -279,6 +327,13 @@ def packed_material(unreal, g, folder, lines):
         mel.set_material_instance_scalar_parameter_value(mi, "DetailRibOn", 1.0 if rib is not None else 0.0)
         if rib is not None:
             lines.append("  rib detail normal %s on the rib part (0.25)" % rib.get_name())
+    if vary is not None:
+        # the variation shares the detail's tiling (DetailTiling), set here too for a row with a variation and no normal tile
+        mel.set_material_instance_texture_parameter_value(mi, "DetailVary", vary)
+        mel.set_material_instance_scalar_parameter_value(mi, "DetailTiling", float(maps.get("detail_tiling", 1.0)))
+        mel.set_material_instance_scalar_parameter_value(mi, "VaryColour", float(maps.get("vary_colour", 1.0)))
+        mel.set_material_instance_scalar_parameter_value(mi, "VaryRough", float(maps.get("vary_rough", 1.0)))
+        lines.append("  variation %s: colour %s, roughness %s, %s repeats a UV unit" % (vary.get_name(), maps.get("vary_colour", 1.0), maps.get("vary_rough", 1.0), maps.get("detail_tiling", 1.0)))
     if wear_mask is not None:
         w = maps.get("wear", {})
         mel.set_material_instance_texture_parameter_value(mi, "WearMap", wear_mask)

@@ -1319,16 +1319,56 @@
    "text": "Tom as one whole person, for your look (this week's order, item 2). Shortfalls first: his boots read soft, almost like slippers, from the side, with no laces seen; he perches on the front edge of the bench; in an about-turn from standing his trailing shoe keeps pointing the old way for a few frames; one frame of skin shows at his right hip as he sits (not in the film below); his jeans hang as stiff tubes at the hem. Nothing else was found: no clipping, no skin at neck, chest or wrists, no pops. Three stills by day (whole, close as in talk, his boots), then two short films from the packaged game: standing, turning and breaking into a run, and sitting on the office bench (cropped to him). Fresh reviewers checked every frame.",
    "links": [],
    "pictures": [
-    {"src": "production/approvals/needs-you/pictures/tom-whole-2026-11-11.jpg", "alt": "Tom, whole, in the street by day"},
-    {"src": "production/approvals/needs-you/pictures/tom-close-2026-11-11.jpg", "alt": "Tom, close, as in talk"},
-    {"src": "production/approvals/needs-you/pictures/tom-boots-2026-11-11.jpg", "alt": "Tom's boots and jeans"},
-    {"src": "production/approvals/needs-you/pictures/tom-walk-2026-11-11.webp", "alt": "Film: Tom stands, turns and breaks into a run (side-on, knee height)"},
-    {"src": "production/approvals/needs-you/pictures/tom-sit-2026-11-11.webp", "alt": "Film: Tom sitting on the office bench (cropped to him)"}
+    {
+     "src": "production/approvals/needs-you/pictures/tom-whole-2026-11-11.jpg",
+     "alt": "Tom, whole, in the street by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-close-2026-11-11.jpg",
+     "alt": "Tom, close, as in talk"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-boots-2026-11-11.jpg",
+     "alt": "Tom's boots and jeans"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-walk-2026-11-11.webp",
+     "alt": "Film: Tom stands, turns and breaks into a run (side-on, knee height)"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-sit-2026-11-11.webp",
+     "alt": "Film: Tom sitting on the office bench (cropped to him)"
+    }
    ],
    "recommendation": "Yes, with the listed points fixed in the next order: he holds together as one person, and the shortfalls are small, known and already on the list.",
    "options": [
-    ["yes", "Yes, with the points listed (recommended)"],
-    ["no", "Not yet: say what is wrong in the note"]
+    [
+     "yes",
+     "Yes, with the points listed (recommended)"
+    ],
+    [
+     "no",
+     "Not yet: say what is wrong in the note"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 08:28, answered no (07:44): face and hair good; boots read as rubber slippers, jacket has no cloth texture, jeans no denim; clothes brought up to the floor, then shown again"
+  },
+  {
+   "id": "f-drive-room-2026-11-11",
+   "added": "2026-11-11 08:31",
+   "text": "A yes to delete, nothing else to do. The game drive F: is 0.2 GB under its 20 GB floor, so new downloads and tonight's packaged build are stopped. The room can come from old review pictures that the session itself took: 29 folders older than two weeks (6.3 GB), whose verdicts are already recorded, plus the session's own test logs older than two days (0.25 GB). Nothing of yours, nothing on your pages, nothing the game uses. Tap Yes to let the session delete them and log each one.",
+   "links": [],
+   "recommendation": "Yes: it frees about 6.5 GB, keeps every recent picture and every verdict, and lets tonight's build run.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete them (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
    ],
    "state": "open"
   }
