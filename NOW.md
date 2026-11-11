@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (8 Nov 21:50): card memory measured packaged (run-time pictures 1.95 of 6.15 GB; the cooking plan by a helper); the street sweep's editor run done, known list replaced; Ron's cost inputs gathered; advisor 34 (RECIPE/NOTEBOOK rename) goes to his page in the morning batch; tonight's walk tests the dressed men; exit Monday morning.
+STATE (11 Nov, 06:49): Tom as one whole person on his page (n09-2), waiting for his look; the cast's bind pose fixed by a fallback idle (packaged logs), tonight's walk to confirm, the launcher content his to restore; the texturing test's jeans decided (ours stays), brick to his look, timber and crate this evening.
 
 ## Handovers
 
