@@ -241,8 +241,24 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       </div>
       <p class="sub">What stands between this stop and the next. A boss falls when its number reaches its goal, or when you rule the goal met.</p>
       <div class="bosses" id="bosses"></div>
+      <p class="small" id="bossesClosed"></p>
     </section>
   </div>
+
+  <section class="col" aria-labelledby="h-eff" style="margin-top:24px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <h2 id="h-eff">Efficiency bosses</h2>
+      <span class="bosses-count" id="effCount"></span>
+    </div>
+    <p class="sub" id="effNote"></p>
+    <div class="bosses" id="effBosses"></div>
+    <p class="small" id="hoursToGo"></p>
+  </section>
+
+  <section class="col" aria-labelledby="h-tools" style="margin-top:24px">
+    <h2 id="h-tools">Tools in test</h2>
+    <ul class="pieces" id="toolsList"></ul>
+  </section>
 
   <section class="road" aria-labelledby="h-road">
     <h2 id="h-road">The road to release</h2>
@@ -463,11 +479,31 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   }
 
   function renderBosses(d){
-    const g = $("bosses"); g.replaceChildren();
-    const down = d.bosses.filter(b => b.state === "defeated").length;
-    $("bossCount").textContent = down + " of " + d.bosses.length + " down";
+    renderBossList(d.bosses, "bosses", "bossCount");
     if (d.bosses_title) $("h-boss").textContent = d.bosses_title;
-    for (const b of d.bosses){
+    $("bossesClosed").textContent = d.bosses_closed || "";
+    // EFFICIENCY BOSSES, HOURS TO GO, TOOLS IN TEST (11 Nov, advisor 112, his pick A)
+    if (Array.isArray(d.eff_bosses)){
+      renderBossList(d.eff_bosses, "effBosses", "effCount");
+      if (d.eff_title) $("h-eff").textContent = d.eff_title;
+      $("effNote").textContent = d.eff_note || "";
+    }
+    const h = d.hours_to_go;
+    if (h && h.points){
+      $("hoursToGo").textContent = h.title + ": " + h.points.map(p => short(p.date) + " " + p.lo + " to " + p.hi + " h").join("; ") + (h.next ? ". Next point " + h.next + ". " : ". ") + (h.note || "");
+    }
+    const tl = $("toolsList"); tl.replaceChildren();
+    if (d.tools_title) $("h-tools").textContent = d.tools_title;
+    for (const t of (d.tools || [])){
+      const li = el("li"); li.append(el("span", "pn", t.name)); li.append(el("span", "ps", "Decide: " + t.decide)); li.append(el("span", "pl", t.status)); tl.append(li);
+    }
+  }
+
+  function renderBossList(list, gridId, countId){
+    const g = $(gridId); g.replaceChildren();
+    const down = list.filter(b => b.state === "defeated").length;
+    $(countId).textContent = down + " of " + list.length + " down";
+    for (const b of list){
       const hp = hpOf(b);
       const a = el("article", "boss " + b.state);
       const h = el("header"); h.append(el("h3", null, b.name));
@@ -483,7 +519,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (numeric){
         const dl = el("dl", "nums");
         const cell = (k, v, sub, cls) => { const w = el("div", cls || ""); w.append(el("dt", null, k)); const dd = el("dd", null, v); w.append(dd); if (sub) w.title = sub; return w; };
-        dl.append(cell("Start", fmt(b.start, b.unit), b.start_label), cell("Now", fmt(b.now, b.unit), b.now_label), cell("Goal", fmt(b.target, b.unit), null, "goal"));
+        dl.append(cell("Start", fmt(b.start, b.unit), b.start_label), cell("Now", fmt(b.now, b.unit), b.now_label), cell(b.target_proposed ? "Goal (proposed)" : "Goal", fmt(b.target, b.unit), null, "goal"));
         a.append(dl);
       } else if (b.display){
         a.append(el("p", "display", b.display));
@@ -501,6 +537,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
         a.append(ul);
       }
       if (b.last) a.append(el("p", "last", b.last));
+      if (b.route) a.append(el("p", "last", "Best route now: " + b.route));
       g.append(a);
     }
   }
@@ -644,7 +681,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     }
     if (r) row("Forecast", fdate(r.start) + " to " + fdate(r.end), "Earliest finish " + fdate(r.early) + ", latest " + fdate(r.late) + (r.after ? ". After release, in the first update." : "."));
     else if (s.n >= 1) row("Forecast", "None.");
-    if (s.n === 1){
+    if (s.n === 1 && d.bosses_closed) row("Boss", d.bosses_closed);
+    else if (s.n === d.here){
       const down = d.bosses.filter(b => b.state === "defeated"), fight = d.bosses.filter(b => b.state !== "defeated");
       row("Boss", down.length + " of " + d.bosses.length + " down (" + down.map(b => b.name).join(", ") + "). Still standing: " + fight.map(b => b.name).join(", ") + ".");
     } else row("Boss", s.n === 0 ? "None." : "None named yet; its bosses are set when the phase opens.");

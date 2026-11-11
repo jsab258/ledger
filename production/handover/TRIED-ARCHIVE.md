@@ -68,3 +68,8 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - Tom's surfaces by painted maps (11 Nov, try 3): denim streaks evenly spaced and continuous with no diagonal read as pinstripe close up; a dark jacket hides lightness speckle; a grain tile reaches the boot's welt. Three tuning passes on the welt changed nothing (cause misread). Listed for the next order.
 - Motion 1, rise from a chair (set aside 11 Nov 00:42 after 2 of 2).
 - Clips over 81 frames lose the card (Vulkan device lost).
+
+## From the handover, 11 Nov 20:01
+- Blender pictures hid a culled band: Blender draws back faces; check face orientation by numbers, not by its pictures.
+- Sheila's colours (11 Nov): a garment with no maps, plain or materials comes in white; now a selftest.
+- Drape Studio's layering (11 Nov): cloth over frozen cloth lets the inner through.

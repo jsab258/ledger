@@ -1,634 +1,671 @@
 {
-  "updated": "Monday 9 November 2026, 15:40",
-  "here": 2,
-  "friends_eta": "around January",
-  "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
-  "sketch_note": "Phases 6 to 10 and the stop after release are a sketch, shaped by your scope rulings of 28 October; the advisor writes the full plan after Monday's audit.",
-  "stations": [
-    {
-      "n": 0,
-      "name": "Recover control",
-      "get": "Order in the project: branches, records and checks.",
-      "size": "2 to 3 days",
-      "state": "passed",
-      "note": "Passed 6 October.",
-      "planned_w": [
-        0.4,
-        0.6
-      ],
-      "actual_w": 0.1,
-      "actual_note": "done",
-      "short": "Recover",
-      "next_step": "Done."
-    },
-    {
-      "n": 1,
-      "name": "Prove the bottlenecks",
-      "get": "One finished room, one complete Tom who walks, sits and turns, speech under 2 seconds, frame headroom.",
-      "size": "1 to 2 weeks",
-      "state": "closed",
-      "note": "Closed on 9 November by your tap, with four faults carried into phase 2, not passed: the office's black frame and its 1990 wear; the speakers' sitting, slips and the office exit; speech at 2.02 s against 2.0; card memory just over 6 GB.",
-      "planned_w": [
-        1.0,
-        2.0
-      ],
-      "actual_w": 4.9,
-      "actual_note": "closed with four faults carried",
-      "began": "2026-10-06",
-      "short": "Bottlenecks",
-      "next_step": "Its four faults are worked in phase 2's items, card memory first.",
-      "fc_w": [
-        0.5,
-        0.5
-      ]
-    },
-    {
-      "n": 2,
-      "name": "Quay Street",
-      "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
-      "size": "3 to 4 weeks",
-      "state": "here",
-      "note": "Started 9 November, when your tap closed phase 1. The shops already in the street stay.",
-      "arrived": [
-        "Lamp posts",
-        "Rita's pawnbroker",
-        "The ironmonger's",
-        "The newsagent's",
-        "The tea rooms",
-        "The grocer's",
-        "The chandler's",
-        "The launderette",
-        "The west row's eaves"
-      ],
-      "plan_title": "Its pieces (plan revised 9 Nov; hours are estimates until measured)",
-      "plan_note": "In hours first: 266 to 437 hours on the plan's own figures, without cars; about 447 to 764 hours once its guesses are doubled, as past guesses ran 2 to 4 times over. At the planned 99 production hours a week that is about 4.5 to 7.7 weeks. Last week's broken pace (57 hours logged) would make it 8 to 13 weeks: a footnote, replaced by each week's measured hours as they come in. Not yet priced: distance beyond the hill and the crowd beyond the named people. Full scope stays (your rulings of 5 and 6 Nov).",
-      "plan": [
-        {
-          "name": "Card memory and headroom first: they cap what may be copied",
-          "hours": "about 14 h"
-        },
-        {
-          "name": "The street's budget and scale test, then a rough whole-street layout with routes and doors (added 9 Nov on the advisor's review)",
-          "hours": "26 to 52 h"
-        },
-        {
-          "name": "The street's checks (width, kit reuse, the street's ends)",
-          "hours": "3 to 5 h"
-        },
-        {
-          "name": "Brick in Flemish bond with burnt headers, before the corner is copied",
-          "hours": "4 to 8 h"
-        },
-        {
-          "name": "The corner's finish copied along the street (roofs already done)",
-          "hours": "10 to 20 h"
-        },
-        {
-          "name": "The fishmonger and the empty unit (your yes, 8 Nov)",
-          "hours": "16 to 37 h"
-        },
-        {
-          "name": "Mickey's front at night, signs, upper windows, near shop rooms",
-          "hours": "24 to 44 h"
-        },
-        {
-          "name": "The wet ground's seam and lane, about ten kinds of street furniture, lamps, plants",
-          "hours": "33 to 53 h"
-        },
-        {
-          "name": "Props and dressing, the fish slab, food",
-          "hours": "16 to 31 h"
-        },
-        {
-          "name": "The hill's crowns",
-          "hours": "8 to 16 h"
-        },
-        {
-          "name": "Light by real values, weather life, dirt on shop glass, frame headroom",
-          "hours": "11 to 20 h"
-        },
-        {
-          "name": "The street's sound (your ear needed)",
-          "hours": "12 to 20 h"
-        },
-        {
-          "name": "People: Ron, clothing, hair, people alive (this week), the rest of the Hook's cast, walking, plain clothes at 8 m",
-          "hours": "about 78 to 101 h"
-        },
-        {
-          "name": "Parked fictional cars, after the blind silhouette check (on your page)",
-          "hours": "50 to 90 h"
-        },
-        {
-          "name": "The exit walk and its gate",
-          "hours": "6 to 10 h"
-        }
-      ],
-      "weekly": [
-        "Shop fronts passed in the packaged game, of ten",
-        "Props per 10 m (target 5); street furniture kinds passed",
-        "People in passed clothes; hours per garment, latest against first",
-        "Light against the chart; night burn-out at most 2%",
-        "Sound layers present; cars passed the blind check",
-        "The week's hours against this list; card memory; worst frame against 33.3 ms"
-      ],
-      "planned_w": [
-        3.0,
-        4.0
-      ],
-      "note_lists": [
-        {
-          "title": "Phase 2's estimate, re-measured every Monday (it must fall week by week)",
-          "items": [
-            "Remaining last Monday: no estimate yet (the plan was first made on 8 Nov)",
-            "Hours done on phase 2's pieces since: none measured yet (it began 9 Nov)",
-            "Remaining now (9 Nov): about 447 to 764 hours without cars, guesses doubled",
-            "Fell? First reading, the baseline; from 16 Nov each Monday says whether the same remaining pieces cost less"
-          ]
-        },
-        {
-          "title": "Against a PS5-level game, by element (a fresh reviewer, 8 Nov stills; re-judged at each phase's end)",
-          "items": [
-            "Street life: large gap; not one car in any frame",
-            "Distance: medium to large; far houses are plain boxes, trees lumps",
-            "People: medium; cloth does not yet read as cloth",
-            "Buildings: medium; walls clean and new, no wear, downpipes or arched heads",
-            "Night: medium; only lamp pools, little light from signs and doors",
-            "Daylight: small to medium; weak shadow where things meet the ground",
-            "Motion: not judged from stills; a 30 s walk film decides"
-          ]
-        },
-        {
-          "title": "The scoreboard: the latest of a kind against the first (hours; M measured, R recorded)",
-          "items": [
-            "Shop front: Rita's 10.5 R, the launderette 3.6 M (0.34)",
-            "Garment: Tom's jacket 6.8 M, his jeans 1.6 M (0.24)",
-            "Dressing a man: Tom 14.2 M, Ron and Darren together 5.8 M (0.41)",
-            "A gate: 0.50 M, now 0.12 M (0.24)",
-            "A packaged pass: 0.92 M, now 0.27 M (0.29)",
-            "Not cheaper: talk features (about 2 to 4 times the first) and prop reviews (2.6)",
-            "Logged 2 to 8 Nov: 57.0 h, of them 3.5 h review"
-          ]
-        }
-      ],
-      "short": "Quay Street",
-      "next_step": "First: card memory and headroom (the cooking plan is written and reviewed), then the street's budget and scale test.",
-      "fc_w": [
-        4.5,
-        7.7
-      ],
-      "began": "2026-11-09"
-    },
-    {
-      "n": 3,
-      "name": "Thirty minutes that hold",
-      "get": "The town remembers what you did: arrivals, deliveries, consequences, the office and the ledger, talk.",
-      "size": "1 to 2 weeks",
-      "state": "ahead",
-      "planned_w": [
-        1.0,
-        2.0
-      ],
-      "short": "30 minutes",
-      "next_step": "Waits for Quay Street to pass.",
-      "fc_w": [
-        1.5,
-        2
-      ]
-    },
-    {
-      "n": 4,
-      "name": "Friends' evening",
-      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening.",
-      "size": "About a week",
-      "state": "ahead",
-      "milestone": true,
-      "note": "Around January if phase 1 passes soon. Low confidence.",
-      "planned_w": [
-        1.0,
-        1.0
-      ],
-      "short": "Friends",
-      "next_step": "Waits for phase 3; then your friends play thirty minutes.",
-      "fc_w": [
-        1,
-        1
-      ]
-    },
-    {
-      "n": 5,
-      "name": "The Hook",
-      "get": "The district: one more block, then the 14 main characters, about 30 regulars and a crowd.",
-      "size": "3 to 6 months",
-      "state": "ahead",
-      "planned_w": [
-        13.0,
-        26.0
-      ],
-      "short": "The Hook",
-      "next_step": "Waits for phase 4. Before it, the cost of one complete named person is measured on Ron, Sheila and Darren.",
-      "fc_w": [
-        15,
-        20
-      ]
-    },
-    {
-      "n": 6,
-      "name": "Crime and combat",
-      "get": "The escalation ladder: fists, improvised and carried weapons; guns rare, and last.",
-      "state": "sketch",
-      "short": "Crime, combat",
-      "next_step": "Waits for the Hook. Its plan and bosses are written when it opens.",
-      "fc_w": [
-        6,
-        8
-      ],
-      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
-    },
-    {
-      "n": 7,
-      "name": "Empire",
-      "get": "Your first business, first recruit and first racket, and a rival who reacts.",
-      "state": "sketch",
-      "short": "Empire",
-      "next_step": "Waits for crime and combat. Its plan and bosses are written when it opens.",
-      "fc_w": [
-        4,
-        5
-      ],
-      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
-    },
-    {
-      "n": 8,
-      "name": "The docks",
-      "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
-      "state": "sketch",
-      "short": "The docks",
-      "next_step": "Waits for the Empire. Your ruling of 28 October makes it the first cut if time runs short; the advisor suggests moving it to the first update after release, your call at the 1 July check.",
-      "fc_w": [
-        6,
-        8
-      ],
-      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
-    },
-    {
-      "n": 9,
-      "name": "The story: 15 to 20 hours, one main story, two or three endings",
-      "get": "Jobs, the main story and its endings.",
-      "state": "sketch",
-      "short": "The story",
-      "next_step": "Waits for the earlier phases. The story's text is written on the monthly credit while the Hook is built.",
-      "fc_w": [
-        9,
-        12
-      ],
-      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
-    },
-    {
-      "n": 10,
-      "name": "Release, late 2027",
-      "get": "Menus, music, polish and testing: one full release, not early access.",
-      "state": "sketch",
-      "short": "Release",
-      "next_step": "Waits for the story. Menus, music, polish and testing.",
-      "fc_w": [
-        5,
-        7
-      ],
-      "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
-    },
-    {
-      "n": 11,
-      "name": "After release: more districts, driving yourself",
-      "get": "Updates after release: Meridian's other districts, and driving yourself.",
-      "state": "sketch",
-      "terminus": true,
-      "short": "After",
-      "next_step": "Not estimated: it starts after release."
-    }
-  ],
-  "bosses_title": "Phase 1 bosses",
-  "bosses": [
-    {
-      "name": "The Glide",
-      "what": "How far a planted foot slides while Tom walks, stops and turns.",
-      "unit": "cm",
-      "start": 50,
-      "now": 11,
-      "target": 3,
-      "start_label": "Tom's own walk",
-      "now_label": "25 Oct, by eye",
-      "state": "defeated",
-      "last": "27 Oct: found that Epic's walk and Tom's MetaHuman had never reached the packaged game (their files never went to the build machine); fixed, and the AI tester walked the whole route in it, 15 of 15. The first stop still drags 10 to 13 cm inside Epic's own clip; your eye passed it.",
-      "when": "26 Oct",
-      "display": "Passed your eye, 26 Oct"
-    },
-    {
-      "name": "The Long Pause",
-      "what": "Seconds from the end of your question to the character's first sound.",
-      "unit": "s",
-      "start": 3.25,
-      "now": 2.02,
-      "target": 2.0,
-      "start_label": "8 Oct",
-      "now_label": "real questions, 4 Nov, packaged",
-      "state": "fighting",
-      "last": "4 Nov: run F, twenty different newcomer questions in the packaged game: a median 2.02 s against 2.0 s, 7 of 30 at 4 s or more. Three tries spent; the bar is missed and reported at the exit."
-    },
-    {
-      "name": "The Stutter",
-      "what": "The worst single frame on a walk down the street.",
-      "unit": "ms",
-      "start": 87,
-      "now": 22.37,
-      "target": 33.3,
-      "start_label": "22 Oct",
-      "now_label": "8 Nov, the build machine, packaged",
-      "state": "fighting",
-      "last": "8 Nov: the night's walk, 16 of 17 stages: 58.2 fps, worst frame 22.37 ms, none over 33.3 ms. The rare freeze of 6 Nov stays listed at the exit. Tries spent."
-    },
-    {
-      "name": "The Tailor",
-      "what": "Period clothes on the cast, counted by pieces, starting with Tom's four. A piece is beaten when it passes in the packaged game with no open fault.",
-      "unit": "pieces to go",
-      "start": 4,
-      "now": 1,
-      "target": 0,
-      "display": "3 of 4 pieces settled; the jacket set aside",
-      "state": "fighting",
-      "last": "Interim: two men dressed on the floor; the Tailor still standing. 8 Nov: Ron and Darren in wool-knit jumpers (Ron navy, Darren maroon) and jeans passed your look on the clothes' floor, an interim pass only; from tonight they wear them in the game you play, and tonight's walk is their first test there. Tom's jacket stays set aside and listed at the exit; clothing is far from done.",
-      "pieces": [
-        {
-          "name": "Jacket",
-          "state": "fighting",
-          "line": "Set aside after four tries: his neck shows at the collar, front and back, when his head turns. Listed at the exit."
-        },
-        {
-          "name": "Jumper",
-          "state": "beaten",
-          "line": "Made and held: unseen under the zipped jacket, its place decided 4 Nov."
-        },
-        {
-          "name": "Jeans",
-          "state": "beaten",
-          "line": "Passed packaged 4 Nov: the straight cut over his boots, no new fault."
-        },
-        {
-          "name": "Boots",
-          "state": "beaten",
-          "line": "Passed packaged 4 Nov. Known: no toe-cap seam or lacing; the toe's shape and the pale band stay listed."
-        },
-        {
-          "name": "Ron and Darren",
-          "state": "fighting",
-          "line": "Interim: two men dressed on the floor (his yes 8 Nov); tailor boss standing. Left: a real wool knit with ribbing, a colour each, Darren's stiff neckband."
-        }
-      ]
-    },
-    {
-      "name": "The Empty Chair",
-      "what": "Someone sits down in the game as you play it.",
-      "display": "Sits and stands packaged, face up; his head swings in the drop, set aside",
-      "hp": 100,
-      "state": "fighting",
-      "last": "6 Nov: in the packaged film his face is at most 10 degrees down and he sits and stands with nothing touched; a fresh reviewer found his head swinging round in the drop. Tries spent; listed at the exit."
-    },
-    {
-      "name": "The Clean Room",
-      "what": "Mickey's office worn, lived in and free of glitches, at the Hook sheet's bar.",
-      "display": "Passed packaged 4 Nov; the exit re-check to come",
-      "hp": 100,
-      "state": "unchecked",
-      "last": "8 Nov: the office as the game you play draws it, by day and night, one fresh reviewer: no new fault. Listed: the room's light wear, the night room lit by hard warm light, the damp stain's cut-out edge, Tom's pale crown."
-    },
-    {
-      "name": "The Memory Hog",
-      "what": "Graphics card memory.",
-      "display": "6,005 MB on 8 Nov (a middle reading, not the peak); being looked at",
-      "state": "fighting",
-      "when": "24 Oct",
-      "last": "8 Nov: 6,005 MB in the night's walk, a middle reading, not a peak; 6,089 the night before. Your ruling of 24 Oct: the 6 GB line counts the game alone; whether these readings are the game alone is being checked."
-    },
-    {
-      "name": "The Shadow Tax",
-      "what": "Spare graphics card time, kept for what the street still needs.",
-      "display": "Night 2.7 ms, day 1.7 ms",
-      "state": "defeated",
-      "when": "24 Oct",
-      "last": "Night beats its 1.4 ms target. Day is under its 2.5 ms target, accepted by your ruling of 24 Oct until phase 2's street budget."
-    }
-  ],
-  "street": {
-    "path": "street/morning-{view}-{date}.jpg",
-    "target": "street/hook-sheet.jpg",
-    "views": [
-      {
-        "key": "hook-day",
-        "label": "Hook camera by day"
-      },
-      {
-        "key": "reverse-day",
-        "label": "Reverse view"
-      },
-      {
-        "key": "night",
-        "label": "At night"
-      }
-    ],
-    "days": [
-      "2026-10-05",
-      "2026-10-06",
-      "2026-10-07",
-      "2026-10-08",
-      "2026-10-21",
-      "2026-10-22",
-      "2026-10-23",
-      "2026-10-24",
-      "2026-10-26",
-      "2026-10-27",
-      "2026-10-28",
-      "2026-10-29",
-      "2026-10-30",
-      "2026-10-31",
-      "2026-11-01",
-      "2026-11-02",
-      "2026-11-03",
-      "2026-11-04",
-      "2026-11-05",
-      "2026-11-06",
-      "2026-11-07",
-      "2026-11-08",
-      "2026-11-09",
-      "2026-11-10",
-      "2026-11-11"
-    ],
-    "gap_note": "No pictures from 9 to 20 October: the PC was off.",
-    "morning": {
-      "date": "2026-11-11",
-      "line": "Morning, Wednesday 11 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
-      "failure": "",
-      "views": [
-        {
-          "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-11.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-10.jpg"
-        },
-        {
-          "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-11.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-10.jpg"
-        },
-        {
-          "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-11.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-10.jpg"
-        }
-      ],
-      "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
-      "note": "No decision asked: these are for watching the street change.",
-      "by": "tools/morning_pictures.py"
-    }
+ "updated": "Wednesday 11 November 2026, 20:45",
+ "here": 2,
+ "friends_eta": "around January",
+ "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
+ "sketch_note": "Phases 6 to 10 and the stop after release are a sketch, shaped by your scope rulings of 28 October; the advisor writes the full plan after Monday's audit.",
+ "stations": [
+  {
+   "n": 0,
+   "name": "Recover control",
+   "get": "Order in the project: branches, records and checks.",
+   "size": "2 to 3 days",
+   "state": "passed",
+   "note": "Passed 6 October.",
+   "planned_w": [
+    0.4,
+    0.6
+   ],
+   "actual_w": 0.1,
+   "actual_note": "done",
+   "short": "Recover",
+   "next_step": "Done."
   },
-  "studies": {
-    "done": 16,
-    "total": 16,
-    "order": "2026-11-09.md",
-    "list": [
-      {
-        "n": 1,
-        "name": "NPC life and AI",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 2,
-        "name": "The first 30 minutes",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 3,
-        "name": "Dialogue and barks",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 4,
-        "name": "Street and world building",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 5,
-        "name": "Visuals",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 6,
-        "name": "Characters and wardrobe",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 7,
-        "name": "Animation",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 8,
-        "name": "Sound",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 9,
-        "name": "Camera, controls and feel",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 10,
-        "name": "Interface",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 11,
-        "name": "Systems",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 12,
-        "name": "Tech and budgets",
-        "status": "done",
-        "week": "this week"
-      },
-      {
-        "n": 13,
-        "name": "Production pipeline",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 14,
-        "name": "Combat and violence",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 15,
-        "name": "The crime toolkit",
-        "status": "done",
-        "week": "next week"
-      },
-      {
-        "n": 16,
-        "name": "Jobs and story",
-        "status": "done",
-        "week": "next week"
-      }
-    ]
+  {
+   "n": 1,
+   "name": "Prove the bottlenecks",
+   "get": "One finished room, one complete Tom who walks, sits and turns, speech under 2 seconds, frame headroom.",
+   "size": "1 to 2 weeks",
+   "state": "closed",
+   "note": "Closed on 9 November by your tap, with four faults carried into phase 2, not passed: the office's black frame and its 1990 wear; the speakers' sitting, slips and the office exit; speech at 2.02 s against 2.0; card memory just over 6 GB.",
+   "planned_w": [
+    1.0,
+    2.0
+   ],
+   "actual_w": 4.9,
+   "actual_note": "closed with four faults carried",
+   "began": "2026-10-06",
+   "short": "Bottlenecks",
+   "next_step": "Its four faults are worked in phase 2's items, card memory first.",
+   "fc_w": [
+    0.5,
+    0.5
+   ]
   },
-  "carried": [],
-  "line2027": {
-    "as_of": "Monday 9 November",
-    "behind_w": 2.4,
-    "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
-  },
-  "forecast": {
-    "made": "2026-11-08",
-    "label": "advisor's estimate, 5 Nov, re-forecast monthly",
-    "source": "The advisor's release plan of 5 November: each phase's weeks from the quick end (with this week's efficiency gain) to the slow end (today's efficiency). Phase 1 shows only its remaining weeks. One week of allowance is counted as one calendar week.",
-    "next_reforecast": "2026-12-07",
-    "release_target": {
-      "label": "Release target, late 2027",
-      "date": "2027-11-30"
+  {
+   "n": 2,
+   "name": "Quay Street",
+   "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
+   "size": "3 to 4 weeks",
+   "state": "here",
+   "note": "Started 9 November, when your tap closed phase 1. The shops already in the street stay.",
+   "arrived": [
+    "Lamp posts",
+    "Rita's pawnbroker",
+    "The ironmonger's",
+    "The newsagent's",
+    "The tea rooms",
+    "The grocer's",
+    "The chandler's",
+    "The launderette",
+    "The west row's eaves"
+   ],
+   "plan_title": "Its pieces (plan revised 9 Nov; hours are estimates until measured)",
+   "plan_note": "In hours first: 266 to 437 hours on the plan's own figures, without cars; about 447 to 764 hours once its guesses are doubled, as past guesses ran 2 to 4 times over. At the planned 99 production hours a week that is about 4.5 to 7.7 weeks. Last week's broken pace (57 hours logged) would make it 8 to 13 weeks: a footnote, replaced by each week's measured hours as they come in. Not yet priced: distance beyond the hill and the crowd beyond the named people. Full scope stays (your rulings of 5 and 6 Nov).",
+   "plan": [
+    {
+     "name": "Card memory and headroom first: they cap what may be copied",
+     "hours": "about 14 h"
     },
-    "check_limit_w": 4,
-    "checks": [
-      {
-        "date": "2027-02-01",
-        "label": "1 Feb check",
-        "note": "More than about 4 weeks behind brings scope back to you."
-      },
-      {
-        "date": "2027-07-01",
-        "label": "1 Jul docks check",
-        "note": "The docks come back into 2027 only with at least 6 weeks in hand."
-      }
-    ],
-    "unit_costs": {
-      "person_hours": null,
-      "person_note": "One complete named person (Ron first, then Sheila and Darren): not measured yet.",
-      "named_people": 44,
-      "residents": [
-        50,
-        100
-      ],
-      "rule": "When Ron's cost is measured, the Hook's weeks are re-worked from it, never from phase 1's pace."
+    {
+     "name": "The street's budget and scale test, then a rough whole-street layout with routes and doors (added 9 Nov on the advisor's review)",
+     "hours": "26 to 52 h"
+    },
+    {
+     "name": "The street's checks (width, kit reuse, the street's ends)",
+     "hours": "3 to 5 h"
+    },
+    {
+     "name": "Brick in Flemish bond with burnt headers, before the corner is copied",
+     "hours": "4 to 8 h"
+    },
+    {
+     "name": "The corner's finish copied along the street (roofs already done)",
+     "hours": "10 to 20 h"
+    },
+    {
+     "name": "The fishmonger and the empty unit (your yes, 8 Nov)",
+     "hours": "16 to 37 h"
+    },
+    {
+     "name": "Mickey's front at night, signs, upper windows, near shop rooms",
+     "hours": "24 to 44 h"
+    },
+    {
+     "name": "The wet ground's seam and lane, about ten kinds of street furniture, lamps, plants",
+     "hours": "33 to 53 h"
+    },
+    {
+     "name": "Props and dressing, the fish slab, food",
+     "hours": "16 to 31 h"
+    },
+    {
+     "name": "The hill's crowns",
+     "hours": "8 to 16 h"
+    },
+    {
+     "name": "Light by real values, weather life, dirt on shop glass, frame headroom",
+     "hours": "11 to 20 h"
+    },
+    {
+     "name": "The street's sound (your ear needed)",
+     "hours": "12 to 20 h"
+    },
+    {
+     "name": "People: Ron, clothing, hair, people alive (this week), the rest of the Hook's cast, walking, plain clothes at 8 m",
+     "hours": "about 78 to 101 h"
+    },
+    {
+     "name": "Parked fictional cars, after the blind silhouette check (on your page)",
+     "hours": "50 to 90 h"
+    },
+    {
+     "name": "The exit walk and its gate",
+     "hours": "6 to 10 h"
     }
+   ],
+   "weekly": [
+    "Shop fronts passed in the packaged game, of ten",
+    "Props per 10 m (target 5); street furniture kinds passed",
+    "People in passed clothes; hours per garment, latest against first",
+    "Light against the chart; night burn-out at most 2%",
+    "Sound layers present; cars passed the blind check",
+    "The week's hours against this list; card memory; worst frame against 33.3 ms"
+   ],
+   "planned_w": [
+    3.0,
+    4.0
+   ],
+   "note_lists": [
+    {
+     "title": "Phase 2's estimate, re-measured every Monday (it must fall week by week)",
+     "items": [
+      "Remaining last Monday: no estimate yet (the plan was first made on 8 Nov)",
+      "Hours done on phase 2's pieces since: none measured yet (it began 9 Nov)",
+      "Remaining now (9 Nov): about 447 to 764 hours without cars, guesses doubled",
+      "Fell? First reading, the baseline; from 16 Nov each Monday says whether the same remaining pieces cost less"
+     ]
+    },
+    {
+     "title": "Against a PS5-level game, by element (a fresh reviewer, 8 Nov stills; re-judged at each phase's end)",
+     "items": [
+      "Street life: large gap; not one car in any frame",
+      "Distance: medium to large; far houses are plain boxes, trees lumps",
+      "People: medium; cloth does not yet read as cloth",
+      "Buildings: medium; walls clean and new, no wear, downpipes or arched heads",
+      "Night: medium; only lamp pools, little light from signs and doors",
+      "Daylight: small to medium; weak shadow where things meet the ground",
+      "Motion: not judged from stills; a 30 s walk film decides"
+     ]
+    },
+    {
+     "title": "The scoreboard: the latest of a kind against the first (hours; M measured, R recorded)",
+     "items": [
+      "Shop front: Rita's 10.5 R, the launderette 3.6 M (0.34)",
+      "Garment: Tom's jacket 6.8 M, his jeans 1.6 M (0.24)",
+      "Dressing a man: Tom 14.2 M, Ron and Darren together 5.8 M (0.41)",
+      "A gate: 0.50 M, now 0.12 M (0.24)",
+      "A packaged pass: 0.92 M, now 0.27 M (0.29)",
+      "Not cheaper: talk features (about 2 to 4 times the first) and prop reviews (2.6)",
+      "Logged 2 to 8 Nov: 57.0 h, of them 3.5 h review"
+     ]
+    }
+   ],
+   "short": "Quay Street",
+   "next_step": "First: card memory and headroom (the cooking plan is written and reviewed), then the street's budget and scale test.",
+   "fc_w": [
+    4.5,
+    7.7
+   ],
+   "began": "2026-11-09"
+  },
+  {
+   "n": 3,
+   "name": "Thirty minutes that hold",
+   "get": "The town remembers what you did: arrivals, deliveries, consequences, the office and the ledger, talk.",
+   "size": "1 to 2 weeks",
+   "state": "ahead",
+   "planned_w": [
+    1.0,
+    2.0
+   ],
+   "short": "30 minutes",
+   "next_step": "Waits for Quay Street to pass.",
+   "fc_w": [
+    1.5,
+    2
+   ]
+  },
+  {
+   "n": 4,
+   "name": "Friends' evening",
+   "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening.",
+   "size": "About a week",
+   "state": "ahead",
+   "milestone": true,
+   "note": "Around January if phase 1 passes soon. Low confidence.",
+   "planned_w": [
+    1.0,
+    1.0
+   ],
+   "short": "Friends",
+   "next_step": "Waits for phase 3; then your friends play thirty minutes.",
+   "fc_w": [
+    1,
+    1
+   ]
+  },
+  {
+   "n": 5,
+   "name": "The Hook",
+   "get": "The district: one more block, then the 14 main characters, about 30 regulars and a crowd.",
+   "size": "3 to 6 months",
+   "state": "ahead",
+   "planned_w": [
+    13.0,
+    26.0
+   ],
+   "short": "The Hook",
+   "next_step": "Waits for phase 4. Before it, the cost of one complete named person is measured on Ron, Sheila and Darren.",
+   "fc_w": [
+    15,
+    20
+   ]
+  },
+  {
+   "n": 6,
+   "name": "Crime and combat",
+   "get": "The escalation ladder: fists, improvised and carried weapons; guns rare, and last.",
+   "state": "sketch",
+   "short": "Crime, combat",
+   "next_step": "Waits for the Hook. Its plan and bosses are written when it opens.",
+   "fc_w": [
+    6,
+    8
+   ],
+   "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
+  },
+  {
+   "n": 7,
+   "name": "Empire",
+   "get": "Your first business, first recruit and first racket, and a rival who reacts.",
+   "state": "sketch",
+   "short": "Empire",
+   "next_step": "Waits for crime and combat. Its plan and bosses are written when it opens.",
+   "fc_w": [
+    4,
+    5
+   ],
+   "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
+  },
+  {
+   "n": 8,
+   "name": "The docks",
+   "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
+   "state": "sketch",
+   "short": "The docks",
+   "next_step": "Waits for the Empire. Your ruling of 28 October makes it the first cut if time runs short; the advisor suggests moving it to the first update after release, your call at the 1 July check.",
+   "fc_w": [
+    6,
+    8
+   ],
+   "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
+  },
+  {
+   "n": 9,
+   "name": "The story: 15 to 20 hours, one main story, two or three endings",
+   "get": "Jobs, the main story and its endings.",
+   "state": "sketch",
+   "short": "The story",
+   "next_step": "Waits for the earlier phases. The story's text is written on the monthly credit while the Hook is built.",
+   "fc_w": [
+    9,
+    12
+   ],
+   "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
+  },
+  {
+   "n": 10,
+   "name": "Release, late 2027",
+   "get": "Menus, music, polish and testing: one full release, not early access.",
+   "state": "sketch",
+   "short": "Release",
+   "next_step": "Waits for the story. Menus, music, polish and testing.",
+   "fc_w": [
+    5,
+    7
+   ],
+   "est_label": "advisor's estimate, 5 Nov, re-forecast monthly"
+  },
+  {
+   "n": 11,
+   "name": "After release: more districts, driving yourself",
+   "get": "Updates after release: Meridian's other districts, and driving yourself.",
+   "state": "sketch",
+   "terminus": true,
+   "short": "After",
+   "next_step": "Not estimated: it starts after release."
   }
+ ],
+ "bosses_title": "Phase 2 bosses",
+ "bosses": [
+  {
+   "name": "The Tailor",
+   "what": "Period clothes on the cast, close up, holding in walk, sit and turn; repeats at about half the first's cost.",
+   "display": "Tom 3 of 4 pieces settled; Ron and Darren interim; Sheila filmed, one collar fault set aside",
+   "state": "fighting",
+   "start_label": "phase 2 began 9 Nov",
+   "last": "11 Nov: Sheila filmed in the packaged game; the neckband shards at her collar pass, the cardigan still shows through the collar fall in strips (two tries spent, set aside). Tom's jacket stays set aside.",
+   "route": "Our own refit, with MetaTailor (free version) and Houdini's cloth (Vellum) on test."
+  },
+  {
+   "name": "People in motion",
+   "what": "Natural moves beyond the walk: sitting, turning the head, standing still, as the cast need them.",
+   "display": "The walk passed your eye (26 Oct); the sit's head swing and two motion clips set aside",
+   "state": "fighting",
+   "last": "Sitting and standing work packaged with the face up; his head swings in the drop. Two clips made from video were set aside after two tries each.",
+   "route": "Cascadeur's physics tools (on test), the free CMU motion library, real footage as reference, the larger video model later."
+  },
+  {
+   "name": "Hair",
+   "what": "One character's hair passing the full gate: behind, close up, sitting and walking, at four distances, day and night, wet, no shimmer.",
+   "display": "Not started at the gate; strands stay (9 Nov)",
+   "state": "fighting",
+   "last": "No character's hair has passed yet. Houdini's free licence cooks headless but cannot export the hair to Unreal (needs Indie, about US$299 a year): asked only if Houdini still wins after its cloth test.",
+   "route": "Houdini on test (Darren's curls)."
+  },
+  {
+   "name": "The crowd and card memory",
+   "what": "Graphics card memory with the whole street and its people, within the 6 GB line for the game alone.",
+   "display": "6,005 MB in the 8 Nov walk (a middle reading, not the peak)",
+   "state": "fighting",
+   "last": "Whether the reading is the game alone is still being checked; the crowd beyond the named people is not yet priced.",
+   "route": "AMD's memory tools, if you say yes."
+  },
+  {
+   "name": "Testing",
+   "what": "The AI tester walks every changed piece in the night's packaged build, so what reaches your hands is 99% done.",
+   "display": "8 Nov walk: 16 of 17 stages, 58.2 fps, worst frame 22.37 ms",
+   "state": "fighting",
+   "last": "Lean checks: one added only when a fault slipped past, dropped after a month of catching nothing.",
+   "route": "The nightly walk plus the session's own packaged films."
+  }
+ ],
+ "street": {
+  "path": "street/morning-{view}-{date}.jpg",
+  "target": "street/hook-sheet.jpg",
+  "views": [
+   {
+    "key": "hook-day",
+    "label": "Hook camera by day"
+   },
+   {
+    "key": "reverse-day",
+    "label": "Reverse view"
+   },
+   {
+    "key": "night",
+    "label": "At night"
+   }
+  ],
+  "days": [
+   "2026-10-05",
+   "2026-10-06",
+   "2026-10-07",
+   "2026-10-08",
+   "2026-10-21",
+   "2026-10-22",
+   "2026-10-23",
+   "2026-10-24",
+   "2026-10-26",
+   "2026-10-27",
+   "2026-10-28",
+   "2026-10-29",
+   "2026-10-30",
+   "2026-10-31",
+   "2026-11-01",
+   "2026-11-02",
+   "2026-11-03",
+   "2026-11-04",
+   "2026-11-05",
+   "2026-11-06",
+   "2026-11-07",
+   "2026-11-08",
+   "2026-11-09",
+   "2026-11-10",
+   "2026-11-11"
+  ],
+  "gap_note": "No pictures from 9 to 20 October: the PC was off.",
+  "morning": {
+   "date": "2026-11-11",
+   "line": "Morning, Wednesday 11 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
+   "failure": "",
+   "views": [
+    {
+     "label": "The hook camera by day",
+     "today": "production/previews/morning-hook-day-2026-11-11.jpg",
+     "yesterday": "production/previews/morning-hook-day-2026-11-10.jpg"
+    },
+    {
+     "label": "The reverse view",
+     "today": "production/previews/morning-reverse-day-2026-11-11.jpg",
+     "yesterday": "production/previews/morning-reverse-day-2026-11-10.jpg"
+    },
+    {
+     "label": "The street at night",
+     "today": "production/previews/morning-night-2026-11-11.jpg",
+     "yesterday": "production/previews/morning-night-2026-11-10.jpg"
+    }
+   ],
+   "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
+   "note": "No decision asked: these are for watching the street change.",
+   "by": "tools/morning_pictures.py"
+  }
+ },
+ "studies": {
+  "done": 16,
+  "total": 16,
+  "order": "2026-11-09.md",
+  "list": [
+   {
+    "n": 1,
+    "name": "NPC life and AI",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 2,
+    "name": "The first 30 minutes",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 3,
+    "name": "Dialogue and barks",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 4,
+    "name": "Street and world building",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 5,
+    "name": "Visuals",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 6,
+    "name": "Characters and wardrobe",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 7,
+    "name": "Animation",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 8,
+    "name": "Sound",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 9,
+    "name": "Camera, controls and feel",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 10,
+    "name": "Interface",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 11,
+    "name": "Systems",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 12,
+    "name": "Tech and budgets",
+    "status": "done",
+    "week": "this week"
+   },
+   {
+    "n": 13,
+    "name": "Production pipeline",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 14,
+    "name": "Combat and violence",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 15,
+    "name": "The crime toolkit",
+    "status": "done",
+    "week": "next week"
+   },
+   {
+    "n": 16,
+    "name": "Jobs and story",
+    "status": "done",
+    "week": "next week"
+   }
+  ]
+ },
+ "carried": [],
+ "line2027": {
+  "as_of": "Monday 9 November",
+  "behind_w": 2.4,
+  "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
+ },
+ "forecast": {
+  "made": "2026-11-08",
+  "label": "advisor's estimate, 5 Nov, re-forecast monthly",
+  "source": "The advisor's release plan of 5 November: each phase's weeks from the quick end (with this week's efficiency gain) to the slow end (today's efficiency). Phase 1 shows only its remaining weeks. One week of allowance is counted as one calendar week.",
+  "next_reforecast": "2026-12-07",
+  "release_target": {
+   "label": "Release target, late 2027",
+   "date": "2027-11-30"
+  },
+  "check_limit_w": 4,
+  "checks": [
+   {
+    "date": "2027-02-01",
+    "label": "1 Feb check",
+    "note": "More than about 4 weeks behind brings scope back to you."
+   },
+   {
+    "date": "2027-07-01",
+    "label": "1 Jul docks check",
+    "note": "The docks come back into 2027 only with at least 6 weeks in hand."
+   }
+  ],
+  "unit_costs": {
+   "person_hours": null,
+   "person_note": "One complete named person (Ron first, then Sheila and Darren): not measured yet.",
+   "named_people": 44,
+   "residents": [
+    50,
+    100
+   ],
+   "rule": "When Ron's cost is measured, the Hook's weeks are re-worked from it, never from phase 1's pace."
+  }
+ },
+ "bosses_closed": "Phase 1, closed 9 Nov: The Glide and The Shadow Tax defeated; The Long Pause, The Stutter, The Empty Chair and The Clean Room listed at the exit; The Tailor and The Memory Hog carried into phase 2.",
+ "eff_title": "Efficiency bosses",
+ "eff_note": "From the daily measures and Monday's audit; no new measuring. Targets are proposed, not yet ruled.",
+ "eff_bosses": [
+  {
+   "name": "The Idle Hours",
+   "what": "Share of the day (07:00 to 23:00) a session is working.",
+   "unit": "%",
+   "start": 49,
+   "now": 49,
+   "target": 95,
+   "target_proposed": true,
+   "start_label": "this week's first reading",
+   "now_label": "10 to 11 Nov, daily measures",
+   "state": "fighting",
+   "last": "11 Nov: 485 minutes of the day with no session running."
+  },
+  {
+   "name": "The Rereader",
+   "what": "Share of spend that is the session re-reading its own history.",
+   "unit": "%",
+   "start": 53,
+   "now": 24,
+   "target": 20,
+   "target_proposed": true,
+   "start_label": "the 26 Oct week",
+   "now_label": "Monday's audit",
+   "state": "fighting",
+   "last": "Daily readings swing: 18% on 10 Nov, 34% on 11 Nov, as more ran in the session itself."
+  },
+  {
+   "name": "The Price Tag",
+   "what": "Dollars per session step, at API list prices (a measure, not a bill).",
+   "unit": "$",
+   "start": 0.131,
+   "now": 0.068,
+   "target": 0.05,
+   "target_proposed": true,
+   "start_label": "first audit",
+   "now_label": "11 Nov",
+   "state": "fighting",
+   "last": "Helpers' steps cost $0.039 on 11 Nov."
+  },
+  {
+   "name": "The Leftover Week",
+   "what": "Share of the weekly allowance unused at Monday's reset.",
+   "unit": "%",
+   "start": 11,
+   "now": 11,
+   "target": 5,
+   "target_proposed": true,
+   "start_label": "last week",
+   "now_label": "last week (next reading Monday)",
+   "state": "fighting",
+   "last": "Tonight the week runs 6 points ahead of its line."
+  },
+  {
+   "name": "The Second Suit",
+   "what": "Cost of a repeated piece against the first: Sheila's clothes against Tom's first.",
+   "display": "First measure Monday 16 Nov; target half or less (proposed)",
+   "state": "unchecked",
+   "last": "Hours, dollars, tries and set-asides per garment and in total."
+  }
+ ],
+ "hours_to_go": {
+  "title": "Phase 2 hours to go",
+  "note": "One point each Monday; it must fall. The first point is the plan's own figures doubled, without cars.",
+  "points": [
+   {
+    "date": "2026-11-09",
+    "lo": 447,
+    "hi": 764
+   }
+  ],
+  "next": "Monday 16 Nov"
+ },
+ "tools_title": "Tools in test",
+ "tools": [
+  {
+   "name": "Houdini (free)",
+   "status": "Cloth cooks headless and writes frames; hair export blocked on the free licence. Next: Tom's jumper against Marvelous.",
+   "decide": "16 Nov (planned)"
+  },
+  {
+   "name": "Cascadeur (free)",
+   "status": "Installed; its script server starts from its menu. Next: the head-turn clean-up and a sit-down.",
+   "decide": "16 Nov (planned)"
+  },
+  {
+   "name": "MetaTailor (free)",
+   "status": "Chosen for a free test (Sheila's blouse and cardigan); waits for your account.",
+   "decide": "a week after your account"
+  },
+  {
+   "name": "FaceBuilder (trial)",
+   "status": "Chosen for its 15-day free trial; not started.",
+   "decide": "at the trial's end"
+  },
+  {
+   "name": "DrapeStudio",
+   "status": "Three tests written up: single garments drape, layering fails; its licence question is on your page.",
+   "decide": "your licence answer"
+  }
+ ]
 }
