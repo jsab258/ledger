@@ -2062,3 +2062,13 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1 h (bake 21 s, compose and import minutes, two films 17 min, review 1 min).
 - What failed and why: curvature alone does not know where hands, feet and weather reach, so panelled joinery reads piped; the first bake was on a held-back mesh whose UVs differ from the shipped one, which a file trace caught before filming.
 - Evidence: F:/LedgerTools/gate/new/timber-tcwear-2026-11-11/review.json and crop-front.jpg; production/research/texture-pipeline/TIMBER-FILES-2026-11-11.md.
+
+## Making a garment read as its fabric with tiling layers alone (11 November 2026, set aside)
+- Made: three garments (zip jacket, jeans, lace-up boots) given a tiling fabric or leather detail at true size, a colour and roughness variation tile on the same tiling, and cloth shading with a fuzz colour on the two cloth pieces; the shared garment material gained these as opt-in parameters.
+- Method: the reference studio's own master uses one cloth-shaded material with fabric layers about 20 repeats a UV unit at strong normal relief; free scanned tiles were scaled to their real size from each garment's measured UV scale (3D area over UV area) and their own luminance turned into colour and roughness variation.
+- Tools: the engine's material editing from Python, a headless 3D package for the UV measure, image scripts for the tiles.
+- Target and check: the owner's "reads as denim / cotton / leather"; an editor screen at the shipped quality, then one fresh final reviewer beside the rejected pictures.
+- Cost: about 0.6 h, two tries, one extraction helper and one reviewer.
+- What failed and why: fuzz three times the cloth colour read as felt; fuzz equal to it still lifted the jeans to a chalky pale blue and the jacket from navy to violet (cloth shading adds its sheen on top, so the base must be darker to keep the colour); the weave tile is too fine to read beyond arm's length, and a scan's own variation is too faint to say "denim"; leather gloss worked, but one material over every slot made the sole glossy too. Denim and cotton read by colour structure (twill diagonal, indigo against pale weft, fades at wear points, tonal topstitching), which lives in the garment's own colour map, not in a shared tile. Leather needs the sole on its own values.
+- Evidence: F:/LedgerTools/gate/new/tom-surfaces-2026-11-11 (before, after, review.json); production/research/game-clothing-pipeline/MAFIA-CLOTH-SURFACES-2026-11-11.md.
+- A startup trap found on the way: a shared material whose empty mask slot defaults to a colour texture fails to compile whenever a garment without that mask is imported last; linear placeholder masks of one's own fix it.

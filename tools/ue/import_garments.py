@@ -45,6 +45,7 @@ BODY = {"Rocco": "MH_RoccoP2", "Lena": "MH_LenaS4", "Sam": "MH_SamS6",
 # R, the part's ID in G, metal B); one material over every slot, the cloth and rib tinted, the tape and the teeth
 # their own colours by the ID (cloth 0, rib 0.25, tape 0.5, teeth 0.75, welt 1)
 PACKED_BASE = DEST + "/M_LedgerGarmentPacked"
+SHARED_MASKS = "F:/LedgerTools/garments/shared-masks"
 
 
 def packed_material(unreal, g, folder, lines):
@@ -84,6 +85,9 @@ def packed_material(unreal, g, folder, lines):
     rib = texture(maps["detail_rib"], "T_%s_DetailRib_Normal" % g["name"], "normal") if maps.get("detail_rib") and detail else None
     wear_mask = texture(maps["wear_mask"], "T_%s_Wear_Mask" % g["name"], "packed") if maps.get("wear_mask") else None
     vary = texture(maps["detail_vary"], "T_%s_Detail_Vary" % g["name"], "packed") if maps.get("detail_vary") else None
+    # linear stand-ins for the mask slots when a garment has none (see the wear map below)
+    black = texture(SHARED_MASKS + "/mask_black.png", "T_LedgerMask_Black", "packed")
+    neutral = texture(SHARED_MASKS + "/mask_neutral.png", "T_LedgerMask_Neutral", "packed")
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
@@ -141,8 +145,7 @@ def packed_material(unreal, g, folder, lines):
     vuv = node(unreal.MaterialExpressionMultiply, -1750, -1250)
     mel.connect_material_expressions(uv0, "", vuv, "A")
     mel.connect_material_expressions(vtile, "", vuv, "B")
-    grey = unreal.load_asset("/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture")
-    vm = node(unreal.MaterialExpressionTextureSampleParameter2D, -1600, -1250, parameter_name="DetailVary", texture=vary or grey,
+    vm = node(unreal.MaterialExpressionTextureSampleParameter2D, -1600, -1250, parameter_name="DetailVary", texture=vary or neutral,
               sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
     mel.connect_material_expressions(vuv, "", vm, "UVs")
     vary_c = node(unreal.MaterialExpressionScalarParameter, -1400, -1350, parameter_name="VaryColour", default_value=0.0)
@@ -171,7 +174,9 @@ def packed_material(unreal, g, folder, lines):
     # made by a texturing tool from the garment's own bakes (R wear on folds and edges, G dirt in hollows, B rising from the
     # hem, A cavities); the colour fades toward FadeMul times itself by R and dirties toward DirtColour by G, B and A. WearOn
     # is 0 unless the row has a mask, so every garment without one is drawn exactly as before.
-    black = unreal.load_asset("/Engine/EngineResources/Black.Black")
+    # LINEAR PLACEHOLDERS FOR THE MASK SLOTS (11 November: the engine's Black is a colour texture, so a garment imported
+    # without a wear mask left the shared material failing to compile, "Sampler type is Masks, should be Color", and the
+    # game drew its default material): two tiny masks of our own, imported linear as masks, stand in
     wm = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, -800, parameter_name="WearMap", texture=wear_mask or black,
               sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
     wear_on = node(unreal.MaterialExpressionScalarParameter, -1000, -950, parameter_name="WearOn", default_value=0.0)
@@ -222,10 +227,10 @@ def packed_material(unreal, g, folder, lines):
     # its own instance (MaterialInstanceBasePropertyOverrides.h, bOverride_ShadingModel), so no other garment changes
     fuzz = node(unreal.MaterialExpressionVectorParameter, -400, -900, parameter_name="FuzzColour",
                 default_value=unreal.LinearColor(0.5, 0.5, 0.5, 1.0))
-    cloth_amt = node(unreal.MaterialExpressionScalarParameter, -400, -800, parameter_name="ClothAmount", default_value=0.0)
-    # under cloth shading the engine reads Fuzz Color from the subsurface colour pin and Cloth from custom data 0
+    # under cloth shading the engine reads Fuzz Color from the subsurface colour pin; the Cloth pin (custom data 0) is
+    # hidden from Python (SceneTypes.h, UMETA(Hidden)), so it keeps its default and the sheen is set by the fuzz colour,
+    # "cloth_amount" scaling it (11 November: the first import stopped on MP_CUSTOM_DATA0)
     mel.connect_material_property(fuzz, "", unreal.MaterialProperty.MP_SUBSURFACE_COLOR)
-    mel.connect_material_property(cloth_amt, "", unreal.MaterialProperty.MP_CUSTOM_DATA0)
     mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
     mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
     flat = unreal.load_asset("/Engine/EngineMaterials/FlatNormal.FlatNormal")
@@ -312,9 +317,9 @@ def packed_material(unreal, g, folder, lines):
             ov.set_editor_property("shading_model", unreal.MaterialShadingModel.MSM_CLOTH)
         mi.set_editor_property("base_property_overrides", ov)
         if cloth_on:
+            k = float(maps.get("cloth_amount", 1.0))
             fr, fg, fb = maps.get("fuzz", maps["tint"])
-            mel.set_material_instance_vector_parameter_value(mi, "FuzzColour", unreal.LinearColor(fr, fg, fb, 1.0))
-            mel.set_material_instance_scalar_parameter_value(mi, "ClothAmount", float(maps.get("cloth_amount", 1.0)))
+            mel.set_material_instance_vector_parameter_value(mi, "FuzzColour", unreal.LinearColor(fr * k, fg * k, fb * k, 1.0))
             lines.append("  cloth shading (its own instance's override): fuzz %s, amount %s" % (maps.get("fuzz", maps["tint"]), maps.get("cloth_amount", 1.0)))
     except Exception as e:
         lines.append("  two-sided override refused: %r" % e)
