@@ -14,6 +14,9 @@ THE RULE. For each garment row in production/specs/garments.json:
   - it is not older than the row's source FBX on F: (else STALE: the source changed after the last import
     into the shipping project);
   - a copy in the dressing project newer than the shipping one is WRONG-PROJECT (the last import went to F:).
+  - no map the row names (colour, normal, packed) is one flat value (else FLAT-MAP: 11 Nov, the texturing
+    test's jeans were filmed on a failed bake that was 140 grey everywhere; it imported without a word and
+    a packaged film and a fresh review were spent on it).
 A source FBX that is not on this PC is skipped and named, never guessed. Without the shipping project
 (another machine) the check says SKIP and fails nothing.
 
@@ -55,12 +58,41 @@ def judge(rows, shipped, dressed, sources):
     return out
 
 
+MAP_KEYS = ("colour", "normal", "packed")
+
+
+def flat_maps(row, spread=None):
+    """The map keys of a row whose picture on this PC is one flat value (every channel's spread under half a
+    level); spread(path) -> the largest channel standard deviation, or None when unreadable (skipped)."""
+    if spread is None:
+        spread = map_spread
+    out = []
+    for k in MAP_KEYS:
+        path = (row.get("maps") or {}).get(k)
+        if isinstance(path, str) and os.path.isfile(path):
+            sd = spread(path)
+            if sd is not None and sd < 0.5:
+                out.append(k)
+    return out
+
+
+def map_spread(path):
+    try:
+        from PIL import Image, ImageStat
+        # the colour channels at full size: a shrink premultiplies the transparent padding to black and reads
+        # a flat map as varied, and a thin stitch line is the only spread a plain map may have
+        return max(ImageStat.Stat(Image.open(path).convert("RGB")).stddev)
+    except Exception:
+        return None
+
+
 def line(rows, findings, skipped_sources):
     n = lambda w: sum(1 for _, why in findings if why == w)
     first = "%s:%s" % findings[0] if findings else "none"
     extra = (" sourceNotHere=%d" % len(skipped_sources)) if skipped_sources else ""
-    return "garmentsShipped=%s garments=%d missing=%d stale=%d wrongProject=%d first=%s%s" % (
-        "FAIL" if findings else "PASS", len(rows), n("missing"), n("stale"), n("wrong-project"), first, extra)
+    flat = sum(1 for _, why in findings if why.startswith("flat-map"))
+    return "garmentsShipped=%s garments=%d missing=%d stale=%d wrongProject=%d flatMap=%d first=%s%s" % (
+        "FAIL" if findings else "PASS", len(rows), n("missing"), n("stale"), n("wrong-project"), flat, first, extra)
 
 
 def main():
@@ -75,6 +107,9 @@ def main():
     sources = {f: mtime(f) for _, f in rows if f}
     skipped = [f for f, t in sources.items() if t is None]
     findings = judge(rows, shipped, dressed, sources)
+    for r in g:
+        for k in flat_maps(r):
+            findings.append((r["name"], "flat-map:" + k))
     print(line(rows, findings, skipped))
     for name, why in findings:
         print("  %s: %s" % (name, why))
@@ -104,6 +139,9 @@ def selftest():
     check("a row with no source is judged on presence only", "E" not in f)
     check("a source not on this PC is skipped, never stale", judge([("X", "x.fbx")], {"X": 1}, {}, {"x.fbx": None}) == [])
     check("the line fails on any finding", line(rows, list(f.items()), []).startswith("garmentsShipped=FAIL"))
+    check("a flat map is named", flat_maps({"maps": {"colour": __file__, "normal": __file__}}, lambda p: 0.0) == ["colour", "normal"])
+    check("a map with grain passes", flat_maps({"maps": {"colour": __file__}}, lambda p: 12.0) == [])
+    check("an unreadable or absent map is skipped", flat_maps({"maps": {"colour": __file__, "packed": "nowhere.png"}}, lambda p: None) == [])
     check("the line passes clean", line(rows, [], []).startswith("garmentsShipped=PASS garments=5"))
     print("garments_shipped selftest: passed=%d/%d failed=%d" % (ok, ok + fail, fail))
     return 1 if fail else 0
