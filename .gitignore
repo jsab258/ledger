@@ -236,3 +236,6 @@ game-design/voice-conds/zlata.npz
 
 # The cover's drawn cast tread (8 Nov), kept on F: game-inputs like every new picture
 production/assets/street/surfaces/cover_iron*.png
+
+# Personal Claude Code settings for this PC (hidden skills), never committed
+.claude/settings.local.json

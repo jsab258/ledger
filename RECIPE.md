@@ -117,3 +117,11 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Target and check: same pixels twice (passed); the edge-wear generator's level against the street's 3 to 10% worn share (0.7 to 0.8; the default 0.5 shows nothing).
 - Cost: about 45 min. Failed: masks from the game mesh alone came out blocky; baking from the high drape fixed it. The procedural tool's 0.3 has no ready patterns or noise: patterns drawn as true-size SVG, noise made outside. A build was run on a STOP disk reading (chained after the check): check first, alone.
 - Evidence: production/research/texture-pipeline/ (MAP, MAP-REVIEW, PROOF).
+
+### A turn-end check that holds only the scheduled worker (11 Nov)
+- Made: a stop hook that sends the scheduled production session back once when it ends a turn without handing over; tightened the same day so it holds nothing else. Never-used skills hidden for this project only (local settings).
+- Method: tell who the session is from how its log opens and from the start gate's verdict inside it (the opening message is the scheduled task's tag AND the gate said GO), never from a name appearing anywhere in the log; a guard lets a turn already sent back go, so it cannot loop.
+- Tools: Claude Code Stop hook (command, JSON on stdin, decision block); Python reading the session's JSONL log.
+- Target and check: hold every GO run and nothing else. Own tests 14 of 14; on the last 80 real logs, 41 GO runs held, 32 WAIT runs and the owner's own chats let go (the first version held all of them).
+- Cost: about 0.5 h. Failed: the first test (the task's name in the first 400 KB of the log) held any chat that had read the task file, and would have sent every WAIT run of a 15-minute schedule back to work beside the live session; its own synthetic tests passed, running it on real logs found it.
+- Evidence: tools/stop_hook.py (--selftest).
