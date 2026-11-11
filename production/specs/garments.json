@@ -126,6 +126,49 @@
    "handed": "2026-09-30"
   },
   {
+   "who": "Lena",
+   "name": "SheilaCardigan",
+   "fbx": "F:/LedgerTools/garments/sheila/cardigan-s4-2026-11-11/chain2/skinned/sheila_cardigan_s4_skinned.fbx",
+   "hides": [
+    "top"
+   ],
+   "handed": "2026-11-11",
+   "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
+   "made": "Tom's jumper carried to her S4 body and cut to a seven-button cardigan (SHEILA-CARDIGAN-S4-2026-11-11.md); listed: the blouse hem lump above the bottom button, two collar points in the neck."
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaBlouse",
+   "fbx": "F:/LedgerTools/garments/sheila/blouse-under-cardigan-2026-11-11/sheila_blouse_under_cardigan_skinned.fbx",
+   "hides": [],
+   "handed": "2026-11-11",
+   "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
+   "made": "Her C1 blouse carried to S4, its covered faces trimmed for wearing under the cardigan (SHEILA-BLOUSE-TRIM-2026-11-11.md)."
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaSkirt",
+   "fbx": "F:/LedgerTools/garments/sheila/skirt-cloth-2026-11-11/SheilaSkirt/SheilaSkirt_skinned.fbx",
+   "hides": [
+    "lower"
+   ],
+   "cloth": true,
+   "handed": "2026-11-11",
+   "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
+   "made": "Her C1 skirt carried to S4; worn as Chaos cloth CA_SheilaSkirt (480-triangle simulation mesh, free up to 8 cm at the hem; SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md); SKM_ stays the weights' source."
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaShoes",
+   "fbx": "F:/LedgerTools/garments/sheila/shoes-s4-model-2026-11-11/skin3/sheila_shoes_skinned.fbx",
+   "hides": [
+    "shoes"
+   ],
+   "handed": "2026-11-11",
+   "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
+   "made": "Flat brown derby modelled over her feet (SHEILA-SHOES-S4-MODEL-2026-11-11.md); listed: a pale gap at the right collar, a lumpy side wall."
+  },
+  {
    "who": "Sam",
    "name": "DarrenBelt",
    "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_belt_skinned.fbx",
