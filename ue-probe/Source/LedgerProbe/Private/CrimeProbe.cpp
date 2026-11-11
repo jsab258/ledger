@@ -8128,10 +8128,120 @@ namespace
 		return bDone;
 	}
 
+	// STAND UP, THEN WALK (11 November, n09-5 the office exit, try 2): a seated person asked to walk used to be refused
+	// (GSeated), so Ron never left the office bench on foot and was placed unseen after 12 s. Now the stand-up clip plays
+	// first, as the sit proof plays it (feet held; the idle back as the loop once the clip is in; the slide from the
+	// clip's feet to the idle's as it blends out), and the walk is asked again once he stands. Kingdom Come II's furniture
+	// plays an exit clip and the NPC then stands at the furniture's exit marker (STAND-AND-DOOR-READING-2026-11-09.md).
+	struct FStandUp
+	{
+		TWeakObjectPtr<AActor> Body;
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		double At = 0.0, ToX = 0.0, ToZ = 0.0, YawDeg = 0.0;
+		bool bLeaving = false, bSliding = false;
+		double SlideAt = -1.0;
+		FVector Slide = FVector::ZeroVector, SlideDone = FVector::ZeroVector;
+	};
+	std::map<std::string, FStandUp> GStandUps;
+	static const TCHAR* kStandUpClip = TEXT("/Game/Ledger/Anim/Sit/A_stand_up_MH.A_stand_up_MH");
+
+	bool BeginStandUp(UWorld* World, const char* C, AActor* Body, double ToX, double ToZ, double YawDeg, bool bLeaving)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoStandUp"));
+		if (bOff || World == nullptr || Body == nullptr || GStandUps.count(C)) { return false; }
+		UAnimSequence* Up = LoadObject<UAnimSequence>(nullptr, kStandUpClip);
+		TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = GLooks.Find(Body);
+		ULedgerPersonAnim* A = nullptr;
+		if (Up != nullptr && Parts != nullptr)
+		{
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& P : *Parts)
+			{
+				const USkeletalMeshComponent* M = P.IsValid() ? P->GetSkelMeshComponent() : nullptr;
+				if (M != nullptr && M->GetSkeletalMeshAsset() != nullptr && M->GetSkeletalMeshAsset()->GetSkeleton() == Up->GetSkeleton()) { A = P.Get(); break; }
+			}
+		}
+		if (A == nullptr || A->IsMoving() || A->GetCurrentActiveMontage() != nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerStandUp: %s cannot stand (%s)"), UTF8_TO_TCHAR(C), Up == nullptr ? TEXT("no clip") : TEXT("no fitting part or busy"));
+			return false;
+		}
+		USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+		for (int32 I = 0; I < 2; ++I)
+		{
+			A->FootHoldAt[I] = Mesh->GetSocketLocation(FName(I == 0 ? TEXT("foot_l") : TEXT("foot_r")));
+			A->FootHold[I] = 1.0f;
+		}
+		if (!A->PlayMove(Up, 0.3f, 0.5f, 1.0f)) { UE_LOG(LogTemp, Display, TEXT("LedgerStandUp: %s's clip did not start"), UTF8_TO_TCHAR(C)); return false; }
+		FStandUp& S = GStandUps[C];
+		S = FStandUp();
+		S.Body = Body; S.Anim = A; S.At = World->GetTimeSeconds();
+		S.ToX = ToX; S.ToZ = ToZ; S.YawDeg = YawDeg; S.bLeaving = bLeaving;
+		UE_LOG(LogTemp, Display, TEXT("LedgerStandUp: %s stands up to walk toward (%.2f, %.2f)"), UTF8_TO_TCHAR(C), ToX, ToZ);
+		return true;
+	}
+
+	bool StartWalkOff(UWorld* World, const char* C, AActor* Body, double ToX, double ToZ, double YawDeg, bool bLeaving);
+
+	// Each frame: the stand-up's loop swap, its slide, and the walk asked again once it ends.
+	void StandUpTick(UWorld* World)
+	{
+		if (World == nullptr || GStandUps.empty()) { return; }
+		const FVector2D IdleFeet(-9.0, 8.0), UpEnd(4.5, 46.0);   // the sit proof's measures (sit_join.txt)
+		const float BlendIn = 0.3f, BlendOut = 0.5f;
+		UAnimSequence* Up = LoadObject<UAnimSequence>(nullptr, kStandUpClip);
+		const double Now = World->GetTimeSeconds();
+		for (auto It = GStandUps.begin(); It != GStandUps.end();)
+		{
+			FStandUp& S = It->second;
+			AActor* Body = S.Body.Get();
+			ULedgerPersonAnim* A = S.Anim.Get();
+			AActor* V = Body != nullptr ? GVisualFor(Body) : nullptr;
+			if (Body == nullptr || A == nullptr || V == nullptr || Up == nullptr) { It = GStandUps.erase(It); continue; }
+			USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+			const double T = Now - S.At;
+			if (T >= BlendIn && GSeated.Contains(Body)) { SeatPerson(Body, std::string()); }
+			if (!S.bSliding && T >= Up->GetPlayLength() - BlendOut && Mesh != nullptr)
+			{
+				const FVector2D D = UpEnd - IdleFeet;
+				S.Slide = Mesh->GetComponentTransform().TransformVector(FVector(D.X, D.Y, 0.0));
+				S.SlideAt = Now; S.bSliding = true;
+			}
+			if (S.SlideAt >= 0.0)
+			{
+				const float W = FMath::Clamp((float)(Now - S.SlideAt) / BlendOut, 0.0f, 1.0f);
+				const FVector Want = S.Slide * W;
+				V->AddActorWorldOffset(FVector(Want.X - S.SlideDone.X, Want.Y - S.SlideDone.Y, 0.0));
+				S.SlideDone = Want;
+				if (W >= 1.0f) { S.SlideAt = -1.0; }
+			}
+			if (S.bSliding && S.SlideAt < 0.0 && A->GetCurrentActiveMontage() == nullptr)
+			{
+				for (int32 I = 0; I < 2; ++I) { A->FootHold[I] = 0.0f; }
+				const std::string C = It->first;
+				const FStandUp Done = S;
+				It = GStandUps.erase(It);
+				const bool bGo = StartWalkOff(World, C.c_str(), Body, Done.ToX, Done.ToZ, Done.YawDeg, Done.bLeaving);
+				UE_LOG(LogTemp, Display, TEXT("LedgerStandUp: %s stood in %.1f s and %s"), UTF8_TO_TCHAR(C.c_str()), T, bGo ? TEXT("walks") : TEXT("cannot walk"));
+				continue;
+			}
+			if (T > Up->GetPlayLength() + 5.0)
+			{
+				for (int32 I = 0; I < 2; ++I) { A->FootHold[I] = 0.0f; }
+				UE_LOG(LogTemp, Display, TEXT("LedgerStandUp: %s's stand-up never ended, given up"), UTF8_TO_TCHAR(It->first.c_str()));
+				It = GStandUps.erase(It);
+				continue;
+			}
+			++It;
+		}
+	}
+
 	// A walk begun: the figure walks the path, the simulation's body is at its end already (bLeaving: taken off later).
 	bool StartWalkOff(UWorld* World, const char* C, AActor* Body, double ToX, double ToZ, double YawDeg, bool bLeaving)
 	{
 		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoWalkOff"));
+		// seated: the stand-up first; the walk is asked again when it ends (StandUpTick)
+		if (!bOff && Body != nullptr && GSeated.Contains(Body)) { return BeginStandUp(World, C, Body, ToX, ToZ, YawDeg, bLeaving); }
+		if (GStandUps.count(C)) { return false; }
 		AActor* Visual = GVisualFor(Body);
 		ULedgerPersonAnim* A = WalkingPart(Body);
 		if (bOff || World == nullptr || Body == nullptr || Visual == nullptr || Visual == Body || A == nullptr || A->GoPhase != 0
@@ -10254,12 +10364,42 @@ namespace
 		}
 	}
 
+	// -FilmOnlyTom (11 November): every person more than 2 m from Tom hidden, again each second, so a film of
+	// him alone shows no placeholder or undressed passer-by (his rule of 4 Nov); his body, mover and garments
+	// stand where he does, as -OfficeLookNoOthers keeps them. A watch-only switch for films, never a pass.
+	// ITS OWN STEP, EVERY FRAME, BEFORE THE PHASES (11 November, second session): inside HumanTalkTick it never ran in
+	// the -TomSitProof mode (no log line), and an undressed Lena within 2 m walked through frames 1-120; so anyone
+	// tagged LedgerUndressed is hidden whatever the distance, and actors attached to Tom are never touched.
+	void FilmOnlyTomTick(UWorld* World, double Now)
+	{
+		static const bool bOnlyTom = FParse::Param(FCommandLine::Get(), TEXT("FilmOnlyTom"));
+		static double NextHide = 0.0;
+		if (!bOnlyTom || World == nullptr || GPawn == nullptr || Now < NextHide) { return; }
+		NextHide = Now + 1.0;
+		GFilmOnlyTom = true;
+		int32 Hid = 0;
+		const FVector Tom = GPawn->GetActorLocation();
+		for (TActorIterator<AActor> It(World); It; ++It)
+		{
+			if (*It == GPawn || It->IsHidden() || It->FindComponentByClass<USkeletalMeshComponent>() == nullptr) { continue; }
+			bool bToms = false;
+			for (AActor* Up = It->GetAttachParentActor(); Up != nullptr; Up = Up->GetAttachParentActor()) { if (Up == GPawn) { bToms = true; break; } }
+			if (bToms) { continue; }
+			if (It->ActorHasTag(FName(TEXT("LedgerUndressed"))) || FVector::Dist2D(It->GetActorLocation(), Tom) > 200.0)
+			{
+				It->SetActorHiddenInGame(true); ++Hid;
+			}
+		}
+		if (Hid > 0) { UE_LOG(LogTemp, Display, TEXT("ledgerFilmOnlyTom: %d more people hidden at %.1f s"), Hid, Now); }
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		MoveProofTick(World, Now);
 		WalkProofTick(World, Now);
 		WalkOffProofTick(World, Now);
 		WalkOffTick(World);
+		StandUpTick(World);
 		SitProofTick(World, Now);
 		OfficeLookTick(World, Now);
 		TurnTick(World, Now);
@@ -10300,28 +10440,6 @@ namespace
 		if (LedgerCollisionAudit::On()) { static bool bAudited = false; if (!bAudited && Now > 20.0) { bAudited = true; LedgerCollisionAudit::Report(); } }
 		OfficeCameraTick((float)FApp::GetDeltaTime());
 		PageShotsTick(World, Now);
-		// -FilmOnlyTom (11 November): every person more than 2 m from Tom hidden, again each second, so a film of
-		// him alone shows no placeholder or undressed passer-by (his rule of 4 Nov); his body, mover and garments
-		// stand where he does, as -OfficeLookNoOthers keeps them. A watch-only switch for films, never a pass.
-		{
-			static const bool bOnlyTom = FParse::Param(FCommandLine::Get(), TEXT("FilmOnlyTom"));
-			static double NextHide = 0.0;
-			if (bOnlyTom && GPawn != nullptr && Now >= NextHide)
-			{
-				NextHide = Now + 1.0;
-				GFilmOnlyTom = true;
-				int32 Hid = 0;
-				const FVector Tom = GPawn->GetActorLocation();
-				for (TActorIterator<AActor> It(World); It; ++It)
-				{
-					if (*It != GPawn && !It->IsHidden() && It->FindComponentByClass<USkeletalMeshComponent>() != nullptr && FVector::Dist2D(It->GetActorLocation(), Tom) > 200.0)
-					{
-						It->SetActorHiddenInGame(true); ++Hid;
-					}
-				}
-				if (Hid > 0) { UE_LOG(LogTemp, Display, TEXT("ledgerFilmOnlyTom: %d more people hidden at %.1f s"), Hid, Now); }
-			}
-		}
 		PerfHookTick(World, Now, (float)FApp::GetDeltaTime());
 		TalkLightTick(World, Now);
 		AckTick();
@@ -11833,6 +11951,7 @@ namespace
 		// and pretending otherwise would understate the one number the
 		// accepting case turns on.
 		if (GWatchSlot >= 0) { AccrueWatching(World, Delta); }
+		FilmOnlyTomTick(World, Now);
 
 		switch (GPhase)
 		{

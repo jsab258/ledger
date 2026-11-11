@@ -2044,3 +2044,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1 h (trace 2 min of helper, two runs 17 min, review 3 min).
 - What failed and why: nothing broke; the tile itself lacks age, which a procedural pattern does not give by itself.
 - Evidence: F:/LedgerTools/gate/new/brick-flemish-2026-11-11/review-brick/review.json; production/research/texture-pipeline/BRICK-FILES-2026-11-11.md.
+
+## A time-limited rule left in a scheduler's gate (11 November 2026)
+- Made: the hourly start gate's night pause removed for good; only the nightly test walk holds a run.
+- Method: a temporary rule coded with an end date outlived its week, and the old behaviour silently came back when the standing ruling had no end; the fix makes the standing rule the code and adds a test that sweeps every minute of the night window and fails any refusal outside the one allowed hold.
+- Tools: Python, the gate's own selftest.
+- Target and check: no WAIT from 00:45 to 05:10 except the walk hold; selftest 34 cases, the project checks failed=none.
+- Cost: about 0.2 h.
+- What failed and why: one night (00:50 to 05:15) lost; a dated branch in code was not tied to the ruling it served, so nothing flagged its lapse.
+- Evidence: tools/fresh_gate.py (commit 15dccba12); the advisor's message 92.

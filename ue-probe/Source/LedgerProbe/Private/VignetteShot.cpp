@@ -7947,7 +7947,25 @@ namespace
 	{
 		const std::string Glb = LedgerStreet::StrOr(Front, "glb");
 		if (World == nullptr || Glb.empty()) { Note = TEXT("no-glb"); return nullptr; }
-		const FString Stem = UTF8_TO_TCHAR(Glb.c_str());
+		FString Stem = UTF8_TO_TCHAR(Glb.c_str());
+		// A CANDIDATE FRONT FOR ONE RUN (11 November 2026, the texturing test's timber): -ShopFrontSwap=<shipped>:<variant>
+		// draws the variant's mesh, imported beside the shipped one, wherever the shop file names the shipped stem, so a
+		// new paint can be filmed in the packaged game beside today's without changing the shop file. A missing variant
+		// falls back to the shipped mesh, noted.
+		FString Swap, From, To;
+		if (FParse::Value(FCommandLine::Get(), TEXT("ShopFrontSwap="), Swap) && Swap.Split(TEXT(":"), &From, &To) && From == Stem && !To.IsEmpty())
+		{
+			const FString VariantPath = FString::Printf(TEXT("/Game/Ledger/ShopFronts/%s/SM_%s.SM_%s"), *To, *To, *To);
+			if (LoadObject<UStaticMesh>(nullptr, *VariantPath) != nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerShopFrontSwap from=%s to=%s"), *Stem, *To);
+				Stem = To;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("ledgerShopFrontSwap from=%s to=%s missing, the shipped front drawn"), *Stem, *To);
+			}
+		}
 		const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/ShopFronts/%s/SM_%s.SM_%s"), *Stem, *Stem, *Stem);
 		UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, *MeshPath);
 		if (Mesh == nullptr) { Note = TEXT("no-front-mesh(tools/ue/import_shop_displays.py)"); return nullptr; }
