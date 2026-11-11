@@ -134,7 +134,32 @@
    ],
    "handed": "2026-11-11",
    "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
-   "made": "Tom's jumper carried to her S4 body and cut to a seven-button cardigan (SHEILA-CARDIGAN-S4-2026-11-11.md); listed: the blouse hem lump above the bottom button, two collar points in the neck."
+   "made": "Tom's jumper carried to her S4 body and cut to a seven-button cardigan (SHEILA-CARDIGAN-S4-2026-11-11.md); listed: the blouse hem lump above the bottom button, two collar points in the neck.",
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
+    "tint": [
+     0.38,
+     0.29,
+     0.17
+    ],
+    "tapecolour": [
+     0.38,
+     0.29,
+     0.17
+    ],
+    "teethcolour": [
+     0.3,
+     0.24,
+     0.16
+    ],
+    "detail": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_Knit_Detail_Normal.png",
+    "detail_rib": "F:/LedgerTools/polyhaven/knitted_fleece/tiles/T_KnitRibAcross_Detail_Normal.png",
+    "detail_tiling": 2.4,
+    "detail_strength": 1.0
+   },
+   "knit": "11 November: Tom's jumper maps (her cardigan keeps its UVs), the shared knit and rib detail at 2.4 (a finer hand-knit than Ron's 2.0, her stitch scale not measured); beige from her casting sheet, linear 0.38/0.29/0.17, decided within canon."
   },
   {
    "who": "Lena",
@@ -143,7 +168,19 @@
    "hides": [],
    "handed": "2026-11-11",
    "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
-   "made": "Her C1 blouse carried to S4, its covered faces trimmed for wearing under the cardigan (SHEILA-BLOUSE-TRIM-2026-11-11.md)."
+   "made": "Her C1 blouse carried to S4, its covered faces trimmed for wearing under the cardigan (SHEILA-BLOUSE-TRIM-2026-11-11.md).",
+   "plain": {
+    "csheila_blouse_s4": {
+     "rgb": [
+      0.7,
+      0.64,
+      0.5
+     ],
+     "rough": 0.75,
+     "metal": 0.0,
+     "what": "cream cotton"
+    }
+   }
   },
   {
    "who": "Lena",
@@ -155,7 +192,19 @@
    "cloth": true,
    "handed": "2026-11-11",
    "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
-   "made": "Her C1 skirt carried to S4; worn as Chaos cloth CA_SheilaSkirt (480-triangle simulation mesh, free up to 8 cm at the hem; SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md); SKM_ stays the weights' source."
+   "made": "Her C1 skirt carried to S4; worn as Chaos cloth CA_SheilaSkirt (480-triangle simulation mesh, free up to 8 cm at the hem; SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md); SKM_ stays the weights' source.",
+   "plain": {
+    "M_SkirtWool": {
+     "rgb": [
+      0.1,
+      0.055,
+      0.03
+     ],
+     "rough": 0.9,
+     "metal": 0.0,
+     "what": "brown wool"
+    }
+   }
   },
   {
    "who": "Lena",
@@ -166,7 +215,59 @@
    ],
    "handed": "2026-11-11",
    "hold": "11 November: Sheila's refit onto her S4 body (n09-6, SHEILA-REFIT-PLAN-2026-11-09.md step 7); held for her -WearHeld film, its reviewers and his whole-person look.",
-   "made": "Flat brown derby modelled over her feet (SHEILA-SHOES-S4-MODEL-2026-11-11.md); listed: a pale gap at the right collar, a lumpy side wall."
+   "made": "Flat brown derby modelled over her feet (SHEILA-SHOES-S4-MODEL-2026-11-11.md); listed: a pale gap at the right collar, a lumpy side wall.",
+   "plain": {
+    "M_Upper": {
+     "rgb": [
+      0.15,
+      0.058,
+      0.02
+     ],
+     "rough": 0.5,
+     "metal": 0.0,
+     "what": "mid brown leather"
+    },
+    "M_Sole": {
+     "rgb": [
+      0.035,
+      0.022,
+      0.015
+     ],
+     "rough": 0.8,
+     "metal": 0.0,
+     "what": "dark brown sole and welt"
+    },
+    "M_Lace": {
+     "rgb": [
+      0.11,
+      0.045,
+      0.018
+     ],
+     "rough": 0.65,
+     "metal": 0.0,
+     "what": "brown laces"
+    },
+    "M_Eyelet": {
+     "rgb": [
+      0.08,
+      0.075,
+      0.07
+     ],
+     "rough": 0.35,
+     "metal": 1.0,
+     "what": "plain dull metal eyelets"
+    },
+    "M_Panel": {
+     "rgb": [
+      0.15,
+      0.058,
+      0.02
+     ],
+     "rough": 0.5,
+     "metal": 0.0,
+     "what": "mid brown leather panel"
+    }
+   }
   },
   {
    "who": "Sam",

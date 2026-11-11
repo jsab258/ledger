@@ -371,6 +371,65 @@ def packed_material(unreal, g, folder, lines):
     return mi
 
 
+# PLAIN COLOURS BY SLOT (11 November 2026, Sheila's packaged film: her blouse, cardigan and shoes came in with no
+# "maps" and no "materials", so the FBX importer's own materials drew them white). "plain" names, per FBX slot,
+# {"rgb": linear base colour, "rough": roughness, "metal": metallic}: one instance per slot on a matt base, set on
+# the mesh; for a cloth row also named MI_Slot_<slot> and MI_Slot_<number> beside the cloth asset, where the game
+# looks for the cloth's colours (LedgerJacket.h, WearCloth). A slot the row does not name keeps what it had.
+PLAIN_BASE = DEST + "/M_LedgerGarmentPlain"
+
+
+def plain_material(unreal, g, folder, mesh, lines):
+    tools = unreal.AssetToolsHelpers.get_asset_tools()
+    mel = unreal.MaterialEditingLibrary
+    if unreal.EditorAssetLibrary.does_asset_exist(PLAIN_BASE):
+        base = unreal.load_asset(PLAIN_BASE)
+        mel.delete_all_material_expressions(base)
+    else:
+        base = tools.create_asset("M_LedgerGarmentPlain", DEST, unreal.Material, unreal.MaterialFactoryNew())
+    for name, prop, y, default in (("Color", unreal.MaterialProperty.MP_BASE_COLOR, 0, None),
+                                   ("Roughness", unreal.MaterialProperty.MP_ROUGHNESS, 250, 0.8),
+                                   ("Metallic", unreal.MaterialProperty.MP_METALLIC, 400, 0.0)):
+        cls = unreal.MaterialExpressionVectorParameter if default is None else unreal.MaterialExpressionScalarParameter
+        e = mel.create_material_expression(base, cls, -500, y)
+        e.set_editor_property("parameter_name", name)
+        if default is not None:
+            e.set_editor_property("default_value", default)
+        mel.connect_material_property(e, "", prop)
+    for flag in ("used_with_skeletal_mesh", "used_with_clothing"):
+        base.set_editor_property(flag, True)
+    mel.recompile_material(base)
+    unreal.EditorAssetLibrary.save_loaded_asset(base, only_if_is_dirty=False)
+    plain = g["plain"]
+    slots = list(mesh.get_editor_property("materials"))
+    done = []
+    for i, s in enumerate(slots):
+        slot = str(s.get_editor_property("material_slot_name"))
+        want = plain.get(slot)
+        if not want:
+            continue
+        names = ["MI_%s_%s" % (g["name"], slot)]
+        if g.get("cloth"):
+            names += ["MI_Slot_" + slot, "MI_Slot_%d" % i]
+        for mi_name in names:
+            path = folder + "/" + mi_name
+            mi = unreal.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else tools.create_asset(
+                mi_name, folder, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
+            mel.set_material_instance_parent(mi, base)
+            mel.clear_all_material_instance_parameters(mi)
+            r, gr, b = want["rgb"]
+            mel.set_material_instance_vector_parameter_value(mi, "Color", unreal.LinearColor(r, gr, b, 1.0))
+            mel.set_material_instance_scalar_parameter_value(mi, "Roughness", float(want.get("rough", 0.8)))
+            mel.set_material_instance_scalar_parameter_value(mi, "Metallic", float(want.get("metal", 0.0)))
+            unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
+            if mi_name == names[0]:
+                s.set_editor_property("material_interface", mi)
+                slots[i] = s
+        done.append("%s %s" % (slot, want["rgb"]))
+    mesh.set_editor_property("materials", slots)
+    lines.append("  plain colours on %s: %s; slots not named kept: %s" % (PLAIN_BASE, done, [str(s.get_editor_property("material_slot_name")) for s in slots if str(s.get_editor_property("material_slot_name")) not in plain]))
+
+
 BUDGETS = os.path.join(REPO, "production", "specs", "asset-budgets.json")
 
 
@@ -439,6 +498,13 @@ def selftest():
          ini_lod_groups() is None or ini_lod_groups() == list(zip(budget_kind(DEST + "/TomZipJacket").get("lod_keep", []),
                                                                   budget_kind(DEST + "/TomZipJacket").get("lod_screen_size", []))),
          str(ini_lod_groups())),
+        # 11 November: Sheila's garments came in white, drawn by the FBX importer's own materials
+        ("every garment says how it is coloured (maps, plain or materials)",
+         all(x.get("maps") or x.get("plain") or x.get("materials") for x in g if "released" in x or x.get("who") == "Lena" and "hold" in x and "11 November" in x["hold"]),
+         str([x["name"] for x in g if not (x.get("maps") or x.get("plain") or x.get("materials")) and ("released" in x or x.get("who") == "Lena" and "11 November" in x.get("hold", ""))])),
+        ("every plain colour has three numbers",
+         all(len(v.get("rgb", [])) == 3 for x in g for v in x.get("plain", {}).values()),
+         str([x["name"] for x in g if any(len(v.get("rgb", [])) != 3 for v in x.get("plain", {}).values())])),
         ("nothing the game wears lives in a scratch folder (tmp is cleared after seven days)",
          all("hold" in x for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower()),
          str([x["name"] for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower() and "hold" not in x])),
@@ -529,6 +595,8 @@ def main_after_idle(seconds=20.0):
                     slots[i] = s
                 mesh.set_editor_property("materials", slots)
                 lines.append("  every slot set to %s" % mi.get_name())
+        if g.get("plain"):
+            plain_material(unreal, g, folder, mesh, lines)
         mats = g.get("materials", {})
         if mats:
             slots = list(mesh.get_editor_property("materials"))
