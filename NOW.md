@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (11 Nov, 12:51): Sheila's cardigan and shoes made (faults listed), her skirt as cloth under way (meshes and game code done, asset run next); Drape Studio on Tom's jacket and jeans next (advisor 100); his efficiency and 15-minute rulings in RULINGS.
+STATE (11 Nov, 14:05): Sheila's four garments imported as held rows (her skirt as cloth, 480-triangle proxy), a packaged build asked for her film; Drape Studio on Tom's jacket and jeans written up, the jacket-over-jumper run still going.
 
 ## Handovers
 

@@ -2115,3 +2115,19 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: Blender headless, tools/meshgen/blender/model_footwear.py --kind shoe, sole_footprints.py, the footwear pose check.
 - Target and check: foot through over 1 mm per pose (rest and toe bend 0; walk/sit/stair up to 2.6 mm, hidden by the body's foot hide), the builder's close look, then the whole-person gate.
 - Cost: about 0.15 h (carry, set aside) plus 0.1 h (model). Evidence: production/research/clothing-pipeline/SHEILA-SHOES-S4-2026-11-11.md, SHEILA-SHOES-S4-MODEL-2026-11-11.md
+
+## An outside cloth simulator on a jacket, trousers and a pattern import (11 Nov 2026)
+- Made: a second and third garment run unattended through a candidate simulator's Marvelous-compatible scripting, each beside the reference tool's drape; a sized vector pattern imported.
+- Method: the reference tool's own job scripts, unchanged but for output folder and a body file the candidate reads (FBX for the proprietary avatar); same body, same check script, same hang heights; runs one after another for fair times; pattern exported by the pattern library's own renderer and imported as SVG.
+- Tools: the candidate's Python runner, Blender headless (drape check, bounds, workbench pictures), the pattern library under Node.
+- Target and check: cloth inside body, body through cloth, edges over 1.2x, worst edge, hang heights, time, by eye. Result: the jacket matched or beat the reference on the checks at 5.8x the time; trousers usable but 2 cm high with a flaring band at 2.6x; import exact in size (perimeters within 0.4 mm).
+- Failed and why: time grows with steps (no stop-when-still in the scripted path); share-based checks pass a sleeve the arm pokes through; locked fabric files fall back to stiffer presets; SVG symbol definitions import as pieces and names are lost.
+- Cost: about 0.6 h session, no helpers, no API. Evidence: production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-11.md
+
+## A skirt as simulated cloth on a coarse proxy (11 Nov 2026)
+- Made: a game cloth asset for a knee-length skirt: the full skirt renders, a 480-triangle single-layer mesh simulates.
+- Method: the engine's static-mesh cloth template with separate render and simulation meshes; with no proxy-deformer node the render mesh is deformed by the simulation mesh (engine source); free distance by a height gradient in the graph (0 above the hip line, full at the hem).
+- Tools: the engine's cloth template by editor script (tools/ue/make_cloth_garment.py), Blender for the proxy.
+- Target and check: the asset regenerates; the game wears it through its cloth path; judged in a packaged held film (pending).
+- Failed and why: the garment import stopped on folders with no budget kind: every new garment folder needs its budget and parts lines first.
+- Cost: about 0.5 h. Evidence: production/research/clothing-pipeline/SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md, C:/LedgerTools/mh-assemble/cloth-garment.txt
