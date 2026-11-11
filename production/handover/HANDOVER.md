@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-11 00:22 (hourly run)
+**Started:** 2026-11-11 05:21 (hourly run; the 00:22 session set no Stopped line, taken as stopped after 34 idle minutes)
 (The session started 10 Nov 20:22 set no Stopped line; no turn for 76 minutes, taken as stopped by the gate; its background job still ran on the card at this start.)
 **Stopped:** 2026-11-10 19:54 (history past its point at the Discord item's end; motion 2 filmed and reviewed, his tap acted on, scan sent; sd-cli still making motion 3 on the card, see Next 1b)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)

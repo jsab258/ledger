@@ -200,6 +200,9 @@ namespace
 	// Set while his page's pictures leave the undressed out (PageShotsTick), so the day's moves
 	// (ShowPerson) never show one again: Darren at the cafe, 4 November.
 	bool GPageLeavesUndressed = false;
+	// -FilmOnlyTom (11 November, Tom's page films: a placeholder and the undressed Lena walked through both);
+	// set while it hides everyone but him, so ShowPerson never brings one back.
+	bool GFilmOnlyTom = false;
 
 	// ---- ceilings and durations, none of them a threshold ----------------
 	const double kWorldCeiling          = 45.0;
@@ -939,7 +942,13 @@ namespace
 	const TCHAR* kLiveIdles[] = {
 		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_b_idle.mhc_mh001_fmn_b_idle"),
 		TEXT("/MetaHumanCharacter/Optional/Animation/UEFNAnimPreset/Locomotion/AS_MH_Neutral_Stand_Idle_Loop.AS_MH_Neutral_Stand_Idle_Loop"),
-		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_f_idle.mhc_mh001_fmn_f_idle") };
+		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_f_idle.mhc_mh001_fmn_f_idle"),
+		// AND OUR OWN, LAST (11 November, production/research/ron-apose/DIAGNOSIS-2026-11-11.md): the
+		// launcher's 5.8.4 update of 9 Nov dropped the plugin's Optional folder, none of the three above
+		// cooked, and the cast stood in the bind pose; the Game Animation Sample's stand, retargeted to
+		// the cast's skeleton under /Game/Ledger, is cooked with the game, so a missing plugin folder
+		// can never leave them in it again. Used only when every clip above fails to load.
+		TEXT("/Game/Ledger/Anim/Idle/A_stand_idle_MH.A_stand_idle_MH") };
 
 	AActor* GVisualFor(AActor* Body)
 	{
@@ -7917,6 +7926,7 @@ namespace
 	{
 		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
 		if (V == nullptr || !V->IsValid()) { return; }
+		if (bShow && GFilmOnlyTom) { return; }
 		if (bShow && GPageLeavesUndressed && ((*V)->ActorHasTag(FName(TEXT("LedgerUndressed")))
 		                                      || (Body != nullptr && Body->ActorHasTag(FName(TEXT("LedgerUndressed")))))) { return; }
 		(*V)->SetActorHiddenInGame(!bShow);
@@ -10290,6 +10300,28 @@ namespace
 		if (LedgerCollisionAudit::On()) { static bool bAudited = false; if (!bAudited && Now > 20.0) { bAudited = true; LedgerCollisionAudit::Report(); } }
 		OfficeCameraTick((float)FApp::GetDeltaTime());
 		PageShotsTick(World, Now);
+		// -FilmOnlyTom (11 November): every person more than 2 m from Tom hidden, again each second, so a film of
+		// him alone shows no placeholder or undressed passer-by (his rule of 4 Nov); his body, mover and garments
+		// stand where he does, as -OfficeLookNoOthers keeps them. A watch-only switch for films, never a pass.
+		{
+			static const bool bOnlyTom = FParse::Param(FCommandLine::Get(), TEXT("FilmOnlyTom"));
+			static double NextHide = 0.0;
+			if (bOnlyTom && GPawn != nullptr && Now >= NextHide)
+			{
+				NextHide = Now + 1.0;
+				GFilmOnlyTom = true;
+				int32 Hid = 0;
+				const FVector Tom = GPawn->GetActorLocation();
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (*It != GPawn && !It->IsHidden() && It->FindComponentByClass<USkeletalMeshComponent>() != nullptr && FVector::Dist2D(It->GetActorLocation(), Tom) > 200.0)
+					{
+						It->SetActorHiddenInGame(true); ++Hid;
+					}
+				}
+				if (Hid > 0) { UE_LOG(LogTemp, Display, TEXT("ledgerFilmOnlyTom: %d more people hidden at %.1f s"), Hid, Now); }
+			}
+		}
 		PerfHookTick(World, Now, (float)FApp::GetDeltaTime());
 		TalkLightTick(World, Now);
 		AckTick();
