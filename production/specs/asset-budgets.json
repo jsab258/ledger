@@ -63,6 +63,10 @@
     ["/Game/Ledger/MetaHumans/Garments/DarrenJeans", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/DarrenBoots", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments/DarrenJumper", "garment_jumper"],
+    ["/Game/Ledger/MetaHumans/Garments/SheilaCardigan", "garment_jumper"],
+    ["/Game/Ledger/MetaHumans/Garments/SheilaBlouse", "garment_jumper"],
+    ["/Game/Ledger/MetaHumans/Garments/SheilaSkirt", "garment_trousers"],
+    ["/Game/Ledger/MetaHumans/Garments/SheilaShoes", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
     ["/Game/MetaHumans", "exempt"],
@@ -100,6 +104,26 @@
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJeansTC"],
       "parts": ["SKM_TomJeansTC", "MI_TomJeansTC", "T_TomJeansTC_ColourAO", "T_TomJeansTC_Normal", "T_TomJeansTC_Packed", "T_TomJeansTC_Detail_Normal", "T_TomJeansTC_Wear_Mask"],
       "source": "production/specs/garments.json (TomJeansTC, held: the texturing test's jeans, MAP-2026-11-10.md chain 1) and tools/ue/import_garments.py's names"
+    },
+    "sheila-cardigan": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/SheilaCardigan"],
+      "parts": ["SKM_SheilaCardigan", "Knit", "Rib", "Button"],
+      "source": "production/specs/garments.json (SheilaCardigan, held: her S4 refit, 11 Nov) and tools/ue/import_garments.py's names"
+    },
+    "sheila-blouse": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/SheilaBlouse"],
+      "parts": ["SKM_SheilaBlouse", "csheila_blouse_s4"],
+      "source": "production/specs/garments.json (SheilaBlouse, held: her S4 refit, 11 Nov) and tools/ue/import_garments.py's names"
+    },
+    "sheila-skirt": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/SheilaSkirt"],
+      "parts": ["SKM_SheilaSkirt", "M_SkirtWool", "SM_SheilaSkirt", "SM_SheilaSkirt_SIM", "CA_SheilaSkirt", "DF_SheilaSkirt", "MI_Slot_0", "MI_Slot_M_SkirtWool", "M_Garment_Matt"],
+      "source": "production/specs/garments.json (SheilaSkirt, held: her S4 refit, 11 Nov) and tools/ue/import_garments.py's names; the cloth asset's from tools/ue/make_cloth_garment.py (LEDGER_CLOTH_FIXED=1)"
+    },
+    "sheila-shoes": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/SheilaShoes"],
+      "parts": ["SKM_SheilaShoes", "M_Upper", "M_Panel", "M_Sole", "M_Eyelet", "M_Lace"],
+      "source": "production/specs/garments.json (SheilaShoes, held: her S4 refit, 11 Nov) and tools/ue/import_garments.py's names"
     },
     "tom-jumper": {
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJumper"],

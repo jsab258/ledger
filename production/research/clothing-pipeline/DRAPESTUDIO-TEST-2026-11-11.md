@@ -58,3 +58,41 @@ The example job twice: byte-identical OBJs. The jumper twice (run 1, run 1b): by
 It now runs the whole jumper job unattended with no setting, writes its own pictures and a pass/fail, and exports FBX. Next useful: a per-piece worst-stretch limit in the check, and the cuff fix. Whether it replaces Marvelous for other garments (jacket, jeans) is not tested; one garment passing is one sample.
 
 Cost: about 25 minutes of session time and one small helper-free FBX check; no API spend.
+
+# Tom's zip jacket and jeans, layering and a pattern import (advisor 100, 11 November, 13:22 on)
+
+His pick (12:45): Tom's other garments through the updated build, his own tool, no checks of it. Same method as the jumper: Marvelous's own jobs (zip_jacket.py drape v19, jeans.py drape n7) through run_job_script.py, only the output folder and the body file changed (Drape Studio reads FBX, not Marvelous's .avt: the jacket on MH_TomL1_straight.fbx, the jeans on the same proxy body Marvelous used, n6/body/MH_TomL1_straight_proxy.fbx). Default seam directions; DRAPE_STUDIO_EXE unset; runs one after another for fair times. Same check (drape_check_any.py, the job's own plan), same hang heights (bounds.py). Work folder F:/LedgerTools/drapestudio-test-2026-11-11 (jacket/, jeans/, layer/, import/, pics/). Pictures: production/previews/drapestudio-jacket-2026-11-11.jpg and drapestudio-jeans-2026-11-11.jpg (left Marvelous, right Drape Studio; the picture script frames hips up, so the jeans' hems are out of frame).
+
+## Verdict: the jacket drapes as well as Marvelous on our checks but takes 5.8 times as long; the jeans come out usable but sit about 2 cm high with the waistband standing off at the sides, in 2.6 times the time. The pattern import is exact in size but drags in FreeSewing's marks as pieces and loses the names.
+
+## Numbers (same check, same body; the jacket after its cuff grip, as Marvelous's shipped drape)
+| | Jacket, Marvelous v19 | Jacket, Drape Studio | Jeans, Marvelous n7 | Jeans, Drape Studio |
+|---|---|---|---|---|
+| time | 102 s | 587 s | 86 s | 226 s |
+| hang height (jacket: back; jeans: right front), mm | 1,031 to 1,628 | 1,025 to 1,629 | 64 to 1,085 | 73 to 1,106 |
+| waistband (jeans), mm | | | 1,066 to 1,120 | 1,074 to 1,141 |
+| cloth points over 1 mm inside the body | 100 | 26 | 101 | 36 |
+| body through the cloth, points over 1 mm | 103 (back 44, cuffs 31) | 158 (sleeves 142) | 28 | 52 (backs) |
+| edges over 1.2x their pattern length | 1,076 | 891 | 83 | 216 |
+| worst edge | 13.1x (right cuff) | 6.05x (left sleeve) | 1.70x | 2.19x |
+| its own check | none | ok (604 edges over; seam gap 12.3 mm; 26 points through) | none | ok (45 points through; seam gap 5.6 mm; worst piece drop 73 mm) |
+
+By eye: the jacket is a jacket: collar standing, shoulders, sleeves and the rib hem sit as Marvelous's do, the zip line straight down the front; Marvelous's own drape shows more folds at the hem band. Body through the cloth moved from the back and cuffs (Marvelous) to the upper sleeves (Drape Studio): the arm pokes through the sleeve near the armpit. The jeans: the waistband rides about 2 cm higher than Marvelous's and its top edge stands off the body at the hips; the seat and crotch read as jeans; slightly more stretch at the back.
+
+## Layering (the jacket over the jumper)
+(added when its run ends)
+
+## Pattern import (FreeSewing's Brian at Tom's measures as FreeSewing's own SVG, ImportSVG)
+- 14 pieces came in, in 0.08 s. Three are the pattern (fs-1 back, fs-2 front, fs-3 sleeve); the other 11 are FreeSewing's mark symbols (buttons, notches, a logo, 2 to 24 mm) taken as closed outlines.
+- Sizes exact: back 307.3 x 628.4 mm, perimeter 1,828.4 against FreeSewing's 1,828.8; front 1,814.2 against 1,814.4; sleeve 430.9 x 611.5 mm, 1,798.2 against 1,798.3.
+- Corners: back 7 lines, front 6, sleeve 4, so seams can be sewn between them; the part names are lost (fs-1...), and FreeSewing draws back and front as halves on the fold, so a whole piece needs mirroring by hand.
+
+## What works, what fails and why
+- Works: unattended runs of two more Marvelous jobs, unchanged but for the folder and body file; every call our jobs use answered (no unsupported call); the jacket's cuff grip (freeze, shrink, re-settle) runs; pictures and pass/fail beside each drape; a sized pattern straight from FreeSewing.
+- Fails: time (5.8x on the 1,700-step jacket, 2.6x on the jeans; the jumper was 2.0x): it grows with steps and particles; the jacket's upper sleeves let the arm through (its own check passes it on its share rule); the jeans' waistband sits high and flares (Marvelous's denim file is locked, so its Denim preset is stiffer or lighter than Marvelous's denim: likely, not measured); SVG marks imported as pieces.
+
+## Improvement suggestions for unattended work
+1. Speed on long jobs: the jacket's 1,000-step settle dominates; a stop when still (its JSON jobs have until_still) in the Python Simulate would cut it.
+2. A per-piece worst-stretch and worst-penetration limit, not only shares, so the sleeves' arm-through and the jumper's cuffs fail the check.
+3. SVG import: skip anything inside <defs> or <use> and anything under about 30 mm; keep FreeSewing's part ids (data-part or the group's id) as names; an option to mirror a piece on its fold line.
+4. A denim fabric close to Marvelous's (a .drape-fabric.json from Marvelous's stated values) and a waistband elastic hint.
