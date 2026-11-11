@@ -2131,3 +2131,17 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: the asset regenerates; the game wears it through its cloth path; judged in a packaged held film (pending).
 - Failed and why: the garment import stopped on folders with no budget kind: every new garment folder needs its budget and parts lines first.
 - Cost: about 0.5 h. Evidence: production/research/clothing-pipeline/SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md, C:/LedgerTools/mh-assemble/cloth-garment.txt
+
+## Layering one garment over another in an outside cloth simulator (11 Nov, finished: fails)
+- Made: an outer jacket draped over a frozen inner jumper in a third-party simulator by an unchanged job script.
+- Method: open the inner drape, freeze its pieces, build and sew the outer pattern, settle, then the cuff grip; check each garment against the body and the outer against the inner, after splitting the result by piece order (both garments reuse piece names, which a name-keyed check silently merges).
+- Tools: the simulator's job runner, the drape check in Blender, a small splitter script.
+- Target and check: no inner cloth visible through the outer at any view; the check's three marks.
+- Failed and why: the inner shows through the outer over shoulders, chest and sleeves; cloth-to-frozen-cloth contact is absent or too thin (likely); 7 times the outer's time alone. A ray check that trusts the inner mesh's face direction is supporting evidence only; the picture decides.
+- Cost: about 1.3 h machine, 0.3 h checking. Evidence: production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-11.md, production/previews/drapestudio-layer-2026-11-11.jpg
+
+## Garment colours by slot when no baked maps exist (11 Nov, part of a person's dressing)
+- Made: plain colour per material slot for garments with no bake (a blouse, a wool skirt worn as cloth, shoes), and a carried garment wearing its source's baked maps in a new tint.
+- Method: the importer refuses nothing that has no colour route, so a garment came in drawn with the file importer's own white; a selftest now fails any garment for the dressed person without maps, plain colours or materials.
+- Failed and why: found only in the packaged film; the import's own result line listed slots but nobody read them for colour.
+- Cost: about 0.5 h. Evidence: tools/ue/import_garments.py (plain_material), C:/LedgerTools/mh-assemble/import-garments.txt
