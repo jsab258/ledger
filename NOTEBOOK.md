@@ -2035,3 +2035,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 3 h with the bakes (10 Nov) and 1.5 h of films and reviews (11 Nov).
 - What failed and why: the first film judged the wiring, not the method: the test row named a failed bake that was one flat grey and imported silently (the garment check now fails a flat map). On the fair film the generator's mask, knowing nothing of seams, gave smudges, no fading, and lost the seam and pocket lines our fade step paints; ours won clearly. A generic curvature-and-occlusion mask is not garment wear; wear follows the pattern's seams.
 - Evidence: F:/LedgerTools/gate/new/tom-films-2026-11-11-b/review-jeans/review.json; F:/LedgerTools/gate/new/tom-films-2026-11-11/review-jeans/review.json.
+
+## A candidate wall tile shown in the shipped game with no code (11 November 2026)
+- Made: two runs of the packaged game's fixed street views, the second with a procedural Flemish-bond tile in place of the photographed brick scan.
+- Method: trace which files the loader reads for the surface (its scan entry, tiling size and colour grade, the layers over it); swap the three maps in the disposable packaged copy, set the tiling to the tile's true size and the grade to the same target mean in linear light, switch off the layers bound to the old scan (per-brick tones) on both runs, restore afterwards; one fresh reviewer, near, mid and far crops.
+- Tools: the packaged game's vignette mode, PowerShell, PIL; a read-only file trace by a cheap helper.
+- Target and check: the right bond and scale; no seams, repeats or shimmer; against the Hook sheet. Result: right bond and scale, better near, a wash far; reads newly built (crisp arrises, thin pale flush mortar), headers in a regular dot grid.
+- Cost: about 1 h (trace 2 min of helper, two runs 17 min, review 3 min).
+- What failed and why: nothing broke; the tile itself lacks age, which a procedural pattern does not give by itself.
+- Evidence: F:/LedgerTools/gate/new/brick-flemish-2026-11-11/review-brick/review.json; production/research/texture-pipeline/BRICK-FILES-2026-11-11.md.
