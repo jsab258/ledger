@@ -628,3 +628,5 @@
 {"event": "stop", "at": "2026-11-11T10:21:06", "note": "try 3 imported, reviewed, set aside; rows restored"}
 {"event": "start", "at": "2026-11-11T18:58:00", "task": "n09-6", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-11T19:04:00", "note": "Sheila collar faults c/d try 2: cardigan neck cut, collar lift both islands, seen blouse body cut, import"}
+{"event": "start", "at": "2026-11-11T19:41:00", "task": "n09-6", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-11T19:46:00", "note": "Sheila collar try 2 filmed packaged: c pass, d set aside"}
