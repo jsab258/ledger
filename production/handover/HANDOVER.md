@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-11 20:21 (hourly run)
-**Stopped:** 2026-11-11 20:39 (pace +7.1 ahead, over 6: nothing new and heavy; no job, helper or game running)
+**Started:** 2026-11-12 00:37 (hourly run)
+**Stopped:** 2026-11-12 00:22 (run 00:22: pace +6.0, at the stop mark; nothing new on the page or from the advisor; next steps unchanged)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
