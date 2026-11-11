@@ -2108,3 +2108,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: under-layer points through the outer layer at rest and in three poses. Result: counts fell only because fewer points remained; the worst point (11.8 mm) stayed.
 - Failed and why: the faults that show are the faces that already poke out, and a "covered" test never cuts them by definition. Cutting poking points too ragged the collar. The trim saves triangles, not clipping: pair it with a push-out or a hem shortened above the outer garment's reach.
 - Cost: about 0.1 h helper. Evidence: production/research/clothing-pipeline/SHEILA-BLOUSE-TRIM-2026-11-11.md
+
+## A low lace-up shoe for a second wearer (11 Nov 2026)
+- Made: a woman's flat lace-up derby for a MetaHuman body, skinned (20,152 triangles the pair, raise 16 mm).
+- Method: carrying another wearer's passed boot and cutting it low failed the close look (a cut topline leaves a ragged edge and orphaned eyelets, and the work boot's sole stays). Modelling the shoe new over the wearer's own foot (foot skin offset by ease and leather, toe box hull, sloped topline cut then rolled, slim sole and welt, eyelets on the instep, weights written by the script) gave a clean result in one run. Lesson: carry a shoe only when the target keeps its kind; for a different kind, model it.
+- Tools: Blender headless, tools/meshgen/blender/model_footwear.py --kind shoe, sole_footprints.py, the footwear pose check.
+- Target and check: foot through over 1 mm per pose (rest and toe bend 0; walk/sit/stair up to 2.6 mm, hidden by the body's foot hide), the builder's close look, then the whole-person gate.
+- Cost: about 0.15 h (carry, set aside) plus 0.1 h (model). Evidence: production/research/clothing-pipeline/SHEILA-SHOES-S4-2026-11-11.md, SHEILA-SHOES-S4-MODEL-2026-11-11.md

@@ -25,6 +25,7 @@
 #include "Rendering/SkeletalMeshLODRenderData.h"
 #include "GameFramework/Actor.h"
 #include "Misc/CommandLine.h"
+#include "LedgerJacket.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "Serialization/JsonReader.h"
@@ -317,6 +318,17 @@ namespace LedgerGarments
 					continue;
 				}
 				UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s is held, worn for this test run (-WearHeld)"), Who, *Name);
+			}
+			// CLOTH (11 November, Sheila's skirt; SHEILA-SKIRT-CLOTH-ROUTE-2026-11-11.md): a row with "cloth": true
+			// is a Chaos cloth asset, CA_<Name> beside its SKM_ (tools/ue/make_cloth_garment.py, LEDGER_CLOTH_FIXED=1),
+			// worn by the cloth path the donkey jacket proved (LedgerJacket::WearCloth); its loose part swings.
+			bool bCloth = false;
+			if (G->TryGetBoolField(TEXT("cloth"), bCloth) && bCloth)
+			{
+				const FString ClothPath = FString::Printf(TEXT("/Game/Ledger/MetaHumans/Garments/%s/CA_%s.CA_%s"), *Name, *Name, *Name);
+				const bool bWorn = LedgerJacket::WearCloth(A, ClothPath, false);
+				UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s %s %s (cloth)"), Who, bWorn ? TEXT("wears") : TEXT("does NOT wear"), *Name);
+				continue;
 			}
 			const FString Asset = FString::Printf(TEXT("/Game/Ledger/MetaHumans/Garments/%s/SKM_%s.SKM_%s"), *Name, *Name, *Name);
 			USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *Asset);

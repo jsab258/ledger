@@ -4,6 +4,8 @@
     set LEDGER_GARMENT_DIR=F:/LedgerTools/garments/suit_jacket_test/ron    (NAME_static.fbx and NAME_skinned.fbx)
     set LEDGER_GARMENT_NAME=ron_suit_jacket
     set LEDGER_GARMENT_BODY=/Game/Ledger/Export/MH_RoccoP2/MH_RoccoP2_Body (the body it was made on)
+    set LEDGER_CLOTH_ROOT=/Game/Ledger/MetaHumans/Garments  (optional, the game's garment folder; default /Game/Ledger/Cloth/)
+    set LEDGER_CLOTH_FIXED=1                          (optional; fixed DF_/CA_ names, old pair replaced)
     set LEDGER_GARMENT_FREE=97.2,86.9,4   (skinned above the first height, cm; free by up to the
                                            last value, cm, at the second; garment.json's simMaxDistance)
     UnrealEditor.exe F:/LedgerTools/mh-dress/MHAssemble.uproject -unattended
@@ -240,7 +242,11 @@ def main_after_idle(seconds=20.0):
         # Git Bash turns "/Game/..." in the environment into "C:/Program Files/Git/Game/...": keep the asset path.
         body_path = body_path[body_path.find("/Game/"):] if "/Game/" in body_path else body_path
         top, hem, most = (float(v) for v in os.environ.get("LEDGER_GARMENT_FREE", "97.2,86.9,4").split(","))
-        dest = ROOT + name
+        # LEDGER_CLOTH_ROOT (11 Nov): where the assets go, e.g. mh-assemble's garments folder that the game and the
+        # build machine read; the default keeps the old /Game/Ledger/Cloth/ for mh-dress tests.
+        root = os.environ.get("LEDGER_CLOTH_ROOT", ROOT)
+        root = root[root.find("/Game/"):] if "/Game/" in root else root
+        dest = root.rstrip("/") + "/" + name
         body = unreal.load_asset(body_path)
         skel = body.get_editor_property("skeleton") if body else None
         log("body %s: %s, skeleton %s" % (body_path, type(body).__name__ if body else "NOT FOUND",
@@ -253,8 +259,15 @@ def main_after_idle(seconds=20.0):
         slot_materials(sim, dest, src, name)
         write_layer(sim, top, hem)
         lib = unreal.EditorAssetLibrary
-        stamp = time.strftime("%m%d%H%M")
-        df_path, ca_path = dest + "/DF_" + name + "_" + stamp, dest + "/CA_" + name + "_" + stamp
+        # LEDGER_CLOTH_FIXED=1 (11 Nov, Sheila's skirt route): fixed names a garment row can name, the old pair
+        # deleted first since duplicate_asset refuses an existing path; otherwise a time stamp as before.
+        fixed = os.environ.get("LEDGER_CLOTH_FIXED", "") == "1"
+        suffix = "" if fixed else "_" + time.strftime("%m%d%H%M")
+        df_path, ca_path = dest + "/DF_" + name + suffix, dest + "/CA_" + name + suffix
+        if fixed:
+            for p in (ca_path, df_path):
+                if lib.does_asset_exist(p):
+                    log("replacing %s: %s" % (p, "deleted" if lib.delete_asset(p) else "DELETE FAILED"))
         df = lib.duplicate_asset("/ChaosClothAsset/DF_StaticMeshClothTemplate", df_path)
         ca = lib.duplicate_asset("/ChaosClothAsset/CA_Template", ca_path)
         log("cloth asset path %s.%s" % (ca_path, ca_path.split("/")[-1]))
