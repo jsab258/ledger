@@ -2100,3 +2100,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Lessons kept: a reviewer can be wrong against the project's own evidence (a call it called C++-only had been used from script in September); say plainly when the test a decision was tied to was not run, and put the choice to its owner.
 - Tools: tools/ue/resize_probe.py (commandlet). Cost: about 1.2 h, two helpers. Failed: vertex counts per detail level did not read in a commandlet (two tries).
 - Evidence: production/research/clothing-pipeline/RESIZING-VERDICT-2026-11-11.md.
+
+## Under-layer trim for layered clothing (11 Nov 2026, set aside for its target fault)
+- Made: a variant of an under-garment with every face the outer garment always covers removed (faces 35,845 to 10,908), open neckline kept whole by a ray grid check (0 holes).
+- Method: in rest pose, a face is cut when all its points find the outer cloth within 40 mm along their normal and lie below the neckline edge by 15 mm; weights and UVs untouched.
+- Tools: Blender 5.2 headless, a trim script beside the garment (F:/LedgerTools/garments/sheila/blouse-under-cardigan-2026-11-11/trim.py).
+- Target and check: under-layer points through the outer layer at rest and in three poses. Result: counts fell only because fewer points remained; the worst point (11.8 mm) stayed.
+- Failed and why: the faults that show are the faces that already poke out, and a "covered" test never cuts them by definition. Cutting poking points too ragged the collar. The trim saves triangles, not clipping: pair it with a push-out or a hem shortened above the outer garment's reach.
+- Cost: about 0.1 h helper. Evidence: production/research/clothing-pipeline/SHEILA-BLOUSE-TRIM-2026-11-11.md
