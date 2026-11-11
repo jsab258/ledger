@@ -1311,7 +1311,8 @@
      "Later"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-11 09:46, done (09:41): checked 09:46: Unreal 5.8.4, the MetaHuman optional content (5.8 GB) and engine source (550 files in Engine/Private) present"
   },
   {
    "id": "tom-whole-person-2026-11-11",
