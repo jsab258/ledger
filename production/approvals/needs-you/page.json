@@ -1,11 +1,73 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Wednesday 11 November, 5:41",
+ "kicker": "LEDGER · Needs you · 2 open · updated Wednesday 11 November, 6:45",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "launcher-metahuman-content-2026-11-11",
+   "name": "Your hands, about 5 minutes at the PC. Since the Epic launcher updated Unreal to 5.8.4 on 9 November, its optional MetaHuman content is missing, so Ron, Sheila and Darren lost their standing idle and stood with arms out in the last two night walks. A stand-in idle of ours goes into today's build, but the approved one is Epic's. Steps: open the Epic Games Launcher, Unreal Engine, Library; on the 5.8 tile click the small arrow, then Options; tick every box that mentions MetaHuman, and Engine Source if it is unticked (the update removed that too); Apply. Then tap Done here. Nothing else needs to be open; Unreal must be closed while it installs.",
+   "links": [],
+   "recommendation": "Do it when you are next at the PC: it brings back the people's approved idle and the engine source the session checks engine questions against.",
+   "added": "2026-11-11 05:55",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "later",
+     "Later"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "tom-whole-person-2026-11-11",
+   "name": "Tom as one whole person, for your look (this week's order, item 2). Shortfalls first: his boots read soft, almost like slippers, from the side, with no laces seen; he perches on the front edge of the bench; in an about-turn from standing his trailing shoe keeps pointing the old way for a few frames; one frame of skin shows at his right hip as he sits (not in the film below); his jeans hang as stiff tubes at the hem. Nothing else was found: no clipping, no skin at neck, chest or wrists, no pops. Three stills by day (whole, close as in talk, his boots), then two short films from the packaged game: standing, turning and breaking into a run, and sitting on the office bench (cropped to him). Fresh reviewers checked every frame.",
+   "links": [],
+   "recommendation": "Yes, with the listed points fixed in the next order: he holds together as one person, and the shortfalls are small, known and already on the list.",
+   "added": "2026-11-11 06:45",
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/tom-whole-2026-11-11.jpg",
+     "alt": "Tom, whole, in the street by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-close-2026-11-11.jpg",
+     "alt": "Tom, close, as in talk"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-boots-2026-11-11.jpg",
+     "alt": "Tom's boots and jeans"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-walk-2026-11-11.webp",
+     "alt": "Film: Tom stands, turns and breaks into a run (side-on, knee height)"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-sit-2026-11-11.webp",
+     "alt": "Film: Tom sitting on the office bench (cropped to him)"
+    }
+   ],
+   "detail": [],
+   "options": [
+    [
+     "yes",
+     "Yes, with the points listed (recommended)"
+    ],
+    [
+     "no",
+     "Not yet: say what is wrong in the note"
+    ]
+   ]
+  }
+ ]
 }
