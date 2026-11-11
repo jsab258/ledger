@@ -409,6 +409,90 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "houdini-cascadeur-accounts-2026-11-11",
+   "added": "2026-11-11 17:25",
+   "text": "Your hands, about 10 minutes, for the free tests you said yes to at 16:14. (1) Make a SideFX account (first link), then on the download page take Houdini 21 Apprentice and its launcher; (2) make a Cascadeur account (third link, Free plan's Get started). Tell nothing else; if an install is refused here, the exact line to type comes back to you. Known limits, to be confirmed in the tests: Apprentice runs Houdini Engine in Unreal only for paid licences and may not save to the formats Unreal reads; Cascadeur Free cannot export FBX (only its own format), so its results are judged inside Cascadeur, not in the game.",
+   "links": [
+    {
+     "label": "SideFX account",
+     "url": "https://www.sidefx.com/register/"
+    },
+    {
+     "label": "Houdini download",
+     "url": "https://www.sidefx.com/download/"
+    },
+    {
+     "label": "Cascadeur plans (Free: Get started)",
+     "url": "https://cascadeur.com/plans"
+    },
+    {
+     "label": "Cascadeur download",
+     "url": "https://cascadeur.com/download"
+    }
+   ],
+   "recommendation": "Done: both are free, test only, nothing made in them goes into the game.",
+   "options": [
+    [
+     "done",
+     "Done, both accounts made (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "paid-tools-ruling-2026-11-11",
+   "added": "2026-11-11 17:25",
+   "text": "One tap to make it a standing ruling: any tool, paid or free, that would fix a standing problem (an open boss, a fault set aside, a try used up) reaches this page within a day as a decision with its cost, the expected gain and a recommendation; nothing waits in a research file as 'his decision'. Houdini and Cascadeur sat in research that way and never reached you.",
+   "links": [],
+   "recommendation": "Yes: you see every paid way out within a day, and you still decide every franc.",
+   "options": [
+    [
+     "yes",
+     "Yes, make it a ruling (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "paid-tools-top-three-2026-11-11",
+   "added": "2026-11-11 17:42",
+   "text": "From today's sweep of tools our research left as 'your decision' (Houdini and Cascadeur already decided), the top three. Two can be tested free first: MetaTailor (fits a garment onto each MetaHuman body, the refit that took most of today for Sheila; free version, a few exports a month; Pro about US$35 a month) and KeenTools FaceBuilder (faces from photographs, for faces failing their casting sheets; 15-day free trial; US$20 a month). Both are licences outside your list and need accounts in your name (links below), tests only, nothing into the game unless you approve. The third costs money now: Marvelous Enterprise, US$199 for a month of unattended drapes, where today's layering test failed. The other 20 wait in a ranked list.",
+   "links": [
+    {
+     "label": "MetaTailor (free version)",
+     "url": "https://www.metatailor.com/"
+    },
+    {
+     "label": "KeenTools FaceBuilder (15-day trial)",
+     "url": "https://keentools.io/products/facebuilder-for-blender"
+    }
+   ],
+   "recommendation": "Free tests of both, no money: they hit the two problems that cost us most hours.",
+   "options": [
+    [
+     "free",
+     "Free tests of both; I'll make the accounts (recommended)"
+    ],
+    [
+     "free-and-mde",
+     "Those, and buy Marvelous Enterprise for a month"
+    ],
+    [
+     "none",
+     "None for now"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
