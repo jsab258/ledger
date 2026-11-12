@@ -6299,6 +6299,44 @@ namespace
 		return Tex;
 	}
 
+	// A PICTURE ALREADY BLOCK-COMPRESSED (12 Nov, n09-3 step 4, the card's memory): tools/bc1_pictures.py writes
+	// "LBC1", four uint32 (block width, block height: multiples of 4; the picture's own width, height), then BC1
+	// blocks row by row. No compressor runs in a packaged game, so the blocks are made ahead of time; CreateTransient
+	// takes them as PF_DXT1 at a size that is a multiple of 4 (Texture2D.cpp 1298-1354). Made empty, its colour space
+	// set, then filled and refreshed, so the first upload is already sRGB. One mip, as ImportTexture's. OutW and OutH
+	// are the picture's own size; the padded last row or column (at most 3 texels) is the only difference.
+	UTexture2D* ImportBc1Texture(const FString& FullPath, bool bSrgb, int32& OutW, int32& OutH, FString& OutLoadedAs)
+	{
+		OutW = 0; OutH = 0;
+		TArray64<uint8> Bytes;
+		if (!FFileHelper::LoadFileToArray(Bytes, *FullPath) || Bytes.Num() < 20)
+		{
+			OutLoadedAs = TEXT("bc1-would-not-load");
+			return nullptr;
+		}
+		if (FMemory::Memcmp(Bytes.GetData(), "LBC1", 4) != 0) { OutLoadedAs = TEXT("bc1-bad-magic"); return nullptr; }
+		uint32 Head[4];
+		FMemory::Memcpy(Head, Bytes.GetData() + 4, sizeof(Head));
+		const int32 BW = (int32)Head[0], BH = (int32)Head[1];
+		const int64 Want = (int64)(BW / 4) * (int64)(BH / 4) * 8;
+		if (BW <= 0 || BH <= 0 || BW % 4 || BH % 4 || BW > 16384 || BH > 16384 || Bytes.Num() - 20 != Want)
+		{
+			OutLoadedAs = FString::Printf(TEXT("bc1-bad-size-%dx%d-%lld-bytes"), BW, BH, (long long)(Bytes.Num() - 20));
+			return nullptr;
+		}
+		UTexture2D* Tex = UTexture2D::CreateTransient(BW, BH, PF_DXT1);
+		if (Tex == nullptr) { OutLoadedAs = TEXT("bc1-createtransient-returned-null"); return nullptr; }
+		Tex->SRGB = bSrgb;
+		Tex->AddToRoot();
+		uint8* Dest = (uint8*)Tex->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+		FMemory::Memcpy(Dest, Bytes.GetData() + 20, (SIZE_T)Want);
+		Tex->GetPlatformData()->Mips[0].BulkData.Unlock();
+		Tex->UpdateResource();
+		OutW = (int32)Head[2]; OutH = (int32)Head[3];
+		OutLoadedAs = FString::Printf(TEXT("BC1/srgb=%s"), bSrgb ? TEXT("yes") : TEXT("no"));
+		return Tex;
+	}
+
 	// A FLAT TEXTURE OF ONE COLOUR, BUILT IN CODE, NO FILE AND NO DECODER.
 	//
 	// THIS IS THE WHOLE OF THE TINT ROUTE ON THIS SIDE. The Unity host paints
@@ -7687,6 +7725,8 @@ namespace
 		// night, LitOn, fixed per shop, picks lit or dark), so only that one is loaded and the last released on each
 		// change of light (BindInteriorPicture): 7 of 21 resident, about 420 MB less
 		FString Pic[3]; UTexture2D* Bound = nullptr; int32 BoundK = -1;
+		// each picture's block-compressed copy where one is current (12 Nov, n09-3 step 4: tools/bc1_pictures.py), else empty
+		FString Bc[3];
 		// a lit box sign's face, glowing after dark at the front's "night_glow" strength (ReDriveShopInteriors)
 		TArray<UMaterialInstanceDynamic*> SignGlow; TArray<float> SignGlowStrength; };
 	TArray<FInteriorRow> GInteriorRows;
@@ -8551,7 +8591,17 @@ namespace
 				Ir.Row = I;
 				Ir.Shop = UTF8_TO_TCHAR(Id.c_str());
 				Ir.Mid = Mid;
-				for (int32 K = 0; K < 3; ++K) { Ir.Pic[K] = Files[K]; }
+				for (int32 K = 0; K < 3; ++K)
+				{
+					Ir.Pic[K] = Files[K];
+					// the BC1 copy only while at least as new as its PNG, so a repainted room never shows its old picture
+					const FString Bc1 = RepoOrGameInputs(FString(UTF8_TO_TCHAR((Pics + "_" + States[K] + ".bc1").c_str())));
+					if (!Files[K].IsEmpty() && IFileManager::Get().FileSize(*Bc1) > 0
+						&& IFileManager::Get().GetTimeStamp(*Bc1) >= IFileManager::Get().GetTimeStamp(*Files[K]))
+					{
+						Ir.Bc[K] = Bc1;
+					}
+				}
 				// Bright as the street's own lit rooms by default (the recipe's day and night
 				// strength times the look's gains), scaled by the spec where it says so.
 				Ir.DayGlow = (float)(LedgerStreet::NumOr(Sh, "glow_day", 1.0) * Rw.EmitDay * GLook.GlowGain);
@@ -8658,7 +8708,13 @@ namespace
 		static const TCHAR* Params[3] = { TEXT("DayTex"), TEXT("LitTex"), TEXT("DarkTex") };
 		int32 FW = 0, FH = 0;
 		FString As;
-		UTexture2D* T = ImportTexture(Ir.Pic[K], true, FW, FH, As);
+		// the block-compressed copy first (an eighth of the card's memory), the PNG when it is missing or refused
+		UTexture2D* T = Ir.Bc[K].IsEmpty() ? nullptr : ImportBc1Texture(Ir.Bc[K], true, FW, FH, As);
+		if (T == nullptr)
+		{
+			if (!Ir.Bc[K].IsEmpty()) { UE_LOG(LogTemp, Warning, TEXT("LedgerInteriors: %s's %s BC1 copy refused (%s), its PNG instead"), *Ir.Shop, Params[K], *As); }
+			T = ImportTexture(Ir.Pic[K], true, FW, FH, As);
+		}
 		if (T == nullptr)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("LedgerInteriors: %s's %s picture did not load (%s)"), *Ir.Shop, Params[K], *As);
@@ -8674,7 +8730,7 @@ namespace
 		}
 		Ir.Bound = T;
 		Ir.BoundK = K;
-		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s shows its %s picture (%dx%d), one of three loaded"), *Ir.Shop, Params[K], FW, FH);
+		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s shows its %s picture (%dx%d, %s), one of three loaded"), *Ir.Shop, Params[K], FW, FH, *As);
 	}
 
 	// Each change of light: the room by day, or lit or dark at night.

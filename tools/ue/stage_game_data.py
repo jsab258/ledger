@@ -141,6 +141,12 @@ def wanted():
         pic = sh.get("pictures")
         if pic:
             files += [pic + "_" + s + ".png" for s in ("day", "night_lit", "night_dark")]
+            # and each one's block-compressed copy (12 Nov, n09-3 step 4; tools/bc1_pictures.py), staged only while
+            # it is at least as new as its PNG, so a repainted room never shows its old picture; else the PNG serves
+            for s in ("day", "night_lit", "night_dark"):
+                png, bc1 = source_of(pic + "_" + s + ".png"), source_of(pic + "_" + s + ".bc1")
+                if png and bc1 and os.path.getmtime(bc1) >= os.path.getmtime(png):
+                    files.append(pic + "_" + s + ".bc1")
         # and a cloud front's door card turned at night (22 October), wherever it lives
         closed = (sh.get("front") or {}).get("door_sign_closed")
         if closed:
@@ -262,6 +268,13 @@ def selftest():
     check("nothing is listed twice", len(files) == len(set(files)))
     check("every shop room's three pictures are staged by name, wherever they live",
           all(p["pictures"] + "_" + s + ".png" in files
+              for p in _load("production/specs/shop-interiors.json").get("shops", []) if p.get("pictures")
+              for s in ("day", "night_lit", "night_dark")))
+    check("each shop picture's BC1 copy is staged while current, never when older than its PNG (tools/bc1_pictures.py)",
+          all(((p["pictures"] + "_" + s + ".bc1") in files) == bool(
+                  source_of(p["pictures"] + "_" + s + ".png") and source_of(p["pictures"] + "_" + s + ".bc1")
+                  and os.path.getmtime(source_of(p["pictures"] + "_" + s + ".bc1"))
+                  >= os.path.getmtime(source_of(p["pictures"] + "_" + s + ".png")))
               for p in _load("production/specs/shop-interiors.json").get("shops", []) if p.get("pictures")
               for s in ("day", "night_lit", "night_dark")))
     check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
