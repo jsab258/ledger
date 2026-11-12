@@ -92,3 +92,6 @@ About 25 minutes (10:33 to 10:38 work in Cascadeur, plus reading the backtrace, 
 
 ### Files (try 2)
 F:/LedgerTools/tool-tests-2026-11/cascadeur-test4/ : t2_01 to t2_11 scripts with t2_01.txt to t2_10.txt replies; rigged_model.casc (rigged, no animation), after_fixfoot.casc (the Fix Foot result), after_fixfoot_autophysics.casc (same, after the Auto Physics switches). Nothing enters the game.
+
+## Correction (2026-11-12 11:46, the session)
+The 'toes 22 to 24 deg down' rows measure the ankle-to-ball line, which slopes about 23 deg on a flat foot by anatomy (measured on the control solve, STOCK-CHAIR-RISE-2026-11-12.md). Toes are judged by ball height: before Fix Foot the left ball rode 1.8 to 2.8 cm up (lifted), after it 0.9 to 2.2 cm into the floor (a new fault). The verdict stands (knees not met; toes now into the floor).

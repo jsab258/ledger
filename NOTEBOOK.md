@@ -2208,3 +2208,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: Houdini Apprentice (hython), numpy port of the drape check. Target: match the reference on body-through-cloth, cloth inside >3 mm, over-stretched edges, hang heights within 10 mm.
 - Result: worse than the reference on all four; deterministic and click-free. Why: soft seam springs stall when a seam's halves start on opposite sides of a limb (wrap over 230 deg); the weld then snaps them through the body. A placement that starts seams near closed (pieces as open sleeves round each limb) is the untested next method. Cost about 1 h over three tries, 11 min simulation for the last.
 - Evidence: production/research/tool-tests-2026-11/VELLUM-TEST3-2026-11-12.md
+
+## 2026-11-12 11:46 Control clip for a video-to-motion solve
+- Made: a real footage control (a stock clip of one person sitting, reversed to a rise) solved by the same markerless body solver as the AI-generated clips, measured per frame.
+- Method: contact sheet of the source first to find the action's frames (a note's frame numbers were wrong); reverse frame by frame; solve on the processor; export the skeleton; measure hip height, knee angle, foot slide and ball height above the lowest foot point per frame.
+- Lesson: an ankle-to-ball slope of about 23 deg is anatomy, not toes down: judge flat feet by ball height above the floor. A run of identical frames means the solver lost the body.
+- Result: the solver leaves legs bent and loses the body on real footage too, so the fault sits in the solver. Cost about 1 h 10 min (43 min solving).
+- Evidence: production/research/ai-video-motion/STOCK-CHAIR-RISE-2026-11-12.md

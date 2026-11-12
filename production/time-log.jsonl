@@ -634,3 +634,15 @@
 {"event": "stop", "at": "2026-11-11T20:38:00", "note": ""}
 {"event": "start", "at": "2026-11-11T20:21:00", "task": "advisor 112: progress page for phase 2", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-11T20:26:00", "note": ""}
+{"event": "start", "at": "2026-11-12T10:24:00", "task": "n09-6 Vellum third try on Tom's jumper (helper)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T10:55:00", "note": ""}
+{"event": "start", "at": "2026-11-12T10:23:00", "task": "n09-8 Cascadeur no-click start and head-turn test, two tries", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T10:47:00", "note": ""}
+{"event": "start", "at": "2026-11-12T10:28:00", "task": "n09-6 MetaTailor method note, files, access attempt", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T11:03:00", "note": ""}
+{"event": "start", "at": "2026-11-12T10:55:00", "task": "n09-8 chair-rise control clip cut", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T10:59:00", "note": ""}
+{"event": "start", "at": "2026-11-12T11:02:55", "task": "n09-8 CPU solve of the chair-rise control clip", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T11:43:26", "note": "solve ok 2550 s, 200 frames, /Game/MocapSolve/rise430r_Body"}
+{"event": "start", "at": "2026-11-12T11:43:00", "task": "n09-8 control solve measured and written up", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T11:46:00", "note": ""}

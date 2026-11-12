@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 08:52 (hourly run)
+**Started:** 2026-11-12 10:22 (hourly run)
 **Stopped:** 2026-11-12 09:48 (run 08:52: shop pictures BC1, measured 4,965 MB; gate far-ahead wait; his method rule and its check; Ron's cost table reviewed; Cascadeur and Vellum method notes; history at its point)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -26,23 +26,26 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 12 Nov, from 08:52
-- n09-3 step 4, second change: shop rooms' day and lit-night pictures block-compressed (BC1) ahead of time by our own encoder (tools/bc1_pictures.py, 40 to 46 dB; 3.8 MB instead of 30.4 each; files on F: game-inputs, staged only while newer than their PNG); the game reads them as PF_DXT1 (VignetteShot.cpp ImportBc1Texture), PNG as fallback. Dark night pictures stay PNG (4x4 checker on dark surfaces, first small review; try 1's fix). Plan reviewed first; game target built; pushed d4a070b [package].
-- Advisor 114 done: the gate waits free after a clean stop while the last pace reading (pace-state.json, written by pace_line.py) is over +6, at most 2 h after the stop. Advisor 116 done: his method rule in RULINGS, checked by tools/method_line_check.py. Acks 114 to 116 written; last row 09:19.
-- Ron's cost table reviewed (pass, five fixes made). Cascadeur's settings.json is read-only (the runner's write refused); the set-aside does not count (advisor 116).
-- Commits 98c103b, cd0f763, b4e78bd were held locally while the build ran (a push mid-build could disturb it): push them (checks first) if not yet on origin/wip.
+## Run on 12 Nov, from 10:22
+- Vellum third try (helper): worse than try 2 on every check; set aside, Marvelous stays (VELLUM-TEST3-2026-11-12.md). Cause: seams start on opposite sides of a limb (230-250 deg wrap); soft springs stall, the weld drags cloth through. No fourth try.
+- Cascadeur: started with no click from C:/LedgerTools/cascadeur-portable (its application_started hook starts the shipped script server, 127.0.0.1:8765). Test 4 two tries, set aside (CASCADEUR-TEST4-2026-11-12.md): Fix Foot met feet and timing; knees, toes not; Auto Physics nothing; render-to-video crashes it. Licence is a Trial to 25 Nov. Test 5 (sit-down) not started; listed. Cascadeur not running now.
+- MetaTailor: method note written; Tom's jumper FBX at F:/LedgerTools/tool-tests-2026-11/metatailor-test/; Sheila's body F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_Body.fbx. Computer-use approval is refused in a scheduled run: page item metatailor-access-2026-11-12 (NEEDS YOU sent 11:02).
+- Motion 107 (a): control clip (source 430 back to 230) solved and measured. Monday's raw garment numbers: production/research/clothing-pipeline/MONDAY-NUMBERS-RAW-2026-11-12.md (gap: no hours per garment in the time log). Rows 10:27, 10:54.
+
+Earlier today (08:52 run): shop pictures BC1 (dark night ones stay PNG), pushed d4a070b; advisors 114 and 116 done.
 
 ## Next, in order
-1. FIRST: pace (+5.1 at 09:18), verdicts after 2026-11-12T08:35Z, advisor after 09:25 Swiss (ack 116 at 09:36). Push the held commits if still local.
+1. FIRST: pace (+5.2 at 10:53), verdicts after 2026-11-12T09:30Z, advisor after 10:30 Swiss (latest ack 115). Control solve done 11:43 and measured (STOCK-CHAIR-RISE note, last section): solver leaves legs bent and freezes after the rise on real footage too. Next for motion: advisor 107 (d) as before; report the control's lesson in the hour's row.
+1a. MetaTailor once he has allowed it (his page): the test as METATAILOR-METHOD-2026-11-12.md says, clicks after 10 idle minutes, build machine off.
 2. d4a070b measured: steady 4,965 MB (was 5,172), peak 5,323, frame 17.05 ms (GPU 14.99); about 95 MB over Windows' budget. Confirm in tonight's walk log the line "shows its ... picture (..., BC1/srgb=yes)"; next for the gap: decals and scans.
-3. The Vellum third try on Tom's jumper (his yes 09:11, advisor 115): start from production/research/tool-tests-2026-11/VELLUM-METHOD-2026-11-12.md (done: drape pre-roll with soft seam springs, gravity off, then weld; substeps 5; no published knit values, so match Marvelous's by test); the try as advisor 115 says, same checks and table against Marvelous j3 posed; jacket only if the jumper matches. Heavy local job: never during a build's perf step or the night's build and walk. Its verdict file needs 'Method researched:'.
-4. Cascadeur: CASCADEUR-METHOD-2026-11-12.md: no documented command line or start hook; its docs put settings.json (ScriptsDir) in the install's resources folder (Program Files: his yes needed); free exports .casc only. Then two proper tries.
-5. MetaTailor test (Sheila d), clicks only after 10 idle minutes and not while the build machine runs (its wait-for-PC step): Sheila's blouse and cardigan carried from Tom's body (F:/LedgerTools/garments/sheila/...), clicks counted, against her refit's hours. Needs its method note first (advisor 116).
-6. n09-12: UE4SS-READING-2026-11-12.md: MIT; v4.0.0 is from today, so use an older proven release; support for SH2 (UE 5.1, unverified) and inZOI unconfirmed; one run per game, never beside Unreal, its files removed after.
+6. n09-12 (game windows: only when the PC is idle and no Unreal runs): UE4SS-READING-2026-11-12.md: MIT; v4.0.0 is from today, so use an older proven release; support for SH2 (UE 5.1, unverified) and inZOI unconfirmed; one run per game, never beside Unreal, its files removed after.
 7. Motion: advisor 107 (a) and (d) as before.
 8. Advisor "eff" DAILY at 19:00; before 23:30 space for the night build; nothing touching Unreal 01:15 to 04:30.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- Vellum on Tom's jumper, 3 of 3 (his yes for the third): set aside. Cascadeur test 4, 2 of 2: set aside (quick rig needs rig mode on in a scene with the model alone; render to video crashes).
+- Computer use cannot be approved inside a scheduled run; any app beyond the task's settings needs his message in the conversation.
+- Cutting video: no ffmpeg on this PC; Blender 5.2's video editor works headless (fit_method="FIT", media_type 'VIDEO' before FFMPEG; reverse frame by frame, its use_reverse_frames with offsets gave the wrong range).
 - BC1 on dark night pictures (12 Nov, try 1): four colours a 4x4 block cannot hold a dark gradient; a checker shows on dark surfaces. Kept PNG.
 - The test props' materials (12 Nov): read the render log for "Failed to compile Material" before judging any scripted material.
 

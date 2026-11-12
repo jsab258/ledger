@@ -2,6 +2,29 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "metatailor-access-2026-11-12",
+   "added": "2026-11-12 11:01",
+   "text": "Your hands, one minute, at the PC: MetaTailor's free test is ready (your yes to its clicks, 07:17), but the app refuses computer-use approval inside a scheduled run. Send any message in this conversation in the Claude app (for example \"go MetaTailor\"); an approval card appears: tap Allow for META-Tailor.exe. The test then runs while you are away.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done: one message and one tap; the test fits Tom's jumper on Sheila and measures it against her 3-hour Blender refit.",
+   "options": [
+    [
+     "done",
+     "Done, message sent and Allow tapped (recommended)"
+    ],
+    [
+     "no",
+     "Skip the MetaTailor test"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "fable-verdict-2026-11-10",
    "added": "2026-11-10 00:29",
    "text": "The new model, Fable 5.2, against today's Opus 5.5, judged blind on three past clothing problems and one code fix: Opus was better on the cuffs, equal on the neckband and nearly equal on the skin-through fix; Fable was better on the code fix (right on all real logs). Fable cost about three times as much and took twice as long. Switch any work to Fable?",
