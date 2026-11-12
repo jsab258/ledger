@@ -190,7 +190,15 @@ def ahead_wait_until(now, stopped, pace):
     """The time a cleanly stopped session's successor may start when the week is far ahead, else None."""
     if not pace or pace["priority"] or pace["ahead"] <= AHEAD_LIMIT or pace["at"] < stopped - datetime.timedelta(hours=3):
         return None
-    caught = pace["at"] + datetime.timedelta(hours=(pace["ahead"] - AHEAD_LIMIT) / LINE_PER_HOUR)
+    rate = LINE_PER_HOUR
+    try:  # the double week's steeper line, when his tap has switched it on (production/week-shape.json)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import pace_line
+        if pace_line.double_for(pace["at"], pace_line.read_shape()):
+            rate = pace_line.line_per_hour(pace["at"])
+    except Exception:
+        pass
+    caught = pace["at"] + datetime.timedelta(hours=(pace["ahead"] - AHEAD_LIMIT) / rate)
     until = min(caught, stopped + datetime.timedelta(minutes=AHEAD_MAX_WAIT_MIN))
     return until if now < until else None
 

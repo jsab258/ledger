@@ -1,0 +1,6 @@
+{
+  "note": "Draft of the double week (advisor 118, 12 Nov). OFF: set active to true only on his tap adopting the order of 16 Nov; reset_at (Swiss YYYY-MM-DD HH:MM) when he presses the spare reset. Read by tools/pace_line.py and tools/fresh_gate.py.",
+  "active": false,
+  "monday": "2026-11-16",
+  "reset_at": null
+}

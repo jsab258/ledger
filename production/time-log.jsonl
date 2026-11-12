@@ -650,3 +650,5 @@
 {"event": "stop", "at": "2026-11-12T12:52:00", "note": ""}
 {"event": "start", "at": "2026-11-12T12:55:00", "task": "n09-6 MetaTailor free test: run, measure, record", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-12T13:40:00", "note": ""}
+{"event": "start", "at": "2026-11-12T18:08:25", "task": "advisor 118: double-week prep", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T18:17:56", "note": ""}
