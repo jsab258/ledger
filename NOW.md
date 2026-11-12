@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (11 Nov, 15:20): Sheila filmed packaged in colour (her garments had none: fixed); her cardigan's left band faces inward and the blouse shows at the shoulders, both next; Drape Studio's three tests written up (layering fails).
+STATE (12 Nov 09:21): n09-3 step 4, shop pictures compressed (BC1) and pushed for the build machine's memory reading; Cascadeur's set-aside traced to a read-only settings file.
 
 ## Handovers
 
