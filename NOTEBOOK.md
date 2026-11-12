@@ -2222,3 +2222,13 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Lessons: Blender's default FBX keeps the up axis in a node rotation that simple FBX readers ignore (the body lies down): flatten the hierarchy, apply transforms, bake the axis. A tool's own view may hide the body under clothes: always measure the export with the body visible. Measure the in-house result the same way for a fair line.
 - Result: fails at defaults: body out through the sleeves ten times the in-house carry, cuffs halved, torn flap at the back neck; better on cloth inside the body. The manual pose match was not tried. About 1 h 10 min in all, 33 clicks.
 - Evidence: production/research/tool-tests-2026-11/METATAILOR-TEST-2026-11-12.md
+
+## 2026-11-12 20:28 A scripted refit tool carrying finished garments to other bodies
+- Made: a knit pullover and a two-layer outfit (blouse under an open cardigan) refitted onto several bodies by a job-file refit program, measured by the same script as the earlier commercial and in-house refits.
+- Method: skeleton pose and proportion carry, exact point-to-point body-shape carry between bodies of one topology, band heights held, collision to a clearance with lower layers as colliders, weights from the target body capped at 8, test poses; checked by an independent script on the skinned output.
+- Tools: the refit program (headless), Blender headless measuring.
+- Target and check: the refit bars (body through cloth over 3 mm under 299, cloth inside under 44, bands within 10%, cap 8, UVs kept).
+- Cost: about 0.5 h builder time; seconds of machine time.
+- Lessons: run the identity case (a garment onto its own body) first: it must come back unchanged, and here it did not; open garments need lower layers counted as cover; band rules must tell cuffs from button bands.
+- Result: pullover passes clean on every body; the layered cardigan fails three of four bodies. Kept for a second round.
+- Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md

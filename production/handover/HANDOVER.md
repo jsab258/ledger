@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 18:07 (hourly run; gate GO: last stopped 15:53)
-**Stopped:** 2026-11-12 18:17 (run 18:07: advisor 118 prep done as drafts, CMU method note written; pace +10.1, stopped by the rule).
+**Started:** 2026-11-12 20:22 (hourly run; gate GO: last stopped 18:17)
+**Stopped:** 2026-11-12 20:29 (run 20:22: Seamshift round 1 landed; pace +9.8, stopped by the rule; advisor eff not yet acted on).
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -27,22 +27,23 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 12 Nov, from 18:07
-- Gate GO; no verdicts after 14:53Z; advisor 118 (16:30: next week a double week, prepare now) taken as a priority item and acked 18:15. Done: the doubled line drafted in tools/pace_line.py and tools/fresh_gate.py, read from production/week-shape.json, OFF ("active": false) until his tap adopting the order of 16 Nov (then set active; set reset_at when he presses the reset); room plan, tap list and the method-notes index in production/handover/DOUBLE-WEEK-PREP-2026-11-12.md; the CMU retarget method note written (research/ai-video-motion/CMU-RETARGET-METHOD-2026-11-12.md, its fresh review owed). Row 18:08 (v1). Pace +10.1 at 18:08 (53%): stopped after this item. Earlier today: Vellum 3 of 3 and Cascadeur test 4 set aside; Cascadeur starts with no click (trial to 25 Nov); MetaTailor fails at defaults, Pose Match untried, 1 of 5 exports used.
+## Run on 12 Nov, from 20:22
+- Gate GO; no verdicts after 17:08Z; three new advisor messages. Advisor 119 and 120 (his ask, 20:11 and 20:18): test his own replacements under C:\Game Dev Tools, a priority item. Seamshift = MetaTailor's replacement, Motionsmith = Cascadeur's, Loomwright = Houdini's. Order, rounds, time-log window and level 3 as acked 20:30.
+- Done: Seamshift round 1 (production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md; work folder F:/LedgerTools/tool-tests-2026-11/seamshift-r1). Jumper onto Sheila clean (41/0, bands within 3%, 0.8 s, same bytes twice). Cardigan over blouse fails 3 of 4 bodies (cuffs to 0.68 on C1, identity fit not a no-op, open-front through counts). Row 20:28 (v1). Pace +9.8 at 20:28 (54%): stopped after this item by the rule.
+- Advisor "eff" (19:45) NOT yet acked or acted on: (1) before Monday 13:00, make a handover start the next session at once (research the documented way first, dated note; build it if it is within the gate or launcher, else one tap on his page); (2) finish today's DAILY 19:00 rows; count rework of passed pieces there.
 
 ## Next, in order
-1. FIRST: pace; verdicts after 2026-11-12T17:08Z, advisor after 18:15 Swiss (latest ack 118). Next row due within the hour of working.
-2. Advisor 118, continued while ahead and within the bands (no helpers over +6): the CMU note's fresh review, then the method notes in the prep file's order (street scale test, painted weave, Houdini groom, parked cars, same-day checks). Sunday 15 Nov: delete the own leftovers listed there (one DECISIONS line each), after Saturday's walk. On his adoption tap: week-shape.json active true.
-3. d4a070b measured: steady 4,965 MB, peak 5,323, frame 17.05 ms (GPU 14.99), about 95 MB over Windows' budget. Confirm in tonight's walk log the line "shows its ... picture (..., BC1/srgb=yes)"; next for the gap: decals and scans.
-4. n09-12 (game windows, only when the PC is idle and no Unreal runs): UE4SS-READING-2026-11-12.md; an older proven release; one run per game, files removed after.
-5. Motion (advisor 117): the CMU first try by the new note, when pace allows.
-6. Advisor "eff" DAILY at 19:00; before 23:30 space for the night build; nothing touching Unreal 01:15 to 04:30.
+1. FIRST: pace; verdicts after 2026-11-12T19:28Z, advisor after 20:30 Swiss (latest acks 119, 120). Next row due within the hour of working.
+2. Advisor eff: the DAILY 19:00 rows for 12 Nov, then the handover-start research note. Ack "2026-11-12-1940-eff" after acting.
+3. Advisor 119/120: Motionsmith round 1 (C:\Game Dev Tools\Motionsmith: its README and MECHANICS first; the bars in advisor 119; beside CASCADEUR-TEST4). Run its jobs into F:/LedgerTools/tool-tests-2026-11/motionsmith-r1, never into his folder. Then Loomwright hair (Darren's curls), then its streets. Seamshift round 2: Unreal import of jumper_skinned.fbx (a scratch import, not into the game, outside 01:15 to 04:30), then its improvements once he updates it.
+4. Advisor 118 while ahead: the CMU note's fresh review, then the method notes in DOUBLE-WEEK-PREP's order. Sunday 15 Nov: own leftovers (one DECISIONS line each), after Saturday's walk. On his adoption tap: week-shape.json active true.
+5. d4a070b: confirm in tonight's walk log "shows its ... picture (..., BC1/srgb=yes)"; next for the gap: decals and scans.
+6. n09-12 (games' numbers, PC idle, no Unreal): UE4SS-READING-2026-11-12.md.
+7. Before 23:30 space for the night build; nothing touching Unreal 01:15 to 04:30.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - Vellum on Tom's jumper, 3 of 3 (his yes for the third): set aside. Cascadeur test 4, 2 of 2: set aside (quick rig needs rig mode on in a scene with the model alone; render to video crashes).
-- Computer use cannot be approved inside a scheduled run; any app beyond the task's settings needs his message in the conversation.
 - Cutting video: no ffmpeg on this PC; Blender 5.2's video editor works headless (fit_method="FIT", media_type 'VIDEO' before FFMPEG; reverse frame by frame, its use_reverse_frames with offsets gave the wrong range).
-- BC1 on dark night pictures (12 Nov, try 1): four colours a 4x4 block cannot hold a dark gradient; a checker shows on dark surfaces. Kept PNG.
 - The test props' materials (12 Nov): read the render log for "Failed to compile Material" before judging any scripted material.
 
 ## In flight (carried)
