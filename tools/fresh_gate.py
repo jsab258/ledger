@@ -170,20 +170,36 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
 # waits here, free, until the line catches up (90 points in 162 hours, about 0.56 an hour), but never more than
 # AHEAD_MAX_WAIT_MIN after the stop: the gate cannot see his page, so his answers wait at most that long.
 # A priority item or a card or processor job of his ("priority_waiting": true in pace-state.json) always goes.
+# THE PRIORITY MARK (the advisor's message 126, 12 Nov): pace_line.py rewrites pace-state.json at every reading, so
+# the flag there was never set, and his three tools and the C: survey waited from 20:33 to 22:37. A session that
+# stops while a priority item of his is open writes production/handover/priority-open.json
+# (`python tools/fresh_gate.py --priority-open "ids"`); while it exists the pace hold is skipped; the session that
+# finishes or sets aside the last one clears it (`--priority-done`). Helpers and other work stay held as before.
 PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
+PRIORITY_MARK = os.path.join(ROOT, "production", "handover", "priority-open.json")
 AHEAD_LIMIT = 6.0
 LINE_PER_HOUR = 90.0 / 162.0
 AHEAD_MAX_WAIT_MIN = 120
 
 
-def read_pace(path=PACE_STATE):
+def read_pace(path=PACE_STATE, mark=PRIORITY_MARK):
     try:
         with open(path, encoding="utf-8") as fh:
             p = json.load(fh)
         return {"at": datetime.datetime.strptime(p["at"], "%Y-%m-%d %H:%M"), "ahead": float(p["ahead"]),
-                "priority": bool(p.get("priority_waiting"))}
+                "priority": bool(p.get("priority_waiting")) or os.path.isfile(mark)}
     except (OSError, ValueError, KeyError, TypeError):
         return None
+
+
+def set_mark(ids, mark=PRIORITY_MARK):
+    with open(mark, "w", encoding="utf-8") as fh:
+        json.dump({"at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "open": ids}, fh)
+
+
+def clear_mark(mark=PRIORITY_MARK):
+    if os.path.isfile(mark):
+        os.remove(mark)
 
 
 def ahead_wait_until(now, stopped, pace):
@@ -367,6 +383,19 @@ def selftest():
             hold = WALK_HOLD_FROM <= m < WALK_HOLD_UNTIL and not rep
             if got.startswith("WAIT") != hold:
                 night_bad.append("%02d:%02d" % (m // 60, m % 60))
+    # The priority mark (advisor 126): far ahead after a clean stop waits without it and goes with it.
+    pf = os.path.join(tmp, "pace.json")
+    mk = os.path.join(tmp, "priority-open.json")
+    with open(pf, "w", encoding="utf-8") as fh:
+        json.dump({"at": "2026-11-04 12:15", "percent": 55, "ahead": 9.6}, fh)
+    no_mark = decide(d, hs, 40, pace=read_pace(pf, mk))
+    set_mark(["119"], mk)
+    with_mark = decide(d, hs, 40, pace=read_pace(pf, mk))
+    clear_mark(mk)
+    cleared = decide(d, hs, 40, pace=read_pace(pf, mk))
+    cases += [("far ahead, no priority mark: WAIT", no_mark, "WAIT the week was"),
+              ("far ahead, the priority mark set: GO (advisor 126)", with_mark, "GO"),
+              ("far ahead, the mark cleared: WAIT again", cleared, "WAIT the week was")]
     cases.append(("no night WAIT outside the walk hold, 00:45 to 05:10", "none" if not night_bad else night_bad[0], "none"))
     bad = [n for n, got, want in cases if not got.startswith(want)]
     print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
@@ -376,6 +405,15 @@ def selftest():
 def main(a):
     if "--selftest" in a:
         return selftest()
+    if "--priority-open" in a:
+        ids = a[a.index("--priority-open") + 1:]
+        set_mark(" ".join(ids).split())
+        print("priority mark set:", " ".join(ids))
+        return 0
+    if "--priority-done" in a:
+        clear_mark()
+        print("priority mark cleared")
+        return 0
     now = datetime.datetime.now()
     own = os.environ.get("CLAUDE_CODE_SESSION_ID")
     r = rehearsal(now)

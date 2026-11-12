@@ -2232,3 +2232,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Lessons: run the identity case (a garment onto its own body) first: it must come back unchanged, and here it did not; open garments need lower layers counted as cover; band rules must tell cuffs from button bands.
 - Result: pullover passes clean on every body; the layered cardigan fails three of four bodies. Kept for a second round.
 - Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md
+
+## 2026-11-12: a handover start that a speed-limit hold must not block; a full system drive measured
+- Made: a priority mark the session sets when it stops with an owner's priority item open; the start gate skips its "far ahead of the budget line" hold while the mark exists. A drive survey by folder with "new since date" bytes, own leftovers deleted, the rest put to the owner as one decision.
+- Method: a hold that saves budget must name its exceptions as state the gate can read, written by whoever knows them (the stopping session), not as a field another tool overwrites. For a full drive: size folders two levels down, add bytes written since the last good reading, then sort into own (delete), rebuildable cache (cap, never wipe) and the owner's (one item with sizes and a recommendation each).
+- Tools: the start gate script; PowerShell folder sums; the engine's derived-data cache settings (garbage-collect age in project config).
+- Target and check: the gate's self-test (three new cases: no mark waits, mark goes, cleared waits again); drive above the build floor (40 GB) after.
+- Cost: about 0.4 h.
+- Failed: the earlier flag lived in a file the budget tool rewrote every reading, so it was never set and priority work waited two hours. A recursive temp-folder scan ran over 10 minutes: use du with a timeout.
+- Evidence: tools/fresh_gate.py; production/approvals/needs-you/items.json (c-drive-room-2026-11-12).

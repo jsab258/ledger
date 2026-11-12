@@ -244,3 +244,4 @@ ue-probe/Content/Ledger/Test/
 # Megascans leak decals (12 Nov): run-time pictures live on F:/LedgerTools/game-inputs (push guard)
 ledger/Assets/StreamingAssets/Decals/megascans/
 production/handover/pace-state.json
+production/handover/priority-open.json
