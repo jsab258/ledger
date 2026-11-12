@@ -2147,6 +2147,13 @@ jobs:
             "slicePerf=uw-half status=NO-PYTHON/the-csv-is-at-$($csv.FullName -replace ' ','~')" | Set-Content $out -Encoding utf8
           } elseif ($csv) {
             & $py tools/slice-perf.py $csv.FullName --label uw-half | Set-Content $out -Encoding utf8
+            # KEPT FOR A WEEK (12 Nov 2026, n09-3): the per-frame file is wiped at the next run, and the
+            # opening frames' memory peak can only be read from it; F:/LedgerTools/tmp is retention's 7-day scratch.
+            try {
+              $keep = "F:\LedgerTools\tmp\perf-csv"
+              New-Item -ItemType Directory -Force -Path $keep | Out-Null
+              Copy-Item $csv.FullName (Join-Path $keep ("{0}-{1}.csv" -f (Get-Date -Format yyyyMMdd-HHmm), "$env:GITHUB_SHA".Substring(0, 7))) -Force
+            } catch { Add-Content $out "slicePerfCsvKept=no/$($_.Exception.GetType().Name)" }
           } else {
             "slicePerf=uw-half status=NO-CSV/waited-${t}s" | Set-Content $out -Encoding utf8
           }

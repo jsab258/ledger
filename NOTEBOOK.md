@@ -2169,3 +2169,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: outer points above the collar 102 to 0; under-layer body first hits beside the collar 983 to 9; skin hits unchanged; the packaged close film.
 - Cost: about 0.3 h plus one packaged build. Result: the shards passed; the collar's edge came out clean but the knit showed through the fall in strips, since the lift only reached points within 12 mm and some lay 17 mm under: a lift needs its reach set from the measured depth, not a guess. Failed and why: try 1 (a lift) chose islands by size and missed the fall; and it was judged with the shards still there.
 - Evidence: production/research/clothing-pipeline/SHEILA-CARDIGAN-S4-2026-11-11.md (try 2)
+
+## Lean QA's first steps (closed 12 Nov)
+- Made: three read-only lines in the night's tester report (legs that never arrived, the launch switches, card memory's peak against the plan's ceiling), every capture tool writing its launch verdict beside its pictures, and a two-page test plan for the next phases.
+- Method: add a check only where a fault slipped past; read the numbers the build machine already writes rather than measuring again; a report line never fails a walk, it only reports; check each new line on past nights' real files before trusting it.
+- Tools: the nightly walk script, the perf step's verdict line, the launch-line checker.
+- Target and check: all three lines present with real values in a night's report: met on 12 Nov (legs 2, PLAYER+WATCH, peak 5,830 against 5,650).
+- Cost: about 6 h across 8 to 11 Nov. Failed and why: the memory line first read a perf step at a higher quality level than the one played; it says so in words until the step runs at the played level.
+- Evidence: production/research/qa-practice/N09-9-REPORT-LINES-2026-11-09.md; F:/LedgerTools/nightly/task.log (walk of 2026-11-12).
