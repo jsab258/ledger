@@ -2215,3 +2215,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Lesson: an ankle-to-ball slope of about 23 deg is anatomy, not toes down: judge flat feet by ball height above the floor. A run of identical frames means the solver lost the body.
 - Result: the solver leaves legs bent and loses the body on real footage too, so the fault sits in the solver. Cost about 1 h 10 min (43 min solving).
 - Evidence: production/research/ai-video-motion/STOCK-CHAIR-RISE-2026-11-12.md
+
+## 2026-11-12 13:40 An auto-fit tool carrying a garment to another body
+- Made: one knit jumper fitted onto a second body by a commercial auto-fit program (free tier), measured against the in-house carry of the same garment to the same body.
+- Method: export the body with its skeleton and the garment as FBX; in the tool, import the body (landmarks auto-placed), import the garment with a category, let it warp and fit with its default stages, export garment, body and weights; weld the export's seam splits, then measure at rest: cloth inside the body, body out through the cloth (signed by the cloth's outward side, openings excluded), neck hole, band heights per sector, gap at chest, waist and hip, skin at rest.
+- Lessons: Blender's default FBX keeps the up axis in a node rotation that simple FBX readers ignore (the body lies down): flatten the hierarchy, apply transforms, bake the axis. A tool's own view may hide the body under clothes: always measure the export with the body visible. Measure the in-house result the same way for a fair line.
+- Result: fails at defaults: body out through the sleeves ten times the in-house carry, cuffs halved, torn flap at the back neck; better on cloth inside the body. The manual pose match was not tried. About 1 h 10 min in all, 33 clicks.
+- Evidence: production/research/tool-tests-2026-11/METATAILOR-TEST-2026-11-12.md

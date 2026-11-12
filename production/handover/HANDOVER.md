@@ -29,11 +29,11 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 
 ## Run on 12 Nov, from 12:52
 - Advisor 117 taken (ack 12:54): hours per garment reconstructed from commit gaps (Tom about 20 h, Sheila about 5 h), last section of MONDAY-NUMBERS-RAW-2026-11-12.md. Row 12:54. Pace +7.1, so the session handed over with no new heavy work.
-- From the 10:22 run: Vellum 3 of 3 and Cascadeur test 4 set aside (notes in tool-tests-2026-11); Cascadeur starts with no click from C:/LedgerTools/cascadeur-portable (Trial to 25 Nov); test 5 not started. MetaTailor: method note and inputs ready (METATAILOR-METHOD-2026-11-12.md); his tap "done" 11:12 UTC seen, but computer use cannot be approved in a scheduled run: it needs a session he starts at the PC.
+- From the 10:22 run: Vellum 3 of 3 and Cascadeur test 4 set aside (notes in tool-tests-2026-11); Cascadeur starts with no click from C:/LedgerTools/cascadeur-portable (Trial to 25 Nov); test 5 not started. MetaTailor: see 1a.
 
 ## Next, in order
 1. FIRST: pace (+7.1 at 12:54: over +6, so no new token-heavy work or helpers until back within 6), verdicts after 2026-11-12T11:55Z, advisor after 12:30 Swiss (latest ack 117). Row 12:54.
-1a. MetaTailor once he has allowed it (his page): the test as METATAILOR-METHOD-2026-11-12.md says, clicks after 10 idle minutes, build machine off.
+1a. MetaTailor done 13:40 (his chat, "go now"): fails at defaults; Pose Match listed, untried; 1 of 5 exports used (METATAILOR-TEST-2026-11-12.md).
 2. d4a070b measured: steady 4,965 MB (was 5,172), peak 5,323, frame 17.05 ms (GPU 14.99); about 95 MB over Windows' budget. Confirm in tonight's walk log the line "shows its ... picture (..., BC1/srgb=yes)"; next for the gap: decals and scans.
 6. n09-12 (game windows: only when the PC is idle and no Unreal runs): UE4SS-READING-2026-11-12.md: MIT; v4.0.0 is from today, so use an older proven release; support for SH2 (UE 5.1, unverified) and inZOI unconfirmed; one run per game, never beside Unreal, its files removed after.
 7. Motion (advisor 117): CMU library route, research note first, when pace allows.

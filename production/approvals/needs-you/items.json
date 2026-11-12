@@ -4,7 +4,7 @@
   {
    "id": "metatailor-access-2026-11-12",
    "added": "2026-11-12 11:01",
-   "text": "Your hands, one minute, at the PC: MetaTailor's free test is ready (your yes to its clicks, 07:17), but the app refuses computer-use approval inside a scheduled run. Send any message in this conversation in the Claude app (for example \"go MetaTailor\"); an approval card appears: tap Allow for META-Tailor.exe. The test then runs while you are away.",
+   "text": "Your hands, one minute, at the PC: MetaTailor's free test is ready (your yes to its clicks, 07:17), but the app refuses computer-use approval inside a scheduled run. Your message at 11:54 did not bring the card (this conversation still counts as a scheduled run). The other route: in the Claude app, open Scheduled in the sidebar, choose ledger-daily-fresh-session, open its settings and add META-Tailor.exe (F:\\LedgerTools\\tool-tests-2026-11\\metatailor\\app\\META-Tailor.exe) to the apps it may control. The test then runs while you are away.",
    "links": [
     {
      "label": "This page",
@@ -22,7 +22,8 @@
      "Skip the MetaTailor test"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-12 13:11, done 12:55: he ran the test from the chat (go now); result 13:06, METATAILOR-TEST-2026-11-12.md"
   },
   {
    "id": "fable-verdict-2026-11-10",

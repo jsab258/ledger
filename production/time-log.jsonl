@@ -646,3 +646,7 @@
 {"event": "stop", "at": "2026-11-12T11:43:26", "note": "solve ok 2550 s, 200 frames, /Game/MocapSolve/rise430r_Body"}
 {"event": "start", "at": "2026-11-12T11:43:00", "task": "n09-8 control solve measured and written up", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-12T11:46:00", "note": ""}
+{"event": "start", "at": "2026-11-12T12:30:00", "task": "n09-6 MetaTailor free test: prep (method, avatar, yardstick)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T12:52:00", "note": ""}
+{"event": "start", "at": "2026-11-12T12:55:00", "task": "n09-6 MetaTailor free test: run, measure, record", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T13:40:00", "note": ""}
