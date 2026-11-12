@@ -582,7 +582,8 @@
      "Keep it running"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-12 08:26, done (08:20): he switched the nightly task off"
   },
   {
    "id": "metatailor-clicks-2026-11-12",
@@ -633,7 +634,8 @@
      "No, I keep tapping here"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-12 08:26, answered yes (08:17): in RULINGS"
   },
   {
    "id": "approved-programs-install-2026-11-12",
@@ -656,7 +658,8 @@
      "No, I install programs myself"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-12 08:26, answered yes (08:18): in RULINGS"
   }
  ]
 }
