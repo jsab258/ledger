@@ -94,6 +94,9 @@ WATCHED = {
     # Poly Haven's CC0 textures, joined by tools/art-recipes/front_for_game.py.
     "ue-probe/Content/Ledger/ShopFronts": "Poly Haven",
     "ue-probe/Content/Ledger/Sounds": ("VCTK", "sturmankin"),
+    # THE TEXTURING TEST'S CRATE, 12 November 2026: Epic's Megascans scan (allowed in the game, RULINGS 13 Oct),
+    # imported by tools/ue/import_crate_test.py from his Fab download on F:, for one-run films; leaves with the test.
+    "ue-probe/Content/Ledger/Test": "Megascans Industrial Junkyard Crate",
     "ledger/Assets/Characters": "Mixamo",
     # THE PICKER'S REJECTING CASE. Four Mixamo clips that shipped under
     # `Characters` until the posture and travel screen caught them, kept out of

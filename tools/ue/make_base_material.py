@@ -4889,6 +4889,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("shopRoomsImportStatus=RAISED shopRoomsImportNote=%s\n"
                          % str(_room_err).replace(" ", "~")[:160])
+    # tools/ue/import_crate_test.py: the texturing test's crate, as it comes and repainted, under
+    # /Game/Ledger/Test for the game's one-run -PropTest (12 November 2026); Epic's scan stays on F:,
+    # never in git, so the build machine imports it here. Leaves with the test.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_crate_test
+            import_crate_test.main()
+        except Exception as _crate_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("crateTest=RAISED crateTestNote=%s\n"
+                         % str(_crate_err).replace(" ", "~")[:160])
     # ---- AND NO MESH LEFT DRAWING NANITE'S STAND-IN, 1 October --------------
     # tools/ue/nanite_audit.py: every static mesh under /Game/Ledger with Nanite
     # still on, counted (twenty were, the cars and the skip among them, drawing

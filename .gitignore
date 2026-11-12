@@ -239,3 +239,5 @@ production/assets/street/surfaces/cover_iron*.png
 
 # Personal Claude Code settings for this PC (hidden skills), never committed
 .claude/settings.local.json
+# Epic's Megascans test crate (tools/ue/import_crate_test.py): imported from F:, never in git
+ue-probe/Content/Ledger/Test/

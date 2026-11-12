@@ -591,3 +591,9 @@ Tool of the shop windows' checks, not shipped (15 October 2026): rapidocr-onnxru
 | **Licence** | CC0 1.0 Universal (https://polyhaven.com/license), no attribution required |
 | **Where** | F:/LedgerTools/polyhaven/knitted_fleece (not in git); to become the tiling knit detail of Ron's and Darren's jumpers (production/research/game-clothing-pipeline/KNIT-PLAN-2026-11-08.md) |
 | **What** | a fine stockinette knit, about 266 mm square, looked at at 100 per cent: no mark, no brand, nothing but the knit |
+
+## Motion references — Pexels licence (reference only, nothing ships)
+- "A Man Walking Towards the Chair and Sitting on it", cottonbro studio, https://www.pexels.com/video/a-man-walking-towards-the-chair-and-sitting-on-it-6615631/ . Pexels licence (https://www.pexels.com/license/, read 2026-11-09: free use, modification allowed, no standalone resale). Downloaded 2026-11-12 to C:/LedgerTools/ai-video/stock/ as the control clip for the motion solve (advisor 107); the clip itself never enters the game or git; credit kept here.
+
+## Test prop — Megascans Industrial Junkyard Crate (Epic Games, Fab)
+- Megascans Industrial Junkyard Crate Metal, Epic Games' Quixel Megascans on Fab, downloaded by him through the Epic launcher 11 Nov 2026 (F:/LedgerTools/game-inputs/fab-megascans). Epic's own content: allowed inside the game even where tagged NoAI (RULINGS 13 Oct), never outside an Unreal build. Imported as the texturing test's crate (tools/ue/import_crate_test.py, /Game/Ledger/Test) for one-run films; not in git; removed with the test unless an order keeps it.

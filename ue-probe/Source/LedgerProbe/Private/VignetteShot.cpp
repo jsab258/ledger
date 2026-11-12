@@ -2909,6 +2909,56 @@ namespace
 		// and the crime need the scene file's collision, which this has none of.
 		SpawnStreet(World, bInteractive);
 
+		// A TEST PROP FOR ONE RUN (12 November 2026, the texturing test's crate): -PropTest=<Name>@<x>,<z>,<yaw>
+		// stands /Game/Ledger/Test/<Name>/SM_<Name> on whatever is under street point (x, z) in the scene file's
+		// metres (x along the street, z across it), its bounds' bottom on the first surface a trace down finds,
+		// so a new prop can be filmed and its memory read in the packaged game without a line in the street file.
+		// Several props: separate them with ';'. A missing mesh or no ground is logged and nothing is placed.
+		{
+			FString TestArg;
+			if (FParse::Value(FCommandLine::Get(), TEXT("PropTest="), TestArg, false))
+			{
+				TArray<FString> Items;
+				TestArg.ParseIntoArray(Items, TEXT(";"), true);
+				for (const FString& Item : Items)
+				{
+					FString TName, TWhere;
+					TArray<FString> N;
+					if (!Item.Split(TEXT("@"), &TName, &TWhere) || TWhere.ParseIntoArray(N, TEXT(","), true) < 2)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("ledgerPropTest item=%s unreadable"), *Item);
+						continue;
+					}
+					const double TX = FCString::Atod(*N[0]) * 100.0, TY = FCString::Atod(*N[1]) * 100.0;
+					const double TYaw = N.Num() > 2 ? FCString::Atod(*N[2]) : 0.0;
+					const FString TPath = FString::Printf(TEXT("/Game/Ledger/Test/%s/SM_%s.SM_%s"), *TName, *TName, *TName);
+					UStaticMesh* TMesh = LoadObject<UStaticMesh>(nullptr, *TPath);
+					FHitResult THit;
+					FCollisionQueryParams TQ(TEXT("LedgerPropTest"), true);
+					const bool bGround = World->LineTraceSingleByChannel(THit, FVector(TX, TY, 400.0), FVector(TX, TY, -200.0), ECC_Visibility, TQ);
+					if (TMesh == nullptr || !bGround)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("ledgerPropTest name=%s mesh=%s ground=%s nothing placed"),
+						       *TName, TMesh ? TEXT("yes") : TEXT("MISSING"), bGround ? TEXT("yes") : TEXT("NONE"));
+						continue;
+					}
+					const FBox LB = TMesh->GetBoundingBox();
+					const FRotator TRot(0.0, TYaw, 0.0);
+					const FVector C = TRot.RotateVector(LB.GetCenter());
+					const FVector Loc(TX - C.X, TY - C.Y, THit.ImpactPoint.Z - LB.Min.Z);
+					AStaticMeshActor* TA = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), Loc, TRot);
+					if (TA != nullptr)
+					{
+						TA->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+						TA->GetStaticMeshComponent()->SetStaticMesh(TMesh);
+						UE_LOG(LogTemp, Display, TEXT("ledgerPropTest name=%s at=%.1f,%.1f,%.1f yaw=%.0f size_cm=%.1f,%.1f,%.1f ground_on=%s"),
+						       *TName, Loc.X, Loc.Y, Loc.Z, TYaw, LB.GetSize().X, LB.GetSize().Y, LB.GetSize().Z,
+						       THit.GetActor() ? *THit.GetActor()->GetName() : TEXT("none"));
+					}
+				}
+			}
+		}
+
 		// H4: A POINT LIGHT UNDER EVERY EMISSIVE PIECE, which is what the
 		// file's lantern block says in as many words: one point light 0.05 m
 		// below the centre of each emissive piece.

@@ -559,6 +559,15 @@
    "recommendation": "Switch it off: it has done nothing for three nights, and a session cannot change a schedule.",
    "options": [["done", "Done, switched off (recommended)"], ["keep", "Keep it running"]],
    "state": "open"
+  },
+  {
+   "id": "metatailor-clicks-2026-11-12",
+   "added": "2026-11-12 03:26",
+   "text": "A ruling, one tap: MetaTailor works only by mouse, and your ruling lets the session click only in Marvelous. May the session click in MetaTailor too, only for its free test (carrying Sheila's blouse and cardigan from Tom's body, counting the clicks), only after 10 minutes without your mouse, each use in the hourly row? Your account and its app are ready; the app is copied out of WinRAR's temporary folder so it is not lost.",
+   "links": [{"label": "MetaTailor", "url": "https://www.metatailor.com/"}],
+   "recommendation": "Yes, for the test only: it is the one way to learn whether it saves the day per wearer that Sheila's refit cost.",
+   "options": [["yes", "Yes, clicks in MetaTailor for its test (recommended)"], ["hands", "No, I will do the test's clicks myself"], ["no", "No, drop the test"]],
+   "state": "open"
   }
  ]
 }

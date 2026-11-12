@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 02:21 (hourly run)
-**Stopped:** 2026-11-12 01:37 (run 01:36: pace +6.3, over 6 ahead, so no new work; page and advisor read, nothing new since 20:26; nothing running)
+**Started:** 2026-11-12 03:22 (hourly run)
+**Stopped:** 2026-11-12 03:37 (run 03:22: control clip kept, MetaTailor copied and its clicks asked on his page, crate test and Cascadeur setting committed locally, NOT pushed or built; history near its point; nothing running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -25,17 +25,18 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 12 Nov, from 02:21
-- CMU terms read at source; two page items (licence, nightly task); Cascadeur start route decided and its module written on F:; Houdini Vellum test 2 run by a helper and set aside (all in DECISIONS 12 Nov).
+## Run on 12 Nov, from 02:21 and 03:22
+- 02:21: CMU terms read at source; two page items (licence, nightly task); Cascadeur start route decided and its module written on F:; Houdini Vellum test 2 set aside (DECISIONS 12 Nov).
+- 03:22: control clip looked at and kept; MetaTailor's account exists, app copied to F:, clicks asked on his page; crate test and Cascadeur setting COMMITTED LOCALLY, NOT PUSHED, NOT BUILT (step 2).
 
 ## Next, in order
-1. FIRST: pace (stopped at +7.1: nothing new and heavy until back within 6), page verdicts (UTC filter after 19:38Z), advisor after 20:20 (Swiss).
-2. The crate in Unreal beside the scan as it comes (FBX at F:/LedgerTools/texture-tools/crate/in/crate.fbx, maps out1024/ and as-it-comes/; no generic prop importer: import_cap.py's FbxImportUI pattern into a test path, editor pictures as screens), one small reviewer, card memory in a packaged walk. Then the other four downloads by the brick's and timber's tests.
-3. Tool tests (PLAN-2026-11-11.md): Houdini Vellum test 2 done 03:10, falls short on every mark, set aside at 2 tries (VELLUM-TEST2-2026-11-12.md); MetaTailor (advisor 110: Sheila's blouse and cardigan carried from Tom's beside ours, same checks, time, clicks needed) once his account exists (check first; if not, a page item); Cascadeur tests 4 and 5: start route decided 02:35 (a module in a user folder on F: named by its ScriptsDir setting, written through the build machine; fallback his click; PLAN's last section).
+1. FIRST: pace (+5.3 at 03:33), page verdicts (UTC filter after 2026-11-12T02:30Z; three open items: CMU licence, nightly task, MetaTailor clicks; close each on his tap), advisor after 20:25:59 (Swiss; nothing new to 03:33). Nothing touching Unreal before 04:30, nor while the 04:15 morning pictures run (wait for UnrealEditor to be gone).
+2. The crate (local commit "Crate test prepared"): (a) build the GAME target (VignetteShot.cpp's new -PropTest=<Name>@x,z,yaw, uncompiled); (b) run tools/ue/import_crate_test.py as a commandlet in ue-probe, read its own crateTest= line (scan normal assumed DirectX, UNVERIFIED); (c) editor screens with -PropTest=CrateScan@20.0,-4.3,0 then CrateRepaint (spot clear; crate 1.23x0.89x0.76 m), one small reviewer; (d) push (the runner then sets Cascadeur's ScriptsDir and imports the crate from F:); package; card memory in the walk. Then the other four downloads.
+3. Tool tests (PLAN-2026-11-11.md): MetaTailor waits for his tap. Cascadeur tests 4 and 5 once the push sets ScriptsDir ("[LEDGER] start hook imported", /health on 127.0.0.1:8765).
 4. Sheila (d): only the 7 Nov rule's one different method (MetaTailor or a Marvelous drape); then a fresh final reviewer and her page as a whole person, fault listed.
 5. Advisor "eff" (19:45): DAILY-2026-11-12.md is started (interim from 01:00); at 19:00 rerun its three commands for the window to 19:00 (tools/idle_gaps.py and tools/shell_reads.py, new tonight), fill the rows, then: if handover waits pass 30 minutes a day, research an immediate next start (one tap, exact lines); pictures under 120; file reading against this tool's baseline 424,185 tokens (a one-tap guard if not down a third). Then ack "2026-11-11-1940-eff".
 5b. Done 02:23: on his page (pause-nightly-answers-task-2026-11-12); close it on his tap.
-5c. Advisor 107: (c) done 02:23: CMU's own terms read at source over plain http (commercial products allowed, no resale of the data); licence item on his page (cmu-motion-licence-2026-11-12), raw ASF/AMC or cgspeed BVH once he says yes. (a) Pexels 6615631 reversed (fallback Pixabay 165019): download, look at frames for whole body and feet, then the CPU solve beside the AI clip's (after 04:30).
+5c. Advisor 107: (c) licence item on his page (cmu-motion-licence-2026-11-12), raw ASF/AMC or cgspeed BVH once he says yes. (a) clip at C:/LedgerTools/ai-video/stock/pexels-6615631/clip.mp4, looked at and kept: reverse frames about 250 to 420, then the CPU solve beside the AI clip's (after 04:30, Unreal). (d) Wan 2.2: wait for (a)'s verdict before researching.
 6. Advisor 107's motion routes, one at a time (a, c, d as written there).
 7. Before 23:30: space for the night build; nothing touching Unreal 01:15 to 04:30. n09-12 (UE4SS, never beside Unreal); n09-3 step 3 after Monday's exit.
 
@@ -48,6 +49,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - F:/LedgerTools/gate/new/tom-films-2026-11-11 and -b; brick-flemish-2026-11-11 (the swapped brick files' originals in originals/; the packaged copy restored 06:37).
 - C:/LedgerTools/ai-video/out; C:/LedgerTools/mocap-solve; mh-assemble /Game/MocapSolve and /Game/CaptureManager/Imports/m2s1101*_1 (the session's, unused).
 - F:/LedgerTools/texture-tools (about 600 MB); F:/LedgerTools/drapestudio-test-2026-11-11 (the retest).
+- C:/LedgerTools/ai-video/stock/pexels-6615631 (whole/ the good stills); F:/LedgerTools/tool-tests-2026-11/metatailor (759 MB).
 
 ## Kept as they are
 - Uncommitted on purpose: the office prints (copies on F:/LedgerTools/game-inputs); untracked shop-room files are not this session's; stash@{0} kept.

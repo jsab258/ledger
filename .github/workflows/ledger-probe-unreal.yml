@@ -353,6 +353,27 @@ jobs:
             }
           }
 
+      # CASCADEUR'S USER SCRIPTS FOLDER, 12 November (tool tests 4 and 5; PLAN-2026-11-11.md's last section).
+      # Cascadeur imports a user scripts folder at start when its settings name one ("ScriptsDir"); the
+      # prepared module there starts its own script server, so the test needs no click. The settings sit
+      # under AppData, which writes from inside Claude's app never reach (appdata-writes-are-private-to-claude),
+      # so this runner sets it, only when it differs, and leaves the rest of the file as Cascadeur wrote it.
+      - name: Point Cascadeur at the test's scripts folder
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 1
+        shell: pwsh
+        run: |
+          $f = Join-Path $env:LOCALAPPDATA "Nekki Limited\Cascadeur\settings.json"
+          $want = "F:\LedgerTools\tool-tests-2026-11\cascadeur-scripts"
+          if (-not (Test-Path $f)) { Write-Host "cascadeurScriptsDir=no-settings-file"; exit 0 }
+          $j = Get-Content $f -Raw | ConvertFrom-Json
+          if ($j.ScriptsDir -eq $want) { Write-Host "cascadeurScriptsDir=already-set"; exit 0 }
+          Copy-Item $f "$f.before-ledger" -Force
+          $j.ScriptsDir = $want
+          $j | ConvertTo-Json -Depth 8 | Set-Content $f -Encoding utf8NoBOM
+          Write-Host "cascadeurScriptsDir=set value=$((Get-Content $f -Raw | ConvertFrom-Json).ScriptsDir)"
+
       #
       # NO continue-on-error, FROM 2026-09-22, AND THIS IS THE POINT OF THE
       # WHOLE SAFEGUARD. It carried `continue-on-error: true` from the days

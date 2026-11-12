@@ -34,3 +34,6 @@ Checked, not usable by title or description: Pexels "A Man Leaving a Desk" 10567
 
 ## Not reached
 - Mixkit search page (404) and the Mixkit free-video licence text; Videvo (not tried); Pexels "Load More" results beyond 24 per search; Pexels clips 8691675, 7652162, 4707857 (not read); Pixabay durations on clip pages (not shown); any video content itself.
+
+## Looked at (2026-11-12 03:24)
+Pexels 6615631 downloaded (Pexels' own download link, 7.4 MB, 4096x2160, 25 fps, 588 frames) to C:/LedgerTools/ai-video/stock/pexels-6615631/clip.mp4; 13 stills every 2 s (whole/, sheet-whole.jpg). Measured by eye: one adult side-on, whole body, head and both feet in frame throughout; the camera does not move; plain white room, three white chairs (the front chair covers no foot). Empty room to about frame 250; walks in from the right, frames about 250 to 350; turns and sits, about 350 to 400; seated, hands on lap, to the end. Reversed, frames about 250 to 420 give a sit-to-stand and a walk away to the right. Usable as the control clip; Pixabay 165019 not needed. Next: the CPU solve on that range beside the AI clip's (Unreal, after 04:30).
