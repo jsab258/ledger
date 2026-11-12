@@ -2194,3 +2194,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: reads as run-off from the gutter, no box edge, no new fault beside the frame without it; one fresh small review per try. Try 1's square scan ran full width to a hard top edge and read as a box (FAIL); the run-shaped scan passed, faint at distance.
 - Cost: about 2 h, one packaged build. Failed and why: first laid on a wall too far from any camera to judge anything; a square decal whose coverage touches its top edge prints a box unless it sits tight under a ledge.
 - Evidence: F:/LedgerTools/gate/new/leak-scan-2026-11-12/packaged (pair-t2-zoom.jpg, review-small.md, review-small-t2.md).
+
+## 2026-11-12 10:43 Cascadeur clean-up of a solved clip, set aside
+- Made: a no-click route into Cascadeur (a copy of the install whose start-up event hook starts its shipped local script server), then a solved standing clip rigged and cleaned from scripts.
+- Method: copy the program to a folder we own; hook the start-up event to start its script server; drive it by HTTP: new scene, import the body only, rig mode on, quick rig from the vendor's template, generate, then import the animation onto the rig; foot clean-up; measure joints per frame from scripts. Calling the quick rig on a scene made by importing a whole animated file crashes the app.
+- Tools: Cascadeur 2026.2 (Trial), its script server, Python. Target: foot slide 1 cm or less, standing knees within 5 deg, toes flat, timing kept. Check: per-frame joint measures before and after.
+- Result: feet and timing met; knees and toes not; physics tool changed nothing; video render crashed. Cost about 1 h with set-up. Why it failed: its clean-up tools fix contacts, not posture; the posture fault must be fixed in the solve or by hand.
+- Evidence: production/research/tool-tests-2026-11/CASCADEUR-TEST4-2026-11-12.md
