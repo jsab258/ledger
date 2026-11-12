@@ -164,7 +164,38 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
     return (minutes, newest_log) if with_log else minutes
 
 
-def decide(now, text, idle_min, walk_reported=False, job_running=False):
+# FAR AHEAD OF THE LINE, NO SESSION (the advisor's message 114, 12 Nov): from 20:50 to 00:37 on 11 Nov sixteen
+# quarter-hour runs started a session only to read the page, find the week more than 6 points ahead, write a row and
+# stop, US$0.40 to 1.40 each. A clean stop with the last reading (tools/pace_line.py, pace-state.json) over +6 now
+# waits here, free, until the line catches up (90 points in 162 hours, about 0.56 an hour), but never more than
+# AHEAD_MAX_WAIT_MIN after the stop: the gate cannot see his page, so his answers wait at most that long.
+# A priority item or a card or processor job of his ("priority_waiting": true in pace-state.json) always goes.
+PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
+AHEAD_LIMIT = 6.0
+LINE_PER_HOUR = 90.0 / 162.0
+AHEAD_MAX_WAIT_MIN = 120
+
+
+def read_pace(path=PACE_STATE):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            p = json.load(fh)
+        return {"at": datetime.datetime.strptime(p["at"], "%Y-%m-%d %H:%M"), "ahead": float(p["ahead"]),
+                "priority": bool(p.get("priority_waiting"))}
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def ahead_wait_until(now, stopped, pace):
+    """The time a cleanly stopped session's successor may start when the week is far ahead, else None."""
+    if not pace or pace["priority"] or pace["ahead"] <= AHEAD_LIMIT or pace["at"] < stopped - datetime.timedelta(hours=3):
+        return None
+    caught = pace["at"] + datetime.timedelta(hours=(pace["ahead"] - AHEAD_LIMIT) / LINE_PER_HOUR)
+    until = min(caught, stopped + datetime.timedelta(minutes=AHEAD_MAX_WAIT_MIN))
+    return until if now < until else None
+
+
+def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=None):
     hm = now.hour * 60 + now.minute
     # ROUND THE CLOCK, standing (his ruling of 9 November, RULINGS "the night: round the clock: only Unreal work and
     # heavy local jobs pause for the night's build and walk; none stops"; the advisor's message 92, 11 November: the
@@ -181,6 +212,11 @@ def decide(now, text, idle_min, walk_reported=False, job_running=False):
         return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), quiet)
     job = "; a background job of the last session still runs: leave the card alone until it ends, then take its result" \
         if job_running else ""
+    if stopped >= started and not job_running:
+        until = ahead_wait_until(now, stopped, pace)
+        if until is not None:
+            return "WAIT the week was %+.1f points ahead at %s: no session until %s (advisor 114)" % (
+                pace["ahead"], pace["at"].strftime("%H:%M"), until.strftime("%H:%M"))
     if stopped >= started:
         return "GO the last session stopped at %s; no turn written for %s minutes%s" % (
             stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min), job)
@@ -205,6 +241,10 @@ def selftest():
     h = "**Started:** 2026-11-04 08:43 (x)\n**Stopped:** 2026-11-04 09:38 (y)\n"
     r = "**Started:** 2026-11-04 11:00 (x)\n**Stopped:** 2026-11-04 09:38 (y)\n"
     d = datetime.datetime(2026, 11, 4, 12, 15)
+    hs = "**Started:** 2026-11-04 10:00 (x)\n**Stopped:** 2026-11-04 12:15 (y)\n"   # stopped just now
+
+    def pace_at(at, ahead, priority=False):
+        return {"at": at, "ahead": ahead, "priority": priority}
     cases = [
         ("stopped and quiet: GO", decide(d, h, 40), "GO"),
         ("stopped, a turn 2.9 min ago: WAIT", decide(d, h, 2.9), "WAIT"),
@@ -227,6 +267,15 @@ def selftest():
         ("after Monday's 13:00, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 10, 2, 15), h, 400), "WAIT the night's walk"),
         ("after Monday's 13:00, 00:15 still works: GO", decide(datetime.datetime(2026, 11, 10, 0, 15), h, 40), "GO"),
         ("no lines: WAIT", decide(d, "nothing", 40), "WAIT"),
+        ("far ahead after a clean stop: WAIT (advisor 114)", decide(d, hs, 40, pace=pace_at(d, 8.0)), "WAIT the week was"),
+        ("6 ahead: GO", decide(d, hs, 40, pace=pace_at(d, 6.0)), "GO"),
+        ("far ahead, his priority waiting: GO", decide(d, hs, 40, pace=pace_at(d, 9.0, True)), "GO"),
+        ("far ahead, a job running: GO", decide(d, hs, 40, job_running=True, pace=pace_at(d, 9.0)), "GO"),
+        ("far ahead, not stopped: the old rules", decide(d, r, 5, pace=pace_at(d, 9.0)), "WAIT a session wrote"),
+        ("far ahead, 2 h after the stop: GO (the page is read at least every 2 h)", decide(d + datetime.timedelta(hours=2), hs, 160, pace=pace_at(d, 12.0)), "GO"),
+        ("7 ahead: GO once the line has caught up (1.8 h)", decide(d + datetime.timedelta(minutes=110), hs, 150, pace=pace_at(d, 7.0)), "GO"),
+        ("7 ahead: WAIT before it has (1.7 h)", decide(d + datetime.timedelta(minutes=100), hs, 140, pace=pace_at(d, 7.0)), "WAIT the week was"),
+        ("an old reading (over 3 h before the stop): GO", decide(d, hs, 40, pace=pace_at(d - datetime.timedelta(hours=5), 9.0)), "GO"),
     ]
     # The project's own activity, from logs made here: an idle log the app keeps appending untimed bookkeeping to
     # (13:15's fault) must not count; a real turn must; this run's own log and a left-out log must not.
@@ -327,7 +376,7 @@ def main(a):
     reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
     idle, log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_log=True)
     job = bool(log and os.path.isfile(log) and pending_jobs(log))
-    line = decide(now, text, idle, reported, job)
+    line = decide(now, text, idle, reported, job, None if r else read_pace())
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)
     return 0

@@ -10,7 +10,13 @@ carry on. 3 to 6 ahead: at most two helpers. More than 6 ahead: finish the item 
 back on the line. Behind it: full pace within his rules. Monday 07:00 to 13:00: full pace.
 """
 import datetime
+import json
+import os
 import sys
+
+# THE LAST READING, FOR THE GATE (the advisor's message 114, 12 Nov): tools/fresh_gate.py reads it without tokens and
+# stands an hourly run aside while the week is more than 6 points ahead. Local state, not a record (gitignored).
+STATE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "production", "handover", "pace-state.json")
 
 WEEK_HOURS = 6 * 24 + 18  # Monday 13:00 to the next Monday 07:00
 
@@ -60,7 +66,14 @@ def selftest():
 def main(a):
     if "--selftest" in a:
         return selftest()
-    print(verdict(datetime.datetime.now(), float(a[0])))
+    now = datetime.datetime.now()
+    print(verdict(now, float(a[0])))
+    try:
+        with open(STATE, "w", encoding="utf-8") as fh:
+            json.dump({"at": now.strftime("%Y-%m-%d %H:%M"), "percent": float(a[0]),
+                       "ahead": round(float(a[0]) - line_at(now), 2)}, fh)
+    except OSError:
+        pass
     return 0
 
 
