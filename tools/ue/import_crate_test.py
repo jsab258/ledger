@@ -36,6 +36,15 @@ VARIANTS = {
         "Normal": SRC + "/out1024/T_CrateRepaint_Normal.png",
         "ORM": SRC + "/out1024/T_CrateRepaint_OcclusionRoughnessMetallic.png",
     },
+    # 12 NOV 06:10, THE SECOND PROP OF HIS FIVE: Megascans Wooden Storage Box (a compartment tray), as it comes,
+    # its 4K maps cut to 1024 px; its own mesh (the "fbx" key), the same normal convention as the crate's.
+    "WoodBox": {
+        "fbx": "F:/LedgerTools/texture-tools/woodbox/in/woodbox.fbx",
+        "BaseColor": "F:/LedgerTools/texture-tools/woodbox/as-it-comes/BaseColor.png",
+        "Normal": "F:/LedgerTools/texture-tools/woodbox/as-it-comes/Normal.png",
+        "Roughness": "F:/LedgerTools/texture-tools/woodbox/as-it-comes/Roughness.png",
+        "AO": "F:/LedgerTools/texture-tools/woodbox/as-it-comes/AO.png",
+    },
 }
 
 
@@ -104,7 +113,7 @@ def make_material(unreal, dest, name, tex):
     return mat
 
 
-def import_mesh(unreal, dest, name):
+def import_mesh(unreal, dest, name, fbx=FBX):
     ui = unreal.FbxImportUI()
     ui.set_editor_property("import_mesh", True)
     ui.set_editor_property("import_as_skeletal", False)
@@ -119,7 +128,7 @@ def import_mesh(unreal, dest, name):
     sm.set_editor_property("auto_generate_collision", False)
     sm.set_editor_property("normal_import_method", unreal.FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS_AND_TANGENTS)
     task = unreal.AssetImportTask()
-    task.set_editor_property("filename", FBX)
+    task.set_editor_property("filename", fbx)
     task.set_editor_property("destination_path", dest)
     task.set_editor_property("destination_name", "SM_" + name)
     task.set_editor_property("automated", True)
@@ -143,10 +152,12 @@ def main():
         try:
             tex = {}
             for role, path in maps.items():
+                if role == "fbx":
+                    continue
                 kind = "normal" if role == "Normal" else ("color" if role == "BaseColor" else "mask")
                 tex[role] = import_texture(unreal, path, dest, "T_%s_%s" % (name, role), kind)
             mat = make_material(unreal, dest, name, tex)
-            mesh = import_mesh(unreal, dest, name)
+            mesh = import_mesh(unreal, dest, name, maps.get("fbx", FBX))
             if mesh is None:
                 ok = False
                 parts.append("%s=MISSING" % name)
