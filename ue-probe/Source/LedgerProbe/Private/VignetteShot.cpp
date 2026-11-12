@@ -7682,9 +7682,15 @@ namespace
 		TWeakObjectPtr<ARectLight> Spill; TArray<TWeakObjectPtr<ARectLight>> Strips; FString Shop;
 		// the door's OPEN card, turned to CLOSED at night unless the shop keeps late hours (ReDriveShopInteriors)
 		UMaterialInstanceDynamic* DoorSign = nullptr; UTexture* SignOpen = nullptr; UTexture* SignClosed = nullptr; bool bOpenAtNight = false;
+		// ONE PICTURE AT A TIME (12 Nov, n09-3 step 4, the card's steady use about 680 MB over Windows' budget): the room's
+		// three pictures (day, night lit, night dark) are 30 MB each uncompressed and only one shows (Night picks day or
+		// night, LitOn, fixed per shop, picks lit or dark), so only that one is loaded and the last released on each
+		// change of light (BindInteriorPicture): 7 of 21 resident, about 420 MB less
+		FString Pic[3]; UTexture2D* Bound = nullptr; int32 BoundK = -1;
 		// a lit box sign's face, glowing after dark at the front's "night_glow" strength (ReDriveShopInteriors)
 		TArray<UMaterialInstanceDynamic*> SignGlow; TArray<float> SignGlowStrength; };
 	TArray<FInteriorRow> GInteriorRows;
+	void BindInteriorPicture(FInteriorRow& Ir, bool bSunOn);
 	int32 GInteriorsAsked = 0;
 	// What the shops stood behind their glass (GInteriorActors) is declared with the glass catches above,
 	// whose captures leave it out.
@@ -8516,15 +8522,14 @@ namespace
 				UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(Base, GStreetActors[I]);
 				if (Mid == nullptr) { continue; }
 				const char* States[3] = { "day", "night_lit", "night_dark" };
-				const TCHAR* Params[3] = { TEXT("DayTex"), TEXT("LitTex"), TEXT("DarkTex") };
+				FString Files[3];
 				int32 Got = 0;
 				for (int32 K = 0; K < 3; ++K)
 				{
 					const FString File = RepoOrGameInputs(FString(UTF8_TO_TCHAR((Pics + "_" + States[K] + ".png").c_str())));
 					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
-					int32 FW = 0, FH = 0;
-					FString As;
-					if (UTexture2D* T = ImportTexture(File, true, FW, FH, As)) { Mid->SetTextureParameterValue(FName(Params[K]), T); ++Got; }
+					Files[K] = File;   // loaded only when shown (BindInteriorPicture)
+					++Got;
 				}
 				if (Got < 3)
 				{
@@ -8546,6 +8551,7 @@ namespace
 				Ir.Row = I;
 				Ir.Shop = UTF8_TO_TCHAR(Id.c_str());
 				Ir.Mid = Mid;
+				for (int32 K = 0; K < 3; ++K) { Ir.Pic[K] = Files[K]; }
 				// Bright as the street's own lit rooms by default (the recipe's day and night
 				// strength times the look's gains), scaled by the spec where it says so.
 				Ir.DayGlow = (float)(LedgerStreet::NumOr(Sh, "glow_day", 1.0) * Rw.EmitDay * GLook.GlowGain);
@@ -8632,6 +8638,7 @@ namespace
 						if (SA != nullptr && SA->GetStaticMeshComponent() != nullptr) { SA->GetStaticMeshComponent()->SetLightingChannels(true, true, false); }
 					}
 				}
+				BindInteriorPicture(Ir, GRoomLightsSunOn);
 				GInteriorRows.Add(Ir);
 				const Value* Card = Sh.Find("card");
 				UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s on its card, corner %.0f,%.0f,%.0f cm (spec %.0f,%.0f,%.0f), %.0f cm wide, glow day %.2f night %.2f; %s; night spill %s"),
@@ -8643,12 +8650,40 @@ namespace
 		}
 	}
 
+	// The one picture the room shows in this light, loaded; the one it showed before released (FInteriorRow.Pic).
+	void BindInteriorPicture(FInteriorRow& Ir, bool bSunOn)
+	{
+		const int32 K = bSunOn ? 0 : (Ir.bLitAtNight ? 1 : 2);
+		if (Ir.Mid == nullptr || K == Ir.BoundK || Ir.Pic[K].IsEmpty()) { return; }
+		static const TCHAR* Params[3] = { TEXT("DayTex"), TEXT("LitTex"), TEXT("DarkTex") };
+		int32 FW = 0, FH = 0;
+		FString As;
+		UTexture2D* T = ImportTexture(Ir.Pic[K], true, FW, FH, As);
+		if (T == nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LedgerInteriors: %s's %s picture did not load (%s)"), *Ir.Shop, Params[K], *As);
+			return;
+		}
+		Ir.Mid->SetTextureParameterValue(FName(Params[K]), T);
+		if (Ir.Bound != nullptr)
+		{
+			// the old parameter given a 2x2 grey, so the instance holds no reference and the 30 MB is collected
+			static UTexture2D* Blank = MakeFlatTexture(128, 128, 128, true, TEXT("LedgerInteriorBlank"));
+			Ir.Mid->SetTextureParameterValue(FName(Params[Ir.BoundK]), Blank);
+			Ir.Bound->RemoveFromRoot();
+		}
+		Ir.Bound = T;
+		Ir.BoundK = K;
+		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s shows its %s picture (%dx%d), one of three loaded"), *Ir.Shop, Params[K], FW, FH);
+	}
+
 	// Each change of light: the room by day, or lit or dark at night.
 	void ReDriveShopInteriors(bool bSunOn)
 	{
-		for (const FInteriorRow& Ir : GInteriorRows)
+		for (FInteriorRow& Ir : GInteriorRows)
 		{
 			if (Ir.Mid == nullptr) { continue; }
+			BindInteriorPicture(Ir, bSunOn);
 			Ir.Mid->SetScalarParameterValue(FName(TEXT("Night")), bSunOn ? 0.0f : 1.0f);
 			Ir.Mid->SetScalarParameterValue(FName(TEXT("Brightness")), bSunOn ? Ir.DayGlow : Ir.NightGlow);
 			if (Ir.Spill.IsValid() && Ir.Spill->GetLightComponent() != nullptr)
@@ -9221,10 +9256,14 @@ namespace
 			}
 			else if (bStain)
 			{
-				double Rough = 0.85, Spread = 1.0, Edge = 1.0;
+				double Rough = 0.85, Spread = 1.0, Edge = 1.0, ColourAlpha = 0.0;
 				D->TryGetNumberField(TEXT("rough"), Rough);
 				D->TryGetNumberField(TEXT("spread"), Spread);
 				D->TryGetNumberField(TEXT("edge"), Edge);
+				// 12 Nov, the order's leakage decals: a scanned colour-and-opacity picture ("colour_alpha": 1) lays its
+				// own colour and takes its alpha as coverage (make_stain_material.py's (c))
+				D->TryGetNumberField(TEXT("colour_alpha"), ColourAlpha);
+				M->SetScalarParameterValue(FName(TEXT("UseColourAlpha")), bWearTest ? 0.0f : (float)ColourAlpha);
 				M->SetTextureParameterValue(FName(TEXT("StainTex")), *Have);
 				M->SetScalarParameterValue(FName(TEXT("StainStrength")), bWearTest ? 1.0f : (float)D->GetNumberField(TEXT("strength")));
 				M->SetVectorParameterValue(FName(TEXT("StainTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintFor(D, Kind));

@@ -281,6 +281,7 @@ def build(pieces):
                        "on": "ground_" + ("east" if cz > 0 else "west") + ("_footway" if abs(cz) > CHANNEL_Z_M + 0.2 else "_carriageway")})
     decals += street_level_wear(pieces)
     decals += chandler_marks(pieces, house)
+    decals += leak_scan_test(pieces)
     # Every ground mark stands at the ground's own height where it lies (ground_y).
     for d in decals:
         if d.get("pitch_deg") == 90.0:
@@ -552,6 +553,31 @@ def chandler_marks(pieces, house):
     return out
 
 
+#: THE SCANNED LEAK, ONE WALL (12 November 2026, the order of 9 November's Fab downloads; the street-weathering skill's
+#: section 4, its method (c) in tools/ue/make_stain_material.py): one Megascans leakage decal (colour and opacity, a
+#: 1 m by 1 m scan, resized to 512 px a metre, kept on F:/LedgerTools/game-inputs) under the parade's eaves by its party
+#: wall with bay 4, where rain off the gutter runs down the brick. Owned by its own name, so -NoWearOn=leak_test gives
+#: the same frame without it and the pair shows only what the scan changes. Nothing multiplied before it passes.
+LEAK_TEST = "leak_test"
+LEAK_TEST_BAY, LEAK_TEST_PICTURE = "east_parade_bay5", "megascans/leak_tdcafitc"
+LEAK_TEST_X_FROM_WEST_M, LEAK_TEST_TOP_M, LEAK_TEST_SIZE_M = 0.6, 6.2, 1.1
+LEAK_TEST_ROUGH, LEAK_TEST_STRENGTH = 0.7, 0.9   # as the chandler's rust run's sheen; the scan's own alpha shapes it
+
+
+def leak_scan_test(pieces):
+    by = {p["name"]: p for p in pieces["pieces"]}
+    b = by.get(LEAK_TEST_BAY)
+    if b is None:
+        return []
+    zf, facing = face_of(b)
+    x = b["x_m"] - b["sx_m"] / 2.0 + LEAK_TEST_X_FROM_WEST_M
+    d = wall_decal("streak", x, LEAK_TEST_TOP_M - LEAK_TEST_SIZE_M / 2.0, zf, facing, LEAK_TEST_SIZE_M, LEAK_TEST_SIZE_M,
+                   LEAK_TEST_STRENGTH, LEAK_TEST)
+    d.update({"kind": "leak", "picture": LEAK_TEST_PICTURE, "material": "stain", "colour_alpha": 1,
+              "rough": LEAK_TEST_ROUGH, "tint": [1.0, 1.0, 1.0]})
+    return [d]
+
+
 def stain_chandler(d):
     """The chandler's marks laid with M_LedgerStain, each with its kind's sheen and colour."""
     d["material"] = "stain"
@@ -778,7 +804,9 @@ def selftest():
                                                 for k in {(d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) for d in walls_floor if d["pitch_deg"] == 0.0}) <= 6)
     check("every office mark is laid with the stain material and a sheen of its own",
           office and all(d.get("material") == "stain" and 0.0 <= d.get("rough", -1) <= 1.0 for d in office))
-    check("the street's marks keep the grime material until their own gate", not any(d.get("material") for d in decals if d["on"] not in ("mickeys_room", CHANDLER)))
+    check("the street's marks keep the grime material until their own gate", not any(d.get("material") for d in decals if d["on"] not in ("mickeys_room", CHANDLER, LEAK_TEST)))
+    leak = [d for d in decals if d["on"] == LEAK_TEST]
+    check("the scanned leak test is one stain mark in colour-and-alpha mode", len(leak) == 1 and leak[0]["material"] == "stain" and leak[0]["colour_alpha"] == 1)
     # THE CHANDLER'S BAY (30 October, S1 and S3)
     ch = [d for d in decals if d["on"] == CHANDLER]
     walls = {}

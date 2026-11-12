@@ -17,7 +17,11 @@ TWO WAYS, ONE MATERIAL (the method's (a) and (b)):
       opacity, so one picture serves a small stain or a spread one (StainSpread 0 to 1: how far up the picture's
       height the stain reaches; StainEdge: how soft its edge is; 1 and 1 give the picture's alpha as it is);
   (b) the same picture as a mask over a tiling pattern (TileTex, its red channel, tiled TileScale times across
-      the decal; UseTile 1) for grunge and damp.
+      the decal; UseTile 1) for grunge and damp;
+  (c) a scanned colour-and-opacity decal (Megascans' B-O pictures: colour in RGB, coverage in alpha; UseColourAlpha
+      1): the picture's colour as it is, its alpha x StainStrength as coverage, still under the tile when UseTile is
+      1 (added 12 Nov 2026 for the three leakage decals of the order of 9 November; the method's (a) reads alpha as
+      height and darkens by the picture's brightness, which turns a scanned rust run into a grey cut-out).
 Colour as the grime's: the stain darkened by StainTint (or the tint itself, TintOnly 1, for wear that lightens);
 coverage (1 - the picture's brightness) x its grown height x StainStrength, times the tile where it is used;
 roughness StainRoughness under the same coverage. No normal is written: the wall's own detail stays (the method's
@@ -40,6 +44,7 @@ EDGE_PARAM, EDGE_DEFAULT = "StainEdge", 1.0
 TINT_PARAM, TINT_DEFAULT = "StainTint", (0.35, 0.33, 0.3)
 TINT_ONLY_PARAM, TINT_ONLY_DEFAULT = "TintOnly", 0.0
 ROUGH_PARAM, ROUGH_DEFAULT = "StainRoughness", 0.85
+COLOUR_ALPHA_PARAM = "UseColourAlpha"
 WHITE = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 FLAGS = [
     ("material_domain", "MaterialDomain", "MD_DEFERRED_DECAL"),
@@ -88,6 +93,11 @@ def grown(height, spread=SPREAD_DEFAULT, edge=EDGE_DEFAULT):
 
 def coverage(picture, height, strength, spread=SPREAD_DEFAULT, edge=EDGE_DEFAULT):
     return (1.0 - picture) * grown(height, spread, edge) * strength
+
+
+def colour_alpha(picture_rgb, alpha, strength, use_colour_alpha=1.0, tile=1.0):
+    """The method's (c), as the graph does it: (colour, coverage) for a colour-and-opacity decal texel."""
+    return tuple(picture_rgb), alpha * tile * strength
 
 
 def darkening(wall, tint, strength, picture=0.0, height=1.0):
@@ -151,6 +161,9 @@ def main():
     masked = node(X.MaterialExpressionMultiply, -500, 450)
     tiled = node(X.MaterialExpressionMultiply, -350, 600)
     opacity = node(X.MaterialExpressionMultiply, -200, 450)
+    use_ca = node(X.MaterialExpressionScalarParameter, -700, 200, parameter_name=COLOUR_ALPHA_PARAM, default_value=0.0)
+    colour_out = node(X.MaterialExpressionLinearInterpolate, -300, 0)
+    cover = node(X.MaterialExpressionLinearInterpolate, -420, 450)
     links = [(uv, "", tiled_uv, "A"), (tile_scale, "", tiled_uv, "B"), (tiled_uv, "", tile, "UVs"),
              (one, "", tile_or_one, "A"), (tile, "R", tile_or_one, "B"), (use_tile, "", tile_or_one, "Alpha"),
              (tex, "RGB", colour, "A"), (tint, "", colour, "B"),
@@ -159,7 +172,9 @@ def main():
              (spread, "", spread_inv, ""), (tex, "A", rise, "A"), (spread_inv, "", rise, "B"),
              (rise, "", soften, "A"), (edge, "", soften, "B"), (soften, "", height, ""),
              (dark, "", masked, "A"), (height, "", masked, "B"),
-             (masked, "", tiled, "A"), (tile_or_one, "", tiled, "B"),
+             (masked, "", cover, "A"), (tex, "A", cover, "B"), (use_ca, "", cover, "Alpha"),
+             (cover, "", tiled, "A"), (tile_or_one, "", tiled, "B"),
+             (pick, "", colour_out, "A"), (tex, "RGB", colour_out, "B"), (use_ca, "", colour_out, "Alpha"),
              (tiled, "", opacity, "A"), (strength, "", opacity, "B")]
     wired = 0
     for a, out_name, b, in_name in links:
@@ -168,7 +183,7 @@ def main():
                 wired += 1
         except Exception:
             pass
-    for src, prop in ((pick, unreal.MaterialProperty.MP_BASE_COLOR),
+    for src, prop in ((colour_out, unreal.MaterialProperty.MP_BASE_COLOR),
                       (rough, unreal.MaterialProperty.MP_ROUGHNESS),
                       (opacity, unreal.MaterialProperty.MP_OPACITY)):
         try:
@@ -201,8 +216,17 @@ def selftest():
         else:
             failed += 1
             print("FAILED - %s : %s" % (name, detail))
-    line = stain_line("MADE", 29, 29, ["material_domain=taken"], True)
-    check("the line carries its wired denominator", "stainMaterialWired=29/29" in line, line)
+    line = stain_line("MADE", 35, 35, ["material_domain=taken"], True)
+    check("the line carries its wired denominator", "stainMaterialWired=35/35" in line, line)
+    import re
+    links_n = len(re.findall(r'\(\w+, "\w*", \w+, "\w*"\)',
+                             open(__file__, encoding="utf-8").read().split("links = [")[1].split("]\n")[0]))
+    check("the graph asks 32 links and 3 outputs (35 wired)", links_n == 32, str(links_n))
+    col, cov = colour_alpha((0.42, 0.25, 0.12), 0.8, STRENGTH_DEFAULT)
+    check("(c) keeps the scan's own colour", col == (0.42, 0.25, 0.12))
+    check("(c) takes coverage from alpha x strength", abs(cov - 0.8 * STRENGTH_DEFAULT) < 1e-9, "%.3f" % cov)
+    check("(c) is off by default, so every existing mark is unchanged",
+          'parameter_name=COLOUR_ALPHA_PARAM, default_value=0.0' in open(__file__, encoding="utf-8").read())
     check("and names the asset the game loads", "stainMaterialPath=/Game/Ledger/M_LedgerStain" in line)
     # the method's step 1 check, on a mid wall (colour 0.35, roughness 0.6), a full-coverage dark stain (picture 0.3)
     d = darkening(0.35, max(TINT_DEFAULT), STRENGTH_DEFAULT, picture=0.3)

@@ -241,3 +241,5 @@ production/assets/street/surfaces/cover_iron*.png
 .claude/settings.local.json
 # Epic's Megascans test crate (tools/ue/import_crate_test.py): imported from F:, never in git
 ue-probe/Content/Ledger/Test/
+# Megascans leak decals (12 Nov): run-time pictures live on F:/LedgerTools/game-inputs (push guard)
+ledger/Assets/StreamingAssets/Decals/megascans/

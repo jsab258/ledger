@@ -3822,6 +3822,27 @@
    ]
   },
   {
+   "kind": "leak",
+   "picture": "megascans/leak_tdcafitc",
+   "x_m": 33.6,
+   "y_m": 5.65,
+   "z_m": 5.115,
+   "w_m": 1.1,
+   "h_m": 1.1,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.9,
+   "on": "leak_test",
+   "material": "stain",
+   "colour_alpha": 1,
+   "rough": 0.7,
+   "tint": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
    "kind": "scuff",
    "picture": "ours/wear_splash",
    "x_m": 6.0476,
