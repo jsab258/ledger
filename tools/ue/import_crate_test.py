@@ -103,8 +103,12 @@ def make_material(unreal, dest, name, tex):
         mel.connect_material_property(orm, "G", unreal.MaterialProperty.MP_ROUGHNESS)
         mel.connect_material_property(orm, "B", unreal.MaterialProperty.MP_METALLIC)
     else:
-        ro = sample(tex["Roughness"], 300, S.SAMPLERTYPE_LINEAR_COLOR)
-        ao = sample(tex["AO"], 600, S.SAMPLERTYPE_LINEAR_COLOR)
+        # MASKS, NOT LINEAR COLOR (12 Nov 06:35): these two import as TC_MASKS (import_texture's "mask"), and a
+        # Masks texture in a Linear Color sampler fails to compile, so the editor and the packaged game both drew
+        # Unreal's default material on CrateScan and WoodBox ("Failed to compile Material ... Default Material will
+        # be used"), which the first small review took for dark grey steel.
+        ro = sample(tex["Roughness"], 300, S.SAMPLERTYPE_MASKS)
+        ao = sample(tex["AO"], 600, S.SAMPLERTYPE_MASKS)
         mel.connect_material_property(bc, "RGB", unreal.MaterialProperty.MP_BASE_COLOR)
         mel.connect_material_property(ro, "R", unreal.MaterialProperty.MP_ROUGHNESS)
         mel.connect_material_property(ao, "R", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
