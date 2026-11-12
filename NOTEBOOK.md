@@ -2201,3 +2201,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: Cascadeur 2026.2 (Trial), its script server, Python. Target: foot slide 1 cm or less, standing knees within 5 deg, toes flat, timing kept. Check: per-frame joint measures before and after.
 - Result: feet and timing met; knees and toes not; physics tool changed nothing; video render crashed. Cost about 1 h with set-up. Why it failed: its clean-up tools fix contacts, not posture; the posture fault must be fixed in the solve or by hand.
 - Evidence: production/research/tool-tests-2026-11/CASCADEUR-TEST4-2026-11-12.md
+
+## 2026-11-12 10:50 Vellum garment drape from a pattern, set aside after three tries
+- Made: a knit jumper draped headless in Houdini Vellum from its flat pattern pieces, against the same garment draped in Marvelous.
+- Method: flat pieces from UVs at pattern size; seams as point pairs read from the reference drape; fabric density copied, stretch set by a hanging-strip test, rib from knit by the reference tool's ratios; seams closed in stages (soft springs, gravity off; weld with bend across welds, gravity on; finer settle with more substeps and passes). Placement: pieces wrapped round cylinders about body parts.
+- Tools: Houdini Apprentice (hython), numpy port of the drape check. Target: match the reference on body-through-cloth, cloth inside >3 mm, over-stretched edges, hang heights within 10 mm.
+- Result: worse than the reference on all four; deterministic and click-free. Why: soft seam springs stall when a seam's halves start on opposite sides of a limb (wrap over 230 deg); the weld then snaps them through the body. A placement that starts seams near closed (pieces as open sleeves round each limb) is the untested next method. Cost about 1 h over three tries, 11 min simulation for the last.
+- Evidence: production/research/tool-tests-2026-11/VELLUM-TEST3-2026-11-12.md
