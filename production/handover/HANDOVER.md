@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 03:22 (hourly run)
+**Started:** 2026-11-12 03:52 (hourly run)
 **Stopped:** 2026-11-12 03:37 (run 03:22: control clip kept, MetaTailor copied and its clicks asked on his page, crate test and Cascadeur setting committed locally, NOT pushed or built; history near its point; nothing running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 

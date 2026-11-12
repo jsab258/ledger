@@ -2909,7 +2909,7 @@ namespace
 		// and the crime need the scene file's collision, which this has none of.
 		SpawnStreet(World, bInteractive);
 
-		// A TEST PROP FOR ONE RUN (12 November 2026, the texturing test's crate): -PropTest=<Name>@<x>,<z>,<yaw>
+		// A TEST PROP FOR ONE RUN (12 November 2026, the texturing test's crate): -PropTest=<Name>@<x>,<z>,<yaw>[,<ground y>]
 		// stands /Game/Ledger/Test/<Name>/SM_<Name> on whatever is under street point (x, z) in the scene file's
 		// metres (x along the street, z across it), its bounds' bottom on the first surface a trace down finds,
 		// so a new prop can be filmed and its memory read in the packaged game without a line in the street file.
@@ -2935,7 +2935,20 @@ namespace
 					UStaticMesh* TMesh = LoadObject<UStaticMesh>(nullptr, *TPath);
 					FHitResult THit;
 					FCollisionQueryParams TQ(TEXT("LedgerPropTest"), true);
-					const bool bGround = World->LineTraceSingleByChannel(THit, FVector(TX, TY, 400.0), FVector(TX, TY, -200.0), ECC_Visibility, TQ);
+					bool bGround = false;
+					// A FOURTH NUMBER IS THE GROUND'S HEIGHT IN METRES (12 Nov): the automation's frames build the street with
+					// no collision, so a trace there finds nothing (two tries: collision switched on for the trace, and each
+					// mesh traced on its own body); the scene file's footway tops give the height instead. Without it, play
+					// runs (whose street collides) trace down as before.
+					if (N.Num() > 3)
+					{
+						THit.ImpactPoint = FVector(TX, TY, FCString::Atod(*N[3]) * 100.0);
+						bGround = true;
+					}
+					else
+					{
+						bGround = World->LineTraceSingleByChannel(THit, FVector(TX, TY, 400.0), FVector(TX, TY, -200.0), ECC_Visibility, TQ);
+					}
 					if (TMesh == nullptr || !bGround)
 					{
 						UE_LOG(LogTemp, Warning, TEXT("ledgerPropTest name=%s mesh=%s ground=%s nothing placed"),
