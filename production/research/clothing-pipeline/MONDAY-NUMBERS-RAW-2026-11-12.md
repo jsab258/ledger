@@ -81,3 +81,22 @@ Sheila totals:
 | Blouse, skirt, handbag, spectacles, belt, t-shirt, cap | made once in the sources read; no second make found | not applicable | | | not applicable |
 
 Not read: DECISIONS.md and NOTEBOOK.md in full (searched by words only, as the brief requires); the notes' pictures; any Tom note in production/art/clothing/ (not named in the brief); RECIPE.md's per-garment cost lines beyond "a chain about 3 h; a fix 0.2 to 1.5 h" (RECIPE.md line 54, section 6).
+
+## Hours per garment, reconstructed (advisor 117, 12 Nov 13:05)
+
+Marked **reconstructed**, not measured. Method: every commit on any branch since 5 Oct (git log, 1,555 commits, read 12 Nov 13:00) ordered by time; each commit is given the time since the commit before it, capped at 90 minutes (a longer gap is taken as a break); a commit whose message names a garment gives that time to it, split evenly when it names several. Script: the session's scratchpad recon.py (patterns: Tom with jumper/jacket/collar/jeans/boots; blouse, skirt, cardigan, derby/Sheila's shoes). Uncertainty: large. Commits bundle several pieces of work under one message, so a garment's time hides inside commits named for other work (Sheila's cardigan: the note states about 3.2 h, the commits give 1.6 h); helpers' time is not in it; pre-October work is not in it. Treat each figure as a floor of the order of magnitude, within a factor of two.
+
+| Garment | Reconstructed hours | Commits naming it | Span |
+|---|---|---|---|
+| Tom: jumper | 4.1 | 8 | 30 Oct to 12 Nov |
+| Tom: jacket and collar | 10.5 | 29 | 26 Oct to 11 Nov |
+| Tom: jeans | 3.0 | 8 | 30 Oct to 11 Nov |
+| Tom: boots | 2.8 | 9 | 30 Oct to 9 Nov |
+| Tom, in all | 20.4 | | |
+| Sheila: blouse | 1.7 (note: 0.4) | 9 | 11 Nov |
+| Sheila: skirt | 1.6 (note: 0.3) | 7 | 11 Nov |
+| Sheila: cardigan | 1.6 (note: 3.2) | 8 | 11 Nov |
+| Sheila: shoes | 0.2 (note: 1.5) | 2 | 11 Nov |
+| Sheila, in all | 5.1 (notes: 5.4) | | |
+
+Reading: Tom's clothes took about four times Sheila's, which reused Tom's and Ron's pieces through the refit route in one day. From 12 Nov every garment's work is logged in its own time-log window named "garment: <wearer> <garment> <step>", so the Second Suit has measured hours.

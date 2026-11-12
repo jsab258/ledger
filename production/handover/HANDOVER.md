@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 10:22 (hourly run)
-**Stopped:** 2026-11-12 09:48 (run 08:52: shop pictures BC1, measured 4,965 MB; gate far-ahead wait; his method rule and its check; Ron's cost table reviewed; Cascadeur and Vellum method notes; history at its point)
+**Started:** 2026-11-12 12:52 (hourly run)
+**Stopped:** 2026-11-12 13:02 (run 12:52: advisor 117 taken, garment hours reconstructed; pace +7.1, handed over). The gate at 12:52 reported a background job of the 10:22 run still running; no Unreal, Blender or Cascadeur was running: check its result first.
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -22,24 +22,21 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **The lean start's page reads, filtered (advisor 97, 11 Nov; measured: the three full listings cost about 10,000 tokens a start):** never list advisor, advisor-acks or verdicts whole, nor with out_dir. Two queries for the advisor: advisor-acks ordered by "at" descending, limit 1; then advisor where "at" is after that ack's. Verdicts: a query where "at" is after the last page read, written in UTC (verdicts' "at" is UTC, e.g. 2026-11-11T11:50 for 12:50 Swiss; a Swiss time in the filter hid his 12:28 taps for 20 minutes, 11 Nov). Advisor messages carry +01:00 times: filter those in Swiss time. Open page items by a filter on items.json (answered items now live in archive.json, never read at the start). The task file still says the old reads: editing it was refused by the permission check, so it is his to change.
 - **Advisor 113 (12 Nov):** of two tools that do the job, prefer the one the builder can drive without clicks. MetaTailor clicks allowed for its free test (his tap 07:17); CMU motion capture on the licence list.
 - Helper briefs on one person carry "person <name>".
+- **Advisor 117 (12 Nov):** every garment's work gets its own time-log window named "garment: <wearer> <garment> <step>" (tools/timelog.py start), so Monday's numbers and the Second Suit have measured hours. Motion: the 14B video route is dropped; next motion step (when pace allows) the CMU library, sit-down/stand-up and a lean, retargeted with Unreal's own retargeter, filmed packaged beside ours, research note first. Houdini on test for hair only (Darren's curls on its own renders first).
 
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 12 Nov, from 10:22
-- Vellum third try (helper): worse than try 2 on every check; set aside, Marvelous stays (VELLUM-TEST3-2026-11-12.md). Cause: seams start on opposite sides of a limb (230-250 deg wrap); soft springs stall, the weld drags cloth through. No fourth try.
-- Cascadeur: started with no click from C:/LedgerTools/cascadeur-portable (its application_started hook starts the shipped script server, 127.0.0.1:8765). Test 4 two tries, set aside (CASCADEUR-TEST4-2026-11-12.md): Fix Foot met feet and timing; knees, toes not; Auto Physics nothing; render-to-video crashes it. Licence is a Trial to 25 Nov. Test 5 (sit-down) not started; listed. Cascadeur not running now.
-- MetaTailor: method note written; Tom's jumper FBX at F:/LedgerTools/tool-tests-2026-11/metatailor-test/; Sheila's body F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_Body.fbx. Computer-use approval is refused in a scheduled run: page item metatailor-access-2026-11-12 (NEEDS YOU sent 11:02).
-- Motion 107 (a): control clip (source 430 back to 230) solved and measured. Monday's raw garment numbers: production/research/clothing-pipeline/MONDAY-NUMBERS-RAW-2026-11-12.md (gap: no hours per garment in the time log). Rows 10:27, 10:54.
-
-Earlier today (08:52 run): shop pictures BC1 (dark night ones stay PNG), pushed d4a070b; advisors 114 and 116 done.
+## Run on 12 Nov, from 12:52
+- Advisor 117 taken (ack 12:54): hours per garment reconstructed from commit gaps (Tom about 20 h, Sheila about 5 h), last section of MONDAY-NUMBERS-RAW-2026-11-12.md. Row 12:54. Pace +7.1, so the session handed over with no new heavy work.
+- From the 10:22 run: Vellum 3 of 3 and Cascadeur test 4 set aside (notes in tool-tests-2026-11); Cascadeur starts with no click from C:/LedgerTools/cascadeur-portable (Trial to 25 Nov); test 5 not started. MetaTailor: method note and inputs ready (METATAILOR-METHOD-2026-11-12.md); his tap "done" 11:12 UTC seen, but computer use cannot be approved in a scheduled run: it needs a session he starts at the PC.
 
 ## Next, in order
-1. FIRST: pace (+5.2 at 10:53), verdicts after 2026-11-12T09:30Z, advisor after 10:30 Swiss (latest ack 115). Control solve done 11:43 and measured (STOCK-CHAIR-RISE note, last section): solver leaves legs bent and freezes after the rise on real footage too. Next for motion: advisor 107 (d) as before; report the control's lesson in the hour's row.
+1. FIRST: pace (+7.1 at 12:54: over +6, so no new token-heavy work or helpers until back within 6), verdicts after 2026-11-12T11:55Z, advisor after 12:30 Swiss (latest ack 117). Row 12:54.
 1a. MetaTailor once he has allowed it (his page): the test as METATAILOR-METHOD-2026-11-12.md says, clicks after 10 idle minutes, build machine off.
 2. d4a070b measured: steady 4,965 MB (was 5,172), peak 5,323, frame 17.05 ms (GPU 14.99); about 95 MB over Windows' budget. Confirm in tonight's walk log the line "shows its ... picture (..., BC1/srgb=yes)"; next for the gap: decals and scans.
 6. n09-12 (game windows: only when the PC is idle and no Unreal runs): UE4SS-READING-2026-11-12.md: MIT; v4.0.0 is from today, so use an older proven release; support for SH2 (UE 5.1, unverified) and inZOI unconfirmed; one run per game, never beside Unreal, its files removed after.
-7. Motion: advisor 107 (a) and (d) as before.
+7. Motion (advisor 117): CMU library route, research note first, when pace allows.
 8. Advisor "eff" DAILY at 19:00; before 23:30 space for the night build; nothing touching Unreal 01:15 to 04:30.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
