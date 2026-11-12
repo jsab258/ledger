@@ -2250,3 +2250,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.7 h builder time; under 2 minutes of machine time for 61 runs plus one engine commandlet.
 - Failed: the real-clip jobs could not run because their inputs were deleted the same hour as "own unused leftovers": grep research notes for a folder's path before deleting it. The tool's leg rule ("bends over 18 degrees are intent") leaves solve-sized faults alone and flattens deliberate small bends; its stand-ins were too mild to show it.
 - Evidence: production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md; TOOLCHAIN-FACTS.md.
+
+## 2026-11-12: a hair generator tested from job files (round 1)
+- Made: the owner's hair tool run on its curls, perm and short-cut jobs; same-twice verify; strands and cards imported headless into the engine; its pictures looked at; card placement measured.
+- Method: run from job copies with outputs outside its folder; its own verify for determinism; the engine's groom importer as a commandlet; look at every picture it makes before trusting any check; measure placement (card points inside the head) where a check only counts.
+- Tools: the tool's command line; the engine's Python import; a few lines parsing the FBX text when the checker program refused the format.
+- Target and check: budgets per head, curl visible at talk distance, engine import, coverage; the person-level bar (crown, distances, lights, shimmer, scalp) left for the engine.
+- Cost: about 0.5 h; seconds of machine time plus one engine commandlet.
+- Failed: the cards version passed "cards made" while about nine in ten card points sat inside the head; styles did not match their names; a proxy head was used silently when no scalp was given; ASCII FBX refused by Blender.
+- Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md.

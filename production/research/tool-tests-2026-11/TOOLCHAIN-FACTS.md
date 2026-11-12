@@ -27,5 +27,14 @@ One growing note (advisor 119, 120, 122, 12 Nov 2026). Setting-free: anything ab
 - Needs: fit a finished, skinned garment onto another body with no cloth inside the body, bands at their heights, UVs and skinning kept, layered garments counted together (an open front over a lower layer).
 - Lacked so far: Seamshift fails layered garments and its identity case (SEAMSHIFT-ROUND1); MetaTailor needs clicks (METATAILOR-TEST).
 
-### Cloth drape, hair, procedural building
-- To be filled from the next rounds (Loomwright; the Vellum tests VELLUM-TEST2 and VELLUM-TEST3 hold the commercial side).
+### Hair (strands and cards)
+- Needs: strands grown on the character's real scalp (a painted mask), cut by per-zone lengths, curl and clumping, exported as engine-readable curves (Alembic groom), plus a cards version for distance placed outside the scalp, budgets per head, pictures beside the reference photographs from the bar's views (crown from behind, talk close-up, the distances).
+- Checks must measure what is seen, not what was made: a card count passed while nine in ten card points sat inside the head (LOOMWRIGHT-HAIR-ROUND1). Coverage of the scalp from the camera, measured lengths per zone, facial strands rooted on skin.
+- A named person's job must fail without its real head and reference photograph, rather than fall back to a proxy silently.
+- Lacked so far: Houdini's free edition cannot write the Alembic (PLAN-2026-11-11); Loomwright writes it and Unreal imports it, but grows on a proxy head and buries its cards.
+
+### Cloth drape, procedural building
+- To be filled from the next rounds (Loomwright's cloth and streets; the Vellum tests VELLUM-TEST2 and VELLUM-TEST3 hold the commercial side).
+
+### File formats
+- Write binary FBX (or OBJ beside it): ASCII FBX is read by Unreal but refused by Blender (LOOMWRIGHT-HAIR-ROUND1), and the checks run in Blender.
