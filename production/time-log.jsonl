@@ -656,3 +656,5 @@
 {"event": "stop", "at": "2026-11-12T20:28:15", "note": "round 1 done; production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md"}
 {"event": "start", "at": "2026-11-12T22:38:52", "task": "priority mark and C: survey", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-12T23:02:23", "note": ""}
+{"event": "start", "at": "2026-11-12T23:07:42", "task": "tool test: Motionsmith round 1", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-12T23:19:03", "note": ""}

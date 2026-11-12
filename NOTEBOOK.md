@@ -2241,3 +2241,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.4 h.
 - Failed: the earlier flag lived in a file the budget tool rewrote every reading, so it was never set and priority work waited two hours. A recursive temp-folder scan ran over 10 minutes: use du with a timeout.
 - Evidence: tools/fresh_gate.py; production/approvals/needs-you/items.json (c-drive-room-2026-11-12).
+
+## 2026-11-12: a motion clean-up tool tested from job files (round 1)
+- Made: the owner's motion tool run on its 5 test jobs and 23-move library twice, measured independently, imported into the engine, and fed its own clean moves back as fix jobs.
+- Method: run every job from copies of its job files with outputs outside its folder; compare hashes across two runs; measure the output with a second program (leg angles, planted drift, floor) rather than trusting the tool's checks; engine import and export-back compare; then the identity case (fix a clean clip, expect no change) and read the tool's rule table for the cause of any change.
+- Tools: the tool's command line, Blender headless for measures, the engine's Python import as a commandlet.
+- Target and check: slide 1 cm or less, standing knee within 5 degrees, floor kept, timing kept; same bytes twice; engine round trip identical.
+- Cost: about 0.7 h builder time; under 2 minutes of machine time for 61 runs plus one engine commandlet.
+- Failed: the real-clip jobs could not run because their inputs were deleted the same hour as "own unused leftovers": grep research notes for a folder's path before deleting it. The tool's leg rule ("bends over 18 degrees are intent") leaves solve-sized faults alone and flattens deliberate small bends; its stand-ins were too mild to show it.
+- Evidence: production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md; TOOLCHAIN-FACTS.md.
