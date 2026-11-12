@@ -26,6 +26,11 @@ is in the newest session's log and whose finish ("<task-id>") is not; helpers' t
 THREE MINUTES AFTER A WRITTEN STOP (5 November, his yes on his page): a session that stopped just before the quarter
 past made the next run stand aside for an hour, his answers waiting up to about 75 minutes. Stopped later than Started
 means the old session has declared itself finished, so 3 quiet minutes are enough; 15 stay when it has not.
+EIGHTEEN SECONDS SINCE 12 NOVEMBER (the advisor's "eff", production/research/token-audit/HANDOVER-START-2026-11-12.md): the task
+allows one run at a time, so the quarter-hour run that falls inside a working session is held and starts 30 to 50 s
+after that session ends (17:23:41 after 17:22:53, 19:34:43 after 19:34:12); with 3 minutes it read WAIT and the next
+session began at the following quarter, about 15 minutes lost per handover. The held run's start itself shows the old
+run has ended; 18 s keeps out a turn still being written.
 
 WHY NOT A FILE'S TIME OR THE APP'S SESSION LIST (4 November, his message at 13:38): the 12:15 run stood aside because
 the app listed an idle "Ledger Builder" session under remote control as active three minutes before (its
@@ -57,7 +62,7 @@ HANDOVER = os.path.join(ROOT, "production", "handover", "HANDOVER.md")
 REHEARSAL = os.path.join(ROOT, "production", "handover", "takeover-rehearsal.json")
 LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Jafar-ledger-local")
 QUIET_MIN = 15
-QUIET_STOPPED_MIN = 3
+QUIET_STOPPED_MIN = 0.3  # 18 s (advisor 'eff', 12 Nov; HANDOVER-START note): was 3
 DEAD_MIN = 30
 DEAD_JOB_MIN = 120  # only for the cheap file-time shortcut below
 JOB_START = re.compile(rb'"backgroundTaskId": ?"([A-Za-z0-9]+)"')
@@ -233,7 +238,7 @@ def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=Non
         return "WAIT the handover has no Started or Stopped line: a session must set them"
     quiet = QUIET_STOPPED_MIN if stopped >= started else QUIET_MIN
     if idle_min is not None and idle_min < quiet:
-        return "WAIT a session wrote a turn %d minutes ago (under %d)" % (int(idle_min), quiet)
+        return "WAIT a session wrote a turn %.1f minutes ago (under %s)" % (idle_min, quiet)
     job = "; a background job of the last session still runs: leave the card alone until it ends, then take its result" \
         if job_running else ""
     if stopped >= started and not job_running:
@@ -271,8 +276,8 @@ def selftest():
         return {"at": at, "ahead": ahead, "priority": priority}
     cases = [
         ("stopped and quiet: GO", decide(d, h, 40), "GO"),
-        ("stopped, a turn 2.9 min ago: WAIT", decide(d, h, 2.9), "WAIT"),
-        ("stopped, a turn 3 min ago: GO", decide(d, h, 3), "GO"),
+        ("stopped, a turn 10 s ago: WAIT", decide(d, h, 0.17), "WAIT"),
+        ("stopped, a turn 30 s ago: GO (the held run starts 30 to 50 s after the stop)", decide(d, h, 0.5), "GO"),
         ("not stopped, a turn 5 min ago: WAIT, 15", decide(d, r, 5), "WAIT a session wrote"),
         ("not stopped, a turn 14.6 min ago: WAIT, 15", decide(d, r, 14.6), "WAIT a session wrote"),
         ("running: WAIT", decide(d, r, 20), "WAIT"),

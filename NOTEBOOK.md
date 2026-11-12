@@ -2259,3 +2259,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.5 h; seconds of machine time plus one engine commandlet.
 - Failed: the cards version passed "cards made" while about nine in ten card points sat inside the head; styles did not match their names; a proxy head was used silently when no scalp was given; ASCII FBX refused by Blender.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md.
+
+## 2026-11-12: handovers between sessions that lose no quarter-hour
+- Made: the start gate now accepts a run 18 s after a written stop instead of 3 minutes.
+- Method: measure first: read the scheduler's run list against the idle-gap tool's causes; the scheduler holds a due run while one is working and starts it as soon as that run ends, so the gate's quiet time, not the cadence, was the wait.
+- Tools: the scheduler's run list; the idle-gap script; the gate's self-test.
+- Target and check: handover waits under 10 minutes a day, read Monday and Thursday; the first stop after the change should hand over within a minute.
+- Cost: about 0.3 h.
+- Failed: nothing yet; the measure rests on two held runs.
+- Evidence: production/research/token-audit/HANDOVER-START-2026-11-12.md.
