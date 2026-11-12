@@ -555,12 +555,15 @@ def chandler_marks(pieces, house):
 
 #: THE SCANNED LEAK, ONE WALL (12 November 2026, the order of 9 November's Fab downloads; the street-weathering skill's
 #: section 4, its method (c) in tools/ue/make_stain_material.py): one Megascans leakage decal (colour and opacity, a
-#: 1 m by 1 m scan, resized to 512 px a metre, kept on F:/LedgerTools/game-inputs) under the parade's eaves by its party
-#: wall with bay 4, where rain off the gutter runs down the brick. Owned by its own name, so -NoWearOn=leak_test gives
+#: 1 m by 1 m scan, resized to 512 px a metre, kept on F:/LedgerTools/game-inputs) under the eaves of Mickey's house (bay 0, near the hook camera; bay 5 was too far to judge) by its end
+#: wall, where rain off the gutter runs down the brick. Owned by its own name, so -NoWearOn=leak_test gives
 #: the same frame without it and the pair shows only what the scan changes. Nothing multiplied before it passes.
 LEAK_TEST = "leak_test"
-LEAK_TEST_BAY, LEAK_TEST_PICTURE = "east_parade_bay5", "megascans/leak_tdcafitc"
-LEAK_TEST_X_FROM_WEST_M, LEAK_TEST_TOP_M, LEAK_TEST_SIZE_M = 0.6, 6.2, 1.1
+#: TRY 2 of the leak's look (12 Nov, first small review FAIL: the square scan's coverage runs full width to a hard top
+#: edge, so it read as a box): the run-shaped scan (tculfbnc, 0.25 x 0.5 m as scanned) laid at 0.55 x 1.1 m, its picture
+#: regenerated at 512 px a metre for that size (280 x 564), soft at the sides and the top
+LEAK_TEST_BAY, LEAK_TEST_PICTURE = "east_parade_bay0", "megascans/leak_tculfbnc"
+LEAK_TEST_X_FROM_WEST_M, LEAK_TEST_TOP_M, LEAK_TEST_W_M, LEAK_TEST_SIZE_M = 0.6, 6.2, 0.55, 1.1
 LEAK_TEST_ROUGH, LEAK_TEST_STRENGTH = 0.7, 0.9   # as the chandler's rust run's sheen; the scan's own alpha shapes it
 
 
@@ -571,7 +574,7 @@ def leak_scan_test(pieces):
         return []
     zf, facing = face_of(b)
     x = b["x_m"] - b["sx_m"] / 2.0 + LEAK_TEST_X_FROM_WEST_M
-    d = wall_decal("streak", x, LEAK_TEST_TOP_M - LEAK_TEST_SIZE_M / 2.0, zf, facing, LEAK_TEST_SIZE_M, LEAK_TEST_SIZE_M,
+    d = wall_decal("streak", x, LEAK_TEST_TOP_M - LEAK_TEST_SIZE_M / 2.0, zf, facing, LEAK_TEST_W_M, LEAK_TEST_SIZE_M,
                    LEAK_TEST_STRENGTH, LEAK_TEST)
     d.update({"kind": "leak", "picture": LEAK_TEST_PICTURE, "material": "stain", "colour_alpha": 1,
               "rough": LEAK_TEST_ROUGH, "tint": [1.0, 1.0, 1.0]})
