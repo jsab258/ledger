@@ -28,6 +28,8 @@ def judged(rel):
     rel = rel.replace("\\", "/")
     if not rel.startswith("production/research/") or not rel.endswith(".md"):
         return False
+    if re.search(r"(method|reading)", os.path.basename(rel), re.I):
+        return False   # the research notes themselves, which the line points to
     return bool(NAME.search(os.path.basename(rel))) or rel.startswith("production/research/tool-tests-")
 
 
@@ -56,6 +58,7 @@ def selftest():
         ("a test file is judged", judged("production/research/x/VELLUM-TEST3-2026-11-12.md"), True),
         ("any file in a tool-tests folder", judged("production/research/tool-tests-2026-11/NOTES.md"), True),
         ("a reading note is not", judged("production/research/x/UE4SS-READING-2026-11-12.md"), False),
+        ("a method note in a tool-tests folder is not", judged("production/research/tool-tests-2026-11/VELLUM-METHOD-2026-11-12.md"), False),
         ("outside research is not", judged("production/handover/TEST.md"), False),
         ("the line found", has_line("# T\n\nMethod researched: production/research/x/METHOD.md, 12 Nov\n"), True),
         ("the line in a list", has_line("- Method researched: SideFX docs, 12 Nov"), True),
