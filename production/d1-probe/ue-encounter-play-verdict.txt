@@ -1,7 +1,7 @@
 encounterMode=play
 encounterStatus=FAIL
 encounterFailed=and-his-mate,the-witness-has-reason-too
-encounterCommit=9e19bb3
+encounterCommit=a73a1b5
 pawnClass=LedgerSliceCharacter actPressLanded=player-input actRequestsSeen=1 actAttempted=yes
 aboutA w1=1 n2=1 r3=0 aboutB w1=0 n2=0 r3=0 crimeMemories w1=1 n2=2 r3=0
 filedSummaryA=somebody put a window in down Quay Street and all there was to see was a shape
