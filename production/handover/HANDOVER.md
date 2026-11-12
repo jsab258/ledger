@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 00:37 (hourly run)
-**Stopped:** 2026-11-12 00:22 (run 00:22: pace +6.0, at the stop mark; nothing new on the page or from the advisor; next steps unchanged)
+**Started:** 2026-11-12 02:21 (hourly run)
+**Stopped:** 2026-11-12 01:37 (run 01:36: pace +6.3, over 6 ahead, so no new work; page and advisor read, nothing new since 20:26; nothing running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -33,11 +33,11 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 ## Next, in order
 1. FIRST: pace (stopped at +7.1: nothing new and heavy until back within 6), page verdicts (UTC filter after 19:38Z), advisor after 20:20 (Swiss).
 2. The crate in Unreal beside the scan as it comes (FBX at F:/LedgerTools/texture-tools/crate/in/crate.fbx, maps out1024/ and as-it-comes/; no generic prop importer: import_cap.py's FbxImportUI pattern into a test path, editor pictures as screens), one small reviewer, card memory in a packaged walk. Then the other four downloads by the brick's and timber's tests.
-3. Tool tests (PLAN-2026-11-11.md): Houdini Vellum test 2 (Tom's jumper against Marvelous, OBJ frames); MetaTailor (advisor 110: Sheila's blouse and cardigan carried from Tom's beside ours, same checks, time, clicks needed) once his account exists (check first; if not, a page item); Cascadeur tests 4 and 5 after deciding how its script server starts.
+3. Tool tests (PLAN-2026-11-11.md): Houdini Vellum test 2 (Tom's jumper against Marvelous, OBJ frames); MetaTailor (advisor 110: Sheila's blouse and cardigan carried from Tom's beside ours, same checks, time, clicks needed) once his account exists (check first; if not, a page item); Cascadeur tests 4 and 5: start route decided 02:35 (a module in a user folder on F: named by its ScriptsDir setting, written through the build machine; fallback his click; PLAN's last section).
 4. Sheila (d): only the 7 Nov rule's one different method (MetaTailor or a Marvelous drape); then a fresh final reviewer and her page as a whole person, fault listed.
 5. Advisor "eff" (19:45): DAILY-2026-11-12.md is started (interim from 01:00); at 19:00 rerun its three commands for the window to 19:00 (tools/idle_gaps.py and tools/shell_reads.py, new tonight), fill the rows, then: if handover waits pass 30 minutes a day, research an immediate next start (one tap, exact lines); pictures under 120; file reading against this tool's baseline 424,185 tokens (a one-tap guard if not down a third). Then ack "2026-11-11-1940-eff".
-5b. His page's next batch: the nightly answers task (ledger-page-answers-nightly) stops at a permission prompt each night since 10 Nov (49 min each); recommend pausing it, the session reading answers back by filtered query (done by hand 12 Nov 00:50).
-5c. Advisor 107: (c) the 4TU FBX is CC BY-NC, not used; CMU raw or cgspeed BVH need CMU's own terms read at source (certificate error tonight), then a licence item on his page. (a) Pexels 6615631 reversed (fallback Pixabay 165019): download, look at frames for whole body and feet, then the CPU solve beside the AI clip's (after 04:30).
+5b. Done 02:23: on his page (pause-nightly-answers-task-2026-11-12); close it on his tap.
+5c. Advisor 107: (c) done 02:23: CMU's own terms read at source over plain http (commercial products allowed, no resale of the data); licence item on his page (cmu-motion-licence-2026-11-12), raw ASF/AMC or cgspeed BVH once he says yes. (a) Pexels 6615631 reversed (fallback Pixabay 165019): download, look at frames for whole body and feet, then the CPU solve beside the AI clip's (after 04:30).
 6. Advisor 107's motion routes, one at a time (a, c, d as written there).
 7. Before 23:30: space for the night build; nothing touching Unreal 01:15 to 04:30. n09-12 (UE4SS, never beside Unreal); n09-3 step 3 after Monday's exit.
 

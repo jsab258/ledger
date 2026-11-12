@@ -60,3 +60,12 @@ Counts listed: sit/stand about 20; lean 3 (none wall/counter); gesture 9 groups;
 - cgspeed README: CMU captured no finger data; finger joints are placeholders; original format ASF/AMC.
 - 4TU page: lower-numbered subjects earlier, lower quality.
 - Foot sliding or noise beyond the above: no primary measurement read. Unverified.
+
+## CMU's own pages, read at source 12 Nov 2026 02:23 (Swiss)
+Plain http reached both pages tonight (http://mocap.cs.cmu.edu/ and http://mocap.cs.cmu.edu/faqs.php, raw HTML saved and read in full, not through a summarising tool); https still fails its certificate. Answers to question 1, now confirmed at source:
+- Home page: "free for all uses"; "free for use in research projects. You may include this data in commercially-sold products, but you may not resell this data directly, even in converted form." So the 4TU quote is CMU's current wording; the 2010 cgspeed wording is older.
+- FAQ, "How can I use this data?": "may be copied, modified, or redistributed without permission."
+- Credit: requested only when results are published (citation email and an acknowledgment line); not a condition for a product.
+- AI/ML clause: none on either page.
+- Quality notes on the home page: start with higher-numbered subjects; toe and hand joints noisy; finger and thumb joints not captured.
+Result: commercial game use allowed; ship moves inside the game, never the files as a library. The library is not on the licence allowlist, so it goes to his page as a licence item (cmu-motion-licence-2026-11-12). The 4TU FBX stays out (CC BY-NC); the raw ASF/AMC or the cgspeed BVH (no added restrictions) are the routes once he says yes.

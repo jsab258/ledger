@@ -541,6 +541,24 @@
    ],
    "state": "done",
    "closed": "2026-11-11 19:43, answered yes (19:16): in RULINGS 11 Nov, the computer-use line"
+  },
+  {
+   "id": "cmu-motion-licence-2026-11-12",
+   "added": "2026-11-12 02:23",
+   "text": "A licence, one tap: may the game use moves from Carnegie Mellon's free motion-capture library (sitting down, getting up, idles, gestures) as the base for people's movements? Its own page, read tonight, says the data may be included in products that are sold, only not resold as data. No money; a credit line is asked only for published papers.",
+   "links": [{"label": "Carnegie Mellon's library and its terms", "url": "https://mocap.cs.cmu.edu/"}],
+   "recommendation": "Yes: real captured moves for sitting and idles at no cost; we never ship the files as a library, only moves inside the game.",
+   "options": [["yes", "Yes, add it to the licence list (recommended)"], ["no", "No, keep to other sources"]],
+   "state": "open"
+  },
+  {
+   "id": "pause-nightly-answers-task-2026-11-12",
+   "added": "2026-11-12 02:23",
+   "text": "Your hands, one minute: in the Claude app, open Scheduled in the sidebar, choose the task 'ledger-page-answers-nightly' and switch it off. Since 10 November it stops each night at a permission question nobody can answer; the session already reads your answers back itself.",
+   "links": [],
+   "recommendation": "Switch it off: it has done nothing for three nights, and a session cannot change a schedule.",
+   "options": [["done", "Done, switched off (recommended)"], ["keep", "Keep it running"]],
+   "state": "open"
   }
  ]
 }

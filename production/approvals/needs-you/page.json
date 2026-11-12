@@ -1,11 +1,57 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Wednesday 11 November, 19:43",
+ "kicker": "LEDGER · Needs you · 2 open · updated Thursday 12 November, 2:24",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "cmu-motion-licence-2026-11-12",
+   "name": "A licence, one tap: may the game use moves from Carnegie Mellon's free motion-capture library (sitting down, getting up, idles, gestures) as the base for people's movements? Its own page, read tonight, says the data may be included in products that are sold, only not resold as data. No money; a credit line is asked only for published papers.",
+   "links": [
+    {
+     "label": "Carnegie Mellon's library and its terms",
+     "url": "https://mocap.cs.cmu.edu/"
+    }
+   ],
+   "recommendation": "Yes: real captured moves for sitting and idles at no cost; we never ship the files as a library, only moves inside the game.",
+   "added": "2026-11-12 02:23",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "yes",
+     "Yes, add it to the licence list (recommended)"
+    ],
+    [
+     "no",
+     "No, keep to other sources"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "pause-nightly-answers-task-2026-11-12",
+   "name": "Your hands, one minute: in the Claude app, open Scheduled in the sidebar, choose the task 'ledger-page-answers-nightly' and switch it off. Since 10 November it stops each night at a permission question nobody can answer; the session already reads your answers back itself.",
+   "links": [],
+   "recommendation": "Switch it off: it has done nothing for three nights, and a session cannot change a schedule.",
+   "added": "2026-11-12 02:23",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "done",
+     "Done, switched off (recommended)"
+    ],
+    [
+     "keep",
+     "Keep it running"
+    ]
+   ]
+  }
+ ]
 }
