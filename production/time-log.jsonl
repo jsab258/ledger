@@ -708,3 +708,5 @@
 {"event": "stop", "at": "2026-11-13T20:21:29", "note": ""}
 {"event": "start", "at": "2026-11-13T20:35:00", "task": "tool loop: kiln round 3 judging", "phase": "2", "kind": "review"}
 {"event": "stop", "at": "2026-11-13T20:50:00", "note": ""}
+{"event": "start", "at": "2026-11-13T21:07:52", "task": "tool loop: kiln round 4", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T22:00:50", "note": "round 4 judged: M3 not met, progress; KILN-ROUND1-2026-11-13.md Round 4"}
