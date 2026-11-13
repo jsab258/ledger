@@ -2340,3 +2340,21 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.65 h, no helpers.
 - Failed: a refitter's 'sitting' fix passes its count (328 to 10 points through) while the hem still balloons by eye: a count can pass a bad shape, so every count check needs a shape check beside it. A draper's third layer vanished below the floor on a real body while every picture looked clean: check that every layer is present and on the body, not only that what is present is clean. A folder-date check that skipped subfolders missed an update for three hours: date the source files themselves.
 - Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md (Round 4), LOOMWRIGHT-CLOTH-ROUND1-2026-11-13.md (Round 2).
+
+## 2026-11-13: setting up an improvement loop for in-house tools
+- Made: no game piece; the starting point for a loop in which a fresh helper improves a tool each round and the session judges it.
+- Method: copy each tool under version control and tag the copy as the maker's version; write a short design note of the shared interfaces only, each part naming the game item it serves and the hours it should save, and have one fresh reviewer check it against the sources; keep the judge (jobs, inputs, measuring scripts, reference numbers, bars) outside the copy with a hash list checked before every round; prove the judge on the unchanged copy first (it must match the last test round, timings aside).
+- Tools: version control, a judge runner script, the tools' own command lines.
+- Target and check: the unchanged copy matches the last round under the judge; the reviewer's findings all applied.
+- Cost: about 1.2 h of session time and one reviewer.
+- Failed: the reviewer found the note missing the pattern-to-mesh step and two misnamed files, so a design read only from file lists misses whole stages; read the solver's real inputs before naming its interface. A shell heredoc dropped a backslash in the judge script (known trap); a file-hash list must leave out the version-control folder.
+- Evidence: production/research/tool-tests-2026-11/TOOLCHAIN-CORE-DESIGN-2026-11-13.md and its review; F:/LedgerTools/tool-dev/LOOP.md.
+
+## 2026-11-13: testing a command-driven animation tool
+- Made: no game piece; three test moves (sit and stand, lean on a counter, smoking) authored headless.
+- Method: a helper writes each move as one command script (keys from library poses, learned in-between fill, feet planted, checks, export, contact strips), then measures from the exported bones rather than trusting the tool's own figures.
+- Tools: the tool's command line, short generator and measuring scripts.
+- Target and check: pelvis back where it started, planted feet still, nothing through support boxes, and the strips by eye.
+- Cost: about 0.25 h of session time and one helper.
+- Failed: hands near the face could not be posed in two tries (dragging the elbow drags the body); the tool's foot-slide figure disagreed with the planted bones. Lesson: measure motion from the exported bones; a tool's own summary number is a claim.
+- Evidence: production/research/tool-tests-2026-11/HUMANMOTIONCRAFT-ROUND1-2026-11-13.md.
