@@ -1,0 +1,35 @@
+Method researched: the four tools' own sources and notes, read 13 Nov 2026 (Seamshift src and MECHANICS.md; Drape Studio AUTOMATION.md and src/serve.rs, 85 commands; ClothCraft at commit 16761c55, 8 Nov, src/vbd.rs, src/ogc, src/fabrics.rs; Loomwright MECHANICS.md and job.rs) and their test reports in this folder. ClothCraft's brief page (claude.ai artifact DMSWtYf5MnqSZcpZckqNuy) was unreachable (docs connector errors, three tries); its file list is to be checked against this note before the first fixer round.
+
+# The shared core of LEDGER's tools: design note (13 November 2026)
+
+Advisor 139 and his ruling of 13 Nov 14:19 (RULINGS): one combined toolchain that serves the game, never itself. This note fixes only the interfaces today's modules need. Nothing here is built without a game item that needs it.
+
+## Why, and what it must save
+- Game items it unblocks: Tom's outfit (jumper, zip jacket, jeans) and its layering (the tailor boss), the cast's outfits refitted (Ron, Darren, Sheila, the townspeople), later the cast's hair. Today these run through Marvelous (paid month ending about 20 Nov, clicks and a bridge) and a Blender chain.
+- Hours it should save, against measured costs: the Blender refit chain took 3.2 h per garment per body, Seamshift 2 s (SEAMSHIFT-ROUND1, round 1); a drape runs 124 s in Marvelous for the jumper (DRAPESTUDIO-TEST-2026-11-11) but needs a live, clicked Marvelous. Target: a garment draped, refitted to five bodies and skinned with no clicks in under 15 minutes of machine time and under 0.5 h of builder time.
+- Checkpoint (his park rule): the clothing tool reaches M3 (jumper, jacket with cuff grip, jeans at or better than Marvelous on our check) by the end of the double week, about 22 Nov; else parked as keep-or-drop.
+
+## One program, five parts
+Base: the copy of Seamshift (F:/LedgerTools/tool-dev/clothing, tag his-seamshift-2026-11-13), because it already passes the most of our tests and writes skinned FBX that Unreal imports exactly (round 2).
+
+1. **Body and skeleton loader** (Seamshift scene.rs, fbx.rs; keep). Reads binary FBX of any axis and units, MetaHuman bodies point for point; bones and skin weights; fingerprints every body (SHA-256 of file and shape). Add only: glTF reading when a job needs it (Loomwright's body.rs has it). One body type for every part: Body {mesh, bones, weights, landmarks, fingerprint}.
+2. **Job and result format** (Seamshift job.rs; keep and extend). A job names inputs, steps and pass bars; a result names every check, number, output file and SHA-256, with exit codes 0 pass, 1 a check failed, 2 bad input. New step kinds sit beside "fit": "drape" (pattern pieces, seams, fabric, arrangement, simulate) and later "groom". Same input, same bytes out, checked by the tool's own test.
+3. **The check suite** (Seamshift checks.rs; keep, add). Today: body through cloth, cloth inside body, bands, openings, gap, stretch, folds, skin, mesh intact, camera coverage, identity, negative controls. Add, from today's failures: worst case per piece (stretch, through) not only shares (Drape Studio's cuffs, 11 Nov); every layer present and on the body (Loomwright's lost jacket, 13 Nov); a shape check beside every count (Seamshift's ballooning hem, round 4); settled or jammed label at the end of a drape. Checks run the same on a drape and on a refit.
+4. **The viewer** (Seamshift render.rs, viewer.rs; keep). Headless pictures per job: torso views, neck, test poses, source beside result. The window viewer stays optional; nothing needs clicks.
+5. **The cloth slot**: one trait, Drape { load(body, pieces, seams, fabrics, arrangement) ; step(n) ; positions() ; diagnostics() }, with one engine behind it, ported from ClothCraft (MIT; its licence notice kept at the top of every copied file and in CREDITS.md): the VBD solver (vbd.rs and vbd/), Offset Geometric Contact (ogc/), its start check, sewing with easing (vbd/seam_blocks.rs), fabric presets (fabrics.rs), body inspection (avatar.rs). CPU first; ClothCraft's GPU path only if time measures say so. All layers of an outfit are one cloth system with self-contact, so a jacket over a jumper is solved together, not over a frozen copy.
+
+## The front end
+Drape Studio's Python job interface is copied, not its engine: python/run_job_script.py and the compat module, so Marvelous's job scripts for Tom's garments (job_j3.py, zip_jacket.py, jeans.py) run unchanged. The module talks to the tool's `serve` command over the same command names Drape Studio's serve.rs answers (85; the ones our three jobs use first, the rest only when a job calls them). Nothing of Drape Studio's engine, presets or files is copied: its own log says it holds 59 preset values taken from Marvelous (page item of 10 Nov), so fabrics come from ClothCraft's presets and our own measured values. Whether Drape Studio's interface code itself may be used in anything that ships is his licence judgement; it never ships, it only drives the tool.
+
+## Hair and motion slots (named, not designed)
+- Groom: Loomwright's hair module (its copy in tool-dev/loomwright) writes strands and cards; it will use the same body loader (a head mesh), job and result format and checks; its loop runs on its own copy until a game need joins them.
+- Motion: none yet. Motionsmith and HumanMotionCraft are under test; a slot is designed only when one passes for a game item.
+
+## The judge, outside the tool
+Our measuring scripts (measure_fit.py, drape_check_any.py, bounds.py), the jobs, input bodies, Marvelous's own results and the bars live in F:/LedgerTools/tool-dev/judge, never inside the copy; their SHA-256 list is checked before every round and a changed file stops the round. The fixer may change the tool and its own checks, never the judge.
+
+## Milestones (advisor 139), each with the game item it serves
+M1 the combined tool builds and every Seamshift job matches round 4 (no regression; serves the cast refits). M2 Tom's jumper from Marvelous's job at or better than Marvelous on our check, at most 1.5x its 124 s (serves Tom's outfit). M3 the jacket with cuff grip and the jeans the same. M4 jacket over jumper, nothing showing through from the cameras. M5 outfits refitted and rigged to the cast, the heavy body sitting under its bar. M6 one outfit in the packaged game for the gate.
+
+## Not in this note
+Pattern making (Marvelous's patterns and FreeSewing stay the source), textures, Unreal-side tools, anything for hair beyond its slot.

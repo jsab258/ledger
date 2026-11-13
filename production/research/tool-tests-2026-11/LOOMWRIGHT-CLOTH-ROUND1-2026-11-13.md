@@ -56,7 +56,7 @@ Marvelous with our Blender chain makes Tom's jumper and jacket that passed in th
 
 Cost: about 0.2 h builder time, no helpers ("tool test: Loomwright cloth round 1").
 
-## Round 2, 13 November 2026 (14:00 to 14:30): his update (program built 13 Nov 10:42; advisor 136, step 0)
+## Round 2, 13 November 2026 (14:00 to 14:20): his update (program built 13 Nov 10:42; advisor 136, step 0)
 Method researched: as round 1 (VELLUM-METHOD-2026-11-12.md; the tool's MECHANICS.md, read 13 Nov 14:05). Work folder F:/LedgerTools/tool-tests-2026-11/loomwright-cloth-r2: his example jobs copied unchanged, plus one of ours, cloth_tom_layers_on_tom (his three-layer job with Tom L1's MetaHuman body as the body file, converted from its FBX to glTF in Blender, LOD 0 and its 341-bone skeleton; crowd left out). Picture: production/previews/loomwright-cloth-round2-2026-11-13.jpg (top: his example on the built-in body; below: on Tom's own body; each front, back, without the outer layer).
 
 **Verdict: a large step on the built-in body, a hard fault on a real one.** Every round 1 fault was worked on, and the claims hold on his own example: no more torn sheets, layers start apart and stay apart, a crumple and a self-crossing check, binary FBX, skinning. On Tom's real body the shirt and jumper drape cleanly and come out skinned to his own skeleton, but **the jacket is lost**: it ends 2 to 2.7 m below the floor, unskinned, and the run fails its own hem check (3.6 m off). Its pictures do not show it, because the jacket simply is not there.
