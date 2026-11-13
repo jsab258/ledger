@@ -692,3 +692,11 @@
 {"event": "stop", "at": "2026-11-13T14:53:35", "note": "gate capped at 30 min; selftest 51 pass; live replay WAIT to 15:20, GO at 30"}
 {"event": "start", "at": "2026-11-13T14:59:09", "task": "tool test: HumanMotionCraft round 1 (Unreal half: retarget, measures, film)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T15:24:33", "note": "Unreal half done: retarget by script, two route faults fixed, knees fault open, one reviewer; set aside"}
+{"event": "start", "at": "2026-11-13T15:40:00", "task": "tool loop: drapestudio final round", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T17:00:00", "note": ""}
+{"event": "start", "at": "2026-11-13T16:10:00", "task": "tool loop: kiln bodies fix (advisor 148)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T16:55:00", "note": ""}
+{"event": "start", "at": "2026-11-13T16:59:18", "task": "tool loop: kiln round 1", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T17:42:29", "note": ""}
+{"event": "start", "at": "2026-11-13T17:40:00", "task": "tool loop: kiln round 1 judging", "phase": "2", "kind": "review"}
+{"event": "stop", "at": "2026-11-13T18:00:00", "note": ""}

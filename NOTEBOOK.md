@@ -2383,3 +2383,6 @@ Made: a night-report line naming each run of movement legs that ran out short of
 
 ## Test bodies that were one body (13 Nov 2026)
 - Three 'build' bodies set aside for being identical were later used as batch targets, so every 'heavy' result for six weeks was on an average body. Method: refuse in the judge and the tool any two inputs whose measurements or shape match under different names, with a recorded exception for a body shared on purpose; test the refusal both ways. Cost: about 1 h. Evidence: SEAMSHIFT-ROUND1-2026-11-12.md, 'The heavy body was not heavy'.
+
+## A drape engine ported from an open-source simulator in one round (13 Nov 2026)
+- Made: one fixer round put an open-source cloth solver and contact method behind an existing job interface; the reference tool's own job ran unchanged at 1.1x its time and beat it on every count, yet looked like a box by eye. Method: a locked judge outside the tool (counts plus a fresh reviewer on pictures beside the reference), one fixer per round with a written brief. Lesson: counts that reward cloth sitting clear of the body and barely stretching also reward stiffness; a judge needs a picture check (folds, seams closed, settled) beside the counts. Cost: 43 min fixer, 30 min session. Evidence: production/research/tool-tests-2026-11/KILN-ROUND1-2026-11-13.md.
