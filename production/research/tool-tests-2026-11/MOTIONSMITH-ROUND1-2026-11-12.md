@@ -96,3 +96,26 @@ F:/LedgerTools/tool-tests-2026-11/motionsmith-r1/: jobs-a, jobs-b (job copies po
 - What it says: its feet fix is real on real footage; its checks pass a move that never reaches its goal. A check that the clip ends standing (or reaches the move's named end pose) is missing; the leg fault is the solver's, beyond what a clean-up can repair.
 - Cascadeur beside it: none to compare (test 4 set aside, 2 of 2). The identity check and the stress clip wait for an update from him (none since round 1).
 - Cost: about 0.6 h of session time, 37 min of processor, no helpers. Time log: "tool test: Motionsmith round 2 re-solve".
+
+## Round 3, 13 November 2026 (11:23 to 11:30, the session alone, no helpers)
+Method researched: as round 1 (CASCADEUR-METHOD-2026-11-12.md); his updated README and MECHANICS read 13 Nov 11:24 (build 09:19). Script tools/tool-tests/motionsmith_r3.py; work folder F:/LedgerTools/tool-tests-2026-11/motionsmith-r3. Preview production/previews/motionsmith-round3-2026-11-13.jpg (top: the hard stand-in fixed; bottom: our real chair-rise).
+
+**Verdict: the leg faults of round 1 are fixed; the job it exists for (a real solve that never stands) it now fails honestly instead of passing.** Level 2 as before (no clicks, 31 of 31 jobs the same bytes twice, 1.4 to 7.2 s a job).
+
+| Round 1 fault / improvement | Round 3 |
+|---|---|
+| 1. Leg rule from knee angle; sunk-pelvis solves left alone | fixed on the stand-ins: the new hard head-turn (knees 42-46 / 18-25 deg by our measure, a ball 5.6 cm up and one 2.9 cm under) comes out at knees 1-4 deg, floor +0.8, drift 0.0; the stand-in chair-rise ends standing (knees median 3.8) |
+| Our real chair-rise (round 2's solve) | **fails "ends standing"**: last 25 frames pelvis 24.5 cm below standing, knees 79-80 deg, trunk lean up to 51 deg. It does not straighten him (the solve never rises; the tool says so). Feet: slide 21.4 / 10.3 to 0.0 / 0.2 cm, sole tilt 28 to 0.5 deg, floor 2.3 to 0.0 cm, timing kept. Our own drift measure reads 4.7 cm on the right ball where it says 0.2: most likely a step's lift and landing counted by our detector (the ball rises to 5 cm); not settled |
+| 2. Not a no-op on clean motion | fixed: all 23 library moves fixed again change by at most 0.003 deg / 0.000 cm (--compare). The crouch, sit-down and counter lean, 15 to 43 deg in round 1, now 0.000. Only fault left: with default settings the fix's own check fails the lean's relaxed knee ("standing knee right") on lean_counter and lean_wall while leaving it untouched; balance_tolerance is documented for leans |
+| 3. Make and fix judged differently | fixed (identity holds, the tool checks it itself) |
+| 4. Stand-ins too easy | fixed: hard head-turn and sunk chair-rise added, faults as asked |
+| 5. Fixed 2.5 deg standing knee | fixed: knees range 1.0 to 4.0 (head-turn medians L 1.0, R 2.8) |
+| 6. Perfect symmetry; fingers at rest | fixed: sit-down knees L 78.8 / R 78.5 median (identical in round 1); fingers curl 13 to 22 deg, differ left and right, flatten to 3 to 7 deg on the thighs |
+| 7. Stick-figure films | partly: solid mannequins now, still no MetaHuman mesh; the look is judged only in Unreal |
+| 8. --compare against a reference clip | done (job 06 compares with its clean source) |
+| README's first line ("contains the original game's own files") | still there |
+
+Unreal 5.8 round trip (classic FBX importer, metahuman_base_skel, commandlet exit 0): hard head-turn, stand-in chair-rise and the counter lean imported and exported back; knees and elbows identical (0.003 deg at most), pelvis within 0.14 cm. Frame counts one under the tool's, as before (intervals).
+
+What is still unknown: whether a real solve that does stand up (knees 25-35 deg standing) comes out right; we have none since the head-turn's source was lost. Natural look: unjudged until a packaged film on a MetaHuman (not run: nothing enters the game in a tool test).
+Cost: about 0.15 h session time, no helpers; time log "tool test: Motionsmith round 3".

@@ -2313,3 +2313,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.3 h, no helpers.
 - Failed: a measuring method, not a garment: our script read a cardigan's cuffs along the tilted knit, so round 1 reported a shrink of a third that was mostly the measure. Lesson: measure a band along its own opening's axis.
 - Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md (Round 3), production/previews/seamshift-round3-2026-11-13.jpg.
+
+## 2026-11-13: a motion clean-up tool's third round
+- Made: no game piece; a motion clean-up tool's fixes measured on its own new hard cases and our one real solve.
+- Method: run every job twice (same bytes), feed each made move back through the fix and compare joint angles (identity under 1 deg / 0.5 cm), measure knees, floor and planted-foot drift in a separate program, export a sample through the engine and back.
+- Tools: the tool's job runner and compare mode, headless Blender, an engine commandlet.
+- Target and check: round 1's faults by name; feet slide 1 cm, standing knees within 5 deg, and the clip ending in its named pose.
+- Cost: about 0.15 h, no helpers.
+- Failed: nothing in the round; open: our drift detector and the tool's disagree on one stepping foot (4.7 against 0.2 cm), and the only real solve never stands, so the case the tool exists for is unproven on real footage. Lesson: keep at least one real solved clip per job type safe on the inputs drive before testing tools.
+- Evidence: production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md (Round 3), production/previews/motionsmith-round3-2026-11-13.jpg.
