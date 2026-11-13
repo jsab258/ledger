@@ -89,3 +89,10 @@ Time: 0.9 to 2.7 s a job with film (28 jobs in 46 s), about 1 s without. Unreal 
 ## Files
 
 F:/LedgerTools/tool-tests-2026-11/motionsmith-r1/: jobs-a, jobs-b (job copies pointing at his folder for inputs), out-a, out-b (all outputs, films, checks), summary-a.json and summary-b.json (exit, seconds, hashes, checks), measure-a.json (the Blender measures), jobs-stress and out-stress (fix of clean moves), ue_check (the Unreal check copied, ue_result.json, round-trip FBX, ue_run.log). Scripts: tools/tool-tests/motionsmith_r1.py, tools/tool-tests/measure_fbx_legs.py.
+
+## Round 2, 13 November 2026 (05:27 to 06:08)
+- Inputs remade: the solve project rebuilt from its kept source (tools/ue/mocap-solve-project, copied to C:/LedgerTools/mocap-solve, editor build 66 s), the kept stock cut (Pexels 6615631 reversed, rise-430-230.mp4, 201 frames at 24 fps) re-solved on the processor: every stage ok, 2,234 s (37 min), /Game/MocapSolve/rise430s_Body, exported to F:/LedgerTools/tool-tests-2026-11/motionsmith-r2/rise430s_Body.fbx (342 bones). The head-turn cannot be remade: its source video was lost with the solve on 12 Nov, no copy.
+- Motionsmith's fix job on it (motionsmith-r2/jobs/01_rise_fix.json, our pass bars): ALL PASSED. Foot slide 21.6 and 25.8 cm down to 0.4 and 0.5; sole tilt 28.0 to 0.5 degrees; floor 2.3 to 0.0 cm; timing untouched (correlation 1.000). But it found 0 standing frames and did not straighten the knees: the solve never brings him upright (preview: crouched, the last two moments the same pose, as in the 12 Nov control solve). Picture: production/previews/motionsmith-round2-rise-2026-11-13.jpg.
+- What it says: its feet fix is real on real footage; its checks pass a move that never reaches its goal. A check that the clip ends standing (or reaches the move's named end pose) is missing; the leg fault is the solver's, beyond what a clean-up can repair.
+- Cascadeur beside it: none to compare (test 4 set aside, 2 of 2). The identity check and the stress clip wait for an update from him (none since round 1).
+- Cost: about 0.6 h of session time, 37 min of processor, no helpers. Time log: "tool test: Motionsmith round 2 re-solve".
