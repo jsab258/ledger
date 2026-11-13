@@ -133,7 +133,18 @@ def main_after_idle(seconds=20.0):
             ga.attach_to_component(face, "", unreal.AttachmentRule.SNAP_TO_TARGET, unreal.AttachmentRule.SNAP_TO_TARGET,
                                    unreal.AttachmentRule.KEEP_WORLD, False)
             gc.set_relative_location(unreal.Vector(*OFF), False, False)
-            mi = unreal.load_asset(HAIR_MI)
+            # run 10 (13 Nov): the engine source (GroomComponent.cpp 2179-2234, 2825-2847) treats a groom whose parent is a
+            # skeletal mesh differently (bounds from the mesh, binding and deformation paths); LEDGER_GROOM_DETACH=1 keeps
+            # the place it reached and detaches it, so the groom draws as a plain actor with no skeletal parent
+            if os.environ.get("LEDGER_GROOM_DETACH", "") == "1":
+                ga.detach_from_actor(unreal.DetachmentRule.KEEP_WORLD, unreal.DetachmentRule.KEEP_WORLD,
+                                     unreal.DetachmentRule.KEEP_WORLD)
+                note("detach", parent=str(gc.get_attach_parent()), at=vec(gc.get_world_location()),
+                     rot=str(gc.get_world_rotation()), scale=vec(gc.get_world_scale()))
+            # run 9 (13 Nov): his MetaHuman hair material may colour each strand from attributes the tool's file
+            # lacks (root UV, groom textures); LEDGER_GROOM_MI=none keeps Epic's default strands material instead
+            mi = None if os.environ.get("LEDGER_GROOM_MI", "") == "none" else unreal.load_asset(HAIR_MI)
+            note("material", override=mi.get_name() if mi is not None else "default strands material")
             if mi is not None:
                 gc.set_material(0, mi)
             st["actors_extra"] = [ga]

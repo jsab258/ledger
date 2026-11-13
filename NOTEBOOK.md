@@ -2322,3 +2322,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.15 h, no helpers.
 - Failed: nothing in the round; open: our drift detector and the tool's disagree on one stepping foot (4.7 against 0.2 cm), and the only real solve never stands, so the case the tool exists for is unproven on real footage. Lesson: keep at least one real solved clip per job type safe on the inputs drive before testing tools.
 - Evidence: production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md (Round 3), production/previews/motionsmith-round3-2026-11-13.jpg.
+
+## 2026-11-13: proving a picture shows what it claims
+- Made: no game piece; a test harness's pictures checked against themselves.
+- Method: change one setting of the thing under test per run (width, material, attachment) and compare the pictures pixel by pixel with each other and with the run-to-run noise; if no change rises above the noise, the thing is not in the picture at all.
+- Tools: an editor script run headless, a pixel-difference script, the engine's own source for how the thing is drawn and bounded.
+- Target and check: a change you make must show in the picture before any picture is judged.
+- Cost: about 0.15 h, no helpers.
+- Failed: three earlier runs judged hair 'lying under the skin' from pictures in which it was never drawn, and 'sits right' from bounds that were the face's, not the hair's. Lesson: before judging a test picture, change the subject and see the picture change; never take an attached part's bounds as its position.
+- Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md (The bald look settled).
