@@ -2277,3 +2277,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1.6 h, no helpers; seven harness runs.
 - Failed: the hair sat right but lay under the skin, crown bare; the generator's own checks all passed, so a tool's numbers never stand in for the picture. Harness faults on the way: unit scale applied twice, unlit new level, rotators built positionally (roll, pitch, yaw) pointed the camera at the floor.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md, production/previews/loomwright-round2-on-darren-2026-11-13.jpg.
+
+## 2026-11-13: a layered cloth generator tested from one job file (round 1)
+- Made: three layered garments (shirt, jumper, jacket) and three crowd refits from built-in measurements.
+- Method: run the tool's example job as given, then its repeat check; judge the front, back and inner-layer picture before its numbers.
+- Tools: the generator's job file and report; an image viewer.
+- Target and check: the clothing floor (no clipping, no holes) on the character's own body, output skinned for the engine.
+- Cost: about 0.2 h, no helpers.
+- Failed: collars and shoulders crumpled and torn, the inner layer showing through, all 17 of its checks passing; no body file input and no skinning, so it cannot reach the game. A check that counts points inside misses folds and self-crossing.
+- Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-CLOTH-ROUND1-2026-11-13.md, production/previews/loomwright-cloth-round1-2026-11-13.jpg.
