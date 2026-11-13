@@ -2,7 +2,7 @@
 
 His own replacement for Houdini (C:\Game Dev Tools\Loomwright), advisor 119 and 120: its cloth module, after its hair (LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md, rounds 1 and 2). Work folder F:/LedgerTools/tool-tests-2026-11/loomwright-cloth; nothing written into his folder; nothing enters the game.
 
-Method researched: the professional garment route as the game-garment skill and VELLUM-METHOD-2026-11-12.md hold it (pattern pieces sewn and draped on the real avatar, then skinned to the MetaHuman skeleton, only loose parts simulated; SideFX's paneling and drape pre-roll), and the tool's own MECHANICS.md (cloth.rs: XPBD, 1 substep, 100 iterations; SideFX's own page warns 1 substep per 100 iterations is very stretchy).
+Method researched: production/research/tool-tests-2026-11/VELLUM-METHOD-2026-11-12.md, 12 Nov 2026 (the professional garment route, with the game-garment skill: pattern pieces sewn and draped on the real avatar, then skinned to the MetaHuman skeleton, only loose parts simulated; SideFX's paneling and drape pre-roll), and the tool's own MECHANICS.md (cloth.rs: XPBD, 1 substep, 100 iterations; SideFX's own page warns 1 substep per 100 iterations is very stretchy).
 
 ## Verdict
 

@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 2 open · updated Thursday 12 November, 23:39",
+ "kicker": "LEDGER · Needs you · 1 open · updated Friday 13 November, 7:47",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -8,35 +8,6 @@
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
  "sections": [
-  {
-   "kind": "need",
-   "key": "c-drive-room-2026-11-12",
-   "name": "One tap to free C: (44 GB free today, 107 on 9 Nov; the aim is over 70 before Monday). Since 9 Nov: the AI-video install 26 GB, Unreal's 5.8.4 update rewrote 27 GB of the engine, Drape Studio's maker 9 GB, your three new tools 6 GB, Houdini 8 GB, the build machine and Unreal's caches about 16 GB. Done without asking: two of my own leftover folders deleted (3 GB), Unreal's cache now kept 7 days instead of 14. Asked: I delete the AI-video install (26 GB; the route is dropped; about an hour to download again), MetaTailor's unpacked copy in Windows' temporary folder (0.8 GB; the copy on F: stays) and my own Cascadeur copy (1 GB); you uninstall Cascadeur in Windows Settings, Apps (one minute, 1 GB); Houdini stays for the hair test. Yours, untouched unless you say: LM Studio's models 22 GB, Stable Diffusion 12 GB, Vuze 11.5 GB, downloaded AI models 7 GB.",
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "recommendation": "Yes: about 29 GB back at once, 30 with Cascadeur, nothing the game or a test still uses.",
-   "added": "2026-11-12 23:00",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "yes",
-     "Yes, delete those three; I uninstall Cascadeur (recommended)"
-    ],
-    [
-     "video",
-     "Only the AI-video install"
-    ],
-    [
-     "no",
-     "Keep everything"
-    ]
-   ]
-  },
   {
    "kind": "need",
    "key": "talk-router-key-2026-11-12",
