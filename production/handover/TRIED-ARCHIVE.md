@@ -77,3 +77,4 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - Collar try 2 (11 Nov): a fixed 12 mm lift left points 17 mm under the knit (strips); set a lift's reach from the measured depth.
 - The collar lift (11 Nov, try 1 on (c)/(d)): the shards are the cardigan's neckband above the collar, not under it; lifting the collar 2.5 mm moved 915 points (up to 14 mm) and left both faults.
 - BC1 on dark night pictures (12 Nov, try 1): four colours a 4x4 block cannot hold a dark gradient; a checker shows on dark surfaces. Kept PNG.
+- Cutting video: no ffmpeg on this PC; Blender 5.2's video editor works headless (fit_method="FIT", media_type 'VIDEO' before FFMPEG; reverse frame by frame, its use_reverse_frames with offsets gave the wrong range). (moved 13 Nov)

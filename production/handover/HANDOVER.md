@@ -3,7 +3,7 @@
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-13 05:22 (hourly run; gate GO: last stopped 05:08)
-**Stopped:** 2026-11-13 05:08 (run 2026-11-13 05:07: nothing new on the page or channel; pace +7.0, over 6 ahead, nothing new started; last row 05:08).
+**Stopped:** 2026-11-13 06:22 (run from 05:22: Seamshift and Motionsmith round 2 done, Loomwright round 2 part; history near its limit; rows 0535, 0621).
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -27,26 +27,24 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 12 Nov, from 22:37
-- Advisor 121 to 126 acked. Done: the priority mark (advisor 126; `python tools/fresh_gate.py --priority-open ids` / `--priority-done`); SET NOW for 119 120 121, cleared only when his tools' rounds are done or set aside and his C: tap is acted on. C: survey (121): page item c-drive-room-2026-11-12. Motionsmith and Loomwright hair round 1 (production/research/tool-tests-2026-11/, TOOLCHAIN-FACTS.md). His picks 123 to 125 recorded (RULINGS; page item talk-router-key-2026-11-12; waiting list). Handover start: gate quiet time 18 s (production/research/token-audit/HANDOVER-START-2026-11-12.md).
-- WRONG DELETE (mine, 23:02): C:/LedgerTools/ai-video/out held the real head-turn solve, its source video and the chair-rise control solve; no copy. Rule: grep the research notes for a folder's path before deleting it.
-
-## Run on 13 Nov, from 00:00
-- 00:00: eff item 1 confirmed (GO 31 s after the last turn) and acked; row 0008 written; pace +8.9, every next step touches Unreal (held 01:15 to 04:30), stopped.
-- Runs 00:03 to 05:07, every 15 min: no verdicts after 23:00Z, no advisor after 00:01; pace +9.1 falling to +7.0 (56% at 05:07 against 49.0%); each stopped at once (every step touches Unreal, or pace over 6 ahead); rows 0107, 0223, 0323, 0423, 0508 (each v1); next row due by 06:08.
-- Night rule: before 04:30, if every open step touches Unreal and pace is over 6 ahead, row only hourly, then stop.
+## Run on 13 Nov, from 05:22 (this session)
+- Rows 0535, 0621 (v1). No verdicts after 23:00Z, no advisor after 00:01 (latest ack eff). Pace +6.8 to +7.4: the earlier runs held round 2 for the pace, but RULINGS (7, 10 Nov) lets his priority items and processor jobs run over 6 ahead; priority-open.json (119 120 121) is set, so round 2 ran, no helpers.
+- Seamshift round 2 DONE (commit 4a353e061): jumpers import onto each body's skeleton, 342/342 bones, bind pose exact, no turn; a stray root bone on Darren's file, no smoothing groups. Tool: tools/ue/seamshift_scratch_import.py. No update from him.
+- Motionsmith round 2 DONE (d62e2c882): solve project rebuilt at C:/LedgerTools/mocap-solve from tools/ue/mocap-solve-project; stock cut re-solved (37 min); fix passes every bar, feet clean, but no standing frames, legs stay bent: its checks lack the end pose. Head-turn source lost (12 Nov), not remade.
+- d4a070b confirmed in the 13 Nov 02:01 walk (21 day, 10 lit BC1 pictures, none refused); NOW.md state line updated.
+- Loomwright round 2 PART (uncommitted until this handover's commit): Darren's scalp (loomwright-r2/darren_scalp.py) and two perm jobs pass, picture production/previews/loomwright-round2-darren-2026-11-13.jpg. tools/ue/groom_on_darren.py imports the groom (needs -EnablePlugins=AlembicHairImporter, set in its docstring) but run 4 showed walls (the start level) and B kept his own hair.
 
 ## Next, in order
-1. FIRST: pace; verdicts after 2026-11-12T23:00Z, advisor after 22:25 Swiss (latest ack eff, 00:01). Act on his two page taps (C: delete list; router key) at once.
-2. Advisor 119/120 round 2, in order: Seamshift round 2 (Unreal scratch import of jumper_skinned.fbx, then his updates); Motionsmith round 2 (re-solve the kept stock clip, ai-video/stock/pexels-6615631, through tools/ue/mocap-solve-project, about 35 min of processor time, outside 01:15 to 04:30; then the head-turn and chair-rise jobs, the identity check, the stress clip); Loomwright hair round 2 (Darren's head and scalp exported from his MetaHuman, his reference photographs; groom on him in the editor); then Loomwright's cloth and streets. Each round: own time-log window; facts into TOOLCHAIN-FACTS.md; keep-or-drop for him after two or three rounds.
-3. Advisor 118 while ahead: the CMU note's fresh review, then the method notes in DOUBLE-WEEK-PREP's order. Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
-4. d4a070b: confirm in tonight's walk log "shows its ... picture (..., BC1/srgb=yes)".
+1. FIRST: pace; verdicts after 2026-11-13T05:20Z, advisor after 06:05 Swiss (latest ack eff, 00:01).
+2. Loomwright round 2, finish: in groom_on_darren.py, load a blank level first (unreal.EditorLevelLibrary.new_level or LevelEditorSubsystem.new_level to a /Temp path), and on B hide his Hair component and add a new GroomComponent attached to his face carrying the tool's groom (the BP construction resets a swapped groom_asset); then hair top against face top 189.4 cm, and the four exposures; pick the readable one. Then append to LOOMWRIGHT-HAIR-ROUND1's Round 2 and RECIPE. Not a fault fix: harness runs so far 4.
+3. Then Loomwright's cloth and streets (advisor 120). Keep-or-drop for him after the rounds: one page item for all three tools when Loomwright's picture exists (Seamshift keep for plain pullovers; Motionsmith keep for feet, add an end-pose check; Loomwright by its picture). Then clear the priority mark (`python tools/fresh_gate.py --priority-done`) only after his C: tap is acted on.
+4. Advisor 118 while ahead: the CMU note's fresh review (a helper: only once pace is within 6), then the method notes in DOUBLE-WEEK-PREP's order. Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
 5. n09-12 (games' numbers, PC idle, no Unreal): UE4SS-READING-2026-11-12.md.
-6. Nothing touching Unreal 01:15 to 04:30; space checked 23:00 (C: 47.8, F: 24.0 GB).
+6. Nothing touching Unreal 01:15 to 04:30; space 05:28 C: 44.7, F: 23.2 GB.
+7. New leftovers of mine: C:/LedgerTools/mocap-solve (rebuilt, about 1 GB with its solve assets), F:/LedgerTools/tool-tests-2026-11/motionsmith-r2 and loomwright-r2 (keep until his keep-or-drop).
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - Vellum on Tom's jumper, 3 of 3 (his yes for the third): set aside. Cascadeur test 4, 2 of 2: set aside (quick rig needs rig mode on in a scene with the model alone; render to video crashes).
-- Cutting video: no ffmpeg on this PC; Blender 5.2's video editor works headless (fit_method="FIT", media_type 'VIDEO' before FFMPEG; reverse frame by frame, its use_reverse_frames with offsets gave the wrong range).
 - The test props' materials (12 Nov): read the render log for "Failed to compile Material" before judging any scripted material.
 
 ## In flight (carried)

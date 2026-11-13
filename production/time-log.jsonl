@@ -665,3 +665,4 @@
 {"event": "start", "at": "2026-11-13T05:26:58", "task": "tool test: Motionsmith round 2 re-solve", "phase": "4", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T06:08:06", "note": "Motionsmith round 2: re-solve ok, fix passes feet, legs stay bent"}
 {"event": "start", "at": "2026-11-13T06:08:07", "task": "tool test: Loomwright hair round 2", "phase": "4", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T06:21:12", "note": "Loomwright round 2: strands on his scalp; Unreal pictures pending a blank level and an attached groom"}
