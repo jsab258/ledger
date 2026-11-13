@@ -770,7 +770,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-13 14:23, his pick yes (14:12), and his own typed approval in a local session about 14:12 (advisor 141): install and test now"
   },
   {
    "id": "start-gate-advisor-rows-2026-11-13",
@@ -797,7 +798,8 @@
      "C: leave it"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-13 14:23, his pick A (14:12), and his own typed approval (advisor 141): the gate also starts on an unanswered advisor message"
   }
  ]
 }
