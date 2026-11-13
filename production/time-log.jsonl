@@ -684,3 +684,5 @@
 {"event": "stop", "at": "2026-11-13T13:58:44", "note": "round 4 in SEAMSHIFT-ROUND1-2026-11-12.md"}
 {"event": "start", "at": "2026-11-13T13:58:44", "task": "tool test: Loomwright on his 12:51 update (advisor 136 step 0)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T14:18:01", "note": "Loomwright round on his update: cloth round 2, hair unchanged"}
+{"event": "start", "at": "2026-11-13T14:27:26", "task": "tool loop: shared-core design note (advisor 142)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T14:36:39", "note": "shared-core design note and its review settled"}
