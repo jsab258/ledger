@@ -135,3 +135,17 @@ Numbers (its own; ours where named): cardigan over blouse, through at rest / sit
 What fails, most useful first, for the loop: the Heavy sitting shape (a ballooned hem passes a count; needs a shape check, e.g. hem distance from the thighs, and skinning the lower front to the pelvis and thighs); Ron's jacket vent over the seat; the front shoulder ripple; the README line.
 
 Cost: about 0.15 h of session time, no helpers, no API spend. Time log: "tool test: Seamshift round 4 (advisor 137)".
+
+## The heavy body was not heavy (advisor 148, 13 November 2026, 16:50)
+
+The 'BuildHeavy' target in Sheila's layers job (rounds 3 and 4) was one of three identical build bodies: Epic's Walter preset, chest 923 mm, waist 941 mm, an average man (F:/LedgerTools/bodies/README.md, set aside 29 Sep but later used as a batch target). Every 'heavy body' result above was on that body. Rerun with round 4's program, unchanged, on Ron's body (MH_RoccoP2, chest 1,231, waist 1,079, hips 1,156 mm) in its place (runs/bodies-fix-2026-11-13):
+
+| Sheila's cardigan over her blouse | 'Heavy' (the false body), round 4 | Ron, 13 Nov |
+|---|---|---|
+| at rest, body through over 3 mm | 5 | 186 (bar 299) |
+| sitting / walking / arms up, through | 10 / 191 / 14 | 18 / 146 / 42 |
+| bands | 0.947 to 1.009 | 0.999 to 1.064 |
+| tears, flaps and holes | pass | **fails** (130 folded edges against 96 on the source, allowance 29) |
+| blouse alone, bare body newly in view | 60 | 99 (bar 100) |
+
+What changed: round 4's 'Heavy sitting 328 to 10' and its pass were measured on an average body; on a real heavy body the cardigan fails its own fold check and by eye folds and wrinkles at the belly and hem, with a ragged shoulder line at the back (pose-sit.png beside the result). Nothing else in the five jobs changed (summary identical outside that target). The judge is re-based on Ron (heavy sitting bar 18, the fold failure a known failure a fix must turn), and the judge and Kiln now refuse two bodies that are one body under two names (tested both ways: the two build bodies refused, Ron and Darren passed).
