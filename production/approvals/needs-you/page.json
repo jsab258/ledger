@@ -1,45 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Friday 13 November, 7:47",
+ "kicker": "LEDGER · Needs you · 0 open · updated Friday 13 November, 8:53",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "talk-router-key-2026-11-12",
-   "name": "Money and your account, about 10 minutes (your pick A to the advisor, 21:48: try other companies' models for the talk). Sonnet 5.5 and a local model on your card need nothing from you and start with the next order. For Google's, OpenAI's and an open model: (1) open openrouter.ai and make an account; (2) on its Credits page add US$10 and leave automatic top-up off; (3) on its Keys page make a key named LEDGER bake-off with a credit limit of 10; (4) in File Explorer type %LOCALAPPDATA%\\LEDGER in the address bar, make a new text document named router-key.txt, paste the key into it and save. Never paste the key into the chat. The talk program will also stop itself at US$10 a run in its own code.",
-   "links": [
-    {
-     "label": "OpenRouter",
-     "url": "https://openrouter.ai"
-    },
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "recommendation": "One router account: one key and one US$10 limit reach every company's models, against a separate account, key and bill per company.",
-   "added": "2026-11-12 23:50",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "router",
-     "One router account, US$10 (recommended)"
-    ],
-    [
-     "each",
-     "A key from each company instead"
-    ],
-    [
-     "no",
-     "Not now: Sonnet 5.5 and local only"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

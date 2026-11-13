@@ -2295,3 +2295,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.15 h, no helpers.
 - Failed: a grey-box look (flat colours, box bays), one straight row, its own ranges rather than measured tables. Kept as a lesson: a placement list written as data is the useful part of any street generator; the look comes from the kit.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-STREETS-ROUND1-2026-11-13.md, production/previews/loomwright-street-round1-2026-11-13.jpg.
+
+## 2026-11-13: a re-test asked for before the tool changed
+- Made: no new drape; one repeat run proving the tool unchanged.
+- Method: before any re-test, compare the tool's folder dates and program date with the last test's; when unchanged, run one deterministic job and compare its output byte for byte, and carry the old numbers instead of re-running every job.
+- Tools: file dates, a file hash, the tool's own job runner.
+- Target and check: byte-identical output to the last round.
+- Cost: about 0.25 h, no helpers.
+- Failed: nothing; avoided about 80 minutes of identical runs (the layering job alone 68 min).
+- Evidence: production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-13.md.

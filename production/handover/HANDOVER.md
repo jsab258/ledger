@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-13 07:22 (hourly run; gate GO: the 06:37 session set no Stopped line, no turn for 38 minutes, taken as stopped)
-**Stopped:** 2026-11-13 06:22 (run from 05:22: Seamshift and Motionsmith round 2 done, Loomwright round 2 part; history near its limit; rows 0535, 0621).
+**Started:** 2026-11-13 08:52 (hourly run; gate GO: the last session stopped at 08:08)
+**Stopped:** 2026-11-13 08:08 (run from 08:07: pace +6.4, over 6 ahead, so no new heavy work; tool folders unchanged since their rounds; nothing new on the page; row 0808. Next steps below unchanged; verdicts read to 07:08Z, advisor to 08:08).
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -28,17 +28,20 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
 ## Run on 13 Nov, from 07:22 (this session)
-- The 06:37 session ran groom_on_darren.py runs 5 to 7 (fixes: no times-100 scale, movable lights and a sky light, rotators by keyword) but wrote no row and no Stopped line. Row 0724 (v1). No verdicts after 05:20Z, no advisor after 00:01 (latest ack eff). Pace +6.8.
-- Loomwright round 2 hair DONE, judged not usable (commit 9e035a72b): run 7's groom sits within 0.3 cm of his scalp but lies under his skin, crown bare from behind; its own checks pass. Picture production/previews/loomwright-round2-on-darren-2026-11-13.jpg.
-- Earlier today: Seamshift round 2 done (keep for plain pullovers), Motionsmith round 2 done (keep for feet, add an end-pose check).
+- The 06:37 session died mid-turn: its last request (06:44, after reading two full-size PNGs) never returned, so no row or Stopped line. Read pictures at reduced size.
+- Rows 0724, 0756 (v1); ack 2026-11-13-0805-127 written. Verdicts read to 06:25Z (his c-drive-room yes 06:24Z, acted on); advisor read to 08:05 (127).
+- His C: yes acted on (commit fd2d7e86c): ai-video, MetaTailor's WinRAR temp copy, cascadeur-portable deleted; C: 72.6 GB; chair-rise source kept at F:/LedgerTools/tool-tests-2026-11/motionsmith-r2/chair-rise-source; Cascadeur's Windows uninstall is his.
+- Loomwright cloth round 1 (82254abd1) and streets round 1 (1d1116061): reports in production/research/tool-tests-2026-11/. Cloth fails the picture (crumpled, torn collars, mannequin, unskinned); streets a grey-box layout, placement data only.
+- Loomwright hair: the 07:30 'tool's fault' verdict was wrong and is corrected: tools/strand_skin_check.py shows its strands 10 mm (median) off his skin, Unreal bounds identical; run 8 ruled out strand width (0.01 cm kept). The bare head is our Unreal picture's fault, cause not found. Harness runs 8; that question's tries: 1 (width).
+- Priority mark cleared (119, 120 wait on his folder changes per advisor 127; 121 done). Pace +6.5 at 07:56.
 
 ## Next, in order
-1. FIRST: pace; verdicts after the last read (07:23 Swiss = 06:23Z), advisor after 00:01 Swiss (latest ack eff).
-2. Loomwright's cloth and streets (advisor 120): research its job files first (production/research/tool-tests-2026-11/), the same harness way. Then one page item for all three tools' keep-or-drop (Seamshift keep for plain pullovers; Motionsmith keep for feet with an end-pose check; Loomwright hair drop, cloth and streets by their pictures). Clear the priority mark (`python tools/fresh_gate.py --priority-done`) only after his C: tap is acted on.
-3. Advisor 118 while ahead: the CMU note's fresh review (a helper, only once pace is within 6), then the method notes in DOUBLE-WEEK-PREP's order. Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
+1. FIRST: pace; verdicts after 2026-11-13T06:55Z, advisor after 08:05 Swiss (latest ack 0805-127).
+2. Advisor 127: his tools' next rounds start only when his folder for that tool changes (C:/Game Dev Tools/<tool>; compare dates). Each round: identity case, real inputs, the feedback's checks, beside the last round's numbers. For Loomwright hair first research (dated note) how an unbound groom draws in a SceneCapture2D and whether the Maya conversion flips it inside its bounds (compare guide points with the USD), before run 9. No keep-or-drop item yet.
+3. Otherwise the order's work: advisor 118 while ahead (the CMU note's fresh review once pace is within 6, then the method notes in DOUBLE-WEEK-PREP's order). Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
 4. n09-12 (games' numbers, PC idle, no Unreal): UE4SS-READING-2026-11-12.md.
-5. Nothing touching Unreal 01:15 to 04:30; space 05:28 C: 44.7, F: 23.2 GB.
-6. Leftovers of mine: C:/LedgerTools/mocap-solve (about 1 GB), F:/LedgerTools/tool-tests-2026-11/motionsmith-r2 and loomwright-r2 (keep until his keep-or-drop).
+5. Nothing touching Unreal 01:15 to 04:30. Tonight's walk: no game piece changed today (tool tests only, scratch).
+6. Leftovers of mine: C:/LedgerTools/mocap-solve (about 1 GB); F:/LedgerTools/tool-tests-2026-11/motionsmith-r2, loomwright-r2 (ue to ue8 about 50 MB), loomwright-cloth, loomwright-street (keep while rounds continue).
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - Vellum on Tom's jumper, 3 of 3 (his yes for the third): set aside. Cascadeur test 4, 2 of 2: set aside (quick rig needs rig mode on in a scene with the model alone; render to video crashes).
@@ -49,7 +52,7 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 
 ## Kept as they are
 - Uncommitted on purpose: the office prints (copies on F:/LedgerTools/game-inputs); untracked shop-room files are not this session's; stash@{0} kept.
-- Waiting list for the next order, beyond the order file's own: as written at 10:25 (git show c8d0834c7:production/handover/HANDOVER.md, 'Kept as they are'), plus same-day packaged verdicts as an item (advisor 113), the provider-neutral talk program and its one bake-off (advisor 125), Drape Studio's cuffs, a per-piece worst-stretch check and cloth-on-cloth contact, and the true resize of Tom's jumper if he picks keep.
+- Waiting list for the next order, beyond the order file's own: as written at 10:25 (git show c8d0834c7:production/handover/HANDOVER.md, 'Kept as they are'), plus same-day packaged verdicts as an item (advisor 113), the provider-neutral talk program and its one bake-off (advisor 125), Drape Studio's cuffs, a per-piece worst-stretch check and cloth-on-cloth contact, and the true resize of Tom's jumper if he picks keep; about 25 Nov (Cascadeur's trial end, advisor 128): uninstall or keep, by whether Motionsmith's next round fixes the leg rule, one line with a recommendation; the talk bake-off with the router key (in place since his 08:37 tap).
 - Tries used (older: TRIED-ARCHIVE.md, "Tries carried 10 Nov"): Tom's surfaces 3 (two tiles, one painted), set aside, listed; Sheila's skirt band clear 2 of 2, set aside; the cast's bind pose 1 of 2 (fallback idle, confirmed in packaged logs, the walk to confirm); the office exit 2 of 2 (stand-up, tonight's walk decides); Tom's chest skin 1 of 2, passed; the boots 5 (his yes), passed; the crown 4, listed; the test props' material compile 1 (passed); the scanned leak 2 (passed); the shop pictures' BC1 1 (passed, dark kept PNG); Cascadeur's start 0 (advisor 116: unresearched, does not count); the solve: commandlet 2, full editor 2; Drape Studio's jumper 2 of 2, spent; Sheila's colours 1 (fixed); her cardigan's left band 1 (passed); her blouse at the shoulders 1 (passed); her collar faults (c) passed at 2, (d) 2 of 2, set aside; motion 3's clip 2 of 2; motion 1's clip 2 of 2, set aside; texturing: jeans masks 2 then the fair film (set aside as a garment method), brick 2 offline plus one packaged film (his look), timber edge wear 2 of 2, set aside (today's stays), the cornice 2 of 2 set aside.
 - API spend: US$1.15 (8 Nov); none since.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help, or guess a tool's name; let a helper stop a process; work while another LEDGER session works; write a time without Get-Date; put an unmeasured number in a row (done once at 06:50, corrected).
