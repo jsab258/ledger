@@ -180,11 +180,17 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
 # stops while a priority item of his is open writes production/handover/priority-open.json
 # (`python tools/fresh_gate.py --priority-open "ids"`); while it exists the pace hold is skipped; the session that
 # finishes or sets aside the last one clears it (`--priority-done`). Helpers and other work stay held as before.
+# 30 MINUTES, NOT 120 (his typed message in the chat, 13 Nov about 14:12; the advisor's messages 134, 135, 141): the
+# 09:14 session stopped with nothing of his open, and his three asks (advisor rows 131 at 09:31, 132, 133) waited
+# unread until 11:22. His word: if the gate can reliably see an unacknowledged advisor row, start whenever one
+# exists; if it cannot, end the hold 30 minutes after a clean stop. It cannot: the advisor channel lives in his
+# page's database, which only Claude's own tool reads under his sign-in; a script has no way in without his token,
+# and nothing may use that. So the hold now ends at most 30 minutes after the stop, and an unread row waits no longer.
 PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
 PRIORITY_MARK = os.path.join(ROOT, "production", "handover", "priority-open.json")
 AHEAD_LIMIT = 6.0
 LINE_PER_HOUR = 90.0 / 162.0
-AHEAD_MAX_WAIT_MIN = 120
+AHEAD_MAX_WAIT_MIN = 30
 
 
 def read_pace(path=PACE_STATE, mark=PRIORITY_MARK):
@@ -244,8 +250,9 @@ def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=Non
     if stopped >= started and not job_running:
         until = ahead_wait_until(now, stopped, pace)
         if until is not None:
-            return "WAIT the week was %+.1f points ahead at %s: no session until %s (advisor 114)" % (
-                pace["ahead"], pace["at"].strftime("%H:%M"), until.strftime("%H:%M"))
+            return "WAIT the week was %+.1f points ahead at %s: no session until %s (advisor 114; at most %d min " \
+                   "after the stop, his word 13 Nov)" % (pace["ahead"], pace["at"].strftime("%H:%M"),
+                                                         until.strftime("%H:%M"), AHEAD_MAX_WAIT_MIN)
     if stopped >= started:
         return "GO the last session stopped at %s; no turn written for %s minutes%s" % (
             stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min), job)
@@ -301,9 +308,14 @@ def selftest():
         ("far ahead, his priority waiting: GO", decide(d, hs, 40, pace=pace_at(d, 9.0, True)), "GO"),
         ("far ahead, a job running: GO", decide(d, hs, 40, job_running=True, pace=pace_at(d, 9.0)), "GO"),
         ("far ahead, not stopped: the old rules", decide(d, r, 5, pace=pace_at(d, 9.0)), "WAIT a session wrote"),
-        ("far ahead, 2 h after the stop: GO (the page is read at least every 2 h)", decide(d + datetime.timedelta(hours=2), hs, 160, pace=pace_at(d, 12.0)), "GO"),
-        ("7 ahead: GO once the line has caught up (1.8 h)", decide(d + datetime.timedelta(minutes=110), hs, 150, pace=pace_at(d, 7.0)), "GO"),
-        ("7 ahead: WAIT before it has (1.7 h)", decide(d + datetime.timedelta(minutes=100), hs, 140, pace=pace_at(d, 7.0)), "WAIT the week was"),
+        ("far ahead, 29 min after the stop: WAIT (his 13 Nov cap)", decide(d + datetime.timedelta(minutes=29), hs, 29, pace=pace_at(d, 12.0)), "WAIT the week was"),
+        ("far ahead, 30 min after the stop: GO (his 13 Nov cap, not 120)", decide(d + datetime.timedelta(minutes=30), hs, 30, pace=pace_at(d, 12.0)), "GO"),
+        ("far ahead, 2 h after the stop: GO", decide(d + datetime.timedelta(hours=2), hs, 160, pace=pace_at(d, 12.0)), "GO"),
+        ("the WAIT names the 30-minute cap", "%s" % ("at most 30 min" in decide(d, hs, 40, pace=pace_at(d, 12.0))), "True"),
+        ("6.1 ahead: WAIT before the line catches up (10 min of 10.8)", decide(d + datetime.timedelta(minutes=10), hs, 10, pace=pace_at(d, 6.1)), "WAIT the week was"),
+        ("6.1 ahead: GO once it has (11 min), before the cap", decide(d + datetime.timedelta(minutes=11), hs, 11, pace=pace_at(d, 6.1)), "GO"),
+        ("7 ahead (1.8 h to catch up): WAIT at 20 min", decide(d + datetime.timedelta(minutes=20), hs, 20, pace=pace_at(d, 7.0)), "WAIT the week was"),
+        ("7 ahead: GO at the cap, 30 min, long before the line", decide(d + datetime.timedelta(minutes=30), hs, 30, pace=pace_at(d, 7.0)), "GO"),
         ("an old reading (over 3 h before the stop): GO", decide(d, hs, 40, pace=pace_at(d - datetime.timedelta(hours=5), 9.0)), "GO"),
     ]
     # The project's own activity, from logs made here: an idle log the app keeps appending untimed bookkeeping to

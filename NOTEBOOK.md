@@ -2358,3 +2358,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.25 h of session time and one helper.
 - Failed: hands near the face could not be posed in two tries (dragging the elbow drags the body); the tool's foot-slide figure disagreed with the planted bones. Lesson: measure motion from the exported bones; a tool's own summary number is a claim.
 - Evidence: production/research/tool-tests-2026-11/HUMANMOTIONCRAFT-ROUND1-2026-11-13.md.
+
+## 2026-11-13: capping a self-imposed hold on an unattended session starter
+- Made: the session starter's hold while far ahead of the week's usage line now ends at most 30 minutes after a clean stop, instead of 2 hours.
+- Method: when a starter cannot see the inbox where new instructions arrive, bound how long it may stay idle by the longest delay the owner accepts for an unread instruction; let the owner's words set that bound, not the pacing arithmetic.
+- Tools: the starter's own script and its self-test.
+- Target and check: self-test cases at 29 and 30 minutes after the stop, a catch-up shorter than the cap still honoured, and a replay on the day's real stop (WAIT until 15:20, GO at 30 minutes).
+- Cost: about 0.2 h of session time, no helpers.
+- Failed: two hours of instructions waited unread that morning because the hold could only see work known at the stop; reading the inbox itself would need the owner's sign-in token, which no script may hold.
+- Evidence: tools/fresh_gate.py (selftest), DECISIONS 2026-11-13 14:53.

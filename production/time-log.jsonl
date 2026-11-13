@@ -688,3 +688,5 @@
 {"event": "stop", "at": "2026-11-13T14:36:39", "note": "shared-core design note and its review settled"}
 {"event": "start", "at": "2026-11-13T14:27:00", "task": "tool test: HumanMotionCraft round 1 (headless half; helper about 13 min)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T14:42:00", "note": ""}
+{"event": "start", "at": "2026-11-13T14:51:58", "task": "start gate: pace hold capped at 30 minutes (his chat, advisor 134)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T14:53:35", "note": "gate capped at 30 min; selftest 51 pass; live replay WAIT to 15:20, GO at 30"}
