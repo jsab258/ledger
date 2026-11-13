@@ -3,7 +3,7 @@
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-13 08:52 (hourly run; gate GO: the last session stopped at 08:08)
-**Stopped:** 2026-11-13 08:08 (run from 08:07: pace +6.4, over 6 ahead, so no new heavy work; tool folders unchanged since their rounds; nothing new on the page; row 0808. Next steps below unchanged; verdicts read to 07:08Z, advisor to 08:08).
+**Stopped:** 2026-11-13 09:14 (run from 08:52: his router tap, Drape Studio re-test and Seamshift round 3 done; pace +8.8, over 6 ahead, so no new heavy work; rows 0900, 0915; verdicts read to 07:37Z, advisor to 09:13).
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -27,21 +27,21 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Advisor 111 (11 Nov 19:00):** before any second try on a fault, check the paid-tools sweep (production/research/paid-tools-sweep-2026-11-11.md) and research for a tool or method that already solves it. Monday's numbers: Sheila against Tom per garment and in total (hours, dollars, tries, set-asides, steps from a skill), and first-against-latest for every kind made more than once.
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
-## Run on 13 Nov, from 07:22 (this session)
-- The 06:37 session died mid-turn: its last request (06:44, after reading two full-size PNGs) never returned, so no row or Stopped line. Read pictures at reduced size.
-- Rows 0724, 0756 (v1); ack 2026-11-13-0805-127 written. Verdicts read to 06:25Z (his c-drive-room yes 06:24Z, acted on); advisor read to 08:05 (127).
-- His C: yes acted on (commit fd2d7e86c): ai-video, MetaTailor's WinRAR temp copy, cascadeur-portable deleted; C: 72.6 GB; chair-rise source kept at F:/LedgerTools/tool-tests-2026-11/motionsmith-r2/chair-rise-source; Cascadeur's Windows uninstall is his.
-- Loomwright cloth round 1 (82254abd1) and streets round 1 (1d1116061): reports in production/research/tool-tests-2026-11/. Cloth fails the picture (crumpled, torn collars, mannequin, unskinned); streets a grey-box layout, placement data only.
-- Loomwright hair: the 07:30 'tool's fault' verdict was wrong and is corrected: tools/strand_skin_check.py shows its strands 10 mm (median) off his skin, Unreal bounds identical; run 8 ruled out strand width (0.01 cm kept). The bare head is our Unreal picture's fault, cause not found. Harness runs 8; that question's tries: 1 (width).
-- Priority mark cleared (119, 120 wait on his folder changes per advisor 127; 121 done). Pace +6.5 at 07:56.
+## Run on 13 Nov, from 08:52 (this session)
+- His tap 'router' (07:37Z) acted on: item closed, his key file in place (%LOCALAPPDATA%\LEDGER\router-key.txt), page republished with nothing open; the talk bake-off waits for the next order. Advisor 128 (Cascadeur stays) on the waiting list for 25 Nov.
+- Advisor 129, Drape Studio re-test: his folder (now C:/Game Dev Tools/DrapeStudio; C:/DrapeStudio is gone) unchanged since before the 11 Nov test; one jumper run byte-identical to 11 Nov's; the rest not re-run. production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-13.md.
+- Advisor 130, Seamshift round 3 (his 08:44 build): six of seven faults fixed and confirmed by our own measures; still failing Heavy sitting (328), front shoulder saw-tooth, small bare patch, README line; new: a pullover over a blouse loses up to 14% at a cuff and the crew band. 'Round 3' in production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md; preview seamshift-round3-2026-11-13.jpg. Round 1's cuff 'shrink by a third' was our script's measuring (corrected in the report and DECISIONS).
+- Rows 0900, 0915; acks 128 to 130.
+- Loomwright hair: the bare head is our Unreal picture's fault, cause not found (tries: 1, width).
 
 ## Next, in order
-1. FIRST: pace; verdicts after 2026-11-13T06:55Z, advisor after 08:05 Swiss (latest ack 0805-127).
+1. FIRST: pace; verdicts after 2026-11-13T07:37Z, advisor after 09:13 Swiss (latest ack 0857-130).
 2. Advisor 127: his tools' next rounds start only when his folder for that tool changes (C:/Game Dev Tools/<tool>; compare dates). Each round: identity case, real inputs, the feedback's checks, beside the last round's numbers. For Loomwright hair first research (dated note) how an unbound groom draws in a SceneCapture2D and whether the Maya conversion flips it inside its bounds (compare guide points with the USD), before run 9. No keep-or-drop item yet.
 3. Otherwise the order's work: advisor 118 while ahead (the CMU note's fresh review once pace is within 6, then the method notes in DOUBLE-WEEK-PREP's order). Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
 4. n09-12 (games' numbers, PC idle, no Unreal): UE4SS-READING-2026-11-12.md.
 5. Nothing touching Unreal 01:15 to 04:30. Tonight's walk: no game piece changed today (tool tests only, scratch).
-6. Leftovers of mine: C:/LedgerTools/mocap-solve (about 1 GB); F:/LedgerTools/tool-tests-2026-11/motionsmith-r2, loomwright-r2 (ue to ue8 about 50 MB), loomwright-cloth, loomwright-street (keep while rounds continue).
+6. Leftovers of mine: C:/LedgerTools/mocap-solve (about 1 GB); F:/LedgerTools/tool-tests-2026-11/motionsmith-r2, loomwright-r2 (ue to ue8 about 50 MB), loomwright-cloth, loomwright-street, seamshift-r3, F:/LedgerTools/drapestudio-test-2026-11-13 (keep while rounds continue).
+7. Folder dates at 09:13 for the next rounds: DrapeStudio 11 Nov 10:14, Loomwright 12 Nov 13:26, Motionsmith 12 Nov 15:04, Seamshift 13 Nov 08:47 (round 3 done on it).
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - Vellum on Tom's jumper, 3 of 3 (his yes for the third): set aside. Cascadeur test 4, 2 of 2: set aside (quick rig needs rig mode on in a scene with the model alone; render to video crashes).

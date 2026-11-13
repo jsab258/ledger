@@ -2304,3 +2304,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.25 h, no helpers.
 - Failed: nothing; avoided about 80 minutes of identical runs (the layering job alone 68 min).
 - Evidence: production/research/clothing-pipeline/DRAPESTUDIO-TEST-2026-11-13.md.
+
+## 2026-11-13: a garment refit tool's third round
+- Made: no game piece; the refit tool's fixes measured on the same jobs as before.
+- Method: for each claimed fix, a check that does not use the tool's own measure (our script, and a ring height along each band's own axis taken straight from the mesh); a job of our own for each new option; the identity case first.
+- Tools: the tool's job runner, a measuring script in headless Blender, a small mesh script.
+- Target and check: round 1's faults by name; bars of 299 / 44 points and bands within 10%.
+- Cost: about 0.3 h, no helpers.
+- Failed: a measuring method, not a garment: our script read a cardigan's cuffs along the tilted knit, so round 1 reported a shrink of a third that was mostly the measure. Lesson: measure a band along its own opening's axis.
+- Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md (Round 3), production/previews/seamshift-round3-2026-11-13.jpg.

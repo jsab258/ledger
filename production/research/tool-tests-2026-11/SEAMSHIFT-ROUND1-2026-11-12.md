@@ -77,3 +77,40 @@ Unreal import; the packaged game; Pose Match in MetaTailor (still untried, so th
 - His updates: none since round 1 (his folder unchanged since 12 Nov 19:37).
 - Still unreached: the packaged game (a held scratch garment is not worn in the game), and the cardigan faults, which wait for an update from him.
 - Cost: about 0.4 h, no helpers. Time log: "tool test: Seamshift round 2 Unreal import".
+
+## Round 3, 13 November 2026 (09:05 to 09:15): his update of 08:44 (advisor 130)
+Method researched: production/research/tool-tests-2026-11/METATAILOR-METHOD-2026-11-12.md (12 Nov) and rounds 1 and 2 above; the same jobs, bodies and measuring script, only the output folder changed. Work folder F:/LedgerTools/tool-tests-2026-11/seamshift-r3 (jobs, out, measure, summary.txt, cuff-ring-check.txt). Picture: production/previews/seamshift-round3-2026-11-13.jpg (top to bottom: cardigan over blouse on Lena C1; Build Heavy sitting; Sheila S4 identity; Tom's jumper on Darren).
+
+**Verdict: a large step. Six of the seven listed faults are fixed, and its claims hold when we measure them ourselves. The cardigan over the blouse now passes on Lena C1 and Sam C5, and the identity fit hands it back unchanged. Still failing: Build Heavy sitting (the cardigan balloons at the belly), a ragged front shoulder line, a small bare patch under the lowest button, and a new fault: a jumper layered over a blouse loses up to 14% at a cuff and the crew band. It can now refit pullovers and layered open garments onto the cast's normal bodies; heavy bodies sitting and layered pullovers still need its maker.**
+
+Its notes (MECHANICS.md, "Round 2 changes"; program built 13 Nov 08:44) claim eight changes. Each was tested:
+
+| # | Round 1 fault | Round 3 | Evidence |
+|---|---|---|---|
+| 1 | Cardigan cuffs shrink to two-thirds | **fixed**: along each cuff's own axis 57.7 to 58.2 mm on every body (source 57.9). Our own check (each cuff ring's height along its own axis, straight from the meshes): 64 mm on the source, 61 to 62 mm on C1, C5 and Heavy, so 4 to 6% less, inside the 10% bar. Round 1's two-thirds was mostly our script measuring the cardigan's cuffs along the tilted knit (it still reads 54.7 / 58.5 on C1 against 85 on the source). | cuff-ring-check.txt, m-c1.log |
+| 2 | Identity fit not a no-op | **fixed**: every garment onto its own source body moves 0.0 mm, checked by every job (identityCheck passes in all five jobs). | job-result.json |
+| 3 | Body-through counts points under the blouse | **fixed**: points under a lower layer count as covered. Cardigan on C1 through over 3 mm: 509 (round 1) to 115; our script, which ignores the blouse, 500 to 445. | summary.txt |
+| 4 | Layer check passes with lower cloth through | **fixed**: bar stated as 0 and met on C1, C5 and Heavy (0 each). On the identity it reports 213 blouse points through, our own source's fault, marked unchanged and not failed. | summary.txt |
+| 5 | One source body per job | **fixed**: a garment can name its own source body. Tested with a job of ours: Sheila's blouse (made on S4) under Tom's jumper (made on Tom) onto Lena C1. It runs, each identity is 0 mm, no blouse through the jumper, but the jumper's left cuff (0.86) and crew band (0.86) fail the bands (new fault below). | out/mixed-sources-c1 |
+| 6 | Heavy crew band 1.58x | **fixed**: the cardigan's button band is now told apart from the rings (front band 0.99; welt and cuffs 0.95 to 1.00). | summary.txt |
+| 7 | Unreal import: stale bone name, no smoothing groups | **partly**: smoothing groups now written (its own unrealImport check); Darren's file now names its node after his body (MH_SamS6_Body). One MH_SamC5_Body remains, and it comes from Darren's own body file, which carries that name. Not re-imported into Unreal this round (round 2's import was clean). | grep on the FBX files |
+| 8 | README's first line about "the original game's own files" | **not fixed** (still there). | README.md |
+
+Improvements asked in round 1: 1 to 5 and 7 done; 6 (saw-tooth smoothing) partly: the back shoulder line is now smooth, the front shoulder line still ragged by eye.
+
+Numbers beside round 1 (its own checks; through / inside over 3 mm; ours where named):
+- Tom's jumper on Sheila S4: 47 / 0 (round 1 41 / 0); our script 21 (round 1 41); cuffs 72.7 / 74.0, welt 76.6 / 75.6, crew 28.0, all as round 1. On Ron 130 / 20, on Darren 113 / 0. Bands within 5%.
+- Cardigan over blouse: S4 identity unchanged; Lena C1 115 / 0, pass; Sam C5 173 / 0, pass; Build Heavy 6 / 0 at rest but FAILS sitting (328 through, bar 299; walking 197). Blouse passes on all four.
+- Ron's shirt under his suit jacket on Tom and Sheila: pass (jacket 13 / 9 and 16 / 0).
+- Time 0.4 to 2.2 s per garment per body; five jobs in 30 s. Same bytes on two runs (33 mesh files compared).
+
+By eye (its own pictures): on C1 the blouse stays under the cardigan everywhere but its collar; the back shoulder line is smooth now; the front shoulder line is still ragged; under the lowest button a small bare patch remains, smaller than round 1's. Build Heavy sitting: the cardigan balloons over the belly and seat. Darren's jumper is clean.
+
+What fails, most useful first, for its maker:
+1. Heavy body sitting: the cardigan balloons at the belly (328 through). Skinning the lower front to the pelvis and thighs, or a sitting-pose collision pass, would help.
+2. A pullover over a lower layer: cuff and crew band lose up to 14% (alone on C1 they hold). The band rule may be measuring against the blouse-lifted shape; keep band height when lifting over a lower layer.
+3. The front shoulder line of an outer layer is still saw-toothed (the back is fixed).
+4. A small bare patch under the lowest button of an open front.
+5. The README's first line.
+
+Cost: about 0.3 h of session time, no helpers, no API spend. Time log: "tool test: Seamshift round 3 (advisor 130)".
