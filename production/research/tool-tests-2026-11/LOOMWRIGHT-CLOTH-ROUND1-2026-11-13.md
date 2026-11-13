@@ -55,3 +55,22 @@ Method researched: production/research/tool-tests-2026-11/VELLUM-METHOD-2026-11-
 Marvelous with our Blender chain makes Tom's jumper and jacket that passed in the packaged game; Vellum was set aside after three tries; Seamshift refits a finished garment cleanly. Loomwright's cloth, as it stands, is not a route for the game's garments.
 
 Cost: about 0.2 h builder time, no helpers ("tool test: Loomwright cloth round 1").
+
+## Round 2, 13 November 2026 (14:00 to 14:30): his update (program built 13 Nov 10:42; advisor 136, step 0)
+Method researched: as round 1 (VELLUM-METHOD-2026-11-12.md; the tool's MECHANICS.md, read 13 Nov 14:05). Work folder F:/LedgerTools/tool-tests-2026-11/loomwright-cloth-r2: his example jobs copied unchanged, plus one of ours, cloth_tom_layers_on_tom (his three-layer job with Tom L1's MetaHuman body as the body file, converted from its FBX to glTF in Blender, LOD 0 and its 341-bone skeleton; crowd left out). Picture: production/previews/loomwright-cloth-round2-2026-11-13.jpg (top: his example on the built-in body; below: on Tom's own body; each front, back, without the outer layer).
+
+**Verdict: a large step on the built-in body, a hard fault on a real one.** Every round 1 fault was worked on, and the claims hold on his own example: no more torn sheets, layers start apart and stay apart, a crumple and a self-crossing check, binary FBX, skinning. On Tom's real body the shirt and jumper drape cleanly and come out skinned to his own skeleton, but **the jacket is lost**: it ends 2 to 2.7 m below the floor, unskinned, and the run fails its own hem check (3.6 m off). Its pictures do not show it, because the jacket simply is not there.
+
+| Round 1 fault | Round 2 | Evidence |
+|---|---|---|
+| Collar and shoulders crumple and tear | **fixed** on the built-in body: crumpled 0.27 to 0.65% of edges (bar 1%), self-crossing 0 to 0.32% (bar 0.5%); by eye no tears, the jacket still lumpy, reading more like a thick jumper than a tailored coat | out/tom_layers |
+| Checks pass a visibly wrong garment | **fixed in kind**: crumple, self-crossing and layer-seen-through-layer by camera (front and back) now checked; on Tom they caught the lost jacket (hem) | report.json |
+| No real body | **fixed**: glTF or OBJ body file; Tom's MetaHuman body read in its bind pose. Shirt and jumper fit it (inside body 0 / 0.03%, nothing through) | out/tom_layers_on_tom |
+| No skinning | **fixed for two of three layers**: shirt 77 and jumper 73 bone groups on Tom's 341-bone skeleton (Blender reads it); the jacket has none | fbx_probe.py |
+| ASCII FBX | **fixed**: binary FBX, Blender 5.2 imports it | |
+| 1 substep | **changed**: 5 substeps of 20 iterations | job files |
+
+New fault: the outer layer is lost on a real body (thrown below the floor), most likely the third shell or its collision against the layer underneath on a body file; the hem check is the only one that sees it, so 'all layers present and on the body' needs its own check.
+Time: 548 s for his example (three layers and three crowd refits; debug build), 335 s on Tom (no crowd), 63 s for the one-layer body-file example.
+Hair and streets: their code is unchanged since 12 Nov 10:01 (hair.rs, street.rs dates); Darren's curls came out byte-identical to round 1, so the hair and street verdicts stand.
+Cost: about 0.5 h of session time, no helpers, no API spend. Time log: "tool test: Loomwright on his 12:51 update (advisor 136 step 0)".

@@ -2331,3 +2331,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.15 h, no helpers.
 - Failed: three earlier runs judged hair 'lying under the skin' from pictures in which it was never drawn, and 'sits right' from bounds that were the face's, not the hair's. Lesson: before judging a test picture, change the subject and see the picture change; never take an attached part's bounds as its position.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md (The bald look settled).
+
+## 2026-11-13: re-testing tools after their maker's update
+- Made: no game piece; two outside tools (a garment refitter, a cloth draper) re-tested on their makers' updates.
+- Method: rerun the same jobs, bodies, measuring script and bars into a new folder; compare each output byte for byte with the last round first (an unchanged output proves no regression and no change); then each claimed fix measured by our own script, then judged by eye on the tool's pictures; always add one job on a real production input the tool's own examples avoid.
+- Tools: the tools' command lines, a short result-summary script, a headless 3D package for our own measures and for opening the outputs.
+- Target and check: every claimed fix confirmed by our numbers and by eye; outputs open in the next program in the chain.
+- Cost: about 0.65 h, no helpers.
+- Failed: a refitter's 'sitting' fix passes its count (328 to 10 points through) while the hem still balloons by eye: a count can pass a bad shape, so every count check needs a shape check beside it. A draper's third layer vanished below the floor on a real body while every picture looked clean: check that every layer is present and on the body, not only that what is present is clean. A folder-date check that skipped subfolders missed an update for three hours: date the source files themselves.
+- Evidence: production/research/tool-tests-2026-11/SEAMSHIFT-ROUND1-2026-11-12.md (Round 4), LOOMWRIGHT-CLOTH-ROUND1-2026-11-13.md (Round 2).

@@ -99,3 +99,6 @@ Method researched: Unreal 5.8.2's own source, read 13 Nov: HairStrandsMacroGroup
 - **Verdict: the bald look is our picture set-up, not the tool.** The tool's hair is still unjudged in Unreal. Run 7's 'lies flat on and under his skin' is withdrawn.
 - Tries on this fault (our picture): width 1, material 2, detach 3 (the one method found by research). None closed the gap, so it is set aside and listed. The likely remaining cause, unproven: strands that the editor's scene capture does not draw while his own hair shows (most likely through its cards); the next method is to read how Epic's MetaHuman hair picks strands or cards in a capture, then photograph the groom in the packaged game or through the editor's own view instead of a scene capture.
 - The round itself: his Loomwright folder is unchanged since 12 Nov 13:06 (newest file at 11:25 today), so by advisor 127 the tool's next round has not started.
+
+## Round 3, 13 November 2026 (14:05): his update of 10:42 (advisor 136, step 0)
+- The update did not touch the hair: hair.rs is dated 12 Nov 10:01, and Darren's curls job came out byte-identical to round 1 (hair_strands.abc compared). Every hair fault above stands; nothing new to test. Correction: the 11:41 note that his folder was unchanged since 12 Nov 13:06 was wrong; his cloth code changed at 10:42 (see LOOMWRIGHT-CLOTH-ROUND1-2026-11-13.md, round 2).

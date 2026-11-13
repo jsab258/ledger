@@ -744,6 +744,60 @@
    ],
    "state": "done",
    "closed": "2026-11-13 08:53, his pick 'router' at 08:37 (13 Nov); router-key.txt is in place; the bake-off starts with the next order (waiting list, advisor 125)"
+  },
+  {
+   "id": "humanmotioncraft-install-2026-11-13",
+   "added": "2026-11-13 14:12",
+   "text": "One tap (your words to the advisor, 10:36: 'ok let's test it'). Effect of yes: the builder downloads HumanMotionCraft's official Windows release from its GitHub releases page into its own tools folder on F:, and tests it from the command line, with no clicks from you. Nothing enters the game.",
+   "links": [
+    {
+     "label": "HumanMotionCraft releases",
+     "url": "https://github.com/YalKouassi/HumanMotionCraft/releases"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: it is the free motion tool you asked to test, and the builder installs it without your hands.",
+   "options": [
+    [
+     "yes",
+     "Yes, install and test it (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "start-gate-advisor-rows-2026-11-13",
+   "added": "2026-11-13 14:12",
+   "text": "One tap: when should the next work session start? Today 09:15 to 11:22 was lost: three of your asks to the advisor sat unread while the start waited out its pause after a clean stop. A: also start a session whenever the advisor has a message not yet answered, even during the pause (changes your 4 Nov rule that the start looks only at the handover and the logs). B: shorten the pause after a clean stop from 120 to 45 minutes. C: leave it as it is.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: your asks are picked up within 15 minutes, and no session starts when nothing waits.",
+   "options": [
+    [
+     "a",
+     "A: start on an unanswered advisor message (recommended)"
+    ],
+    [
+     "b",
+     "B: pause 45 minutes instead of 120"
+    ],
+    [
+     "c",
+     "C: leave it"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

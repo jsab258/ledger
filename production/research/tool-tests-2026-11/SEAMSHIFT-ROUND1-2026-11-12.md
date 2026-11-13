@@ -114,3 +114,24 @@ What fails, most useful first, for its maker:
 5. The README's first line.
 
 Cost: about 0.3 h of session time, no helpers, no API spend. Time log: "tool test: Seamshift round 3 (advisor 130)".
+
+## Round 4, 13 November 2026 (13:55 to 14:00): his update of 12:57 (advisor 137)
+Method researched: as round 3 (METATAILOR-METHOD-2026-11-12.md and rounds 1 to 3 above); the same five jobs, bodies, measuring script and bars, only the output folder changed. Work folder F:/LedgerTools/tool-tests-2026-11/seamshift-r4 (jobs, out, measure, summary.txt). Picture: production/previews/seamshift-round4-2026-11-13.jpg (top to bottom: Build Heavy sitting; cardigan over blouse on Lena C1; Tom's jumper over Sheila's blouse on Lena C1; Ron's jacket over his shirt on Sheila). His permanent tests were not run: they write into his folder.
+
+**Verdict: the counted faults are fixed and its own numbers match its notes exactly; by eye one is fixed only on paper. Build Heavy sitting goes from 328 body points through to 10, but the cardigan still balloons round the belly and seat like a hoop. The pullover over a lower layer now keeps its bands (0.97 to 1.02, was 0.86). The new coverage check works and catches a real old fault: Ron's jacket vent opens over the seat on Tom and Sheila (140 and 143 points, bar 100), so that job now fails, honestly. The front shoulder line is better but still rippled by eye. Nothing regressed: Tom's jumper on Sheila is byte-identical to round 3.**
+
+| Round 3 fault | Round 4 | Evidence |
+|---|---|---|
+| Heavy sitting, 328 through | **fixed in count** (10 through, 9 inside), not in shape: still a ballooned hem by eye | sheila-layers-to-cast/BuildHeavy |
+| Pullover over a lower layer loses 14% at cuff and crew | **fixed**: bands 0.97 to 1.02, through 40, no blouse through | mixed-sources-c1 |
+| Front shoulder line saw-toothed | **better**, still rippled along the top of the shoulders by eye | torso-views, Lena C1 |
+| Bare patch under the lowest button | **fixed by its own camera check** (0 newly bare on C1, 31 on C5, bar 100); not seen at sheet size | coverage in results |
+| README's first line | **not fixed** | README.md |
+
+New in this build, each tried: bodies fingerprinted in every result (bodyUsed, SHA-256); negative controls in every job, all failing as they should (cloth pushed 12 mm in, bands squashed to 80%, outer layer started inside the lower one); camera coverage per result; weights mended in test poses.
+
+Numbers (its own; ours where named): cardigan over blouse, through at rest / sit: Heavy 5 / 10 (round 3 6 / 328), Lena C1 157 / 177 (115 / -), Sam C5 179 / 175 (173 / -), S4 identity unchanged (0.0 mm). Our script on C1: 435 through over 3 mm (round 3 445; it ignores the blouse), cuffs 57.4 / 57.9 (round 3 54.7 / 58.5). Tom's jumper on Sheila / Ron / Darren 47, 130, 113, bands within 5%; our script on S4 21, all bands as rounds 1 and 3. Ron's shirt and jacket: jacket 15 / 39 through, fails coverage only. Time 0.5 to 4.7 s a garment; five jobs in 65 s.
+
+What fails, most useful first, for the loop: the Heavy sitting shape (a ballooned hem passes a count; needs a shape check, e.g. hem distance from the thighs, and skinning the lower front to the pelvis and thighs); Ron's jacket vent over the seat; the front shoulder ripple; the README line.
+
+Cost: about 0.15 h of session time, no helpers, no API spend. Time log: "tool test: Seamshift round 4 (advisor 137)".
