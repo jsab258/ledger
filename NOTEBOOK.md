@@ -2367,3 +2367,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.2 h of session time, no helpers.
 - Failed: two hours of instructions waited unread that morning because the hold could only see work known at the stop; reading the inbox itself would need the owner's sign-in token, which no script may hold.
 - Evidence: tools/fresh_gate.py (selftest), DECISIONS 2026-11-13 14:53.
+
+## 2026-11-13: carrying a third-party rig's clips onto the production skeleton by script
+- Made: no game piece; three test moves retargeted onto two production bodies in a scratch project, measured, and filmed on the real body mesh for a reviewer.
+- Method: import the clip file, build the source rig's chains by hand when the engine's auto rig misses the naming (name each chain as the target rig names it), one retargeter per move and body, batch retarget, export, measure from the exported bones, render the body from the side and front at fixed moments. When a number looks impossible, read the engine's own source for the step before changing anything.
+- Tools: the engine's retargeter driven from a script, a headless 3D package for measures and stills, an image library for the sheet.
+- Target and check: pelvis at the body's standing height, standing knees as straight as the source's, feet on the floor and still; one fresh reviewer on the stills beside another tool's pictures of the same moves.
+- Cost: about 0.45 h of session time and one small reviewer.
+- Failed: the source rig's rest pose stood its hips 5 cm off the ground, so the engine scaled the hips 16 times; its hip bone shared the target's floor-bone name, so the root-motion step copied the hips onto the floor bone. Both fixed (rest raised by the measured gap; that step off). Left open: knees bent 20 deg more than the source after retarget. Also, three 'different' body files were one body: check inputs' measurements before calling them different. Lesson: a clip's rest pose and bone names matter as much as its motion; check them first.
+- Evidence: production/research/tool-tests-2026-11/HUMANMOTIONCRAFT-ROUND1-2026-11-13.md, production/previews/humanmotioncraft-metahuman-2026-11-13.jpg.
