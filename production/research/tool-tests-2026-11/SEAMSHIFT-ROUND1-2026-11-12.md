@@ -69,3 +69,11 @@ Its body and skeleton loader (FBX any axis, MetaHuman exact match), its check su
 
 ## Unreached or untested
 Unreal import; the packaged game; Pose Match in MetaTailor (still untried, so the comparison is against its defaults); Seamshift's viewer (it needs clicks, so it wasn't used).
+
+## Round 2, 13 November 2026 (05:25 to 05:50): the Unreal import
+- Method: tools/ue/seamshift_scratch_import.py in the MetaHuman project (full editor, unattended), the same import settings as the game's garments (import_garments.py), onto each wearer's own body skeleton, into a scratch folder deleted afterwards. A garment and its body each spawned at the origin; every bone's reference-pose position compared; bounds compared. Result file: C:/LedgerTools/mh-assemble/seamshift-scratch.txt; log Saved/Logs/seamshift-scratch.log.
+- All three of tom-jumper-to-cast (Sheila S4, Ron P2, Darren S6) import onto the body's own skeleton, 342 of 342 bones shared, bind pose identical (worst 0.001 cm). No turn: each jumper is centred on the body (x -0.1 cm), wider than deep like the body, at chest height (centre 115 to 132 cm). The 90-degree turn its notes report for Darren does not appear in Unreal.
+- Small faults: Darren's file carries one extra bone at its root named after his old body (MH_SamC5_Body); Unreal accepts it, but it is a stale name from the source FBX. Every file lacks smoothing groups (Unreal warns; it rebuilds normals itself).
+- His updates: none since round 1 (his folder unchanged since 12 Nov 19:37).
+- Still unreached: the packaged game (a held scratch garment is not worn in the game), and the cardigan faults, which wait for an update from him.
+- Cost: about 0.4 h, no helpers. Time log: "tool test: Seamshift round 2 Unreal import".

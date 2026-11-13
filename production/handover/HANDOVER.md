@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten, not appended, at each stop; capped at 1,800 words (tools/doc-caps.py, 8 Nov). Rules are CLAUDE.md's and RULINGS.md's; the items are NOW.md's and the order's; this file holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-12 22:37 (hourly run; gate GO: last stopped 20:29)
-**Stopped:** 2026-11-12 23:51 (run 22:37: stopped at the history point).
+**Started:** 2026-11-13 05:22 (hourly run; gate GO: last stopped 05:08)
+**Stopped:** 2026-11-13 05:08 (run 2026-11-13 05:07: nothing new on the page or channel; pace +7.0, over 6 ahead, nothing new started; last row 05:08).
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted by his tap 8 Nov 17:17; runs to 13:00 Monday 16 November).
@@ -28,12 +28,16 @@ The one file a fresh session starts from. Rewritten, not appended, at each stop;
 - **Launcher ruling (his tap 19:16, RULINGS 11 Nov, computer-use line):** the builder alone may click in the signed-in Epic launcher and fab.com in his Chrome, only to download his Fab library, add free items an order names, install engine updates and parts; each use a DECISIONS line.
 
 ## Run on 12 Nov, from 22:37
-- Gate GO. Advisor 121 to 126 read and acked (eff not yet acked: item 1 done tonight, see below). No verdicts after 19:28Z.
-- Done: the priority mark (advisor 126; `python tools/fresh_gate.py --priority-open ids` / `--priority-done`; production/handover/priority-open.json, ignored by git); SET NOW for 119 120 121: clear it only when his tools' rounds are done or set aside and his C: tap is acted on. C: survey (121): own leftovers deleted, Unreal's cache 7 days, one page item (c-drive-room-2026-11-12). Motionsmith round 1 and Loomwright hair round 1 (reports in production/research/tool-tests-2026-11/, plus TOOLCHAIN-FACTS.md, advisor 122). His picks 123 to 125: monthly model check in RULINGS; keys page item (talk-router-key-2026-11-12); the provider-neutral talk and bake-off on the 16 Nov waiting list. Today's 19:00 DAILY rows. Handover start (eff item 1): the gate's quiet time after a written stop is now 18 s, because the held quarter-hour run starts 30 to 50 s after a session ends (production/research/token-audit/HANDOVER-START-2026-11-12.md); check at this stop that the next run read GO.
-- WRONG DELETE (mine, 23:02): C:/LedgerTools/ai-video/out held the real head-turn solve, its source video and the chair-rise control solve; no copy anywhere. Rule from now: grep the research notes for a folder's path before deleting it.
+- Advisor 121 to 126 acked. Done: the priority mark (advisor 126; `python tools/fresh_gate.py --priority-open ids` / `--priority-done`); SET NOW for 119 120 121, cleared only when his tools' rounds are done or set aside and his C: tap is acted on. C: survey (121): page item c-drive-room-2026-11-12. Motionsmith and Loomwright hair round 1 (production/research/tool-tests-2026-11/, TOOLCHAIN-FACTS.md). His picks 123 to 125 recorded (RULINGS; page item talk-router-key-2026-11-12; waiting list). Handover start: gate quiet time 18 s (production/research/token-audit/HANDOVER-START-2026-11-12.md).
+- WRONG DELETE (mine, 23:02): C:/LedgerTools/ai-video/out held the real head-turn solve, its source video and the chair-rise control solve; no copy. Rule: grep the research notes for a folder's path before deleting it.
+
+## Run on 13 Nov, from 00:00
+- 00:00: eff item 1 confirmed (GO 31 s after the last turn) and acked; row 0008 written; pace +8.9, every next step touches Unreal (held 01:15 to 04:30), stopped.
+- Runs 00:03 to 05:07, every 15 min: no verdicts after 23:00Z, no advisor after 00:01; pace +9.1 falling to +7.0 (56% at 05:07 against 49.0%); each stopped at once (every step touches Unreal, or pace over 6 ahead); rows 0107, 0223, 0323, 0423, 0508 (each v1); next row due by 06:08.
+- Night rule: before 04:30, if every open step touches Unreal and pace is over 6 ahead, row only hourly, then stop.
 
 ## Next, in order
-1. FIRST: pace; verdicts after 2026-11-12T23:00Z, advisor after 22:25 Swiss (latest ack 126). Act on his two page taps (C: delete list; router key) at once. Ack eff after confirming the handover-start GO (idle_gaps' handover column), with the 19:00 rows.
+1. FIRST: pace; verdicts after 2026-11-12T23:00Z, advisor after 22:25 Swiss (latest ack eff, 00:01). Act on his two page taps (C: delete list; router key) at once.
 2. Advisor 119/120 round 2, in order: Seamshift round 2 (Unreal scratch import of jumper_skinned.fbx, then his updates); Motionsmith round 2 (re-solve the kept stock clip, ai-video/stock/pexels-6615631, through tools/ue/mocap-solve-project, about 35 min of processor time, outside 01:15 to 04:30; then the head-turn and chair-rise jobs, the identity check, the stress clip); Loomwright hair round 2 (Darren's head and scalp exported from his MetaHuman, his reference photographs; groom on him in the editor); then Loomwright's cloth and streets. Each round: own time-log window; facts into TOOLCHAIN-FACTS.md; keep-or-drop for him after two or three rounds.
 3. Advisor 118 while ahead: the CMU note's fresh review, then the method notes in DOUBLE-WEEK-PREP's order. Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true.
 4. d4a070b: confirm in tonight's walk log "shows its ... picture (..., BC1/srgb=yes)".

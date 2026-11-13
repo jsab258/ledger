@@ -25,7 +25,7 @@ One growing note (advisor 119, 120, 122, 12 Nov 2026). Setting-free: anything ab
 
 ### Garment fitting onto other bodies
 - Needs: fit a finished, skinned garment onto another body with no cloth inside the body, bands at their heights, UVs and skinning kept, layered garments counted together (an open front over a lower layer).
-- Lacked so far: Seamshift fails layered garments and its identity case (SEAMSHIFT-ROUND1); MetaTailor needs clicks (METATAILOR-TEST).
+- Lacked so far: Seamshift fails layered garments and its identity case (SEAMSHIFT-ROUND1), though its skinned output imports cleanly onto the MetaHuman skeleton with an exact bind pose (round 2, 13 Nov); MetaTailor needs clicks (METATAILOR-TEST).
 
 ### Hair (strands and cards)
 - Needs: strands grown on the character's real scalp (a painted mask), cut by per-zone lengths, curl and clumping, exported as engine-readable curves (Alembic groom), plus a cards version for distance placed outside the scalp, budgets per head, pictures beside the reference photographs from the bar's views (crown from behind, talk close-up, the distances).
