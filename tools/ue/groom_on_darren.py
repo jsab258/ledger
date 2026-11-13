@@ -9,8 +9,8 @@
 
 WHY, 13 November 2026. Round 1 (production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md) grew hair on
 the tool's own proxy head; round 2 grows it on Darren's scalp (darren_scalp.py) and must judge it on him. The strands are
-imported with the groom importer's Maya conversion (rotation 90,0,0; scale 1,-1,1; the tool's frame is Maya's, in metres,
-so times 100) into /Game/Scratch/LoomwrightR2, then two of his MetaHumans stand 60 cm apart in the unsaved level: A with
+imported with the groom importer's Maya conversion (rotation 90,0,0; scale 1,-1,1; run 5 showed
+times 100 is wrong) into /Game/Scratch/LoomwrightR2, then two of his MetaHumans stand 60 cm apart in the unsaved level: A with
 his current hair, B with the tool's strands in place of it (his own hair material on them, so only the strands differ).
 The offset moves the tool's skull centre (0, 1.62 m, 0) to his. Checks written to groom_on_darren.json: curves, the hair's
 top against his crown (B's hair bounds against his face mesh), and pictures at talk distance (1.2 m) from the front and
@@ -50,7 +50,9 @@ def main_after_idle(seconds=20.0):
         opts = unreal.GroomImportOptions()
         conv = opts.get_editor_property("conversion_settings")
         conv.set_editor_property("rotation", unreal.Vector(90.0, 0.0, 0.0))
-        conv.set_editor_property("scale", unreal.Vector(100.0, -100.0, 100.0))
+        # run 5 (13 Nov): times 100 made the strands 25 m wide; the groom importer already brings this file in at
+        # head size, so only the Maya mirror is kept (scale 1, -1, 1)
+        conv.set_editor_property("scale", unreal.Vector(1.0, -1.0, 1.0))
         opts.set_editor_property("conversion_settings", conv)
         t = unreal.AssetImportTask()
         t.set_editor_property("filename", ABC)
@@ -98,20 +100,44 @@ def main_after_idle(seconds=20.0):
         note("actors", a=a.get_name(), b=b.get_name(), hair_found=hb is not None, face_found=face is not None,
              hair_asset=hb.get_editor_property("groom_asset").get_name() if hb else None)
         if hb is not None and groom is not None:
-            try:
-                hb.set_editor_property("binding_asset", None)
-            except Exception as e:
-                note("binding", error=str(e))
-            hb.set_groom_asset(groom) if hasattr(hb, "set_groom_asset") else hb.set_editor_property("groom_asset", groom)
-            hb.set_relative_location(unreal.Vector(*OFF), False, False)
+            # run 4 (13 Nov): swapping the groom on B's own Hair component did nothing visible, the blueprint's
+            # construction puts his own groom back. So his Hair is hidden and the tool's strands come in their own
+            # GroomActor, attached rigidly to his face at the skull-centre offset (a still picture needs no binding).
+            hb.set_visibility(False, False)
+            ga = unreal.EditorLevelLibrary.spawn_actor_from_class(unreal.GroomActor, b.get_actor_location(), unreal.Rotator(0, 0, 0))
+            gc = ga.get_component_by_class(unreal.GroomComponent)
+            gc.set_groom_asset(groom) if hasattr(gc, "set_groom_asset") else gc.set_editor_property("groom_asset", groom)
+            ga.attach_to_component(face, "", unreal.AttachmentRule.SNAP_TO_TARGET, unreal.AttachmentRule.SNAP_TO_TARGET,
+                                   unreal.AttachmentRule.KEEP_WORLD, False)
+            gc.set_relative_location(unreal.Vector(*OFF), False, False)
             mi = unreal.load_asset(HAIR_MI)
             if mi is not None:
-                hb.set_material(0, mi)
+                gc.set_material(0, mi)
+            st["actors_extra"] = [ga]
+            note("swap", groom_actor=ga.get_name(), attached_to=face.get_name(), b_hair_hidden=not hb.is_visible())
         # light: a key from front-left above, a fill, a rim from behind
         for loc, rot, inten in (((300, 250, 260), (-30, -140, 0), 8.0), ((-250, 250, 200), (-15, -50, 0), 3.0), ((50, -300, 250), (-25, 80, 0), 5.0)):
-            l = unreal.EditorLevelLibrary.spawn_actor_from_class(unreal.DirectionalLight, unreal.Vector(*loc), unreal.Rotator(*rot))
-            l.get_component_by_class(unreal.DirectionalLightComponent).set_intensity(inten)
+            l = unreal.EditorLevelLibrary.spawn_actor_from_class(unreal.DirectionalLight, unreal.Vector(*loc), unreal.Rotator(roll=0.0, pitch=float(rot[0]), yaw=float(rot[1])))
+            lc = l.get_component_by_class(unreal.DirectionalLightComponent)
+            # run 5 (13 Nov): in the new empty level every picture was black even at +3.5 EV: spawned lights are
+            # stationary and a new level has no built lighting, so they are made movable and a sky light added
+            lc.set_mobility(unreal.ComponentMobility.MOVABLE)
+            lc.set_intensity(inten)
             st["lights"].append(l)
+        try:
+            sky = unreal.EditorLevelLibrary.spawn_actor_from_class(unreal.SkyLight, unreal.Vector(0, 0, 400))
+            sc = sky.get_component_by_class(unreal.SkyLightComponent)
+            sc.set_mobility(unreal.ComponentMobility.MOVABLE)
+            sc.set_editor_property("source_type", unreal.SkyLightSourceType.SLS_SPECIFIED_CUBEMAP)
+            cube = unreal.load_asset("/Engine/MapTemplates/Sky/DaylightAmbientCubemap")
+            if cube is not None:
+                sc.set_editor_property("cubemap", cube)
+            sc.set_intensity(1.0)
+            sc.recapture_sky()
+            st["lights"].append(sky)
+            note("skylight", cubemap=cube is not None)
+        except Exception as e:
+            note("skylight", error=str(e))
 
     def measure():
         a, b = st["actors"]
@@ -126,6 +152,12 @@ def main_after_idle(seconds=20.0):
             bo_o, bo_e, _r = unreal.SystemLibrary.get_component_bounds(c)
             out.setdefault("b_grooms", []).append({"name": c.get_name(), "asset": c.get_editor_property("groom_asset").get_name() if c.get_editor_property("groom_asset") else None,
                                                    "min": vec(bo_o - bo_e), "max": vec(bo_o + bo_e)})
+        for x in st.get("actors_extra", []):
+            c = x.get_component_by_class(unreal.GroomComponent)
+            bo_o, bo_e, _r = unreal.SystemLibrary.get_component_bounds(c)
+            out["tool_hair"] = {"min": vec(bo_o - bo_e), "max": vec(bo_o + bo_e)}
+            if face is not None:
+                out["tool_hair_top_minus_face_top_cm"] = round(bo_o.z + bo_e.z - out["face_top_z"], 2)
         ha = hair_component(a)
         if ha is not None:
             bo_o, bo_e, _r = unreal.SystemLibrary.get_component_bounds(ha)
@@ -142,11 +174,14 @@ def main_after_idle(seconds=20.0):
         cc.set_editor_property("capture_source", unreal.SceneCaptureSource.SCS_FINAL_COLOR_LDR)
         cc.set_editor_property("fov_angle", 45.0)
         z = face_z - 12.0
-        shots = {"front": (unreal.Vector(30, 120, z), unreal.Rotator(0, -90, 0)),
-                 "behind": (unreal.Vector(30, -120, z), unreal.Rotator(0, 90, 0))}
+        # run 6 (13 Nov): unreal.Rotator's positional order is roll, pitch, yaw, so (0, -90, 0) looked straight down
+        # (run 4's "walls" were the floor tiles) and (0, 90, 0) straight up at the sky: angles by keyword only
+        shots = {"front": (unreal.Vector(30, 120, z), unreal.Rotator(roll=0.0, pitch=0.0, yaw=-90.0)),
+                 "behind": (unreal.Vector(30, -120, z), unreal.Rotator(roll=0.0, pitch=0.0, yaw=90.0))}
         files = []
         for name, (loc, rot) in shots.items():
             cap.set_actor_location_and_rotation(loc, rot, False, False)
+            note("camera", shot=name, at=vec(cap.get_actor_location()), rot=str(cap.get_actor_rotation()))
             for bias in (-1.0, 0.5, 2.0, 3.5):
                 pp = cc.get_editor_property("post_process_settings")
                 pp.set_editor_property("override_auto_exposure_method", True)
@@ -172,6 +207,8 @@ def main_after_idle(seconds=20.0):
                 # an import pumps editor ticks, so this callback re-enters during it (13 Nov, second run): hold it off
                 st["busy"] = True
                 st["phase"] = 1
+                # runs 5 and 6 tried an empty level: unlit once, refused once; the start level stays (its floor
+                # was what run 4 photographed, through the camera pointing down)
                 g = import_groom()
                 setup(g)
                 st["t1"] = time.time()
@@ -183,7 +220,7 @@ def main_after_idle(seconds=20.0):
                 st["t1"] = now
             elif st["phase"] == 2 and now - st["t1"] > 3.0:
                 st["phase"] = 3
-                for x in st["actors"] + st["lights"]:
+                for x in st.get("actors_extra", []) + st["actors"] + st["lights"]:
                     unreal.EditorLevelLibrary.destroy_actor(x)
                 unreal.EditorAssetLibrary.delete_directory(DEST)
                 note("cleanup", scratch_gone=not unreal.EditorAssetLibrary.does_directory_exist(DEST))

@@ -2268,3 +2268,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.3 h.
 - Failed: nothing yet; the measure rests on two held runs.
 - Evidence: production/research/token-audit/HANDOVER-START-2026-11-12.md.
+
+## 2026-11-13: a hair generator judged on the real head (round 2)
+- Made: one generated hairstyle grown on a character's own scalp, imported as strands and photographed beside the character's current hair.
+- Method: cut the scalp from the head mesh and give it to the generator in its own frame; import its strands with the engine's groom importer (mirror only, no unit scale); hide the old hair; attach the new groom on its own component at the skull-centre offset; two copies side by side, front and behind, four exposures; compare bounds with the head before judging pictures.
+- Tools: the generator's job files, Blender for the scalp, the engine's groom importer plugin, a scripted scene capture.
+- Target and check: hair readable from the player's camera behind and at talk distance; bounds within 1 cm of the scalp; then the picture.
+- Cost: about 1.6 h, no helpers; seven harness runs.
+- Failed: the hair sat right but lay under the skin, crown bare; the generator's own checks all passed, so a tool's numbers never stand in for the picture. Harness faults on the way: unit scale applied twice, unlit new level, rotators built positionally (roll, pitch, yaw) pointed the camera at the floor.
+- Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md, production/previews/loomwright-round2-on-darren-2026-11-13.jpg.
