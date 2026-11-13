@@ -2275,7 +2275,7 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: the generator's job files, Blender for the scalp, the engine's groom importer plugin, a scripted scene capture.
 - Target and check: hair readable from the player's camera behind and at talk distance; bounds within 1 cm of the scalp; then the picture.
 - Cost: about 1.6 h, no helpers; seven harness runs.
-- Failed: the hair sat right but lay under the skin, crown bare; the generator's own checks all passed, so a tool's numbers never stand in for the picture. Harness faults on the way: unit scale applied twice, unlit new level, rotators built positionally (roll, pitch, yaw) pointed the camera at the floor.
+- Failed: the head looked bare in the engine although the generator's own file holds the strands 1 to 2.6 cm out from the skin, in the same place: the fault is in the engine picture, not the tool. First judged the tool's fault, wrongly: measure the tool's own output against the head before blaming the tool. Harness faults on the way: unit scale applied twice, unlit new level, rotators built positionally (roll, pitch, yaw) pointed the camera at the floor.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-HAIR-ROUND1-2026-11-12.md, production/previews/loomwright-round2-on-darren-2026-11-13.jpg.
 
 ## 2026-11-13: a layered cloth generator tested from one job file (round 1)
@@ -2286,3 +2286,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.2 h, no helpers.
 - Failed: collars and shoulders crumpled and torn, the inner layer showing through, all 17 of its checks passing; no body file input and no skinning, so it cannot reach the game. A check that counts points inside misses folds and self-crossing.
 - Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-CLOTH-ROUND1-2026-11-13.md, production/previews/loomwright-cloth-round1-2026-11-13.jpg.
+
+## 2026-11-13: a rule-built terrace row tested from one job file (round 1)
+- Made: a twelve-house row with bays, a shop front, chimneys, lamps and clutter, as meshes and as a placement list.
+- Method: run the tool's example rules, its repeat check, then judge its day, night and overhead picture against the street bar, and its placement data against what the engine's procedural step needs.
+- Tools: the generator's job file, report and layout file.
+- Target and check: period sizes inside measured ranges, a triangle and draw-call budget; the look against the mood sheet.
+- Cost: about 0.15 h, no helpers.
+- Failed: a grey-box look (flat colours, box bays), one straight row, its own ranges rather than measured tables. Kept as a lesson: a placement list written as data is the useful part of any street generator; the look comes from the kit.
+- Evidence: production/research/tool-tests-2026-11/LOOMWRIGHT-STREETS-ROUND1-2026-11-13.md, production/previews/loomwright-street-round1-2026-11-13.jpg.

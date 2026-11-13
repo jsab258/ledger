@@ -75,6 +75,29 @@ def main_after_idle(seconds=20.0):
             except Exception as e:
                 info = str(e)
         note("import", ok=g is not None, paths=paths, groups=info)
+        # run 8 (13 Nov): the tool's strands sit 1 to 2.6 cm off his skin in its own file and land in the same place here,
+        # yet draw almost nothing: the likely cause is the strand width (0.07 mm in metres, not scaled with the points).
+        # Read the width the import kept; with LEDGER_GROOM_WIDTH_CM set, override it (MetaHuman hair is about 0.007 cm).
+        if g is not None:
+            try:
+                rs = list(g.get_editor_property("hair_groups_rendering"))
+                before = []
+                want = os.environ.get("LEDGER_GROOM_WIDTH_CM", "")
+                for r in rs:
+                    gs = r.get_editor_property("geometry_settings")
+                    before.append({"width": gs.get_editor_property("hair_width"),
+                                   "override": gs.get_editor_property("hair_width_override")})
+                    if want:
+                        gs.set_editor_property("hair_width", float(want))
+                        gs.set_editor_property("hair_width_override", True)
+                        r.set_editor_property("geometry_settings", gs)
+                if want:
+                    g.set_editor_property("hair_groups_rendering", rs)
+                after = [r.get_editor_property("geometry_settings").get_editor_property("hair_width")
+                         for r in g.get_editor_property("hair_groups_rendering")]
+                note("width", before=before, set_cm=want or None, after=after)
+            except Exception as e:
+                note("width", error=str(e))
         return g
 
     def hair_component(actor):

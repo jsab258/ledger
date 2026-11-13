@@ -670,3 +670,5 @@
 {"event": "stop", "at": "2026-11-13T07:25:29", "note": "Loomwright r2 hair on Darren: run 7 pictures read, verdict not usable"}
 {"event": "start", "at": "2026-11-13T07:31:14", "task": "tool test: Loomwright cloth round 1", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T07:37:00", "note": "Loomwright cloth round 1: example job, picture fails, report written"}
+{"event": "start", "at": "2026-11-13T07:51:00", "task": "tool test: Loomwright streets round 1", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T07:51:42", "note": "Loomwright streets round 1: grey-box layout, report written"}
