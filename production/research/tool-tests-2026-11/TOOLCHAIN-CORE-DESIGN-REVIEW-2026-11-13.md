@@ -1,4 +1,4 @@
-Method researched: the design note's own sources, read 13 Nov 2026 (Seamshift copy, ClothCraft commit 16761c55, Drape Studio AUTOMATION.md and src/serve.rs, Loomwright copy, the test reports named in the note).
+Method researched: TOOLCHAIN-CORE-DESIGN-2026-11-13.md and its sources, read 13 Nov 2026 (Seamshift copy, ClothCraft commit 16761c55, Drape Studio AUTOMATION.md and src/serve.rs, Loomwright copy, the test reports named in the note).
 
 # Review: TOOLCHAIN-CORE-DESIGN-2026-11-13 (fresh reviewer, 13 Nov 2026)
 

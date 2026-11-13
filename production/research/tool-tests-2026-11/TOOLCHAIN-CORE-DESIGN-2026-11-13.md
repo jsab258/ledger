@@ -1,4 +1,4 @@
-Method researched: the four tools' own sources and notes, read 13 Nov 2026 (Seamshift src and MECHANICS.md; Drape Studio AUTOMATION.md and src/serve.rs, 85 commands; ClothCraft at commit 16761c55, 8 Nov, src/vbd.rs, src/ogc, src/fabrics.rs; Loomwright MECHANICS.md and job.rs) and their test reports in this folder. ClothCraft's brief page (claude.ai artifact DMSWtYf5MnqSZcpZckqNuy) was unreachable (docs connector errors, three tries); its file list is to be checked against this note before the first fixer round.
+Method researched: tool sources and notes of all four tools, read 13 Nov 2026 (Seamshift src and MECHANICS.md; Drape Studio AUTOMATION.md and src/serve.rs, 85 commands; ClothCraft at commit 16761c55, 8 Nov, src/vbd.rs, src/ogc, src/fabrics.rs; Loomwright MECHANICS.md and job.rs) and their test reports in this folder. ClothCraft's brief page (claude.ai artifact DMSWtYf5MnqSZcpZckqNuy) was unreachable (docs connector errors, three tries); its file list is to be checked against this note before the first fixer round.
 
 # The shared core of LEDGER's tools: design note (13 November 2026)
 

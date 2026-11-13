@@ -686,3 +686,5 @@
 {"event": "stop", "at": "2026-11-13T14:18:01", "note": "Loomwright round on his update: cloth round 2, hair unchanged"}
 {"event": "start", "at": "2026-11-13T14:27:26", "task": "tool loop: shared-core design note (advisor 142)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T14:36:39", "note": "shared-core design note and its review settled"}
+{"event": "start", "at": "2026-11-13T14:27:00", "task": "tool test: HumanMotionCraft round 1 (headless half; helper about 13 min)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-13T14:42:00", "note": ""}
