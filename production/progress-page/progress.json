@@ -399,24 +399,24 @@
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-13",
-      "line": "Morning, Friday 13 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
-      "failure": "",
+      "date": "2026-11-14",
+      "line": "Morning, Saturday 14 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
+      "failure": "No morning pictures today: the free-space check refused ({\"job\": \"morning pictures\", \"drives\": \"CF\", \"before\": {\"C\": 85.6, \"F\": 19.6}, \"after\": {\"C\": 85.6, \"F\": 19.6}, \"verdict\": \"STOP\", \"needsYou\": \"morning pictures stopped: C: has 85.6 GB free (needs 40.0), F: 19.6 GB (needs 20.0) after the nightly limits ran. Put this in Needs you and do not retry until there is room.\"}). Yesterday's stand.",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-13.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-12.jpg"
+          "today": null,
+          "yesterday": "production/previews/morning-hook-day-2026-11-13.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-13.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-12.jpg"
+          "today": null,
+          "yesterday": "production/previews/morning-reverse-day-2026-11-13.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-13.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-12.jpg"
+          "today": null,
+          "yesterday": "production/previews/morning-night-2026-11-13.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
