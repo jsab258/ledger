@@ -712,3 +712,5 @@
 {"event": "stop", "at": "2026-11-13T22:00:50", "note": "round 4 judged: M3 not met, progress; KILN-ROUND1-2026-11-13.md Round 4"}
 {"event": "start", "at": "2026-11-13T22:38:20", "task": "tool loop: kiln round 5", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-13T23:51:02", "note": "round 5 judged: M3 not met, jeans pass, cuffs fail; KILN-ROUND1-2026-11-13.md Round 5"}
+{"event": "start", "at": "2026-11-14T07:39:34", "task": "tool loop: Kiln round 6 (n09-6 clothing)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-14T08:33:04", "note": "round 6: M3 met; judge r6 byte-identical; reviewer pass; KILN-ROUND1 Round 6"}

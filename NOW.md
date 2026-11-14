@@ -12,7 +12,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
 - [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
 
-STATE (13 Nov 05:40): n09-3 step 4's BC1 shop pictures confirmed packaged (13 Nov 02:01 walk: 21 day and 10 lit pictures as BC1, none refused); his tools' round 2 under way (Seamshift's Unreal import passed; Motionsmith re-solve running).
+STATE (14 Nov 08:33): Kiln has priority to Mon 16 Nov 07:00 (advisor 144); its M3 is met (jacket with cuff grip and jeans at Marvelous's level, round 6, KILN-ROUND1-2026-11-13.md); next M4, jacket over jumper. n09-3 step 4's BC1 shop pictures confirmed packaged (13 Nov walk).
 
 ## Handovers
 

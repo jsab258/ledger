@@ -41,3 +41,6 @@ M1 the combined tool builds and every Seamshift job matches round 4 (no regressi
 
 ## Not in this note
 Pattern making (Marvelous's patterns and FreeSewing stay the source), textures, Unreal-side tools, anything for hair beyond its slot.
+
+## Breadth by design (his decision, 14 November 08:32; advisor 157)
+Standing for every Kiln module (clothing, hair, props, buildings, motion). No special cases: a fix changes the method; any change that adds a code path, setting or number used by only one garment or job, or names a job in code, is refused; per-fabric numbers come only from the fabric presets; each round's report says "special cases: none" or names what was refused. Every module's milestones include held-back jobs drawn from the game's own need lists: at least two never go to the fixer (kept outside its folder, hash-locked with the judge) and run unchanged at every milestone (clothing: from M4 on, six jobs from HOOK-GARMENT-LIST-2026-11-03.md). Held-back jobs passing about as well as the practised ones means the fixes are general; far worse means the tool is being taught to the test and the next round fixes the method. A held-back job shown to a fixer becomes a practice job and a fresh one is drawn.
