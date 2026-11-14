@@ -430,6 +430,66 @@ def spend_since(hhmm):
     since = since_time(hhmm, datetime.datetime.now())
     steps = [s for path, _ in logs_touched(since) for s in read_events(path)["steps"] if s["t"] >= since]
     print("spend since %s: US$%.2f" % (hhmm, sum(step_cost(s["u"], s["model"]) for s in steps)))
+    print(model_line(session_model_now()))
+    return 0
+
+
+# THE SESSION'S MODEL IN EVERY ROW, AND DOLLARS PER STEP BY MODEL (advisor 162, 14 November: the session ran a whole
+# day on Fable against RULINGS 8 Nov, about twice the dollars per step, and nothing caught it). --spend now ends with
+# the row's "Model:" words, read from the newest session log's newest step; --by-model gives the DAILY file its table
+# and says JUMP when the session's dollars per step rose by more than half on the day before (to his page that hour).
+SESSION_MODEL = "claude-opus-5-5"
+JUMP = 1.5
+
+
+def model_line(model):
+    if model and model.startswith(SESSION_MODEL):
+        return "Model: Opus 5.5"
+    return "MODEL WRONG, first in the row: the session is on %s, not Opus 5.5 (RULINGS 8 Nov). Row ends 'Model: %s'" % (model or "unknown", model or "unknown")
+
+
+def session_model_now():
+    """The model of the newest step in the newest main session log that has one."""
+    for path in sorted(glob.glob(os.path.join(LOGS, "*.jsonl")), key=os.path.getmtime, reverse=True)[:6]:
+        steps = read_events(path)["steps"]
+        if steps:
+            return steps[-1]["model"]
+    return None
+
+
+def by_model_of(day):
+    """{(who, model): [steps, dollars]} for a day; who is 'session' or 'helpers'."""
+    out = collections.defaultdict(lambda: [0, 0.0])
+    until = day + datetime.timedelta(days=1)
+    for path, meta in logs_touched(day):
+        for s in read_events(path)["steps"]:
+            if day <= s["t"] < until:
+                row = out[("session" if meta is None else "helpers", s["model"])]
+                row[0] += 1
+                row[1] += step_cost(s["u"], s["model"])
+    return out
+
+
+def per_step(table, who="session"):
+    n = sum(v[0] for k, v in table.items() if k[0] == who)
+    return (sum(v[1] for k, v in table.items() if k[0] == who) / n) if n else None
+
+
+def jump_line(today, before):
+    if today is None or before is None or before <= 0:
+        return "jump: not judged (a day without session steps)"
+    word = "JUMP: to his page this hour" if today > JUMP * before else "no jump"
+    return "%s: the session's dollars per step US$%.3f against US$%.3f the day before (%+.0f%%)" % (word, today, before, (today / before - 1) * 100)
+
+
+def by_model(day):
+    a, b = by_model_of(day), by_model_of(day - datetime.timedelta(days=1))
+    print("| who | model | %s steps | US$ | US$ per step | day before: steps | US$ per step |" % day.strftime("%d %b"))
+    print("|---|---|---|---|---|---|---|")
+    for key in sorted(set(a) | set(b)):
+        x, y = a.get(key, [0, 0.0]), b.get(key, [0, 0.0])
+        print("| %s | %s | %d | %.2f | %s | %d | %s |" % (key[0], key[1], x[0], x[1], "%.3f" % (x[1] / x[0]) if x[0] else "-", y[0], "%.3f" % (y[1] / y[0]) if y[0] else "-"))
+    print(jump_line(per_step(a), per_step(b)))
     return 0
 
 
@@ -451,6 +511,13 @@ def selftest():
         ("a built-in tool", server_of("Read") == "built in"),
         ("carrying: one write at US$8, then reads at US$0.20", abs(carried_cost(1000000, 0, steps) - (8.0 + 0.2 * 2)) < 1e-9),
         ("a result at the last step costs nothing yet", carried_cost(1000, 3, steps) == 0.0),
+        ("the row's model words on Opus", model_line("claude-opus-5-5") == "Model: Opus 5.5"),
+        ("the row's model words fire on Fable", model_line("claude-fable-5-2").startswith("MODEL WRONG")),
+        ("the row's model words fire when unknown", model_line(None).startswith("MODEL WRONG")),
+        ("dollars per step up by more than half: JUMP", jump_line(0.169, 0.071).startswith("JUMP")),
+        ("dollars per step up by a third: no jump", jump_line(0.094, 0.071).startswith("no jump")),
+        ("dollars per step with an empty day: not judged", jump_line(0.1, None).startswith("jump: not judged")),
+        ("per step over the session's models only", abs(per_step({("session", "a"): [2, 1.0], ("session", "b"): [2, 3.0], ("helpers", "a"): [9, 90.0]}) - 1.0) < 1e-9),
     ]
     bad = 0
     for name, good in cases:
@@ -468,6 +535,9 @@ def main(a):
         return record_thrown(a)
     if "--spend" in a:
         return spend_since(a[a.index("--spend") + 1])
+    if "--by-model" in a:
+        rest = a[a.index("--by-model") + 1:]
+        return by_model(datetime.datetime.strptime(rest[0], "%Y-%m-%d") if rest else datetime.datetime.combine(datetime.date.today(), datetime.time()))
     day = datetime.datetime.strptime(a[0], "%Y-%m-%d") if a else datetime.datetime.combine(datetime.date.today() - datetime.timedelta(days=1), datetime.time())
     return overview(day, a[a.index("--allowance") + 1] if "--allowance" in a else None)
 

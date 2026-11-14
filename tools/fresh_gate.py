@@ -197,6 +197,50 @@ AHEAD_MAX_WAIT_MIN = 30
 # session starts before it, except one page check each QUIET_CHECK_MIN minutes (his taps and the advisor's rows are
 # still read within about an hour; the schedule's quarter makes 55 land at 55 to 70). The priority mark overrides it.
 QUIET_CHECK_MIN = 55
+# THE RUN'S MODEL (advisor 162, 14 November; his words at 21:11: "can't happen again"): every session of 14 Nov ran
+# on Fable against RULINGS 8 and 10 Nov (Opus for the session), about twice the dollars per step, and nothing checked
+# it for a day. The task's model is set in the app, outside the session; a read-only search of the app's folders
+# (Roaming/Claude, Local/Claude, its package folder) found the task's name only in the app's logs, never in a
+# settings file a script can read. But every run's log names the model of each of its turns, so the gate reads it
+# there, free: this run's own log when its first turn is already written, else the newest other run's. On the wrong
+# model a quiet spell's page check does not start (only work already due does), and every GO says so, for the
+# session's first row and his page's item.
+SESSION_MODEL = "claude-opus-5-5"
+MODEL_HEAD = 4 << 20
+
+
+def log_model(path, head=MODEL_HEAD):
+    """The model of a log's first assistant turn (read from its first 4 MB), or None."""
+    try:
+        with open(path, "rb") as fh:
+            for raw in fh.read(head).split(b"\n"):
+                if b'"model"' not in raw or b'"assistant"' not in raw:
+                    continue
+                try:
+                    d = json.loads(raw)
+                except ValueError:
+                    continue
+                m = (d.get("message") or {}).get("model")
+                if d.get("type") == "assistant" and isinstance(m, str) and m.startswith("claude-"):
+                    return m
+    except OSError:
+        pass
+    return None
+
+
+def run_model(logs=LOGS, own=None):
+    """The model this task's runs use: this run's own log first, else the newest main logs, newest first."""
+    paths = sorted(glob.glob(os.path.join(logs, "*.jsonl")), key=os.path.getmtime, reverse=True)
+    mine = [p for p in paths if own and os.path.basename(p)[:-6] == own]
+    for p in mine + [p for p in paths if p not in mine][:8]:
+        m = log_model(p)
+        if m:
+            return m
+    return None
+
+
+def model_wrong(model):
+    return bool(model) and not model.startswith(SESSION_MODEL)
 
 
 def read_pace(path=PACE_STATE, mark=PRIORITY_MARK):
@@ -236,7 +280,15 @@ def ahead_wait_until(now, stopped, pace):
     return until if now < until else None
 
 
-def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=None):
+def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=None, model=None):
+    line = decide_base(now, text, idle_min, walk_reported, job_running, pace, model)
+    if line.startswith("GO") and model_wrong(model):
+        line += ("; MODEL WRONG: this run is on %s, not Opus 5.5 (RULINGS 8 Nov; advisor 162): only work already due; "
+                 "say so first in the row; his page's item with the fix must be open" % model)
+    return line
+
+
+def decide_base(now, text, idle_min, walk_reported=False, job_running=False, pace=None, model=None):
     hm = now.hour * 60 + now.minute
     # ROUND THE CLOCK, standing (his ruling of 9 November, RULINGS "the night: round the clock: only Unreal work and
     # heavy local jobs pause for the night's build and walk; none stops"; the advisor's message 92, 11 November: the
@@ -262,6 +314,8 @@ def decide(now, text, idle_min, walk_reported=False, job_running=False, pace=Non
     due = line_time(text, "Next due")
     if stopped >= started and not job_running and due is not None and not (pace and pace["priority"]):
         until = min(due, stopped + datetime.timedelta(minutes=QUIET_CHECK_MIN))
+        if now < due and model_wrong(model):
+            return "WAIT a stated quiet spell on the wrong model (%s, not Opus 5.5): no page check, no session until work is due at %s (advisor 162)" % (model, due.strftime("%d %b %H:%M"))
         if now < until:
             return "WAIT a stated quiet spell: work is next due at %s; no session until %s (advisor 160: a page check each %d minutes)" % (due.strftime("%d %b %H:%M"), until.strftime("%H:%M"), QUIET_CHECK_MIN)
     if stopped >= started:
@@ -437,6 +491,35 @@ def selftest():
               ("quiet spell, the priority mark set: not held by it", quiet_mark, "GO"),
               ("quiet spell, a session not stopped is never held by it", decide(at(12, 40), r + "**Next due:** 2026-11-04 15:00\n", 40), "GO the last session (started"),
               ("no Next due line: as before", decide(at(12, 40), hs, 25), "GO")]
+    # The run's model (advisor 162): read from the logs; wrong model: no page check, due work goes and says so.
+    fable, opus = "claude-fable-5-2", "claude-opus-5-5"
+    mlogs = os.path.join(tmp, "model-logs")
+    os.makedirs(mlogs, exist_ok=True)
+
+    def mlog(name, model, age):
+        p = os.path.join(mlogs, name + ".jsonl")
+        with open(p, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({"type": "user", "message": {"content": "x"}}) + "\n")
+            if model:
+                fh.write(json.dumps({"type": "assistant", "message": {"model": model, "content": []}}) + "\n")
+        t = datetime.datetime.now().timestamp() - age
+        os.utime(p, (t, t))
+    mlog("old", opus, 900)
+    mlog("newer", fable, 300)
+    mlog("own-empty", None, 0)
+    from_other = run_model(mlogs, "own-empty")
+    mlog("own", opus, 0)
+    go_wrong = decide(at(13, 11), hq, 56, model=fable)
+    cases += [("model: own log has no turn yet, the newest other run's is read", from_other, fable),
+              ("model: this run's own log wins", run_model(mlogs, "own"), opus),
+              ("model: no log names one: None, nothing held", str(run_model(os.path.join(tmp, "none"))), "None"),
+              ("model wrong, quiet spell, page check time: WAIT, no page check", go_wrong, "WAIT a stated quiet spell on the wrong model"),
+              ("model wrong, work due: GO and says MODEL WRONG", "x" if "MODEL WRONG" not in decide(at(15, 1), hq, 60, model=fable) else decide(at(15, 1), hq, 60, model=fable), "GO"),
+              ("model wrong, no Next due line: GO and says so", str("MODEL WRONG" in decide(at(12, 40), hs, 25, model=fable)), "True"),
+              ("model Opus, quiet spell, page check time: GO, no warning", str(decide(at(13, 11), hq, 56, model=opus).startswith("GO") and "MODEL" not in decide(at(13, 11), hq, 56, model=opus)), "True"),
+              ("model Opus with a date suffix counts as Opus", str(model_wrong("claude-opus-5-5-20261001")), "False"),
+              ("model unknown: as before", decide(at(13, 11), hq, 56, model=None), "GO the last session stopped"),
+              ("model wrong never turns a WAIT into GO", decide(at(12, 15), h, 0.17, model=fable), "WAIT a session wrote")]
     cases.append(("no night WAIT outside the walk hold, 00:45 to 05:10", "none" if not night_bad else night_bad[0], "none"))
     bad = [n for n, got, want in cases if not got.startswith(want)]
     print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
@@ -463,7 +546,7 @@ def main(a):
     reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
     idle, log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_log=True)
     job = bool(log and os.path.isfile(log) and pending_jobs(log))
-    line = decide(now, text, idle, reported, job, None if r else read_pace())
+    line = decide(now, text, idle, reported, job, None if r else read_pace(), None if r else run_model(own=own))
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)
     return 0

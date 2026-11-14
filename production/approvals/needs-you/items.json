@@ -822,7 +822,32 @@
      "B: keep Fable"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-14 22:05, his tap A at 21:52: the start task runs on Opus 5.5"
+  },
+  {
+   "id": "c-root-empty-folders-2026-11-14",
+   "added": "2026-11-14 22:05",
+   "text": "Your hands, one minute: helpers left eight empty folders at C:'s root (their pictures are moved to F:). A session may not delete folders at a drive's root. In File Explorer, open C:\\ and delete a2, r4, diag, base, tube0, pics, closeups and home. Leave actions-runner-ledger (the build machine). C:\\pic and C:\\c are not clearly ours: yours to keep or delete. Then tap A.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: they are empty and only LEDGER's leftovers.",
+   "options": [
+    [
+     "a",
+     "A: deleted (recommended)"
+    ],
+    [
+     "b",
+     "B: leave them"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-14 22:19, his note 'You delete' at 22:11: the eight empty folders removed by the session at 22:2x"
   }
  ]
 }
