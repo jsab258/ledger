@@ -716,3 +716,5 @@
 {"event": "stop", "at": "2026-11-14T08:33:04", "note": "round 6: M3 met; judge r6 byte-identical; reviewer pass; KILN-ROUND1 Round 6"}
 {"event": "start", "at": "2026-11-14T12:22:25", "task": "tool loop: Kiln round 7 (M4)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-14T14:04:30", "note": "M4 not met: layered job from not finishing to 134 s; 15 seen through, sleeve 5.98x; report Round 7"}
+{"event": "start", "at": "2026-11-14T16:23:13", "task": "tool loop: Kiln round 8 (M4)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-14T17:18:08", "note": "M4 not met by one point: seen through 15 to 1, sleeve 2.66x, jumper unchanged, 147 s; report Round 8"}
