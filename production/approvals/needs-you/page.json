@@ -1,11 +1,37 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Friday 13 November, 14:23",
+ "kicker": "LEDGER · Needs you · 1 open · updated Saturday 14 November, 20:31",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "start-model-opus-2026-11-14",
+   "name": "Your hands, two minutes at the PC: the quarter-hourly start runs on Fable, and today its starts that only said 'wait' or found nothing due cost about US$48 of the day's US$89 at list prices. On Opus (your 8 and 10 Nov rulings name Opus for the session) the same starts cost about 40% of that. In the Claude app: Scheduled, open 'ledger-daily-fresh-session', Edit, set Model to Opus 5.5, Save. Then tap A here. A session cannot change this itself.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: Opus is what your rulings set, and it frees about two Kiln rounds a day of allowance.",
+   "added": "2026-11-14 20:31",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "a",
+     "A: done, it runs on Opus (recommended)"
+    ],
+    [
+     "b",
+     "B: keep Fable"
+    ]
+   ]
+  }
+ ]
 }
