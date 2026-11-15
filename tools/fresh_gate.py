@@ -146,18 +146,43 @@ def pending_jobs(path, cap=16 << 20):
     return set(JOB_START.findall(data)) - set(JOB_DONE.findall(data))
 
 
+# RUNS THE PROMPT HOOK ENDED (the advisor's "eff", 15 Nov; tools/gate_prompt_hook.py): a WAIT run blocked before the
+# model leaves a log with the block message but no gate line of its own; its id in gate-blocked.jsonl keeps it from
+# counting as activity, as ended_at_wait does for runs the model ended.
+BLOCKED_RUNS = os.path.join(ROOT, "production", "handover", "gate-blocked.jsonl")
+
+
+def blocked_runs(path=BLOCKED_RUNS, cap=1 << 20):
+    try:
+        with open(path, "rb") as fh:
+            fh.seek(max(0, os.path.getsize(path) - cap))
+            rows = fh.read().decode("utf-8", "replace").splitlines()
+    except OSError:
+        return set()
+    out = set()
+    for r in rows:
+        try:
+            d = json.loads(r)
+        except ValueError:
+            continue
+        if isinstance(d, dict) and d.get("blocked") and d.get("session"):
+            out.add(d["session"])
+    return out
+
+
 def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False):
     """Minutes since the project's newest real turn, this run's own log and those named left out; with_log also
     gives the main session log that turn belongs to (a helper's turn gives its parent's log)."""
     paths = glob.glob(os.path.join(logs, "*.jsonl")) + glob.glob(os.path.join(logs, "*", "subagents", "*.jsonl"))
     newest, newest_log = None, None
+    blocked = blocked_runs()
     for p in paths:
         sid = os.path.basename(p)[:-6] if os.path.dirname(p) == logs else os.path.basename(os.path.dirname(os.path.dirname(p)))
         if sid in leave_out or (own and sid == own):
             continue
         if not own and os.path.dirname(p) == logs and now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
             continue
-        if os.path.dirname(p) == logs and ended_at_wait(p):
+        if os.path.dirname(p) == logs and (sid in blocked or ended_at_wait(p)):
             continue
         if now_ts - os.path.getmtime(p) > DEAD_JOB_MIN * 60 * 2:
             t = os.path.getmtime(p)  # no turn is newer than the file; reading old giants would cost seconds

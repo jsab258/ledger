@@ -724,3 +724,5 @@
 {"event": "stop", "at": "2026-11-15T17:32:00", "note": ""}
 {"event": "start", "at": "2026-11-15T18:36:00", "task": "DAILY-2026-11-15 and the Kiln evaluation draft (advisor 144)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-15T18:40:00", "note": ""}
+{"event": "start", "at": "2026-11-15T19:52:00", "task": "n09-11 efficiency: prompt hook for WAIT runs (advisor eff)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-15T19:56:00", "note": ""}

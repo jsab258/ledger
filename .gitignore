@@ -245,3 +245,4 @@ ue-probe/Content/Ledger/Test/
 ledger/Assets/StreamingAssets/Decals/megascans/
 production/handover/pace-state.json
 production/handover/priority-open.json
+production/handover/gate-blocked.jsonl

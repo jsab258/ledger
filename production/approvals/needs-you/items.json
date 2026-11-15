@@ -920,6 +920,27 @@
     "Closed into this order's items: n09-3, n09-5, n09-6, n09-7, n09-8, n09-10 and n09-12 close into n16-3, n16-2, n16-1, n16-8, n16-7, waiting item 8 and n16-11."
    ],
    "state": "open"
+  },
+  {
+   "id": "gate-hook-2026-11-15",
+   "added": "2026-11-15 19:55",
+   "text": "Most hourly starts only find there is nothing to do, yet each pays for a full start (US$15.83 of today's US$26.12). A small check can end those starts before they cost anything. Switch it on?",
+   "links": [],
+   "recommendation": "Yes: about US$10 to 12 saved a day, US$50 to 80 a week. Your messages are never touched; only the hourly task's idle starts end early, and working starts run as now. If the check fails in any way, the start simply runs as it does today. It is the same kind of switch as the end-of-turn check you allowed on 11 November. The first real starts after it is on are measured and reported.",
+   "options": [
+    [
+     "yes",
+     "Yes, switch it on (recommended)"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "detail": [
+    "What it is: a prompt-submit hook in the project's settings that runs the hourly gate before the model is called; a WAIT ends the run at once (Claude Code's hooks documentation, read 15 Nov). Built and self-tested; not switched on. Advisor's efficiency review of 15 Nov 19:46."
+   ],
+   "state": "open"
   }
  ]
 }

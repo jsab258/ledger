@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-15 18:36 (hourly run; the gate said GO: last stopped 17:41)
+**Started:** 2026-11-15 19:52 (hourly run; the gate said GO: last stopped 18:44)
 **Next due:** 2026-11-15 23:15 (space check by 23:30, step 7; DAILY-2026-11-15 and the evaluation draft done 18:40; no Kiln or hair round: 91% at 18:36, +7.9 ahead, DECISIONS 15 Nov 04:52; the gate starts only a page check each 55 minutes, advisor 160; set it at every stop)
-**Stopped:** 2026-11-15 18:44 (DAILY-2026-11-15 and the Kiln evaluation draft done, ci failed=none, pushed; no verdicts after 16:22Z (read 18:37 Swiss), no advisor after 167, only adopt-order-2026-11-16 open; row 2026-11-15-1841 states 23:15; pace 91%, +7.9 ahead)
+**Stopped:** 2026-11-15 20:00 (advisor "eff" acted on: prompt hook built and tested, not installed, his page item gate-hook-2026-11-15; ci failed=none, pushed; no verdicts after 16:22Z (read 19:53), advisor after "eff" none; row 2026-11-15-1957 states 23:15; pace 91%, +7.1 ahead)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 9 November (production/orders/2026-11-09.md, adopted 8 Nov 17:17; runs to 13:00 Monday 16 November). **Until Monday 16 Nov 07:00 Kiln has priority over the order's game work, clothing first (advisor 144, his pick 14:36)**; game items run only where Kiln waits (Unreal or the card idle). The weekly line still governs total usage.
@@ -24,24 +24,20 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Kiln stays general (his decision 14 Nov 08:32, advisor 157):** no special cases (each report: 'special cases: none' or what was refused); from M4 on two held-back jobs the fixer never sees; the Marvelous renewal rests on M4 plus their result (design note, 'Breadth by design').
 - **He no longer develops any of his tools (advisor 146, 14:45):** the copies under F:/LedgerTools/tool-dev are their only line of development; no more rebasing on his folders.
 
-## Run on 13 Nov (15:36 to 20:30, 21:06 to 22:05, 22:36 to its stop)
-- His 'Authored breadth' ruling (advisor 156) is RULINGS's first line; its note 6 (verified pieces per week by kind beside hours) goes into Monday's audit.
-- **Kiln round 9, M4 MET** (report's 'Round 9'; tag m4-2026-11-14): margins thin (worst edge 2.88 of 3); the opt-in added-pieces start check (12 s) to be made cheaper.
-- **14 Nov evening (advisors 162, 163):** guards after a run on the wrong model: fresh_gate.py reads each run's model from its log (wrong: due work only, MODEL WRONG in its line); `token_measures.py --spend` ends with the row's model words; `--by-model DAY` gives DAILY its table and JUMP line. C:'s root: `python tools/c_root_guard.py check` before and after every round (C-ROOT NEW fails it); every tool-loop output path goes through F:/LedgerTools/tool-dev/outpath.py.
-
 ## In flight
 - Nothing running. No helper is out. F: 20.0 GB by retention.py (a fixer reading GiB sees 18.6: briefs say 'by tools/retention.py'). Own leftovers of round 9: runs/fixer-r9/nofresh and rep, runs/kiln-r4-judge/r9 (the check-on run), runs/c-root-moved-2026-11-14 (34.8 MB); keep fixer-r9/review, closeups, METHOD-NOTE and r9b. F: was, at its floor: space check before every round; on STOP delete own unreferenced scratch first (next: runs/fixer-r6, fixer-r7/t, kiln-r4-judge/r5, r6; fixer-r8's a1, b2, c0, c1 if left; keep fixer-r8/final and kiln-r4-judge/r7, r8).
 - Pace: 91% at 18:36 Sunday (+7.9 on the line); no more rounds before Monday's order. Row 2026-11-15-1841 states the 23:15 time.
 - His page: one item open, adopt-order-2026-11-16 (raised 17:29 for advisor 167; the order saved as production/orders/2026-11-16.md, ledger carried, ack 17:30). **On his tap, all at once (advisor 167):** week-shape.json active true; this file's goal line names the 16 Nov order (runs to Mon 23 Nov 13:00); Kiln's share follows the order and his answer to the advisor's 07:40 evaluation; order_current_check passes; the watchdog and night check read week-shape.json and push him the reset at 93%; when the meter drops after his press, set reset_at; before Mon 13:00 a row confirming HOURLY-TASK.md and this file point at the current order. On "not yet": the 9 Nov items go back to open (DECISIONS 15 Nov 17:31).
+- **Advisor "eff" (19:46, acked 19:55), under n09-11:** the prompt hook that ends WAIT runs before the model (tools/gate_prompt_hook.py; fresh_gate.py skips runs listed in production/handover/gate-blocked.jsonl) is built and self-tested, NOT installed: his page item gate-hook-2026-11-15. **On his yes:** add to .claude/settings.json hooks a "UserPromptSubmit" entry, command `python "$CLAUDE_PROJECT_DIR/tools/gate_prompt_hook.py"`, timeout 30; commit; then read gate-blocked.jsonl after the next starts: rows with blocked true prove it fires on the scheduler's first prompt (unverified until then); DAILY's runs by kind show WAIT near US$0. If no rows appear after two WAIT-due starts, it does not fire there: put the half-hour schedule (QUIET-STARTS-2026-11-14.md) on his page as one tap. On "not yet": the same half-hour tap instead.
 - DAILY file: due 19:00 every day (as DAILY-2026-11-14.md, with runs by kind).
 
 ## Next, in order
-1. FIRST: fresh_gate's line must not say MODEL WRONG; verdicts after 2026-11-15T16:22Z (read 17:23 Swiss); advisor after 2026-11-15T17:30+01:00 (167 acked).
+1. FIRST: fresh_gate's line must not say MODEL WRONG; verdicts after 2026-11-15T16:22Z (read 19:53 Swiss, none new); advisor after 2026-11-15T19:55+01:00 ("eff" acked).
 1a. **Read-back by the session (DECISIONS 15 Nov 09:10):** the nightly answers task was switched off by him on 12 Nov; read his page's verdicts back into production/approvals/answers by a filtered read at least every two days (last 15 Nov 09:10, verdicts to 2026-11-14T21:11Z), then `python tools/page_answers.py --index`, or page-answers-fresh holds the push.
 2. Kiln after M4: M5 (outfits refitted and rigged to the cast) waits for the 16 Nov order and its held-back jobs; until then only cheap shortfall work if the meter allows (the added-pieces start check made cheaper; the thin margins). Fixer briefs: free space by tools/retention.py, every output path through outpath.py, c_root_guard before and after.
 3. Epic's baseline (149, held while ahead) and the Loomwright hair loop (now n16-8) wait for the new order.
 5. Monday's evaluation (advisor 144): DRAFTED 15 Nov 18:40, production/research/tool-tests-2026-11/KILN-EVALUATION-2026-11-16.md (M1 to M4 met, numbers against Marvelous, 12.6 h of 20, next milestones' cost); point the advisor's 07:40 evaluation to it; adoption is his (none made yet, tag m4-2026-11-14).
-6. Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true, the doubled line.
+6. Monday's audit: 'Authored breadth' note 6 (verified pieces per week by kind beside hours; advisor 156). Sunday 15 Nov: own leftovers (grep first), after Saturday's walk. On his adoption tap: week-shape.json active true, the doubled line.
 7. Space check by 23:30.
 8. Leftovers of mine (keep while rounds continue): C:/LedgerTools/mocap-solve, cargo-target; F:/LedgerTools/tool-tests-2026-11/* (keep rise430s_Body.fbx), drapestudio-test-2026-11-13 and -final.
 
