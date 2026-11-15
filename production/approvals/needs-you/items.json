@@ -943,6 +943,15 @@
    ],
    "state": "done",
    "closed": "2026-11-15 22:08, his tap yes, 15 Nov 21:09; the settings change was refused in the unattended run, so it waits for a turn he starts at the PC"
+  },
+  {
+   "id": "gate-hook-install-2026-11-15",
+   "added": "2026-11-15 23:23",
+   "text": "Your hands, about 2 minutes, any day this week (not urgent): switch on the start check you said yes to. At the PC or through Chrome Remote Desktop: open the Claude app, the Code tab, start a new session in the ledger-local folder, paste this one line and send it: install the gate hook. If Claude asks to allow a change to the project's settings, press Allow. It worked when Claude answers that the gate hook is installed and committed. Then tap Done here.",
+   "links": [{"label": "This page", "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"}],
+   "recommendation": "Done when convenient: saves about US$10 a day on quiet days. Only a session you start yourself may change the project's settings, so the hourly runs cannot do it for you.",
+   "options": [["done", "Done (recommended)"], ["not-yet", "Not yet (add a note)"]],
+   "state": "open"
   }
  ]
 }
