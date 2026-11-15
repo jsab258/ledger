@@ -720,3 +720,5 @@
 {"event": "stop", "at": "2026-11-14T17:18:08", "note": "M4 not met by one point: seen through 15 to 1, sleeve 2.66x, jumper unchanged, 147 s; report Round 8"}
 {"event": "start", "at": "2026-11-14T21:41:44", "task": "tool loop: Kiln round 9 (M4)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-14T22:39:36", "note": "M4 met; KILN-ROUND1-2026-11-13.md Round 9"}
+{"event": "start", "at": "2026-11-15T17:22:00", "task": "order of 16 Nov saved and raised (advisor 167)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-15T17:32:00", "note": ""}
