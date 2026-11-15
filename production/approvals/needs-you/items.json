@@ -919,7 +919,8 @@
     "All three are part of the largest gap to a PS5-level game (people).",
     "Closed into this order's items: n09-3, n09-5, n09-6, n09-7, n09-8, n09-10 and n09-12 close into n16-3, n16-2, n16-1, n16-8, n16-7, waiting item 8 and n16-11."
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-15 22:08, his tap yes, 15 Nov 21:08: week shape on, goal line names the 16 Nov order"
   },
   {
    "id": "gate-hook-2026-11-15",
@@ -940,7 +941,8 @@
    "detail": [
     "What it is: a prompt-submit hook in the project's settings that runs the hourly gate before the model is called; a WAIT ends the run at once (Claude Code's hooks documentation, read 15 Nov). Built and self-tested; not switched on. Advisor's efficiency review of 15 Nov 19:46."
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-15 22:08, his tap yes, 15 Nov 21:09; the settings change was refused in the unattended run, so it waits for a turn he starts at the PC"
   }
  ]
 }
