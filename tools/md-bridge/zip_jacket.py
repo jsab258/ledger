@@ -21,7 +21,8 @@ THE PIECES, a 1990 cotton zip jacket of the blouson cut: two fronts (Brian's fro
 mirrored), a whole back (Brian's half back mirrored about the centre back), two one-piece sleeves, a rib band at the
 hem in three parts (each front's and the back's, sewn at the side seams), a rib cuff at each wrist, and a stand
 collar along the whole neckline. The zip is drawn closed: the fronts' centre edges, the bands' and the collar's
-front ends are sewn edge to edge (no API call makes a zip; the zip itself is a detail for the game mesh). Rib is cut
+front ends are sewn edge to edge (no API call makes a zip; the zip itself is a detail for the game mesh), the
+tapes' seam marked a zipper seam so Kiln's pattern check knows the jacket opens there (ZIP_SEAM, 17 November). Rib is cut
 shorter than the edge it is sewn to (the band 0.9, the cuff 0.85) so it draws the cloth in, as rib does.
 
 THE ZIP'S TAPES AND THE POCKETS' PLACES (26 October night; production/research/game-clothing-pipeline/
@@ -53,6 +54,23 @@ BAND_H, CUFF_H, COLLAR_H = 55.0, 60.0, 70.0
 # cut narrower than the hand it must pass
 WRIST_MM, CUFF_OF_WRIST = 197.1, 1.0
 TAPE_W = 12.0
+# THE ZIP IS AN OPENING (17 November, Kiln's pattern check, Kiln commit 3ec9c73: a ring closed with no opening cannot be
+# put on, and the zip sewn as a plain seam made the collar a closed ring smaller than the head): the tapes' inner seam,
+# the zip itself, hem to collar top, is marked a zipper seam in the plan ("zipper": true), so the check knows the
+# garment opens there; it is still sewn closed. Kiln's solver does not read the mark (only its drawing and the check).
+ZIP_SEAM = (("tapeR", "tapeRLowI", "tapeRTopI"), ("tapeL", "tapeLLowI", "tapeLTopI"))
+# The job's one sewing call, shared by every job writer here (jeans.py, work_trousers.py, pleated_skirt.py,
+# nylon_jacket.py): a plan seam with "zipper" is an opening of the real garment (a zip, a fly, a placket), sewn as any
+# seam and then marked with SetSeamlineZipper; Marvelous's API has no such call (the docstring: no API call makes a
+# zipper), so there it is skipped.
+SEW = """# OPENINGS (Kiln's pattern check): a seam the real garment opens (a zip, a fly, a placket) is sewn, then marked a zipper
+def sew(s):
+    (pa, la, fa), (pb, lb, fb) = s["a"], s["b"]
+    ok = bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb))
+    if s.get("zipper") and hasattr(pattern_api, "SetSeamlineZipper"):
+        pattern_api.SetSeamlineZipper(pattern_api.GetSeamlinePairGroupCount() - 1, True)
+    return ok
+"""
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
 # the way from the centre front to the side seam, leaning this many degrees from upright with its top towards the
 # side seam (a hand-warmer welt; slanted, not upright: DECISIONS, 26 October night)
@@ -267,7 +285,10 @@ def plan(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST, cuffs=True):
         lb, fb = lines[(pb, b0, b1)]
         # the cuff's own side seam (it closes the cuff into a tube) is sewn LATE when asked (--cuff-seam-late)
         late = pa == pb and pa.startswith("cuff")
-        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1], "late": late})
+        seam = {"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1], "late": late}
+        if ((pa, a0, a1), (pb, b0, b1)) == ZIP_SEAM:
+            seam["zipper"] = True
+        out_seams.append(seam)
     # EACH PIECE'S NAMED CORNERS (pattern millimetres) and ITS FOUR PATCH CORNERS for the game mesh's grid (the bake
     # chain, tools/meshgen/blender/retopo_pieces.py; production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md,
     # step 2): the bottom side runs from the first to the second; the grid's rows run bottom to top
@@ -332,7 +353,7 @@ for p in PLAN["pieces"]:
             pattern_api.SetArrangementPosition(idx, *SLEEVE_POS)
             pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
-sewn = []
+%(sew)ssewn = []
 # THE CUFF'S SIDE SEAM SEWN LATE (the cuffs' third try, 27 October: sewn at once, each cuff closed into a flat tube beside
 # the arm where it was placed, and the arm never passed through it): first each cuff hangs open from the sleeve's end
 # and is carried round the arm as the sleeve's own seam closes; its side seam is sewn after LATE_STEPS
@@ -353,7 +374,7 @@ for s in PLAN["seams"]:
     pb, lb, fb = s["b"]
     if pa.startswith("cuff") and pb.startswith("sleeve") and pa[-1] in FLIP:
         fb = not fb
-    sewn.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
+    sewn.append(sew(dict(s, b=[pb, lb, fb])))
 result["sewn"] = sewn
 # THE CLOTH (only its physics: nothing of a library fabric's look goes into the game): cotton twill for the
 # shell, rib knit for the bands and cuffs, from Marvelous's stock library as October's drapes used
@@ -480,7 +501,7 @@ def main(argv):
     opt = lambda n, d: float(argv[argv.index(n) + 1]) if n in argv else d  # noqa: E731
     out = argv[argv.index("--out") + 1] if "--out" in argv else r"F:\LedgerTools\garments\tom\zip_jacket"
     p = plan(load(src), opt("--sleeve-shorten", 0.0), opt("--cuff-of-wrist", CUFF_OF_WRIST), "--no-cuffs" not in argv)
-    open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out,
+    open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out, "sew": SEW,
                                                   "steps": int(opt("--steps", 400)), "particle": opt("--particle", 20.0),
                                                   "cuff_particle": opt("--cuff-particle", 6.0), "grip": opt("--grip", 0.0),
                                                   "late": int(opt("--cuff-seam-late", 0)),

@@ -30,7 +30,7 @@ seatBack with the same ease; its dart places (bum_points, bust_points) and hip i
 not measured on S4.
 
 THE PIECES (six): yokeFront, yokeBack (each whole, darts sewn shut, side seams sewn; the zip drawn closed, so the
-skirt is a closed ring), bandFront, bandBack (BAND_H deep, cut to the yoke's waist edge, closed at the sides),
+skirt is a closed ring, its left side marked as a zipper seam: openings()), bandFront, bandBack (BAND_H deep, cut to the yoke's waist edge, closed at the sides),
 pleatsFront, pleatsBack (straight panels, PLEATS knife pleats each, all turned the same way round the body, sewn to
 the yoke's hip edge and to each other at the sides). The hem is level with the knee plus KNEE_BELOW at the centre
 front (--length). Each panel's visible face matches its yoke's hip edge; the pleats take PLEAT_TAKE more cloth (the
@@ -76,7 +76,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from zip_jacket import CORNER, CURVE, area, ccw, edges_from, idx_of, length, load  # noqa: E402
+from zip_jacket import CORNER, CURVE, SEW, area, ccw, edges_from, idx_of, length, load  # noqa: E402
 
 sys.path.insert(0, "F:/LedgerTools/tool-dev")
 from outpath import checked  # noqa: E402
@@ -361,6 +361,16 @@ def seams(info, n):
     return out
 
 
+def openings(info, n):
+    """The skirt's opening, a side zip on the wearer's left (17 November, Kiln's pattern check, Kiln commit 3ec9c73: the
+    band closed all round with no opening cannot be put on): the yoke's left side seam, waist to hip, and the band's
+    left side closure (its button or hook). Both stay sewn closed and are only marked as zipper seams; the pleated
+    panels' side seams below the yoke stay plain. Kiln's solver does not read the mark."""
+    nf = len(info["top_stretches"]["F"])
+    return [(("yokeFront", "C%dF" % n, "waistLF"), ("yokeBack", "C%dB" % n, "waistLB")),
+            (("bandFront", "bf%dF" % nf, "btEF"), ("bandBack", "bf0B", "btSB"))]
+
+
 def plan(gc, meas, n=PLEATS, skirt_len=None, take=PLEAT_TAKE):
     pieces, folds, info = build(gc, meas, n, skirt_len, take)
     out_pieces, lines = [], {}
@@ -376,10 +386,14 @@ def plan(gc, meas, n=PLEATS, skirt_len=None, take=PLEAT_TAKE):
             q["folds"] = folds[key[6]]
         out_pieces.append(q)
     out_seams = []
+    zips = openings(info, n)
     for (pa, a0, a1), (pb, b0, b1) in seams(info, n):
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
-        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]})
+        seam = {"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]}
+        if ((pa, a0, a1), (pb, b0, b1)) in zips:
+            seam["zipper"] = True
+        out_seams.append(seam)
     corners = {key: [[a, round(seg[0][0], 2), round(seg[0][1], 2)] for seg, a, _b in edges] for key, edges in pieces.items()}
     patch = {"yokeFront": {"bottom": ["C0F", "C%dF" % n], "top": ["waistLF", "waistRF"]},
              "yokeBack": {"bottom": ["C%dB" % n, "C0B"], "top": ["waistRB", "waistLB"]},
@@ -426,8 +440,7 @@ for p in PLAN["pieces"]:
         except Exception as e:
             folds[f["name"]] = "refused: %%s" %% e
 result["folds"] = folds
-result["sewn"] = [bool(pattern_api.AddSeamlinePairGroup(made[s["a"][0]], s["a"][1], made[s["b"][0]], s["b"][1], s["a"][2], s["b"][2]))
-                  for s in PLAN["seams"]]
+%(sew)sresult["sewn"] = [sew(s) for s in PLAN["seams"]]
 # THE CLOTH: Marvelous's stock files where they are and this is Marvelous; on Kiln our own descriptions beside the job
 ON_KILN = type(fabric_api).__name__ == "_Module"
 FAB = r"C:\\Users\\Public\\Documents\\MarvelousDesigner\\New Assets\\Fabric"
@@ -506,7 +519,7 @@ def main(argv):
     fab = write_fabrics(folder)
     open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out, "steps": steps,
                                                   "fabrics": fab, "pp": opt("--pleat-particle", PLEAT_PARTICLE),
-                                                  "avt": sarg("--avatar", BODY)})
+                                                  "avt": sarg("--avatar", BODY), "sew": SEW})
     json.dump(p, open(checked(job[:-3] + ".plan.json"), "w", encoding="utf-8"), indent=1)
     c = p["cut"]
     print("pleated skirt: %d pieces, %d seams, %d fold lines -> %s" % (
@@ -536,6 +549,9 @@ def _check(gc, meas, n, label):
     nst = len(info["top_stretches"]["F"]) + len(info["top_stretches"]["B"])
     want_seams = nd + 2 + nst + 2 + 4 * n + 2
     ok.append(len(p["seams"]) == want_seams)
+    # the opening: the yoke's and the band's left sides marked as zipper seams, nothing else
+    ok.append(sorted(tuple(q["names"]) for q in p["seams"] if q.get("zipper")) ==
+              sorted(tuple(a[1:] + b[1:]) for a, b in openings(info, n)))
     # every seam's two edges, found by their ends, of matching length: darts, bands, stretches, tacks and panel sides
     # 1:1 within 1%; the yoke's side seams the back's hip extension (front / back = 1 / 1.05) within 1%
     E = lambda key, a, b: next(seg for seg, x, y in pieces[key] if {x, y} == {a, b})  # noqa: E731

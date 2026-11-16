@@ -49,7 +49,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import zip_jacket  # noqa: E402
-from zip_jacket import ARRANGE, CORNER, CURVE, RIB_BAND, area, build as zip_build, length, load, seams, welts  # noqa: E402,F401
+from zip_jacket import ARRANGE, CORNER, CURVE, RIB_BAND, SEW, ZIP_SEAM, area, build as zip_build, length, load, seams, welts  # noqa: E402,F401
 
 sys.path.insert(0, "F:/LedgerTools/tool-dev")
 from outpath import checked  # noqa: E402
@@ -135,7 +135,11 @@ def plan(brian, meas):
     for (pa, a0, a1), (pb, b0, b1) in seams():
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
-        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]})
+        seam = {"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]}
+        # the zip an opening (zip_jacket.ZIP_SEAM, Kiln's pattern check): marked a zipper seam, still sewn closed
+        if ((pa, a0, a1), (pb, b0, b1)) == ZIP_SEAM:
+            seam["zipper"] = True
+        out_seams.append(seam)
     corners = {key: [[a, round(seg[0][0], 2), round(seg[0][1], 2)] for seg, a, _b in pieces[key]] for key in ORDER}
     patch = {}
     for s in ("R", "L"):
@@ -176,8 +180,7 @@ for p in PLAN["pieces"]:
             pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
 result["arranged"] = {p["key"]: p["arrange"] in points for p in PLAN["pieces"]}
-result["sewn"] = [bool(pattern_api.AddSeamlinePairGroup(made[s["a"][0]], s["a"][1], made[s["b"][0]], s["b"][1], s["a"][2], s["b"][2]))
-                  for s in PLAN["seams"]]
+%(sew)sresult["sewn"] = [sew(s) for s in PLAN["seams"]]
 # THE CLOTH: Marvelous's stock files where they are and this is Marvelous; on Kiln our own descriptions beside the job
 ON_KILN = type(fabric_api).__name__ == "_Module"
 FAB = r"C:\\Users\\Public\\Documents\\MarvelousDesigner\\New Assets\\Fabric"
@@ -258,7 +261,7 @@ def main(argv):
     steps = int(opt("--steps", 400))
     fab = write_fabrics(os.path.dirname(os.path.abspath(job)))
     open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out, "steps": steps,
-                                                  "fabrics": fab, "avt": sarg("--avatar", BODY)})
+                                                  "fabrics": fab, "avt": sarg("--avatar", BODY), "sew": SEW})
     json.dump(p, open(checked(job[:-3] + ".plan.json"), "w", encoding="utf-8"), indent=1)
     print("nylon jacket: %d pieces, %d seams -> %s" % (len(p["pieces"]), len(p["seams"]), job))
     for k, (got, want) in girths(brian, meas, build(brian, meas)).items():
@@ -278,6 +281,8 @@ def _check(brian, meas, label, ease=True):
         names = [a for _s, a, _b in edges]
         ok.append(len(names) == len(set(names)))
     ok.append(len(p["seams"]) == len(seams()) == 29)
+    # the zip the one opening marked (a zipper seam, the tapes' inner sides)
+    ok.append([q["names"] for q in p["seams"] if q.get("zipper")] == [list(ZIP_SEAM[0][1:] + ZIP_SEAM[1][1:])])
     # every seam by its named ends: plain seams 1:1 within 3%, a sleeve cap up to 12% long (eased in), rib bands
     # RIB_BAND of their edge, the cuffs against the sleeve end free (cut to the wrist, gathered by the rib)
     E = lambda key, a, b: next(seg for seg, x, y in pieces[key] if {x, y} == {a, b})  # noqa: E731

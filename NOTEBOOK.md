@@ -2428,3 +2428,17 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: the drawn layout's twelve measured rows, then a near-crop screen before any film, then the packaged film beside the current surface, one small reviewer.
 - What failed before and why: two drawn tiles passed every measured check and still read newly built up close; offline measures cannot see CG surfaces, so a near-crop look comes before filming. A seed choice also mattered: the dark-header cluster passes its anti-grid test on only some seeds.
 - Tools: Python (numpy, scipy, Pillow). Cost about 1.5 h. Evidence: production/research/street-checks/N16-4-BRICK-PHOTO-2026-11-16.md.
+
+## Openings marked in the pattern writers (17 Nov 2026)
+- Made: every real opening (zip, fly, side zip) marked as an opening seam in the scripts that write cloth-solver jobs, so the "can it be put on" rule judges patterns truly; garments with none (a pull-on knit, a buttoned coat drawn closed) left alone.
+- Method: mark at the source that writes every job, never in the solver; prove on the whole regression set with the rule switched to refuse in a side copy; switch it on only after the gate's job scripts are rewritten from the new writers.
+- Target and check: all regression jobs accepted with the rule refusing (8 of 8, from 2); solver tests with the rule on and off; one drape showing a marked seam still closes.
+- Failed and why: nothing; one drape hung 10 mm lower than before, cause unchecked, watched at the next gate.
+- Tools: Python job writers, the solver's own test suite. Cost about 0.4 helper hours. Evidence: F:/LedgerTools/tool-dev/reports/KILN-ZIPS-2026-11-17.md.
+
+## Pictures of hair strands that showed nothing (17 Nov 2026)
+- Made: a working scripted picture of imported hair strands on a character in the editor, after three failed tries had blamed strand width, material and attachment.
+- Method: when a part seems not to draw, hide everything around it and look from the side, and take pictures across many frames; one capture right after spawning drew no strands, the same capture about 60 editor frames later drew them all. Read the engine's own capture code before blaming the asset.
+- Target and check: strands visible from the side with face and body hidden, then from front and behind with them shown.
+- Failed and why: three tries changed the asset while every picture was taken in the capture's first frame; a behind-the-head pixel test could never see buried hair, so it proved nothing either way.
+- Tools: Unreal editor Python (scene capture over editor ticks), the engine source. Cost about 1 h (diagnosis helper 0.35 h, two runs of 2 minutes). Evidence: production/previews/loomwright-hair-capture-fixed-2026-11-17.jpg; F:/LedgerTools/tool-tests-2026-11/loomwright-r2/CAPTURE-DIAGNOSIS-2026-11-17.md.

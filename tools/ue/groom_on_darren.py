@@ -4,6 +4,8 @@
     set LEDGER_GROOM_ABC=F:/.../hair_strands.abc   (Loomwright's output, its own frame: metres, Y up, face +Z)
     set LEDGER_GROOM_OUT=F:/LedgerTools/tool-tests-2026-11/loomwright-r2/ue
     set LEDGER_GROOM_OFFSET=0,1.52,16.89            (cm, from darren_scalp.py's scalp.json: the skull centre)
+    set LEDGER_GROOM_DIAG=1                         (17 Nov diagnosis: B's face, body and grooms hidden, groom detached, one
+                                                     side camera, pictures over 60 ticks plus one at r.HairStrands.ViewMode 36)
     UnrealEditor.exe C:/LedgerTools/mh-assemble/MHAssemble.uproject -unattended -EnablePlugins=AlembicHairImporter
     (the Alembic hair translator is its own plugin, off in this project; the flag loads it for this run only)
 
@@ -29,6 +31,7 @@ def main_after_idle(seconds=20.0):
     import unreal
     ABC = os.environ.get("LEDGER_GROOM_ABC", "")
     OUT = os.environ.get("LEDGER_GROOM_OUT", "")
+    DIAG = os.environ.get("LEDGER_GROOM_DIAG", "") == "1"
     OFF = [float(x) for x in os.environ.get("LEDGER_GROOM_OFFSET", "0,0,0").split(",")]
     os.makedirs(OUT, exist_ok=True)
     res = {"abc": ABC, "offset_cm": OFF, "stages": []}
@@ -136,7 +139,7 @@ def main_after_idle(seconds=20.0):
             # run 10 (13 Nov): the engine source (GroomComponent.cpp 2179-2234, 2825-2847) treats a groom whose parent is a
             # skeletal mesh differently (bounds from the mesh, binding and deformation paths); LEDGER_GROOM_DETACH=1 keeps
             # the place it reached and detaches it, so the groom draws as a plain actor with no skeletal parent
-            if os.environ.get("LEDGER_GROOM_DETACH", "") == "1":
+            if os.environ.get("LEDGER_GROOM_DETACH", "") == "1" or DIAG:
                 ga.detach_from_actor(unreal.DetachmentRule.KEEP_WORLD, unreal.DetachmentRule.KEEP_WORLD,
                                      unreal.DetachmentRule.KEEP_WORLD)
                 note("detach", parent=str(gc.get_attach_parent()), at=vec(gc.get_world_location()),
@@ -148,6 +151,14 @@ def main_after_idle(seconds=20.0):
             if mi is not None:
                 gc.set_material(0, mi)
             st["actors_extra"] = [ga]
+            if DIAG and os.environ.get("LEDGER_GROOM_DIAG_HIDE", "1") != "0":
+                # 17 Nov diagnosis (CAPTURE-DIAGNOSIS-2026-11-17.md): hair buried in the head can never show from behind,
+                # so B's face, body and own grooms are hidden and only the tool's (detached) strands remain to be seen
+                hidden = []
+                for c in b.get_components_by_class(unreal.PrimitiveComponent):
+                    c.set_visibility(False, False)
+                    hidden.append(c.get_name())
+                note("diag_hidden", components=hidden)
             note("swap", groom_actor=ga.get_name(), attached_to=face.get_name(), b_hair_hidden=not hb.is_visible())
         # light: a key from front-left above, a fill, a rim from behind
         for loc, rot, inten in (((300, 250, 260), (-30, -140, 0), 8.0), ((-250, 250, 200), (-15, -50, 0), 3.0), ((50, -300, 250), (-25, 80, 0), 5.0)):
@@ -225,12 +236,54 @@ def main_after_idle(seconds=20.0):
                 pp.set_editor_property("override_auto_exposure_apply_physical_camera_exposure", True)
                 pp.set_editor_property("auto_exposure_apply_physical_camera_exposure", False)
                 cc.set_editor_property("post_process_settings", pp)
+                # 17 Nov diagnosis run (ue11-diag): strands are absent from a scene capture's first frames and fully drawn
+                # by the 60th tick; captures repeated inside one tick are untested as a warm-up (default 0): the proven
+                # way is LEDGER_GROOM_DIAG=1 with LEDGER_GROOM_DIAG_HIDE=0, which warms over ticks and adds front and behind
+                for _w in range(int(os.environ.get("LEDGER_GROOM_WARMUP", "0"))):
+                    cc.capture_scene()
                 cc.capture_scene()
                 fn = "darren_%s_ev%+.1f.png" % (name, bias)
                 unreal.RenderingLibrary.export_render_target(unreal.EditorLevelLibrary.get_editor_world(), rt, OUT, fn)
                 files.append(fn)
         note("pictures", files=files, note="A (his current hair) on the left of the front view at x 0; B (the tool's strands) at x 60")
         unreal.EditorLevelLibrary.destroy_actor(cap)
+
+    DIAG_VIEWS = {"side": ((180, 0), 180.0), "front": ((60, 120), -90.0), "behind": ((60, -120), 90.0)}
+
+    def diag_shot(face_z, k, view_mode=None, view="side"):
+        # one side picture per call, spread over many ticks so streamed strand data has time to arrive
+        if "diag_cap" not in st:
+            rt = unreal.RenderingLibrary.create_render_target2d(unreal.EditorLevelLibrary.get_editor_world(), 1600, 1000,
+                                                                unreal.TextureRenderTargetFormat.RTF_RGBA8)
+            cap = unreal.EditorLevelLibrary.spawn_actor_from_class(unreal.SceneCapture2D, unreal.Vector(0, 0, 0))
+            cc = cap.get_component_by_class(unreal.SceneCaptureComponent2D)
+            cc.set_editor_property("texture_target", rt)
+            cc.set_editor_property("capture_source", unreal.SceneCaptureSource.SCS_FINAL_COLOR_LDR)
+            cc.set_editor_property("fov_angle", 45.0)
+            pp = cc.get_editor_property("post_process_settings")
+            pp.set_editor_property("override_auto_exposure_method", True)
+            pp.set_editor_property("auto_exposure_method", unreal.AutoExposureMethod.AEM_MANUAL)
+            pp.set_editor_property("override_auto_exposure_bias", True)
+            pp.set_editor_property("auto_exposure_bias", 0.5)
+            pp.set_editor_property("override_auto_exposure_apply_physical_camera_exposure", True)
+            pp.set_editor_property("auto_exposure_apply_physical_camera_exposure", False)
+            cc.set_editor_property("post_process_settings", pp)
+            st["diag_cap"], st["diag_cc"], st["diag_rt"] = cap, cc, rt
+        if st.get("diag_view") != view:
+            # views of B (x 60), level, by keyword (Rotator order is roll, pitch, yaw)
+            (x, y), yaw = DIAG_VIEWS[view]
+            st["diag_cap"].set_actor_location_and_rotation(unreal.Vector(x, y, face_z - 12.0), unreal.Rotator(roll=0.0, pitch=0.0, yaw=yaw), False, False)
+            st["diag_view"] = view
+            note("camera", shot="diag_" + view, at=vec(st["diag_cap"].get_actor_location()), rot=str(st["diag_cap"].get_actor_rotation()))
+        world = unreal.EditorLevelLibrary.get_editor_world()
+        if view_mode is not None:
+            unreal.SystemLibrary.execute_console_command(world, "r.HairStrands.ViewMode %d" % view_mode)
+        st["diag_cc"].capture_scene()
+        if k < 0:
+            return
+        fn = "diag_%s_t%02d%s.png" % (view, k, "" if view_mode is None else "_vm%d" % view_mode)
+        unreal.RenderingLibrary.export_render_target(world, st["diag_rt"], OUT, fn)
+        note("diag_picture", file=fn, tick=k, view_mode=view_mode)
 
     def tick(delta):
         now = time.time()
@@ -247,6 +300,27 @@ def main_after_idle(seconds=20.0):
                 setup(g)
                 st["t1"] = time.time()
                 st["busy"] = False
+            elif st["phase"] == 1 and now - st["t1"] > 25.0 and DIAG:
+                # diagnosis: a side picture at ticks 0, 15, 30, 45 and 60, then one frame at strand view mode 36
+                k = st.setdefault("diag_k", 0)
+                if k == 0:
+                    st["diag_face_z"] = measure().get("face_top_z", 190.0) - 2.0
+                if k <= 60:
+                    # every tick captures (the warm-up); five are written
+                    diag_shot(st["diag_face_z"], k if k % 15 == 0 else -1)
+                if k == 62:
+                    diag_shot(st["diag_face_z"], k, view_mode=36)
+                if 65 <= k <= 84:
+                    diag_shot(st["diag_face_z"], 84 if k == 84 else -1, view="front")
+                if 85 <= k <= 104:
+                    diag_shot(st["diag_face_z"], 104 if k == 104 else -1, view="behind")
+                if k == 64:
+                    diag_shot(st["diag_face_z"], k, view_mode=0)
+                if k == 105:
+                    unreal.EditorLevelLibrary.destroy_actor(st["diag_cap"])
+                    st["phase"] = 2
+                    st["t1"] = now
+                st["diag_k"] = k + 1
             elif st["phase"] == 1 and now - st["t1"] > 25.0:
                 st["phase"] = 2
                 m = measure()

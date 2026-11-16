@@ -12,8 +12,8 @@ production/art/clothing/tom-outfit/JEANS-PLAN-2026-10-30.md). Charlie, the plan'
 hip line (its waistHeight runs only to 40% of the waist-to-hips drop), a low-rise chino; Titan, the block it is built
 on, reaches the natural waist, so Titan is drafted (F:/LedgerTools/garments/tom/jeans/pattern/titan-jeans.json:
 seatEase 9%, kneeEase 20% with fitKnee, waistHeight 90%): seat 1,136 mm round (+9%), knee 478 (+20%), the band's top
-about 2 to 5 cm under his natural waist. Its pieces are plain: no fly, pockets, yoke or loops to sew; those are drawn
-in the normal map, the loops modelled after the drape if the bake reads flat (the plan). The jumper's helpers
+about 2 to 5 cm under his natural waist. Its pieces are plain: no fly pieces, pockets, yoke or loops to sew (the fly is
+only marked, as an opening on the front rise: FLY_LENGTH); those are drawn in the normal map, the loops modelled after the drape if the bake reads flat (the plan). The jumper's helpers
 (tools/md-bridge/zip_jacket.py: named edges, mirroring, winding) are imported, not copied.
 
 THE CUT: Titan's leg runs straight down from the knee (hem = knee, 478 mm, 18.8 in), wider than the 501's 16 in
@@ -29,7 +29,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from zip_jacket import CORNER, CURVE, ccw, edges_from, idx_of, length, load, mirror_edges  # noqa: E402
+from zip_jacket import CORNER, CURVE, SEW, ccw, edges_from, idx_of, length, load, mirror_edges  # noqa: E402
 
 HEM_ROUND = 419.0           # mm round the hem, 16.5 in (the 501's 16 in, a little eased)
 WAISTBAND_H = 38.0          # mm, 1.5 in
@@ -37,6 +37,17 @@ WAISTBAND_OF_WAIST = 0.97   # the band against the trousers' waist edge
 ARRANGE = {"frontR": "Leg_Front_R", "frontL": "Leg_Front_L", "backR": "Leg_Back_R", "backL": "Leg_Back_L",
            "waistbandR": "Body_Waist_R", "waistbandL": "Body_Waist_L"}
 FABRIC = "V2_Woven_Denim_1.zfab"      # its physics only: a denim twill
+# THE FLY AND THE BAND'S FRONT ARE OPENINGS (17 November, Kiln's pattern check, Kiln commit 3ec9c73: a waistband closed
+# all round with no opening cannot pass the hips). The fly's foot as FreeSewing's Charlie 4.10.2 places it (front.mjs,
+# flyBottom: where the front rise crosses the height FLY_LENGTH of the way from cfSeat toward crotchSeamCurveCp2; its
+# option flyLength, 45%), taken at the drafted outline point nearest that height, which becomes a corner (fFly): no
+# point is moved or added. The front rise is then two lines, sewn as two whole-line seams (Kiln conforms the samples
+# of whole-line seams only, so a part seam was not used): the lower plain, the upper (the fly, the fly's foot to the
+# waist) a zipper seam, and the band's centre-front seam a zipper seam (its button). Both stay sewn closed, only
+# marked, so Kiln's check knows the trousers open there (Kiln's solver does not read the mark).
+FLY_LENGTH = 0.45
+FLY_SEAM = (("frontR", "fFlyR", "fWaistInR"), ("frontL", "fFlyL", "fWaistInL"))
+BAND_CF = (("waistbandR", "wbCFR", "wbTopCFR"), ("waistbandL", "wbCFL", "wbTopCFL"))
 
 
 def shorten(pts, names, s):
@@ -71,6 +82,18 @@ def taper(pts, names, hem_round_half):
     return [f(p) for p in pts], {n: f(p) for n, p in names.items()}
 
 
+def fly_foot(pts, names):
+    """The fly's foot: of the drafted points on the front rise (the outline between styleWaistIn and fork), the one
+    nearest Charlie's fly height (FLY_LENGTH). The rise lies above the knee, untouched by shortening and taper."""
+    y = names["cfSeat"][1] + FLY_LENGTH * (names["crotchSeamCurveCp2"][1] - names["cfSeat"][1])
+    iw, ik, n = idx_of(pts, names["styleWaistIn"]), idx_of(pts, names["fork"]), len(pts)
+    # the shorter way round from the waist's corner to the fork's is the rise
+    fwd = (ik - iw) % n
+    run = [(iw + k) % n for k in range(fwd + 1)] if fwd <= n - fwd else [(iw - k) % n for k in range(n - fwd + 1)]
+    i = min(run[1:-1], key=lambda k: abs(pts[k][1] - y))
+    return list(pts[i])
+
+
 def build(titan, shorten_mm=0.0):
     fpts, fn = shorten(*titan["titan.front"], shorten_mm)
     bpts, bn = shorten(*titan["titan.back"], shorten_mm)
@@ -78,12 +101,13 @@ def build(titan, shorten_mm=0.0):
     back_w = abs(bn["floorIn"][0] - bn["floorOut"][0])
     # the hem's round shared as the drafted hem is, front to back
     fpts, fn = taper(fpts, fn, HEM_ROUND * front_w / (front_w + back_w))
+    fn = dict(fn, flyFoot=fly_foot(fpts, fn))
     bpts, bn = taper(bpts, bn, HEM_ROUND * back_w / (front_w + back_w))
     corner = lambda pts, nm, order: [(idx_of(pts, nm[n]), tag) for n, tag in order]  # noqa: E731
     # THE DRAFT AS DRAWN IS HIS RIGHT LEG: the front seen from the front has its centre front (+x) to the side seam's
     # right, the back seen from behind its centre back (-x) to the side seam's left; the left leg is their mirror
     front = edges_from(fpts, sorted(corner(fpts, fn, [("styleWaistOut", "fWaistOut"), ("floorOut", "fFloorOut"), ("floorIn", "fFloorIn"),
-                                                      ("fork", "fFork"), ("styleWaistIn", "fWaistIn")])))
+                                                      ("fork", "fFork"), ("flyFoot", "fFly"), ("styleWaistIn", "fWaistIn")])))
     back = edges_from(bpts, sorted(corner(bpts, bn, [("fork", "bFork"), ("floorIn", "bFloorIn"), ("floorOut", "bFloorOut"),
                                                      ("styleWaistOut", "bWaistOut"), ("styleWaistIn", "bWaistIn")])))
     tag = lambda edges, s: [(seg, a + s, b + s) for seg, a, b in edges]  # noqa: E731
@@ -110,7 +134,8 @@ def seams():
                 (("front" + s, "fFloorIn" + s, "fFork" + s), ("back" + s, "bFloorIn" + s, "bFork" + s)),              # inseam
                 (("waistband" + s, "wbCF" + s, "wbSide" + s), ("front" + s, "fWaistIn" + s, "fWaistOut" + s)),
                 (("waistband" + s, "wbSide" + s, "wbCB" + s), ("back" + s, "bWaistOut" + s, "bWaistIn" + s))]
-    out += [(("frontR", "fForkR", "fWaistInR"), ("frontL", "fForkL", "fWaistInL")),       # the front rise, the fly shut
+    out += [(("frontR", "fForkR", "fFlyR"), ("frontL", "fForkL", "fFlyL")),               # the front rise below the fly
+            FLY_SEAM,                                                                     # the fly, shut (an opening)
             (("backR", "bForkR", "bWaistInR"), ("backL", "bForkL", "bWaistInL")),         # the back rise
             (("waistbandR", "wbCFR", "wbTopCFR"), ("waistbandL", "wbCFL", "wbTopCFL")),   # the band shut at the front
             (("waistbandR", "wbCBR", "wbTopCBR"), ("waistbandL", "wbCBL", "wbTopCBL"))]   # and at the back
@@ -143,11 +168,15 @@ def plan(titan, shorten_mm=0.0):
     for (pa, a0, a1), (pb, b0, b1) in seams():
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
-        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]})
+        seam = {"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]}
+        if ((pa, a0, a1), (pb, b0, b1)) in (FLY_SEAM, BAND_CF):
+            seam["zipper"] = True
+        out_seams.append(seam)
+    fly_mm = length(next(sg for sg, a, b in pieces["frontR"] if {a, b} == {"fFlyR", "fWaistInR"}))
     corners = {key: [[a, round(seg[0][0], 2), round(seg[0][1], 2)] for seg, a, _b in edges] for key, edges in pieces.items()}
     return {"pieces": out_pieces, "seams": out_seams, "corners": corners, "patch": patch(),
             "cut": {"hem_round_mm": HEM_ROUND, "waistband_mm": WAISTBAND_H, "waistband_of_waist": WAISTBAND_OF_WAIST,
-                    "shorten_mm": shorten_mm}}
+                    "shorten_mm": shorten_mm, "fly_mm": round(fly_mm, 1)}}
 
 
 JOB = '''# Generated by tools/md-bridge/jeans.py from %(src)s: Tom's jeans made, placed on his avatar's points, sewn, draped
@@ -172,8 +201,7 @@ for p in PLAN["pieces"]:
         pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
 result["arranged"] = {p["key"]: p["arrange"] in points for p in PLAN["pieces"]}
-result["sewn"] = [bool(pattern_api.AddSeamlinePairGroup(made[s["a"][0]], s["a"][1], made[s["b"][0]], s["b"][1], s["a"][2], s["b"][2]))
-                  for s in PLAN["seams"]]
+%(sew)sresult["sewn"] = [sew(s) for s in PLAN["seams"]]
 FAB = r"C:\\Users\\Public\\Documents\\MarvelousDesigner\\New Assets\\Fabric"
 fabrics = {}
 path = os.path.join(FAB, %(fabric)r)
@@ -268,7 +296,7 @@ def main(argv):
         front = ('\n        if p["key"].startswith("front"):\n'
                  '            pattern_api.SetArrangementPosition(idx, %d, %d, %d)' % tuple(fp))
     open(job, "w", encoding="utf-8").write(JOB % {
-        "src": src, "plan": json.dumps(p), "out": out, "steps": steps, "fabric": FABRIC, "simulate": sim, "front": front,
+        "src": src, "plan": json.dumps(p), "out": out, "steps": steps, "fabric": FABRIC, "simulate": sim, "front": front, "sew": SEW,
         # the straight-elbowed drape body, as the jacket's and the jumper's (the skill, step 2)
         "avt": argv[argv.index("--avatar") + 1] if "--avatar" in argv else r"F:\LedgerTools\garments\tom\MH_TomL1_straight.avt"})
     json.dump(p, open(job[:-3] + ".plan.json", "w", encoding="utf-8"), indent=1)
@@ -286,7 +314,14 @@ def selftest():
         return 0
     p = plan(load(src))
     keys = [q["key"] for q in p["pieces"]]
-    ok.append(keys == ["frontR", "frontL", "backR", "backL", "waistbandR", "waistbandL"] and len(p["seams"]) == 12)
+    ok.append(keys == ["frontR", "frontL", "backR", "backL", "waistbandR", "waistbandL"] and len(p["seams"]) == 13)
+    # the openings: the fly and the band's front marked, nothing else; the fly a plausible length (a screen, not a source)
+    ok.append(sorted(tuple(s["names"]) for s in p["seams"] if s.get("zipper")) ==
+              sorted(tuple(a[1:] + b[1:]) for a, b in (FLY_SEAM, BAND_CF)))
+    ok.append(120.0 <= p["cut"]["fly_mm"] <= 260.0)
+    # no point moved or added by the fly's corner: the front's outline as before, one more corner
+    fpts = shorten(*load(src)["titan.front"], 0.0)[0]
+    ok.append(len(p["pieces"][0]["points"]) == len(fpts))
     pieces = build(load(src))
     E = lambda key, a, b: next(seg for seg, x, y in pieces[key] if {x, y} == {a, b})  # noqa: E731
     L = lambda seg: sum(math.dist(seg[k], seg[k + 1]) for k in range(len(seg) - 1))  # noqa: E731
@@ -302,7 +337,7 @@ def selftest():
     ok.append(abs(hem - HEM_ROUND) < 2.0)
     # the left leg the right's mirror: the same seam lengths
     ok.append(abs(L(E("frontL", "fWaistOutL", "fFloorOutL")) - L(E("frontR", "fWaistOutR", "fFloorOutR"))) < 0.5)
-    print("jeans selftest: hem %.0f mm round (target %.0f)" % (hem, HEM_ROUND))
+    print("jeans selftest: hem %.0f mm round (target %.0f); fly %.0f mm" % (hem, HEM_ROUND, p["cut"]["fly_mm"]))
     print("jeans selftest: passed=%d/%d failed=%d (seam ratios %s)" % (
         sum(ok), len(ok), len(ok) - sum(ok), ", ".join("%.3f" % r for r in ratios)))
     return 0 if all(ok) else 1

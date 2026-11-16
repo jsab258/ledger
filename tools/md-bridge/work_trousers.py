@@ -14,7 +14,8 @@ Kiln's M6 outfit is Ron's donkey jacket and dark wool work trousers from the bre
 trousers are not a recoloured variant of the jeans (DECISIONS 16 Nov 07:09). The draft is Titan at Ron's measures
 (F:/LedgerTools/garments/ron/kiln-outfit-2026-11-16/titan-ron-trousers.json: seat ease 11%, knee ease 10%, the
 waist at the natural waist, a straight leg, cuffless). jeans.py's build, seams, patch corners and simulation stages are
-imported, not copied; the crease and the fly are drawn in the normal map, as the jeans' fly and pockets are.
+imported, not copied; the crease and the fly are drawn in the normal map, as the jeans' fly and pockets are (the fly
+and the band's front are marked as openings, zipper seams, by jeans.plan for Kiln's pattern check).
 
 THE HEM: Titan's leg runs straight down from the knee, so the hem's round is the knee's (the plan asks a hem wider
 than the jeans' 419 mm, about 460 to 480). It is kept as drafted unless --hem-round asks a narrower one (jeans.py's
@@ -36,7 +37,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import jeans  # noqa: E402
 from jeans import SIM_PLAIN, SIM_SETTLE, WAISTBAND_OF_WAIST  # noqa: E402
-from zip_jacket import length, load  # noqa: E402
+from zip_jacket import SEW, length, load  # noqa: E402
 
 TITAN = r"F:\LedgerTools\garments\ron\kiln-outfit-2026-11-16\titan-ron-trousers.json"
 OUT_DIR = r"F:\LedgerTools\garments\ron\kiln-outfit-2026-11-16"
@@ -142,8 +143,7 @@ for p in PLAN["pieces"]:
         pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
 result["arranged"] = {p["key"]: p["arrange"] in points for p in PLAN["pieces"]}
-result["sewn"] = [bool(pattern_api.AddSeamlinePairGroup(made[s["a"][0]], s["a"][1], made[s["b"][0]], s["b"][1], s["a"][2], s["b"][2]))
-                  for s in PLAN["seams"]]
+%(sew)sresult["sewn"] = [sew(s) for s in PLAN["seams"]]
 # THE CLOTH: Marvelous's stock file where it is and this is Marvelous; on Kiln (its modules are stand-ins that cannot
 # read a locked fabric) our own description, <name>.drape-fabric.json beside the job
 ON_KILN = type(fabric_api).__name__ == "_Module"
@@ -207,7 +207,7 @@ def main(argv):
     own = write_fabric(os.path.dirname(os.path.abspath(job)))
     open(job, "w", encoding="utf-8").write(JOB % {
         "src": src, "plan": json.dumps(p), "out": out, "steps": steps, "fabric_md": FABRIC_MD, "fabric_own": own,
-        "simulate": sim, "front": front, "avt": sarg("--avatar", BODY)})
+        "simulate": sim, "front": front, "avt": sarg("--avatar", BODY), "sew": SEW})
     json.dump(p, open(job[:-3] + ".plan.json", "w", encoding="utf-8"), indent=1)
     print("work trousers: %d pieces, %d seams -> %s (leg shortened %.1f mm)" % (len(p["pieces"]), len(p["seams"]), job, s))
     for line in report(girths(titan, meas, build(titan, meas, hem, brk))):
@@ -222,7 +222,10 @@ def _structure(titan, meas, label):
     p, s = plan(titan, meas)
     pieces = build(titan, meas)
     keys = [q["key"] for q in p["pieces"]]
-    ok.append(keys == ["frontR", "frontL", "backR", "backL", "waistbandR", "waistbandL"] and len(p["seams"]) == 12)
+    # 13 seams: jeans.py's twelve with the front rise in two parts, the fly (its upper part) and the band's front marked
+    # as openings (zipper seams)
+    ok.append(keys == ["frontR", "frontL", "backR", "backL", "waistbandR", "waistbandL"] and len(p["seams"]) == 13)
+    ok.append(sum(1 for q in p["seams"] if q.get("zipper")) == 2)
     E = lambda key, a, b: next(seg for seg, x, y in pieces[key] if {x, y} == {a, b})  # noqa: E731
     ratios = []
     for (pa, a0, a1), (pb, b0, b1) in jeans.seams():
