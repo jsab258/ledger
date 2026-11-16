@@ -222,6 +222,19 @@ AHEAD_MAX_WAIT_MIN = 30
 # session starts before it, except one page check each QUIET_CHECK_MIN minutes (his taps and the advisor's rows are
 # still read within about an hour; the schedule's quarter makes 55 land at 55 to 70). The priority mark overrides it.
 QUIET_CHECK_MIN = 55
+# ONLY A STATED SPELL HOLDS (advisor 'eff', 16 November 19:44; production/research/token-audit/IDLE-GAPS-2026-11-16.md):
+# every handover that day wrote its hourly row's time as "**Next due:**", so every clean stop read as a quiet spell and
+# held the next start up to 55 minutes (about 4 of the day's 5.5 idle hours). A Next due line now holds only when the
+# line itself says "quiet" (a spell the session meant); the hourly row's time goes on "**Row due:**", which never holds.
+QUIET_WORD = "quiet"
+
+
+def stated_quiet_due(text):
+    """The Next due time when that line states a quiet spell (the word 'quiet' on it), else None."""
+    for line in text.splitlines():
+        if line.startswith("**Next due:**") and QUIET_WORD in line.lower():
+            return line_time(line, "Next due")
+    return None
 # THE RUN'S MODEL (advisor 162, 14 November; his words at 21:11: "can't happen again"): every session of 14 Nov ran
 # on Fable against RULINGS 8 and 10 Nov (Opus for the session), about twice the dollars per step, and nothing checked
 # it for a day. The task's model is set in the app, outside the session; a read-only search of the app's folders
@@ -336,7 +349,7 @@ def decide_base(now, text, idle_min, walk_reported=False, job_running=False, pac
             return "WAIT the week was %+.1f points ahead at %s: no session until %s (advisor 114; at most %d min " \
                    "after the stop, his word 13 Nov)" % (pace["ahead"], pace["at"].strftime("%H:%M"),
                                                          until.strftime("%H:%M"), AHEAD_MAX_WAIT_MIN)
-    due = line_time(text, "Next due")
+    due = stated_quiet_due(text)
     if stopped >= started and not job_running and due is not None and not (pace and pace["priority"]):
         until = min(due, stopped + datetime.timedelta(minutes=QUIET_CHECK_MIN))
         if now < due and model_wrong(model):
@@ -504,18 +517,21 @@ def selftest():
               ("far ahead, the priority mark set: GO (advisor 126)", with_mark, "GO"),
               ("far ahead, the mark cleared: WAIT again", cleared, "WAIT the week was")]
     # A stated quiet spell (advisor 160): no start before the next due time, but a page check each QUIET_CHECK_MIN.
-    hq = hs + "**Next due:** 2026-11-04 15:00 (round 9)\n"
+    hq = hs + "**Next due:** 2026-11-04 15:00 (quiet spell until round 9)\n"
     at = lambda hh, mm: datetime.datetime(2026, 11, 4, hh, mm)
     set_mark(["160"], mk)
     quiet_mark = decide(at(12, 40), hq, 25, pace=read_pace(pf, mk))
     clear_mark(mk)
     cases += [("quiet spell, 25 min after the stop: WAIT", decide(at(12, 40), hq, 25), "WAIT a stated quiet spell"),
               ("quiet spell, 56 min after the stop: the page check goes", decide(at(13, 11), hq, 56), "GO"),
-              ("quiet spell, due time 10 min after the stop: GO at it", decide(at(12, 26), hs + "**Next due:** 2026-11-04 12:25\n", 11), "GO"),
-              ("quiet spell, a due time already past: GO", decide(at(12, 20), hs + "**Next due:** 2026-11-04 11:00\n", 5), "GO"),
+              ("quiet spell, due time 10 min after the stop: GO at it", decide(at(12, 26), hs + "**Next due:** 2026-11-04 12:25 (quiet)\n", 11), "GO"),
+              ("quiet spell, a due time already past: GO", decide(at(12, 20), hs + "**Next due:** 2026-11-04 11:00 (quiet)\n", 5), "GO"),
               ("quiet spell, the priority mark set: not held by it", quiet_mark, "GO"),
               ("quiet spell, a session not stopped is never held by it", decide(at(12, 40), r + "**Next due:** 2026-11-04 15:00\n", 40), "GO the last session (started"),
-              ("no Next due line: as before", decide(at(12, 40), hs, 25), "GO")]
+              ("no Next due line: as before", decide(at(12, 40), hs, 25), "GO"),
+              ("a Next due line not stating quiet (the hourly row's time, 16 Nov): never holds",
+               decide(at(12, 40), hs + "**Next due:** 2026-11-04 15:00 (the hourly row; last row 12:09)\n", 25), "GO"),
+              ("a Row due line never holds", decide(at(12, 40), hs + "**Row due:** 2026-11-04 15:00\n", 25), "GO")]
     # The run's model (advisor 162): read from the logs; wrong model: no page check, due work goes and says so.
     fable, opus = "claude-fable-5-2", "claude-opus-5-5"
     mlogs = os.path.join(tmp, "model-logs")

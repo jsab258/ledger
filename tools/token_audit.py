@@ -347,7 +347,9 @@ def main(a):
         d = datetime.datetime.strptime(a[a.index("--shares") + 1], "%Y-%m-%d")
         out = audit(d, d + datetime.timedelta(days=1))
         h, o, r = shares(out)
-        print("tokenShares day=%s history=%.0f%% opus=%.0f%% reviewing=%.0f%% steps=%d usd=%.2f" % (d.strftime("%Y-%m-%d"), h, o, r, out["steps"], out["usd"]))
+        # records and reports' share (advisor 'eff', 16 Nov: against RULINGS 11 Nov's 15% line, for advisor 182's trial)
+        rec = 100 * out["kinds"].get("records and reports", [0.0, 0])[0] / (out["usd"] or 1.0)
+        print("tokenShares day=%s history=%.0f%% opus=%.0f%% reviewing=%.0f%% records=%.0f%% steps=%d usd=%.2f" % (d.strftime("%Y-%m-%d"), h, o, r, rec, out["steps"], out["usd"]))
         return 0
 
     if "--models" in a:
