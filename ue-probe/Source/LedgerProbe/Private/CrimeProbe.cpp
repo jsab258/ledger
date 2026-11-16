@@ -409,6 +409,7 @@ namespace
 	// the town's first hour on paper does; a load puts it back where it was.
 	LiveClock GClock;
 	bool bClockRuns = false;
+	bool bPerfHookClockHeld = false;   // a measuring capture holds the game's clock (16 Nov: a night walk ran into morning, LIGHTS-OFF-DIAGNOSIS-2026-11-16.md)
 	bool bLiveScript = false;    // -LiveScript, the scripted encounter (see THE LIVE ENCOUNTER, SCRIPTED)
 	// THE THREE IN THE STREET BY THE CAST'S OWN IDS in free play (the town's
 	// route, production/handovers/ROUTE.md, step 0: "key the mill by the
@@ -5457,6 +5458,7 @@ namespace
 				if (FParse::Param(FCommandLine::Get(), TEXT("ExitAfterCsvProfiling"))) { FPlatformMisc::RequestExit(false); }
 				return;
 			}
+			bPerfHookClockHeld = true;   // the capture measures one moment of the day: its clock stands still from here
 			if (FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")))
 			{
 				GClock.JumpTo(GameTime(GNow.Day, 22, 0));
@@ -9096,7 +9098,7 @@ namespace
 		// the office clock's hands to the game's time, every phase that keeps a clock, running or not (3 November)
 		if (GPawn != nullptr) { OfficeClockHands(GPawn->GetWorld()); InvestigateTick(GPawn->GetWorld()); }
 		if (!bClockRuns) { return; }
-		const bool bHeld = bSayOpen || GLive.PendingId != 0 || GPhase == ECrimePhase::LiveWalkRound;
+		const bool bHeld = bSayOpen || GLive.PendingId != 0 || GPhase == ECrimePhase::LiveWalkRound || bPerfHookClockHeld;
 		const std::vector<GameTime> Hours = GClock.Advance(Delta, bHeld);
 		GNow = GClock.Now();
 		ClockHours(Hours);
