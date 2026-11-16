@@ -89,6 +89,7 @@
 #include "DayOne.h"
 #include "LedgerGarments.h"
 #include "Misc/Parse.h"
+#include "Algo/Reverse.h"   // the scale walk, laid ending at cam_hook, walked from there (PerfHookTick)
 #include "Misc/DateTime.h"
 #include "HAL/FileManager.h"
 #include "HAL/PlatformMisc.h"
@@ -5306,13 +5307,79 @@ namespace
 	// (-csvGpuStats on the command line), and -ExitAfterCsvProfiling closes the game.
 	// -PerfHookCam=<id> (16 November, n16-3, the street budget and scale test: the reverse, hill and office views as
 	// single stands): any camera of the scene file instead of cam_hook; one the file lacks ends the game, as before.
+	// -PerfHookRoute=scale and -PerfHookWalkM=<m> (16 November, n16-3 step 2, the scale test; METHOD-NOTE-2026-11-16.md
+	// section 7, fix 1: the day walk runs along the copies): the walk follows production/specs/scale-test.json's "walk"
+	// polyline from its cam_hook end (tools/scale_test_layout.py lays it on the Hook's road lines through the copies'
+	// slots), its eye on whatever ground lies under it, turning toward the way ahead at most 45 degrees a second; it walks
+	// the polyline's whole length, or -PerfHookWalkM metres, which also replaces the straight walk's fixed 45 m. The lit
+	// local lights are counted at the capture's start, the walk's end and the capture's end (LedgerPerfHookLights).
+
+	// THE LIGHTS AT ONE MOMENT OF A CAPTURE: every local light lit in the world, those casting shadows, those casting
+	// within 40 m of the view, and how many of the lit ones are the scale test's copies.
+	void PerfHookLightCount(UWorld* World, const FVector& Eye, const TCHAR* When)
+	{
+		int32 Lit = 0, Casting = 0, Near = 0, Copies = 0;
+		static const FName CopyTag(TEXT("LedgerScaleCopy"));
+		for (TObjectIterator<ULocalLightComponent> It; It; ++It)
+		{
+			ULocalLightComponent* L = *It;
+			if (L == nullptr || L->GetWorld() != World || !L->IsRegistered() || !L->IsVisible() || L->Intensity <= 0.0f) { continue; }
+			++Lit;
+			if (L->GetOwner() != nullptr && L->GetOwner()->ActorHasTag(CopyTag)) { ++Copies; }
+			if (!L->CastShadows) { continue; }
+			++Casting;
+			if (FVector::Dist(L->GetComponentLocation(), Eye) <= 4000.0) { ++Near; }
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerPerfHookLights: when=%s lit=%d castingShadows=%d shadowingWithin40m=%d scaleCopies=%d"),
+			When, Lit, Casting, Near, Copies);
+	}
+
+	// The scale test's walk, from its cam_hook end, in street metres (x along the street, z across). Empty when the file
+	// or its "walk" is missing.
+	TArray<FVector2D> ReadScaleWalk(FString& From)
+	{
+		TArray<FVector2D> Out;
+		From = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("scale-test.json"));
+		FString Text;
+		TSharedPtr<FJsonObject> Root;
+		const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+		if (From.IsEmpty() || !FFileHelper::LoadFileToString(Text, *From)) { return Out; }
+		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetArrayField(TEXT("walk"), List)) { return Out; }
+		for (const TSharedPtr<FJsonValue>& V : *List)
+		{
+			const TArray<TSharedPtr<FJsonValue>>* P = nullptr;
+			if (V.IsValid() && V->TryGetArray(P) && P->Num() >= 2) { Out.Add(FVector2D((*P)[0]->AsNumber(), (*P)[1]->AsNumber())); }
+		}
+		Algo::Reverse(Out);   // laid ending at cam_hook; walked from there
+		return Out;
+	}
+
+	// The point D metres along a polyline (its end beyond its length).
+	FVector2D AlongWalk(const TArray<FVector2D>& Line, double D)
+	{
+		if (Line.Num() == 0) { return FVector2D::ZeroVector; }
+		for (int32 I = 1; I < Line.Num(); ++I)
+		{
+			const double Seg = FVector2D::Distance(Line[I - 1], Line[I]);
+			if (D <= Seg && Seg > 0.0) { return Line[I - 1] + (Line[I] - Line[I - 1]) * (D / Seg); }
+			D -= Seg;
+		}
+		return Line.Last();
+	}
+
 	void PerfHookTick(UWorld* World, double Now, float Dt)
 	{
 		static FString Mode;
 		static FString CamId = TEXT("cam_hook");
+		static FString Route;
 		static bool bRead = false;
 		static int32 Step = -1;
 		static double NextAt = 0.0, WalkedM = 0.0;
+		static double WalkLimitM = 45.0, ViewYaw = 0.0, FootY = 0.1;
+		static TArray<FVector2D> RouteLine;
+		static bool bWalkEndLogged = false, bCaptureEndLogged = false;
+		static int32 CaptureTicks = 0, CaptureFrames = 1800;
 		static FPageShot Hook;
 		static TWeakObjectPtr<ACameraActor> Cam;
 		if (!bRead)
@@ -5320,6 +5387,31 @@ namespace
 			bRead = true;
 			FParse::Value(FCommandLine::Get(), TEXT("PerfHook="), Mode);
 			FParse::Value(FCommandLine::Get(), TEXT("PerfHookCam="), CamId);
+			FParse::Value(FCommandLine::Get(), TEXT("PerfHookRoute="), Route);
+			if (!Mode.IsEmpty() && Route == TEXT("scale"))
+			{
+				FString From;
+				RouteLine = ReadScaleWalk(From);
+				double Len = 0.0;
+				for (int32 I = 1; I < RouteLine.Num(); ++I) { Len += FVector2D::Distance(RouteLine[I - 1], RouteLine[I]); }
+				if (RouteLine.Num() < 2)
+				{
+					// A MEASUREMENT THAT CANNOT START ENDS THE GAME it was asked of, as an unknown camera does
+					UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no scale walk in %s"), *From);
+					Mode.Empty();
+					if (FParse::Param(FCommandLine::Get(), TEXT("ExitAfterCsvProfiling"))) { FPlatformMisc::RequestExit(false); }
+					return;
+				}
+				WalkLimitM = Len;
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: the scale walk, %d points, %.1f m, from %s"), RouteLine.Num(), Len, *From);
+			}
+			else if (!Route.IsEmpty() && !Mode.IsEmpty())
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: unknown route %s, the straight walk instead"), *Route);
+				Route.Empty();
+			}
+			FParse::Value(FCommandLine::Get(), TEXT("PerfHookWalkM="), WalkLimitM);
+			WalkLimitM = FMath::Max(0.0, WalkLimitM);
 		}
 		if (Mode.IsEmpty() || World == nullptr) { return; }
 		APlayerController* PC = World->GetFirstPlayerController();
@@ -5386,11 +5478,39 @@ namespace
 			NextAt = Now + 8.0;   // the street settled at the view, its history and streaming done
 		}
 		if (!Cam.IsValid()) { return; }
+		if (RouteLine.Num() >= 2)
+		{
+			// ALONG THE SCALE WALK: the eye over the ground under it, found from just above the last foothold down (the
+			// copies have no collision, and the climb's ground rises above a fixed trace's top); none found, the last kept.
+			static bool bYawSet = false;
+			if (!bYawSet) { bYawSet = true; ViewYaw = Hook.Yaw; }
+			const FVector2D P = AlongWalk(RouteLine, WalkedM);
+			const FVector2D Ahead = AlongWalk(RouteLine, WalkedM + 5.0) - P;
+			if (WalkedM > 0.0 && WalkedM < WalkLimitM && !Ahead.IsNearlyZero())
+			{
+				const double Want = FMath::RadiansToDegrees(std::atan2(Ahead.Y, Ahead.X));
+				ViewYaw = FMath::FixedTurn((float)ViewYaw, (float)Want, 45.0f * Dt);
+			}
+			{
+				FCollisionQueryParams Q(TEXT("LedgerPerfHookWalk"), false);
+				if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+				FHitResult Hit;
+				if (World->LineTraceSingleByChannel(Hit, ToUE(LedgerCrime::P3(P.X, FootY + 1.5, P.Y)), ToUE(LedgerCrime::P3(P.X, FootY - 10.0, P.Y)), ECC_Visibility, Q))
+				{
+					FootY = (double)Hit.ImpactPoint.Z / 100.0;
+				}
+			}
+			Cam->SetActorLocationAndRotation(ToUE(LedgerCrime::P3(P.X, FootY + Hook.Eye, P.Y)),
+				FRotator((float)-Hook.Pitch, (float)ViewYaw, 0.0f));
+		}
+		else
+		{
 		// Along its heading on the ground, x along the street and z across, as the scene file reads.
 		const double Yaw = FMath::DegreesToRadians(Hook.Yaw);
 		const double X = Hook.X + WalkedM * std::cos(Yaw), Z = Hook.Z + WalkedM * std::sin(Yaw);
 		Cam->SetActorLocationAndRotation(ToUE(LedgerCrime::P3(X, FeetYAt(World, X, Z) + Hook.Eye, Z)),
 			FRotator((float)-Hook.Pitch, (float)Hook.Yaw, 0.0f));
+		}
 		if (Step == 0)
 		{
 			if (Now < NextAt) { return; }
@@ -5440,11 +5560,29 @@ namespace
 					L->bCastShadowsFromCinematicObjectsOnly ? 1 : 0);
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHookLight: %d local lights lit and shadowing within 40 m"), Shadowing);
+			PerfHookLightCount(World, Cam->GetActorLocation(), TEXT("capture-start"));
+			CaptureFrames = FMath::Max(60, Frames);
 			Step = 1;
 			return;
 		}
-		// THE WALK: a walking pace, up to 45 m, then standing where it got to.
-		if (Mode == TEXT("walk") && WalkedM < 45.0) { WalkedM = FMath::Min(45.0, WalkedM + 1.4 * (double)Dt); }
+		// THE WALK: a walking pace, up to 45 m (or -PerfHookWalkM, or the scale walk's length), then standing where it got to.
+		if (Mode == TEXT("walk") && WalkedM < WalkLimitM)
+		{
+			WalkedM = FMath::Min(WalkLimitM, WalkedM + 1.4 * (double)Dt);
+			if (WalkedM >= WalkLimitM && !bWalkEndLogged)
+			{
+				bWalkEndLogged = true;
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: the walk ended at %.1f m, frame %d of the capture"), WalkedM, CaptureTicks);
+				PerfHookLightCount(World, Cam->GetActorLocation(), TEXT("walk-end"));
+			}
+		}
+		// THE CAPTURE'S END, a frame before the profiler's own last (which may close the game with it).
+		++CaptureTicks;
+		if (!bCaptureEndLogged && CaptureTicks >= CaptureFrames - 1)
+		{
+			bCaptureEndLogged = true;
+			PerfHookLightCount(World, Cam->GetActorLocation(), TEXT("capture-end"));
+		}
 	}
 
 	// The camera's arm while Tom is inside Mickey's, eased back out on the street.

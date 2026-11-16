@@ -1303,6 +1303,9 @@ namespace
 	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
 	// PaintStreet, called from ApplyCondition above it.
 	void ReDriveStreetLook(const Condition& C);
+	// THE SCALE TEST'S COPIES (-ScaleTest=N, n16-3 step 2): their lights and pictures follow the street's own, driven
+	// at the end of ApplyCondition and of ReDriveShopInteriors; defined at the end of this namespace.
+	void ScaleTestDrive(bool bSunOn);
 	// QUEUE 186. Defined beside the texture search it borrows its candidate
 	// list from; declared here because BuildScene calls it.
 	void LookForNamedHdri();
@@ -2331,6 +2334,83 @@ namespace
 		return A;
 	}
 
+	// ONE STAND-IN PERSON, its skeletal mesh, its loop and its walk (16 November, n16-3 step 2: moved out of SpawnPeople
+	// unchanged, so the street's people and the scale test's extra walkers, -ScalePeople, are made the same way). At and
+	// Rot are where it stands; with bWalk it paces from At to WalkTo when its row has a walk clip. Nothing is registered
+	// here (the people's lists, the voices' lookup, the bare shots' hide list): the caller decides. Look is null when the
+	// native animation instance could not be made and the plain loop stands instead.
+	struct FStandIn { ASkeletalMeshActor* Actor = nullptr; ULedgerPersonAnim* Look = nullptr; bool bWalking = false; };
+	FStandIn SpawnStandIn(UWorld* World, const LedgerStreet::Person& P, const FVector& At, const FRotator& Rot,
+	                      bool bInteractive, bool bWalk, const FVector& WalkTo, std::string& Missing)
+	{
+		FStandIn Out;
+		const FString Stem = UTF8_TO_TCHAR(P.Glb.c_str());
+		const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/People/%s/SK_%s.SK_%s"), *Stem, *Stem, *Stem);
+		const FString AnimPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s.A_%s"), *Stem, *Stem, *Stem);
+		USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *MeshPath);
+		UAnimSequence* Anim = LoadObject<UAnimSequence>(nullptr, *AnimPath);
+		if (Mesh == nullptr || Anim == nullptr)
+		{
+			Missing += "/" + P.Glb + (Mesh == nullptr ? "-mesh" : "-anim");
+			return Out;
+		}
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ASkeletalMeshActor* A = World->SpawnActor<ASkeletalMeshActor>(
+			ASkeletalMeshActor::StaticClass(), At, Rot, Params);
+		if (A == nullptr) { Missing += "/" + P.Glb + "-spawn"; return Out; }
+		MakeMovable(A);
+		USkeletalMeshComponent* C = A->GetSkeletalMeshComponent();
+		if (C == nullptr) { A->Destroy(); Missing += "/" + P.Glb + "-component"; return Out; }
+		C->SetMobility(EComponentMobility::Movable);
+		C->SetSkeletalMeshAsset(Mesh);
+		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		LedgerCollisionAudit::Note(C, TEXT("people-glb"));
+		C->SetCastShadow(true);
+		C->bCastCinematicShadow = true;     // a person's shadow in a shop window's light (SpawnShopSpill)
+		C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
+		// HEADS THAT TURN, 23 September: the loop and Unreal's own Look At
+		// node in a native animation instance (PersonAnim.h). The shots
+		// hold the loop and never look; the playable street plays it and
+		// looks at the player. If the instance cannot be made, the old
+		// single-animation path below stands and the verdict says so.
+		C->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+		C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
+		ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance());
+		Out.Actor = A;
+		if (Look != nullptr)
+		{
+			Look->Setup(Anim, At0, bInteractive ? 1.0f : 0.0f, bInteractive);
+			if (P.HasWalk && bWalk)
+			{
+				const FString WalkPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s__walk.A_%s__walk"), *Stem, *Stem, *Stem);
+				if (UAnimSequence* Walk = LoadObject<UAnimSequence>(nullptr, *WalkPath))
+				{
+					Look->SetupWalk(Walk, At, WalkTo, (float)(P.WalkSpeedMs * 100.0), (float)P.PauseMinS, (float)P.PauseMaxS, (float)kPersonYawOffsetDeg);
+					Out.bWalking = true;
+				}
+			}
+			C->InitAnim(true);
+			Out.Look = Look;
+			return Out;
+		}
+		C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+		C->SetAnimation(Anim);
+		if (bInteractive)
+		{
+			C->Play(true);
+			C->SetPosition(At0, false);
+		}
+		else
+		{
+			C->SetPlayRate(0.0f);
+			C->Stop();
+			C->SetPosition(At0, false);
+		}
+		return Out;
+	}
+
 	// THE HANDFUL OF PEOPLE, 23 September, for the presentable checklist.
 	// Seen and not simulated: no collision, no perception, nothing a system
 	// reads. In the automation's shots each is HELD at its phase of its loop,
@@ -2400,62 +2480,23 @@ namespace
 				}
 				Missing += "/" + P.Glb + "-cast-metahuman-" + GCastNote;
 			}
-			const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/People/%s/SK_%s.SK_%s"), *Stem, *Stem, *Stem);
-			const FString AnimPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s.A_%s"), *Stem, *Stem, *Stem);
-			USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *MeshPath);
-			UAnimSequence* Anim = LoadObject<UAnimSequence>(nullptr, *AnimPath);
-			if (Mesh == nullptr || Anim == nullptr)
-			{
-				Missing += "/" + P.Glb + (Mesh == nullptr ? "-mesh" : "-anim");
-				continue;
-			}
-			FActorSpawnParameters Params;
-			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			const FVector At((float)(P.X * 100.0), (float)(P.Z * 100.0), (float)(P.Y * 100.0));
 			const FRotator Rot(0.0f, (float)(P.FaceDeg + kPersonYawOffsetDeg), 0.0f);
-			ASkeletalMeshActor* A = World->SpawnActor<ASkeletalMeshActor>(
-				ASkeletalMeshActor::StaticClass(), At, Rot, Params);
-			if (A == nullptr) { Missing += "/" + P.Glb + "-spawn"; continue; }
-			MakeMovable(A);
-			USkeletalMeshComponent* C = A->GetSkeletalMeshComponent();
-			if (C == nullptr) { A->Destroy(); Missing += "/" + P.Glb + "-component"; continue; }
-			C->SetMobility(EComponentMobility::Movable);
-			C->SetSkeletalMeshAsset(Mesh);
-			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			LedgerCollisionAudit::Note(C, TEXT("people-glb"));
-			C->SetCastShadow(true);
-			C->bCastCinematicShadow = true;     // a person's shadow in a shop window's light (SpawnShopSpill)
-			C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
-			const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
-			// HEADS THAT TURN, 23 September: the loop and Unreal's own Look At
-			// node in a native animation instance (PersonAnim.h). The shots
-			// hold the loop and never look; the playable street plays it and
-			// looks at the player. If the instance cannot be made, the old
-			// single-animation path below stands and the verdict says so.
-			C->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-			C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
-			ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance());
+			// A WALKER, 30 September (the twenty a friend would notice, 13):
+			// only where a friend or the tester plays, never in the
+			// automation's shots or its scripted runs, whose sight lines
+			// and frames are measured with everyone where the file puts them.
+			const bool bFreePlay = bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("LiveScript"))
+				&& !FParse::Param(FCommandLine::Get(), TEXT("LookScript"))
+				&& (bLiveEncounter || !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")));
+			const FVector To((float)(P.WalkToX * 100.0), At.Y, At.Z);
+			const FStandIn Made = SpawnStandIn(World, P, At, Rot, bInteractive, bFreePlay, To, Missing);
+			ASkeletalMeshActor* A = Made.Actor;
+			if (A == nullptr) { continue; }
+			ULedgerPersonAnim* Look = Made.Look;
 			if (Look != nullptr)
 			{
-				Look->Setup(Anim, At0, bInteractive ? 1.0f : 0.0f, bInteractive);
-				// A WALKER, 30 September (the twenty a friend would notice, 13):
-				// only where a friend or the tester plays, never in the
-				// automation's shots or its scripted runs, whose sight lines
-				// and frames are measured with everyone where the file puts them.
-				const bool bFreePlay = bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("LiveScript"))
-					&& !FParse::Param(FCommandLine::Get(), TEXT("LookScript"))
-					&& (bLiveEncounter || !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")));
-				if (P.HasWalk && bFreePlay)
-				{
-					const FString WalkPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s__walk.A_%s__walk"), *Stem, *Stem, *Stem);
-					if (UAnimSequence* Walk = LoadObject<UAnimSequence>(nullptr, *WalkPath))
-					{
-						const FVector To((float)(P.WalkToX * 100.0), At.Y, At.Z);
-						Look->SetupWalk(Walk, At, To, (float)(P.WalkSpeedMs * 100.0), (float)P.PauseMinS, (float)P.PauseMaxS, (float)kPersonYawOffsetDeg);
-						++GPeopleWalking;
-					}
-				}
-				C->InitAnim(true);
+				if (Made.bWalking) { ++GPeopleWalking; }
 				GPersonAnims.Add(Look);
 				if (GHeadBone.empty() && !Look->HeadBone.IsNone())
 				{
@@ -2468,20 +2509,7 @@ namespace
 				++GPeopleSpawned;
 				continue;
 			}
-			++GHeadsFallback;
-			C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
-			C->SetAnimation(Anim);
-			if (bInteractive)
-			{
-				C->Play(true);
-				C->SetPosition(At0, false);
-			}
-			else
-			{
-				C->SetPlayRate(0.0f);
-				C->Stop();
-				C->SetPosition(At0, false);
-			}
+			++GHeadsFallback;   // the plain loop, set by SpawnStandIn
 			GPeopleByGlb.Add(Stem, A);
 			GBareHide.Add(A);
 			++GPeopleSpawned;
@@ -3931,6 +3959,8 @@ namespace
 		// material parameter and a light are not read by each other.
 		ReDriveWetness(C);
 		ReDriveStreetLook(C);
+		// the scale test's copies, last, so every light and picture they mirror has been written (n16-3 step 2)
+		ScaleTestDrive(C.SunOn);
 	}
 
 	// ---- AMENDMENT A1: FOUR FLAGS, READ OFF THE LIVE OBJECTS -------------
@@ -8769,6 +8799,8 @@ namespace
 				Ir.SignGlow[K]->SetVectorParameterValue(FName(TEXT("EmissiveFactor")), FLinearColor(E, E, E, 1.0f));
 			}
 		}
+		// the scale test's copied rooms and window lights beside the street's own (n16-3 step 2)
+		ScaleTestDrive(bSunOn);
 	}
 
 	// THE GLOW AND THE WET, PER CONDITION, as Blender drives them: the tubes
@@ -10448,6 +10480,425 @@ namespace
 			return false;
 		}
 	}
+
+	// ---- THE STREET SCALE TEST (n16-3 step 2, 16 November 2026) ----------------------------------------------------
+	//
+	// A MEASURING SWITCH ONLY, never shipped and never on his page (production/research/street-scale-test/STEP2-DESIGN-
+	// 2026-11-16.md; METHOD-NOTE-2026-11-16.md sections 4 and 7). -ScaleTest=N stands N-1 copies of the built 48 m street
+	// (N counts street-lengths, the built one included) at the slots tools/scale_test_layout.py wrote into
+	// production/specs/scale-test.json, on the Hook's own road lines, so the frame and memory a district would cost can be
+	// measured from the packaged game. A copy is the street box's actors (x -2 to 50, |z| <= 14, under 16 m): the street
+	// rows wholly inside it, the scene file's visible pieces, the replaced ground, kerb and frontage blocks as stand-ins for
+	// the rows that straddle the box into the backdrop town, the shop rooms except Mickey's, the wear decals, and every local
+	// light; never people, cars, sounds, Mickey's office or a glass catch. Each copy's lights follow the street's own
+	// (ScaleTestDrive, after ApplyCondition and ReDriveShopInteriors); each copy decodes its own pictures (-ScaleTestPictures=
+	// all|shops|none): copy k's painted rooms show room (u + k) mod 7's pictures, and every lettered street row a fresh decode
+	// of its own picture, so the run-time pictures grow as a district's would. -ScalePeople=M adds M walkers, walker i in
+	// street-length i mod N on a footway. -ScaleTestCollide keeps the copies' collision. Two log lines: LedgerScaleTest (the
+	// totals) and one LedgerScaleTestSlot per slot.
+	struct FScaleSlot { int32 K = 0; FString Route; int32 Segment = -1; double X = 0.0, Z = 0.0, Yaw = 0.0; bool bInHook = true; int32 UnitShift = 0;
+		bool bPlaced = false; int32 Actors = 0, Lights = 0, Pictures = 0; FTransform T; };
+	struct FScaleLight { TWeakObjectPtr<ULightComponent> Src, Dst; };
+	struct FScaleMid { TWeakObjectPtr<UMaterialInstanceDynamic> Src, Dst; UTexture* Own = nullptr; };
+	TArray<FScaleLight> GScaleLights;
+	TArray<FScaleMid> GScaleMids;
+	TArray<FInteriorRow> GScaleRooms;
+	TArray<TWeakObjectPtr<AActor>> GScaleActors;
+	bool GScaleBuilt = false;
+	const FName kScaleCopyTag(TEXT("LedgerScaleCopy"));
+
+	// The built street's box in this engine's centimetres, and the point a copy is turned about (the street's middle on
+	// the carriageway's centre line, z = 0): a slot's x_m, z_m are where that point stands.
+	constexpr double kScaleBoxX0 = -200.0, kScaleBoxX1 = 5000.0, kScaleBoxY = 1400.0, kScaleBoxTop = 1600.0;
+	constexpr double kScaleStreetMidX = 2400.0;
+
+	bool ScaleInBox(const FBox& B)
+	{
+		return B.IsValid && B.Min.X >= kScaleBoxX0 && B.Max.X <= kScaleBoxX1 && B.Min.Y >= -kScaleBoxY && B.Max.Y <= kScaleBoxY
+			&& B.Max.Z <= kScaleBoxTop;
+	}
+	bool ScalePointInBox(const FVector& P)
+	{
+		return P.X >= kScaleBoxX0 && P.X <= kScaleBoxX1 && FMath::Abs(P.Y) <= kScaleBoxY && P.Z <= kScaleBoxTop;
+	}
+	// MICKEY'S ROOM AND OFFICE stay out of every copy (the design): his room stands behind the east card at x 3.35 to
+	// 8.65 m, from the glass (z 5.875) back; anything centred there, below the first floor, is his.
+	bool ScaleIsMickeys(const FVector& C)
+	{
+		return C.X > 335.0 && C.X < 865.0 && C.Y > 610.0 && C.Y < 1150.0 && C.Z < 450.0;
+	}
+	// The replaced scene pieces that stand in for the street rows straddling the box (the roofs, roads and pavements that
+	// run on into the backdrop town): the ground (carriageway, footways, plots, roofs), the kerbs and the frontage blocks.
+	bool ScaleIsStandIn(const std::string& Name)
+	{
+		return Name.rfind("ground_", 0) == 0 || Name.rfind("kerb", 0) == 0 || Name.find("_bay") != std::string::npos
+			|| Name.find("roofdeck") != std::string::npos || Name.find("parapet") != std::string::npos
+			|| Name.find("coping") != std::string::npos;
+	}
+	// A lettered street row's picture file, found as PaintStreet finds it.
+	FString ScaleStreetPicture(const LedgerStreet::Row& Rw)
+	{
+		bool bRepo = false;
+		const FString Leaf(UTF8_TO_TCHAR(LedgerStreet::PictureLeaf(Rw, bRepo).c_str()));
+		TArray<FString> Where;
+		if (bRepo) { Where.Add(RepoOrGameInputs(Leaf)); }
+		else
+		{
+			if (!GDecalRoot.IsEmpty()) { Where.Add(FPaths::Combine(GDecalRoot, Leaf)); }
+			Where.Add(FPaths::Combine(GStreetRepoRoot, TEXT("ledger/Assets/StreamingAssets/Decals"), Leaf));
+		}
+		for (const FString& W : Where) { if (IFileManager::Get().FileSize(*W) > 0) { return W; } }
+		return FString();
+	}
+	double ScaleTextureMB(const UTexture* T)
+	{
+		return T != nullptr ? (double)T->CalcTextureMemorySizeEnum(TMC_AllMips) / (1024.0 * 1024.0) : 0.0;
+	}
+
+	// THE COPIES' LIGHTS AND PICTURES FOLLOW THE STREET'S. Each copied light takes its original's visibility and strength
+	// (the lamps, the pools, the lit windows, the shops' window lamps and strips, the rooms' tubes and lamps), so every rule
+	// the street's own drivers keep (a dark shop, a shut one, night and day) holds in the copies without a second copy of
+	// it; each copied room shows its picture for this light; each re-painted row takes its original's parameters (the wet,
+	// the grade, the glow) and keeps its own picture.
+	void ScaleTestDrive(bool bSunOn)
+	{
+		if (!GScaleBuilt) { return; }
+		for (const FScaleLight& L : GScaleLights)
+		{
+			ULightComponent* S = L.Src.Get();
+			ULightComponent* D = L.Dst.Get();
+			if (S == nullptr || D == nullptr) { continue; }
+			if (D->IsVisible() != S->IsVisible()) { D->SetVisibility(S->IsVisible()); }
+			if (D->Intensity != S->Intensity) { D->SetIntensity(S->Intensity); }
+		}
+		for (FInteriorRow& Ir : GScaleRooms)
+		{
+			if (Ir.Mid == nullptr) { continue; }
+			BindInteriorPicture(Ir, bSunOn);
+			Ir.Mid->SetScalarParameterValue(FName(TEXT("Night")), bSunOn ? 0.0f : 1.0f);
+			Ir.Mid->SetScalarParameterValue(FName(TEXT("Brightness")), bSunOn ? Ir.DayGlow : Ir.NightGlow);
+		}
+		const FName AlbedoParam(UTF8_TO_TCHAR(LedgerSurface::MapParam(0)));
+		for (const FScaleMid& M : GScaleMids)
+		{
+			UMaterialInstanceDynamic* S = M.Src.Get();
+			UMaterialInstanceDynamic* D = M.Dst.Get();
+			if (S == nullptr || D == nullptr) { continue; }
+			D->CopyParameterOverrides(S);
+			if (M.Own != nullptr) { D->SetTextureParameterValue(AlbedoParam, M.Own); }
+		}
+	}
+
+	void ScaleTestBuild(UWorld* World)
+	{
+		if (GScaleBuilt || World == nullptr) { return; }
+		int32 N = 1, People = 0;
+		const bool bAskN = FParse::Value(FCommandLine::Get(), TEXT("ScaleTest="), N);
+		FParse::Value(FCommandLine::Get(), TEXT("ScalePeople="), People);
+		if (!bAskN && People <= 0) { return; }
+		GScaleBuilt = true;
+		N = FMath::Clamp(N, 1, 64);
+		People = FMath::Clamp(People, 0, 400);
+		const double Start = FPlatformTime::Seconds();
+		const bool bCollide = FParse::Param(FCommandLine::Get(), TEXT("ScaleTestCollide"));
+		FString PicMode = TEXT("all");
+		FParse::Value(FCommandLine::Get(), TEXT("ScaleTestPictures="), PicMode);
+		PicMode = PicMode.ToLower();
+		if (PicMode != TEXT("all") && PicMode != TEXT("shops") && PicMode != TEXT("none")) { PicMode = TEXT("all"); }
+
+		// THE SLOTS, from the layout file (never placed here by hand).
+		TArray<FScaleSlot> Slots;
+		FString Text;
+		FString FileNote = TEXT("read");
+		if (!ReadStreetSpecFile(TEXT("scale-test.json"), Text)) { FileNote = TEXT("no-scale-test.json"); }
+		else
+		{
+			TSharedPtr<FJsonObject> Root;
+			const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+			const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+			if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetArrayField(TEXT("slots"), List)) { FileNote = TEXT("unreadable"); }
+			else
+			{
+				for (const TSharedPtr<FJsonValue>& V : *List)
+				{
+					const TSharedPtr<FJsonObject> O = V.IsValid() ? V->AsObject() : nullptr;
+					if (!O.IsValid()) { continue; }
+					FScaleSlot S;
+					double D = 0.0;
+					if (O->TryGetNumberField(TEXT("k"), D)) { S.K = (int32)D; }
+					O->TryGetStringField(TEXT("route"), S.Route);
+					if (O->TryGetNumberField(TEXT("segment"), D)) { S.Segment = (int32)D; }
+					O->TryGetNumberField(TEXT("x_m"), S.X);
+					O->TryGetNumberField(TEXT("z_m"), S.Z);
+					O->TryGetNumberField(TEXT("yaw_deg"), S.Yaw);
+					O->TryGetBoolField(TEXT("in_hook"), S.bInHook);
+					S.UnitShift = S.K;
+					if (O->TryGetNumberField(TEXT("unit_shift"), D)) { S.UnitShift = (int32)D; }
+					// the street's middle carried to the slot, turned by its yaw (vignette-scene.json's: from +x toward +z,
+					// which is this engine's positive yaw)
+					S.T = FTransform(FVector(-kScaleStreetMidX, 0.0, 0.0))
+						* FTransform(FRotator(0.0, S.Yaw, 0.0), FVector(S.X * 100.0, S.Z * 100.0, 0.0));
+					Slots.Add(S);
+				}
+			}
+		}
+		const int32 Wanted = N - 1;
+		const int32 Placing = FMath::Min(Wanted, Slots.Num());
+
+		// WHAT A COPY TAKES, gathered once before anything is spawned (an actor iterator must not see its own copies).
+		TSet<AActor*> StreetRows, Interiors, Excluded, StandIns;
+		for (AStaticMeshActor* A : GStreetActors) { if (A != nullptr) { StreetRows.Add(A); } }
+		for (const TWeakObjectPtr<AActor>& W : GInteriorActors) { if (W.IsValid()) { Interiors.Add(W.Get()); } }
+		for (const TWeakObjectPtr<AActor>& W : GBareHide) { if (W.IsValid()) { Excluded.Add(W.Get()); } }   // people, cars
+		for (const Piece& P : GSpec.Pieces)
+		{
+			if (!LedgerStreet::Replaced(GStreet.Replaced, P.Name, P.Shape, P.Asset) || !ScaleIsStandIn(P.Name)) { continue; }
+			AStaticMeshActor** Found = GByName.Find(FString(UTF8_TO_TCHAR(P.Name.c_str())));
+			if (Found != nullptr && *Found != nullptr) { StandIns.Add(*Found); }
+		}
+		struct FSource { AActor* A = nullptr; char Kind = 'p'; };   // r street row, s stand-in, i interior, p piece, d decal, l light
+		TArray<FSource> Sources;
+		int32 RowsIn = 0, RowsTown = 0;
+		for (TActorIterator<AActor> It(World); It; ++It)
+		{
+			AActor* A = *It;
+			if (A == nullptr || A->IsPendingKillPending() || Excluded.Contains(A) || A->ActorHasTag(kScaleCopyTag)) { continue; }
+			if (A->FindComponentByClass<USceneCaptureComponent>() != nullptr) { continue; }   // a glass catch
+			if (ALight* L = Cast<ALight>(A))
+			{
+				if (Cast<ULocalLightComponent>(L->GetLightComponent()) == nullptr) { continue; }   // the sun and the fills
+				const FVector At = L->GetActorLocation();
+				if (!ScalePointInBox(At) || ScaleIsMickeys(At)) { continue; }
+				Sources.Add({ A, 'l' });
+				continue;
+			}
+			if (ADecalActor* Dc = Cast<ADecalActor>(A))
+			{
+				if (Dc->IsHidden() || !ScalePointInBox(Dc->GetActorLocation()) || ScaleIsMickeys(Dc->GetActorLocation())) { continue; }
+				Sources.Add({ A, 'd' });
+				continue;
+			}
+			AStaticMeshActor* Sm = Cast<AStaticMeshActor>(A);
+			if (Sm == nullptr || Sm->GetStaticMeshComponent() == nullptr || Sm->GetStaticMeshComponent()->GetStaticMesh() == nullptr) { continue; }
+			const bool bStandIn = StandIns.Contains(A);
+			if (Sm->IsHidden() && !bStandIn) { continue; }
+			const FBox B = Sm->GetComponentsBoundingBox(true);
+			const bool bIn = ScaleInBox(B);
+			if (StreetRows.Contains(A))
+			{
+				if (!bIn) { ++RowsTown; continue; }
+				++RowsIn;
+			}
+			if (!bIn || ScaleIsMickeys(B.GetCenter())) { continue; }
+			Sources.Add({ A, StreetRows.Contains(A) ? 'r' : bStandIn ? 's' : Interiors.Contains(A) ? 'i' : 'p' });
+		}
+		int32 PerKind[6] = { 0, 0, 0, 0, 0, 0 };   // r s i p d l
+		for (const FSource& S : Sources)
+		{
+			const int32 Ix = S.Kind == 'r' ? 0 : S.Kind == 's' ? 1 : S.Kind == 'i' ? 2 : S.Kind == 'p' ? 3 : S.Kind == 'd' ? 4 : 5;
+			++PerKind[Ix];
+		}
+		TSet<ULightComponent*> SpillLights;
+		for (const FSpillShadowLod& S : GSpillShadowLods) { if (S.Light.IsValid()) { SpillLights.Add(S.Light.Get()); } }
+
+		// THE COPIES.
+		int32 ActorsAdded = 0, Components = 0, Meshes = 0, LightsAdded = 0, Shadowing = 0, Pictures = 0, SpillsAdded = 0;
+		int64 Tris = 0;
+		double PictureMB = 0.0;
+		int32 InHook = 0, Outside = 0;
+		const bool bShopPics = PicMode != TEXT("none");
+		const bool bRowPics = PicMode == TEXT("all");
+		const FName AlbedoParam(UTF8_TO_TCHAR(LedgerSurface::MapParam(0)));
+		for (int32 Si = 0; Si < Placing; ++Si)
+		{
+			FScaleSlot& Slot = Slots[Si];
+			TMap<AActor*, AActor*> CopyOf;
+			for (const FSource& S : Sources)
+			{
+				USceneComponent* SrcRoot = S.A->GetRootComponent();
+				if (SrcRoot == nullptr) { continue; }
+				const FTransform At = SrcRoot->GetComponentTransform() * Slot.T;
+				FActorSpawnParameters P;
+				P.Template = S.A;
+				P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				AActor* C = World->SpawnActor(S.A->GetClass(), &At, P);
+				if (C == nullptr) { continue; }
+				MakeMovable(C);
+				C->SetActorTransform(At, false, nullptr, ETeleportType::TeleportPhysics);
+				C->Tags.Add(kScaleCopyTag);
+				if (S.Kind == 's') { C->SetActorHiddenInGame(false); }
+#if WITH_EDITOR
+				C->SetActorLabel(FString::Printf(TEXT("scale%d_%s"), Slot.K, *S.A->GetActorLabel()));
+#endif
+				TArray<UActorComponent*> Comps;
+				C->GetComponents(Comps);
+				for (UActorComponent* Ac : Comps)
+				{
+					if (Ac == nullptr) { continue; }
+					if (USceneCaptureComponent* Cap = Cast<USceneCaptureComponent>(Ac)) { Cap->DestroyComponent(); continue; }
+					++Components;
+					if (UPrimitiveComponent* Pc = Cast<UPrimitiveComponent>(Ac); Pc != nullptr && !bCollide)
+					{
+						Pc->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+						Pc->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+					}
+					if (UStaticMeshComponent* Mc = Cast<UStaticMeshComponent>(Ac))
+					{
+						++Meshes;
+						if (const UStaticMesh* M = Mc->GetStaticMesh()) { Tris += M->GetNumTriangles(0); }
+					}
+				}
+				if (S.Kind == 'l')
+				{
+					ULightComponent* SL = Cast<ALight>(S.A)->GetLightComponent();
+					ULightComponent* DL = Cast<ALight>(C)->GetLightComponent();
+					if (SL != nullptr && DL != nullptr)
+					{
+						GScaleLights.Add({ SL, DL });
+						++LightsAdded;
+						++Slot.Lights;
+						if (DL->CastShadows) { ++Shadowing; }
+						// a window lamp casts shadows only within 15 m of the eye, as the street's own do
+						if (SpillLights.Contains(SL))
+						{
+							if (URectLightComponent* Rc = Cast<URectLightComponent>(DL))
+							{
+								FSpillShadowLod Lod;
+								Lod.Light = Rc;
+								Lod.At = Rc->GetComponentLocation();
+								GSpillShadowLods.Add(Lod);
+								++SpillsAdded;
+							}
+						}
+					}
+				}
+				CopyOf.Add(S.A, C);
+				GScaleActors.Add(C);
+				++ActorsAdded;
+				++Slot.Actors;
+			}
+			// THE COPY'S OWN PICTURES. Its painted rooms show the room u + k along (of the street's seven), each decoded for
+			// this copy; its lettered rows a fresh decode of their own picture.
+			const int32 NRooms = GInteriorRows.Num();
+			for (int32 U = 0; bShopPics && U < NRooms; ++U)
+			{
+				const FInteriorRow& Own = GInteriorRows[U];
+				const FInteriorRow& Shown = GInteriorRows[(U + Slot.UnitShift) % NRooms];
+				AStaticMeshActor* Card = GStreetActors.IsValidIndex(Own.Row) ? GStreetActors[Own.Row] : nullptr;
+				AActor** CopyCard = Card != nullptr ? CopyOf.Find(Card) : nullptr;
+				AStaticMeshActor* Cc = CopyCard != nullptr ? Cast<AStaticMeshActor>(*CopyCard) : nullptr;
+				if (Cc == nullptr || Own.Mid == nullptr || Cc->GetStaticMeshComponent() == nullptr) { continue; }
+				UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(Own.Mid->Parent, Cc);
+				if (Mid == nullptr) { continue; }
+				Mid->CopyParameterOverrides(Own.Mid);
+				// the room is looked up from the card's own corner in the world, carried with the copy (a turned copy's room
+				// reads at an angle; the cost is what is measured, not the look)
+				const FLinearColor Corner = Own.Mid->K2_GetVectorParameterValue(FName(TEXT("CardOrigin")));
+				const FVector Moved = Slot.T.TransformPosition(FVector(Corner.R, Corner.G, Corner.B));
+				Mid->SetVectorParameterValue(FName(TEXT("CardOrigin")), FLinearColor((float)Moved.X, (float)Moved.Y, (float)Moved.Z, 0.0f));
+				FInteriorRow Ir;
+				Ir.Row = Own.Row;
+				Ir.Shop = FString::Printf(TEXT("%s@scale%d"), *Shown.Shop, Slot.K);
+				Ir.Mid = Mid;
+				Ir.DayGlow = Shown.DayGlow;
+				Ir.NightGlow = Shown.NightGlow;
+				Ir.bLitAtNight = Shown.bLitAtNight;
+				Mid->SetScalarParameterValue(FName(TEXT("LitOn")), Ir.bLitAtNight ? 1.0f : 0.0f);
+				for (int32 K = 0; K < 3; ++K) { Ir.Pic[K] = Shown.Pic[K]; Ir.Bc[K] = Shown.Bc[K]; }
+				UStaticMeshComponent* Comp = Cc->GetStaticMeshComponent();
+				for (int32 M = 0; M < Comp->GetNumMaterials(); ++M) { Comp->SetMaterial(M, Mid); }
+				BindInteriorPicture(Ir, GRoomLightsSunOn);
+				if (Ir.Bound != nullptr) { ++Pictures; ++Slot.Pictures; PictureMB += ScaleTextureMB(Ir.Bound); }
+				GScaleRooms.Add(Ir);
+			}
+			for (int32 I = 0; bRowPics && I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+			{
+				const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+				UMaterialInstanceDynamic* SrcMid = GStreetMids.IsValidIndex(I) ? GStreetMids[I] : nullptr;
+				AActor** CopyRow = GStreetActors[I] != nullptr ? CopyOf.Find(GStreetActors[I]) : nullptr;
+				AStaticMeshActor* Cr = CopyRow != nullptr ? Cast<AStaticMeshActor>(*CopyRow) : nullptr;
+				if (Rw.Decal.empty() || SrcMid == nullptr || Cr == nullptr || Cr->GetStaticMeshComponent() == nullptr) { continue; }
+				const FString File = ScaleStreetPicture(Rw);
+				if (File.IsEmpty()) { continue; }
+				int32 FW = 0, FH = 0;
+				FString As;
+				UTexture2D* Tex = ImportTexture(File, true, FW, FH, As);
+				if (Tex == nullptr) { continue; }
+				UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(SrcMid->Parent, Cr);
+				if (Mid == nullptr) { continue; }
+				Mid->CopyParameterOverrides(SrcMid);
+				Mid->SetTextureParameterValue(AlbedoParam, Tex);
+				UStaticMeshComponent* Comp = Cr->GetStaticMeshComponent();
+				for (int32 M = 0; M < Comp->GetNumMaterials(); ++M) { Comp->SetMaterial(M, Mid); }
+				GScaleMids.Add({ SrcMid, Mid, Tex });
+				++Pictures;
+				++Slot.Pictures;
+				PictureMB += ScaleTextureMB(Tex);
+			}
+			Slot.bPlaced = true;
+			if (Slot.bInHook) { ++InHook; } else { ++Outside; }
+		}
+		const int32 Placed = InHook + Outside;
+
+		// THE WALKERS (-ScalePeople=M): walker i in street-length i mod N (0 the built street, k the copy at slot k), on a
+		// footway at z +-4.1 m, pacing between x 4 and 44 m, made as the street's own stand-ins are (SpawnStandIn) from the
+		// people file's rows that have a walk clip, in turn; none of them in the street's people lists or voices.
+		int32 PeopleMade = 0, Walking = 0, Standing = 0;
+		std::string PeopleMissing;
+		if (People > 0)
+		{
+			FString PText;
+			std::vector<LedgerStreet::Person> Rows;
+			std::string Err;
+			const FString PPath = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/street-people.json"));
+			if (FFileHelper::LoadFileToString(PText, *PPath) && LedgerStreet::ParsePeople(std::string(TCHAR_TO_UTF8(*PText)), Rows, Err) && !Rows.empty())
+			{
+				std::vector<size_t> Walkers;
+				for (size_t I = 0; I < Rows.size(); ++I) { if (Rows[I].HasWalk) { Walkers.push_back(I); } }
+				const int32 Lengths = Placed + 1;
+				for (int32 I = 0; I < People; ++I)
+				{
+					const LedgerStreet::Person& P = Walkers.empty() ? Rows[(size_t)I % Rows.size()] : Rows[Walkers[(size_t)I % Walkers.size()]];
+					const int32 L = I % Lengths;
+					const double LocalX = 4.0 + std::fmod((double)I * 9.7, 40.0);
+					const double LocalZ = ((I / Lengths) % 2 == 0) ? -4.1 : 4.1;
+					const double ToX = LocalX < 24.0 ? 44.0 : 4.0;
+					const FTransform T = L == 0 ? FTransform::Identity : Slots[L - 1].T;
+					const FVector At = T.TransformPosition(FVector(LocalX * 100.0, LocalZ * 100.0, P.Y * 100.0));
+					const FVector To = T.TransformPosition(FVector(ToX * 100.0, LocalZ * 100.0, P.Y * 100.0));
+					const double FaceDeg = (ToX > LocalX ? 0.0 : 180.0) + (L == 0 ? 0.0 : Slots[L - 1].Yaw);
+					const FStandIn Made = SpawnStandIn(World, P, At, FRotator(0.0f, (float)(FaceDeg + kPersonYawOffsetDeg), 0.0f),
+						/*bInteractive=*/true, /*bWalk=*/true, To, PeopleMissing);
+					if (Made.Actor == nullptr) { continue; }
+					Made.Actor->Tags.Add(kScaleCopyTag);
+					GScaleActors.Add(Made.Actor);
+					++PeopleMade;
+					if (Made.bWalking) { ++Walking; } else { ++Standing; }
+				}
+			}
+			else { PeopleMissing = "/no-people-file-or-unreadable"; }
+		}
+
+		const int32 LightsPerCopy = Placed > 0 ? LightsAdded / Placed : 0;
+		const double BuildS = FPlatformTime::Seconds() - Start;
+		const FString MissingNote = PeopleMissing.empty() ? FString() : FString(UTF8_TO_TCHAR((" peopleMissing=" + PeopleMissing).c_str()));
+		UE_LOG(LogTemp, Display,
+			TEXT("LedgerScaleTest: streetLengths=%d copies=%d slots=%d inHook=%d outsideHook=%d dropped=%d pack=actors collide=%d rowsPerCopy=%d rowsTown=%d standIns=%d pieces=%d interiors=%d decals=%d meshes=%d actors=%d components=%d instances=0 tris=%lld lightsPerCopy=%d lightsAdded=%d shadowCasting=%d spillsByDistance=%d pictures=%d pictureMode=%s pictureMBPerCopy=%.1f people=%d walking=%d standing=%d cast=0 hideTown=0 buildS=%.2f file=%s%s"),
+			N, Placed, Slots.Num(), InHook, Outside, Wanted - Placed, bCollide ? 1 : 0, PerKind[0], RowsTown, PerKind[1], PerKind[3], PerKind[2], PerKind[4],
+			Meshes, ActorsAdded, Components, (long long)Tris, LightsPerCopy, LightsAdded, Shadowing, SpillsAdded, Pictures, *PicMode,
+			Placed > 0 ? PictureMB / (double)Placed : 0.0, PeopleMade, Walking, Standing, BuildS, *FileNote,
+			*MissingNote);
+		for (const FScaleSlot& S : Slots)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerScaleTestSlot: k=%d route=%s segment=%d x_m=%.2f z_m=%.2f yaw=%.1f inHook=%d unitShift=%d placed=%d actors=%d lights=%d pictures=%d"),
+				S.K, *S.Route, S.Segment, S.X, S.Z, S.Yaw, S.bInHook ? 1 : 0, S.UnitShift, S.bPlaced ? 1 : 0, S.Actors, S.Lights, S.Pictures);
+		}
+		// the shops' window lamps that came with the copies cast shadows only near the eye, from the next look
+		if (SpillsAdded > 0 && !GRoomShadowTicker.IsValid())
+		{
+			GRoomShadowTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickRoomShadows), 0.25f);
+		}
+	}
 }
 
 namespace LedgerVignetteShot
@@ -10487,6 +10938,11 @@ namespace LedgerVignetteShot
 		}
 
 		BuildScene(World, /*bInteractive=*/true);
+
+		// THE SCALE TEST (-ScaleTest=N, -ScalePeople=M; n16-3 step 2, a measuring switch only): the street's copies
+		// stood on the Hook's road lines from production/specs/scale-test.json, before the first condition is applied
+		// so that one ApplyCondition lights the copies with the street. Does nothing without either switch.
+		ScaleTestBuild(World);
 
 		// LIGHT IT. BuildScene spawns the sun and the three fill lights at
 		// zero intensity (ApplyCondition is their one owner, named at the
