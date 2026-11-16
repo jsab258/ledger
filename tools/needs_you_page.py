@@ -37,6 +37,12 @@ PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pict
 DELETE_WORDS = re.compile(r"\b(delete|deleting|deleted|clear|clearing|remove|removing|free up)\b", re.I)
 OWN_WORDS = re.compile(r"(working outputs?|leftovers?|tool[- ]tests?|test outputs?|run outputs?|temporary|scratch|"
                        r"Claude made|made itself|Claude's own|its own outputs?|Kiln'?s? (runs?|outputs?))", re.I)
+# NO ROUTINE HANDS ON HIS PAGE (advisor 177, his weekly audit of 16 Nov): an open item asking him to install something,
+# change a setting or click what the session can do itself is refused. What the app's safety check truly needs from his
+# hands says so with "his_hands": true, and open items come in at most two batches a day (RULINGS 8 Nov; a batch is
+# the items sharing one 'added' time).
+HANDS_WORDS = re.compile(r"\b(install|installing|reinstall|uninstall|change (a|the|its|this) settings?|settings? change|"
+                         r"turn (on|off)|switch (on|off)|click|tick|untick|enable|disable)\b", re.I)
 
 
 def load(path=ITEMS):
@@ -66,6 +72,9 @@ def faults(data, check_files=True):
                 and OWN_WORDS.search(str(it.get("text", "")))):
             out.append("%s asks him about deleting the session's own outputs: delete them under RULINGS 29 Oct, one "
                        "DECISIONS line each, no page item (his decision 16 Nov); if they are his, mark his_files" % it.get("id"))
+        if it.get("state") == "open" and not it.get("his_hands") and HANDS_WORDS.search(str(it.get("text", ""))):
+            out.append("%s asks his hands for an install, a setting or a click: do it yourself; only what the app's "
+                       "safety check needs from him goes on the page, marked his_hands (advisor 177)" % it.get("id"))
         for p in it.get("pictures", []) if it.get("state") == "open" else []:
             # the page publishes only files inside the checkout: an open item's pictures live in pictures/ beside it
             src = str(p.get("src", "")).replace("\\", "/")
@@ -73,6 +82,14 @@ def faults(data, check_files=True):
                 out.append("%s: picture %r is not under %s/ with its words" % (it.get("id"), src, PICTURES_REL))
             elif check_files and not os.path.isfile(os.path.join(REPO, src)):
                 out.append("%s: picture %s is missing" % (it.get("id"), src))
+    days = {}
+    for it in data.get("items", []):
+        if it.get("state") == "open":
+            added = str(it.get("added", ""))
+            days.setdefault(added[:10], set()).add(added)
+    for day, times in sorted(days.items()):
+        if len(times) > 2:
+            out.append("%s: open items came in %d batches (at most two a day, RULINGS 8 Nov; advisor 177)" % (day, len(times)))
     return out
 
 
@@ -159,6 +176,12 @@ def selftest():
     his = dict(good["items"][0], text="May Claude delete C:/LedgerTools/ai-video (26 GB, your dropped video route)?", his_files=True)
     check("an item about his own files, marked his_files, passes", faults({"items": [his]}) == [])
     check("an ordinary ask about a test passes", faults({"items": [dict(good["items"][0], text="Your hands: start the tool test window once.")]}) == [])
+    inst = dict(good["items"][0], text="Your hands: install the new driver and change the setting to 60 Hz.")
+    check("an item asking him to install or change a setting is refused", faults({"items": [inst]}) != [])
+    check("a click the app's safety check needs, marked his_hands, passes", faults({"items": [dict(inst, his_hands=True)]}) == [])
+    batch = [dict(good["items"][0], id="t%d" % n, added="2026-11-16 %02d:00" % (8 + n)) for n in range(3)]
+    check("three batches of open items in one day are refused", faults({"items": batch}) != [])
+    check("two batches in one day pass", faults({"items": batch[:2]}) == [])
     print("needs_you_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

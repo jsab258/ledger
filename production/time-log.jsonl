@@ -749,3 +749,7 @@
 {"event": "stop", "at": "2026-11-16T11:20:00", "note": ""}
 {"event": "start", "at": "2026-11-16T12:40:00", "task": "n16-3 step 2 core: scale test switches coded, both targets built (helper)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-16T13:16:00", "note": ""}
+{"event": "start", "at": "2026-11-16T12:55:00", "task": "tool loop: kiln round 10", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T13:50:00", "note": "helper (Opus fixer): Drape Studio engine exact speed-up, report F:/LedgerTools/tool-dev/reports/KILN-ROUND10-REPORT-2026-11-16.md"}
+{"event": "start", "at": "2026-11-16T14:07:00", "task": "session start, hourly row, advisor 176-181 (RULINGS, page guard, decisions)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T14:20:00", "note": ""}
