@@ -1,0 +1,38 @@
+{
+ "about": "The scale test's measuring cameras (n16-3, production/research/street-scale-test/METHOD-NOTE-2026-11-16.md): read only by -PerfHook with -PerfHookCam=<id>, after vignette-scene.json's own cameras. Kept apart from that file because any edit of it stales the window-glass bake (ci glass-bake-fresh), and because -PageShots photographs every camera in its list. Staged for the packaged copy (tools/ue/stage_game_data.py).",
+ "measure_cameras": [
+  {
+   "id": "cam_hill",
+   "bom": "n16-3.street_budget_and_scale_test",
+   "side": "carriageway",
+   "x_m": 44.0,
+   "z_m": 0.0,
+   "eye_height_m": 1.7,
+   "yaw_deg": 16.0,
+   "pitch_deg": -3.0,
+   "fov_vertical_deg": 46.0,
+   "note": "THE HILL, A MEASURING CAMERA ONLY (16 November, n16-3, production/research/street-scale-test/METHOD-NOTE-2026-11-16.md section 2, view 4): at the level street's end (x 44, before the climb's start at 52, atlas.json's approach), on the carriageway's middle at a player's eye, looking up the climb: its line runs x 52 to 72 drifting 8 m east, so the turn is atan(8/28), 16 degrees toward the parade, and it looks up 3 degrees for the 1 in 12 climb; the hook's 46-degree lens. Where the scale test's copies are least hidden. Read only by -PerfHook=stand -PerfHookCam=cam_hill; kept out of \"cameras\" so the photograph runs do not take it. Judged first on an editor screen (step 2)."
+  },
+  {
+   "id": "cam_office",
+   "side": "inside_mickeys",
+   "x_m": 5.6,
+   "z_m": 9.2,
+   "eye_height_m": 1.6,
+   "declared_ground": {
+    "y_m": 0.0,
+    "why": "the office floor"
+   },
+   "yaw_deg": -90.0,
+   "pitch_deg": 3.0,
+   "fov_vertical_deg": 60.0,
+   "sees": [
+    "the counter",
+    "the radio desk",
+    "the bay window",
+    "the street through the glass"
+   ],
+   "note": "16 November, n16-3 (the scale test's section 7: a fixed office camera). No fixed camera for the office existed: its gate pictures were taken from Tom's own arm (OfficeCameraTick). This is the staff view: behind the counter, 0.2 m in front of the back-room wall (z 9.4), clear of the radio desk (x 6.3 to 7.8), looking out to the street (yaw -90 looks towards -z), so the frame holds the room, the glass's reflections and the street beyond: the heaviest single interior view. Pitch 3 down, a standing eye of 1.6 m, a room lens of 60 degrees vertical."
+  }
+ ]
+}

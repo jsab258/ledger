@@ -250,7 +250,14 @@ namespace Ledger.Core
         public static bool AcceptsThinkingOff(string model) =>
             model == "claude-sonnet-5" || (model != null && model.StartsWith("claude-haiku-", StringComparison.Ordinal));
 
-        static string ReplyThinking(string model) => ReplyThinkingOff && AcceptsThinkingOff(model) ? "disabled" : null;
+        /// Sonnet 5.5 refuses "disabled": its lowest, "between_tools", thinks only between tool calls, and a reply has none
+        /// (16 November, the bake-off: with no thinking field its thinking spent a draft's 300 tokens and 29 of 60 replies came
+        /// back empty).
+        static string ReplyThinking(string model) =>
+            !ReplyThinkingOff ? null
+            : AcceptsThinkingOff(model) ? "disabled"
+            : model != null && model.StartsWith("claude-sonnet-5-5", StringComparison.Ordinal) ? "between_tools"
+            : null;
 
         /// The last turn's first draft's first sentence, and whether the faster model wrote it (for the bench's readers).
         public string LastFirstSentence { get; private set; }

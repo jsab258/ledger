@@ -672,5 +672,51 @@
       "status": "Three tests written up: single garments drape, layering fails; its licence question is on your page.",
       "decide": "your licence answer"
     }
+  ],
+  "weeks": [
+    {
+      "label": "Week of 9 to 15 November (read Monday 16 November)",
+      "rows": [
+        [
+          "Allowance used",
+          "to be read at 12:50, before the 13:00 reset"
+        ],
+        [
+          "Spend, list-price measure",
+          "US$930 (the week before: US$1,370); not a bill: the plan's allowance is what is paid"
+        ],
+        [
+          "Game's own API credit",
+          "US$0 this week (last spend 8 November)"
+        ],
+        [
+          "Share on records and reports",
+          "11% (the week before 13%; the line is 15%)"
+        ],
+        [
+          "Share re-reading history",
+          "24% (the week before 40%)"
+        ],
+        [
+          "Order items",
+          "14: 5 done, 1 set aside, 8 carried into this week's order"
+        ],
+        [
+          "Failed or set aside",
+          "the API-credit batch of backstories and side-story outlines (set aside)"
+        ],
+        [
+          "Kiln-made garments in the game",
+          "0 (the first will be Ron's jacket and trousers, this week)"
+        ]
+      ],
+      "risks": [
+        "The street scale test is estimated near 30 hours against its 40, and past work ran two to four times over; if long, it is cut to the hook, walk and night views.",
+        "Marvelous renews on 26 November: the six breadth patterns, the held-back ones included, must be made and exported before then.",
+        "Drive F: is at its 20 GB floor; Kiln's rounds and the scale test's captures need room.",
+        "Kiln front-loaded at about 35% to Wednesday: it must turn into garments in the game (Ron's outfit first), not only test passes.",
+        "Live talk's two-second bar on a newcomer's real questions is not yet met inside the packaged game (2.02 s median, 4 November); the bake-off may move it."
+      ]
+    }
   ]
 }

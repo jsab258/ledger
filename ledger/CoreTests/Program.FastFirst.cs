@@ -122,7 +122,8 @@ namespace Ledger.CoreTests
                 Check(a0.llm.Asked.Where(r => r.MaxTokens == 300).All(r => r.Thinking == "disabled") && a0.llm.Asked.Any(r => r.MaxTokens == 300),
                     "with the reply's thinking off, every draft on Sonnet 5 is sent thinking disabled");
                 var a55 = await Turn("claude-sonnet-5-5", "", "", "I keep the books here. The office is upstairs.");
-                Check(a55.llm.Asked.Where(r => r.MaxTokens == 300).All(r => r.Thinking == null), "and never on a model that refuses it");
+                Check(a55.llm.Asked.Where(r => r.MaxTokens == 300).All(r => r.Thinking == "between_tools") && a55.llm.Asked.Any(r => r.MaxTokens == 300),
+                    "and on Sonnet 5.5, which refuses disabled, its lowest: between_tools (16 November, the bake-off's empty drafts)");
                 ConversationEngine.ReplyThinkingOff = false;
                 var a = await Turn(Models.Core, "", "", "I keep the books here. The office is upstairs.");
                 Check(a.llm.Asked.Where(r => r.MaxTokens == 300).All(r => r.Thinking == null) && !a.engine.LastFirstFast && a.engine.LastFirstSentence == "I keep the books here.",

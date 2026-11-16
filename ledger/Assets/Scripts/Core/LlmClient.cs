@@ -102,6 +102,8 @@ namespace Ledger.Core
                 // so every cost the helper reported for Sheila's talk was half
                 // as much again as the bill.
                 { Core, (2.0, 10.0) },
+                // Haiku 4.5: $1 in, $5 out (the pricing page read 16 November 2026, with
+                // Sonnet 5 and 5.5 at $2/$10 and Haiku 5.5 at $0.10/$0.50 unchanged).
                 { Ambient, (1.0, 5.0) },
                 // The check's candidate successors (the talk task of 7 October;
                 // the pricing page read that day): Haiku 5.5 for prompts up to

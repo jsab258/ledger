@@ -5327,11 +5327,15 @@ namespace
 		{
 			if (Now < NextAt) { return; }
 			FString Path = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("vignette-scene.json"));
+			// The measuring cameras' own file (16 November): an edit of vignette-scene.json stales the window-glass bake
+			// (ci glass-bake-fresh hashes the whole file), so cam_hill and cam_office live in measure-cameras.json.
+			const FString MeasurePath = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("measure-cameras.json"));
 			FString Text;
 			TSharedPtr<FJsonObject> Root;
 			const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
 			bool bFound = false;
-			if (!Path.IsEmpty() && FFileHelper::LoadFileToString(Text, *Path))
+			for (const FString& File : { Path, MeasurePath })
+			if (!bFound && !File.IsEmpty() && FFileHelper::LoadFileToString(Text, *File))
 			{
 				const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
 				// The scene's cameras, then the measuring ones (cam_hill, the office's fixed camera), which live apart so the
@@ -5354,7 +5358,7 @@ namespace
 			}
 			if (!bFound || PC == nullptr)
 			{
-				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no %s in the scene file (%s)"), *CamId, *Path);
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no %s in the scene files (%s, %s)"), *CamId, *Path, *MeasurePath);
 				Mode.Empty();
 				// A MEASUREMENT THAT CANNOT START ENDS THE GAME it was asked of (7 October: the packaged
 				// copy lacked the scene file, and three captures waited all night, blocking the walk).

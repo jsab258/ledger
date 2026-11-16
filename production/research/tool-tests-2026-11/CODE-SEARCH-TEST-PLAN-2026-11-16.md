@@ -21,3 +21,7 @@ Method researched: KILN-ROUND1-2026-11-13.md (rounds 7 to 9: fixers' time went o
 4. Its own time-log windows: "tool loop: kiln code-search round n".
 
 Estimate (unmeasured): about 1 h of setup and reading spread over the four rounds, which run anyway as Kiln work.
+
+## Readied (16 Nov 2026, 10:25)
+
+ast-grep 0.51.3 installed by pip into F:/LedgerTools/ast-grep (binary F:/LedgerTools/ast-grep/bin/ast-grep.exe; `sg.exe` is the same tool). Smoke test on Kiln's own source: `ast-grep run --lang rust -p 'fn $NAME($$$ARGS) -> $RET { $$$BODY }' F:/LedgerTools/tool-dev/kiln` answered with matches. Credited in Kiln's CREDITS.md as a tool used. The "with" brief's two lines: "ast-grep is installed at F:/LedgerTools/ast-grep/bin/ast-grep.exe: structural search over Rust syntax, e.g. `ast-grep run --lang rust -p 'impl $T for $X { $$$ }' <dir>`. Use it before reading whole files to find where a function, type or trait is defined or called."

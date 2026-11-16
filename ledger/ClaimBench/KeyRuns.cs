@@ -31,6 +31,8 @@ static partial class Program
         { "invented-source-2026-10-27", 19.50 },
         // live talk's two cost levers (n02-9-talk-cost-levers, his yes of 6 November), inside the day's ceiling (RULINGS, 1 Nov)
         { "talk-levers-2026-11-06", 5.00 },
+        // n16-6, the talk bake-off's Anthropic legs (order of 16 November), inside the day's ceiling (RULINGS, 1 Nov)
+        { "bakeoff-2026-11-16", 4.00 },
         // his standing measuring dollar (RULINGS, 3 Oct: "measurement runs ($1 a day in all, each logged)"), one task a day
         { "measure-2026-10-28", 1.00 },
     };

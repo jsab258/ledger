@@ -967,6 +967,33 @@
    ],
    "state": "done",
    "closed": "2026-11-16 07:56, done in his own turn (07:52): the gate hook installed and tested; FoldCraft and ast-grep on the licence list"
+  },
+  {
+   "id": "marvelous-bridge-2026-11-16",
+   "added": "2026-11-16 10:28",
+   "text": "Your hands, about one minute, today if you can: the clothing patterns wait on Marvelous's LEDGER bridge, which would not start on its own this morning (two tries, then Claude's safety check stopped a third). At the PC or through Chrome Remote Desktop: in Marvelous Designer (already open), open the menu Plugins, then Plug-in, then click LEDGER bridge. Nothing else. Then tap Done here. If you would rather Claude tries once more by itself, tap Another try.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done (one click in Marvelous): Ron's jacket and trousers, Sheila's skirt and the two held-back jobs all need the bridge, and Marvelous renews on 26 November.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "retry",
+     "Another try by Claude"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

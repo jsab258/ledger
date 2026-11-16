@@ -86,9 +86,32 @@ $fore = Add-Type -PassThru -Name Fg -Namespace LedgerUia -MemberDefinition '[Dll
 $before = $fore::GetForegroundWindow()
 $opened = @()
 try {
+  # A FRESH MARVELOUS SETTLES FIRST (16 Nov: two starts 92 s after launch timed out; Qt switches its accessibility on at
+  # the first query, production/research/clothing-pipeline/BRIDGE-START-TIMEOUT-2026-11-16.md): no query before
+  # the program is two minutes old.
+  $young = 120 - ((Get-Date) - $proc.StartTime).TotalSeconds
+  if ($young -gt 0) { Start-Sleep -Seconds ([int][math]::Ceiling($young)) }
   $mainWin = $A::RootElement.FindFirst($T::Children, $mine)
   if (-not $mainWin) { Say $false "Marvelous has no window yet"; exit 1 }
-  $top = ItemIn $mainWin $T::Descendants $PATH[0]
+  # CHILDREN ONLY, NEVER THE WHOLE WINDOW (same note: a Descendants search walks the whole tree, viewport and lists
+  # included, Microsoft's FindFirst page): the main window's menu bar, then its Plugins item.
+  # Qt nests the bar a level or two down: a children walk, at most four levels, stopping at the first menu bar
+  $isBar = New-Object System.Windows.Automation.AndCondition(
+    (New-Object System.Windows.Automation.PropertyCondition($A::ControlTypeProperty, $CT::MenuBar)), $mine)
+  $bar = $null; $level = @($mainWin)
+  for ($d = 0; $d -lt 4 -and -not $bar -and $level.Count -gt 0; $d++) {
+    $next = @()
+    foreach ($el in $level) {
+      $bar = $el.FindFirst($T::Children, $isBar); if ($bar) { break }
+      foreach ($ch in $el.FindAll($T::Children, $mine)) {
+        $ct = $ch.Current.ControlType
+        if ($ct -eq $CT::Pane -or $ct -eq $CT::Group -or $ct -eq $CT::Custom -or $ct -eq $CT::Window) { $next += $ch }
+      }
+    }
+    $level = $next
+  }
+  if (-not $bar) { Say $false "no menu bar among Marvelous's main window's children" @{ pid = $proc.Id } -log; exit 1 }
+  $top = ItemIn $bar $T::Children $PATH[0]
   if (-not $top) { Say $false "no '$($PATH[0])' menu in Marvelous's menu bar"; exit 1 }
   (Pattern $top $EC).Expand(); $opened += $top
   $sub = FindOpen $top $PATH[1] 5

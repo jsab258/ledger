@@ -255,6 +255,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     <p class="small" id="hoursToGo"></p>
   </section>
 
+  <section class="col" aria-labelledby="h-week" style="margin-top:24px" id="weekSec" hidden>
+    <h2 id="h-week">The week's numbers</h2>
+    <p class="sub">Each Monday: what the week spent, how much of it went on records, what was done and what failed, and five risks.</p>
+    <div id="weekList"></div>
+  </section>
+
   <section class="col" aria-labelledby="h-tools" style="margin-top:24px">
     <h2 id="h-tools">Tools in test</h2>
     <ul class="pieces" id="toolsList"></ul>
@@ -491,6 +497,23 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     const h = d.hours_to_go;
     if (h && h.points){
       $("hoursToGo").textContent = h.title + ": " + h.points.map(p => short(p.date) + " " + p.lo + " to " + p.hi + " h").join("; ") + (h.next ? ". Next point " + h.next + ". " : ". ") + (h.note || "");
+    }
+    // THE WEEK'S NUMBERS (RULINGS 9 Nov: each Monday spend, process share, done, failed, five risks), newest first
+    if (Array.isArray(d.weeks) && d.weeks.length){
+      $("weekSec").hidden = false;
+      const wl = $("weekList"); wl.replaceChildren();
+      for (const w of d.weeks){
+        const det = el("details"); if (w === d.weeks[0]) det.open = true;
+        det.append(el("summary", null, w.label));
+        const dl = el("dl", "nums");
+        for (const [k, v] of (w.rows || [])){ dl.append(el("dt", null, k)); dl.append(el("dd", null, v)); }
+        det.append(dl);
+        if (Array.isArray(w.risks) && w.risks.length){
+          det.append(el("p", "note", "Risks:"));
+          const ul = el("ul"); for (const r of w.risks) ul.append(el("li", null, r)); det.append(ul);
+        }
+        wl.append(det);
+      }
     }
     const tl = $("toolsList"); tl.replaceChildren();
     if (d.tools_title) $("h-tools").textContent = d.tools_title;
