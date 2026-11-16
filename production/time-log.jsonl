@@ -764,3 +764,7 @@
 {"event": "start", "at": "2026-11-16T18:25:00", "task": "n16-4 brick target and street checks (helpers: reading, synthesis, review)", "phase": "0", "kind": "production"}
 {"event": "start", "at": "2026-11-16T18:25:00", "task": "n16-4 brick target and street checks (helpers: reading, synthesis, review)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-16T18:40:00", "note": ""}
+{"event": "start", "at": "2026-11-16T18:20:00", "task": "tool loop: kiln collar placement round 1 (helper, diagnoser Opus)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T19:13:00", "note": ""}
+{"event": "start", "at": "2026-11-16T18:15:00", "task": "n16-3 packing step 1: Lumen trial packaged (six walks, four pictures, review)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T19:55:00", "note": ""}
