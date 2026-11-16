@@ -184,6 +184,8 @@ real_table() {
     contact-selftest      "$REPO"                 "$PY tools/ue/make_contact_material.py --selftest" \
     token-audit-selftest  "$REPO"                 "$PY tools/token_audit.py --selftest"     needs-you-selftest    "$REPO"                 "$PY tools/needs_you_page.py --selftest"     needs-you-check       "$REPO"                 "$PY tools/needs_you_page.py --check" \
     stain-check-selftest  "$REPO"                 "$PY tools/stain_check.py --selftest" \
+    street-width          "$REPO"                 "$PY tools/street_checks.py" \
+    street-width-selftest "$REPO"                 "$PY tools/street_checks.py --selftest" \
     surface-values-selftest "$REPO"               "$PY tools/surface_values.py --selftest" \
     cuff-faults-selftest  "$REPO"                 "$PY tools/md-bridge/cuff_faults.py --selftest" \
     build-cuffs-selftest  "$REPO"                 "$PY tools/md/build_cuffs.py --selftest" \

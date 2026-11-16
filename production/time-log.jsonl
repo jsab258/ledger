@@ -761,3 +761,6 @@
 {"event": "stop", "at": "2026-11-16T17:05:00", "note": ""}
 {"event": "start", "at": "2026-11-16T18:09:00", "task": "n16-3 packing step 2 review", "phase": "2", "kind": "review"}
 {"event": "stop", "at": "2026-11-16T18:12:00", "note": ""}
+{"event": "start", "at": "2026-11-16T18:25:00", "task": "n16-4 brick target and street checks (helpers: reading, synthesis, review)", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-16T18:25:00", "task": "n16-4 brick target and street checks (helpers: reading, synthesis, review)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T18:40:00", "note": ""}
