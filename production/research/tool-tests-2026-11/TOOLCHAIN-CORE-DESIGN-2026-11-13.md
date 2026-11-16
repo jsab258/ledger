@@ -46,3 +46,15 @@ Pattern making (Marvelous's patterns and FreeSewing stay the source), textures, 
 
 ## Breadth by design (his decision, 14 November 08:32; advisor 157)
 Standing for every Kiln module (clothing, hair, props, buildings, motion). No special cases: a fix changes the method; any change that adds a code path, setting or number used by only one garment or job, or names a job in code, is refused; per-fabric numbers come only from the fabric presets; each round's report says "special cases: none" or names what was refused. Every module's milestones include held-back jobs drawn from the game's own need lists: at least two never go to the fixer (kept outside its folder, hash-locked with the judge) and run unchanged at every milestone (clothing: from M4 on, six jobs from HOOK-GARMENT-LIST-2026-11-03.md). Held-back jobs passing about as well as the practised ones means the fixes are general; far worse means the tool is being taught to the test and the next round fixes the method. A held-back job shown to a fixer becomes a practice job and a fresh one is drawn.
+
+## Cost per garment (advisor 177, 16 November)
+
+Each garment's hours (tools/timelog.py, its own window) and dollars (tools/token_measures.py --spend over that window), filled as each lands. The baseline is the hand route of 7 and 8 Nov.
+
+| Garment | Route | Hours | Dollars | Source |
+|---|---|---|---|---|
+| Darren's and Ron's existing clothes refitted to their bodies (7 to 8 Nov, n02-9-dress-the-cast) | Marvelous and Blender by hand | 5.8 h for both (6 time-log rows, 349 min) | not measured (per-window spend was not logged before 11 Nov) | time-log.jsonl, 7 Nov 15:21 to 8 Nov 00:40 |
+| Ron's donkey jacket | Kiln breadth | job written, drape not run | | |
+| Ron's work trousers | Kiln breadth | job written, drape not run | | |
+| Sheila's pleated skirt | Kiln breadth | job written, drape not run | | |
+| Darren's nylon jacket | Kiln breadth | job written, drape not run | | |

@@ -24,6 +24,9 @@ import time
 
 ROOT = os.environ.get("LEDGER_MD_JOBS", r"F:\LedgerTools\md-jobs")
 STALE_S = 30.0
+# 16 Nov: start_bridge.ps1 keeps its whole run under 150 s (a 60 s settle for a fresh copy, up to three Welcome
+# closes 5 s apart, bounded menu searches); the old 90 s limit was shorter than its 120 s wait and crashed md_job.
+START_TIMEOUT_S = 180
 
 
 def alive(root=ROOT, now=None):
@@ -40,15 +43,18 @@ def alive(root=ROOT, now=None):
     return True, "alive, %s jobs run" % beat.get("jobs")
 
 
-def start(root=ROOT, wait_s=20.0):
+def start(root=ROOT, wait_s=20.0, cmd=None, timeout=START_TIMEOUT_S):
     """(True, note) once the bridge beats, started through its menu item if it was not (start_bridge.ps1)."""
     ok, note = alive(root)
     if ok:
         return ok, note
     ps1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "start_bridge.ps1")
     env = dict(os.environ, LEDGER_MD_JOBS=root)
-    r = subprocess.run(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ps1],
-                       capture_output=True, text=True, timeout=90, env=env)
+    cmd = cmd or ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ps1]
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=env)
+    except subprocess.TimeoutExpired:
+        return False, "%s; the start ran past %d s and was stopped (see starts.jsonl)" % (note, timeout)
     said = (r.stdout.strip().splitlines() or ["{}"])[-1]
     if r.returncode != 0:
         return False, "%s; the start: %s" % (note, said)
@@ -95,8 +101,12 @@ def selftest():
         ok += alive(d, now=time.time() + 60)[0] is False
         json.dump({"stopped": "x"}, open(os.path.join(d, "heartbeat.json"), "w"))
         ok += alive(d)[0] is False
-    print("md_job selftest: passed=%d/4 failed=%d" % (ok, 4 - ok))
-    return 0 if ok == 4 else 1
+        # a start that outlasts its limit answers False with a note instead of crashing
+        r = start(d, cmd=[sys.executable, "-c", "import time; time.sleep(10)"], timeout=1)
+        ok += (r[0] is False and "ran past 1 s" in r[1])
+    ok += START_TIMEOUT_S > 150     # above start_bridge.ps1's whole-run budget ($BUDGET_S)
+    print("md_job selftest: passed=%d/6 failed=%d" % (ok, 6 - ok))
+    return 0 if ok == 6 else 1
 
 
 if __name__ == "__main__":

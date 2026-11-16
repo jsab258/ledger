@@ -36,14 +36,21 @@ function Log($step, $note) {
 
 Log "begin" "task started"
 $p = Get-Process $EXE -ErrorAction SilentlyContinue | Select-Object -First 1
+$launched = $null
 if (-not $p) {
-  Start-Process -FilePath $EXE_PATH -WorkingDirectory (Split-Path $EXE_PATH)
-  Log "launched" "Marvelous started"
+  $launched = Start-Process -FilePath $EXE_PATH -WorkingDirectory (Split-Path $EXE_PATH) -PassThru
+  Log "launched" "Marvelous started, pid $($launched.Id)"
 } else { Log "running" "Marvelous was already open; not started again" }
 
 $t0 = Get-Date
 while ($true) {
-  $p = Get-Process $EXE -ErrorAction SilentlyContinue | Select-Object -First 1
+  # 16 Nov: the copy this task opened is the one waited on, and its process id and start time are recorded in
+  # marvelous.pid beside starts.jsonl; start_bridge.ps1 targets it and may restart only a copy recorded there
+  $p = if ($launched) { Get-Process -Id $launched.Id -ErrorAction SilentlyContinue } else { Get-Process $EXE -ErrorAction SilentlyContinue | Select-Object -First 1 }
+  if ($launched -and $p -and $p.MainWindowHandle -ne 0 -and $p.MainWindowTitle) {
+    [System.IO.File]::WriteAllText((Join-Path $ROOT "marvelous.pid"), ([ordered]@{ pid = $p.Id;
+      started = $p.StartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"); by = "open_marvelous.ps1"; at = (Get-Date -Format "yyyy-MM-dd HH:mm:ss") } | ConvertTo-Json -Compress))
+  }
   if ($p -and $p.MainWindowHandle -ne 0 -and $p.MainWindowTitle) { break }
   if (((Get-Date) - $t0).TotalSeconds -gt $WAIT_S) { Log "timeout" "no main window after $WAIT_S s"; exit 2 }
   Start-Sleep -Seconds 5
@@ -51,6 +58,7 @@ while ($true) {
 Log "window" "main window: $($p.MainWindowTitle)"
 Start-Sleep -Seconds 20   # its plug-ins load after the window shows
 
+$env:LEDGER_MD_IN_TASK = "1"   # tells start_bridge.ps1 it runs in his session, inside this task (its restart path)
 for ($i = 1; $i -le 3; $i++) {
   $out = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $HERE "start_bridge.ps1") 2>&1 | Out-String
   Log "bridge-$i" $out.Trim()

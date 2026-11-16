@@ -95,7 +95,8 @@ def tick(state):
         if now - state["beat"] >= BEAT_S:
             state["beat"] = now
             write_json(os.path.join(ROOT, "heartbeat.json"), {"alive": time.strftime("%Y-%m-%d %H:%M:%S"),
-                                                             "jobs": state["jobs"], "python": sys.version.split()[0]})
+                                                             "jobs": state["jobs"], "python": sys.version.split()[0],
+                                                             "pid": os.getpid()})   # names its copy for start_bridge.ps1
         if os.path.exists(os.path.join(INBOX, "stop.job")):
             os.remove(os.path.join(INBOX, "stop.job"))
             stop(state)
@@ -140,7 +141,7 @@ def start():
         return
     setattr(builtins, KEY, state)
     write_json(os.path.join(ROOT, "heartbeat.json"), {"started": time.strftime("%Y-%m-%d %H:%M:%S"), "jobs": 0,
-                                                     "python": sys.version.split()[0]})
+                                                     "python": sys.version.split()[0], "pid": os.getpid()})
     print("LEDGER bridge: running. Jobs are read from %s; leave Marvelous open." % INBOX)
 
 
