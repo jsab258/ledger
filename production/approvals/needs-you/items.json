@@ -948,10 +948,25 @@
    "id": "gate-hook-install-2026-11-15",
    "added": "2026-11-15 23:23",
    "text": "Your hands, about 2 minutes, any day this week (not urgent): switch on the start check you said yes to. At the PC or through Chrome Remote Desktop: open the Claude app, the Code tab, start a new session in the ledger-local folder, paste this one line and send it: install the gate hook, and add FoldCraft and ast-grep to the licence list as your pick A of 15 Nov. If Claude asks to allow a change to the project's settings, press Allow. It worked when Claude answers that both are done and committed. Then tap Done here. (Added 16 Nov 06:50: the licence list's line for FoldCraft and ast-grep, both MIT, also needs a turn you start.)",
-   "links": [{"label": "This page", "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"}],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
    "recommendation": "Done when convenient: saves about US$10 a day on quiet days. Only a session you start yourself may change the project's settings, so the hourly runs cannot do it for you.",
-   "options": [["done", "Done (recommended)"], ["not-yet", "Not yet (add a note)"]],
-   "state": "open"
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-16 07:56, done in his own turn (07:52): the gate hook installed and tested; FoldCraft and ast-grep on the licence list"
   }
  ]
 }
