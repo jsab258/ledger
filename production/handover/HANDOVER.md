@@ -3,7 +3,7 @@
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-16 20:17 (the hourly run)
-**Row due:** 2026-11-16 21:18 (the hourly row; last row 20:18)
+**Row due:** 2026-11-16 22:12 (the hourly row; last row 21:12)
 **Stopped:** 2026-11-16 19:51 (history at its point at an item's end; Kiln slide helper still running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
