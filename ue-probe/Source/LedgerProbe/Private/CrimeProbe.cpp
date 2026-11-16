@@ -5304,9 +5304,12 @@ namespace
 	// its detail as a walk does. After the street has settled, the engine's CSV profiler
 	// records -PerfHookFrames frames (1800 by default) with its per-pass GPU timings
 	// (-csvGpuStats on the command line), and -ExitAfterCsvProfiling closes the game.
+	// -PerfHookCam=<id> (16 November, n16-3, the street budget and scale test: the reverse, hill and office views as
+	// single stands): any camera of the scene file instead of cam_hook; one the file lacks ends the game, as before.
 	void PerfHookTick(UWorld* World, double Now, float Dt)
 	{
 		static FString Mode;
+		static FString CamId = TEXT("cam_hook");
 		static bool bRead = false;
 		static int32 Step = -1;
 		static double NextAt = 0.0, WalkedM = 0.0;
@@ -5316,6 +5319,7 @@ namespace
 		{
 			bRead = true;
 			FParse::Value(FCommandLine::Get(), TEXT("PerfHook="), Mode);
+			FParse::Value(FCommandLine::Get(), TEXT("PerfHookCam="), CamId);
 		}
 		if (Mode.IsEmpty() || World == nullptr) { return; }
 		APlayerController* PC = World->GetFirstPlayerController();
@@ -5330,13 +5334,17 @@ namespace
 			if (!Path.IsEmpty() && FFileHelper::LoadFileToString(Text, *Path))
 			{
 				const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
-				if (FJsonSerializer::Deserialize(R, Root) && Root.IsValid() && Root->TryGetArrayField(TEXT("cameras"), List))
+				// The scene's cameras, then the measuring ones (cam_hill, the office's fixed camera), which live apart so the
+				// photograph runs (-PageShots takes every camera in "cameras") do not grow a picture for each.
+				if (FJsonSerializer::Deserialize(R, Root) && Root.IsValid())
+				for (const TCHAR* Key : { TEXT("cameras"), TEXT("measure_cameras") })
+				if (Root->TryGetArrayField(Key, List))
 				{
 					for (const TSharedPtr<FJsonValue>& V : *List)
 					{
 						const TSharedPtr<FJsonObject> C = V->AsObject();
-						if (!C.IsValid() || C->GetStringField(TEXT("id")) != TEXT("cam_hook")) { continue; }
-						Hook.Id = TEXT("cam_hook");
+						if (!C.IsValid() || C->GetStringField(TEXT("id")) != CamId) { continue; }
+						Hook.Id = CamId;
 						Hook.X = C->GetNumberField(TEXT("x_m")); Hook.Z = C->GetNumberField(TEXT("z_m"));
 						Hook.Eye = C->GetNumberField(TEXT("eye_height_m")); Hook.Yaw = C->GetNumberField(TEXT("yaw_deg"));
 						Hook.Pitch = C->GetNumberField(TEXT("pitch_deg")); Hook.VFov = C->GetNumberField(TEXT("fov_vertical_deg"));
@@ -5346,7 +5354,7 @@ namespace
 			}
 			if (!bFound || PC == nullptr)
 			{
-				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no cam_hook in the scene file (%s)"), *Path);
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no %s in the scene file (%s)"), *CamId, *Path);
 				Mode.Empty();
 				// A MEASUREMENT THAT CANNOT START ENDS THE GAME it was asked of (7 October: the packaged
 				// copy lacked the scene file, and three captures waited all night, blocking the walk).
@@ -5408,8 +5416,8 @@ namespace
 				FParse::Value(FCommandLine::Get(), TEXT("PerfHookShotName="), Name);
 				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("PerfHook") / (Name + TEXT(".png"))), false, false);
 			}
-			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: %s at cam_hook (%.2f, %.2f) yaw %.1f, profiling %d frames%s"),
-				*Mode, Hook.X, Hook.Z, Hook.Yaw, Frames, FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")) ? TEXT(", at night") : TEXT(""));
+			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: %s at %s (%.2f, %.2f) yaw %.1f, profiling %d frames%s"),
+				*Mode, *Hook.Id, Hook.X, Hook.Z, Hook.Yaw, Frames, FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")) ? TEXT(", at night") : TEXT(""));
 			// THE LIGHTS THAT DRAW SHADOWS, named (7 October: P1 packaged counted two besides the sun
 			// redrawing theirs every frame by day, and eleven at night, without saying which): every
 			// local light lit and casting shadows within 40 m of the view, its owner, brightness,
