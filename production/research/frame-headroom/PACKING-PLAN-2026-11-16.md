@@ -52,6 +52,14 @@ The home is 4-BUDGETS l.172-174: at most 3 principal people near (27-43 MB of te
 
 In 800 MB: 3 near at about 100 MB (300) plus passers-by at about 20 MB with their card grooms (about 25, 500): about 28 people. Street copies share the room at ~165 MB each from four to ten street-lengths (I, SCREEN-N10).
 
+## Step 0 done (16 Nov 16:34, packaged day walk at High; OWNER-DUMP-2026-11-16.md)
+
+Card 5,213 MB median, 5,565 peak (Windows' counter). The dump: used 5,072 MB against a budget of 4,711 at the peak (360 over, not 150), 4,952 settled. Run-time pictures 1,351 MB in 340 rows, all BGRA8, unnamed in the dump (naming them needs a log line in the game); Lumen 678; distance fields 463; TSR 156; hair 178 (overlapping other rows). Shop fronts: all 111 block-compressed with 4 to 13 mips. Section 1 holds; step 1 alone does not close the gap, so step 2 follows at once.
+
+## Step 1, first packaged trial (16 Nov 16:55, settings on the command line, no rebuild)
+
+Same walk, Lumen atlas 3584 and probe resolution 16: dump at frame 1100 4,792 MB used (from 4,952: 160 saved); the radiance atlas 2304 and the probe atlases 2048 as predicted; Windows' counter median 5,148 (from 5,213), peak 5,505 (from 5,565). Frame median 11.6 ms against 10.9 and the Lumen passes 1.27 against 1.15 ms: one run each, so the three-run check comes before it is written into DefaultScalability.ini; pictures for the gate (hook and reverse beside the last good) after the step 2 build.
+
 ## 6. Unknown, and what settles it
 
 - Today's owners at the played High: step 0.
