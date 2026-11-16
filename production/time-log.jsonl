@@ -739,3 +739,11 @@
 {"event": "stop", "at": "2026-11-16T08:58:50", "note": ""}
 {"event": "start", "at": "2026-11-16T08:58:57", "task": "n16-6 review of the provider client", "phase": "2", "kind": "review"}
 {"event": "stop", "at": "2026-11-16T09:04:21", "note": "review passed with fixes, all taken; CLIENT-REVIEW-2026-11-16.md"}
+{"event": "start", "at": "2026-11-16T10:09:00", "task": "n16-6 bake-off leg 1 (Sonnet 5.5): questions, eight arms, review", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T11:15:00", "note": ""}
+{"event": "start", "at": "2026-11-16T10:12:00", "task": "n16-3 step 1: office fixed camera, measuring cameras' file, both targets built", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T10:22:00", "note": ""}
+{"event": "start", "at": "2026-11-16T10:18:00", "task": "n16-1 Marvelous bridge start, two tries, research, his click asked; ast-grep readied", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T10:30:00", "note": ""}
+{"event": "start", "at": "2026-11-16T10:07:00", "task": "his page, advisor 171-172, rows, the week's numbers", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T11:20:00", "note": ""}

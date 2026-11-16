@@ -1,0 +1,210 @@
+{
+ "about": "The scale test's layout (n16-3 step 2), written by tools/scale_test_layout.py from production/art/atlas-01/data/atlas.json; do not edit by hand. A measuring switch only (-ScaleTest=N), never shipped. Street frame: x along the street, z across, yaw_deg from +x toward +z (vignette-scene.json's cameras); atlas = [400 + z_m, 350 + x_m]. Each slot is one copy of the built street, 48 x 26.3 m centred on a main or minor road line, straight, never over the built street (x -2 to 50, |z| <= 14) or the approach (x 48 to 108.8, z -14 to 60), ordered by distance from the built street, inside the Hook first; in_hook false only with --allow-outside. unit_shift k: copy k shows shop (u + k) mod 7's pictures. walk: road centrelines through every slot's whole length, ending at cam_hook's spot; walk_m its length.",
+ "street_lengths": 10,
+ "copies": 9,
+ "copies_wanted": 9,
+ "capacity_in_hook": 10,
+ "allow_outside": false,
+ "slid_past_slots": 2,
+ "slots": [
+  {
+   "k": 1,
+   "route": "harbourlink",
+   "segment": 0,
+   "x_m": -31.993,
+   "z_m": 23.917,
+   "yaw_deg": 94.764,
+   "atlas": [
+    423.917,
+    318.007
+   ],
+   "in_hook": true,
+   "unit_shift": 1
+  },
+  {
+   "k": 2,
+   "route": "quay",
+   "segment": 1,
+   "x_m": -36.074,
+   "z_m": -27.333,
+   "yaw_deg": -102.529,
+   "atlas": [
+    372.667,
+    313.926
+   ],
+   "in_hook": true,
+   "unit_shift": 2
+  },
+  {
+   "k": 3,
+   "route": "goods",
+   "segment": 2,
+   "x_m": 113.101,
+   "z_m": -41.049,
+   "yaw_deg": -52.896,
+   "atlas": [
+    358.951,
+    463.101
+   ],
+   "in_hook": true,
+   "unit_shift": 3
+  },
+  {
+   "k": 4,
+   "route": "harbourlink",
+   "segment": 1,
+   "x_m": -32.612,
+   "z_m": 83.881,
+   "yaw_deg": 84.289,
+   "atlas": [
+    483.881,
+    317.388
+   ],
+   "in_hook": true,
+   "unit_shift": 4
+  },
+  {
+   "k": 5,
+   "route": "goods",
+   "segment": 1,
+   "x_m": 128.529,
+   "z_m": -93.111,
+   "yaw_deg": -105.642,
+   "atlas": [
+    306.889,
+    478.529
+   ],
+   "in_hook": true,
+   "unit_shift": 5
+  },
+  {
+   "k": 6,
+   "route": "coast",
+   "segment": 0,
+   "x_m": -44.179,
+   "z_m": 133.429,
+   "yaw_deg": 97.125,
+   "atlas": [
+    533.429,
+    305.821
+   ],
+   "in_hook": true,
+   "unit_shift": 6
+  },
+  {
+   "k": 7,
+   "route": "goods",
+   "segment": 1,
+   "x_m": 115.047,
+   "z_m": -141.259,
+   "yaw_deg": -105.642,
+   "atlas": [
+    258.741,
+    465.047
+   ],
+   "in_hook": true,
+   "unit_shift": 7
+  },
+  {
+   "k": 8,
+   "route": "coldstore",
+   "segment": 1,
+   "x_m": -60.58,
+   "z_m": -167.348,
+   "yaw_deg": -149.036,
+   "atlas": [
+    232.652,
+    289.42
+   ],
+   "in_hook": true,
+   "unit_shift": 8
+  },
+  {
+   "k": 9,
+   "route": "night",
+   "segment": 0,
+   "x_m": -27.65,
+   "z_m": 188.746,
+   "yaw_deg": 21.371,
+   "atlas": [
+    588.746,
+    322.35
+   ],
+   "in_hook": true,
+   "unit_shift": 9
+  }
+ ],
+ "walk": [
+  [
+   127.579,
+   -60.19
+  ],
+  [
+   98.623,
+   -21.908
+  ],
+  [
+   76.0,
+   8.0
+  ],
+  [
+   72.0,
+   8.0
+  ],
+  [
+   67.0,
+   4.5
+  ],
+  [
+   62.0,
+   2.0
+  ],
+  [
+   57.0,
+   0.5
+  ],
+  [
+   52.0,
+   0.0
+  ],
+  [
+   -30.0,
+   0.0
+  ],
+  [
+   -30.868,
+   -3.905
+  ],
+  [
+   -41.28,
+   -50.762
+  ],
+  [
+   -30.868,
+   -3.905
+  ],
+  [
+   -30.0,
+   0.0
+  ],
+  [
+   -33.986,
+   47.834
+  ],
+  [
+   -30.0,
+   0.0
+  ],
+  [
+   -3.0,
+   0.0
+  ],
+  [
+   -3.0,
+   -1.6
+  ]
+ ],
+ "walk_m": 422.04,
+ "walk_slots": 3,
+ "walk_m_outside_hook": 0.0
+}
