@@ -42,3 +42,7 @@ About 12.6 h of the clothing cap's 20 h: rounds 1 to 9 about 9.8 h with their ju
 ## Open for the evaluation
 - Whether the margins are wide enough to start M5 without a hardening round (recommended: start M5, harden only what M5's jobs break).
 - The Marvelous renewal (it renews on 26 Nov, his own check of 13 Nov, advisor 170) rests on M4 plus the held-back result (advisor 157): the held-back jobs are not run yet, so no renewal recommendation is possible before they are.
+
+## His pick A, 16 Nov 12:24 (advisor 174)
+
+The breadth set's six patterns come from our own pattern tools (FreeSewing and GarmentCode, both on the allowlist, the route Tom's jacket, jumper and jeans were drafted by), straight into Kiln's job format; no bridge needed. Marvelous is used only for comparison drapes while its bridge is up; a held-back result stands on the clothing floor, the references and the reviewer, with Marvelous's drape beside it where one exists. This is the renewal test of 26 November: Kiln without Marvelous. The bridge's auto-start is to be fixed to recover by itself (stray dialog, restart in his signed-in session, retry) and is never raised on his page again. Replaces his A of 14 Nov (advisor 157). DECISIONS 2026-11-16 12:39.

@@ -993,7 +993,32 @@
      "Not yet (add a note)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-16 12:39, Closed by his pick A (advisor 174, 12:24): breadth patterns from our own pattern tools; Marvelous for comparison drapes only; the auto-start to be fixed to recover by itself; never on his page again."
+  },
+  {
+   "id": "f-room-2026-11-16",
+   "added": "2026-11-16 11:56",
+   "text": "One tap: drive F has 19.9 GB free, just under the 20 GB it must keep, so this afternoon's street scale test, Ron's body in Blender and tonight's build cannot start. May Claude delete the working outputs of four finished tool tests from 12 November (the motion tool's three rounds and the clothing-fit tool's test, 2.5 GB)? Their written reports and verdicts stay; only the bulk files go. Nothing of yours, nothing the game uses.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: those tools were judged and set aside; the reports keep what was learnt, and F gets back to about 22 GB.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete them (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-16 12:39, Not his to answer (advisor 173, 12:19): own leftovers of four finished 12 Nov tool tests deleted at 12:38, 2.49 GB; reports kept."
   }
  ]
 }

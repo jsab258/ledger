@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 16 November 2026, 11:20",
+  "updated": "Monday 16 November 2026, 12:40",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -641,9 +641,15 @@
         "date": "2026-11-09",
         "lo": 447,
         "hi": 764
+      },
+      {
+        "date": "2026-11-16",
+        "lo": 426,
+        "hi": 743,
+        "method": "last point less the 21 h of phase 2 work in the time log; not re-estimated"
       }
     ],
-    "next": "Monday 16 Nov"
+    "next": "Monday 23 Nov"
   },
   "tools_title": "Tools in test",
   "tools": [
@@ -679,7 +685,7 @@
       "rows": [
         [
           "Allowance used",
-          "to be read at 12:50, before the 13:00 reset"
+          "97% (read at 12:40 Monday, 20 minutes before the reset; the line allowed 99%)"
         ],
         [
           "Spend, list-price measure",
@@ -712,8 +718,8 @@
       ],
       "risks": [
         "The street scale test is estimated near 30 hours against its 40, and past work ran two to four times over; if long, it is cut to the hook, walk and night views.",
-        "Marvelous renews on 26 November: the six breadth patterns, the held-back ones included, must be made and exported before then.",
-        "Drive F: is at its 20 GB floor; Kiln's rounds and the scale test's captures need room.",
+        "Clothing patterns now come from our own pattern tools (his pick, 16 Nov); Marvelous renews on 26 November and is used only for comparison drapes, so the renewal question is whether Kiln stands without it.",
+        "Drive F: was at its 20 GB floor five times in four days; 2.5 GB of finished tests cleared (21 GB free); a lasting fix with costs comes this week.",
         "Kiln front-loaded at about 35% to Wednesday: it must turn into garments in the game (Ron's outfit first), not only test passes.",
         "Live talk's two-second bar on a newcomer's real questions is not yet met inside the packaged game (2.02 s median, 4 November); the bake-off may move it."
       ]

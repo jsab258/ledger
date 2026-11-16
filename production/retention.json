@@ -62,7 +62,11 @@
   "C:/LedgerTools/python312",
   "C:/LedgerTools/parler-tts",
   "C:/LedgerTools/slr83",
-  "C:/Users/Jafar/ledger-local/ue-probe/Binaries"
+  "C:/Users/Jafar/ledger-local/ue-probe/Binaries",
+  "F:/LedgerTools/tool-dev/runs/m1-baseline",
+  "F:/LedgerTools/tool-dev/runs/bodies-fix-2026-11-13",
+  "F:/LedgerTools/tool-dev/runs/kiln-r4-judge",
+  "F:/LedgerTools/tool-dev/judge"
  ],
  "limits": [
   {
@@ -111,7 +115,7 @@
    "days": 7,
    "folders": [
     "F:/LedgerTools/tmp",
-  "F:/LedgerTools/latency",
+    "F:/LedgerTools/latency",
     "F:/LedgerTools/town-scratch/breaker",
     "F:/LedgerTools/review-voice-*",
     "C:/Users/Jafar/ledger-local/.claude/worktrees",
@@ -159,6 +163,17 @@
    "kind": "tool caches",
    "keep": "capped in the tool's own settings, checked where it really writes",
    "rule": "caches"
+  },
+  {
+   "kind": "tool test and Kiln run outputs",
+   "keep": "14 days; what was learnt lives in the reports and verdicts (production/research, F:/LedgerTools/tool-dev/reports, LOOP.md), never only here",
+   "rule": "age",
+   "days": 14,
+   "folders": [
+    "F:/LedgerTools/tool-tests-2026-11",
+    "F:/LedgerTools/tool-dev/runs"
+   ],
+   "note": "His decision of 16 Nov 12:23 (advisor 174): test and Kiln run outputs clear themselves, so the session's own leftovers never reach his page. The judge's scripts, baselines and held-back jobs are protected."
   }
  ],
  "caches": [

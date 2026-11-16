@@ -1,41 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Monday 16 November, 10:28",
+ "kicker": "LEDGER · Needs you · 0 open · updated Monday 16 November, 12:39",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "marvelous-bridge-2026-11-16",
-   "name": "Your hands, about one minute, today if you can: the clothing patterns wait on Marvelous's LEDGER bridge, which would not start on its own this morning (two tries, then Claude's safety check stopped a third). At the PC or through Chrome Remote Desktop: in Marvelous Designer (already open), open the menu Plugins, then Plug-in, then click LEDGER bridge. Nothing else. Then tap Done here. If you would rather Claude tries once more by itself, tap Another try.",
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "recommendation": "Done (one click in Marvelous): Ron's jacket and trousers, Sheila's skirt and the two held-back jobs all need the bridge, and Marvelous renews on 26 November.",
-   "added": "2026-11-16 10:28",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ],
-    [
-     "retry",
-     "Another try by Claude"
-    ],
-    [
-     "not-yet",
-     "Not yet (add a note)"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

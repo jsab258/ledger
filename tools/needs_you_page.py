@@ -31,6 +31,12 @@ ITEMS = os.path.join(DIR, "items.json")
 URL = "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"   # his one permanent link (published 2 November 2026)
 FIELDS = ("id", "added", "text", "links", "recommendation", "state")
 PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
+# OWN LEFTOVERS NEVER REACH HIS PAGE (his decision, 16 Nov 12:23, advisor 174; RULINGS 29 Oct): an open item asking him
+# whether to delete the session's own outputs (test or run outputs, leftovers, temporary files) is refused. An item
+# about something genuinely his (his folders, page-approved, bought or unmakeable things) says so with "his_files": true.
+DELETE_WORDS = re.compile(r"\b(delete|deleting|deleted|clear|clearing|remove|removing|free up)\b", re.I)
+OWN_WORDS = re.compile(r"(working outputs?|leftovers?|tool[- ]tests?|test outputs?|run outputs?|temporary|scratch|"
+                       r"Claude made|made itself|Claude's own|its own outputs?|Kiln'?s? (runs?|outputs?))", re.I)
 
 
 def load(path=ITEMS):
@@ -56,6 +62,10 @@ def faults(data, check_files=True):
                 out.append("%s: link %r is not a full https link" % (it.get("id"), l.get("url")))
         if it.get("state") == "done" and not it.get("closed"):
             out.append("%s is done with no 'closed' (when, and how)" % it.get("id"))
+        if (it.get("state") == "open" and not it.get("his_files") and DELETE_WORDS.search(str(it.get("text", "")))
+                and OWN_WORDS.search(str(it.get("text", "")))):
+            out.append("%s asks him about deleting the session's own outputs: delete them under RULINGS 29 Oct, one "
+                       "DECISIONS line each, no page item (his decision 16 Nov); if they are his, mark his_files" % it.get("id"))
         for p in it.get("pictures", []) if it.get("state") == "open" else []:
             # the page publishes only files inside the checkout: an open item's pictures live in pictures/ beside it
             src = str(p.get("src", "")).replace("\\", "/")
@@ -143,6 +153,12 @@ def selftest():
     check("a closed item is done with when and how", it and it["state"] == "done" and it["closed"] == "2026-11-02 09:05, answered done")
     check("a closed item leaves the page", spec(d)["sections"] == [] and faults(d) == [])
     check("closing an unknown or done item changes nothing", close(d, "b", "x") is None and close(d, "zz", "x") is None)
+    own = dict(good["items"][0], text="One tap: may Claude delete the working outputs of four finished tool tests (2.5 GB)?")
+    check("an item asking to delete own test outputs is refused", faults({"items": [own]}) != [])
+    check("the same words on a done item are history, not a fault", faults({"items": [dict(own, state="done", closed="2026-11-16 12:38, x")]}) == [])
+    his = dict(good["items"][0], text="May Claude delete C:/LedgerTools/ai-video (26 GB, your dropped video route)?", his_files=True)
+    check("an item about his own files, marked his_files, passes", faults({"items": [his]}) == [])
+    check("an ordinary ask about a test passes", faults({"items": [dict(good["items"][0], text="Your hands: start the tool test window once.")]}) == [])
     print("needs_you_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
