@@ -600,3 +600,7 @@ Tool of the shop windows' checks, not shipped (15 October 2026): rapidocr-onnxru
 
 ## The street's brick from 16 November 2026 — Poly Haven, CC0
 - Brick Wall 006 by Jan Burghardt, https://polyhaven.com/a/brick_wall_006, CC0 (https://polyhaven.com/license, read 16 Nov 2026); its 2K diffuse, DirectX normal and roughness downloaded 16 Nov to F:/LedgerTools/game-inputs/polyhaven/brick_wall_006. Its bricks are cut and re-laid into our own Flemish bond by tools/photo_flemish_tile.py; worn by the street's red brick walls (production/specs/ps5-corner.json, asset photo_flemish_n16_4). No credit required; credited here.
+
+## Motion capture from 17 November 2026: CMU Graphics Lab, cgspeed BVH conversion
+- Carnegie Mellon University Graphics Lab Motion Capture Database (http://mocap.cs.cmu.edu/), terms read at source 12 Nov 2026 02:23 (production/research/ai-video-motion/CMU-TERMS-AND-CLIPS-2026-11-12.md): the moves may be used inside a sold game; the data is never resold or shipped as a library. Item 11 of the licence allowlist (his ruling of 12 Nov).
+- Taken through B. Hahne's (cgspeed) MotionBuilder-friendly BVH conversion, from the GitHub mirror sfd158/cmu-mocap at commit 09a07f54f3bbb58797325f009282d0b2048a2871, downloaded 17 Nov 2026: clips 143_18, 113_15 and 131_01 (F:/LedgerTools/game-inputs/cmu-2026-11-17/src). Test inputs for n16-7; none in the game yet.
