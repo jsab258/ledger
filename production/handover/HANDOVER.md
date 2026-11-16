@@ -2,8 +2,8 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-16 20:17 (the hourly run)
-**Row due:** 2026-11-16 23:09 (the hourly row; last row 22:09)
+**Started:** 2026-11-16 22:37 (the hourly run)
+**Row due:** 2026-11-16 23:40 (the hourly row; last row 22:40)
 **Stopped:** 2026-11-16 22:24 (history past its point at an item's end; Kiln helpers still running: jackets, trousers finishing, speed, regression gate, pattern check: their reports land as files)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -25,15 +25,14 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Held-back jobs never reach a fixer:** never name the two held-back garments in any brief, report, row or file a fixer reads; they live only in F:/LedgerTools/tool-dev/judge/heldback (hash-locked).
 - The page tool (tools/needs_you_page.py) now also refuses install, setting and click asks (his_hands marks safety-check needs) and more than two batches of open items a day.
 
-## Done this run (20:17 to 22:25)
-- Kiln: slide-down fix kept (04f9c93); arm line kept (667768b); body standard kept (3d32458). His picks 185, 186, 187, 188 acked and in DECISIONS (inputs first, Thursday checkpoint; Fable escalation, Fable review taken steps 1-3; lanes; speed lane, 70% on the held-back pass).
-- Idle-gap fix in the gate (Row due, not Next due); records share in token_audit --shares; add history and records rows to every DAILY.
-- Brick try 2 (drawn Flemish tile) set aside after four reviews; donors downloaded.
-- The RULINGS models-line amendment was refused by the unattended run's permission check: leave it for a session at his desk.
-- Rows 20:18, 21:12, (21:37 stamped 22:01, corrected), 22:09.
+## Done this run (22:37 to now)
+- Judge on the body standard: the judge's own jobs (Seamshift transfers, the Marvelous comparison drape) never pass Kiln's drape start, so they stay; the two held-back jobs now name the standard bodies (Tom's; Sheila's = C1's body under S4's head), README and HASHES re-made, hash check clean. Held-back patterns are still PENDING (made in Marvelous before 26 Nov), so no held-back pass and no 70% switch yet.
+- Speed lane try 1 reported: no card port kept (exact order slower; coloured order 2.4-3.2x faster but crosses two bars by 0.15 mm and 4 mm). Try 2 (diagnoser, from 22:47): coloured order with a convergence fix; report LANE-SPEED-TRY2-2026-11-16.md in the lane; card free by 01:10.
+- n16-4 brick, new method try 1: tools/photo_flemish_tile.py (uncommitted) cuts 198 real bricks from brick_wall_006 into the drawn bond; output F:/LedgerTools/game-inputs/brick-flemish-photo-n16-4 (seed 3); 12 checks pass; near-crop screen PASS (Sonnet: reads old; shortfalls a little orange, mortar wide and grey, faint halos). Packaged film by an importer helper (from 22:46) into F:/LedgerTools/gate/new/brick-photo-n16-4, files restored by 00:45.
+- Space 22:40: C: 62.4, F: 20.9 GB, GO. Row 22:40.
 
 ## Done the runs before
-- git show 7e2198b04:production/handover/HANDOVER.md ('Done this run') and earlier.
+- git show 983ad87da:production/handover/HANDOVER.md ('Done this run': Kiln slide, arm line, body standard; picks 185-188; brick try 2 set aside), and 7e2198b04 before it. The RULINGS models-line amendment waits for a session at his desk (the unattended run's permission check refused it).
 
 ## In flight
 - Kiln regression gate helper (diagnoser, from about 21:48): all eight jobs, measured bands, failing exit; report F:/LedgerTools/tool-dev/reports/KILN-REGRESSION-GATE-2026-11-16.md; edits uncommitted in Kiln (python/ only).
@@ -41,10 +40,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Body standard DONE 22:17 (Kiln 3d32458): standard bodies F:/LedgerTools/bodies/standard-2026-11-16; old body files now refused; lanes must merge 3d32458 and use them (jackets lane told; gate helper told to re-baseline on them). Pattern check (rings against girths, seam travel) still to build.
 
 ## Next, in order
-0. KILN INTEGRATION FIRST (the session's judge work): the body standard (3d32458) refuses old body files, and the judge's hash-locked jobs (F:/LedgerTools/tool-dev/judge/jobs, run_round.py, HASHES.txt) still point at them. Move the judge jobs to F:/LedgerTools/bodies/standard-2026-11-16, re-hash, record a new baseline on 3d32458 (never show held-back jobs to a fixer). Then merge lanes one at a time, each only after the full judge run passes: lane-skirt (3b10d4b, 7d5daf0: skirt fixed, report reports-lane/LANE-SKIRT), lane-trousers (passes per piece; read its report, check its commit), then jackets and speed when they report. The regression gate (python/regression_gate.py, uncommitted in Kiln main) and the pattern check (Rust, uncommitted) land by their reports KILN-REGRESSION-GATE and KILN-PATTERN-CHECK; commit each after reading.
+0. KILN INTEGRATION (judge side done 22:40). Merge lanes one at a time, each only after the full judge run passes: lane-skirt (3b10d4b, 7d5daf0: skirt fixed, report reports-lane/LANE-SKIRT), lane-trousers (passes per piece; read its report, check its commit), then jackets and speed when they report. The regression gate (python/regression_gate.py, uncommitted in Kiln main) and the pattern check (Rust, uncommitted) land by their reports KILN-REGRESSION-GATE and KILN-PATTERN-CHECK; commit each after reading.
 1. FIRST: verdicts after 2026-11-16T21:05:00Z; advisor after 2026-11-16T22:08:00+01:00 (all acked to 188 and the 22:08 watchdog). Hourly row by 23:09. On the held-back jobs' first full pass: Kiln to about 70% (his 188), say so in that row, record n16-5 and the rest of n16-3 as waiting in the order's ledger.
-2. Arm line kept (Kiln, try 1 of 2): left the collar in a headless body, an input fault for 3(b).
-3. Kiln under 185 and the Fable review: (a) regression gate over all eight jobs with measured bands and a failing exit code (review step 1); (b) body export standard, one script for Tom, Ron, Darren, Sheila (one detail level, same rest pose and skeleton, head and hands, real scale, no stray objects), start check refusing with the reason; pattern check (rings against girths, seam travel) (step 2); (c) passes per piece (step 3). Thursday checkpoint 19 Nov: held-back jobs once, M5 counts, faults traded. Kiln faults with two Opus tries spent go to a Fable helper next.
+3. Kiln under 185 and the Fable review: (a) regression gate (in flight); (b) body standard done; pattern check (step 2) in flight; (c) passes per piece (step 3). Thursday checkpoint 19 Nov: held-back jobs once, M5 counts, faults traded. Kiln faults with two Opus tries spent go to a Fable helper next.
 4. Tonight's build: both packing steps and the n16-6 switch; space check by 23:30 (F: 20.7 GB at 21:10, floor 20: check first, delete own leftovers only); nothing in Unreal 01:15 to 04:30.
 5. Morning: the three morning pictures against today's (reverse and night verify both packing steps); the walk's card memory against 5.07 GB; cam_office screen on the new copy.
 6. n16-4 brick, a genuinely different method (try 1 of it): photographed bricks cut into the drawn bond (keep flemish_tile.py's sizes, header map and checks); donors from N16-4-PHOTO-BRICK-READING-2026-11-16.md (no Flemish scan exists in the allowed libraries; CC0 candidates Poly Haven brick_wall_006 and church_bricks_02, ambientCG Bricks094, downloaded 21:27 to F:/LedgerTools/game-inputs/polyhaven and ambientcg; looked at: brick_wall_006 is English bond with real worn, chipped, separable bricks: the donor; cut stretchers from its stretcher rows and headers from its header rows into flemish_tile.py's layout); add a near-crop realism screen before any film. Quay-end closure as a page item with pictures (batch with Tom's and Ron's looks).
