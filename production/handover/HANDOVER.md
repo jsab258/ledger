@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-15 23:22 (hourly run; the gate said GO: last stopped 22:12)
+**Started:** 2026-11-16 06:37 (hourly run; the gate said GO: last stopped 05:37)
 **Next due:** 2026-11-16 07:00 (advisor 168: quiet tonight; from about 07:00 Monday preparation for the 16 Nov order paced to near 99% by 12:55, never 100%; set it at every stop)
-**Stopped:** 2026-11-15 23:28 (night space check GO after own scratch removed; gate-hook install steps on his page; advisor 169 and the 23:08 watchdog acked; quiet until about 07:00 Monday; row 2026-11-15-2324 states it)
+**Stopped:** 2026-11-16 05:37 (quiet check: no verdicts after 2026-11-15T20:09:01Z, no advisor after 23:24+01:00; nothing due before about 07:00 Monday; no row, row 2026-11-15-2324 states the next time)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted by his tap 15 Nov 21:08; runs to 13:00 Monday 23 November). Until Monday 13:00 only the advisor 168 pacing applies: quiet tonight, preparation from about 07:00 Monday aiming near 99% by 12:55, never 100%.

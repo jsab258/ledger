@@ -1,18 +1,17 @@
-GOAL (to Mon 16 Nov 13:00): his order of 9 November, adopted by his tap of 8 Nov 17:17, item by item (production/orders/2026-11-09.md); anything new goes on its waiting list.
+GOAL (to Mon 23 Nov 13:00): his order of 16 November, adopted by his tap of 15 Nov 21:08, item by item (production/orders/2026-11-16.md); anything new goes on its waiting list.
 
-Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
+Phase 0 done (production/audits/phase0-exit/BUNDLE.md). Phase 1's open exits and the 9 Nov items closed into this order (its section 4).
 
-## Phase 1: Prove the bottlenecks (open, not closed)
+## Phase 2
 
-- [ ] n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md).
-- [ ] n09-2. Tom as one whole person on his page by Tuesday.
+- [ ] n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note).
+- [ ] n16-2 Ron as one complete person (CLOTHES.md).
+- [ ] n16-3 street budget and scale test, method note first; the rough street (TOWN.md).
+- [ ] n16-4 street checks, Flemish bond; n16-5 the corner copied along the street.
+- [ ] n16-6 talk provider-neutral, bake-off; n16-7 people alive; n16-8 hair.
+- [ ] n16-9 parked cars; n16-10 efficiency and safety; n16-11 the games' numbers.
 
-## Phase 2 begins beside it
-
-- [ ] n09-3 card memory and headroom; n09-4 phase 2's plan; n09-5 Ron end to end; n09-6 clothing; n09-7 hair; n09-8 people alive.
-- [ ] n09-9 lean QA; n09-10 skills; n09-11 efficiency; n09-12 the games' numbers; n09-13 parked cars' cost; n09-14 the API credit by about 11 Nov.
-
-STATE (14 Nov 22:40): Kiln has priority to Mon 16 Nov 07:00 (advisor 144); M3 and M4 met (round 9, tag m4-2026-11-14; KILN-ROUND1-2026-11-13.md); M5 waits for the 16 Nov order; M7 is the finish line (advisor 159). n09-3 step 4's BC1 shop pictures confirmed packaged (13 Nov walk).
+STATE (16 Nov 06:50): preparation before the 13:00 reset (advisor 168): records done; method note, FoldCraft read, breadth set and code-search test under way. M4 met (tag m4-2026-11-14).
 
 ## Handovers
 

@@ -726,3 +726,7 @@
 {"event": "stop", "at": "2026-11-15T18:40:00", "note": ""}
 {"event": "start", "at": "2026-11-15T19:52:00", "task": "n09-11 efficiency: prompt hook for WAIT runs (advisor eff)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-15T19:56:00", "note": ""}
+{"event": "start", "at": "2026-11-16T06:40:16", "task": "n16-3 street scale test method note (helper)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T06:46:09", "note": "method note written by helper, under review"}
+{"event": "start", "at": "2026-11-16T06:46:10", "task": "n16-3 method note review (helper)", "phase": "2", "kind": "review"}
+{"event": "stop", "at": "2026-11-16T06:51:29", "note": "method note passed with fixes; fixes applied"}
