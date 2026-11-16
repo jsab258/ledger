@@ -12,6 +12,7 @@
 #include "Retargeter/IKRetargeter.h"
 #include "Misc/FileHelper.h"
 #include "ImageUtils.h"
+#include "VignetteShot.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Engine/Texture2D.h"
 
@@ -723,11 +724,9 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 			Cands.Add(FPaths::Combine(Inputs.IsEmpty() ? FString(TEXT("F:/LedgerTools/game-inputs")) : Inputs, Rel));
 			for (const FString& C : Cands)
 			{
-				if (IFileManager::Get().FileSize(*C) > 0 && (Painted = FImageUtils::ImportFileAsTexture2D(C)) != nullptr)
+				// through the game's one picture importer (16 November): its block-compressed copy when current, sRGB, rooted
+				if (IFileManager::Get().FileSize(*C) > 0 && (Painted = LedgerVignetteShot::ImportRuntimePicture(C, true)) != nullptr)
 				{
-					Painted->SRGB = true;
-					Painted->UpdateResource();
-					Painted->AddToRoot();
 					UE_LOG(LogTemp, Display, TEXT("LedgerWalk: his scalp painted in his hair's colour, from %s"), *C);
 					break;
 				}

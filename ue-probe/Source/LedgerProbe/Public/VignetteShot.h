@@ -205,4 +205,13 @@ namespace LedgerVignetteShot
 	// this an occlusion reading can only name StaticMeshActor_NNN, which
 	// names nothing anybody can look up in vignette-pieces.json.
 	FString StreetPieceNameOf(const AActor* Actor);
+
+	// THE RUN-TIME PICTURES (16 November, n16-3, the packing plan's step 2; VignetteShot.cpp ImportTexture). A picture
+	// file made into a texture by the game's one importer: its block-compressed copy when one is current
+	// (tools/bc1_pictures.py), else its PNG decoded; rooted, sRGB as asked, noted in the picture list. NoteRuntimePicture
+	// adds a texture made elsewhere (the interface's pictures) to that list; WritePictureLog writes the list to
+	// Saved/PerfHook/<Name>-pictures.tsv and logs one summary line (LedgerPictures:).
+	class UTexture2D* ImportRuntimePicture(const FString& FullPath, bool bSrgb);
+	void NoteRuntimePicture(const FString& Path, class UTexture2D* Tex, const TCHAR* Why);
+	void WritePictureLog(const FString& Name, const TCHAR* When);
 }

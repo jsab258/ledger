@@ -6206,6 +6206,169 @@ namespace
 		return FString();
 	}
 
+	// ---- THE RUN-TIME PICTURES, NAMED AND BLOCK-COMPRESSED (16 November, n16-3, the packing plan's step 2) ----------
+	//
+	// The owner dump of 16 November (OWNER-DUMP-2026-11-16.md) counted 340 run-time pictures, 1,351 MB, every one
+	// /Engine/Transient and unnamed. Each picture ImportTexture or ImportBlockTexture makes is noted here: its file, its
+	// size and format as made, the card memory of its one mip, and why a PNG was decoded where a compressed copy could
+	// have been read. Under the measuring switch (-PerfHook=, or -LedgerPictureLog) each BGRA8 decode logs one line
+	// (LedgerPicture:); WritePictureLog writes the whole list to Saved/PerfHook/<name>-pictures.tsv and one summary line
+	// (LedgerPictures:) at the capture's start (CrimeProbe.cpp PerfHookTick).
+	struct FPictureNote
+	{
+		FString Path;
+		FString Format;
+		FString Why;
+		int32 W = 0, H = 0;
+		double MB = 0.0;
+		TWeakObjectPtr<UTexture2D> Tex;
+	};
+	TArray<FPictureNote>& GPictureNotes = *new TArray<FPictureNote>();
+	int32 GFlatPictures = 0;   // the 2x2 colours made in code (MakeFlatTexture, MakeControlTexture): no file
+
+	bool PictureLogOn()
+	{
+		static const bool bOn = [] {
+			FString Mode;
+			return FParse::Param(FCommandLine::Get(), TEXT("LedgerPictureLog"))
+				|| (FParse::Value(FCommandLine::Get(), TEXT("PerfHook="), Mode) && !Mode.IsEmpty());
+		}();
+		return bOn;
+	}
+
+	void NotePicture(const FString& Path, const TCHAR* Format, int32 W, int32 H, int64 Bytes, const FString& Why, UTexture2D* Tex)
+	{
+		FPictureNote N;
+		N.Path = Path;
+		N.Format = Format;
+		N.Why = Why;
+		N.W = W;
+		N.H = H;
+		N.MB = (double)Bytes / (1024.0 * 1024.0);
+		N.Tex = Tex;
+		GPictureNotes.Add(N);
+		if (PictureLogOn() && N.Format == TEXT("BGRA8"))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerPicture: BGRA8 %s %dx%d %.2f MB (%s)"), *Path, W, H, N.MB, *Why);
+		}
+	}
+
+	FString NormalPath(const FString& P)
+	{
+		FString Out = FPaths::ConvertRelativePathToFull(P);
+		FPaths::NormalizeFilename(Out);
+		FPaths::CollapseRelativeDirectories(Out);
+		return Out;
+	}
+
+	// WHERE A PICTURE'S COMPRESSED COPY MAY BE: beside it (a packaged copy stages it there; a picture read from the game
+	// inputs has it there), else under the game inputs at the picture's repository path (tools/bc1_pictures.py writes
+	// there; a checkout holds no copy). One extension per format; the tool keeps one copy a picture.
+	void CompressedSiblings(const FString& FullPath, TArray<FString>& Out)
+	{
+		static const TCHAR* Exts[3] = { TEXT(".bc1"), TEXT(".bc3"), TEXT(".bc5") };
+		const FString Full = NormalPath(FullPath);
+		const FString Stem = FPaths::Combine(FPaths::GetPath(Full), FPaths::GetBaseFilename(Full));
+		FString Rel;
+		TArray<FString> Roots;
+		// the game's staged copy first (Content/LedgerData keeps each file's repository path below it, and the editor
+		// reads a file there when the checkout lacks it: his scalp, 16 Nov), then the checkout's root
+		Roots.Add(NormalPath(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"))));
+		if (!GStreetRepoRoot.IsEmpty()) { Roots.Add(NormalPath(GStreetRepoRoot)); }
+		Roots.Add(NormalPath(FPaths::Combine(FPaths::ProjectDir(), TEXT(".."))));
+		for (FString R : Roots)
+		{
+			if (!R.EndsWith(TEXT("/"))) { R += TEXT("/"); }
+			if (Stem.StartsWith(R, ESearchCase::IgnoreCase)) { Rel = Stem.Mid(R.Len()); break; }
+		}
+		FString Inputs = FPlatformMisc::GetEnvironmentVariable(TEXT("LEDGER_GAME_INPUTS"));
+		if (Inputs.IsEmpty()) { Inputs = TEXT("F:/LedgerTools/game-inputs"); }
+		for (const TCHAR* E : Exts)
+		{
+			Out.Add(Stem + E);
+			if (!Rel.IsEmpty()) { Out.Add(FPaths::Combine(Inputs, Rel) + E); }
+		}
+	}
+
+	// A PICTURE ALREADY BLOCK-COMPRESSED (12 Nov, n09-3 step 4, the shop rooms' BC1; widened 16 Nov to BC3 and BC5):
+	// tools/bc1_pictures.py writes a four-byte magic ("LBC1", "LBC3", "LBC5"), four uint32 (block width, block height:
+	// multiples of 4; the picture's own width, height), then the blocks row by row (8 bytes a block for BC1, 16 for BC3
+	// and BC5). No compressor runs in a packaged game, so the blocks are made ahead of time; CreateTransient takes any
+	// pixel format at a size that is a multiple of its block (Texture2D.cpp 1291-1340, UTexture2D::CreateTransient). Made
+	// empty, its colour space set, then filled and refreshed, so the first upload is already in the right colour space.
+	// One mip, as ImportTexture's. BC5 holds a normal map's x and y; the material's normal sampler rebuilds z from them
+	// (Common.ush 1698-1711, UnpackNormalMap), so it is refused for a colour (sRGB) use. OutW and OutH are the picture's
+	// own size. Source names the picture the copy stands for, in the picture list.
+	UTexture2D* ImportBlockTexture(const FString& FullPath, bool bSrgb, int32& OutW, int32& OutH, FString& OutLoadedAs,
+	                               const FString& Source = FString())
+	{
+		OutW = 0; OutH = 0;
+		TArray64<uint8> Bytes;
+		if (!FFileHelper::LoadFileToArray(Bytes, *FullPath) || Bytes.Num() < 20)
+		{
+			OutLoadedAs = TEXT("block-copy-would-not-load");
+			return nullptr;
+		}
+		EPixelFormat Fmt = PF_Unknown;
+		int32 BlockBytes = 0;
+		const TCHAR* Name = TEXT("");
+		if (FMemory::Memcmp(Bytes.GetData(), "LBC1", 4) == 0) { Fmt = PF_DXT1; BlockBytes = 8; Name = TEXT("BC1"); }
+		else if (FMemory::Memcmp(Bytes.GetData(), "LBC3", 4) == 0) { Fmt = PF_DXT5; BlockBytes = 16; Name = TEXT("BC3"); }
+		else if (FMemory::Memcmp(Bytes.GetData(), "LBC5", 4) == 0) { Fmt = PF_BC5; BlockBytes = 16; Name = TEXT("BC5"); }
+		else { OutLoadedAs = TEXT("block-copy-bad-magic"); return nullptr; }
+		if (Fmt == PF_BC5 && bSrgb) { OutLoadedAs = TEXT("bc5-copy-asked-for-as-colour"); return nullptr; }
+		uint32 Head[4];
+		FMemory::Memcpy(Head, Bytes.GetData() + 4, sizeof(Head));
+		const int32 BW = (int32)Head[0], BH = (int32)Head[1];
+		const int64 Want = (int64)(BW / 4) * (int64)(BH / 4) * BlockBytes;
+		if (BW <= 0 || BH <= 0 || BW % 4 || BH % 4 || BW > 16384 || BH > 16384 || Bytes.Num() - 20 != Want)
+		{
+			OutLoadedAs = FString::Printf(TEXT("%s-bad-size-%dx%d-%lld-bytes"), Name, BW, BH, (long long)(Bytes.Num() - 20));
+			return nullptr;
+		}
+		UTexture2D* Tex = UTexture2D::CreateTransient(BW, BH, Fmt);
+		if (Tex == nullptr) { OutLoadedAs = FString::Printf(TEXT("%s-createtransient-returned-null"), Name); return nullptr; }
+		Tex->SRGB = bSrgb;
+		Tex->AddToRoot();
+		uint8* Dest = (uint8*)Tex->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+		FMemory::Memcpy(Dest, Bytes.GetData() + 20, (SIZE_T)Want);
+		Tex->GetPlatformData()->Mips[0].BulkData.Unlock();
+		Tex->UpdateResource();
+		OutW = (int32)Head[2]; OutH = (int32)Head[3];
+		OutLoadedAs = FString::Printf(TEXT("%s/srgb=%s"), Name, bSrgb ? TEXT("yes") : TEXT("no"));
+		NotePicture(Source.IsEmpty() ? FullPath : Source, Name, BW, BH, Want, FString::Printf(TEXT("copy %s"), *FullPath), Tex);
+		return Tex;
+	}
+
+	// THE COMPRESSED COPY OF A PICTURE, when one is there, at least as new as the picture, and well formed; else null and
+	// OutWhyNot says which of the three it was (the picture list carries it beside the PNG decode that follows).
+	// -NoCompressedPictures reads every picture from its PNG, as before 16 November (the before half of a measurement).
+	UTexture2D* ImportCompressedCopy(const FString& FullPath, bool bSrgb, int32& OutW, int32& OutH, FString& OutLoadedAs,
+	                                 FString& OutWhyNot)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoCompressedPictures"));
+		if (bOff) { OutWhyNot = TEXT("compressed copies off (-NoCompressedPictures)"); return nullptr; }
+		TArray<FString> Cands;
+		CompressedSiblings(FullPath, Cands);
+		const FDateTime Pic = IFileManager::Get().GetTimeStamp(*FullPath);
+		OutWhyNot = TEXT("no compressed copy");
+		for (const FString& C : Cands)
+		{
+			if (IFileManager::Get().FileSize(*C) <= 0) { continue; }
+			if (IFileManager::Get().GetTimeStamp(*C) < Pic)
+			{
+				OutWhyNot = FString::Printf(TEXT("compressed copy older than its picture: %s"), *C);
+				continue;
+			}
+			FString As;
+			UTexture2D* T = ImportBlockTexture(C, bSrgb, OutW, OutH, As, FullPath);
+			if (T != nullptr) { OutLoadedAs = As; return T; }
+			OutWhyNot = FString::Printf(TEXT("compressed copy refused, %s: %s"), *As, *C);
+			UE_LOG(LogTemp, Warning, TEXT("LedgerPicture: %s: %s"), *FullPath, *OutWhyNot);
+		}
+		return nullptr;
+	}
+
 	// DECODE A FILE AND UPLOAD IT, WHOLE OR CROPPED, BY ONE PATH.
 	//
 	// THE CROP IS WHY THIS FUNCTION GREW AND NOT WHY A SECOND ONE WAS
@@ -6229,6 +6392,13 @@ namespace
 	{
 		OutW = 0; OutH = 0;
 		OutLoadedAs = TEXT("not-read");
+		// THE COMPRESSED COPY FIRST (16 November, the packing plan's step 2): a quarter or an eighth of the card's memory.
+		// A cropped decal always decodes its PNG, since the crop is cut out of the decoded texels.
+		FString WhyPng = TEXT("cropped decal (the crop needs the decoded picture)");
+		if (CropFrom == nullptr)
+		{
+			if (UTexture2D* Bc = ImportCompressedCopy(FullPath, bSrgb, OutW, OutH, OutLoadedAs, WhyPng)) { return Bc; }
+		}
 		TArray<uint8> Bytes;
 		if (!FFileHelper::LoadFileToArray(Bytes, *FullPath) || Bytes.Num() == 0)
 		{
@@ -6323,47 +6493,10 @@ namespace
 		}
 		Tex->GetPlatformData()->Mips[0].BulkData.Unlock();
 		Tex->UpdateResource();
+		NotePicture(FullPath, TEXT("BGRA8"), Rect.W, Rect.H, (int64)Rect.W * (int64)Rect.H * 4, WhyPng, Tex);
 		OutW = W; OutH = H;
 		OutLoadedAs = FString::Printf(TEXT("%s-BGRA8/srgb=%s"),
 		                              ImageFormatName(Fmt), bSrgb ? TEXT("yes") : TEXT("no"));
-		return Tex;
-	}
-
-	// A PICTURE ALREADY BLOCK-COMPRESSED (12 Nov, n09-3 step 4, the card's memory): tools/bc1_pictures.py writes
-	// "LBC1", four uint32 (block width, block height: multiples of 4; the picture's own width, height), then BC1
-	// blocks row by row. No compressor runs in a packaged game, so the blocks are made ahead of time; CreateTransient
-	// takes them as PF_DXT1 at a size that is a multiple of 4 (Texture2D.cpp 1298-1354). Made empty, its colour space
-	// set, then filled and refreshed, so the first upload is already sRGB. One mip, as ImportTexture's. OutW and OutH
-	// are the picture's own size; the padded last row or column (at most 3 texels) is the only difference.
-	UTexture2D* ImportBc1Texture(const FString& FullPath, bool bSrgb, int32& OutW, int32& OutH, FString& OutLoadedAs)
-	{
-		OutW = 0; OutH = 0;
-		TArray64<uint8> Bytes;
-		if (!FFileHelper::LoadFileToArray(Bytes, *FullPath) || Bytes.Num() < 20)
-		{
-			OutLoadedAs = TEXT("bc1-would-not-load");
-			return nullptr;
-		}
-		if (FMemory::Memcmp(Bytes.GetData(), "LBC1", 4) != 0) { OutLoadedAs = TEXT("bc1-bad-magic"); return nullptr; }
-		uint32 Head[4];
-		FMemory::Memcpy(Head, Bytes.GetData() + 4, sizeof(Head));
-		const int32 BW = (int32)Head[0], BH = (int32)Head[1];
-		const int64 Want = (int64)(BW / 4) * (int64)(BH / 4) * 8;
-		if (BW <= 0 || BH <= 0 || BW % 4 || BH % 4 || BW > 16384 || BH > 16384 || Bytes.Num() - 20 != Want)
-		{
-			OutLoadedAs = FString::Printf(TEXT("bc1-bad-size-%dx%d-%lld-bytes"), BW, BH, (long long)(Bytes.Num() - 20));
-			return nullptr;
-		}
-		UTexture2D* Tex = UTexture2D::CreateTransient(BW, BH, PF_DXT1);
-		if (Tex == nullptr) { OutLoadedAs = TEXT("bc1-createtransient-returned-null"); return nullptr; }
-		Tex->SRGB = bSrgb;
-		Tex->AddToRoot();
-		uint8* Dest = (uint8*)Tex->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
-		FMemory::Memcpy(Dest, Bytes.GetData() + 20, (SIZE_T)Want);
-		Tex->GetPlatformData()->Mips[0].BulkData.Unlock();
-		Tex->UpdateResource();
-		OutW = (int32)Head[2]; OutH = (int32)Head[3];
-		OutLoadedAs = FString::Printf(TEXT("BC1/srgb=%s"), bSrgb ? TEXT("yes") : TEXT("no"));
 		return Tex;
 	}
 
@@ -6385,6 +6518,7 @@ namespace
 	{
 		UTexture2D* Tex = UTexture2D::CreateTransient(2, 2, PF_B8G8R8A8);
 		if (Tex == nullptr) { return nullptr; }
+		++GFlatPictures;
 		Tex->SRGB = bSrgb;
 		Tex->Filter = TF_Nearest;
 		Tex->AddToRoot();
@@ -8739,7 +8873,7 @@ namespace
 		int32 FW = 0, FH = 0;
 		FString As;
 		// the block-compressed copy first (an eighth of the card's memory), the PNG when it is missing or refused
-		UTexture2D* T = Ir.Bc[K].IsEmpty() ? nullptr : ImportBc1Texture(Ir.Bc[K], true, FW, FH, As);
+		UTexture2D* T = Ir.Bc[K].IsEmpty() ? nullptr : ImportBlockTexture(Ir.Bc[K], true, FW, FH, As, Ir.Pic[K]);
 		if (T == nullptr)
 		{
 			if (!Ir.Bc[K].IsEmpty()) { UE_LOG(LogTemp, Warning, TEXT("LedgerInteriors: %s's %s BC1 copy refused (%s), its PNG instead"), *Ir.Shop, Params[K], *As); }
@@ -10044,6 +10178,7 @@ namespace
 	{
 		UTexture2D* Tex = UTexture2D::CreateTransient(2, 2, PF_B8G8R8A8);
 		if (Tex == nullptr) { return nullptr; }
+		++GFlatPictures;
 		Tex->SRGB = true;
 		// NEAREST, BECAUSE A 2x2 BILINEAR TEXTURE IS A GRADIENT RATHER THAN
 		// FOUR COLOURS. The reading survives either filter, since a blend of
@@ -11354,5 +11489,57 @@ namespace LedgerVignetteShot
 			if (It.Value() == Actor) { return It.Key(); }
 		}
 		return FString();
+	}
+
+	// THE RUN-TIME PICTURES, for the rest of the game (VignetteShot.h). ImportRuntimePicture is ImportTexture whole.
+	UTexture2D* ImportRuntimePicture(const FString& FullPath, bool bSrgb)
+	{
+		int32 W = 0, H = 0;
+		FString As;
+		return ImportTexture(FullPath, bSrgb, W, H, As);
+	}
+
+	void NoteRuntimePicture(const FString& Path, UTexture2D* Tex, const TCHAR* Why)
+	{
+		if (Tex == nullptr) { return; }
+		const EPixelFormat F = Tex->GetPixelFormat();
+		const int32 W = Tex->GetSizeX(), H = Tex->GetSizeY();
+		const FPixelFormatInfo& Info = GPixelFormats[F];
+		const int64 Bytes = (int64)FMath::DivideAndRoundUp(W, Info.BlockSizeX) * FMath::DivideAndRoundUp(H, Info.BlockSizeY) * Info.BlockBytes;
+		NotePicture(Path, F == PF_B8G8R8A8 ? TEXT("BGRA8") : Info.Name, W, H, Bytes, FString(Why), Tex);
+	}
+
+	// THE PICTURE LIST, WRITTEN: every picture noted since the game started (format, size as made, MB, whether its texture
+	// is still held, file, why a PNG), and one line of sums. "alive" is a texture still rooted: a shop room's released
+	// picture (BindInteriorPicture) is counted as made but not alive.
+	void WritePictureLog(const FString& Name, const TCHAR* When)
+	{
+		int32 Bgra = 0, Block = 0, BgraAlive = 0, BlockAlive = 0, Bc1 = 0, Bc3 = 0, Bc5 = 0, Other = 0;
+		double BgraMB = 0.0, BlockMB = 0.0, BgraAliveMB = 0.0, BlockAliveMB = 0.0;
+		FString Text = TEXT("format\tw\th\tmb\talive\tpath\twhy\n");
+		for (const FPictureNote& N : GPictureNotes)
+		{
+			const bool bAlive = N.Tex.IsValid() && N.Tex->IsRooted();
+			if (N.Format == TEXT("BGRA8"))
+			{
+				++Bgra; BgraMB += N.MB;
+				if (bAlive) { ++BgraAlive; BgraAliveMB += N.MB; }
+			}
+			else if (N.Format == TEXT("BC1") || N.Format == TEXT("BC3") || N.Format == TEXT("BC5"))
+			{
+				++Block; BlockMB += N.MB;
+				if (bAlive) { ++BlockAlive; BlockAliveMB += N.MB; }
+				Bc1 += N.Format == TEXT("BC1") ? 1 : 0;
+				Bc3 += N.Format == TEXT("BC3") ? 1 : 0;
+				Bc5 += N.Format == TEXT("BC5") ? 1 : 0;
+			}
+			else { ++Other; }
+			Text += FString::Printf(TEXT("%s\t%d\t%d\t%.3f\t%d\t%s\t%s\n"), *N.Format, N.W, N.H, N.MB, bAlive ? 1 : 0, *N.Path, *N.Why);
+		}
+		const FString File = FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("PerfHook") / (Name + TEXT("-pictures.tsv")));
+		const bool bSaved = FFileHelper::SaveStringToFile(Text, *File, FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
+		UE_LOG(LogTemp, Display, TEXT("LedgerPictures: when=%s bgra8=%d (%.1f MB; alive %d, %.1f MB) blockCompressed=%d (%.1f MB; alive %d, %.1f MB; BC1 %d, BC3 %d, BC5 %d) other=%d flat2x2=%d file=%s%s"),
+			When, Bgra, BgraMB, BgraAlive, BgraAliveMB, Block, BlockMB, BlockAlive, BlockAliveMB, Bc1, Bc3, Bc5, Other, GFlatPictures,
+			*File, bSaved ? TEXT("") : TEXT(" (NOT WRITTEN)"));
 	}
 }

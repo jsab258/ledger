@@ -10,6 +10,7 @@
 #include "HAL/FileManager.h"
 #include "HAL/PlatformTime.h"
 #include "ImageUtils.h"
+#include "VignetteShot.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Paths.h"
 #include "Styling/CoreStyle.h"
@@ -69,6 +70,8 @@ namespace
 		if (IFileManager::Get().FileSize(*Path) <= 0) { return nullptr; }
 		UTexture2D* T = FImageUtils::ImportFileAsTexture2D(Path);
 		if (T != nullptr) { T->AddToRoot(); }
+		// in the run-time picture list (16 November): the interface's pictures stay PNG, a named exception
+		LedgerVignetteShot::NoteRuntimePicture(Path, T, TEXT("interface picture, a Slate brush (LedgerPaper.cpp)"));
 		return T;
 	}
 }

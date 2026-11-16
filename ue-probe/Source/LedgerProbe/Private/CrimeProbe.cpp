@@ -5531,6 +5531,12 @@ namespace
 			}
 			if (Now < CollectedAt + 2.0) { return; }
 			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: capture starts %.1f s after the street settled, %d shader pipeline(s) still being prepared, the setting-up garbage collected"), Now - NextAt, Pending);
+			// THE RUN-TIME PICTURES AT THIS MOMENT (16 November, the packing plan's step 2): the list beside the shot's name
+			{
+				FString PicName = Mode;
+				FParse::Value(FCommandLine::Get(), TEXT("PerfHookShotName="), PicName);
+				LedgerVignetteShot::WritePictureLog(PicName, TEXT("capture-start"));
+			}
 			int32 Frames = 1800;
 			FParse::Value(FCommandLine::Get(), TEXT("PerfHookFrames="), Frames);
 			if (GEngine != nullptr) { GEngine->Exec(World, *FString::Printf(TEXT("csvprofile frames=%d"), FMath::Max(60, Frames))); }

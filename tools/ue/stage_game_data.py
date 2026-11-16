@@ -160,6 +160,11 @@ def wanted():
                 if n.endswith(".meta"):
                     continue
                 files.append(os.path.relpath(os.path.join(dirpath, n), REPO).replace("\\", "/"))
+    # EVERY RUN-TIME PICTURE'S BLOCK-COMPRESSED COPY (16 November, n16-3, the packing plan's step 2; tools/bc1_pictures.py
+    # writes them to the game inputs on F:, .bc1, .bc3 or .bc5 beside the picture's path): staged beside its picture
+    # only while at least as new as it, so a repainted picture never shows its old copy; else the PNG serves
+    # (VignetteShot.cpp ImportCompressedCopy reads it beside the picture in a packaged copy)
+    files += compressed_copies(files)
     seen, out = set(), []
     for f in files:
         f = f.replace("\\", "/")
@@ -174,6 +179,25 @@ def wanted():
 # such as a shop room's lives on F:, under the same path as in the repository. The build machine
 # runs on this PC and reads it there; a file in the checkout is always preferred.
 GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
+
+
+COMPRESSED_EXT = (".bc1", ".bc3", ".bc5")
+PICTURE_EXT = (".png", ".jpg", ".jpeg")
+
+
+def compressed_copies(files):
+    """The current compressed copy of each picture in files (tools/bc1_pictures.py), as repository paths."""
+    out = []
+    for f in files:
+        stem, ext = os.path.splitext(f)
+        if ext.lower() not in PICTURE_EXT:
+            continue
+        pic = source_of(f)
+        for e in COMPRESSED_EXT:
+            copy = source_of(stem + e)
+            if pic and copy and os.path.getmtime(copy) >= os.path.getmtime(pic):
+                out.append(stem + e)
+    return out
 
 
 def source_of(f):
@@ -279,6 +303,13 @@ def selftest():
                   >= os.path.getmtime(source_of(p["pictures"] + "_" + s + ".png")))
               for p in _load("production/specs/shop-interiors.json").get("shops", []) if p.get("pictures")
               for s in ("day", "night_lit", "night_dark")))
+    copies = [f for f in files if f.endswith(COMPRESSED_EXT)]
+    check("every picture's current compressed copy is staged (tools/bc1_pictures.py, 16 November)",
+          sorted(set(compressed_copies(files))) == sorted(copies))
+    check("no staged compressed copy is older than its picture",
+          all(any(source_of(os.path.splitext(f)[0] + x)
+                  and os.path.getmtime(source_of(f)) >= os.path.getmtime(source_of(os.path.splitext(f)[0] + x))
+                  for x in PICTURE_EXT) for f in copies))
     check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
     check("the photographed surfaces are staged", any(f.startswith("ledger/Assets/StreamingAssets/CityPack/textures/") for f in files))
     check("the corner file and every scan it lists are staged (the played copy wore the drawn brick without them)",
