@@ -735,3 +735,7 @@
 {"event": "stop", "at": "2026-11-16T07:13:13", "note": "n16-6 method note passed with fixes"}
 {"event": "start", "at": "2026-11-16T07:52:00", "task": "n16-10 gate hook installed and licence line (his turn)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-16T07:56:00", "note": ""}
+{"event": "start", "at": "2026-11-16T08:54:00", "task": "n16-6 the second provider's client and its tests", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-16T08:58:50", "note": ""}
+{"event": "start", "at": "2026-11-16T08:58:57", "task": "n16-6 review of the provider client", "phase": "2", "kind": "review"}
+{"event": "stop", "at": "2026-11-16T09:04:21", "note": "review passed with fixes, all taken; CLIENT-REVIEW-2026-11-16.md"}

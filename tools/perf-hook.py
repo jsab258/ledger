@@ -73,6 +73,19 @@ def slowest_1pct(xs):
     return statistics.mean(s[-max(1, len(s) // 100):]) if s else None
 
 
+def p99(xs):
+    """The true 99th percentile (nearest rank), not the mean of the slowest 1%."""
+    if not xs:
+        return None
+    s = sorted(xs)
+    return round(s[min(len(s) - 1, max(0, -(-99 * len(s) // 100) - 1))], 2)
+
+
+def ends(xs):
+    """The first and last frame's value, or None."""
+    return [xs[0], xs[-1]] if xs else None
+
+
 def med(xs):
     return round(statistics.median(xs), 2) if xs else None
 
@@ -116,12 +129,32 @@ def summarise(header, body, label=""):
         # the highest frame of the rows read, no drop rule of its own; reports, never fails
         "gpuMemPeakMB": round(max(mem), 1) if mem else None,
         "systemMemMB": med(column(header, body, "PhysicalUsedMB")),
+        # THE SCALE TEST'S COLUMNS (n16-3, METHOD-NOTE-2026-11-16.md section 2 and its review's changes 4, 6, 7):
+        # the CPU threads beside the GPU, the true 99th percentile frame (the 25 ms target), Windows' budget beside
+        # the use, the streaming pools, the people's animation and movement time, lights and instances at the
+        # capture's start and end, so cost per copy and per person can be fitted over the ladder.
+        "frameP99Ms": p99(frame),
+        "gameThreadMedianMs": med(column(header, body, "GameThreadTime")),
+        "renderThreadMedianMs": med(column(header, body, "RenderThreadTime")),
+        "rhiThreadMedianMs": med(column(header, body, "RHIThreadTime")),
+        "gpuBudgetMB": med(column(header, body, "GPUMem/LocalBudgetMB")),
+        "streamingPoolMB": med(column(header, body, "TextureStreaming/StreamingPool")),
+        "wantedMipsMB": med(column(header, body, "TextureStreaming/WantedMips")),
+        "nonStreamingMipsMB": med(column(header, body, "TextureStreaming/NonStreamingMips")),
+        "residentMeshMB": med(column(header, body, "TextureStreaming/ResidentMeshMem")),
+        "levelsLoadingMax": max(column(header, body, "LevelStreaming/NumLevelsLoading") or [0]),
+        "animationMedianMs": med(column(header, body, "Exclusive/GameThread/Animation")),
+        "movementMedianMs": med(column(header, body, "Exclusive/GameThread/CharacterMovement")),
+        "lightsStartEnd": ends(column(header, body, "LightCount/All")),
+        "instancesStartEnd": ends(column(header, body, "GPUSceneInstanceCount")),
         "walkedM": round(max(column(header, body, "View/PosX") or [0]) / 100.0 - min(column(header, body, "View/PosX") or [0]) / 100.0, 1),
     }
 
 
 def table(rows):
-    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "frameWorstMs", "framesOver33", "gpuMedianMs", "gpuRoomMs", "verdict", "drawCalls", "primitives", "gpuMemMB", "gpuMemPeakMB"]
+    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "frameP99Ms", "frameWorstMs", "framesOver33", "gpuMedianMs", "gpuRoomMs", "verdict",
+            "gameThreadMedianMs", "renderThreadMedianMs", "rhiThreadMedianMs", "drawCalls", "primitives", "gpuMemMB", "gpuMemPeakMB", "gpuBudgetMB",
+            "streamingPoolMB", "animationMedianMs", "movementMedianMs", "lightsStartEnd", "instancesStartEnd"]
     out = [" | ".join(keys)]
     for r in rows:
         out.append(" | ".join(str(r.get(k)) for k in keys))
@@ -158,6 +191,17 @@ def selftest():
     check("the walk's distance is read from the view", s["walkedM"] == 19.9)
     slow = [[str(40), "38", "3", "2", "1.5", "0.5", "900", "0"] for _ in range(200)]
     check("a frame of 40 ms is below 30", summarise(header, slow)["verdict"] == "BELOW-30")
+    sh = ["FrameTime", "GameThreadTime", "RenderThreadTime", "RHIThreadTime", "GPUMem/LocalBudgetMB", "TextureStreaming/StreamingPool",
+          "Exclusive/GameThread/Animation", "Exclusive/GameThread/CharacterMovement", "LightCount/All", "GPUSceneInstanceCount", "LevelStreaming/NumLevelsLoading"]
+    sb = [[str(10 + (k == 99) * 15 + (k == 98) * 12), "8", "6", "4", "7000", "1000", "0.9", "0.4", str(30 + k // 50), str(5000 + k), str(k % 2)] for k in range(100)]
+    ss = summarise(sh, sb, "scale")
+    check("the true 99th percentile, not the slowest 1%'s mean", ss["frameP99Ms"] == 22.0 and ss["frameWorstMs"] == 25.0)
+    check("the threads, the budget and the pool are read", ss["gameThreadMedianMs"] == 8.0 and ss["renderThreadMedianMs"] == 6.0
+          and ss["rhiThreadMedianMs"] == 4.0 and ss["gpuBudgetMB"] == 7000.0 and ss["streamingPoolMB"] == 1000.0)
+    check("people's animation and movement time", ss["animationMedianMs"] == 0.9 and ss["movementMedianMs"] == 0.4)
+    check("lights and instances at the start and the end", ss["lightsStartEnd"] == [30.0, 31.0] and ss["instancesStartEnd"] == [5000.0, 5099.0])
+    check("levels loading at their most", ss["levelsLoadingMax"] == 1.0)
+    check("an older CSV without them gives None, never a crash", s["frameP99Ms"] is not None and s["gameThreadMedianMs"] is None and s["lightsStartEnd"] is None)
     import tempfile
     with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)

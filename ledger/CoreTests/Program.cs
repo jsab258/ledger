@@ -227,6 +227,7 @@ namespace Ledger.CoreTests
                 await TestDirectorAsync();
                 await TestIntentRouterAsync();
                 await TestRetryAndErrors();
+                await TestProviderClient();
                 Console.WriteLine($"\nAll {_passed} checks passed.");
                 return 0;
             }

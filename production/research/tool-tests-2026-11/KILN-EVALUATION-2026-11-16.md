@@ -41,4 +41,4 @@ About 12.6 h of the clothing cap's 20 h: rounds 1 to 9 about 9.8 h with their ju
 
 ## Open for the evaluation
 - Whether the margins are wide enough to start M5 without a hardening round (recommended: start M5, harden only what M5's jobs break).
-- The Marvelous renewal (its month ends about 20 Nov) rests on M4 plus the held-back result (advisor 157): the held-back jobs are not run yet, so no renewal recommendation is possible before they are.
+- The Marvelous renewal (it renews on 26 Nov, his own check of 13 Nov, advisor 170) rests on M4 plus the held-back result (advisor 157): the held-back jobs are not run yet, so no renewal recommendation is possible before they are.
