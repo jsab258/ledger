@@ -730,3 +730,6 @@
 {"event": "stop", "at": "2026-11-16T06:46:09", "note": "method note written by helper, under review"}
 {"event": "start", "at": "2026-11-16T06:46:10", "task": "n16-3 method note review (helper)", "phase": "2", "kind": "review"}
 {"event": "stop", "at": "2026-11-16T06:51:29", "note": "method note passed with fixes; fixes applied"}
+{"event": "start", "at": "2026-11-16T07:07:17", "task": "n16-6 talk provider-neutral method note (helper)", "phase": "2", "kind": "production"}
+{"event": "start", "at": "2026-11-16T07:09:42", "task": "n16-6 method note review (helper)", "phase": "2", "kind": "review"}
+{"event": "stop", "at": "2026-11-16T07:13:13", "note": "n16-6 method note passed with fixes"}
