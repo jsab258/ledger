@@ -153,6 +153,12 @@ static class Program
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
         public bool Early;
+        /// THE BAKE-OFF'S MEASURING SWITCH (n16-6, 16 Nov 2026): --core-model NAME or LEDGER_TALK_CORE_MODEL sends every
+        /// real-conversation moment to NAME instead of Models.Core, for a packaged measuring run; small talk is untouched
+        /// and the moment rule (D48) unchanged. Unset, the game is exactly as shipped.
+        public static string CoreModelOverride;
+        public static string ModelForMoment(TalkKind kind) =>
+            kind == TalkKind.Conversation && !string.IsNullOrEmpty(CoreModelOverride) ? CoreModelOverride : TalkMoment.ModelFor(kind);
         /// The fast checker in front of Haiku, when LEDGER_FAST_CHECKER switched it on; null otherwise.
         public volatile FastChecker Fast;
         /// THE FIRST SENTENCE AHEAD OF ITS CHECK (--pending; U1, 30 September):
@@ -1119,7 +1125,7 @@ static class Program
                     // deal is standing, or it is a newcomer's real question; else small talk.
                     bool dealStanding = askTonight || weekAsk || weekStands;
                     lock (_askedNo) if (_askedNo.ContainsKey(to) || _askedWeek.ContainsKey(to) || _askedNo.ContainsKey(key) || _askedWeek.ContainsKey(key)) dealStanding = true;
-                    engine.Model = TalkMoment.ModelFor(TalkMoment.Of(say, deedTopic != null || evidenceBears, dealStanding, momentSaid));
+                    engine.Model = ModelForMoment(TalkMoment.Of(say, deedTopic != null || evidenceBears, dealStanding, momentSaid));
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
                     var timeout = Task.Delay(_patience);
@@ -1554,6 +1560,10 @@ static class Program
         int fmi = Array.IndexOf(args, "--first-model");
         string firstModel = fmi >= 0 && fmi + 1 < args.Length ? args[fmi + 1] : Environment.GetEnvironmentVariable("LEDGER_TALK_FIRST_MODEL");
         ConversationEngine.FirstModel = string.IsNullOrEmpty(firstModel) || firstModel == "off" ? null : firstModel;
+        int cmi = Array.IndexOf(args, "--core-model");
+        string coreModel = cmi >= 0 && cmi + 1 < args.Length ? args[cmi + 1] : Environment.GetEnvironmentVariable("LEDGER_TALK_CORE_MODEL");
+        Helper.CoreModelOverride = string.IsNullOrEmpty(coreModel) ? null : coreModel;
+        if (Helper.CoreModelOverride != null) Console.Error.WriteLine("talk-helper: real conversation goes to " + Helper.CoreModelOverride + " (measuring switch)");
         // THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): with --budget-usd
         // (or LEDGER_TALK_BUDGET_USD) every call reserves its worst case first,
         // and none is sent that could take the run past the budget (BudgetedClient).
@@ -1767,6 +1777,14 @@ static class Program
             return o;
         }
         bool Flag(string json, string f) { using var d = JsonDocument.Parse(json); return d.RootElement.TryGetProperty(f, out var v) && v.GetBoolean(); }
+
+        // THE BAKE-OFF'S MEASURING SWITCH (n16-6): unset, every moment's model is as shipped; set, only real conversation moves
+        Helper.CoreModelOverride = null;
+        Ok("no core switch: conversation keeps the shipped model", Helper.ModelForMoment(TalkKind.Conversation) == Models.Core);
+        Helper.CoreModelOverride = "claude-sonnet-5-5";
+        Ok("the core switch moves real conversation", Helper.ModelForMoment(TalkKind.Conversation) == "claude-sonnet-5-5");
+        Ok("the core switch leaves small talk alone", Helper.ModelForMoment(TalkKind.SmallTalk) == Models.Ambient);
+        Helper.CoreModelOverride = null;
 
         var fake = new FakeLlm();
         var h = new Helper(fake, TimeSpan.FromSeconds(8));
