@@ -3,8 +3,8 @@
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
 **Started:** 2026-11-16 20:17 (the hourly run)
-**Row due:** 2026-11-16 22:12 (the hourly row; last row 21:12)
-**Stopped:** 2026-11-16 19:51 (history at its point at an item's end; Kiln slide helper still running)
+**Row due:** 2026-11-16 23:09 (the hourly row; last row 22:09)
+**Stopped:** 2026-11-16 22:24 (history past its point at an item's end; Kiln helpers still running: jackets, trousers finishing, speed, regression gate, pattern check: their reports land as files)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted by his tap 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line runs from 0 at Monday 13:00 to 95% by Wednesday 15:00, six helpers, full pace. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -25,37 +25,36 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Held-back jobs never reach a fixer:** never name the two held-back garments in any brief, report, row or file a fixer reads; they live only in F:/LedgerTools/tool-dev/judge/heldback (hash-locked).
 - The page tool (tools/needs_you_page.py) now also refuses install, setting and click asks (his_hands marks safety-check needs) and more than two batches of open items a day.
 
-## Done this run (18:07 to 19:52; pushed to wip: bef9165fd, f00d4dbeb, 4d8bbc44b)
-- Packing step 2 (run-time pictures compressed, BC1/BC5/BC3): fresh Sonnet reviewer pass at hill and hook (editor, same binary, 4.6 to 3.8 GB standing); in tonight's build.
-- Packing step 1: Lumen atlas 3584 and probe resolution 16 in DefaultScalability.ini [GlobalIlluminationQuality@2]; packaged three walks each: about 186 MB less at the median, frame equal. Pictures: HOOK ONLY passed review (last night's copy predates -PerfHookCam and reads only cam_hook; the 'reverse' pair was the hook view: corrected in DECISIONS). Logo (T_GameAnimationSample_Logo) not done.
-- n16-4 part 1: brick target (production/research/street-checks/N16-4-TARGET-2026-11-16.md, reviewed, fixes taken): Flemish, 86 mm courses (texture only; kit grid unchanged), occasional clustered darker headers (20-35%, no chequer, no gloss), greyer recessed mortar. tools/street_checks.py: width in ci (10.25 m PASS); --ends report-only: cam_A 9/21, cam_hook 9/21, cam_reverse 5/21 rays closed (known shortfall; how the quay end closes is taste: his page with pictures). Kit reuse waits for a placement spec.
-- Kiln collar placement try 1 kept (KILN-COLLAR-FIX-2026-11-16.md): neck and shoulders from each body's skin; four of four breadth jobs start; Tom's regression within noise (stretch 1.518 vs 1.502). Committed in Kiln's own repo (376aac6).
-- DAILY-2026-11-16.md written 18:22; hourly rows 18:09, 19:09; recipe map rows C1, C9, B9 updated.
+## Done this run (20:17 to 22:25)
+- Kiln: slide-down fix kept (04f9c93); arm line kept (667768b); body standard kept (3d32458). His picks 185, 186, 187, 188 acked and in DECISIONS (inputs first, Thursday checkpoint; Fable escalation, Fable review taken steps 1-3; lanes; speed lane, 70% on the held-back pass).
+- Idle-gap fix in the gate (Row due, not Next due); records share in token_audit --shares; add history and records rows to every DAILY.
+- Brick try 2 (drawn Flemish tile) set aside after four reviews; donors downloaded.
+- The RULINGS models-line amendment was refused by the unattended run's permission check: leave it for a session at his desk.
+- Rows 20:18, 21:12, (21:37 stamped 22:01, corrected), 22:09.
 
 ## Done the runs before
-- 15:52 to 17:06 and 14:07 to 14:52: git show 8a078e06f:production/handover/HANDOVER.md ('Done this run', 'Done the run before').
+- git show 7e2198b04:production/handover/HANDOVER.md ('Done this run') and earlier.
 
 ## In flight
-- A diagnoser helper (Opus, started about 19:15) on Kiln's slide-down at the 10 mm stage, TRY 2 OF 2 for that fault: research note KILN-SLIDE-METHOD, fix, a height check in Kiln's drop check, reruns of Ron's trousers and Tom's j3; report F:/LedgerTools/tool-dev/reports/KILN-SLIDE-FIX-2026-11-16.md; edits uncommitted in F:/LedgerTools/tool-dev/kiln (commit them in Kiln's repo if kept). It waits while LedgerProbe/UnrealEditor runs. If not closed: set aside, listed.
+- Kiln regression gate helper (diagnoser, from about 21:48): all eight jobs, measured bands, failing exit; report F:/LedgerTools/tool-dev/reports/KILN-REGRESSION-GATE-2026-11-16.md; edits uncommitted in Kiln (python/ only).
+- Kiln fixer lanes (his 187), worktrees C:/LedgerTools/kiln-lanes/{skirt,jackets,trousers,speed} (speed: his 188, the card port, from 22:09), branches lane-*; reports in each lane's reports-lane/LANE-*-2026-11-16.md; judge runs one at a time via F:/LedgerTools/tool-dev/judge-run.lock; merge into Kiln main only after the full judge run passes (all milestones and the held-back jobs, never named to a fixer).
+- Body standard DONE 22:17 (Kiln 3d32458): standard bodies F:/LedgerTools/bodies/standard-2026-11-16; old body files now refused; lanes must merge 3d32458 and use them (jackets lane told; gate helper told to re-baseline on them). Pattern check (rings against girths, seam travel) still to build.
 
 ## Next, in order
-1. FIRST: verdicts after 2026-11-16T18:50:00Z; advisor after 2026-11-16T15:54+01:00 (nothing new since; all acked to 184). Hourly row due by 20:09 (last 19:09).
-2. Read the Kiln slide report when it lands; record (DECISIONS, NOTEBOOK, recipe map row B9/D3), commit Kiln's repo if kept.
-3. Tonight's build carries both packing steps and the n16-6 Sonnet switch: space check by 23:30 (F: 22 GB, floor 20); nothing in Unreal 01:15 to 04:30.
-4. Tomorrow morning: the morning pictures (hook, reverse, night) against today's for both packing steps (reverse and night unverified); the walk's card-memory line against 5.07 GB packaged; then cam_office screen with the new copy (-PerfHookCam=cam_office -PerfHookShot on the packaged exe).
-5. Kiln: Darren's arm line on his headless body (try 1 of 2); then M5 rounds (helpers, advisor 182).
-6. n16-4 part 2: the brick at 86 mm with header flags and clustered darkening (route in the target, section 2), try 2 of the new method; the quay-end closure as a page item with pictures (batch with Tom's and Ron's looks); kit-reuse check once a placement spec exists.
+0. KILN INTEGRATION FIRST (the session's judge work): the body standard (3d32458) refuses old body files, and the judge's hash-locked jobs (F:/LedgerTools/tool-dev/judge/jobs, run_round.py, HASHES.txt) still point at them. Move the judge jobs to F:/LedgerTools/bodies/standard-2026-11-16, re-hash, record a new baseline on 3d32458 (never show held-back jobs to a fixer). Then merge lanes one at a time, each only after the full judge run passes: lane-skirt (3b10d4b, 7d5daf0: skirt fixed, report reports-lane/LANE-SKIRT), lane-trousers (passes per piece; read its report, check its commit), then jackets and speed when they report. The regression gate (python/regression_gate.py, uncommitted in Kiln main) and the pattern check (Rust, uncommitted) land by their reports KILN-REGRESSION-GATE and KILN-PATTERN-CHECK; commit each after reading.
+1. FIRST: verdicts after 2026-11-16T21:05:00Z; advisor after 2026-11-16T22:08:00+01:00 (all acked to 188 and the 22:08 watchdog). Hourly row by 23:09. On the held-back jobs' first full pass: Kiln to about 70% (his 188), say so in that row, record n16-5 and the rest of n16-3 as waiting in the order's ledger.
+2. Arm line kept (Kiln, try 1 of 2): left the collar in a headless body, an input fault for 3(b).
+3. Kiln under 185 and the Fable review: (a) regression gate over all eight jobs with measured bands and a failing exit code (review step 1); (b) body export standard, one script for Tom, Ron, Darren, Sheila (one detail level, same rest pose and skeleton, head and hands, real scale, no stray objects), start check refusing with the reason; pattern check (rings against girths, seam travel) (step 2); (c) passes per piece (step 3). Thursday checkpoint 19 Nov: held-back jobs once, M5 counts, faults traded. Kiln faults with two Opus tries spent go to a Fable helper next.
+4. Tonight's build: both packing steps and the n16-6 switch; space check by 23:30 (F: 20.7 GB at 21:10, floor 20: check first, delete own leftovers only); nothing in Unreal 01:15 to 04:30.
+5. Morning: the three morning pictures against today's (reverse and night verify both packing steps); the walk's card memory against 5.07 GB; cam_office screen on the new copy.
+6. n16-4 brick, a genuinely different method (try 1 of it): photographed bricks cut into the drawn bond (keep flemish_tile.py's sizes, header map and checks); donors from N16-4-PHOTO-BRICK-READING-2026-11-16.md (no Flemish scan exists in the allowed libraries; CC0 candidates Poly Haven brick_wall_006 and church_bricks_02, ambientCG Bricks094, downloaded 21:27 to F:/LedgerTools/game-inputs/polyhaven and ambientcg; looked at: brick_wall_006 is English bond with real worn, chipped, separable bricks: the donor; cut stretchers from its stretcher rows and headers from its header rows into flemish_tile.py's layout); add a near-crop realism screen before any film. Quay-end closure as a page item with pictures (batch with Tom's and Ron's looks).
 7. Bridge live test once its heartbeat is stale; n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 on tonight's copy.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 16 Nov 19:45: p1-packaged.ps1 runs write no pictures, and last night's packaged copy ignores -PerfHookCam (reads only cam_hook): check the log's 'stand at' line before trusting a view's name.
-- 16 Nov 17:00: Kiln start check try 2 of 2: set aside as listed; two different faults remain (collar height rule, slide-down at 10 mm).
-- 16 Nov: a timed walk at a faster frame rate ran out of frames before the route's end (frames x frame time x 1.4 m/s must exceed 422 m).
-- 16 Nov: the profiler's LightCount/All is lights shaded per frame (DeferredShadingRenderer.cpp:2818), not lights lit; read the log's lit line.
-- 16 Nov: by day no local light is lit; light counts need -PerfHookNight; captures longer than about 285 s crossed into the next part of the day until the clock hold.
-- 16 Nov: three breadth drapes refused at Kiln's start check (cloth starts inside the body): try 1 of 2 for each.
-- 16 Nov: the bridge start's UI Automation search took the Welcome window for the main one; rewritten (untested live).
-- 16 Nov: a helper's 1.1 GB build took F: under its floor; build Rust on C:/LedgerTools/cargo-target.
+- 16 Nov 22:09: four stamps (a row and three DECISIONS lines) written without Get-Date, one 25 minutes off; read the clock in the same call that writes.
+- 16 Nov 21:25: a drawn brick tile passed twelve measured checks and still read newly built near the camera: offline measures cannot see a CG surface; judge near crops before filming.
+- 16 Nov 21:00: the scan grade (match_rgb) works in linear light; a first grade in display values missed by about a fifth.
+- 16 Nov 21:11: editing RULINGS from an unattended run (and rewording another ruling to keep the cap) was refused by the permission check.
 - Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2; the rewrite is the genuinely different method under his pick A).
 
 ## Kept as they are

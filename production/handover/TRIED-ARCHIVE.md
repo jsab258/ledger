@@ -78,3 +78,9 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - The collar lift (11 Nov, try 1 on (c)/(d)): the shards are the cardigan's neckband above the collar, not under it; lifting the collar 2.5 mm moved 915 points (up to 14 mm) and left both faults.
 - BC1 on dark night pictures (12 Nov, try 1): four colours a 4x4 block cannot hold a dark gradient; a checker shows on dark surfaces. Kept PNG.
 - Cutting video: no ffmpeg on this PC; Blender 5.2's video editor works headless (fit_method="FIT", media_type 'VIDEO' before FFMPEG; reverse frame by frame, its use_reverse_frames with offsets gave the wrong range). (moved 13 Nov)
+
+- 16 Nov: a timed walk at a faster frame rate ran out of frames before the route's end (frames x frame time x 1.4 m/s must exceed 422 m).
+- 16 Nov: the profiler's LightCount/All is lights shaded per frame (DeferredShadingRenderer.cpp:2818), not lights lit; read the log's lit line.
+- 16 Nov: by day no local light is lit; light counts need -PerfHookNight; captures longer than about 285 s crossed into the next part of the day until the clock hold.
+- 16 Nov 19:45: p1-packaged.ps1 runs write no pictures, and last night's packaged copy ignores -PerfHookCam (reads only cam_hook): check the log's 'stand at' line before trusting a view's name.
+- 16 Nov: the bridge start's UI Automation search took the Welcome window for the main one; rewritten (untested live).
