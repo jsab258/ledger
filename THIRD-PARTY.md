@@ -597,3 +597,6 @@ Tool of the shop windows' checks, not shipped (15 October 2026): rapidocr-onnxru
 
 ## Test prop — Megascans Industrial Junkyard Crate (Epic Games, Fab)
 - Megascans Industrial Junkyard Crate Metal, Epic Games' Quixel Megascans on Fab, downloaded by him through the Epic launcher 11 Nov 2026 (F:/LedgerTools/game-inputs/fab-megascans). Epic's own content: allowed inside the game even where tagged NoAI (RULINGS 13 Oct), never outside an Unreal build. Imported as the texturing test's crate (tools/ue/import_crate_test.py, /Game/Ledger/Test) for one-run films; not in git; removed with the test unless an order keeps it.
+
+## The street's brick from 16 November 2026 — Poly Haven, CC0
+- Brick Wall 006 by Jan Burghardt, https://polyhaven.com/a/brick_wall_006, CC0 (https://polyhaven.com/license, read 16 Nov 2026); its 2K diffuse, DirectX normal and roughness downloaded 16 Nov to F:/LedgerTools/game-inputs/polyhaven/brick_wall_006. Its bricks are cut and re-laid into our own Flemish bond by tools/photo_flemish_tile.py; worn by the street's red brick walls (production/specs/ps5-corner.json, asset photo_flemish_n16_4). No credit required; credited here.

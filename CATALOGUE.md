@@ -64,10 +64,11 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - lighting: talk and evening light tests.
 - mickeys-cars: cars considered (off until convincing).
 - shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); printed goods (sw_prints.py: 24 Poly Haven HDRI crops, prints_used.json; Gutenberg 1408); the cloud's fronts for the game (front_for_game.py, meshes on F:; velvet normals ambientCG Fabric034), all CC0.
-- mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
-- shopfront-kit: the parade's shopfront pieces, scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
+- mickeys-props: Mickey's office's hero props (tools/art-recipes/mickeys-props/; meshes on F:).
+- shopfront-kit: the parade's shopfront pieces (tools/art-recipes/shopfront-kit/).
 - sash-window: the lab's box sash (tools/art-recipes/sash-window/).
 - brick-colour: brick and maroon target.
+- photo_flemish_n16_4: the street's brick (photo_flemish_tile.py; on F:).
 - south-quay: the street's south end (road, quay, basin, jetty), scripted (tools/art-recipes/south-quay/).
 - ui: the interface's screens.
 

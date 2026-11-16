@@ -346,34 +346,21 @@
   "scanned": [
     {
       "base": "brick_red",
-      "asset": "brick_4",
+      "asset": "photo_flemish_n16_4",
       "files": [
-        "production/assets/scanned/polyhaven/brick_4/brick_4_diff_2k.jpg",
-        "production/assets/scanned/polyhaven/brick_4/brick_4_nor_dx_2k.jpg",
-        "production/assets/scanned/polyhaven/brick_4/brick_4_rough_2k.jpg"
+        "production/assets/scanned/photo_flemish_n16_4/photo_flemish_diff.png",
+        "production/assets/scanned/photo_flemish_n16_4/photo_flemish_nor_dx.png",
+        "production/assets/scanned/photo_flemish_n16_4/photo_flemish_rough.png"
       ],
-      "covers_m": 1.05,
+      "covers_m": 2.72,
       "match_rgb": [
-        0.479,
-        0.298,
-        0.314
+        0.556,
+        0.376,
+        0.316
       ],
-      "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour",
+      "why": "16 November (n16-4, the new method try 1): real bricks cut from Poly Haven brick_wall_006 (CC0) into the drawn Flemish bond, 85 mm courses, clustered darker headers (tools/photo_flemish_tile.py, seed 3); graded so the near wall matches the earlier brick (filmed packaged, F:/LedgerTools/gate/new/brick-photo-n16-4, small review PASS). Was brick_4 at 1.05 m.",
       "always": true,
       "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md.",
-      "ids": "production/assets/scanned/polyhaven/brick_4/brick_4_ids.png",
-      "retone": 1.0,
-      "tones": [
-        0.585,
-        1.019,
-        1.348
-      ],
-      "hue": [
-        1.9249,
-        0.7844,
-        0.4123
-      ],
-      "ids_note": "3 November, the corner's step 6: tools/brick_ids.py's brick map (on F: game inputs and, ignored, in the checkout); tones are the bricks' 2, 50 and 98% over the median, hue the common brick's, both linear; the material is make_base_material.py BRICK_TONE_HLSL",
       "macro": 0.08,
       "macro_scale": 0.0025,
       "macro_note": "3 November, the corner's step 6, its second part (world-space variation at 2 to 10 m; Mafia's world noise on 31% of plaster placements): the brick lighter and darker by up to 8% over a 4 m lattice (make_base_material.py MACRO_PARAM); the plan's check, 5 to 15% across a bay"
@@ -506,7 +493,11 @@
         "production/assets/scanned/polyhaven/large_sandstone_blocks/large_sandstone_blocks_rough.png"
       ],
       "covers_m": 1.7148,
-      "match_rgb": [2.0827, 2.0954, 2.2735],
+      "match_rgb": [
+        2.0827,
+        2.0954,
+        2.2735
+      ],
       "always": true,
       "why": "5 November, the corner's step 9b: sills, doorsteps and coping in coursed ashlar, from Poly Haven large_sandstone_blocks (CC0), its moulded bands cut off, made by tools/art-recipes/dressing_tiles.py, 512 px a metre; match_rgb the row's palette over the tile's mean. Joints on single-stone sills are the risk, judged in the first picture."
     },
@@ -519,7 +510,11 @@
         "production/assets/scanned/polyhaven/rusty_metal_02/rusty_metal_02_rough.png"
       ],
       "covers_m": 0.8125,
-      "match_rgb": [0.0678, 0.0779, 0.1248],
+      "match_rgb": [
+        0.0678,
+        0.0779,
+        0.1248
+      ],
       "always": true,
       "why": "5 November, the corner's step 9b: gutters and downpipes as black paint with rust blotches, from Poly Haven rusty_metal_02 (CC0), by the same tool, match_rgb on the paint's brightest quarter (over the whole mean its paint turned blue); black-painted cast iron is a project choice, unverified until the reviewer's period check."
     },
@@ -532,7 +527,11 @@
         "production/assets/scanned/polyhaven/roof_slates_03/roof_slates_03_rough.png"
       ],
       "covers_m": 3.9,
-      "match_rgb": [0.3982, 0.3983, 0.4786],
+      "match_rgb": [
+        0.3982,
+        0.3983,
+        0.4786
+      ],
       "always": true,
       "why": "5 November, the corner's step 9d: worn Welsh-sized slate, 26 cm wide at a 17 cm margin, from Poly Haven roof_slates_03 (CC0), by the same tool, its ridge course cut off; second try: the pale worn patches, also the tile's glossiest, flashed as white flecks at the roof's grazing angle, so tone above the median keeps 30% of its lift and roughness under it 20% of its drop."
     }

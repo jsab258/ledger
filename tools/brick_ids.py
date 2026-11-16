@@ -325,7 +325,9 @@ def selftest():
     ok.append(("an edge brick takes one tone across the copies' seam", np.allclose(left, right, atol=1e-6)))
     ok.append(("the mortar is never re-toned", np.allclose(wall[1, w + 1], lin[1, 1])))
     ok.append(("to_srgb undoes to_linear", np.allclose(to_srgb(to_linear(rgb)), rgb, atol=1e-6)))
-    ok.append(("the spec's brick rows wear two scans", sorted({s["asset"] for s in scans()}) == ["brick_4", "brick_wall_001"]))
+    # 16 Nov (n16-4): brick_red wears the photographed Flemish tile; brick_4 stays on the rubbed arches
+    ok.append(("the spec's brick rows wear their three scans",
+               sorted({s["asset"] for s in scans()}) == ["brick_4", "brick_wall_001", "photo_flemish_n16_4"]))
     for name, good in ok:
         print("  %s %s" % ("ok  " if good else "FAIL", name))
     passed = sum(1 for _, g in ok if g)
