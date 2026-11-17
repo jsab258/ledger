@@ -254,16 +254,12 @@
    ]
   },
   {
-   "line": "11 Oct, amended 25 and 28 Oct: The AAA study",
+   "line": "17 Nov (replaces 11, 25, 28 Oct): other games",
    "by": [
-    "tools/push_guard.py::an AES key's shape (0x and 64 hex characters)",
-    "tools/push_guard.py::a file from a study export folder",
-    "tools/push_guard.py::a picture or film added or changed outside production/previews/",
-    "tools/git-size-guard.py::this commit is refused",
-    "tools/backup-to-dropbox.py::aesKeys",
-    "monday-audit"
+    "monday-audit",
+    "advisor:daily-backstop"
    ],
-   "note": "game pictures and the key kept out of git and the backup"
+   "note": "his ruling 17 Nov 22:33 (advisor 214); a build check failing on a decompiler, game-file extractor or another game's archive in the repo, tools or named F: folders is the next session's first job, then named here"
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
