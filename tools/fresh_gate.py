@@ -44,6 +44,19 @@ its few turns as a session's, so the idle time never passed about 60 minutes, DE
 started until he cleared it by hand, about 10:45. So a short log whose gate line says WAIT is left out. A log that went
 on working after it, or any bigger one, still counts.
 
+A WAITING SESSION IS NOT A STOPPED ONE; A SCRIPT'S RUN IS NOT A SESSION (17 November, two faults in one night;
+F:/LedgerTools/tool-dev/reports/START-CHECK-GAPS-2026-11-17.md). At 01:07 the session started 00:22 had written no turn
+for 32 minutes because it was waiting on a background command of its own (started 00:28, reported finished 01:19, after
+which it worked on); the gate looked for jobs only in the newest turn's log (another session's) and, with no Stopped
+line, took 30 quiet minutes as stopped: GO, and two sessions ran until 01:40. From 01:40 nobody worked, but at 02:22
+the night walk's own `claude -p` reviewer (the walk's eyes, 02:12 to 02:13) counted as a session's turn, and at 02:37
+the idle time was under 30 again: the next session began at 02:52. So now: a background command started and not
+reported finished (nor ended by TaskStop, whose result names it in "task_id") in ANY counted log, a helper's
+included, whose log wrote a turn in the last DEAD_JOB_MIN minutes, holds a session that has not written Stopped
+(WAIT, never "taken as stopped"); and a log a script's `claude -p` wrote
+(its "entrypoint" is "sdk-cli") is not activity: a session waiting on such a helper waits inside a tool call or on a
+background command of its own, which already counts.
+
 THE REHEARSAL (his message of 4 November: test the take-over itself, not only standing aside): while
 production/handover/takeover-rehearsal.json exists and has not expired, the gate decides from the rehearsal's
 handover instead and leaves out the logs it names (the working session standing in for the stopped one); its line
@@ -64,9 +77,11 @@ LOGS = os.path.join(os.path.expanduser("~"), ".claude", "projects", "C--Users-Ja
 QUIET_MIN = 15
 QUIET_STOPPED_MIN = 0.3  # 18 s (advisor 'eff', 12 Nov; HANDOVER-START note): was 3
 DEAD_MIN = 30
-DEAD_JOB_MIN = 120  # only for the cheap file-time shortcut below
+DEAD_JOB_MIN = 120  # the cheap file-time shortcut below (x2); since 17 Nov also how long a pending job holds
 JOB_START = re.compile(rb'"backgroundTaskId": ?"([A-Za-z0-9]+)"')
 JOB_DONE = re.compile(rb'<task-id>([A-Za-z0-9]+)</task-id>')
+ENTRY = re.compile(rb'"entrypoint": ?"([A-Za-z0-9_-]+)"')
+JOB_STOPPED = re.compile(rb'"task_id": ?"([A-Za-z0-9]+)", ?"task_type"')  # TaskStop's result: ended, no <task-id> line
 OWN_RUN_MIN = 10
 TAIL = 1 << 20
 WALK_HOLD_FROM, WALK_HOLD_UNTIL = 1 * 60 + 40, 3 * 60 + 30
@@ -139,11 +154,21 @@ def ended_at_wait(path):
 
 
 def pending_jobs(path, cap=16 << 20):
-    """Background commands started in a log and not reported finished there (read from its last 16 MB)."""
+    """Background commands started in a log and not reported finished or stopped there (read from its last 16 MB)."""
     with open(path, "rb") as fh:
         fh.seek(max(0, os.path.getsize(path) - cap))
         data = fh.read()
-    return set(JOB_START.findall(data)) - set(JOB_DONE.findall(data))
+    return set(JOB_START.findall(data)) - set(JOB_DONE.findall(data)) - set(JOB_STOPPED.findall(data))
+
+
+def script_run(path, head=1 << 16):
+    """True for a log a script's `claude -p` wrote (entrypoint sdk-cli: the night walk's eyes, a Blender helper)."""
+    try:
+        with open(path, "rb") as fh:
+            m = ENTRY.search(fh.read(head))
+    except OSError:
+        return False
+    return bool(m) and m.group(1) == b"sdk-cli"
 
 
 # RUNS THE PROMPT HOOK ENDED (the advisor's "eff", 15 Nov; tools/gate_prompt_hook.py): a WAIT run blocked before the
@@ -170,11 +195,14 @@ def blocked_runs(path=BLOCKED_RUNS, cap=1 << 20):
     return out
 
 
-def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False):
-    """Minutes since the project's newest real turn, this run's own log and those named left out; with_log also
-    gives the main session log that turn belongs to (a helper's turn gives its parent's log)."""
+def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False, with_jobs=False):
+    """Minutes since the project's newest real turn, this run's own log, those named left out and scripts' runs
+    left out; with_log also gives the main session log that turn belongs to (a helper's turn gives its parent's log);
+    with_jobs instead gives the main log of the newest log, main or helper, that holds a pending background command
+    and wrote a turn in the last DEAD_JOB_MIN minutes (17 Nov), else None."""
     paths = glob.glob(os.path.join(logs, "*.jsonl")) + glob.glob(os.path.join(logs, "*", "subagents", "*.jsonl"))
     newest, newest_log = None, None
+    job_t, job_log = None, None
     blocked = blocked_runs()
     for p in paths:
         sid = os.path.basename(p)[:-6] if os.path.dirname(p) == logs else os.path.basename(os.path.dirname(os.path.dirname(p)))
@@ -182,7 +210,7 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
             continue
         if not own and os.path.dirname(p) == logs and now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
             continue
-        if os.path.dirname(p) == logs and (sid in blocked or ended_at_wait(p)):
+        if os.path.dirname(p) == logs and (sid in blocked or ended_at_wait(p) or script_run(p)):
             continue
         if now_ts - os.path.getmtime(p) > DEAD_JOB_MIN * 60 * 2:
             t = os.path.getmtime(p)  # no turn is newer than the file; reading old giants would cost seconds
@@ -190,7 +218,12 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False)
             t = last_turn(p)
         if t is not None and (newest is None or t > newest):
             newest, newest_log = t, os.path.join(logs, sid + ".jsonl")
+        if with_jobs and t is not None and now_ts - t < DEAD_JOB_MIN * 60 and (job_t is None or t > job_t) \
+                and pending_jobs(p):
+            job_t, job_log = t, os.path.join(logs, sid + ".jsonl")
     minutes = None if newest is None else (now_ts - newest) / 60
+    if with_jobs:
+        return minutes, job_log
     return (minutes, newest_log) if with_log else minutes
 
 
@@ -359,9 +392,12 @@ def decide_base(now, text, idle_min, walk_reported=False, job_running=False, pac
     if stopped >= started:
         return "GO the last session stopped at %s; no turn written for %s minutes%s" % (
             stopped.strftime("%H:%M"), "?" if idle_min is None else "%d" % int(idle_min), job)
+    if job_running:  # a session waiting on its own background command is working, however quiet (17 Nov)
+        return "WAIT the last session (started %s) has not stopped: a background command it started still runs " \
+               "(17 Nov: one session at a time)" % started.strftime("%d %b %H:%M")
     if idle_min is not None and idle_min >= DEAD_MIN:
         return "GO the last session (started %s) set no Stopped line but no turn has been written for %d minutes: " \
-               "taken as stopped; say so in the handover%s" % (started.strftime("%d %b %H:%M"), int(idle_min), job)
+               "taken as stopped; say so in the handover" % (started.strftime("%d %b %H:%M"), int(idle_min))
     return "WAIT the last session (started %s) has not stopped" % started.strftime("%d %b %H:%M")
 
 
@@ -395,8 +431,9 @@ def selftest():
         ("ended its turn idle, no Stopped, quiet 29 min: WAIT", decide(d, r, 29), "WAIT"),
         ("ended its turn idle, no Stopped, quiet 30 min: GO", decide(d, r, 30), "GO"),
         ("no Stopped, quiet 29 min, its own job running: WAIT", decide(d, r, 29, job_running=True), "WAIT"),
-        ("no Stopped, quiet 30 min, its own job running: GO (advisor 68)", decide(d, r, 30, job_running=True), "GO"),
-        ("that GO names the running job", "%s" % ("background job" in decide(d, r, 30, job_running=True)), "True"),
+        ("no Stopped, quiet 30 min, its own job running: WAIT (17 Nov; was GO, advisor 68)", decide(d, r, 30, job_running=True), "WAIT the last session"),
+        ("no Stopped, quiet 3 h, a job held: still WAIT (the hold's age limit is in the logs' reading)", decide(d, r, 180, job_running=True), "WAIT the last session"),
+        ("that WAIT names the running command", "%s" % ("background command" in decide(d, r, 30, job_running=True)), "True"),
         ("stopped, its job still running: GO naming it", decide(d, h, 40, job_running=True), "GO the last session stopped"),
         ("until Monday, 00:50: GO", decide(datetime.datetime(2026, 11, 7, 0, 50), h, 400), "GO"),
         ("until Monday, the walk not reported, 02:15: WAIT", decide(datetime.datetime(2026, 11, 7, 2, 15), h, 400), "WAIT the night's walk"),
@@ -562,6 +599,72 @@ def selftest():
               ("model unknown: as before", decide(at(13, 11), hq, 56, model=None), "GO the last session stopped"),
               ("model wrong never turns a WAIT into GO", decide(at(12, 15), h, 0.17, model=fable), "WAIT a session wrote")]
     cases.append(("no night WAIT outside the walk hold, 00:45 to 05:10", "none" if not night_bad else night_bad[0], "none"))
+    # THE NIGHT OF 17 NOVEMBER, from its real logs' times (UTC; Swiss is an hour later). Fault b, 01:07: the session
+    # started 00:22 (log A) waits on its own background command (started 23:28:45, last turn 23:29:37); another
+    # session's helper wrote the newest turn at 23:34:21. Fault a, 02:22: A and the second session (C) ended by 00:38:48;
+    # the walk's `claude -p` eyes wrote turns 01:12:41 to 01:13:03 (entrypoint sdk-cli); the walk reported at 02:13.
+    tmp3 = tempfile.mkdtemp(prefix="fresh_gate_17nov_")
+    ho17 = "**Started:** 2026-11-17 00:22 (x)\n**Stopped:** 2026-11-17 00:20 (y)\n"
+    utc = lambda s: datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=datetime.timezone.utc).timestamp()
+
+    def nlog(rel, rows, entry="claude-desktop"):
+        p = os.path.join(tmp3, rel)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "a", encoding="utf-8") as fh:
+            for kind, ts, extra in rows:
+                row = {"type": kind, "timestamp": ts + ".000Z", "entrypoint": entry, "message": {"content": "x"}}
+                row.update(extra)
+                fh.write(json.dumps(row, separators=(",", ":")) + "\n")
+        return p
+    nlog("A.jsonl", [("user", "2026-11-16T23:21:48", {}),
+                     ("user", "2026-11-16T23:28:45", {"toolUseResult": {"backgroundTaskId": "b3hb2una6"}}),
+                     ("assistant", "2026-11-16T23:29:37", {})])
+    nlog("B.jsonl", [("user", "2026-11-16T19:16:45", {}), ("assistant", "2026-11-16T23:19:11", {})])
+    nlog(os.path.join("B", "subagents", "agent-k.jsonl"), [("assistant", "2026-11-16T23:34:21", {})])
+    at107 = utc("2026-11-17T00:07:02")
+    m_b, job_b = last_turn_minutes(at107, tmp3, own="C", with_jobs=True)
+    no_job_dir = tempfile.mkdtemp(prefix="fresh_gate_17nov_nojob_")
+    for name in ("B.jsonl",):
+        with open(os.path.join(tmp3, name), encoding="utf-8") as src_fh, open(os.path.join(no_job_dir, name), "w", encoding="utf-8") as dst_fh:
+            dst_fh.write(src_fh.read())
+    with open(os.path.join(no_job_dir, "A.jsonl"), "w", encoding="utf-8") as fh:
+        fh.write(json.dumps({"type": "assistant", "timestamp": "2026-11-16T23:29:37.000Z", "entrypoint": "claude-desktop",
+                             "message": {"content": "x"}}) + "\n")
+    os.makedirs(os.path.join(no_job_dir, "B", "subagents"))
+    with open(os.path.join(no_job_dir, "B", "subagents", "agent-k.jsonl"), "w", encoding="utf-8") as fh:
+        fh.write(json.dumps({"type": "assistant", "timestamp": "2026-11-16T23:34:21.000Z", "message": {"content": "x"}}) + "\n")
+    m_q, job_q = last_turn_minutes(at107, no_job_dir, own="C", with_jobs=True)
+    nlog("A.jsonl", [("queue-operation", "2026-11-17T00:19:37", {"content": "<task-id>b3hb2una6</task-id>"}),
+                     ("user", "2026-11-17T00:19:37", {"message": {"content": "<task-notification><task-id>b3hb2una6</task-id>"}}),
+                     ("assistant", "2026-11-17T00:35:29", {})])
+    nlog("C.jsonl", [("user", "2026-11-17T00:06:57", {}), ("assistant", "2026-11-17T00:38:48", {})])
+    eyes = nlog("eyes.jsonl", [("user", "2026-11-17T01:12:41", {}), ("assistant", "2026-11-17T01:13:03", {})], entry="sdk-cli")
+    at222 = utc("2026-11-17T01:22:02")
+    m_a, job_a = last_turn_minutes(at222, tmp3, own="D", with_jobs=True)
+    # a command that timed out and was ended by TaskStop (the 23:32 session's two, 16 Nov) is not pending
+    stopped_job = nlog("S.jsonl", [("user", "2026-11-17T01:00:00", {"toolUseResult": {"backgroundTaskId": "bstop1", "timedOutAfterMs": 120000}}),
+                                   ("user", "2026-11-17T01:00:05", {"toolUseResult": {"message": "Successfully stopped task: bstop1", "task_id": "bstop1", "task_type": "local_bash", "command": "x"}})])
+    cases.append(("a command ended by TaskStop is not pending", str(pending_jobs(stopped_job)), "set()"))
+    os.remove(stopped_job)
+    # a session killed with a command still pending: it holds only while its log wrote a turn in DEAD_JOB_MIN
+    nlog("K.jsonl", [("user", "2026-11-16T22:00:00", {"toolUseResult": {"backgroundTaskId": "bkilled1"}})])
+    m_k, job_k = last_turn_minutes(at222, tmp3, own="D", with_jobs=True)
+    cases += [
+        ("17 Nov 01:07: the quiet session's own pending command is found (not only the newest turn's log)",
+         os.path.basename(job_b or "None"), "A.jsonl"),
+        ("17 Nov 01:07: idle 32.7 min, as the night's gate read it", "%s" % (m_b is not None and 32 < m_b < 33.5), "True"),
+        ("17 Nov 01:07: fault b, WAIT, not a second session",
+         decide(datetime.datetime(2026, 11, 17, 1, 7), ho17, m_b, False, job_b is not None), "WAIT the last session"),
+        ("17 Nov 01:07 without the pending command: GO taken as stopped, as before",
+         decide(datetime.datetime(2026, 11, 17, 1, 7), ho17, m_q, False, job_q is not None), "GO the last session (started"),
+        ("17 Nov 02:22: the walk's claude -p eyes are not a session's turn: idle 43 min, not 9",
+         "%s" % (m_a is not None and 43 < m_a < 43.6), "True"),
+        ("17 Nov 02:22: the finished command no longer holds", str(job_a), "None"),
+        ("17 Nov 02:22: fault a, GO at the first run after the walk's report",
+         decide(datetime.datetime(2026, 11, 17, 2, 22), ho17, m_a, True, job_a is not None), "GO the last session (started"),
+        ("a pending command in a log quiet over DEAD_JOB_MIN holds nothing (a killed session)", str(job_k), "None"),
+        ("a script's run is recognised by its entrypoint", "%s/%s" % (script_run(eyes), script_run(os.path.join(tmp3, "A.jsonl"))), "True/False"),
+    ]
     bad = [n for n, got, want in cases if not got.startswith(want)]
     print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
     return 1 if bad else 0
@@ -585,8 +688,8 @@ def main(a):
     path = os.path.join(ROOT, r["handover"]) if r else HANDOVER
     text = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
     reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
-    idle, log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_log=True)
-    job = bool(log and os.path.isfile(log) and pending_jobs(log))
+    idle, job_log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_jobs=True)
+    job = job_log is not None
     line = decide(now, text, idle, reported, job, None if r else read_pace(), None if r else run_model(own=own))
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)

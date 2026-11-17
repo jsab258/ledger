@@ -5,7 +5,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 **Started:** 2026-11-17 06:22 (the hourly run; the last session set its Stopped line at 06:19)
 
 **A second session ran by mistake 01:07 to 01:40** (gate committed in Kiln 0241526; integrate worktree C:/LedgerTools/kiln-lanes/integrate with all four lanes merged; cmu_clips.py TRIM = 2, flips 0; cmu_ue_retarget.py written). All kept by the 02:52 session.
-**Row due:** 2026-11-17 08:17 (last 07:17; page and advisor read 07:10, advisor 07:09 pace guard acked)
+**Row due:** 2026-11-17 09:30 (last 08:30; page and advisor read 08:27, advisor 189 acked 08:20)
 **Stopped:** 2026-11-17 06:19 (history near its limit at an item's end; all helpers reported; the scale ladder waits in the background for the Kiln queue)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -29,6 +29,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 - **Advisor 189 (his 08:02, 17 Nov):** every hourly row names F:'s free room and the next 12 h's need (clear it that hour if short) and the gap to the line; `python tools/retention.py space` before every Kiln round, film, build, capture and in every helper brief; each round deletes its own bulky outputs once its numbers are reported (1 GB a job); no delete outside retention.py without its protected list and readers checked; before 01:15 each night queue machine-free work for the allowed helpers. Target: on the line by 07:30 on 18 Nov.
 
+- **Before writing Stopped: end every background job of your own** (fresh_gate.py since 17 Nov holds starts up to 120 min while any session's background command still runs).
+
 ## Done the runs before
 - git show 4b16a336e:production/handover/HANDOVER.md (04:52 to 06:19), d74c1862d, 5606f2805, 9f155e60f, 983ad87da.
 
@@ -43,7 +45,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - n16-10: guards already shown firing 16 Nov (GUARDS-FIRING-2026-11-16.md); DAILY due by 19:00.
 
 ## Next, in order
-0. FIRST: verdicts after the last read in UTC; advisor after 2026-11-17T08:15:00+01:00 (last ack 08:20). Row due 08:17.
+0. FIRST: verdicts after the last read in UTC; advisor after 2026-11-17T08:15:00+01:00 (last ack 08:20). Row due 09:30.
 1. Helpers' results if they landed after the stop: KILN-LANES-FIX1-2026-11-17.md (jackets, trousers lane fixes, try 1 of 2 each), the n16-7 hip-joint note.
 2. After the ladder (runs.jsonl lines packaged-day-stand-scaleN-rI): fit memory and card time against N; then ci-checks, commit route_walk.py with DECISIONS, push wip on failed=none.
 3. n16-1: lane gates (fixer), then the collar-plane lane's gate; re-take the baseline after the skirt merge (the pleated skirt now hangs).
