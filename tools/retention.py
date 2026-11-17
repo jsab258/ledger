@@ -95,6 +95,45 @@ def backup_paths():
     return [p for p in out if p]
 
 
+def _named(text, key):
+    """key ('runs/fixer-r7') appears in text as a whole name: no name character after it, and a full stop
+    counts as an end only when no name character follows it."""
+    i = text.find(key)
+    while i >= 0:
+        nxt, after = text[i + len(key):i + len(key) + 1], text[i + len(key) + 1:i + len(key) + 2]
+        if not (nxt.isalnum() or nxt in "_-") and not (nxt == "." and (after.isalnum() or after in "_-")):
+            return True
+        i = text.find(key, i + 1)
+    return False
+
+
+def named_keep(pol):
+    """Entries directly under a `namedKeep` folder that one of its `namedIn` files names, as '<folder>/<entry>'
+    (17 Nov, KILN-DISK: run outputs expire, but never a run the regression jobs, the judge's HASHES.txt, a report
+    or an approval names). Never opens the judge's held-back jobs."""
+    out = []
+    for nk in pol.get("namedKeep", []):
+        texts = []
+        for pat in nk.get("namedIn", []):
+            for f in glob.glob(pat.replace("/", os.sep), recursive=True):
+                if "heldback" in norm(f) or not os.path.isfile(f):
+                    continue
+                try:
+                    with open(f, encoding="utf-8", errors="replace") as fh:
+                        texts.append(fh.read())
+                except OSError:
+                    pass
+        text = "\n".join(texts).replace("\\\\", "/").replace("\\", "/").lower()
+        for pat in nk.get("under", []):
+            for top in expand(pat):
+                if not os.path.isdir(top) or is_link(top):
+                    continue
+                for e in os.scandir(top):
+                    if _named(text, (os.path.basename(top.rstrip("\\/")) + "/" + e.name).lower()):
+                        out.append(e.path)
+    return out
+
+
 def held(pol, path, today=None):
     today = today or dt.date.today()
     for h in pol.get("holds", []):
@@ -356,7 +395,7 @@ def candidates(pol, now=None, running=None):
 
 
 def enforce(pol, dry=False):
-    protected_extra = backup_paths()
+    protected_extra = backup_paths() + named_keep(pol)
     results = []
     for p, rule, why in candidates(pol):
         results.append(delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra))
@@ -675,6 +714,22 @@ def selftest():
             line = morning_line(snaps)
             check("C: 70 GB free, F: 25 GB free" in line and "A\\x +1.9 GB" in line and "B +0.5 GB" in line and "A +2.0" not in line,
                   "the morning line: " + line)
+            # namedKeep (17 Nov): a run a report names stays past its age limit; an unnamed one, and one whose
+            # name only begins like a named one, go. A full stop after the name and backslashes still name it.
+            make(j("runs", "named-run", "a.obj"), old)
+            make(j("runs", "named-run-2", "a.obj"), old)
+            make(j("runs", "other-run", "a.obj"), old)
+            os.makedirs(j("reports"), exist_ok=True)
+            with open(j("reports", "R.md"), "w", encoding="utf-8") as fh:
+                fh.write("Evidence in F:\\\\x\\runs\\named-run. Done.\n")
+            pol2 = {"places": [j("runs")], "protected": [], "holds": [], "caches": [],
+                    "namedKeep": [{"under": [j("runs")], "namedIn": [j("reports", "*.md")]}],
+                    "limits": [{"kind": "runs", "rule": "age", "days": 7, "folders": [j("runs")]}]}
+            check([os.path.basename(p) for p in named_keep(pol2)] == ["named-run"], "namedKeep names only named-run")
+            enforce(pol2)
+            check(os.path.exists(j("runs", "named-run", "a.obj")), "a run a report names stays")
+            check(not os.path.exists(j("runs", "named-run-2")) and not os.path.exists(j("runs", "other-run")),
+                  "unnamed runs past their limit go")
         finally:
             STATE = saved_state
     finally:

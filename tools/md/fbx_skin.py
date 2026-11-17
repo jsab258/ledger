@@ -73,6 +73,34 @@ def _mat(t):
     return np.array(t, dtype=float).reshape(4, 4).T
 
 
+def _bind_ids(objs):
+    ids = set()
+    for p in objs.find_all("Pose"):
+        if any(s == "BindPose" for s in p.props if isinstance(s, str)):
+            for pn in p.find_all("PoseNode"):
+                if pn.find("Node") is not None:
+                    ids.add(pn.find("Node").props[0])
+    return ids
+
+
+def _static(path, g, mesh_name, C, unit):
+    """A mesh with no bind pose (a static export): its points as stored, in Blender's frame, no bones or weights."""
+    out = Skinned()
+    out.path, out.mesh_name, out.geometry = path, mesh_name, g
+    out.frame = {"axes": C.tolist(), "metresPerUnit": unit}
+    local = np.array(g.find("Vertices").props[0], dtype=float).reshape(-1, 3)
+    out.verts = local @ (C * unit).T
+    pvi = np.array(g.find("PolygonVertexIndex").props[0], dtype=np.int64)
+    idx = np.where(pvi < 0, -pvi - 1, pvi)
+    tris, start = [], 0
+    for e in np.nonzero(pvi < 0)[0]:
+        poly = idx[start:e + 1]
+        tris += [(poly[0], poly[k], poly[k + 1]) for k in range(1, len(poly) - 1)]
+        start = e + 1
+    out.tris = np.array(tris, dtype=np.int64)
+    return out
+
+
 class Skinned:
     def __init__(self):
         self.path = None
@@ -83,6 +111,7 @@ class Skinned:
         self.parent = {}
         self.weights = {}
         self.frame = None
+        self.geometry = None
 
     def joint(self, name):
         return self.bones[name][:3, 3].copy()
@@ -100,7 +129,9 @@ class Skinned:
         return out
 
 
-def load_skinned(path, mesh=None):
+def load_skinned(path, mesh=None, need_weights=True):
+    """need_weights=False (step 2, skin_transfer.py) also reads a static mesh: no bones or weights required. The
+    mesh's Geometry node is kept as .geometry, for callers that read its polygons or UV layers."""
     root, _version = parse_fbx(path, max_array=BIG)
     gs = _gs(root)
     C, unit = file_to_blender(gs)
@@ -143,6 +174,8 @@ def load_skinned(path, mesh=None):
         raise ValueError("%s: no mesh%s" % (path, "" if mesh is None else " named " + mesh))
     _, gid, mesh_id, mesh_name = best
     g = geoms[gid]
+    if not need_weights and mesh_id not in _bind_ids(objs):
+        return _static(path, g, mesh_name, C, unit)
     # bind poses: the mesh's own pose first (each skinned mesh has one), then the others for bones it lacks
     poses = [p for p in objs.find_all("Pose") if any(s == "BindPose" for s in p.props if isinstance(s, str))]
     def pose_has(p, nid):
@@ -179,6 +212,7 @@ def load_skinned(path, mesh=None):
             tris.append((poly[0], poly[k], poly[k + 1]))
         start = e + 1
     out.tris = np.array(tris, dtype=np.int64)
+    out.geometry = g
     # bones: every LimbNode/Root model; world matrices in Blender's frame (rotation columns made unit length)
     for mid, (nm, kind) in models.items():
         if kind not in ("LimbNode", "Root", "Null") or mid not in bind:
@@ -206,6 +240,6 @@ def load_skinned(path, mesh=None):
             if ix is None or wt is None or ix.props[0] is None:
                 continue
             out.weights[models[bone_id][0]] = (np.array(ix.props[0], dtype=np.int64), np.array(wt.props[0], dtype=float))
-    if not out.weights:
+    if not out.weights and need_weights:
         raise ValueError("%s: the mesh %s carries no skin weights" % (path, mesh_name))
     return out

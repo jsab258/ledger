@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 06:22 (the hourly run; the last session set its Stopped line at 06:19)
+**Started:** 2026-11-17 10:07 (the hourly run; the last session set its Stopped line at 09:52)
 
-**Row due:** 2026-11-17 10:27 (last 09:27; page and advisor read 09:30)
+**Row due:** 2026-11-17 11:11 (last 10:11; page and advisor read 10:09)
 **Stopped:** 2026-11-17 09:52 (history near its hard stop at an item's end; all helpers reported; two days-old fixer-r5 wait loops (bash 14768, 20724) are not this session's and were left)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -30,27 +30,26 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Before writing Stopped: end every background job of your own** (fresh_gate.py since 17 Nov holds starts up to 120 min while any session's background command still runs).
 
 ## Done the runs before
-- git show 4b16a336e:production/handover/HANDOVER.md (04:52 to 06:19), d74c1862d, 5606f2805, 9f155e60f, 983ad87da.
+- git show 47cfaec10:production/handover/HANDOVER.md (06:22 to 09:52), 4b16a336e, d74c1862d, 5606f2805.
 
-## Done this run (06:22 to the stop), all committed and pushed to wip
-- Tester fix (Sheila "missing" was the tester); start-check fix (fresh_gate.py: running background commands hold, claude -p not counted); scale ladder read (100 MB a street-length, +0.2 ms).
-- n16-7: hip-joint method 7 of 36 failing (try 1 9) after the measure floor fix; stopped, kept default; knees note production/research/n16-7-knees-method-2026-11-17.md.
-- n16-1: Kiln main aab3778 (skirt, trousers lanes in; gate exit fix); M5 method reviewed (41-69 h: this week Ron's trousers only, rest on the waiting list); M5 step 1 code (tools/md/bend_back.py, Ron's turns record PASS).
-- n16-5: fronts launderette to chandler checked (no own change; 0.65 h); S1 street-level wear to x 48 with gable feet (tools/street_wear.py, production/specs/street-wear.json; pictures F:/LedgerTools/gate/new/s1-street-level-n16-5-2026-11-17/, previews production/previews/n16-5-*): a whole-frame change, held for his batched look before main.
-- Held: n16-8 Darren's head (editor launch refused to a helper); the F: clear-out (production/research/disk/CLEAROUT-LIST-2026-11-17.md: retention protects gate, the direct delete refused by the permission system; told him 09:35).
+## Done this run (10:07 to the stop)
+- Advisor 193 (his pick about 10:00): Kiln about 70% of the week; acked, DECISIONS, order ledger. Review step 3 had already landed (Kiln aab3778). Step 4 cap 32 h (failed-capability report if not landed Thu 19 Nov); step 5's layered-job worst edge recorded as a known shortfall. Engine-count tuning in the jacket/trouser lanes STOPPED (lane-jackets parked until step 4 lands). n16-5 S2 and the rest of n16-3 WAIT.
+- n16-7 knees: fresh review (production/research/n16-7-knees-review-2026-11-17.md): same fault as the stopped pelvis method; set aside, listed, NOTEBOOK entry; no further try.
+- Recipe map: D3 and D5 rows updated for 17 Nov.
+- Helpers started 10:10-10:35 (report files): held-back patterns (judge/heldback/patterns, never to a fixer); step 4 stiffness lane (C:/LedgerTools/kiln-lanes/stiffness, report KILN-STEP4-STIFFNESS-2026-11-17.md); collar-plane gate (KILN-COLLAR-PLANE-GATE-2026-11-17.md); M5 step 2 code (tools/md, uncommitted until checked); zips lane gate (verdict appended to KILN-ZIPS-2026-11-17.md; md-bridge writer changes on wip uncommitted, commit after its verdict); fabric numbers (production/research/fabric-targets/FABRIC-NUMBERS-2026-11-17.md): DONE, thin: partial KES only for two wool samples; per-material simulator tables (RGBench, others) with units unverified; most papers' PDFs unreachable. The re-tune leans on Tom's references; the numbers are a sanity band only.
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T08:40:00Z; advisor after 2026-11-17T09:30:00+01:00 (last ack 09:16). Row due 10:27 (give the 6-hour rate and the 93% time).
-1. n16-5 S2 (the grey row to the photographed brick): inputs ready (tile production/assets/scanned/photo_flemish_n16_5_grey on F: game inputs, before pictures F:/LedgerTools/gate/new/s2-grey-brick-n16-5-2026-11-17/before); left: the C++ houses filter (patches in the 06:22 session's scratchpad: patch_vs.py, patch_corner.py, may be gone: rewrite from the note), after pictures, match check, brick_ids accepting the entry. FOUND: editor runs read scan pictures from the checkout and the n16-4 brick files are only on F:, so every editor picture since 16 Nov shows the drawn brick (packaged unaffected): fix the editor's path or copy before judging any brick picture. The kerb-top marks read 0% in corner and S1: look. Then S1+S2 pictures to his batched rough-street page.
-2. n16-1: jackets lane 9b3f4c6 try 1 of 2 failed (14 lines out; donkey made); try 2 with the collar-plane fix 1b88925; re-take the baseline. M5 next: a real Kiln drape of Ron's trousers on the standard body, then bend_back. Zips patch parked (F:/LedgerTools/tool-dev/runs/kiln-gate-jobs-2026-11-17/dressing-rule-and-jobs.patch; the cherry-pick refused to a helper): gate lane-zips like any lane.
-3. n16-7: fresh review of the knees note; decide under RULINGS 7 Nov whether it is a new try (separate cause from the stopped pelvis method) or listed. Then the look by eye and the packaged film.
-4. n16-3: people 0 to 40 at N=10 packaged (nothing beside it).
-5. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5. DAILY by 19:00 (production/research/token-audit/DAILY-2026-11-17.md).
+0. FIRST: verdicts after 2026-11-17T09:30:00Z; advisor after 2026-11-17T10:10:00+01:00 (last ack 10:33, pace). Row due 11:11.
+1. Read each helper's verdict as it lands; merge only on a passing gate; commit md-bridge writers and M5 step 2 code with their evidence; NOTEBOOK lines per finished unit.
+2. Kiln step 4: after the code lands, re-tune presets against Tom's references using the fabric numbers (12-20 h), then re-judge M2-M4; the speed lane's card port re-checked on the new engine before switching on. Held-back jobs run once patterns exist (judge only; no fixer sees them).
+3. M5 step 3 for Ron's trousers after step 2 (a real Kiln drape, bend_back, skin, film held for his page).
+4. n16-7: the look by eye and the packaged film with the hip-joint default (knees listed).
+5. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 (small slot). DAILY by 19:00 (production/research/token-audit/DAILY-2026-11-17.md).
 6. n16-8 when an editor run is allowed: head and scalp into F:/LedgerTools/game-inputs/loomwright-darren/, round 5 at 60 roots/cm2.
-7. Recipe map (https://claude.ai/artifact/PDhLE6yEQKYuHWbzy7Y3pH): add today's four notebook entries.
+7. Waiting by his pick: n16-5 S2 (notes in git show 47cfaec10:production/handover/HANDOVER.md, item 1, incl. the editor brick path fault) and n16-3's people ladder; S1 pictures go to his batched rough-street page with S2.
 
 ## Tonight's machine-free queue (start before 01:15)
-1. n16-5 roof runs R1-R4 checks as script inputs (slate-roofs skill). 2. n16-3 people ladder script at N=10. 3. M5 step 2 code (skin from Ron's full body) per the method note. 4. Reviews of the evening's work. If the current order waits on the machine: the next order's waiting list (advisor 192).
+1. Kiln step 4 preset re-tune prep and held-back judge runs (processor, outside Unreal's runs). 2. M5 step 3 code. 3. Reviews of the evening's work. If the current order waits on the machine: the next order's waiting list (advisor 192).
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2; the rewrite is the genuinely different method under his pick A).

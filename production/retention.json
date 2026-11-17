@@ -66,7 +66,11 @@
   "F:/LedgerTools/tool-dev/runs/m1-baseline",
   "F:/LedgerTools/tool-dev/runs/bodies-fix-2026-11-13",
   "F:/LedgerTools/tool-dev/runs/kiln-r4-judge",
-  "F:/LedgerTools/tool-dev/judge"
+  "F:/LedgerTools/tool-dev/judge",
+  "F:/LedgerTools/tool-dev/runs/kiln-r10-after3",
+  "F:/LedgerTools/drapestudio-test-2026-11-13-final",
+  "C:/LedgerTools/cargo-target/kiln/release/drape-studio.exe",
+  "C:/LedgerTools/cargo-target/kiln/release/seamshift.exe"
  ],
  "limits": [
   {
@@ -171,9 +175,23 @@
    "days": 14,
    "folders": [
     "F:/LedgerTools/tool-tests-2026-11",
-    "F:/LedgerTools/tool-dev/runs"
+    "F:/LedgerTools/tool-dev/runs",
+    "F:/LedgerTools/tool-dev/kiln/out",
+    "C:/LedgerTools/kiln-lanes/*/runs-lane"
    ],
-   "note": "His decision of 16 Nov 12:23 (advisor 174): test and Kiln run outputs clear themselves, so the session's own leftovers never reach his page. The judge's scripts, baselines and held-back jobs are protected."
+   "note": "His decision of 16 Nov 12:23 (advisor 174): test and Kiln run outputs clear themselves, so the session's own leftovers never reach his page. The judge's scripts, baselines and held-back jobs are protected. 17 Nov (KILN-DISK-2026-11-17): Kiln's own out folder and the lanes' runs-lane folders are run output too; a run that namedKeep finds named stays; a finished run's meshes, frames and engine copies go sooner through Kiln's run_prune.py (the gate at its end, a sweep for helpers' runs), its numbers kept."
+  },
+  {
+   "kind": "Rust build caches (Kiln, its lanes, Loomwright)",
+   "keep": "3 days untouched; cargo rebuilds whatever is missing (a few minutes a lane)",
+   "rule": "age",
+   "days": 3,
+   "folders": [
+    "C:/LedgerTools/cargo-target",
+    "C:/LedgerTools/kiln-lanes/integrate-target",
+    "F:/LedgerTools/tool-dev/kiln/engines/drapestudio/target"
+   ],
+   "note": "17 Nov (KILN-DISK-2026-11-17): 11.3 GB on C: with no limit, one target per lane and gate. Kiln's default engine (cargo-target/kiln/release, kiln_front.find_exe) is protected by its two programs; a build a report names stays through namedKeep. Never the lane worktrees themselves (C:/LedgerTools/kiln-lanes/<lane>): their unchanged source files would read as old; a merged lane is removed with git worktree remove by the session."
   }
  ],
  "caches": [
@@ -319,6 +337,31 @@
     "tools/voice-live/pocket-server.py"
    ],
    "why": "the same weights, for tools run without HF_HOME on F:"
+  }
+ ],
+ "namedKeep": [
+  {
+   "why": "17 Nov (KILN-DISK-2026-11-17): limits never delete a run the regression jobs or baseline, the judge's HASHES.txt, a report or an approval names. An entry directly under one of these folders stays when its name, as '<folder>/<entry>', appears in a namedIn file (tools/retention.py named_keep; the judge's held-back jobs are never opened).",
+   "under": [
+    "F:/LedgerTools/tool-dev/runs",
+    "C:/LedgerTools/kiln-lanes/*/runs-lane",
+    "C:/LedgerTools/cargo-target/*"
+   ],
+   "namedIn": [
+    "F:/LedgerTools/tool-dev/kiln/python/regression_jobs.json",
+    "F:/LedgerTools/tool-dev/kiln/python/regression_baseline.json",
+    "F:/LedgerTools/tool-dev/judge/HASHES.txt",
+    "F:/LedgerTools/tool-dev/reports/**/*.md",
+    "F:/LedgerTools/tool-dev/kiln/reports-lane/*.md",
+    "F:/LedgerTools/tool-dev/LOOP.md",
+    "C:/Users/Jafar/ledger-local/production/research/**/*.md",
+    "C:/Users/Jafar/ledger-local/production/approvals/**/*.md",
+    "C:/Users/Jafar/ledger-local/production/approvals/**/*.json",
+    "C:/Users/Jafar/ledger-local/production/handover/*.md",
+    "C:/Users/Jafar/ledger-local/DECISIONS.md",
+    "C:/Users/Jafar/ledger-local/FINDINGS.md",
+    "C:/Users/Jafar/ledger-local/NOW.md"
+   ]
   }
  ],
  "holds": []

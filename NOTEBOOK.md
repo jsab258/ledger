@@ -2478,3 +2478,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Result: 7 of 36 failing against 9 for the first working setup and 13 for the second; slide and flips kept, height 5/6. Under a third of the gap closed, so the method stops by the rule; kept as default because it is better with no new fault.
 - Failed and why: bent knees remain on clips where the source stands slightly crouched; pelvis placement does not change them (within 0.4 degrees across all three setups), so their cause lies elsewhere.
 - Tools: Blender pre-pass, Unreal 5.8 IK Retargeter by Python, the Blender measure. Cost about 2.5 h helper time. Evidence: F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md; F:/LedgerTools/game-inputs/cmu-measure-gate-2026-11-17.
+
+## Motion onto another skeleton: knees left bent after the hips were fixed (17 Nov 2026, set aside, listed)
+- Made: a diagnosis of two clips whose knees stay bent on the target after the hip method; no change built.
+- Method: read the retargeter's own source for which step can still move the knee; propose causes (reference-pose knee carried into every frame; hip width under blend-to-source); have a fresh reviewer decide whether the cause is a new fault or the old one before any try.
+- Tools: the engine source, the measure files, one fresh reviewer.
+- Target and check: knee angle within the measure's band; the tries rule counts per fault.
+- Cost: about 1.5 h (note and review).
+- What failed and why: the reviewer found the knee bend was already a counted failure of the stopped hip method, so a fix would be a fourth method on one fault; set aside and listed. Lesson: before calling a cause new, check whether its symptom was in the stopped method's failure list.
+- Evidence: production/research/n16-7-knees-method-2026-11-17.md, production/research/n16-7-knees-review-2026-11-17.md
