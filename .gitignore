@@ -249,3 +249,4 @@ production/handover/gate-blocked.jsonl
 
 # Epic MetaHuman files never go to GitHub (RULINGS 3 Oct; backup review 17 Nov)
 ue-probe/Content/MetaHumans/
+production/handover/backup-start.lock

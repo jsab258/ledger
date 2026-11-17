@@ -1,85 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 2 open · updated Tuesday 17 November, 16:30",
+ "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 17 November, 16:40",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "backup-schedule-at-pc-2026-11-17",
-   "name": "ACTION: Two clicks at your PC: the nightly backup, and 23 GB back on C:",
-   "why": [
-    "The app will not let Claude make a Windows schedule, so the 05:00 backup needs your Allow.",
-    "Dropbox undoes Claude's online-only setting within seconds (tested), so only your right-click frees the space."
-   ],
-   "steps": [
-    "Claude app: Scheduled tasks",
-    "Open \"LEDGER: the hourly fresh session\"",
-    "History: Today at 2:21 PM",
-    "Type: Register the backup schedule now",
-    "Click Allow if asked",
-    "File Explorer: click Dropbox in the left column",
-    "Right-click the folder LEDGER backup",
-    "Choose Make online-only (nothing is deleted)",
-    "Tap Done below"
-   ],
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "recommendation": "Do it today: tonight's backup runs, and C: goes from 47 to about 70 GB free.",
-   "added": "2026-11-17 13:17",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "lane-task-at-pc-2026-11-17",
-   "name": "ACTION: Add the lane session's hourly task (your pick of 16:05)",
-   "why": [
-    "A second session works this week on things that never touch the machine, so the meter moves faster.",
-    "Only you can create a scheduled task, at the PC itself."
-   ],
-   "steps": [
-    "Claude app: Scheduled (left sidebar)",
-    "New task",
-    "Name: LEDGER: the lane session",
-    "Folder: C:\\Users\\Jafar\\ledger-lane",
-    "Repeat: Hourly",
-    "Model: Opus 5.5",
-    "Prompt: in File Explorer open ledger-local, production, lane, then lane-prompt.txt; press Ctrl+A, Ctrl+C; paste into the prompt box",
-    "Permissions: automatically approve",
-    "Click Save",
-    "Tap Done below"
-   ],
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "recommendation": "Do it today: it stops by itself on Monday 23 November at 07:00.",
-   "added": "2026-11-17 16:30",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

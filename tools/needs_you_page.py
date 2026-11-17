@@ -5,6 +5,7 @@
     python tools/needs_you_page.py --check    # fails when an item lacks a field, or a link is not a full https link
     python tools/needs_you_page.py --close ID "how"   # he answered or did it: the item is done and leaves the page
     python tools/needs_you_page.py --archive  # each Monday: items done over two days ago move to archive.json, unpublished
+    python tools/needs_you_page.py --action-week 2026-11-16   # Monday: every ACTION item since that day, with its reason
     python tools/needs_you_page.py --selftest
 
 WHY, 2 November 2026. Jafar: "make one permanent page, 'LEDGER: Needs you', in the same format as your decision
@@ -33,6 +34,10 @@ FIELDS = ("id", "added", "text", "links", "recommendation", "state")
 # A TAG BEFORE EVERY ITEM (his message of 17 Nov 14:38, advisor 199): ACTION (his hands at the PC, a sign-in, a click),
 # DECISION (pick an option), REVIEW (look at pictures or frames and judge); stored as "tag", shown first on the page.
 TAGS = ("ACTION", "DECISION", "REVIEW")
+# HIS HANDS ONLY WHEN NOTHING ELSE CAN (his messages of 17 Nov 16:34 and 16:36, advisors 203 and 204): an open ACTION
+# item names in "only_you" exactly one of these reasons and in "tried" one line saying which other routes were tried
+# and why each fails; the check refuses it otherwise, and the page shows both under the title.
+ONLY_YOU = ("sign-in", "purchase", "licence", "taste", "his-setting")
 PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
 # OWN LEFTOVERS NEVER REACH HIS PAGE (his decision, 16 Nov 12:23, advisor 174; RULINGS 29 Oct): an open item asking him
 # whether to delete the session's own outputs (test or run outputs, leftovers, temporary files) is refused. An item
@@ -64,6 +69,11 @@ def faults(data, check_files=True):
         if it.get("state") == "open" and it.get("tag") in TAGS:
             if not it.get("title") or len(it.get("why", [])) > 2 or (it["tag"] == "ACTION" and not it.get("steps")):
                 out.append("%s: an open item needs a one-line title, at most two why bullets and, for ACTION, numbered steps (his message 17 Nov 15:48)" % it.get("id"))
+        if it.get("state") == "open" and it.get("tag") == "ACTION":
+            tried = str(it.get("tried") or "").strip()
+            if it.get("only_you") not in ONLY_YOU or not tried or "\n" in tried:
+                out.append("%s: an ACTION item needs only_you (one of %s) and tried (one line: the other routes and why "
+                           "each fails); his hands only when nothing else can (advisors 203, 204)" % (it.get("id"), ", ".join(ONLY_YOU)))
         if it.get("state") == "open" and it.get("tag") not in TAGS:
             out.append("%s lacks its tag (one of %s; his message 17 Nov 14:38)" % (it.get("id"), ", ".join(TAGS)))
         seen.add(it.get("id"))
@@ -128,6 +138,8 @@ def spec(data, now=None):
         "sections": [{"kind": "need", "key": it["id"], "name": "%s: %s" % (it.get("tag", "?"), it.get("title") or it["text"]),
                       # his message of 17 Nov 15:48 (advisor 200): a one-line title, why in short bullets, steps numbered
                       "why": it.get("why", []), "steps": it.get("steps", []), "links": it["links"],
+                      "only_you": it.get("only_you", "") if it.get("tag") == "ACTION" else "",
+                      "tried": it.get("tried", "") if it.get("tag") == "ACTION" else "",
                       "recommendation": it["recommendation"], "added": it["added"],
                       "pictures": it.get("pictures", []),
                       # a written piece he rules on, folded shut on the page (8 Nov, the side stories)
@@ -169,10 +181,19 @@ def selftest():
     check("a clean list has no faults", faults(good) == [])
     check("only open items are drawn", [s["key"] for s in spec(good)["sections"]] == ["a"])
     check("the tag comes first on the page", spec(good)["sections"][0]["name"] == "DECISION: Pick a.")
-    check("an ACTION without numbered steps is refused", faults({"items": [dict(good["items"][0], tag="ACTION")]}) != [])
+    act = dict(good["items"][0], tag="ACTION", only_you="sign-in", tried="The runner and the gate cannot sign in to Fab for him.")
+    check("an ACTION without numbered steps is refused", faults({"items": [dict(act, steps=[])]}) != [])
     check("an ACTION with steps passes and they reach the page",
-          faults({"items": [dict(good["items"][0], tag="ACTION", steps=["Do it."])]}) == []
-          and spec({"items": [dict(good["items"][0], tag="ACTION", steps=["Do it."])]})["sections"][0]["steps"] == ["Do it."])
+          faults({"items": [dict(act, steps=["Do it."])]}) == []
+          and spec({"items": [dict(act, steps=["Do it."])]})["sections"][0]["steps"] == ["Do it."])
+    check("an ACTION without only_you or tried is refused (advisor 204)",
+          faults({"items": [dict(act, steps=["Do it."], only_you=None)]}) != []
+          and faults({"items": [dict(act, steps=["Do it."], tried="")]}) != [])
+    check("an ACTION with another reason is refused", faults({"items": [dict(act, steps=["Do it."], only_you="convenience")]}) != [])
+    check("an ACTION's tried must be one line", faults({"items": [dict(act, steps=["Do it."], tried="a\nb")]}) != [])
+    check("only_you and tried reach the page under the title",
+          spec({"items": [dict(act, steps=["Do it."])]})["sections"][0]["only_you"] == "sign-in"
+          and spec({"items": [dict(act, steps=["Do it."])]})["sections"][0]["tried"].startswith("The runner"))
     check("an open item without a tag is refused",
           faults({"items": [dict(good["items"][0], tag=None)]}) != [] and faults({"items": [dict(good["items"][0], tag="ASK")]}) != [])
     check("a link must be a full https link", faults({"items": [dict(good["items"][0], links=[{"label": "A", "url": "fab.com/x"}])]}) != [])
@@ -233,6 +254,18 @@ if __name__ == "__main__":
             json.dump(data, fh, indent=1, ensure_ascii=False)
             fh.write("\n")
         sys.exit(build())
+    if "--action-week" in a:
+        # MONDAY'S NUMBERS (advisor 204, point 4): every ACTION item added since the given day, from items.json and
+        # archive.json, with its reason and what was tried, for the audit's "only his taps" test.
+        since = a[a.index("--action-week") + 1]
+        arch = os.path.join(DIR, "archive.json")
+        allit = load()["items"] + (load(arch)["items"] if os.path.exists(arch) else [])
+        rows = [x for x in allit if x.get("tag") == "ACTION" and str(x.get("added", "")) >= since]
+        for x in sorted(rows, key=lambda r: r["added"]):
+            print("%s | %s | only_you=%s | tried=%s | %s" % (x["added"], x["id"], x.get("only_you", "none (before 17 Nov 16:50)"),
+                                                          x.get("tried", "-"), x.get("closed", "open")))
+        print("action items since %s: %d" % (since, len(rows)))
+        sys.exit(0)
     if "--check" in a:
         f = faults(load())
         for x in f:

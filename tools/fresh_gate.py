@@ -411,6 +411,73 @@ def rehearsal(now):
     return r
 
 
+BACKUP_DUE_HOURS = 20        # advisor 203 (his message 16:34, 17 Nov): no Windows task for the backup
+BACKUP_LOCK = os.path.join(ROOT, "production", "handover", "backup-start.lock")   # gitignored
+BACKUP_LOCK_MIN = 180        # a run started by the gate is not started again for three hours
+UNREAL_HOLD_FROM, UNREAL_HOLD_UNTIL = 1 * 60 + 15, 4 * 60 + 30   # the night's build and walk
+BUSY_NAMES = ("unrealeditor", "ledgerprobe", "build.bat", "ubt", "unrealbuildtool")
+BUSY_CMDS = ("regression_gate.py",)   # a Kiln gate bands its seconds: no copying beside it
+
+
+def backup_should_start(now, hours, busy, lock_age_min):
+    """THE BACKUP STARTED BY THIS GATE (advisor 203, 17 Nov: his hands only when nothing else can; the backup
+    schedule needed his PC visit, so the 15-minute gate starts it instead). Start when the last good backup is
+    more than 20 hours old (or there is none), outside the night's Unreal window, with no Unreal or Kiln gate
+    running, and no start of its own in the last three hours. The post-commit hook stays the second chance and
+    backup-to-dropbox.py --stale (26 h) the alert. Returns (start?, why)."""
+    mins = now.hour * 60 + now.minute
+    if hours is not None and hours <= BACKUP_DUE_HOURS:
+        return False, "backup fresh (%.1f h)" % hours
+    if UNREAL_HOLD_FROM <= mins < UNREAL_HOLD_UNTIL:
+        return False, "backup due, held for the night's build and walk"
+    if busy:
+        return False, "backup due, held: %s running" % busy
+    if lock_age_min is not None and lock_age_min < BACKUP_LOCK_MIN:
+        return False, "backup due, started %d min ago" % lock_age_min
+    return True, "backup started (last good %s)" % ("none" if hours is None else "%.1f h ago" % hours)
+
+
+def busy_job():
+    """The first Unreal or Kiln-gate process running, by name or command line; '' when none (or unreadable)."""
+    import subprocess
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command",
+                              "Get-CimInstance Win32_Process | % { $_.Name + ' ' + $_.CommandLine }"],
+                             capture_output=True, text=True, timeout=60).stdout.lower()
+    except Exception:
+        return "process list unreadable"
+    for ln in out.splitlines():
+        name = ln.split(" ", 1)[0]
+        if any(name.startswith(b) for b in BUSY_NAMES) or any(c in ln for c in BUSY_CMDS):
+            return name
+    return ""
+
+
+def maybe_start_backup(now):
+    """Reads the backup's log, decides, and starts tools/backup-to-dropbox.py --log detached; returns the reason."""
+    import subprocess
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "tools"))
+        import importlib
+        b = importlib.import_module("backup-to-dropbox")
+        log = b.log_path()
+        lines = open(log, encoding="utf-8").read().splitlines() if os.path.exists(log) else []
+        hours = b.stale(lines, now)[1]
+    except Exception as e:
+        return "backup check failed (%s)" % type(e).__name__
+    if hours is not None and hours <= BACKUP_DUE_HOURS:
+        return "backup fresh (%.1f h)" % hours
+    lock_age = (now.timestamp() - os.path.getmtime(BACKUP_LOCK)) / 60 if os.path.isfile(BACKUP_LOCK) else None
+    start, why = backup_should_start(now, hours, busy_job(), lock_age)
+    if start:
+        open(BACKUP_LOCK, "w").write(now.isoformat())
+        flags = 0x00000008 | 0x00000200 | 0x08000000   # detached, own group, no window
+        subprocess.Popen([sys.executable, os.path.join(ROOT, "tools", "backup-to-dropbox.py"), "--log"], cwd=ROOT,
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                         creationflags=flags, close_fds=True)
+    return why
+
+
 def selftest():
     import tempfile
     h = "**Started:** 2026-11-04 08:43 (x)\n**Stopped:** 2026-11-04 09:38 (y)\n"
@@ -664,6 +731,18 @@ def selftest():
          decide(datetime.datetime(2026, 11, 17, 2, 22), ho17, m_a, True, job_a is not None), "GO the last session (started"),
         ("a pending command in a log quiet over DEAD_JOB_MIN holds nothing (a killed session)", str(job_k), "None"),
         ("a script's run is recognised by its entrypoint", "%s/%s" % (script_run(eyes), script_run(os.path.join(tmp3, "A.jsonl"))), "True/False"),
+        ("backup: 21 h old at 16:40, nothing running: start",
+         str(backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), 21.0, "", None)[0]), "True"),
+        ("backup: no good backup ever: start", str(backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), None, "", None)[0]), "True"),
+        ("backup: 19 h old: fresh", backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), 19.0, "", None)[1], "backup fresh"),
+        ("backup: due at 02:00: held for the night",
+         backup_should_start(datetime.datetime(2026, 11, 17, 2, 0), 30.0, "", None)[1], "backup due, held for the night"),
+        ("backup: due beside a Kiln gate: held",
+         backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), 30.0, "python.exe", None)[1], "backup due, held: python.exe"),
+        ("backup: started 30 min ago: not again",
+         backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), 30.0, "", 30)[1], "backup due, started 30"),
+        ("backup: own start 4 h ago and still stale: start again",
+         str(backup_should_start(datetime.datetime(2026, 11, 17, 16, 40), 30.0, "", 240)[0]), "True"),
     ]
     bad = [n for n, got, want in cases if not got.startswith(want)]
     print("fresh_gate selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
@@ -693,6 +772,8 @@ def main(a):
     line = decide(now, text, idle, reported, job, None if r else read_pace(), None if r else run_model(own=own))
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))
           if r else line)
+    if not r and "--no-backup" not in a:
+        print("backup: " + maybe_start_backup(now))   # advisor 203; a second line, the first keeps its meaning
     return 0
 
 

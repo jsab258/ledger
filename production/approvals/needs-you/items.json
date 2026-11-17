@@ -37,7 +37,8 @@
      "Done (recommended)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-17 16:40, withdrawn on his message of 16:34 (advisor 203): no new scheduled task; the lane is to start from the existing 15-minute task"
   },
   {
    "id": "metatailor-access-2026-11-12",
@@ -1122,7 +1123,7 @@
      "Done (recommended)"
     ]
    ],
-   "state": "open",
+   "state": "done",
    "tag": "ACTION",
    "updated": "2026-11-17 15:58: laid out for a phone (his message 15:48, advisor 200)",
    "title": "Two clicks at your PC: the nightly backup, and 23 GB back on C:",
@@ -1140,7 +1141,8 @@
     "Right-click the folder LEDGER backup",
     "Choose Make online-only (nothing is deleted)",
     "Tap Done below"
-   ]
+   ],
+   "closed": "2026-11-17 16:40, withdrawn on his message of 16:34 (advisor 203): the 15-minute gate starts the backup; Dropbox online-only not needed now"
   }
  ]
 }

@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 14:22 (the hourly run; the last session set its Stopped line at 14:03)
+**Started:** 2026-11-17 16:37 (the hourly run; the last session set its Stopped line at 16:31)
 
 **Row due:** 2026-11-17 16:29 (last 15:29, overdue at the stop; page and advisor read 16:20; last ack 16:12, advisors 201/202)
 **Stopped:** 2026-11-17 16:31 (history past its point at an item's end; ONE helper still running: the Kiln convergence gate, self-contained, see 'At the stop')

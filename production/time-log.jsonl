@@ -802,3 +802,5 @@
 {"event": "stop", "at": "2026-11-17T13:59:00", "note": ""}
 {"event": "start", "at": "2026-11-17T13:20:00", "task": "tool loop: kiln zips round 2 (n16-1)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T14:02:00", "note": ""}
+{"event": "start", "at": "2026-11-17T14:25:00", "task": "n16-10 backup low findings and online-only test", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T14:30:00", "note": ""}

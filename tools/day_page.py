@@ -241,6 +241,10 @@ function render(){
         for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
         sec.append(g);
       }
+      // WHY ONLY HIM (advisor 204, 17 Nov): an ACTION item shows its one reason and what else was tried, under the title
+      if (s.only_you) {
+        sec.append(el("p", {class:"was", style:"margin:0", text:"Only you: " + s.only_you + ". Tried: " + (s.tried || "")}));
+      }
       // LAID OUT FOR A PHONE (his message of 17 Nov 15:48, advisor 200): why as short bullets, steps numbered, one action each
       if (s.why && s.why.length) {
         const ul = el("ul", {class:"how", style:"padding-left:20px;margin:0"});
