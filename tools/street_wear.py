@@ -646,10 +646,16 @@ def frontage_wear(pieces):
 
 #: STREET-LEVEL WEAR (5 November, his corner note, point 5: "more wear and dirt at street level"): the corner's
 #: 33 m only, nothing multiplied before he has seen it; every mark owned by one name, so -NoWearOn=street_level
-#: shows the street without them. From the Hook sheet's foot of the frame, read by eye: dirt where the flags meet
+#: shows the street without them. TO THE STREET'S END (17 November, n16-5 S1, his order of 16 November: the corner's
+#: finish copied along the street; production/research/street-checks/N16-5-PLAN-2026-11-17.md): the bands run on to
+#: x 48, where the street's footways meet the climb's (terrace-front.py APPROACH_X; level to 52, so a flat mark at the
+#: footway's height still lands), and the dark foot goes onto the chandler's two gables and the west row's north gable. From the Hook sheet's foot of the frame, read by eye: dirt where the flags meet
 #: the wall, silt along the kerb, a black foot on the gable. Stains on the flags themselves are left out: broad ones read
 #: as leaf shadows and small ones as stamps, grey under the wet coat, through both review rounds (DECISIONS 5 November).
-STREET_LEVEL_X_M = 33.0
+STREET_LEVEL_X_M = 48.0   # 33.0 until 17 November (the corner only)
+#: the gables that take the dark foot: (bay, end), "south" facing the hook camera's way (yaw 270), "north" the far way (yaw 90)
+GABLE_FEET = (("east_parade_bay0", "south"), ("west_south_bay0", "south"), ("east_chandler_bay0", "south"),
+              ("east_chandler_bay0", "north"), ("west_north_bay2", "north"))
 STREET_LEVEL = "street_level"
 #: A tint is multiplied by the picture's grey, a quarter (make_wear_masks.py STAIN_GREY), so these are four times the base colour meant
 FOOT_TINT, SILT_TINT = [0.08, 0.07, 0.055], [0.05, 0.045, 0.04]
@@ -678,10 +684,14 @@ def street_level_wear(pieces):
             flat("footdirt", PICTURE["splash"], x, sign * 4.80, 5.0, 0.65, yaw, 1.0, FOOT_TINT)
             flat("silt", PICTURE["splash"], x, sign * 2.84, 5.0, 0.26, yaw, 0.8 + 0.2 * rnd(s, "silt%d" % k), SILT_TINT)
             flat("kerbtop", PICTURE["splash"], x, sign * 3.075, 5.0, 0.11, yaw, 0.7 + 0.3 * rnd(s, "kerb%d" % k), SILT_TINT, KERB_TOP_Y_M)
-    for name in ("east_parade_bay0", "west_south_bay0"):
+    for name, end in GABLE_FEET:
         g = by[name]
-        d = gable_decal("damp", g["x_m"] - g["sx_m"] / 2.0 - END_WALL_T - STANDOFF_M, g["y_m"] - g["sy_m"] / 2.0 + 0.45, g["z_m"], g["sz_m"], 0.90, 0.85, STREET_LEVEL)   # flush with its corners, as the wash (4 October)
-        d.update({"kind": "gablefoot", "tint": SILT_TINT})
+        if end == "south":
+            gx = g["x_m"] - g["sx_m"] / 2.0 - END_WALL_T - STANDOFF_M
+        else:
+            gx = g["x_m"] + g["sx_m"] / 2.0 + END_WALL_T + STANDOFF_M
+        d = gable_decal("damp", gx, g["y_m"] - g["sy_m"] / 2.0 + 0.45, g["z_m"], g["sz_m"], 0.90, 0.85, STREET_LEVEL)   # flush with its corners, as the wash (4 October)
+        d.update({"kind": "gablefoot", "tint": SILT_TINT, "yaw_deg": 270.0 if end == "south" else 90.0})
         out.append(d)
     return out
 
@@ -845,8 +855,14 @@ def selftest():
     check("the pale oblongs keep clear of the notices hanging now",
           len(pale) == 2 and all(abs(d["z_m"] - z) * 2 >= d["w_m"] + w or abs(d["y_m"] - y) * 2 >= d["h_m"] + h for d in pale for z, y, w, h in prints))
     level = [d for d in decals if d["on"] == STREET_LEVEL]
-    check("street-level wear only in the corner, every kind present, never the stain material", all(d["x_m"] < STREET_LEVEL_X_M + 5.0 for d in level) and
+    # (17 November, n16-5 S1: "only in the corner" became "to the street's end")
+    check("street-level wear to the street's end on both sides (x 48) and no further, every kind present, never the stain material",
+          all(d["x_m"] < STREET_LEVEL_X_M + 5.0 for d in level) and
+          all(max(d["x_m"] + d["w_m"] / 2.0 for d in level if d["kind"] == "footdirt" and d["z_m"] * sign > 0) >= STREET_LEVEL_X_M for sign in (1, -1)) and
           {"footdirt", "silt", "kerbtop", "gablefoot"} == {d["kind"] for d in level} and not any("material" in d for d in level))
+    feet = [d for d in level if d["kind"] == "gablefoot"]
+    check("a dark foot on each listed gable, south ends facing yaw 270 and north ends yaw 90",
+          len(feet) == len(GABLE_FEET) and sorted(d["yaw_deg"] for d in feet) == sorted(270.0 if e == "south" else 90.0 for _n, e in GABLE_FEET))
     pud = [d for d in decals if d["kind"] == "puddle"]
     check("puddles stand along both gutters", any(d["z_m"] > 2 for d in pud) and any(d["z_m"] < -2 for d in pud))
     print("street_wear selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))

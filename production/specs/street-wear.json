@@ -3046,6 +3046,330 @@
   {
    "kind": "footdirt",
    "picture": "ours/wear_splash",
+   "x_m": 34.2499,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 34.2499,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.903,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 34.2499,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.884,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 36.5329,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 36.5329,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.976,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 36.5329,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.991,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 39.0216,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 39.0216,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.981,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 39.0216,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.999,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 41.501,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 41.501,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.986,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 41.501,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.989,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 44.0172,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 44.0172,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.982,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 44.0172,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.982,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 46.9319,
+   "y_m": 0.1,
+   "z_m": 4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 46.9319,
+   "y_m": -0.071,
+   "z_m": 2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.868,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 46.9319,
+   "y_m": -0.075,
+   "z_m": 3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.792,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
    "x_m": 1.832,
    "y_m": 0.1,
    "z_m": -4.8,
@@ -3746,6 +4070,330 @@
    ]
   },
   {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 34.5009,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 34.5009,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.846,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 34.5009,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.742,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 36.9152,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 36.9152,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.875,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 36.9152,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.784,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 39.4267,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 39.4267,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.869,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 39.4267,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.775,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 41.9483,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 41.9483,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.864,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 41.9483,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.786,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 44.4323,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 44.4323,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.868,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 44.4323,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.792,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "footdirt",
+   "picture": "ours/wear_splash",
+   "x_m": 46.5174,
+   "y_m": 0.1,
+   "z_m": -4.8,
+   "w_m": 5.0,
+   "h_m": 0.65,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 1.0,
+   "on": "street_level",
+   "tint": [
+    0.08,
+    0.07,
+    0.055
+   ]
+  },
+  {
+   "kind": "silt",
+   "picture": "ours/wear_splash",
+   "x_m": 46.5174,
+   "y_m": -0.071,
+   "z_m": -2.84,
+   "w_m": 5.0,
+   "h_m": 0.26,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.983,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "kerbtop",
+   "picture": "ours/wear_splash",
+   "x_m": 46.5174,
+   "y_m": -0.075,
+   "z_m": -3.075,
+   "w_m": 5.0,
+   "h_m": 0.11,
+   "yaw_deg": 180.0,
+   "pitch_deg": 90.0,
+   "strength": 0.983,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
    "kind": "gablefoot",
    "picture": "ours/wear_damp",
    "x_m": 2.65,
@@ -3772,6 +4420,60 @@
    "w_m": 8,
    "h_m": 0.9,
    "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "gablefoot",
+   "picture": "ours/wear_damp",
+   "x_m": 39.65,
+   "y_m": 0.55,
+   "z_m": 9.125,
+   "w_m": 8,
+   "h_m": 0.9,
+   "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "gablefoot",
+   "picture": "ours/wear_damp",
+   "x_m": 46.35,
+   "y_m": 0.55,
+   "z_m": 9.125,
+   "w_m": 8,
+   "h_m": 0.9,
+   "yaw_deg": 90.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "street_level",
+   "tint": [
+    0.05,
+    0.045,
+    0.04
+   ]
+  },
+  {
+   "kind": "gablefoot",
+   "picture": "ours/wear_damp",
+   "x_m": 42.35,
+   "y_m": 0.55,
+   "z_m": -9.125,
+   "w_m": 8,
+   "h_m": 0.9,
+   "yaw_deg": 90.0,
    "pitch_deg": 0.0,
    "strength": 0.85,
    "on": "street_level",
