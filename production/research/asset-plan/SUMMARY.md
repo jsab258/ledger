@@ -448,9 +448,10 @@ The proof view (item 2 of his one ordered list) already holds the first proof of
 5. **Vegetation, and the hillside (families 9 and 10).** The neglect pass along the whole street, and the hill finished by the building kit. Planting is cheap once the kit exists.
 6. **People and accessories (families 11 and 13), with clothes at crowd distance (12).** The friends' build needs people in the street, but the coat is the risk and tailoring is blocked. Prove the three passers-by, then multiply recipes only after his yes in the game.
 7. **Cars (family 3).** Only once the proof car passes; the street has none until then (his ruling). The street-wide pass then has 4 platforms and about 12 looks.
+8. **Traffic (his ruling, 17 Nov), in the friends' build.** Moving background traffic from the same kit once one car passes, ahead of the friends' evening; then an arcade car for the player once the map grows; AAA driving is the end state, costed for him first.
 
 **After the friends' build** (ROADMAP stages 2 to 6):
-- moving traffic (stage 2, his G4) from the same car kit, with vans and buses;
+- vans and buses added to the traffic (moving traffic itself moved into the friends' build, his ruling of 17 Nov); an arcade car for the player once the map grows;
 - walk-in interiors for the story: a home, the police station, the tea room;
 - the rest of the Hook's buildings and the harbour's boats;
 - the far town seen from the quay;
