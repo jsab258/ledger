@@ -88,3 +88,5 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 16 Nov 21:25: a drawn brick tile passed twelve measured checks and still read newly built near the camera: offline measures cannot see a CG surface; judge near crops before filming.
 - 16 Nov 21:00: the scan grade (match_rgb) works in linear light; a first grade in display values missed by about a fifth.
 - 16 Nov 21:11: editing RULINGS from an unattended run (and rewording another ruling to keep the cap) was refused by the permission check.
+- 16 Nov 23:00: the Flemish anti-grid check passes only on some seeds (seed 7 fails, 3 passes); a photo tile reusing the drawn tile's darks must use its seed.
+- 16 Nov 22:09: four stamps written without Get-Date, one 25 minutes off; read the clock in the same call that writes.
