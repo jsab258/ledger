@@ -8,6 +8,8 @@ WHY. His decision of 16 Nov 14:12 (advisor 182, item 2): list every setting outs
 raise cost or stop work and give each a check read at the start or in the DAILY file, like the model check of
 14 Nov (tools/fresh_gate.py). The list and where each lives: production/research/token-audit/SETTINGS-SWEEP-2026-11-16.md.
 This reads; it changes nothing. A key's value is never printed, only 'set' or 'not set'.
+API spend (RULINGS 1 Nov, 16 Nov; enforced 17 Nov): each day of the current credit month in production/api-spend.jsonl
+is judged against that day's ceiling (credit left divided by days left, api_batch.py's own figures, its one home).
 """
 import glob
 import json
@@ -61,6 +63,33 @@ def judge_drive(letter, free_gb):
     return "WARN" if free_gb < EXPECT["warn_gb"][letter] else "OK"
 
 
+def api_days_over(lines, today):
+    """[(day, spent, ceiling)] for days of today's credit month whose logged spend passed that day's ceiling."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from api_batch import ceiling_today, month_start
+    import datetime
+    start, over = month_start(today), []
+    for d in sorted({str(r.get("day")) for r in lines if r.get("day")}):
+        try:
+            day = datetime.date.fromisoformat(d)
+        except ValueError:
+            continue
+        if start <= day <= today:
+            ceiling, spent, _ = ceiling_today(lines, day)
+            if spent > ceiling + 1e-9:
+                over.append((d, spent, ceiling))
+    return over
+
+
+def api_row():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from api_batch import read_spend
+    import datetime
+    over = api_days_over(read_spend(), datetime.date.today())
+    text = "; ".join("API spend over the day's ceiling %s: US$%.2f against US$%.2f" % o for o in over)
+    return ("WRONG", text) if over else ("OK", "every day of this credit month within its ceiling")
+
+
 def checks():
     rows = []
 
@@ -99,6 +128,7 @@ def checks():
         user = {}
     mode = (user.get("permissions") or {}).get("defaultMode")
     row("permissions never bypassed", "OK" if mode != "bypassPermissions" else "WRONG", mode or "no default mode")
+    row("API spend per day", *api_row())
     row("switchModelsOnFlag", "OK" if not user.get("switchModelsOnFlag") else "WRONG", str(user.get("switchModelsOnFlag", False)))
     return rows
 
@@ -118,6 +148,14 @@ def selftest():
     check("F: under its floor is wrong", judge_drive("F", 19.5) == "WRONG")
     check("F: just above the floor warns", judge_drive("F", 20.9) == "WARN")
     check("C: with room is fine", judge_drive("C", 60) == "OK")
+    import datetime
+    d = datetime.date
+    spend = [{"day": "2026-11-05", "usd": 100.0}, {"day": "2026-11-12", "usd": 5.0}, {"day": "2026-11-13", "usd": 30.0}]
+    over = api_days_over(spend, d(2026, 11, 13))
+    check("a day past its ceiling is named", [o[0] for o in over] == ["2026-11-13"])
+    check("its ceiling is the credit left over the days left", abs(over[0][2] - 195.0 / 29) < 1e-9 if over else False)
+    check("a day within its ceiling passes", api_days_over(spend, d(2026, 11, 12)) == [])
+    check("a day of last month is not judged", api_days_over([{"day": "2026-11-05", "usd": 100.0}], d(2026, 11, 13)) == [])
     print("settings_check selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

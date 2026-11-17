@@ -774,6 +774,11 @@ def main(a):
           if r else line)
     if not r and "--no-backup" not in a:
         print("backup: " + maybe_start_backup(now))   # advisor 203; a second line, the first keeps its meaning
+        # advisor 205: the start gate also reports the rulings' enforcers (a line of its own, never a WAIT)
+        import subprocess
+        rc = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "rulings_check.py")], capture_output=True,
+                            text=True, timeout=60).stdout.splitlines()
+        print("rulings: " + (rc[0] if rc else "rulings_check gave no line"))
     return 0
 
 

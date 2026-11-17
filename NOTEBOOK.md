@@ -2551,3 +2551,19 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: no fallbacks (0 of 12, was 33 of 54); angles rising with overhang 11 of 12; clamp moved 0.0 mm; only 4 of 12 settle within 2%, so 2 of 12 pass every check.
 - Cost: about 0.9 h of a helper. What failed and why: the old bench pinned the back short of the edge (the strip buckled up 9 mm), let the edge fall between particles, and read curled tips as angles over 90 degrees. Still open: the engine's strips never come to rest, and every fabric reads 36 to 78% softer at the finer spacing (the spacing fault being fixed on its own lane).
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-CANTILEVER-BENCH-2026-11-17.md; lane-benches 0ca5376. Recipe map: no step moved (the cloth tool's bench step stands).
+
+## The owner's hands only where nothing else can (17 Nov 2026, finished)
+- What was made: two asks for the owner's hands withdrawn and done by what already runs: the 15-minute start check now starts the nightly backup when the last good one is over 20 h old; the owner's page refuses a hands-on item unless it names one of five reasons only the owner can meet and one line of routes tried.
+- Method: before any ask for hands, look for a route through a job that already runs on a schedule; make the rule a refusal in the publishing check, not a memory.
+- Tools: the start check script, the backup script's staleness reader, the page's publish check.
+- Target and check: 7 new start-check cases (88 of 88), 5 new page-check cases (27 of 27); the live backup check reads "fresh (3.2 h)" and holds beside a running solver gate.
+- Cost: about 0.3 h. What failed and why: the earlier route (a system scheduled task) needed the owner because the app refuses a scheduled-task registration; it should have been looked for in the running jobs first.
+- Evidence: tools/fresh_gate.py (backup_should_start), tools/needs_you_page.py (ONLY_YOU). Recipe map: no step moved.
+
+## Every standing rule names its enforcer (17 Nov 2026, finished)
+- What was made: a check that every standing line of the rulings file names the test, gate, scheduled check or weekly audit that catches a breach, and that the named check exists; run on commit and at each start.
+- Method: rules as code: a companion list keyed by each rule's opening words, so an edited rule is looked at again; judgement-only rules name the weekly audit.
+- Tools: the rulings check script and its self-tests, the commit hook, the start check.
+- Target and check: 9 of 9 self-tests; 84 of 84 rules enforced, faults=0; 51 by code or scheduled checks, 33 by the weekly audit; 7 new small checks written the same day (picture size, placeholders, the tool share, the API ceiling, the weekly audit file, a key in a commit, helpers at once).
+- Cost: about 1 h with three helpers. What failed: two shell edits lost backslashes (a known heredoc quirk), caught by self-tests.
+- Evidence: tools/rulings_check.py, production/rulings-enforcers.json.

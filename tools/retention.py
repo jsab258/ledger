@@ -818,17 +818,19 @@ def map_rule_cases(j, make, check_only=True):
           ("tool-keep", "tools", d20, {"proposal": "keep", "source": "public PyPI"}),
           ("lasting-old", "lasting", d20, {"proposal": "remove"}),
           ("side-old", "side-session", d20, {"proposal": "remove"}),
-          ("cache-old", "build-cache", d20, {"proposal": "remove"})]
+          ("cache-old", "build-cache", d20, {"proposal": "remove"}),
+          ("work-noowner", "working", d10, {"proposal": "remove: test", "owner": ""}),
+          ("work-unknownsrc", "working", d10, {"proposal": "remove: test", "source": "source unknown"})]
     fake = {"shelves_gb": {"F": {"floor": 20}, "C": {"floor": 40}}, "folders": []}
     for name, shelf, when, extra in fx:
         make(mp_(name, "f.bin"), when, size=1000)
         fake["folders"].append(dict({"path": mp_(name), "shelf": shelf, "source": "made by LEDGER runs",
-                                     "serves": "test", "proposal": ""}, **extra))
+                                     "serves": "test", "proposal": "", "owner": "LEDGER"}, **extra))
     make(mp_("work-holds", "inner", "g.bin"), d10)
     fake["folders"].append({"path": mp_("work-holds", "inner"), "shelf": "lasting", "proposal": "keep"})
     make(mp_("unmapped-old", "f.bin"), d20)                       # in the places, old, not on the map
     make(j("mp-elsewhere", "stray", "f.bin"), d10)                # on the map, outside the places
-    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray"})
+    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray", "owner": "LEDGER"})
     make(j("mp-target", "keep.bin"), d10)                         # a junction's target, outside the places
     link_made = False
     if os.name == "nt":
@@ -861,10 +863,16 @@ def map_rule_cases(j, make, check_only=True):
                        ("work-read", "names it"), ("work-side", "side session"), ("work-holds", "holds another"),
                        ("work-backup", "backed up"), ("work-his", "owner"), ("lasting-old", "never"),
                        ("work-linenamed", "names a reader (tools/cleanup.py)"),
-                       ("side-old", "never"), ("cache-old", "never")):
+                       ("side-old", "never"), ("cache-old", "never"),
+                       ("work-noowner", "owner not written"), ("work-unknownsrc", "source unknown")):
         check(frag in why.get(os.path.join("mp", name), ""), "%s kept for '%s', got '%s'"
               % (name, frag, why.get(os.path.join("mp", name))))
     check(any("protected" in w for p, _, w in plan["refused"] if p.endswith("work-protected")), "protected is refused as protected")
+    # the step-2 review, B1: a script inside a lasting folder that names a removable one is a reader
+    make(j("mp-final", "run_all.ps1"), d1, size=0)
+    open(j("mp-final", "run_all.ps1"), "w").write("& python x.py --in '%s'" % mp_("work-old"))
+    check(_named(reader_text(j(), extra_dirs=[j("mp-final")]), path_key(mp_("work-old"))),
+          "a lasting folder's script naming a folder counts as its reader")
     check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
     check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
     # not live: run removes none of the map's rows
@@ -1014,25 +1022,49 @@ def map_rules_live(pol):
     return pol.get("mapRulesLive") is True
 
 
-def reader_text(repo=REPO):
-    """The repository's tool, game-source, spec and workflow text, lower case, backslashes as '/': where a path a
-    tool reads would be named. Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
+def reader_text(repo=REPO, extra_dirs=()):
+    """Where a path a tool or record reads would be named, lower case, backslashes as '/': every text file git tracks in
+    the repository (tools, game source, specs, workflows and the records, approvals and casting notes: the step-2
+    review, 17 Nov, B1, found four removal rows named only in records), and the scripts and notes inside the map's
+    lasting and protected folders (extra_dirs; a protected run's run_all.ps1 read a removable folder, the scalp
+    pattern). Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
+    import subprocess
     parts = []
     me = norm(os.path.abspath(__file__))
-    for d in READER_DIRS:
-        for root, dirs, files in os.walk(os.path.join(repo, d)):
-            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
+    skip = {norm(os.path.join(repo, x)) for x in NOT_READERS}
+
+    def take(f):
+        if norm(f) == me or norm(f) in skip or not f.lower().endswith(READER_EXT + (".md", ".jsonl", ".csv")):
+            return
+        try:
+            if os.path.getsize(f) > 2_000_000:
+                return
+            with open(f, encoding="utf-8", errors="replace") as fh:
+                parts.append(fh.read())
+        except OSError:
+            pass
+    listed = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True).stdout.decode("utf-8", "replace")
+    names = [x for x in listed.split("\0") if x]
+    if names:
+        for n in names:
+            take(os.path.join(repo, n))
+    else:   # not a checkout (the self-test's folders): the old reader folders
+        for d in READER_DIRS:
+            for root, dirs, files in os.walk(os.path.join(repo, d)):
+                dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
+                for n in files:
+                    take(os.path.join(root, n))
+    for d in extra_dirs:
+        seen = 0
+        for root, dirs, files in os.walk(d):
+            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git", "target", "Intermediate",
+                                                    "Saved", "DerivedDataCache", ".venv")]
             for n in files:
-                f = os.path.join(root, n)
-                if not n.lower().endswith(READER_EXT) or norm(f) == me:
-                    continue
-                try:
-                    if os.path.getsize(f) > 2_000_000:
-                        continue
-                    with open(f, encoding="utf-8", errors="replace") as fh:
-                        parts.append(fh.read())
-                except OSError:
-                    pass
+                if n.lower().endswith((".py", ".ps1", ".bat", ".cmd", ".sh", ".json", ".md", ".txt", ".toml", ".ini")):
+                    take(os.path.join(root, n))
+                    seen += 1
+            if seen > 5000:
+                break
     return "\n".join(parts).replace("\\\\", "/").replace("\\", "/").lower()
 
 
@@ -1089,8 +1121,13 @@ def map_plan(m, pol, now=None, readers=None):
         if shelf not in ("working", "tools"):
             kept(p, "shelf %s: never removed by the map" % (shelf or "missing"))
             continue
-        if owner and owner not in LEDGER_OWNERS:
-            kept(p, "owner %s: never touched" % e.get("owner"))
+        if owner not in LEDGER_OWNERS:
+            # when in doubt, it is his (RULINGS 29 Oct; the step-2 review, 17 Nov, B2): only a line whose owner is
+            # written as LEDGER's or Claude's may be removed by the map's rules
+            kept(p, "owner %s: only an owner written as LEDGER or Claude is touched" % (e.get("owner") or "not written"))
+            continue
+        if any(w in line for w in ("source unknown", "unknown source")):
+            kept(p, "source unknown: when in doubt, it is his")
             continue
         if os.path.basename(p.rstrip("/\\")).lower() in NOT_OURS:
             kept(p, "not LEDGER's")
@@ -1117,7 +1154,9 @@ def map_plan(m, pol, now=None, readers=None):
             kept(p, "written %.1f day(s) ago, inside its %d days" % (age, days))
             continue
         if text is None:
-            text = reader_text() if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
+            lasting = [o["path"] for o in folders if o.get("path") and os.path.isdir(o["path"])
+                       and str(o.get("shelf", "")).strip().lower() not in ("working", "tools")]
+            text = reader_text(extra_dirs=lasting) if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
         if _named(text, path_key(p)):
             kept(p, "no write for %.0f days, but a tool in the repository names it" % age, True)
             continue
