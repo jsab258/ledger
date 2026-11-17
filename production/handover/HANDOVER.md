@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 18:52 (the hourly run; the last session set its Stopped line at 18:40)
+**Started:** 2026-11-17 20:07 (the hourly run; the last session set its Stopped line at 19:52)
 
 **Row due:** 2026-11-17 20:38 (last 19:38; page and advisor read 19:45; last ack 18:11, the pace guard)
 **Stopped:** 2026-11-17 19:52 (history past its point at an item's end; no helper or background job running)

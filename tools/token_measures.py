@@ -6,6 +6,7 @@
     python tools/token_measures.py --thrown "the hill's second crowns" --since 09:30 [--until 10:10]  # record a try thrown away
     python tools/token_measures.py --kiln-share [2026-11-16]   # Kiln's share of that day's week (Monday on); KILN OVER 15% fails
     python tools/token_measures.py --helpers   # the most helpers running at once yesterday and today; HELPERS OVER CAP fails
+    python tools/token_measures.py --top-helpers [2026-11-17]   # the DAILY file's table: the day's five largest helper runs by steps
     python tools/token_measures.py --selftest
 
 WHY, 5 November 2026 (the advisor's message 11, within his efficiency rulings): 1 failed tries and rework per item; 2 the ten
@@ -172,6 +173,16 @@ def carried_cost(tokens, step_index, steps):
     return tokens * (p[3] + p[4] * (len(later) - 1)) / 1e6
 
 
+def write_kind(i, meta, cw):
+    """Which part of measure 3 a step's cache write belongs to: a run's first steps are its start (session or helper), a session
+    step writing over 30,000 tokens later is a rewrite, everything else is step growth (the context growing step by step)."""
+    if i < START_STEPS:
+        return "helper start" if meta is not None else "session start"
+    if meta is None and cw > 30000:
+        return "rewrite"
+    return "growth"
+
+
 def measure_day(day):
     since, until = day, day + datetime.timedelta(days=1)
     windows = task_windows(TIMELOG)
@@ -182,16 +193,21 @@ def measure_day(day):
     helper_start, helper_runs = 0.0, 0
     write_all, runs, broken, rewrites = 0.0, 0, 0, 0
     rounds = collections.Counter()
+    growth, helpers = 0.0, []
     for path, meta in logs_touched(since):
         ev = read_events(path)
         steps = ev["steps"]
         today = [i for i, s in enumerate(steps) if since <= s["t"] < until]
         if not today:
             continue
+        run = {"type": (meta or {}).get("agentType") or "?", "models": collections.Counter(), "steps": len(today), "usd": 0.0, "growth": 0.0}
         for i in today:
             s = steps[i]
             u = s["u"]
-            usd += step_cost(u, s["model"])
+            c = step_cost(u, s["model"])
+            usd += c
+            run["usd"] += c
+            run["models"][s["model"]] += 1
             p, _ = price_of(s["model"])
             cw, cr, fresh = u.get("cache_creation_input_tokens", 0) or 0, u.get("cache_read_input_tokens", 0) or 0, u.get("input_tokens", 0) or 0
             tokens["read"] += cr
@@ -204,14 +220,20 @@ def measure_day(day):
                 w5m = max(cw - w1h, 0)
             cost = (w5m * p[2] + w1h * p[3]) / 1e6
             write_all += cost
-            if meta is not None and i < START_STEPS:
+            kind = write_kind(i, meta, cw)
+            if kind == "helper start":
                 helper_start += cost
                 helper_runs += 1 if i == 0 else 0
-            elif meta is None and i < START_STEPS:
+            elif kind == "session start":
                 start_write += cost
-            elif meta is None and cw > 30000:
+            elif kind == "rewrite":
                 rewrite += cost
                 rewrites += 1
+            else:
+                growth += cost
+                run["growth"] += cost
+        if meta is not None:
+            helpers.append(run)
         if meta is None and today[0] == 0:
             runs += 1
             u = steps[0]["u"]
@@ -229,7 +251,7 @@ def measure_day(day):
     biggest.sort(key=lambda b: -b[0])
     return {"usd": usd, "biggest": biggest[:10], "byKind": by_kind, "tokens": tokens, "writeAll": write_all, "startWrite": start_write,
             "rewrite": rewrite, "rewrites": rewrites, "runs": runs, "broken": broken, "rounds": rounds,
-            "helperStart": helper_start, "helperRuns": helper_runs}
+            "helperStart": helper_start, "helperRuns": helper_runs, "growth": growth, "helpers": helpers}
 
 
 def thrown_of(day):
@@ -495,6 +517,48 @@ def by_model(day):
     return 0
 
 
+# THE DAY'S LARGEST HELPER RUNS (the advisor's efficiency review of 17 Nov, point 2): the five helper runs with the most steps that
+# day, each with its dollars and its step-growth dollars (measure 3's "the rest step growth": cache writes after the run's first
+# START_STEPS steps, write_kind) and that growth's share of the whole day's step growth, session included. A run is one helper log;
+# its steps are only those inside the day. The DAILY file is written by the session; this prints its table, ready to paste.
+TOP_HELPERS = 5
+LONG_RUN = 300
+
+
+def short_model(model):
+    for word in ("opus", "sonnet", "haiku", "fable"):
+        if model and word in model:
+            return word.capitalize()
+    return model or "?"
+
+
+def top_helper_rows(runs, growth_total, n=TOP_HELPERS):
+    """The n runs with the most steps, largest first: (type, model, steps, US$, growth US$, share of the day's growth in %)."""
+    out = []
+    for r in sorted(runs, key=lambda r: (-r["steps"], -r["usd"]))[:n]:
+        model = short_model(r["models"].most_common(1)[0][0]) if r["models"] else "?"
+        out.append((r["type"], model, r["steps"], r["usd"], r["growth"], 100 * r["growth"] / growth_total if growth_total else 0.0))
+    return out
+
+
+def long_run_line(runs, growth_total, long_run=LONG_RUN):
+    """What share of the day's step growth the helper runs over long_run steps carry."""
+    long = [r for r in runs if r["steps"] > long_run]
+    g = sum(r["growth"] for r in long)
+    return "helper runs over %d steps: %d of %d runs, step growth US$%.2f, %.0f%% of the day's US$%.2f" % (
+        long_run, len(long), len(runs), g, 100 * g / growth_total if growth_total else 0.0, growth_total)
+
+
+def top_helpers(day):
+    m = measure_day(day)
+    print("| helper | model | steps | US$ | step growth US$ | share of the day's step growth |")
+    print("|---|---|---|---|---|---|")
+    for typ, model, n, usd, g, share in top_helper_rows(m["helpers"], m["growth"]):
+        print("| %s | %s | %s | %.2f | %.2f | %.1f%% |" % (typ, model, format(n, ","), usd, g, share))
+    print(long_run_line(m["helpers"], m["growth"]))
+    return 0
+
+
 # KILN'S SHARE OF THE WEEK (RULINGS 13 Nov: "at most 15% of weekly usage"; enforced 17 Nov). The week's steps are
 # token_audit.py's, each given to the time-log task open at that moment (helpers' steps too); a task whose name holds
 # "kiln" or "tool loop" is Kiln's. Dollars at list price, a measure of usage, not his bill.
@@ -621,6 +685,12 @@ def selftest():
         ("seven at once next week fails", helpers_line(7, datetime.datetime(2026, 11, 24, 10)).startswith("HELPERS OVER CAP")),
         ("eight at once this week passes", helpers_line(8, datetime.datetime(2026, 11, 17, 10)).startswith("helpers within cap")),
         ("a log's span from its head and tail", span_case()),
+        ("a run's first steps are its start", write_kind(0, {}, 50000) == "helper start" and write_kind(START_STEPS - 1, None, 9) == "session start"),
+        ("a session's big write later is a rewrite", write_kind(START_STEPS, None, 30001) == "rewrite"),
+        ("a helper's big write later is step growth", write_kind(START_STEPS, {}, 90000) == "growth" and write_kind(40, None, 3000) == "growth"),
+        ("top helpers: most steps first, five at most, share of the day's growth", top_helper_case()),
+        ("runs over 300 steps: their share of the day's growth", long_run_line(top_runs_sample(), 10.0).startswith("helper runs over 300 steps: 2 of 7 runs, step growth US$6.00, 60%")),
+        ("top helpers on a day without growth: share 0", top_helper_rows(top_runs_sample()[:1], 0.0)[0][5] == 0.0),
         ("per step over the session's models only", abs(per_step({("session", "a"): [2, 1.0], ("session", "b"): [2, 3.0], ("helpers", "a"): [9, 90.0]}) - 1.0) < 1e-9),
     ]
     bad = 0
@@ -630,6 +700,19 @@ def selftest():
             print("token_measures selftest FAIL " + name)
     print("token_measures selftest: passed=%d/%d failed=%d" % (len(cases) - bad, len(cases), bad))
     return 1 if bad else 0
+
+
+def top_runs_sample():
+    def run(t, steps, g, model="claude-opus-5-5"):
+        return {"type": t, "models": collections.Counter({model: steps}), "steps": steps, "usd": steps / 10.0, "growth": g}
+    return [run("diagnoser", 900, 4.0), run("extractor", 50, 0.1, "claude-sonnet-5-5"), run("claude", 310, 2.0), run("final-reviewer", 120, 0.5),
+            run("importer", 80, 0.2, "claude-sonnet-5-5"), run("research-reader", 60, 0.1, "claude-sonnet-5-5"), run("small-reviewer", 300, 1.0)]
+
+
+def top_helper_case():
+    rows = top_helper_rows(top_runs_sample(), 10.0)
+    return (len(rows) == 5 and [r[2] for r in rows] == [900, 310, 300, 120, 80] and rows[0][:2] == ("diagnoser", "Opus")
+            and rows[4][1] == "Sonnet" and abs(rows[0][5] - 40.0) < 1e-9 and abs(rows[1][4] - 2.0) < 1e-9)
 
 
 def span_case():
@@ -649,6 +732,9 @@ def main(a):
     if "--kiln-share" in a:
         rest = a[a.index("--kiln-share") + 1:]
         return kiln_week(datetime.datetime.strptime(rest[0], "%Y-%m-%d") if rest else datetime.datetime.combine(datetime.date.today(), datetime.time()))
+    if "--top-helpers" in a:
+        rest = a[a.index("--top-helpers") + 1:]
+        return top_helpers(datetime.datetime.strptime(rest[0], "%Y-%m-%d") if rest else datetime.datetime.combine(datetime.date.today(), datetime.time()))
     if "--helpers" in a:
         return helpers_peak()
     if "--thrown" in a:
