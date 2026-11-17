@@ -2600,3 +2600,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: card off bit-identical to main; every gate job inside its bands. Met.
 - Cost: about 0.7 h session, 0.5 h gate; one helper 0.1 h for the gate change. What failed and why: a golden predating a later main feature failed once; retaken on main itself, equal.
 - Evidence: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-speed2/gate.out. Recipe map: no step moved.
+
+## 2026-11-18 00:51 Tools: each fabric's stretch limit applied last, with what it cannot reach reported
+- Made: an off-by-default switch in the cloth solver that applies each fabric's existing stretch limit as the very last step of every frame and of the layer finish, then reports per piece the worst edge still over its limit. Method: the published post-step repair of over-stretched edges (Provot's, as Bridson, Marino and Fedkiw 2002 sec. 4 describe it), iterated in alternating order until a pass finds nothing over or a pass cap is hit; it need not converge where held points force a stretch, so the leftover is measured and reported, never hidden.
+- Tools: the solver's own tests, a git worktree per lane, the regression gate run alone.
+- Target and check: off, bit for bit the main solver (hash test); on, a stretched strip ends within its limit and a strip held apart reports its leftover; the gate with the switch off inside every band. Review note: the repair runs after body contact, so on a body it may move points back inside; the switch stays off until a garment run shows body-through 0 with it on.
+- Cost: helper about 1 h; session review, rebase and tests about 0.3 h; gate about 0.4 h. What failed and why: nothing; on a strip held apart it concentrates stretch into fewer edges rather than lowering it, as the method's source predicts.
+- Evidence: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-strainlimit/gate.out. Recipe map: no step moved.
