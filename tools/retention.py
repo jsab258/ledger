@@ -1296,6 +1296,26 @@ def map_rule_cases(j, make, check_only=True):
         vw = {q: w for q, w, _ in pl["kept"]}
         check(not pl["remove"] and "N-R2" in vw.get(mp_("work-voice"), "") and "N-R2" in vw.get(mp_("work-voice2"), ""),
               "a junction in a lasting folder, and one in an unmapped game folder, keep their targets (N-R2): %s" % pl)
+        # review 4, fault 1: a folder the link walk cannot read keeps every pending row
+        real_scandir, bad = os.scandir, norm(j("game-content"))
+        def refusing_scandir(path="."):
+            if norm(path) == bad:
+                raise PermissionError("refused")
+            return real_scandir(path)
+        os.scandir = refusing_scandir
+        try:
+            unread = []
+            link_targets([j("game-content")], unread=unread)
+            check(unread and norm(unread[0]) == bad, "link_targets reports a folder it cannot read: %s" % unread)
+            LINK_ROOTS[:] = [j("game-content")]
+            vrows2 = {"folders": [dict(fake["folders"][0], path=mp_("work-voice2"))]}
+            pl2 = map_plan(vrows2, pol, readers=readers)
+        finally:
+            os.scandir = real_scandir
+            LINK_ROOTS[:] = []
+        vw2 = {q: w for q, w, _ in pl2["kept"]}
+        check(not pl2["remove"] and "could not read" in vw2.get(mp_("work-voice2"), ""),
+              "an unreadable folder in the link walk keeps every pending row (review 4): %s" % pl2)
         pl2 = map_plan(vrows, pol, readers=readers)
         check(rel(pl2["remove"]) == {os.path.join("mp", "work-voice2")},
               "without the game folder walked, only its target is removable; the lasting junction still keeps its own (N-R2): %s" % pl2["remove"])
@@ -1561,7 +1581,7 @@ LINK_ROOTS = list(LINK_ROOTS_DEFAULT)
 LINK_SKIP_DIRS = {".git", "__pycache__", "deriveddatacache"}
 
 
-def link_targets(roots, avoid=()):
+def link_targets(roots, avoid=(), unread=None):
     """[(link, real target)] for every symbolic link or junction under the roots (a root that is itself a link
     counts). Names only, no file is opened; never walked through a link; folders inside `avoid` are left, unless the
     root itself lies inside one (a LINK_ROOTS folder in the repository)."""
@@ -1584,6 +1604,8 @@ def link_targets(roots, avoid=()):
                 with os.scandir(cur) as it:
                     entries = list(it)
             except OSError:
+                if unread is not None:
+                    unread.append(cur)
                 continue
             for e in entries:
                 try:
@@ -1763,7 +1785,15 @@ def map_plan(m, pol, now=None, readers=None, repo=REPO):
         return out
     # N-R2: a link or junction anywhere mapped, protected or in LINK_ROOTS that reaches a candidate keeps it
     lroots = [o["path"] for o in folders if not never_opened(o)] + [x for x in pol.get("protected", []) if isinstance(x, str)]
-    links = link_targets(lroots + list(LINK_ROOTS), avoid=[repo, STATE] + [o["path"] for o in folders if never_opened(o)])
+    unread = []
+    links = link_targets(lroots + list(LINK_ROOTS), avoid=[repo, STATE] + [o["path"] for o in folders if never_opened(o)],
+                         unread=unread)
+    if unread:
+        # REVIEW 4, fault 1: a folder the walk could not read may hold a junction into a candidate: keep them all
+        for x in pending:
+            kept(x[1], "no write for %.0f days, but the link walk could not read %s, so a link into it may be missed (N-R2)"
+                 % (x[3], unread[0]), True)
+        return out
     still = []
     for x in pending:
         hit = reached_by_link(x[1], links)
