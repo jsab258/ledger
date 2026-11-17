@@ -2,6 +2,44 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "lane-task-at-pc-2026-11-17",
+   "added": "2026-11-17 16:30",
+   "his_hands": true,
+   "tag": "ACTION",
+   "title": "Add the lane session's hourly task (your pick of 16:05)",
+   "why": [
+    "A second session works this week on things that never touch the machine, so the meter moves faster.",
+    "Only you can create a scheduled task, at the PC itself."
+   ],
+   "steps": [
+    "Claude app: Scheduled (left sidebar)",
+    "New task",
+    "Name: LEDGER: the lane session",
+    "Folder: C:\\Users\\Jafar\\ledger-lane",
+    "Repeat: Hourly",
+    "Model: Opus 5.5",
+    "Prompt: in File Explorer open ledger-local, production, lane, then lane-prompt.txt; press Ctrl+A, Ctrl+C; paste into the prompt box",
+    "Permissions: automatically approve",
+    "Click Save",
+    "Tap Done below"
+   ],
+   "text": "Add the lane session's hourly task at the PC (numbered steps on the page).",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today: it stops by itself on Monday 23 November at 07:00.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "open"
+  },
+  {
    "id": "metatailor-access-2026-11-12",
    "added": "2026-11-12 11:01",
    "text": "Your hands, one minute, at the PC: MetaTailor's free test is ready (your yes to its clicks, 07:17), but the app refuses computer-use approval inside a scheduled run. Your message at 11:54 did not bring the card (this conversation still counts as a scheduled run). The other route: in the Claude app, open Scheduled in the sidebar, choose ledger-daily-fresh-session, open its settings and add META-Tailor.exe (F:\\LedgerTools\\tool-tests-2026-11\\metatailor\\app\\META-Tailor.exe) to the apps it may control. The test then runs while you are away.",
