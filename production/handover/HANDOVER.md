@@ -4,8 +4,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-17 20:07 (the hourly run; the last session set its Stopped line at 19:52)
 
-**Row due:** 2026-11-17 21:13 (last 20:13; page and advisor read 20:41; last ack 20:12)
-**Stopped:** 2026-11-17 19:52 (history past its point at an item's end; no helper or background job running)
+**Row due:** 2026-11-17 21:57 (last 20:57; page and advisor read 20:55; last ack 20:56)
+**Stopped:** 2026-11-17 21:03 (history past its point at an item's end; no helper or background job running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -39,7 +39,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 0. FIRST: verdicts after 2026-11-17T19:55:00Z; advisor after the last ack (2055-209). Then finish his cars rulings of 20:44/20:48 (advisors 208, 209; RULINGS and canon done): PLAN.md, the roadmap, the asset plan SUMMARY order (traffic into the friends' build), the progress page (station 8 traffic into the friends' build, station 11 "driving, once the map is bigger", AAA end state); put the traffic item with the lane's hours (production/research/lane/TRAFFIC-COST-2026-11-17.md when it lands) into the running list for the order of 23 Nov. Lane: fetch and review as before.
-1. THE GATE IN FLIGHT: C:/LedgerTools/kiln-runs/hinge-gate-2026-11-17.log (KILN_EXE = the hinge exe, every switch off). Must be 189/189 identical to baseline 9ca019e; if so merge lane-hinge-generic into Kiln main (`git -C F:/LedgerTools/tool-dev/kiln checkout main`, merge --no-ff, message ending "Special cases: none."). A gate must use KILN_EXE: without it the gate takes C:/LedgerTools/cargo-target/kiln/release/drape-studio.exe (an older build) - the first attempt did and was stopped.
+1. DONE: hinge gate PASS (inside every band), merged on Kiln main fdd3a6d. Any later gate must set KILN_EXE (else it takes C:/LedgerTools/cargo-target/kiln/release, an older build).
 2. THEN, quiet machine: the speed timing (advisor 2010-207, next machine job): plan and ready script in F:/LedgerTools/tool-dev/reports/KILN-SPEED2-PORT-2026-11-17.md (six runs per garment, Tom j3 and Ron's trousers; check KILN_GPU_LOG); drape time per garment before and after in the row; then merge lane-speed2 after the hinge (same step: care with conflicts), gate again with switches off.
 3. Bending try 2 option (a) on the merged hinge: spacing list, silk and nylon at 6 and 4 mm, KILN_DOUBLE=1, KILN_XPBD=1.
 4. Kiln gap 1 (plan and adapter committed: production/research/phase2-plan/KILN-TO-GAME-PLAN-2026-11-17.md, tools/kiln_to_game.py): re-export the armline trousers OBJ from its .drape on a quiet machine (the final OBJ is gone), then steps A to J; open: the weights-body match, the hem over his boots, the Kiln front-end adoption tap before step I (check whether it is his). Never beside a Kiln gate.

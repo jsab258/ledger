@@ -1,5 +1,7 @@
 # Review: output-cap hook (n16-10), 17 Nov 2026
 
+Method researched: HOOK-OUTPUT-CAP-RESEARCH-2026-11-17.md, 17 Nov 2026
+
 Fresh, hostile review of tools/output_cap.py (uncommitted, 551 lines), the snippet
 HOOK-OUTPUT-CAP-SETTINGS.json and HOOK-OUTPUT-CAP-RESEARCH-2026-11-17.md. Nothing was edited.
 
