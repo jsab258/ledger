@@ -2,8 +2,8 @@
 """Retention for drives C: and F:: what this project keeps, measured and enforced every night.
 
     python tools/retention.py census [--since ISO] [--out FILE]   # every place of the project's, folder by folder, largest first
-    python tools/retention.py plan                                 # what the limits would delete now (nothing is deleted)
-    python tools/retention.py run                                  # deletes what the limits say, logs each deletion
+    python tools/retention.py plan                                 # what the limits and the storage map's rules would delete now (nothing is deleted)
+    python tools/retention.py run                                  # deletes what the limits say (and the map's rules once live), logs each deletion
     python tools/retention.py delete PATH --why "..."              # one deletion by hand, through the same checks and log
     python tools/retention.py nightly                              # census, run, census, the morning line (Task Scheduler, 04:30)
     python tools/retention.py space --job "what" [--drives CF] [--need-c 40 --need-f 20]   # before any build, render or large job
@@ -28,6 +28,14 @@ backup covers is protected as well (tools/backup-to-dropbox.py's own list). A
 link or junction is removed as a link, never entered (tools/cleanup.py's
 remove_tree). The nightly task runs outside the Claude app, so it sees the
 real AppData; from inside Claude a session sees its private copy on top.
+
+THE STORAGE MAP (production/storage-map.json, RULINGS 17 Nov) gives every
+folder a shelf and an expiry. Its rules (map_plan: working 3 days, tools 14
+days unused and refetchable, else his page; lasting and side sessions never)
+are listed by `plan` beside the limits, with the "his page" candidates and the
+floors (the map's: F: 20, C: 40). `run`, `nightly` and `space` remove the
+map's rows only once production/retention.json sets "mapRulesLive": true, and
+only what `plan` lists, through the same delete() and its log.
 """
 import datetime as dt
 import fnmatch
@@ -35,6 +43,7 @@ import glob
 import json
 import ntpath
 import os
+import re
 import shutil
 import stat
 import subprocess
@@ -394,11 +403,27 @@ def candidates(pol, now=None, running=None):
     return uniq
 
 
-def enforce(pol, dry=False):
+def enforce(pol, dry=False, mp=None, map_live=None):
+    """The limits' rows, then the storage map's (map_plan's 'remove' list only): listed when dry, removed only when
+    the map's rules are live (retention.json "mapRulesLive": true). Each goes through delete() and its checks."""
     protected_extra = backup_paths() + named_keep(pol)
     results = []
     for p, rule, why in candidates(pol):
         results.append(delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra))
+    live = map_rules_live(pol) if map_live is None else map_live
+    if dry or live:
+        if mp is None:
+            try:
+                mp = map_plan(storage_map(), pol)
+            except (OSError, ValueError):
+                mp = {"remove": []}
+        done = [r["path"] for r in results]
+        for p, rule, why in mp.get("remove", []):
+            if any(inside(p, d) for d in done):
+                continue            # a limit's row already covers it
+            r = delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra)
+            r["map"] = True
+            results.append(r)
     return results
 
 
@@ -730,6 +755,7 @@ def selftest():
             check(os.path.exists(j("runs", "named-run", "a.obj")), "a run a report names stays")
             check(not os.path.exists(j("runs", "named-run-2")) and not os.path.exists(j("runs", "other-run")),
                   "unnamed runs past their limit go")
+            failures.extend(map_rule_cases(j, make, check_only=True))
         finally:
             STATE = saved_state
         # THE STORAGE MAP, read only (17 Nov): a folder inside a mapped one is covered, a new one is flagged
@@ -745,6 +771,7 @@ def selftest():
               "nothing of his is on the map")
         check(all(e.get("shelf") and e.get("expiry") for e in real["folders"]), "every mapped folder has a shelf and an expiry")
         check(sum(v for k, v in real["shelves_gb"]["F"].items()) <= 120.5, "F:'s shelves and floor fit the drive")
+        check(floors(real) == {"C": 40.0, "F": 20.0}, "the real map's floors are C: 40, F: 20")
     finally:
         import cleanup
         done = {"files": 0, "links": 0, "bytes": 0, "failed": []}
@@ -758,6 +785,127 @@ def selftest():
 
 def enforce_with(pol):
     return [delete(pol, p, r, w) for p, r, w in candidates(pol, running=set())]
+
+
+def map_rule_cases(j, make, check_only=True):
+    """The storage map's expiry rules on temp folders and a fake map (step 2, 17 Nov). Returns the failures."""
+    fails = []
+
+    def check(cond, what):
+        if not cond:
+            fails.append("map rules: " + what)
+
+    mp_ = lambda *a: j("mp", *a)
+    now = time.time()
+    d1, d5, d10, d20 = (now - n * 86400 for n in (1, 5, 10, 20))
+    fx = [("work-old", "working", d10, {"proposal": "remove: test"}),
+          ("work-new", "working", d1, {"proposal": "remove: test"}),
+          ("work-keep", "working", d10, {"proposal": "keep, test"}),
+          ("work-shrink", "working", d10, {"proposal": "remove/shrink candidate"}),
+          ("work-read", "working", d10, {"proposal": "remove: test"}),
+          ("work-side", "working", d10, {"proposal": "remove: test", "source": "made by the lab side session"}),
+          ("work-protected", "working", d10, {"proposal": "remove: test"}),
+          ("work-held", "working", d10, {"proposal": "remove: test"}),
+          ("work-holds", "working", d10, {"proposal": "remove: test"}),
+          ("work-backup", "working", d10, {"proposal": "remove: test", "backup": "yes (all of it)"}),
+          ("work-his", "working", d10, {"proposal": "remove: test", "owner": "Jafar"}),
+          ("work-linenamed", "working", d10, {"proposal": "remove candidate, no path reader (tools/cleanup.py imports it)"}),
+          ("work-limitrow", "working", d10, {"proposal": "remove: empty", "serves": "production/retention.json (limit row)"}),
+          ("tool-public", "tools", d20, {"proposal": "remove candidate", "source": "public PyPI"}),
+          ("tool-unknown", "tools", d20, {"proposal": "remove candidate", "source": "unknown"}),
+          ("tool-signin", "tools", d20, {"proposal": "", "source": "public, needs the owner's sign-in"}),
+          ("tool-recent", "tools", d5, {"proposal": "remove candidate", "source": "public PyPI"}),
+          ("tool-keep", "tools", d20, {"proposal": "keep", "source": "public PyPI"}),
+          ("lasting-old", "lasting", d20, {"proposal": "remove"}),
+          ("side-old", "side-session", d20, {"proposal": "remove"}),
+          ("cache-old", "build-cache", d20, {"proposal": "remove"})]
+    fake = {"shelves_gb": {"F": {"floor": 20}, "C": {"floor": 40}}, "folders": []}
+    for name, shelf, when, extra in fx:
+        make(mp_(name, "f.bin"), when, size=1000)
+        fake["folders"].append(dict({"path": mp_(name), "shelf": shelf, "source": "made by LEDGER runs",
+                                     "serves": "test", "proposal": ""}, **extra))
+    make(mp_("work-holds", "inner", "g.bin"), d10)
+    fake["folders"].append({"path": mp_("work-holds", "inner"), "shelf": "lasting", "proposal": "keep"})
+    make(mp_("unmapped-old", "f.bin"), d20)                       # in the places, old, not on the map
+    make(j("mp-elsewhere", "stray", "f.bin"), d10)                # on the map, outside the places
+    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray"})
+    make(j("mp-target", "keep.bin"), d10)                         # a junction's target, outside the places
+    link_made = False
+    if os.name == "nt":
+        r = subprocess.run(["cmd", "/c", "mklink", "/J", mp_("work-old", "link"), j("mp-target")], capture_output=True)
+        link_made = r.returncode == 0
+    elif hasattr(os, "symlink"):
+        try:
+            os.symlink(j("mp-target"), mp_("work-old", "link"))
+            link_made = True
+        except OSError:
+            pass
+    pol = {"places": [j("mp")], "protected": [mp_("work-protected")], "caches": [], "limits": [],
+           "holds": [{"path": mp_("work-held"), "why": "test", "until": (dt.date.today() + dt.timedelta(days=3)).isoformat()}],
+           "floors": {"C": 30, "F": 20}}
+    readers = "open(r'%s\\data.json')" % mp_("work-read")
+    plan = map_plan(fake, pol, readers=readers)
+    rel = lambda rows: {os.path.relpath(r[0], j()) for r in rows}
+    want_remove = {os.path.join("mp", "work-old"), os.path.join("mp", "tool-public"), os.path.join("mp", "work-limitrow")}
+    want_page = {os.path.join("mp", "tool-unknown"), os.path.join("mp", "tool-signin")}
+    want_refused = {os.path.join("mp", "work-protected"), os.path.join("mp", "work-held"),
+                    os.path.join("mp-elsewhere", "stray")}
+    check(rel(plan["remove"]) == want_remove, "remove %s, wanted %s" % (sorted(rel(plan["remove"])), sorted(want_remove)))
+    check(rel(plan["hisPage"]) == want_page, "his page %s, wanted %s" % (sorted(rel(plan["hisPage"])), sorted(want_page)))
+    check(rel(plan["refused"]) == want_refused, "refused %s, wanted %s" % (sorted(rel(plan["refused"])), sorted(want_refused)))
+    listed = rel(plan["remove"]) | rel(plan["hisPage"]) | rel(plan["refused"]) | rel(plan["kept"])
+    check(os.path.join("mp", "unmapped-old") not in listed, "an unmapped folder is on no list")
+    why = {os.path.relpath(p, j()): w for p, w, _ in plan["kept"]}
+    for name, frag in (("work-new", "inside its 3 days"), ("tool-recent", "inside its 14 days"),
+                       ("work-keep", "keeps it"), ("work-shrink", "keeps it"), ("tool-keep", "keeps it"),
+                       ("work-read", "names it"), ("work-side", "side session"), ("work-holds", "holds another"),
+                       ("work-backup", "backed up"), ("work-his", "owner"), ("lasting-old", "never"),
+                       ("work-linenamed", "names a reader (tools/cleanup.py)"),
+                       ("side-old", "never"), ("cache-old", "never")):
+        check(frag in why.get(os.path.join("mp", name), ""), "%s kept for '%s', got '%s'"
+              % (name, frag, why.get(os.path.join("mp", name))))
+    check(any("protected" in w for p, _, w in plan["refused"] if p.endswith("work-protected")), "protected is refused as protected")
+    check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
+    check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
+    # not live: run removes none of the map's rows
+    res = enforce(pol, dry=False, mp=plan, map_live=False)
+    check(not [r for r in res if r.get("map")] and os.path.exists(mp_("work-old", "f.bin")), "not live: nothing of the map's removed")
+    # plan (dry) lists exactly the remove list
+    res = enforce(pol, dry=True, mp=plan)
+    check({os.path.relpath(r["path"], j()) for r in res if r.get("map") and r.get("dry")} == want_remove,
+          "the dry plan lists the remove list")
+    check(os.path.exists(mp_("work-old", "f.bin")), "the dry plan removed nothing")
+    # live: removes only what the plan lists, through delete() and its log
+    log_before = len(open(os.path.join(STATE, "deleted.log"), encoding="utf-8").read().splitlines()) \
+        if os.path.exists(os.path.join(STATE, "deleted.log")) else 0
+    res = enforce(pol, dry=False, mp=plan, map_live=True)
+    gone = {os.path.relpath(r["path"], j()) for r in res if r.get("map") and r.get("gone")}
+    check(gone == want_remove, "live run removed %s, wanted %s" % (sorted(gone), sorted(want_remove)))
+    check(not os.path.exists(mp_("work-old")) and not os.path.exists(mp_("tool-public"))
+          and not os.path.exists(mp_("work-limitrow")), "the expired folders are gone")
+    check(os.path.exists(j("mp-target", "keep.bin")), "the junction's target survived")
+    check(link_made, "the junction test ran")
+    if link_made:
+        row = [r for r in res if r.get("map") and r["path"].endswith("work-old")]
+        check(row and row[0].get("links") == 1, "the junction was removed as one link")
+    for name in ("work-new", "work-keep", "work-shrink", "work-read", "work-side", "work-protected", "work-held",
+                 "work-holds", "work-backup", "work-his", "work-linenamed", "tool-unknown", "tool-signin", "tool-recent", "tool-keep",
+                 "lasting-old", "side-old", "cache-old", "unmapped-old"):
+        check(os.path.exists(mp_(name, "f.bin")), "%s stays" % name)
+    check(os.path.exists(j("mp-elsewhere", "stray", "f.bin")), "the stray outside the places stays")
+    log_path = os.path.join(STATE, "deleted.log")
+    lines = open(log_path, encoding="utf-8").read().splitlines()[log_before:] if os.path.exists(log_path) else []
+    check(len(lines) == 3 and all(json.loads(x)["rule"].startswith("map ") for x in lines), "three map deletions logged")
+    # floors: the map's win over retention.json's; a drive below its floor is flagged before and after
+    fl = floors(fake, pol)
+    check(fl == {"C": 40.0, "F": 20.0}, "the map's floors: %s" % fl)
+    check(floors({}, pol) == {"C": 30.0, "F": 20.0} and floors({}, {}) == {"C": 40.0, "F": 20.0}, "floor fallbacks")
+    rows = {r["drive"]: r for r in floor_rows(fl, {"C": 35.0, "F": 25.0}, {"C": 3e9})}
+    check(rows["C"]["below"] and rows["C"]["after"] == 38.0 and rows["C"]["belowAfter"] and not rows["F"]["below"],
+          "floor rows: %s" % rows)
+    rows = {r["drive"]: r for r in floor_rows(fl, {"C": 38.0, "F": None}, {"C": 3e9})}
+    check(rows["C"]["below"] and not rows["C"]["belowAfter"] and not rows["F"]["below"], "freeing lifts a drive over its floor")
+    return fails
 
 
 # ---- THE STORAGE MAP (advisor 196, his pick 17 Nov 12:43; RULINGS 17 Nov) ---------------------------------
@@ -815,6 +963,200 @@ def shelves(m, measure=size_of):
              "over85": used.get(s, 0) > 0.85 * sizes[s]} for s in sizes if s not in ("floor", "spare")]
 
 
+# ---- THE MAP'S EXPIRY RULES (step 2) ---------------------------------------------------------------------------
+# What the rules mean here, and what code cannot judge:
+# - working, "3 days, or once its numbers are recorded": a mapped working folder whose newest file is over 3 days
+#   old, that no tool names and whose map line proposes removal ("remove..." with no "keep" or "shrink") goes
+#   whole. Whether its numbers are recorded, and "a superseded review picture keeps its preview only", are not
+#   judged by code: an expired folder the map's line keeps is listed as kept, for the map to be corrected.
+# - tools, "14 days unused: removed if refetchable, else his page": a tool is read, not written, so a file date
+#   alone does not say it is unused. Unused here = no file written for 14 days AND no tool in the repository names
+#   its path. Refetchable = the map's source names a public origin and nothing doubtful (unknown, sign-in,
+#   unverified, not refetchable). Unused and refetchable goes only if the map's line proposes removal; unused and
+#   not known refetchable is a "his page" candidate (unless the map's line keeps it), never removed.
+# - lasting, side-session, build-cache, installed program, not-LEDGER, or any other shelf: never by the map
+#   (build caches stay under retention.json's limits and caps).
+# - never by the map either: an owner other than LEDGER or Claude (the map says nothing of his is on it; an entry
+#   with another owner is his), a line naming a side session, a line backed up ("backup": "yes ..."), a folder
+#   holding another mapped folder, a mapped link (its target is mapped where it lives), and everything delete()
+#   refuses (outside retention.json's places, protected, backed up, tracked by git, held, named by a report).
+# - a folder not on the map is never removed by the map's rules.
+
+MAP_WORKING_DAYS = 3
+MAP_TOOLS_DAYS = 14
+LEDGER_OWNERS = {"ledger", "claude", "session"}
+REFETCH_WORDS = ("public", "pypi", "hugging face", "blender.org", "npm install", "microsoft download",
+                 "github runner release", "rebuilt by")
+DOUBT_WORDS = ("unknown", "sign-in", "sign in", "unverified", "not refetchable", "not found", "no requirements",
+               "needs his", "owner's", "unique")
+READER_DIRS = ("tools", os.path.join("ue-probe", "Source"), os.path.join("ue-probe", "Config"),
+               os.path.join("production", "specs"), ".github")
+READER_EXT = (".py", ".ps1", ".psm1", ".bat", ".cmd", ".json", ".cs", ".cpp", ".h", ".ini", ".yml", ".yaml",
+              ".toml", ".txt", ".sh", ".rs")
+
+
+LINE_FILE = re.compile(r"[A-Za-z0-9_./-]+[.](?:py|ps1|bat|cs|cpp|h|rs|json|ini|yml)")
+NOT_READERS = ("production/retention.json", "production/storage-map.json")
+
+
+def line_reader(e, repo=REPO):
+    """A repository file the map's own line names as using the folder ('tools/x.py imports it'), if it exists;
+    retention.json and the map itself name folders without reading them."""
+    for k in ("serves", "proposal", "source"):
+        for f in LINE_FILE.findall(str(e.get(k, ""))):
+            f = f.strip("./")
+            if f.replace("\\", "/").lower() not in NOT_READERS and os.path.isfile(os.path.join(repo, f)):
+                return f
+    return None
+
+
+def map_rules_live(pol):
+    return pol.get("mapRulesLive") is True
+
+
+def reader_text(repo=REPO):
+    """The repository's tool, game-source, spec and workflow text, lower case, backslashes as '/': where a path a
+    tool reads would be named. Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
+    parts = []
+    me = norm(os.path.abspath(__file__))
+    for d in READER_DIRS:
+        for root, dirs, files in os.walk(os.path.join(repo, d)):
+            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
+            for n in files:
+                f = os.path.join(root, n)
+                if not n.lower().endswith(READER_EXT) or norm(f) == me:
+                    continue
+                try:
+                    if os.path.getsize(f) > 2_000_000:
+                        continue
+                    with open(f, encoding="utf-8", errors="replace") as fh:
+                        parts.append(fh.read())
+                except OSError:
+                    pass
+    return "\n".join(parts).replace("\\\\", "/").replace("\\", "/").lower()
+
+
+def path_key(p):
+    """A path as the reader text writes it, without its drive ('F:/LedgerTools/old' -> '/ledgertools/old')."""
+    k = p.replace("\\", "/").rstrip("/").lower()
+    return k[2:] if len(k) > 1 and k[1] == ":" else k
+
+
+def floors(m=None, pol=None):
+    """{'C': GB, 'F': GB} each drive keeps free: the map's floors (their home since 17 Nov), else retention.json's,
+    else 40 and 20."""
+    out = {"C": 40.0, "F": 20.0}
+    for d in out:
+        v = (pol or {}).get("floors", {}).get(d)
+        if isinstance(v, (int, float)):
+            out[d] = float(v)
+        v = (m or {}).get("shelves_gb", {}).get(d, {}).get("floor")
+        if isinstance(v, (int, float)):
+            out[d] = float(v)
+    return out
+
+
+def floor_rows(fl, free, freed_bytes):
+    """One row per drive: free now, its floor, free after what would be removed, and whether it is below."""
+    rows = []
+    for d in ("C", "F"):
+        f = free.get(d)
+        after = None if f is None else round(f + freed_bytes.get(d, 0) / 1e9, 1)
+        rows.append({"drive": d, "free": f, "floor": fl[d], "after": after,
+                     "below": f is not None and f < fl[d], "belowAfter": after is not None and after < fl[d]})
+    return rows
+
+
+def map_plan(m, pol, now=None, readers=None):
+    """What the map's expiry rules say now: {'remove': [(path, rule, why)], 'hisPage': [(path, rule, why)],
+    'refused': [(path, rule, why)], 'kept': [(path, why, expired)]}. Removes nothing."""
+    now = now or time.time()
+    out = {"remove": [], "hisPage": [], "refused": [], "kept": []}
+    folders = m.get("folders", [])
+    text, protected_extra = None, None
+
+    def kept(p, why, expired=False):
+        out["kept"].append((p, why, expired))
+
+    for e in folders:
+        p = e.get("path", "")
+        if not p:
+            continue
+        shelf = str(e.get("shelf", "")).strip().lower()
+        line = " ".join(str(e.get(k, "")) for k in ("source", "serves", "proposal")).lower()
+        proposal = str(e.get("proposal", "")).strip().lower()
+        owner = str(e.get("owner", "") or "").strip().lower()
+        if shelf not in ("working", "tools"):
+            kept(p, "shelf %s: never removed by the map" % (shelf or "missing"))
+            continue
+        if owner and owner not in LEDGER_OWNERS:
+            kept(p, "owner %s: never touched" % e.get("owner"))
+            continue
+        if os.path.basename(p.rstrip("/\\")).lower() in NOT_OURS:
+            kept(p, "not LEDGER's")
+            continue
+        if "side session" in line or "side-session" in line:
+            kept(p, "a side session's work: never touched")
+            continue
+        if str(e.get("backup", "")).strip().lower().startswith("yes"):
+            kept(p, "backed up: never removed")
+            continue
+        if is_link(p):
+            kept(p, "a link: its target is mapped where it lives")
+            continue
+        if not os.path.exists(p):
+            kept(p, "not on disk")
+            continue
+        inner = [o["path"] for o in folders if o.get("path") and norm(o["path"]) != norm(p) and inside(o["path"], p)]
+        if inner:
+            kept(p, "holds another mapped folder (%s)" % inner[0])
+            continue
+        days = MAP_WORKING_DAYS if shelf == "working" else MAP_TOOLS_DAYS
+        age = (now - newest_mtime(p)) / 86400
+        if age <= days:
+            kept(p, "written %.1f day(s) ago, inside its %d days" % (age, days))
+            continue
+        if text is None:
+            text = reader_text() if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
+        if _named(text, path_key(p)):
+            kept(p, "no write for %.0f days, but a tool in the repository names it" % age, True)
+            continue
+        named_by = line_reader(e)
+        if named_by:
+            kept(p, "no write for %.0f days, but the map's line names a reader (%s)" % (age, named_by), True)
+            continue
+        says_remove = proposal.startswith("remove") and "keep" not in proposal and "shrink" not in proposal
+        rule = "map %s %dd" % (shelf, days)
+        if shelf == "tools":
+            source = str(e.get("source", "")).lower()
+            refetch = any(w in source for w in REFETCH_WORDS) and not any(w in source for w in DOUBT_WORDS)
+            if not refetch:
+                if "keep" in proposal:
+                    kept(p, "unused %.0f days, not known refetchable; the map's line keeps it (%s)"
+                         % (age, e.get("proposal", "")), True)
+                else:
+                    out["hisPage"].append((p, rule, "unused %.0f days, no tool names it, not known refetchable (source: %s)"
+                                           % (age, e.get("source", "") or "none")))
+                continue
+            if not says_remove:
+                kept(p, "unused %.0f days and refetchable; the map's line keeps it (%s)" % (age, e.get("proposal", "")), True)
+                continue
+            why = "unused %.0f days, no tool names it, refetchable (%s)" % (age, e.get("source", ""))
+        else:
+            if not says_remove:
+                kept(p, "no write for %.0f days; the map's line keeps it (%s)" % (age, e.get("proposal", "")), True)
+                continue
+            why = "no write for %.0f days, no tool names it; the map: %s" % (age, e.get("proposal", ""))
+        if protected_extra is None:
+            protected_extra = backup_paths() + named_keep(pol)
+        ok, reason = may_delete(pol, p, protected_extra)
+        if not ok:
+            out["refused"].append((p, rule, reason))
+            continue
+        out["remove"].append((p, rule, why))
+    return out
+
+
 # ---- COMMANDS -------------------------------------------------------------------
 
 def main(argv):
@@ -839,13 +1181,53 @@ def main(argv):
         print("free: C: %s GB, F: %s GB" % (snap["free"]["C"], snap["free"]["F"]))
         return 0
     if cmd in ("plan", "run"):
-        res = enforce(policy(), dry=(cmd == "plan"))
+        pol = policy()
+        try:
+            m = storage_map()
+            mp = map_plan(m, pol)
+        except (OSError, ValueError) as e:
+            print("storage map unreadable (%s): the map's rules list nothing" % e)
+            m, mp = {}, {"remove": [], "hisPage": [], "refused": [], "kept": []}
+        live = map_rules_live(pol)
+        res = enforce(pol, dry=(cmd == "plan"), mp=mp)
+        verb = "would" if cmd == "plan" else "deleted"
+        row = lambda r: "%s %7.2f GB  %-26s %s%s" % ("REFUSED" if "refused" in r else verb, r.get("bytes", 0) / 1e9,
+                                                     r["rule"], r["path"],
+                                                     ("  (" + r["refused"] + ")") if "refused" in r else "")
+        print("== retention.json limits")
         for r in res:
-            print("%s %7.2f GB  %-26s %s%s" % ("REFUSED" if "refused" in r else ("would" if cmd == "plan" else "deleted"),
-                                              r.get("bytes", 0) / 1e9, r["rule"], r["path"],
-                                              ("  (" + r["refused"] + ")") if "refused" in r else ""))
-        print("%s: %.2f GB in %d place(s)" % (cmd, sum(r.get("bytes", 0) for r in res if "refused" not in r) / 1e9,
-                                             sum(1 for r in res if "refused" not in r)))
+            if not r.get("map"):
+                print(row(r))
+        print("== storage map rules (%s)" % ("live" if live else "NOT LIVE: listed only; run removes them once "
+                                              "production/retention.json sets \"mapRulesLive\": true"))
+        for r in res:
+            if r.get("map"):
+                print(row(r) + ("" if "refused" in r else "  [" + r["why"] + "]"))
+        for p, rule, why in mp["refused"]:
+            print("REFUSED %7.2f GB  %-26s %s  (%s)" % (size_of(p) / 1e9, rule, p, why))
+        page_bytes = 0
+        for p, rule, why in mp["hisPage"]:
+            b = size_of(p)
+            page_bytes += b
+            print("HISPAGE %7.2f GB  %-26s %s  (%s)" % (b / 1e9, rule, p, why))
+        expired_kept = [k for k in mp["kept"] if k[2]]
+        for p, why, _ in expired_kept:
+            print("kept    expired   %-26s %s  (%s)" % ("map", p, why))
+        print("map: %d folder(s) kept that are not expired or never removed by the map" % (len(mp["kept"]) - len(expired_kept)))
+        done = [r for r in res if "refused" not in r]
+        freed = {}
+        for r in done:
+            d = r["path"][:1].upper()
+            freed[d] = freed.get(d, 0) + r.get("bytes", 0)
+        for f in floor_rows(floors(m, pol), free_gb(), freed):
+            print("floor %s: %s GB free, floor %.0f, after this %s%s" % (
+                f["drive"], f["free"], f["floor"], f["after"],
+                "  BELOW ITS FLOOR: his page within the hour (the map's shelf rule)" if f["belowAfter"] else ""))
+        lim_b = sum(r.get("bytes", 0) for r in done if not r.get("map"))
+        map_b = sum(r.get("bytes", 0) for r in done if r.get("map"))
+        print("%s: %.2f GB in %d place(s) (limits %.2f GB, map %.2f GB%s); his page %.2f GB in %d" % (
+            cmd, (lim_b + map_b) / 1e9, len(done), lim_b / 1e9, map_b / 1e9, "" if live else ", not live",
+            page_bytes / 1e9, len(mp["hisPage"])))
         return 0
     if cmd == "delete":
         if not args or not opt("--why"):
@@ -892,7 +1274,11 @@ def main(argv):
             print("%-10s %6.1f GB of %5.1f%s" % (s["shelf"], s["gb"], s["sizeGb"], "  OVER 85%" if s["over85"] else ""))
         return 0
     if cmd == "space":
-        r = space(opt("--job", "a job"), float(opt("--need-c", 40)), float(opt("--need-f", 20)), opt("--drives", "CF"))
+        try:
+            fl = floors(storage_map(), policy())
+        except (OSError, ValueError):
+            fl = floors(None, policy())
+        r = space(opt("--job", "a job"), float(opt("--need-c", fl["C"])), float(opt("--need-f", fl["F"])), opt("--drives", "CF"))
         print(json.dumps({k: v for k, v in r.items() if k != "cleaned"}))
         return 0 if r["verdict"] == "GO" else 3
     print("unknown command " + cmd)

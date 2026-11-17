@@ -1386,6 +1386,28 @@
    "source": "rebuilt by Unreal (Zen shared cache)",
    "proposal": "keep: protected; 13.8 GB, Unreal trims itself to its 10 GB soft limit",
    "expiry": "by retention.json caps (rebuilt by the build)"
+  },
+  {
+   "path": "C:/Users/Jafar/ledger-lane",
+   "shelf": "side-session",
+   "gb": 0.1,
+   "last_write": "2026-11-17",
+   "serves": "the lane session, 16 to 23 Nov only (RULINGS 7, 10 Nov; advisor 202): its sparse worktree on branch lane, text folders only",
+   "source": "git (branch lane; merged into wip by the main session at item ends)",
+   "proposal": "keep until 23 Nov 07:00; then, after the last merge of branch lane, the main session removes it with git worktree remove (Claude made it; one line recorded)",
+   "backup": "no",
+   "expiry": "never touched by the main session while the lane runs (side sessions own their folders); after 23 Nov 07:00 and the last merge, removed as above"
+  },
+  {
+   "path": "F:/LedgerTools/lane-research",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-17",
+   "serves": "the lane session's one place on F: (RULINGS 7, 10 Nov; advisor 202): raw research material; what matters goes into git on branch lane",
+   "source": "rewritten by the lane from its sources",
+   "proposal": "keep until the lane's last merge after 23 Nov 07:00; then by the working shelf's rule",
+   "backup": "no",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   }
  ],
  "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."
