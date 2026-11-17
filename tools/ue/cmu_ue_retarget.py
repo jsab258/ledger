@@ -33,6 +33,24 @@ CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md, 5.8.2 source cited there):
   marks; height stays chain-relative, so each body keeps its own ankle height (CMU ankles sit 2.6-6 cm up, the
   MetaHuman's 9.5-9.8: a full blend sank the feet 4-14 cm in the diagnosis).
 - Each body's reference pose of the measured roles goes into ue_result.json (body_ref) for cmu_bone_dump.py's rest.
+
+Hip-joint centre (n16-7, a new method after two tries, try 1 of 2, 18 Nov; production/research/
+n16-7-hip-joint-pelvis-method-2026-11-17.md section 3B and its review's fixes; engine 5.8.4 source): with
+LEDGER_CMU_HIPCENTRE=1 and cmu_clips.py's HipCentre clips (a bone at the hip-joint midpoint, keyed with Hips's rotation)
+plus their floor_<subject>.json (the source ankle height a_s at its standing frame, cmu_measure's rule):
+- The source IK rig stays the auto rig with retarget root Hips; it is read back against try 1's (CMU_TRY1_RESULT): same
+  auto result, chains and root, no chain on HipCentre (review fix 7; the template's name has no Python reader).
+- Per pair, from the RETARGET poses (local = ref local x delta, IKRetargetProcessor.cpp 77-79; review fix 2): H_p =
+  HipCentre height and L_s = mean |UpLeg - Foot| on the source; P0, R0 (pelvis), T0 (thigh midpoint), H_tp = P0.z,
+  a_t = mean foot height and L_t = mean |thigh - foot| on the target. r = L_t / L_s, G = H_tp / H_p, S = r / G.
+- Scale Source factor r about the component origin; Pelvis Motion scale_horizontal = scale_vertical = S, global
+  offset (-P0.x (1 - S), -P0.y (1 - S), a_t - r a_s), local offset R0^-1 (P0 - T0), Affect IK 1 and 1, the rest at
+  their neutral values (PelvisMotionOp.cpp 323-385: the target hip midpoint lands at r x HipCentre + (0, 0, b), and Run
+  IK Rig's goal at r x the source ankle + (0, 0, b), RunIKRigOp.cpp 113-133); Blend to Source's apply_pelvis_offset 0.
+- Both retarget poses' root translation deltas must read zero (review fix 3: with HipCentre as the op's bone the pose
+  resolve adds that delta to HipCentre alone, IKRetargetProcessor.cpp 56-62, 2230-2241).
+- LAST, after every assign_ik_rig_to_all_ops (each resets it, PelvisMotionOp.cpp 151-163; set_settings never copies it,
+  25-36): set_source_pelvis_bone("HipCentre"), read back; every read-back mismatch stops the pair before the batch.
 """
 import json
 import os
@@ -52,6 +70,13 @@ ANKLE_RIG = WORK + "/IK_MH_IKRig_ankle"  # the copy with ankle goals, remade eve
 BLEND_AXES = (1.0, 1.0, 0.0)  # Blend to Source per axis: horizontal from the scaled source, height chain-relative
 MH_ROLES = ("pelvis", "thigh_l", "calf_l", "foot_l", "ball_l", "thigh_r", "calf_r", "foot_r", "ball_r")
 CMU_FOOT_PARENTS = ("CmuRig", "Hips", "{s}HipJoint", "{s}UpLeg", "{s}Leg")  # root down to the foot's parent (cgspeed)
+HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE") == "1"   # the hip-joint-centre pelvis (docstring)
+TRY1_RESULT = os.environ.get("CMU_TRY1_RESULT", "F:/LedgerTools/game-inputs/cmu-2026-11-17-try1/ue/ue_result.json")
+CMU_HC_CHAIN = ("CmuRig", "Hips", "HipCentre")
+MH_LEG_CHAIN = ("root", "pelvis", "thigh_{s}", "calf_{s}", "foot_{s}")
+# the note's expected r (reference poses, analysis.txt section 4): a read more than 0.01 off is a wrong length read
+EXPECTED_R = {("143_18", "Rocco"): 1.141, ("143_18", "RoccoP2"): 1.245, ("113_15", "Rocco"): 1.062,
+              ("113_15", "RoccoP2"): 1.159, ("131_01", "Rocco"): 1.052, ("131_01", "RoccoP2"): 1.148}
 
 # CMU (cgspeed, MotionBuilder naming) bones by role: role -> (start, end, goal bone or None). No finger chains.
 CMU_ROLES = {
@@ -72,7 +97,8 @@ MH_START = {"spine": "spine_01", "neck": "neck_01", "head": "head", "clavicle_l"
             "toe_l": "ball_l", "toe_r": "ball_r"}
 FINGERS = ("thumb", "index", "middle", "ring", "pinky", "finger")
 
-res = {"started": time.strftime("%Y-%m-%d %H:%M:%S"), "notes": [], "subjects": {}, "outputs": []}
+res = {"started": time.strftime("%Y-%m-%d %H:%M:%S"), "notes": [], "subjects": {}, "outputs": [],
+       "method": "hip-joint centre (n16-7, 18 Nov)" if HIPCENTRE else "try 1 (17 Nov)"}
 
 
 def note(s):
@@ -149,6 +175,152 @@ def qinv(a):
 
 def wxyz(q):
     return (q.w, q.x, q.y, q.z)
+
+
+def qrot(q, v):
+    """v turned by the unit quaternion q (w, x, y, z)."""
+    w, x, y, z = qmul(qmul(q, (0.0, v[0], v[1], v[2])), qinv(q))
+    return (x, y, z)
+
+
+def vsub(a, b):
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def vlen(a):
+    return (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]) ** 0.5
+
+
+def qangle(a, b):
+    """Degrees between two rotations."""
+    import math
+    d = abs(sum(x * y for x, y in zip(a, b)))
+    return math.degrees(2.0 * math.acos(min(1.0, d)))
+
+
+def fk_retarget(ctrl, side, rc, chain, root_delta_bone=None, root_delta=(0.0, 0.0, 0.0)):
+    """Global positions and turns of a chain (root first) in the retarget pose: local rotation = ref local x delta,
+    local translation kept (IKRetargetProcessor.cpp 56-79), so pos'(c) = pos'(p) + E(p) (pos(c) - pos(p)) and
+    E(c) = E(p) Qg(c) D(c) Qg(c)^-1, E = the global turn over the reference. Returns bone -> dict."""
+    out, E, prev_ref, prev_new = {}, (1.0, 0.0, 0.0, 0.0), None, None
+    for b in chain:
+        t = rc.get_ref_pose_transform_of_bone(b)
+        p = (t.translation.x, t.translation.y, t.translation.z)
+        qg = wxyz(t.rotation)
+        d = wxyz(ctrl.get_rotation_offset_for_retarget_pose_bone(b, side))
+        newp = p if prev_ref is None else tuple(a + c for a, c in zip(prev_new, qrot(E, vsub(p, prev_ref))))
+        if b == root_delta_bone:
+            newp = tuple(a + c for a, c in zip(newp, root_delta))
+        E = qmul(E, qmul(qg, qmul(d, qinv(qg))))
+        out[b] = dict(ref=p, pos=newp, rot=qmul(E, qg), E=E, delta=d)
+        prev_ref, prev_new = p, newp
+    return out
+
+
+def hip_centre_values(ctrl, src_rc, tgt_rc, a_s):
+    """The method's per-pair numbers from the two retarget poses (docstring). Returns (values, stop reasons)."""
+    SRC, TGT = unreal.RetargetSourceOrTarget.SOURCE, unreal.RetargetSourceOrTarget.TARGET
+    stop = []
+    ro_s = ctrl.get_root_offset_in_retarget_pose(SRC)
+    ro_t = ctrl.get_root_offset_in_retarget_pose(TGT)
+    ro_s, ro_t = (ro_s.x, ro_s.y, ro_s.z), (ro_t.x, ro_t.y, ro_t.z)
+    if vlen(ro_s) > 1e-4:
+        stop.append("source retarget pose root translation delta %s is not zero (review fix 3)" % (ro_s,))
+    hc = fk_retarget(ctrl, SRC, src_rc, CMU_HC_CHAIN)
+    if qangle(hc["HipCentre"]["E"], hc["Hips"]["E"]) > 0.1:
+        stop.append("HipCentre turns %.2f deg away from Hips in the source retarget pose" % qangle(hc["HipCentre"]["E"], hc["Hips"]["E"]))
+    legs_s, legs_t = {}, {}
+    for side, sfx in (("Left", "l"), ("Right", "r")):
+        legs_s[sfx] = fk_retarget(ctrl, SRC, src_rc, [n.format(s=side) for n in CMU_FOOT_PARENTS] + [side + "Foot"])
+        legs_t[sfx] = fk_retarget(ctrl, TGT, tgt_rc, [n.format(s=sfx) for n in MH_LEG_CHAIN], "pelvis", ro_t)
+    up = lambda sfx: legs_s[sfx][("Left" if sfx == "l" else "Right") + "UpLeg"]
+    ft = lambda sfx: legs_s[sfx][("Left" if sfx == "l" else "Right") + "Foot"]
+    L_s = sum(vlen(vsub(up(x)["pos"], ft(x)["pos"])) for x in "lr") / 2.0
+    L_s_ref = sum(vlen(vsub(up(x)["ref"], ft(x)["ref"])) for x in "lr") / 2.0
+    L_t = sum(vlen(vsub(legs_t[x]["thigh_" + x]["pos"], legs_t[x]["foot_" + x]["pos"])) for x in "lr") / 2.0
+    L_t_ref = sum(vlen(vsub(legs_t[x]["thigh_" + x]["ref"], legs_t[x]["foot_" + x]["ref"])) for x in "lr") / 2.0
+    mid_hips = tuple((up("l")["pos"][i] + up("r")["pos"][i]) / 2.0 for i in range(3))
+    hc_off = vlen(vsub(hc["HipCentre"]["pos"], mid_hips))
+    if hc_off > 0.05:
+        stop.append("HipCentre sits %.3f cm off the UpLeg midpoint in the source retarget pose" % hc_off)
+    pel = legs_t["l"]["pelvis"]
+    if vlen(vsub(pel["pos"], legs_t["r"]["pelvis"]["pos"])) > 1e-3:
+        stop.append("target pelvis read differs between the two leg chains")
+    P0, R0 = pel["pos"], pel["rot"]
+    T0 = tuple((legs_t["l"]["thigh_l"]["pos"][i] + legs_t["r"]["thigh_r"]["pos"][i]) / 2.0 for i in range(3))
+    H_p, H_tp = hc["HipCentre"]["pos"][2], P0[2]
+    a_t = (legs_t["l"]["foot_l"]["pos"][2] + legs_t["r"]["foot_r"]["pos"][2]) / 2.0
+    r, G = L_t / L_s, H_tp / H_p
+    S = r / G
+    b = a_t - r * a_s
+    og = (-P0[0] * (1.0 - S), -P0[1] * (1.0 - S), b)
+    ol = qrot(qinv(R0), vsub(P0, T0))
+    tgt_deltas = max(qangle(v["delta"], (1.0, 0.0, 0.0, 0.0)) for x in "lr" for v in legs_t[x].values())
+    v = dict(r=round(r, 5), G=round(G, 5), S=round(S, 5), H_p=round(H_p, 3), H_tp=round(H_tp, 3), a_t=round(a_t, 3),
+             a_s=round(a_s, 3), b=round(b, 3), L_s=round(L_s, 3), L_t=round(L_t, 3), r_ref=round(L_t_ref / L_s_ref, 5),
+             offset_global=[round(x, 4) for x in og], offset_local=[round(x, 4) for x in ol],
+             P0=[round(x, 3) for x in P0], T0=[round(x, 3) for x in T0], R0=[round(x, 6) for x in R0],
+             hipcentre_off_midpoint_cm=round(hc_off, 4), source_root_delta=list(ro_s), target_root_delta=list(ro_t),
+             target_pose_largest_delta_deg=round(tgt_deltas, 4),
+             hipcentre_vs_hips_turn_deg=round(qangle(hc["HipCentre"]["E"], hc["Hips"]["E"]), 4))
+    return v, stop
+
+
+def set_pelvis_hc(ctrl, v):
+    """Pelvis Motion settings of the method (docstring), then every field read back. Returns (read back, mismatches)."""
+    oc = ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion"))
+    st = oc.get_settings()
+    want = dict(scale_horizontal=v["S"], scale_vertical=v["S"], affect_ik_horizontal=1.0, affect_ik_vertical=1.0,
+                floor_constraint_weight=0.0, blend_to_source_translation=0.0, rotation_alpha=1.0, translation_alpha=1.0)
+    vec = dict(translation_offset_global=tuple(v["offset_global"]), translation_offset_local=tuple(v["offset_local"]),
+               blend_to_absolute_offset=(0.0, 0.0, 0.0))
+    rot0 = ("rotation_offset_local", "rotation_offset_global")
+    for k, x in want.items():
+        st.set_editor_property(k, x)
+    for k, x in vec.items():
+        st.set_editor_property(k, unreal.Vector(*x))
+    for k in rot0:
+        st.set_editor_property(k, unreal.Rotator(0.0, 0.0, 0.0))
+    oc.set_settings(st)
+    return read_pelvis_hc(ctrl, want, vec)
+
+
+def read_pelvis_hc(ctrl, want, vec):
+    b = ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion")).get_settings()
+    back, bad = {}, []
+    for k, x in want.items():
+        back[k] = round(b.get_editor_property(k), 6)
+        if abs(back[k] - x) > 1e-4:
+            bad.append("%s reads %s, want %s" % (k, back[k], x))
+    for k, x in vec.items():
+        g = b.get_editor_property(k)
+        back[k] = [round(g.x, 4), round(g.y, 4), round(g.z, 4)]
+        if any(abs(a - c) > 1e-3 for a, c in zip(back[k], x)):
+            bad.append("%s reads %s, want %s" % (k, back[k], list(x)))
+    for k in ("rotation_offset_local", "rotation_offset_global"):
+        g = b.get_editor_property(k)
+        back[k] = [round(g.roll, 4), round(g.pitch, 4), round(g.yaw, 4)]
+        if any(abs(a) > 1e-4 for a in back[k]):
+            bad.append("%s reads %s, want zero" % (k, back[k]))
+    return back, bad
+
+
+def auto_rig_same_as_try1(subj, row):
+    """Review fix 7: the auto-characterised source rig with HipCentre present against try 1's (no HipCentre)."""
+    try:
+        t1 = json.load(open(TRY1_RESULT, encoding="utf-8"))["subjects"][subj]
+    except Exception as e:
+        return ["try 1's rig record unreadable (%s): %s" % (TRY1_RESULT, str(e)[:80])]
+    bad = []
+    for k in ("auto_ok", "rig", "root"):
+        if row.get(k) != t1.get(k):
+            bad.append("%s reads %s, try 1 %s" % (k, row.get(k), t1.get(k)))
+    for k in ("auto_chains", "chains"):
+        if sorted(map(json.dumps, row.get(k, []))) != sorted(map(json.dumps, t1.get(k, []))):
+            bad.append("%s differ from try 1's" % k)
+    if any("HipCentre" in (c.get("start"), c.get("end")) for c in row.get("chains", [])):
+        bad.append("a chain uses HipCentre")
+    return bad
 
 
 def make_ankle_rig(lib):
@@ -256,7 +428,8 @@ def add_leg_ops(ctrl, factor):
     oc.set_settings(st)
     ctrl.move_retarget_op_in_stack(idx(scale_name), 0)
     rec["scale"] = dict(name=scale_name, index=idx(scale_name),
-                        factor=round(ctrl.get_op_controller(idx(scale_name)).get_settings().get_editor_property("source_scale_factor"), 5))
+                        factor=round(ctrl.get_op_controller(idx(scale_name)).get_settings().get_editor_property("source_scale_factor"), 5),
+                        pivot=str(ctrl.get_op_controller(idx(scale_name)).get_settings().get_editor_property("scale_pivot")))
     i = ctrl.add_retarget_op("/Script/IKRig.IKRetargetBlendToSourceOp")
     blend_name = str(ctrl.get_op_name(i))
     rec["blend_parent_set"] = bool(ctrl.set_parent_op_by_name(blend_name, "Run IK Rig"))
@@ -275,6 +448,7 @@ def set_blend(ctrl, blend_name, leg_chains):
             c.set_editor_property("translation_alpha", 1.0)
             c.set_editor_property("rotation_alpha", 0.0)
             c.set_editor_property("translation_per_axis_alpha", unreal.Vector(*BLEND_AXES))
+            c.set_editor_property("apply_pelvis_offset", 0.0)   # its default; the pelvis delta never drags the marks
         new.append(c)
     st.set_editor_property("chains", new)
     oc.set_settings(st)
@@ -284,7 +458,19 @@ def set_blend(ctrl, blend_name, leg_chains):
         if n in leg_chains:
             v = c.get_editor_property("translation_per_axis_alpha")
             back[n] = dict(blend=round(c.get_editor_property("blend_to_source"), 3), t=round(c.get_editor_property("translation_alpha"), 3),
-                           r=round(c.get_editor_property("rotation_alpha"), 3), axes=[round(v.x, 3), round(v.y, 3), round(v.z, 3)])
+                           r=round(c.get_editor_property("rotation_alpha"), 3), axes=[round(v.x, 3), round(v.y, 3), round(v.z, 3)],
+                           pelvis_offset=round(c.get_editor_property("apply_pelvis_offset"), 3))
+    return back
+
+
+def set_blend_read(ctrl, blend_name, leg_chains):
+    """Blend to Source leg chains read back (no change)."""
+    back = {}
+    for c in ctrl.get_op_controller(op_idx(ctrl, blend_name)).get_settings().get_editor_property("chains"):
+        n = str(c.get_editor_property("target_chain_name"))
+        if n in leg_chains:
+            back[n] = dict(pelvis_offset=round(c.get_editor_property("apply_pelvis_offset"), 3),
+                           blend=round(c.get_editor_property("blend_to_source"), 3))
     return back
 
 
@@ -324,6 +510,15 @@ def main():
             row["error"] = "no T-pose mesh"
             continue
         skel = mesh.get_editor_property("skeleton")
+        if HIPCENTRE:
+            names = [str(n) for n in unreal.AnimPoseExtensions.get_bone_names(unreal.AnimPoseExtensions.get_reference_pose(skel))]
+            fl = os.path.join(IN, "floor_%s.json" % subj)
+            if "HipCentre" not in names or not os.path.isfile(fl):
+                row["error"] = "HipCentre method: %s" % ("no HipCentre bone in the T-pose skeleton" if "HipCentre" not in names
+                                                         else "no " + fl)
+                note("%s stopped: %s" % (subj, row["error"]))
+                continue
+            row["floor"] = json.load(open(fl, encoding="utf-8"))
         anims = []
         for clip in clips:
             before = set(str(a.get_path_name()) for a in got if a is not None)
@@ -406,6 +601,8 @@ def main():
             missing = sorted(want - set(c["chain"] for c in row["chains"]))
             if missing:
                 bad.append("hand-built rig lacks " + ", ".join(missing))
+        if HIPCENTRE:
+            bad += ["auto rig (fix 7): " + x for x in auto_rig_same_as_try1(subj, row)]
         if bad:
             row["error"] = "; ".join(bad)
             note("%s stopped: %s" % (subj, row["error"]))
@@ -457,11 +654,22 @@ def main():
             try:
                 hips = rc.get_ref_pose_transform_of_bone("Hips").translation.z
                 factor = res["body_ref"][bname]["pelvis"][2] / hips
+                if HIPCENTRE:
+                    tgt_rc = unreal.IKRigController.get_controller(unreal.load_asset("%s/ref/IK_Ref_%s" % (WORK, bname)))
+                    o["hc"], hc_stop = hip_centre_values(ctrl, rc, tgt_rc, row["floor"]["a_s"])
+                    stop += hc_stop
+                    factor = o["hc"]["r"]
+                    exp = EXPECTED_R.get((subj, bname))
+                    if exp is not None and abs(o["hc"]["r_ref"] - exp) > 0.01:
+                        stop.append("r from the reference poses %.4f is more than 0.01 off the note's %.3f" % (o["hc"]["r_ref"], exp))
                 o["leg_ops"], blend_name = add_leg_ops(ctrl, factor)
                 ctrl.assign_ik_rig_to_all_ops(unreal.RetargetSourceOrTarget.SOURCE, rig)
                 ctrl.assign_ik_rig_to_all_ops(unreal.RetargetSourceOrTarget.TARGET, target_rig)
                 o["leg_ops"]["fk_legs"] = set_fk_one_to_one(ctrl, legs)
                 o["blend"] = set_blend(ctrl, blend_name, legs)
+                if HIPCENTRE:
+                    o["pelvis"], pv_bad = set_pelvis_hc(ctrl, o["hc"])
+                    stop += ["Pelvis Motion: " + x for x in pv_bad]
                 lo = o["leg_ops"]
                 lo["fk_legs"] = {str(c.get_editor_property("target_chain_name")): str(c.get_editor_property("rotation_mode"))
                                  for c in ctrl.get_op_controller(op_idx(ctrl, "FK Chains")).get_settings().get_editor_property("chains_to_retarget")
@@ -473,7 +681,10 @@ def main():
                     stop.append("Scale Source not first or factor wrong: %s (want %.4f)" % (lo["scale"], factor))
                 if not lo["blend_parent_set"] or str(ctrl.get_parent_op_by_name(blend_name)) != "Run IK Rig":
                     stop.append("Blend to Source is not under Run IK Rig")
-                if sorted(o["blend"]) != sorted(legs) or any(v["blend"] != 1.0 or v["axes"] != list(BLEND_AXES) for v in o["blend"].values()):
+                if "COMPONENT_ORIGIN" not in lo["scale"]["pivot"].upper():
+                    stop.append("Scale Source pivot reads %s, not the component origin" % lo["scale"]["pivot"])
+                if sorted(o["blend"]) != sorted(legs) or any(v["blend"] != 1.0 or v["axes"] != list(BLEND_AXES) or v["pelvis_offset"] != 0.0
+                                                             for v in o["blend"].values()):
                     stop.append("Blend to Source leg settings read back wrong: %s" % o["blend"])
                 o["steps"].append("legs One to One, Scale Source %.4f, Blend to Source (horizontal)" % factor)
             except Exception as e:
@@ -493,6 +704,41 @@ def main():
                     stop.append("the ball chains are not mapped to the source toe chains: %s" % o["mapping"]["FK Chains"])
             except Exception as e:
                 stop.append("mapping read refused: " + str(e)[:100])
+            if HIPCENTRE and "hc" in o:
+                # LAST: the source pelvis bone (every assign above reset it), then everything read back once more
+                try:
+                    oc = ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion"))
+                    oc.set_source_pelvis_bone("HipCentre")
+                    hc = o["hc"]
+                    hc["source_pelvis_bone"] = str(ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion")).get_source_pelvis_bone())
+                    hc["target_pelvis_bone"] = str(ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion")).get_target_pelvis_bone())
+                    if hc["source_pelvis_bone"] != "HipCentre":
+                        stop.append("source pelvis bone reads %s, not HipCentre" % hc["source_pelvis_bone"])
+                    if hc["target_pelvis_bone"] != "pelvis":
+                        stop.append("target pelvis bone reads %s, not pelvis" % hc["target_pelvis_bone"])
+                    again, again_stop = hip_centre_values(ctrl, rc, tgt_rc, row["floor"]["a_s"])
+                    stop += again_stop
+                    for k in ("r", "G", "S", "b", "H_p", "H_tp", "a_t"):
+                        if abs(again[k] - hc[k]) > 1e-3:
+                            stop.append("%s changed after the feet restore and the pelvis bone: %s then %s" % (k, hc[k], again[k]))
+                    pv_want = dict(scale_horizontal=hc["S"], scale_vertical=hc["S"], affect_ik_horizontal=1.0, affect_ik_vertical=1.0,
+                                   floor_constraint_weight=0.0, blend_to_source_translation=0.0, rotation_alpha=1.0, translation_alpha=1.0)
+                    pv_vec = dict(translation_offset_global=tuple(hc["offset_global"]), translation_offset_local=tuple(hc["offset_local"]),
+                                  blend_to_absolute_offset=(0.0, 0.0, 0.0))
+                    o["pelvis_last"], pv_bad = read_pelvis_hc(ctrl, pv_want, pv_vec)
+                    stop += ["Pelvis Motion (last read): " + x for x in pv_bad]
+                    sc_st = ctrl.get_op_controller(op_idx(ctrl, o["leg_ops"]["scale"]["name"])).get_settings()
+                    hc["scale_last"] = [round(sc_st.get_editor_property("source_scale_factor"), 5), str(sc_st.get_editor_property("scale_pivot"))]
+                    if abs(hc["scale_last"][0] - hc["r"]) > 1e-4 or op_idx(ctrl, o["leg_ops"]["scale"]["name"]) != 0:
+                        stop.append("Scale Source (last read) %s at index %d, want r %.5f first" % (hc["scale_last"], op_idx(ctrl, o["leg_ops"]["scale"]["name"]), hc["r"]))
+                    bl = set_blend_read(ctrl, blend_name, legs)
+                    if any(x["pelvis_offset"] != 0.0 for x in bl.values()) or len(bl) != 2:
+                        stop.append("Blend to Source apply_pelvis_offset (last read) %s" % bl)
+                    o["steps"].append("HipCentre pelvis: r %.4f, S %.4f, b %+.2f cm, read back" % (hc["r"], hc["S"], hc["b"]))
+                except Exception as e:
+                    stop.append("HipCentre pelvis refused: " + str(e)[:160])
+            elif HIPCENTRE:
+                stop.append("HipCentre values never computed")
             o["ops"] = [dict(name=str(ctrl.get_op_name(i)), enabled=bool(ctrl.get_retarget_op_enabled(i)),
                              parent=str(ctrl.get_parent_op_by_name(ctrl.get_op_name(i)))) for i in range(ctrl.get_num_retarget_ops())]
             if stop:
@@ -512,6 +758,11 @@ def main():
             t0 = time.time()
             result = unreal.IKRetargetBatchOperation.run_batch_retarget(inputs)
             o["seconds"] = round(time.time() - t0, 2)
+            if HIPCENTRE:
+                after = str(ctrl.get_op_controller(op_idx(ctrl, "Pelvis Motion")).get_source_pelvis_bone())
+                o["hc"]["source_pelvis_bone_after_batch"] = after
+                if after != "HipCentre":
+                    o["error"] = "source pelvis bone reads %s after the batch" % after
             made = [str(a.package_name) for a in result] if result else []
             o["made"] = made
             o["clips"] = {}
@@ -522,6 +773,9 @@ def main():
                     o["clips"][clip] = {"error": "batch made no clip"}
                     continue
                 path = os.path.join(OUT, "fbx", "%s__%s.fbx" % (clip, bname))
+                if o.get("error"):
+                    o["clips"][clip] = {"asset": hit, "error": o["error"], "exported": False}
+                    continue
                 o["clips"][clip] = {"asset": hit, "frames": unreal.AnimationLibrary.get_num_frames(done),
                                     "skeleton": done.get_editor_property("skeleton").get_path_name(),
                                     "fbx": path, "exported": export_fbx(done, path)}

@@ -783,3 +783,8 @@
 {"event": "stop", "at": "2026-11-17T05:46:00", "note": "built, pattern check passes"}
 {"event": "start", "at": "2026-11-17T05:30:00", "task": "n16-7 CMU feet tries 1 and 2 (helper)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T05:49:00", "note": ""}
+{"event": "start", "at": "2026-11-17T06:26:00", "task": "walk tester: Sheila missing, diagnosis and fix (helper + session)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T06:35:00", "note": ""}
+{"event": "start", "at": "2026-11-17T06:24:00", "task": "tool loop: kiln lanes round 1 verdict, skirt merge, gate exit fix (helper + session)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T06:35:00", "note": ""}
+{"event": "start", "at": "2026-11-17T06:35:34", "task": "session: helpers in flight (feet research, n16-5 plan, kiln lane fixes), scale ladder", "phase": "2", "kind": "production"}

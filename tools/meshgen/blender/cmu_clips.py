@@ -11,6 +11,7 @@ stand-in cube bound to the hips) and one motion-only FBX per clip. Then flip che
 over 90 degrees between two 30 fps frames) on the BVH and on each exported FBX re-imported, and the
 pelvis heights. The output is a build input on F:, never in git.
 """
+import json
 import math
 import os
 import sys
@@ -21,6 +22,11 @@ TRIM = 2   # 30 fps samples dropped after the T-pose: the first step turns the h
 CLIPS = (("143_18", "sit_get_up_143_18"), ("113_15", "sit_get_up_113_15"), ("131_01", "start_walk_stop_131_01"))
 SRC_DIR = "F:/LedgerTools/game-inputs/cmu-2026-11-17/src"
 OUT_DIR = "F:/LedgerTools/game-inputs/cmu-2026-11-17"
+# THE HIP-JOINT CENTRE (n16-7, 17 Nov, method note n16-7-hip-joint-pelvis-method-2026-11-17.md, section 3A): with
+# LEDGER_CMU_HIPCENTRE=1 each skeleton gets a bone HipCentre, a child of Hips at the midpoint of the two hip joints,
+# keyed every frame there with Hips's rotation, so the retargeter's pelvis can read the hip joints, not the Hips bone;
+# and floor_<subject>.json beside the clips: the source ankle height a_s at the measure's standing frame (step 5)
+HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE") == "1"
 LIMB_END = ("UpLeg", "Leg", "Foot", "ToeBase", "Arm", "ForeArm", "Hand", "Shoulder")
 
 
@@ -33,6 +39,22 @@ def fcurves_of(act):
     if hasattr(act, "layers"):
         return [fc for layer in act.layers for strip in layer.strips for bag in strip.channelbags for fc in bag.fcurves]
     return list(act.fcurves)
+
+
+def stand_frame(cm, src):
+    """The measured check's single standing frame, by cmu_measure.measure()'s own rule and functions (the source alone:
+    with equal frame counts its n is the source's). Returns (0-based frame, how chosen, standing pelvis cm)."""
+    n = len(src["pos"]["pelvis"])
+    s_stand, _ = cm.standing(src)
+    hs = [src["pos"]["pelvis"][i][2] for i in range(n)]
+    pl, pr = cm.planted(src, "l"), cm.planted(src, "r")
+    cand = [i for i in range(n) if pl[i] and pr[i] and hs[i] >= cm.STAND_FRAC * s_stand]
+    how = "both source balls planted, source pelvis >= 97%, straightest source knees"
+    if not cand:
+        cand = [max(range(n), key=lambda i: hs[i])]
+        how = "source pelvis highest (no planted standing frame)"
+    f = min(cand, key=lambda i: cm.knee_flex(src, "l", i) + cm.knee_flex(src, "r", i))
+    return f, how, s_stand
 
 
 def main(src_dir, out_dir):
@@ -122,12 +144,27 @@ def main(src_dir, out_dir):
             b.rotation_quaternion = (1, 0, 0, 0)
         bpy.context.view_layer.update()
         rest_hips = hips_z(rig)
+        if HIPCENTRE:
+            bpy.ops.object.mode_set(mode="EDIT")
+            eb = rig.data.edit_bones
+            h = eb["Hips"]
+            nb = eb.new("HipCentre")
+            nb.head = (eb["LeftUpLeg"].head + eb["RightUpLeg"].head) / 2.0
+            nb.tail = nb.head + (h.tail - h.head)
+            nb.roll = h.roll
+            nb.parent = h
+            nb.use_connect = False
+            bpy.ops.object.mode_set(mode="OBJECT")
+            rig.pose.bones["HipCentre"].rotation_mode = "QUATERNION"
+            bpy.context.view_layer.update()
         say("%s: rest Hips height after scaling %.3f m (T-pose frame; import rest was %.3f)" % (num, rest_hips, rest_hips_import))
         # stand-in cube bound to the hips, then the skeleton file
         bpy.ops.mesh.primitive_cube_add(size=0.05, location=rig.matrix_world @ rig.pose.bones["Hips"].head)
         box = bpy.context.active_object
         box.name = "CmuStandIn"
         box.vertex_groups.new(name="Hips").add(list(range(len(box.data.vertices))), 1.0, "REPLACE")
+        if HIPCENTRE:      # skinned, so the bone survives the import (the note's step 2)
+            box.vertex_groups.new(name="HipCentre").add(list(range(len(box.data.vertices) // 2)), 1.0, "REPLACE")
         box.parent = rig
         box.modifiers.new("Armature", "ARMATURE").object = rig
 
@@ -173,15 +210,24 @@ def main(src_dir, out_dir):
         sc.render.fps = 30
         sc.render.fps_base = 1.0
         order = [b.name for b in rig.pose.bones]
+
+        def target(st, n):
+            """A bone's stored matrix; HipCentre's from the stored hip joints and Hips's rotation."""
+            if n != "HipCentre":
+                return st[n]
+            m = st["Hips"].copy()
+            m.translation = (st["LeftUpLeg"].translation + st["RightUpLeg"].translation) / 2.0
+            return m
         worst = 0.0
+        worst_hc = 0.0
         for k, st in enumerate(stored):
             for n in order:
                 pb = rig.pose.bones[n]
-                pb.matrix = st[n]
+                pb.matrix = target(st, n)
                 bpy.context.view_layer.update()
             for n in order:
                 pb = rig.pose.bones[n]
-                if n == "Hips":
+                if n in ("Hips", "HipCentre"):
                     pb.keyframe_insert("location", frame=k + 1)
                 pb.keyframe_insert("rotation_quaternion", frame=k + 1)
         sc.frame_start, sc.frame_end = 1, len(stored)
@@ -190,10 +236,18 @@ def main(src_dir, out_dir):
             sc.frame_set(k + 1)
             bpy.context.view_layer.update()
             for n in order:
-                d = (rig.pose.bones[n].matrix.translation - st[n].translation).length
-                worst = max(worst, d)
+                d = (rig.pose.bones[n].matrix.translation - target(st, n).translation).length
+                if n == "HipCentre":
+                    worst_hc = max(worst_hc, d)
+                else:
+                    worst = max(worst, d)
             hs.append(hips_z(rig))
         say("%s: re-keyed %d frames at 30 fps; worst bone head off its stored place %.4f m" % (num, len(stored), worst))
+        if HIPCENTRE:      # the note's bar: 0.05 cm (0.0005 m) or less, else stop
+            say("%s: HipCentre worst off the hip-joint midpoint %.5f m" % (num, worst_hc))
+            if worst_hc > 0.0005:
+                print("cmuClips=STOP HipCentre off the hip joints by %.5f m (%s)" % (worst_hc, num))
+                return 2
         motion = os.path.join(out_dir, "%s.fbx" % take)
         rig.animation_data.action.name = take
         export(motion, [rig], True)
@@ -217,6 +271,26 @@ def main(src_dir, out_dir):
             hz.append((rig.matrix_world @ rig.pose.bones["Hips"].head).z)
         r["fbx_hs"] = hz
         r["fbx_root"] = [o.name for o in bpy.data.objects]
+        if HIPCENTRE and "HipCentre" not in rig.pose.bones:
+            print("cmuClips=STOP no HipCentre bone in the re-imported %s" % r["motion"].replace(" ", "~"))
+            return 2
+    if HIPCENTRE:      # the note's step 5 (fix M3): the source floor from its standing frame, never the T-pose
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import cmu_measure as cm
+        for num, take in CLIPS:
+            tr = cm.read_fbx(results[num]["motion"])      # the measure's own reader: the clip with its T-pose file's rest
+            f, how, s_stand = stand_frame(cm, tr)
+            p = tr["pos"]
+            fl = dict(subject=num, take=take, frame=f, chosen=how, standing_pelvis_cm=round(s_stand, 3),
+                      a_s=round((p["foot_l"][f][2] + p["foot_r"][f][2]) / 2.0, 4),
+                      foot_cm=dict(l=round(p["foot_l"][f][2], 4), r=round(p["foot_r"][f][2], 4)),
+                      toe_cm=dict(l=round(p["ball_l"][f][2], 4), r=round(p["ball_r"][f][2], 4)),
+                      rule="cmu_measure.measure()'s stand frame: both source balls planted (planted()), pelvis at or above "
+                           "STAND_FRAC of standing height, straightest knees (knee_flex()); a_s = mean LeftFoot/RightFoot head "
+                           "height there (cm, the clip's own floor)", source=results[num]["motion"], made="cmu_clips.py")
+            with open(os.path.join(out_dir, "floor_%s.json" % num), "w", encoding="utf-8") as fh:
+                json.dump(fl, fh, indent=1)
+            say("RESULT %s floor frame=%d a_s=%.3f cm toes l=%.3f r=%.3f (%s)" % (num, f, fl["a_s"], fl["toe_cm"]["l"], fl["toe_cm"]["r"], how))
     for num, r in results.items():
         hs, fh = r["hs"], r["fbx_hs"]
         say("RESULT %s %s frames=%d seconds=%.2f restHips=%.3f pelvis=%.3f..%.3f fbxFrames=%d fbxPelvis=%.3f..%.3f" % (

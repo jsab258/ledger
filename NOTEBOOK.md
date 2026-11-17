@@ -2456,3 +2456,17 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: foot slide within 2 cm of the source's, height within 2 cm, knees within max(10, source + 3) degrees at the last stand, no limb flip over 90 degrees a frame. Try 1: slide 6/6, flips 0, height 3/6, knees 1/6.
 - Failed and why: try 2 scaled hips and feet by one hip-joint ratio with a fixed pelvis offset; it straightened some knees but the offset is only right with the pelvis upright, so sitting and walking feet sank or floated. The two skeletons put the hips bone at different places (8-9 cm above the hip joints against 1 cm below), and any fix must place the target's hip joints, not its hips bone.
 - Tools: Unreal 5.8 IK Retargeter by Python commandlet, a per-frame bone dump in the engine, a Blender measure. Cost about 1.2 h helper time. Evidence: F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md; F:/LedgerTools/game-inputs/cmu-2026-11-17-try1/measure.
+
+## A tester that walked past the person it was looking for (17 Nov 2026)
+- Made: a stop test and a short re-read in the automated play-tester, so "person not there" stops being reported when the person is there.
+- Method: before blaming the game, read the tester's own movement against the game's log of where everyone was. Walking in fixed-length steps toward a target with a tolerance smaller than one step swings back and forth forever; stop as soon as the goal (within talking reach, same side of any wall) is met, not when a point is reached. After a time skip, the game may hold people back while their spots are in view: read the world again for a few seconds before declaring someone absent.
+- Target and check: the night walk reaches talk and greeting stages whenever the person is on the street; selftest 23/23; the night's packaged walk is the real check.
+- Failed and why: three nights read as a missing character were the tester's timing (steps of about 1.2 m against 0.4 m tolerance) and a one-second-too-early read.
+- Tools: Python tester, the game's own log. Cost about 0.4 h (helper and session). Evidence: F:/LedgerTools/tool-dev/reports/SHEILA-MISSING-DIAGNOSIS-2026-11-17.md.
+
+## Merging tool lanes on a regression gate (17 Nov 2026)
+- Made: one of three parallel change lanes merged onto the cloth tool's main line; the gate's own false failure fixed.
+- Method: each lane is gated alone against a fixed baseline whose bands come from the method's own noise; a lane merges only when every job sits inside its bands; a failing lane is diagnosed for whether its own change or the environment caused it (results that repeat to the digit across runs rule out load). Merge exactly the tree that was gated (commit it where it was tested, fast-forward main to it). A job the baseline already records as not made is a known shortfall for the comparison, not a stopped run.
+- Target and check: gate PASS with exit 0; 10 gate tests pass.
+- Failed and why: two lanes failed on their own changes (a neck-base rule that also fixed a stand refusal; per-piece solver passes that softened coarse pieces), not on the known check fault they were blamed on.
+- Tools: Rust cloth engine, Python gate. Cost about 0.3 h. Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANES-VERDICT-2026-11-17.md.

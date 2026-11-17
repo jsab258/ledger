@@ -159,7 +159,7 @@ def walk_to_person(r, key, m):
     # followed her in straight legs from inside, and he held W into the office's side wall). When they end on
     # different sides of it, the way round is by road again, once.
     for _ in range(2):
-        r.go_to(0, 0, tol=0.5, legs=10, follow=follow_aim(key, m))
+        r.go_to(0, 0, tol=0.5, legs=10, follow=follow_aim(key, m), done=in_reach(key, m))
         w = r.where()
         if key not in w or "tom" not in w or same_side(w, key):
             return
@@ -170,6 +170,18 @@ def walk_to_person(r, key, m):
 def same_side(w, key):
     """Tom and the person both inside the office, or both outside it."""
     return in_office(w[key][0], w[key][1]) == in_office(w["tom"][0], w["tom"][1])
+
+
+def in_reach(key, m):
+    """go_to's stop test: on the same side of the office wall and within 0.8 of their talk reach (never nearer than
+    the stand-off m asks)."""
+    def done(ww):
+        if key not in ww or "tom" not in ww or not same_side(ww, key):
+            return False
+        p, t = ww[key], ww["tom"]
+        reach = p[2] if len(p) > 2 and isinstance(p[2], float) else 0.0
+        return math.hypot(p[0] - t[0], p[1] - t[1]) <= max(m, 0.8 * reach)
+    return done
 
 
 def follow_aim(key, m):
@@ -286,16 +298,21 @@ class Route:
             time.sleep(0.3)
         return False
 
-    def go_to(self, x, z, tol=0.4, legs=14, follow=None):
+    def go_to(self, x, z, tol=0.4, legs=14, follow=None, done=None):
         """Short legs toward (x, z), turning between them; a leg that gets
         nowhere is a blockage, side-stepped once each way. follow(where)
         gives a moving target instead, read again before every leg (people
-        move with their day while he walks)."""
+        move with their day while he walks). done(where), when given, ends
+        the walk as soon as it is true."""
         for _ in range(legs):
             whole = self.where()
             w = whole.get("tom")
             if not w:
                 return False
+            # A STOP TEST (17 November, SHEILA-MISSING-DIAGNOSIS): legs of about 1.2 m against a 0.4 m tolerance swung
+            # him to and fro beside Sheila for game hours while she was within talk reach, until her day took her away
+            if done is not None and done(whole):
+                return True
             if follow is not None:
                 aim = follow(whole)
                 if aim is None:
@@ -437,6 +454,12 @@ def not_started(again=False):
 def greet(r, key, name):
     """Walk to one of the three, wherever their day has them, and say TOWN_LINE."""
     w = r.where()
+    # READ AGAIN FOR 15 SECONDS (17 November, SHEILA-MISSING-DIAGNOSIS): after the night wait the game holds people
+    # back about 12 real seconds while their spots are in view; the tester read at 10:15, the game placed them at 10:16
+    waited = time.time()
+    while (key not in w or "tom" not in w) and time.time() - waited < 15.0:
+        time.sleep(1.0)
+        w = r.where()
     if key not in w or "tom" not in w:
         return r.record("town-" + name, False, "%s is not on the street" % name)
     walk_to_person(r, key, 1.1)
@@ -688,6 +711,8 @@ def selftest():
     check("the window and its reach read", w["window"] == [18.2, 5.1, 1.5])
     check("a bearing up the street is 0, across toward the shops 90", abs(bearing(0, 0, 5, 0)) < 1e-9 and abs(bearing(0, 0, 0, 5) - 90) < 1e-9)
     check("headings wrap", wrap(350) == -10 and wrap(-190) == 170)
+    check("the follow stops within 0.8 of her talk reach (17 Nov)", in_reach("lena", 1.1)(parse_where("tom 4.200 4.600 0 D0|lena 6.000 4.600 2.50")))
+    check("and not beyond it", not in_reach("lena", 1.1)(parse_where("tom 1.000 4.600 0 D0|lena 6.000 4.600 2.50")))
     s = stand_off([6.0, 4.6], [1.0, 4.6], 1.1)
     check("a talk spot stands off toward Tom", abs(s[0] - 4.9) < 1e-9 and abs(s[1] - 4.6) < 1e-9)
     check("the town round greets the three who talk, the same line to each",

@@ -5,7 +5,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 **Started:** 2026-11-17 06:22 (the hourly run; the last session set its Stopped line at 06:19)
 
 **A second session ran by mistake 01:07 to 01:40** (gate committed in Kiln 0241526; integrate worktree C:/LedgerTools/kiln-lanes/integrate with all four lanes merged; cmu_clips.py TRIM = 2, flips 0; cmu_ue_retarget.py written). All kept by the 02:52 session.
-**Row due:** 2026-11-17 06:34 (last 05:34; page and advisor read 06:19, nothing new)
+**Row due:** 2026-11-17 08:17 (last 07:17; page and advisor read 07:10, advisor 07:09 pace guard acked)
 **Stopped:** 2026-11-17 06:19 (history near its limit at an item's end; all helpers reported; the scale ladder waits in the background for the Kiln queue)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -28,24 +28,28 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - The page tool (tools/needs_you_page.py) now also refuses install, setting and click asks (his_hands marks safety-check needs) and more than two batches of open items a day.
 
 ## Done the runs before
-- git show d74c1862d:production/handover/HANDOVER.md (02:52 to 04:33), 5606f2805, 9f155e60f, 983ad87da.
+- git show 4b16a336e:production/handover/HANDOVER.md (04:52 to 06:19), d74c1862d, 5606f2805, 9f155e60f, 983ad87da.
 
-## Done this run (04:52 on)
-- Page and advisor read 04:53, 05:07, 05:25, 05:41 (nothing new); rows 04:53, 05:34.
-- n16-7: the "reader fault" was the clips' (source rig node x100); cmu_clips.py exports bones in cm (set cmu-2026-11-17-cm), tools/ue/cmu_bone_dump.py reads tracks in Unreal (d74c1862d). Diagnosis F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md. Try 1 of 2 on "CMU feet" (helper; cmu_ue_retarget.py, cmu_bone_dump.py, cmu_measure.py edited, UNCOMMITTED): slide 6/6 pass, flips 0, height 3/6, knees 1/6; 143_18 RoccoP2 passes all (F:/LedgerTools/game-inputs/cmu-2026-11-17-try1/measure). Try 2 (one hip-joint scale, pelvis Z offset) no better: fault SET ASIDE after 2 tries, try 1's settings committed.
-- n16-8: round 4 on Darren in Unreal draws fully (preview loomwright-hair-r4-darren-2026-11-17.jpg); crown thin, hard hairline, square sideburns. Round 5 (67702d9) fixed the real faults on a stand-in head (Darren's inputs deleted by my mistake). About 3.5 h of 8.
-- n16-1: collar 'cannot fit where it sits' is the check's plane (KILN-COLLAR-RING-DIAGNOSIS-2026-11-17.md); try 1 of 2 built in lane-collar-plane 1b88925 (C:/LedgerTools/kiln-lanes/collar-plane): pattern check passes the three, gate not run. The 02:52 run's lane queue still runs (queue.log): main 76dc035 passes every band (donkey not made); jackets lane: GATE FAIL 6 outside, the three collar jobs not made (the check's plane; lane-collar-plane sits on integrate, which holds jackets, so its gate tests both); trousers exit 3 at 06:07 (read its .out), skirt from 06:07 (about 42 min).
-- n16-3: step 2 editor screen at N=10, 20 people passes (preview n16-3-scale10-top-2026-11-17.jpg). Packaged ladder (hook stand, N 1,1,1,2,4,10,10,10, tags scaleN-rI) waits in the background for the Kiln queue's "queue finished" (tools/scale_ladder.ps1; each run is p1-packaged.ps1 -Only day-stand -Tag scaleN -GameArgs '-ScaleTest=N'). The capture scale1-l1 (05:34) ran beside a drape: void.
-- F: 18.8 to 20.2 GB by own leftovers. Progress page republished with 17 Nov. nightly_walk.py flags a perf line from another build. 17 Nov's real perf: memory 4,984 MB peak, card frame 18.44 ms against 14.86 (watch tonight).
+## Done this run (06:22 on)
+- Page and advisor read 06:23, 06:37 (nothing new); row 06:23.
+- Night walk's "Sheila is not on the street" (12, 16, 17 Nov) was the tester's: go_to swung beside her; greet read before the game placed people. route_walk.py: stop test in_reach (0.8 of talk reach, same side of the office wall), greet re-reads 15 s; selftest 23/23 (UNCOMMITTED until ci-checks; commit after the ladder). Report F:/LedgerTools/tool-dev/reports/SHEILA-MISSING-DIAGNOSIS-2026-11-17.md.
+- n16-1: lanes judged (KILN-LANES-VERDICT-2026-11-17.md): skirt PASS, merged onto Kiln main 7838e29; jackets FAIL (own neck-base change bdc599d worsens j3, though bdc599d is also the likely donkey stand fix: KILN-DONKEY-STAND-DIAGNOSIS); trousers FAIL (per-piece solver passes). Gate fix f153caa (a baseline-known unmade job no longer exits 3). Lane fixes try 1 in a helper (report KILN-LANES-FIX1-2026-11-17.md; builds and gates only after the ladder).
+- n16-5: plan written and reviewed, fixes taken (production/research/street-checks/N16-5-PLAN-2026-11-17.md and -REVIEW): 12 units, 14.5 h, launderette first. The 17 Nov walk did play the brick (played copy cf9d6ac, 01:42).
+- n16-8: Darren's head remake HELD: export_mesh_fbx.py needs the full editor; the helper's launch of UnrealEditor.exe was refused by the permission system; not retried. No copy of his face mesh anywhere (C:, F:, backup).
+- n16-7: research note for a hip-joint-placed pelvis in a helper (production/research/n16-7-hip-joint-pelvis-method-2026-11-17.md).
+- n16-3: scale ladder running from 06:31 (8 captures; tools/scale_ladder.ps1).
+- n16-10: guards already shown firing 16 Nov (GUARDS-FIRING-2026-11-16.md); DAILY due by 19:00.
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T04:40:00Z; advisor after 2026-11-17T03:47:00+01:00 (last ack 03:47). Row due 06:34 (last 05:34).
-1. Helpers' results, if this run stopped before they landed: read F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md (appended try notes), F:/LedgerTools/game-inputs/cmu-2026-11-17-try2/measure, F:/LedgerTools/tool-tests-2026-11/loomwright-r5/ROUND5-FIXER-2026-11-17.md, F:/LedgerTools/tool-dev/reports/KILN-COLLAR-RING-DIAGNOSIS-2026-11-17.md (its build appendix); whatever is missing, rerun from that note.
-2. n16-7: "CMU feet" set aside after 2 tries (try 1 committed). Next, one genuinely different researched method: place the target's hip joints (not its hips bone) from the source's hip joints, e.g. a hip-joint-based pelvis (diagnosis report's end; RULINGS 7 Nov), research note first. Then a fresh look by eye at the passing pairs, idle variety and look-at, the packaged film.
-3. n16-3: the ladder was started in this run's background and may have died with it: if runs.jsonl has no packaged-day-stand-scaleN-rI lines, run `powershell -File tools/scale_ladder.ps1` (it waits for the Kiln queue's end) once the queue says "queue finished"; then read the ladder's lines in production/research/pre-production/p1-packaged/runs.jsonl (labels packaged-day-stand-scaleN-rI; scale1-l1 is void); fit memory and card time against N; then the other views and people 0 to 40 at N=10 (METHOD-NOTE step 4); check tonight's perf line against 14.86 ms.
-4. n16-1: when the lane queue says "queue finished", judge jackets, trousers, skirt in a helper (short verdict); merge passing lanes onto main (skirt: keep both constant blocks in mechanics.rs); gate lane-collar-plane (1b88925, built: pattern check lifts the three collar refusals, nothing else changes; copy C:/LedgerTools/cargo-target/kiln-collar-plane/release/drape-studio.exe to the runs exe folder and run regression_gate.py gate --allow-better, after the scale ladder, never beside a perf capture); then regenerate the gate's job scripts from the zip-marking writers and turn PAT_DRESSING_REFUSES on. Speed lane stays off.
-5. n16-8: FIRST remake Darren's head and scalp (deleted by mistake at 05:05 with loomwright-r2; head from his MetaHuman, scalp cut as the round notes describe) into a kept folder, then rerun round 5's tool (67702d9) on them at 60 roots/cm2, then Unreal (groom_on_darren.py, LEDGER_GROOM_DIAG=1 LEDGER_GROOM_DIAG_HIDE=0, offset 0,1.52,16.89; hide Epic's stubble and brows in B), then Tom's crown. Round 5 note: F:/LedgerTools/tool-tests-2026-11/loomwright-r5/ROUND5-FIXER-2026-11-17.md.
-6. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 (not beside perf captures). DAILY file by 19:00. n16-4 quay-end page item batched with Tom's and Ron's looks.
+0. FIRST: verdicts after the last read in UTC; advisor after 2026-11-17T07:11:00+01:00 (last ack 07:11). Row due 08:17.
+1. Helpers' results if they landed after the stop: KILN-LANES-FIX1-2026-11-17.md (jackets, trousers lane fixes, try 1 of 2 each), the n16-7 hip-joint note.
+2. After the ladder (runs.jsonl lines packaged-day-stand-scaleN-rI): fit memory and card time against N; then ci-checks, commit route_walk.py with DECISIONS, push wip on failed=none.
+3. n16-1: lane gates (fixer), then the collar-plane lane's gate; re-take the baseline after the skirt merge (the pleated skirt now hangs).
+4. n16-5: the launderette in Unreal per the plan (first front; its hours set the ratio).
+5. n16-7: try the hip-joint method (try 1 of the new method).
+6. n16-8: the head export needs a full-editor run the permission system refused to a helper; ask in the next interactive moment or find an allowed route; then rerun round 5 at 60 roots/cm2.
+6b. n16-1 zips: PARKED as F:/LedgerTools/tool-dev/runs/kiln-gate-jobs-2026-11-17/dressing-rule-and-jobs.patch (Kiln checkout restored so the lane gates keep their inputs): PAT_DRESSING_REFUSES true (mechanics.rs ~498, comment still says off) and regression_jobs.json pointing at F:/LedgerTools/tool-dev/runs/kiln-gate-jobs-2026-11-17/ (6 of 8 scripts with openings marked by lane-zips efdfb5b's check_openings). A helper's cherry-pick of efdfb5b onto main was refused by the permission system: not retried; lane-zips goes through the gate like any lane, then cargo test with the rule on and check_openings on all jobs, then commit and re-take the baseline.
+7. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 (not beside perf captures). DAILY by 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 17 Nov 00:10: three hair tries (13 Nov) changed the asset while every picture was a cold capture; a behind-the-head pixel test hid buried and missing hair alike. Hide the surroundings, look from the side, capture over ticks.
