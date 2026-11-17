@@ -163,8 +163,10 @@
    "by": [
     "tools/pace_line.py::more than 6 ahead: finish the item in hand",
     "tools/fresh_gate.py::WAIT the week was",
-    "advisor:watchdog"
-   ]
+    "advisor:watchdog",
+    "tools/push_guard.py"
+   ],
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip"
   },
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
