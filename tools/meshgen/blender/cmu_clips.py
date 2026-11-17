@@ -5,7 +5,7 @@ production/research/ai-video-motion/CMU-RETARGET-METHOD-2026-11-12.md (review 17
 
 Per clip: the BVH is imported at SCALE metres a unit (not inches), armature object scale 1; the
 frame-0 T-pose (cgspeed's added first frame) becomes the REST pose (pose.armature_apply) and is dropped
-from the clip; the rest samples are taken every fourth (120 to 30 fps); the motion is re-keyed against
+from the clip with the first TRIM samples after it (a turn over 90 degrees in one step there); the rest samples are taken every fourth (120 to 30 fps); the motion is re-keyed against
 the new rest. Output as sitting_clips.py writes Mixamo clips: one skeleton FBX (T-pose rest with a
 stand-in cube bound to the hips) and one motion-only FBX per clip. Then flip checks (any bone turning
 over 90 degrees between two 30 fps frames) on the BVH and on each exported FBX re-imported, and the
@@ -17,6 +17,7 @@ import sys
 
 SCALE = 0.0564
 STEP = 4   # 120 fps to 30 fps
+TRIM = 2   # 30 fps samples dropped after the T-pose: the first step turns the hips and left arm over 90 degrees (17 Nov)
 CLIPS = (("143_18", "sit_get_up_143_18"), ("113_15", "sit_get_up_113_15"), ("131_01", "start_walk_stop_131_01"))
 SRC_DIR = "F:/LedgerTools/game-inputs/cmu-2026-11-17/src"
 OUT_DIR = "F:/LedgerTools/game-inputs/cmu-2026-11-17"
@@ -84,7 +85,7 @@ def main(src_dir, out_dir):
         sc = bpy.context.scene
         total = int(rig.animation_data.action.frame_range[1]) + 1
         say("%s: BVH imported, %d samples at 120 fps, object scale %s, %d bones" % (num, total, tuple(rig.scale), len(rig.pose.bones)))
-        samples = list(range(1, total, STEP))   # sample 0 is the T-pose, dropped
+        samples = list(range(1 + TRIM * STEP, total, STEP))   # sample 0 is the T-pose, dropped, and the first TRIM steps
         # --- the BVH itself: flips and heights at 30 fps
         sc.frame_set(0)
         bpy.context.view_layer.update()

@@ -11,7 +11,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md). Phase 1's open exits and
 - [ ] n16-6 talk provider-neutral, bake-off (the second provider's client built and reviewed 16 Nov, ledger/DevTools/OpenAiCompatibleClient.cs; next the Sonnet 5.5 leg, other hosts with the router key on the waiting list); n16-7 people alive; n16-8 hair.
 - [ ] n16-9 parked cars; n16-10 efficiency and safety; n16-11 the games' numbers.
 
-STATE (16 Nov 06:50): preparation before the 13:00 reset (advisor 168): records done; method note, FoldCraft read, breadth set and code-search test under way. M4 met (tag m4-2026-11-14).
+STATE (17 Nov 03:05): Kiln gate committed, lanes merged and gating; brick in; hair capture fixed; CMU retarget next. M4 met.
 
 ## Handovers
 
