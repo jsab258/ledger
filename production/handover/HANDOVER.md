@@ -5,7 +5,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 **Started:** 2026-11-17 23:22 (the hourly run; the last session set its Stopped line at 23:06)
 
 **Row due:** 2026-11-18 00:45 (last 23:45; page and advisor read 23:40; last ack 215 at 23:24)
-**Stopped:** 2026-11-17 23:06 (history past its point at an item's end; no helper or background job running)
+**Stopped:** 2026-11-18 00:10 (history 242k of its 250k point at an item's end; the next item, the strain-limit review and gate, could not finish under it; no helper or background job running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -36,7 +36,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 0. FIRST: verdicts after 2026-11-17T22:45:00Z; advisor after 2026-11-17T22:58:00+01:00 (last ack 215, 23:24).
-1. DONE: Kiln main at a8368f3. Take a new gate baseline (base plus calibration runs, quiet machine) so link_cap_solves is banded; remove worktrees merge-speed2 and stepbands (own leftovers, one line each).
+1. DONE: Kiln main at a8368f3. Take a new gate baseline (base plus calibration runs, quiet machine) so link_cap_solves is banded (worktrees merge-speed2 and stepbands removed 00:10).
 2. Strain-limit lane: review its report and diff, cargo test, gate alone, merge.
 3. His licence tap (kiln-front-end-licence-2026-11-17) answered yes: trousers step I (held row in production/specs/garments.json, import_garments in mh-assemble, garments_shipped_check), then step J (nightly package, -WearHeld film). Never in Unreal 01:15-04:30.
 4. Darren's head remake when the editor is free (advisor 215), outside the night.
