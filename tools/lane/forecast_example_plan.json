@@ -1,0 +1,75 @@
+{
+ "source": "planned hours from production/orders/2026-11-09.md (n09, items marked done there) and production/orders/2026-11-16.md (n16, open items; n16-9 and n16-11 left out, moved to the waiting list 16 Nov). n09 items carried over into n16 are left out so they are not counted twice; n09-14 set aside. Filled 17 Nov 2026 by a lane helper; the main session updates done flags and adds aliases.",
+ "items": [
+  {
+   "code": "n09-1",
+   "planned_h": 8,
+   "done": true
+  },
+  {
+   "code": "n09-2",
+   "planned_h": 3,
+   "done": true
+  },
+  {
+   "code": "n09-4",
+   "planned_h": 5,
+   "done": true
+  },
+  {
+   "code": "n09-9",
+   "planned_h": 6,
+   "done": true
+  },
+  {
+   "code": "n09-13",
+   "planned_h": 2,
+   "done": true
+  },
+  {
+   "code": "n16-1",
+   "planned_h": 46,
+   "done": false
+  },
+  {
+   "code": "n16-2",
+   "planned_h": 10,
+   "done": false
+  },
+  {
+   "code": "n16-3",
+   "planned_h": 40,
+   "done": false
+  },
+  {
+   "code": "n16-4",
+   "planned_h": 10,
+   "done": false
+  },
+  {
+   "code": "n16-5",
+   "planned_h": 15,
+   "done": false
+  },
+  {
+   "code": "n16-6",
+   "planned_h": 12,
+   "done": false
+  },
+  {
+   "code": "n16-7",
+   "planned_h": 10,
+   "done": false
+  },
+  {
+   "code": "n16-8",
+   "planned_h": 8,
+   "done": false
+  },
+  {
+   "code": "n16-10",
+   "planned_h": 6,
+   "done": false
+  }
+ ]
+}
