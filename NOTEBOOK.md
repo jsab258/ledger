@@ -2575,3 +2575,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: 16 of 16 self-tests; outlines read as the intended class and era with no confident make named.
 - Cost: about 0.4 h. What failed: the first two outlines read as saloon then estate, not the intended hatch; round 3's proposal fixes the tail.
 - Evidence: production/lane/P9-OUTLINE-ROUNDS-2026-11-17.md, tools/lane/car_loft.py. Recipe map: no step moved.
+
+## A solver's precision as a switch (17 Nov 2026, finished)
+- What was made: double-precision positions for a cloth solver as a run-time switch, off by default, so test benches get true rest while garments keep their baselined results.
+- Method: write the step once, generic over the point type, compiled twice; with the switch off, the original single-precision arithmetic operation for operation, no extra copies; gate the off path for identical results against the baseline before merging.
+- Tools: the solver's own tests, the regression gate run alone on a quiet machine, the cantilever bench.
+- Target and check: off: 189 of 189 drape measures identical to the baseline; on: strips at rest (sd 0.00, under 0.11 mm/s); 47 of 47 tests.
+- Cost: about 0.6 h (22 min engine). What failed and why: try 1 changed precision everywhere and moved one garment edge into another state with a jam at a 1 mm nudge; a switch keeps garments unchanged until their own baseline.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-SETTLE-DIAGNOSIS-2026-11-17.md. Recipe map: no step moved.

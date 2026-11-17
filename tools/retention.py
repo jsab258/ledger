@@ -104,13 +104,16 @@ def backup_paths():
     return [p for p in out if p]
 
 
-def _named(text, key):
+def _named(text, key, left=False):
     """key ('runs/fixer-r7') appears in text as a whole name: no name character after it, and a full stop
-    counts as an end only when no name character follows it."""
+    counts as an end only when no name character follows it. left: no name character before it either (a bare
+    folder name). A name at the very end of the text counts (an empty string is "in" every string, so the end
+    was read as a name character before 17 Nov)."""
+    namech = lambda c: bool(c) and (c.isalnum() or c in "_-")
     i = text.find(key)
     while i >= 0:
         nxt, after = text[i + len(key):i + len(key) + 1], text[i + len(key) + 1:i + len(key) + 2]
-        if not (nxt.isalnum() or nxt in "_-") and not (nxt == "." and (after.isalnum() or after in "_-")):
+        if not (left and i > 0 and namech(text[i - 1])) and not namech(nxt) and not (nxt == "." and namech(after)):
             return True
         i = text.find(key, i + 1)
     return False
@@ -302,15 +305,31 @@ def real(p):
     return os.path.normcase(os.path.realpath(p))
 
 
-def map_files_committed(repo=REPO):
-    """True when production/storage-map.json and production/retention.json have no uncommitted change (S5): the
-    night acts on map rows only from reviewed, committed files."""
+MAP_FILES = ("production/storage-map.json", "production/retention.json")
+
+
+def map_files_committed(repo=REPO, env=None):
+    """True when production/storage-map.json and production/retention.json have no uncommitted change (S5) and
+    equal main's (the second review, N10: committed is not reviewed, and main holds only what passed review; a
+    checkout with no main falls back to origin/main, and with neither refuses). False when LEDGER_RETENTION_POLICY
+    or LEDGER_STORAGE_MAP points elsewhere, since then the files checked are not the files used. Any git failure
+    refuses."""
+    env = os.environ if env is None else env
+    if env.get("LEDGER_RETENTION_POLICY") or env.get("LEDGER_STORAGE_MAP"):
+        return False
     try:
-        out = subprocess.run(["git", "-C", repo, "status", "--porcelain", "--", "production/storage-map.json",
-                              "production/retention.json"], capture_output=True, text=True, timeout=60)
+        out = subprocess.run(["git", "-C", repo, "status", "--porcelain", "--"] + list(MAP_FILES),
+                             capture_output=True, text=True, timeout=60)
+        if out.returncode != 0 or out.stdout.strip():
+            return False
+        for ref in ("main", "origin/main"):
+            d = subprocess.run(["git", "-C", repo, "diff", "--quiet", ref, "--"] + list(MAP_FILES),
+                               capture_output=True, text=True, timeout=60)
+            if d.returncode in (0, 1):
+                return d.returncode == 0
     except (OSError, subprocess.SubprocessError):
         return False
-    return out.returncode == 0 and not out.stdout.strip()
+    return False
 
 
 def prune_old(top, now, limit):
@@ -362,8 +381,14 @@ def busy():
     except (OSError, subprocess.SubprocessError):
         return {"unknown"}
     names = {"runner.worker.exe": "runner", "unrealeditor.exe": "unreal", "unrealbuildtool.exe": "unreal",
-             "zenserver.exe": "zen", "ledgerprobe.exe": "game", "marvelousdesigner": "marvelous"}
+             "zenserver.exe": "zen", "ledgerprobe.exe": "game", "marvelousdesigner": "marvelous",
+             "blender.exe": "blender", "drape-studio": "drape", "drape_studio": "drape"}   # Kiln's jobs run drape-studio*.exe
     return {v for k, v in names.items() if k in out}
+
+
+# THE SECOND REVIEW, N9: the map removes whole folders, and a long job reading old inputs changes no file date, so
+# while any of these runs (or the process list cannot be read) no map row is removed at all.
+MAP_BUSY = {"unknown", "runner", "unreal", "zen", "game", "marvelous", "blender", "drape"}
 
 
 def runner_path(p):
@@ -444,15 +469,31 @@ def candidates(pol, now=None, running=None):
     return uniq
 
 
-def enforce(pol, dry=False, mp=None, map_live=None, committed=None):
+def with_reals(paths):
+    """The paths, plus the real folder of each that is spelled through a junction, link or short name (the second
+    review, N4: a protected path written through a junction must also protect the folder it reaches)."""
+    out = [p for p in paths if isinstance(p, str) and p]
+    for p in list(out):
+        try:
+            r = os.path.realpath(p)
+        except (OSError, ValueError):
+            continue
+        if os.path.normcase(r) != norm(p):
+            out.append(r)
+    return out
+
+
+def enforce(pol, dry=False, mp=None, map_live=None, committed=None, running=None, limits=True, map_rows=True):
     """The limits' rows, then the storage map's (map_plan's 'remove' list only): listed when dry, removed only when
-    the map's rules are live (retention.json "mapRulesLive": true). Each goes through delete() and its checks."""
-    protected_extra = backup_paths() + named_keep(pol)
+    the map's rules are live (retention.json "mapRulesLive": true). Each goes through delete() and its checks.
+    limits / map_rows pick the parts (`space` runs the map's rows only when the limits alone leave a drive short)."""
+    protected_extra = with_reals(list(pol.get("protected", [])) + backup_paths() + named_keep(pol))
     results = []
-    for p, rule, why in candidates(pol):
-        results.append(delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra))
+    if limits:
+        for p, rule, why in candidates(pol):
+            results.append(delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra))
     live = map_rules_live(pol) if map_live is None else map_live
-    if dry or live:
+    if map_rows and (dry or live):
         if mp is None:
             try:
                 mp = map_plan(storage_map(), pol)
@@ -461,17 +502,21 @@ def enforce(pol, dry=False, mp=None, map_live=None, committed=None):
                 mp = {"remove": []}
         done = [r["path"] for r in results]
         committed = True if dry else (map_files_committed() if committed is None else committed)
-        running = busy() if mp.get("remove") else set()
+        if running is None:
+            running = busy() if (mp.get("remove") and not dry) else set()
+        stop = sorted(set(running) & MAP_BUSY)
         for p, rule, why in mp.get("remove", []):
             if any(inside(p, d) for d in done):
                 continue            # a limit's row already covers it
             if not committed:
                 results.append({"path": p, "rule": rule, "bytes": 0, "map": True,
-                                "refused": "storage-map.json or retention.json has uncommitted changes (S5)"})
+                                "refused": "storage-map.json or retention.json uncommitted, unlike main's, or "
+                                           "overridden by an environment setting (S5, N10)"})
                 continue
-            if (runner_path(p) and "runner" in running) or (unreal_path(p) and ("unreal" in running or "zen" in running)):
+            if stop and not dry:
                 results.append({"path": p, "rule": rule, "bytes": 0, "map": True,
-                                "refused": "Unreal or the runner is running (M1)"})
+                                "refused": "running now: %s (no map row goes while a long job may read it, N9)"
+                                           % ", ".join(stop)})
                 continue
             r = delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra)
             r["map"] = True
@@ -676,18 +721,25 @@ def morning_line(snaps=None):
 
 # ---- THE FREE-SPACE CHECK BEFORE A JOB ---------------------------------------
 
-def space(job, need_c, need_f, drives="CF"):
+def space(job, need_c, need_f, drives="CF", pol=None, free_fn=None, enforce_fn=None):
     """GO or STOP for a job, on the drives it writes to (an Unreal build writes to
-    both: its cache is on F:; a .NET test run with its temporary files on C: only C:)."""
-    pol = policy()
-    free = free_gb()
+    both: its cache is on F:; a .NET test run with its temporary files on C: only C:).
+    The limits run first; the storage map's rows (and their reader scan, minutes long) only when the limits alone
+    leave the drive short (the second review, N8: `space` runs before builds, Kiln gates and renders)."""
+    pol = policy() if pol is None else pol
+    free_fn = free_fn or free_gb
+    enforce_fn = enforce_fn or enforce
+    free = free_fn()
     need_c = need_c if "C" in drives.upper() else 0
     need_f = need_f if "F" in drives.upper() else 0
     short = lambda f: (f["C"] is not None and f["C"] < need_c) or (f["F"] is not None and f["F"] < need_f)
     out = {"job": job, "drives": drives.upper(), "before": free}
     if short(free):
-        out["cleaned"] = [r for r in enforce(pol) if "refused" not in r]
-        free = free_gb()
+        out["cleaned"] = [r for r in enforce_fn(pol, map_rows=False) if "refused" not in r]
+        free = free_fn()
+        if short(free):
+            out["cleaned"] += [r for r in enforce_fn(pol, limits=False) if "refused" not in r]
+            free = free_fn()
         out["after"] = free
     if short(free):
         out["verdict"] = "STOP"
@@ -810,6 +862,8 @@ def selftest():
             failures.extend(map_rule_cases(j, make, check_only=True))
         finally:
             STATE = saved_state
+            MAP_AGE[0] = newest_any
+            READ_CAP[0] = 5000
         # THE STORAGE MAP, read only (17 Nov): a folder inside a mapped one is covered, a new one is flagged
         os.makedirs(j("map", "kept", "inner"))
         os.makedirs(j("map", "new"))
@@ -936,18 +990,28 @@ def map_rule_cases(j, make, check_only=True):
     check(not map_plan(said, pol, readers=readers)["remove"], "'removed ... kept' is not a remove order (S3)")
     said2 = {"folders": [dict(fake["folders"][0], proposal="remove candidate: check with him before any delete")]}
     check(not map_plan(said2, pol, readers=readers)["remove"], "'check with him' is not a remove order (S3)")
-    bad_map = False
-    try:
-        map_plan({"folders": "oops"}, pol, readers=readers)
-    except ValueError:
-        bad_map = True
-    check(bad_map and map_plan({"folders": [None, {"path": 5}]}, pol, readers=readers)["remove"] == [],
-          "a malformed map raises or lists nothing (S4)")
-    # the step-2 review, B1: a script inside a lasting folder that names a removable one is a reader
+    # S4, and the second review's N6: a malformed map, or any one malformed row, raises (enforce and run then list
+    # nothing); a row is never dropped quietly with the protection it gave
+    for bad in ({"folders": "oops"}, {"folders": [None, {"path": 5}]},
+                {"folders": [dict(fake["folders"][0]), {"path": "", "shelf": "lasting"}]},
+                {"folders": [dict(fake["folders"][0]), ["a list"]]}):
+        raised = False
+        try:
+            map_plan(bad, pol, readers=readers)
+        except ValueError:
+            raised = True
+        check(raised, "a malformed map or row raises, never dropped (S4, N6): %s" % repr(bad)[:70])
+    # the step-2 review, B1, through map_plan: a lasting folder's script that names a removable one keeps it, and the
+    # reason names the file (N5)
     make(j("mp-final", "run_all.ps1"), d1, size=0)
     open(j("mp-final", "run_all.ps1"), "w").write("& python x.py --in '%s'" % mp_("work-old"))
-    check(_named(reader_text(j(), extra_dirs=[j("mp-final")]), path_key(mp_("work-old"))),
-          "a lasting folder's script naming a folder counts as its reader")
+    b1 = {"folders": [dict(fake["folders"][0]), {"path": j("mp-final"), "shelf": "lasting", "proposal": "keep"}]}
+    pb1 = map_plan(b1, pol, readers=readers)
+    check(not pb1["remove"] and any("files in" in w and "run_all.ps1" in w for q, w, _ in pb1["kept"] if q.endswith("work-old")),
+          "a lasting folder's script naming a folder keeps it, and the reason names the file (B1, N5)")
+    pb1p = map_plan({"folders": [dict(fake["folders"][0])]}, dict(pol, protected=pol["protected"] + [j("mp-final")]),
+                    readers=readers)
+    check(not pb1p["remove"], "a protected folder's script naming a folder keeps it (B1, N2)")
     nr = {"folders": [dict(fake["folders"][0]),
                       {"path": mp_("work-newer"), "shelf": "working", "owner": "LEDGER", "source": "made by LEDGER runs",
                        "proposal": "keep"}]}
@@ -963,6 +1027,140 @@ def map_rule_cases(j, make, check_only=True):
     os.remove(mp_("work-old", "self.ps1"))
     unk = {"folders": [dict(fake["folders"][0], source="unknown")]}
     check(not map_plan(unk, pol, readers=readers)["remove"], "a plain 'unknown' source keeps the row (N1)")
+    # N3: a partial or conditional proposal is no order to remove the whole folder
+    for phrase in ("remove: the logs (2 GB); the models stay", "remove once Kiln confirms", "remove after his OK",
+                   "remove: keeping only the reports", "Remove candidate - not yet", "remove only if unused by 20 Nov",
+                   "remove: superseded review pictures; the preview stays", "remove: all but the reports",
+                   "remove: unsure?", "remove: the old takes, except take 3", "remove when the lane ends"):
+        check(not map_plan({"folders": [dict(fake["folders"][0], proposal=phrase)]}, pol, readers=readers)["remove"],
+              "a partial or conditional proposal is no remove order (N3): " + phrase)
+    check(says_remove("remove: empty, no files") and says_remove("Remove candidate") and not says_remove("removed 17 Nov")
+          and not says_remove("remove the logs"), "plain whole-folder orders still read as orders (N3)")
+    # N4: a lasting line spelled through a junction elsewhere that reaches a folder inside a working row keeps the row;
+    # a protected path spelled through a junction protects its real folder
+    if os.name == "nt":
+        make(mp_("work-b", "inner", "x.bin"), d10, size=10)
+        make(mp_("work-c", "y.bin"), d10, size=10)
+        r1 = subprocess.run(["cmd", "/c", "mklink", "/J", j("side-assemble"), mp_("work-b", "inner")], capture_output=True)
+        r2 = subprocess.run(["cmd", "/c", "mklink", "/J", j("prot-link"), mp_("work-c")], capture_output=True)
+        p4 = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-b")),
+                                   {"path": j("side-assemble"), "shelf": "lasting", "proposal": "keep"}]}, pol, readers=readers)
+        check(r1.returncode == 0 and not p4["remove"]
+              and any("holds another" in w for q, w, _ in p4["kept"] if q.endswith("work-b")),
+              "a lasting folder reached through a junction keeps the working row holding it (N4)")
+        pc = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-c"))]}, dict(pol, protected=[j("prot-link")]),
+                      readers=readers)
+        check(r2.returncode == 0 and not pc["remove"]
+              and any(q.endswith("work-c") and "protected" in w for q, _, w in pc["refused"]),
+              "a protected path spelled through a junction protects its real folder (N4)")
+        check(any(os.path.normcase(x) == real(mp_("work-c")) for x in with_reals([j("prot-link")])),
+              "with_reals adds a junction's real folder (N4)")
+    # N5: a checkout of the repository, copies of the map and the limits, and side sessions' folders are no readers;
+    # the repository's disk inventories and reviews are not read
+    make(j("mp-lane", "tools", "retention.py"), d1, size=0)
+    make(j("mp-lane", "production", "storage-map.json"), d1, size=0)
+    open(j("mp-lane", "notes.md"), "w").write(mp_("work-old"))
+    make(j("mp-copies", "x", "storage-map.json"), d1, size=0)
+    open(j("mp-copies", "x", "storage-map.json"), "w").write('{"path": "%s"}' % mp_("work-old").replace("\\", "/"))
+    open(j("mp-copies", "retention.json"), "w").write('["%s"]' % mp_("work-old").replace("\\", "/"))
+    make(j("mp-copies", "runner", "ledger", "tools", "retention.py"), d1, size=0)          # a checkout nested deeper
+    make(j("mp-copies", "runner", "ledger", "production", "storage-map.json"), d1, size=0)
+    open(j("mp-copies", "runner", "ledger", "INVENTORY.md"), "w").write(mp_("work-old"))
+    make(j("mp-side", "run.ps1"), d1, size=0)
+    open(j("mp-side", "run.ps1"), "w").write(mp_("work-old"))
+    n5 = {"folders": [dict(fake["folders"][0]), {"path": j("mp-lane"), "shelf": "lasting", "proposal": "keep"},
+                      {"path": j("mp-copies"), "shelf": "lasting", "proposal": "keep"},
+                      {"path": j("mp-side"), "shelf": "side-session", "proposal": "keep"}]}
+    p5 = map_plan(n5, pol, readers=readers)
+    check(rel(p5["remove"]) == {os.path.join("mp", "work-old")},
+          "copies of the repository and the map, and side sessions, are no readers (N5): %s" % p5["kept"][:1])
+    rf, _every = repo_files(REPO)
+    check(rf and not any(x.replace("\\", "/").lower().endswith(("/storage-map.json", "/retention.json")) for x in rf)
+          and not any("production/research/disk/" in os.path.relpath(x, REPO).replace("\\", "/") for x in rf),
+          "the repository's disk inventories and map copies are not read (N5)")
+    # N7: a git that fails stops the reader scan (the map lists nothing), never narrows it
+    os.makedirs(j("not-a-checkout"), exist_ok=True)
+    raised = False
+    try:
+        map_plan({"folders": [dict(fake["folders"][0])]}, pol, repo=j("not-a-checkout"))
+    except RuntimeError:
+        raised = True
+    check(raised, "a failing git ls-files raises instead of narrowing the scan (N7)")
+    # N8: the scan stops once every candidate is named; `space` runs the map's rows only if the limits leave it short.
+    # N11: past the cap, a folder is not fully read and rows nothing named are kept
+    for k in range(5):
+        make(j("mp-big", "n%d.json" % k), d1, size=2)
+    open(j("mp-big", "z_last.ps1"), "w").write(mp_("work-old"))
+    big = {"folders": [dict(fake["folders"][0]), {"path": j("mp-big"), "shelf": "lasting", "proposal": "keep"}]}
+    READ_CAP[0] = 2
+    try:
+        pbig = map_plan(big, pol, readers=readers)
+        check(not pbig["remove"] and any("not fully read" in w for q, w, _ in pbig["kept"] if q.endswith("work-old")),
+              "a folder past the cap is not fully read, and the unnamed row is kept (N11)")
+        fnd, cpd = find_readers([(0, mp_("work-old"))], big["folders"], pol, readers=mp_("work-old"))
+        check(fnd == {0: "the given reader text"} and not cpd, "the scan stops once every candidate is named (N8)")
+    finally:
+        READ_CAP[0] = 5000
+    calls = []
+
+    def fake_enforce(p, limits=True, map_rows=True):
+        calls.append((limits, map_rows))
+        return [{"path": "x"}]
+    seq = [{"C": 10.0, "F": 50.0}, {"C": 45.0, "F": 50.0}]
+    sp = space("t", 40, 20, "CF", pol={}, free_fn=lambda: seq.pop(0), enforce_fn=fake_enforce)
+    check(calls == [(True, False)] and sp["verdict"] == "GO", "space: the limits alone made room, no map scan (N8): %s" % calls)
+    calls[:] = []
+    seq = [{"C": 10.0, "F": 50.0}, {"C": 20.0, "F": 50.0}, {"C": 45.0, "F": 50.0}]
+    sp = space("t", 40, 20, "CF", pol={}, free_fn=lambda: seq.pop(0), enforce_fn=fake_enforce)
+    check(calls == [(True, False), (False, True)] and sp["verdict"] == "GO" and len(sp["cleaned"]) == 2,
+          "space: still short after the limits, then the map's rows (N8): %s" % calls)
+    # N9: an unreadable process list or a long job stops every map row
+    for run in ({"unknown"}, {"blender"}, {"drape"}, {"game"}, {"marvelous"}):
+        res9 = enforce(pol, dry=False, mp=plan, map_live=True, committed=True, running=run)
+        check(not [r for r in res9 if r.get("map") and "refused" not in r]
+              and all("running now" in r["refused"] for r in res9 if r.get("map"))
+              and os.path.exists(mp_("work-old", "f.bin")), "running %s: no map row removed (N9)" % sorted(run))
+    # N10: an environment override, a change committed on a branch unlike main's, or no checkout refuses
+    check(not map_files_committed(REPO, env={"LEDGER_STORAGE_MAP": "x"})
+          and not map_files_committed(REPO, env={"LEDGER_RETENTION_POLICY": "x"}),
+          "an environment override refuses the map's rows (N10)")
+    check(not map_files_committed(j("not-a-checkout"), env={}), "no checkout refuses (N10)")
+    g = j("gitrepo")
+    os.makedirs(os.path.join(g, "production"))
+    for f in MAP_FILES:
+        open(os.path.join(g, *f.split("/")), "w").write("{}")
+    gitc = lambda *a: subprocess.run(["git", "-C", g, "-c", "user.name=selftest", "-c", "user.email=selftest@invalid"]
+                                     + list(a), capture_output=True, text=True, timeout=60).returncode
+    made = gitc("init", "-q", "-b", "main") == 0 and gitc("add", "-A") == 0 and gitc("commit", "-q", "-m", "a") == 0
+    check(made and map_files_committed(g, env={}), "the map files equal to main's: acts (N10)")
+    check(not map_files_committed(g, env={"LEDGER_STORAGE_MAP": "x"}) and not map_files_committed(g, env={"LEDGER_RETENTION_POLICY": "x"}),
+          "an environment override refuses even when the files equal main's (N10)")
+    open(os.path.join(g, "production", "storage-map.json"), "w").write('{"x": 1}')
+    check(not map_files_committed(g, env={}), "an uncommitted map edit refuses (S5)")
+    made = gitc("checkout", "-q", "-b", "wip") == 0 and gitc("commit", "-q", "-am", "b") == 0
+    check(made and not map_files_committed(g, env={}), "a map edit committed on a branch, unlike main's, refuses (N10)")
+    # N11: "session" is no owner of ours; a relative reference in a protected sibling's script keeps a folder; a name
+    # at the end of a text counts, a longer name does not; a malformed shelves_gb or floors never crashes
+    ses = map_plan({"folders": [dict(fake["folders"][0], owner="session")]}, pol, readers=readers)
+    check(not ses["remove"] and any("owner session" in w for _, w, _ in ses["kept"]), "owner 'session' is not ours (N11)")
+    make(mp_("work-f", "f.bin"), d10, size=10)
+    make(mp_("work-g", "run_all.ps1"), d1, size=0)
+    open(mp_("work-g", "run_all.ps1"), "w").write("$src = Join-Path $PSScriptRoot '..\\work-f'\n")
+    pf = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-f"))]},
+                  dict(pol, protected=pol["protected"] + [mp_("work-g")]), readers=readers)
+    check(not pf["remove"] and any("files in" in w for q, w, _ in pf["kept"] if q.endswith("work-f")),
+          "a relative reference in a protected sibling's script keeps the folder (N11)")
+    check(_named("x /a/b", "/a/b") and not _named("rework-f", "work-f", left=True) and _named("'../work-f'", "work-f", left=True),
+          "a name at the end of a text counts; a longer name is not the name (N11)")
+    check(floors({"shelves_gb": {"F": 5}}, {}) == {"C": 40.0, "F": 20.0} and floors({"shelves_gb": 3}, {"floors": 5})
+          == {"C": 40.0, "F": 20.0} and floors({"shelves_gb": {"C": {"floor": True}}}, {}) == {"C": 40.0, "F": 20.0},
+          "a malformed shelves_gb or floors falls back, never crashes (N11)")
+    # N11: map_plan's real age function end to end: a folder copied in today with old modification times is young
+    MAP_AGE[0] = newest_any
+    make(mp_("work-copied", "f.bin"), d10, size=10)
+    pa = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-copied"))]}, pol, readers=readers)
+    check(not pa["remove"] and any("inside its 3 days" in w for q, w, _ in pa["kept"] if q.endswith("work-copied")),
+          "map_plan's own age function reads a copied-in folder as new (S2, N11)")
     check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
     check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
     # not live: run removes none of the map's rows
@@ -976,10 +1174,10 @@ def map_rule_cases(j, make, check_only=True):
     # live: removes only what the plan lists, through delete() and its log
     log_before = len(open(os.path.join(STATE, "deleted.log"), encoding="utf-8").read().splitlines()) \
         if os.path.exists(os.path.join(STATE, "deleted.log")) else 0
-    unc = enforce(pol, dry=False, mp=plan, map_live=True, committed=False)
+    unc = enforce(pol, dry=False, mp=plan, map_live=True, committed=False, running=set())
     check(not [r for r in unc if r.get("map") and "refused" not in r] and os.path.exists(mp_("work-old", "f.bin")),
           "live, but the map files uncommitted: nothing of the map's removed (S5)")
-    res = enforce(pol, dry=False, mp=plan, map_live=True, committed=True)
+    res = enforce(pol, dry=False, mp=plan, map_live=True, committed=True, running=set())
     gone = {os.path.relpath(r["path"], j()) for r in res if r.get("map") and r.get("gone")}
     check(gone == want_remove, "live run removed %s, wanted %s" % (sorted(gone), sorted(want_remove)))
     check(not os.path.exists(mp_("work-old")) and not os.path.exists(mp_("tool-public"))
@@ -1067,8 +1265,8 @@ def shelves(m, measure=size_of):
 # ---- THE MAP'S EXPIRY RULES (step 2) ---------------------------------------------------------------------------
 # What the rules mean here, and what code cannot judge:
 # - working, "3 days, or once its numbers are recorded": a mapped working folder whose newest file is over 3 days
-#   old, that no tool names and whose map line proposes removal ("remove..." with no "keep" or "shrink") goes
-#   whole. Whether its numbers are recorded, and "a superseded review picture keeps its preview only", are not
+#   old, that nothing names (find_readers) and whose map line orders removal (says_remove: "remove:" or "remove
+#   candidate" with no hedge such as keep, stay, only, once, until, if) goes whole. Whether its numbers are recorded, and "a superseded review picture keeps its preview only", are not
 #   judged by code: an expired folder the map's line keeps is listed as kept, for the map to be corrected.
 # - tools, "14 days unused: removed if refetchable, else his page": a tool is read, not written, so a file date
 #   alone does not say it is unused. Unused here = no file written for 14 days AND no tool in the repository names
@@ -1080,24 +1278,45 @@ def shelves(m, measure=size_of):
 # - never by the map either: an owner other than LEDGER or Claude (the map says nothing of his is on it; an entry
 #   with another owner is his), a line naming a side session, a line backed up ("backup": "yes ..."), a folder
 #   holding another mapped folder, a mapped link (its target is mapped where it lives), and everything delete()
-#   refuses (outside retention.json's places, protected, backed up, tracked by git, held, named by a report).
+#   refuses (outside retention.json's places, protected, also through a junction, backed up, tracked by git, held,
+#   or a namedKeep run its files name). A folder only a report names is kept by find_readers, not by delete().
+# - none while a long job runs or the process list is unreadable (MAP_BUSY), nor unless the map and the limits
+#   equal main's with no environment override (map_files_committed).
 # - a folder not on the map is never removed by the map's rules.
 
 MAP_WORKING_DAYS = 3
 MAP_TOOLS_DAYS = 14
-LEDGER_OWNERS = {"ledger", "claude", "session"}
+LEDGER_OWNERS = {"ledger", "claude"}      # the second review, N11: "session" could be a side session's owner
 REFETCH_WORDS = ("public", "pypi", "hugging face", "blender.org", "npm install", "microsoft download",
                  "github runner release", "rebuilt by")
 DOUBT_WORDS = ("unknown", "sign-in", "sign in", "unverified", "not refetchable", "not found", "no requirements",
                "needs his", "owner's", "unique")
-READER_DIRS = ("tools", os.path.join("ue-probe", "Source"), os.path.join("ue-probe", "Config"),
-               os.path.join("production", "specs"), ".github")
 READER_EXT = (".py", ".ps1", ".psm1", ".bat", ".cmd", ".json", ".cs", ".cpp", ".h", ".ini", ".yml", ".yaml",
               ".toml", ".txt", ".sh", ".rs")
+SCAN_EXT = (".py", ".ps1", ".bat", ".cmd", ".sh", ".json", ".md", ".txt", ".toml", ".ini")
+SCRIPT_EXT = (".py", ".ps1", ".psm1", ".bat", ".cmd", ".sh")
+SCAN_SKIP_DIRS = {"__pycache__", "node_modules", ".git", "target", "intermediate", "saved", "deriveddatacache", ".venv"}
+READ_CAP = [5000]     # text files read per scanned folder, counted after the skips (a list: the self-test lowers it)
 
 
 LINE_FILE = re.compile(r"[A-Za-z0-9_./-]+[.](?:py|ps1|bat|cs|cpp|h|rs|json|ini|yml)")
-NOT_READERS = ("production/retention.json", "production/storage-map.json")
+NOT_READERS = ("production/retention.json", "production/storage-map.json", "tools/retention.py")
+# THE SECOND REVIEW, N5: copies of the map and the limits, the disk inventories, clear-out lists and reviews, the
+# retention state and any checkout of this repository name every row without reading it; read as readers they kept
+# every row by accident (and slowly). They are never readers.
+COPY_NAMES = ("storage-map.json", "retention.json")
+NOT_READER_DIRS = ("production/research/disk/",)
+# THE SECOND REVIEW, N3: a proposal that is partial ("the preview stays") or conditional ("once Kiln confirms") is
+# not an order to remove the whole folder.
+HEDGE = re.compile(r"\b(stay\w*|keep\w*|kept|except|but|only|once|after|until|when|if|wait\w*|not yet|unsure|"
+                   r"shrink|his yes|his ok|check with him|needs his|ask\w*)\b|\?")
+
+
+def says_remove(proposal):
+    """True only for a whole-folder order: the proposal starts with "remove:" or "remove candidate" and carries no
+    hedge (S3; the second review, N3)."""
+    p = str(proposal or "").strip().lower()
+    return (p.startswith("remove:") or p.startswith("remove candidate")) and not HEDGE.search(p)
 
 
 def line_reader(e, repo=REPO):
@@ -1115,57 +1334,125 @@ def map_rules_live(pol):
     return pol.get("mapRulesLive") is True
 
 
-def reader_text(repo=REPO, extra_dirs=()):
-    """Where a path a tool or record reads would be named, lower case, backslashes as '/': every text file git tracks in
-    the repository (tools, game source, specs, workflows and the records, approvals and casting notes: the step-2
-    review, 17 Nov, B1, found four removal rows named only in records), and the scripts and notes inside the map's
-    lasting and protected folders (extra_dirs; a protected run's run_all.ps1 read a removable folder, the scalp
-    pattern). Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
-    import subprocess
-    parts = []
-    me = norm(os.path.abspath(__file__))
-    skip = {norm(os.path.join(repo or REPO, x)) for x in NOT_READERS}
+def is_repo_copy(d):
+    """A checkout or copy of this repository (a side session's, the lane's, the runner's): never a reader (N5)."""
+    return os.path.isfile(os.path.join(d, "tools", "retention.py")) and \
+        os.path.isfile(os.path.join(d, "production", "storage-map.json"))
 
-    def take(f):
-        if norm(f) == me or norm(f) in skip or not f.lower().endswith(READER_EXT + (".md", ".jsonl", ".csv")):
-            return
-        try:
-            if os.path.getsize(f) > 2_000_000:
+
+def repo_files(repo=REPO):
+    """([text files git tracks that may be readers], {every tracked file, normalised}). A git that cannot run, fails
+    or lists nothing raises (the second review, N7: a silent fallback narrowed the scan to the tools folder), and
+    enforce and main turn that into "the map's rules list nothing"."""
+    try:
+        r = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True, timeout=300)
+    except (OSError, subprocess.SubprocessError) as e:
+        raise RuntimeError("git ls-files could not run in %s (%s): the reader scan would be blind (N7)" % (repo, e))
+    names = [x for x in r.stdout.decode("utf-8", "replace").split("\0") if x]
+    if r.returncode != 0 or not names:
+        raise RuntimeError("git ls-files failed or listed nothing in %s: the reader scan would be blind (N7)" % repo)
+    me = norm(os.path.abspath(__file__))
+    files, every = [], set()
+    for n in names:
+        f = os.path.join(repo, n)
+        every.add(norm(f))
+        low = n.replace("\\", "/").lower()
+        if low in NOT_READERS or low.rsplit("/", 1)[-1] in COPY_NAMES or low.startswith(NOT_READER_DIRS) \
+                or norm(f) == me or not low.endswith(READER_EXT + (".md", ".jsonl", ".csv")):
+            continue
+        files.append(f)
+    return files, every
+
+
+def read_lower(f):
+    """One file's text as the reader check compares it (lower case, backslashes as '/'), or None (over 2 MB,
+    unreadable)."""
+    try:
+        if os.path.getsize(f) > 2_000_000:
+            return None
+        with open(f, encoding="utf-8", errors="replace") as fh:
+            return fh.read().replace("\\\\", "/").replace("\\", "/").lower()
+    except OSError:
+        return None
+
+
+def scan_walk(d, avoid, visited, tracked_set, status):
+    """The text files under folder d the reader scan opens, one at a time: links, build and tool caches, copies of
+    the repository, the avoided folders, copies of the map and files git tracks (read already) are skipped before
+    counting; past READ_CAP files the folder is listed in status["capped"] and left (the second review, N11)."""
+    taken = 0
+    for root, dirs, files in os.walk(d):
+        nr = norm(root)
+        if nr in visited:
+            dirs[:] = []
+            continue
+        visited.add(nr)
+        keep = []
+        for x in dirs:
+            full = os.path.join(root, x)
+            if x.lower() in SCAN_SKIP_DIRS or is_link(full) or is_repo_copy(full) or any(inside(full, a) for a in avoid):
+                continue
+            keep.append(x)
+        dirs[:] = keep
+        for n in files:
+            low = n.lower()
+            f = os.path.join(root, n)
+            if low in COPY_NAMES or not low.endswith(SCAN_EXT) or norm(f) in tracked_set:
+                continue
+            taken += 1
+            if taken > READ_CAP[0]:
+                status["capped"].append(d)
                 return
-            with open(f, encoding="utf-8", errors="replace") as fh:
-                parts.append(fh.read())
-        except OSError:
-            pass
-    if repo is None:
-        names, repo = [], REPO
-        skip_repo = True
+            yield f
+
+
+def find_readers(cands, folders, pol, readers=None, repo=REPO):
+    """Which candidates something names: ({id: what names it}, [capped folders]). cands are (id, path). Read, one file
+    at a time, stopping once every candidate is named (the second review, N8: never one joined text): the
+    repository's tracked text files (or, in the self-test, the given `readers` text), then every mapped folder on any
+    shelf but side-session and build-cache, and every protected folder (N2). A file inside the candidate never counts
+    (a folder is not its own reader). In a script under the candidate's own parent folder, the candidate's bare name
+    counts too (a relative path such as '..\\work-f', N11). Paths built from pieces are still missed."""
+    todo = {}
+    for cid, p in cands:
+        np_ = norm(p).rstrip(os.sep)
+        todo[cid] = (p, path_key(p), os.path.basename(np_).lower(), os.path.dirname(np_))
+    found, status = {}, {"capped": []}
+
+    def look(f, text, label, bare):
+        for cid in list(todo):
+            p, key, name, parent = todo[cid]
+            if f is not None and inside(f, p):
+                continue
+            if _named(text, key) or (bare and f is not None and f.lower().endswith(SCRIPT_EXT)
+                                     and inside(f, parent) and _named(text, name, left=True)):
+                found[cid] = label
+                del todo[cid]
+        return not todo
+
+    if readers is not None:
+        tracked_set = set()
+        if look(None, readers.replace("\\\\", "/").replace("\\", "/").lower(), "the given reader text", False):
+            return found, []
     else:
-        listed = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True).stdout.decode("utf-8", "replace")
-        names = [x for x in listed.split("\0") if x]
-        skip_repo = False
-    if skip_repo:
-        pass
-    elif names:
-        for n in names:
-            take(os.path.join(repo, n))
-    else:   # not a checkout (the self-test's folders): the old reader folders
-        for d in READER_DIRS:
-            for root, dirs, files in os.walk(os.path.join(repo, d)):
-                dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
-                for n in files:
-                    take(os.path.join(root, n))
-    for d in extra_dirs:
-        seen = 0
-        for root, dirs, files in os.walk(d):
-            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git", "target", "Intermediate",
-                                                    "Saved", "DerivedDataCache", ".venv")]
-            for n in files:
-                if n.lower().endswith((".py", ".ps1", ".bat", ".cmd", ".sh", ".json", ".md", ".txt", ".toml", ".ini")):
-                    take(os.path.join(root, n))
-                    seen += 1
-            if seen > 5000:
-                break
-    return "\n".join(parts).replace("\\\\", "/").replace("\\", "/").lower()
+        files, tracked_set = repo_files(repo)
+        for f in files:
+            t = read_lower(f)
+            if t is not None and look(f, t, "the repository's " + os.path.relpath(f, repo).replace("\\", "/"), False):
+                return found, []
+    avoid = [repo, STATE] + [os.path.join(repo, *x.strip("/").split("/")) for x in NOT_READER_DIRS]
+    avoid += [o["path"] for o in folders if str(o.get("shelf", "")).strip().lower() in ("side-session", "build-cache")]
+    roots = [o["path"] for o in folders if str(o.get("shelf", "")).strip().lower() not in ("side-session", "build-cache")]
+    roots += [x for x in pol.get("protected", []) if isinstance(x, str)]
+    visited = set()
+    for d in dict.fromkeys(roots):
+        if not os.path.isdir(d) or is_link(d) or is_repo_copy(d) or any(inside(d, a) for a in avoid):
+            continue
+        for f in scan_walk(d, avoid, visited, tracked_set, status):
+            t = read_lower(f)
+            if t is not None and look(f, t, "files in %s (%s)" % (d, os.path.relpath(f, d)), True):
+                return found, status["capped"]
+    return found, status["capped"]
 
 
 def path_key(p):
@@ -1176,14 +1463,20 @@ def path_key(p):
 
 def floors(m=None, pol=None):
     """{'C': GB, 'F': GB} each drive keeps free: the map's floors (their home since 17 Nov), else retention.json's,
-    else 40 and 20."""
+    else 40 and 20. A malformed floors or shelves_gb is ignored, never a crash (the second review, N11: `space` read
+    the traceback as STOP and stopped builds)."""
     out = {"C": 40.0, "F": 20.0}
+    pf = (pol or {}).get("floors", {}) if isinstance(pol or {}, dict) else {}
+    sg = (m or {}).get("shelves_gb", {}) if isinstance(m or {}, dict) else {}
+    pf = pf if isinstance(pf, dict) else {}
+    sg = sg if isinstance(sg, dict) else {}
     for d in out:
-        v = (pol or {}).get("floors", {}).get(d)
-        if isinstance(v, (int, float)):
+        v = pf.get(d)
+        if isinstance(v, (int, float)) and not isinstance(v, bool):
             out[d] = float(v)
-        v = (m or {}).get("shelves_gb", {}).get(d, {}).get("floor")
-        if isinstance(v, (int, float)):
+        sd = sg.get(d, {})
+        v = sd.get("floor") if isinstance(sd, dict) else None
+        if isinstance(v, (int, float)) and not isinstance(v, bool):
             out[d] = float(v)
     return out
 
@@ -1199,27 +1492,32 @@ def floor_rows(fl, free, freed_bytes):
     return rows
 
 
-def map_plan(m, pol, now=None, readers=None):
+def map_plan(m, pol, now=None, readers=None, repo=REPO):
     """What the map's expiry rules say now: {'remove': [(path, rule, why)], 'hisPage': [(path, rule, why)],
-    'refused': [(path, rule, why)], 'kept': [(path, why, expired)]}. Removes nothing."""
+    'refused': [(path, rule, why)], 'kept': [(path, why, expired)]}. Removes nothing. Raises ValueError on a malformed
+    map and RuntimeError when git cannot list the repository (enforce and main then list nothing)."""
     now = now or time.time()
     out = {"remove": [], "hisPage": [], "refused": [], "kept": []}
     folders = m.get("folders", [])
     if not isinstance(folders, list):
         raise ValueError("folders is %s, not a list" % type(folders).__name__)
-    folders = [e for e in folders if isinstance(e, dict) and isinstance(e.get("path"), str) and e.get("path").strip()]
-    text, protected_extra = None, None
+    for n, e in enumerate(folders):
+        # the second review, N6: a malformed row is not dropped, since its protection (a lasting folder inside a
+        # working one, a twin) would go with it; the whole map is refused instead
+        if not (isinstance(e, dict) and isinstance(e.get("path"), str) and e["path"].strip()):
+            raise ValueError("map row %d is not an object with a non-empty path: %s" % (n, repr(e)[:80]))
+    protected_extra = None
     reals = [(i, real(e["path"]), str(e.get("shelf", "")).strip().lower(), str(e.get("owner", "") or "").strip().lower())
              for i, e in enumerate(folders)]
+    pending = []
 
     def kept(p, why, expired=False):
         out["kept"].append((p, why, expired))
 
     for idx, e in enumerate(folders):
-        p = e.get("path", "")
-        if not p:
-            continue
+        p = e["path"]
         shelf = str(e.get("shelf", "")).strip().lower()
+        me = None
         if shelf in ("working", "tools"):
             # S1: the guarantee goes by the real folder, not its spelling
             me = real(p)
@@ -1266,7 +1564,10 @@ def map_plan(m, pol, now=None, readers=None):
         if not os.path.exists(p):
             kept(p, "not on disk")
             continue
-        inner = [o["path"] for o in folders if o.get("path") and norm(o["path"]) != norm(p) and inside(o["path"], p)]
+        # the second review, N4: by text, and by real folder (a lasting line spelled through a junction elsewhere
+        # may reach a folder inside this one)
+        inner = [o["path"] for o in folders if norm(o["path"]) != norm(p) and inside(o["path"], p)]
+        inner += [folders[i]["path"] for i, r, sh, ow in reals if i != idx and r != me and r.startswith(me.rstrip(os.sep) + os.sep)]
         if inner:
             kept(p, "holds another mapped folder (%s)" % inner[0])
             continue
@@ -1275,26 +1576,10 @@ def map_plan(m, pol, now=None, readers=None):
         if age <= days:
             kept(p, "written %.1f day(s) ago, inside its %d days" % (age, days))
             continue
-        if text is None:
-            text = reader_text() if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
-            # the second review, 17 Nov, N2: every mapped folder (any shelf) and every protected path is scanned,
-            # each kept apart so a folder's own files never count as its own reader
-            scan = [o["path"] for o in folders if o.get("path") and os.path.isdir(o["path"])]
-            scan += [x for x in pol.get("protected", []) if isinstance(x, str) and os.path.isdir(x)]
-            others = [(d, reader_text(None, extra_dirs=[d])) for d in dict.fromkeys(scan)]
-        key = path_key(p)
-        by_folder = [d for d, t in others if not inside(d, p) and _named(t, key)]
-        if _named(text, key) or by_folder:
-            kept(p, "no write for %.0f days, but %s names it" % (age, ("files in " + by_folder[0]) if by_folder
-                                                                    else "a tool in the repository"), True)
-            continue
-        named_by = line_reader(e)
+        named_by = line_reader(e, repo)
         if named_by:
             kept(p, "no write for %.0f days, but the map's line names a reader (%s)" % (age, named_by), True)
             continue
-        says_remove = ((proposal.startswith("remove:") or proposal.startswith("remove candidate")
-                        or proposal.startswith("remove ")) and not proposal.startswith("removed")
-                       and not re.search(r"\b(keep|kept|shrink|his yes|check with him|needs his|ask)\b", proposal))
         rule = "map %s %dd" % (shelf, days)
         if shelf == "tools":
             source = str(e.get("source", "")).lower()
@@ -1303,21 +1588,38 @@ def map_plan(m, pol, now=None, readers=None):
                 if "keep" in proposal:
                     kept(p, "unused %.0f days, not known refetchable; the map's line keeps it (%s)"
                          % (age, e.get("proposal", "")), True)
-                else:
-                    out["hisPage"].append((p, rule, "unused %.0f days, no tool names it, not known refetchable (source: %s)"
-                                           % (age, e.get("source", "") or "none")))
+                    continue
+                pending.append((idx, p, rule, age, "hisPage", "unused %.0f days, no tool names it, not known "
+                                "refetchable (source: %s)" % (age, e.get("source", "") or "none")))
                 continue
-            if not says_remove:
+            if not says_remove(proposal):
                 kept(p, "unused %.0f days and refetchable; the map's line keeps it (%s)" % (age, e.get("proposal", "")), True)
                 continue
             why = "unused %.0f days, no tool names it, refetchable (%s)" % (age, e.get("source", ""))
         else:
-            if not says_remove:
+            if not says_remove(proposal):
                 kept(p, "no write for %.0f days; the map's line keeps it (%s)" % (age, e.get("proposal", "")), True)
                 continue
             why = "no write for %.0f days, no tool names it; the map: %s" % (age, e.get("proposal", ""))
+        pending.append((idx, p, rule, age, "remove", why))
+    if not pending:
+        return out
+    # the reader scan last, and only for the rows it could still decide (N8)
+    found, capped = find_readers([(x[0], x[1]) for x in pending], folders, pol, readers=readers, repo=repo)
+    for idx, p, rule, age, dest, why in pending:
+        if idx in found:
+            kept(p, "no write for %.0f days, but %s names it" % (age, found[idx]), True)
+            continue
+        cap = [c for c in capped if not inside(c, p)]
+        if cap:
+            kept(p, "no write for %.0f days; not fully read: %s holds over %d text files, so rows nothing named are kept"
+                 % (age, cap[0], READ_CAP[0]), True)
+            continue
+        if dest == "hisPage":
+            out["hisPage"].append((p, rule, why))
+            continue
         if protected_extra is None:
-            protected_extra = backup_paths() + named_keep(pol)
+            protected_extra = with_reals(list(pol.get("protected", [])) + backup_paths() + named_keep(pol))
         ok, reason = may_delete(pol, p, protected_extra)
         if not ok:
             out["refused"].append((p, rule, reason))
