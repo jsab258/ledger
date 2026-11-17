@@ -26,7 +26,7 @@ Every exit bundle names the commit and package, raw logs, fixed-camera images, a
 - **Binding stop:** a sample that cannot pass within this ceiling halts expansion; the failed capability is reported plainly, never dressed as another plan.
 
 **2. Produce Quay Street from proved families.** Ceiling 2.00W, three to four weeks, no new spending.
-- From the asset plan (production/research/asset-plan/SUMMARY.md): the approved building kit re-seeded; mapped upper rooms; real near shop rooms; ground, wear, signage, furniture and food, vegetation, the hill's distance versions. Only approved samples multiplied. P7 walking, P6 plain clothes, P20 exposure, P13 ambience. The wet street's seam and icy near lane, and the hill, return here with their research. No cars unless P9 passes.
+- From the asset plan (production/research/asset-plan/SUMMARY.md): the approved building kit re-seeded; mapped upper rooms; real near shop rooms; ground, wear, signage, furniture and food, vegetation, the hill's distance versions. Only approved samples multiplied. P7 walking, P6 plain clothes, P20 exposure, P13 ambience. The wet street's seam and icy near lane, and the hill, return here with their research. Parked cars once one sample car passes (P9).
 - **Exit:** a whole-street day and night walk passes the asset, source and budget checks, reverse views and the office camera (P15) included. **His checkpoint:** street, people and ambience, at most three decisions.
 
 **3. Make thirty minutes hold.** Ceiling 0.75W, one to two weeks, the existing talk caps.
@@ -34,6 +34,7 @@ Every exit bundle names the commit and package, raw logs, fixed-camera images, a
 - **Exit:** two different thirty-minute newcomer routes and one continuous checked-live route within the cap; no critical fault; at most five empty minutes; a consequence seen and kept after restart. **His checkpoint:** he plays thirty minutes and judges it.
 
 **4. Friends' candidate.** Ceiling 0.50W, about a week, at most $5 an evening.
+- Traffic from the car kit (17 Nov).
 - The package frozen; P5 on his own account and shortcut; source credits; voice and save separate; packaged performance in rain, at night, with speech; the two routes repeated on that package.
 - **Exit:** the twenty basics proved by output; no visible placeholder, hole or debug display; no development tools needed. The friends' first thirty minutes logged, blockers fixed before scope is added. **His checkpoint:** appearance and the evening's spend.
 
@@ -54,4 +55,4 @@ This consolidates P1 to P22 (production/research/pre-production/3-PROOFS.md); P1
 - Town tasks: N3 with a packaged port; newcomers' common questions grounded in authored facts; P4's reachable gaps. Stopped: new systems, unreachable depth, reviews of unported features.
 - Clothing tasks: one allowed plain outfit fitted to the approved bodies, with deformation films and source records. Stopped: tailoring, purchase programmes, six-body wardrobes.
 - Stopped for the builder: wardrobe and town multiplication, whole-street parameter sweeps.
-- Orders on Mondays, taste answers at checkpoints. Monday's review updates R1 to R10 (production/research/pre-production/6-RISKS.md). Running out of budget or two attempts brings a failed-capability report, not more research.
+- Orders on Mondays. Monday's review updates R1 to R10 (production/research/pre-production/6-RISKS.md). Two failed attempts bring a failed-capability report.

@@ -21,13 +21,14 @@ STATE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEEK_HOURS = 6 * 24 + 18  # Monday 13:00 to the next Monday 07:00
 
 # THE DOUBLE WEEK, A DRAFT (the advisor's message 118, 12 Nov; his picks in chat 16:24): for the week of 16 Nov he
-# presses a spare weekly reset. Shape: 0 to 95% from Monday 13:00 to Wednesday 15:00; after the reset, 0 to 90% from
+# presses a spare weekly reset. Shape: 0 to 99% from Monday 13:00 to Wednesday 15:00 (99 since his ruling of 17 Nov
+# 21:12, advisor 210: the reset is pressed at 98 to 99%, never 100); after the reset, 0 to 90% from
 # the reset's time to the next Monday 07:00. OFF until his tap adopting the order of 16 Nov sets "active": true in
 # production/week-shape.json for that week's Monday; "reset_at" (Swiss "YYYY-MM-DD HH:MM") is written when he presses
 # the reset. Any other week, or the file missing, keeps the single line above.
 SHAPE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "production", "week-shape.json")
 FIRST_LEG_HOURS = 2 * 24 + 2  # Monday 13:00 to Wednesday 15:00
-FIRST_LEG_TOP = 95.0
+FIRST_LEG_TOP = 99.0
 
 
 def week_monday(now):
@@ -111,13 +112,13 @@ def selftest():
     tue = datetime.datetime(2026, 11, 17, 14, 0)
     cases += [
         ("double off keeps the single line", abs(line_at(tue, off) - line_at(tue, {})) < 1e-9, True),
-        ("double on, Tuesday 14:00 about 46", abs(line_at(tue, on) - 95.0 * 25 / 50) < 0.01, True),
-        ("double on, Wednesday 15:00 is 95", abs(line_at(datetime.datetime(2026, 11, 18, 15, 0), on) - 95) < 0.01, True),
-        ("no reset yet, Thursday stays 95", abs(line_at(datetime.datetime(2026, 11, 19, 12, 0), on) - 95) < 0.01, True),
+        ("double on, Tuesday 14:00 about 49.5", abs(line_at(tue, on) - 99.0 * 25 / 50) < 0.01, True),
+        ("double on, Wednesday 15:00 is 99", abs(line_at(datetime.datetime(2026, 11, 18, 15, 0), on) - 99) < 0.01, True),
+        ("no reset yet, Thursday stays 99", abs(line_at(datetime.datetime(2026, 11, 19, 12, 0), on) - 99) < 0.01, True),
         ("reset at 15:00, 0 just after", line_at(datetime.datetime(2026, 11, 18, 15, 30), pressed) < 0.5, True),
         ("reset, Monday 07:00 is 90", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), pressed) - 90) < 0.01, True),
         ("another week ignores it", abs(line_at(fri, on) - line_at(fri, {})) < 1e-9, True),
-        ("double climbs about 1.9 an hour", abs(line_per_hour(tue, on) - 1.9) < 0.01, True),
+        ("double climbs about 1.98 an hour", abs(line_per_hour(tue, on) - 1.98) < 0.01, True),
     ]
     bad = [n for n, got, want in cases if got != want]
     print("pace_line selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))

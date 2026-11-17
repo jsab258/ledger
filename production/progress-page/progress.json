@@ -200,7 +200,7 @@
     {
       "n": 4,
       "name": "Friends' evening",
-      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening.",
+      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening; parked cars and background traffic in the street (your ruling of 17 November).",
       "size": "About a week",
       "state": "ahead",
       "milestone": true,
@@ -262,7 +262,7 @@
     {
       "n": 8,
       "name": "The docks",
-      "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
+      "get": "The docks beside the Hook (traffic moved into the friends' build by your ruling of 17 November).",
       "state": "sketch",
       "short": "The docks",
       "next_step": "Waits for the Empire. Your ruling of 28 October makes it the first cut if time runs short; the advisor suggests moving it to the first update after release, your call at the 1 July check.",
@@ -301,7 +301,7 @@
     {
       "n": 11,
       "name": "After release: more districts, driving yourself",
-      "get": "Updates after release: Meridian's other districts, and driving yourself.",
+      "get": "Updates after release: Meridian's other districts. Driving: an arcade car once the map is bigger, then driving to AAA standard as the end state, costed for you first (your ruling of 17 November).",
       "state": "sketch",
       "terminus": true,
       "short": "After",
