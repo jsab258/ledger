@@ -7,10 +7,10 @@ Research helper, about twenty minutes, read only apart from this file. Answers h
 ## The answer in brief
 
 - Stage 1 (cars passing at the street's end, from the parked-car kit): est. 38 hours machine-free (range 33 to 43) and 47 on the PC (range 40 to 55). It starts only after the parked hatch passes his gate (n16-9), as his ruling says. The kit checklist (section 5) adds est. 10 to 20 machine-free and 6 to 12 PC hours, charged to the kit, not to traffic.
-- Method: our own lane splines with a simple "follower" car that slides along them, no physics. ZoneGraph plus Mass (MassTraffic) is built for a city and is wrong for two cars. Chaos Vehicles waits for stage 2.
+- Method: our own lane splines with a simple "follower" car that slides along them, no physics. ZoneGraph plus Mass (MassTraffic) is built for a city and is wrong for two cars. Stage 2 route now recommended: the hybrid (DRIVING-ESTIMATE section 1); the kit's wheel bones still serve the wheel visuals.
 - Rate: about one vehicle every 60 to 90 seconds by day at the street's end, at most two in view; every 2 to 3 minutes in the evening, every 5 to 10 minutes late at night (est., section 2).
 - Budget: fits by day, tight at night. Est. 0.2 to 0.4 ms by day and 0.3 to 0.6 ms at night, of the 2.5 ms and 1.4 ms spare. No new textures; headlamps cast no shadows.
-- Stage 2 (arcade car), ROUGH: 150 to 300 hours. Stage 3 (AAA driving), ROUGH: 1,000 to 2,500 hours.
+- Stage 2 (arcade car): est. 100 to 220 hours (lean version 85 to 180). Stage 3 (AAA driving, on top of stage 2, four platforms): est. 430 to 900 hours (450 to 950 with four full interiors). See DRIVING-ESTIMATE-AI-2026-11-17.md.
 
 ## 1. How professional games do light background traffic
 
@@ -50,7 +50,7 @@ Chosen: splines plus a simple follower actor.
 Rejected for now:
 - ZoneGraph plus Mass (MassTraffic): built for The Matrix Awakens; called "very complex" on Epic's forum, and ZoneGraph cannot be generated or changed at run time [READ]. Mass's cheap instanced animation is marked experimental [READ]. Right for hundreds of cars, wrong for two.
 - City Sample: content never used (outside the allowlist); its code read as method only.
-- Chaos Vehicles for background cars: costs more and can wobble [I]. Kept for stage 2. Epic's online docs are now at 5.9 and also describe Chaos Modular Vehicles, which build a car from breakable parts [READ]; whether 5.8 has it is checked on the PC.
+- Chaos Vehicles for background cars: costs more and can wobble [I]. Stage 2 now recommends the hybrid instead (DRIVING-ESTIMATE section 1). Epic's online docs are now at 5.9 and also describe Chaos Modular Vehicles, which build a car from breakable parts [READ]; whether 5.8 has it is checked on the PC.
 - Nothing bought (16 Sep).
 
 Giving way: a box ahead of each car checks for a person or the player in the road. The car slows, stops and waits. Still blocked after about 3 seconds, one short horn; after about 10, a second (est.). It never drives through or round a person; it waits, as a real driver would.
@@ -82,7 +82,7 @@ Verdict: measured with the frame ruler (n16-11, PresentMon) on a wet night befor
 The kit is a scripted loft (tools/lane/car_loft.py; its Blender side untested). Today it makes one body mesh and plain tyres for the silhouette test. The first real build should produce:
 
 1. Wheels separate, each pivoting at the wheel's centre, spinning about the axle; hub, tyre and trim as parts.
-2. One source, two exports. The kit keeps each panel, wheel and glass piece as its own mesh in the source file and assembles two exports from it: a skinned mesh with wheel bones for Chaos Vehicles (a root bone at the car's centre on the ground, one bone per wheel at the hub, named the same on every platform), and loose parts for Modular Vehicles if 5.8 has it. Which one stage 2 uses is decided when stage 2 starts. Stage 1 turns the wheel bones.
+2. One source, two exports. The kit keeps each panel, wheel and glass piece as its own mesh in the source file and assembles two exports from it: a skinned mesh with wheel bones for Chaos Vehicles (a root bone at the car's centre on the ground, one bone per wheel at the hub, named the same on every platform), and loose parts for Modular Vehicles if 5.8 has it. Stage 2 now recommends the hybrid (DRIVING-ESTIMATE section 1), whose wheel visuals use the same wheel bones; a short trial at stage 2's start confirms it. Stage 1 turns the wheel bones.
 3. Arches cut with room for the wheel to rise about 8 to 10 cm (est.).
 4. Simple collision: one box plus arch shapes, at most 6 hulls (asset-budgets.json "car").
 5. The body split along real panel lines (bonnet, boot or hatch, doors, bumpers, wings), each piece with its hinge pivot placed, welded shut in stage 1. These are the pieces item 2 exports both ways.
@@ -128,10 +128,10 @@ Not included: the car kit and its second variant (2-VEHICLES.md: 4 to 6 days), t
 
 ROUGH: first ranges for scale, not plans. They assume the checklist was followed.
 
-| Stage | ROUGH hours | What drives the cost |
+| Stage | Est. hours | What drives the cost |
 |---|---|---|
-| 2. Simple arcade car | 150 to 300 | Handling tuning by feel (many short checks with him); getting in and out with a MetaHuman (the likely overrun); a chase camera; background cars switching to physics when hit. |
-| 3. AAA driving | 1,000 to 2,500 | Handling depth (weight transfer, wet tyres); damage (dents, panels off, glass and lamps); AI drivers who react, and police chases; a full interior and first-person view with layered engine sound. The bar is Mafia or GTA, made by large teams over years [I]. |
+| 2. Simple arcade car | 100 to 220 (see DRIVING-ESTIMATE-AI-2026-11-17.md) | Handling tuning by feel (many short checks with him); getting in and out with a MetaHuman (the likely overrun); a chase camera; background cars switching to physics when hit. |
+| 3. AAA driving | 430 to 900, on top of stage 2 (see DRIVING-ESTIMATE-AI-2026-11-17.md) | Handling depth (weight transfer, wet tyres); damage (dents, panels off, glass and lamps); AI drivers who react, and police chases; a full interior and first-person view with layered engine sound. The bar is Mafia or GTA, made by large teams over years [I]. |
 
 The biggest risk in both is handling feel, won by iteration, not code.
 
