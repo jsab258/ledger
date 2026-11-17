@@ -1220,7 +1220,7 @@
   },
   {
    "id": "kiln-front-end-licence-2026-11-17",
-   "added": "2026-11-17 22:10",
+   "added": "2026-11-17 21:36",
    "tag": "DECISION",
    "title": "May garments made through Kiln's copied job interface go into the game?",
    "text": "Kiln reuses Drape Studio's job interface (the command names only, not its engine, presets or files) so Marvelous's job scripts run unchanged. The design note made this your licence call before any Kiln garment is adopted.",
