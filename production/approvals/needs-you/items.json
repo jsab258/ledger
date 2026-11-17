@@ -1063,27 +1063,30 @@
     ]
    ],
    "state": "done",
-   "closed": "2026-11-17 14:42, answered yes (14:26): all three removed through retention.py at 14:41, 14.6 GB (F: and C:); the designed voices and the study notes kept"
+   "closed": "2026-11-17 14:42, answered yes (14:26): all three removed through retention.py at 14:41, 14.6 GB (F: and C:); the designed voices and the study notes kept",
+   "tag": "DECISION"
   },
   {
    "id": "backup-schedule-at-pc-2026-11-17",
    "added": "2026-11-17 13:17",
    "his_hands": true,
-   "text": "Your hands, one minute at the PC, any time today: the nightly backup to your Dropbox (your pick at 12:58) should run every day at 05:00, but the app's safety check will not let Claude create a Windows schedule on its own. In the Claude app, open LEDGER's production session, type \"Register the backup schedule now\", and click Allow when it asks. It adds one scheduled task named LEDGER backup and nothing else. Until then the backup still runs once a day with the first commit, as before (today's run at 13:09 copied 4.3 GB, all checked). Then tap Done.",
+   "text": "One visit to the PC, two steps, about two minutes in all. Step 1, the nightly backup at 05:00 (your pick at 12:58; the app's safety check will not let Claude create a Windows schedule itself): in the Claude app open Scheduled tasks, then \"LEDGER: the hourly fresh session\", then History, then the run \"Today at 2:21 PM\". In its message box type: Register the backup schedule now. Click Allow when it asks. It adds one scheduled task named LEDGER backup and nothing else. Step 2, give C: back about 23 GB (Dropbox undoes Claude's script within seconds, tested at 14:27): in File Explorer click Dropbox in the left column, right-click the folder LEDGER backup, choose Make online-only. Nothing is deleted; every file stays in Dropbox and comes back when opened. Then tap Done; the session checks that the task exists, the folder is online-only and the backup is still complete.",
    "links": [
     {
      "label": "This page",
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "recommendation": "Do it today, so tonight's 05:00 backup runs whether or not anything is committed.",
+   "recommendation": "Do both today: tonight's 05:00 backup then runs whether or not anything is committed, and C: goes from 48.7 to about 72 GB free.",
    "options": [
     [
      "done",
      "Done (recommended)"
     ]
    ],
-   "state": "open"
+   "state": "open",
+   "tag": "ACTION",
+   "updated": "2026-11-17 14:55: steps named exactly, the Dropbox step added (his message 14:38, advisor 199)"
   }
  ]
 }

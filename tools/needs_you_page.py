@@ -30,6 +30,9 @@ DIR = os.path.join(REPO, "production", "approvals", "needs-you")
 ITEMS = os.path.join(DIR, "items.json")
 URL = "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"   # his one permanent link (published 2 November 2026)
 FIELDS = ("id", "added", "text", "links", "recommendation", "state")
+# A TAG BEFORE EVERY ITEM (his message of 17 Nov 14:38, advisor 199): ACTION (his hands at the PC, a sign-in, a click),
+# DECISION (pick an option), REVIEW (look at pictures or frames and judge); stored as "tag", shown first on the page.
+TAGS = ("ACTION", "DECISION", "REVIEW")
 PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
 # OWN LEFTOVERS NEVER REACH HIS PAGE (his decision, 16 Nov 12:23, advisor 174; RULINGS 29 Oct): an open item asking him
 # whether to delete the session's own outputs (test or run outputs, leftovers, temporary files) is refused. An item
@@ -58,6 +61,8 @@ def faults(data, check_files=True):
                 out.append("%s lacks %s" % (it.get("id", "?"), f))
         if it.get("id") in seen:
             out.append("%s appears twice" % it.get("id"))
+        if it.get("state") == "open" and it.get("tag") not in TAGS:
+            out.append("%s lacks its tag (one of %s; his message 17 Nov 14:38)" % (it.get("id"), ", ".join(TAGS)))
         seen.add(it.get("id"))
         if it.get("state") not in ("open", "done"):
             out.append("%s has state %r (open or done)" % (it.get("id"), it.get("state")))
@@ -117,7 +122,7 @@ def spec(data, now=None):
         "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
         # an item may carry pictures, judged on the page itself at full size (a whole street frame or a person at its
         # gate, 3 November: the corner's midweek page is the first); their files sit in pictures/ beside the page, out of git
-        "sections": [{"kind": "need", "key": it["id"], "name": it["text"], "links": it["links"],
+        "sections": [{"kind": "need", "key": it["id"], "name": "%s: %s" % (it.get("tag", "?"), it["text"]), "links": it["links"],
                       "recommendation": it["recommendation"], "added": it["added"],
                       "pictures": it.get("pictures", []),
                       # a written piece he rules on, folded shut on the page (8 Nov, the side stories)
@@ -153,11 +158,14 @@ def selftest():
             bad += 1
             print("needs_you_page selftest FAIL " + name)
     good = {"items": [{"id": "a", "added": "2026-11-02 07:00", "text": "Do a.", "links": [{"label": "A", "url": "https://x.y/a"}],
-                       "recommendation": "Yes.", "state": "open"},
+                       "recommendation": "Yes.", "state": "open", "tag": "DECISION"},
                       {"id": "b", "added": "2026-11-01 07:00", "text": "Did b.", "links": [], "recommendation": "No.", "state": "done",
                        "closed": "2026-11-02 08:00, answered no"}]}
     check("a clean list has no faults", faults(good) == [])
     check("only open items are drawn", [s["key"] for s in spec(good)["sections"]] == ["a"])
+    check("the tag comes first on the page", spec(good)["sections"][0]["name"].startswith("DECISION: "))
+    check("an open item without a tag is refused",
+          faults({"items": [dict(good["items"][0], tag=None)]}) != [] and faults({"items": [dict(good["items"][0], tag="ASK")]}) != [])
     check("a link must be a full https link", faults({"items": [dict(good["items"][0], links=[{"label": "A", "url": "fab.com/x"}])]}) != [])
     check("a done item must say when and how it closed", faults({"items": [dict(good["items"][1], closed="")]}) != [])
     check("the tab is his page's name", spec(good)["tab"] == "LEDGER: Needs you")
