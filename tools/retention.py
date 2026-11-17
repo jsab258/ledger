@@ -882,7 +882,7 @@ def map_rule_cases(j, make, check_only=True):
     fake["folders"].append({"path": mp_("work-holds", "inner"), "shelf": "lasting", "proposal": "keep"})
     make(mp_("unmapped-old", "f.bin"), d20)                       # in the places, old, not on the map
     make(j("mp-elsewhere", "stray", "f.bin"), d10)                # on the map, outside the places
-    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray", "owner": "LEDGER"})
+    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray", "owner": "LEDGER", "source": "made by LEDGER runs"})
     make(j("mp-target", "keep.bin"), d10)                         # a junction's target, outside the places
     link_made = False
     if os.name == "nt":
@@ -948,6 +948,21 @@ def map_rule_cases(j, make, check_only=True):
     open(j("mp-final", "run_all.ps1"), "w").write("& python x.py --in '%s'" % mp_("work-old"))
     check(_named(reader_text(j(), extra_dirs=[j("mp-final")]), path_key(mp_("work-old"))),
           "a lasting folder's script naming a folder counts as its reader")
+    nr = {"folders": [dict(fake["folders"][0]),
+                      {"path": mp_("work-newer"), "shelf": "working", "owner": "LEDGER", "source": "made by LEDGER runs",
+                       "proposal": "keep"}]}
+    make(mp_("work-newer", "run_all.ps1"), d1, size=0)
+    open(mp_("work-newer", "run_all.ps1"), "w").write("python x.py --in '%s'" % mp_("work-old"))
+    np_ = map_plan(nr, pol)
+    check(not np_["remove"] and any("files in" in w for q, w, _ in np_["kept"] if q.endswith("work-old")),
+          "a newer working round's script keeps the old round it reads, through map_plan (N2)")
+    open(mp_("work-old", "self.ps1"), "w").write("python x.py --out '%s'" % mp_("work-old"))
+    os.remove(mp_("work-newer", "run_all.ps1"))
+    check(not any("files in" in w for q, w, _ in map_plan(nr, pol)["kept"] if q.endswith("work-old")),
+          "a folder's own script never counts as its own reader (N2)")
+    os.remove(mp_("work-old", "self.ps1"))
+    unk = {"folders": [dict(fake["folders"][0], source="unknown")]}
+    check(not map_plan(unk, pol, readers=readers)["remove"], "a plain 'unknown' source keeps the row (N1)")
     check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
     check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
     # not live: run removes none of the map's rows
@@ -1109,7 +1124,7 @@ def reader_text(repo=REPO, extra_dirs=()):
     import subprocess
     parts = []
     me = norm(os.path.abspath(__file__))
-    skip = {norm(os.path.join(repo, x)) for x in NOT_READERS}
+    skip = {norm(os.path.join(repo or REPO, x)) for x in NOT_READERS}
 
     def take(f):
         if norm(f) == me or norm(f) in skip or not f.lower().endswith(READER_EXT + (".md", ".jsonl", ".csv")):
@@ -1121,9 +1136,16 @@ def reader_text(repo=REPO, extra_dirs=()):
                 parts.append(fh.read())
         except OSError:
             pass
-    listed = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True).stdout.decode("utf-8", "replace")
-    names = [x for x in listed.split("\0") if x]
-    if names:
+    if repo is None:
+        names, repo = [], REPO
+        skip_repo = True
+    else:
+        listed = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True).stdout.decode("utf-8", "replace")
+        names = [x for x in listed.split("\0") if x]
+        skip_repo = False
+    if skip_repo:
+        pass
+    elif names:
         for n in names:
             take(os.path.join(repo, n))
     else:   # not a checkout (the self-test's folders): the old reader folders
@@ -1224,8 +1246,10 @@ def map_plan(m, pol, now=None, readers=None):
             # written as LEDGER's or Claude's may be removed by the map's rules
             kept(p, "owner %s: only an owner written as LEDGER or Claude is touched" % (e.get("owner") or "not written"))
             continue
-        if any(w in line for w in ("source unknown", "unknown source")):
-            kept(p, "source unknown: when in doubt, it is his")
+        src = str(e.get("source", "") or "").strip().lower()
+        if shelf == "working" and (not src or any(w in src for w in DOUBT_WORDS)):   # tools rows in doubt go to his page below
+            # the second review, 17 Nov, N1: the map writes "unknown"; any doubt or no source is his
+            kept(p, "source %s: when in doubt, it is his" % (src or "not written"))
             continue
         if os.path.basename(p.rstrip("/\\")).lower() in NOT_OURS:
             kept(p, "not LEDGER's")
@@ -1252,11 +1276,17 @@ def map_plan(m, pol, now=None, readers=None):
             kept(p, "written %.1f day(s) ago, inside its %d days" % (age, days))
             continue
         if text is None:
-            lasting = [o["path"] for o in folders if o.get("path") and os.path.isdir(o["path"])
-                       and str(o.get("shelf", "")).strip().lower() not in ("working", "tools")]
-            text = reader_text(extra_dirs=lasting) if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
-        if _named(text, path_key(p)):
-            kept(p, "no write for %.0f days, but a tool in the repository names it" % age, True)
+            text = reader_text() if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
+            # the second review, 17 Nov, N2: every mapped folder (any shelf) and every protected path is scanned,
+            # each kept apart so a folder's own files never count as its own reader
+            scan = [o["path"] for o in folders if o.get("path") and os.path.isdir(o["path"])]
+            scan += [x for x in pol.get("protected", []) if isinstance(x, str) and os.path.isdir(x)]
+            others = [(d, reader_text(None, extra_dirs=[d])) for d in dict.fromkeys(scan)]
+        key = path_key(p)
+        by_folder = [d for d, t in others if not inside(d, p) and _named(t, key)]
+        if _named(text, key) or by_folder:
+            kept(p, "no write for %.0f days, but %s names it" % (age, ("files in " + by_folder[0]) if by_folder
+                                                                    else "a tool in the repository"), True)
             continue
         named_by = line_reader(e)
         if named_by:
