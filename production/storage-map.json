@@ -17,7 +17,7 @@
  "expiry": {
   "lasting": "never; backed up nightly to Dropbox",
   "tools": "14 days unused: removed if refetchable, else his page",
-  "working": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only",
+  "working": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only",
   "build-cache": "by retention.json caps (rebuilt by the build)",
   "installed program": "never by retention; his to uninstall",
   "not-LEDGER": "never touched"
@@ -151,7 +151,7 @@
    "serves": "tools/ue/mocap-solve-project",
    "source": "rebuilt by Unreal",
    "proposal": "keep, recent",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/Users/Jafar/ledger-talk",
@@ -181,7 +181,7 @@
    "serves": "tester, editor; retention.json places",
    "source": "regenerated",
    "proposal": "keep; those four old folders (1.7 GB, 5 to 30 Oct) are shrink candidates if retention allows",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/LedgerTools/kiln-lanes",
@@ -191,7 +191,7 @@
    "serves": "retention.json namedKeep",
    "source": "rebuilt",
    "proposal": "keep",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/Users/Jafar/ledger-local/ledger",
@@ -241,7 +241,7 @@
    "serves": "Claude's session",
    "source": "-",
    "proposal": "keep, size only",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/LedgerTools/blender",
@@ -281,7 +281,7 @@
    "serves": "tools/cleanup.py, retention.json",
    "source": "unknown",
    "proposal": "keep, under 1 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/Users/Jafar/AppData/Local/pip",
@@ -321,7 +321,7 @@
    "serves": "handover",
    "source": "rebuilt",
    "proposal": "keep",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "C:/Users/Jafar/AppData/Local/UnrealEngine/Common",
@@ -404,7 +404,7 @@
    "source": "made by LEDGER runs; approved pictures also copied under production/approvals",
    "proposal": "keep; gate/new now 5.4 GB, all of it from the 17 Nov keep list (the 7.7 GB clear-out has been done)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/played-game",
@@ -415,7 +415,7 @@
    "source": "rebuilt by the packaged build workflow",
    "proposal": "keep (the played build; limit: latest two)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/parler-tts",
@@ -492,7 +492,7 @@
    "source": "Kiln tool sources and runs; runs rebuilt by rerunning jobs; judge protected",
    "proposal": "keep (runs 1.0 GB governed by retention limit)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/fab",
@@ -547,7 +547,7 @@
    "source": "made by LEDGER runs",
    "proposal": "keep",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/pylib",
@@ -569,7 +569,7 @@
    "source": "made by the lab side session (clothes, jacket, sash, door); unique work: unknown",
    "proposal": "remove/shrink candidate: 0.99 GB, no reader, last write 22 Oct; check with him before any delete",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/blender52",
@@ -602,7 +602,7 @@
    "source": "rerun the test jobs; limit: tool test and Kiln run outputs",
    "proposal": "keep (limit covers it)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/bpyenv",
@@ -657,7 +657,7 @@
    "source": "made by LEDGER runs (shop windows, scratch); rerun unknown",
    "proposal": "shrink candidate: 0.54 GB, no reader, last write 24 Oct",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/checkers",
@@ -668,7 +668,7 @@
    "source": "made by LEDGER runs; rebuildable by tools/checkers scripts",
    "proposal": "keep (readers: tools/checkers)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/old",
@@ -679,7 +679,7 @@
    "source": "mixed made-by-runs or reference; none read",
    "proposal": "keep, later look; total tiny",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/tmp",
@@ -690,7 +690,7 @@
    "source": "scratch, 7-day limit",
    "proposal": "keep (limit covers it)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/dotnet10",
@@ -712,7 +712,7 @@
    "source": "made by LEDGER runs (bench/arm folders from 30 Sep)",
    "proposal": "shrink candidate: 0.17 GB, 76 old bench folders, last write 16 Nov in one small folder",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/drapestudio-test-2026-11-11",
@@ -723,7 +723,7 @@
    "source": "rerun",
    "proposal": "remove candidate: superseded by -final (protected)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/saved-branches-2026-10-05",
@@ -789,7 +789,7 @@
    "source": "rerun",
    "proposal": "keep (named in regression jobs, protected)",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/blender_mcp",
@@ -865,7 +865,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: misnamed stray (backslashes lost), holds no files, empty cards/checker folders",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/f",
@@ -875,7 +875,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: stray nested F:/f/LedgerTools/garments/sheila, holds no files",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/town-bench",
@@ -885,7 +885,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: Sep 2026 town bench scratch, 12 files, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/town-bisect",
@@ -895,7 +895,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: Sep 2026 bisect scratch, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/town-scratch",
@@ -905,7 +905,7 @@
    "serves": "tools/checkers/claim_label_trial.py, tools/checkers/measure_checkers.py, tools/checkers/sentence_test.py",
    "source": "unknown",
    "proposal": "keep: named by the checkers tools (0.07 GB)",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/ai-video",
@@ -915,7 +915,7 @@
    "serves": "tools/needs_you_page.py (path text only)",
    "source": "unknown",
    "proposal": "remove: empty, no files",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/asset-checks",
@@ -925,7 +925,7 @@
    "serves": "production/specs/asset-budgets.json",
    "source": "made by tools/ue/asset_checks.py runs",
    "proposal": "keep: current asset-check output, 0.0 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/atlas-01-2026-10-06",
@@ -945,7 +945,7 @@
    "serves": "tools/backup-to-dropbox.py, production/specs/in-game.json",
    "source": "rebuilt by tools/backup-to-dropbox.py",
    "proposal": "keep: backup staging, written today",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/bound",
@@ -985,7 +985,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: scripts and scans of the finished 26 Sep clear-out, 0.0 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/drapestudio-test",
@@ -995,7 +995,7 @@
    "serves": "production/retention.json (names the -final sibling only)",
    "source": "unknown",
    "proposal": "keep: Kiln drape test files from 14 Nov, 0.02 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/drapestudio-test-2026-11-13",
@@ -1005,7 +1005,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "keep: 13 Nov Kiln run1, 0.01 GB; the -final sibling is the protected one",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/freesewing",
@@ -1035,7 +1035,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: 25 Sep voice test takes, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/game-voice2",
@@ -1045,7 +1045,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: 25 Sep voice test takes, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/keys",
@@ -1065,7 +1065,7 @@
    "serves": "production/retention.json (limit row)",
    "source": "unknown",
    "proposal": "remove: empty, covered by a retention limit",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/md-bridge",
@@ -1085,7 +1085,7 @@
    "serves": "tools/md-bridge/ledger_md_bridge.py, tools/md-bridge/md_job.py, tools/md-bridge/start_bridge.ps1",
    "source": "rebuilt by rerunning Marvelous jobs",
    "proposal": "keep: live bridge job folder, written today",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/mickeys-props",
@@ -1115,7 +1115,7 @@
    "serves": "tools/nightly_walk.py",
    "source": "made by the nightly walk",
    "proposal": "keep: nightly walk records, 0.01 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/page-frames",
@@ -1125,7 +1125,7 @@
    "serves": "production/retention.json (scratch limit)",
    "source": "unknown",
    "proposal": "keep: empty scratch folder named by retention",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/pip-cache",
@@ -1145,7 +1145,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: one 26 Oct walk folder, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/presets",
@@ -1185,7 +1185,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: no files, only an old folder",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/renders",
@@ -1195,7 +1195,7 @@
    "serves": "tools/morning_pictures.py, tools/clothes_page.py, tools/proof_progress_page.py",
    "source": "made by tools/morning_pictures.py",
    "proposal": "keep: morning renders, retention scratch limit covers it",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/replay-2026-11-08",
@@ -1205,7 +1205,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "keep: 8 Nov replay briefs and judge notes, 0.0 GB",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/retired",
@@ -1215,7 +1215,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: superseded imagegen-2026-09-03 set (0.04 GB), no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/review-faces-2026-09-26",
@@ -1225,7 +1225,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: 26 Sep review frames, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/review-voice-2026-09-25",
@@ -1235,7 +1235,7 @@
    "serves": "production/retention.json (review-voice-* limit)",
    "source": "unknown",
    "proposal": "remove: empty, covered by a retention limit",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/review-voice-2026-09-26",
@@ -1245,7 +1245,7 @@
    "serves": "production/retention.json (review-voice-* limit)",
    "source": "unknown",
    "proposal": "remove: empty, covered by a retention limit",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/ron-voice",
@@ -1265,7 +1265,7 @@
    "serves": "tools/art-recipes/sash-window/check_window.py, window_design.py, target_drawing.py",
    "source": "rebuilt by tools/art-recipes/sash-window",
    "proposal": "keep: recipe build output, small",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/scratch",
@@ -1275,7 +1275,7 @@
    "serves": "tools/p1-packaged.ps1, tools/ue/clip_frames.py, tools/meshgen/blender/sitting_clips.py",
    "source": "unknown",
    "proposal": "keep: named scratch folder, retention limit covers it",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/selfcheck-voice-2026-09-26",
@@ -1285,7 +1285,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: 26 Sep self-check outputs, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/shopfront-kit",
@@ -1315,7 +1315,7 @@
    "serves": "no reader found",
    "source": "unknown",
    "proposal": "remove: 6 Oct try1-try5 scratch, no reader",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   },
   {
    "path": "F:/LedgerTools/steps-sources",
@@ -1407,7 +1407,7 @@
    "source": "rewritten by the lane from its sources",
    "proposal": "keep until the lane's last merge after 23 Nov 07:00; then by the working shelf's rule",
    "backup": "no",
-   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+   "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
   }
  ],
  "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."

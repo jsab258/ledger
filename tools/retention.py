@@ -30,8 +30,8 @@ remove_tree). The nightly task runs outside the Claude app, so it sees the
 real AppData; from inside Claude a session sees its private copy on top.
 
 THE STORAGE MAP (production/storage-map.json, RULINGS 17 Nov) gives every
-folder a shelf and an expiry. Its rules (map_plan: working 3 days, tools 14
-days unused and refetchable, else his page; lasting and side sessions never)
+folder a shelf and an expiry. Its rules (map_plan: working 14 days, as RULINGS'
+"run outputs expire in 14 days"; tools 14 days unused and refetchable, else his page; lasting and side sessions never)
 are listed by `plan` beside the limits, with the "his page" candidates and the
 floors (the map's: F: 20, C: 40). `run`, `nightly` and `space` remove the
 map's rows only once production/retention.json sets "mapRulesLive": true, and
@@ -383,13 +383,24 @@ def tracked(path):
 
 def busy():
     """What is running that a deletion must not pull files from under."""
+    return busy_from(run=subprocess.run)
+
+
+def busy_from(run):
+    """busy() with the process list's runner given (the self-test stubs it). The third review, N-R9: a tasklist that
+    fails, or answers without its header, is "unknown" (busy), never "nothing running"; "unrealeditor" matches
+    UnrealEditor-Cmd.exe (every -run=pythonscript import) too, and Kiln's seamshift.exe counts as a drape job."""
     try:
-        out = subprocess.run(["tasklist"], capture_output=True, text=True, timeout=60).stdout.lower()
+        r = run(["tasklist"], capture_output=True, text=True, timeout=60)
     except (OSError, subprocess.SubprocessError):
         return {"unknown"}
-    names = {"runner.worker.exe": "runner", "unrealeditor.exe": "unreal", "unrealbuildtool.exe": "unreal",
+    out = (r.stdout or "").lower()
+    if r.returncode != 0 or "image name" not in out:
+        return {"unknown"}
+    names = {"runner.worker.exe": "runner", "unrealeditor": "unreal", "unrealbuildtool.exe": "unreal",
              "zenserver.exe": "zen", "ledgerprobe.exe": "game", "marvelousdesigner": "marvelous",
-             "blender.exe": "blender", "drape-studio": "drape", "drape_studio": "drape"}   # Kiln's jobs run drape-studio*.exe
+             "blender.exe": "blender", "drape-studio": "drape", "drape_studio": "drape",   # Kiln's jobs run drape-studio*.exe
+             "seamshift": "drape"}
     return {v for k, v in names.items() if k in out}
 
 
@@ -762,11 +773,15 @@ def space(job, need_c, need_f, drives="CF", pol=None, free_fn=None, enforce_fn=N
 
 # ---- THE SELF-TEST -----------------------------------------------------------
 
+CHECKS = [0]     # self-test checks run (both check functions count)
+
+
 def selftest():
     import tempfile
     failures = []
 
     def check(cond, what):
+        CHECKS[0] += 1
         if not cond:
             failures.append(what)
 
@@ -871,6 +886,7 @@ def selftest():
             STATE = saved_state
             MAP_AGE[0] = newest_any
             READ_CAP[0] = 5000
+            LINK_ROOTS[:] = LINK_ROOTS_DEFAULT
         # THE STORAGE MAP, read only (17 Nov): a folder inside a mapped one is covered, a new one is flagged
         os.makedirs(j("map", "kept", "inner"))
         os.makedirs(j("map", "new"))
@@ -885,6 +901,19 @@ def selftest():
         check(all(e.get("shelf") and e.get("expiry") for e in real["folders"]), "every mapped folder has a shelf and an expiry")
         check(sum(v for k, v in real["shelves_gb"]["F"].items()) <= 120.5, "F:'s shelves and floor fit the drive")
         check(floors(real) == {"C": 40.0, "F": 20.0}, "the real map's floors are C: 40, F: 20")
+        # M4 (third review): the working shelf's days, the map's working expiry and the run-output limit follow RULINGS
+        try:
+            rt = open(os.path.join(REPO, "RULINGS.md"), encoding="utf-8").read()
+        except OSError:
+            rt = ""
+        mm = re.search(r"run outputs expire in (\d+) days", rt)
+        check(mm and int(mm.group(1)) == MAP_WORKING_DAYS, "RULINGS' run-output days (%s) equal MAP_WORKING_DAYS (%d) (M4)"
+              % (mm.group(1) if mm else "not found", MAP_WORKING_DAYS))
+        bad = [e["path"] for e in real["folders"] if str(e.get("shelf", "")).lower() == "working"
+               and not str(e.get("expiry", "")).startswith("%d days" % MAP_WORKING_DAYS)]
+        check(not bad, "every working row's expiry says %d days (M4): %s" % (MAP_WORKING_DAYS, bad[:3]))
+        runs = [x for x in json.load(open(os.path.join(REPO, "production", "retention.json"), encoding="utf-8")).get("limits", []) if "run outputs" in str(x.get("kind", ""))]
+        check(runs and all(x.get("days") == MAP_WORKING_DAYS for x in runs), "the run-output limit keeps %d days (M4)" % MAP_WORKING_DAYS)
     finally:
         import cleanup
         done = {"files": 0, "links": 0, "bytes": 0, "failed": []}
@@ -892,7 +921,7 @@ def selftest():
             cleanup.remove_tree(base, done)
         except OSError:
             pass
-    print("retention selftest: %s" % ("passed" if not failures else "FAILED: " + "; ".join(failures)))
+    print("retention selftest: %s (%d checks)" % ("passed" if not failures else "FAILED: " + "; ".join(failures), CHECKS[0]))
     return 0 if not failures else 1
 
 
@@ -905,25 +934,28 @@ def map_rule_cases(j, make, check_only=True):
     fails = []
 
     def check(cond, what):
+        CHECKS[0] += 1
         if not cond:
             fails.append("map rules: " + what)
 
     mp_ = lambda *a: j("mp", *a)
     now = time.time()
-    d1, d5, d10, d20 = (now - n * 86400 for n in (1, 5, 10, 20))
-    fx = [("work-old", "working", d10, {"proposal": "remove: test"}),
+    d1, d5, d20 = (now - n * 86400 for n in (1, 5, 20))
+    dold = now - (MAP_WORKING_DAYS + 6) * 86400    # past the working shelf's days, whatever the ruling sets (M4)
+    LINK_ROOTS[:] = []                             # N-R2: the real game folders are not walked here
+    fx = [("work-old", "working", dold, {"proposal": "remove: test"}),
           ("work-new", "working", d1, {"proposal": "remove: test"}),
-          ("work-keep", "working", d10, {"proposal": "keep, test"}),
-          ("work-shrink", "working", d10, {"proposal": "remove/shrink candidate"}),
-          ("work-read", "working", d10, {"proposal": "remove: test"}),
-          ("work-side", "working", d10, {"proposal": "remove: test", "source": "made by the lab side session"}),
-          ("work-protected", "working", d10, {"proposal": "remove: test"}),
-          ("work-held", "working", d10, {"proposal": "remove: test"}),
-          ("work-holds", "working", d10, {"proposal": "remove: test"}),
-          ("work-backup", "working", d10, {"proposal": "remove: test", "backup": "yes (all of it)"}),
-          ("work-his", "working", d10, {"proposal": "remove: test", "owner": "Jafar"}),
-          ("work-linenamed", "working", d10, {"proposal": "remove candidate, no path reader (tools/cleanup.py imports it)"}),
-          ("work-limitrow", "working", d10, {"proposal": "remove: empty", "serves": "production/retention.json (limit row)"}),
+          ("work-keep", "working", dold, {"proposal": "keep, test"}),
+          ("work-shrink", "working", dold, {"proposal": "remove/shrink candidate"}),
+          ("work-read", "working", dold, {"proposal": "remove: test"}),
+          ("work-side", "working", dold, {"proposal": "remove: test", "source": "made by the lab side session"}),
+          ("work-protected", "working", dold, {"proposal": "remove: test"}),
+          ("work-held", "working", dold, {"proposal": "remove: test"}),
+          ("work-holds", "working", dold, {"proposal": "remove: test"}),
+          ("work-backup", "working", dold, {"proposal": "remove: test", "backup": "yes (all of it)"}),
+          ("work-his", "working", dold, {"proposal": "remove: test", "owner": "Jafar"}),
+          ("work-linenamed", "working", dold, {"proposal": "remove candidate, no path reader (tools/cleanup.py imports it)"}),
+          ("work-limitrow", "working", dold, {"proposal": "remove: empty", "serves": "production/retention.json (limit row)"}),
           ("tool-public", "tools", d20, {"proposal": "remove candidate", "source": "public PyPI"}),
           ("tool-unknown", "tools", d20, {"proposal": "remove candidate", "source": "unknown"}),
           ("tool-signin", "tools", d20, {"proposal": "", "source": "public, needs the owner's sign-in"}),
@@ -932,19 +964,19 @@ def map_rule_cases(j, make, check_only=True):
           ("lasting-old", "lasting", d20, {"proposal": "remove"}),
           ("side-old", "side-session", d20, {"proposal": "remove"}),
           ("cache-old", "build-cache", d20, {"proposal": "remove"}),
-          ("work-noowner", "working", d10, {"proposal": "remove: test", "owner": ""}),
-          ("work-unknownsrc", "working", d10, {"proposal": "remove: test", "source": "source unknown"})]
+          ("work-noowner", "working", dold, {"proposal": "remove: test", "owner": ""}),
+          ("work-unknownsrc", "working", dold, {"proposal": "remove: test", "source": "source unknown"})]
     fake = {"shelves_gb": {"F": {"floor": 20}, "C": {"floor": 40}}, "folders": []}
     for name, shelf, when, extra in fx:
         make(mp_(name, "f.bin"), when, size=1000)
         fake["folders"].append(dict({"path": mp_(name), "shelf": shelf, "source": "made by LEDGER runs",
                                      "serves": "test", "proposal": "", "owner": "LEDGER"}, **extra))
-    make(mp_("work-holds", "inner", "g.bin"), d10)
+    make(mp_("work-holds", "inner", "g.bin"), dold)
     fake["folders"].append({"path": mp_("work-holds", "inner"), "shelf": "lasting", "proposal": "keep"})
     make(mp_("unmapped-old", "f.bin"), d20)                       # in the places, old, not on the map
-    make(j("mp-elsewhere", "stray", "f.bin"), d10)                # on the map, outside the places
+    make(j("mp-elsewhere", "stray", "f.bin"), dold)                # on the map, outside the places
     fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray", "owner": "LEDGER", "source": "made by LEDGER runs"})
-    make(j("mp-target", "keep.bin"), d10)                         # a junction's target, outside the places
+    make(j("mp-target", "keep.bin"), dold)                         # a junction's target, outside the places
     link_made = False
     if os.name == "nt":
         r = subprocess.run(["cmd", "/c", "mklink", "/J", mp_("work-old", "link"), j("mp-target")], capture_output=True)
@@ -976,7 +1008,7 @@ def map_rule_cases(j, make, check_only=True):
     listed = rel(plan["remove"]) | rel(plan["hisPage"]) | rel(plan["refused"]) | rel(plan["kept"])
     check(os.path.join("mp", "unmapped-old") not in listed, "an unmapped folder is on no list")
     why = {os.path.relpath(p, j()): w for p, w, _ in plan["kept"]}
-    for name, frag in (("work-new", "inside its 3 days"), ("tool-recent", "inside its 14 days"),
+    for name, frag in (("work-new", "inside its %d days" % MAP_WORKING_DAYS), ("tool-recent", "inside its 14 days"),
                        ("work-keep", "keeps it"), ("work-shrink", "keeps it"), ("tool-keep", "keeps it"),
                        ("work-read", "names it"), ("work-side", "side session"), ("work-holds", "holds another"),
                        ("work-backup", "backed up"), ("work-his", "owner"), ("lasting-old", "never"),
@@ -1046,8 +1078,8 @@ def map_rule_cases(j, make, check_only=True):
     # N4: a lasting line spelled through a junction elsewhere that reaches a folder inside a working row keeps the row;
     # a protected path spelled through a junction protects its real folder
     if os.name == "nt":
-        make(mp_("work-b", "inner", "x.bin"), d10, size=10)
-        make(mp_("work-c", "y.bin"), d10, size=10)
+        make(mp_("work-b", "inner", "x.bin"), dold, size=10)
+        make(mp_("work-c", "y.bin"), dold, size=10)
         r1 = subprocess.run(["cmd", "/c", "mklink", "/J", j("side-assemble"), mp_("work-b", "inner")], capture_output=True)
         r2 = subprocess.run(["cmd", "/c", "mklink", "/J", j("prot-link"), mp_("work-c")], capture_output=True)
         p4 = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-b")),
@@ -1057,8 +1089,12 @@ def map_rule_cases(j, make, check_only=True):
               "a lasting folder reached through a junction keeps the working row holding it (N4)")
         pc = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-c"))]}, dict(pol, protected=[j("prot-link")]),
                       readers=readers)
-        check(r2.returncode == 0 and not pc["remove"]
-              and any(q.endswith("work-c") and "protected" in w for q, _, w in pc["refused"]),
+        # since N-R2 (third review) the protected junction itself keeps work-c before delete() is asked; N4's own
+        # guard is checked directly through may_delete
+        okc, whyc = may_delete(dict(pol, protected=[j("prot-link")]), mp_("work-c"), with_reals([j("prot-link")]))
+        check(r2.returncode == 0 and not pc["remove"] and not okc and "protected" in whyc
+              and (any(q.endswith("work-c") and "protected" in w for q, _, w in pc["refused"])
+                   or any(q.endswith("work-c") and "N-R2" in w for q, w, _ in pc["kept"])),
               "a protected path spelled through a junction protects its real folder (N4)")
         check(any(os.path.normcase(x) == real(mp_("work-c")) for x in with_reals([j("prot-link")])),
               "with_reals adds a junction's real folder (N4)")
@@ -1153,7 +1189,7 @@ def map_rule_cases(j, make, check_only=True):
     # at the end of a text counts, a longer name does not; a malformed shelves_gb or floors never crashes
     ses = map_plan({"folders": [dict(fake["folders"][0], owner="session")]}, pol, readers=readers)
     check(not ses["remove"] and any("owner session" in w for _, w, _ in ses["kept"]), "owner 'session' is not ours (N11)")
-    make(mp_("work-f", "f.bin"), d10, size=10)
+    make(mp_("work-f", "f.bin"), dold, size=10)
     make(mp_("work-g", "run_all.ps1"), d1, size=0)
     open(mp_("work-g", "run_all.ps1"), "w").write("$src = Join-Path $PSScriptRoot '..\\work-f'\n")
     pf = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-f"))]},
@@ -1167,9 +1203,9 @@ def map_rule_cases(j, make, check_only=True):
           "a malformed shelves_gb or floors falls back, never crashes (N11)")
     # N11: map_plan's real age function end to end: a folder copied in today with old modification times is young
     MAP_AGE[0] = newest_any
-    make(mp_("work-copied", "f.bin"), d10, size=10)
+    make(mp_("work-copied", "f.bin"), dold, size=10)
     pa = map_plan({"folders": [dict(fake["folders"][0], path=mp_("work-copied"))]}, pol, readers=readers)
-    check(not pa["remove"] and any("inside its 3 days" in w for q, w, _ in pa["kept"] if q.endswith("work-copied")),
+    check(not pa["remove"] and any(("inside its %d days" % MAP_WORKING_DAYS) in w for q, w, _ in pa["kept"] if q.endswith("work-copied")),
           "map_plan's own age function reads a copied-in folder as new (S2, N11)")
     check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
     check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
@@ -1214,6 +1250,55 @@ def map_rule_cases(j, make, check_only=True):
           "floor rows: %s" % rows)
     rows = {r["drive"]: r for r in floor_rows(fl, {"C": 38.0, "F": None}, {"C": 3e9})}
     check(rows["C"]["below"] and not rows["C"]["belowAfter"] and not rows["F"]["below"], "freeing lifts a drive over its floor")
+    # THE THIRD REVIEW. M2: a private build is not refetchable, whatever else its source says
+    MAP_AGE[0] = newest_mtime
+    make(mp_("tool-private", "f.bin"), d20, size=10)
+    make(mp_("work-private", "f.bin"), dold, size=10)
+    pv = map_plan({"folders": [dict(fake["folders"][0], path=mp_("tool-private"), shelf="tools", proposal="remove candidate",
+                                    source="private build, not public"),
+                               dict(fake["folders"][0], path=mp_("work-private"), source="a private copy")]}, pol, readers=readers)
+    check(rel(pv["hisPage"]) == {os.path.join("mp", "tool-private")} and not pv["remove"],
+          "a tools row 'private build, not public' goes to his page, never removed (M2): %s" % pv)
+    check(any("in doubt" in w for q, w, _ in pv["kept"] if q.endswith("work-private")), "a working row with a private source is his (M2)")
+    # N-R9: a failed or headless process list is busy; commandlets and Kiln's seamshift count
+    from types import SimpleNamespace as NS
+    stub = lambda code, text: (lambda *a, **k: NS(returncode=code, stdout=text))
+    hdr = "Image Name                     PID Session Name\n========================= ========\n"
+    check(busy_from(stub(1, "")) == {"unknown"}, "a failing tasklist reads as unknown, not idle (N-R9)")
+    check(busy_from(stub(0, "")) == {"unknown"}, "a tasklist without its header reads as unknown (N-R9)")
+    check(busy_from(stub(0, hdr + "UnrealEditor-Cmd.exe   12 Console\n")) == {"unreal"}, "UnrealEditor-Cmd.exe is Unreal (N-R9)")
+    check(busy_from(stub(0, hdr + "seamshift.exe   9 Console\n")) == {"drape"}, "Kiln's seamshift.exe is a drape job (N-R9)")
+    check(busy_from(stub(0, hdr + "explorer.exe   1 Console\n")) == set(), "a quiet machine is idle (N-R9)")
+
+    def boom(*a, **k):
+        raise subprocess.TimeoutExpired("tasklist", 60)
+    check(busy_from(boom) == {"unknown"} and {"unknown", "unreal", "drape"} <= MAP_BUSY, "a tasklist timeout is busy (N-R9)")
+    # N-R2: a link outside a candidate reaching it (equal, inside, holding) keeps it; a link inside it does not
+    cand = mp_("work-x")
+    check(reached_by_link(cand, [(j("elsewhere", "L"), real(cand))]) and reached_by_link(cand, [(j("e", "L"), real(os.path.join(cand, "in")))])
+          and reached_by_link(cand, [(j("e", "L"), real(j("mp")))]) and reached_by_link(cand, [(os.path.join(cand, "L"), real(cand))]) is None
+          and reached_by_link(cand, [(j("e", "L"), real(j("other")))]) is None, "which links reach a candidate (N-R2)")
+    if link_made:
+        make(mp_("work-voice", "v.bin"), dold, size=10)
+        make(mp_("work-voice2", "inner", "v.bin"), dold, size=10)
+        make(mp_("lasting-game", "g.bin"), dold, size=10)
+        make(j("game-content", "c.bin"), dold, size=10)
+        jn = lambda a, b: subprocess.run(["cmd", "/c", "mklink", "/J", a, b], capture_output=True).returncode == 0
+        ok = jn(mp_("lasting-game", "Voice"), mp_("work-voice")) and jn(j("game-content", "Sub"), mp_("work-voice2", "inner"))
+        check(ok, "the N-R2 junctions were made")
+        lt = link_targets([j("game-content"), mp_("lasting-game")])
+        check({t for _, t in lt} == {real(mp_("work-voice")), real(mp_("work-voice2", "inner"))}, "link_targets records both junctions: %s" % lt)
+        vrows = {"folders": [dict(fake["folders"][0], path=mp_("work-voice")), dict(fake["folders"][0], path=mp_("work-voice2")),
+                             {"path": mp_("lasting-game"), "shelf": "lasting", "owner": "LEDGER", "proposal": "keep"}]}
+        LINK_ROOTS[:] = [j("game-content")]
+        pl = map_plan(vrows, pol, readers=readers)
+        LINK_ROOTS[:] = []
+        vw = {q: w for q, w, _ in pl["kept"]}
+        check(not pl["remove"] and "N-R2" in vw.get(mp_("work-voice"), "") and "N-R2" in vw.get(mp_("work-voice2"), ""),
+              "a junction in a lasting folder, and one in an unmapped game folder, keep their targets (N-R2): %s" % pl)
+        pl2 = map_plan(vrows, pol, readers=readers)
+        check(rel(pl2["remove"]) == {os.path.join("mp", "work-voice2")},
+              "without the game folder walked, only its target is removable; the lasting junction still keeps its own (N-R2): %s" % pl2["remove"])
     return fails
 
 
@@ -1274,8 +1359,9 @@ def shelves(m, measure=size_of):
 
 # ---- THE MAP'S EXPIRY RULES (step 2) ---------------------------------------------------------------------------
 # What the rules mean here, and what code cannot judge:
-# - working, "3 days, or once its numbers are recorded": a mapped working folder whose newest file is over 3 days
-#   old, that nothing names (find_readers) and whose map line orders removal (says_remove: "remove:" or "remove
+# - working, "14 days, or once its numbers are recorded" (RULINGS 29 Oct, 16 Nov: "run outputs expire in 14 days";
+#   the third review, M4: the map said 3 and the ruling wins): a mapped working folder whose newest file is over 14
+#   days old, that nothing names (find_readers) and whose map line orders removal (says_remove: "remove:" or "remove
 #   candidate" with no hedge such as keep, stay, only, once, until, if) goes whole. Whether its numbers are recorded, and "a superseded review picture keeps its preview only", are not
 #   judged by code: an expired folder the map's line keeps is listed as kept, for the map to be corrected.
 # - tools, "14 days unused: removed if refetchable, else his page": a tool is read, not written, so a file date
@@ -1294,13 +1380,14 @@ def shelves(m, measure=size_of):
 #   equal main's with no environment override (map_files_committed).
 # - a folder not on the map is never removed by the map's rules.
 
-MAP_WORKING_DAYS = 3
+MAP_WORKING_DAYS = 14      # RULINGS: "run outputs expire in 14 days" (M4; the self-test compares the two)
 MAP_TOOLS_DAYS = 14
 LEDGER_OWNERS = {"ledger", "claude"}      # the second review, N11: "session" could be a side session's owner
 REFETCH_WORDS = ("public", "pypi", "hugging face", "blender.org", "npm install", "microsoft download",
                  "github runner release", "rebuilt by")
 DOUBT_WORDS = ("unknown", "sign-in", "sign in", "unverified", "not refetchable", "not found", "no requirements",
-               "needs his", "owner's", "unique")
+               "needs his", "owner's", "unique",
+               "not public", "private")   # the third review, M2: a private build is no public origin, whatever else it says
 READER_EXT = (".py", ".ps1", ".psm1", ".bat", ".cmd", ".json", ".cs", ".cpp", ".h", ".ini", ".yml", ".yaml",
               ".toml", ".txt", ".sh", ".rs")
 SCAN_EXT = (".py", ".ps1", ".bat", ".cmd", ".sh", ".json", ".md", ".txt", ".toml", ".ini")
@@ -1466,6 +1553,65 @@ def find_readers(cands, folders, pol, readers=None, repo=REPO):
     return found, status["capped"]
 
 
+# THE THIRD REVIEW, N-R2: a link or junction elsewhere into a candidate (the played game's Voice junction into
+# voice-portable; the game's content junctions into F: and C: folders) means something reads it through that link.
+# These are walked for links only, although the reader scan avoids the repository (a list: the self-test swaps it).
+LINK_ROOTS_DEFAULT = (os.path.join(REPO, "ue-probe", "Content"), "F:/LedgerTools/played-game")
+LINK_ROOTS = list(LINK_ROOTS_DEFAULT)
+LINK_SKIP_DIRS = {".git", "__pycache__", "deriveddatacache"}
+
+
+def link_targets(roots, avoid=()):
+    """[(link, real target)] for every symbolic link or junction under the roots (a root that is itself a link
+    counts). Names only, no file is opened; never walked through a link; folders inside `avoid` are left, unless the
+    root itself lies inside one (a LINK_ROOTS folder in the repository)."""
+    out, seen = [], set()
+    for d in dict.fromkeys(x for x in roots if isinstance(x, str) and x):
+        if is_link(d):
+            out.append((d, real(d)))
+            continue
+        if not os.path.isdir(d):
+            continue
+        av = [a for a in avoid if not inside(d, a)]
+        stack = [d]
+        while stack:
+            cur = stack.pop()
+            nc = norm(cur)
+            if nc in seen:
+                continue
+            seen.add(nc)
+            try:
+                with os.scandir(cur) as it:
+                    entries = list(it)
+            except OSError:
+                continue
+            for e in entries:
+                try:
+                    link = e.is_symlink() or (hasattr(e, "is_junction") and e.is_junction())
+                except OSError:
+                    link = False
+                if link:
+                    out.append((e.path, real(e.path)))
+                    continue
+                try:
+                    isdir = e.is_dir(follow_symlinks=False)
+                except OSError:
+                    isdir = False
+                if isdir and e.name.lower() not in LINK_SKIP_DIRS and not any(inside(e.path, a) for a in av):
+                    stack.append(e.path)
+    return out
+
+
+def reached_by_link(p, links):
+    """The first (link, target) outside folder p whose target is p, inside p or holds p; else None."""
+    for lk, t in links:
+        if inside(lk, p):
+            continue
+        if inside(t, p) or inside(p, t):
+            return lk, t
+    return None
+
+
 def path_key(p):
     """A path as the reader text writes it, without its drive ('F:/LedgerTools/old' -> '/ledgertools/old')."""
     k = p.replace("\\", "/").rstrip("/").lower()
@@ -1613,6 +1759,20 @@ def map_plan(m, pol, now=None, readers=None, repo=REPO):
                 continue
             why = "no write for %.0f days, no tool names it; the map: %s" % (age, e.get("proposal", ""))
         pending.append((idx, p, rule, age, "remove", why))
+    if not pending:
+        return out
+    # N-R2: a link or junction anywhere mapped, protected or in LINK_ROOTS that reaches a candidate keeps it
+    lroots = [o["path"] for o in folders if not never_opened(o)] + [x for x in pol.get("protected", []) if isinstance(x, str)]
+    links = link_targets(lroots + list(LINK_ROOTS), avoid=[repo, STATE] + [o["path"] for o in folders if never_opened(o)])
+    still = []
+    for x in pending:
+        hit = reached_by_link(x[1], links)
+        if hit:
+            kept(x[1], "no write for %.0f days, but the link %s reaches it (%s): what reads through a link uses it (N-R2)"
+                 % (x[3], hit[0], hit[1]), True)
+        else:
+            still.append(x)
+    pending = still
     if not pending:
         return out
     # the reader scan last, and only for the rows it could still decide (N8)
