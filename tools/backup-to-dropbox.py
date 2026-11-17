@@ -328,6 +328,8 @@ def restore_check(srcs, dest, n=20, seed=None):
     bad = []
     with tempfile.TemporaryDirectory() as t:
         for i, (s, d) in enumerate(pick):
+            if free_gb(t) - os.path.getsize(d) / 1e9 < FLOOR_GB:
+                continue        # the temporary copy never takes C: below its floor (backup review 17 Nov)
             back = os.path.join(t, "%02d_%s" % (i, os.path.basename(d)))
             shutil.copy2(d, back)
             if not os.path.exists(s) or sha(back) == sha(s):
