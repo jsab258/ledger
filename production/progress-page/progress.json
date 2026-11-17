@@ -397,34 +397,34 @@
       "2026-11-11",
       "2026-11-12",
       "2026-11-13",
-      "2026-11-16"
+      "2026-11-16",
+      "2026-11-17"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-16",
-      "line": "Morning, Monday 16 November. Phase 1, Prove the bottlenecks. On: n09-1. The exit Monday: one fresh reviewer per exit on the newest build; his rulings on each open fault; the playbook (production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md). Next: n09-2. Tom as one whole person on his page by Tuesday.",
+      "date": "2026-11-17",
+      "line": "Morning, Tuesday 17 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-16.jpg",
-          "yesterday": null
+          "today": "production/previews/morning-hook-day-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-16.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-16.jpg",
-          "yesterday": null
+          "today": "production/previews/morning-reverse-day-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-16.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-16.jpg",
-          "yesterday": null
+          "today": "production/previews/morning-night-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-16.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
       "note": "No decision asked: these are for watching the street change.",
-      "by": "tools/morning_pictures.py",
-      "repo_size": "3.44 GB on GitHub; 4.61 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push)."
+      "by": "tools/morning_pictures.py"
     }
   },
   "studies": {
