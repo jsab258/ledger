@@ -256,10 +256,10 @@
   {
    "line": "17 Nov (replaces 11, 25, 28 Oct): other games",
    "by": [
-    "monday-audit",
-    "advisor:daily-backstop"
+    "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
+    "monday-audit"
    ],
-   "note": "his ruling 17 Nov 22:33 (advisor 214); a build check failing on a decompiler, game-file extractor or another game's archive in the repo, tools or named F: folders is the next session's first job, then named here"
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot"
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
