@@ -11,6 +11,11 @@ tools/meshgen/blender/cmu_measure.py's read_track() takes: per frame, component-
 positions in cm of the measured roles, the reference pose of the same roles, and limb bones' local rotations
 (w, x, y, z). Evaluated as tools/ue/clip_frames.py does (should_retarget and extract_root_motion off), every 1/fps from
 0 to the play length. Prints one line "cmuBoneDump=DONE|FAIL ..." and writes ue_bone_dump.json beside ue_result.json.
+
+Rest (measure fix M1, 17 Nov): the body's own reference pose from ue_result.json's body_ref (cmu_ue_retarget.py reads
+it from the body mesh). The skeleton asset's reference is metahuman_base_skel, another body: scaled by leg length it
+put Rocco's ankle 1.95 cm low and his standing pelvis 2.6 cm high (diagnosis 17 Nov). Without body_ref the skeleton's
+reference is used and rest_from says so.
 """
 import json
 import os
@@ -50,7 +55,7 @@ def frame_rate(seq):
     return 30.0
 
 
-def dump(asset, out):
+def dump(asset, out, body_rest=None, body=None):
     seq = unreal.load_asset(asset)
     if not isinstance(seq, unreal.AnimSequence):
         raise RuntimeError("no AnimSequence at " + asset)
@@ -64,7 +69,12 @@ def dump(asset, out):
     if missing:
         raise RuntimeError("bones missing: %s" % missing)
     limbs = [b for b in names if MH_LIMB.match(b)]
-    rest = {r: v3(unreal.AnimPoseExtensions.get_ref_bone_pose(p0, r, W)) for r in ROLES}
+    if body_rest and all(r in body_rest for r in ROLES):
+        rest = {r: tuple(body_rest[r]) for r in ROLES}
+        rest_from = "body reference pose of %s (ue_result body_ref)" % body
+    else:
+        rest = {r: v3(unreal.AnimPoseExtensions.get_ref_bone_pose(p0, r, W)) for r in ROLES}
+        rest_from = asset + " (skeleton reference pose: no body_ref)"
     pos = {r: [] for r in ROLES}
     rot = {b: [] for b in limbs}
     for i in range(n):
@@ -76,10 +86,10 @@ def dump(asset, out):
             q = unreal.AnimPoseExtensions.get_bone_pose(p, b, L).rotation
             rot[b].append((round(q.w, 6), round(q.x, 6), round(q.y, 6), round(q.z, 6)))
     tr = dict(path=out, asset=asset, kind="MH", fps=fps, frame_range=[0, n - 1], pos=pos, rest=rest, rot=rot,
-              rest_from=asset + " (reference pose)", made="tools/ue/cmu_bone_dump.py")
+              rest_from=rest_from, made="tools/ue/cmu_bone_dump.py")
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(tr, fh)
-    return dict(asset=asset, track=out, frames=n, fps=fps, length_s=round(length, 4),
+    return dict(asset=asset, track=out, frames=n, fps=fps, length_s=round(length, 4), rest_from=rest_from,
                 rest_pelvis_cm=rest["pelvis"], first_pelvis_cm=pos["pelvis"][0], limbs=len(limbs))
 
 
@@ -91,7 +101,7 @@ for o_ in res.get("outputs", []):
             continue
         out = os.path.splitext(c["fbx"].replace("\\", "/"))[0] + ".track.json"
         try:
-            done.append(dump(c["asset"], out))
+            done.append(dump(c["asset"], out, res.get("body_ref", {}).get(o_.get("body")), o_.get("body")))
         except Exception as e:
             errs.append(dict(asset=c.get("asset"), error=str(e)[:300], trace=traceback.format_exc()[-800:]))
 summary = dict(made="tools/ue/cmu_bone_dump.py", result=RES, done=done, errors=errs,

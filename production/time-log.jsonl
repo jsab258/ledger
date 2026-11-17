@@ -779,3 +779,7 @@
 {"event": "stop", "at": "2026-11-17T05:32:48", "note": "screen passes; ladder waits for the Kiln queue"}
 {"event": "start", "at": "2026-11-17T05:24:00", "task": "n16-1 tool loop: kiln collar ring diagnosis", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T05:33:00", "note": ""}
+{"event": "start", "at": "2026-11-17T05:34:00", "task": "n16-1 tool loop: kiln collar plane fix round 1", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:46:00", "note": "built, pattern check passes"}
+{"event": "start", "at": "2026-11-17T05:30:00", "task": "n16-7 CMU feet tries 1 and 2 (helper)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:49:00", "note": ""}

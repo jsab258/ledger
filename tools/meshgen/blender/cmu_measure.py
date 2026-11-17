@@ -21,17 +21,22 @@ printed line "cmuMeasure=PASS|FAIL ..." per pair. Measures and bars (review fix 
   ball bones: slide = largest horizontal distance from the bone's place at the span's first frame; height = the
   span's lowest point against the floor, read as min over the span and both bones of (bone height - the bone's
   height in the rest pose, feet flat on the floor). Joint centres never touch the floor, so the rest pose sets each
-  bone's contact height. No span at all fails. Bars RELATIVE TO THE SOURCE over the same span (session decision
+  bone's contact height on the retargeted file (its rest is the body's own reference pose: cmu_bone_dump.py, fix M1
+  17 Nov). On the SOURCE the contact heights are the foot and ball heights at the source's standing frame (see
+  stand), not the T-pose's: cgspeed's T-pose frame is not on the clip's floor (113_15's toe at -1.3 cm against 0.6
+  standing; fix M3, CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md). No span at all fails. Bars RELATIVE TO THE SOURCE over the same span (session decision
   17 Nov: the source clips fail 2 cm absolute bars themselves, slide 2.4 to 13 cm, 131_01's height 4.2 cm): slide
   at most 2 cm more than the source's, height at most 2 cm further off the floor than the source's. The absolute
   worst values are written beside.
-- knees: flexion = 180 - the angle at the knee between thigh and shin (thigh->calf->foot heads). Read on the
-  retargeted file from the first frame of its last run at or above 97% of standing pelvis height to the end;
-  standing height = the rest pose's pelvis height (scaled by the clip's leg length over the rest's, since
-  Unreal writes the preview mesh's reference pose as the file's rest: EditorExporters.cpp 2465-2496,
-  FbxSkeletalMeshExport.cpp 46-77). Each frame passes at most max(10, source knee + 3) degrees: "within 3 of
-  the source where the source stands softer" read one-sided (a target straighter than the source never fails).
-  No frame reaching 97% fails.
+- knees: flexion = 180 - the angle at the knee between thigh and shin (thigh->calf->foot heads). Read over the
+  SOURCE's last stand: from the first frame of the source's last run at or above 97% of its standing pelvis height
+  to the end (fix M2: the window used to start at the target's own last run, so a target standing 3% short of a
+  wrongly estimated height opened the window mid-clip and judged seated frames as standing). Standing height = the
+  rest pose's pelvis height (scaled by the clip's leg length over the rest's, since Unreal writes the preview
+  mesh's reference pose as the file's rest: EditorExporters.cpp 2465-2496, FbxSkeletalMeshExport.cpp 46-77). Each
+  frame passes at most max(10, source knee + 3) degrees: "within 3 of the source where the source stands softer"
+  read one-sided (a target straighter than the source never fails). Fails when the source never stands, or when the
+  target's pelvis never reaches 97% of its own standing height inside that window.
 - flips: no limb bone (clavicle, upper arm, forearm, hand, thigh, calf, foot, ball; CMU: cmu_clips.is_limb)
   turns over 90 degrees between two 30 fps frames (local rotation, every round(fps/30) frames), on the
   retargeted file; the source file's count is written beside (cmu_clips.py checks the BVH). Twist, corrective
@@ -131,12 +136,13 @@ def spans(flags, n_max):
     return out
 
 
-def span_numbers(tr, s, a, b, k):
+def span_numbers(tr, s, a, b, k, floor=None):
+    """Slide and lowest point over a span; floor (bone -> contact height) replaces rest height x k when given."""
     p, rest = tr["pos"], tr["rest"]
     slide, low = 0.0, None
     for bone in ("foot_" + s, "ball_" + s):
         x0, y0 = p[bone][a][0], p[bone][a][1]
-        rz = rest[bone][2] * k
+        rz = floor[bone] if floor else rest[bone][2] * k
         for i in range(a, b + 1):
             slide = max(slide, math.hypot(p[bone][i][0] - x0, p[bone][i][1] - y0))
             off = p[bone][i][2] - rz
@@ -187,13 +193,26 @@ def measure(src, tgt, stand_frame=None):
     add("frames", [ns, nt], "equal frame counts (pairing by index)", ns == nt)
     s_stand, s_k = standing(src)
     t_stand, t_k = standing(tgt)
+    hs = [src["pos"]["pelvis"][i][2] for i in range(n)]
+    # the single standing frame (also the source's floor, fix M3)
+    if stand_frame is None:
+        pl, pr = planted(src, "l"), planted(src, "r")
+        cand = [i for i in range(n) if pl[i] and pr[i] and hs[i] >= STAND_FRAC * s_stand]
+        how = "both source balls planted, source pelvis >= 97%, straightest source knees"
+        if not cand:
+            cand = [max(range(n), key=lambda i: hs[i])]
+            how = "source pelvis highest (no planted standing frame)"
+        f = min(cand, key=lambda i: knee_flex(src, "l", i) + knee_flex(src, "r", i))
+    else:
+        f, how = min(max(0, stand_frame), n - 1), "given"
+    src_floor = {b + s: src["pos"][b + s][f][2] for b in ("foot_", "ball_") for s in "lr"}
     # --- feet
     feet_rows, worst_slide, worst_low, any_span, over_src, low_over = [], 0.0, 0.0, False, 0.0, 0.0
     for s in "lr":
         for a, b in spans(planted(src, s), n):
             any_span = True
             ts, tl = span_numbers(tgt, s, a, b, t_k)
-            ss, sl = span_numbers(src, s, a, b, s_k)
+            ss, sl = span_numbers(src, s, a, b, s_k, floor=src_floor)
             feet_rows.append(dict(side=s, frames=[a, b], slide_cm=ts, low_cm=tl, source_slide_cm=ss, source_low_cm=sl))
             worst_slide = max(worst_slide, ts)
             over_src = max(over_src, ts - ss)
@@ -212,13 +231,15 @@ def measure(src, tgt, stand_frame=None):
         add("feet_height_cm", None, "within +-%.1f" % HEIGHT_CM, False, why="no planted span on the source ball")
     # --- knees
     ht = [tgt["pos"]["pelvis"][i][2] for i in range(n)]
-    hs = [src["pos"]["pelvis"][i][2] for i in range(n)]
-    w0 = last_stand_run(ht, STAND_FRAC * t_stand)
     ws = last_stand_run(hs, STAND_FRAC * s_stand)
+    w0 = ws
     bar_k = "<= max(%.0f, source + %.0f) deg" % (KNEE_DEG, KNEE_SRC_DEG)
-    if w0 is None:
-        add("knees_deg", None, bar_k, False, why="the pelvis never reaches 97%% of standing height %.1f cm (highest %.1f)"
-            % (t_stand, max(ht)), standing_cm=round(t_stand, 1))
+    if ws is None:
+        add("knees_deg", None, bar_k, False, why="the source pelvis never reaches 97%% of its standing height %.1f cm"
+            % s_stand, standing_cm=round(t_stand, 1))
+    elif max(ht[ws:n]) < STAND_FRAC * t_stand:
+        add("knees_deg", None, bar_k, False, why="in the source's stand (from frame %d) the target pelvis never reaches 97%% "
+            "of its standing height %.1f cm (highest %.1f)" % (ws, t_stand, max(ht[ws:n])), standing_cm=round(t_stand, 1))
     else:
         worst = None
         for i in range(w0, n):
@@ -235,17 +256,7 @@ def measure(src, tgt, stand_frame=None):
     sf, _ = flips(src)
     add("limb_flips", len(tf), "0 turns over %.0f deg per 30 fps frame (every %d frames)" % (FLIP_DEG, tstep), not tf,
         first=tf[:10], source_flips=len(sf))
-    # --- the single standing frame
-    if stand_frame is None:
-        pl, pr = planted(src, "l"), planted(src, "r")
-        cand = [i for i in range(n) if pl[i] and pr[i] and hs[i] >= STAND_FRAC * s_stand]
-        how = "both source balls planted, source pelvis >= 97%, straightest source knees"
-        if not cand:
-            cand = [max(range(n), key=lambda i: hs[i])]
-            how = "source pelvis highest (no planted standing frame)"
-        f = min(cand, key=lambda i: knee_flex(src, "l", i) + knee_flex(src, "r", i))
-    else:
-        f, how = min(max(0, stand_frame), n - 1), "given"
+    # --- the single standing frame (chosen above)
     rows, ok = {}, True
     for s in "lr":
         t, sv = knee_flex(tgt, s, f), knee_flex(src, s, f)
@@ -476,6 +487,20 @@ def selftest():
     case("30 fps file, calf 50 deg a frame: flips pass", synth(n=120, fps=30.0, rot={"calf_l": ramp}), dict(limb_flips="PASS"),
          src_tr=synth(n=120))
     case("frame counts differ: frames fails", synth(n=59, flex=sit_rise), dict(frames="FAIL"))
+    # fix M3: the source's floor from its standing frame, not its T-pose
+    low_tpose = synth(flex=sit_rise)
+    low_tpose["rest"] = {r: (v[0], v[1], v[2] - 4.0) if r.startswith(("foot", "ball")) else v for r, v in low_tpose["rest"].items()}
+    case("source T-pose 4 cm below its floor, target floats 3 cm: height fails (the T-pose read the source 4 cm off)",
+         synth(flex=sit_rise, dz=3.0), dict(feet_height_cm="FAIL"), src_tr=low_tpose)
+    case("source T-pose 4 cm below its floor, target on the floor: height passes", synth(flex=sit_rise),
+         dict(feet_height_cm="PASS", feet_slide_cm="PASS"), src_tr=low_tpose)
+    # fix M2: knees over the source's last stand
+    seated_more = lambda i: sit_rise(i) + (10.0 if 25 <= i < 35 else 0.0)
+    case("target 10 deg more bent only while seated, stands 4 cm short at the end: knees pass (seated frames not judged)",
+         synth(flex=seated_more, pelvis_dz=lambda i: -4.0 if i >= 45 else 0.0), dict(knees_deg="PASS"))
+    case("target stands 4 cm short and 15 deg bent in the source's stand: knees fail",
+         synth(flex=lambda i: sit_rise(i) + (15.0 if i >= 45 else 0.0), pelvis_dz=lambda i: -4.0 if i >= 45 else 0.0),
+         dict(knees_deg="FAIL"))
     case("source ball always moving 1.5 cm a frame: no span, feet fail",
          synth(), dict(feet_slide_cm="FAIL", feet_height_cm="FAIL"),
          src_tr=synth(ankle=lambda i, s: (1.5 * i, 10.0 if s == "l" else -10.0, 8.0)))
