@@ -30,3 +30,33 @@ The game exposes a test hook, window.LEDGER: G (the whole game state), step, sim
 - Licence lines: three.js (MIT) and esbuild (MIT) are not on the allowlist by name; the page also loads Google Fonts (mostly OFL 1.1, which is listed; Special Elite is Apache 2.0, unverified here). MIT is listed for other tools, so likely a one-line addition, but it is his list.
 - The page uses claude.use("db"), ("user") and ("sample") (save, sign-in and live talk). Outside claude.ai these are absent, so tests run with saves in the browser only and live talk off; talk checks must use its fallback lines.
 - The pictures and the people rig live only on the page (and in this run's scratch copy). Keep a checked copy in F:\LedgerTools (MANIFEST.json has the checksums) so the smoke test runs on the PC and a lost page can be rebuilt.
+
+## Per-system checks (stage 2, first four)
+
+tests/systems_test.py, added 18 Nov 2026. It plays one new week in headless Chromium through the game's test hook only, with the clock stopped between steps, in about 40 seconds. Needs LEDGER_PROTO_ASSETS like the smoke test; skipped otherwise.
+
+Seeing and naming:
+- Wearing the coat on the street by day makes one sighting event, with the people who saw it as witnesses; each has a memory of it, and Sheila, indoors, has none.
+- One event per sighting kind per two-hour block, however many people see it.
+- Without the coat, no new coat sighting.
+- The three on the rank start calling him more than "the new owner" once they have seen his face, and link the stranger off the bus to him; Brenda, who saw nothing, does not; the street's own name climbs once most of it knows his face (a threshold check only: how well everyone knows his face is set by hand).
+
+The Ledger:
+- The report's Known, Ledger right and missed counts match a count made separately from the minds and the Ledger.
+- The Ledger never says someone saw an act unless that person is a witness of it.
+- The same counts hold for a case counted by hand: the three on the rank saw both the bus and the coat and Tom saw them looking, so at least 6 known and 6 right.
+- Gossip told behind his back adds one to Known and one to missed, and the report lists the person under "told" but not under what he believes. The told memory is planted by hand, not spread by the game's own gossip.
+
+Money and the tin:
+- A fare goes in the pocket, never the tin (the cab and passenger are placed at the drop by hand, so only the payment is tested), and raises the fare count, clean earnings and what the book can hide; the report's pocket matches.
+- The report shows the tin apart from the pocket.
+- Mickey's book starts with the five debts; an open debt can be demanded, a paid one cannot.
+
+Saving and restore:
+- With no claude.use (outside claude.ai) saving falls back to the browser; the save matches the live state, and restoring it brings back time, money, debts, events, the Ledger, the log and memories.
+- A save of another version is refused and changes nothing.
+
+Could not be checked, and why:
+- Dirty money: the tin fills only at a night job's drop door (a key prompt) or when a debt is collected in talk or a fight, and washing goes through Sheila's talk. Not reachable through the hook; marked skipped.
+- Taking a fare, picking up and driving are key presses; the check lets the radio offer the fare, then places the cab and passenger at the drop by hand, so only the payment is tested. It finds the fare places in the built script by the shape of their data; if a rebuild changes that, the check fails saying so.
+- Finding: restoring through the hook leaves every person holding their old memory, not the restored one (the game's own Continue rebuilds the people; the hook does not). Kept as an expected failure, so a fix will show.
