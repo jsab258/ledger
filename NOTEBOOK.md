@@ -2586,3 +2586,17 @@ Made: a night-report line naming each run of movement legs that ran out short of
 
 ## 2026-11-17 21:03 Kiln: a solver feature ported onto a precision-generic step
 - Made: the hinge bending term carried from an old single-precision branch onto a step generic over its point type; off by default. Method: cherry-pick, then narrow points to single precision only where the angle is read, widen the moves back; unit test in both precisions; the regression gate alone with switches off. Tools: Rust, cargo test, the project's regression gate. Target and check: every gate job inside its bands. Cost: about 0.5 h helper, 0.3 h gate. Failed: the first gate took an older default engine because the engine path was not set explicitly; always pass the engine by its variable. Evidence: F:/LedgerTools/tool-dev/reports/KILN-HINGE-GENERIC-2026-11-17.md
+
+## 2026-11-17 23:32 Clothing: the in-house cloth solver's drape carried through the game-mesh chain
+- Made: one garment (work trousers) from the in-house solver to a skinned game mesh with maps, ready to import. Method: draft, place on the body's named points, sew with the fly marked as an opening, drape on the standard body; adapt the export to the old chain's layout (UVs to plan size, body group renamed); bend back to the reference pose; weld and pattern layer; quad game mesh from the pattern pieces; pack; bake; copy weights from the body with leg sides and crotch fades; pose check against the last passed trousers.
+- Tools: the solver's job runner, the adapter, Blender headless scripts, the pose check with zones.
+- Target and check: nothing through the body; one part with three openings; 8-10k triangles; bake hits 97%+; sitting no worse than the passed trousers. All met but seam stretch in the seat when sitting and 1.3% steep normals on one panel.
+- Cost: about 0.3 h machine, 0.6 h session. What failed and why: re-opening an old project failed the body standard added since; the old job lacked an opening the pattern check now refuses without. Re-run from the current job writer, never a saved project from before a standard changed.
+- Evidence: F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md. Recipe map: step "into the game" still open (import waits on a licence tap).
+
+## 2026-11-18 00:05 Tools: merging a speed path and judging regressions by work done, not clock time
+- Made: a graphics-card solver path merged onto the main solver with a refusal where the card cannot reproduce a term the processor solves; the regression gate's bands moved from seconds to solver work (frames, constraint solves). Method: merge, then refuse incompatible switch pairs with a named reason and a test; retake any bit-exact golden on the unchanged main with the same helper and compare; band work counts, keep times as information.
+- Tools: git worktrees, the solver's tests, the regression gate run alone.
+- Target and check: card off bit-identical to main; every gate job inside its bands. Met.
+- Cost: about 0.7 h session, 0.5 h gate; one helper 0.1 h for the gate change. What failed and why: a golden predating a later main feature failed once; retaken on main itself, equal.
+- Evidence: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-speed2/gate.out. Recipe map: no step moved.

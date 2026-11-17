@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 21:22 (the hourly run; the last session set its Stopped line at 21:03)
+**Started:** 2026-11-17 23:22 (the hourly run; the last session set its Stopped line at 23:06)
 
-**Row due:** 2026-11-18 00:06 (last 23:06; page and advisor read 22:50; last ack 22:39)
+**Row due:** 2026-11-18 00:45 (last 23:45; page and advisor read 23:40; last ack 215 at 23:24)
 **Stopped:** 2026-11-17 23:06 (history past its point at an item's end; no helper or background job running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -28,29 +28,26 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (21:22 to the stop)
-- His reset ruling of 21:12 (advisor 210): pace_line.py's first leg tops at 99 (selftest 17/17); RULINGS pacing line and its enforcer (advisor backstop 21:35); both acked. Rows project when 98% comes; near 98% while he sleeps (23:00-07:00) slow to stay under 99%, never 100%.
-- His car rulings carried: PLAN (phase 2 parked cars after P9; phase 4 traffic), asset plan SUMMARY order item 8, progress page stations 4, 8, 11. Traffic costed by a helper (about 29 h after the sample car), fresh review PASS WITH FIXES applied: production/research/traffic/TRAFFIC-COST-2026-11-17.md; waiting item 15 in the order of 16 Nov.
-- Lane merged and pushed (ee12c86e8); later commits not pushed.
-- His page: DECISION item kiln-front-end-licence-2026-11-17 (the Kiln front end's licence tap the design note requires before step I of gap 1; never asked before); NEEDS YOU sent.
-- Kiln speed timing (advisor 2010-207): the plan's script named the pre-16 Nov bodies and was refused at once (setup, not a try); fixed to the standard bodies as the regression gate does (fixed script beside the runs: time1.sh). Results in F:/LedgerTools/tool-dev/runs/kiln-speed2-2026-11-17/*/time.txt; the refused first series in ...-refused (own leftover: delete, one line). Seen so far, Tom j3: cpu 103 s, card-exact 229 s, card-colour 66 s, xpbd-cpu 1016 s.
-- Merge snag found (recorded in the speed report's last section and DECISIONS 21:37): main's hinge (on by default under XPBD) is a Link the card would solve as a plain distance link; the merge must refuse KILN_GPU with hinge bending on, with a test.
+## Done this run (23:22 to the stop)
+- Advisor 215 (game and Kiln first; rows lead with the next thing he sees in the game) acked 23:24.
+- Ron's Kiln work trousers, gap 1 steps A-H (c009b0d87; F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md): the 16 Nov drape cannot reopen (its raw body fails Kiln's body standard; its job lacked the fly opening), so route B: job regenerated from tools/md-bridge/work_trousers.py on ron_standard_body.fbx (68 s), adapter, unpose, weld, retopo 9,504 tris, uv pack, bake, skin (--piece-attr none), pose check vs Tom's jeans. Shortfalls listed: frontR steep normals 1.3%, seat stretch sitting. Skinned FBX: G/skinned/work_trousers_skinned.fbx, maps G/bake.
+- Kiln merge (worktree C:/LedgerTools/kiln-lanes/merge-speed2, branch merge-speed2, head a8368f3): lane-speed2 onto main fdd3a6d with the hinge refusal and test; the XPBD strip golden retaken on fdd3a6d (equal); lane-stepbands (helper, 0165f06: gate bands frames and link/cap solves, seconds information only) merged in. cargo test 53/53, gate tests 21/21. Gate started 23:43 alone: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-speed2/gate.out (exit line at its end). Gate PASS (every job inside its bands, baseline 9ca019e); Kiln main fast-forwarded to a8368f3 at 00:04. Next baseline should be taken to record link_cap_solves (quiet machine).
+- Helper lane-strainlimit (C:/LedgerTools/kiln-lanes/strainlimit): ready list item 1, switch off by default. Done: head ac7126d, KILN_STRAIN_LAST (off by default) runs the existing caps at frame end and after layers, leftover per piece in the job result; 53/53 tests; on a held-apart strip it concentrates stretch into fewer edges (264 vs 267 over) rather than reducing it; untested with body contact. Method: Bridson 2002 sec. 4 (Wang 2010, Provot unread). Needs review, then the gate.
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T21:50:00Z; advisor after the last ack (2235-214, 22:39). wip pushed at 23:06.
-0b. His study ruling (advisor 214): check built, tools/outside_only_check.py, in ci (repo and tools/ clean). Its F: hits (FModel, the SH2 reader, an empty inZOI folder in F:/LedgerTools/aaa-study) are protected by the map: retention refused; they wait as AWAITING in the check. Put a DECISION on his page in tomorrow's first batch (delete them, recommended yes; his_files); today's two batches are used. Old memories on FModel and Mafia extracts are void: update them; check FModel's AppData settings hold no key.
-0c. Kiln first (advisor 213): DONE, targets written (b515c5a0b). Fill free helper places from the design note's ready Kiln list. Targets now in the design note's last section (proposed card limits; GarmentCode is MIT but not on the allowlist, which lists items: his licence tap before use). Each row: Kiln's share of the main session since the morning (28.8% this week at 22:38; 60% from Wednesday morning).
-1. Timing DONE (report's table and verdict): converged solve, card colour 1.8x (j3) and 2.35x (trousers, drop passes); exact order always slower; old solve colour fails the trousers' drop. Judge j3's card objs (judge counts; hang.py vs M2's 25 mm); objs kept in the runs folder.
-2. Merge lane-speed2 onto Kiln main fdd3a6d in a new worktree with the hinge refusal and its test; cargo test; build; gate alone with every switch off, KILN_EXE set to the new build. Nothing beside it.
-3. Bending try 2 option (a): script ready (C:/LedgerTools/kiln-runs/bending2-2026-11-17/try2-a/bending2.sh: darren_nylon and Silk Charmeuse Cusick at 6 and 4 mm, Fitting, KILN_XPBD=1 KILN_DOUBLE=1, engine drape-studio-hinge-eb65d0d.exe; 6 mm took about 14 min a run, 4 mm longer).
-4. Kiln gap 1 (KILN-TO-GAME-PLAN-2026-11-17.md): re-export the trousers OBJ, steps A to J; step I waits on his licence tap.
-5. Retention: `retention.py plan` (not beside a timing or gate); the first real plan with pending rows gets one fresh look, then mapRulesLive on.
-6. n16-8 Tom's crown, n16-7, n16-6; nightly: nothing in Unreal or heavy local jobs 01:15-04:30.
+0. FIRST: verdicts after 2026-11-17T22:45:00Z; advisor after 2026-11-17T22:58:00+01:00 (last ack 215, 23:24).
+1. DONE: Kiln main at a8368f3. Take a new gate baseline (base plus calibration runs, quiet machine) so link_cap_solves is banded; remove worktrees merge-speed2 and stepbands (own leftovers, one line each).
+2. Strain-limit lane: review its report and diff, cargo test, gate alone, merge.
+3. His licence tap (kiln-front-end-licence-2026-11-17) answered yes: trousers step I (held row in production/specs/garments.json, import_garments in mh-assemble, garments_shipped_check), then step J (nightly package, -WearHeld film). Never in Unreal 01:15-04:30.
+4. Darren's head remake when the editor is free (advisor 215), outside the night.
+5. Bending try 2 option (a) (script C:/LedgerTools/kiln-runs/bending2-2026-11-17/try2-a/bending2.sh), not beside a gate.
+6. His study ruling leftovers: a DECISION on his page in tomorrow's first batch (delete FModel, the SH2 reader, the empty inZOI folder in F:/LedgerTools/aaa-study; recommended yes). Memories updated and FModel's key checked blank (17 Nov 23:5x).
+7. Retention plan (not beside a gate); n16-8 Tom's crown, n16-7, n16-6.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 17 Nov late: the speed timing's first series refused by the body standard (old body paths in the plan's script; not a try). Two time stamps guessed (22:00, 22:10), corrected from the clock.
-- 17 Nov night: switching on the output-cap hook in .claude/settings.json refused by the app's safety check (not retried; his page). The first hinge gate ran the wrong engine (no KILN_EXE): stopped, not a try. Hang and Cusick full matrix too long beside the machine queue: stopped, not a try. Two time stamps written without Get-Date, corrected (acks, DECISIONS).
-- Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2).
+- 17 Nov 23:25: reopening the 16 Nov trousers project refused by Kiln's body standard; the old job refused by the dressing rule (no fly opening). Setup, not tries; route B worked first time.
+- 17 Nov 23:55: merged tests failed once on a golden taken before main's hinge; retaken on main, equal. Not a try.
+- 17 Nov late: the speed timing's first series refused by the body standard (old body paths). Output-cap hook refused by the app's safety check (his page). Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3 (items 2, 3 and 4 have targets now).
