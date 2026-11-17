@@ -1,0 +1,17 @@
+{
+  "_note": "Proposed for .claude/settings.json (n16-10, 17 Nov 2026). Add the PreToolUse key below to the existing hooks object; UserPromptSubmit, PostToolUse and Stop stay exactly as they are. Not switched on: the session checks it on one real run first. onFailure is left unset on purpose, so a broken hook lets the call run unchanged; '|| true' because python exits 2 when the script is missing (mid-rebase, a stash), and exit 2 would refuse every call (review fix 3).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/output_cap.py\" hook || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
