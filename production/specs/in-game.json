@@ -118,6 +118,48 @@
    "as": "reference/other-games",
    "first": true,
    "why": "the bar's frames from other games (KCD2, GTA V), out of the public repository by his ruling of 3 October and kept only on this PC and here (P14)"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_TomL1.uasset",
+   "as": "approved/tom/source/MH_TomL1.uasset",
+   "first": true,
+   "why": "Tom's approved face, take L1 (his pick, 8 Oct; RULINGS faces); advisor 197: every approved cast member, Tom first"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_TomL1",
+   "as": "approved/tom/built/MH_TomL1",
+   "first": false,
+   "why": "Tom's built MetaHuman (advisor 197)"
+  },
+  {
+   "path": "F:/LedgerTools/tool-dev/kiln",
+   "as": "kiln/source",
+   "first": true,
+   "exclude": [
+    "target",
+    "out",
+    ".git",
+    "__pycache__"
+   ],
+   "why": "Kiln's source and records, without build folders or run outputs (advisor 197: Dropbox only, no GitHub)"
+  },
+  {
+   "path": "F:/LedgerTools/backup-staging/kiln.bundle",
+   "as": "kiln/history/kiln.bundle",
+   "first": true,
+   "why": "Kiln's whole history as one git bundle, remade each night by the backup itself (advisor 197)"
+  },
+  {
+   "path": "F:/LedgerTools/game-inputs",
+   "as": "lasting/game-inputs",
+   "first": false,
+   "why": "what the night build reads beside the repository (advisor 197)"
+  },
+  {
+   "path": "F:/LedgerTools/tool-dev/judge",
+   "as": "lasting/judge",
+   "first": true,
+   "why": "the judge folder (advisor 197); fixers never read the backup"
   }
  ]
 }

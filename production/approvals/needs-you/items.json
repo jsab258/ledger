@@ -1040,6 +1040,29 @@
    ],
    "state": "done",
    "closed": "2026-11-17 12:26, done at his word in the session (2026-11-17 12:26): the 41 listed gate items and the animation sample copy deleted, F: 20.8 to 34.9 GB free; the dress film script kept first in game-inputs/kept-scripts"
+  },
+  {
+   "id": "storage-remove-list-2026-11-17",
+   "added": "2026-11-17 13:09",
+   "text": "One yes: the storage plan you picked at 12:43 found 14.4 GB on the drives that nothing in the game or the tools uses, all of it downloadable again without your sign-in. (1) The old Parler voice program and its model, 8.8 GB on F and C (Sheila speaks with the Pocket voice since 27 October). (2) A set of accent recordings, 3.8 GB, that no tool reads. (3) The extracts from Kingdom Come II and Mafia, 1.8 GB, whose numbers are already written down. Kept on purpose: the approved cast's faces, everything the game reads, a voice setup that may not be rebuildable, and the lab folder. If the app's safety check stops the delete, the session will ask for your Allow at the PC the same hour.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: F goes from 35 to about 46 GB free, comfortably above its 20 GB floor for this week's Kiln runs and builds.",
+   "options": [
+    [
+     "yes",
+     "Yes, remove all three (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

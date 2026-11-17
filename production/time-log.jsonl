@@ -793,3 +793,7 @@
 {"event": "start", "at": "2026-11-17T11:04:00", "task": "n16-1 restart: gates, held-back results, notebook lines", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T11:24:00", "note": ""}
 {"event": "start", "at": "2026-11-17T11:23:45", "task": "tool loop: kiln round 1 (step 4 gate, zips gate, benches) (n16-1)", "phase": "2", "kind": "production"}
+{"event": "start", "at": "2026-11-17T12:57:19", "task": "n16-8 Darren hair inputs remake", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T13:05:02", "note": "n16-8 inputs remade, d60 run done"}
+{"event": "start", "at": "2026-11-17T13:07:04", "task": "n16-8 hair r5b on Darren in editor", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T13:09:40", "note": "r5b strands on Darren in editor, pictures made"}

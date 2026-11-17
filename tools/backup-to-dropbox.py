@@ -53,25 +53,30 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DROPBOX = os.path.join(os.path.expanduser("~"), "Dropbox")
 DEST = os.path.join(DROPBOX, "LEDGER backup")
 LIST = os.path.join(REPO, "production", "specs", "in-game.json")
-FLOOR_GB = 1.8          # C: keeps at least this free: Windows, Dropbox and the build machine need room
+FLOOR_GB = 40.0         # C: keeps at least this free (C:'s floor in RULINGS; advisor 197, 17 Nov: raised from 1.8)
+STALE_HOURS = 26        # advisor 197: a last good backup older than this is an item on his page that hour
+KILN = "F:/LedgerTools/tool-dev/kiln"
+BUNDLE = "F:/LedgerTools/backup-staging/kiln.bundle"   # Kiln's whole history, one file, remade each night (no GitHub)
 
 # Never copied, whatever the list says: the key, and the place it lives.
-NEVER = ("secrets.json", os.path.join("LocalLow", "DefaultCompany"), ".ledger-gh-token")
+NEVER = ("secrets.json", os.path.join("LocalLow", "DefaultCompany"), ".ledger-gh-token",
+         os.path.join("LedgerTools", "keys"), "aesKeys", ".env", "api-key", "apikey")
 
 
 def refused(path):
     p = path.replace("/", os.sep)
-    return any(n in p for n in NEVER)
+    return any(n in p for n in NEVER) or os.path.basename(p).lower() in (".env",)
 
 
 def sources(list_path=LIST):
-    """(source, name under the backup, first?) from the approved entries."""
+    """(source, name under the backup, first?[, folder names left out]) from the approved entries."""
     d = json.load(open(list_path, encoding="utf-8"))
     items = [b for e in d.get("placed", []) for b in e.get("backup", [])] + list(d.get("backupAlso", []))
     out = []
     for b in items:
         src = b["path"] if os.path.isabs(b["path"]) else os.path.join(REPO, b["path"])
-        out.append((os.path.normpath(src), os.path.normpath(b["as"]), bool(b.get("first"))))
+        ex = tuple(b.get("exclude", ()))
+        out.append((os.path.normpath(src), os.path.normpath(b["as"]), bool(b.get("first"))) + ((ex,) if ex else ()))
     # first things first: the sources to rebuild from and the voices
     return sorted(out, key=lambda x: not x[2])
 
@@ -79,10 +84,13 @@ def sources(list_path=LIST):
 def pairs(srcs, dest):
     """Every (source file, destination file, first?) the list names, in order."""
     out = []
-    for src, name, first in srcs:
+    for item in srcs:
+        src, name, first = item[:3]
+        exclude = set(item[3]) if len(item) > 3 else set()
         target = os.path.join(dest, name)
         if os.path.isdir(src):
-            for root, _dirs, files in os.walk(src):
+            for root, dirs, files in os.walk(src):
+                dirs[:] = [x for x in dirs if x not in exclude]   # build folders and run outputs left out (Kiln)
                 for f in sorted(files):
                     s = os.path.join(root, f)
                     out.append((s, os.path.join(target, os.path.relpath(s, src)), first))
@@ -120,7 +128,7 @@ def free_gb(path):
 def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
     copied = unchanged = size = deferred = versioned = 0
     broken = []
-    missing = [s for s, _, _ in srcs if not os.path.exists(s)]
+    missing = [x[0] for x in srcs if not os.path.exists(x[0])]
     # JAFAR'S DROPBOX IS HIS, 24 September: "just need to be 10000000% sure you
     # don't fuck up my dropbox". Every file this writes is checked to lie
     # inside the backup's own folder before anything is written, and one that
@@ -192,6 +200,66 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
                (" notWhole=%d first=%s" % (len(broken), broken[0].replace(" ", "~"))) if broken else ""))
 
 
+def stale(lines, now=None):
+    """(stale?, hours since the last good run or None) from the log's lines: a good run is OK or DEFERRED."""
+    now = now or datetime.datetime.now()
+    last = None
+    for ln in lines:
+        if "backupToDropbox=OK" in ln or "backupToDropbox=DEFERRED-LOW-SPACE" in ln:
+            try:
+                last = datetime.datetime.strptime(ln.split()[0], "%Y-%m-%dT%H:%M:%S")
+            except (ValueError, IndexError):
+                pass
+    if last is None:
+        return True, None
+    hours = (now - last).total_seconds() / 3600
+    return hours > STALE_HOURS, hours
+
+
+def log_path():
+    import subprocess
+    common = subprocess.run(["git", "-C", REPO, "rev-parse", "--git-common-dir"], capture_output=True, text=True).stdout.strip()
+    return os.path.join(common if os.path.isabs(common) else os.path.join(REPO, common), "backup-to-dropbox.log")
+
+
+def make_bundle():
+    """Kiln's whole history as one file (advisor 197: Dropbox only, no GitHub repository). Written to the staging
+    folder on F:, never into Dropbox directly; the copy then keeps each changed night's bundle under versions/."""
+    import subprocess
+    os.makedirs(os.path.dirname(BUNDLE), exist_ok=True)
+    tmp = BUNDLE + ".new"
+    r = subprocess.run(["git", "-C", KILN, "bundle", "create", tmp, "--all"], capture_output=True, text=True)
+    if r.returncode != 0 or not os.path.exists(tmp):
+        return "bundle=FAILED"
+    shutil.copyfile(tmp, BUNDLE)   # the staging file on F: only, outside Dropbox
+    return "bundle=OK"
+
+
+def restore_check(srcs, dest, n=20, seed=None):
+    """Weekly (advisor 197): about n files sampled across the listed folders, copied back from the backup into a
+    temporary folder and compared with the source by SHA-256 (a source changed since is compared with its newest
+    version). Reads the backup; writes only the temporary folder."""
+    import random
+    import tempfile
+    plan = [(s, d) for s, d, _ in pairs(srcs, dest) if os.path.exists(d)]
+    pick = random.Random(seed).sample(plan, min(n, len(plan)))
+    vroot = os.path.join(dest, "versions")
+    bad = []
+    with tempfile.TemporaryDirectory() as t:
+        for i, (s, d) in enumerate(pick):
+            back = os.path.join(t, "%02d_%s" % (i, os.path.basename(d)))
+            shutil.copy2(d, back)
+            if not os.path.exists(s) or sha(back) == sha(s):
+                continue
+            rel = os.path.relpath(d, dest)
+            held = os.path.isdir(vroot) and any(same(s, os.path.join(vroot, v, rel)) for v in os.listdir(vroot)
+                                                if os.path.exists(os.path.join(vroot, v, rel)))
+            if not held:
+                bad.append(d)
+    return "restoreCheck=%s sampled=%d differ=%d%s" % ("OK" if not bad else "DIFFER", len(pick), len(bad),
+                                                       (" first=" + bad[0].replace(" ", "~")) if bad else "")
+
+
 def selftest():
     import tempfile
     ok = bad = 0
@@ -205,11 +273,18 @@ def selftest():
             print("backup-to-dropbox selftest FAIL " + name)
     check("the backup lands inside Dropbox", os.path.commonpath([DEST, DROPBOX]) == DROPBOX)
     real = sources()
-    check("the list comes from the approved entries and names the three faces",
-          sum(1 for s, n, _ in real if "Content" in s and "Cast" in s) == 3)
-    check("no listed source is the key", not any(refused(s) for s, _, _ in real))
+    check("the list comes from the approved entries and names the four faces, Tom's included",
+          sum(1 for x in real if "Content" in x[0] and "Cast" in x[0]) == 4
+          and any("MH_TomL1" in x[0] for x in real))
+    check("no listed source is the key", not any(refused(x[0]) for x in real))
+    check("the keys folder and an .env are refused", refused(r"F:\LedgerTools\keys\a.txt") and refused(r"F:\x\.env"))
+    check("Kiln, the game inputs and the judge folder are listed",
+          all(any(os.path.normpath(w) == x[0] for x in real) for w in (KILN, "F:/LedgerTools/game-inputs",
+                                                                       "F:/LedgerTools/tool-dev/judge", BUNDLE)))
+    check("Kiln's build folders and run outputs are left out",
+          any(x[0] == os.path.normpath(KILN) and {"target", "out", ".git"} <= set(x[3] if len(x) > 3 else ()) for x in real))
     check("the key is refused by name", refused(r"C:\Users\x\AppData\LocalLow\DefaultCompany\ledger\secrets.json"))
-    check("the sources to rebuild from go first", [f for _, _, f in real] == sorted([f for _, _, f in real], reverse=True))
+    check("the sources to rebuild from go first", [x[2] for x in real] == sorted([x[2] for x in real], reverse=True))
     with tempfile.TemporaryDirectory() as t:
         src, dst = os.path.join(t, "src"), os.path.join(t, "dst")
         os.makedirs(os.path.join(src, "d"))
@@ -237,6 +312,18 @@ def selftest():
         check("and the gone source is named", "MISSING-SOURCE" in fourth)
         low = run([(os.path.join(src, "d"), "dir2", True)], dst, floor_gb=1e9)
         check("a copy that would fill the drive is put off", "DEFERRED-LOW-SPACE" in low and not os.path.exists(os.path.join(dst, "dir2")))
+        os.makedirs(os.path.join(src, "k", "target"))
+        open(os.path.join(src, "k", "target", "big.exe"), "wb").write(b"b")
+        open(os.path.join(src, "k", "main.rs"), "wb").write(b"m")
+        run([(os.path.join(src, "k"), "kiln", True, ("target",))], dst, floor_gb=0, now=when)
+        check("an excluded folder is not copied, the rest is",
+              os.path.exists(os.path.join(dst, "kiln", "main.rs")) and not os.path.exists(os.path.join(dst, "kiln", "target")))
+        check("a log line older than 26 h is stale, a fresh one is not",
+              stale(["2026-09-24T04:00:00 abc backupToDropbox=OK copied=0"], when)[0]
+              and not stale(["2026-09-25T04:00:00 abc backupToDropbox=OK copied=0"], when)[0])
+        check("a failed run does not count as the last good one",
+              stale(["2026-09-24T04:00:00 a backupToDropbox=OK", "2026-09-25T20:00:00 b backupToDropbox=BROKEN-COPY"], when)[0])
+        check("the restore check finds the copies whole", restore_check(lst, dst, seed=1).startswith("restoreCheck=OK"))
         escape = run([(os.path.join(src, "d"), os.path.join("..", "escaped"), True)], dst, floor_gb=0)
         check("a destination outside the backup folder is refused", "REFUSED-OUTSIDE-ITS-FOLDER" in escape)
         check("and nothing is written there", not os.path.exists(os.path.join(t, "escaped")))
@@ -254,6 +341,25 @@ if __name__ == "__main__":
     if not os.path.isdir(DROPBOX):
         print("backupToDropbox=NO-DROPBOX dest=%s" % DROPBOX.replace(" ", "~"))
         sys.exit(1)
+    if "--stale" in sys.argv:
+        lines = open(log_path(), encoding="utf-8").read().splitlines() if os.path.exists(log_path()) else []
+        is_stale, hours = stale(lines)
+        print("backupStale=%s hours=%s" % ("YES" if is_stale else "no", "none" if hours is None else "%.1f" % hours))
+        sys.exit(1 if is_stale else 0)
+    if "--restore-check" in sys.argv:
+        line = restore_check(sources(), DEST)
+        print(line)
+        sys.exit(0 if "=OK" in line else 1)
+    pre = ""
+    if not ("--dry-run" in sys.argv or "--verify" in sys.argv):
+        pre = make_bundle() + " "
     line = run(sources(), DEST, dry="--dry-run" in sys.argv, verify_only="--verify" in sys.argv)
-    print(line)
+    print(pre + line)
+    if "--log" in sys.argv:
+        # THE NIGHTLY RUN (advisor 197: about 05:00 through Windows' Task Scheduler, after retention, whether or not
+        # there was a commit): the line goes to the same log the post-commit hook writes and --stale reads.
+        import subprocess
+        head = subprocess.run(["git", "-C", REPO, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+        with open(log_path(), "a", encoding="utf-8") as fh:
+            fh.write("%s %s %s\n" % (datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), head or "-", pre + line))
     sys.exit(0 if any(s in line for s in ("=OK", "=DRY-RUN", "=VERIFIED", "=DEFERRED-LOW-SPACE")) else 1)   # VERIFIED-SO-FAR too

@@ -119,7 +119,7 @@ His binding rulings in force; the later stands; canon.md outranks them. Done, re
 
 ## Disk, git and backup
 
-- 2 Oct: Retention runs nightly by the limits in production/retention.json; holds 14 days at most. Before any build, render or large job: C: 40 GB and F: 20 GB free; a full disk: stop and wait. 2 Nov: the build cache and the compiled code kept between builds may use about 17 GB on C:.
+- 17 Nov (advisor 196), storage: each gigabyte has a shelf, owner and end date in production/storage-map.json, which retention.py enforces (floors F: 20, C: 40 GB); writes and deletes only through it; nothing of his. 2 Nov: the build cache and the compiled code kept between builds may use about 17 GB on C:.
 - 29 Oct: Claude deletes without asking what it made itself that nothing uses, one DECISIONS.md line each, never a page item (16 Nov: guarded; run outputs expire in 14 days). His yes for anything of his, anything he approved on a page, anything bought or downloaded at his request, and anything that cannot be made again; never deleted either: what the game or a build uses, what the backup holds. When in doubt, it is his.
 - 3 Oct: Git holds what CLAUDE.md says, never MetaHuman files; large output on F: and the Dropbox backup, which never deletes or overwrites.
 - 6 Oct: Packaged builds only for a step's evidence, nightly if wip moved, or main; no second cook; rest Monday.

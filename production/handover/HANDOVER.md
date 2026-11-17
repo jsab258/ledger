@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 11:04 (the hourly run; the last session set its Stopped line at 11:02)
+**Started:** 2026-11-17 12:52 (the hourly run; the last session set its Stopped line at 12:39)
 
-**Row due:** 2026-11-17 13:05 (last 12:05; page and advisor read 12:05; last ack 12:05, advisor 195)
-**Stopped:** 2026-11-17 11:02 (history OVER at an item's end; three helpers ended mid-run, listed below; no Kiln processes left)
+**Row due:** 2026-11-17 13:55 (last 12:55; page and advisor read 12:54; last ack 12:54, advisor 196)
+**Stopped:** 2026-11-17 12:39 (history near its limit at an item's end; the benches helper left running, below)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted by his tap 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line runs from 0 at Monday 13:00 to 95% by Wednesday 15:00, six helpers, full pace. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -36,9 +36,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Held-back first run on main c16be30 finished (started by the stopped helper): 1 of 2 pass (HB-1 settles, checks pass; HB-2 jams, fails worst edge, inside, seam gap). Written up by the session: judge/heldback/RESULTS-2026-11-17-main.md, hashed in judge/HASHES.txt.
 - Zips lane gate try 1: FAIL on the jeans only (drop 100.4 against 91); two controls: main = lane exactly (flag clean), the baseline's own engine 3d32458 on the regenerated script also 100.4, so the regenerated job script causes it. The new jeans are NEARER Marvelous n7 (waistband 1,119/1,071 against 1,120/1,066; old 1,128/1,081; inside 3 against 7). DECIDED: re-take the judge baseline on main with the new scripts (session-only judge change, hashes re-made), re-gate lane-zips with PAT_DRESSING_REFUSES true, merge on PASS. Lane rebased on main 131eee0, 38 tests, flag back false. Report sections in KILN-ZIPS-2026-11-17.md.
 - Step 4 gate (helper, diagnoser): flag-off GATE PASS against baseline 3d32458 (old path unchanged); flag-on run worse on 7 of 7 made jobs before the re-tune (expected): counted as code landed behind its switch, merged into Kiln main fb0669c, switch off by default. Run folder C:/LedgerTools/kiln-runs/step4-2026-11-17/; report KILN-STEP4-STIFFNESS-2026-11-17.md.
-- Fabric benches (helper, diagnoser) on new lane-benches (C:/LedgerTools/kiln-lanes/benches, off lane-stiffness): BENCH_RESULT. Report KILN-BENCHES-2026-11-17.md.
-- M5 chain proof for Ron's work trousers (drape, bend_back, skin_transfer, pose_check): a helper for it was REFUSED TWICE by the app's permission check (11:10 'unsanctioned communication', 11:30 'undermining oversight'); not tried again, not done another way. Next session: try it yourself in the session only if the reason is understood, else leave it named in the row.
-- NOTEBOOK: three owed entries written (skin transfer, pose check, held-back patterns; held-back jobs not named).
+- Fabric benches (helper, diagnoser) on new lane-benches (off lane-stiffness): DONE after the stop: lane-benches b70e791; 0 of 13 presets hold 10% (Normal vs Fitting and 20 vs 10 mm far apart; report KILN-BENCHES-2026-11-17.md): step 4's own check fails, so no tuning yet; next is quality/spacing independence in the solver (KILN-RETUNE-PLAN step 1). Report KILN-BENCHES-2026-11-17.md.
+- M5 chain proof for Ron's work trousers (drape, bend_back, skin_transfer, pose_check): a helper for it was REFUSED TWICE by the app's permission check; not tried again, not done another way.
+- NOTEBOOK: three owed entries written.
 - Advisor 194 (his 11:46): clear-out item put on his page; he typed "Run the clear-out delete now" at 12:2x: Part 1 (41 gate items) and the GameAnimationSample copy deleted, F: 20.8 to 34.9 GB free; dress_film.ps1 kept in game-inputs/kept-scripts; item closed, published. Standing: any ask needing his hands, allowance or sign-in goes on the page the same hour.
 - Advisor 195 (his pick 11:58): measure the rate 10:30 to 15:00 (31% at 10:11, 32% at 12:05); under 1.2 points an hour: up to EIGHT helpers from 15:00, real work only (this order, then the next order's machine-free work), empty places said in the row; back to six at 1.2 for 3 h or within 6 points of the line. Each row: helper count and rate.
 
