@@ -1070,14 +1070,14 @@
    "id": "backup-schedule-at-pc-2026-11-17",
    "added": "2026-11-17 13:17",
    "his_hands": true,
-   "text": "One visit to the PC, two steps, about two minutes in all. Step 1, the nightly backup at 05:00 (your pick at 12:58; the app's safety check will not let Claude create a Windows schedule itself): in the Claude app open Scheduled tasks, then \"LEDGER: the hourly fresh session\", then History, then the run \"Today at 2:21 PM\". In its message box type: Register the backup schedule now. Click Allow when it asks. It adds one scheduled task named LEDGER backup and nothing else. Step 2, give C: back about 23 GB (Dropbox undoes Claude's script within seconds, tested at 14:27): in File Explorer click Dropbox in the left column, right-click the folder LEDGER backup, choose Make online-only. Nothing is deleted; every file stays in Dropbox and comes back when opened. Then tap Done; the session checks that the task exists, the folder is online-only and the backup is still complete.",
+   "text": "Two clicks at your PC: the nightly backup, and 23 GB back on C: (numbered steps on the page).",
    "links": [
     {
      "label": "This page",
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "recommendation": "Do both today: tonight's 05:00 backup then runs whether or not anything is committed, and C: goes from 48.7 to about 72 GB free.",
+   "recommendation": "Do it today: tonight's backup runs, and C: goes from 47 to about 70 GB free.",
    "options": [
     [
      "done",
@@ -1086,7 +1086,23 @@
    ],
    "state": "open",
    "tag": "ACTION",
-   "updated": "2026-11-17 14:55: steps named exactly, the Dropbox step added (his message 14:38, advisor 199)"
+   "updated": "2026-11-17 15:58: laid out for a phone (his message 15:48, advisor 200)",
+   "title": "Two clicks at your PC: the nightly backup, and 23 GB back on C:",
+   "why": [
+    "The app will not let Claude make a Windows schedule, so the 05:00 backup needs your Allow.",
+    "Dropbox undoes Claude's online-only setting within seconds (tested), so only your right-click frees the space."
+   ],
+   "steps": [
+    "Claude app: Scheduled tasks",
+    "Open \"LEDGER: the hourly fresh session\"",
+    "History: Today at 2:21 PM",
+    "Type: Register the backup schedule now",
+    "Click Allow if asked",
+    "File Explorer: click Dropbox in the left column",
+    "Right-click the folder LEDGER backup",
+    "Choose Make online-only (nothing is deleted)",
+    "Tap Done below"
+   ]
   }
  ]
 }

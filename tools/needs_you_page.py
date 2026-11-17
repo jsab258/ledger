@@ -61,6 +61,9 @@ def faults(data, check_files=True):
                 out.append("%s lacks %s" % (it.get("id", "?"), f))
         if it.get("id") in seen:
             out.append("%s appears twice" % it.get("id"))
+        if it.get("state") == "open" and it.get("tag") in TAGS:
+            if not it.get("title") or len(it.get("why", [])) > 2 or (it["tag"] == "ACTION" and not it.get("steps")):
+                out.append("%s: an open item needs a one-line title, at most two why bullets and, for ACTION, numbered steps (his message 17 Nov 15:48)" % it.get("id"))
         if it.get("state") == "open" and it.get("tag") not in TAGS:
             out.append("%s lacks its tag (one of %s; his message 17 Nov 14:38)" % (it.get("id"), ", ".join(TAGS)))
         seen.add(it.get("id"))
@@ -122,7 +125,9 @@ def spec(data, now=None):
         "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
         # an item may carry pictures, judged on the page itself at full size (a whole street frame or a person at its
         # gate, 3 November: the corner's midweek page is the first); their files sit in pictures/ beside the page, out of git
-        "sections": [{"kind": "need", "key": it["id"], "name": "%s: %s" % (it.get("tag", "?"), it["text"]), "links": it["links"],
+        "sections": [{"kind": "need", "key": it["id"], "name": "%s: %s" % (it.get("tag", "?"), it.get("title") or it["text"]),
+                      # his message of 17 Nov 15:48 (advisor 200): a one-line title, why in short bullets, steps numbered
+                      "why": it.get("why", []), "steps": it.get("steps", []), "links": it["links"],
                       "recommendation": it["recommendation"], "added": it["added"],
                       "pictures": it.get("pictures", []),
                       # a written piece he rules on, folded shut on the page (8 Nov, the side stories)
@@ -158,12 +163,16 @@ def selftest():
             bad += 1
             print("needs_you_page selftest FAIL " + name)
     good = {"items": [{"id": "a", "added": "2026-11-02 07:00", "text": "Do a.", "links": [{"label": "A", "url": "https://x.y/a"}],
-                       "recommendation": "Yes.", "state": "open", "tag": "DECISION"},
+                       "recommendation": "Yes.", "state": "open", "tag": "DECISION", "title": "Pick a.", "why": ["Because."]},
                       {"id": "b", "added": "2026-11-01 07:00", "text": "Did b.", "links": [], "recommendation": "No.", "state": "done",
                        "closed": "2026-11-02 08:00, answered no"}]}
     check("a clean list has no faults", faults(good) == [])
     check("only open items are drawn", [s["key"] for s in spec(good)["sections"]] == ["a"])
-    check("the tag comes first on the page", spec(good)["sections"][0]["name"].startswith("DECISION: "))
+    check("the tag comes first on the page", spec(good)["sections"][0]["name"] == "DECISION: Pick a.")
+    check("an ACTION without numbered steps is refused", faults({"items": [dict(good["items"][0], tag="ACTION")]}) != [])
+    check("an ACTION with steps passes and they reach the page",
+          faults({"items": [dict(good["items"][0], tag="ACTION", steps=["Do it."])]}) == []
+          and spec({"items": [dict(good["items"][0], tag="ACTION", steps=["Do it."])]})["sections"][0]["steps"] == ["Do it."])
     check("an open item without a tag is refused",
           faults({"items": [dict(good["items"][0], tag=None)]}) != [] and faults({"items": [dict(good["items"][0], tag="ASK")]}) != [])
     check("a link must be a full https link", faults({"items": [dict(good["items"][0], links=[{"label": "A", "url": "fab.com/x"}])]}) != [])

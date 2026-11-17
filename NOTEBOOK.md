@@ -2542,4 +2542,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Tools: the backup script's self-tests, the shell's attribute command, the size-on-disk system call.
 - Target and check: 33 of 33 self-tests; online-only by script: the sync client cleared the mark within 10 s twice and the files stayed whole on disk, so only the client's own menu works.
 - Cost: about 0.4 h. What failed and why: the script route, because the client resets the attribute; the ask waits a day because the owner's page takes at most two batches a day.
-- Evidence: production/audits/backup-review-2026-11-17.md (last section); production/research/disk/DROPBOX-ONLINE-ONLY-2026-11-17.md (Measured on this PC).
+- Evidence: production/audits/backup-review-2026-11-17.md (last section); production/research/disk/DROPBOX-ONLINE-ONLY-2026-11-17.md (Measured on this PC). Recipe map: no step moved (the backup step stands).
+
+## A bending-length bench that can judge (17 Nov 2026, finished; merge after the gates)
+- What was made: the cloth tool's cantilever bench rebuilt so every preset gives a reading: everything on the platform pinned, overhangs in whole particle steps, strips at least five particles wide, judged only at fine spacings, the 41.5 degree crossing read through the self-weight elastica instead of a straight line.
+- Method: the standard cantilever test's geometry as simulation papers reproduce it (all nodes over the table fixed); the elastica gives the bending length exactly where overhang is twice it.
+- Tools: the bench script and its tests, the cloth engine at its converged quality.
+- Target and check: no fallbacks (0 of 12, was 33 of 54); angles rising with overhang 11 of 12; clamp moved 0.0 mm; only 4 of 12 settle within 2%, so 2 of 12 pass every check.
+- Cost: about 0.9 h of a helper. What failed and why: the old bench pinned the back short of the edge (the strip buckled up 9 mm), let the edge fall between particles, and read curled tips as angles over 90 degrees. Still open: the engine's strips never come to rest, and every fabric reads 36 to 78% softer at the finer spacing (the spacing fault being fixed on its own lane).
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-CANTILEVER-BENCH-2026-11-17.md; lane-benches 0ca5376. Recipe map: no step moved (the cloth tool's bench step stands).

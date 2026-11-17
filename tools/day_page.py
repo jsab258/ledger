@@ -241,6 +241,17 @@ function render(){
         for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
         sec.append(g);
       }
+      // LAID OUT FOR A PHONE (his message of 17 Nov 15:48, advisor 200): why as short bullets, steps numbered, one action each
+      if (s.why && s.why.length) {
+        const ul = el("ul", {class:"how", style:"padding-left:20px;margin:0"});
+        for (const w of s.why) ul.append(el("li", {text:w}));
+        sec.append(ul);
+      }
+      if (s.steps && s.steps.length) {
+        const ol = el("ol", {class:"steps", style:"font:600 17px/1.6 var(--display);padding-left:24px;margin:0"});
+        for (const t of s.steps) ol.append(el("li", {text:t}));
+        sec.append(ol);
+      }
       if (s.links && s.links.length) {
         const ul = el("ul", {class:"links"});
         for (const l of s.links) ul.append(el("li", {}, el("a", {href:l.url, target:"_blank", rel:"noopener", text:l.label})));
