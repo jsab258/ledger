@@ -4,6 +4,7 @@
     python tools/token_audit.py [--since 2026-10-26] [--until 2026-11-02] [--out production/research/token-audit]
     python tools/token_audit.py --shares 2026-11-03   # one line: the history's, Opus's and reviewing's shares of a day
     python tools/token_audit.py --models 2026-11-04   # who ran on which model that day: the session and each helper type, with shares
+    python tools/token_audit.py --monday-due   # fails when it is Monday after 12:50 and that day's MONDAY-AUDIT file is missing
     python tools/token_audit.py --selftest
     (six further measures for the morning's overview: tools/token_measures.py)
 
@@ -294,6 +295,21 @@ def report(out, since, until):
     return "\n".join(lines) + "\n"
 
 
+# THE MONDAY AUDIT IS DUE BY 12:50 (RULINGS 9 Nov, records; 16 Nov, weekly audit; enforced 17 Nov): local time from
+# Python (Windows' own clock), never Git Bash's date, which runs an hour behind.
+MONDAY_DIR = os.path.join(ROOT, "production", "research", "token-audit")
+
+
+def monday_due(now, exists=os.path.exists, folder=MONDAY_DIR):
+    """The fault when it is Monday after 12:50 and that day's MONDAY-AUDIT-<date>.md is missing, else None."""
+    if now.weekday() != 0 or (now.hour, now.minute) <= (12, 50):
+        return None
+    name = "MONDAY-AUDIT-%s.md" % now.strftime("%Y-%m-%d")
+    if exists(os.path.join(folder, name)):
+        return None
+    return "MONDAY AUDIT MISSING: %s not written by Monday 12:50 (RULINGS 9 Nov, records)" % name
+
+
 def selftest():
     ok = bad = 0
 
@@ -326,6 +342,12 @@ def selftest():
     check("a person is read from the task", person_of("n02-x person Ron: jacket") == "ron")
     check("a helper's description names the person first", person_of("n02-x person ron: jacket", "Gate review person darren neckband") == "darren")
     check("no person named is none", person_of("n02-9-qa-lean", "Review launch line") is None)
+    mon = datetime.datetime(2026, 11, 16, 13, 0)
+    check("Monday 13:00 without the audit file fails", (monday_due(mon, lambda p: False) or "").startswith("MONDAY AUDIT MISSING"))
+    check("the missing file is that Monday's", "MONDAY-AUDIT-2026-11-16.md" in (monday_due(mon, lambda p: False) or ""))
+    check("Monday 13:00 with the file passes", monday_due(mon, lambda p: p.endswith("MONDAY-AUDIT-2026-11-16.md")) is None)
+    check("Monday 12:50 is not yet due", monday_due(datetime.datetime(2026, 11, 16, 12, 50), lambda p: False) is None)
+    check("a Tuesday is never due", monday_due(datetime.datetime(2026, 11, 17, 15, 0), lambda p: False) is None)
     print("token_audit selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -342,6 +364,10 @@ def shares(out):
 def main(a):
     if "--selftest" in a:
         return selftest()
+    if "--monday-due" in a:
+        fault = monday_due(datetime.datetime.now())
+        print(fault or "mondayDue ok (not Monday after 12:50, or the file is there)")
+        return 1 if fault else 0
     if "--shares" in a:
         # python tools/token_audit.py --shares 2026-11-03: one line for the overview, nothing written
         d = datetime.datetime.strptime(a[a.index("--shares") + 1], "%Y-%m-%d")

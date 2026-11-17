@@ -13,7 +13,11 @@ own commits, which are the baseline), it refuses:
   - a picture or film added or changed outside production/previews/;
   - a picture in production/previews/ of 500 KB or more;
   - any commit of the old history: every old fingerprint is in the map of old to new commits,
-    production/audits/history-clean-2026-10/commit-map.txt.
+    production/audits/history-clean-2026-10/commit-map.txt;
+  - (RULINGS 11 Oct, amended 25 and 28 Oct, the AAA study; enforced 17 Nov) a file under a study export
+    folder (a folder named fmodel or aaa-study, or FModel's Output/Exports), or an added line holding an
+    AES key's shape (0x and 64 hex characters): the published key stays on F: only, never in git. Read from
+    one diff of the staged files, or one git log of the pushed commits, so the guard stays fast.
 
   git pre-push hook (tools/hooks/pre-push):  python tools/push_guard.py <remote> <url>  < refs on stdin
   CI on every push (ledger-push-guard.yml):  python tools/push_guard.py --range BEFORE AFTER
@@ -22,6 +26,7 @@ own commits, which are the baseline), it refuses:
   python tools/push_guard.py --selftest
 """
 import os
+import re
 import subprocess
 import sys
 
@@ -33,6 +38,8 @@ PREVIEW_LIMIT = 500_000
 PICTURES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tga", ".tif", ".tiff", ".exr", ".hdr",
             ".psd", ".dds", ".heic", ".avif", ".mp4", ".mov", ".avi", ".webm", ".mkv"}
 ZERO = "0" * 40
+AES_KEY = re.compile(r"0x[0-9a-fA-F]{64}(?![0-9a-fA-F])")
+STUDY_DIRS = ("fmodel", "aaa-study")
 
 
 def git(*args, check=True, repo=None):
@@ -68,6 +75,39 @@ def verdict(path, size):
     if size > FILE_LIMIT:
         return "%.1f MB, over the 1 MB any file may be" % (size / 1e6)
     return None
+
+
+def study_verdict(path, added=""):
+    """Why a file breaks the AAA study's rule (RULINGS 11 Oct), or None: a study export folder, or a key's shape."""
+    p = path.replace("\\", "/").lower()
+    if any(d in STUDY_DIRS for d in p.split("/")[:-1]) or "output/exports/" in p:
+        return "a file from a study export folder: nothing from the studied games enters git"
+    if added and AES_KEY.search(added):
+        return "an AES key's shape (0x and 64 hex characters): the study's key stays on F: only"
+    return None
+
+
+def added_lines(diff):
+    """{(commit or None, path): added text} from a -U0 diff or a git log -p with 'commit <sha>' lines."""
+    out, commit, path = {}, None, None
+    for line in diff.splitlines():
+        if line.startswith("commit ") and len(line) == 47:
+            commit, path = line[7:], None
+        elif line.startswith("+++ "):
+            path = line[6:] if line.startswith("+++ b/") else None
+        elif path and line.startswith("+"):
+            key = (commit, path)
+            out[key] = out.get(key, "") + line[1:] + "\n"
+    return out
+
+
+def commits_added(commits, repo=None):
+    """The added lines of many commits from one git log call (shas on its stdin)."""
+    if not commits:
+        return {}
+    r = subprocess.run(["git", "log", "--stdin", "--no-walk", "-p", "-U0", "--no-color", "--no-ext-diff", "--format=commit %H"],
+                       cwd=repo or REPO, input="\n".join(commits) + "\n", capture_output=True, text=True, encoding="utf-8", errors="replace")
+    return added_lines(r.stdout)
 
 
 def commits_to_check(local_sha, remote_sha, baseline, remote="origin", repo=None):
@@ -111,16 +151,17 @@ def check(pairs, out=sys.stdout, map_path=MAP, remote="origin", repo=None):
         print("push-guard FAIL the map of old to new commits is missing (%s): nothing is pushed unmeasured" % map_path, file=out)
         return 1
     bad, seen = [], 0
-    for local_sha, remote_sha in pairs:
-        for c in commits_to_check(local_sha, remote_sha, baseline, remote, repo):
-            seen += 1
-            if c in old:
-                bad.append("%s is a commit of the old history (it is in the map of old to new commits)" % c[:10])
-                continue
-            for path, size in files_of(c, repo):
-                why = verdict(path, size)
-                if why:
-                    bad.append("%s %s: %s" % (c[:10], path, why))
+    todo = [c for local_sha, remote_sha in pairs for c in commits_to_check(local_sha, remote_sha, baseline, remote, repo)]
+    added = commits_added([c for c in todo if c not in old], repo)
+    for c in todo:
+        seen += 1
+        if c in old:
+            bad.append("%s is a commit of the old history (it is in the map of old to new commits)" % c[:10])
+            continue
+        for path, size in files_of(c, repo):
+            why = verdict(path, size) or study_verdict(path, added.get((c, path), ""))
+            if why:
+                bad.append("%s %s: %s" % (c[:10], path, why))
     for b in bad:
         print("push-guard REFUSED " + b, file=out)
     print("push-guard commits=%d refused=%d outcome=%s" % (seen, len(bad), "FAIL" if bad else "PASS"), file=out)
@@ -151,6 +192,16 @@ def selftest():
     sink = __import__("io").StringIO()
     t(check([], sink, os.path.join(d, "missing.txt")) == 1, "no map, no push: nothing passes unmeasured")
     t(is_text(b"probeTest=PASS\n") and not is_text(b"\x89PNG\0\0"), "text is told from a binary by its bytes")
+    key = "0x" + "a1" * 32
+    t(study_verdict("notes/x.md", "mainKey: " + key + "\n") is not None, "an added AES key's shape is refused")
+    t(study_verdict("notes/x.md", "0x" + "a1" * 31 + "\n") is None, "a shorter hex number passes")
+    t(study_verdict("notes/x.md", key + "ff\n") is None, "a longer hex run is not a key's shape")
+    t(study_verdict("study/Output/Exports/Game/a.json") is not None, "a file under FModel's Output/Exports is refused")
+    t(study_verdict("production/aaa-study/mafia/a.txt") is not None, "a file under an aaa-study folder is refused")
+    t(study_verdict("production/research/aaa-reference/KIT.md", "FModel exports to F:/LedgerTools/aaa-study\n") is None,
+      "words about the study pass; only its files and its key are refused")
+    diff = "commit " + "c" * 40 + "\ndiff --git a/k.txt b/k.txt\n+++ b/k.txt\n@@ -0,0 +1 @@\n+" + key + "\n-old\n"
+    t(added_lines(diff) == {("c" * 40, "k.txt"): key + "\n"}, "a log's added lines are read per commit and file")
     # A TINY REPOSITORY, as the real one stands since 5 October: an old commit the archive (another
     # remote) knows, a cleaned baseline on the remote being pushed to, and new work on top.
     r = tempfile.mkdtemp()
@@ -179,6 +230,11 @@ def selftest():
     t(check([(base, ZERO)], sink2, mp, "origin", r) == 0, "the cleaned baseline itself passes")
     rg("update-ref", "refs/remotes/origin/main", big)
     t(check([(big, ZERO)], sink2, mp, None, r) == 1, "a big file already on the remote is still found when the whole branch is read")
+    open(os.path.join(r, "k.txt"), "w").write("mainKey=" + key + "\n")
+    rg("add", "k.txt"); rg("commit", "-q", "-m", "key")
+    kc = rg("rev-parse", "HEAD")
+    t(check([(kc, big)], sink2, mp, "origin", r) == 1, "a pushed commit adding a key's shape is refused")
+    rg("reset", "-q", "--hard", big)
     t(check([(base, ZERO)], sink2, mp, None, r) == 0, "the whole branch read back to the baseline passes")
     print("push_guard selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
@@ -201,10 +257,11 @@ def staged(build_machine, out=sys.stdout):
     also any picture at all and anything that is not text but the named material files."""
     names = [n for n in git("diff", "--cached", "--name-only", "-z", "--diff-filter=AMCR", "--no-renames").split("\0") if n]
     bad = []
+    added = added_lines(git("diff", "--cached", "-U0", "--no-color", "--no-ext-diff", "--diff-filter=AMCR", "--no-renames")) if names else {}
     for n in names:
         blob = git("rev-parse", ":" + n).strip()
         size = int(git("cat-file", "-s", blob).strip() or 0)
-        why = verdict(n, size)
+        why = verdict(n, size) or study_verdict(n, added.get((None, n), ""))
         if build_machine and not why:
             if os.path.splitext(n)[1].lower() in PICTURES:
                 why = "a picture: the build machine's pictures go to the drive"

@@ -1,0 +1,609 @@
+{
+ "about": "Each standing line of RULINGS.md and the checks that enforce it (tools/rulings_check.py; advisor 205, 17 Nov).",
+ "entries": [
+  {
+   "line": "Authored breadth (13 Nov 2026): LEDGER gets",
+   "by": [
+    "tools/catalogue.py::EVERY FOLDER OF ART AND RESEARCH HAS A LINE IN THE CATALOGUE, OR THE BUILD FAILS",
+    "monday-audit"
+   ],
+   "note": "catalogue catches art with no line; spec-and-check for every piece is judgement"
+  },
+  {
+   "line": "28 Oct, for the release:",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "scope, length, map, story: judgement"
+  },
+  {
+   "line": "5 and 6 Nov: Full scope stays the target",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "1 Nov: The friends' evening comes after the",
+   "by": [
+    "tools/names-gate.py::No retired name in anything the player sees or hears",
+    "monday-audit"
+   ],
+   "note": "names gate covers retired names only; the evening's bar is judgement"
+  },
+  {
+   "line": "5 Oct: CHARTER.md and PLAN.md replace every",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "22 Oct: Rita's front is the shops' sample",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "25 Oct: Phase 5: kits plus Unreal's procedural",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "11 Nov: efficiency, never at the cost of quality",
+   "by": [
+    "advisor:watchdog",
+    "advisor:daily-backstop",
+    "tools/token_audit.py::WHAT EACH ITEM AND EACH KIND OF WORK COSTS"
+   ],
+   "note": "allowance use and the DAILY file; records share measured, not refused"
+  },
+  {
+   "line": "6 and 7 Nov, testing: AI testing, so what",
+   "by": [
+    "tools/nightly_walk.py::does the town visibly know Tom",
+    "monday-audit"
+   ],
+   "note": "lean-check pruning is judgement"
+  },
+  {
+   "line": "8 Nov, scans: a dated one-page field scan",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "11 Nov: any tool, paid or free, fixing a",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "7 Nov, tries: the professional method researched",
+   "by": [
+    "tools/method_line_check.py::Method researched:",
+    "tools/ci-checks.sh::method-line"
+   ],
+   "note": "a tool test, first try or verdict without its method line fails ci"
+  },
+  {
+   "line": "30 Oct, decide it yourself: record it in",
+   "by": [
+    "tools/needs_you_page.py::an item asking him to install or change a setting is refused",
+    "monday-audit"
+   ],
+   "note": "refuses page items the session can do itself"
+  },
+  {
+   "line": "29 and 30 Oct, computer use: only in Marvelous",
+   "by": [
+    "tools/md-bridge/start_bridge.ps1::the bridge's heartbeat is older than 30 s",
+    "monday-audit"
+   ],
+   "note": "the UIA start is scripted to the one item; other computer use is judgement"
+  },
+  {
+   "line": "4 Nov, the advisor channel: he talks only",
+   "by": [
+    "tools/page_read_hook.py",
+    "advisor:needs-you-check",
+    "monday-audit"
+   ],
+   "note": "page (and advisor rows) read within 15 min; acks are judgement"
+  },
+  {
+   "line": "2 Nov, his page: \"LEDGER: Needs you\"",
+   "by": [
+    "tools/needs_you_page.py::an ACTION without only_you or tried is refused (advisor 204)",
+    "tools/needs_you_page.py::three batches of open items in one day are refused",
+    "tools/page_read_hook.py",
+    "advisor:needs-you-check"
+   ]
+  },
+  {
+   "line": "3 Oct: The AI tester's walk is played as",
+   "by": [
+    "tools/nightly_walk.py::does the town visibly know Tom",
+    "tools/ci-checks.sh::nightly-selftest"
+   ]
+  },
+  {
+   "line": "25 Oct: every order is a ledger (tools/order_ledger.py)",
+   "by": [
+    "tools/order_ledger.py::carried over",
+    "tools/hooks/pre-push::order_ledger.py\" --push",
+    "tools/ci-checks.sh::order-ledger"
+   ]
+  },
+  {
+   "line": "6 Nov, every week: up to four helpers, reviewers",
+   "by": [
+    "tools/token_measures.py::HELPERS OVER CAP",
+    "tools/pace_line.py::3 to 6 ahead: at most two helpers",
+    "advisor:watchdog"
+   ],
+   "note": "token_measures.py --helpers counts helpers running at once from the session logs; the pace line states the cap"
+  },
+  {
+   "line": "9 Nov, a clear winner on look and cost",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "9 Nov, records (over CLAUDE.md): NOTEBOOK.md",
+   "by": [
+    "tools/token_audit.py::MONDAY AUDIT MISSING",
+    "tools/doc-caps.py::THE FILES EVERY SESSION READS STAY SHORT ENOUGH",
+    "monday-audit"
+   ],
+   "note": "caps; the Monday file's presence by 12:50 (token_audit.py --monday-due); notebook lines are judgement"
+  },
+  {
+   "line": "7, 10 Nov: an hourly-checked line, 0% at",
+   "by": [
+    "tools/pace_line.py::more than 6 ahead: finish the item in hand",
+    "tools/fresh_gate.py::WAIT the week was",
+    "advisor:watchdog",
+    "tools/push_guard.py"
+   ],
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip"
+  },
+  {
+   "line": "13 Nov: Kiln serves LEDGER: each piece names",
+   "by": [
+    "tools/token_measures.py::KILN OVER 15% of the week's spend",
+    "monday-audit"
+   ],
+   "note": "token_measures.py --kiln-share measures Kiln's share of the week; the rest is judgement"
+  },
+  {
+   "line": "8 Nov, models: helpers are the project's agents",
+   "by": [
+    "tools/settings_check.py::a helper moved to a dearer model is named",
+    "tools/fresh_gate.py::MODEL WRONG",
+    "tools/token_measures.py::the row's model words fire on Fable"
+   ]
+  },
+  {
+   "line": "3, 4, 11 Nov: one session at a time",
+   "by": [
+    "tools/fresh_gate.py::WAIT the last session",
+    "tools/history_check.py::historyCheck context=",
+    "tools/settings_check.py::permissions never bypassed"
+   ]
+  },
+  {
+   "line": "3 Nov, reviews sized to the piece: a small",
+   "by": [
+    "tools/settings_check.py::a helper moved to a dearer model is named",
+    "monday-audit"
+   ],
+   "note": "reviewer models checked; rounds per piece are judgement"
+  },
+  {
+   "line": "25 Oct: His progress page (https://claude.ai",
+   "by": [
+    "tools/progress_page.py::--check",
+    "tools/morning_pictures.py::morning-fresh newest=",
+    "tools/ci-checks.sh::morning-fresh"
+   ]
+  },
+  {
+   "line": "16 Sep: Purchases and accounts are his alone",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "1 Nov, 16 Nov: his plan's monthly API credit",
+   "by": [
+    "tools/settings_check.py::API spend over the day's ceiling",
+    "tools/api_batch.py::api_batch refused: an automated run may never use LEDGER's key",
+    "tools/api_batch.py::past today's",
+    "advisor:watchdog"
+   ],
+   "note": "the day's ceiling refuses a batch; settings_check.py judges each logged day against its ceiling; calls never logged are not caught"
+  },
+  {
+   "line": "28 Sep: The relay, when friends need it",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct: Sources in order: free assets that",
+   "by": [
+    "tools/attribution-check.py::an asset directory with no entry fails the build",
+    "tools/catalogue.py::EVERY FOLDER OF ART AND RESEARCH HAS A LINE IN THE CATALOGUE, OR THE BUILD FAILS"
+   ]
+  },
+  {
+   "line": "3 Oct, narrowed 13 Oct: Nothing marked NoAI",
+   "by": [
+    "tools/attribution-check.py::NEVER_SHIP",
+    "monday-audit"
+   ],
+   "note": "a package holding Fab paths fails; a NoAI tag on a fetched item is judged by eye"
+  },
+  {
+   "line": "24 Sep: Nothing ships off the allowlist",
+   "by": [
+    "tools/ci-checks.sh::package-sources",
+    "tools/attribution-check.py::an asset directory with no entry fails the build"
+   ]
+  },
+  {
+   "line": "11 Oct, amended 25 and 28 Oct: The AAA study",
+   "by": [
+    "tools/push_guard.py::an AES key's shape (0x and 64 hex characters)",
+    "tools/push_guard.py::a file from a study export folder",
+    "tools/push_guard.py::a picture or film added or changed outside production/previews/",
+    "tools/git-size-guard.py::this commit is refused",
+    "tools/backup-to-dropbox.py::aesKeys",
+    "monday-audit"
+   ],
+   "note": "game pictures and the key kept out of git and the backup"
+  },
+  {
+   "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
+   "by": [
+    "tools/push_guard.py::a picture or film added or changed outside production/previews/",
+    "monday-audit"
+   ],
+   "note": "screenshots out of git; the bar is judgement"
+  },
+  {
+   "line": "3 Oct: The proof view is built to the Hook",
+   "by": [
+    "tools/wet_ground_check.py::wetGroundRoad checks=",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: His page's pictures are taken at 2560",
+   "by": [
+    "tools/needs_you_page.py::not 2560x1440 (RULINGS 30 Sep)",
+    "monday-audit"
+   ],
+   "note": "the page check refuses an open item's picture that is not 2560x1440"
+  },
+  {
+   "line": "28 Oct, the camera: the street camera at",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "29 Oct, the day's exposure: one stop darker",
+   "by": [
+    "tools/surface_values.py::to reach it",
+    "tools/chart_read.py::chart_read selftest",
+    "monday-audit"
+   ],
+   "note": "surfaces measured against bands; the stop is judgement"
+  },
+  {
+   "line": "5 Oct, weather: a grey range (dry overcast",
+   "by": [
+    "tools/measure_night_pools.py::pools with dark between spread over four stops",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "23 Sep: Blender for shapes and layout; all",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "8 Oct: Kit pieces period books draw (windows",
+   "by": [
+    "tools/facade-pair.py::every drawn edge measured on the frame",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "23 Sep: 60 fps at 3440×1440 on the RX 6700",
+   "by": [
+    "tools/slice-perf.py::target=60fps-at-3440x1440/never-below-30",
+    "tools/perf-hook.py"
+   ]
+  },
+  {
+   "line": "2 Oct: no skip or pallets until real; the",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct, trades: bay 1 fishmonger, bay 3 empty",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct: Poll-tax posters: an invented local",
+   "by": [
+    "tools/needs_you_page.py::a placeholder on his page",
+    "tools/canon-gate.py::real brand besides",
+    "tools/names-gate.py::No retired name in anything the player sees or hears",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "4 Oct: Mickey's office is the front room Tom",
+   "by": [
+    "tools/office_look.py",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "22 Oct: The lamp columns stay concrete",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: Faces are frozen: Ron P2, Sheila S4",
+   "by": [
+    "tools/approvals.py::lapse by themselves",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Nov, hair (9 Nov: strands stay): no hair",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "24 Sep: No voice is cast without his yes",
+   "by": [
+    "tools/voice-cast-check.py::Every principal has a voice that can actually reach them",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "The voices in the game (3 Oct, 26 and 27 Oct)",
+   "by": [
+    "tools/voice-cast-check.py::Every principal has a voice that can actually reach them",
+    "tools/attribution-check.py::p286"
+   ]
+  },
+  {
+   "line": "25 Sep: Ron's and Darren's lines made in advance",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "28 Sep: Before an answer, a short thinking",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct: Clothes are the one exception to the",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct: People wear only gated garments from",
+   "by": [
+    "tools/garments_shipped_check.py::a garment absent from the shipping project is missing",
+    "tools/attribution-check.py::an asset directory with no entry fails the build",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: Game clothes are skinned meshes",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Oct: Tom wears lace-up boots like Ron's",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "People's moves: the walk on Epic's Game Animation",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "9 Nov, motion: he never films or performs",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: Townspeople: measure 0, 5, 10 and 20",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "23 Sep: After a deed, near people look, some",
+   "by": [
+    "tools/encounter-verdict-check.py::The integrated encounter, judged",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "D25: Everyone perceives, remembers and gossips",
+   "by": [
+    "ledger/CoreTests/Program.cs::witness holds a first-hand rumor at full confidence",
+    "tools/port-golden-check.sh"
+   ]
+  },
+  {
+   "line": "24 Sep: Everything the town says unprompted",
+   "by": [
+    "tools/dialogue-verify.py::Mechanical verification for dialogue banks",
+    "ledger/CoreTests/Program.cs::prompt block guards hard facts against manipulation"
+   ]
+  },
+  {
+   "line": "1 Oct (D48): The model is chosen by the kind",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "Speech (7 to 28 Oct): no prepared openings",
+   "by": [
+    "ledger/CoreTests/Program.Port.cs::The hard rule on names:",
+    "tools/ci-checks.sh::talk-tests",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "23 Sep: Offline or slow: the authored street",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "the brush-off exists in the talk program; no test drops an 8 s line"
+  },
+  {
+   "line": "24 Sep: Before outsiders play: the AI notice",
+   "by": [
+    "tools/canon-gate.py::real brand besides",
+    "tools/content-gate.py::The content rule, D17 and D18",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "3 Oct: A threat can stop a report to the police",
+   "by": [
+    "ledger/CoreTests/Program.cs::an intimidated source stays quiet",
+    "ledger/CoreTests/Program.cs::the threat becomes its own rumor",
+    "monday-audit"
+   ],
+   "note": "silence and the street's rumour tested; the live-only threat read is judgement"
+  },
+  {
+   "line": "1 Oct: Suggested lines \"Mixed\" (written",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "Street lines: own for Ron, Darren, Father Walsh",
+   "by": [
+    "tools/ci-checks.sh::own-lines-port",
+    "tools/port_own_lines.py"
+   ]
+  },
+  {
+   "line": "28 Sep: The story's spine is canon's baseline",
+   "by": [
+    "tools/canon-gate.py::real brand besides",
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: Mickey died of his heart at the office",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "1 Oct: Mickey's people (Ron, Sheila) never",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "30 Sep: A witness's story is only as sure",
+   "by": [
+    "ledger/CoreTests/Program.cs::a witness who saw only a shape has no reason to suspect this man"
+   ]
+  },
+  {
+   "line": "30 Oct: Tom rises in position (money, respect",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "D27, D30: the end state is the ambition",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "23 Sep, genre: no jump; crew act on orders",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "D56: The crime layer owes eight verbs, in order",
+   "by": [
+    "production/art/atlas-01/scripts/check.py",
+    "tools/crime-verdict-check.py",
+    "monday-audit"
+   ],
+   "note": "the atlas's layout rules are checked; verbs and sound lane are judgement"
+  },
+  {
+   "line": "Combat (12 Oct): his \"LEDGER Combat: Final",
+   "by": [
+    "monday-audit"
+   ]
+  },
+  {
+   "line": "17 Nov (advisor 196), storage: each gigabyte",
+   "by": [
+    "tools/retention.py::every mapped folder has a shelf and an expiry",
+    "tools/retention.py::the real map's floors are C: 40, F: 20",
+    "tools/settings_check.py::F: under its floor is wrong",
+    "tools/c_root_guard.py::C-ROOT NEW"
+   ]
+  },
+  {
+   "line": "29 Oct: Claude deletes without asking what it",
+   "by": [
+    "tools/retention.py::a path outside the places is refused",
+    "tools/needs_you_page.py::an item asking to delete own test outputs is refused"
+   ]
+  },
+  {
+   "line": "3 Oct: never MetaHuman files in git; the Dropbox",
+   "by": [
+    "tools/git-size-guard.py::.uasset",
+    "tools/backup-to-dropbox.py::a changed file is not overwritten"
+   ]
+  },
+  {
+   "line": "6 Oct: Packaged builds only for a step's evidence",
+   "by": [
+    "tools/nightly_package.py::wip has moved since the played copy"
+   ]
+  }
+ ]
+}

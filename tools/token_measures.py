@@ -4,6 +4,8 @@
     python tools/token_measures.py 2026-11-05 [--allowance 49]   # a short table for the overview, then the detail
     python tools/token_measures.py --spend 21:22   # list-price dollars since then, for the hourly row
     python tools/token_measures.py --thrown "the hill's second crowns" --since 09:30 [--until 10:10]  # record a try thrown away
+    python tools/token_measures.py --kiln-share [2026-11-16]   # Kiln's share of that day's week (Monday on); KILN OVER 15% fails
+    python tools/token_measures.py --helpers   # the most helpers running at once yesterday and today; HELPERS OVER CAP fails
     python tools/token_measures.py --selftest
 
 WHY, 5 November 2026 (the advisor's message 11, within his efficiency rulings): 1 failed tries and rework per item; 2 the ten
@@ -35,7 +37,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from token_audit import ROOT, LOGS, TIMELOG, item_at, price_of, step_cost, swiss, task_windows  # noqa: E402
+from token_audit import ROOT, LOGS, TIMELOG, audit, item_at, price_of, step_cost, swiss, task_windows  # noqa: E402
 
 THROWN = os.path.join(ROOT, "production", "research", "token-audit", "thrown-tries.jsonl")
 ITEMS = os.path.join(ROOT, "production", "approvals", "needs-you")
@@ -493,6 +495,96 @@ def by_model(day):
     return 0
 
 
+# KILN'S SHARE OF THE WEEK (RULINGS 13 Nov: "at most 15% of weekly usage"; enforced 17 Nov). The week's steps are
+# token_audit.py's, each given to the time-log task open at that moment (helpers' steps too); a task whose name holds
+# "kiln" or "tool loop" is Kiln's. Dollars at list price, a measure of usage, not his bill.
+KILN = re.compile(r"kiln|tool loop", re.I)
+KILN_CAP = 15.0
+
+
+def kiln_share(items):
+    """(Kiln's dollars, all dollars) from token_audit's items table {task: [usd, steps]}."""
+    return sum(v[0] for k, v in items.items() if KILN.search(k or "")), sum(v[0] for v in items.values())
+
+
+def kiln_line(kiln, total, week):
+    pct = 100.0 * kiln / total if total else 0.0
+    word = "KILN OVER 15% of the week's spend" if pct > KILN_CAP else "kiln share within 15%"
+    return "%s: week of %s, US$%.2f of US$%.2f (%.1f%%)" % (word, week.strftime("%d %b"), kiln, total, pct)
+
+
+def kiln_week(day):
+    week = day - datetime.timedelta(days=day.weekday())
+    out = audit(week, week + datetime.timedelta(days=7))
+    line = kiln_line(*kiln_share(out["items"]), week=week)
+    print(line)
+    return 1 if line.startswith("KILN OVER") else 0
+
+
+# HELPERS RUNNING AT ONCE (RULINGS 6 Nov: up to four, six when behind; his picks of 17 Nov: eight a session from 16 to
+# 23 Nov; enforced 17 Nov). Each helper's log runs from its first timestamp to its last; the most that overlap is the
+# day's peak. Only each log's head and tail are read, so this stays light however large a log is.
+TIMESTAMP = re.compile(rb'"timestamp":"(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)')
+
+
+def helper_cap(day):
+    return 8 if datetime.date(2026, 11, 16) <= day <= datetime.date(2026, 11, 23) else 6
+
+
+def log_span(path, chunk=262144, most=8 * 262144):
+    """(first, last) Swiss times of a log from its head and tail, or None."""
+    try:
+        with open(path, "rb") as fh:
+            first = TIMESTAMP.search(fh.read(chunk))
+            size = fh.seek(0, 2)
+            last, back = None, chunk
+            while last is None and back <= most:
+                fh.seek(max(0, size - back))
+                found = TIMESTAMP.findall(fh.read(min(back, size)))
+                last = found[-1] if found else None
+                if back >= size:
+                    break
+                back *= 2
+    except OSError:
+        return None
+    if not first or not last:
+        return None
+    return swiss(first.group(1).decode()), swiss(last.decode())
+
+
+def max_at_once(spans):
+    """(peak, moment) of overlapping (start, end) spans; an end and a start at the same second do not overlap."""
+    events = sorted([(s, 1) for s, e in spans] + [(e, -1) for s, e in spans], key=lambda x: (x[0], x[1]))
+    now = peak = 0
+    when = None
+    for t, d in events:
+        now += d
+        if now > peak:
+            peak, when = now, t
+    return peak, when
+
+
+def helpers_line(peak, when):
+    if not peak:
+        return "helpers at once: none running yesterday or today"
+    cap = helper_cap(when.date())
+    word = "HELPERS OVER CAP" if peak > cap else "helpers within cap"
+    return "%s: %d at once at %s, cap %d" % (word, peak, when.strftime("%d %b %H:%M"), cap)
+
+
+def helpers_peak():
+    since = datetime.datetime.combine(datetime.date.today() - datetime.timedelta(days=1), datetime.time())
+    spans = []
+    for sub in glob.glob(os.path.join(LOGS, "*", "subagents", "agent-*.jsonl")):
+        if os.path.getmtime(sub) >= since.timestamp():
+            span = log_span(sub)
+            if span and span[1] >= since:
+                spans.append((max(span[0], since), span[1]))
+    line = helpers_line(*max_at_once(spans))
+    print(line)
+    return 1 if line.startswith("HELPERS OVER") else 0
+
+
 def selftest():
     png = base64.b64encode(b"\x89PNG\r\n\x1a\n" + b"\0\0\0\rIHDR" + struct.pack(">II", 3136, 1568)).decode()
     usage = {"input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 100, "cache_creation_input_tokens": 0}
@@ -517,6 +609,18 @@ def selftest():
         ("dollars per step up by more than half: JUMP", jump_line(0.169, 0.071).startswith("JUMP")),
         ("dollars per step up by a third: no jump", jump_line(0.094, 0.071).startswith("no jump")),
         ("dollars per step with an empty day: not judged", jump_line(0.1, None).startswith("jump: not judged")),
+        ("kiln share: tasks naming kiln or the tool loop", kiln_share({"tool loop: kiln round 1": [3.0, 1], "Kiln gate": [1.0, 1], "n02 garment": [16.0, 1]}) == (4.0, 20.0)),
+        ("kiln at 20% fails", kiln_line(4.0, 20.0, datetime.datetime(2026, 11, 16)).startswith("KILN OVER 15%")),
+        ("kiln at exactly 15% passes", kiln_line(3.0, 20.0, datetime.datetime(2026, 11, 16)).startswith("kiln share within")),
+        ("kiln with no spend passes", kiln_line(0.0, 0.0, datetime.datetime(2026, 11, 16)).startswith("kiln share within")),
+        ("helper cap is eight this week", helper_cap(datetime.date(2026, 11, 17)) == 8 and helper_cap(datetime.date(2026, 11, 23)) == 8),
+        ("helper cap is six outside it", helper_cap(datetime.date(2026, 11, 24)) == 6 and helper_cap(datetime.date(2026, 11, 15)) == 6),
+        ("three overlapping helpers peak at three", max_at_once([(datetime.datetime(2026, 11, 17, h), datetime.datetime(2026, 11, 17, h + 3)) for h in (9, 10, 11)])[0] == 3),
+        ("one ending as the next starts is not two", max_at_once([(datetime.datetime(2026, 11, 17, 9), datetime.datetime(2026, 11, 17, 10)), (datetime.datetime(2026, 11, 17, 10), datetime.datetime(2026, 11, 17, 11))])[0] == 1),
+        ("nine at once this week fails", helpers_line(9, datetime.datetime(2026, 11, 17, 10)).startswith("HELPERS OVER CAP")),
+        ("seven at once next week fails", helpers_line(7, datetime.datetime(2026, 11, 24, 10)).startswith("HELPERS OVER CAP")),
+        ("eight at once this week passes", helpers_line(8, datetime.datetime(2026, 11, 17, 10)).startswith("helpers within cap")),
+        ("a log's span from its head and tail", span_case()),
         ("per step over the session's models only", abs(per_step({("session", "a"): [2, 1.0], ("session", "b"): [2, 3.0], ("helpers", "a"): [9, 90.0]}) - 1.0) < 1e-9),
     ]
     bad = 0
@@ -528,9 +632,25 @@ def selftest():
     return 1 if bad else 0
 
 
+def span_case():
+    import tempfile
+    d = tempfile.mkdtemp()
+    p = os.path.join(d, "agent-x.jsonl")
+    with open(p, "w", encoding="utf-8") as fh:
+        fh.write('{"timestamp":"2026-11-17T08:00:00.000Z"}\n' + ('{"pad":"' + "x" * 1000 + '"}\n') * 600 + '{"timestamp":"2026-11-17T09:30:00.000Z"}\n')
+    span = log_span(p, chunk=4096)
+    os.remove(p)
+    return span == (datetime.datetime(2026, 11, 17, 9, 0), datetime.datetime(2026, 11, 17, 10, 30))
+
+
 def main(a):
     if "--selftest" in a:
         return selftest()
+    if "--kiln-share" in a:
+        rest = a[a.index("--kiln-share") + 1:]
+        return kiln_week(datetime.datetime.strptime(rest[0], "%Y-%m-%d") if rest else datetime.datetime.combine(datetime.date.today(), datetime.time()))
+    if "--helpers" in a:
+        return helpers_peak()
     if "--thrown" in a:
         return record_thrown(a)
     if "--spend" in a:

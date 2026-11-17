@@ -272,6 +272,47 @@ def newest_mtime(path):
     return own if best is None else best
 
 
+def newest_any(path):
+    """The newest modification or creation time of path and anything under it (links not entered): the map's age
+    (the step-2 review, 17 Nov, S2: a move or copy keeps files' modification times, so a set moved in today
+    would read as weeks unwritten; on Windows st_ctime is the creation time, st_birthtime where Python has it)."""
+    def t(st):
+        born = getattr(st, "st_birthtime", st.st_ctime if os.name == "nt" else st.st_mtime)
+        return max(st.st_mtime, born)
+    try:
+        best = t(os.lstat(path))
+    except OSError:
+        return 0.0
+    if not os.path.isdir(path) or is_link(path):
+        return best
+    for root, dirs, files in os.walk(path):
+        dirs[:] = [d for d in dirs if not is_link(os.path.join(root, d))]
+        for n in files + dirs:
+            try:
+                best = max(best, t(os.lstat(os.path.join(root, n))))
+            except OSError:
+                continue
+    return best
+
+
+MAP_AGE = [newest_any]     # the self-test's fixtures can set only modification times, so they swap in newest_mtime
+
+
+def real(p):
+    return os.path.normcase(os.path.realpath(p))
+
+
+def map_files_committed(repo=REPO):
+    """True when production/storage-map.json and production/retention.json have no uncommitted change (S5): the
+    night acts on map rows only from reviewed, committed files."""
+    try:
+        out = subprocess.run(["git", "-C", repo, "status", "--porcelain", "--", "production/storage-map.json",
+                              "production/retention.json"], capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return out.returncode == 0 and not out.stdout.strip()
+
+
 def prune_old(top, now, limit):
     """What under `top` is older than `limit`: a folder whose newest file is
     older goes whole (one entry); otherwise it is entered and its old files and
@@ -403,7 +444,7 @@ def candidates(pol, now=None, running=None):
     return uniq
 
 
-def enforce(pol, dry=False, mp=None, map_live=None):
+def enforce(pol, dry=False, mp=None, map_live=None, committed=None):
     """The limits' rows, then the storage map's (map_plan's 'remove' list only): listed when dry, removed only when
     the map's rules are live (retention.json "mapRulesLive": true). Each goes through delete() and its checks."""
     protected_extra = backup_paths() + named_keep(pol)
@@ -415,12 +456,23 @@ def enforce(pol, dry=False, mp=None, map_live=None):
         if mp is None:
             try:
                 mp = map_plan(storage_map(), pol)
-            except (OSError, ValueError):
+            except Exception as e:          # S4: a malformed map lists nothing; the limits' rows stand
+                print("storage map unreadable (%s: %s): the map's rules list nothing" % (type(e).__name__, e))
                 mp = {"remove": []}
         done = [r["path"] for r in results]
+        committed = True if dry else (map_files_committed() if committed is None else committed)
+        running = busy() if mp.get("remove") else set()
         for p, rule, why in mp.get("remove", []):
             if any(inside(p, d) for d in done):
                 continue            # a limit's row already covers it
+            if not committed:
+                results.append({"path": p, "rule": rule, "bytes": 0, "map": True,
+                                "refused": "storage-map.json or retention.json has uncommitted changes (S5)"})
+                continue
+            if (runner_path(p) and "runner" in running) or (unreal_path(p) and ("unreal" in running or "zen" in running)):
+                results.append({"path": p, "rule": rule, "bytes": 0, "map": True,
+                                "refused": "Unreal or the runner is running (M1)"})
+                continue
             r = delete(pol, p, rule, why, dry=dry, protected_extra=protected_extra)
             r["map"] = True
             results.append(r)
@@ -818,17 +870,19 @@ def map_rule_cases(j, make, check_only=True):
           ("tool-keep", "tools", d20, {"proposal": "keep", "source": "public PyPI"}),
           ("lasting-old", "lasting", d20, {"proposal": "remove"}),
           ("side-old", "side-session", d20, {"proposal": "remove"}),
-          ("cache-old", "build-cache", d20, {"proposal": "remove"})]
+          ("cache-old", "build-cache", d20, {"proposal": "remove"}),
+          ("work-noowner", "working", d10, {"proposal": "remove: test", "owner": ""}),
+          ("work-unknownsrc", "working", d10, {"proposal": "remove: test", "source": "source unknown"})]
     fake = {"shelves_gb": {"F": {"floor": 20}, "C": {"floor": 40}}, "folders": []}
     for name, shelf, when, extra in fx:
         make(mp_(name, "f.bin"), when, size=1000)
         fake["folders"].append(dict({"path": mp_(name), "shelf": shelf, "source": "made by LEDGER runs",
-                                     "serves": "test", "proposal": ""}, **extra))
+                                     "serves": "test", "proposal": "", "owner": "LEDGER"}, **extra))
     make(mp_("work-holds", "inner", "g.bin"), d10)
     fake["folders"].append({"path": mp_("work-holds", "inner"), "shelf": "lasting", "proposal": "keep"})
     make(mp_("unmapped-old", "f.bin"), d20)                       # in the places, old, not on the map
     make(j("mp-elsewhere", "stray", "f.bin"), d10)                # on the map, outside the places
-    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray"})
+    fake["folders"].append({"path": j("mp-elsewhere", "stray"), "shelf": "working", "proposal": "remove: stray", "owner": "LEDGER"})
     make(j("mp-target", "keep.bin"), d10)                         # a junction's target, outside the places
     link_made = False
     if os.name == "nt":
@@ -844,6 +898,11 @@ def map_rule_cases(j, make, check_only=True):
            "holds": [{"path": mp_("work-held"), "why": "test", "until": (dt.date.today() + dt.timedelta(days=3)).isoformat()}],
            "floors": {"C": 30, "F": 20}}
     readers = "open(r'%s\\data.json')" % mp_("work-read")
+    # S2: a file made today with a 30-day-old modification time reads as new to the map's age
+    make(j("s2", "old.bin"), d20)
+    check(now - newest_any(j("s2")) < 3600 and now - newest_mtime(j("s2")) > 86400 * 15,
+          "a copied-in old file reads as new by its creation time (S2)")
+    MAP_AGE[0] = newest_mtime
     plan = map_plan(fake, pol, readers=readers)
     rel = lambda rows: {os.path.relpath(r[0], j()) for r in rows}
     want_remove = {os.path.join("mp", "work-old"), os.path.join("mp", "tool-public"), os.path.join("mp", "work-limitrow")}
@@ -861,10 +920,34 @@ def map_rule_cases(j, make, check_only=True):
                        ("work-read", "names it"), ("work-side", "side session"), ("work-holds", "holds another"),
                        ("work-backup", "backed up"), ("work-his", "owner"), ("lasting-old", "never"),
                        ("work-linenamed", "names a reader (tools/cleanup.py)"),
-                       ("side-old", "never"), ("cache-old", "never")):
+                       ("side-old", "never"), ("cache-old", "never"),
+                       ("work-noowner", "owner not written"), ("work-unknownsrc", "source unknown")):
         check(frag in why.get(os.path.join("mp", name), ""), "%s kept for '%s', got '%s'"
               % (name, frag, why.get(os.path.join("mp", name))))
     check(any("protected" in w for p, _, w in plan["refused"] if p.endswith("work-protected")), "protected is refused as protected")
+    # S1: a twin line (lasting) of a working folder, and a '..' path, keep it; S3: "removed ... kept" is no order;
+    # S4: a malformed map raises, which enforce and run turn into an empty list
+    twin = {"folders": [dict(fake["folders"][0]), {"path": mp_("work-old") + os.sep, "shelf": "lasting", "owner": "LEDGER"}]}
+    tp = map_plan(twin, pol, readers=readers)
+    check(not tp["remove"] and any("another line" in w for _, w, _ in tp["kept"]), "a lasting twin keeps a working line (S1)")
+    dots = {"folders": [dict(fake["folders"][0], path=os.path.join(j("mp"), "x", "..", "work-old"))]}
+    check(not map_plan(dots, pol, readers=readers)["remove"], "a path with '..' is never removed (S1)")
+    said = {"folders": [dict(fake["folders"][0], proposal="removed 17 Nov by his yes; designed voices kept")]}
+    check(not map_plan(said, pol, readers=readers)["remove"], "'removed ... kept' is not a remove order (S3)")
+    said2 = {"folders": [dict(fake["folders"][0], proposal="remove candidate: check with him before any delete")]}
+    check(not map_plan(said2, pol, readers=readers)["remove"], "'check with him' is not a remove order (S3)")
+    bad_map = False
+    try:
+        map_plan({"folders": "oops"}, pol, readers=readers)
+    except ValueError:
+        bad_map = True
+    check(bad_map and map_plan({"folders": [None, {"path": 5}]}, pol, readers=readers)["remove"] == [],
+          "a malformed map raises or lists nothing (S4)")
+    # the step-2 review, B1: a script inside a lasting folder that names a removable one is a reader
+    make(j("mp-final", "run_all.ps1"), d1, size=0)
+    open(j("mp-final", "run_all.ps1"), "w").write("& python x.py --in '%s'" % mp_("work-old"))
+    check(_named(reader_text(j(), extra_dirs=[j("mp-final")]), path_key(mp_("work-old"))),
+          "a lasting folder's script naming a folder counts as its reader")
     check(any("held" in w for p, _, w in plan["refused"] if p.endswith("work-held")), "a held folder is refused as held")
     check(any("outside" in w for p, _, w in plan["refused"] if p.endswith("stray")), "outside the places is refused")
     # not live: run removes none of the map's rows
@@ -878,7 +961,10 @@ def map_rule_cases(j, make, check_only=True):
     # live: removes only what the plan lists, through delete() and its log
     log_before = len(open(os.path.join(STATE, "deleted.log"), encoding="utf-8").read().splitlines()) \
         if os.path.exists(os.path.join(STATE, "deleted.log")) else 0
-    res = enforce(pol, dry=False, mp=plan, map_live=True)
+    unc = enforce(pol, dry=False, mp=plan, map_live=True, committed=False)
+    check(not [r for r in unc if r.get("map") and "refused" not in r] and os.path.exists(mp_("work-old", "f.bin")),
+          "live, but the map files uncommitted: nothing of the map's removed (S5)")
+    res = enforce(pol, dry=False, mp=plan, map_live=True, committed=True)
     gone = {os.path.relpath(r["path"], j()) for r in res if r.get("map") and r.get("gone")}
     check(gone == want_remove, "live run removed %s, wanted %s" % (sorted(gone), sorted(want_remove)))
     check(not os.path.exists(mp_("work-old")) and not os.path.exists(mp_("tool-public"))
@@ -1014,25 +1100,49 @@ def map_rules_live(pol):
     return pol.get("mapRulesLive") is True
 
 
-def reader_text(repo=REPO):
-    """The repository's tool, game-source, spec and workflow text, lower case, backslashes as '/': where a path a
-    tool reads would be named. Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
+def reader_text(repo=REPO, extra_dirs=()):
+    """Where a path a tool or record reads would be named, lower case, backslashes as '/': every text file git tracks in
+    the repository (tools, game source, specs, workflows and the records, approvals and casting notes: the step-2
+    review, 17 Nov, B1, found four removal rows named only in records), and the scripts and notes inside the map's
+    lasting and protected folders (extra_dirs; a protected run's run_all.ps1 read a removable folder, the scalp
+    pattern). Paths built from pieces are missed (INVENTORY-2026-11-17, not measured)."""
+    import subprocess
     parts = []
     me = norm(os.path.abspath(__file__))
-    for d in READER_DIRS:
-        for root, dirs, files in os.walk(os.path.join(repo, d)):
-            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
+    skip = {norm(os.path.join(repo, x)) for x in NOT_READERS}
+
+    def take(f):
+        if norm(f) == me or norm(f) in skip or not f.lower().endswith(READER_EXT + (".md", ".jsonl", ".csv")):
+            return
+        try:
+            if os.path.getsize(f) > 2_000_000:
+                return
+            with open(f, encoding="utf-8", errors="replace") as fh:
+                parts.append(fh.read())
+        except OSError:
+            pass
+    listed = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True).stdout.decode("utf-8", "replace")
+    names = [x for x in listed.split("\0") if x]
+    if names:
+        for n in names:
+            take(os.path.join(repo, n))
+    else:   # not a checkout (the self-test's folders): the old reader folders
+        for d in READER_DIRS:
+            for root, dirs, files in os.walk(os.path.join(repo, d)):
+                dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git")]
+                for n in files:
+                    take(os.path.join(root, n))
+    for d in extra_dirs:
+        seen = 0
+        for root, dirs, files in os.walk(d):
+            dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules", ".git", "target", "Intermediate",
+                                                    "Saved", "DerivedDataCache", ".venv")]
             for n in files:
-                f = os.path.join(root, n)
-                if not n.lower().endswith(READER_EXT) or norm(f) == me:
-                    continue
-                try:
-                    if os.path.getsize(f) > 2_000_000:
-                        continue
-                    with open(f, encoding="utf-8", errors="replace") as fh:
-                        parts.append(fh.read())
-                except OSError:
-                    pass
+                if n.lower().endswith((".py", ".ps1", ".bat", ".cmd", ".sh", ".json", ".md", ".txt", ".toml", ".ini")):
+                    take(os.path.join(root, n))
+                    seen += 1
+            if seen > 5000:
+                break
     return "\n".join(parts).replace("\\\\", "/").replace("\\", "/").lower()
 
 
@@ -1073,24 +1183,49 @@ def map_plan(m, pol, now=None, readers=None):
     now = now or time.time()
     out = {"remove": [], "hisPage": [], "refused": [], "kept": []}
     folders = m.get("folders", [])
+    if not isinstance(folders, list):
+        raise ValueError("folders is %s, not a list" % type(folders).__name__)
+    folders = [e for e in folders if isinstance(e, dict) and isinstance(e.get("path"), str) and e.get("path").strip()]
     text, protected_extra = None, None
+    reals = [(i, real(e["path"]), str(e.get("shelf", "")).strip().lower(), str(e.get("owner", "") or "").strip().lower())
+             for i, e in enumerate(folders)]
 
     def kept(p, why, expired=False):
         out["kept"].append((p, why, expired))
 
-    for e in folders:
+    for idx, e in enumerate(folders):
         p = e.get("path", "")
         if not p:
             continue
         shelf = str(e.get("shelf", "")).strip().lower()
+        if shelf in ("working", "tools"):
+            # S1: the guarantee goes by the real folder, not its spelling
+            me = real(p)
+            if ".." in p.replace("\\", "/").split("/"):
+                kept(p, "the path climbs with '..': never removed by the map (S1)")
+                continue
+            if me != os.path.normcase(os.path.abspath(p)):
+                kept(p, "the path reaches its folder through a link or a short name: never removed by the map (S1)")
+                continue
+            twin = [i for i, r, sh, ow in reals if i != idx and (r == me or me.startswith(r.rstrip(os.sep) + os.sep))
+                    and (sh not in ("working", "tools") or ow not in LEDGER_OWNERS)]
+            if twin:
+                kept(p, "another line (%s) holds the same folder or a parent of it: never removed by the map (S1)"
+                     % folders[twin[0]]["path"])
+                continue
         line = " ".join(str(e.get(k, "")) for k in ("source", "serves", "proposal")).lower()
         proposal = str(e.get("proposal", "")).strip().lower()
         owner = str(e.get("owner", "") or "").strip().lower()
         if shelf not in ("working", "tools"):
             kept(p, "shelf %s: never removed by the map" % (shelf or "missing"))
             continue
-        if owner and owner not in LEDGER_OWNERS:
-            kept(p, "owner %s: never touched" % e.get("owner"))
+        if owner not in LEDGER_OWNERS:
+            # when in doubt, it is his (RULINGS 29 Oct; the step-2 review, 17 Nov, B2): only a line whose owner is
+            # written as LEDGER's or Claude's may be removed by the map's rules
+            kept(p, "owner %s: only an owner written as LEDGER or Claude is touched" % (e.get("owner") or "not written"))
+            continue
+        if any(w in line for w in ("source unknown", "unknown source")):
+            kept(p, "source unknown: when in doubt, it is his")
             continue
         if os.path.basename(p.rstrip("/\\")).lower() in NOT_OURS:
             kept(p, "not LEDGER's")
@@ -1112,12 +1247,14 @@ def map_plan(m, pol, now=None, readers=None):
             kept(p, "holds another mapped folder (%s)" % inner[0])
             continue
         days = MAP_WORKING_DAYS if shelf == "working" else MAP_TOOLS_DAYS
-        age = (now - newest_mtime(p)) / 86400
+        age = (now - MAP_AGE[0](p)) / 86400
         if age <= days:
             kept(p, "written %.1f day(s) ago, inside its %d days" % (age, days))
             continue
         if text is None:
-            text = reader_text() if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
+            lasting = [o["path"] for o in folders if o.get("path") and os.path.isdir(o["path"])
+                       and str(o.get("shelf", "")).strip().lower() not in ("working", "tools")]
+            text = reader_text(extra_dirs=lasting) if readers is None else readers.replace("\\\\", "/").replace("\\", "/").lower()
         if _named(text, path_key(p)):
             kept(p, "no write for %.0f days, but a tool in the repository names it" % age, True)
             continue
@@ -1125,7 +1262,9 @@ def map_plan(m, pol, now=None, readers=None):
         if named_by:
             kept(p, "no write for %.0f days, but the map's line names a reader (%s)" % (age, named_by), True)
             continue
-        says_remove = proposal.startswith("remove") and "keep" not in proposal and "shrink" not in proposal
+        says_remove = ((proposal.startswith("remove:") or proposal.startswith("remove candidate")
+                        or proposal.startswith("remove ")) and not proposal.startswith("removed")
+                       and not re.search(r"\b(keep|kept|shrink|his yes|check with him|needs his|ask)\b", proposal))
         rule = "map %s %dd" % (shelf, days)
         if shelf == "tools":
             source = str(e.get("source", "")).lower()
@@ -1185,7 +1324,7 @@ def main(argv):
         try:
             m = storage_map()
             mp = map_plan(m, pol)
-        except (OSError, ValueError) as e:
+        except Exception as e:              # S4
             print("storage map unreadable (%s): the map's rules list nothing" % e)
             m, mp = {}, {"remove": [], "hisPage": [], "refused": [], "kept": []}
         live = map_rules_live(pol)

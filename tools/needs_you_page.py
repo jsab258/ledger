@@ -53,6 +53,19 @@ HANDS_WORDS = re.compile(r"\b(install|installing|reinstall|uninstall|change (a|t
                          r"turn (on|off)|switch (on|off)|click|tick|untick|enable|disable)\b", re.I)
 
 
+PLACEHOLDER = re.compile(r"\b(placeholder|lorem ipsum|TODO|TBD)\b", re.I)
+
+
+def picture_size(path):
+    """(width, height) of a page picture, or None when it cannot be read (films' sprite sheets are not pictures)."""
+    try:
+        from PIL import Image
+        with Image.open(path) as im:
+            return im.size
+    except Exception:
+        return None
+
+
 def load(path=ITEMS):
     return json.load(open(path, encoding="utf-8"))
 
@@ -100,6 +113,12 @@ def faults(data, check_files=True):
                 out.append("%s: picture %r is not under %s/ with its words" % (it.get("id"), src, PICTURES_REL))
             elif check_files and not os.path.isfile(os.path.join(REPO, src)):
                 out.append("%s: picture %s is missing" % (it.get("id"), src))
+            elif check_files and picture_size(os.path.join(REPO, src)) not in (None, (2560, 1440)):
+                # RULINGS 30 Sep: his page's pictures are taken at 2560x1440, never enlarged (advisor 205's backfill)
+                out.append("%s: picture %s is %sx%s, not 2560x1440 (RULINGS 30 Sep)" % ((it.get("id"), src) + picture_size(os.path.join(REPO, src))))
+        if it.get("state") == "open" and PLACEHOLDER.search(json.dumps(it, ensure_ascii=False)):
+            # RULINGS 3 Oct: placeholders meanwhile, never on his page (advisor 205's backfill)
+            out.append("%s: a placeholder on his page (RULINGS 3 Oct: never on his page)" % it.get("id"))
     days = {}
     for it in data.get("items", []):
         if it.get("state") == "open":
@@ -203,6 +222,14 @@ def selftest():
     check("an open item's pictures reach its section", spec({"items": [pic]})["sections"][0]["pictures"][0]["alt"] == "the hook by day")
     check("a picture outside the page's folder is a fault", faults({"items": [dict(pic, pictures=[{"src": "F:/x.png", "alt": "x"}])]}, check_files=False) != [])
     check("a picture in the page's folder passes", faults({"items": [pic]}, check_files=False) == [])
+    check("a placeholder on an open item is refused", faults({"items": [dict(good["items"][0], text="Pick the placeholder name.")]}) != [])
+    import tempfile
+    from PIL import Image
+    tdir = tempfile.mkdtemp()
+    small, full = os.path.join(tdir, "s.jpg"), os.path.join(tdir, "f.jpg")
+    Image.new("RGB", (1600, 900)).save(small)
+    Image.new("RGB", (2560, 1440)).save(full)
+    check("picture sizes are read", picture_size(small) == (1600, 900) and picture_size(full) == (2560, 1440))
     d = json.loads(json.dumps(good))
     it = close(d, "a", "answered done", datetime.datetime(2026, 11, 2, 9, 5))
     check("a closed item is done with when and how", it and it["state"] == "done" and it["closed"] == "2026-11-02 09:05, answered done")
