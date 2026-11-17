@@ -2535,3 +2535,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: scalp area 650 to 760 cm2 (652); no scalp point on an ear (widest 8.3 cm against the ears' 10.6); skin through the hair from above 0.09 (0.13 on the stand-in); by eye: crown covered, soft hairline and sideburns, no ear through the hair.
 - Cost: about 0.8 h of helpers. What failed and why: the first inputs were deleted with a superseded round's folder, so inputs now live on the kept shelf; the front view's skin-through (0.56) is still thin; the stand-in face's own stubble stays in the pictures (the capture script has no switch for it).
 - Evidence: F:/LedgerTools/tool-tests-2026-11/loomwright-r5/darren-r5b/RESULT.md and ue/RESULT-UE.md; production/previews/loomwright-hair-r5b-darren-side-2026-11-17.jpg. Recipe map: D2 updated.
+
+## Backup's low findings and cloud online-only (17 Nov 2026, finished; online-only waits on the owner's right-click)
+- What was made: the backup never writes over a version made the same minute (the next free folder beside it); the other low findings became rules (exclude names match at every depth on purpose; size-plus-time skipping is caught by the weekly sample restore; a damaged copy is caught by the full verify); a measured test of setting cloud files online-only by script.
+- Method: a three-file test folder inside the backup, the unpinned attribute set, attributes and size on disk read over a minute without opening the files.
+- Tools: the backup script's self-tests, the shell's attribute command, the size-on-disk system call.
+- Target and check: 33 of 33 self-tests; online-only by script: the sync client cleared the mark within 10 s twice and the files stayed whole on disk, so only the client's own menu works.
+- Cost: about 0.4 h. What failed and why: the script route, because the client resets the attribute; the ask waits a day because the owner's page takes at most two batches a day.
+- Evidence: production/audits/backup-review-2026-11-17.md (last section); production/research/disk/DROPBOX-ONLINE-ONLY-2026-11-17.md (Measured on this PC).

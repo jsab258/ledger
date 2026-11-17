@@ -35,3 +35,6 @@ Read 2026-11-17. First pass, no decision. Nothing on the PC's Dropbox was touche
 - Dropbox page on the Dropbox folder as junction point, and any app-version statement: not found.
 - Microsoft pages on Cloud Files stat/attribute-read hydration behaviour: not found.
 - Search engine result lists were used only to find pages, not as evidence.
+
+## Measured on this PC (2026-11-17 14:28)
+Three 2 MB files in a test folder inside LEDGER backup, synced (PowerShell shows Archive and ReparsePoint, 0x420: cloud-files placeholders, fully present). `attrib +U -P` set UNPINNED (0x100420); Dropbox cleared it within 10 seconds, twice, and the files stayed fully on disk (GetCompressedFileSizeW 2,097,152 bytes each; no OFFLINE or RECALL bit ever appeared). So Dropbox does not honour attrib's unpinned mark here: online-only cannot be set by script. The documented way is Explorer's right-click "Make online-only" (his hands). The backup folder holds 23.3 GB in 15,253 files on C: (45.9 GB free, floor 40). Still unmeasured: whether metadata reads (exists, size) hydrate a placeholder; the manifest already keeps the backup from reading copies' bytes. Test folder deleted.

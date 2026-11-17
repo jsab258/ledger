@@ -253,6 +253,12 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None, m
             held_back = held_back or first
             continue
         if not dry:
+            # TWO RUNS IN ONE MINUTE (backup review, 17 Nov, low): the minute's versions folder may already hold this
+            # file with other bytes; never write over it, take the next free folder beside it instead.
+            n = 2
+            while target != d and os.path.exists(target):
+                target = os.path.join(dest, "versions", "%s-%d" % (stamp, n), os.path.relpath(d, dest))
+                n += 1
             os.makedirs(os.path.dirname(target), exist_ok=True)
             shutil.copy2(s, target)
             if not same(s, target):        # the fresh local copy, read back once by SHA-256
@@ -389,6 +395,11 @@ def selftest():
               and "versioned=1" in third)
         again = run(lst, dst, floor_gb=0, now=datetime.datetime(2026, 9, 26, 7, 0))
         check("a changed file already held as a version is not copied again", "versioned=0" in again and "copied=0" in again)
+        open(os.path.join(src, "b.bin"), "wb").write(b"changed twice")
+        run(lst, dst, floor_gb=0, now=when)
+        check("a second change in the same minute never writes over that minute's version",
+              open(os.path.join(dst, "versions", "2026-09-25-2330", "b.bin"), "rb").read() == b"changed"
+              and open(os.path.join(dst, "versions", "2026-09-25-2330-2", "b.bin"), "rb").read() == b"changed twice")
         os.remove(os.path.join(src, "b.bin"))
         fourth = run(lst, dst, floor_gb=0, now=when)
         check("a file gone from the source stays in the backup", os.path.exists(os.path.join(dst, "b.bin")))
