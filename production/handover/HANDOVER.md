@@ -30,15 +30,16 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Done the runs before
 - git show 5606f2805:production/handover/HANDOVER.md ('Done this run' 23:32 to 00:20), and 9f155e60f, 983ad87da before it.
 
-## Done this run (02:52 on)
-- Page read 02:54 and 03:20 (nothing new); row 02:54; advisor night checks 01:41 and 02:40 acked.
-- Walk of 17 Nov read: 11 of 15 (Sheila absent and in white). Wall walk at step-129 diagnosed as the tester's follow (not the game): route_walk.py's follow now ends at the office wall and goes by road (selftest 21/21, replayed on the real path); passes on the next walk. Step-081's stiff doorway pose: the tester's arrival tolerance under its shortest step, listed, not changed.
-- Kiln: 76dc035 in main (body height, remeasure). integrate a0616d0 gated: donkey_jacket and pleated_skirt now made; jacket, layered, nylon_jacket refused 'cannot fit where it sits' (collar ring at 1712 mm); j3 drop 24.2 vs 18, jeans inside 12 vs 7, work trousers 1 through. A diagnoser is gating each lane alone and explaining main's 'closed ring' refusals with the flag off: report F:/LedgerTools/tool-dev/reports/KILN-LANE-GATES-2026-11-17.md, runs in F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-17-lanes.
-- n16-7: cmu_ue_retarget.py review fixes 1-5 made, step 4 run 04:30 (six moves out, measure reader fault); the measured check tools/meshgen/blender/cmu_measure.py (feet relative to the source, decided; selftest 20/20; sources pass against themselves).
-- n16-8: Loomwright rounds 3 (fb9ebba) and 4 (73929ca): facial strands and scalp strands outside the skin, cards on the scalp, tip colour, JPEG, stubble off nose and lips. Job and outputs: F:/LedgerTools/tool-tests-2026-11/loomwright-r4 (ROUND4-FIXER note). F: is near its 20 GB floor (20.1 after deleting own hair leftovers 03:30).
-- F: sits on its 20 GB floor (20.3 at 03:55 after deleting own hair leftovers twice): every Kiln gate and hair run stops on it; find more own leftovers (old tool-dev/runs judged and reported) or raise it on his page as disk, before the next heavy day.
-- Uncommitted (no notes-only commits): RECIPE lines (tester follow, retarget check), DECISIONS lines for hair rounds 3 and 4 and the deletes, this handover: commit with the next work.
-- Kiln lane-gates diagnoser still out at the stop (its report replaces the draft at F:/LedgerTools/tool-dev/reports/KILN-LANE-GATES-2026-11-17.md; read it first).
+## Done the run 02:52 to 04:33
+- git show d74c1862d:production/handover/HANDOVER.md ('Done this run (02:52 on)').
+
+## Done this run (04:52 on)
+- Page and advisor read 04:53 and 05:07 (nothing new); row 04:53.
+- n16-7: the "reader fault" was the clips': the source rig node carried x100 (Blender's default scaling), so the retargeted pelvis sat about -96 m. cmu_clips.py exports bones in cm (new set F:/LedgerTools/game-inputs/cmu-2026-11-17-cm), tools/ue/cmu_bone_dump.py reads tracks inside Unreal, cmu_measure.py reads them (d74c1862d). Pelvis right now; all six pairs FAIL: feet slide 7.6-18.4 cm over source, height 2-16.5 cm, knees bent at last stand, one-frame foot/ball spikes (113_15, 131_01). Diagnoser out: report F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md. Tries on "CMU feet": 0 of 2.
+- F: 18.8 to 20.2 GB by own leftovers (DECISIONS 05:05). Every remaining old gate/new folder is named by a record or tool: kept.
+- Kiln: the 02:52 run's lane queue is still running by itself (F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-17-lanes, queue.log): main 76dc035 passes every band (donkey not made, known); jackets with the check off: 15 outside; jackets, trousers, skirt gates in turn from 05:03 (about 42 min each).
+- Progress page republished with 17 Nov's pictures (and 11 Nov's, missing). The walk report's card-memory line was the night before's: nightly_walk.py now flags a line from another build. Real 17 Nov line: memory 4,984 MB peak (under 5.07 GB), card frame 18.44 ms against 14.86 (watch tonight).
+- Hair round 4 on Darren running in the editor from 05:18 (F:/LedgerTools/tool-tests-2026-11/loomwright-r4/ue).
 
 ## Next, in order
 0. FIRST: verdicts after 2026-11-17T02:46:00Z; advisor after 2026-11-17T03:41:00+01:00. Row due 04:47 (last 03:47).

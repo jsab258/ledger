@@ -218,11 +218,25 @@ def memory_peak(at_ts=None):
     except Exception as e:
         return {"fired": False, "note": "the perf line could not be read (%s)" % type(e).__name__}
     build = "%s, %s" % (subj.replace("UE machine probe from ", "build of "), when[:16])
+    build += not_played_build(subj)
     if p["peak"] is None:
         why = ("no memory column in the capture" if p["verdict"] == "absent" else
                "the capture failed, " + p["status"] if (p["status"] or "").startswith("NO-") else "a line from before 8 Nov")
         return {"fired": False, "build": build, "note": "the perf line carries no peak (%s)" % why}
     return dict(p, fired=p["verdict"] == "OVER-LINE", build=build, level=perf_level())
+
+
+def not_played_build(subj, played=None):
+    """The perf line names the build it measured; when that is not the played copy's build, say so (17 Nov: the
+    walk ran before the night's perf line was pushed and quoted the night before's numbers unannounced)."""
+    try:
+        played = played if played is not None else open(PLAYED_STAMP, encoding="utf-8").read().strip()
+    except OSError:
+        return ""
+    m = re.search(r"from ([0-9a-f]{7,40})", subj or "")
+    if not (played and m) or m.group(1).startswith(played) or played.startswith(m.group(1)):
+        return ""
+    return "; NOT the played build %s: tonight's perf line was not pushed before the walk" % played
 
 
 def memory_sentence(m):
@@ -497,6 +511,9 @@ def selftest():
     b = parse_bench('firsts: a newcomer\'s first questions, 60 answered (0 failed): "that\'s all I know" 21 (lena 7, rocco 8, sam 6), refused 1; api-rate usd, not billed=0.00 -> firsts.jsonl')
     check("the bench's count and who said it are read", b["count"] == 21 and b["by_who"] == {"Sheila": 7, "Ron": 8, "Darren": 6})
     check("a bench with no count says so", parse_bench("nothing")["count"] is None)
+    check("a perf line from another build says it is not the played one",
+          "NOT the played build cf9d6ac" in not_played_build("UE machine probe from 9ffd652", "cf9d6ac"))
+    check("a perf line from the played build says nothing more", not_played_build("UE machine probe from cf9d6ac", "cf9d6ac") == "")
     check("a bench whose calls all failed measured nothing",
           parse_bench("firsts: a newcomer's first questions, 0 answered (60 failed): \"that's all I know\" 0 (), refused 0")["count"] is None)
     # WHO SAW IT from the game's witness events, as it records them (4 October).

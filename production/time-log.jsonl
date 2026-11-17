@@ -771,3 +771,5 @@
 {"event": "start", "at": "2026-11-17T02:55:18", "task": "n16-1 tool loop: kiln round integrate", "phase": "2", "kind": "production"}
 {"event": "start", "at": "2026-11-17T04:55:00", "task": "n16-7 CMU measured in Unreal, root scale fixed", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T05:07:00", "note": "scale fixed, six pairs measured, fail on feet; diagnosis helper out"}
+{"event": "start", "at": "2026-11-17T05:08:00", "task": "n16-10 walk report names a stale perf line; n16-3 perf read", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:17:00", "note": ""}
