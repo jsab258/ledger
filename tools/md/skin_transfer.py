@@ -15,7 +15,11 @@ on the body's own skeleton.
         --crotch-fade 0.07 --centre-seam auto|R:L   trousers: the thighs fade to the pelvis at the centre seam
         --max-influences 8           bones a point at most
         --compare ACCEPTED.fbx       per-point difference from an accepted skinned garment with the same points
+        --uv-first UVMap             the UV layer put first (the maps' layout; "" keeps the order as read)
+        --obj-uv-name UVMap          the name an OBJ's one UV layer takes
     python tools/md/skin_transfer.py --match WEIGHTS_BODY.fbx BODY.fbx      the match check alone
+    python tools/md/skin_transfer.py --uv-chain KILN.obj BENT.obj SKINNED.fbx [--obj-uv-name UVMap]
+                                     the UV order from Kiln's drape through bend_back.py to the FBX
     python tools/md/skin_transfer.py --selftest
 
 WHY, 17 November 2026. The method note's step f is skin_garment.py, which calls bind_garment.py; both run inside
@@ -44,9 +48,15 @@ HOW (bind_garment.py's steps, then skin_garment.py's, in their order).
    share of its weight to the pelvis, all of it on the seam); loose pieces inside the shoulders lose the arm (and the
    correctives) to spine_05 if nothing is left; head and facial weights go to neck_02; loose pieces smoothed over
    themselves 6 rounds; at most --max-influences bones, normalised.
-   Not ported (step 3 adds them when a garment needs them): the skirt rule (skin_garment.py's default, off for
-   trousers by --no-skirt), --collar-attr, the buttons, --also, the binder's decimation (the game mesh is already at
-   its weight) and the maps-layout-first UV order (uv_order.py).
+   Not ported (added when a garment needs them): the skirt rule (skin_garment.py's default, off for trousers by
+   --no-skirt), --collar-attr, the buttons, --also, and the binder's decimation (the game mesh is already at its
+   weight).
+5b. The UV order (step 3, 17 Nov; uv_order.py's rule): the maps' layout ("UVMap", --uv-first) is made the first
+   layer, the others kept in order ("uvReordered" in skin.json); the written FBX is read back and every corner's UV,
+   every polygon and corner order, and the layer order must equal what went in, or the run stops ("uv" in
+   skin.json). An OBJ with corners lacking a vt stops the run. --uv-chain checks the whole way from Kiln's OBJ:
+   bend_back.py rewrites only "v" lines and drops normals, so the faces' UV indices and the vt lines must pass
+   through unchanged.
 6. Out: OUT_DIR/NAME_skinned.fbx (binary FBX 7.4, centimetres, z up, the body facing -y as 3ds Max writes; the
    mesh with its UV layers, every bone of the body as a LimbNode placed by its bind pose, one cluster per used bone,
    the bind pose), NAME_weights.npz (the point by bone matrix) and skin.json (every count the Blender scripts log,
@@ -101,6 +111,7 @@ class Garment:
         self.face_piece = None     # (F,) piece number, -1 none
         self.piece_names = []
         self.source = None
+        self.uv_missing = 0
 
     @property
     def n_faces(self):
@@ -131,8 +142,9 @@ class Garment:
         return np.unique(e, axis=0)
 
 
-def read_obj(path):
-    """An OBJ in Marvelous's or Kiln's layout (millimetres, y up, facing +z), as bend_back.py reads it."""
+def read_obj(path, uv_name="UVMap"):
+    """An OBJ in Marvelous's or Kiln's layout (millimetres, y up, facing +z), as bend_back.py reads it. Its one UV
+    layer is named uv_name; g.uv_missing counts corners with no vt (a layer is kept only when none is missing)."""
     g = Garment()
     g.source = path
     pts, uvs, corners, cuv, starts, piece = [], [], [], [], [0], []
@@ -166,8 +178,9 @@ def read_obj(path):
     g.face_piece = np.array(piece, dtype=np.int64)
     g.piece_names = names
     cuv = np.array(cuv, dtype=np.int64)
+    g.uv_missing = int(np.sum(cuv < 0)) if len(uvs) else 0
     if len(uvs) and np.all(cuv >= 0):
-        g.uv_layers.append(("UVMap", np.array(uvs, dtype=float), cuv))
+        g.uv_layers.append((uv_name, np.array(uvs, dtype=float), cuv))
     return g
 
 
@@ -213,8 +226,82 @@ def read_fbx(path, mesh=None):
     return g
 
 
-def read_garment(path, mesh=None):
-    return read_obj(path) if path.lower().endswith(".obj") else read_fbx(path, mesh)
+def read_garment(path, mesh=None, obj_uv_name="UVMap"):
+    return read_obj(path, obj_uv_name) if path.lower().endswith(".obj") else read_fbx(path, mesh)
+
+
+# ---- step 3: the UV order (uv_order.py, kept from Kiln's output to the FBX) ---------------------------------------
+
+def maps_layout_first(g, name="UVMap"):
+    """The maps' layout made the first UV layer, the one Unreal's material reads (uv_order.py's rule, 30 Oct: the
+    built cuffs' jacket reached the game with "pattern" first and its colour map's alpha cut holes). The other layers
+    keep their order. Returns True when the order changed."""
+    names = [n for n, _, _ in g.uv_layers]
+    if not names or names[0] == name or name not in names:
+        return False
+    k = names.index(name)
+    g.uv_layers = [g.uv_layers[k]] + g.uv_layers[:k] + g.uv_layers[k + 1:]
+    return True
+
+
+def corner_uvs(g):
+    """{layer name: (C, 2) the UV at every polygon corner, in the polygons' order}."""
+    return {n: np.asarray(uv, dtype=float)[np.asarray(idx, dtype=np.int64)] for n, uv, idx in g.uv_layers}
+
+
+def uv_check(src, out, tol=1e-9):
+    """Every UV layer of src found in out under its name with the same UV at every corner, the polygons and their
+    corners in the same order, and out's layers in the order wanted (src's own order). tol in UV units (the writer
+    keeps float64, so the read-back is exact)."""
+    rep = {"layersIn": [n for n, _, _ in src.uv_layers], "layersOut": [n for n, _, _ in out.uv_layers]}
+    fails = []
+    same_polys = (len(src.poly_start) == len(out.poly_start) and np.array_equal(src.poly_start, out.poly_start)
+                  and np.array_equal(src.corners, out.corners))
+    rep["polygonsSame"] = bool(same_polys)
+    if not same_polys:
+        fails.append("polygons or corners differ (%d/%d polygons, %d/%d corners)" % (
+            len(src.poly_start) - 1, len(out.poly_start) - 1, len(src.corners), len(out.corners)))
+    if rep["layersIn"] != rep["layersOut"]:
+        fails.append("layer order %s, wanted %s" % (rep["layersOut"], rep["layersIn"]))
+    a, b = corner_uvs(src), corner_uvs(out)
+    worst = {}
+    for n, uv in a.items():
+        if n not in b:
+            fails.append("layer %s missing" % n)
+            continue
+        if len(b[n]) != len(uv):
+            fails.append("layer %s has %d corners, wanted %d" % (n, len(b[n]), len(uv)))
+            continue
+        d = float(np.abs(b[n] - uv).max()) if len(uv) else 0.0
+        worst[n] = d
+        if d > tol:
+            fails.append("layer %s differs by up to %.3g at %d corners" % (n, d, int(np.sum(np.abs(b[n] - uv).max(axis=1) > tol))))
+    if getattr(src, "uv_missing", 0):
+        fails.append("%d corners carry no UV in %s" % (src.uv_missing, src.source))
+    rep["worstDifference"] = {n: float("%.3g" % v) for n, v in worst.items()}
+    rep["first"] = rep["layersOut"][0] if rep["layersOut"] else None
+    rep["pass"] = not fails
+    rep["fails"] = fails
+    return rep
+
+
+def uv_chain(kiln_obj, bent_obj, skinned_fbx, uv_name="UVMap", tol=1e-9):
+    """The UV order kept from Kiln's output to the FBX: the drape's OBJ, the bent-back OBJ (tools/md/bend_back.py)
+    and the skinned FBX hold the same polygons in the same order with the same UV at every corner. The OBJs' layer
+    is looked for under uv_name in the FBX; its other layers are listed."""
+    k = read_obj(kiln_obj, uv_name)
+    b = read_obj(bent_obj, uv_name)
+    f = read_fbx(skinned_fbx)
+    rep = {"kilnObj": kiln_obj.replace("\\", "/"), "bentObj": bent_obj.replace("\\", "/"),
+           "fbx": skinned_fbx.replace("\\", "/"), "kilnToBent": uv_check(k, b, tol)}
+    sub = Garment()
+    sub.verts, sub.poly_start, sub.corners, sub.source = f.verts, f.poly_start, f.corners, f.source
+    sub.uv_layers = [x for x in f.uv_layers if x[0] == uv_name]
+    rep["bentToFbx"] = uv_check(b, sub, tol)
+    rep["fbxLayers"] = [n for n, _, _ in f.uv_layers]
+    rep["fbxFirst"] = rep["fbxLayers"][0] if rep["fbxLayers"] else None
+    rep["pass"] = rep["kilnToBent"]["pass"] and rep["bentToFbx"]["pass"]
+    return rep
 
 
 def uv_islands(g, layer="pattern"):
@@ -957,7 +1044,7 @@ def skin(body, g, pieces="auto", reach=REACH, angle=ANGLE, panels=True, keep_cor
     return W, names, log
 
 
-def run(weights_body, garment, out_dir, name, match_body=None, compare_to=None, **kw):
+def run(weights_body, garment, out_dir, name, match_body=None, compare_to=None, uv_first="UVMap", obj_uv_name="UVMap", **kw):
     os.makedirs(out_dir, exist_ok=True)
     rep = {"tool": "tools/md/skin_transfer.py", "weightsBody": weights_body.replace("\\", "/"),
            "weightsBodySha256_16": sha16(weights_body), "garment": garment.replace("\\", "/"),
@@ -969,13 +1056,24 @@ def run(weights_body, garment, out_dir, name, match_body=None, compare_to=None, 
         if not rep["match"]["pass"]:
             _dump(rep, out_dir)
             raise SystemExit("SKIN TRANSFER the weights body does not match %s: %s" % (match_body, "; ".join(rep["match"]["fails"])))
-    g = read_garment(garment)
+    g = read_garment(garment, obj_uv_name=obj_uv_name)
+    if g.uv_missing:
+        _dump(rep, out_dir)
+        raise SystemExit("SKIN TRANSFER %d of the garment's corners carry no UV: fix the OBJ's faces" % g.uv_missing)
+    layers_in = [n for n, _, _ in g.uv_layers]
+    rep["uvReordered"] = maps_layout_first(g, uv_first) if uv_first else False
     W, names, log = skin(body, g, **kw)
     rep.update(log)
     rep["points"] = int(len(g.verts))
     out_fbx = os.path.join(out_dir, name + "_skinned.fbx")
     rep["fbx"] = write_skinned_fbx(out_fbx, g, body.bones, body.parent, W, names, mesh_name=name)
     rep["fbx"]["path"] = out_fbx.replace("\\", "/")
+    # the FBX read back: every corner's UV, the polygons' order, the maps' layout first
+    rep["uv"] = uv_check(g, read_fbx(out_fbx))
+    rep["uv"]["layersAsRead"] = layers_in
+    if not rep["uv"]["pass"]:
+        _dump(rep, out_dir)
+        raise SystemExit("SKIN TRANSFER the written FBX lost its UV order: %s" % "; ".join(rep["uv"]["fails"]))
     used = [j for j in range(len(names)) if W[:, j].max() > 0]
     np.savez_compressed(os.path.join(out_dir, name + "_weights.npz"), W=W[:, used].astype(np.float32),
                         names=np.array([names[j] for j in used]))
@@ -989,7 +1087,7 @@ def run(weights_body, garment, out_dir, name, match_body=None, compare_to=None, 
         c["pointMismatchMm"] = None if off is None else round(1000 * off, 4)
         rep["compare"] = c
     _dump(rep, out_dir)
-    print("SKIN TRANSFER " + json.dumps({k: rep.get(k) for k in ("points", "pieces", "legSides", "crotch", "compare")})[:900], flush=True)
+    print("SKIN TRANSFER " + json.dumps({k: rep.get(k) for k in ("points", "pieces", "uvReordered", "legSides", "crotch", "compare")})[:900], flush=True)
     return rep
 
 
@@ -1011,8 +1109,14 @@ def main(argv):
         rep = match_check(fbx_skin.load_skinned(argv[i + 1]), fbx_skin.load_skinned(argv[i + 2]))
         print("MATCH " + json.dumps(rep))
         return 0 if rep["pass"] else 3
+    if "--uv-chain" in argv:
+        i = argv.index("--uv-chain")
+        rep = uv_chain(argv[i + 1], argv[i + 2], argv[i + 3],
+                       uv_name=argv[argv.index("--obj-uv-name") + 1] if "--obj-uv-name" in argv else "UVMap")
+        print("UV CHAIN " + json.dumps(rep))
+        return 0 if rep["pass"] else 3
     valued = ("--match-body", "--reach", "--angle", "--pieces", "--leg-sides", "--crotch-fade", "--centre-seam",
-              "--max-influences", "--compare")
+              "--max-influences", "--compare", "--uv-first", "--obj-uv-name")
     pos, k = [], 0
     while k < len(argv):
         if argv[k] in valued:
@@ -1031,7 +1135,8 @@ def main(argv):
         pieces=opt("--pieces", "auto"), reach=float(opt("--reach", REACH)), angle=float(opt("--angle", ANGLE)),
         panels="--no-panels" not in argv, keep_correctives="--no-keep-correctives" not in argv,
         leg_sides=opt("--leg-sides"), crotch_fade=float(opt("--crotch-fade", 0.0)), centre_seam=opt("--centre-seam"),
-        max_influences=int(opt("--max-influences", MAX_INFLUENCES)))
+        max_influences=int(opt("--max-influences", MAX_INFLUENCES)), uv_first=opt("--uv-first", "UVMap"),
+        obj_uv_name=opt("--obj-uv-name", "UVMap"))
     return 0
 
 

@@ -459,5 +459,139 @@ class TestRun(unittest.TestCase):
                 stf.run(fb, gp, os.path.join(d, "out3"), "leg", match_body=bb_, pieces="none")
 
 
+def with_uvs(g, names=("pattern", "UVMap")):
+    """Give a quad garment one UV layer per name: per corner, distinct values (the layer's number in the integer part)."""
+    g.uv_layers = []
+    C = len(g.corners)
+    for k, n in enumerate(names):
+        uv = np.stack([k + np.arange(C) / (C + 1.0), (np.arange(C) * 7 % C) / float(C)], axis=1)
+        g.uv_layers.append((n, uv, np.arange(C, dtype=np.int64)))
+    return g
+
+
+OBJ = """# a tiny drape: two quads, two pieces, normals as Marvelous writes them
+v 0 1000 0
+v 100 1000 0
+v 100 900 0
+v 0 900 0
+v 200 1000 0
+v 200 900 0
+vt 0.0 0.0
+vt 0.5 0.0
+vt 0.5 0.5
+vt 0.0 0.5
+vt 0.75 0.0
+vt 0.75 0.5
+vt 0.25 0.25
+vn 0 0 1
+g front
+f 1/1/1 4/4/1 3/3/1 2/2/1
+g back
+f 2/7/1 3/3/1 6/6/1 5/5/1
+"""
+
+
+class TestUvOrder(unittest.TestCase):
+    def test_maps_layout_first(self):
+        g = with_uvs(quad_garment(lerp_path((0, 0, 0.2), (0, 0, 0.8), 4), 0.1, 6), ("pattern", "UVMap", "extra"))
+        before = stf.corner_uvs(g)
+        self.assertTrue(stf.maps_layout_first(g))
+        self.assertEqual([n for n, _, _ in g.uv_layers], ["UVMap", "pattern", "extra"])
+        for n, uv in stf.corner_uvs(g).items():
+            np.testing.assert_array_equal(uv, before[n])
+        self.assertFalse(stf.maps_layout_first(g))                       # already first
+        self.assertFalse(stf.maps_layout_first(g, "nothing"))            # no such layer: left alone
+
+    def test_fbx_read_back_keeps_every_corner_and_catches_changes(self):
+        b = synthetic_body(True)
+        g = with_uvs(quad_garment(lerp_path((0.1, 0, 0.9), (0.1, 0, 0.1), 6), 0.08, 8), ("UVMap", "pattern"))
+        W, names = stf.dense_weights(b)
+        Wg = np.zeros((len(g.verts), len(names)))
+        Wg[:, names.index("thigh_l")] = 1.0
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "g.fbx")
+            stf.write_skinned_fbx(p, g, b.bones, b.parent, Wg, names)
+            back = stf.read_fbx(p)
+            rep = stf.uv_check(g, back)
+            self.assertTrue(rep["pass"], rep["fails"])
+            self.assertEqual(rep["first"], "UVMap")
+            self.assertEqual(rep["worstDifference"], {"UVMap": 0.0, "pattern": 0.0})
+            # one corner's UV changed, or the layers swapped, or a polygon turned: each fails
+            n, uv, idx = back.uv_layers[1]
+            uv = uv.copy()
+            uv[idx[5]] += 0.01
+            back.uv_layers[1] = (n, uv, idx)
+            self.assertFalse(stf.uv_check(g, back)["pass"])
+            back = stf.read_fbx(p)
+            back.uv_layers = back.uv_layers[::-1]
+            self.assertIn("layer order", " ".join(stf.uv_check(g, back)["fails"]))
+            back = stf.read_fbx(p)
+            back.corners = back.corners.copy()
+            back.corners[:4] = back.corners[:4][::-1]
+            self.assertFalse(stf.uv_check(g, back)["polygonsSame"])
+
+    def test_obj_missing_uv_is_counted(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "m.obj")
+            with open(p, "w") as f:
+                f.write(OBJ.replace("f 2/7/1 3/3/1 6/6/1 5/5/1", "f 2 3 6 5"))
+            g = stf.read_obj(p)
+            self.assertEqual(g.uv_missing, 4)
+            self.assertEqual(g.uv_layers, [])
+            with open(p, "w") as f:
+                f.write(OBJ)
+            self.assertEqual(stf.read_obj(p).uv_missing, 0)
+
+    def test_chain_from_kiln_obj_through_bend_back_to_fbx(self):
+        import bend_back
+        b = synthetic_body(True)
+        with tempfile.TemporaryDirectory() as d:
+            k, bent, fb = (os.path.join(d, x) for x in ("kiln.obj", "bent.obj", "s.fbx"))
+            with open(k, "w") as f:
+                f.write(OBJ)
+            lines, vidx, pts, _ = bend_back.read_obj(k)
+            moved = pts + np.array([3.0, -2.0, 1.5])                       # every point moves, as a bend-back does
+            bend_back.write_obj(bent, lines, vidx, pts, moved)
+            g = stf.read_obj(bent)
+            self.assertEqual(g.uv_missing, 0)
+            W, names = stf.dense_weights(b)
+            Wg = np.zeros((len(g.verts), len(names)))
+            Wg[:, names.index("spine_05")] = 1.0
+            stf.write_skinned_fbx(fb, g, b.bones, b.parent, Wg, names)
+            rep = stf.uv_chain(k, bent, fb)
+            self.assertTrue(rep["pass"], (rep["kilnToBent"]["fails"], rep["bentToFbx"]["fails"]))
+            self.assertEqual(rep["fbxFirst"], "UVMap")
+            # a bent OBJ whose face took another vt fails the chain
+            txt = open(bent).read().replace("f 2/7 3/3 6/6 5/5", "f 2/1 3/3 6/6 5/5")
+            self.assertNotEqual(txt, open(bent).read())
+            with open(bent, "w") as f:
+                f.write(txt)
+            self.assertFalse(stf.uv_chain(k, bent, fb)["pass"])
+
+    def test_run_puts_the_maps_layout_first_and_checks_the_fbx(self):
+        full = synthetic_body(True)
+        g = with_uvs(quad_garment(lerp_path((0.1, 0, 0.9), (0.1, 0, 0.1), 9), 0.08), ("pattern", "UVMap"))
+        with tempfile.TemporaryDirectory() as d:
+            fb, gp = os.path.join(d, "full.fbx"), os.path.join(d, "g.fbx")
+            bg = stf.Garment()
+            bg.verts, bg.corners = full.verts, full.tris.reshape(-1)
+            bg.poly_start = np.arange(0, len(bg.corners) + 1, 3)
+            Wb, nb = stf.dense_weights(full)
+            stf.write_skinned_fbx(fb, bg, full.bones, full.parent, Wb, nb, mesh_name="body")
+            stf.write_skinned_fbx(gp, g, full.bones, full.parent, np.zeros((len(g.verts), len(nb))) + (np.array(nb) == "root"), nb)
+            rep = stf.run(fb, gp, os.path.join(d, "out"), "leg", pieces="none")
+            self.assertTrue(rep["uvReordered"])
+            self.assertTrue(rep["uv"]["pass"], rep["uv"]["fails"])
+            self.assertEqual(rep["uv"]["layersAsRead"], ["pattern", "UVMap"])
+            out = stf.read_fbx(os.path.join(d, "out", "leg_skinned.fbx"))
+            self.assertEqual([n for n, _, _ in out.uv_layers], ["UVMap", "pattern"])
+            src = stf.corner_uvs(g)
+            for n, uv in stf.corner_uvs(out).items():
+                np.testing.assert_array_equal(uv, src[n])
+            rep2 = stf.run(fb, gp, os.path.join(d, "out2"), "leg", pieces="none", uv_first="")
+            self.assertFalse(rep2["uvReordered"])
+            self.assertEqual(rep2["uv"]["first"], "pattern")
+
+
 if __name__ == "__main__":
     unittest.main()
