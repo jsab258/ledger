@@ -206,6 +206,8 @@ real_table() {
     push-guard-selftest   "$REPO"                 "$PY tools/push_guard.py --selftest" \
     catalogue             "$REPO"                 "$PY tools/catalogue.py" \
     catalogue-selftest    "$REPO"                 "$PY tools/catalogue.py --selftest" \
+    outside-only          "$REPO"                 "$PY tools/outside_only_check.py" \
+    outside-only-selftest "$REPO"                 "$PY tools/outside_only_check.py --selftest" \
     branch-check          "$REPO"                 "$PY tools/branch_check.py" \
     branch-check-selftest "$REPO"                 "$PY tools/branch_check.py --selftest" \
     homes                 "$REPO"                 "$PY tools/homes_check.py" \

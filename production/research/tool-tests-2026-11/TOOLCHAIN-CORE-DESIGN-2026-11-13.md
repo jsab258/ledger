@@ -58,3 +58,31 @@ Each garment's hours (tools/timelog.py, its own window) and dollars (tools/token
 | Ron's work trousers | Kiln breadth | job written, drape not run | | |
 | Sheila's pleated skirt | Kiln breadth | job written, drape not run | | |
 | Darren's nylon jacket | Kiln breadth | job written, drape not run | | |
+
+## Product targets (his direction, 17 Nov 22:12)
+
+Advisor 213: Kiln is to be efficient as a product, quality first; speed or cost is never a reason to pass lower quality. Numbers marked (P) are proposed until the session adopts them.
+
+- **No hands on routine garments.** He reviews samples only; tokens go only to exceptions.
+- **A machine-minute limit per garment, met on the card (P).** Measured, Tom's jumper: processor 102.8 s, card colour order 65.6 s, card exact order 229.0 s; under XPBD 1,016 s, 568 s, 2,408 s; trousers processor only, 72.4 s (F:/LedgerTools/tool-dev/runs/kiln-speed2-2026-11-17/*/time.txt). Gate baseline, processor (F:/LedgerTools/tool-dev/kiln/python/regression_baseline.json, 9ca019e): jumper 123.6 s, jacket 155.5, jeans 78.5, trousers 159.8, layered 221.8, nylon jacket 335.7, skirt 479.7. Proposed drape limits on the card: plain garment 2 min; jacket 4; layered pair 6; skirt or coat 8; under XPBD 10 for a plain garment (9.5 measured, before the hinge). Refit 1 min per person (Seamshift 0.8 s, above). Drape, five refits and skinning stay within this note's 15 minutes. Card times for all but the jumper are unmeasured.
+- **Repeats nearly free.** Drape once per pattern and body class, refit to each person; colours, wear and sizes from data. Reference: Mafia's skinned pieces on one leader skeleton (studies/06, as KILN-TO-GAME-PLAN-2026-11-17.md cites it).
+- **Whole wardrobes overnight from a list**, unattended, checked automatically; a failure becomes an exception line.
+- **Every round report measures** machine minutes, tokens and human minutes per garment against these limits and the old route, 77.0 h E for the Hook's list (production/art/clothing/HOOK-GARMENT-LIST-2026-11-03.md line 55, an estimate); plus hours per round, first-time gate passes, regressions per merge, and time waiting for the machine (17 Nov: about 1.1 h of 1.6, F:/LedgerTools/tool-dev/reports/KILN-BENCHES-2026-11-17.md line 495).
+- **Checks in solver steps and results, not clock time (P).** Results do not depend on load (F:/LedgerTools/tool-dev/reports/KILN-LANES-VERDICT-2026-11-17.md line 35); the zips gate failed on jeans seconds alone, 123.05 against 78.46 (KILN-ZIPS-2026-11-17.md line 215). Timing keeps its own measure on a quiet machine and fails no merge. Clock items in F:/LedgerTools/tool-dev/kiln/python/regression_gate.py:
+
+| Clock item | Lines | Step-based replacement |
+|---|---|---|
+| "seconds" band, 25% floor, higher worse | 49, 59, 107 | "frames" (now direction 0, line 60) banded higher-worse, plus small steps times passes |
+| job timeout 2,400 s, kept as a result | 276 | a frame budget ending "jammed"; the clock only a hang guard, exit 3 |
+| judge timeouts 1,800 s | 295, 304 | hang guard only, exit 3 |
+| waiting for an idle machine, 46 x 120 s | 216-223 | not needed by the bands; kept for card runs |
+| wall_s | 279 | timing record only |
+
+**Ready Kiln list (machine-free, for helper places, in order):**
+1. Step 5's strain limits per material, applied last, leftover reported (KILN-METHOD-REVIEW-2026-11-16.md line 66); layered expected to fail first, a known shortfall (line 76).
+2. The card speed path; the card refuses while the hinge is on until it solves hinges (F:/LedgerTools/tool-dev/reports/KILN-SPEED2-PORT-2026-11-17.md lines 124-125); its Apache-2.0-only crates settled (line 110).
+3. M5 skinning (KILN-M5-RIGGING-METHOD-2026-11-17.md) and the converter for Ron's trousers (tools/kiln_to_game.py; KILN-TO-GAME-PLAN-2026-11-17.md section 3).
+4. The refit-first pipeline (Seamshift, one drape per pattern and body class).
+5. Batch mode: a wardrobe list in, one result line per garment, exceptions listed.
+6. Patterns for M7's list: FreeSewing (MIT, his decision of 25 Sep, production/archive/DECISIONS-to-2026-11-09.md line 36); GarmentCode (code MIT, "Copyright (c) 2024 Maria Korosteleva", read 17 Nov 2026 at github.com/maria-korosteleva/GarmentCode/blob/main/LICENSE), not on ledger-v2/research/license-allowlist.md, so his licence tap first; its dataset's licence unread, unverified.
+7. The judge's checks in step terms (the table above), the judge kept outside the tool.

@@ -162,11 +162,12 @@
    "line": "7, 10 Nov: an hourly-checked line, 0% at",
    "by": [
     "tools/pace_line.py::more than 6 ahead: finish the item in hand",
+    "tools/pace_line.py::FIRST_LEG_TOP = 99.0",
     "tools/fresh_gate.py::WAIT the week was",
     "advisor:watchdog",
     "tools/push_guard.py"
    ],
-   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip"
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98"
   },
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
@@ -253,16 +254,12 @@
    ]
   },
   {
-   "line": "11 Oct, amended 25 and 28 Oct: The AAA study",
+   "line": "17 Nov (replaces 11, 25, 28 Oct): other games",
    "by": [
-    "tools/push_guard.py::an AES key's shape (0x and 64 hex characters)",
-    "tools/push_guard.py::a file from a study export folder",
-    "tools/push_guard.py::a picture or film added or changed outside production/previews/",
-    "tools/git-size-guard.py::this commit is refused",
-    "tools/backup-to-dropbox.py::aesKeys",
+    "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
     "monday-audit"
    ],
-   "note": "game pictures and the key kept out of git and the backup"
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot"
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",

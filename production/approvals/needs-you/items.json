@@ -1217,6 +1217,38 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "kiln-front-end-licence-2026-11-17",
+   "added": "2026-11-17 21:36",
+   "tag": "DECISION",
+   "title": "May garments made through Kiln's copied job interface go into the game?",
+   "text": "Kiln reuses Drape Studio's job interface (the command names only, not its engine, presets or files) so Marvelous's job scripts run unchanged. The design note made this your licence call before any Kiln garment is adopted.",
+   "why": [
+    "Ron's work trousers are the first Kiln garment heading for the game; the step that adopts them waits on this.",
+    "You recorded Drape Studio as your own tool on 10 Nov; whether that covers adopting garments made through its interface was never asked."
+   ],
+   "steps": [
+    "Tap Yes or No below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: only the command names are reused, the tool is yours, and nothing of its engine or presets is in Kiln.",
+   "options": [
+    [
+     "yes",
+     "Yes, adopt (recommended)"
+    ],
+    [
+     "no",
+     "No: Kiln garments reach the game only through Marvelous"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
