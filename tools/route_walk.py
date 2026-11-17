@@ -153,10 +153,32 @@ def walk_to_person(r, key, m):
         spot = approach(w[key][:2], w["tom"][:2], m)
         r.by_road(spot[0], spot[1])
         w = r.where()
-        if key in w and "tom" in w and in_office(w[key][0], w[key][1]) == in_office(w["tom"][0], w["tom"][1]):
+        if key in w and "tom" in w and same_side(w, key):
             break
-    r.go_to(0, 0, tol=0.5, legs=10,
-            follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], m) if key in ww and "tom" in ww else None)
+    # THE FOLLOW STOPS AT THE OFFICE WALL (17 November, the night's walk, step-129: Sheila left the office while he
+    # followed her in straight legs from inside, and he held W into the office's side wall). When they end on
+    # different sides of it, the way round is by road again, once.
+    for _ in range(2):
+        r.go_to(0, 0, tol=0.5, legs=10, follow=follow_aim(key, m))
+        w = r.where()
+        if key not in w or "tom" not in w or same_side(w, key):
+            return
+        spot = approach(w[key][:2], w["tom"][:2], m)
+        r.by_road(spot[0], spot[1])
+
+
+def same_side(w, key):
+    """Tom and the person both inside the office, or both outside it."""
+    return in_office(w[key][0], w[key][1]) == in_office(w["tom"][0], w["tom"][1])
+
+
+def follow_aim(key, m):
+    """go_to's moving target: where to stand by them, or None (the follow ends) when the office wall lies between."""
+    def aim(ww):
+        if key not in ww or "tom" not in ww or not same_side(ww, key):
+            return None
+        return approach(ww[key][:2], ww["tom"][:2], m)
+    return aim
 
 
 def stand_off(target, frm, m):
@@ -428,8 +450,7 @@ def greet(r, key, name):
     # ONE MORE APPROACH WHEN THE FIRST ENDS SHORT (28 October 2026, the night's walk: Ron missed at 3.7 m against his
     # 3.5 m reach, the evening after a 15 of 15; Epic's walk glides on after each leg, so a leg can end a little short)
     if d > w[key][2] and "tom" in w:
-        r.go_to(0, 0, tol=0.4, legs=6,
-                follow=lambda ww: approach(ww[key][:2], ww["tom"][:2], 0.9) if key in ww and "tom" in ww else None)
+        r.go_to(0, 0, tol=0.4, legs=6, follow=follow_aim(key, 0.9))
         w = r.where()
         if not (w.get("tom") and key in w):
             return r.record("town-" + name, False, "lost sight of %s" % name)
@@ -700,6 +721,12 @@ def selftest():
     check("a follow run, its aim changing each leg, does not fire", not stuck_runs(follow)["fires"])
     check("five legs short do not fire", not stuck_runs([leg((5, 0), (0, 0))] * 5 + [leg((9, 9), (0, 0))])["fires"])
     check("no path says so", stuck_runs([]).get("note") == "no path" and stuck_runs(None).get("note") == "no path")
+    inside = [(OFFICE_BOX[0] + OFFICE_BOX[1]) / 2, (OFFICE_BOX[2] + OFFICE_BOX[3]) / 2]
+    outside = [OFFICE_BOX[1] + 3.0, inside[1]]
+    check("the follow ends when the office wall lies between (17 Nov step-129)",
+          follow_aim("sheila", 1.1)({"tom": inside + [0.0], "sheila": outside + [3.5]}) is None)
+    check("the follow aims at her when both are outside",
+          follow_aim("sheila", 1.1)({"tom": [outside[0] + 4, outside[1]], "sheila": outside + [3.5]}) is not None)
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
