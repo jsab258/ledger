@@ -190,3 +190,5 @@ These are the features for later rounds. List them in your notes as planned, but
 11. Layered engine sound: pitch with engine speed, gear changes, tyre squeal at the grip limit, impact sounds.
 
 When this round is done, send back: the results JSON from "Run all", the telemetry files, the settings JSON, and the changelog note.
+
+Also send back the game's source files as you wrote them, before any bundling or shrinking of names (one file per part, readable), with the build command you used. They will be kept in the project's repository with tests, so the next rounds build on readable code.
