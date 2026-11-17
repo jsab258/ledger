@@ -1143,6 +1143,39 @@
     "Tap Done below"
    ],
    "closed": "2026-11-17 16:40, withdrawn on his message of 16:34 (advisor 203): the 15-minute gate starts the backup; Dropbox online-only not needed now"
+  },
+  {
+   "id": "presentmon-licence-2026-11-17",
+   "added": "2026-11-17 18:54",
+   "tag": "DECISION",
+   "title": "Allow a free frame-timing tool (PresentMon) on your PC?",
+   "why": [
+    "Order item 11 compares the big games' speed with ours; Intel's free PresentMon times their frames from outside, without opening their files.",
+    "It is MIT-licensed, stays on your PC and never ships, but it is not on the licence list, so it is yours to allow."
+   ],
+   "text": "Allow Intel's free PresentMon (MIT licence) on your PC to time the big games' frames from outside; used only for measuring, never shipped.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    },
+    {
+     "label": "PresentMon (Intel, free)",
+     "url": "https://github.com/GameTechDev/PresentMon"
+    }
+   ],
+   "recommendation": "Yes: real frame times for the comparison, from outside the games, at no cost.",
+   "options": [
+    [
+     "yes",
+     "Yes, add it to the list (recommended)"
+    ],
+    [
+     "no",
+     "No, published figures only"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

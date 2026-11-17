@@ -2567,3 +2567,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: 9 of 9 self-tests; 84 of 84 rules enforced, faults=0; 51 by code or scheduled checks, 33 by the weekly audit; 7 new small checks written the same day (picture size, placeholders, the tool share, the API ceiling, the weekly audit file, a key in a commit, helpers at once).
 - Cost: about 1 h with three helpers. What failed: two shell edits lost backslashes (a known heredoc quirk), caught by self-tests.
 - Evidence: tools/rulings_check.py, production/rulings-enforcers.json.
+
+## A vehicle body's first shape, machine-free part (17 Nov 2026, the lane; set aside until its first Blender run)
+- What was made: a loft generator for a fictional car body from a dozen fixed-topology cross-sections, with its tests, a Blender side (untested) and two rounds of blind outline screening.
+- Method: class numbers measured off real cars (dimensions only), ratios checked in code, flat outlines shown to a blind reviewer before any 3D render; a short deck behind the rear glass reads as a saloon, a flat roof into an upright tail as an estate.
+- Tools: plain Python with self-tests; a fresh blind reviewer on flat outlines.
+- Target and check: 16 of 16 self-tests; outlines read as the intended class and era with no confident make named.
+- Cost: about 0.4 h. What failed: the first two outlines read as saloon then estate, not the intended hatch; round 3's proposal fixes the tail.
+- Evidence: production/lane/P9-OUTLINE-ROUNDS-2026-11-17.md, tools/lane/car_loft.py. Recipe map: no step moved.

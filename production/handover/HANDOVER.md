@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 16:37 (the hourly run; the last session set its Stopped line at 16:31)
+**Started:** 2026-11-17 18:52 (the hourly run; the last session set its Stopped line at 18:40)
 
 **Row due:** 2026-11-17 19:25 (last 18:25; page and advisor read 18:25; last ack 18:11, the pace guard)
 **Stopped:** 2026-11-17 18:40 (history near its hard limit at an item's end; no helper or background job running)
@@ -28,11 +28,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (16:37 to the stop)
-- His messages via the advisor (203-206) acted on and acknowledged: PC tasks withdrawn (page: nothing open); backup started by the gate; ACTION items need a reason only he can meet; every ruling's enforcer listed (84 of 84) and checked on commit; seven new checks; the lane is the advisor's cloud task.
-- Retention step 2: two hostile reviews failed it; three fix tries; off.
-- Kiln: convergence, zips (5ee46da) and benches (911bfdc) merged; double precision rests truly but failed its gate (diagnosed: the jobs' sensitivity).
-- Next order's targets: props, light and weather, hill crowns, Rita's fixes; the quay-end stop diagnosed (FINDINGS). DAILY-2026-11-17 written.
+## In flight (18:52 run, kept current)
+- Lane merged into wip 82b9db3e5 (n16-9 loft generator, n16-11 method); n16-11 Q1 PresentMon on his page (presentmon-licence-2026-11-17, open), Q2 decided (DECISIONS). Row 18:58 written; page and advisor read 19:1x, nothing new.
+- Helpers: Kiln double-switch (lane-double-switch, worktree C:/LedgerTools/kiln-lanes/double-switch, try 2 of 2: switch off by default, gate alone vs 9ca019e, M1 with it on; NOT to merge itself); retention open fixes (copy in Temp/claude/retention-fix, os.replace only with no gate running); image-to-3D props target; Mickey's night target's review fixes (PASS WITH FIXES, decided: the front room lit at night).
+- Staged, uncommitted: DECISIONS, NOTEBOOK (lane car lesson), FINDINGS (Mickey's night line), order item 5 link, page items, the night target. Commit with the next work.
+- Removing C:/Users/Jafar/ledger-lane (git worktree remove, clean and merged) was refused by the app's safety check: not retried; leave it, 0.1 GB.
 
 ## Next, in order
 0. FIRST: verdicts after 2026-11-17T17:20:00Z; advisor after the last ack (18:11, the pace guard). THE LANE (his pick about 17:15, advisor 206): runs in the cloud as the advisor's hourly task (at :15, to 23 Nov 07:00) on branch lane-2026-11, writing only production/lane/, production/research/lane/, tools/lane/. At each item end: `git fetch origin lane-2026-11`, `git log wip..origin/lane-2026-11`, review, merge what passes the checks into wip, a DECISIONS line per merge; steer it by editing production/lane/LANE-QUEUE.md on wip; its results in production/lane/LANE-LOG.md. The PC lane is dropped: C:/Users/Jafar/ledger-lane (95 MB worktree), tools/lane_gate.py and production/lane's PC setup files are unused; remove the worktree through retention.py's map with one DECISIONS line (own leftover).
