@@ -28,6 +28,13 @@ def is_limb(name):
     return name.startswith(("Left", "Right")) and name.endswith(LIMB_END) and "Finger" not in name
 
 
+def fcurves_of(act):
+    """Every F-curve of an action (Blender 5: layered actions, as sitting_clips.py reads them)."""
+    if hasattr(act, "layers"):
+        return [fc for layer in act.layers for strip in layer.strips for bag in strip.channelbags for fc in bag.fcurves]
+    return list(act.fcurves)
+
+
 def main(src_dir, out_dir):
     import bpy
 
@@ -124,7 +131,31 @@ def main(src_dir, out_dir):
         box.parent = rig
         box.modifiers.new("Armature", "ARMATURE").object = rig
 
+        def cm_scale(objs, k):
+            """Bones in centimetres, the rig node unscaled (17 Nov: with Blender's default 'All Local' the exporter
+            puts the metres-to-cm x100 on the root node only (export_fbx_bin.py 3542-3545, 5.2.2), Unreal keeps it as
+            a scaled root bone CmuRig, and its retargeter threw the targets' pelvis about 96 m off). The rest and the
+            location keys are scaled by k and applied; the scene's unit scale makes the exporter's factor 1."""
+            for o in bpy.data.objects:
+                o.select_set(o in objs)
+            bpy.context.view_layer.objects.active = rig
+            rig.scale = (k, k, k)
+            bpy.context.view_layer.update()
+            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+            act = rig.animation_data.action if rig.animation_data else None
+            if act:
+                for fc in fcurves_of(act):
+                    if fc.data_path.endswith(".location"):
+                        for kp in fc.keyframe_points:
+                            kp.co[1] *= k
+                            kp.handle_left[1] *= k
+                            kp.handle_right[1] *= k
+                        fc.update()
+            bpy.context.view_layer.update()
+
         def export(path, objs, anim):
+            sc.unit_settings.scale_length = 0.01
+            cm_scale(objs, 100.0)
             for o in bpy.data.objects:
                 o.select_set(o in objs)
             bpy.context.view_layer.objects.active = objs[0]
@@ -133,6 +164,8 @@ def main(src_dir, out_dir):
                                      add_leaf_bones=False, bake_anim=anim, bake_anim_use_all_actions=False,
                                      bake_anim_use_nla_strips=False, bake_anim_force_startend_keying=True,
                                      apply_unit_scale=True, armature_nodetype="NULL")
+            cm_scale(objs, 0.01)
+            sc.unit_settings.scale_length = 1.0
         skel = os.path.join(out_dir, "tpose_%s.fbx" % num)
         export(skel, [rig, box], False)
         bpy.data.objects.remove(box)

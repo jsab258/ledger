@@ -332,6 +332,23 @@ def read_fbx(path):
             q = arm.pose.bones[b].matrix_basis.to_quaternion()
             rot[b].append((q.w, q.x, q.y, q.z))
     tr = dict(path=path, kind=kind, fps=fps, frame_range=[f0, f1], pos=pos, rest=rest, rot=rot, rest_from=rest_from)
+    return finish(tr, path)
+
+
+def read_track(path):
+    """A track file (tools/ue/cmu_bone_dump.py, read inside Unreal: try 2 of 2 on the FBX reader's scale fault, 17 Nov)
+    or an FBX (Blender). Track files hold cm, component space, the reference pose as rest."""
+    if path.lower().endswith(".json"):
+        tr = json.load(open(path, encoding="utf-8"))
+        tr["pos"] = {r: [tuple(p) for p in v] for r, v in tr["pos"].items()}
+        tr["rest"] = {r: tuple(v) for r, v in tr["rest"].items()}
+        tr["rot"] = {b: [tuple(q) for q in v] for b, v in tr["rot"].items()}
+        return finish(tr, path)
+    return read_fbx(path)
+
+
+def finish(tr, path):
+    rest = tr["rest"]
     tr["rest_knees_deg"] = [round(angle(sub(rest["calf_" + s], rest["thigh_" + s]), sub(rest["foot_" + s], rest["calf_" + s])), 1)
                             for s in "lr"]
     pz = rest["pelvis"][2] * body_scale(tr)
@@ -347,7 +364,7 @@ def run_pairs(pairs, out_dir, stand_frame=None):
         try:
             for p in (src_p, tgt_p):
                 if p not in cache:
-                    cache[p] = read_fbx(p)
+                    cache[p] = read_track(p)
             src, tgt = cache[src_p], cache[tgt_p]
             r = measure(src, tgt, stand_frame)
             r.update(source=src_p, target=tgt_p, source_kind=src["kind"], target_kind=tgt["kind"],
@@ -501,7 +518,9 @@ def main(argv):
         for o in res.get("outputs", []):
             for clip, c in o.get("clips", {}).items():
                 if c.get("exported") and c.get("fbx"):
-                    pairs.append((os.path.join(src_dir, clip + ".fbx"), c["fbx"], os.path.splitext(os.path.basename(c["fbx"]))[0]))
+                    tgt = os.path.splitext(c["fbx"])[0] + ".track.json"   # read inside Unreal, when dumped
+                    tgt = tgt if os.path.isfile(tgt) else c["fbx"]
+                    pairs.append((os.path.join(src_dir, clip + ".fbx"), tgt, os.path.splitext(os.path.basename(c["fbx"]))[0]))
     elif selfpairs:
         pairs = [(f, f, os.path.splitext(os.path.basename(f))[0] + "__self") for f in files]
     else:

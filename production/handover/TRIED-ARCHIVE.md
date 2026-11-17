@@ -84,3 +84,7 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 16 Nov: by day no local light is lit; light counts need -PerfHookNight; captures longer than about 285 s crossed into the next part of the day until the clock hold.
 - 16 Nov 19:45: p1-packaged.ps1 runs write no pictures, and last night's packaged copy ignores -PerfHookCam (reads only cam_hook): check the log's 'stand at' line before trusting a view's name.
 - 16 Nov: the bridge start's UI Automation search took the Welcome window for the main one; rewritten (untested live).
+
+- 16 Nov 21:25: a drawn brick tile passed twelve measured checks and still read newly built near the camera: offline measures cannot see a CG surface; judge near crops before filming.
+- 16 Nov 21:00: the scan grade (match_rgb) works in linear light; a first grade in display values missed by about a fifth.
+- 16 Nov 21:11: editing RULINGS from an unattended run (and rewording another ruling to keep the cap) was refused by the permission check.

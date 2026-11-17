@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 02:52 (the hourly run; the last session, started 00:22, set no Stopped line but wrote no turn for 39 minutes: taken as stopped)
+**Started:** 2026-11-17 04:52 (the hourly run; the last session set its Stopped line at 04:33)
 
 **A second session ran by mistake 01:07 to 01:40** (gate committed in Kiln 0241526; integrate worktree C:/LedgerTools/kiln-lanes/integrate with all four lanes merged; cmu_clips.py TRIM = 2, flips 0; cmu_ue_retarget.py written). All kept by the 02:52 session.
-**Row due:** 2026-11-17 03:54 (last row 02:54; page and advisor read 02:54, two night checks acked)
-**Stopped:** 2026-11-17 00:20 (history near its point at an item's end: hair capture fixed, zips marked, CMU steps 1-3; the Kiln gate chain still running on its own)
+**Row due:** 2026-11-17 04:47 (last row 03:47; page and advisor read 03:46, night check 03:41 acked)
+**Stopped:** 2026-11-17 04:33 (history past its point at an item's end: CMU step 4 run, its measure reader faulted, try 1 of 2; Kiln lane gates helper still running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted by his tap 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line runs from 0 at Monday 13:00 to 95% by Wednesday 15:00, six helpers, full pace. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,33 +28,31 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - The page tool (tools/needs_you_page.py) now also refuses install, setting and click asks (his_hands marks safety-check needs) and more than two batches of open items a day.
 
 ## Done the runs before
-- git show 5606f2805:production/handover/HANDOVER.md ('Done this run' 23:32 to 00:20: CMU review and steps 1-3, hair capture fixed, zips marked in five job writers), and 9f155e60f, 983ad87da before it.
-- 02:52 run: page read, row 02:54, advisor night checks acked; walk of 17 Nov read (11 of 15; Sheila absent and in white; a stiff doorway pose, recurring; a walk into the office wall, new).
+- git show 5606f2805:production/handover/HANDOVER.md ('Done this run' 23:32 to 00:20), and 9f155e60f, 983ad87da before it.
 
-## In flight
-- Kiln gate committed in main (0241526, then 76dc035: body height in the body facts, remeasure; 10 tests). Baseline on engine 3d32458: j3, jacket, jeans, work trousers pass; layered, pleated skirt, nylon jacket known failing; donkey jacket not made. The gate on main 3ec9c73 (01:35) fails: the pattern check refuses six jobs (closed rings).
-- 02:55: integrate a0616d0 (+76dc035) built, engine tests pass, gate run started (F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-16/integrate.out). Early lines: j3 made; jacket refused "cannot fit where it sits" (collar at 1712 mm, 14 mm higher than on main): likely lane-jackets' neck base from the skin lifting the collar into the jaw for the pattern check. Diagnose after the run.
-- Lanes: trousers (f1251c0), skirt (7d5daf0), jackets (bdc599d), speed (aa0ef11, off), zips (efdfb5b).
-- Helpers out: walk-wall diagnosis (report F:/LedgerTools/tool-dev/reports/WALK-WALL-2026-11-17.md); Loomwright hair round 3 fixer (facial strands inside the chin, bald cards, tip colour, JPEG; note F:/LedgerTools/tool-tests-2026-11/loomwright-r3/ROUND3-FIXER-2026-11-17.md).
-- n16-7: cmu_ue_retarget.py reviewed (PASS WITH FIXES, F:/LedgerTools/game-inputs/cmu-2026-11-17/STEP4-SCRIPT-REVIEW-2026-11-17.md); fixes 1-5 made; fix 6 (the measured check) due before step 5. Search the editor log for BadPelvisHeight after the run.
+## Done this run (02:52 on)
+- Page read 02:54 and 03:20 (nothing new); row 02:54; advisor night checks 01:41 and 02:40 acked.
+- Walk of 17 Nov read: 11 of 15 (Sheila absent and in white). Wall walk at step-129 diagnosed as the tester's follow (not the game): route_walk.py's follow now ends at the office wall and goes by road (selftest 21/21, replayed on the real path); passes on the next walk. Step-081's stiff doorway pose: the tester's arrival tolerance under its shortest step, listed, not changed.
+- Kiln: 76dc035 in main (body height, remeasure). integrate a0616d0 gated: donkey_jacket and pleated_skirt now made; jacket, layered, nylon_jacket refused 'cannot fit where it sits' (collar ring at 1712 mm); j3 drop 24.2 vs 18, jeans inside 12 vs 7, work trousers 1 through. A diagnoser is gating each lane alone and explaining main's 'closed ring' refusals with the flag off: report F:/LedgerTools/tool-dev/reports/KILN-LANE-GATES-2026-11-17.md, runs in F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-17-lanes.
+- n16-7: cmu_ue_retarget.py review fixes 1-5 made, step 4 run 04:30 (six moves out, measure reader fault); the measured check tools/meshgen/blender/cmu_measure.py (feet relative to the source, decided; selftest 20/20; sources pass against themselves).
+- n16-8: Loomwright rounds 3 (fb9ebba) and 4 (73929ca): facial strands and scalp strands outside the skin, cards on the scalp, tip colour, JPEG, stubble off nose and lips. Job and outputs: F:/LedgerTools/tool-tests-2026-11/loomwright-r4 (ROUND4-FIXER note). F: is near its 20 GB floor (20.1 after deleting own hair leftovers 03:30).
+- F: sits on its 20 GB floor (20.3 at 03:55 after deleting own hair leftovers twice): every Kiln gate and hair run stops on it; find more own leftovers (old tool-dev/runs judged and reported) or raise it on his page as disk, before the next heavy day.
+- Uncommitted (no notes-only commits): RECIPE lines (tester follow, retarget check), DECISIONS lines for hair rounds 3 and 4 and the deletes, this handover: commit with the next work.
+- Kiln lane-gates diagnoser still out at the stop (its report replaces the draft at F:/LedgerTools/tool-dev/reports/KILN-LANE-GATES-2026-11-17.md; read it first).
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-16T23:15:00Z; advisor after 2026-11-16T22:09:00+01:00. Row due by 01:03 (last 00:03).
-1. Kiln integration when the gate lands (as before): commit the gate's files in Kiln main, merge lanes one at a time on a passing gate: trousers, skirt, jackets, zips (then regenerate the gate's six job scripts from the new writers and turn PAT_DRESSING_REFUSES on), speed's switch tested off. Checked 01:21 (merge-tree, nothing changed): trousers, jackets, zips, speed merge cleanly onto main; skirt conflicts only in mechanics.rs where both sides append constants at the end (keep both blocks). The jackets lane (bdc599d) is the donkey_jacket fix (stand started 39 mm inside Ron's upper back: neck base from the skin); a read-only diagnoser confirmed the mechanism and that it is general (reports/KILN-DONKEY-STAND-DIAGNOSIS-2026-11-17.md); the gate ran only the old exe 3d32458, so confirm on an engine with bdc599d (donkey_jacket and nylon_jacket, whose underarm seams the lane jams 27 mm open). Held-back first pass: Kiln to about 70% (his 188).
-2. After 04:30 (nothing in Unreal 01:15 to 04:30): n16-7 CMU step 4, the Unreal retarget onto Ron and Rocco by the reviewed note (trim the first-step flips: FBX frames 0-4 hold the Hips/LeftArm flips at frame 3 in all three; finger and thumb flips later are cosmetic, check by eye), then the measured check and a packaged film.
-3. n16-8: Loomwright's hair loop proper on Darren's curls and Tom's crown, warmed captures, judged against today's strands (8 h cap; about 1 h used this run).
-4. Morning: the three morning pictures against today's (the new brick on every brick wall; reverse and cam_office first verified on the new copy); the walk's card memory against 5.07 GB.
-5. n16-4 rest: quay-end closure page item with pictures, batched with Tom's and Ron's looks; n16-4 closes on tonight's walk.
-6. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 on tonight's copy; bridge live test once its heartbeat is stale.
-7. The recipe map: both entries (openings, hair captures) placed 17 Nov 00:25 (D2, D3 rows).
+0. FIRST: verdicts after 2026-11-17T02:46:00Z; advisor after 2026-11-17T03:41:00+01:00. Row due 04:47 (last 03:47).
+1. Kiln: read the lane-gates report; merge each lane whose gate passes onto main (skirt: keep both constant blocks in mechanics.rs), re-take the baseline when a job newly made (donkey_jacket); fix the collar 'where it sits' refusal by the report's general fix (try 1); then regenerate the gate's six job scripts from the zip-marking writers and turn PAT_DRESSING_REFUSES on. Speed lane stays off. Held-back first pass: Kiln to about 70% (his 188).
+2. n16-7: step 4 RAN 04:30 (ue_result.json DONE, 6 of 6 exported, auto rig, root Hips, Root Motion op off by name; no BadPelvisHeight; F:/LedgerTools/game-inputs/cmu-2026-11-17/ue). The measure FAILS ON ITS READER, not judged yet: Blender reads Unreal's export with the armature object 'root' at scale 0.01 and pelvis as first bone; rest is right (pelvis 92.8 cm) but pose locations come out about 100 times too large (slide 45 m). Try 1 of 2 (scale every location key by 0.01) put the pelvis at 0 cm: wrong. Second try or, better, a genuinely different method: read world bone positions inside Unreal (AnimPoseExtensions at each frame in a commandlet, write JSON) and give cmu_measure.py a JSON reader for the target. Then the measured check, a fresh look by eye, a packaged film. Probe script: the session scratchpad's probe_ue_fbx.py (copy it if needed).
+3. n16-8: round 4 job (F:/LedgerTools/tool-tests-2026-11/loomwright-r4) on Darren in Unreal with groom_on_darren.py warmed captures (LEDGER_GROOM_DIAG=1, ~60 ticks), side, front, behind, beside today's strands; tip colour import; then Tom's crown. About 2 h of 8 used.
+4. Morning: the three morning pictures (04:15 task) against yesterday's; the walk's card memory against 5.07 GB; FOR-JAFAR day summary by 07:00, overview by 07:30.
+5. n16-4 rest: quay-end closure page item with pictures, batched with Tom's and Ron's looks.
+6. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 on tonight's copy.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 17 Nov 00:10: three hair tries (13 Nov) changed the asset while every picture was a cold capture; a behind-the-head pixel test hid buried and missing hair alike. Hide the surroundings, look from the side, capture over ticks.
 - 16 Nov 23:00: the Flemish anti-grid check passes only on some seeds (seed 7 fails, 3 passes); a photo tile reusing the drawn tile's darks must use its seed.
 - 16 Nov 22:09: four stamps (a row and three DECISIONS lines) written without Get-Date, one 25 minutes off; read the clock in the same call that writes.
-- 16 Nov 21:25: a drawn brick tile passed twelve measured checks and still read newly built near the camera: offline measures cannot see a CG surface; judge near crops before filming.
-- 16 Nov 21:00: the scan grade (match_rgb) works in linear light; a first grade in display values missed by about a fifth.
-- 16 Nov 21:11: editing RULINGS from an unattended run (and rewording another ruling to keep the cap) was refused by the permission check.
 - Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2; the rewrite is the genuinely different method under his pick A).
 
 ## Kept as they are
