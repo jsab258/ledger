@@ -63,9 +63,19 @@ NEVER = ("secrets.json", os.path.join("LocalLow", "DefaultCompany"), ".ledger-gh
          os.path.join("LedgerTools", "keys"), "aesKeys", ".env", "api-key", "apikey")
 
 
+NEVER_NAMES = ("secrets.json", "aeskeys", "api_key", "api-key", "apikey", "token.txt", "id_rsa", "id_ed25519",
+               "credentials.json", ".ledger-gh-token", ".env", ".netrc")
+NEVER_DIRS = (os.path.join("ledgertools", "keys"), os.path.join("locallow", "defaultcompany"), "fmodel", ".ssh")
+
+
 def refused(path):
-    p = path.replace("/", os.sep)
-    return any(n in p for n in NEVER) or os.path.basename(p).lower() in (".env",)
+    """Never copied: the keys and anything named like a secret, judged case-blind on the path and its real target."""
+    for p in {path, os.path.realpath(path)}:
+        low = p.replace("/", os.sep).lower()
+        name = os.path.basename(low)
+        if any(n in name for n in NEVER_NAMES) or any(d in low for d in NEVER_DIRS):
+            return True
+    return False
 
 
 def sources(list_path=LIST):
@@ -90,13 +100,19 @@ def pairs(srcs, dest):
         target = os.path.join(dest, name)
         if os.path.isdir(src):
             for root, dirs, files in os.walk(src):
-                dirs[:] = [x for x in dirs if x not in exclude]   # build folders and run outputs left out (Kiln)
+                dirs[:] = [x for x in dirs if x not in exclude and not linked(os.path.join(root, x))]
+                files = [f for f in files if not linked(os.path.join(root, f))]
                 for f in sorted(files):
                     s = os.path.join(root, f)
                     out.append((s, os.path.join(target, os.path.relpath(s, src)), first))
         elif os.path.isfile(src):
             out.append((src, target, first))
     return [(s, d, f) for s, d, f in out if not refused(s)]
+
+
+def linked(path):
+    """A symbolic link or a junction: never followed by the backup."""
+    return os.path.islink(path) or bool(getattr(os.path, "isjunction", lambda _p: False)(path))
 
 
 def sha(path):
@@ -109,6 +125,58 @@ def sha(path):
 
 def same(src, dst):
     return os.path.exists(dst) and os.path.getsize(src) == os.path.getsize(dst) and sha(src) == sha(dst)
+
+
+# ITS OWN FINGERPRINTS (advisor 198, 17 Nov): the backup keeps a SHA-256 manifest of every file it has written, on F:
+# beside the Kiln bundle, so a run compares a source with the manifest instead of reading the backup's copy. A copy
+# that is online-only in Dropbox is then never pulled down again just to be compared. A file the manifest does not
+# know is compared the old way once (reading the backup) and recorded. --verify and --restore-check still read the
+# backup itself: they are the checks that the manifest is true.
+MANIFEST = "F:/LedgerTools/backup-staging/manifest.json"
+
+
+def load_manifest(path):
+    try:
+        m = json.load(open(path, encoding="utf-8")) if path and os.path.exists(path) else {}
+    except (OSError, ValueError):
+        return {}
+    return m if isinstance(m, dict) else {}
+
+
+def save_manifest(man, path):
+    if not path:
+        return
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".new"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(man, fh)
+    shutil.copyfile(tmp, path)      # the manifest on F: only, never inside Dropbox
+
+
+def known_same(src, dst, man):
+    """same(), from the manifest when it knows dst; the backup's copy is read only for a file it does not know."""
+    key = os.path.normcase(os.path.abspath(dst))
+    e = man.get(key)
+    if e is not None:
+        st = os.stat(src)
+        if st.st_size != e["size"] or not os.path.exists(dst) or os.path.getsize(dst) != e["size"]:
+            return False
+        if e.get("srcMtime") == st.st_mtime:
+            return True
+        h = sha(src)
+        if h == e["sha"]:
+            e["srcMtime"] = st.st_mtime
+            return True
+        return False
+    if same(src, dst):
+        record(man, src, dst)
+        return True
+    return False
+
+
+def record(man, src, dst, digest=None):
+    st = os.stat(src)
+    man[os.path.normcase(os.path.abspath(dst))] = {"sha": digest or sha(src), "size": st.st_size, "srcMtime": st.st_mtime}
 
 
 def inside(path, dest):
@@ -125,8 +193,10 @@ def free_gb(path):
     return shutil.disk_usage(probe).free / 1e9
 
 
-def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
+def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None, manifest=None):
     copied = unchanged = size = deferred = versioned = 0
+    man = load_manifest(manifest)
+    eq = same if verify_only else (lambda a, b: known_same(a, b, man))   # --verify reads the backup itself
     broken = []
     missing = [x[0] for x in srcs if not os.path.exists(x[0])]
     # JAFAR'S DROPBOX IS HIS, 24 September: "just need to be 10000000% sure you
@@ -138,15 +208,20 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
     outside = [d for _, d, _ in plan if not inside(d, dest)]
     outside += [os.path.join(dest, "versions", stamp, os.path.relpath(d, dest)) for _, d, _ in plan
                 if not inside(os.path.join(dest, "versions", stamp, os.path.relpath(d, dest)), dest)]
-    if outside or os.path.islink(dest):
+    if outside or linked(dest):
         return "backupToDropbox=REFUSED-OUTSIDE-ITS-FOLDER copied=0 first=%s" % (outside[:1] or [dest])[0].replace(" ", "~")
     held_back = False
     for s, d, first in plan:
-        if same(s, d):
+        if eq(s, d):
             unchanged += 1
             continue
         if verify_only:
-            if os.path.exists(d):
+            rel = os.path.relpath(d, dest)
+            vroot = os.path.join(dest, "versions")
+            if os.path.isdir(vroot) and any(same(s, os.path.join(vroot, v, rel)) for v in os.listdir(vroot)
+                                            if os.path.exists(os.path.join(vroot, v, rel))):
+                unchanged += 1              # the change is held beside, under versions/: not damage
+            elif os.path.exists(d):
                 broken.append(d)            # there, but not the same bytes
             else:
                 deferred += 1               # not there yet
@@ -155,7 +230,7 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
         if os.path.exists(d):
             # NEVER OVERWRITTEN: the backup's copy stays; the new one goes beside it.
             target = os.path.join(dest, "versions", stamp, os.path.relpath(d, dest))
-            if same(s, target):
+            if eq(s, target):
                 unchanged += 1
                 continue
             # UNLESS AN EARLIER VERSION ALREADY HOLDS THESE BYTES (3 October: the cast rebuilt
@@ -163,7 +238,7 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
             # because only the first copy was compared).
             rel = os.path.relpath(d, dest)
             vroot = os.path.join(dest, "versions")
-            if os.path.isdir(vroot) and any(same(s, os.path.join(vroot, v, rel))
+            if os.path.isdir(vroot) and any(eq(s, os.path.join(vroot, v, rel))
                                             for v in sorted(os.listdir(vroot), reverse=True)
                                             if os.path.exists(os.path.join(vroot, v, rel))):
                 unchanged += 1
@@ -180,10 +255,14 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
         if not dry:
             os.makedirs(os.path.dirname(target), exist_ok=True)
             shutil.copy2(s, target)
-            if not same(s, target):
+            if not same(s, target):        # the fresh local copy, read back once by SHA-256
                 broken.append(target)
+            else:
+                record(man, s, target)
         copied += 1
         size += os.path.getsize(s)
+    if not dry and not verify_only:
+        save_manifest(man, manifest)
     if verify_only:
         status = "NOT-WHOLE" if broken or missing else ("VERIFIED-SO-FAR" if deferred else "VERIFIED")
     elif broken:
@@ -201,15 +280,17 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
 
 
 def stale(lines, now=None):
-    """(stale?, hours since the last good run or None) from the log's lines: a good run is OK or DEFERRED."""
+    """(stale?, hours since the last good run or None): only a plain OK counts (a DEFERRED night is not a backup)."""
     now = now or datetime.datetime.now()
     last = None
     for ln in lines:
-        if "backupToDropbox=OK" in ln or "backupToDropbox=DEFERRED-LOW-SPACE" in ln:
+        if "backupToDropbox=OK" in ln and "bundle=FAILED" not in ln:
             try:
-                last = datetime.datetime.strptime(ln.split()[0], "%Y-%m-%dT%H:%M:%S")
+                when = datetime.datetime.strptime(ln.split()[0], "%Y-%m-%dT%H:%M:%S")
             except (ValueError, IndexError):
-                pass
+                continue
+            if when <= now:         # a date in the future never counts
+                last = when
     if last is None:
         return True, None
     hours = (now - last).total_seconds() / 3600
@@ -324,6 +405,25 @@ def selftest():
         check("a failed run does not count as the last good one",
               stale(["2026-09-24T04:00:00 a backupToDropbox=OK", "2026-09-25T20:00:00 b backupToDropbox=BROKEN-COPY"], when)[0])
         check("the restore check finds the copies whole", restore_check(lst, dst, seed=1).startswith("restoreCheck=OK"))
+        check("keys are refused case-blind", refused("F:/LedgerTools/Keys/x.txt") and refused("C:/a/Secrets.JSON"))
+        check("a stale line after a failed bundle", stale(["2026-09-25T04:00:00 a bundle=FAILED backupToDropbox=OK"], when)[0])
+        check("a DEFERRED night is not a backup", stale(["2026-09-25T04:00:00 a backupToDropbox=DEFERRED-LOW-SPACE"], when)[0])
+        mpath = os.path.join(t, "manifest.json")
+        run(lst[:1], os.path.join(t, "dst3"), floor_gb=0, now=when, manifest=mpath)
+        man = load_manifest(mpath)
+        check("the manifest records each file written", len(man) == 1 and all(len(e["sha"]) == 64 for e in man.values()))
+        reads = []
+        global sha
+        real_sha = sha
+        sha = lambda pth: reads.append(pth) or real_sha(pth)
+        again3 = run(lst[:1], os.path.join(t, "dst3"), floor_gb=0, now=when, manifest=mpath)
+        sha = real_sha
+        check("a second run compares with the manifest and reads no backup copy",
+              "copied=0 unchanged=1" in again3 and not any(os.path.join(t, "dst3") in r for r in reads))
+        lost = [os.path.join(dp, f) for dp, _, fs in os.walk(os.path.join(t, "dst3")) for f in fs][0]
+        open(lost, "wb").write(b"")
+        check("a damaged copy the manifest knows is noticed", "unchanged=1" not in run(lst[:1], os.path.join(t, "dst3"),
+                                                                                   floor_gb=0, now=when, manifest=mpath))
         escape = run([(os.path.join(src, "d"), os.path.join("..", "escaped"), True)], dst, floor_gb=0)
         check("a destination outside the backup folder is refused", "REFUSED-OUTSIDE-ITS-FOLDER" in escape)
         check("and nothing is written there", not os.path.exists(os.path.join(t, "escaped")))
@@ -353,7 +453,7 @@ if __name__ == "__main__":
     pre = ""
     if not ("--dry-run" in sys.argv or "--verify" in sys.argv):
         pre = make_bundle() + " "
-    line = run(sources(), DEST, dry="--dry-run" in sys.argv, verify_only="--verify" in sys.argv)
+    line = run(sources(), DEST, dry="--dry-run" in sys.argv, verify_only="--verify" in sys.argv, manifest=MANIFEST)
     print(pre + line)
     if "--log" in sys.argv:
         # THE NIGHTLY RUN (advisor 197: about 05:00 through Windows' Task Scheduler, after retention, whether or not
