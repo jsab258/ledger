@@ -305,7 +305,14 @@ def real(p):
     return os.path.normcase(os.path.realpath(p))
 
 
-MAP_FILES = ("production/storage-map.json", "production/retention.json")
+# N-R1 (third review): the deletion code itself must be committed and equal to main's, not only the map
+MAP_FILES = ("production/storage-map.json", "production/retention.json", "tools/retention.py", "tools/cleanup.py")
+
+
+def never_opened(row):
+    """N-R3 (third review): a row whose source says its contents are never opened (the keys) is never scanned for readers."""
+    return "never opened" in str(row.get("source", "")).lower()
+
 
 
 def map_files_committed(repo=REPO, env=None):
@@ -1125,9 +1132,12 @@ def map_rule_cases(j, make, check_only=True):
           and not map_files_committed(REPO, env={"LEDGER_RETENTION_POLICY": "x"}),
           "an environment override refuses the map's rows (N10)")
     check(not map_files_committed(j("not-a-checkout"), env={}), "no checkout refuses (N10)")
+    check(never_opened({"source": "unknown (keys; contents never opened)"}) and not never_opened({"source": "git"}),
+          "a never-opened row is kept out of the reader scan (N-R3)")
+    check("tools/retention.py" in MAP_FILES and "tools/cleanup.py" in MAP_FILES, "the deletion code is among the committed map files (N-R1)")
     g = j("gitrepo")
-    os.makedirs(os.path.join(g, "production"))
     for f in MAP_FILES:
+        os.makedirs(os.path.join(g, *f.split("/")[:-1]), exist_ok=True)
         open(os.path.join(g, *f.split("/")), "w").write("{}")
     gitc = lambda *a: subprocess.run(["git", "-C", g, "-c", "user.name=selftest", "-c", "user.email=selftest@invalid"]
                                      + list(a), capture_output=True, text=True, timeout=60).returncode
@@ -1442,6 +1452,7 @@ def find_readers(cands, folders, pol, readers=None, repo=REPO):
                 return found, []
     avoid = [repo, STATE] + [os.path.join(repo, *x.strip("/").split("/")) for x in NOT_READER_DIRS]
     avoid += [o["path"] for o in folders if str(o.get("shelf", "")).strip().lower() in ("side-session", "build-cache")]
+    avoid += [o["path"] for o in folders if never_opened(o)]
     roots = [o["path"] for o in folders if str(o.get("shelf", "")).strip().lower() not in ("side-session", "build-cache")]
     roots += [x for x in pol.get("protected", []) if isinstance(x, str)]
     visited = set()
