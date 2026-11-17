@@ -2583,3 +2583,6 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: off: 189 of 189 drape measures identical to the baseline; on: strips at rest (sd 0.00, under 0.11 mm/s); 47 of 47 tests.
 - Cost: about 0.6 h (22 min engine). What failed and why: try 1 changed precision everywhere and moved one garment edge into another state with a jam at a 1 mm nudge; a switch keeps garments unchanged until their own baseline.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-SETTLE-DIAGNOSIS-2026-11-17.md. Recipe map: no step moved.
+
+## 2026-11-17 21:03 Kiln: a solver feature ported onto a precision-generic step
+- Made: the hinge bending term carried from an old single-precision branch onto a step generic over its point type; off by default. Method: cherry-pick, then narrow points to single precision only where the angle is read, widen the moves back; unit test in both precisions; the regression gate alone with switches off. Tools: Rust, cargo test, the project's regression gate. Target and check: every gate job inside its bands. Cost: about 0.5 h helper, 0.3 h gate. Failed: the first gate took an older default engine because the engine path was not set explicitly; always pass the engine by its variable. Evidence: F:/LedgerTools/tool-dev/reports/KILN-HINGE-GENERIC-2026-11-17.md

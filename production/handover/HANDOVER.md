@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 18:52 (the hourly run; the last session set its Stopped line at 18:40)
+**Started:** 2026-11-17 20:07 (the hourly run; the last session set its Stopped line at 19:52)
 
-**Row due:** 2026-11-17 20:38 (last 19:38; page and advisor read 19:45; last ack 18:11, the pace guard)
-**Stopped:** 2026-11-17 19:52 (history past its point at an item's end; no helper or background job running)
+**Row due:** 2026-11-17 21:57 (last 20:57; page and advisor read 20:55; last ack 20:56)
+**Stopped:** 2026-11-17 21:03 (history past its point at an item's end; no helper or background job running)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,27 +28,27 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (18:52 to the stop)
-- Lane merged (82b9db3e5), ci fixed after it (catalogue, attribution row). His yes to PresentMon (19:36): allowlist item 12, item closed; page: nothing open. n16-11 Q2 decided under the 11 Oct ruling.
-- Targets written, reviewed, fixed: TARGET-MICKEYS-NIGHT (front room lit at night, decided from canon) and TARGET-IMAGE-TO-3D-PROPS (DINOv3 licence pick goes with the next order); waiting items 5 and 11 link them; Mickey's night fault in FINDINGS.
-- Kiln: double precision try 2 MERGED (Kiln main f901e1f, KILN_DOUBLE=1 off by default; gate 189/189 identical; closed). Cantilever matrix with it on: 12 of 12 settle (4 before).
-- Retention step 2: nine open items fixed (try 4); third review PASS WITH FIXES; N-R1 and N-R3 fixed after it. Still off.
-- Rows 18:58 and 19:38. Removing C:/Users/Jafar/ledger-lane (clean, merged) refused by the app's safety check: not retried, 0.1 GB left.
+## Done this run (20:07 to the stop)
+- Lane merged (f56fead36, street furniture plan); ci 103/103; pushed to wip at about 20:25.
+- Advisor 1940-eff and 2010-207 acknowledged. Step-growth table: token_measures.py --top-helpers; 17 Nov no helper run over 300 steps, so hand-backs unchanged (advisor's own condition).
+- Output cap (n16-10): tools/output_cap.py built, reviewed (PASS WITH FIXES, all needed fixes in), self-test 126/126, committed. Switching the hook on in .claude/settings.json was REFUSED by the app's safety check: ACTION item output-cap-switch-on-2026-11-17 on his page (his-setting), NEEDS YOU sent. When he says it in chat: add the PreToolUse entry from production/research/tool-tests-2026-11/HOOK-OUTPUT-CAP-SETTINGS.json, check one real run (capped text, cd carries, no "hook changed input" denial), add its RULINGS enforcer entry (rulings-enforcers.json), close the item.
+- Retention step 2: N-R2, M2, M4 (14 days), N-R9 fixed; fourth review PASS WITH FIXES; its fault 1 fixed (151 checks). mapRulesLive stays OFF until the first real plan with pending rows gets one fresh look (fault 2). Night task's Python is 3.12.8.
+- Kiln: bench judging range merged on Kiln main (f78b98f): judged 7 of 12 (4 before). Hinge ported onto the generic step: lane-hinge-generic eb65d0d (cargo test 50/50), exe C:/LedgerTools/kiln-runs/bending2-2026-11-17/drape-studio-hinge-eb65d0d.exe (sha 6834da1d). Speed lane ported: lane-speed2 a588941 (worktree C:/LedgerTools/kiln-lanes/speed2; off = bit-identical; exe C:/LedgerTools/cargo-target/kiln-speed/release/drape-studio.exe; licence accepted, DECISIONS). Parity list: F:/LedgerTools/tool-dev/reports/KILN-PARITY-LIST-2026-11-17.md (4 garments drape today, M7 0; gap order decided: drape-to-game first).
+- n16-2: Ron's routine and talk already exist (RON-ROUTINE-TALK-2026-11-17.md); talk gap for later hours is waiting item 14.
+- Hang and Cusick benches started then stopped (108 strips, about 3 min each at 10 mm: hours); run a reduced set later.
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T18:40:00Z; advisor after the last ack (18:11). Row due 20:38. THE LANE: at each item end `git fetch origin lane-2026-11`, review `git log wip..origin/lane-2026-11`, merge what passes ci (check catalogue and attribution: new research folders and drawings need their lines), a DECISIONS line per merge; steer via production/lane/LANE-QUEUE.md.
-1. Kiln, one machine job at a time: (a) bending try 2 = option (a) still unused: first port lane-bending's hinge (6311c22) onto the generic step (geom.rs Pt narrowing, hinge angle and moves for both precisions, about 15 lines, sketched in KILN-BENDING-SCALE's last section) as its own lane, cargo test, gate with switches off identical to 9ca019e; then option (a)'s spacing list with silk and nylon at 6 and 4 mm, KILN_DOUBLE=1. A helper's guard refused that engine edit once: brief engine work explicitly. (b) the speed lane re-checked on f901e1f (advisor 201/193 point 4, Fable allowed), drape time per garment before and after; (c) hang and Cusick re-run with double places.
-2. Retention step 2: N-R2 (record link and junction targets; keep any folder they reach, e.g. voice-portable) with a self-test, plus M2, M4 (3 days vs 14 in RULINGS) and N9's part; one fresh check of those fixes only; then mapRulesLive on and owners into storage-map.json (LEDGER or Claude only where certain).
-3. Up to eight helpers on machine-free work: the next order's waiting items without targets (1, 8, 12 need his ear); Kiln analysis as results land.
-4. n16-8 Tom's crown (full editor; never beside a Kiln gate or bench); n16-7 look and packaged film; n16-6 Sonnet 5.5 packaged run. DAILY by 19:00 tomorrow.
-5. Waiting by his pick: n16-5 S2 and n16-3's people ladder (git show 47cfaec10:production/handover/HANDOVER.md, item 1). M5 chain for Ron's trousers: refused twice by the app's permission check, not again without a new way.
-
-## Tonight's machine-free queue (start before 01:15)
-1. Kiln code (bending try 2, speed lane) and reviews, no drape runs during the night build. 2. The retention fixes and their review. 3. The next order's waiting list (advisor 192).
+0. FIRST: verdicts after 2026-11-17T19:55:00Z; advisor after the last ack (2055-209). Then finish his cars rulings of 20:44/20:48 (advisors 208, 209; RULINGS and canon done): PLAN.md, the roadmap, the asset plan SUMMARY order (traffic into the friends' build), the progress page (station 8 traffic into the friends' build, station 11 "driving, once the map is bigger", AAA end state); put the traffic item with the lane's hours (production/research/lane/TRAFFIC-COST-2026-11-17.md when it lands) into the running list for the order of 23 Nov. Lane: fetch and review as before.
+1. DONE: hinge gate PASS (inside every band), merged on Kiln main fdd3a6d. Any later gate must set KILN_EXE (else it takes C:/LedgerTools/cargo-target/kiln/release, an older build).
+2. THEN, quiet machine: the speed timing (advisor 2010-207, next machine job): plan and ready script in F:/LedgerTools/tool-dev/reports/KILN-SPEED2-PORT-2026-11-17.md (six runs per garment, Tom j3 and Ron's trousers; check KILN_GPU_LOG); drape time per garment before and after in the row; then merge lane-speed2 after the hinge (same step: care with conflicts), gate again with switches off.
+3. Bending try 2 option (a) on the merged hinge: spacing list, silk and nylon at 6 and 4 mm, KILN_DOUBLE=1, KILN_XPBD=1.
+4. Kiln gap 1 (plan and adapter committed: production/research/phase2-plan/KILN-TO-GAME-PLAN-2026-11-17.md, tools/kiln_to_game.py): re-export the armline trousers OBJ from its .drape on a quiet machine (the final OBJ is gone), then steps A to J; open: the weights-body match, the hem over his boots, the Kiln front-end adoption tap before step I (check whether it is his). Never beside a Kiln gate.
+5. Retention: the first real plan with pending rows gets one fresh look, then mapRulesLive on.
+6. n16-8 Tom's crown, n16-7, n16-6 Sonnet 5.5 packaged run; nightly: nothing in Unreal 01:15-04:30.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 17 Nov night: switching on the output-cap hook in .claude/settings.json refused by the app's safety check (not retried; his page). The first hinge gate ran the wrong engine (no KILN_EXE): stopped, not a try. Hang and Cusick full matrix too long beside the machine queue: stopped, not a try. Two time stamps written without Get-Date, corrected (acks, DECISIONS).
 - 17 Nov evening: git worktree remove of the PC lane copy refused by the app's safety check (not retried). A helper's cherry-pick of the hinge onto the generic step refused by its guard (engine edit not in its brief). The catalogue reads commas inside a research line as folder names: no parentheses there. FINDINGS and CATALOGUE sit at their caps: trim a word elsewhere to add one.
-- 17 Nov: zips gate-r3 stopped before judging (its space check called retention.py mid-edit): not a try. A wait loop matched its own command line (searching process command lines for 'regression_gate' finds the bash running the search): match on python.exe or the exe by name. Two heredoc edits lost backslashes (memory bash-heredoc-backslashes): write such edits with chr(92) or the Edit tool. Registering a Windows scheduled task refused by the app's safety check; superseded by the gate route.
 - Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2).
 
 ## Kept as they are

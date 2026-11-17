@@ -156,6 +156,9 @@ which clauses the gate checks and which it does not claim to.
   gets the smallest budget that keeps it from looking wrong. A spend
   rule, not a ban: driving and trade may exist and must not
   look broken; fighting must look and feel AAA (Jafar, 12 October 2026).
+  Driving, when it comes, must end at AAA quality: background traffic in
+  the friends' build, a simple car once the map is bigger, AAA driving
+  the end state (Jafar, 17 November 2026).
 
 ## Brands and law
 - Every brand, band, club, product, weapon and vehicle is fictional. No real people,
