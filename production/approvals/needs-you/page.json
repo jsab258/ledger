@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 17 November, 13:09",
+ "kicker": "LEDGER · Needs you · 2 open · updated Tuesday 17 November, 13:18",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -30,6 +30,27 @@
     [
      "no",
      "No, keep them"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "backup-schedule-at-pc-2026-11-17",
+   "name": "Your hands, one minute at the PC, any time today: the nightly backup to your Dropbox (your pick at 12:58) should run every day at 05:00, but the app's safety check will not let Claude create a Windows schedule on its own. In the Claude app, open LEDGER's production session, type \"Register the backup schedule now\", and click Allow when it asks. It adds one scheduled task named LEDGER backup and nothing else. Until then the backup still runs once a day with the first commit, as before (today's run at 13:09 copied 4.3 GB, all checked). Then tap Done.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today, so tonight's 05:00 backup runs whether or not anything is committed.",
+   "added": "2026-11-17 13:17",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
     ]
    ]
   }

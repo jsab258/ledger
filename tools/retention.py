@@ -732,6 +732,19 @@ def selftest():
                   "unnamed runs past their limit go")
         finally:
             STATE = saved_state
+        # THE STORAGE MAP, read only (17 Nov): a folder inside a mapped one is covered, a new one is flagged
+        os.makedirs(j("map", "kept", "inner"))
+        os.makedirs(j("map", "new"))
+        open(j("map", "kept", "inner", "a.bin"), "wb").write(b"0" * 1000)
+        fake = {"folders": [{"path": j("map", "kept"), "shelf": "lasting"}],
+                "shelves_gb": {"F": {"lasting": 10, "floor": 20}}}
+        check(mapped(fake, j("map", "kept", "inner"))["path"] == j("map", "kept"), "a folder inside a mapped one is covered")
+        check(unmapped(fake, roots=(j("map"),)) == [j("map", "new")], "an unmapped folder is flagged, a mapped one is not")
+        real = storage_map()
+        check(not any(e["path"].lower().rstrip("/").endswith(("vuze", "$recycle.bin")) for e in real["folders"]),
+              "nothing of his is on the map")
+        check(all(e.get("shelf") and e.get("expiry") for e in real["folders"]), "every mapped folder has a shelf and an expiry")
+        check(sum(v for k, v in real["shelves_gb"]["F"].items()) <= 120.5, "F:'s shelves and floor fit the drive")
     finally:
         import cleanup
         done = {"files": 0, "links": 0, "bytes": 0, "failed": []}
@@ -745,6 +758,61 @@ def selftest():
 
 def enforce_with(pol):
     return [delete(pol, p, r, w) for p, r, w in candidates(pol, running=set())]
+
+
+# ---- THE STORAGE MAP (advisor 196, his pick 17 Nov 12:43; RULINGS 17 Nov) ---------------------------------
+# Every folder LEDGER writes has a shelf in production/storage-map.json. Step 1 (17 Nov) only READS the map: which
+# folders are not on it (flagged in the hourly row, his page after a day) and how full each shelf is (85% = clear it
+# that day). Deleting by the map's expiry rules is step 2, after its fixture tests and a hostile fresh review.
+
+MAP = os.environ.get("LEDGER_STORAGE_MAP", os.path.join(REPO, "production", "storage-map.json"))
+MAP_ROOTS = ("F:/", "F:/LedgerTools", "C:/LedgerTools")
+NOT_OURS = {"$recycle.bin", "system volume information", "vuze"}   # named only, never opened (advisor 196, 1)
+
+
+def storage_map(path=None):
+    return json.load(open(path or MAP, encoding="utf-8"))
+
+
+def mapped(m, path):
+    """The map entry covering path (the folder itself or one it lies inside), the deepest first; None if unmapped."""
+    best = None
+    for e in m.get("folders", []):
+        if inside(path, e["path"]) and (best is None or len(norm(e["path"])) > len(norm(best["path"]))):
+            best = e
+    return best
+
+
+def unmapped(m, roots=MAP_ROOTS):
+    """Folders directly under each root that no map entry covers (links and his folders left out)."""
+    out = []
+    for root in roots:
+        if not os.path.isdir(root):
+            continue
+        for name in sorted(os.listdir(root)):
+            p = os.path.join(root, name)
+            if name.lower() in NOT_OURS or not os.path.isdir(p) or is_link(p):
+                continue
+            if norm(p) in {norm(r) for r in roots}:
+                continue
+            if mapped(m, p) is None:
+                out.append(p)
+    return out
+
+
+def shelves(m, measure=size_of):
+    """F:'s shelves: GB used (the map's folders on F:, measured now) against each shelf's size; over 85% flagged."""
+    sizes = m.get("shelves_gb", {}).get("F", {})
+    used = {}
+    for e in m.get("folders", []):
+        p = e["path"]
+        if not norm(p).startswith(norm("F:/")) or any(inside(p, o["path"]) and norm(o["path"]) != norm(p)
+                                                      for o in m["folders"]):
+            continue        # count each tree once, at its top mapped folder
+        if os.path.isdir(p) and not is_link(p):
+            used[e["shelf"]] = used.get(e["shelf"], 0) + measure(p) / 1e9
+    return [{"shelf": s, "gb": round(used.get(s, 0), 1), "sizeGb": sizes[s],
+             "over85": used.get(s, 0) > 0.85 * sizes[s]} for s in sizes if s not in ("floor", "spare")]
 
 
 # ---- COMMANDS -------------------------------------------------------------------
@@ -812,6 +880,16 @@ def main(argv):
     if cmd == "caches":
         for c in cache_report(policy()):
             print("%-40s %6.2f GB of %4.1f  %s%s" % (c["name"], c["gb"], c["capGb"], c["writes"], "  OVER" if c["over"] else ""))
+        return 0
+    if cmd == "unmapped":
+        out = unmapped(storage_map())
+        for p in out:
+            print("UNMAPPED " + p)
+        print("unmapped=%d" % len(out))
+        return 0
+    if cmd == "shelves":
+        for s in shelves(storage_map()):
+            print("%-10s %6.1f GB of %5.1f%s" % (s["shelf"], s["gb"], s["sizeGb"], "  OVER 85%" if s["over85"] else ""))
         return 0
     if cmd == "space":
         r = space(opt("--job", "a job"), float(opt("--need-c", 40)), float(opt("--need-f", 20)), opt("--drives", "CF"))

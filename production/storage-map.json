@@ -1,11 +1,11 @@
 {
- "about": "LEDGER's storage map (advisor 196, his pick 17 Nov 12:43; RULINGS 17 Nov). Every folder LEDGER writes has a shelf, what it serves, its size, its expiry rule and where it comes back from. retention.py reads it (from 18 Nov); a folder not on the map is flagged in that hour's row and goes on his page after a day. Nothing of his is ever on the map. First made 17 Nov from production/research/disk/INVENTORY-F-2026-11-17.md and INVENTORY-C-2026-11-17.md; sizes are those readings.",
+ "about": "LEDGER's storage map (advisor 196, his pick 17 Nov 12:43; RULINGS 17 Nov). Every folder LEDGER writes has a shelf, what it serves, its size, its expiry rule and where it comes back from. retention.py reads it (from 18 Nov); a folder not on the map is flagged in that hour's row and goes on his page after a day. Nothing of his is ever on the map. First made 17 Nov from production/research/disk/INVENTORY-F-2026-11-17.md and INVENTORY-C-2026-11-17.md; sizes are those readings. 53 smaller folders added 17 Nov 13:4x by a third read-only pass.",
  "shelves_gb": {
   "F": {
-   "lasting": 44.5,
-   "tools": 25,
-   "working": 20,
-   "spare": 10,
+   "lasting": 51,
+   "tools": 20,
+   "working": 25,
+   "spare": 4,
    "floor": 20
   },
   "C": {
@@ -877,6 +877,537 @@
    "proposal": "keep",
    "backup": "yes",
    "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerToolsscratchtalk-fast",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-28",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: misnamed stray (backslashes lost), holds no files, empty cards/checker folders",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/f",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-11",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: stray nested F:/f/LedgerTools/garments/sheila, holds no files",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/town-bench",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-29",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: Sep 2026 town bench scratch, 12 files, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/town-bisect",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-28",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: Sep 2026 bisect scratch, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/town-scratch",
+   "shelf": "working",
+   "gb": 0.1,
+   "last_write": "2026-09-28",
+   "serves": "tools/checkers/claim_label_trial.py, tools/checkers/measure_checkers.py, tools/checkers/sentence_test.py",
+   "source": "unknown",
+   "proposal": "keep: named by the checkers tools (0.07 GB)",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/ai-video",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-09",
+   "serves": "tools/needs_you_page.py (path text only)",
+   "source": "unknown",
+   "proposal": "remove: empty, no files",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/asset-checks",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-08",
+   "serves": "production/specs/asset-budgets.json",
+   "source": "made by tools/ue/asset_checks.py runs",
+   "proposal": "keep: current asset-check output, 0.0 GB",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/atlas-01-2026-10-06",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-06",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: atlas plans (svg/png), small, made work",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/backup-staging",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-17",
+   "serves": "tools/backup-to-dropbox.py, production/specs/in-game.json",
+   "source": "rebuilt by tools/backup-to-dropbox.py",
+   "proposal": "keep: backup staging, written today",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/bound",
+   "shelf": "lasting",
+   "gb": 0.1,
+   "last_write": "2026-09-30",
+   "serves": "production/specs/garments.json",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: bound garment sources named in garments.json",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/casting-candidates",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-06",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: casting candidate pictures, small",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/casting-work",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-11-06",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: casting plan, refs and results, small",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/cleanup-2026-09-26",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-26",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: scripts and scans of the finished 26 Sep clear-out, 0.0 GB",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/drapestudio-test",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-14",
+   "serves": "production/retention.json (names the -final sibling only)",
+   "source": "unknown",
+   "proposal": "keep: Kiln drape test files from 14 Nov, 0.02 GB",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/drapestudio-test-2026-11-13",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-13",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "keep: 13 Nov Kiln run1, 0.01 GB; the -final sibling is the protected one",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/freesewing",
+   "shelf": "tools",
+   "gb": 0.0,
+   "last_write": "2026-10-01",
+   "serves": "tools/md-bridge/nylon_jacket.py, tools/md-bridge/pleated_skirt.py, tools/ue/import_cap.py",
+   "source": "npm install from its package.json and package-lock.json (public registry)",
+   "proposal": "keep: read by three tools",
+   "expiry": "14 days unused: removed if refetchable, else his page"
+  },
+  {
+   "path": "F:/LedgerTools/friends-evenings",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-05",
+   "serves": "tools/friends/evening.ps1",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: friends evening records and saves",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/game-voice",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-25",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: 25 Sep voice test takes, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/game-voice2",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-25",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: 25 Sep voice test takes, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/keys",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-11-06",
+   "serves": "tools/backup-to-dropbox.py (refuses it), tools/checkers/gemini_training_data.py, production/retention.json",
+   "source": "unknown (keys; contents never opened)",
+   "proposal": "keep: protected, 4 entries, size only read",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/latency",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-14",
+   "serves": "production/retention.json (limit row)",
+   "source": "unknown",
+   "proposal": "remove: empty, covered by a retention limit",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/md-bridge",
+   "shelf": "tools",
+   "gb": 0.0,
+   "last_write": "2026-10-08",
+   "serves": "tools/md/md_bridge.py, tools/md/md_run.py, production/retention.json",
+   "source": "unknown (its own md_bridge.py and md_run.py live here; tools/md in git has the same names)",
+   "proposal": "keep: protected, Marvelous bridge inbox/outbox",
+   "expiry": "14 days unused: removed if refetchable, else his page"
+  },
+  {
+   "path": "F:/LedgerTools/md-jobs",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-17",
+   "serves": "tools/md-bridge/ledger_md_bridge.py, tools/md-bridge/md_job.py, tools/md-bridge/start_bridge.ps1",
+   "source": "rebuilt by rerunning Marvelous jobs",
+   "proposal": "keep: live bridge job folder, written today",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/mickeys-props",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-06",
+   "serves": "tools/art-recipes/mickeys-props/bench.py, chair.py, ashtray.py",
+   "source": "blends made by tools/art-recipes/mickeys-props; previews made work",
+   "proposal": "keep: prop blends and previews, 0.03 GB",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/n16-6-parked",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-11-16",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: parked n16-6 patch and client sources, 3 files",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/nightly",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-17",
+   "serves": "tools/nightly_walk.py",
+   "source": "made by the nightly walk",
+   "proposal": "keep: nightly walk records, 0.01 GB",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/page-frames",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-05",
+   "serves": "production/retention.json (scratch limit)",
+   "source": "unknown",
+   "proposal": "keep: empty scratch folder named by retention",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/pip-cache",
+   "shelf": "tools",
+   "gb": 0.0,
+   "last_write": "2026-11-11",
+   "serves": "production/retention.json (cache cap 1.0 GB)",
+   "source": "rebuilt by pip from PyPI",
+   "proposal": "keep: empty, capped by retention",
+   "expiry": "14 days unused: removed if refetchable, else his page"
+  },
+  {
+   "path": "F:/LedgerTools/playtest",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-26",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: one 26 Oct walk folder, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/presets",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-09-25",
+   "serves": "production/retention.json (protected)",
+   "source": "unknown",
+   "proposal": "keep: protected, 63 preset pictures",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/proof-2.1-setaside",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-03",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: set-aside proof 2.1 patch and glb, small",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/proof-2.2-paused",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-03",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: paused proof 2.2 patches, small",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/pso-record",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-23",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: no files, only an old folder",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/renders",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-17",
+   "serves": "tools/morning_pictures.py, tools/clothes_page.py, tools/proof_progress_page.py",
+   "source": "made by tools/morning_pictures.py",
+   "proposal": "keep: morning renders, retention scratch limit covers it",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/replay-2026-11-08",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-08",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "keep: 8 Nov replay briefs and judge notes, 0.0 GB",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/retired",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-22",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: superseded imagegen-2026-09-03 set (0.04 GB), no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/review-faces-2026-09-26",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-26",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: 26 Sep review frames, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/review-voice-2026-09-25",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-03",
+   "serves": "production/retention.json (review-voice-* limit)",
+   "source": "unknown",
+   "proposal": "remove: empty, covered by a retention limit",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/review-voice-2026-09-26",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-04",
+   "serves": "production/retention.json (review-voice-* limit)",
+   "source": "unknown",
+   "proposal": "remove: empty, covered by a retention limit",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/ron-voice",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-09-25",
+   "serves": "no reader found",
+   "source": "unknown (VCTK speaker clips by name; nearest.py shows how chosen)",
+   "proposal": "keep: Ron voice choice work, 0.01 GB",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/sash-window",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-08",
+   "serves": "tools/art-recipes/sash-window/check_window.py, window_design.py, target_drawing.py",
+   "source": "rebuilt by tools/art-recipes/sash-window",
+   "proposal": "keep: recipe build output, small",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/scratch",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-11-16",
+   "serves": "tools/p1-packaged.ps1, tools/ue/clip_frames.py, tools/meshgen/blender/sitting_clips.py",
+   "source": "unknown",
+   "proposal": "keep: named scratch folder, retention limit covers it",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/selfcheck-voice-2026-09-26",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-09-26",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: 26 Sep self-check outputs, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/shopfront-kit",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-06",
+   "serves": "tools/art-recipes/shopfront-kit/check-glbs.py, bay-contact-sheet.py, pilaster.py",
+   "source": "blends made by tools/art-recipes/shopfront-kit",
+   "proposal": "keep: shopfront blends and previews, 0.02 GB",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/shops-wip-2026-10-03",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-03",
+   "serves": "no reader found",
+   "source": "made by LEDGER runs, not refetchable",
+   "proposal": "keep: unmerged shop patch and glb, 3 files",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/south-quay-work",
+   "shelf": "working",
+   "gb": 0.0,
+   "last_write": "2026-10-06",
+   "serves": "no reader found",
+   "source": "unknown",
+   "proposal": "remove: 6 Oct try1-try5 scratch, no reader",
+   "expiry": "3 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/steps-sources",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-09-30",
+   "serves": "tools/ue/make_steps.py",
+   "source": "unknown (flac, mp3 and html saved; origin not recorded in the folder)",
+   "proposal": "keep: footstep sources, 3 files",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/terms-2026-10-03",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-10-03",
+   "serves": "no reader found",
+   "source": "unknown (saved licence pages)",
+   "proposal": "keep: Epic content licence and Unreal EULA copies, evidence",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/trellis",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-09-24",
+   "serves": "no reader found",
+   "source": "unknown (hf-tree.json, releases.json and licences saved)",
+   "proposal": "keep: trellis research notes and licences, 11 files",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/vctk-young-men",
+   "shelf": "lasting",
+   "gb": 0.0,
+   "last_write": "2026-11-06",
+   "serves": "no reader found",
+   "source": "its own HOW-FETCHED.py (public VCTK corpus)",
+   "proposal": "keep: young-men clips for casting, 0.05 GB",
+   "expiry": "never; backed up nightly to Dropbox"
+  },
+  {
+   "path": "F:/LedgerTools/zen",
+   "shelf": "build-cache",
+   "gb": 0.0,
+   "last_write": "2026-11-03",
+   "serves": "production/retention.json (mustStayEmpty), tools/ue/UserEngine.ini",
+   "source": "rebuilt by Unreal",
+   "proposal": "keep: protected, must stay empty, no files",
+   "expiry": "by retention.json caps (rebuilt by the build)"
+  },
+  {
+   "path": "C:/LedgerTools/python312",
+   "shelf": "tools",
+   "gb": 0.0,
+   "last_write": "2024-12-03",
+   "serves": "production/retention.json (protected)",
+   "source": "unknown",
+   "proposal": "keep: protected Python install, 34 files",
+   "expiry": "14 days unused: removed if refetchable, else his page"
+  },
+  {
+   "path": "C:/LedgerTools/zen",
+   "shelf": "build-cache",
+   "gb": 13.8,
+   "last_write": "2026-11-17",
+   "serves": "tools/ue/UserEngine.ini, production/retention.json",
+   "source": "rebuilt by Unreal (Zen shared cache)",
+   "proposal": "keep: protected; 13.8 GB, Unreal trims itself to its 10 GB soft limit",
+   "expiry": "by retention.json caps (rebuilt by the build)"
   }
- ]
+ ],
+ "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."
 }

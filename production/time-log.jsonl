@@ -797,3 +797,4 @@
 {"event": "stop", "at": "2026-11-17T13:05:02", "note": "n16-8 inputs remade, d60 run done"}
 {"event": "start", "at": "2026-11-17T13:07:04", "task": "n16-8 hair r5b on Darren in editor", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T13:09:40", "note": "r5b strands on Darren in editor, pictures made"}
+{"event": "start", "at": "2026-11-17T13:12:41", "task": "tool loop: kiln zips round 2 (n16-1)", "phase": "2", "kind": "production"}

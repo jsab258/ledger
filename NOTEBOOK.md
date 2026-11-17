@@ -2511,3 +2511,27 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: both patterns pass the start check (9 and 12 pieces); a reference drape still pending.
 - Cost: about 2 h. What failed: nothing yet; the first measure run is under way.
 - Evidence: the judge folder's README and hash list (named in Kiln's design note).
+
+## Storage inventory and map (17 Nov 2026, step 1 of 2 finished; the cleaner's new rules next)
+- Made: every folder the project writes, on both drives, listed with size, last write, what reads it, where it comes back from, and a shelf (lasting, tools, working, build cache); a map file the cleaner will read; one remove list for the owner's single yes.
+- Method: two read-only helpers, one per drive, each folder sized on disk and its readers found by searching the code and configs for its path; anything protected, approved or not refetchable stays; folders owned by other sessions are mapped but never touched; the remove list carries only what no reader names and can be fetched again without the owner's sign-in.
+- Tools: du, find, grep, a small parser turning the two tables into the map.
+- Target and check: the shelves add up to the drive with its floor; every folder on the map; the owner's correction (the approved cast is lasting) applied before the list went out.
+- Cost: about 1 h of session, 0.3 h of helpers. What failed and why: folders that arrived as protected were never reviewed, so cleaning only ever reached run leftovers and the drive kept running short; path-text search misses scripts that build a path from pieces (listed as a limit).
+- Evidence: production/research/disk/INVENTORY-2026-11-17.md, production/storage-map.json. Recipe map: B11 updated.
+
+## Backup of the lasting shelf (17 Nov 2026, step 1 of 2 finished; the schedule waits on the owner's Allow)
+- Made: the nightly copy to cloud storage now also takes the tool's source and its whole version history as one bundle file (no public code host), the inputs the night build reads, the judge folder and the last approved face; keys refused by folder and name; the system drive kept above its floor; a staleness line and a weekly restore check.
+- Method: copy only, never delete or overwrite (a changed file goes beside under a dated folder); every copy read back by SHA-256; the restore check samples 20 files back into a temporary folder and compares them; one page saying what returns from where, in order.
+- Tools: Python (shutil, hashlib), git bundle.
+- Target and check: 26 of 26 self-tests; the first run copied 4.3 GB, all whole; the first restore check 20 of 20 identical.
+- Cost: about 1 h. What failed and why: registering the nightly schedule was refused by the app's safety check, so it waits on the owner's hands at the PC; a hostile review is running.
+- Evidence: tools/backup-to-dropbox.py, production/RESTORE.md. Recipe map: B11 updated.
+
+## Hair round 5b on the real head (17 Nov 2026, a round within the 8 h cap)
+- Made: the character's head and hair-bearing scalp re-cut from his face mesh with both ears left out, and the hair tool's round-5 rules (no forced parting, a soft irregular hairline, no stubble under the scalp patch) grown on it at 60 roots per cm2, drawn in the engine.
+- Method: export the face mesh at its first detail level in the full editor, cut the scalp in the 3D program by a hairline table and an ear box, keep the cutting script beside its outputs, grow, then look from the side and front over about 60 engine ticks so the strands are warm before judging.
+- Tools: the engine's mesh export, the 3D program's background mode, the hair tool, the engine's groom import in an unsaved level.
+- Target and check: scalp area 650 to 760 cm2 (652); no scalp point on an ear (widest 8.3 cm against the ears' 10.6); skin through the hair from above 0.09 (0.13 on the stand-in); by eye: crown covered, soft hairline and sideburns, no ear through the hair.
+- Cost: about 0.8 h of helpers. What failed and why: the first inputs were deleted with a superseded round's folder, so inputs now live on the kept shelf; the front view's skin-through (0.56) is still thin; the stand-in face's own stubble stays in the pictures (the capture script has no switch for it).
+- Evidence: F:/LedgerTools/tool-tests-2026-11/loomwright-r5/darren-r5b/RESULT.md and ue/RESULT-UE.md; production/previews/loomwright-hair-r5b-darren-side-2026-11-17.jpg. Recipe map: D2 updated.
