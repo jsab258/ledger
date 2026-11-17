@@ -1019,6 +1019,27 @@
    ],
    "state": "done",
    "closed": "2026-11-16 12:39, Not his to answer (advisor 173, 12:19): own leftovers of four finished 12 Nov tool tests deleted at 12:38, 2.49 GB; reports kept."
+  },
+  {
+   "id": "clearout-at-pc-2026-11-17",
+   "added": "2026-11-17 12:08",
+   "his_hands": true,
+   "text": "Allow the drive clear-out at your PC. Your yes was given at 08:20, but the app's safety check stops Claude deleting these folders on its own. At the PC: open the Claude app, go to LEDGER's production session, type \"Run the clear-out delete now\", and click Allow when it asks. It frees about 13 GB: 7.7 GB of old gate pictures already replaced, and the 5.6 GB copy of Epic's animation sample that nothing reads (it can be fetched again from Fab with your sign-in). Drive F has under 1 GB above the 20 GB it must keep, and the next 12 hours, tonight's build included, need about 3 GB. Then tap Done.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it before tonight's build (about 23:00); only the listed folders go, nothing of yours and nothing the game uses.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-17 12:26, done at his word in the session (2026-11-17 12:26): the 41 listed gate items and the animation sample copy deleted, F: 20.8 to 34.9 GB free; the dress film script kept first in game-inputs/kept-scripts"
   }
  ]
 }

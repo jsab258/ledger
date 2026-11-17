@@ -788,3 +788,8 @@
 {"event": "start", "at": "2026-11-17T06:24:00", "task": "tool loop: kiln lanes round 1 verdict, skirt merge, gate exit fix (helper + session)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T06:35:00", "note": ""}
 {"event": "start", "at": "2026-11-17T06:35:34", "task": "session: helpers in flight (feet research, n16-5 plan, kiln lane fixes), scale ladder", "phase": "2", "kind": "production"}
+{"event": "start", "at": "2026-11-17T10:11:57", "task": "n16-1 kiln step 4 + held-back patterns (advisor 193)", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T11:02:04", "note": ""}
+{"event": "start", "at": "2026-11-17T11:04:00", "task": "n16-1 restart: gates, held-back results, notebook lines", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T11:24:00", "note": ""}
+{"event": "start", "at": "2026-11-17T11:23:45", "task": "tool loop: kiln round 1 (step 4 gate, zips gate, benches) (n16-1)", "phase": "2", "kind": "production"}

@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-17 10:07 (the hourly run; the last session set its Stopped line at 09:52)
+**Started:** 2026-11-17 11:04 (the hourly run; the last session set its Stopped line at 11:02)
 
-**Row due:** 2026-11-17 11:11 (last 10:11; page and advisor read 10:09)
-**Stopped:** 2026-11-17 09:52 (history near its hard stop at an item's end; all helpers reported; two days-old fixer-r5 wait loops (bash 14768, 20724) are not this session's and were left)
+**Row due:** 2026-11-17 13:05 (last 12:05; page and advisor read 12:05; last ack 12:05, advisor 195)
+**Stopped:** 2026-11-17 11:02 (history OVER at an item's end; three helpers ended mid-run, listed below; no Kiln processes left)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted by his tap 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line runs from 0 at Monday 13:00 to 95% by Wednesday 15:00, six helpers, full pace. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -30,25 +30,26 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Before writing Stopped: end every background job of your own** (fresh_gate.py since 17 Nov holds starts up to 120 min while any session's background command still runs).
 
 ## Done the runs before
-- git show 47cfaec10:production/handover/HANDOVER.md (06:22 to 09:52), 4b16a336e, d74c1862d, 5606f2805.
+- git show 40ee1fd68:production/handover/HANDOVER.md, 47cfaec10, 4b16a336e.
 
-## Done this run (10:07 to the stop)
-- Advisor 193 (his pick about 10:00): Kiln about 70% of the week; acked, DECISIONS, order ledger. Review step 3 had already landed (Kiln aab3778). Step 4 cap 32 h (failed-capability report if not landed Thu 19 Nov); step 5's layered-job worst edge recorded as a known shortfall. Engine-count tuning in the jacket/trouser lanes STOPPED (lane-jackets parked until step 4 lands). n16-5 S2 and the rest of n16-3 WAIT.
-- n16-7 knees: fresh review (production/research/n16-7-knees-review-2026-11-17.md): same fault as the stopped pelvis method; set aside, listed, NOTEBOOK entry; no further try.
-- Recipe map: D3 and D5 rows updated for 17 Nov.
-- Committed and pushed 3c3d8e671 (wip): M5 step 2 (tools/md/skin_transfer.py, jeans match Blender's weights, worst 0.033); Kiln disk bounded (retention rows; production/research/disk/KILN-DISK-2026-11-17.md: Kiln 15.5 GB, 2.4 on F:, so F:'s squeeze is the gate-picture clear-out); held-back patterns made (judge/heldback/patterns, HB-1 9 pieces, HB-2 12; start check passes; re-hashed; reference_drape PENDING).
-- Kiln main c16be30: collar-plane lane merged on a passing gate (only false collar flags go). Fabric numbers: thin (two wools only), a sanity band; the re-tune leans on Tom's references.
-- Helpers running at the stop (check their files): step 4 stiffness lane (report KILN-STEP4-STIFFNESS-2026-11-17.md); zips lane gate (verdict appended to KILN-ZIPS-2026-11-17.md; md-bridge writers on wip uncommitted: commit after a PASS); held-back first judge run on main (judge/heldback/RESULTS-2026-11-17-main.md; counts only, HB-1/HB-2); M5 step 3 code (tools/md, uncommitted); re-tune plan (production/research/tool-tests-2026-11/KILN-RETUNE-PLAN-2026-11-17.md).
+## Done this run (11:04 to the stop)
+- Held-back first run on main c16be30 finished (started by the stopped helper): 1 of 2 pass (HB-1 settles, checks pass; HB-2 jams, fails worst edge, inside, seam gap). Written up by the session: judge/heldback/RESULTS-2026-11-17-main.md, hashed in judge/HASHES.txt.
+- Zips lane gate try 1: FAIL on the jeans only (drop 100.4 against 91); two controls: main = lane exactly (flag clean), the baseline's own engine 3d32458 on the regenerated script also 100.4, so the regenerated job script causes it. The new jeans are NEARER Marvelous n7 (waistband 1,119/1,071 against 1,120/1,066; old 1,128/1,081; inside 3 against 7). DECIDED: re-take the judge baseline on main with the new scripts (session-only judge change, hashes re-made), re-gate lane-zips with PAT_DRESSING_REFUSES true, merge on PASS. Lane rebased on main 131eee0, 38 tests, flag back false. Report sections in KILN-ZIPS-2026-11-17.md.
+- Step 4 gate (helper, diagnoser): flag-off GATE PASS against baseline 3d32458 (old path unchanged); flag-on run worse on 7 of 7 made jobs before the re-tune (expected): counted as code landed behind its switch, merged into Kiln main fb0669c, switch off by default. Run folder C:/LedgerTools/kiln-runs/step4-2026-11-17/; report KILN-STEP4-STIFFNESS-2026-11-17.md.
+- Fabric benches (helper, diagnoser) on new lane-benches (C:/LedgerTools/kiln-lanes/benches, off lane-stiffness): BENCH_RESULT. Report KILN-BENCHES-2026-11-17.md.
+- M5 chain proof for Ron's work trousers (drape, bend_back, skin_transfer, pose_check): a helper for it was REFUSED TWICE by the app's permission check (11:10 'unsanctioned communication', 11:30 'undermining oversight'); not tried again, not done another way. Next session: try it yourself in the session only if the reason is understood, else leave it named in the row.
+- NOTEBOOK: three owed entries written (skin transfer, pose check, held-back patterns; held-back jobs not named).
+- Advisor 194 (his 11:46): clear-out item put on his page; he typed "Run the clear-out delete now" at 12:2x: Part 1 (41 gate items) and the GameAnimationSample copy deleted, F: 20.8 to 34.9 GB free; dress_film.ps1 kept in game-inputs/kept-scripts; item closed, published. Standing: any ask needing his hands, allowance or sign-in goes on the page the same hour.
+- Advisor 195 (his pick 11:58): measure the rate 10:30 to 15:00 (31% at 10:11, 32% at 12:05); under 1.2 points an hour: up to EIGHT helpers from 15:00, real work only (this order, then the next order's machine-free work), empty places said in the row; back to six at 1.2 for 3 h or within 6 points of the line. Each row: helper count and rate.
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T09:45:00Z; advisor after 2026-11-17T10:10:00+01:00 (last ack 10:33, pace). Row due 11:11.
-1. Read each helper's verdict as it lands; merge only on a passing gate; commit md-bridge writers and M5 step 2 code with their evidence; NOTEBOOK lines per finished unit.
-2. Kiln step 4: after the code lands, re-tune presets against Tom's references using the fabric numbers (12-20 h), then re-judge M2-M4; the speed lane's card port re-checked on the new engine before switching on. Held-back jobs run once patterns exist (judge only; no fixer sees them).
-3. M5 step 3 for Ron's trousers after step 2 (a real Kiln drape, bend_back, skin, film held for his page).
-4. n16-7: the look by eye and the packaged film with the hip-joint default (knees listed).
-5. n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 (small slot). DAILY by 19:00 (production/research/token-audit/DAILY-2026-11-17.md).
-6. n16-8 when an editor run is allowed: head and scalp into F:/LedgerTools/game-inputs/loomwright-darren/, round 5 at 60 roots/cm2.
-7. Waiting by his pick: n16-5 S2 (notes in git show 47cfaec10:production/handover/HANDOVER.md, item 1, incl. the editor brick path fault) and n16-3's people ladder; S1 pictures go to his batched rough-street page with S2.
+0. FIRST: verdicts after 2026-11-17T11:05:00Z; advisor after 2026-11-17T12:05:00+01:00 (last ack 12:05, advisor 195). Row due 13:05.
+1. Read KILN-STEP4-STIFFNESS-2026-11-17.md and KILN-BENCHES-2026-11-17.md (if not already handled above). Step 4 is merged (switch off); the re-tune per KILN-RETUNE-PLAN-2026-11-17.md section 3 starting with the benches (step 1's 10% rule), denim on jeans next. Cap 32 h; failed-capability report if switch-on is not inside the bands by Thu 19 Nov.
+2. Zips: re-take the baseline on main with the regenerated scripts, re-hash judge, re-gate lane-zips (flag true), merge on PASS; commit the lane's regression_jobs.json edit.
+3. M5 chain for Ron's trousers (see above), after step 4's engine if it lands.
+4. n16-7 look and packaged film (knees listed); n16-6 packaged run with LEDGER_TALK_CORE_MODEL=claude-sonnet-5-5 (leg 1's two bench pairs done; the packaged run decides). DAILY by 19:00 (production/research/token-audit/DAILY-2026-11-17.md).
+5. n16-8 when an editor run is allowed: head and scalp into F:/LedgerTools/game-inputs/loomwright-darren/, round 5 at 60 roots/cm2.
+6. Waiting by his pick: n16-5 S2 and n16-3's people ladder (notes in git show 47cfaec10:production/handover/HANDOVER.md, item 1).
 
 ## Tonight's machine-free queue (start before 01:15)
 1. Kiln step 4 preset re-tune prep and held-back judge runs (processor, outside Unreal's runs). 2. M5 step 3 code. 3. Reviews of the evening's work. If the current order waits on the machine: the next order's waiting list (advisor 192).

@@ -2487,3 +2487,27 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1.5 h (note and review).
 - What failed and why: the reviewer found the knee bend was already a counted failure of the stopped hip method, so a fix would be a fourth method on one fault; set aside and listed. Lesson: before calling a cause new, check whether its symptom was in the stopped method's failure list.
 - Evidence: production/research/n16-7-knees-method-2026-11-17.md, production/research/n16-7-knees-review-2026-11-17.md
+
+## A draped garment's skin weights taken from the wearer's body (17 Nov 2026, finished)
+- Made: a tool that gives a simulated garment mesh the wearer's skin weights, and writes the skinned result as an FBX of its own.
+- Method: for each garment point find the nearest place on the wearer's full body (not the clothed body), blend that place's weights, keep the four largest, renormalise; before trusting it, run it on a garment already skinned by hand and compare weight by weight.
+- Tools: Python (numpy), an own FBX 7.4 writer, Blender only as the reference.
+- Target and check: on the already-passed garment, worst weight difference under 0.05; got 0.033. 22 tests.
+- Cost: about 3 h. What failed: nothing; the existing FBX helper needed a fix to write more than one skin cluster.
+- Evidence: tools/md/skin_transfer.py, tools/md/test_skin_transfer.py; commit 3c3d8e671.
+
+## A skinned garment checked through poses before it reaches the engine (17 Nov 2026, finished)
+- Made: a pose check that bends the skinned garment and its wearer through walk, sit and arms-up and counts body points through or inside the cloth; the UV order kept through every step and read back corner by corner.
+- Method: pose both meshes with the same weights and bone moves; count points of the body outside the cloth's inner surface by a set margin; judge a new garment against the same counts on a garment already passed, not against zero.
+- Tools: Python, the skin tool above, the exact inverse of each point's blended move for bending a drape back to the rest pose.
+- Target and check: walk and arms-up within bars; sit fails on the passed garment too (344 through, 83 inside), so sit is judged against the passed garment's numbers, a known shortfall.
+- Cost: about 3 h. What failed and why: a plain unpose missed by 1 mm at the elbows; the exact inverse closes it to 0.002 mm.
+- Evidence: tools/md/pose_check.py, tools/md/bend_back.py; commits d7d685b73, 40ee1fd68.
+
+## Held-back measuring jobs given patterns (17 Nov 2026, finished)
+- Made: patterns for the two jobs kept back from every fixer, so a tool's progress can be measured on work it never practised on.
+- Method: draw the jobs from the game's garment list, make their patterns in the judge's own folder by the same writers' rules, hash-lock the folder, run a start check; no fixer is told the jobs or sees their output.
+- Tools: the pattern writers, a hash list, the regression gate as the runner.
+- Target and check: both patterns pass the start check (9 and 12 pieces); a reference drape still pending.
+- Cost: about 2 h. What failed: nothing yet; the first measure run is under way.
+- Evidence: the judge folder's README and hash list (named in Kiln's design note).
