@@ -773,3 +773,9 @@
 {"event": "stop", "at": "2026-11-17T05:07:00", "note": "scale fixed, six pairs measured, fail on feet; diagnosis helper out"}
 {"event": "start", "at": "2026-11-17T05:08:00", "task": "n16-10 walk report names a stale perf line; n16-3 perf read", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T05:17:00", "note": ""}
+{"event": "start", "at": "2026-11-17T05:17:00", "task": "n16-8 hair round 4 on Darren in Unreal", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:23:00", "note": "round 5 fixer out"}
+{"event": "start", "at": "2026-11-17T05:26:11", "task": "n16-3 scale test editor screen N=10", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:32:48", "note": "screen passes; ladder waits for the Kiln queue"}
+{"event": "start", "at": "2026-11-17T05:24:00", "task": "n16-1 tool loop: kiln collar ring diagnosis", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-17T05:33:00", "note": ""}
