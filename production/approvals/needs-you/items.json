@@ -1062,7 +1062,8 @@
      "No, keep them"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-17 14:42, answered yes (14:26): all three removed through retention.py at 14:41, 14.6 GB (F: and C:); the designed voices and the study notes kept"
   },
   {
    "id": "backup-schedule-at-pc-2026-11-17",

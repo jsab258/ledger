@@ -25,7 +25,13 @@
  ],
  "protected": [
   "F:/LedgerTools/reference-other-games",
-  "F:/LedgerTools/aaa-study",
+  "F:/LedgerTools/aaa-study/public",
+  "F:/LedgerTools/aaa-study/review-inzoi-model",
+  "F:/LedgerTools/aaa-study/study-12",
+  "F:/LedgerTools/aaa-study/study-5",
+  "F:/LedgerTools/aaa-study/study-a-inzoi-extract",
+  "F:/LedgerTools/aaa-study/study-b-sh2",
+  "F:/LedgerTools/aaa-study/tools",
   "F:/LedgerTools/dotnet10",
   "F:/LedgerTools/keys",
   "F:/LedgerTools/played-game",
@@ -51,8 +57,7 @@
   "F:/LedgerTools/models",
   "F:/LedgerTools/retention",
   "F:/LedgerTools/town-scratch/ci-tree",
-  "F:/LedgerTools/slr83",
-  "F:/LedgerTools/parler-tts",
+  "F:/LedgerTools/parler-tts/designed",
   "F:/LedgerTools/accent-id",
   "C:/LedgerTools/mh-assemble",
   "C:/LedgerTools/mh-assemble-before-dressing-2026-09-24",
@@ -61,7 +66,6 @@
   "C:/LedgerTools/zen",
   "C:/LedgerTools/python312",
   "C:/LedgerTools/parler-tts",
-  "C:/LedgerTools/slr83",
   "C:/Users/Jafar/ledger-local/ue-probe/Binaries",
   "F:/LedgerTools/tool-dev/runs/m1-baseline",
   "F:/LedgerTools/tool-dev/runs/bodies-fix-2026-11-13",
@@ -294,20 +298,6 @@
     "tools/voice-live/take_gate.py"
    ],
    "why": "the speaker model's working copy"
-  },
-  {
-   "path": "F:/LedgerTools/parler-tts",
-   "usedBy": [
-    "tools/voice-live/longer_takes.py"
-   ],
-   "why": "designing a new character's voice from a description (casting); review on 9 October"
-  },
-  {
-   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--parler-tts--parler-tts-mini-v1",
-   "usedBy": [
-    "tools/voice-live/longer_takes.py"
-   ],
-   "why": "a second copy of Parler's model, for tools run without HF_HOME; review on 9 October"
   },
   {
    "path": "F:/LedgerTools/voice-graphs/nano",

@@ -106,11 +106,11 @@
   {
    "path": "C:/LedgerTools/parler-tts",
    "shelf": "tools",
-   "gb": 5.5,
+   "gb": 0.0,
    "last_write": "24 Sep",
    "serves": "tools/cleanup.py, tools/voice-live/longer_takes.py, retention.json",
    "source": "Hugging Face; env by pip",
-   "proposal": "keep; hf-cache looks like a second copy of the hub's parler model (not compared)",
+   "proposal": "junction to F:/LedgerTools/parler-tts (designed voices only since 17 Nov)",
    "expiry": "14 days unused: removed if refetchable, else his page"
   },
   {
@@ -142,16 +142,6 @@
    "source": "git, partly",
    "proposal": "keep",
    "expiry": "never; backed up nightly to Dropbox"
-  },
-  {
-   "path": "C:/LedgerTools/slr83",
-   "shelf": "tools",
-   "gb": 3.8,
-   "last_write": "29 Sep (files 2019)",
-   "serves": "tools/cleanup.py, retention.json",
-   "source": "unknown (name suggests OpenSLR)",
-   "proposal": "keep, named in retention",
-   "expiry": "14 days unused: removed if refetchable, else his page"
   },
   {
    "path": "C:/LedgerTools/mocap-solve",
@@ -430,11 +420,11 @@
   {
    "path": "F:/LedgerTools/parler-tts",
    "shelf": "tools",
-   "gb": 5.5,
+   "gb": 0.01,
    "last_write": "2026-09-24",
    "serves": "retention.json, longer_takes.py",
    "source": "Parler model is public (Hugging Face parler-tts-mini-v1; a second copy sits in C: HF cache); env rebuildable by pip",
-   "proposal": "shrink: hf-cache 3.5 GB duplicates the C: copy; env 2.0 GB used only by casting tool longer_takes.py. Protected: needs his yes",
+   "proposal": "removed 17 Nov 14:41 by his yes (env and model); designed voices kept",
    "backup": "no",
    "expiry": "14 days unused: removed if refetchable, else his page"
   },
@@ -448,17 +438,6 @@
    "proposal": "keep (friends build voice, nothing installed)",
    "backup": "no",
    "expiry": "14 days unused: removed if refetchable, else his page"
-  },
-  {
-   "path": "F:/LedgerTools/slr83",
-   "shelf": "lasting",
-   "gb": 3.8,
-   "last_write": "2026-09-29",
-   "serves": "cleanup.py, retention.json",
-   "source": "public OpenSLR dataset 83 (re-download; exact URL unverified)",
-   "proposal": "shrink candidate: 3.8 GB, newest write 29 Sep (file dates 2019), only tools/cleanup.py names it; protected: needs his yes",
-   "backup": "no",
-   "expiry": "never; backed up nightly to Dropbox"
   },
   {
    "path": "F:/LedgerTools/game-inputs",
@@ -496,11 +475,11 @@
   {
    "path": "F:/LedgerTools/aaa-study",
    "shelf": "lasting",
-   "gb": 2.0,
+   "gb": 0.24,
    "last_write": "2026-11-06",
    "serves": "retention.json",
    "source": "game extracts re-made from C:/Games with FModel and the key in F: keys (kcd2, mafia 1.75 GB); study notes small",
-   "proposal": "shrink candidate: kcd2 + mafia extracts 1.75 GB, no write since 28 Oct, CLAUDE.md says extracts go once numbers are recorded; protected: needs his yes",
+   "proposal": "kcd2 and mafia extracts removed 17 Nov 14:41 by his yes; notes and other studies kept",
    "backup": "no",
    "expiry": "never; backed up nightly to Dropbox"
   },
