@@ -2470,3 +2470,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: gate PASS with exit 0; 10 gate tests pass.
 - Failed and why: two lanes failed on their own changes (a neck-base rule that also fixed a stand refusal; per-piece solver passes that softened coarse pieces), not on the known check fault they were blamed on.
 - Tools: Rust cloth engine, Python gate. Cost about 0.3 h. Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANES-VERDICT-2026-11-17.md.
+
+## Motion onto another skeleton: placing the hips from the hip joints (17 Nov 2026, method stopped, kept as default)
+- Made: a retarget whose pelvis follows the source's hip-joint midpoint, scaled by the leg-length ratio, with a floor term from the source's own planted standing frame.
+- Method: when two skeletons put their hips bone at different heights relative to the hip joints, give the source an extra bone at the hip-joint midpoint (keyed every frame with the hips' rotation) and drive the target pelvis from it; scale by the legs' ratio, the ratio the leg goals already use; set the source-bone choice last, since rig assignment resets it; read every setting back and stop on a mismatch.
+- Target and check: the same frame-by-frame measure as before (slide, height, knees, flips on six clip pairs, 36 checks). Fix the measure first when it judges two bodies on different floors: a fault in the check is not a try.
+- Result: 7 of 36 failing against 9 for the first working setup and 13 for the second; slide and flips kept, height 5/6. Under a third of the gap closed, so the method stops by the rule; kept as default because it is better with no new fault.
+- Failed and why: bent knees remain on clips where the source stands slightly crouched; pelvis placement does not change them (within 0.4 degrees across all three setups), so their cause lies elsewhere.
+- Tools: Blender pre-pass, Unreal 5.8 IK Retargeter by Python, the Blender measure. Cost about 2.5 h helper time. Evidence: F:/LedgerTools/tool-dev/reports/CMU-RETARGET-FEET-DIAGNOSIS-2026-11-17.md; F:/LedgerTools/game-inputs/cmu-measure-gate-2026-11-17.

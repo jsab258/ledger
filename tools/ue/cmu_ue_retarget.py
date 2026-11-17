@@ -70,7 +70,7 @@ ANKLE_RIG = WORK + "/IK_MH_IKRig_ankle"  # the copy with ankle goals, remade eve
 BLEND_AXES = (1.0, 1.0, 0.0)  # Blend to Source per axis: horizontal from the scaled source, height chain-relative
 MH_ROLES = ("pelvis", "thigh_l", "calf_l", "foot_l", "ball_l", "thigh_r", "calf_r", "foot_r", "ball_r")
 CMU_FOOT_PARENTS = ("CmuRig", "Hips", "{s}HipJoint", "{s}UpLeg", "{s}Leg")  # root down to the foot's parent (cgspeed)
-HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE") == "1"   # the hip-joint-centre pelvis (docstring)
+HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE", "1") != "0"   # on by default since 17 Nov (7 of 36 failing against 9); =0 for the old Hips pelvis   # the hip-joint-centre pelvis (docstring)
 TRY1_RESULT = os.environ.get("CMU_TRY1_RESULT", "F:/LedgerTools/game-inputs/cmu-2026-11-17-try1/ue/ue_result.json")
 CMU_HC_CHAIN = ("CmuRig", "Hips", "HipCentre")
 MH_LEG_CHAIN = ("root", "pelvis", "thigh_{s}", "calf_{s}", "foot_{s}")

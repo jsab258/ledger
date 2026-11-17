@@ -26,7 +26,7 @@ OUT_DIR = "F:/LedgerTools/game-inputs/cmu-2026-11-17"
 # LEDGER_CMU_HIPCENTRE=1 each skeleton gets a bone HipCentre, a child of Hips at the midpoint of the two hip joints,
 # keyed every frame there with Hips's rotation, so the retargeter's pelvis can read the hip joints, not the Hips bone;
 # and floor_<subject>.json beside the clips: the source ankle height a_s at the measure's standing frame (step 5)
-HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE") == "1"
+HIPCENTRE = os.environ.get("LEDGER_CMU_HIPCENTRE", "1") != "0"   # on by default since 17 Nov (7 of 36 failing against 9); =0 for the old Hips pelvis
 LIMB_END = ("UpLeg", "Leg", "Foot", "ToeBase", "Arm", "ForeArm", "Hand", "Shoulder")
 
 

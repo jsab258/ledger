@@ -36,7 +36,13 @@ printed line "cmuMeasure=PASS|FAIL ..." per pair. Measures and bars (review fix 
   mesh's reference pose as the file's rest: EditorExporters.cpp 2465-2496, FbxSkeletalMeshExport.cpp 46-77). Each
   frame passes at most max(10, source knee + 3) degrees: "within 3 of the source where the source stands softer"
   read one-sided (a target straighter than the source never fails). Fails when the source never stands, or when the
-  target's pelvis never reaches 97% of its own standing height inside that window.
+  target's pelvis never reaches 97% of its own standing height inside that window. Both 97% tests judge a body ABOVE ITS
+  OWN FLOOR (17 Nov, the hip-joint try's 131_01): the source's pelvis minus its floor lift (the mean ankle height at the
+  standing frame below minus the rest ankle height, the same frame that sets the source's contact heights, fix M3; 131_01
+  stands 3.74 cm above its T-pose floor), the target's against its rest floor (its rest is the body's own reference pose,
+  feet flat). Before, the source was judged on absolute height and the target on the true floor, so a raised source
+  floor opened a window the target could not reach and blamed the target. The standing frame itself is still chosen on
+  absolute height (the floor is read at that frame).
 - flips: no limb bone (clavicle, upper arm, forearm, hand, thigh, calf, foot, ball; CMU: cmu_clips.is_limb)
   turns over 90 degrees between two 30 fps frames (local rotation, every round(fps/30) frames), on the
   retargeted file; the source file's count is written beside (cmu_clips.py checks the BVH). Twist, corrective
@@ -206,6 +212,8 @@ def measure(src, tgt, stand_frame=None):
     else:
         f, how = min(max(0, stand_frame), n - 1), "given"
     src_floor = {b + s: src["pos"][b + s][f][2] for b in ("foot_", "ball_") for s in "lr"}
+    # the source's floor lift at that frame (ankles over their rest heights): its standing tests are made above it
+    lift = sum(src_floor["foot_" + s] - src["rest"]["foot_" + s][2] * s_k for s in "lr") / 2.0
     # --- feet
     feet_rows, worst_slide, worst_low, any_span, over_src, low_over = [], 0.0, 0.0, False, 0.0, 0.0
     for s in "lr":
@@ -231,15 +239,16 @@ def measure(src, tgt, stand_frame=None):
         add("feet_height_cm", None, "within +-%.1f" % HEIGHT_CM, False, why="no planted span on the source ball")
     # --- knees
     ht = [tgt["pos"]["pelvis"][i][2] for i in range(n)]
-    ws = last_stand_run(hs, STAND_FRAC * s_stand)
+    ws = last_stand_run([h - lift for h in hs], STAND_FRAC * s_stand)   # above the source's own floor
     w0 = ws
     bar_k = "<= max(%.0f, source + %.0f) deg" % (KNEE_DEG, KNEE_SRC_DEG)
     if ws is None:
-        add("knees_deg", None, bar_k, False, why="the source pelvis never reaches 97%% of its standing height %.1f cm"
-            % s_stand, standing_cm=round(t_stand, 1))
+        add("knees_deg", None, bar_k, False, why="the source pelvis never reaches 97%% of its standing height %.1f cm above "
+            "its own floor (lift %.2f cm)" % (s_stand, lift), standing_cm=round(t_stand, 1), source_floor_lift_cm=round(lift, 2))
     elif max(ht[ws:n]) < STAND_FRAC * t_stand:
         add("knees_deg", None, bar_k, False, why="in the source's stand (from frame %d) the target pelvis never reaches 97%% "
-            "of its standing height %.1f cm (highest %.1f)" % (ws, t_stand, max(ht[ws:n])), standing_cm=round(t_stand, 1))
+            "of its standing height %.1f cm (highest %.1f)" % (ws, t_stand, max(ht[ws:n])), standing_cm=round(t_stand, 1),
+            source_floor_lift_cm=round(lift, 2))
     else:
         worst = None
         for i in range(w0, n):
@@ -250,7 +259,7 @@ def measure(src, tgt, stand_frame=None):
                     worst = (ex, i, s, t, sv)
         add("knees_deg", round(worst[3], 1), bar_k, worst[0] <= 1e-9, frame=worst[1], side=worst[2],
             source_deg=round(worst[4], 1), window=[w0, n - 1], source_window_start=ws, standing_cm=round(t_stand, 1),
-            body_scale=round(t_k, 4))
+            body_scale=round(t_k, 4), source_floor_lift_cm=round(lift, 2))
     # --- flips
     tf, tstep = flips(tgt)
     sf, _ = flips(src)
@@ -447,10 +456,12 @@ def selftest():
     get = lambda r, name: next(m for m in r["measures"] if m["name"] == name)
     cases = []
 
-    def case(label, tgt, expect, src_tr=None, **kw):
+    def case(label, tgt, expect, src_tr=None, why=None, **kw):
         r = measure(src_tr or src, tgt, **kw)
         got = {m["name"]: m["result"] for m in r["measures"]}
         ok = all(got[k] == v for k, v in expect.items())
+        if why:      # (measure, words its reason must contain)
+            ok = ok and why[1] in get(r, why[0]).get("why", "")
         cases.append((label, ok, {k: (got[k], get(r, k)["value"]) for k in expect}))
 
     allpass = {k: "PASS" for k in ("frames", "feet_slide_cm", "feet_height_cm", "knees_deg", "limb_flips", "stand_knee_deg")}
@@ -506,6 +517,16 @@ def selftest():
          src_tr=synth(ankle=lambda i, s: (1.5 * i, 10.0 if s == "l" else -10.0, 8.0)))
     case("stand frame given (frame 30, seated 90 deg on both): stand passes against the source", synth(flex=sit_rise),
          dict(stand_knee_deg="PASS"), stand_frame=30)
+    # the 97% standing tests above each body's own floor (17 Nov, 131_01)
+    case("source floor 4 cm below the target's, both stand fully: knees judged and pass (absolute height read the source "
+         "as never standing)", synth(flex=sit_rise), dict(knees_deg="PASS", feet_height_cm="PASS"),
+         src_tr=synth(flex=sit_rise, dz=-4.0))
+    short = lambda i: -4.1
+    case("source floor 4 cm up, it stands at most 96% above it, target the same on its floor: knees fail on the SOURCE "
+         "(absolute height blamed the target)", synth(flex=sit_rise, pelvis_dz=short), dict(knees_deg="FAIL"),
+         src_tr=synth(flex=sit_rise, dz=4.0, pelvis_dz=short), why=("knees_deg", "the source pelvis never reaches"))
+    case("source floor 4 cm up, both stand fully: all pass", synth(flex=sit_rise), allpass,
+         src_tr=synth(flex=sit_rise, dz=4.0))
     for label, ok, got in cases:
         print("%s  %s  %s" % ("ok  " if ok else "FAIL", label, got))
     bad = sum(not ok for _, ok, _ in cases)
