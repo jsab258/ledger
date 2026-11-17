@@ -2593,3 +2593,10 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: nothing through the body; one part with three openings; 8-10k triangles; bake hits 97%+; sitting no worse than the passed trousers. All met but seam stretch in the seat when sitting and 1.3% steep normals on one panel.
 - Cost: about 0.3 h machine, 0.6 h session. What failed and why: re-opening an old project failed the body standard added since; the old job lacked an opening the pattern check now refuses without. Re-run from the current job writer, never a saved project from before a standard changed.
 - Evidence: F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md. Recipe map: step "into the game" still open (import waits on a licence tap).
+
+## 2026-11-18 00:05 Tools: merging a speed path and judging regressions by work done, not clock time
+- Made: a graphics-card solver path merged onto the main solver with a refusal where the card cannot reproduce a term the processor solves; the regression gate's bands moved from seconds to solver work (frames, constraint solves). Method: merge, then refuse incompatible switch pairs with a named reason and a test; retake any bit-exact golden on the unchanged main with the same helper and compare; band work counts, keep times as information.
+- Tools: git worktrees, the solver's tests, the regression gate run alone.
+- Target and check: card off bit-identical to main; every gate job inside its bands. Met.
+- Cost: about 0.7 h session, 0.5 h gate; one helper 0.1 h for the gate change. What failed and why: a golden predating a later main feature failed once; retaken on main itself, equal.
+- Evidence: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-speed2/gate.out. Recipe map: no step moved.
