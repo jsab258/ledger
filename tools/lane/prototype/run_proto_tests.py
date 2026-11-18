@@ -7,7 +7,10 @@ shim/puppeteer-core (the same calls, carried out by Playwright's installed Chrom
 the real package in the work folder's node_modules, and runs the tests unchanged, in Fable's
 order (npm test): numbers, walks, same week, week, publish set, arrivals, nights,
 town, ledger rules, layout, files, talk, eyes. oldsave runs only with
-OLD=<folder holding an older build of the page>.
+OLD=<folder holding an older build of the page>. Last, the lane's AI playtester
+(playtester/playtest.py: the sweep and the newcomer run) writes its reports to
+<work>/lane-test-logs/playtest/; it gives findings, not a verdict (SEE), and fails only if it
+crashes. --no-playtest leaves it out; --playtest-minutes sets the newcomer's play time.
 
 Needs the pictures: --assets DIR or LEDGER_PROTO_ASSETS (checked against PUBLISHED.json).
 
@@ -66,11 +69,31 @@ def install_shim(work):
     shutil.copytree(os.path.join(HERE, "shim", "puppeteer-core"), nm)
 
 
-def run(assets, only=None, work=None, timeout=1200):
+def run(assets, only=None, work=None, timeout=1200, playtest_minutes=60.0):
     """Build and run the tests, holding the work folder's lock the whole time."""
     work = work or build.DEFAULT_WORK
     with build.work_lock(work):
-        return _run(assets, only, work, timeout)
+        results = _run(assets, only, work, timeout)
+    # the playtester builds for itself (taking the same lock), so it runs after the lock is let go
+    logs = os.path.join(work, "lane-test-logs")
+    os.makedirs(logs, exist_ok=True)
+    if results.get("build") == "FAIL":
+        return results
+    if (not only or "playtest" in only) and playtest_minutes > 0:
+        t0 = time.time()
+        out_dir = os.path.join(logs, "playtest")
+        cmd = [sys.executable, os.path.join(HERE, "playtester", "playtest.py"), "--assets", assets,
+               "--out", out_dir, "--minutes", str(playtest_minutes)]
+        try:
+            p = subprocess.run(cmd, capture_output=True, text=True, timeout=max(timeout, 3600))
+            out, code = p.stdout + p.stderr, p.returncode
+        except subprocess.TimeoutExpired:
+            out, code = "TIMEOUT", 124
+        with open(os.path.join(logs, "playtest.log"), "w", encoding="utf-8") as f:
+            f.write(out)
+        results["playtest"] = "SEE" if code == 0 else "FAIL"
+        print("%-12s %-5s %4.0f s  (reports in %s)" % ("playtest", results["playtest"], time.time() - t0, out_dir), flush=True)
+    return results
 
 
 def _run(assets, only, work, timeout):
@@ -113,11 +136,14 @@ def main(argv=None):
     ap.add_argument("--only")
     ap.add_argument("--work")
     ap.add_argument("--timeout", type=int, default=1200)
+    ap.add_argument("--no-playtest", action="store_true")
+    ap.add_argument("--playtest-minutes", type=float, default=60.0)
     a = ap.parse_args(argv)
     if not a.assets:
         print("needs the pictures: --assets DIR or LEDGER_PROTO_ASSETS")
         return 2
-    res = run(a.assets, a.only.split(",") if a.only else None, a.work, a.timeout)
+    res = run(a.assets, a.only.split(",") if a.only else None, a.work, a.timeout,
+              0 if a.no_playtest else a.playtest_minutes)
     return 1 if any(v == "FAIL" for v in res.values()) else 0
 
 
