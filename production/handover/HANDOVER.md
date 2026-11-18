@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 11:12 (the hourly run; the last session set its Stopped line at 11:09)
+**Started:** 2026-11-18 12:28 (the hourly run; the last session set its Stopped line at 12:22)
 
 **Row due:** 2026-11-18 12:37 (last 11:37; page and advisor read 12:19, advisor 221 acted on and acked)
 **Stopped:** 2026-11-18 12:22 (history past the point at 252k at an item's end; helpers stopped and their leftover runs ended by tree; lock cleared; no job of mine running.)
@@ -25,6 +25,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **The heavy lock** F:/LedgerTools/tool-dev/runs/kiln-heavy.lockdir (mkdir as the lock, owner file inside, released at once) for every cargo/gate/drape run. A Kiln gate whose seconds matter runs alone.
 - **Before writing Stopped: end every background job of your own, and check for runs your stopped helpers leave behind:** stopping a helper does NOT stop its bash scripts; at 12:20 four trees (legtorso sweeps, donkey, blouse) were still running and holding the lock. List processes matching kiln-lanes|sweep.py|regression_gate|heavy*.sh and taskkill /T each top bash; then clear the lock.
 - **Helper spawns in an unattended run:** the permission check refused four of eight briefs at 11:15 (reasons given: destructive actions, unsanctioned communication, needs approval). A leaner brief without "delete" wording passed for two. Do not retry a refused brief verbatim.
+- **Quay Run (advisor 222):** his desktop shortcut opens F:/LedgerTools/quay-run/index.html in Chrome; whenever the driving study (https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq) is republished, copy its index.html there again (Artifact read with path) and run tools/driving_feel_check.py: a copy newer than the ruling must start automatic.
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 ## Done this run (11:12 on; details in DECISIONS 11:2x on)

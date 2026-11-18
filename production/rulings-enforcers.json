@@ -12,9 +12,10 @@
   {
    "line": "28 Oct, for the release:",
    "by": [
-    "monday-audit"
+    "monday-audit",
+    "tools/driving_feel_check.py::gearbox automatic by default"
    ],
-   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line"
+   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual"
   },
   {
    "line": "5 and 6 Nov: Full scope stays the target",
@@ -256,7 +257,7 @@
    ]
   },
   {
-   "line": "17 Nov (replaces 11, 25, 28 Oct): other games",
+   "line": "17 Nov: other games are studied from the outside only",
    "by": [
     "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
     "monday-audit"

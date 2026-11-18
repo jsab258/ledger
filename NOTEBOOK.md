@@ -2742,3 +2742,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: lane about 2 h (17-18 Nov); session about 0.5 h; machine 0.4 h (build 1.7 min, gate about 22 min).
 - What failed and why: an existence guard (hasattr) never protected runs, because the front end answers True for every name; lesson: test for the tool explicitly, not for a method.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-PUBLICNAMES-2026-11-18.md; gate output F:/LedgerTools/tool-dev/runs/kiln-publicnames-gate-2026-11-18
+
+### 2026-11-18 Kiln: a clean Python suite after two lanes merged (n16-1, v1 line 6)
+- Made: the tool's Python suite back to all passing (143) after two merged lanes broke it.
+- Method: run the whole suite against the real engine build; group failures by first error; most shared one cause: two lanes each created the same module object, and the later creation silently dropped what the earlier one had added. Fix the code (create once), and update a test that called a name retired on purpose, keeping its checks.
+- Tools: worktree lane, unittest discovery, the engine's own test run, the shared heavy lock.
+- Target and check: suite all OK; engine tests unchanged (126 + 14).
+- Cost: helper about 0.15 h; session 0.05 h.
+- What failed and why: each lane passed its own tests before merging; the duplicate creation only shows after both merges. Lesson: run the whole suite on main after every merge, not only the lane's tests.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-PYTESTS-2026-11-18.md
