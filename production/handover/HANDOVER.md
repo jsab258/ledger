@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 15:21 (the hourly run; the last session set its Stopped line at 15:10)
+**Started:** 2026-11-18 17:37 (the hourly run; the last session set its Stopped line at 17:05)
 
 **Row due:** at the next start (last row 15:28; page and advisor read 16:17, last ack 226)
-**Stopped:** 2026-11-18 15:10 (history OVER at an item's end; helpers stopped, their leftover runs and old Claude waiters ended by tree; lock cleared; no job of mine running. Last commit not yet pushed: the next session pushes after ci.)
+**Stopped:** 2026-11-18 17:05 (history OVER at an item's end; all helpers and my background runs stopped, leftover trees ended, lock clear; last commit pushed, this handover's final edits uncommitted: no notes-only commits)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 97% at 14:27 against 97.9%, -0.9 (behind, full pace); the spare reset is due at 98-99% (his hands: if it reaches 98% with no reset, a NEEDS YOU message and an ACTION item). This week (RULINGS, his picks 17 Nov): eight helpers a session, Fable up to 20% for the hardest code, high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -36,10 +36,10 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Kiln lanes passed: j4-b2 fc61b57 (J4), skin-verdict d5b06ca, nylon-jam d8dbac0. Legs and R4 tried (see Tried). Line 5: Marvelous drapes exist only for Tom's jeans, j3 and zip jacket.
 - C: fell to 39 GB (lane builds): seven of my own finished build folders deleted through retention.py (about 6 GB); keep lane builds few.
 
-## In flight at the stop (ended at the stop; rerun, never trust a cut run)
-- Merge candidate 1 (with the torso change e1d17f4) FAILED the gate: 19 measures worse, jacket, layered, pleated skirt (gate.out). Candidate 2, lane-merge-cand2-1118 (main + restlabel-fixes + donkey-start + fc61b57 + d5b06ca, no e1d17f4): gate2.sh, machine2.log, gate2.out in F:/LedgerTools/tool-dev/runs/kiln-merge-cand-2026-11-18. If it passes, fast-forward Kiln main to it; e1d17f4's torso default then needs its own fix (the skirt's top drops 36 mm).
-- PACE: 12% at 17:00 against a line of 1.3% (+10.7; Fable 17%): four Fable helpers at max burn about 7% an hour. Two helpers only (advisor 229): Fable stiffness2 (steps 5-7) and Fable legs run on. Stopped 17:00, to resume when back within 6 of the line: Fable blouse (no runs made), Fable R4 try 2 (Opus try 1 failed: the j3 source has 718 cloth-on-cloth crossings, a fault of its own), Opus coat first drape (try 1 unfinished; read its run folder).
-- Nylon-jam PASS: lane-nylon-jam d8dbac0 (the neck switch uses the side neck point; with it on the nylon closes, the donkey jacket drapes, j3 in band; zip jacket drop 22.2 against 19.1 and its cuff worst edge open for the switch-on baseline re-take). Merge it after candidate 2.
+## In flight at the stop (all cut at 17:05; rerun, never trust a cut run)
+- Merge candidate 2, lane-merge-cand2-1118 (main + restlabel-fixes + donkey-start + fc61b57 + d5b06ca, no e1d17f4): its gate never ran (first a C: space STOP at 39 GB, then cut at the stop). Rerun gate2.sh in F:/LedgerTools/tool-dev/runs/kiln-merge-cand-2026-11-18 after renaming machine2.log; check C: is over 41 GB first. If it passes, fast-forward Kiln main; then add nylon-jam d8dbac0. Candidate 1 (with e1d17f4) FAILED: 19 measures worse (gate.out).
+- Cut helpers, none with a finished run: Fable stiffness2 (lane built, tests not run), Fable legs (reading only), Fable blouse and Fable R4 try 2 (reading only), Opus coat first drape (try 1 unfinished; read its run folder).
+- PACE: 12% at 17:00 against a line of 1.3% (+10.7; Fable 17% of its week). Two helpers at most until within 6 of the line, Fable priorities first (stiffness, legs, then blouse, R4).
 
 ## Next, in order
 0. Verdicts after 2026-11-18T15:05:00Z; advisor after 2026-11-18T16:08:00+01:00 (last ack 226). A row on his page at once.
