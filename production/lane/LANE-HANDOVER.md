@@ -1,5 +1,7 @@
 # Lane handover: where the lane session stands
 
+**18 Nov 16:43, his ruling (advisor 229, RULINGS 17 Nov line):** KCD2 is the bar for an immersive AAA game, GTA for why people play for hours; Mafia was studied only as a period game made in Unreal and is never the yardstick. The reviewer panel scores against KCD2; the melee and driving sheets put KCD2 and GTA first, Mafia's numbers one data point only. The 28 Oct camera ruling (Mafia's camera change by situation) stays as written.
+
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
 **Started:** (none yet)
