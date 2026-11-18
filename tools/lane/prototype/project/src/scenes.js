@@ -1142,9 +1142,15 @@ function mattersFor(P) {
               return `Here. ${money(amt)}. That's us square. Tell Sheila to cross it through.`;
             }
             talkSay('sys', 'You could leave it, strike it out, or front up to them on the street [Q].');
-            return id === 'dennis'
-              ? "Eighty quid? Your uncle's dead, son. Dead men don't send bills."
-              : "I haven't got it. You can see I haven't got it.";
+            // round 3: each debtor refuses in his own words, with his own reason (the panel's second complaint)
+            const REFUSE = {
+              dennis: "Eighty quid? Your uncle's dead, son. Dead men don't send bills.",
+              wayne: "Rita pays me Fridays. You'll have it Friday, if she does.",
+              darren: "Twenty-two quid? I've got a pager and my mam's settee. Do the sums.",
+              julie: "I've been on nothing since June. Mickey knew that when he lent it.",
+              lee: "The foreman's not picked me all week. Come back when he does.",
+            };
+            return REFUSE[id] || "I haven't got it. You can see I haven't got it.";
           },
         },
         {

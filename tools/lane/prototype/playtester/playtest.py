@@ -490,6 +490,27 @@ class Novelty:
         return True
 
 
+FIGHT_JS = """() => { const F = LEDGER.F, G = LEDGER.G, out = { secs: 0, foes: F.foes.length };
+  F.tele = []; let k = 0; const subs = [];
+  const said = () => { for (const b of LEDGER.ui.bubs || []) if (!subs.some((s) => s[1] === b.text)) subs.push([b.P.def.name, b.text]); };
+  for (let i = 0; i < 1200 && F.on; i++) {
+    const live = F.foes.filter((f) => f.st !== 'down' && f.st !== 'flee');
+    const coming = live.some((f) => f.st === 'windup' && f.t < 0.3);
+    if (coming && F.st === 'idle') LEDGER.fight.block(true);
+    else if (!coming && F.st === 'block') LEDGER.fight.block(false);
+    else if (F.st === 'idle' && F.stam > 0.3) LEDGER.fight.input(k++ % 3 === 2 ? 'heavy' : 'light');
+    LEDGER.tick(0.05); out.secs += 0.05; if (i % 10 === 0) said();
+  }
+  const T = F.tele || [];
+  out.landed = T.filter((e) => e.ev === 'hit_contact' && e.actor === 'player').length;
+  out.took = T.filter((e) => e.ev === 'hit_contact' && e.target === 'player').length;
+  out.blocked = T.filter((e) => e.ev === 'block' && e.target === 'player').length;
+  out.walls = T.filter((e) => e.ev === 'fall_hazard').length;
+  out.downs = T.filter((e) => e.ev === 'knockdown').length;
+  out.watchers = (F.watch || []).length;
+  out.outcome = G.tom.hurt >= 1 ? 'Tom beaten' : out.downs ? 'a man put down' : F.on ? 'still going' : 'they gave way or ran';
+  out.said = subs; F.tele = null; return out; }"""
+# "fronting up" and "fighting" are play, not talk: the round 3 fight sample in the newcomer hour
 PRESSURE = re.compile(r"\b(police|polis|job|carry|carrying|parcel|bag|deliver|owe[sd]?|debt|threat|warn|knife|cosh|fight|run|drop|tin|refuse|errand|garbutt|iveson)\b", re.I)
 PRESSURE_DECISIONS = ("debt", "wash", "job", "ask", "errand", "wares")
 
@@ -631,12 +652,52 @@ def newcomer(g, stock, minutes=60.0):
             words = sum(len(x["text"].split()) for x in new[n0:])
             n0 = len(new)
             book.add("talking", CHOOSE_S + max(LINE_MIN_S, words / READ_WPS), note="talk " + pid)
+        offered = False
         for ln in talk_log(g):
             transcript.append("  [%s] %s" % (ln["who"], ln["text"]))
+            offered = offered or "front up to them on the street" in ln["text"]
         g.js("LEDGER.talk.say('leave')")
         g.js("LEDGER.talk.leave()")
         clear_boxes(g, book, nov, transcript, tense=tense)
+        if offered and pid not in fronted:
+            front_up(pid)
         return True
+
+    def front_up(pid):
+        """Round 3 (18 Nov): the game offers to front up a debtor who will not pay ([Q]); a newcomer takes it,
+        climbs the ladder to a shove while the man stands, and if it comes to blows fights as a first-time
+        player would: jabs, a heavy blow every third, the guard up only once a wind-up is plainly coming."""
+        fronted.add(pid)
+        tense.add("choice under pressure", "front up to %s over the debt" % pid)
+        g.js("(id) => { const P = LEDGER.G.people[id], t = LEDGER.G.tom; if (!P) return;"
+             " t.ang = Math.atan2(P.x - t.x, P.z - t.z); LEDGER.fight.frontUp(P); }", pid)
+        nov.see("action", "front up")
+        transcript.append("--- fronts up to %s, %s" % (pid, g.clock()))
+        book.add("fronting up", 3, note="front up " + pid)
+        for _ in range(4):
+            f = g.js("({on: LEDGER.F.on, rung: LEDGER.F.rung, y: !!LEDGER.F.yielded})")
+            if not f["on"] or f["rung"] >= 5 or f["y"]:
+                break
+            g.js("LEDGER.fight.climb()")
+            g.step(0.7)
+            book.add("fronting up", 2, note="front up " + pid)
+        f = g.js("({on: LEDGER.F.on, rung: LEDGER.F.rung, y: !!LEDGER.F.yielded})")
+        transcript.append("  (ladder: rung %d, %s)" % (f["rung"], "he gave way" if f["y"] else "he stood"))
+        if f["on"] and f["rung"] >= 5:
+            out = g.js(FIGHT_JS)
+            nov.see("action", "fight")
+            tense.add("fight", "a fight with %s and %d more" % (pid, max(0, out["foes"] - 1)))
+            book.add("fighting", out["secs"], note="fight " + pid)
+            fights.append(dict(out, who=pid, at=round(book.t / 60.0, 1)))
+            transcript.append("  (fight: %.0f s, Tom landed %d, took %d, blocked %d, walls %d, watchers %d, outcome %s)" % (
+                out["secs"], out["landed"], out["took"], out["blocked"], out["walls"], out["watchers"], out["outcome"]))
+            for ln in out.get("said", []):
+                transcript.append("  [%s] %s" % (ln[0], ln[1]))
+        if g.js("LEDGER.F.on"):
+            g.js("LEDGER.fight.end()")
+        clear_boxes(g, book, nov, transcript, tense=tense)
+
+    fronted, fights = set(), []
 
     def do_fare():
         f = g.js("LEDGER.read().story.fare")
@@ -882,7 +943,7 @@ def newcomer(g, stock, minutes=60.0):
         book.add("waiting", WAIT_STEP_S, note="nothing to do")
     tense.poll(g)
     return {"book": book.by, "timeline": book.timeline, "novelty": nov.events, "log": log, "transcript": transcript,
-            "layout": layout, "played_s": book.t, "tense": tense.events}
+            "layout": layout, "played_s": book.t, "tense": tense.events, "fights": fights}
 
 
 def novelty_stats(events, total_s, window_s=1800.0):
@@ -946,6 +1007,12 @@ def write_reports(out, res):
             L.append("- %s: %d" % (k, v))
         for e in nc.get("tense") or []:
             L.append("    - %.1f min: %s, %s" % (e["t"] / 60, e["kind"], e["what"]))
+        L += ["", "## Fights (round 3)", ""]
+        for fo in nc.get("fights") or []:
+            L.append("- %.1f min, with %s and %d more: %.0f s; Tom landed %d, took %d, blocked %d; walls %d; men down %d; watchers %d; %s" % (
+                fo["at"], fo["who"], max(0, fo["foes"] - 1), fo["secs"], fo["landed"], fo["took"], fo["blocked"], fo["walls"], fo["downs"], fo["watchers"], fo["outcome"]))
+        if not nc.get("fights"):
+            L.append("- none")
         L += ["", "## New things in order", ""]
         for e in nc["novelty"]:
             L.append("- %.1f min: %s, %s" % (e["t"] / 60, e["kind"], e["what"]))

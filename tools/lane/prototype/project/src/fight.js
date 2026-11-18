@@ -24,7 +24,33 @@ export const F = {
   struck: false,
   usedW: false,
   open: 0,
+  stop: 0, // hit-stop left: both men held for a moment on contact (round 3)
+  clock: 0, // real seconds since the fight began, for the drills' record
+  lastFoeStart: -Infinity,
+  tele: null, // set to [] to record the melee drills' events (tools/lane/melee_drills.py's format)
+  watch: [],
 };
+// The melee drills' record: one event a moment, in the format tools/lane/melee_drills.py scores.
+function tl(ev, o) {
+  if (F.tele) F.tele.push(Object.assign({ t: F.clock, ev }, o || {}));
+}
+const who = (P) => P.id || P.def.name;
+const SHOUT = ['Come here!', 'Have that!', 'Go on, then!', 'You asked for it!'];
+const WATCH = ['Fight!', "Leave him, he's had enough!", "Somebody fetch the police!", 'Go on, Tom!', 'Oi! Pack it in!'];
+// People near a fight stop to look; the timid back off; some call it out. Their faces only: what they make of
+// it stays the town's own business (the witness rules are not touched).
+function watchers() {
+  const t = G.tom;
+  for (const P of G.named.concat(G.crowd)) {
+    if (P.gone || P.dead || P.down || P.inCar || P.space !== t.space || P === F.T) continue;
+    if (F.foes.find((f) => f.P === P) || F.watch.includes(P)) continue;
+    if (hyp(P.x, P.z, t.x, t.z) > LAD.watchersWithinMetres) continue;
+    F.watch.push(P);
+    P.react = (P.def.nerve ?? LAD.nerveAssumed) < LAD.watcherBacksOffBelowNerve ? 'cower' : 'stare';
+    P.reactT = LAD.watchersLookRealSeconds;
+    if (chance(LAD.watcherShoutChance)) bubble(P, pick(WATCH));
+  }
+}
 const RUNGS = ['', 'Stare', 'Square up', 'Threaten', 'Shove', 'Strike', 'Weapon out'];
 const KIND = ['', 'stare', 'squareup', 'threat', 'shove'];
 const WDMG = {
@@ -165,6 +191,12 @@ export function climb() {
     if (!blocked(nx, nz)) {
       P.x = nx;
       P.z = nz;
+    } else {
+      // shoved back into a wall: it shows, and it frightens
+      m.fear = clamp(m.fear + LAD.fearAddedPerBlow, 0, 1);
+      sub('Back into the wall.', '', 'over', LAD.wallLineRealSeconds);
+      if (G.hooks.sfx) G.hooks.sfx('thud');
+      if (G.hooks.shake) G.hooks.shake(LAD.wallSlamShake);
     }
   }
   if (pressure > (d.nerve ?? LAD.nerveAssumed) + (P.lad ? LAD.ladsNerveAdded : 0)) {
@@ -236,6 +268,9 @@ function startFight(P, tomFirst) {
   S.tomAnim.mode = 'guard';
   F.st = 'idle';
   F.t = 0;
+  F.stop = 0;
+  F.clock = 0;
+  F.lastFoeStart = -Infinity;
   const add = (Q) => {
     if (F.foes.find((f) => f.P === Q) || soft(Q)) return;
     Q.hold = true;
@@ -260,6 +295,7 @@ function startFight(P, tomFirst) {
     });
   }
   if (G.hooks.sfx) G.hooks.sfx('thud');
+  watchers();
 }
 // Others can start on Tom (Cammack's lads, late on).
 export function setOn(list) {
@@ -298,10 +334,16 @@ export function input(kind) {
       if (G.hooks.sfx) G.hooks.sfx('tick');
       return;
     }
+    const action = kind === 'heavy' ? 'heavy' : 'jab';
+    tl('input', { actor: 'player', action });
     F.st = kind === 'heavy' ? 'heavyUp' : 'windup';
     F.t = kind === 'heavy' ? LAD.heavyWindUpRealSeconds : LAD.lightWindUpRealSeconds;
     F.heavy = kind === 'heavy';
     F.stam -= kind === 'heavy' ? LAD.heavyStaminaCost : LAD.lightStaminaCost;
+    F.rest = LAD.staminaRestsAfterSpendRealSeconds;
+    tl('hit_start', { actor: 'player', action, weapon: t.armed ? t.weapon : 'fists' });
+    tl('stamina', { actor: 'player', value: F.stam });
+    if (F.stam < LAD.tooTiredBelowStamina) tl('stamina_empty', { actor: 'player' }); // too tired to swing counts as empty
   } else if (kind === 'dodge') {
     if (F.cool > 0) return;
     const bx = t.x - Math.sin(t.ang) * LAD.dodgeBackMetres,
@@ -312,23 +354,47 @@ export function input(kind) {
     }
     F.st = 'dodge';
     F.t = LAD.dodgeRealSeconds;
+    tl('input', { actor: 'player', action: 'dodge' });
+    tl('dodge_start', { actor: 'player' });
+    tl('invuln_start', { actor: 'player' });
     F.cool = LAD.dodgeCoolDownRealSeconds;
   }
 }
 export function block(on) {
   if (!F.on || F.rung < LAD.strikeRung) return;
-  if (on && F.st === 'idle') F.st = 'block';
+  if (on && F.st === 'idle') {
+    F.st = 'block';
+    tl('input', { actor: 'player', action: 'block' });
+    tl('guard_up', { actor: 'player' });
+  }
   else if (!on && F.st === 'block') F.st = 'idle';
 }
 function hurtFoe(f, dmg, heavy) {
   const P = f.P,
     t = G.tom;
+  // knocked back: into a wall if one is close behind him
+  const kx = P.x - t.x,
+    kz = P.z - t.z,
+    kl = Math.hypot(kx, kz) || 1,
+    wall =
+      blocked(P.x + (kx / kl) * LAD.blowKnocksBackMetres, P.z + (kz / kl) * LAD.blowKnocksBackMetres) ||
+      blocked(P.x + (kx / kl) * LAD.wallBehindWithinMetres, P.z + (kz / kl) * LAD.wallBehindWithinMetres);
+  if (wall) dmg += LAD.wallSlamHurts;
   P.hurt = clamp((P.hurt || 0) + dmg, 0, LAD.foeHurtAtMost);
-  if (heavy || f.st !== 'windup') {
+  const was = f.st;
+  if (heavy || wall || f.st !== 'windup') {
     f.st = 'stagger';
-    f.t = heavy ? LAD.heavyStaggerRealSeconds : LAD.lightStaggerRealSeconds;
+    f.t = wall ? LAD.wallSlamStaggerRealSeconds : heavy ? LAD.heavyStaggerRealSeconds : LAD.lightStaggerRealSeconds;
     P.fight.mode = 'stagger';
+    if (was === 'windup' || was === 'strike') tl('attack_end', { actor: who(P) });
+    tl('stagger_start', { actor: who(P), severity: heavy || wall ? 'heavy' : 'light' });
   } // a light one does not stop a man already swinging
+  if (wall) {
+    tl('fall_hazard', { actor: who(P), surface: 'wall' });
+    sub('Into the wall.', '', 'over', LAD.wallLineRealSeconds);
+    if (G.hooks.sfx) G.hooks.sfx('thud');
+    if (G.hooks.shake) G.hooks.shake(LAD.wallSlamShake);
+  } else if (heavy && G.hooks.shake) G.hooks.shake(LAD.hitShakeHeavy);
   if (!F.struck) {
     F.struck = true;
     act('strike', {
@@ -357,6 +423,7 @@ function hurtFoe(f, dmg, heavy) {
   if (!f.hitOnce && P.hurt < 1) {
     f.hitOnce = 1;
     if ((P.def.nerve ?? LAD.nerveAssumed) < LAD.fleesWhenHitBelowNerve && chance(LAD.fleesWhenHitChance)) {
+      if (was === 'windup' || was === 'strike') tl('attack_end', { actor: who(P) });
       f.st = 'flee';
       flee(P);
       sub('All right! All right!', tomName(P));
@@ -366,6 +433,7 @@ function hurtFoe(f, dmg, heavy) {
   if (P.hurt >= 1) {
     f.st = 'down';
     P.down = true;
+    tl('knockdown', { actor: who(P) });
     P.fight = null;
     sub("He's down.", '', 'over', 2);
     for (const g of F.foes)
@@ -415,6 +483,13 @@ export function step(dt) {
     }
   const T = F.T,
     dT = hyp(T.x, T.z, t.x, t.z);
+  F.clock += dt;
+  if (F.stop > 0) {
+    // hit-stop: both men held on the blow
+    F.stop -= dt;
+    if (F.stop <= 0) tl('hitstop_end', { actor: 'player' });
+    return;
+  }
   if (F.rung < LAD.strikeRung) {
     if (F.animT > 0) {
       F.animT -= dt;
@@ -423,11 +498,15 @@ export function step(dt) {
     if (dT > LAD.ladderEndsBeyondMetres || T.gone) end();
     return;
   }
+  F.rest = Math.max(0, (F.rest || 0) - dt);
+  const was0 = F.stam;
   F.stam = clamp(
-    F.stam + dt * (F.st === 'block' ? -LAD.blockStaminaCostPerRealSecond : LAD.staminaBackPerRealSecond),
+    F.stam +
+      dt * (F.st === 'block' ? -LAD.blockStaminaCostPerRealSecond : F.rest > 0 ? 0 : LAD.staminaBackPerRealSecond),
     0,
     1,
   );
+  if (was0 < 1 && F.stam >= 1) tl('stamina', { actor: 'player', value: 1 });
   G.tom.puff = Math.max(G.tom.puff || 0, 1 - F.stam);
   F.cool -= dt;
   F.open = Math.max(0, F.open - dt);
@@ -464,6 +543,9 @@ export function step(dt) {
         hit &&
         !(near.st === 'guard' && chance(F.heavy ? LAD.guardStopsHeavyChance : LAD.guardStopsLightChance))
       ) {
+        F.stop = t.armed ? LAD.hitStopWeaponRealSeconds : F.heavy ? LAD.hitStopHeavyRealSeconds : LAD.hitStopLightRealSeconds;
+        tl('hit_contact', { actor: 'player', target: who(near.P), action: F.heavy ? 'heavy' : 'jab', weapon: t.armed ? t.weapon : 'fists' });
+        tl('hitstop_start', { actor: 'player' });
         hurtFoe(
           near,
           (F.heavy ? LAD.heavyBlowHurts : LAD.lightBlowHurts) *
@@ -475,6 +557,8 @@ export function step(dt) {
       } else {
         F.rec = F.heavy ? LAD.heavyMissRecoverRealSeconds : LAD.lightMissRecoverRealSeconds;
         F.open = F.rec;
+        if (hit) tl('block', { actor: who(near.P), target: 'player' });
+        tl('miss', { actor: 'player' });
         if (hit && G.hooks.sfx) G.hooks.sfx('block');
       } // a miss leaves you open
     }
@@ -489,6 +573,8 @@ export function step(dt) {
     F.t -= dt;
     if (F.st === 'stagger') S.tomAnim.mode = 'stagger';
     if (F.t <= 0) {
+      tl(F.st === 'recover' ? 'recovery_end' : F.st === 'dodge' ? 'dodge_end' : 'stagger_end', { actor: 'player' });
+      if (F.st === 'dodge') tl('invuln_end', { actor: 'player' });
       F.st = 'idle';
       S.tomAnim.mode = 'guard';
     }
@@ -510,6 +596,7 @@ export function step(dt) {
     k++;
     if (f.st === 'stagger') {
       if (f.t <= 0) {
+        tl('stagger_end', { actor: who(P) });
         f.st = 'guard';
         f.t = rnd(LAD.foeGuardAfterStaggerRealSecondsAtLeast, LAD.foeGuardAfterStaggerRealSecondsAtMost);
         P.fight.mode = 'guard';
@@ -557,11 +644,26 @@ export function step(dt) {
     }
     P.moving = false;
     if (f.st === 'guard' && f.t <= 0) {
+      // attack tickets: at most two men swinging at once, their swings started a beat apart
+      const swinging = live.filter((g) => g.st === 'windup' || g.st === 'strike').length;
+      if (swinging >= LAD.attackersAtOnceAtMost || F.clock - F.lastFoeStart < LAD.swingStartsApartRealSecondsAtLeast) {
+        f.t = LAD.swingStartsApartRealSecondsAtLeast - Math.max(0, F.clock - F.lastFoeStart) + dt;
+        continue;
+      }
+      F.lastFoeStart = F.clock;
       f.st = 'windup';
       f.heavy = chance(LAD.foeHeavyChance);
       f.t = f.heavy ? LAD.foeHeavyWindUpRealSeconds : LAD.foeLightWindUpRealSeconds;
       P.fight.mode = f.heavy ? 'heavy' : 'windup';
-    } // a readable wind-up
+      tl('attack_start', { actor: who(P) });
+      tl('hit_start', { actor: who(P), action: f.heavy ? 'heavy' : 'jab', weapon: P.weapon || 'fists' });
+      tl('telegraph_start', { actor: who(P), action: f.heavy ? 'heavy' : 'jab' });
+      if (f.heavy && chance(LAD.foeShoutsBeforeHeavyChance)) {
+        bubble(P, pick(SHOUT), LAD.shoutShowsRealSeconds);
+        if (G.hooks.sfx) G.hooks.sfx('shout');
+        tl('sound', { actor: who(P), kind: 'shout' });
+      }
+    } // a readable wind-up, and with a heavy one often a shout
     else if (f.st === 'windup' && f.t <= 0) {
       f.st = 'strike';
       f.t = LAD.foeStrikeRealSeconds;
@@ -573,6 +675,7 @@ export function step(dt) {
           (1 - (P.hurt || 0) * LAD.hurtWeakensBlowsByShare);
         const facing =
           Math.abs(angDiff(t.ang, Math.atan2(P.x - t.x, P.z - t.z))) < LAD.blockWorksWithinFacingRadians;
+        tl(F.st === 'block' && facing ? 'block' : 'hit_contact', { actor: who(P), target: 'player', action: f.heavy ? 'heavy' : 'jab' });
         if (F.st === 'block' && facing) {
           dmg *=
             t.weapon === 'dustbin lid' && t.armed ? LAD.lidBlockLetsThroughShare : LAD.blockLetsThroughShare;
@@ -589,6 +692,7 @@ export function step(dt) {
         t.noiseP = LAD.beingHitNoiseCarriesMetres;
       }
     } else if (f.st === 'strike' && f.t <= 0) {
+      tl('attack_end', { actor: who(P) });
       f.st = 'guard';
       f.t =
         rnd(LAD.foeGuardAfterSwingRealSecondsAtLeast, LAD.foeGuardAfterSwingRealSecondsAtMost) +
@@ -641,6 +745,12 @@ export function end(hostile) {
     F.T.hold = false;
     F.T.goalKey = '';
   }
+  for (const P of F.watch) {
+    P.react = null;
+    P.reactT = 0;
+  }
+  F.watch = [];
+  F.stop = 0;
   F.on = false;
   F.proxy = false;
   F.foes = [];

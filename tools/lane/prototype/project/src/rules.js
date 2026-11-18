@@ -509,16 +509,16 @@ export const RULES = {
     ladsFirstMoveAfterRealSecondsAtLeast: 0.8,
     ladsFirstMoveAfterRealSecondsAtMost: 1.6,
     tooTiredBelowStamina: 0.15,
-    heavyWindUpRealSeconds: 0.55,
-    lightWindUpRealSeconds: 0.2,
+    heavyWindUpRealSeconds: 0.7, // round 3: inside the heavy band 0.63 to 0.85 s (melee sheet C2; KCD2 unarmed about 0.75)
+    lightWindUpRealSeconds: 0.28, // round 3: inside the jab band 0.25 to 0.40 s (C2; a real jab about 0.36 s whole)
     heavyStaminaCost: 0.28,
-    lightStaminaCost: 0.15,
+    lightStaminaCost: 0.11, // round 3: 7 jabs from full to tired (C11 band 6 to 10)
     dodgeBackMetres: 1.6,
     dodgeRealSeconds: 0.3,
     dodgeCoolDownRealSeconds: 0.9,
     foeHurtAtMost: 1.2,
-    heavyStaggerRealSeconds: 0.7,
-    lightStaggerRealSeconds: 0.28,
+    heavyStaggerRealSeconds: 1.05, // round 3: C4 heavy reaction 0.9 to 1.3 s (was 0.7)
+    lightStaggerRealSeconds: 0.55, // round 3: C4 light reaction 0.5 to 0.7 s (was 0.28)
     strikeNoiseCarriesMetres: 26,
     weaponUsedNoiseCarriesMetres: 26,
     fearAddedPerBlow: 0.12,
@@ -531,7 +531,26 @@ export const RULES = {
     killNoiseCarriesMetres: 20,
     ladderEndsBeyondMetres: 7,
     blockStaminaCostPerRealSecond: 0.05,
-    staminaBackPerRealSecond: 0.13,
+    staminaBackPerRealSecond: 0.16, // round 3: tired to full in about 6 s with the rest (C11 4 to 8 s)
+    staminaRestsAfterSpendRealSeconds: 0.8, // round 3: no getting breath back while still swinging (otherwise jabs never tire him: C11)
+    // round 3 (lane, 18 Nov), the melee feel targets: weight, walls, being outnumbered, people watching
+    hitStopLightRealSeconds: 0.04, // the freeze on contact, both men held (C3 jab band 0.025 to 0.05)
+    hitStopHeavyRealSeconds: 0.09, // C3 heavy band 0.06 to 0.12
+    hitStopWeaponRealSeconds: 0.1, // C3 swing band 0.07 to 0.13
+    hitShakeHeavy: 0.18, // camera shake on Tom's heavy blow landing (small: grounded, not a fighting game)
+    wallBehindWithinMetres: 0.9, // a man knocked back with a wall this close behind him hits it
+    wallSlamHurts: 0.12, // added to the blow
+    wallSlamStaggerRealSeconds: 1.15, // his reaction is a heavy one whatever the blow (C4 heavy band 0.9 to 1.3)
+    wallSlamShake: 0.35,
+    attackersAtOnceAtMost: 2, // men swinging at Tom at the same moment (C8 band 1 to 2: two is deadly, three a beating)
+    swingStartsApartRealSecondsAtLeast: 0.45, // between two men's swings starting (C8 at least 0.40)
+    foeShoutsBeforeHeavyChance: 0.7, // a shout as his heavy wind-up starts, at least 0.40 s before it lands (C13)
+    watchersWithinMetres: 20, // people this near stop and turn to a fight
+    watcherShoutChance: 0.3, // and some of them call it out
+    watcherBacksOffBelowNerve: 0.35, // the timid back away from it
+    watchersLookRealSeconds: 6,
+    wallLineRealSeconds: 1.5, // 'Into the wall.' shows this long
+    shoutShowsRealSeconds: 1.5, // a man's shout over his heavy wind-up shows this long
     turnsToFoeWithinMetres: 5,
     tomTurnsRadiansPerRealSecond: 9,
     strikeRealSeconds: 0.16,
@@ -543,8 +562,8 @@ export const RULES = {
     lightBlowHurts: 0.15,
     unknownWeaponDamageTimes: 1.5,
     hurtWeakensBlowsByShare: 0.3,
-    heavyHitRecoverRealSeconds: 0.45,
-    lightHitRecoverRealSeconds: 0.28,
+    heavyHitRecoverRealSeconds: 0.3, // round 3: with the 0.16 s strike, 0.46 s after contact (C2 heavy 0.35 to 0.50)
+    lightHitRecoverRealSeconds: 0.14, // round 3: with the strike, 0.30 s after contact (C2 jab 0.20 to 0.40)
     heavyMissRecoverRealSeconds: 0.95,
     lightMissRecoverRealSeconds: 0.6,
     foeTurnsRadiansPerRealSecond: 7,
