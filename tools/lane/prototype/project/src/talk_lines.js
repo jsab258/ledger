@@ -382,7 +382,7 @@ const FBOWN = {
 const CLOSE = {
   sheila: "That's all I have for you. The book's waiting.",
   ron: "Right, boss. I'd best watch the rank.",
-  darren: "So listen, I've got to be somewhere. Laters, yeah?",
+  darren: "So listen, I've got to be somewhere. See you about, yeah?",
   ada: "That's enough for one sitting. Off you go.",
   june: "I've said what I'm going to say, Mr Nowak.",
   ellis: "That'll be all for now, Mr Nowak.",

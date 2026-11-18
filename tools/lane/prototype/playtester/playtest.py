@@ -496,7 +496,7 @@ PRESSURE_DECISIONS = ("debt", "wash", "job", "ask", "errand", "wares")
 class Tense:
     """Tense moments (lane task 4l, 18 Nov): a risk of being seen, a pursuit, a fight, an escape, a choice under pressure.
     Counted from what the game itself records: a job step taken in the open; an act of Tom's the town actually saw
-    (a new event with witnesses); a fight begun; a police chase or an escape (none exist in the prototype yet, so
+    (a new event with witnesses, of a kind with a crime level or a menacing reading in LEDGER.rules.kinds); a fight begun; a police chase or an escape (none exist in the prototype yet, so
     they stay 0 until a round adds them); a decision on a debt, a job, the tin or the like, or a written choice whose
     words name such stakes (a word list, PRESSURE: an estimate, not a judgement)."""
     KINDS = ("risk of being seen", "seen doing it", "pursuit", "fight", "escape", "choice under pressure")
@@ -511,12 +511,19 @@ class Tense:
 
     def poll(self, g):
         """New acts of Tom's that somebody saw, since the last poll."""
-        evs = g.js("(LEDGER.G.events || []).map((e) => ({id: e.id, kind: e.kind, wit: (e.wit || []).length}))") or []
+        evs = g.js("(LEDGER.G.events || []).map((e) => { const k = (LEDGER.rules.kinds || {})[e.kind] || {};"
+                   " return {t: e.t, kind: e.kind, wit: (e.wit || []).length, crime: k.crimeLevel || 0,"
+                   " menace: (k.readsMinusOneMenaceToOneDecent || 0) < 0}; })") or []
         if self.last_ev is None:
             self.last_ev = len(evs)
             return
+        seen = set()
         for e in evs[self.last_ev:]:
-            if e["wit"] and e["kind"] not in ("inherit",):
+            # only an act that could cost him (a crime, or something that reads as menace) seen by somebody;
+            # one moment per kind and game minute, however many sighting records the town keeps of it
+            key = (e["kind"], int(e.get("t") or 0))
+            if e["wit"] and (e["crime"] > 0 or e["menace"]) and key not in seen:
+                seen.add(key)
                 self.add("seen doing it", "%s, %d witness%s" % (e["kind"], e["wit"], "" if e["wit"] == 1 else "es"))
         self.last_ev = len(evs)
 

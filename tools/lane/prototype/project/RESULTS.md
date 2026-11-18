@@ -1,5 +1,28 @@
 # Results of the checks
 
+## 18 November 2026, lane round 1 (the eight fixes): the AI playtester before and after
+
+Both builds played the same day by the same playtester (the lane's tools/lane/prototype/playtester/, seed
+19901120): a newcomer's first hour, then a walk-up to every person at four times of day. Times are estimates
+of a human's pace; the playtester's own waiting is counted as waiting.
+
+| | before (page of 12:00) | after (round 1) |
+|---|---|---|
+| talking | 21.8 min, 36% | 13.1 min, 22% |
+| walking | 15.0 min, 25% | 19.2 min, 32% |
+| waiting | 21.8 min, 36% | 22.3 min, 37% |
+| driving | 1.8 min, 3% | 5.4 min, 9% |
+| new things, minutes 0 to 30 / 30 to 60 | 52 / 11 | 59 / 3 |
+| longest stretch with nothing new | 10.7 min | 11.8 min |
+| tense moments per 30 minutes | 5.5 | 6.0 (all: seen out at night; no fights, chases, escapes) |
+| prompt names someone other than the person in front | 10 | 3 (all three: two people standing on one spot) |
+| a reply repeated word for word within one talk | in most talks (Sheila 4, Ron 3, Kevin 4, Ada) | none |
+
+Talk is now well under half the hour (the canon pillar's target) and driving tripled; waiting and the longest
+empty stretch are about the same (shorter talks leave the newcomer more idle). The target of about ten distinct
+activities per 30 minutes is not near: the hour still holds four kinds (walk, talk, drive, wait). The reviewer
+panel's verdict is in the repository's production/lane/REVIEWS-round1.md.
+
 18 November 2026, second round. Run on the published build (`ledger.js` checksum in `BUILD.md`).
 
 ## The same week, before and after the numbers were moved

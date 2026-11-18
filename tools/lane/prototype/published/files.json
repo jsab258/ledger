@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "178306842355d40a4ba9d990295ddb3f1f6697926939b76c507c02f0d34fe6aa",
+ "ledgerJsSha256": "a46630bb69a87c8c4f13585560b8b3cc79483436b869c1d6b96e5f0ffb32bb30",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -22,21 +22,21 @@
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 15155,
+     "bytes": 18023,
      "text": true
     },
     {
      "path": "NOT_DONE.md",
      "as": "NOT_DONE.md",
      "what": "What could not be done, and why.",
-     "bytes": 3832,
+     "bytes": 4588,
      "text": true
     },
     {
      "path": "BUILD.md",
      "as": "BUILD.md",
      "what": "The build command, the pinned versions, the checksums.",
-     "bytes": 2817,
+     "bytes": 3033,
      "text": true
     },
     {
@@ -50,7 +50,7 @@
      "path": "measures.json",
      "as": "measures.json",
      "what": "The measures from one full week, played by a script through the test hook.",
-     "bytes": 5242,
+     "bytes": 5490,
      "text": true
     }
    ]
@@ -62,35 +62,7 @@
      "path": "RESULTS.md",
      "as": "RESULTS.md",
      "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
-     "bytes": 9329,
-     "text": true
-    },
-    {
-     "path": "results/arrivals.json",
-     "as": "results/arrivals.json",
-     "what": "LEDGER.check.arrivals() over 26 game hours: Tom away, and Tom at the rank.",
-     "bytes": 2588,
-     "text": true
-    },
-    {
-     "path": "results/nights.json",
-     "as": "results/nights.json",
-     "what": "LEDGER.check.nights(): Tuesday and Wednesday nights, every pause and its resume.",
-     "bytes": 2600,
-     "text": true
-    },
-    {
-     "path": "results/gossip_before.json",
-     "as": "results/gossip_before.json",
-     "what": "The gossip of the seeded week before the retiming, day by day.",
-     "bytes": 5550,
-     "text": true
-    },
-    {
-     "path": "results/gossip_after.json",
-     "as": "results/gossip_after.json",
-     "what": "The gossip of the same seeded week after the retiming.",
-     "bytes": 8140,
+     "bytes": 10782,
      "text": true
     }
    ]
@@ -172,7 +144,7 @@
      "path": "source/src/fight.js",
      "as": "src/fight.js",
      "what": "The street's way: an escalation ladder Tom can stop on at any rung. Most of it ends before a blow.",
-     "bytes": 22286,
+     "bytes": 22393,
      "text": true
     },
     {
@@ -284,7 +256,7 @@
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 50876,
+     "bytes": 51033,
      "text": true
     },
     {
@@ -298,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 69006,
+     "bytes": 69778,
      "text": true
     },
     {
@@ -319,21 +291,21 @@
      "path": "source/src/talk.js",
      "as": "src/talk.js",
      "what": "Live talk. The model only voices the line and names the intent; the game's rules decide what happens.",
-     "bytes": 40476,
+     "bytes": 41400,
      "text": true
     },
     {
      "path": "source/src/talk_lines.js",
      "as": "src/talk_lines.js",
      "what": "Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.",
-     "bytes": 20800,
+     "bytes": 23968,
      "text": true
     },
     {
      "path": "source/src/ui.js",
      "as": "src/ui.js",
      "what": "The interface: carbon dockets, a street nameplate, typewritten slips. HUD, dialogue, talk panel, menus.",
-     "bytes": 19783,
+     "bytes": 20745,
      "text": true
     },
     {
@@ -448,7 +420,7 @@
      "path": "source/package.json",
      "as": "package.json",
      "what": "three pinned at 0.187.0; the build and test commands.",
-     "bytes": 1366,
+     "bytes": 1390,
      "text": true
     },
     {
@@ -647,7 +619,7 @@
      "path": "ledger.js",
      "as": "dist/ledger.js",
      "what": "The game, built from src/ by npm run build.",
-     "bytes": 1324009,
+     "bytes": 1327207,
      "text": false
     }
    ]

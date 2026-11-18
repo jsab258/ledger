@@ -1,12 +1,12 @@
 {
  "page": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A",
- "version": "1794997640-def7",
- "read": "2026-11-18 12:35 Swiss",
+ "version": "1795017259-a58e",
+ "read": "2026-11-18 16:55 Swiss",
  "note": "Fable's second round of 18 Nov (every rule's number in LEDGER.rules, routines retimed, three fixes): the readable source is project/ (published under source/ on the page). The pictures and the people rig stay on the page; git holds none of them. The build must reproduce ledger.js and index.html byte for byte.",
  "built": {
   "ledger.js": {
-   "bytes": 1327200,
-   "sha256": "f64066a864992cf1971146fd9570bcdd883bb7939f4f25e2c7662a6b2e5eaf3e"
+   "bytes": 1327207,
+   "sha256": "a46630bb69a87c8c4f13585560b8b3cc79483436b869c1d6b96e5f0ffb32bb30"
   },
   "index.html": {
    "bytes": 22687,

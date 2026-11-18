@@ -1,0 +1,90 @@
+[
+ {
+  "reviewer": "The immersion fan",
+  "thumb": "down",
+  "hours_before_stopping": 0.13,
+  "quit_moment": "7.4 min: stock lines from several people more than once",
+  "most_exciting_moment": "1.9 min: Sheila reads out the debt book",
+  "top_praise": "The opening scenes have real voice and a believable cab office.",
+  "top_complaint": "Free talk gives the same stock lines across people; the town feels hollow.",
+  "evidence": "'Aye, well. There it is' from Ron, the priest, June; 'Same as ever' from four people; the debt exchange identical for five debtors; 37% waiting; 3 prompt faults.",
+  "text": "Free talk gives the same stock lines across people; the town feels hollow. 'Aye, well. There it is' from Ron, the priest, June; 'Same as ever' from four people; the debt exchange identical for five debtors; 37% waiting; 3 prompt faults."
+ },
+ {
+  "reviewer": "The sandbox player",
+  "thumb": "down",
+  "hours_before_stopping": 0.1,
+  "quit_moment": "5 min: after the first fare; next fare not until about 16 min",
+  "most_exciting_moment": "4.3 min: driving the cab and taking the first fare",
+  "top_praise": "The opening street and its people have character.",
+  "top_complaint": "A talking game with almost no sandbox: no fights, no chases, little driving, much waiting.",
+  "evidence": "Pursuit 0, fight 0, escape 0; waiting 37%, walking 32%, talking 22%, driving 9%; longest stretch with nothing new 11.8 min.",
+  "text": "A talking game with almost no sandbox: no fights, no chases, little driving, much waiting. Pursuit 0, fight 0, escape 0; waiting 37%, walking 32%, talking 22%, driving 9%; longest stretch with nothing new 11.8 min."
+ },
+ {
+  "reviewer": "The story-first player",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "41 min: the reporter says Mrs Dunn's answer to the police was word for word; a fare book learns a sentence",
+  "top_praise": "The opening scenes are well written and made me want the whole story.",
+  "top_complaint": "In free talk characters fall back on the same few stock lines across people; the story stalls.",
+  "evidence": "'It's been wet since August' from four people, 'Aye, well' from four; waiting 37%; longest gap 11.8 min.",
+  "text": "In free talk characters fall back on the same few stock lines across people; the story stalls. 'It's been wet since August' from four people, 'Aye, well' from four; waiting 37%; longest gap 11.8 min."
+ },
+ {
+  "reviewer": "The systems player",
+  "thumb": "down",
+  "hours_before_stopping": 0.3,
+  "quit_moment": "17 min: all debtors give the same refusal; no system shows teeth",
+  "most_exciting_moment": "41 min: the reporter traces my own answer to a consequence",
+  "top_praise": "Sheila's opening explains the fare book, the radio and the debt book.",
+  "top_complaint": "Systems are never explained or tested: free talk collapses into stock lines, all debts get one refusal, 37% waiting.",
+  "evidence": "Waiting 37%; longest gap 11.8 min; debt replies identical for five debtors.",
+  "text": "Systems are never explained or tested: free talk collapses into stock lines, all debts get one refusal, 37% waiting. Waiting 37%; longest gap 11.8 min; debt replies identical for five debtors."
+ },
+ {
+  "reviewer": "The impatient player",
+  "thumb": "down",
+  "hours_before_stopping": 0.05,
+  "quit_moment": "2.4 to 3 min: Sheila's nine lines after three others talked",
+  "most_exciting_moment": "2.1 min: the debt list",
+  "top_praise": "The writing has real flavour.",
+  "top_complaint": "The opening is wall-to-wall talk with no clear first job.",
+  "evidence": "Scene lines 0.1 to 2.4 min all talk; first action 4.1 min; waiting 37%.",
+  "text": "The opening is wall-to-wall talk with no clear first job. Scene lines 0.1 to 2.4 min all talk; first action 4.1 min; waiting 37%."
+ },
+ {
+  "reviewer": "The British crime drama fan",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "40.6 to 41 min: the reporter and the fare-book lie",
+  "top_praise": "The scripted introductions are properly British and sharp.",
+  "top_complaint": "Off the scripted lines people recycle stock replies and there is almost no real menace.",
+  "evidence": "Stock lines across Sheila, Hal, Kevin, Brenda, Ron; 37% waiting; pursuit 0, fight 0.",
+  "text": "Off the scripted lines people recycle stock replies and there is almost no real menace. Stock lines across Sheila, Hal, Kevin, Brenda, Ron; 37% waiting; pursuit 0, fight 0."
+ },
+ {
+  "reviewer": "The period-detail stickler",
+  "thumb": "down",
+  "hours_before_stopping": 0.2,
+  "quit_moment": "11 min: Darren's 'Laters, yeah?' is slang from after 1990",
+  "most_exciting_moment": "1.9 min: the debt book",
+  "top_praise": "The money is believable for 1990.",
+  "top_complaint": "The street is hollow: different people repeat the same stock lines, and the slang slips.",
+  "evidence": "Ron gives the same reply in two talks seven minutes apart; 'Laters, yeah?'; 'washeteria'.",
+  "text": "The street is hollow: different people repeat the same stock lines, and the slang slips. Ron gives the same reply in two talks seven minutes apart; 'Laters, yeah?'; 'washeteria'."
+ },
+ {
+  "reviewer": "The sceptic of AI in games",
+  "thumb": "down",
+  "hours_before_stopping": 0.1,
+  "quit_moment": "4 min: the second talk with Ron serves the same lines as the first",
+  "most_exciting_moment": "1.9 min: the debt book",
+  "top_praise": "The scripted introductions sound written by a person.",
+  "top_complaint": "Free talk replies are recycled filler that repeat across people.",
+  "evidence": "Ron's two talks give the same lines; 'It's been wet since August' from three people; 'You get used to the quiet' from three more.",
+  "text": "Free talk replies are recycled filler that repeat across people. Ron's two talks give the same lines; 'It's been wet since August' from three people; 'You get used to the quiet' from three more."
+ }
+]
