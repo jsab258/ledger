@@ -678,7 +678,7 @@ function buildLines() {
       }
     }
   }
-  if (D && !L.length && !D.resolve) {
+  if (D && !D.resolve && L.every((l) => l.job === 'leave') && !(D.q != null)) {
     // a street decision with nothing left to say on it never leaves the talk dead: it lapses and the ordinary lines return
     T.dec = null;
     return buildLines();
@@ -687,8 +687,7 @@ function buildLines() {
     // the decision's lines stand
   } else if (FBT.closed) {
     // they have closed the talk in their own voice: only a way to leave is offered
-    const lv = unused(LEAVES, n + T.turn);
-    if (lv) L.push({ job: 'leave', text: lv });
+    L.push({ job: 'leave', text: unused(LEAVES, n + T.turn) || 'Right. Bye, then.' });
   } else {
     if (!T.said) {
       const x = unused(GREETS, n);

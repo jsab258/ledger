@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "a46630bb69a87c8c4f13585560b8b3cc79483436b869c1d6b96e5f0ffb32bb30",
+ "ledgerJsSha256": "60721649d3303a603c9233db4a6444ff1a4c116e36b8cb2bf845e233c74abe6f",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -22,7 +22,7 @@
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 18023,
+     "bytes": 18400,
      "text": true
     },
     {
@@ -270,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 69778,
+     "bytes": 69827,
      "text": true
     },
     {
@@ -291,7 +291,7 @@
      "path": "source/src/talk.js",
      "as": "src/talk.js",
      "what": "Live talk. The model only voices the line and names the intent; the game's rules decide what happens.",
-     "bytes": 41400,
+     "bytes": 41438,
      "text": true
     },
     {
@@ -619,7 +619,7 @@
      "path": "ledger.js",
      "as": "dist/ledger.js",
      "what": "The game, built from src/ by npm run build.",
-     "bytes": 1327207,
+     "bytes": 1327290,
      "text": false
     }
    ]

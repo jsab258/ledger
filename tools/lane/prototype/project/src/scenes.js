@@ -1748,7 +1748,7 @@ export function clock() {
   if (f.teaInvited && !f.tea && (d > 2 || (d === 2 && h >= STORY.teaUntilHour))) {
     f.tea = 'snub';
     seed('tea_snub', ['ada']);
-    if (/tea/i.test(G.story.objective || '')) G.story.objective = 'Tea at Ada\'s was missed. She said she does not ask twice.'; // the note never outlives its hour
+    if (/\bAda\b/.test(G.story.objective || '') && /seven|tea/i.test(G.story.objective || '')) G.story.objective = 'Tea at Ada\'s was missed. She said she does not ask twice.'; // the note never outlives its hour
     P_('ada').mind.regard = clamp(P_('ada').mind.regard - STORY.adaRegardLostForTheSnub, -1, 1);
   }
   // "Friday, by six": the rent is late from six on Friday evening, as Mrs Rennison says

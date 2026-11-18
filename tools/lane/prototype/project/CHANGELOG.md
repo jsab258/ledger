@@ -30,6 +30,11 @@ log, stats and time stamps differ, so its record was rewritten).
    offered only when they know something Tom does not; a pound pressed on them with nothing to tell buys only
    their goodwill (and silence with the police), never an invented "nobody saw a thing".
 
+A fresh review then found three slips, fixed before this build: the missed-tea note now also replaces the
+other "Ada at seven" notes; a street matter with only Leave left lapses so the ordinary lines return; a closed
+talk always offers a way to leave. Still open: the facing rule picks the nearest person inside the 30 degrees,
+not the one closest to the line straight ahead.
+
 Tests: `test/fixes1.mjs`, one check a fix (in Node for 1 and 4, in the source for 3 and 8, on the page for 2,
 5, 6 and 7), added to `npm test`. All earlier tests pass; an old save loads. The playtester's numbers before and
 after are in RESULTS.md.
