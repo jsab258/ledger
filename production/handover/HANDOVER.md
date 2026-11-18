@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 02:37 (the hourly run; the last session set its Stopped line at 02:23)
+**Started:** 2026-11-18 03:38 (the hourly run; the last session set its Stopped line at 03:14)
 
-**Row due:** 2026-11-18 03:43 (last 02:43; page and advisor read 03:11, nothing new; last ack 216 at 02:55)
-**Stopped:** 2026-11-18 03:14 (history over its point at an item's end. Strainorder merged (Kiln main a48e139); licence item corrected (v153). Helpers left running, reports land in files named under 'Helpers running': trousers wear pass, R1, J1, gap 2 fix lane (Fable). No gate or drape running. Row due 03:43.)
+**Row due:** 2026-11-18 04:39 (last 03:39; page and advisor read 03:50, nothing new; last ack 216 at 02:55)
+**Stopped:** 2026-11-18 03:56 (history near its point at an item's end. Kiln main 0264a9e (R1, B1, J1, P2 merged, tests pass); gap 2 try 1 FAILED; trousers strain-last run clean; licence item v154. Helpers left running, reports land in files named under Running.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,38 +28,38 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (02:37 to 03:14; details in DECISIONS 02:47-03:14)
-- Page and advisor read 02:38, 02:53, 03:11; advisor 216 acknowledged 02:55. Row 02:43.
-- Night walk of wip 4438999c: 17 of 17; known faults only; its "label on the wrong man" is Tom himself (tester misreading).
-- Kiln: strainorder gated alone (PASS) and merged (main a48e139). Gap 2 traced to the mesh rebuild (reports KILN-NYLON-SLEEVE- and KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md). Machine-free list (16 tasks), product targets in LOOP.md, names check, B1 and public-names lanes done.
-- Ron's trousers step I on local branch ron-kiln-trousers-import (ad2dc6cb6, unpushed); maps to get a wear pass.
-- His licence item corrected (v153): Kiln's engine holds decompile-derived values; recommendation now Not yet.
+## Done this run (03:38 to 03:56; details in DECISIONS 03:41-03:55)
+- Page and advisor read 03:39, 03:50: nothing new. Row 03:39.
+- Ron's trousers branch ron-kiln-trousers-import now 536ce6307 (wear maps, twill tile 73 at 0.5); unpushed; waits on his licence answer.
+- Kiln main 0264a9e: R1, B1, J1 (+ review fixes 7686368), P2 (+ classes plain) merged; drapestudio 62/62, root 5/5, python 69 OK.
+- Gap 2 try 1 of 2 FAILED (carry-outside switch): run 1 matched the baseline; with it on the frame-42 wrist edge is unchanged (6.14), body through 112 to 82. Lane not merged.
+- Trousers with KILN_STRAIN_LAST=1: body through 0, worst 1.242, checks pass.
+- Decompile list (58) and costed replacement plan (about 28 h helper, 5 h machine; trousers first about 10 and 4); licence item corrected (v154), still Not yet.
+- Deleted own leftover cargo target lane-strainorder (1.1 GB).
 
-## Helpers running at the stop (their reports land in files; read them, merge nothing unreviewed)
-- Wear pass on Ron's trousers maps: F:/LedgerTools/garments/ron/kiln-trousers-chain/wear/WEAR-2026-11-18.md (gives the garments.json maps lines for the branch).
-- R1 (Seamshift reads Kiln's OBJ groups): lane C:/LedgerTools/kiln-lanes/r1-objgroups, report KILN-LANE-R1-2026-11-18.md.
-- Public names DONE: b2a8d92 on lane-publicnames (50/50 Python tests; replace rules keep gate results identical; 11 names found public on developer.clo3d.com and kept). Writer edits listed in KILN-LANE-PUBLICNAMES-2026-11-18.md (zip_jacket.py SEW lines 70-71, pleated_skirt.py 439, job_reexport.py line 10), not made; merge with them, gate alone.
-- J1 crossing check: lane C:/LedgerTools/kiln-lanes/j1-crossing, report KILN-LANE-J1-2026-11-18.md.
-- Gap 2 fix lane (Fable): debug carry dump + KILN_CARRY_OUTSIDE switch, lane C:/LedgerTools/kiln-lanes/carryinside, report KILN-LANE-CARRYINSIDE-2026-11-18.md with the two runs' commands (run them alone; the second is try 1 of 2).
-- B1 wardrobe runner DONE: b0e1f44 on lane-b1-wardrobe (16/16 fake tests; report KILN-LANE-B1-2026-11-18.md with the B2 command, run from main after merge; timelog 1.3 h against B1 not yet entered). Its note: the outpath check falls open in lane folders (small fix worth its own task).
-(All reports in F:/LedgerTools/tool-dev/reports unless named. If a helper is still running when the next session starts, it belongs to a finished session: read its report file when present; else re-brief from the list.)
+## Running at the stop (reports in F:/LedgerTools/tool-dev/reports; read, review, merge nothing unreviewed)
+- Wrist diagnosis after try 1 (diagnoser): KILN-NYLON-WRIST-AFTER-FIX-DIAGNOSIS-2026-11-18.md (diag folder in the carryinside run folder).
+- J2 rest label: lane C:/LedgerTools/kiln-lanes/j2-restlabel, KILN-LANE-J2-2026-11-18.md.
+- J3 negative controls: lane C:/LedgerTools/kiln-lanes/j3-negative, KILN-LANE-J3-2026-11-18.md.
+- Re-source slice on the trousers path (rows 8, 10, 11, 18, 20, 21, 26, 29, 55): lane C:/LedgerTools/kiln-lanes/resource-trousers (from 0264a9e), KILN-LANE-RESOURCE-TROUSERS-2026-11-18.md; must change no gate result (gate alone to prove it).
+(A helper still running at a new start belongs to a finished session: read its report when present.)
 
 ## Next, in order
-0a. Licence item corrected 03:14 (v153). Next: list every decompile-derived value in engines/drapestudio/MECHANICS.md and plan its public-source or measured replacement, costed, as Kiln's first machine-free task; trousers step I waits on his answer.
-0. FIRST: verdicts after 2026-11-18T02:11:00Z; advisor after 2026-11-18T01:50:00+01:00 (last ack 216 at 02:55). Next row by 03:43, with Kiln's share (`python tools/token_measures.py --kiln-share`) until Thursday.
-1. DONE 03:14: strainorder gate alone PASS (against 9ca019e); merged: Kiln main now a48e139; worktree removed; its cargo target (979 MB, C:/LedgerTools/cargo-target/lane-strainorder) still to delete through retention and record. Next: one Kiln run of Ron's trousers job with KILN_STRAIN_LAST=1 (body-through and leftover read), alone.
-2. After 04:15's morning pictures finish: update make_baseline.sh to main a48e139 (or later merges) and run it (about 1 h, alone), then commit regression_baseline.json on Kiln main.
-3. Kiln gap 2: rebuild diagnosis DONE (KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md, high confidence): at the 20-to-10 mm rebuild, new points carried over on old 20 mm triangles start up to 17 mm inside the forearm (8 right, 10 left); the first frame pushes each to its nearest skin, so long edges straddle the arm and lock. Seam pairing ruled out. Next: the cheap debug dump of carried positions after the last rebuild (confirms), then fix try 1 of 2 at sim.rs:1088-1092: a carried point landing inside the body takes its old triangle's heaviest corner (outside at the frame before); predicted sleeveR about 3.5 at frame 42, wrists under 3. General (jeans also jump 1.32 to 1.94). Armpits' cause still open. Gate alone.
-4. Wear pass result into the trousers branch (maps lines), shipped check's flat-map line clear. On his licence yes: merge the branch, import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Row: time from his tap to Ron in the game.
-5. Helper lanes R1, publicnames, B1: review each, cargo test, merge one at a time (publicnames needs the job writers changed in the same step; results must stay identical, gate alone). Then the list's next tasks (J1, J2, R2...) into free places; C4 waits on a GarmentCode licence tap.
-6. 0c: a daytime packaged talk run asking Ron "where will you be tonight?" (API within the day's ceiling); watch Darren's first-sound time.
-7. Darren's head remake (advisor 215), outside the night. Bending try 2 (a), not beside a gate. n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
+0. Verdicts after 2026-11-18T02:50:00Z; advisor after 2026-11-18T02:55:00+01:00 (last ack 216). Row by 04:39 with Kiln's share until Thursday.
+1. Read the wrist diagnosis; design gap 2 try 2 from it (last try before a researched different method; armpits' cause still open). The carryinside lane's inside-skin choice (no offset) was flagged as first to question.
+2. Public names lane: gate alone on the lane (every switch off, against 9ca019e), merge, then the writer edits in the lanes review (never regenerate the gate's job files).
+3. After 04:15's morning pictures: make_baseline.sh at the newest Kiln main (about 1 h, alone), commit regression_baseline.json on Kiln main.
+4. A gate with KILN_STRAIN_LAST=1 on every job, alone; if all pass with body through 0, decide making it the default.
+5. Review then merge J2, J3, the re-source slice; then the plan's next trousers rows (9 and 13 re-derived, 27 measured) toward clearing Ron's trousers.
+6. Small items: outpath fall-open in lane folders (now B1 is merged); the built-in figure's shoulder fault (J1 review); B2 run from main on a quiet machine.
+7. On his licence answer: trousers merge, import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Then 0c daytime talk run; Darren's head remake (advisor 215); bending try 2 (a); n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 18 Nov 03:40: gap 2 try 1 (carried points landing inside the body moved to their old triangle's heaviest corner): the wrist edge's jump at frame 42 is unchanged, so inside points are not the whole cause; try 2 waits on the diagnosis.
 - 18 Nov 02:45: the strainorder gate stopped at once: `cargo test --release` builds no program; built it and reran. Setup, not a try.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3 (items 2, 3 and 4 have targets now).
-- Tries used: as in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
+- Tries used: as in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 18 Nov: Kiln gap 2 (nylon sleeve) 1 of 2; 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
 - API spend: US$1.15 (8 Nov) plus US$2.62 (16 Nov); none 17 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help (or with no arguments when its docstring shows required ones); let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools.

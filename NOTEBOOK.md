@@ -2624,3 +2624,21 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.5 h session, 0.2 h machine, a helper's read-only diagnosis.
 - What failed and why: the sewing theory, because a coarse summary (one worst edge per piece) hid that the wrist peak in early frames fell back.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-NYLON-SLEEVE-DIAGNOSIS-2026-11-18.md (section 5), KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md.
+
+## 2026-11-18: wear on a plain work trouser's flat maps
+- Made: colour and roughness wear for a skinned twill trouser, no normal change.
+- Method: placement from the garment's own mesh (bind-pose position and true-metre pattern UV per texel), heights from body landmarks, facing as an angle round each leg, edge bands in pattern millimetres; a lightness field applied as colour x (1 + F) plus roughness offsets; smooth-shine on seat and knees rather than pale fade for non-denim cloth; mottle as low sine waves; margins refilled ring by ring.
+- Tools: plain-Python FBX reader, the jeans' fade script reused.
+- Target and check: the shipped check's flat-map spread (0 to 3.1 colour, 5.5 packed), mean value change under 5%; raster against the bake's coverage (IoU 0.93).
+- Cost: about 0.5 h helper.
+- What failed: nothing; shortfalls: no pocket on the mesh so the pocket wear is a soft patch; not yet seen lit.
+- Evidence: F:/LedgerTools/garments/ron/kiln-trousers-chain/wear/WEAR-2026-11-18.md
+
+## 2026-11-18: four bounded tool lanes merged in one pass (OBJ groups, wardrobe runner, end check, product measures)
+- Made: a mesh reader's groups-as-materials fallback; a runner for several garments as one job; an independent end-of-drape crossing check (edges against faces both ways); a per-garment cost table against product limits.
+- Method: each lane a separate worktree from one main commit, a written brief with acceptance cases, no machine runs while a measurement holds the machine; one fresh reviewer per lane reading the diff only; the reviewer's small fixes made by the session on the lane; merged together, then the whole test suite once.
+- Tools: git worktrees, the engine's unit tests, Python unittest.
+- Target and check: each brief's acceptance cases; all tests after the merge (62 engine, 69 Python).
+- Cost: about 1.5 h helpers, 0.3 h session.
+- What failed and why: nothing; a reviewer found an answer saying ok when no body was tested (fixed with a body_tested field).
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANES-REVIEW-2026-11-18.md, KILN-LANE-J1-REVIEW-2026-11-18.md
