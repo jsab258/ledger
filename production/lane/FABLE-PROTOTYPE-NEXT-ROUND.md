@@ -14,7 +14,7 @@ Send the game's source as you wrote it, before bundling or shortening names: one
 2. Fix these faults
 
 a) Restoring a save through the test hook (window.LEDGER.restore) leaves every person holding their old memory object, and the restored memories have no index. The game's own Continue rebuilds the people; the hook does not. Make restore do the same.
-b) Ron sets off home at 23:36, walks about 3 metres from the rank and stops, still marked as walking, and is still on the street at 03:00. Fix it, and check that every named person who sets off for a place gets there.
+b) Ron sets off home at 23:36, walks about 3 metres from the rank and stops, still marked as walking, and is still on the street at 03:00. Cause, confirmed by a run: from 23:30 Tom being out counts as a "night out" act, and while Tom is within 26 m and in sight each new sighting sets Ron's witness pause back to 1.46 s before it runs out, so he never takes a step (with Tom moved 60 m away he walks home); a pause should not be refreshed endlessly by the same ongoing act, so cap it or give it a cool-down. Fix it, and check that every named person who sets off for a place gets there.
 c) On Tuesday night the game paused once and did not resume within a minute. Cause unknown. Add a check that finds it: every pause and resume logged with the game time and its reason, plus a test-hook check that steps through Tuesday and Wednesday nights and reports any pause with no resume. Fix what it finds.
 d) The yellow slip in talk covers the subtitle line. It must sit beside the typing box and never over the subtitles.
 e) Rent: Sylvia's line says "Friday, by six", but the code marks it late only from Saturday 00:00. Make the code follow the line: late from Friday 6pm game time.

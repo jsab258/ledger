@@ -235,6 +235,8 @@ It fits the facts: he is still and smoking on the rank until 23:36 (not moving, 
 
 To confirm: in the same check, move Tom indoors or more than 26 m away at 23:40 and see Ron go on; or read pauseT on Ron, which should sit between 0 and 1.46 and never reach 0. The same freeze would hit anyone walking near Tom while he carries the bag, wears the coat by day or runs in daylight. A fix for Fable: set the pause only on the first sighting of an event, or not top it up while it is running.
 
+Run result (18 Nov, tools/lane/prototype/tests/ronstop_test.py, 2 passed): CONFIRMED. With Tom 16 m away Ron set off at about 23:36, was paused in 102 of 105 slices of 0.1 s to 23:50, his pause set back up to 1.46 s nine times, moved 0.54 m and was still walking on the street at 02:00; with Tom moved 61 m away at 23:30 no pause was ever set, Ron moved 10.7 m by 23:50 and was home at 02:00.
+
 ### 12. Fighting
 
 | Rule in plain words | Number(s) | Search | Confidence |
