@@ -41,7 +41,7 @@ its inner fold B a depth d further on, and its placement line P a depth d beyond
 top edge is cut into lines at every F, B and P, so (1) each visible stretch P to F is sewn to its own stretch of the
 yoke's hip edge, and (2) each pleat is tacked shut at the top by sewing B-F to B-P (F meets P, the fold held where
 the yoke catches it, as a real pleat is caught in the yoke seam). Down the panel, each F and B is an internal line
-(CreateInternalShapeWithPoints) given a fold (SetInternalLineFold: FOLD_ANGLE, FOLD_STRENGTH, +F and -B).
+(CreateInternalShapeWithPoints) given a fold (kiln_api.kiln_set_internal_line_fold: FOLD_ANGLE, FOLD_STRENGTH, +F and -B).
 
 WHAT KILN CANNOT YET DO FOR THIS SKIRT (production/research/tool-tests-2026-11/KILN-PARITY-LIST-2026-11-16.md):
   * No pleat pressing and no pleat tacking down the length: nothing holds a pleat closed below the yoke seam. The
@@ -436,7 +436,7 @@ for p in PLAN["pieces"]:
     for f in p.get("folds", []):
         try:
             k = pattern_api.CreateInternalShapeWithPoints(made[p["key"]], [(float(x), float(y)) for x, y in f["points"]], False)
-            folds[f["name"]] = [k, bool(pattern_api.SetInternalLineFold(made[p["key"]], k, f["angle"], f["strength"]))]
+            folds[f["name"]] = [k, bool(kiln_api.kiln_set_internal_line_fold(made[p["key"]], k, f["angle"], f["strength"]))]
         except Exception as e:
             folds[f["name"]] = "refused: %%s" %% e
 result["folds"] = folds
