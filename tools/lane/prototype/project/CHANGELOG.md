@@ -1,5 +1,29 @@
 # LEDGER loop prototype: changelog
 
+## 18 November 2026, lane round 2. The carry under watch
+
+Built by the cloud lane. Design question: does a night carry past a watching constable give the first half
+hour a tense moment a player would retell? Serves the real game's night-job spec (a delivery under watch, the
+risk of being seen by the town's own eyes) and Study 15's search rule (a search follows suspicion, never chance;
+found goods are kept). Study 16: a failed job is not the end; the Ledger says "The bag was taken" and later
+scenes read it. The town's simulation is untouched: with the constable left out, the seeded week is the same as
+round 1's part for part; with him in, the week bot meets him, so the week's record was rewritten.
+
+1. When Tom lifts the bag or the parcel, PC Ibbotson walks a beat between the pick-up and the drop, back and
+   forth (`jobs.beatStartsAlongTheWayFraction` 0.35, `jobs.beatEndsShortOfTheDropFraction` 0.15, 1.1 m/s, at
+   most 240 real seconds). He sees with the town's own eyes: lamps, line of sight and where he faces, so in the
+   dark he sees about 4 m and under a lamp much further. Ron's advice now matters: keep out of the light.
+2. Seen with the bag within 16 m (`jobs.challengesWithinMetres`), he calls out: "You. With the bag. Stop there
+   a minute." Stand, and he searches: the bag is taken, the job is lost (the Ledger and Sheila's Friday read
+   it), the street hears of it (a new act, `bag_taken`). Run, and it is a chase with the police's own chase
+   numbers: out of his sight 7 s or 70 m away and he gives up; Tom keeps the bag and can still knock, but it
+   is a run from the police the street can see and talk about (`ran_police`).
+3. In the evening of the first day the to-do note says Ron is waiting at the cab rank: the playtester's
+   newcomer never heard the first night's offer in an hour before; now it takes the job at 13.5 minutes.
+4. Tests: test/watch2.mjs (the beat starts at the pick-up; unseen behind him in the dark; searched when
+   standing; a chase lost round a corner keeps the bag and the drop still works); oldsave passes (saves
+   without the watch load). The playtester carries the bag a step at a time and runs when called out to.
+
 ## 18 November 2026, lane round 1. The eight fixes from the first playtest
 
 Built by the cloud lane, not Fable. Design question: does the loop hold up for a first hour once the faults

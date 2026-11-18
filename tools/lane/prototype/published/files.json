@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "60721649d3303a603c9233db4a6444ff1a4c116e36b8cb2bf845e233c74abe6f",
+ "ledgerJsSha256": "39f1c04c40850934b434d4fc2854f4765258afff57df355d10b0d0b9e788d69f",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -22,7 +22,7 @@
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 18400,
+     "bytes": 20581,
      "text": true
     },
     {
@@ -36,7 +36,7 @@
      "path": "BUILD.md",
      "as": "BUILD.md",
      "what": "The build command, the pinned versions, the checksums.",
-     "bytes": 3033,
+     "bytes": 2817,
      "text": true
     },
     {
@@ -62,7 +62,7 @@
      "path": "RESULTS.md",
      "as": "RESULTS.md",
      "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
-     "bytes": 10782,
+     "bytes": 12109,
      "text": true
     }
    ]
@@ -165,21 +165,21 @@
      "path": "source/src/hook.js",
      "as": "src/hook.js",
      "what": "The test hook: window.LEDGER.",
-     "bytes": 23009,
+     "bytes": 23388,
      "text": true
     },
     {
      "path": "source/src/jobs.js",
      "as": "src/jobs.js",
      "what": "The night jobs: the bag, the parcel, the scrapyard. Where the drop doors are and what they pay.",
-     "bytes": 3656,
+     "bytes": 9988,
      "text": true
     },
     {
      "path": "source/src/kinds.js",
      "as": "src/kinds.js",
      "what": "Every kind of thing the town can know about Tom.",
-     "bytes": 9116,
+     "bytes": 9299,
      "text": true
     },
     {
@@ -256,7 +256,7 @@
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 51033,
+     "bytes": 51652,
      "text": true
     },
     {
@@ -270,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 69827,
+     "bytes": 70135,
      "text": true
     },
     {
@@ -298,7 +298,7 @@
      "path": "source/src/talk_lines.js",
      "as": "src/talk_lines.js",
      "what": "Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.",
-     "bytes": 23968,
+     "bytes": 24143,
      "text": true
     },
     {
@@ -420,7 +420,7 @@
      "path": "source/package.json",
      "as": "package.json",
      "what": "three pinned at 0.187.0; the build and test commands.",
-     "bytes": 1390,
+     "bytes": 1414,
      "text": true
     },
     {
@@ -503,6 +503,20 @@
      "as": "test/harness.mjs",
      "what": "Shared test harness: serves dist/, opens the game in headless Chrome, and returns helpers.",
      "bytes": 7607,
+     "text": true
+    },
+    {
+     "path": "source/test/fixes1.mjs",
+     "as": "test/fixes1.mjs",
+     "what": "The lane's round 1 checks: one for each of the eight playtest fixes.",
+     "bytes": 6218,
+     "text": true
+    },
+    {
+     "path": "source/test/watch2.mjs",
+     "as": "test/watch2.mjs",
+     "what": "The lane's round 2 checks: the carry under watch (the beat, the search, the chase).",
+     "bytes": 5389,
      "text": true
     },
     {

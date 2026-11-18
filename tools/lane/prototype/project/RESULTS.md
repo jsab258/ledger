@@ -1,5 +1,27 @@
 # Results of the checks
 
+## 18 November 2026, lane round 2 (the carry under watch): the AI playtester before and after
+
+Same playtester (seed 19901120), a newcomer's first hour. Times are estimates of a human's pace.
+
+| | before (round 1) | after (round 2) |
+|---|---|---|
+| talking | 13.1 min, 22% | 13.9 min, 23% |
+| walking | 19.2 min, 32% | 17.3 min, 29% |
+| waiting | 22.3 min, 37% | 23.8 min, 40% |
+| driving | 5.4 min, 9% | 3.6 min, 6% |
+| job actions (the night carry) | none | 1.6 min, 3% |
+| kinds of activity in the hour | 4 | 5 |
+| new things, minutes 0 to 30 / 30 to 60 | 59 / 3 | 70 / 5 |
+| longest stretch with nothing new | 11.8 min | 11.4 min |
+| tense moments per 30 minutes | 6.0 (all sightings) | 7.5 (12 sightings, 3 risks of being seen: the carry past the constable at 28 m) |
+| pursuits, fights, escapes | 0 | 0 (the newcomer kept to the dark by chance; the chase is tested in watch2) |
+| prompt names someone else (sweep) | 3 | 5 (all a nearer person within Tom's facing, as the rule says; the crowd stood differently) |
+
+The night job is now reached in the first half hour and is the moment six of eight simulated reviewers named
+as the most exciting. Waiting is still the biggest share; the target of about ten activities per 30 minutes is
+not near. The panel's report is production/lane/REVIEWS-round2.md in the repository.
+
 ## 18 November 2026, lane round 1 (the eight fixes): the AI playtester before and after
 
 Both builds played the same day by the same playtester (the lane's tools/lane/prototype/playtester/, seed

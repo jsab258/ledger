@@ -1,0 +1,90 @@
+[
+ {
+  "reviewer": "The immersion fan (came from KCD2)",
+  "thumb": "down",
+  "hours_before_stopping": 0.7,
+  "quit_moment": "About minute 41: from minute 35.9 nothing new for 11.4 minutes; free talk loops the same lines",
+  "most_exciting_moment": "13.5 to 14.4 min: carrying the holdall past a constable on his beat 28 m away, then Hal: 'No coat... Somebody'll have seen your face.'",
+  "top_praise": "The scripted scenes are excellent period writing.",
+  "top_complaint": "Once you talk freely, people loop the same few lines and swap them between characters.",
+  "evidence": "Ron's identical three replies at 3.56pm, 4.03pm, 6.59pm; Brenda and Sheila also 'Aye, well. There it is.'",
+  "text": "A great opening (the holdall past the constable in the dark, Hal noticing the coat), then the town is hollow: Ron's same three lines three times, the same debtor refusal, 40% waiting."
+ },
+ {
+  "reviewer": "The sandbox player (came from GTA)",
+  "thumb": "down",
+  "hours_before_stopping": 0.7,
+  "quit_moment": "About minute 41, in the 11.4-minute stretch with nothing new",
+  "most_exciting_moment": "13.5 to 14.4 min: the holdall past a constable 28 m away, then Hal",
+  "top_praise": "The holdall run at night is a proper tense set-up.",
+  "top_complaint": "Nothing ever kicks off: no chases, no fights; driving barely a sixteenth of the hour.",
+  "evidence": "pursuit 0, fight 0, escape 0; waiting 23.8 min (40%), driving 3.6 min (6%)",
+  "text": "Waiting 23.8 minutes, driving 3.6; five debtors all 'I haven't got it'; the holdall job was genuinely good, then nothing came of it."
+ },
+ {
+  "reviewer": "The story-first player (came from Mafia)",
+  "thumb": "down",
+  "hours_before_stopping": 0.8,
+  "quit_moment": "Minute 49: no written scene after minute 24",
+  "most_exciting_moment": "14.3 min: Hal at the coin shop door, 'You're not Mickey. No coat.'",
+  "top_praise": "The scripted openings are sharp and well cast.",
+  "top_complaint": "Once the scripted lines run out, free conversations go nowhere and stock lines come back.",
+  "evidence": "Ron's identical three replies at 3.56pm, 4.03pm and 6.59pm",
+  "text": "The first fifteen minutes had me; then weather and brush-offs, the same debt exchange, no scene after the priest."
+ },
+ {
+  "reviewer": "The systems player",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "52.6 min: Sheila's fare book backfires on the laundered tin money",
+  "top_praise": "The laundering is a real system with teeth.",
+  "top_complaint": "Debts are the same dead end every time, and a dozen sightings never tell you what they cost.",
+  "evidence": "five debt talks with the same lines; 12 seen-doing-it, 0 pursuit, 0 choice under pressure",
+  "text": "A good systems game hiding in here (the fare book); everything else thin: same debt exchange five times, sightings with no visible consequence, 40% waiting."
+ },
+ {
+  "reviewer": "The impatient player",
+  "thumb": "down",
+  "hours_before_stopping": 0.29,
+  "quit_moment": "Minute 17.1: after the drop, three minutes of nothing and two minutes in the cab at 4.23am with no fare",
+  "most_exciting_moment": "13.6 min: carrying the holdall while a constable on his beat is 28 m away",
+  "top_praise": "It gives you a purpose fast: keys by 2.3, a fare at 4.3, a night job at 6.2.",
+  "top_complaint": "Too much waiting and dead air; talk ends in brush-offs.",
+  "evidence": "waiting 23.8 min, 40%; two minutes in the cab, no fare offered",
+  "text": "Quick opening; the holdall past the constable was the one moment that got me going; then three lines from Hal and dead air."
+ },
+ {
+  "reviewer": "The British crime drama fan",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "13.6 to 14.4 min: the holdall past a constable 28 m away, then Hal",
+  "top_praise": "The first quarter-hour has proper northern grit.",
+  "top_complaint": "After the scripted scenes everyone answers in the same stock deflections and every debt call plays the same.",
+  "evidence": "Wayne, Darren, Julie and Lee all 'I haven't got it'; Ron's same answers in three free talks; 5 new things in minutes 30 to 60",
+  "text": "The opening is the real thing; walking the holdall past a constable is pure Long Good Friday; then it thins out: no chase, no fight."
+ },
+ {
+  "reviewer": "The period-detail stickler",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "13.6 to 14.4 min: the holdall past a constable, then Hal",
+  "top_praise": "The prices and patter are right for 1990.",
+  "top_complaint": "The street goes hollow after half an hour; named people swap stock lines that do not suit them.",
+  "evidence": "'Aye, well. There it is.' from Ron, Brenda and Sheila; eight passers-by with no lines; 5 new things after minute 30",
+  "text": "No glaring anachronism; then the place empties out and people recycle each other's lines."
+ },
+ {
+  "reviewer": "The sceptic of AI in games",
+  "thumb": "down",
+  "hours_before_stopping": 0.07,
+  "quit_moment": "About minute 4: Ron's second free chat gave the same three replies word for word",
+  "most_exciting_moment": "1.8 min: Sheila reads out the debts book",
+  "top_praise": "The scripted openings feel written by hand.",
+  "top_complaint": "Free talk is a slot machine of stock lines; the first person talked to twice repeats himself.",
+  "evidence": "Ron at 3.56pm and 4.03pm: the same three replies",
+  "text": "Handmade opening, then canned lines; stopped at minute four."
+ }
+]
