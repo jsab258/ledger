@@ -78,6 +78,9 @@ WATCHED = {
     "ue-probe/Content/MetaHumans": ("Game Animation Sample", "MetaHuman"),
     "ue-probe/Content/Ledger/Export": "MetaHuman",
     "ue-probe/Content/Ledger/Cloth": ("MakeHuman", "FreeSewing"),
+    # 18 Nov 2026: the loop prototype's published script, copied in by the cloud lane, is a bundle of
+    # three.js 0.187.0 (MIT) and the prototype's own code; a browser prototype, never in the game.
+    "tools/lane/prototype/src/bundle": "three.js",
     "ue-probe/Content/Ledger/Figure": "Mixamo",
     "ue-probe/Content/Ledger/People": "Mixamo",
     "ue-probe/Content/Ledger/Props": "The Base Mesh",
@@ -507,6 +510,10 @@ OURS = {
 # set is printed and fails, so the next omission announces itself on the first
 # run instead of after a month.
 ASSET_SUFFIXES = {".uasset", ".fbx", ".png", ".jpg", ".jpeg", ".tga", ".psd", ".wav",
+                  # .js ADDED 18 NOV 2026: the only scripts walked are the
+                  # prototype's bundle, which carries three.js (MIT); any
+                  # other .js must now sit under a row or fail.
+                  ".js",
                   # .gif ADDED 7 SEP 2026, and this check caught it on
                   # the first run that produced one, which is what the
                   # comment above promises. The walk probe stitches its
