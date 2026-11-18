@@ -60,3 +60,16 @@ Could not be checked, and why:
 - Dirty money: the tin fills only at a night job's drop door (a key prompt) or when a debt is collected in talk or a fight, and washing goes through Sheila's talk. Not reachable through the hook; marked skipped.
 - Taking a fare, picking up and driving are key presses; the check lets the radio offer the fare, then places the cab and passenger at the drop by hand, so only the payment is tested. It finds the fare places in the built script by the shape of their data; if a rebuild changes that, the check fails saying so.
 - Finding: restoring through the hook leaves every person holding their old memory, not the restored one (the game's own Continue rebuilds the people; the hook does not). Kept as an expected failure, so a fix will show.
+
+## Per-system checks (stage 2, second round)
+
+tests/systems2_test.py, added 18 Nov 2026. Same set-up as the first round (headless Chromium, the hook only, the clock stopped between steps, LEDGER_PROTO_ASSETS needed). 15 tests: 11 pass, 3 skipped, 1 expected failure, in about 38 seconds. Its header lists what the hook exposes for each system.
+
+- Gossip: the bus arrival reaches new people within five game hours; nobody forgets; every told memory has a recorded telling from someone who knew the story; no "saw" memory without being a witness.
+- Talk: suggested lines (three at most) name nobody Tom has not learned; before Mickey's book is read, no line to a debtor speaks of a debt. Each talk is closed with its own Leave button, because the clock stops while talk is open. Sheila is left out: talking to her opens her written first scene.
+- Police: crimes planted by hand on Monday evening (Tom's acts are key presses), then the game's own police run at 04:00: the witness who saw it makes a statement and the police are sent; nobody for an unseen crime, a told-only one, an afraid witness or a paid one.
+- Routines: at 02:00, 09:15 and 12:30 on Tuesday every named person not sent elsewhere by the story is headed for their schedule's place (the rule written again in the test from its meaning).
+- Debts: the five debts open; Julie's debt is not in the Ledger before the book is read, which matches the design (the scope draft's Ledger check, "never shows a fact he could not know"; the prototype's own note that debts are listed "by the names in Mickey's book").
+- Skipped, not reachable: paying or striking out a debt, Sheila's book scene, and jobs (all written scenes or talk decisions that wait on key presses).
+- Finding, kept as an expected failure: Ron sets off home at 23:36 and stops about 3 metres from the rank, still marked as walking, until at least 03:00.
+- Not a test, noted: on Tuesday night the game paused and did not resume within a minute (Monday night's forced bedtime at about 04:30 resumes after its fade). Cause not found; so only the first night is stepped through.
