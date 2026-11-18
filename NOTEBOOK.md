@@ -2607,3 +2607,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: off, bit for bit the main solver (hash test); on, a stretched strip ends within its limit and a strip held apart reports its leftover; the gate with the switch off inside every band. Review note: the repair runs after body contact, so on a body it may move points back inside; the switch stays off until a garment run shows body-through 0 with it on.
 - Cost: helper about 1 h; session review, rebase and tests about 0.3 h; gate about 0.4 h. What failed and why: nothing; on a strip held apart it concentrates stretch into fewer edges rather than lowering it, as the method's source predicts.
 - Evidence: F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-strainlimit/gate.out. Recipe map: no step moved.
+
+## 2026-11-18 01:20 Talk: a speaker's own week derived from the routine data into the talk scene
+- Made: each live talker now hears their whole usual week in plain words beside this hour's place, so a question about later today or another day has a source the fact check accepts.
+- Method: derive, never store: one function walks the routine hour by hour for each weekday, writes every change of place as "time, place words", groups identical days, and says unnamed places generically rather than by id; the talk helper appends it to the scene. The routine file stays the one home.
+- Tools: the simulation core's tests and the talk helper's tests.
+- Target and check: an exact-text test on one character's week (both day groups, every change, no ids) and an absent character giving none; all core checks (5,255) and talk checks (132) pass. Still owed: a live talk sample asking "where will you be tonight?", judged by the fact check, in the packaged game.
+- Cost: about 0.3 h. What failed and why: the first wording said a morning hour bare ("seven"), ambiguous beside "seven in the evening"; morning hours are now said in full.
+- Evidence: CoreTests check "a person's own week in plain words"; production/research/phase2-plan/RON-ROUTINE-TALK-2026-11-17.md gap 1. Recipe map: no step moved.
