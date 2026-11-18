@@ -1225,8 +1225,8 @@
    "title": "May garments made through Kiln's copied job interface go into the game?",
    "text": "Kiln reuses Drape Studio's job interface (the command names only, not its engine, presets or files) so Marvelous's job scripts run unchanged. The design note made this your licence call before any Kiln garment is adopted.",
    "why": [
-    "Ron's work trousers are the first Kiln garment heading for the game; the step that adopts them waits on this.",
-    "You recorded Drape Studio as your own tool on 10 Nov; whether that covers adopting garments made through its interface was never asked."
+    "Ron's work trousers are the first Kiln garment heading for the game; adopting them waits on this.",
+    "Correction (18 Nov, 03:14): Kiln's cloth engine is Drape Studio's, and its notes say many of its values were taken by decompiling Marvelous (78 references). Earlier this item said only command names were reused; that was wrong."
    ],
    "steps": [
     "Tap Yes or No below"
@@ -1237,11 +1237,15 @@
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "recommendation": "Yes: only the command names are reused, the tool is yours, and nothing of its engine or presets is in Kiln.",
+   "recommendation": "Not yet: Kiln first replaces every value taken from the decompile with ones from public sources or its own measurements, then this comes back to you. Your outside-only ruling of 17 Nov points that way.",
    "options": [
     [
+     "notyet",
+     "Not yet: replace the decompiled parts first (recommended)"
+    ],
+    [
      "yes",
-     "Yes, adopt (recommended)"
+     "Yes, adopt Kiln garments now as they are"
     ],
     [
      "no",

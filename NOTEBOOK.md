@@ -2615,3 +2615,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: an exact-text test on one character's week (both day groups, every change, no ids) and an absent character giving none; all core checks (5,255) and talk checks (132) pass. Still owed: a live talk sample asking "where will you be tonight?", judged by the fact check, in the packaged game.
 - Cost: about 0.3 h. What failed and why: the first wording said a morning hour bare ("seven"), ambiguous beside "seven in the evening"; morning hours are now said in full.
 - Evidence: CoreTests check "a person's own week in plain words"; production/research/phase2-plan/RON-ROUTINE-TALK-2026-11-17.md gap 1. Recipe map: no step moved.
+
+### 18 Nov: a cloth fault traced to the mesh rebuild, not the sewing (Kiln gap 2, diagnosis)
+- Made: the cause of a jacket sleeve's 6.9x worst edge, found without changing the drape.
+- Method: write the test's verdict rule before the run (which frame and place would confirm or refute); run once plain (must equal the baseline to the digit, or the run does not count), once with debug dumps (worst edge per piece per frame, mesh at chosen frames); find the frame where the fault is born and what changed there (here the point count: a coarse-to-fine rebuild); then a read-only diagnosis replaying that step from the dumps. The first theory was refuted by its own rule and dropped.
+- Tools: the cloth engine's debug switches, the regression gate's single-job run, small read-only Python readers of the dumps.
+- Target and check: baseline numbers reproduced exactly; the born-at frame located (42, the rebuild); carried-over points measured inside the body (8 and 10, up to 17 mm).
+- Cost: about 0.5 h session, 0.2 h machine, a helper's read-only diagnosis.
+- What failed and why: the sewing theory, because a coarse summary (one worst edge per piece) hid that the wrist peak in early frames fell back.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-NYLON-SLEEVE-DIAGNOSIS-2026-11-18.md (section 5), KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md.

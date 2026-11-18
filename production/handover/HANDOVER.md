@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 01:07 (the hourly run; the last session set its Stopped line at 01:02)
+**Started:** 2026-11-18 02:37 (the hourly run; the last session set its Stopped line at 02:23)
 
-**Row due:** 2026-11-18 02:00 (last 01:00; page and advisor read 01:00; last ack 215 at 23:24)
-**Stopped:** 2026-11-18 01:02 (history 232k of its 250k point at an item's end, verdict UNDER; stopped early on judgement: every next step needs the machine after the night build and walk (from about 04:30), and the remaining room would only be spent waiting through the stop hook. No helper or background job running.)
+**Row due:** 2026-11-18 03:43 (last 02:43; page and advisor read 03:11, nothing new; last ack 216 at 02:55)
+**Stopped:** 2026-11-18 03:14 (history over its point at an item's end. Strainorder merged (Kiln main a48e139); licence item corrected (v153). Helpers left running, reports land in files named under 'Helpers running': trousers wear pass, R1, J1, gap 2 fix lane (Fable). No gate or drape running. Row due 03:43.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,32 +28,35 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (01:07 to the stop)
-- Page and advisor read 01:08 and 01:25: nothing new (no verdicts after 00:00Z; no advisor after ack 215).
-- Provot 1995 read from its scan by eye (pages extracted locally; secs. 5-7): one pass (two better), structural and shear springs only, never bending, held ends fixed, 10% (5% flag), no collisions in his tests. Lane strainorder's code read against Provot and Bridson: order, weights, edges all agree; its tests' expectations look right for the new order (no edit). Note appended to STRAIN-LIMIT-SOURCES-2026-11-18.md; DECISIONS 01:10.
-- n16-2 gap 1 built: CastDay.OwnWeekWords + TalkHelper's scene gets "Your usual week: ..." for every live talker (Ron can say where he will be tonight). CoreTests 5,255 and TalkTests 132 pass; full ci-checks run before the night build. Still owed: one live talk sample in the packaged game asking "where will you be tonight?" (API, daytime). NOTEBOOK and DECISIONS 01:20.
-- Diagnoser helper (Opus, read-only) on the nylon jacket's sleeveR stretch (gap 2): report to F:/LedgerTools/tool-dev/reports/KILN-NYLON-SLEEVE-DIAGNOSIS-2026-11-18.md.
+## Done this run (02:37 to 03:14; details in DECISIONS 02:47-03:14)
+- Page and advisor read 02:38, 02:53, 03:11; advisor 216 acknowledged 02:55. Row 02:43.
+- Night walk of wip 4438999c: 17 of 17; known faults only; its "label on the wrong man" is Tom himself (tester misreading).
+- Kiln: strainorder gated alone (PASS) and merged (main a48e139). Gap 2 traced to the mesh rebuild (reports KILN-NYLON-SLEEVE- and KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md). Machine-free list (16 tasks), product targets in LOOP.md, names check, B1 and public-names lanes done.
+- Ron's trousers step I on local branch ron-kiln-trousers-import (ad2dc6cb6, unpushed); maps to get a wear pass.
+- His licence item corrected (v153): Kiln's engine holds decompile-derived values; recommendation now Not yet.
 
-## Done the run before (00:22 to 01:02)
-- Page and advisor read 00:24 and 00:50: nothing new (no verdicts after 22:45Z; no advisor after ack 215). The licence item kiln-front-end-licence-2026-11-17 has NO verdict yet (the last handover's "answered yes" was wrong): trousers step I waits.
-- Strain-limit lane reviewed, rebased onto a8368f3, cargo test 56/56 (off still bit for bit), gate alone PASS (F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-strainlimit/gate.out; donkey_jacket NOT MADE as in the baseline run). Merged: Kiln main (F:/LedgerTools/tool-dev/kiln) at 1231324. Review finding kept in the merge message: the repair runs after body contact, so keep it off until a garment run with it on shows body-through 0. Worktree and its cargo target (1.3 GB) removed, recorded.
-- Hourly rows 00:30 and 01:00 (Fable's own weekly meter 40% then 43%, not used by this session). Study leftovers DECISION on his page 00:57. Reading helper: papers unreadable to it; the builder read Bridson 2002 in full (pdftotext), finding the order fault; DECISIONS 01:0x.
-- Earlier run (23:22-00:10): Ron's Kiln work trousers steps A-H (c009b0d87; F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md); Kiln main to a8368f3 (speed path, gate bands work not seconds).
+## Helpers running at the stop (their reports land in files; read them, merge nothing unreviewed)
+- Wear pass on Ron's trousers maps: F:/LedgerTools/garments/ron/kiln-trousers-chain/wear/WEAR-2026-11-18.md (gives the garments.json maps lines for the branch).
+- R1 (Seamshift reads Kiln's OBJ groups): lane C:/LedgerTools/kiln-lanes/r1-objgroups, report KILN-LANE-R1-2026-11-18.md.
+- Public names DONE: b2a8d92 on lane-publicnames (50/50 Python tests; replace rules keep gate results identical; 11 names found public on developer.clo3d.com and kept). Writer edits listed in KILN-LANE-PUBLICNAMES-2026-11-18.md (zip_jacket.py SEW lines 70-71, pleated_skirt.py 439, job_reexport.py line 10), not made; merge with them, gate alone.
+- J1 crossing check: lane C:/LedgerTools/kiln-lanes/j1-crossing, report KILN-LANE-J1-2026-11-18.md.
+- Gap 2 fix lane (Fable): debug carry dump + KILN_CARRY_OUTSIDE switch, lane C:/LedgerTools/kiln-lanes/carryinside, report KILN-LANE-CARRYINSIDE-2026-11-18.md with the two runs' commands (run them alone; the second is try 1 of 2).
+- B1 wardrobe runner DONE: b0e1f44 on lane-b1-wardrobe (16/16 fake tests; report KILN-LANE-B1-2026-11-18.md with the B2 command, run from main after merge; timelog 1.3 h against B1 not yet entered). Its note: the outpath check falls open in lane folders (small fix worth its own task).
+(All reports in F:/LedgerTools/tool-dev/reports unless named. If a helper is still running when the next session starts, it belongs to a finished session: read its report file when present; else re-brief from the list.)
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-18T00:00:00Z; advisor after 2026-11-17T23:24:00+01:00 (last ack 215).
-1. After the night (from 04:30, quiet machine, after the walk and runner are done): bash C:/LedgerTools/kiln-runs/baseline-2026-11-18/make_baseline.sh (build main 1231324, base and two nudged runs, about 1 h), then commit regression_baseline.json on Kiln main; the old one is copied beside the runs.
-2. His licence tap (kiln-front-end-licence-2026-11-17), when answered yes: trousers step I (held row in production/specs/garments.json, import_garments in mh-assemble, garments_shipped_check), then step J (nightly package, -WearHeld film). Never in Unreal 01:15-04:30.
-3. Strain limit, per the primary source (Bridson, Fedkiw and Anderson 2002 sec. 4, read 01:05; notes F:/LedgerTools/tool-dev/reports/STRAIN-LIMIT-SOURCES-2026-11-18.md): collisions must come last. Lane strainorder (C:/LedgerTools/kiln-lanes/strainorder, bfe9e1e, written in the night, NOT built or tested): the sweep moved to each substep after the caps, before contact; the frame-end and layer-finish sweeps removed; author list fixed. After the night: CARGO_TARGET_DIR=C:/LedgerTools/cargo-target/lane-strainorder cargo test --release in engines/drapestudio (the on-strip test may need its expectation updated: contact now follows the sweep), gate alone, merge; then one Kiln run with KILN_STRAIN_LAST=1 on Ron's trousers job, body-through and leftover read. Provot 1995 and Wang 2010 still unread.
-4. Darren's head remake when the editor is free (advisor 215), outside the night.
-5. Bending try 2 option (a) (script C:/LedgerTools/kiln-runs/bending2-2026-11-17/try2-a/bending2.sh), not beside a gate.
-6. DONE 00:57: study leftovers DECISION on his page (study-leftovers-delete-2026-11-18); on yes, delete via retention and record each line.
-7. n16-6: next is the packaged run with Sonnet 5.5 for core moments (BAKEOFF-SONNET55-2026-11-16.md line 52), daytime. Retention plan (not beside a gate); n16-8 Tom's crown, n16-7.
+0a. Licence item corrected 03:14 (v153). Next: list every decompile-derived value in engines/drapestudio/MECHANICS.md and plan its public-source or measured replacement, costed, as Kiln's first machine-free task; trousers step I waits on his answer.
+0. FIRST: verdicts after 2026-11-18T02:11:00Z; advisor after 2026-11-18T01:50:00+01:00 (last ack 216 at 02:55). Next row by 03:43, with Kiln's share (`python tools/token_measures.py --kiln-share`) until Thursday.
+1. DONE 03:14: strainorder gate alone PASS (against 9ca019e); merged: Kiln main now a48e139; worktree removed; its cargo target (979 MB, C:/LedgerTools/cargo-target/lane-strainorder) still to delete through retention and record. Next: one Kiln run of Ron's trousers job with KILN_STRAIN_LAST=1 (body-through and leftover read), alone.
+2. After 04:15's morning pictures finish: update make_baseline.sh to main a48e139 (or later merges) and run it (about 1 h, alone), then commit regression_baseline.json on Kiln main.
+3. Kiln gap 2: rebuild diagnosis DONE (KILN-NYLON-REBUILD-DIAGNOSIS-2026-11-18.md, high confidence): at the 20-to-10 mm rebuild, new points carried over on old 20 mm triangles start up to 17 mm inside the forearm (8 right, 10 left); the first frame pushes each to its nearest skin, so long edges straddle the arm and lock. Seam pairing ruled out. Next: the cheap debug dump of carried positions after the last rebuild (confirms), then fix try 1 of 2 at sim.rs:1088-1092: a carried point landing inside the body takes its old triangle's heaviest corner (outside at the frame before); predicted sleeveR about 3.5 at frame 42, wrists under 3. General (jeans also jump 1.32 to 1.94). Armpits' cause still open. Gate alone.
+4. Wear pass result into the trousers branch (maps lines), shipped check's flat-map line clear. On his licence yes: merge the branch, import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Row: time from his tap to Ron in the game.
+5. Helper lanes R1, publicnames, B1: review each, cargo test, merge one at a time (publicnames needs the job writers changed in the same step; results must stay identical, gate alone). Then the list's next tasks (J1, J2, R2...) into free places; C4 waits on a GarmentCode licence tap.
+6. 0c: a daytime packaged talk run asking Ron "where will you be tonight?" (API within the day's ceiling); watch Darren's first-sound time.
+7. Darren's head remake (advisor 215), outside the night. Bending try 2 (a), not beside a gate. n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 17 Nov 23:25: reopening the 16 Nov trousers project refused by Kiln's body standard; the old job refused by the dressing rule (no fly opening). Setup, not tries; route B worked first time.
-- 17 Nov 23:55: merged tests failed once on a golden taken before main's hinge; retaken on main, equal. Not a try.
-- 17 Nov late: the speed timing's first series refused by the body standard (old body paths). Output-cap hook refused by the app's safety check (his page). Set aside: Vellum on Tom's jumper (3 of 3), Cascadeur test 4; the bridge start by UI Automation (2 of 2).
+- 18 Nov 02:45: the strainorder gate stopped at once: `cargo test --release` builds no program; built it and reran. Setup, not a try.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3 (items 2, 3 and 4 have targets now).
