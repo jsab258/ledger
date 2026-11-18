@@ -809,3 +809,4 @@
 {"event": "stop", "at": "2026-11-18T09:30:47", "note": "row 27 merged, row 28 fixes merged, licence item updated"}
 {"event": "start", "at": "2026-11-18T09:44:11", "task": "n16-1 Kiln licence item: last two values re-sourced", "phase": "2", "kind": "production", "item": "n16-1"}
 {"event": "start", "at": "2026-11-18T11:13:10", "task": "his page republish and hourly row", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-18T12:15:01", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": ""}
