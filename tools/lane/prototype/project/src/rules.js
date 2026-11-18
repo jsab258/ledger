@@ -564,7 +564,7 @@ export const RULES = {
     hurtWeakensBlowsByShare: 0.3,
     heavyHitRecoverRealSeconds: 0.3, // round 3: with the 0.16 s strike, 0.46 s after contact (C2 heavy 0.35 to 0.50)
     lightHitRecoverRealSeconds: 0.14, // round 3: with the strike, 0.30 s after contact (C2 jab 0.20 to 0.40)
-    heavyMissRecoverRealSeconds: 0.95,
+    heavyMissRecoverRealSeconds: 0.8, // round 3: C2 heavy miss band 0.70 to 0.90 s (was 0.95)
     lightMissRecoverRealSeconds: 0.6,
     foeTurnsRadiansPerRealSecond: 7,
     foeGuardAfterStaggerRealSecondsAtLeast: 0.15,
@@ -594,7 +594,7 @@ export const RULES = {
     tomHurtAtMost: 1.05,
     beingHitNoiseCarriesMetres: 24,
     foeGuardAfterSwingRealSecondsAtLeast: 0.7,
-    foeGuardAfterSwingRealSecondsAtMost: 1.6,
+    foeGuardAfterSwingRealSecondsAtMost: 1.2, // round 3: with the wait when several and a ticket, at most about 2.2 s between a man's swings (C8 at most 2.5; was 1.6)
     foeWaitsAddedWhenSeveralRealSeconds: 0.5,
     beatenNoiseCarriesMetres: 20,
     yieldFearAddedAtBlows: 0.5,

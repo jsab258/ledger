@@ -490,6 +490,7 @@ class Novelty:
         return True
 
 
+LADDER_KINDS = ("stare", "squareup", "threat", "shove", "debt_paid", "strike", "set_on")
 FIGHT_JS = """() => { const F = LEDGER.F, G = LEDGER.G, out = { secs: 0, foes: F.foes.length };
   F.tele = []; let k = 0; const subs = [];
   const said = () => { for (const b of LEDGER.ui.bubs || []) if (!subs.some((s) => s[1] === b.text)) subs.push([b.P.def.name, b.text]); };
@@ -499,7 +500,7 @@ FIGHT_JS = """() => { const F = LEDGER.F, G = LEDGER.G, out = { secs: 0, foes: F
     if (coming && F.st === 'idle') LEDGER.fight.block(true);
     else if (!coming && F.st === 'block') LEDGER.fight.block(false);
     else if (F.st === 'idle' && F.stam > 0.3) LEDGER.fight.input(k++ % 3 === 2 ? 'heavy' : 'light');
-    LEDGER.tick(0.05); out.secs += 0.05; if (i % 10 === 0) said();
+    LEDGER.tick(0.05); out.secs += 0.05; if (i % 10 === 0) said(); out.watchMax = Math.max(out.watchMax || 0, (F.watch || []).length);
   }
   const T = F.tele || [];
   out.landed = T.filter((e) => e.ev === 'hit_contact' && e.actor === 'player').length;
@@ -507,7 +508,7 @@ FIGHT_JS = """() => { const F = LEDGER.F, G = LEDGER.G, out = { secs: 0, foes: F
   out.blocked = T.filter((e) => e.ev === 'block' && e.target === 'player').length;
   out.walls = T.filter((e) => e.ev === 'fall_hazard').length;
   out.downs = T.filter((e) => e.ev === 'knockdown').length;
-  out.watchers = (F.watch || []).length;
+  out.watchers = Math.max(out.watchMax || 0, (F.watch || []).length);
   out.outcome = G.tom.hurt >= 1 ? 'Tom beaten' : out.downs ? 'a man put down' : F.on ? 'still going' : 'they gave way or ran';
   out.said = subs; F.tele = null; return out; }"""
 # "fronting up" and "fighting" are play, not talk: the round 3 fight sample in the newcomer hour
@@ -543,7 +544,9 @@ class Tense:
         for e in evs[self.last_ev:]:
             # only an act that could cost him (a crime, or something that reads as menace) seen by somebody;
             # one moment per kind and game minute, however many sighting records the town keeps of it
-            key = (e["kind"], int(e.get("t") or 0))
+            # the rungs of one fronting-up (stare, square up, threat, shove) and its payment are one moment
+            kind = "confrontation" if e["kind"] in LADDER_KINDS else e["kind"]
+            key = (kind, int(e.get("t") or 0))
             if e["wit"] and (e["crime"] > 0 or e["menace"]) and key not in seen:
                 seen.add(key)
                 self.add("seen doing it", "%s, %d witness%s" % (e["kind"], e["wit"], "" if e["wit"] == 1 else "es"))
@@ -946,6 +949,22 @@ def newcomer(g, stock, minutes=60.0):
             "layout": layout, "played_s": book.t, "tense": tense.events, "fights": fights}
 
 
+def fight_sample(g):
+    """Two of Cammack's lads set on Tom on the quay at night (the game's own set-on, as late in the week)."""
+    g.step(2)
+    setup = g.js("""() => { const G = LEDGER.G, t = G.tom; G.t = 22 * 60; let lads = G.crowd.filter((p) => p.lad && !p.gone).slice(0, 2); if (lads.length < 2) lads = G.crowd.filter((p) => !p.gone && !p.inCar && p.def.sex !== 'f' && (p.def.age || 30) < 45).slice(0, 2); lads.forEach((P) => { P.lad = true; P.def.nerve = Math.max(P.def.nerve || 0.5, 0.8); });
+      if (lads.length < 2) return { error: 'no lads: ' + lads.length };
+      lads.forEach((P, i) => { P.space = 'street'; P.x = t.x + Math.sin(t.ang + (i ? 0.8 : -0.8)) * 3; P.z = t.z + Math.cos(t.ang + (i ? 0.8 : -0.8)) * 3; });
+      LEDGER.fight.setOn(lads); return { lads: lads.map((p) => p.def.name), on: LEDGER.F.on }; }""")
+    if not setup or setup.get("error"):
+        return {"error": (setup or {}).get("error", "no set-up")}
+    shot = g.shot("fight-sample", "two lads set on Tom")[0] if hasattr(g, "shot") else None
+    out = g.js(FIGHT_JS)
+    out["setup"] = setup
+    out["shot"] = shot
+    return out
+
+
 def novelty_stats(events, total_s, window_s=1800.0):
     ts = sorted(e["t"] for e in events)
     windows = []
@@ -1020,6 +1039,16 @@ def write_reports(out, res):
         L += ["", "## Words on screen (%d)" % len(nc["layout"])]
         for fl in nc["layout"]:
             L.append("- %s: %s, %s (%s)" % (fl["where"], fl["kind"], fl["what"], fl["text"]))
+        fs_ = res.get("fight_sample")
+        if fs_:
+            L += ["", "## Fight sample (scripted, outside the hour: two young men set on Tom in the street at night, as Cammack's lads do later in the week; the lads themselves are not out yet in the first hour, so two young men of the crowd stand in)", ""]
+            if fs_.get("error"):
+                L.append("- not run: %s" % fs_["error"])
+            else:
+                L.append("- %s; %.0f s; Tom landed %d blows, took %d, blocked %d; men driven into a wall %d; men down %d; onlookers who stopped %d; %s" % (
+                    " and ".join(fs_["setup"]["lads"]), fs_["secs"], fs_["landed"], fs_["took"], fs_["blocked"], fs_["walls"], fs_["downs"], fs_["watchers"], fs_["outcome"]))
+                for ln in fs_.get("said") or []:
+                    L.append("    - [%s] %s" % (ln[0], ln[1]))
         open(os.path.join(out, "newcomer.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
         open(os.path.join(out, "transcripts.md"), "w", encoding="utf-8").write("# Transcripts\n\n" + "\n".join(nc["transcript"]) + "\n")
 
@@ -1059,6 +1088,14 @@ def main(argv=None):
             res["newcomer"] = nc
             res["errors"] += g.errors
             res["shots_newcomer"] = g.shots
+        finally:
+            g.close()
+        # round 3: a fight sample, scripted and outside the hour: two of Cammack's lads set on Tom in the
+        # street, as they do later in the week, and the newcomer fights as in front_up
+        g = Game(a.assets, a.seed, os.path.join(out, "shots"), not a.no_shots, a.allow_changed)
+        try:
+            res["fight_sample"] = fight_sample(g)
+            res["errors"] += g.errors
         finally:
             g.close()
     res["wall_seconds"] = round(time.time() - t0)

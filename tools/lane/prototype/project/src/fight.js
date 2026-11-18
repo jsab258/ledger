@@ -31,12 +31,20 @@ export const F = {
   watch: [],
 };
 // The melee drills' record: one event a moment, in the format tools/lane/melee_drills.py scores.
+// a man's attack is over whenever he is no longer winding up or striking, for whatever reason (struck, fled, down)
+function attackEnds() {
+  for (const f of F.foes)
+    if (f.att && f.st !== 'windup' && f.st !== 'strike') {
+      f.att = false;
+      tl('attack_end', { actor: who(f.P) });
+    }
+}
 function tl(ev, o) {
   if (F.tele) F.tele.push(Object.assign({ t: F.clock, ev }, o || {}));
 }
 const who = (P) => P.id || P.def.name;
 const SHOUT = ['Come here!', 'Have that!', 'Go on, then!', 'You asked for it!'];
-const WATCH = ['Fight!', "Leave him, he's had enough!", "Somebody fetch the police!", 'Go on, Tom!', 'Oi! Pack it in!'];
+const WATCH = ['Fight!', "Leave him, he's had enough!", "Somebody fetch the police!", 'Go on, lad!', 'Oi! Pack it in!'];
 // People near a fight stop to look; the timid back off; some call it out. Their faces only: what they make of
 // it stays the town's own business (the witness rules are not touched).
 function watchers() {
@@ -45,8 +53,10 @@ function watchers() {
     if (P.gone || P.dead || P.down || P.inCar || P.space !== t.space || P === F.T) continue;
     if (F.foes.find((f) => f.P === P) || F.watch.includes(P)) continue;
     if (hyp(P.x, P.z, t.x, t.z) > LAD.watchersWithinMetres) continue;
+    if (P.moving || P.react || P.state === 'sit' || P.state === 'queueSit') continue; // walking, seated or already showing something: left be
     F.watch.push(P);
     P.react = (P.def.nerve ?? LAD.nerveAssumed) < LAD.watcherBacksOffBelowNerve ? 'cower' : 'stare';
+    P.watchReact = P.react;
     P.reactT = LAD.watchersLookRealSeconds;
     if (chance(LAD.watcherShoutChance)) bubble(P, pick(WATCH));
   }
@@ -192,8 +202,7 @@ export function climb() {
       P.x = nx;
       P.z = nz;
     } else {
-      // shoved back into a wall: it shows, and it frightens
-      m.fear = clamp(m.fear + LAD.fearAddedPerBlow, 0, 1);
+      // shoved back into a wall: it shows (what he feels about it stays the ladder's own rule)
       sub('Back into the wall.', '', 'over', LAD.wallLineRealSeconds);
       if (G.hooks.sfx) G.hooks.sfx('thud');
       if (G.hooks.shake) G.hooks.shake(LAD.wallSlamShake);
@@ -381,12 +390,10 @@ function hurtFoe(f, dmg, heavy) {
       blocked(P.x + (kx / kl) * LAD.wallBehindWithinMetres, P.z + (kz / kl) * LAD.wallBehindWithinMetres);
   if (wall) dmg += LAD.wallSlamHurts;
   P.hurt = clamp((P.hurt || 0) + dmg, 0, LAD.foeHurtAtMost);
-  const was = f.st;
   if (heavy || wall || f.st !== 'windup') {
     f.st = 'stagger';
     f.t = wall ? LAD.wallSlamStaggerRealSeconds : heavy ? LAD.heavyStaggerRealSeconds : LAD.lightStaggerRealSeconds;
     P.fight.mode = 'stagger';
-    if (was === 'windup' || was === 'strike') tl('attack_end', { actor: who(P) });
     tl('stagger_start', { actor: who(P), severity: heavy || wall ? 'heavy' : 'light' });
   } // a light one does not stop a man already swinging
   if (wall) {
@@ -423,7 +430,6 @@ function hurtFoe(f, dmg, heavy) {
   if (!f.hitOnce && P.hurt < 1) {
     f.hitOnce = 1;
     if ((P.def.nerve ?? LAD.nerveAssumed) < LAD.fleesWhenHitBelowNerve && chance(LAD.fleesWhenHitChance)) {
-      if (was === 'windup' || was === 'strike') tl('attack_end', { actor: who(P) });
       f.st = 'flee';
       flee(P);
       sub('All right! All right!', tomName(P));
@@ -490,6 +496,7 @@ export function step(dt) {
     if (F.stop <= 0) tl('hitstop_end', { actor: 'player' });
     return;
   }
+  attackEnds();
   if (F.rung < LAD.strikeRung) {
     if (F.animT > 0) {
       F.animT -= dt;
@@ -557,7 +564,7 @@ export function step(dt) {
       } else {
         F.rec = F.heavy ? LAD.heavyMissRecoverRealSeconds : LAD.lightMissRecoverRealSeconds;
         F.open = F.rec;
-        if (hit) tl('block', { actor: who(near.P), target: 'player' });
+        if (hit) tl('guarded', { actor: who(near.P), against: 'player' }); // the man's guard stopped Tom's blow
         tl('miss', { actor: 'player' });
         if (hit && G.hooks.sfx) G.hooks.sfx('block');
       } // a miss leaves you open
@@ -656,6 +663,7 @@ export function step(dt) {
       f.t = f.heavy ? LAD.foeHeavyWindUpRealSeconds : LAD.foeLightWindUpRealSeconds;
       P.fight.mode = f.heavy ? 'heavy' : 'windup';
       tl('attack_start', { actor: who(P) });
+      f.att = true;
       tl('hit_start', { actor: who(P), action: f.heavy ? 'heavy' : 'jab', weapon: P.weapon || 'fists' });
       tl('telegraph_start', { actor: who(P), action: f.heavy ? 'heavy' : 'jab' });
       if (f.heavy && chance(LAD.foeShoutsBeforeHeavyChance)) {
@@ -692,7 +700,6 @@ export function step(dt) {
         t.noiseP = LAD.beingHitNoiseCarriesMetres;
       }
     } else if (f.st === 'strike' && f.t <= 0) {
-      tl('attack_end', { actor: who(P) });
       f.st = 'guard';
       f.t =
         rnd(LAD.foeGuardAfterSwingRealSecondsAtLeast, LAD.foeGuardAfterSwingRealSecondsAtMost) +
@@ -745,10 +752,13 @@ export function end(hostile) {
     F.T.hold = false;
     F.T.goalKey = '';
   }
-  for (const P of F.watch) {
-    P.react = null;
-    P.reactT = 0;
-  }
+  for (const f of F.foes) if (f.att) f.st = 'over';
+  attackEnds();
+  for (const P of F.watch)
+    if (P.react === P.watchReact) {
+      P.react = null;
+      P.reactT = 0;
+    }
   F.watch = [];
   F.stop = 0;
   F.on = false;

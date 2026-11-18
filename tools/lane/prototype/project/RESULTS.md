@@ -1,5 +1,46 @@
 # Results of the checks
 
+## 18 November 2026, lane round 3 (fists with weight): the drills and the AI playtester before and after
+
+The melee feel sheet's drills, run in the build through the test hook at 1/60 s (test/melee3.mjs), against the
+sheet's bands (production/research/lane/FEEL-TARGETS-MELEE-2026-11-18.md):
+
+| drill | before (round 2) | after (round 3) | band |
+|---|---|---|---|
+| jab, start to contact | 0.20 s | 0.28 s | 0.25 to 0.40 |
+| heavy, start to contact | 0.55 s | 0.70 s | 0.63 to 0.85 |
+| hit-stop jab / heavy | none | 0.05 / 0.10 s (measured in 1/60 s steps) | 0.025 to 0.05 / 0.06 to 0.12 |
+| man's reaction to a jab / a heavy | 0.28 / 0.70 s | 0.60 / 1.13 s | 0.5 to 0.7 / 0.9 to 1.3 |
+| Tom busy after a heavy lands (freeze not counted) | about 0.61 s | 0.48 s | 0.35 to 0.50 |
+| men swinging at once (three men, 20 s) | up to 3 | 2 | 1 to 2 |
+| gap between two men's swings starting | no rule | 0.47 s at least | at least 0.40 |
+| longest wait between one man's swings | up to about 2.6 s | 1.7 s in the drill | at most 2.5 |
+| enemy wind-up readable before it lands | 0.50 s | 0.52 s at least | 0.45 to 0.80 |
+| jabs from full to too tired | never (breath came back between jabs) | 9 | 6 to 10 |
+| too tired to full | not measured | 6.2 s | 4 to 8 |
+| a man struck with a wall behind him | nothing | hits it, 1.18 s reaction | (the design's wall) |
+
+The newcomer's first hour (seed 19901120; times are estimates of a human's pace; two runs of the same build):
+
+| | before (round 2) | after (round 3), two runs |
+|---|---|---|
+| talking | 23% | 24%, 24% |
+| walking | 29% | 23%, 22% |
+| waiting | 40% | 48%, 46% |
+| driving | 6% | 3%, 5% |
+| job actions and fronting up | 3% | 2%, 2% |
+| kinds of activity | 5 | 6, 6 (fronting up) |
+| new things, minutes 30 to 60 | 5 | 7, 4 |
+| longest stretch with nothing new | 11.4 min | 10.5, 13.5 min (run to run the playtester varies by about 3 min) |
+| tense moments per 30 minutes | 7.5 | 15.0 (one fronting-up counted once: 7 choices under pressure, 3 risks of being seen, 20 sightings) |
+| fights, pursuits, escapes | 0 | 0 (all five debtors gave way at a stare, square-up or threat) |
+
+A scripted fight sample outside the hour (two young men set on Tom at night): 16 to 28 s, Tom landed 6 to 10
+blows and took 5 or 6, blocked 4 to 8; onlookers stopped and called out ("Leave him, he's had enough!"); once
+Tom was beaten, once they gave way. The panel's report: production/lane/REVIEWS-round3.md in the repository.
+Waiting rose; the empty stretch is within the playtester's variation. The next round should let a debt come to
+blows in the first hour.
+
 ## 18 November 2026, lane round 2 (the carry under watch): the AI playtester before and after
 
 Same playtester (seed 19901120), a newcomer's first hour. Times are estimates of a human's pace.

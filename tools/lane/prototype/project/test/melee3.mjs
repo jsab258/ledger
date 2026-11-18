@@ -113,6 +113,11 @@ try {
   ok(starts.length >= 4, 'M6: the men swing (' + starts.length + ' swings in 20 s)');
   ok(peak <= 2, 'M6: at most two men swinging at once: ' + peak);
   ok(gap >= 0.4, 'M6: two men\'s swings start at least 0.40 s apart: ' + gap.toFixed(3));
+  let idle = 0;
+  const ends = {};
+  for (const e of ev) { if (e.ev === 'attack_end') ends[e.actor] = e.t; if (e.ev === 'attack_start' && ends[e.actor] != null) idle = Math.max(idle, e.t - ends[e.actor]); }
+  ok(idle > 0 && idle <= 2.5, 'M6: no man waits more than 2.5 s between his swings: ' + idle.toFixed(3));
+  ok(ev.filter((e) => e.ev === 'attack_end').length + 2 >= starts.length, 'M6: every attack begun is recorded as over (but those still swinging at the end): ' + starts.length + ' begun');
   const tele = ev.filter((e) => e.ev === 'telegraph_start'), contacts = ev.filter((e) => (e.ev === 'hit_contact' || e.ev === 'block') && e.actor !== 'player');
   let minLead = 9;
   for (const c of contacts) { const t0 = [...tele].reverse().find((x) => x.actor === c.actor && x.t <= c.t); if (t0) minLead = Math.min(minLead, c.t - t0.t); }

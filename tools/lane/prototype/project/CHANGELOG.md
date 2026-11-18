@@ -1,5 +1,41 @@
 # LEDGER loop prototype: changelog
 
+## 18 November 2026, lane round 3. Fists with weight (melee, part 1)
+
+Built by the cloud lane. Design question: when a debt turns into a fight, do the blows land with weight, can
+a player read what is coming, and does the street react, so a fight is a moment a player would retell? Serves
+his combat pick of 18 Nov (option A with an escalation dial: fists and things to hand every day, guns rare;
+melee first) and the melee feel sheet (production/research/lane/FEEL-TARGETS-MELEE-2026-11-18.md, bands C1 to
+C15, measured with its drills). KCD2 is the measuring stick. The town's simulation is untouched: onlookers
+only show it on their faces; what they make of a fight stays the witness rules' own business.
+
+1. Hit-stop: on contact both men are held for a moment, 0.04 s for a jab, 0.09 s for a heavy blow, 0.10 s
+   for a swung weapon (C3), with a small camera shake on a heavy blow.
+2. Timings in the sheet's bands: Tom's jab lands 0.28 s after it starts (C2 0.25 to 0.40), his heavy 0.70 s
+   (0.63 to 0.85); a man struck reels 0.55 s from a jab and 1.05 s from a heavy (C4); Tom is busy 0.30 s after
+   a jab lands and 0.46 s after a heavy (freeze not counted); a missed heavy costs 0.80 s.
+3. Walls: a man knocked back with a wall close behind him hits it: more hurt, a heavy reaction (1.15 s) and a
+   thud ("Into the wall."). A shove into a wall shows the same way.
+4. Outnumbered: at most two men swing at Tom at the same moment, their swings at least 0.45 s apart, and no
+   man waits more than about 2.2 s between swings (C8). A man winding up a heavy blow often shouts first, at
+   least 0.45 s before it lands (C13).
+5. Onlookers: people within 20 m who are standing about stop and look; the timid shrink back; some call it
+   out ("Fight!", "Somebody fetch the police!"). Walking or seated people carry on.
+6. Breath: Tom gets no breath back while still swinging, so 8 or 9 jabs tire him (C11 6 to 10) and he is back
+   to full in about 6 s.
+7. Each debtor refuses in his own words with his own reason (the panel's second complaint of round 2).
+8. Tests: test/melee3.mjs runs the sheet's drills through the test hook at 1/60 s (jab, heavy, a man against
+   a wall, three men, stamina) and writes the drills' record for tools/lane/melee_drills.py. The playtester's
+   newcomer now fronts up a debtor who will not pay, as the game invites, and fights as a first-time player
+   would. Old saves load (the fight's state is never saved).
+9. After a fresh review (PASS WITH FIXES): Tom's blow stopped by a man's guard is recorded apart from Tom's own
+   blocks; every attack begun is recorded as over whatever ends it; a man's wait between swings is capped;
+   the missed heavy shortened into its band; onlookers who are walking or seated are left be, and the fight's
+   end clears only the looks it gave; a shove into a wall no longer adds lasting fear.
+
+Not yet (next melee rounds): picking up a chair, a brick or a pipe and breaking it (C12), closing in on a blow
+(C9), the camera close-in (C10), the kerb fall rule (C7), and the playtester's fight sample at more debts.
+
 ## 18 November 2026, lane round 2. The carry under watch
 
 Built by the cloud lane. Design question: does a night carry past a watching constable give the first half

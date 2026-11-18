@@ -1,0 +1,24 @@
+ok   M1 set up: {"men":["k_news"],"foes":1}
+ok   M1 heavy: start to contact inside 0.63 to 0.85 s: 0.700
+ok   M1 heavy: hit-stop inside 0.06 to 0.12 s: 0.100
+ok   M1 heavy: the man struck reels (heavy): {"t":1.2166666666666672,"ev":"stagger_start","actor":"k_news","severity":"heavy"}
+ok   M1 heavy: his reaction lasts 0.9 to 1.3 s: 1.133
+ok   M1 heavy: Tom busy 0.35 to 0.50 s after contact (freeze not counted): 0.483
+ok   M1 jab: start to contact inside 0.25 to 0.40 s: 0.283
+ok   M1 jab: his reaction lasts 0.5 to 0.7 s: 0.600
+ok   M9: jabs from full to too tired inside 6 to 10: 9
+ok   M9: tired to full breath inside 4 to 8 s: 6.18
+ok   M6 set up: {"men":["k_news","k_iron","k_chand"],"foes":3}
+ok   M6: the men swing (26 swings in 20 s)
+ok   M6: at most two men swinging at once: 2
+ok   M6: two men's swings start at least 0.40 s apart: 0.467
+ok   M6: no man waits more than 2.5 s between his swings: 1.883
+ok   M6: every attack begun is recorded as over (but those still swinging at the end): 26 begun
+ok   M6: every wind-up readable 0.45 to 0.80 s before it lands: 0.517
+ok   found a wall to drive a man into: {"x":-6.132050807568877,"z":26.5,"ang":4.71238898038469}
+ok   a jab into a man with his back to a wall drives him into it: {"t":0.8000000000000008,"ev":"fall_hazard","actor":"k_news","surface":"wall"}
+ok   and he reels as from a heavy blow (0.9 to 1.3 s): 1.183
+watchers at the M6 fight: 4
+drill events written to melee3-drills.jsonl
+ok   no page errors
+PASS
