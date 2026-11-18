@@ -49,6 +49,7 @@ namespace Ledger.TalkTests
                 TestAccountNamesTeller();
                 await TestCapPrices();
                 TestCheckCache();
+                await TestUsualWeek();
                 Console.WriteLine($"\nALL {_passed} TALK CHECKS PASSED");
                 return 0;
             }
@@ -656,6 +657,92 @@ namespace Ledger.TalkTests
             var r = AnthropicClient.ParseResponse("{\"stop_reason\":\"end_turn\",\"model\":\"m\",\"usage\":{\"input_tokens\":50,\"cache_creation_input_tokens\":400,\"cache_read_input_tokens\":3000,\"output_tokens\":40},\"content\":[{\"type\":\"text\",\"text\":\"{}\"}]}");
             Check(r.InputTokens == 50 + 500 + 300 && r.CacheReadTokens == 3000 && r.CacheWriteTokens == 400 && r.OutputTokens == 40,
                   "the cache's tokens billed at their price: a write a quarter more, a read a tenth", r.InputTokens.ToString());
+        }
+
+        // ------------------------------------------------------------ their usual week
+
+        /// The check, scripted for one routine claim: the list cites what it is
+        /// given; every second look clears its detail from `lookSource`.
+        sealed class WeekCheckLlm : ILlmClient
+        {
+            readonly string _list, _lookSource;
+            public int Calls;
+            public WeekCheckLlm(string list, string lookSource) { _list = list; _lookSource = lookSource; }
+            public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+            {
+                Calls++;
+                bool look = request.System != null && request.System.StartsWith("You check details against", StringComparison.Ordinal);
+                var text = look ? "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"" + _lookSource + "\"}]}" : _list;
+                return Task.FromResult(new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 10, OutputTokens = 10, Model = request.Model });
+            }
+        }
+
+        /// THEIR USUAL WEEK IN THEIR TALK (18 Nov; gap 1 of
+        /// production/research/phase2-plan/RON-ROUTINE-TALK-2026-11-17.md): each
+        /// named talker with a routine in the cast file is told their week beside
+        /// this hour's place, and the claim check takes its hours and places as
+        /// their own facts, while a place or an hour outside it is still refused.
+        static async Task TestUsualWeek()
+        {
+            Console.WriteLine("Their usual week, beside where they are:");
+            var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+            var monday8pm = new GameTime(0, 20, 0);   // day 0 is a Monday (the cast file's week)
+            var sunday11am = new GameTime(6, 11, 0);
+            string ronMonday = cast.TalkLines("rocco", 0, 20) ?? "";
+            const string RonWeekdays = "Monday to Saturday: seven in the morning, inside the cafe across the street from Mickey's; eight in the morning, " +
+                "the pavement at Mickey's door, where the cabs wait; twelve, the pavement outside the fish market; one, the pavement at Mickey's door, " +
+                "where the cabs wait; five, the quay at the bottom of Quay Street; seven in the evening, the front room of Mickey's, the cab office; " +
+                "eleven in the evening, off the street.";
+            const string RonSundays = "Sundays: ten in the morning, the allotments by the railway; one, off the street; seven in the evening, " +
+                "the front room of Mickey's, the cab office; eleven in the evening, off the street.";
+            Check(ronMonday == "Where you are: the front room of Mickey's, the cab office. Your usual week: " + RonWeekdays + " " + RonSundays,
+                  "Ron on a Monday evening: where he is, then his usual week, every weekday change of place and hour", ronMonday);
+            string ronSunday = cast.TalkLines("rocco", 6, 11) ?? "";
+            Check(ronSunday.StartsWith("Where you are: the allotments by the railway. Your usual week: ") && ronSunday.EndsWith(" " + RonSundays)
+                  && !ronSunday.Contains("_"),
+                  "Ron on a Sunday morning: the allotments now, and his Sundays in the same words, no ids", ronSunday);
+            Check(cast.TalkLines("rocco", 1, 2) == "Your usual week: " + RonWeekdays + " " + RonSundays,
+                  "off the street at two in the morning: no place this hour, his week still said");
+            Check(cast.TalkLines("outsider", 0, 20) == null && cast.TalkLines(null, 0, 20) == null,
+                  "a speaker with no routine in the cast gets no line");
+
+            // THE HARD RULE ON NAMES, code before any call, on everything the
+            // helper gives him (card, street facts, the scene with his week, the
+            // street's people and places, its opening hours): every place and
+            // hour of his week passes it; a place his facts have no word for is
+            // refused. (Hours alone it cannot judge: the opening hours already
+            // hold most numbers, so a wrong hour, and a street place he knows but
+            // does not keep, like the chapel, are the model check's to refuse,
+            // shown his week in S1; measured 18 Nov.)
+            var ron = Card("rocco");
+            string withWeek = "Dry, grey. " + ronMonday;
+            List<string> Facts(string scene) => ClaimCheck.KnownItems(ron, null, null, null, scene, monday8pm.ToldAs, null,
+                cast.PeopleFor("rocco", 0, 20), null, cast.HoursFor(0, 20, 0)).Select(i => i.text).ToList();
+            const string Tonight = "I'm at the office from seven most evenings.";
+            var weekLines = new[] { Tonight, "I'm at the office till eleven.", "Sundays I'm up the allotments from ten.", "Mornings I'm in the cafe at seven, then the rank.",
+                                    "Five o'clock I'm down the quay.", "Twelve I'm outside the fish market." };
+            string blocked = string.Join(" | ", weekLines.Where(l => NameRules.Missing(l, Facts(withWeek), true).Count > 0));
+            Check(blocked == "", "every place and hour of his week passes the hard rule on names", blocked);
+            Check(NameRules.Missing("I'm down the pier most evenings.", Facts(withWeek), true).SequenceEqual(new[] { "pier" })
+                  && NameRules.Missing("Evenings I'm up the station.", Facts(withWeek), true).SequenceEqual(new[] { "station" }),
+                  "a place outside his week that his facts have no word for (the pier, the station) is refused by it");
+
+            // THE WHOLE TURN, as the talk helper runs it, the check scripted: asked
+            // where he will be tonight, the week's answer is said; the pier is not.
+            var said = Relayed("rocco");
+            said.People = cast.PeopleFor("rocco", 0, 20);
+            said.StreetHours = cast.HoursFor(0, 20, 0);
+            var accept = new WeekCheckLlm("{\"specifics\": [{\"detail\": \"at the office from seven most evenings\", \"kind\": \"habit\", \"source\": \"S1\"}]}", "S1");
+            Swap(said, new ScriptedLlm(Tonight), accept);
+            string reply = await said.SayToAsync("Where will you be tonight?", monday8pm, withWeek);
+            Check(reply == Tonight && said.LastInvented.Count == 0
+                  && said.LastKnown.Any(k => k.id == "S1" && k.text.Contains("Your usual week: Monday to Saturday")),
+                  "his week reaches the check as his own fact, and an answer from it is said", reply);
+            var refuse = new WeekCheckLlm("{\"specifics\": [{\"detail\": \"down the pier most evenings\", \"kind\": \"habit\", \"source\": \"S1\"}]}", "S1");
+            Swap(said, new ScriptedLlm("I'm down the pier most evenings."), refuse);
+            string pier = await said.SayToAsync("Where will you be tonight?", monday8pm, withWeek);
+            Check(!pier.Contains("pier") && said.LastInvented.Contains("pier") && refuse.Calls == 0,
+                  "a place outside his week is refused by code before any check call, whatever a model would cite", pier);
         }
 
         static void TestAccountNamesTeller()

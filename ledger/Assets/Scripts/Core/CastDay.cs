@@ -520,6 +520,23 @@ namespace Ledger.Core
             return string.Join(". ", groups.ConvertAll(x => DaysWords(x.days) + ": " + x.said));
         }
 
+        /// WHAT THE TALK IS TOLD OF THEIR DAY, in the words the talk helper puts
+        /// beside the game's scene (18 Nov, the session's decision; gap 1 of
+        /// production/research/phase2-plan/RON-ROUTINE-TALK-2026-11-17.md):
+        /// "Where you are: ..." for this hour, then "Your usual week: ..." from
+        /// the same routine, each only when it has words. The claim check reads
+        /// the scene as one of the speaker's own facts (ClaimCheck.KnownItems,
+        /// S1), so the hours and places of their week are theirs to say and a
+        /// place or hour outside it is not. One home for the line's text, so the
+        /// talk tests read what the helper sends. Null for somebody not in the cast.
+        public string TalkLines(string id, int day, int hour)
+        {
+            var lines = new List<string>();
+            if (WhereWords(id, day, hour) is string where) lines.Add("Where you are: " + where + ".");
+            if (OwnWeekWords(id) is string week) lines.Add("Your usual week: " + week + ".");
+            return lines.Count == 0 ? null : string.Join(" ", lines);
+        }
+
         /// Where they stand, or null when off the street or unknown.
         public (double x, double z)? Where(string id, int day, int hour)
         {

@@ -692,14 +692,13 @@ static class Program
             if (!Cards.TryGetValue(to, out var card))
                 return JsonSerializer.Serialize(new { id, to, error = "no-card" }, Plain);
             string key = string.IsNullOrEmpty(who) ? to : who;
-            // WHERE THIS PERSON IS, from their routine at this hour, beside the
-            // scene the game sends (the same for everybody until now).
-            var where = Cast?.WhereWords(key, day, hour);
-            if (where != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + "Where you are: " + where + ".";
-            // THEIR USUAL WEEK, from the same routine (n16-2 gap 1, 18 Nov): asked
-            // where they will be tonight or on a Sunday, they now have a source.
-            var ownWeek = Cast?.OwnWeekWords(key);
-            if (ownWeek != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + "Your usual week: " + ownWeek + ".";
+            // WHERE THIS PERSON IS, from their routine at this hour, and THEIR
+            // USUAL WEEK from the same routine (n16-2 gap 1, 18 Nov: asked where
+            // they will be tonight or on a Sunday, they have a source), beside the
+            // scene the game sends; the words are CastDay.TalkLines', the one home
+            // the talk tests read too.
+            var dayLines = Cast?.TalkLines(key, day, hour);
+            if (dayLines != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + dayLines;
             LastScene = scene;
 
             var sw = Stopwatch.StartNew();

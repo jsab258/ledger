@@ -181,7 +181,10 @@ if OUT:
     os.makedirs(OUT, exist_ok=True)
     info = {key: json.loads(pattern_api.GetPatternLineInfo(idx)) for key, idx in made.items() if idx >= 0}
     json.dump({"made": made, "lineinfo": info}, open(os.path.join(OUT, "made.json"), "w"))
-    pattern_api.ExportPatternJSON(os.path.join(OUT, "pieces.json"))
+    if "kiln_api" in globals():
+        kiln_api.export_pieces(os.path.join(OUT, "kiln-pieces.json"))
+    elif not pattern_api.ExportPatternJSON(os.path.join(OUT, "pieces.json")):
+        print("pieces.json not written: ExportPatternJSON answered False")
     print("WROTE", OUT)
 ''' % {"spec": SPEC, "plan": json.dumps(plan), "out": OUTDIR}
 open(JOB, "w", encoding="utf-8").write(job)
