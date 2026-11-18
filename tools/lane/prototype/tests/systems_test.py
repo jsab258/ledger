@@ -5,7 +5,8 @@ One headless Chromium and one new week for the whole class; the tests run in nam
 and each builds on the street as the one before left it. Needs the pictures in the folder
 named by LEDGER_PROTO_ASSETS (as the smoke test); skipped otherwise, never passed.
 
-Field meanings, read from the bundle (src/bundle/) on 18 Nov 2026:
+Field meanings, read from the bundle on 18 Nov 2026 and checked against the readable source
+(project/src/state.js, events.js, money.js) the same day:
   G.events / G.ev   every act of Tom's the town could know of: {id, kind, t, zone, wit:[ids who saw]}; ev indexes by id
   G.sightIdx        "kind:day:two-hour block:zone" -> event id, so one sighting kind is one event per block, however many see it
   G.minds / p.mind  each person's memory: mem[] and by[event id] = {src saw|told|heard|self, who man|coat|cab|owner|tom, sure, heat}, fam (how well they know his face)
@@ -39,12 +40,6 @@ class Systems(unittest.TestCase):
         from playwright.sync_api import sync_playwright
         cls.tmp = tempfile.TemporaryDirectory()
         build.build(assets_dir=ASSETS, dist=cls.tmp.name)
-        with open(os.path.join(cls.tmp.name, "ledger.js"), encoding="utf-8") as f:
-            # The fare places table, found by the shape of its data ({station:{n:"...",p:[x,z]},...}),
-            # not by the bundler's short names, which change on any rebuild.
-            m = re.search(r'=(\{station:\{n:"[^"]*",p:\[[^\]]*\]\}(?:,\w+:\{n:"[^"]*",p:\[[^\]]*\]\})*\})[;,]', f.read())
-        cls.fare_places_js = m.group(1) if m else None
-
         class Quiet(http.server.SimpleHTTPRequestHandler):
             def log_message(self, *a):
                 pass
@@ -202,9 +197,6 @@ class Systems(unittest.TestCase):
 
     # 3. Money and the tin -------------------------------------------------------------
     def test_3a_a_fare_goes_in_the_pocket_not_the_tin(self):
-        self.assertIsNotNone(self.fare_places_js,
-            "fare places table ({station:{n:..., p:[x, z]}, ...}) not found in the built script: the bundle "
-            "was rebuilt or reshaped; update the search in setUpClass, or expose the table on LEDGER")
         self.assertTrue(7 <= self.js("(LEDGER.G.t / 60) % 24") < 23, "fares are offered from 7 to 23 only")
         m0 = self.js("Object.assign({}, LEDGER.G.money)")
         # Pauline's radio offers a fare once he sits in the cab with the keys.
@@ -219,9 +211,9 @@ class Systems(unittest.TestCase):
         self.assertIsNotNone(fare, "a fare must be offered on the radio")
         self.assertEqual(fare["st"], "offer")
         self.assertGreater(fare["pay"], 0)
-        # Taking it (key Y) and picking up are UI steps: put the passenger in and the cab at the drop.
-        self.js("""(() => { const F = %s, f = LEDGER.G.story.fare, c = LEDGER.G.car;
-          f.st = 'carry'; f.pid = 'pax0'; c.x = F[f.dest].p[0]; c.z = F[f.dest].p[1]; c.v = 0; })()""" % self.fare_places_js)
+        # Put the passenger in and the cab at the drop, read from the hook's fare (LEDGER.fare.read).
+        self.js("""(() => { const d = LEDGER.fare.read().dropOff, f = LEDGER.G.story.fare, c = LEDGER.G.car;
+          f.st = 'carry'; f.pid = 'pax0'; c.x = d.xMetres; c.z = d.zMetres; c.v = 0; })()""")
         self.js("LEDGER.step(0.5)")
         self.assertIsNone(self.js("LEDGER.G.story.fare"), "the fare must end at the drop")
         m1 = self.js("Object.assign({}, LEDGER.G.money)")
@@ -298,12 +290,11 @@ class Systems(unittest.TestCase):
         self.assertFalse(self.js("LEDGER.restore(%s)" % json.dumps(bad)))
         self.assertEqual(self.snapshot(), before)
 
-    @unittest.expectedFailure
     def test_4c_restore_through_the_hook_relinks_people_to_their_minds(self):
-        # Finding (18 Nov): LEDGER.restore replaces G.minds but leaves every person holding the old
-        # mind object, and the restored minds have no by-index. The game's own Continue rebuilds the
-        # people afterwards (the bundle's qd()); the hook does not, so after a hook restore the people
-        # act on the pre-restore memories. Marked expected-to-fail so a fix shows as an unexpected pass.
+        # Finding (18 Nov, bundle): LEDGER.restore replaced G.minds but left every person holding the
+        # old mind object, with no by-index. Fixed in Fable's 18 Nov round (CHANGELOG 2a): restore and
+        # Continue share one function (hook.js restore: x.loadWeek). Was an expected failure; now an
+        # ordinary check.
         self.js("LEDGER.restore(localStorage.getItem(%r))" % SAVE_KEY)
         self.assertTrue(self.js("LEDGER.G.named.every(p => p.mind === LEDGER.G.minds[p.id] && !!p.mind.by)"))
 

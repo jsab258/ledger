@@ -1,0 +1,1 @@
+{ "root": true, "env": { "browser": true, "es2022": true }, "parserOptions": { "sourceType": "module", "ecmaVersion": 2022 }, "rules": { "no-undef": "error", "no-unused-vars": ["warn", { "args": "none" }] } }

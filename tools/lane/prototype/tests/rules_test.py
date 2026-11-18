@@ -1,31 +1,40 @@
 """Rule checks: catch a Fable round that changes one of the prototype's rule numbers.
 
 The rules come from production/lane/PROTOTYPE-RULES-READ-2026-11-18.md (read by hand from the
-bundle, 18 Nov 2026, bundle version 1794862482-9f9b). Rule ids below are that file's section and
-row, counted from the top of each table (1.01 is the first row of "Seeing and witnessing").
+minified bundle, 18 Nov 2026, bundle version 1794862482-9f9b). Rule ids below are that file's
+section and row, counted from the top of each table (1.01 is the first row of "Seeing and
+witnessing"). Since Fable's round of 18 Nov the checks read his readable source
+(tools/lane/prototype/project/, page version in PUBLISHED.json), not the bundle.
 
 Two layers:
 
-1. Static (no browser, no pictures): for each clearly read rule, the piece of the built bundle
-   that holds its number must still be there, as often as it was when read. When a rule's number
-   moves, the failing row names the rule. Most rows search by the bundler's shortened names
-   (single letters like x, ue, Ve); those rows carry the bundle_names mark. When Fable's readable
-   source replaces the bundle, this table is to be re-pointed at the readable files (same rule
-   ids, new search strings); until then a rebuild with new short names fails these rows even
-   when no rule changed, and that is the signal to re-point, not a rule change.
-   Rows marked inferred: the number was read, but its unit or purpose was worked out from context.
+1. Static (no browser, no pictures; needs node for the rules table): each clearly read rule is
+   checked in one of two ways.
+   - kind "rules": the number is in Fable's rules table, project/src/rules.js (the game reads its
+     numbers from there; the page shows the same table as window.LEDGER.rules). The module is
+     evaluated with node and the named entry must hold the read value.
+   - kind "outside_rules": the number (or the plain behaviour) is not in the rules table, so the
+     row searches the named readable source file for a string, as often as it was found when
+     re-pointed (18 Nov). A row with one number in the table and another outside counts as
+     outside_rules. These rows survive a renaming of the table but not a reformat of the file.
+   " inferred" is added where the reading file marks the number's meaning as inferred.
 
 2. Live (headless Chromium, through the game's test hook window.LEDGER): a handful of rules
-   checked by what the game does, not by its text: the hour length, the week's start, starting
-   money, Mickey's book, Ron's schedule, people's traits, who never makes a statement, the save
-   version, heat fading, and the arrest's hold and bill. Needs the pictures in the folder named
-   by LEDGER_PROTO_ASSETS, as the smoke test; skipped otherwise, never passed. Also skipped when
-   Playwright's Chromium cannot start.
+   checked by what the game does, not by its text, plus LEDGER.rules in the page against
+   rules.js. Needs the pictures in the folder named by LEDGER_PROTO_ASSETS, as the smoke test;
+   skipped otherwise, never passed. Also skipped when Playwright's Chromium cannot start.
+
+Changed by Fable's 18 Nov round (the earlier readings were right for the bundle they were read
+from; the rows now hold the new numbers and say so):
+  4.13b rent late: was Saturday 00:00 (day 5), now Friday 18:00 ("Friday, by six").
+  8.05  what is saved: the measures were added to the save.
+  8.06  restore through the hook: it now rebuilds the people around their memories, as Continue.
+  act table: 52 kinds, was 51 (a new private kind, "word", for a thing Tom is told).
 
 Run with pytest (python -m pytest tests/rules_test.py). Rule reads found wrong are kept as strict
-expected failures, so a later fix to the reading file or the game shows up.
+expected failures, so a later fix to the reading file or the game shows up (none at present).
 """
-import functools, http.server, math, os, re, sys, tempfile, threading, time
+import functools, http.server, json, math, os, re, shutil, subprocess, sys, tempfile, threading, time
 
 import pytest
 
@@ -33,183 +42,334 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import build  # noqa: E402
 
+PROJECT = os.path.join(os.path.dirname(HERE), "project")
+SRC = os.path.join(PROJECT, "src")
 ASSETS = os.environ.get("LEDGER_PROTO_ASSETS")
 GL = ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
 HOUR = 45  # LEDGER.step real seconds per game hour (rule 6.01)
 
-S = "short"   # the search uses the bundler's shortened names
-P = "plain"   # the search is plain data or text (survives a renaming, maybe not a reformat)
+RT = "rules"           # the number is in project/src/rules.js
+OUT = "outside_rules"  # the number is searched for in a readable source file
 
-# (rule id, plain name with its number, search string in the minified bundle, times found, kind)
-# kind is S or P, with " inferred" added where the rule file marks the meaning as inferred.
+
+def R(path, value):
+    """The rules table entry at path (section.name) holds value."""
+    return ("rule", path, value)
+
+
+def F(file, search, count=1):
+    """The readable source file (under project/src) holds search, count times."""
+    return ("src", file, search, count)
+
+
+def U(file, search, count=1):
+    """The source file reads the rules-table entry as read (no number of its own): keeps a row "rules"."""
+    return ("use", file, search, count)
+
+
+def sched(rows):
+    """A cast.js schedule as Prettier writes it (six spaces before each row)."""
+    def item(v):
+        return "'%s'" % v if isinstance(v, str) else repr(v)
+    body = "".join("      [%s],\n" % ", ".join(item(v) for v in row) for row in rows)
+    return "    sched: [\n" + body + "    ],"
+
+
+def traits(nerve, venal, talk, discretion):
+    return "    nerve: %r,\n    venal: %r,\n    talk: %r,\n    discretion: %r," % (nerve, venal, talk, discretion)
+
+
+def kind_row(name, sev, val, crime):
+    return "  %s: K(\n    %r,\n    %r,\n    %r," % (name, sev, val, crime)
+
+
+RON_SCHED = [[0, "home", "sleep"], [6.6, "caff:s1", "sit"], [8.1, "rank", "idle"], [12.3, "fish:q1", "queue"],
+             [12.8, "rank", "idle"], [17.4, "tangs:q1", "queue"], [17.9, "rank", "smoke"], [23.6, "home", "sleep"]]
+SHEILA_SCHED = [[0, "off"], [7.5, "mickeys:sheila", "work"], [12.5, "caff:s7", "sit"],
+                [13.1, "mickeys:sheila", "work"], [18.2, "off"]]
+GRACE_SCHED = [[0, "home", "sleep"], [6, "caff:grace", "work"], [17.2, "home", "idle"], [22.5, "home", "sleep"]]
+
+# (rule id, plain name with its number, checks, kind)
 RULES = [
     # 1. Seeing and witnessing
     ("1.01", "sight range 4 + 44 x light^1.2, x(1 - 0.3 rain), x(1 - 0.22 mist at night)",
-     "(4+44*Math.pow(ue(i,0,1),1.2))*(1-.3*x.weather.rain)*(1-.22*x.weather.mist*qn())", 1, S),
-    ("1.02", "cab headlights: seen from at least 34 m", "e.lights&&(o=Math.max(o,34))", 1, S),
-    ("1.03", "indoors: seen from at least 14 m", "o=Math.max(o,14)", 1, S),
-    ("1.04", "field of view on the street 1.08 rad each side", "fov:1.08", 1, P),
-    ("1.05", "field of view from a home window 1.35 rad each side", "fov:1.35", 1, P),
-    ("1.06", "under 3 m seen unless well behind (1.9 rad)", "n<3&&l<1.9", 1, S),
-    ("1.07", "line of sight checked against walls", "x.env.los(t.x,t.z,e.x,e.z)", 1, S),
-    ("1.08", "clarity = 1 - distance / range, 0.05 to 1", "a=ue(1-n/o,.05,1)", 1, S),
+     [R("seeing.rangeInBlackMetres", 4), R("seeing.rangeAddedByFullLightMetres", 44),
+      R("seeing.lightCurvePower", 1.2), R("seeing.rainCutsRangeByShare", 0.3),
+      R("seeing.mistAtNightCutsRangeByShare", 0.22)], RT),
+    ("1.02", "cab headlights: seen from at least 34 m", [R("seeing.headlampsSeenFromMetres", 34)], RT),
+    ("1.03", "indoors: seen from at least 14 m", [R("seeing.indoorsSeenFromMetres", 14)], RT),
+    ("1.04", "field of view on the street 1.08 rad each side", [R("seeing.viewHalfAngleRadians", 1.08)], RT),
+    ("1.05", "field of view from a home window 1.35 rad each side",
+     [R("seeing.windowViewHalfAngleRadians", 1.35)], RT),
+    ("1.06", "under 3 m seen unless well behind (1.9 rad)",
+     [R("seeing.closeByMetres", 3), R("seeing.closeByViewHalfAngleRadians", 1.9)], RT),
+    ("1.07", "line of sight checked against walls",
+     [F("seeing.js", "G.env.los(e.x, e.z, T.x, T.z)")], OUT),
+    ("1.08", "clarity = 1 - distance / range, 0.05 to 1",
+     [R("seeing.leastClarity", 0.05), U("seeing.js", "c = clamp(1 - d / range, SEE.leastClarity, 1);")], RT),
     ("1.09", "noise radius: cab 8 to 30, still 0.5, running 12, walking 5",
-     "i.inCar?8+22*Math.min(1,Math.abs(x.car.v)/12):i.v<.2?.5:i.run?12:5", 1, S),
+     [R("noise.cabIdlingMetres", 8), R("noise.cabAddedAtSpeedMetres", 22),
+      R("noise.cabFullNoiseAtMetresPerSecond", 12), R("noise.stillBelowMetresPerSecond", 0.2),
+      R("noise.standingMetres", 0.5), R("noise.runningMetres", 12), R("noise.walkingMetres", 5)], RT),
     ("1.10", "noise by hour: x0.5 10-16, x2 before 5, x1.5 5-7, x1.3 after 22, else x0.8",
-     "i>=10&&i<16?.5:i<5?2:i<7?1.5:i>=22?1.3:.8", 1, S),
-    ("1.11", "rain muffles noise x(1 - 0.6 rain)", "em()*(1-.6*x.weather.rain)", 1, S),
-    ("1.12", "a sleeper hears at 70 percent of the radius", "hear:c<=e.noiseR*.7", 1, S),
+     [R("noise.noonTimes", 0.5), R("noise.noonFromHour", 10), R("noise.noonUntilHour", 16),
+      R("noise.deadOfNightTimes", 2), R("noise.deadOfNightUntilHour", 5), R("noise.earlyTimes", 1.5),
+      R("noise.earlyUntilHour", 7), R("noise.lateEveningTimes", 1.3), R("noise.lateEveningFromHour", 22),
+      R("noise.otherwiseTimes", 0.8)], RT),
+    ("1.11", "rain muffles noise x(1 - 0.6 rain)", [R("noise.rainCutsByShare", 0.6)], RT),
+    ("1.12", "a sleeper hears at 70 percent of the radius",
+     [R("noise.throughAWindowTimes", 0.7),
+      U("seeing.js", "hear: d <= T.noiseR * NOISE.throughAWindowTimes, c: 0, d, asleep: true")], RT),
     ("1.13", "attention rises 0.45 + 1.4 x clarity a second, x1.5 during an act",
-     "attn+=i*(.45+1.4*a.c)*(t?1.5:1)", 1, S),
-    ("1.14", "night out counts from 23:30 to 05:00", "i>=23.5||i<5", 1, S),
-    ("1.14b", "the cab at night is its own kind of being seen", '"cab_night":"cab_drive"', 1, P),
-    ("1.15", "one sighting event per kind per two-hour block", "Math.floor(Ve()/2)", 1, S),
-    ("1.16", "a heard memory at most every 90 game minutes", "r.heardT||x.t-r.heardT>90", 1, S),
-    ("1.17", "loud acts reach hearers as a man at 0.3 sure", 'src:"heard",who:"man",sure:.3', 1, P),
+     [R("seeing.attentionPerRealSecond", 0.45), R("seeing.attentionPerRealSecondPerClarity", 1.4),
+      R("seeing.attentionFasterWhenRemarkableTimes", 1.5)], RT),
+    ("1.14", "night out counts from 23:30 to 05:00",
+     [R("time.smallHoursFromHour", 23.5), R("time.smallHoursUntilHour", 5)], RT),
+    ("1.14b", "the cab at night is its own kind of being seen",
+     [F("seeing.js", "return smallHours(h) || t.carry === 'bag' ? 'cab_night' : 'cab_drive';")], OUT),
+    ("1.15", "one sighting event per kind per two-hour block", [R("seeing.sameSightingLastsGameHours", 2)], RT),
+    ("1.16", "a heard memory at most every 90 game minutes",
+     [R("noise.sameNoiseRemarkedEveryGameMinutes", 90)], RT),
+    # The bundle string held the loud-act road (events.js, memory.heardSure 0.3). The small-hours noise
+    # road in seeing.js has its own entry, noise.heardSure 0.25, not part of this rule.
+    ("1.17", "loud acts reach hearers as a man at 0.3 sure",
+     [R("memory.heardSure", 0.3),
+      U("events.js", "remember(P, E, { src: 'heard', who: 'man', sure: MEM.heardSure, heat: MEM.heardHeat });")], RT),
     ("1.18", "sureness 0.35 + 0.65 x clarity, x0.85 unless named",
-     'ue(.35+.65*t.c,0,1)*(r==="tom"?1:.85)', 1, S),
-    ("1.19", "a memory's starting heat is severity + 0.3", "ue(a.sev+.3,0,1)", 1, S),
-    ("1.20", "named as Tom above face score 0.36", 's>.36&&o?"tom"', 1, S),
-    ("1.20b", "the coat at night cuts the face score x0.4", "n.coat&&qn()>.5&&(s*=.4)", 1, S),
-    ("1.21", "act table: inherit severity 0.5", "inherit:xt(.5,0,0", 1, S),
-    ("1.21b", "act table: arrive severity 0.3", "arrive:xt(.3,0,0", 1, S),
-    ("1.21c", "act table: kill severity 1, crime 3", "kill:xt(1,-1,3", 1, S),
-    ("1.22", "a non-act glance raises familiarity once every 20 game minutes", "seenCool=x.t+20", 1, S),
-    ("1.23", "timid people (nerve under 0.62) step back", "nerve==null?.5:i.def.nerve)<.62", 1, S),
+     [R("seeing.sureBase", 0.35), R("seeing.surePerClarity", 0.65), R("seeing.sureIfNotNamedTimes", 0.85)], RT),
+    ("1.19", "a memory's starting heat is severity + 0.3",
+     [R("seeing.heatAddedToSeverity", 0.3), R("memory.heatAddedToSeverity", 0.3)], RT),
+    ("1.20", "named as Tom above face score 0.36", [R("seeing.namesHimAboveFace", 0.36)], RT),
+    ("1.20b", "the coat at night cuts the face score x0.4",
+     [R("seeing.coatAtNightFaceTimes", 0.4), R("seeing.coatHidesWhenNightAbove", 0.5)], RT),
+    ("1.21", "act table: inherit severity 0.5", [F("kinds.js", kind_row("inherit", 0.5, 0, 0))], OUT),
+    ("1.21b", "act table: arrive severity 0.3", [F("kinds.js", kind_row("arrive", 0.3, 0, 0))], OUT),
+    ("1.21c", "act table: kill severity 1, crime 3", [F("kinds.js", kind_row("kill", 1, -1, 3))], OUT),
+    ("1.22", "a non-act glance raises familiarity once every 20 game minutes",
+     [R("seeing.plainSightingEveryGameMinutes", 20)], RT),
+    # The default nerve 0.5 (a person with none set) is still written in seeing.js.
+    ("1.23", "timid people (nerve under 0.62) step back",
+     [R("watching.stepBackIfNerveBelow", 0.62),
+      F("seeing.js", "(P.def.nerve == null ? 0.5 : P.def.nerve) < WATCH.stepBackIfNerveBelow")], OUT),
     ("1.24", "night: day 07:45 to 17:15, full night 18:45 to 06:15",
-     "i>=7.75&&i<17.25?0:i>=18.75||i<6.25?1", 1, S),
+     [R("time.dayFullHour", 7.75), R("time.duskStartsHour", 17.25), R("time.nightFullHour", 18.75),
+      R("time.dawnStartsHour", 6.25)], RT),
     # 2. Gossip and rumour
-    ("2.01", "a gossip round every 4 game minutes", "Va.g>=4&&(Va.g=0,V2())", 1, S),
-    ("2.02", "talking distance 4.8 m street, 8 m indoors", '>(t.space==="street"?4.8:8)', 1, S),
+    ("2.01", "a gossip round every 4 game minutes", [R("ticking.gossipEveryGameMinutes", 4)], RT),
+    ("2.02", "talking distance 4.8 m street, 8 m indoors",
+     [R("gossip.withinMetresOnStreet", 4.8), R("gossip.withinMetresIndoors", 8)], RT),
     ("2.03", "closeness weight 0.42, +0.38 close friends, x(0.4 + talk) x(0.6 + 0.4 talk)",
-     "t+=.38),t*(.4+(i.def.talk??.6))*(.6+.4*(e.def.talk??.6))", 1, S),
-    ("2.04", "heat under 0.12 is not passed on", "s.heat<.12||e.mind.by[s.e]", 1, S),
-    ("2.05", "a discreet person holds back by their discretion", "Sn(i.def.discretion", 1, S),
+     [R("gossip.affinityBase", 0.42), R("gossip.closeFriendsAdded", 0.38), R("gossip.tellerTalkBase", 0.4),
+      R("gossip.talkativeIfNotSet", 0.6), R("gossip.listenerTalkBase", 0.6),
+      R("gossip.listenerTalkShare", 0.4)], RT),
+    ("2.04", "heat under 0.12 is not passed on", [R("gossip.notWorthTellingBelowHeat", 0.12)], RT),
+    ("2.05", "a discreet person holds back by their discretion",
+     [F("gossip.js", "chance(A.def.discretion ?? GOS.discretionIfNotSet)")], OUT),
     ("2.06", "each telling: sure x0.8, heat x0.92, hop +1; teller heat +0.12",
-     "sure:t.sure*.8,heat:t.heat*.92,hop:t.hop+1}),t.heat=Math.min(1,t.heat+.12)", 1, S),
-    ("2.08", "passers-by pass on stories over heat 0.2 at 35 percent", "s.heat>.2);if(n&&Sn(.35))", 1, S),
-    ("2.09", "heat fades x e^(-minutes/1700)", "Math.exp(-i/1700)", 1, S),
-    ("2.09b", "heat fades every 10 game minutes", "Va.d>=10&&(Y2(Va.d),Va.d=0)", 1, S),
-    ("2.09c", "a forever act (a killing) keeps heat 0.6", "forever?.6:0", 1, S),
-    ("2.10", "certainty does not fade, only heat", "n.heat=Math.max(s,n.heat*e)", 1, S),
-    ("2.11", "Tuesday push at 08:45 on day 1", "i===1&&e>=8.75", 1, S),
-    ("2.12", "seeing two tell a story within 18 m makes a note", "x.tom.z)<18", 1, S),
+     [R("gossip.toldSureTimes", 0.8), R("gossip.toldHeatTimes", 0.92), R("gossip.tellerHeatAdded", 0.12),
+      F("gossip.js", "hop: m.hop + 1,")], OUT),
+    ("2.08", "passers-by pass on stories over heat 0.2 at 35 percent",
+     [R("gossip.passerByTellsAboveHeat", 0.2), R("gossip.passerByChance", 0.35)], RT),
+    ("2.09", "heat fades x e^(-minutes/1700)", [R("gossip.heatFadeGameMinutes", 1700)], RT),
+    ("2.09b", "heat fades every 10 game minutes", [R("ticking.memoriesFadeEveryGameMinutes", 10)], RT),
+    ("2.09c", "a forever act (a killing) keeps heat 0.6", [R("gossip.neverForgottenHeat", 0.6)], RT),
+    ("2.10", "certainty does not fade, only heat",
+     [F("gossip.js", "m.heat = Math.max(fl, m.heat * f);")], OUT),
+    ("2.11", "Tuesday push at 08:45 on day 1",
+     [F("scenes.js", "if (d === 1 && h >= 8.75 && !f.nudge) {")], OUT),
+    ("2.12", "seeing two tell a story within 18 m makes a note", [R("gossip.tomCatchesThemWithinMetres", 18)], RT),
     ("2.13", "knowing score 0.25 + 0.09 per kind (up to 6) + 0.4 familiarity",
-     "return(e.inh?.25:0)+Math.min(t.size,6)*.09+e.fam*.4", 1, S),
-    ("2.13b", "names at 0.2, 0.5, 0.8, 1.05", "e>=1.05?4:e>=.8?3:e>=.5?2:e>=.2?1:0", 1, S),
-    ("2.14", "the street's name: reached by 40 percent of locals", "length>=i.length*.4", 1, S),
-    ("2.15", "a story said to his face at most every 40 game minutes", "coolSay=x.t+40", 1, S),
+     [R("naming.knowsOfInheritance", 0.25), R("naming.perKindOfActKnown", 0.09),
+      R("naming.kindsCountedAtMost", 6), R("naming.perFamiliarity", 0.4)], RT),
+    ("2.13b", "names at 0.2, 0.5, 0.8, 1.05",
+     [R("naming.levelOneFromScore", 0.2), R("naming.levelTwoFromScore", 0.5),
+      R("naming.levelThreeFromScore", 0.8), R("naming.levelFourFromScore", 1.05)], RT),
+    ("2.14", "the street's name: reached by 40 percent of locals", [R("naming.townLevelNeedsShareOfLocals", 0.4)], RT),
+    ("2.15", "a story said to his face at most every 40 game minutes",
+     [R("gossip.nextRemarkAfterGameMinutes", 40)], RT),
     # 3. The Ledger
-    ("3.01", "every act goes on his own list", "x.ledger.acts.find(e=>e.e===i.id)||x.ledger.acts.push", 1, S),
-    ("3.02", "belief ranks: talking 0, window 1, saw 2", "talking:0,window:1,saw:2", 1, P),
+    ("3.01", "every act goes on his own list",
+     [F("ledger.js", "if (!G.ledger.acts.find((a) => a.e === E.id)) G.ledger.acts.push(")], OUT),
+    ("3.02", "belief ranks: talking 0, window 1, saw 2",
+     [F("events.js", "export const BR = { talking: 0, window: 1, saw: 2,")], OUT),
     ("3.03", "saw only when noticed: 34 m, 0.9 rad beyond 2.5 m, window 9 m, lit 0.2 beyond 7 m",
-     "o>34||o>2.5&&Math.abs(_n(x.env.camYaw(),Math.atan2(t.x-n,t.z-s)))>.9||t.win&&!i.winLit&&o>9"
-     "||o>7&&x.env.lightAt(t.x,t.z,t.space)<.2", 1, S),
-    ("3.04", "there: done in front of them", 'Os(e,i,"there")', 1, S),
-    ("3.05", "asked: he asked and was told", 'Os(a,i,"asked"', 1, S),
-    ("3.06", "two heads together in the caff make a note", "had their heads together at Rinaldi's", 1, P),
-    ("3.07", "first note shows the Ledger hint", "L opens the Ledger", 1, P),
+     [R("noticing.furthestMetres", 34), R("noticing.facingHalfAngleRadians", 0.9),
+      R("noticing.mustFaceBeyondMetres", 2.5), R("noticing.darkWindowHidesBeyondMetres", 9),
+      R("noticing.darkBelowLight", 0.2), R("noticing.darkFigureHidesBeyondMetres", 7)], RT),
+    ("3.04", "there: done in front of them", [F("events.js", "ledgerSeen(E, P, 'there')")], OUT),
+    ("3.05", "asked: he asked and was told", [F("talk.js", "ledgerSeen(E, P, 'asked'")], OUT),
+    ("3.06", "two heads together in the caff make a note",
+     [F("scenes.js", "had their heads together at Rinaldi's")], OUT),
+    ("3.07", "first note shows the Ledger hint", [F("main.js", "L opens the Ledger")], OUT),
     # 4. Money and debts
-    ("4.01", "Tom starts with 23.50 clean", "clean:2350", 1, P),
+    ("4.01", "Tom starts with 23.50 clean", [R("money.startsWithPocketPence", 2350)], RT),
     ("4.02", "Mickey's book: Dennis 80, Lee 15, Darren 22, Julie 9, Wayne 30",
-     'debts:{dennis:{owed:8e3,st:"open"},lee:{owed:1500,st:"open"},darren:{owed:2200,st:"open"},'
-     'julie:{owed:900,st:"open"},wayne:{owed:3e3,st:"open"}}', 1, P),
+     [R("prices.owedByIvesonPence", 8000), R("prices.owedByLeePence", 1500), R("prices.owedByDarrenPence", 2200),
+      R("prices.owedByJuliePence", 900), R("prices.owedByWaynePence", 3000),
+      U("state.js", "dennis: { owed: RULES.prices.owedByIvesonPence, st: 'open' },")], RT),
     ("4.03", "a debtor pays if fear over 0.45, or liking over 0.3 and owing 15 or less",
-     "i.mind.fear>.45||i.mind.regard>.3&&o.owed<=1500", 1, S),
-    ("4.04", "a collected debt goes in the tin", "oh(n,!0)", 1, S),
-    ("4.05", "striking a debt out: liking +0.5", "regard+.5", 1, P),
-    ("4.06", "Julie's slate: nine pounds", "Nine pounds, since the summer", 2, P),
-    ("4.07", "fare 80p plus 0.9p a metre, rounded to 10p", "(80+We(t.sx,t.sz,n.p[0],n.p[1])*.9)/10)*10", 1, S),
-    ("4.08", "radio fares 07:00 to 23:12", "Ve()>=7&&Ve()<23.2", 1, S + " inferred"),
-    ("4.08b", "a new fare offer every 16 to 34 seconds", "fareCool=_t(16,34)", 1, S + " inferred"),
-    ("4.08c", "an offer lasts 26 seconds", "t.t=26", 1, S + " inferred"),
-    ("4.08d", "after a missed offer, 20 to 40 seconds", "e.fareCool=_t(20,40)", 1, S + " inferred"),
-    ("4.08e", "after a paid fare, 14 to 30 seconds", "n.fareCool=_t(14,30)", 1, S + " inferred"),
+     [F("scenes.js", "if (P.mind.fear > 0.45 || (P.mind.regard > 0.3 && d.owed <= 1500)) {")], OUT),
+    ("4.04", "a collected debt goes in the tin", [F("scenes.js", "earn(amt, true);")], OUT),
+    ("4.05", "striking a debt out: liking +0.5",
+     [F("scenes.js", "P.mind.regard = clamp(P.mind.regard + 0.5, -1, 1);")], OUT),
+    ("4.06", "Julie's slate: nine pounds", [F("fares.js", "Nine pounds, since the summer", 2)], OUT),
+    ("4.07", "fare 80p plus 0.9p a metre, rounded to 10p",
+     [R("fares.flagFallPence", 80), R("fares.penceAddedPerMetre", 0.9), R("fares.roundedToPence", 10)], RT),
+    ("4.08", "radio fares 07:00 to 23:12",
+     [R("fares.radioFromHour", 7), R("fares.radioUntilHour", 23.2)], RT + " inferred"),
+    ("4.08b", "a new fare offer every 16 to 34 seconds",
+     [R("fares.nextOfferAfterRealSecondsAtLeast", 16), R("fares.nextOfferAfterRealSecondsAtMost", 34)],
+     RT + " inferred"),
+    ("4.08c", "an offer lasts 26 seconds", [R("fares.offerStandsRealSeconds", 26)], RT + " inferred"),
+    ("4.08d", "after a missed offer, 20 to 40 seconds",
+     [R("fares.afterAMissedOfferRealSecondsAtLeast", 20), R("fares.afterAMissedOfferRealSecondsAtMost", 40)],
+     RT + " inferred"),
+    ("4.08e", "after a paid fare, 14 to 30 seconds",
+     [R("fares.afterAFareRealSecondsAtLeast", 14), R("fares.afterAFareRealSecondsAtMost", 30)], RT + " inferred"),
     ("4.10", "the book hides 10.00 + 80 percent of fares since the wash",
-     "1e3+Math.round(x.money.sinceWash*.8)", 1, S),
-    ("4.11", "job 1 pays sixty", "Sixty. Count it somewhere else.", 1, P),
-    ("4.11b", "job 1 (the Monday bag) pay 60.00", "toZ:\"Metcalfe's back door\",pay:6e3", 1, P),
-    ("4.12", "a job not done by 03:30 to 12:00 next day is a no-show", "Ve()>=3.5&&Ve()<12", 1, S),
-    ("4.13", "rent 18.00", "sr(1800,!0)", 1, S),
-    ("4.13b", "rent late from Saturday (day 5)", "i>=5&&!t.rent", 1, S),
-    ("4.14", "Ron's door and Darren's good word: 5.00", "sr(500)", 2, S),
-    ("4.14b", "Darren's hearsay: 3.00", "sr(300)", 1, S),
-    ("4.15", "tea and paper: 20p", "sr(20,!0)", 2, S),
-    ("4.15b", "tea passes 25 game minutes", "or(x.t+25,!1)", 1, S),
-    ("4.15c", "tea: caff people familiarity +0.06", "t.mind.fam=ue(t.mind.fam+.06,0,1)", 1, S),
-    ("4.16", "the paper", "tf(x.story.flags.dead", 1, S),
-    ("4.17", "spending takes dirty money first", "function sr(", 1, S),
-    ("4.18", "beaten down: pays up to 8.00 from clean", "Math.min(t.clean,800)", 1, S),
+     [R("money.washedSafelyPence", 1000), R("money.washedSafelyShareOfFares", 0.8)], RT),
+    ("4.11", "job 1 pays sixty", [F("jobs.js", "Sixty. Count it somewhere else.")], OUT),
+    ("4.11b", "job 1 (the Monday bag) pay 60.00",
+     [R("jobs.mondayBagPayPence", 6000), U("jobs.js", "pay: JOB.mondayBagPayPence,")], RT),
+    ("4.12", "a job not done by 03:30 to 12:00 next day is a no-show",
+     [R("jobs.missedFromHourNextDay", 3.5), R("jobs.missedUntilHourNextDay", 12)], RT),
+    ("4.13", "rent 18.00", [R("money.rentPence", 1800)], RT),
+    # Changed in Fable's 18 Nov round (CHANGELOG 2e): the bundle read was right (late from Saturday
+    # 00:00, day 5); the rent is now late from Friday 18:00, as Mrs Rennison's line says.
+    ("4.13b", "rent late from Friday 18:00 (was Saturday 00:00 until 18 Nov)",
+     [R("money.rentDueDayIndex", 4), R("money.rentLateFromHour", 18)], RT),
+    ("4.14", "Ron's door and Darren's good word: 5.00",
+     [R("prices.ronWatchesTheDoorPence", 500), R("prices.darrenPutsAGoodWordAboutPence", 500)], RT),
+    ("4.14b", "Darren's hearsay: 3.00", [R("prices.darrenSaysWhatHeHeardPence", 300)], RT),
+    ("4.15", "tea and paper: 20p", [R("rest.teaAtTheCaffPence", 20), R("prices.eveningPaperPence", 20)], RT),
+    ("4.15b", "tea passes 25 game minutes", [R("rest.teaAtTheCaffGameMinutes", 25)], RT),
+    ("4.15c", "tea: caff people familiarity +0.06", [R("rest.caffFamiliarityGain", 0.06)], RT),
+    ("4.16", "the paper",
+     [F("scenes.js", "G.story.flags.dead ? 'MAN FOUND DEAD ON THE HOOK' : G.story.lastNews")], OUT),
+    ("4.17", "spending takes dirty money first", [F("money.js", "const d = Math.min(m.dirty, pence);")], OUT),
+    # The readable source names this 8.00 the plasters after the beating (beaten.plastersPence).
+    ("4.18", "beaten down: pays up to 8.00 from clean",
+     [R("beaten.plastersPence", 800), U("work.js", "Math.min(m.clean, BEAT.plastersPence)")], RT),
     # 5. Suspicion and police
-    ("5.01", "statements taken at 04:00 from Tuesday", "e>=4&&i>=1&&Yx(i-1)", 1, S),
-    ("5.02", "a statement needs sure at least 0.55", "a.sure<.55", 1, S),
-    ("5.03", "ten people never make a statement", "nostmt:1", 10, P),
-    ("5.04", "violence (crime 2+) sends Ellis", "violent:n&&Wt[n.kind].crime>=2", 1, S),
-    ("5.05", "the police come at 09:00", "(i+1)*1440+540", 1, S),
+    ("5.01", "statements taken at 04:00 from Tuesday",
+     [F("scenes.js", "if (h >= 4 && d >= 1) nightly(d - 1);")], OUT),
+    ("5.02", "a statement needs sure at least 0.55", [R("police.statementNeedsSureAtLeast", 0.55)], RT),
+    ("5.03", "ten people never make a statement", [F("cast.js", "    nostmt: 1,\n", 10)], OUT),
+    ("5.04", "violence (crime 2+) sends Ellis", [R("police.violentFromCrimeLevel", 2)], RT),
+    ("5.05", "the police come at 09:00", [R("police.comesNextDayAtHour", 9)], RT),
     ("5.06", "held 4 hours (5 violent), +2 if he ran; bill 25.00 (40.00 if he ran)",
-     "(e.violent?5:4)+(t?2:0),a=t?4e3:2500", 1, S),
-    ("5.07", "they give up after 7 s out of sight, 70 m or 60 s", "t.lost>7||r>70||t.ct>60", 1, S + " inferred"),
+     [R("police.heldGameHours", 4), R("police.heldGameHoursIfViolent", 5),
+      R("police.heldGameHoursAddedIfHeRan", 2), R("police.briefBillPence", 2500),
+      R("police.briefBillPenceIfHeRan", 4000)], RT),
+    ("5.07", "they give up after 7 s out of sight, 70 m or 60 s",
+     [R("police.losesHimAfterRealSecondsUnseen", 7), R("police.losesHimBeyondMetres", 70),
+      R("police.chaseLastsAtMostRealSeconds", 60)], RT + " inferred"),
     ("5.08", "loudness: heat x severity x badness, x0.6 if not by name",
-     'n.val<0&&(i+=t.heat*n.sev*-n.val*(t.who==="tom"?1:.6))', 1, S),
-    ("5.09", "Ellis walks Thursday or Friday, 10:00 to 13:00", "e<3||e>4||i.ellisDays[e]||t<10||t>13", 1, S),
-    ("5.09b", "Ellis walks at loudness 2.2", "n<2.2&&", 1, S),
-    ("5.09c", "Ellis asks up to 5 locals", ".slice(0,5).map(r=>r.id)", 1, S),
-    ("5.10", "Cammack's lads at loudness over 1.2", "Ba()>1.2", 1, S),
-    ("5.11", "fear +0.07 told, +0.18 seen", 'e.src==="told"?.07:.18', 1, S),
-    ("5.12", "liking moves x0.15 told, x0.26 seen", 'e.src==="told"?.15:.26', 1, S),
+     [R("naming.notNamedLoudnessTimes", 0.6)], RT),
+    ("5.09", "Ellis walks Thursday or Friday, 10:00 to 13:00",
+     [R("police.ellisFirstDayIndex", 3), R("police.ellisLastDayIndex", 4), R("police.ellisFromHour", 10),
+      R("police.ellisUntilHour", 13)], RT),
+    ("5.09b", "Ellis walks at loudness 2.2", [R("police.ellisComesAtLoudness", 2.2)], RT),
+    ("5.09c", "Ellis asks up to 5 locals", [R("police.ellisAsksPeopleAtMost", 5)], RT),
+    ("5.10", "Cammack's lads at loudness over 1.2", [F("scenes.js", "loudness() > 1.2")], OUT),
+    ("5.11", "fear +0.07 told, +0.18 seen",
+     [R("memory.fearFromSeriousCrimeTold", 0.07), R("memory.fearFromSeriousCrimeSeen", 0.18)], RT),
+    ("5.12", "liking moves x0.15 told, x0.26 seen",
+     [R("memory.regardPerToldAct", 0.15), R("memory.regardPerSeenAct", 0.26)], RT),
     # 6. Time of day and routines
-    ("6.01", "one game hour is 45 real seconds", "let e=i*60/45", 1, S),
-    ("6.02", "a new week starts Monday 15:36 (save version 4)", "v:4,t:936", 1, P),
-    ("6.05", "the weather list", '["mist","drizzle","drizzle","rain","dry","heavy"]', 1, P),
+    ("6.01", "one game hour is 45 real seconds", [R("time.realSecondsPerGameHour", 45)], RT),
+    ("6.02", "a new week starts Monday 15:36 (save version 4)",
+     [R("time.weekStartsGameMinute", 936), F("state.js", "export const VERSION = 4;")], OUT),
+    ("6.05", "the weather list", [F("clock.js", "['mist', 'drizzle', 'drizzle', 'rain', 'dry', 'heavy']")], OUT),
     ("6.06", "Ron: home 00:00, caff 06:36, rank 08:06, fish 12:18, rank 12:48, Tang's 17:24, rank 17:54, home 23:36",
-     'sched:[[0,"home","sleep"],[6.6,"caff:s1","sit"],[8.1,"rank","idle"],[12.3,"fish:q1","queue"],'
-     '[12.8,"rank","idle"],[17.4,"tangs:q1","queue"],[17.9,"rank","smoke"],[23.6,"home","sleep"]]', 1, P),
-    ("6.07", "Sheila: office 07:30 to 18:12, caff 12:30",
-     'sched:[[0,"off"],[7.5,"mickeys:sheila","work"],[12.5,"caff:s7","sit"],[13.1,"mickeys:sheila","work"],[18.2,"off"]]', 1, P),
-    ("6.07b", "Grace: caff 06:00 to 17:12",
-     'sched:[[0,"home","sleep"],[6,"caff:grace","work"],[17.2,"home","idle"],[22.5,"home","sleep"]]', 1, P),
-    ("6.08", "Sheila: nerve 0.95, talk 0.15, discretion 0.92", "nerve:.95,venal:0,talk:.15,discretion:.92", 1, P),
-    ("6.08b", "Darren: nerve 0.3, talk 0.95, discretion 0.05", "nerve:.3,venal:.95,talk:.95,discretion:.05", 1, P),
-    ("6.08c", "Ron: nerve 0.85, talk 0.7, discretion 0.35", "nerve:.85,venal:.8,talk:.7,discretion:.35", 1, P),
+     [F("cast.js", sched(RON_SCHED))], OUT),
+    ("6.07", "Sheila: office 07:30 to 18:12, caff 12:30", [F("cast.js", sched(SHEILA_SCHED))], OUT),
+    ("6.07b", "Grace: caff 06:00 to 17:12", [F("cast.js", sched(GRACE_SCHED))], OUT),
+    ("6.08", "Sheila: nerve 0.95, talk 0.15, discretion 0.92", [F("cast.js", traits(0.95, 0, 0.15, 0.92))], OUT),
+    ("6.08b", "Darren: nerve 0.3, talk 0.95, discretion 0.05", [F("cast.js", traits(0.3, 0.95, 0.95, 0.05))], OUT),
+    ("6.08c", "Ron: nerve 0.85, talk 0.7, discretion 0.35", [F("cast.js", traits(0.85, 0.8, 0.7, 0.35))], OUT),
     # 7. Talk
-    ("7.01", "Tab opens the suggested lines", 'i==="Tab"?(V.open', 1, S),
-    ("7.02", "at most three suggested lines", "e.length<3&&t.keep", 1, S),
+    ("7.01", "Tab opens the suggested lines", [F("talk.js", "if (code === 'Tab') {\n    T.open = !T.open;")], OUT),
+    ("7.02", "at most three suggested lines", [F("talk.js", "L.length < 3 && D.keep")], OUT),
     ("7.05", "a live reply is cut to three sentences and 380 characters",
-     'e.slice(0,3).join("").trim()),i.slice(0,380)', 1, S),
-    ("7.07", "talking costs 1.5 game minutes an exchange", "x.t+=1.5,await", 1, S + " inferred"),
+     [F("talk.js", "if (parts && parts.length > 3) s = parts.slice(0, 3).join('').trim();\n  return s.slice(0, 380);")],
+     OUT),
+    ("7.07", "talking costs 1.5 game minutes an exchange", [F("talk.js", "G.t += 1.5;")], OUT + " inferred"),
     # 8. Saving
-    ("8.01", "save version 4; any other refused", "e.v!==4", 1, S),
-    ("8.01b", "browser save key ledger.save.v4", 'yT="ledger.save.v"+4', 1, S),
-    ("8.02", "account saves in chunks of 150,000 characters", "hw=15e4", 1, S),
-    ("8.03", "the newer save wins", "t(e)>t(i)?e:i", 1, S),
-    ("8.04", "autosave every 75 real seconds", "fw>75&&!z.on&&(fw=0,el(!1))", 1, S),
-    ("8.05", "what is saved", 'var gT=["v","t","played"', 1, S),
-    ("8.06", "restore through the hook does not rebuild memory; Continue does", 'qd(),x.story.phase="play"', 1, S),
+    ("8.01", "save version 4; any other refused",
+     [F("state.js", "export const VERSION = 4;"), F("saving.js", "if (o.v !== VERSION) return false;")], OUT),
+    ("8.01b", "browser save key ledger.save.v4", [F("saving.js", "const LS = 'ledger.save.v' + VERSION,")], OUT),
+    ("8.02", "account saves in chunks of 150,000 characters", [F("saving.js", "CH = 150000;")], OUT),
+    ("8.03", "the newer save wins", [F("saving.js", "(at(b) > at(a) ? b : a)")], OUT),
+    ("8.04", "autosave every 75 real seconds", [F("main.js", "autoT > 75 && !F.on")], OUT),
+    # Changed in Fable's 18 Nov round: the save now also holds the Ledger screen test's measures.
+    ("8.05", "what is saved (v, t, played, ... and since 18 Nov the measures)",
+     [F("saving.js", "const KEYS = [\n  'v',\n  't',\n  'played',"),
+      F("saving.js", "  'measures', // the Ledger screen test's measures")], OUT),
+    # Changed in Fable's 18 Nov round (CHANGELOG 2a): the reading was right for the bundle (the hook's
+    # restore did not rebuild the people's memories); restore and Continue now share one function.
+    ("8.06", "restore through the hook rebuilds memory as Continue does (fixed 18 Nov)",
+     [F("hook.js", "restore: x.loadWeek,")], OUT),
 ]
 # Left out of the static table, and why: 2.07 and 4.19 are absences (no hop limit, no wages);
 # 4.09 has no number and no unique string; 6.03, 6.04, 7.03 and 7.04 are read from the game's own
 # design notes only, whose headings carry no number; 7.06 (a name learned when said) has no number.
 
+# Rule reads found wrong against the readable source: rule id -> reason. Kept as strict expected
+# failures. None found when re-pointed on 18 Nov.
+WRONG = {}
+
 
 @functools.lru_cache(maxsize=1)
-def bundle():
-    with tempfile.TemporaryDirectory() as d:
-        build.build(dist=d)
-        with open(os.path.join(d, "ledger.js"), encoding="utf-8") as f:
-            return f.read()
+def rules_table():
+    """project/src/rules.js evaluated by node: its RULES export (the game's one rules table)."""
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("node not found: the rules table cannot be read")
+    code = "import('./src/rules.js').then(m => console.log(JSON.stringify(m)))"
+    out = subprocess.run([node, "--input-type=module", "-e", code], cwd=PROJECT, check=True,
+                         capture_output=True, text=True).stdout
+    mod = json.loads(out)
+    assert list(mod) == ["RULES"], "rules.js exports %s, expected only RULES" % list(mod)
+    return mod["RULES"]
+
+
+@functools.lru_cache(maxsize=None)
+def source(name):
+    with open(os.path.join(SRC, name), encoding="utf-8") as f:
+        return f.read()
+
+
+def rule_value(path):
+    node = rules_table()
+    for part in path.split("."):
+        assert isinstance(node, dict) and part in node, "rules.js has no entry %s" % path
+        node = node[part]
+    return node
 
 
 def _param(row):
-    rid, name, search, count, kind = row
-    marks = [pytest.mark.bundle_names] if kind.startswith(S) else []
-    return pytest.param(rid, name, search, count, id="%s %s" % (rid, name[:50]), marks=marks)
+    rid, name, checks, kind = row
+    if any(c[0] == "src" for c in checks):  # "use" checks do not count
+        assert kind.startswith(OUT), "rule %s searches a source file but is not marked outside_rules" % rid
+    else:
+        assert kind.startswith(RT), "rule %s is all in the rules table but marked %s" % (rid, kind)
+    marks = [pytest.mark.xfail(strict=True, reason=WRONG[rid])] if rid in WRONG else []
+    return pytest.param(rid, name, checks, id="%s %s" % (rid, name[:50]), marks=marks)
 
 
-@pytest.mark.parametrize("rid,name,search,count", [_param(r) for r in RULES])
-def test_static_rule_still_in_bundle(rid, name, search, count):
-    found = bundle().count(search)
-    assert found == count, "rule %s (%s): %r found %d times, expected %d; the rule may have moved" % (
-        rid, name, search, found, count)
+@pytest.mark.parametrize("rid,name,checks", [_param(r) for r in RULES])
+def test_static_rule(rid, name, checks):
+    for c in checks:
+        if c[0] == "rule":
+            got = rule_value(c[1])
+            assert got == c[2], "rule %s (%s): rules.js %s is %r, read as %r; the rule may have moved" % (
+                rid, name, c[1], got, c[2])
+        else:  # "src" or "use"
+            _, file, search, count = c
+            found = source(file).count(search)
+            assert found == count, "rule %s (%s): %r found %d times in %s, expected %d; the rule may have moved" % (
+                rid, name, search, found, file, count)
 
 
 def test_static_rule_ids_unique():
@@ -217,24 +377,30 @@ def test_static_rule_ids_unique():
     assert len(ids) == len(set(ids))
 
 
+def test_static_rules_table_is_what_the_game_reads():
+    # Every source file that reads a rule imports the one table; none keeps a copy of it.
+    t = rules_table()
+    assert len(t) == 20, "rules.js has %d sections, 20 when re-pointed" % len(t)
+    readers = [f for f in os.listdir(SRC) if f.endswith(".js") and "from './rules.js'" in source(f)]
+    assert {"seeing.js", "gossip.js", "police.js", "money.js", "fares.js", "jobs.js", "hook.js"} <= set(readers)
+
+
 def _act_kinds():
-    # The act table starts at "Wt={inherit:"; its top-level keys are name:xt(...).
-    b = bundle()
-    start = b.find("Wt={inherit:xt(")
-    assert start >= 0, "act table not found"
-    end = b.find("}", b.find("choice_silent:xt(", start))
-    return re.findall(r"[{,](\w+):xt\(", b[start:end])
+    # The act table in kinds.js: each top-level key is written "  name: K(".
+    return re.findall(r"^  (\w+): K\($", source("kinds.js"), re.M)
 
 
-@pytest.mark.bundle_names
-def test_static_act_table_has_51_kinds_as_found():
-    assert len(_act_kinds()) == 51
+def test_static_act_table_has_52_kinds():
+    # 51 when read from the bundle; Fable's 18 Nov round added "word" (a private thing Tom is told).
+    kinds = _act_kinds()
+    assert len(kinds) == 52, kinds
+    assert "word" in kinds and "choice_silent" in kinds
 
 
-# 30 schedule blocks: 28 named people plus the fare passenger and the yard lad (rules read corrected 18 Nov).
+# 30 schedule blocks: 28 named people (cast.js) plus the fare passenger and the yard lad (routines.js).
 def test_static_30_schedule_blocks():
-    assert bundle().count("sched:[") == 30
-
+    assert source("cast.js").count("sched: [") == 28
+    assert source("routines.js").count("sched: [") == 2
 
 
 # ---------------------------------------------------------------------------------------------
@@ -372,3 +538,8 @@ def test_live_5_06_arrest_hold_and_bill_when_he_ran(js, game):
     assert js("LEDGER.G.money.clean") == clean - paid
     assert (js("LEDGER.G.story.flags.oweAgar") or 0) == 4000 - paid
     assert js("LEDGER.G.story.arrest") is None
+
+
+def test_live_rules_table_in_the_page_is_rules_js(js):
+    # LEDGER.rules is the table the game reads; it must be the same as rules.js in the source.
+    assert js("JSON.parse(JSON.stringify(LEDGER.rules))") == rules_table()

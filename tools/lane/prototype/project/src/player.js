@@ -1,0 +1,609 @@
+// Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.
+import { G, hour } from './state.js';
+import { hyp, clamp, angDiff, pick } from './util.js';
+import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY } from './map.js';
+import { inRect } from './util.js';
+import { nightF } from './seeing.js';
+
+import { BARKS } from './cast.js';
+import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
+import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target } from './fight.js';
+import { stepCar, nearCar, exitPoint } from './drive.js';
+import { hotspots, beatFor } from './scenes.js';
+import { fareAccept } from './fares.js';
+import { startTalk } from './talk.js';
+import { setInside } from './render/effects.js';
+
+export const keys = {},
+  cam = {
+    yaw: Math.PI,
+    pitch: 0.3,
+    dist: 5.4,
+    px: 0,
+    py: 3,
+    pz: 0,
+    tx: 0,
+    ty: 1.5,
+    tz: 0,
+    idle: 9,
+    shake: 0,
+  };
+const touch = { x: 0, y: 0, on: false, run: false };
+let mdown = 0,
+  mbtn = -1,
+  lastP = 0,
+  prompts = [],
+  locked = false,
+  camera = null,
+  canvasEl = null;
+const HOURS = {
+  caff: [6, 17],
+  fish: [7.4, 17.4],
+  laund: [8, 20],
+  grocer: [8, 17.5],
+  tangs: [17, 23.6],
+  news: [6.5, 19],
+  iron: [8.5, 17.5],
+  tearoom: [9.5, 17],
+  rita: [8.5, 18],
+  chandler: [8.5, 17.5],
+  coin: [9.5, 18],
+  chapel: [7, 19.3],
+  harbour: [8, 22.9],
+};
+const isOpen = (id) => {
+  const o = HOURS[id];
+  if (!o) return true;
+  const h = hour();
+  return h >= o[0] && h < o[1];
+};
+
+export function initPlayer(cv, cameraObj) {
+  camera = cameraObj;
+  canvasEl = cv;
+  addEventListener('keydown', (e) => {
+    if (
+      e.target &&
+      e.target.tagName === 'INPUT' &&
+      !['Enter', 'Escape', 'Tab', 'ArrowUp', 'ArrowDown', 'F2'].includes(e.code)
+    )
+      return;
+    if (
+      e.code === 'Tab' ||
+      e.code === 'F2' ||
+      (e.target && e.target.tagName === 'INPUT' && e.code.startsWith('Arrow'))
+    )
+      e.preventDefault();
+    if (e.repeat && !['KeyZ'].includes(e.code)) {
+      keys[e.code] = true;
+      return;
+    }
+    keys[e.code] = true;
+    onKey(e.code);
+    if (['Space', 'ArrowUp', 'ArrowDown'].includes(e.code) && e.target.tagName !== 'INPUT')
+      e.preventDefault();
+  });
+  addEventListener('keyup', (e) => {
+    keys[e.code] = false;
+    if (e.code === 'KeyK') fightBlock(false);
+  });
+  addEventListener('blur', () => {
+    for (const k in keys) keys[k] = false;
+  });
+  cv.addEventListener('mousedown', (e) => {
+    if (ui.modal || G.story.phase !== 'play') return;
+    mdown = performance.now();
+    mbtn = e.button;
+    if (F.on && F.rung >= 5) {
+      if (e.button === 2) fightBlock(true);
+    }
+    if (!locked && cv.requestPointerLock && !G.settings.touch) {
+      try {
+        const p = cv.requestPointerLock();
+        if (p && p.catch) p.catch(() => {});
+      } catch (err) {
+        /* refused */
+      }
+    }
+  });
+  addEventListener('mouseup', (e) => {
+    if (mbtn === 2) fightBlock(false);
+    if (mbtn === 0 && F.on && F.rung >= 5 && !ui.modal)
+      fightInput(performance.now() - mdown > 320 ? 'heavy' : 'light');
+    mbtn = -1;
+  });
+  addEventListener('mousemove', (e) => {
+    if (ui.modal || G.story.phase !== 'play') return;
+    if (locked || mbtn >= 0) {
+      cam.yaw -= e.movementX * 0.0028 * G.settings.sens;
+      cam.pitch = clamp(
+        cam.pitch + e.movementY * 0.0022 * G.settings.sens * (G.settings.invertY ? -1 : 1),
+        -0.12,
+        1.15,
+      );
+      cam.idle = 0;
+    }
+  });
+  cv.addEventListener('contextmenu', (e) => e.preventDefault());
+  cv.addEventListener(
+    'wheel',
+    (e) => {
+      cam.dist = clamp(cam.dist + Math.sign(e.deltaY) * 0.5, 2.6, 9);
+    },
+    { passive: true },
+  );
+  document.addEventListener('pointerlockchange', () => {
+    locked = document.pointerLockElement === cv;
+  });
+  initTouch(cv);
+}
+export const unlock = () => {
+  if (locked && document.exitPointerLock) document.exitPointerLock();
+};
+// One key, as the keyboard sends it. The test hook comes through here too, so it takes the same path.
+export function onKey(code) {
+  if (G.story.phase !== 'play') return;
+  if (uiKey(code)) return;
+  if (code === 'Escape' || code === 'KeyP') {
+    unlock();
+    if (ui.hooks.pause) ui.hooks.pause();
+    return;
+  }
+  if (code === 'KeyL') {
+    // L, and only L, opens the Ledger. Tab means the suggested lines in a talk and nothing else.
+    unlock();
+    if (ui.hooks.ledger) ui.hooks.ledger('keyboard');
+    return;
+  }
+  if (G.paused) return;
+  if (code === 'KeyE') useKey('E');
+  else if (code === 'KeyT') useKey('T');
+  else if (code === 'KeyF') carKey();
+  else if (code === 'KeyQ') {
+    const P = target();
+    if (P && !G.tom.inCar) frontUp(P);
+  } else if (code === 'KeyR') {
+    if (F.on) climb();
+  } else if (code === 'KeyX') backDown();
+  else if (code === 'KeyC') coat();
+  else if (code === 'KeyG') useKey('G');
+  else if (code === 'KeyY') fareAccept();
+  else if (code === 'KeyJ') fightInput('light');
+  else if (code === 'KeyU') fightInput('heavy');
+  else if (code === 'KeyK') fightBlock(true);
+  else if (code === 'KeyV') fightInput('finish');
+  else if (code === 'Space') {
+    if (F.on && F.rung >= 5) fightInput('dodge');
+  }
+}
+function coat() {
+  const t = G.tom;
+  if (!t.hasCoat || t.inCar) return;
+  t.coat = !t.coat;
+  sub(
+    t.coat
+      ? "Mickey's coat. Collar up. Harder to name after dark; a strange thing to wear at noon."
+      : 'Coat off, over your arm.',
+    '',
+    'over',
+    3.5,
+  );
+  if (G.hooks.sfx) G.hooks.sfx('paper');
+}
+function carKey() {
+  const t = G.tom,
+    c = G.car;
+  if (F.on) return;
+  if (t.inCar) {
+    if (Math.abs(c.v) > 1.5) return;
+    const [x, z] = exitPoint();
+    t.inCar = false;
+    t.x = x;
+    t.z = z;
+    t.v = 0;
+    if (G.hooks.sfx) G.hooks.sfx('cardoor');
+    return;
+  }
+  if (t.space !== 'street' || !nearCar(3.2)) return;
+  if (!c.keys) return sub('Locked. The keys will be in the office.', '', 'over');
+  t.inCar = true;
+  c.v = 0;
+  cam.idle = 9;
+  if (G.hooks.sfx) G.hooks.sfx('cardoor');
+}
+export function enterRoom(id, quiet) {
+  const t = G.tom,
+    r = ROOMS[id];
+  const [x, z] = roomPos(id, r.mat[0], r.mat[1] - 0.9);
+  t.space = id;
+  t.x = x;
+  t.z = z;
+  t.ang = Math.PI;
+  t.inCar = false;
+  setInside(r);
+  ui.roomName = r.name;
+  cam.yaw = Math.PI;
+  cam.pitch = 0.62;
+  cam.dist = 6.4;
+  snapCam();
+  if (!quiet && G.hooks.sfx) G.hooks.sfx('door');
+  if (G.hooks.ambience) G.hooks.ambience(id);
+  if (id === 'boarding' && (hour() >= 23 || hour() < 5.5)) {
+    const S = G.people.sylvia;
+    if (S && S.space === 'home') {
+      S.wake = 1;
+      sub("The stair creaks. Mrs Rennison's door stands an inch open.", '', 'over', 4);
+    }
+  }
+}
+export function leaveRoom(exit2) {
+  const t = G.tom,
+    r = ROOMS[t.space];
+  if (!r) return;
+  const s = exit2 ? r.exit2.street : r.street;
+  t.space = 'street';
+  t.x = s[0];
+  t.z = s[1];
+  t.ang = s[2];
+  setInside(null);
+  ui.roomName = null;
+  cam.yaw = s[2];
+  cam.pitch = 0.3;
+  cam.dist = 5.4;
+  snapCam();
+  if (G.hooks.sfx) G.hooks.sfx('door');
+  if (G.hooks.ambience) G.hooks.ambience(null);
+}
+export function buildPrompts() {
+  const t = G.tom,
+    out = [];
+  if (ui.modal || G.paused) return out;
+  if (t.inCar) {
+    if (Math.abs(G.car.v) < 1.5) out.push({ k: 'F', t: 'Get out' });
+    if (G.story.fare && G.story.fare.st === 'offer')
+      out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
+    return out;
+  }
+  if (F.on) return out;
+  for (const h of hotspots()) out.push(h);
+  // people
+  const P = target();
+  if (P && hyp(P.x, P.z, t.x, t.z) < 2.7) {
+    if (!out.some((o) => o.k === 'E'))
+      out.push({
+        k: 'E',
+        t: (P.anon ? 'Speak to ' : 'Talk to ') + tomName(P).replace(/^A /, 'a ').replace(/^The /, 'the '),
+        run: () => talkTo(P),
+      });
+    if (!P.keeper) out.push({ k: 'Q', t: 'Front up' });
+  }
+  // doors
+  if (t.space === 'street') {
+    for (const id in ROOMS) {
+      const r = ROOMS[id];
+      if (r.locked) continue;
+      if (hyp(t.x, t.z, r.street[0], r.street[1]) < 1.7 && !out.some((o) => o.k === 'E'))
+        out.push({
+          k: 'E',
+          t: isOpen(id) ? 'Go into ' + r.name : r.name + ': shut',
+          run: () => {
+            if (isOpen(id)) enterRoom(id);
+            else sub('Shut. A card in the door gives the hours.', '', 'over', 2.5);
+          },
+        });
+    }
+    const y = ROOMS.mickeys.exit2.street;
+    if (hyp(t.x, t.z, y[0], y[1]) < 1.6 && !out.some((o) => o.k === 'E'))
+      out.push({
+        k: 'E',
+        t: "Back door of Mickey's",
+        run: () => {
+          enterRoom('mickeys');
+          const [x, z] = roomPos('mickeys', 5.6, 1.6);
+          t.x = x;
+          t.z = z;
+          t.ang = -1.57;
+        },
+      });
+    if (nearCar(3.2) && G.car.keys) out.push({ k: 'F', t: 'Get in the cab' });
+    for (const p of PROPS)
+      if (p.hand && hyp(t.x, t.z, p.x, p.z) < p.r + 1.3 && t.weapon !== p.hand) {
+        out.push({
+          k: 'G',
+          t: 'Pick up a ' + p.hand,
+          run: () => {
+            t.weapon = p.hand;
+            sub('A ' + p.hand + ', to hand if it comes to that.', '', 'over', 3);
+          },
+        });
+        break;
+      }
+  } else {
+    const r = ROOMS[t.space];
+    if (r) {
+      const [mx, mz] = roomPos(r.id, r.mat[0], r.mat[1]);
+      if (hyp(t.x, t.z, mx, mz) < 1.5 && !out.some((o) => o.k === 'E'))
+        out.push({ k: 'E', t: 'Leave', run: () => leaveRoom(false) });
+      if (r.exit2) {
+        const [ex, ez] = roomPos(r.id, r.exit2.mat[0], r.exit2.mat[1]);
+        if (hyp(t.x, t.z, ex, ez) < 1.4 && !out.some((o) => o.k === 'E'))
+          out.push({ k: 'E', t: 'Out to ' + r.exit2.label, run: () => leaveRoom(true) });
+      }
+    }
+  }
+  if (t.hasCoat) out.push({ k: 'C', t: t.coat ? 'Coat off' : 'Coat on' });
+  if (G.story.fare && G.story.fare.st === 'offer') out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
+  return out;
+}
+// What the E prompt does beside a person: the written scene that is waiting with them, or else a talk.
+export function talkTo(P) {
+  if (P.anon) {
+    bubble(P, pick(P.def.bark || (P.lad ? BARKS.lads : nightF() > 0.6 ? BARKS.night : BARKS.day)), 3.5);
+    P.mind.look = 3;
+    return;
+  }
+  if (P.fight || P.down) return;
+  P.ang = Math.atan2(G.tom.x - P.x, G.tom.z - P.z);
+  unlock();
+  const b = beatFor(P);
+  if (b) b();
+  else startTalk(P);
+}
+function useKey(k) {
+  prompts = buildPrompts();
+  const p = prompts.find((x) => x.k === k && x.run);
+  lastP = 0;
+  if (p) p.run();
+}
+function solidFor(x, z) {
+  if (blocked(x, z, 0.32)) return true;
+  if (G.tom.space === 'street') {
+    const c = G.car;
+    for (const k of [1.3, 0, -1.3])
+      if (hyp(x, z, c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k) < 1.15) return true;
+    if (!G.people.kevin?.gone || hour() < 7 || hour() > 18.4) {
+      for (const k of [1.3, 0, -1.3]) if (hyp(x, z, 4.1, 32.2 + k) < 1.15) return true;
+    }
+  }
+  return false;
+}
+export function stepPlayer(dt) {
+  const t = G.tom;
+  let mx = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0) + touch.x,
+    my = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + touch.y;
+  const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my) < 0.1;
+  ui.wait = waiting;
+  G.fast = waiting ? 12 : 1;
+  if (t.inCar) {
+    stepCar(dt, { x: clamp(mx, -1, 1), y: clamp(my, -1, 1), hb: !!keys.Space });
+    t.run = false;
+  } else {
+    stepCar(dt, { x: 0, y: 0 });
+    const l = Math.hypot(mx, my);
+    let sp = 0;
+    if (l > 0.1 && !(F.on && F.rung < 5 && F.rung > 0 && false)) {
+      mx /= Math.max(1, l);
+      my /= Math.max(1, l);
+      const fx = Math.sin(cam.yaw),
+        fz = Math.cos(cam.yaw),
+        rx = -Math.cos(cam.yaw),
+        rz = Math.sin(cam.yaw),
+        wx = fx * my + rx * mx,
+        wz = fz * my + rz * mx;
+      const fighting = F.on && F.rung >= 5,
+        run = (keys.ShiftLeft || keys.ShiftRight || touch.run) && !fighting && t.hurt < 0.7 && !t.carry;
+      sp =
+        (fighting ? 1.9 : run ? 4.5 : 1.85) *
+        (1 - t.hurt * 0.4) *
+        Math.min(1, l) *
+        (F.st === 'block' ? 0.4 : 1);
+      t.run = run;
+      if (!fighting) t.ang += clamp(angDiff(t.ang, Math.atan2(wx, wz)), -10 * dt, 10 * dt);
+      const nx = t.x + wx * sp * dt,
+        nz = t.z + wz * sp * dt;
+      if (!solidFor(nx, t.z)) t.x = nx;
+      if (!solidFor(t.x, nz)) t.z = nz;
+      t.puff = clamp((t.puff || 0) + (run ? dt * 0.12 : -dt * 0.08), 0, 1);
+      t.still = 0;
+    } else {
+      t.run = false;
+      t.still += dt;
+      t.puff = Math.max(0, (t.puff || 0) - dt * 0.1);
+    }
+    t.v = sp;
+    // do not stand inside people
+    for (const P of G.named.concat(G.crowd)) {
+      if (P.gone || P.space !== t.space || P.down || P.inCar) continue;
+      const d = hyp(P.x, P.z, t.x, t.z);
+      if (d < 0.55 && d > 0.01) {
+        const px = t.x + ((t.x - P.x) / d) * (0.55 - d),
+          pz = t.z + ((t.z - P.z) / d) * (0.55 - d);
+        if (!blocked(px, pz, 0.3)) {
+          t.x = px;
+          t.z = pz;
+        }
+      }
+    }
+  }
+  t.y = groundY(t.x, t.z);
+  lastP -= dt;
+  if (lastP <= 0) {
+    lastP = 0.15;
+    prompts = buildPrompts();
+    if (F.on) prompts = [];
+    setPrompts(prompts);
+  }
+}
+// ---------- camera ----------
+const solidCam = (x, z) => {
+  for (const b of BLD) if (b.st > 1 && inRect(x, z, b, 0.35)) return true;
+  for (const w of WALLS) if (inRect(x, z, w, 0.3)) return true;
+  return false;
+};
+export function snapCam() {
+  cam.snap = true;
+}
+export function stepCamera(dt) {
+  const t = G.tom,
+    room = t.space !== 'street' ? ROOMS[t.space] : null;
+  cam.idle += dt;
+  if (t.inCar) {
+    if (cam.idle > 1.2) cam.yaw += clamp(angDiff(cam.yaw, G.car.ang), -2.2 * dt, 2.2 * dt);
+  } else if (!room && cam.idle > 1.6 && t.v > 0.5 && !F.on)
+    cam.yaw +=
+      clamp(angDiff(cam.yaw, t.ang), -0.7 * dt, 0.7 * dt) * (Math.abs(angDiff(cam.yaw, t.ang)) > 2.4 ? 0 : 1);
+  if (F.on && F.T && !room && cam.idle > 0.8) {
+    const a = Math.atan2(F.T.x - t.x, F.T.z - t.z);
+    cam.yaw += clamp(angDiff(cam.yaw, a + 0.5), -1.2 * dt, 1.2 * dt);
+  }
+  if (room) {
+    cam.yaw = Math.PI + clamp(angDiff(Math.PI, cam.yaw), -0.7, 0.7);
+    cam.pitch = clamp(cam.pitch, 0.42, 1.0);
+  }
+  const tx = t.x,
+    tz = t.z,
+    ty = (t.inCar ? 1.35 : 1.5) + (t.y || 0);
+  const dist = t.inCar ? cam.dist + 3.4 : room ? Math.max(cam.dist, 5.2) : cam.dist,
+    pitch = t.inCar ? Math.max(cam.pitch, 0.2) : cam.pitch;
+  const fx = Math.sin(cam.yaw),
+    fz = Math.cos(cam.yaw),
+    cp = Math.cos(pitch),
+    spn = Math.sin(pitch);
+  let d = dist;
+  if (!room) {
+    for (let s = 0.6; s <= dist; s += 0.35) {
+      if (solidCam(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < 9) {
+        d = Math.max(0.9, s - 0.45);
+        break;
+      }
+    }
+  }
+  const px = tx - fx * cp * d,
+    pz = tz - fz * cp * d,
+    py = Math.max(0.5, ty + spn * d + (d < 2 ? 0.25 : 0));
+  const k = cam.snap ? 1 : 1 - Math.exp(-dt * 9);
+  cam.snap = false;
+  cam.px += (px - cam.px) * k;
+  cam.py += (py - cam.py) * k;
+  cam.pz += (pz - cam.pz) * k;
+  cam.tx += (tx - cam.tx) * k;
+  cam.ty += (ty - cam.ty) * k;
+  cam.tz += (tz - cam.tz) * k;
+  cam.shake = Math.max(0, cam.shake - dt * 2);
+  camera.position.set(
+    cam.px + (Math.random() - 0.5) * cam.shake * 0.3,
+    cam.py + (Math.random() - 0.5) * cam.shake * 0.3,
+    cam.pz,
+  );
+  camera.lookAt(cam.tx, cam.ty + 0.15, cam.tz);
+}
+export function titleCamera(t) {
+  const z = 46 - ((t * 0.55) % 70);
+  camera.position.set(-1.6 + Math.sin(t * 0.07) * 1.6, 2.5 + Math.sin(t * 0.05) * 0.4, z);
+  camera.lookAt(1.5 + Math.sin(t * 0.04) * 3, 2.0, z - 24);
+}
+// ---------- touch ----------
+function initTouch(cv) {
+  const stick = document.getElementById('stick'),
+    nub = stick.firstElementChild,
+    tb = document.getElementById('tb');
+  let sid = null,
+    lid = null,
+    lx = 0,
+    ly = 0;
+  const btns = [
+    ['E', 'Use', () => useKey('E')],
+    ['T', 'Do', () => useKey('T')],
+    ['F', 'Cab', carKey],
+    [
+      'Q',
+      'Front',
+      () => {
+        const P = target();
+        if (P) frontUp(P);
+      },
+    ],
+    [
+      'R',
+      'Up',
+      () => {
+        if (F.on) climb();
+      },
+    ],
+    ['X', 'Off', backDown],
+    ['J', 'Hit', () => fightInput('light')],
+    ['K', 'Block', () => fightBlock(F.st !== 'block')],
+    ['C', 'Coat', coat],
+    ['Y', 'Fare', fareAccept],
+    ['L', 'Ledger', () => ui.hooks.ledger && ui.hooks.ledger()],
+    [
+      'Run',
+      'Run',
+      () => {
+        touch.run = !touch.run;
+      },
+    ],
+    [
+      'Z',
+      'Wait',
+      () => {
+        keys.KeyZ = !keys.KeyZ;
+      },
+    ],
+    ['G', 'Take', () => useKey('G')],
+    ['P', 'Menu', () => ui.hooks.pause && ui.hooks.pause()],
+  ];
+  tb.innerHTML = btns.map((b, i) => `<button data-i="${i}">${b[1]}</button>`).join('');
+  tb.addEventListener('pointerdown', (e) => {
+    const b = e.target.closest('button');
+    if (b) {
+      e.preventDefault();
+      if (ui.modal === 'dialog') uiKey('KeyE');
+      else btns[+b.dataset.i][2]();
+    }
+  });
+  stick.addEventListener('pointerdown', (e) => {
+    sid = e.pointerId;
+    stick.setPointerCapture(sid);
+  });
+  stick.addEventListener('pointermove', (e) => {
+    if (e.pointerId !== sid) return;
+    const r = stick.getBoundingClientRect(),
+      dx = (e.clientX - r.left - 60) / 50,
+      dy = (e.clientY - r.top - 60) / 50,
+      l = Math.max(1, Math.hypot(dx, dy));
+    touch.x = dx / l;
+    touch.y = -dy / l;
+    nub.style.transform = `translate(${touch.x * 35}px,${-touch.y * 35}px)`;
+  });
+  const up = (e) => {
+    if (e.pointerId === sid) {
+      sid = null;
+      touch.x = touch.y = 0;
+      nub.style.transform = '';
+    }
+  };
+  stick.addEventListener('pointerup', up);
+  stick.addEventListener('pointercancel', up);
+  cv.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'touch') return;
+    if (!G.settings.touch) {
+      G.settings.touch = true;
+      show('touch', G.story.phase === 'play');
+    }
+    lid = e.pointerId;
+    lx = e.clientX;
+    ly = e.clientY;
+  });
+  cv.addEventListener('pointermove', (e) => {
+    if (e.pointerId !== lid || ui.modal) return;
+    cam.yaw -= (e.clientX - lx) * 0.006;
+    cam.pitch = clamp(cam.pitch + (e.clientY - ly) * 0.004, -0.1, 1.1);
+    lx = e.clientX;
+    ly = e.clientY;
+    cam.idle = 0;
+  });
+  cv.addEventListener('pointerup', (e) => {
+    if (e.pointerId === lid) lid = null;
+  });
+}

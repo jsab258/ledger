@@ -1,0 +1,27 @@
+{
+  "name": "ledger-loop-prototype",
+  "version": "0.4.0",
+  "description": "LEDGER loop prototype: Meridian, October 1990. One page, built with three.js.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "build:dev": "node tools/build.mjs --dev",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint src",
+    "test": "node test/week.mjs && node tools/publish_set.mjs && node test/nights.mjs && node test/layout.mjs && node test/files.mjs && node test/talk.mjs && node test/eyes.mjs",
+    "test:week": "node test/week.mjs",
+    "test:nights": "node test/nights.mjs",
+    "test:layout": "node test/layout.mjs",
+    "publish-set": "node tools/publish_set.mjs"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "eslint": "8.57.0",
+    "prettier": "3.3.3",
+    "puppeteer-core": "25.17.0"
+  },
+  "private": true
+}

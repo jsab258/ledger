@@ -1,26 +1,23 @@
 {
  "page": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A",
- "version": "1794862482-9f9b",
+ "version": "1794992731-61ca",
  "read": "2026-11-18",
- "note": "Pictures and the people rig stay on the published page; a publish copies them server side from the page itself, so git holds no large files.",
- "code": {
-  "index.html": {
-   "bytes": 18202,
-   "sha256": "6626177122c6e68c0127417a3fb41623a6def0dd8f6bd5306dbe88e7830cf530"
-  },
+ "note": "Fable's round of 18 Nov: the readable source is project/ (published under source/ on the page). The pictures and the people rig stay on the page; git holds none of them. The build must reproduce ledger.js and index.html byte for byte.",
+ "built": {
   "ledger.js": {
-   "bytes": 1210063,
-   "sha256": "05ffc4b37da887c5c704cfc9db8740adb3fe494df7e0accc3fa53635bd971ef8",
-   "parts": [
-    "part-01.js",
-    "part-02.js"
-   ]
+   "bytes": 1278063,
+   "sha256": "73245b8eb8b353a9cbebb0bdb7be20c05c148f7c47de63917c21c03142fcd29e"
+  },
+  "index.html": {
+   "bytes": 22687,
+   "sha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61"
   }
  },
- "three_js": {
-  "version": "0.187.0",
-  "licence": "MIT",
-  "where": "inlined at the start of ledger.js part-01 by the bundler (window.__THREE__ marker at byte 393783); stage 1 swaps it for the pinned npm package"
+ "toolchain": {
+  "node": "22 (Fable: 22.23.4; the lane: 22.23.5)",
+  "npm": "10.9.x",
+  "three": "0.187.0 (MIT)",
+  "esbuild": "0.28.2 (MIT)"
  },
  "assets": [
   {

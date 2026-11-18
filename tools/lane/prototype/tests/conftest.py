@@ -1,8 +1,2 @@
-"""pytest set-up for the prototype tests: names the markers rules_test.py uses."""
-
-
-def pytest_configure(config):
-    config.addinivalue_line(
-        "markers",
-        "bundle_names: the check searches the bundle by the bundler's shortened names; "
-        "re-point it when Fable's readable source replaces the bundle")
+"""pytest set-up for the prototype tests. (The bundle_names marker went with the minified bundle on
+18 Nov 2026: rules_test.py now reads Fable's readable source and its rules table.)"""
