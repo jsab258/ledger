@@ -15,7 +15,7 @@
     "monday-audit",
     "tools/driving_feel_check.py::gearbox automatic by default"
    ],
-   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual"
+   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both."
   },
   {
    "line": "5 and 6 Nov: Full scope stays the target",

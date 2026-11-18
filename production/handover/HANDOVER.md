@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-18 15:21 (the hourly run; the last session set its Stopped line at 15:10)
 
-**Row due:** 2026-11-18 15:28 (last 14:28; page and advisor read 14:56, last ack 223)
+**Row due:** at the next start (last row 15:28; page and advisor read 16:17, last ack 226)
 **Stopped:** 2026-11-18 15:10 (history OVER at an item's end; helpers stopped, their leftover runs and old Claude waiters ended by tree; lock cleared; no job of mine running. Last commit not yet pushed: the next session pushes after ci.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -30,41 +30,35 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Quay Run (advisor 222):** his desktop shortcut opens F:/LedgerTools/quay-run/index.html in Chrome; whenever the driving study (https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq) is republished, copy its index.html there again (Artifact read with path) and run tools/driving_feel_check.py: a copy newer than the ruling must start automatic.
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
-## Done this run (12:28 to 15:10; details in DECISIONS 12:33 on)
-- Kiln main 89157c3 (lane pytests, fast-forward): Python suite clean, 143 OK.
-- Advisors 222-223 (his 12:32, 12:36): desktop shortcut "Quay Run" opens F:/LedgerTools/quay-run/index.html in Chrome (checked in a browser, not with his pad); RULINGS Cars line: fun first, 1990 by sound/sway/look/relative speed, real figures a floor, game-band targets, automatic gearbox; enforcer tools/driving_feel_check.py in ci; acks written. Pushed 4b6ac1a76 to wip (ci clean).
-- Coat (line 1 step 3): reading done (Jaeger on disk, MIT, chosen); lane coat dc6ca1f: knee coat spec, 15 pieces, 33 seams, back 1100 mm, vent, collar, facing; 18/18 spec tests; no drape yet; not merged (shares mark_length with the blouse lane: keep one copy).
-- Blouse (line 1 step 2): set aside: tries 1-2 (60, 70 wrist crossings), method 3 gathered cuff (64, back 3.48 a new fault, 9% of the gap). Staged on lane-blouse, not committed (its elastics spec section is general and tested). Named for Thursday.
-- M5 shared steps 1-5 (line 3 step 1): format, turns records (Ron, Sheila, Tom), weights match PASS; Darren's skeleton shoulders 14.0/13.9 mm against 10 (set aside; an arms-up pose test of his jacket decides); Kiln skin job runs (sit 194/159 against 299/44). Kiln fault found: its skin job reads PASS on a garment's own source body (pose faults marked unchanged): read per-pose numbers; a fix is owed. Turns records placed beside the standard bodies.
-- Donkey-start ca39cd5 (try 1 of 2, PASS switch off): Ron's donkey jacket drapes with KILN_SKIN_NECK_OVER_JOINT=1 (0 through, worst 2.073); switch off byte-identical to main; switch on jams Darren's nylon underarm 26.8 mm and shifts the j3 and zip jacket drops. Not merged.
-- Legtorso e1d17f4 (try 1 of 2): torso start re-sourced (crotch to neck base, span 1.0); legs still borrowed (no swept value passes Ron's trousers). Not merged.
-- restlabel-fixes: main merged into it (a9510c3), clean.
+## Done this run (15:21 to stop; details in DECISIONS 15:35 on)
+- Advisors 224-226 acted on and acknowledged: canon pillar "verbs first, talk as the consequence" plus his words "not a gossip simulator" (226); RULINGS prototype line widened; combat end state A with an escalation dial, no silenced .22 (RULINGS release line, weapons spec head); spare reset recorded (reset_at 15:20); waiting items 20 (prototype licences: his own yes still needed, NOT on the allowlist), 22, 23. Pushed 2b285d039; the 226 records commit with this handover.
+- J4 try 2 PASS: lane j4-b2 fc61b57 (identity split from rest; the gate keeps rest_label under "checks").
+- Skin verdict FIXED: lane-skin-verdict d5b06ca (own-body shape faults stay information, Kiln's own skin-weight checks fail on every body; Ron's jeans stand-in now FAILS on sitting; 21/21 tests).
+- Legs SET ASIDE: try 2 (waist/floor rule) failed; the researched different method (CLO patent's area-centroid rule, GarmentCode's crotch-corner rule) screened offline missed by 6 to 196 mm, no drape spent (legtorso run folder offline-rules/; notes KILN-LEG-PLACEMENT-METHODS and -REVIEW in production/research/tool-tests-2026-11). Borrowed values 0.459/0.968 stay, listed; Ron's trousers go on to M5 on them.
+- Line 5: Marvelous drapes exist only for Tom's jeans, j3 and zip jacket (F:/LedgerTools/tool-dev/reports/KILN-V1-MARVELOUS-DRAPES-2026-11-18.md).
 
-## Running
-- Nothing. Helpers stopped 15:08 (R4 refit, J4 try 2, legs try 2); their trees and old Claude waiters ended; lock cleared 15:09.
-- Lanes with uncommitted work (C:/LedgerTools/kiln-lanes/):
-  - r4-refit: python/refit_drape.py and its test untracked; runs in F:/LedgerTools/tool-dev/runs/kiln-r4-refit-2026-11-18 (refit-run2.log 13:59; a no-start-check diagnostic cut at 15:07); no report written. Try 1 of 2 in progress.
-  - j4-b2: identity_check.py and its test modified (try 2 of 2, identity split from rest); j4-try2.sh cut. No report section yet.
-  - resource-legtorso: mechanics.rs, rig.rs, serve.rs modified on top of e1d17f4 (legs try 2: a rule tying the leg piece to the body's waist line or the floor); heavy4.sh cut. Report section not written.
+## In flight at the stop (ended at the stop; rerun, never trust a cut run)
+- Merge candidate lane-merge-cand-1118 (main 89157c3 + restlabel-fixes + donkey-start + e1d17f4 + fc61b57): build OK, cargo 136 pass, python tests pass; the whole gate (--allow-better) was running: rerun F:/LedgerTools/tool-dev/runs/kiln-merge-cand-2026-11-18/gate.sh (rename machine.log first), reading gate.out.
+- Helper lanes cut at the stop: r4-refit (try 1 of 2; no report yet), coat first drape (try 1 of 2; lane coat), nylon-jam (new lane from donkey-start; diagnosis plus try 1). Read each lane's report and run folder before resuming.
 
 ## Next, in order
-0. Verdicts after 2026-11-18T13:56:00Z; advisor after 2026-11-18T12:42:00+01:00 (last ack 223). Row due 15:28.
-1. Resume the three cut lanes (r4-refit, j4-b2 try 2, legtorso legs try 2) from their folders: rerun any cut run, never trust it.
-2. One gate alone on a merge candidate: main + restlabel-fixes + donkey-start (switch off) + legtorso torso (e1d17f4) against c52c3ab; then re-take the baseline (the torso default moves the trousers' drop out of its band on the better side). Merge what passes.
-3. Coat: first drape on Ron's standard body (lane coat); then merge coat with the blouse's elastics section (one mark_length).
-4. Kiln skin job fault (PASS on its own source body): a general fix lane.
-5. Darren's nylon underarm jam with the neck-over-joint switch on: its own item before the switch becomes the default.
-6. When legs are own-sourced and merged: Ron's trousers adopted (M5 steps 6-10). Then n16-6, n16-8, n16-7.
-7. Morning 19 Nov: read the P4 table (production/playtest/p4/2026-11-19-session.md); NOTEBOOK entry. Thursday's checkpoint (KILN-V1-CHECKLIST section c): donkey jacket made (switch on, not banded yet), trousers not yet, blouse set aside, coat spec yes, B2 yes.
-- Use tools/timelog.py start "<item> ..." at every task.
+0. Verdicts after 2026-11-18T15:05:00Z; advisor after 2026-11-18T16:08:00+01:00 (last ack 226). A row on his page at once.
+1. Rerun the merge gate alone; add d5b06ca to the candidate first (its regression job sheila-layers-to-cast may newly fail: a real fault, not a reason to drop the fix). Merge what passes into Kiln main; re-take the baseline (the torso default moves the trousers' drop out of band on the better side).
+2. Resume r4-refit, coat drape, nylon-jam from their folders.
+3. Ron's trousers M5 steps 6-10 on the borrowed leg values.
+4. Line 5: the close-up comparison on Tom's three garments; for the rest, research Marvelous's DXF-AAMA import and a Kiln pattern-to-DXF writer before the Marvelous month ends (about 26 Nov).
+5. Then n16-6, n16-8, n16-7.
+6. Morning 19 Nov: the P4 table (production/playtest/p4/2026-11-19-session.md); Thursday's checkpoint (KILN-V1-CHECKLIST section c).
+- tools/timelog.py start "<item> ..." at every task.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 18 Nov: blouse: plain sleeve twice, then gathered cuff: the full-width lower sleeve folds through the wrist (the helper's reading: particles too coarse from the first stage; unproven).
-- 18 Nov: leg start values: every swept share of the ankle-to-hip line puts Ron's trousers out of band; a body-landmark rule is the different method (try 2, cut).
-- 18 Nov: J4 identity check: first machine run NOT MADE (plain lists in tests); identity holds, the check mixed in rest. Try 2 of 2 cut.
+- 18 Nov: leg start: swept shares (try 1), waist/floor landmark (try 2), then the area-centroid and crotch-corner rules screened offline: none within about 1 mm on both garments.
+- 18 Nov: J4: tests used made-up file shapes twice; each first real run was NOT MADE. Always one test on a real output file.
+- 18 Nov: helper briefs: two refused by the permission check (wording about cut runs and rerunning what a run started); a leaner brief passed.
+- 18 Nov: blouse: plain sleeve twice, then gathered cuff: the lower sleeve folds through the wrist (unproven: particles too coarse).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
-- Tries used: 18 Nov blouse 2 of 2 plus method 3 (stopped); legtorso torso passed, legs try 2 of 2 in flight; donkey-start 1 of 2 (passed); J4 2 of 2 in flight; R4 1 of 2 in flight; coat 1 of 2 (spec passed); pytests passed (merged); restlabel-fixes try 1 passed; Kiln gap 2: 2 of 2 used, third route failed. Earlier: git show 570374d9a:production/handover/HANDOVER.md ('Tries used') and 8e4584953.
+- Tries used: 18 Nov legs 2 of 2 plus the researched screen (set aside); J4 2 of 2 (passed); skin-verdict 1 (passed); R4 1 of 2, coat 1 of 2, nylon-jam 1 of 2 in flight; donkey-start 1 (passed); blouse set aside. Earlier: git show 570374d9a:production/handover/HANDOVER.md.
 - API spend: US$1.15 (8 Nov) plus US$2.62 (16 Nov); none 17 or 18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools.
