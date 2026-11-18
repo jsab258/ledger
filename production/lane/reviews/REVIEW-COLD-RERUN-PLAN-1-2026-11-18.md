@@ -1,0 +1,19 @@
+# Review: cold re-run plan 1 (18 Nov 2026)
+
+Verdict: FAIL as a brief to run; the cost figure and the choice of skill stand. Plain words, third person, no em-dashes or italics, content rule kept, nothing recommended that needs the licence list, no ask of Jafar outside scope.
+
+## Findings
+
+1. Fixed. Cost figure checked: production/time-log.jsonl, 30 Oct 11:28 to 13:14 is 1.77 h; UNIT-COSTS-2026-11-02.md gives 1.77 h measured, US$40.48 (helper 30.62, reviewers 9.86). 1.5 times 1.77 is 2.66, so 2.7 h is right. But the file calls it the chandler wear redo, and notes the jeans window opened two minutes in: it is elapsed time by a session that knew the piece, not dedicated time. The draft now says so. Shopfront 4.3 h and 4 to about 14 h design match the same file.
+2. Fixed. The brief asked for a grey-brick house outside the corner's 33 m. There is none. The grey-brick houses are the three west_south cottages at x 3 to 21 m (vignette-pieces.json; N16-5 plan's bay plan); beyond 33 m the grey brick is the west_north shops and the chandler. The draft now names the cottages. The lead must accept that the piece sits inside the corner he has seen, kept off by default.
+3. Fixed in wording, open in substance. "No earlier wear piece touched" was false: each cottage already has 7 to 12 rule marks (street-wear.json, counted 18 Nov), including a damp band and four streaks on bay 1. Street-level wear also now runs to 48 m (street_wear.py, 17 Nov). So the brief's "damp at the wall's foot" repeats an existing mark, and the gate's decal counts (median 1 a wall, at most 6 in view) fail on what is already there, before the cold session adds anything. Recommended: drop the damp, and either judge the counts on the new owner's marks only or count them as known shortfalls.
+4. Open, the main one. The isolation does not keep the history out. "A new working copy, withheld files deleted" leaves the git history: git show or git log returns DECISIONS.md, NOTEBOOK.md, the audits and every commit message. The log check only catches reads of named paths, not git commands, other branches, the GitHub remote or the claude.ai recipe map. Recommended: build the folder from the received list only, copied in with no .git (or one fresh commit), no remote, the GitHub and docs connectors off. Have the check flag any git command and any read outside that folder, including the memory folder the skill names by its full C: path, and the claude.ai memory tool if it is on.
+5. Open, minor. Even with all that, history still gets in through the files the session does receive: the skill, VignetteShot.cpp and street_wear.py comments are full of dated decisions. That is acceptable, but the write-up should say so. RULINGS.md and canon.md are in neither list. Decide which.
+6. Fixed. On failure it said "one RECIPE.md line". Since RULINGS 9 Nov, unit lines go to NOTEBOOK.md. Changed.
+7. Fixed. The citation for "no new shops" now includes RULINGS 3 Oct (trades), where the bay plan comes from. The "13 Oct" date for the recipe-tests line is unsourced (CLAUDE.md gives none). It is marked unverified.
+8. Open. Keeping the piece off by default has no mechanism today: -NoWearOn only removes marks when it is passed (VignetteShot.cpp). Now marked unverified. Also, N16-5's S2 may give the cottages a new brick before 1 Dec, which would change the baseline. Check that the run comes after S2 or is pinned before it.
+9. Unverified. The C2 and C4 High grades come from the external recipe-map doc, which this review did not reach. The RECIPE.md section 1, 2 and 13 hours match. The estimate adds up to 3.5 to 7 h.
+
+## For the main session
+
+Merge fixes 1, 2, 6 and 7. Decide 3 (damp and the count rule), 4 (build the folder from the received list, no git history) and 8 (how it stays off) before the plan goes on the 30 Nov order. 30 Nov is a Monday and 1 Dec a Tuesday.
