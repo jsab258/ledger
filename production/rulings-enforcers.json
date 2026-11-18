@@ -156,7 +156,7 @@
     "tools/doc-caps.py::THE FILES EVERY SESSION READS STAY SHORT ENOUGH",
     "monday-audit"
    ],
-   "note": "caps; the Monday file's presence by 12:50 (token_audit.py --monday-due); notebook lines are judgement"
+   "note": "caps; the Monday file's presence by 12:50 (token_audit.py --monday-due); notebook lines are judgement; the monthly cold re-run of one skill (18 Nov, advisor 218): monday-audit checks the month has one"
   },
   {
    "line": "7, 10 Nov: an hourly-checked line, 0% at",
@@ -172,10 +172,11 @@
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
    "by": [
-    "tools/token_measures.py::KILN OVER 15% of the week's spend",
+    "tools/token_measures.py::KILN OVER %g%% of the week's spend",
+    "tools/token_audit.py::KILN BY ORDER ITEM",
     "monday-audit"
    ],
-   "note": "token_measures.py --kiln-share measures Kiln's share of the week; the rest is judgement"
+   "note": "token_measures.py --kiln-share counts each step by order item (token_audit.is_kiln; untimed steps by what they touch) against week-shape.json's kiln_share (70% the week of 16 Nov, else 15%; advisor 218). The three proofs before props, vehicles or buildings modules (18 Nov): monday-audit checks no such module started before them."
   },
   {
    "line": "8 Nov, models: helpers are the project's agents",
@@ -259,7 +260,7 @@
     "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
     "monday-audit"
    ],
-   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot"
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six)"
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",

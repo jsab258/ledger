@@ -211,6 +211,26 @@ def person_of(item, desc=None):
     return None
 
 
+# KILN BY ORDER ITEM (advisor 218, 18 Nov): a step is Kiln's when the task open at it is Kiln's order item (n16-1, or a
+# name saying kiln or tool loop); a step under another order item (nNN-M other than Kiln's) is not; a step in no task
+# or a session-wide task is Kiln's when its own tool calls or its helper's brief touch Kiln (its repository, lanes,
+# gates, engine or the garment writers). Kiln's order items are listed per order below.
+KILN_ITEMS = {"n16-1"}
+KILN_NAME = re.compile(r"kiln|tool loop", re.I)
+ORDER_ITEM = re.compile(r"\bn\d\d-\d+\b")
+KILN_TOUCH = re.compile(r"kiln|tool-dev|tool loop|held-?back|drape-studio|make_\w*_job|cargo|ledger-cloth", re.I)
+
+
+def is_kiln(item, desc, tools):
+    ids = set(ORDER_ITEM.findall(item or ""))
+    if ids & KILN_ITEMS or KILN_NAME.search(item or ""):
+        return True
+    if ids:
+        return False
+    text = (desc or "") + " " + " ".join(x for _, x in tools)
+    return bool(KILN_TOUCH.search(text))
+
+
 def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
     windows = task_windows(timelog)
     rows = []
@@ -235,7 +255,7 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
     out = {"items": defaultdict(lambda: [0.0, 0]), "kinds": defaultdict(lambda: [0.0, 0]), "days": defaultdict(lambda: [0.0, 0]),
            "models": defaultdict(lambda: [0.0, 0]), "history": [0.0, 0.0], "steps": 0, "usd": 0.0,
            "itemKinds": defaultdict(lambda: defaultdict(float)), "itemsFilled": defaultdict(lambda: [0.0, 0]), "gapMin": gap_min,
-           "whoModels": defaultdict(lambda: [0.0, 0]), "persons": defaultdict(lambda: [0.0, 0])}
+           "whoModels": defaultdict(lambda: [0.0, 0]), "persons": defaultdict(lambda: [0.0, 0]), "kiln": [0.0, 0]}
     for who, sess, desc, s, base, agent in rows:
         t = swiss(s["ts"])
         if since and t < since or until and t >= until:
@@ -247,6 +267,9 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
             out[key][name][0] += usd
             out[key][name][1] += 1
         out["itemKinds"][item][kind] += usd
+        if is_kiln(item, desc, s["tools"]):
+            out["kiln"][0] += usd
+            out["kiln"][1] += 1
         who_for = person_of(item, desc)
         if who_for:
             out["persons"][who_for][0] += usd

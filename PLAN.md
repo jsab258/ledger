@@ -11,7 +11,7 @@ Every exit bundle names the commit and package, raw logs, fixed-camera images, a
 **0. Recover control.** Ceiling 0.20W, two to three working days, nothing bought.
 - TOWN.md and CLOTHES.md within their caps; superseded lists and questions retired.
 - Recover what exists unseen: every GitHub branch, his drives' project folders, the approval pages' answers, the old game-studio repository; each marked in main, unique and kept, or archivable. Taste or identity (the September atlas, art/atlas-01) reaches him on one page before merging.
-- CATALOGUE.md: maps, district plans, concept images, research topics, approved assets; and the homes table, one home per kind of fact (map, cast, simulation rules, the street's people, the look). Disagreements listed, first the built street against the atlas, the C# simulation against the Unreal port, the game's cast against the casting sheets, the walkers against the residents.
+- CATALOGUE.md: maps, district plans, concept images, research topics, approved assets; and the homes table, one home per kind of fact (map, cast, simulation rules, the street's people, the look). Disagreements listed (CATALOGUE.md).
 - Checks failing the build: a branch over a week old neither merged nor archived; a derived thing disagreeing with its home; new art or research without a catalogue line. Approval answers read back nightly; the morning pictures made by 07:30.
 - Every friends-build ruling mapped to one item, owner and packaged proof. Verified: P3's checking under caps, P14's source records, evening limits surviving a restart. One Shipping launch from the shortcut on his own account, first-run preparation included; no second account.
 - The history cleaned: its plan and all it touches told to him first; every session stopped.
@@ -31,6 +31,7 @@ Every exit bundle names the commit and package, raw logs, fixed-camera images, a
 
 **3. Make thirty minutes hold.** Ceiling 0.75W, one to two weeks, the existing talk caps.
 - N3 ported, with only the first-week content P4's gaps need: visible arrivals and deliveries, consequence, a useful office and ledger, prompts. Every visible person has a simulation identity. The weather proof (below). Debug keys, typing and collision faults removed.
+- The fight lab test, after his combat pick and a Fable melee round, a punch, hit reaction and fall a witness sees through real perception code.
 - **Exit:** two different thirty-minute newcomer routes and one continuous checked-live route within the cap; no critical fault; at most five empty minutes; a consequence seen and kept after restart. **His checkpoint:** he plays thirty minutes and judges it.
 
 **4. Friends' candidate.** Ceiling 0.50W, about a week, at most $5 an evening.

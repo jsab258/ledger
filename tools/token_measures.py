@@ -559,29 +559,44 @@ def top_helpers(day):
     return 0
 
 
-# KILN'S SHARE OF THE WEEK (RULINGS 13 Nov: "at most 15% of weekly usage"; enforced 17 Nov). The week's steps are
-# token_audit.py's, each given to the time-log task open at that moment (helpers' steps too); a task whose name holds
-# "kiln" or "tool loop" is Kiln's. Dollars at list price, a measure of usage, not his bill.
+# KILN'S SHARE OF THE WEEK (RULINGS 13 Nov, 18 Nov: the share the week's order sets, 15% when it sets none; advisor
+# 218). Each step of the week (helpers' too) is judged by token_audit.is_kiln: by order item first (n16-1 or a task
+# saying kiln/tool loop is Kiln's, another item's is not), and a step in no item's task by what its own calls touch.
+# The week's share: production/week-shape.json "kiln_share" when its "monday" is this week. Dollars at list price.
 KILN = re.compile(r"kiln|tool loop", re.I)
 KILN_CAP = 15.0
+WEEK_SHAPE = os.path.join(ROOT, "production", "week-shape.json")
+
+
+def kiln_cap(week, path=WEEK_SHAPE):
+    try:
+        d = json.load(open(path, encoding="utf-8"))
+    except (OSError, ValueError):
+        return KILN_CAP
+    if d.get("monday") == week.strftime("%Y-%m-%d") and d.get("kiln_share") is not None:
+        return float(d["kiln_share"])
+    return KILN_CAP
 
 
 def kiln_share(items):
-    """(Kiln's dollars, all dollars) from token_audit's items table {task: [usd, steps]}."""
+    """(Kiln's dollars, all dollars) from token_audit's items table {task: [usd, steps]}, by task name alone (the
+    pre-18 Nov count, kept for the selftest and for comparison)."""
     return sum(v[0] for k, v in items.items() if KILN.search(k or "")), sum(v[0] for v in items.values())
 
 
-def kiln_line(kiln, total, week):
+def kiln_line(kiln, total, week, cap=KILN_CAP):
     pct = 100.0 * kiln / total if total else 0.0
-    word = "KILN OVER 15% of the week's spend" if pct > KILN_CAP else "kiln share within 15%"
+    word = ("KILN OVER %g%% of the week's spend" % cap) if pct > cap else ("kiln share within %g%%" % cap)
     return "%s: week of %s, US$%.2f of US$%.2f (%.1f%%)" % (word, week.strftime("%d %b"), kiln, total, pct)
 
 
 def kiln_week(day):
     week = day - datetime.timedelta(days=day.weekday())
     out = audit(week, week + datetime.timedelta(days=7))
-    line = kiln_line(*kiln_share(out["items"]), week=week)
+    line = kiln_line(out["kiln"][0], out["usd"], week, kiln_cap(week))
     print(line)
+    old, tot = kiln_share(out["items"])
+    print("by task name alone (the old count): %.1f%%" % (100.0 * old / tot if tot else 0.0))
     return 1 if line.startswith("KILN OVER") else 0
 
 
@@ -677,6 +692,14 @@ def selftest():
         ("kiln at 20% fails", kiln_line(4.0, 20.0, datetime.datetime(2026, 11, 16)).startswith("KILN OVER 15%")),
         ("kiln at exactly 15% passes", kiln_line(3.0, 20.0, datetime.datetime(2026, 11, 16)).startswith("kiln share within")),
         ("kiln with no spend passes", kiln_line(0.0, 0.0, datetime.datetime(2026, 11, 16)).startswith("kiln share within")),
+        ("kiln at 60% passes a 70% week", kiln_line(12.0, 20.0, datetime.datetime(2026, 11, 16), 70.0).startswith("kiln share within 70%")),
+        ("kiln at 75% fails a 70% week", kiln_line(15.0, 20.0, datetime.datetime(2026, 11, 16), 70.0).startswith("KILN OVER 70%")),
+        ("another week's share falls back to 15%", kiln_cap(datetime.datetime(2020, 1, 6)) == 15.0),
+        ("is_kiln: Kiln's order item", __import__("token_audit").is_kiln("n16-1 sleeve fit", "", [])),
+        ("is_kiln: another item is not, whatever it touches", not __import__("token_audit").is_kiln("n16-3 packing", "", [("Bash", "cargo build kiln")])),
+        ("is_kiln: an untimed step touching Kiln's lanes is", __import__("token_audit").is_kiln("not in the time log", "", [("Bash", "cd F:/LedgerTools/tool-dev/lanes/x")])),
+        ("is_kiln: an untimed step elsewhere is not", not __import__("token_audit").is_kiln("not in the time log", "street scale test", [("Read", "ledger/Source/x.cpp")])),
+        ("is_kiln: n16-10 is not n16-1", not __import__("token_audit").is_kiln("n16-10 gate hook", "", [])),
         ("helper cap is eight this week", helper_cap(datetime.date(2026, 11, 17)) == 8 and helper_cap(datetime.date(2026, 11, 23)) == 8),
         ("helper cap is six outside it", helper_cap(datetime.date(2026, 11, 24)) == 6 and helper_cap(datetime.date(2026, 11, 15)) == 6),
         ("three overlapping helpers peak at three", max_at_once([(datetime.datetime(2026, 11, 17, h), datetime.datetime(2026, 11, 17, h + 3)) for h in (9, 10, 11)])[0] == 3),
