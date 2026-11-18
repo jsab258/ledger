@@ -169,7 +169,7 @@
     "advisor:watchdog",
     "tools/push_guard.py"
    ],
-   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98"
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98 Fable 40% this week (18 Nov, advisor 228): each hourly row names the Fable helpers and the week's Fable share (get_usage Weekly Fable); the advisor watchdog reads the rows."
   },
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
