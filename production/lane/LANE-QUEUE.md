@@ -170,8 +170,8 @@ Run of 17:16:
 The synthesis (4n, advisor 20:55 on 18 Nov, his "1" at 20:47), above everything; item 100 (round 6) waits until "Vision approved:".
 
 4n-1. DONE 18 Nov 23:17 to 23:25: the pack. production/lane/synthesis/pack/ (README.md and eight digests, about 60,000 words, each line sourced; game-file numbers marked as leads). Eight helpers, Sonnet and Opus at medium. 4p's GTA VI first read joins it after 19 Nov.
-4n-2. NEXT: the author (one Fable helper at max): VISION.md, DESIGN.md, TRACE.md, BUILD-ORDER.md, QUESTIONS.md in production/lane/synthesis/.
-4n-3. Then: a fresh Opus reviewer at high; one fix by the author.
+4n-2. DONE 18 Nov 23:26 to 00:13: the author (one Fable helper at max, the week's only Fable use in the lane) wrote production/lane/synthesis/VISION.md (806 words), DESIGN.md (about 11,100; 91 experience rules with ids in 21 families), TRACE.md (all 145 lines: 104 carried, 41 left out; 16 conflict or open lines), BUILD-ORDER.md (29 rounds in four stages, the gate as round 6, the one-simulation switch between stages A and B), QUESTIONS.md (three: endings, Tom's line on who he will not hit, each person's own nerve and loyalty).
+4n-3. NEXT: a fresh Opus reviewer at high (canon.md, RULINGS.md and the five files only); then one fix by a fresh Fable helper given the review (the author of 23:26 cannot be resumed in a new run).
 4n-4. Then: the two Claude Docs ("LEDGER: the vision", "LEDGER: the whole game"), links in the end row.
 4p. From 19 Nov: GTA VI first read (systems only, no spoilers).
 4o. After 4n: the publish gate (tools/lane/gate/, tools/lane/driving-gate/, DRIVING-ROUND4-FINDINGS.md).

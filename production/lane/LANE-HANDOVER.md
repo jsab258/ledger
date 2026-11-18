@@ -4,6 +4,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
+**Cloud lane, last run:** started 23:17 on 18 Nov, stopped 00:15 on 19 Nov. 4n steps 1 and 2 done: the pack (production/lane/synthesis/pack/) and the author's five files (production/lane/synthesis/VISION.md, DESIGN.md, TRACE.md, BUILD-ORDER.md, QUESTIONS.md). Next run: 4n step 3, the fresh Opus review at high, then one fix by a fresh Fable helper given the review, then step 4, the two Claude Docs. 4p (GTA VI first read, systems only, no spoilers) may start from 19 Nov beside it. No prototype rounds until "Vision approved:".
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
