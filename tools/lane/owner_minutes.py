@@ -11,7 +11,8 @@ caller has them (read from the page's database): report rows' words, advisor row
 shown beside the target, never judged against it). Everything per event except the reading speed is an
 estimate, as the design says; anything not passed in is "n.m." (not measured) in the line.
 
-    python tools/lane/owner_minutes.py 2026-11-09 [--finished 23] [--target 30]
+    python tools/lane/owner_minutes.py 2026-11-09 [--finished 23] [--target 30] [--advisor-dir DIR]
+    (DIR: the page database's "advisor" collection exported one JSON file a row, as ArtifactData out_dir writes it)
 """
 import datetime as dt
 import glob
@@ -91,10 +92,33 @@ def parse_answer_at(s):
         return None
 
 
+def count_advisor_rows(folder, week_start):
+    """Numbered advisor rows in a week, from the page database's 'advisor' collection exported as one JSON file a row
+    (file name = row id, numbered rows end in -<number>). Returns (rows carrying his_answer, all numbered rows).
+    Pass the first as advisor_rows: his_answer is the one field that proves his time was spent (a lower bound)."""
+    ws = dt.datetime.combine(week_start, dt.time()) if isinstance(week_start, dt.date) and not isinstance(week_start, dt.datetime) else week_start
+    days = set((ws + dt.timedelta(days=k)).date().isoformat() for k in range(7))
+    with_answer = total = 0
+    for p in sorted(glob.glob(os.path.join(folder, "*.json"))):
+        rid = os.path.splitext(os.path.basename(p))[0]
+        if rid[:10] not in days or not re.search(r"-\d+$", rid):
+            continue
+        try:
+            d = json.load(io.open(p, encoding="utf-8"))
+        except ValueError:
+            continue
+        d = d.get("data", d) if isinstance(d, dict) else {}
+        total += 1
+        if str(d.get("his_answer") or "").strip():
+            with_answer += 1
+    return with_answer, total
+
+
 def owner_minutes(week_start, items, answers, reports=None, advisor_rows=None, finished_units=None,
-                  wpm=200, tap_s=10, pic_s=20, pc_walk_min=5, step_s=30):
+                  wpm=200, tap_s=10, pic_s=20, pc_walk_min=5, step_s=30, advisor_total=None):
     """items: page items (dicts as items.json); answers: [{"id", "at" (datetime, Swiss)}]; reports: [text] or None;
-    advisor_rows: int or None; finished_units: int or None. Returns the design's dict."""
+    advisor_rows: int or None, the numbered advisor rows carrying his_answer (count_advisor_rows' first value, not all
+    rows); advisor_total: all numbered rows, shown beside it; finished_units: int or None. Returns the design's dict."""
     ws = dt.datetime.combine(week_start, dt.time()) if isinstance(week_start, dt.date) and not isinstance(week_start, dt.datetime) else week_start
     we = ws + dt.timedelta(days=7)
     inweek = lambda t: t is not None and ws <= t < we  # noqa: E731
@@ -133,16 +157,20 @@ def owner_minutes(week_start, items, answers, reports=None, advisor_rows=None, f
             "hands_min": round(hands_min, 1), "reports_min": None if reports_min is None else round(reports_min, 1),
             "advisor_min": None if advisor_min is None else round(advisor_min, 1), "per_piece": per_piece,
             "estimated_parts": estimated, "batches_by_day": {d: len(s) for d, s in sorted(batches.items())},
-            "items": len(week_items), "answers": len(week_answers)}
+            "items": len(week_items), "answers": len(week_answers),
+            "advisor_rows": advisor_rows, "advisor_total": advisor_total}
 
 
 def audit_line(week_start, r, target=None):
     nm = lambda v: "n.m." if v is None else "%.0f" % v  # noqa: E731
     end = week_start + dt.timedelta(days=6)
     over = [d for d, n in r["batches_by_day"].items() if n > 2]
-    line = "Owner minutes %s to %s: asked %.0f (items %.0f, taps %.0f, pictures %.0f, hands %.0f, reports %s); chosen %s (advisor); per finished piece %s" % (
+    adv = "advisor"
+    if r.get("advisor_rows") is not None and r.get("advisor_total") is not None:
+        adv = "%d advisor rows with his words of %d" % (r["advisor_rows"], r["advisor_total"])
+    line = "Owner minutes %s to %s: asked %.0f (items %.0f, taps %.0f, pictures %.0f, hands %.0f, reports %s); chosen %s (%s); per finished piece %s" % (
         week_start.strftime("%d %b"), end.strftime("%d %b"), r["asked"], r["items_min"], r["taps_min"], r["pictures_min"],
-        r["hands_min"], nm(r["reports_min"]), nm(r["chosen"]),
+        r["hands_min"], nm(r["reports_min"]), nm(r["chosen"]), adv,
         r["per_piece"] if isinstance(r["per_piece"], str) else "%.1f" % r["per_piece"])
     if target is not None:
         line += "; target %d%s" % (target, " OVER" if r["asked"] > target else "")
@@ -189,7 +217,10 @@ def main(argv):
     ws -= dt.timedelta(days=ws.weekday())
     fin = int(argv[argv.index("--finished") + 1]) if "--finished" in argv else None
     tgt = int(argv[argv.index("--target") + 1]) if "--target" in argv else None
-    r = owner_minutes(ws, read_items(), read_answers(), finished_units=fin)
+    adv_rows = adv_total = None
+    if "--advisor-dir" in argv:
+        adv_rows, adv_total = count_advisor_rows(argv[argv.index("--advisor-dir") + 1], ws)
+    r = owner_minutes(ws, read_items(), read_answers(), finished_units=fin, advisor_rows=adv_rows, advisor_total=adv_total)
     print(audit_line(ws, r, tgt))
     print("batches by day: %s; items %d, answers %d; estimated: %s" % (r["batches_by_day"], r["items"], r["answers"], "; ".join(r["estimated_parts"]) or "none"))
     return 0
