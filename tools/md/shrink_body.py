@@ -8,8 +8,8 @@ OUT_PREFIX-k0.80.fbx and so on (centimetres, mesh and skeleton, as tools/md/pad_
 WHY, 2 October (the jacket proof). Our MetaHuman bodies get no arrangement points by script, so the jacket's pieces
 are placed on Marvelous's stock man and the stock man is then replaced by our body before draping
 (tools/md/jobs/swap_body.py). Ron is a much bigger man: his chest and arms came through the placed pieces, and the
-distance a piece sits off the body cannot be set (SetArrangementPosition moves nothing; research
-MD-LAPEL-FOLD-TURNED-2026-10-02.md). So the drape starts on a thinned Ron that fits inside the placed pieces, and is
+distance a piece sits off the body cannot be set (in Marvelous SetArrangementPosition moves nothing; research
+MD-LAPEL-FOLD-TURNED-2026-10-02.md; Kiln places the piece at once since 18 Nov). So the drape starts on a thinned Ron that fits inside the placed pieces, and is
 carried to his full size by swapping in fuller copies a few millimetres at a time, the cloth settling at each, as
 Marvelous itself morphs a garment from one avatar to the next. Drawing each point towards its own bone (not scaling
 the whole body) keeps the arms where the sleeves were placed round them.
