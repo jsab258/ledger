@@ -224,3 +224,13 @@ def test_kiln_share_cli_fails_over_the_cap(tmp_path, monkeypatch, capsys):
 
 def test_two_codes_take_the_first():
     assert it.code_in("n16-6 after n16-1") == "n16-6"
+
+
+def test_fable_refused_at_its_cap(tmp_path):
+    st = tmp_path / "pace.json"
+    st.write_text(json.dumps({"fable": 40.0, "fable_at": "2026-11-18 22:43"}), encoding="utf-8")
+    assert it.fable_refusal({"model": "fable"}, str(st))
+    assert it.fable_refusal({"model": "opus"}, str(st)) is None
+    st.write_text(json.dumps({"fable": 33.0}), encoding="utf-8")
+    assert it.fable_refusal({"model": "fable"}, str(st)) is None
+    assert it.fable_refusal({"model": "fable"}, str(tmp_path / "missing.json")) is None

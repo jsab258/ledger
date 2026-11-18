@@ -2,6 +2,7 @@
 """THE WEEK'S PACE AGAINST HIS LINE (his yes of 7 November, keep-monday-share-2026-11-06; RULINGS.md).
 
     python tools/pace_line.py 65            # the week's allowance now reads 65%: the line, the gap, what it allows
+    python tools/pace_line.py 65 --fable 33 # also Fable's own weekly reading: the row's share and the 40% cap
     python tools/pace_line.py --selftest
 
 A straight line from 0% at Monday's 13:00 reset to 90% at the next Monday's 07:00, the last 10% kept for Monday morning.
@@ -93,6 +94,18 @@ def verdict(now, percent, shape=None):
     return "pace: %.0f%% against the line's %.1f%%, %+.1f points; %s" % (percent, line, ahead, what)
 
 
+# FABLE'S CAP (his pick 18 Nov, advisors 227-228, 236: Fable up to 40% of its week; the backstop of 21:35 found nothing
+# enforced it). The reading is the usage tool's Weekly Fable line, stored beside the pace in STATE; tools/lane/item_tags.py's
+# helper hook refuses a new helper on model fable when the stored reading is at or over the cap.
+FABLE_CAP = 40.0
+
+
+def fable_verdict(fable):
+    if fable >= FABLE_CAP:
+        return "Fable %.0f%% of its week: AT CAP (%.0f%%), no new Fable helper" % (fable, FABLE_CAP)
+    return "Fable %.0f%% of its week (cap %.0f%%)" % (fable, FABLE_CAP)
+
+
 def selftest():
     fri = datetime.datetime(2026, 11, 6, 21, 0)
     cases = [
@@ -119,6 +132,8 @@ def selftest():
         ("reset, Monday 07:00 is 90", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), pressed) - 90) < 0.01, True),
         ("another week ignores it", abs(line_at(fri, on) - line_at(fri, {})) < 1e-9, True),
         ("double climbs about 1.98 an hour", abs(line_per_hour(tue, on) - 1.98) < 0.01, True),
+        ("Fable under its cap", "AT CAP" in fable_verdict(33), False),
+        ("Fable at its cap", "AT CAP" in fable_verdict(40), True),
     ]
     bad = [n for n, got, want in cases if got != want]
     print("pace_line selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
@@ -130,10 +145,22 @@ def main(a):
         return selftest()
     now = datetime.datetime.now()
     print(verdict(now, float(a[0])))
+    state = {"at": now.strftime("%Y-%m-%d %H:%M"), "percent": float(a[0]), "ahead": round(float(a[0]) - line_at(now), 2)}
+    if "--fable" in a:
+        state["fable"] = float(a[a.index("--fable") + 1])
+        state["fable_at"] = state["at"]
+        print(fable_verdict(state["fable"]))
+    else:
+        try:   # keep the last Fable reading when only the pace is given
+            with open(STATE, encoding="utf-8") as fh:
+                old = json.load(fh)
+            if "fable" in old:
+                state["fable"], state["fable_at"] = old["fable"], old.get("fable_at", old.get("at"))
+        except (OSError, ValueError):
+            pass
     try:
         with open(STATE, "w", encoding="utf-8") as fh:
-            json.dump({"at": now.strftime("%Y-%m-%d %H:%M"), "percent": float(a[0]),
-                       "ahead": round(float(a[0]) - line_at(now), 2)}, fh)
+            json.dump(state, fh)
     except OSError:
         pass
     return 0

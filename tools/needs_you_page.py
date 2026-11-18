@@ -6,6 +6,7 @@
     python tools/needs_you_page.py --close ID "how"   # he answered or did it: the item is done and leaves the page
     python tools/needs_you_page.py --archive  # each Monday: items done over two days ago move to archive.json, unpublished
     python tools/needs_you_page.py --action-week 2026-11-16   # Monday: every ACTION item since that day, with its reason
+    python tools/needs_you_page.py --waiting  # fails when the order's waiting list or the handover's next steps ask him with no open item
     python tools/needs_you_page.py --selftest
 
 WHY, 2 November 2026. Jafar: "make one permanent page, 'LEDGER: Needs you', in the same format as your decision
@@ -138,6 +139,48 @@ def faults(data, check_files=True):
     return out
 
 
+ASKS_HIM = re.compile(r"(one pick for him|his pick (among|between|on|before)|his (one-line )?yes (before|for|on)|needs his yes|"
+                      r"for his (yes|pick|answer|tap)|ask(s)? him (for|whether|to)|waits? on his (yes|pick|answer|tap))", re.I)
+PHASE_KEPT = re.compile(r"\bK[1-7]\b")
+
+
+def current_order(repo=None):
+    """The newest order in production/orders/ (not its archive)."""
+    d = os.path.join(repo or REPO, "production", "orders")
+    names = sorted(n for n in os.listdir(d) if re.match(r"\d{4}-\d{2}-\d{2}\.md$", n))
+    return os.path.join(d, names[-1]) if names else None
+
+
+def section_lines(path, starts):
+    """The lines under the first heading that starts with any of `starts`, up to the next heading of that level."""
+    if not path or not os.path.exists(path):
+        return []
+    out, inside, level = [], False, 0
+    for line in open(path, encoding="utf-8").read().splitlines():
+        m = re.match(r"(#+) (.*)", line)
+        if m:
+            if inside and len(m.group(1)) <= level:
+                break
+            if any(m.group(2).startswith(s) for s in starts):
+                inside, level = True, len(m.group(1))
+            continue
+        if inside and line.strip():
+            out.append(line.strip())
+    return out
+
+
+def waiting_without_item(data, order=None, handover=None):
+    open_ids = [x["id"] for x in data["items"] if x.get("state") == "open"]
+    order = order or current_order()
+    handover = handover or os.path.join(REPO, "production", "handover", "HANDOVER.md")
+    found = []
+    for where, path, starts in (("order", order, ("3.",)), ("handover", handover, ("Next",))):
+        for line in section_lines(path, starts):
+            if ASKS_HIM.search(line) and not PHASE_KEPT.search(line) and not any(i in line for i in open_ids):
+                found.append((where, line))
+    return found
+
+
 def close(data, item_id, how, now=None):
     """Marks one open item done, with when and how; returns the item, or None if no open item has that id."""
     now = now or datetime.datetime.now()
@@ -258,6 +301,19 @@ def selftest():
     batch = [dict(good["items"][0], id="t%d" % n, added="2026-11-16 %02d:00" % (8 + n)) for n in range(3)]
     check("three batches of open items in one day are refused", faults({"items": batch}) != [])
     check("two batches in one day pass", faults({"items": batch[:2]}) == [])
+    # --waiting (advisor 231): a waiting line asking him needs an open item's id; K1-K7 and past answers pass
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        o, h = os.path.join(td, "order.md"), os.path.join(td, "HANDOVER.md")
+        open(o, "w", encoding="utf-8").write("## 2. Week\n- his pick among A and B (not the waiting list)\n"
+                                             "## 3. Waiting\n1. A licence: one pick for him with the next order.\n"
+                                             "2. A font: one pick for him (font-pick-2026-11-19).\n3. K3: his pick for its phase.\n"
+                                             "4. Combat: decided by his pick of 16:02.\n## 4. Decided\n- his yes before X\n")
+        open(h, "w", encoding="utf-8").write("## Tried\n- none asks him to\n## Next, in order\n1. ask him for the key\n")
+        d = {"items": [{"id": "font-pick-2026-11-19", "state": "open"}]}
+        got = waiting_without_item(d, order=o, handover=h)
+        check("waiting: only the unmatched order line and the handover's ask", [w for w, _ in got] == ["order", "handover"]
+              and got[0][1].startswith("1. A licence") and got[1][1].startswith("1. ask him"))
     print("needs_you_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -304,6 +360,15 @@ if __name__ == "__main__":
                                                           x.get("tried", "-"), x.get("closed", "open")))
         print("action items since %s: %d" % (since, len(rows)))
         sys.exit(0)
+    if "--waiting" in a:
+        # NOTHING WAITS ON HIM OFF HIS PAGE (advisor 231, his question of 18 Nov 21:10, "why didn't this come to my needs
+        # you page"): every line of the current order's waiting list or the handover's next steps that still asks for
+        # his yes, pick or answer must name an open page item by its id; his phase-kept items (K1 to K7) are exempt.
+        hits = waiting_without_item(load())
+        for where, line in hits:
+            print("needs-you WAITING %s: %s" % (where, line[:160]))
+        print("needs-you waiting: %d line(s) asking him with no open page item" % len(hits))
+        sys.exit(1 if hits else 0)
     if "--check" in a:
         f = faults(load())
         for x in f:
