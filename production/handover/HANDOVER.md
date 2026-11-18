@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 04:22 (the hourly run; the last session set its Stopped line at 03:56)
+**Started:** 2026-11-18 05:20 (the hourly run; the last session set its Stopped line at 05:11)
 
-**Row due:** 2026-11-18 05:25 (last 04:25; page and advisor read 05:11, nothing new; last ack 216 at 02:55)
-**Stopped:** 2026-11-18 05:11 (history past its point at an item's end. Kiln main 8aca68f (resource-trousers, J3, J2, R2, resource-solver merged, tests pass); gap 2: where the tangle is born found, try 2 not yet run (redesign in Next 1); R3 and C2 back, to review/fix. No helper running.)
+**Row due:** 2026-11-18 07:13 (last 06:13; page and advisor read 06:00, nothing new; last ack 216 at 02:55)
+**Stopped:** 2026-11-18 06:17 (history past its point at an item's end. Kiln main 278e006, eight pieces merged this run; gap 2 set aside after three routes; resource-rewrite reviewed MERGE WITH FIXES, fixes not applied. No helper running.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 65% at 04:25 against 78%, 13 behind. His 17 Nov 22:12 direction (advisor 213): Kiln's share aims at 60% of spend from this morning (25.5% at 04:25). This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,34 +28,34 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (04:22 to 05:00; details in DECISIONS 04:28-04:59)
-- Page and advisor read 04:24, 04:44: nothing new. Row 04:25.
-- Kiln main now 8aca68f: resource-trousers (rows 8, 10, 11, 18, 20, 21, 26, 29, 55; the public quotes checked word for word in the raw page), J3 (+ the review's two gate fixes, 962cc04), J2 rest label, R2 seamshift carry, resource-solver (rows 9, 13, bit for bit).
-- Gap 2 found where the wrist tangle is born: frame 0 every sleeve ring winds once round the forearm; frame 1 the lowest 30 mm lies beside it (first frame's sewing). Holding the cuffs' own closing seams late changed nothing (refuted). My "41 mm off-centre" was a reader's error (mean of a half ring); circle fit: cuff 7 mm off, radius 59, wrapped about 190 degrees. Real fault: band and tube end wrapped only half round; the cuff (191.6 mm) looks narrower than the limb where it lands (about 219 mm, unverified).
-- Lane limbcentre (9c4b1a1 on b095276, KILN_LIMB_CENTRE, off bit for bit; exe C:/LedgerTools/cargo-target/lane-limbcentre/release/drape-studio.exe) built but NOT draped and NOT counted as a try: its premise failed on the circle fit; expected shift about 7 mm only.
-- Untangling research note (production/research): thin, sources unreached.
+## Done this run (05:20 on; details in DECISIONS 05:25 on)
+- Page and advisor read 05:21, 05:28, 05:41, 05:50, 06:00: nothing new. Rows 05:22, 06:13.
+- Kiln main now 278e006 (cargo 90, Python 107): seampartial (compat's long partial-seam forms refused) and figuresurface (the built-in figure's face pushes) merged after small reviews; before them outpath-closed (the output-path guard refused nothing from lane folders; now fails closed), R3 re-target (review MERGE), C2 import hardening (fixes applied), r3-passfalse (R3's follow-ups), C3 garment as data, C1 spec-to-job check. cargo 88 passed, Python suite OK on main.
+- Gap 2 try 2 (of 2) used and FAILED: KILN_BAND_STRETCH (lane bandstretch 300ee5d, not merged) wrapped the cuffs fully; Kiln's own pattern check refused before frame 1 (cuffR rest 172 mm, 219 at the rib's limit, needs 235 where its seams bring it). The half wrap on main hid the shortfall. Girth measured (session scratchpad girth.py): 209-263 mm across the cuff's landing, 193 mm 20 mm nearer the hand.
+- Cause found in the writer's own docstring: the nylon draft is at MH_SamC5's measures but drapes on MH_SamS6 (unmeasured, moved up to 56 mm).
+- Shoulder probe (KILN-SHOULDER-PROBE): the built-in figure has no surface for face pushes; sample only.
 
-## Running at the stop (reports in F:/LedgerTools/tool-dev/reports; read, review, merge nothing unreviewed)
-- R3 (lane r3-retarget 3129b0d): built, four cases pass, KILN-LANE-R3-2026-11-18.md; needs a fresh reviewer.
-- C2 pattern import (lane c2-patimport 6cb883d): review MERGE WITH FIXES (KILN-LANE-C2-REVIEW-2026-11-18.md): DXF pieces in separate blocks at the origin must not be compared (key by block name, plus its test); cargo on the merged tree owed (C: was under its floor). Seam allowance decided: FreeSewing SVGs exported without it.
-(A helper still running at a new start belongs to a finished session: read its report when present.)
+## Running at the stop
+- Nothing. resource-rewrite's review came back MERGE WITH FIXES (KILN-LANE-RESOURCE-REWRITE-REVIEW-2026-11-18.md; scratch merge into 278e006: cargo 97 passed; Python 119 with fix 1): three fixes, all from main's seampartial merge: (1) test_compat_public's 11/12-argument test expects NotSupported, (2) MECHANICS.md's partial-seam row conflict, (3) the stale "More calls" CutPatternAlongInternalShapes row; exact text in that report.
 
 ## Next, in order
-0. Verdicts after 2026-11-18T04:11:00Z; advisor after 2026-11-18T02:55:00+01:00 (last ack 216). Row due 05:25, with Kiln's share.
-1. Gap 2 try 2 (of 2), redesigned: first measure the limb's girth where the right cuff lands (body section at the cuff's placement rows, as KILN-LANE-LIMBCENTRE measures) against the cuff's cut width 191.6 mm. If the band is narrower than its limb plus gap: try 2 = a band narrower than its limb starts stretched fully round it (as a rib cuff is worn), the tube end following it, general, behind a switch, no special cases; drape alone, read winding and the frame-42 wrist. If not narrower: find why the wrap stops at about 190 degrees (rewrap_end's arc-length rule, ARM_WRAP) and make that try 2. A third try needs his yes (research note thin: reach Baraff 2003, Volino 2006 first).
-2. Run alone, no helper compiling: make_baseline.sh at Kiln main 8aca68f (about 1 h), commit regression_baseline.json on Kiln main; the gate with every switch off must match it (resource-solver step 2; also check rest_label on real lines, J2's shortfall: most may read jammed). Then the cantilever convergence check (resource-solver plan step 2).
-3. Public names lane: gate alone (every switch off, against 9ca019e), merge, then the writer edits.
-4. A gate with KILN_STRAIN_LAST=1 on every job, alone; if all pass with body through 0, decide making it the default.
-5. Review then merge R3 and C2; then the re-source plan's step 3-4 (rows 26, 29 wording done in resource-trousers; row 27 Z-step sweep, machine) toward clearing Ron's trousers; remaining machine-free tasks C3 (FreeSewing as data), R4, J4, B2, P1.
-6. Small items: outpath fall-open in lane folders; the built-in figure's shoulder face 2 mm inside (J1 and R3 found it); R2's narrow notes.
-7. On his licence answer: trousers merge (ron-kiln-trousers-import 536ce6307), import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Then 0c daytime talk run; Darren's head remake (advisor 215); bending try 2 (a); n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
+0. Verdicts after 2026-11-18T05:00:00Z; advisor after 2026-11-18T02:55:00+01:00 (last ack 216). Row due 07:13, with Kiln's share. Then item 0b: apply resource-rewrite's three review fixes in its lane (exact text in its review), merge lane-resource-rewrite (it carries resource-public) into main, cargo and Python on main, DECISIONS and NOTEBOOK lines (18 + 14 rows re-sourced).
+1. Gap 2 (nylon right wrist) SET ASIDE 06:05 after the S6 fit route (KILN-NYLON-S6-FIT): unchanged winding 0, new 10.2 mm seam gap. Listed; only a removing or simplifying fix under an hour, or a new researched method that closes a third with no new fault. The S6 draft and measures stay on F: for the jacket when it resumes.
+2. After resource-rewrite merges: step 6's remaining REWRITE batches (line info and export 31-36 with the work-jacket writer; window 15, 16, 43-46), row 39, row 28 (needs a gate).
+3. Run alone, no helper compiling: make_baseline.sh at current Kiln main (about 1 h), commit regression_baseline.json; the gate with every switch off must match it; check rest_label on real lines. Then the cantilever convergence check.
+4. Public names lane: gate alone (every switch off, against 9ca019e), merge, then the writer edits.
+5. A gate with KILN_STRAIN_LAST=1 on every job, alone; if all pass with body through 0, decide making it the default.
+6. Row 27 Z-step sweep (machine) toward clearing Ron's trousers; R4, J4, B2 (drapes after a gate).
+7. Listed: rule 4 refuses uncapped rib at the solver's limit while rule 2 does not; the placement log line lost (the front reads the engine's stderr only at exit).
+8. On his licence answer: trousers merge (ron-kiln-trousers-import 536ce6307), import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Then 0c daytime talk run; Darren's head remake (advisor 215); bending try 2 (a); n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 18 Nov 05:40: gap 2 try 2 (band started fully wrapped and stretched): refused by Kiln's pattern check, the cuff too short for the forearm where it lands (cut for another body).
 - 18 Nov 04:40: causal check, cuffs' closing seams held to the 20 mm stage's end: frames 1-3 identical, so that seam is not the cause (not a try).
 - 18 Nov 03:40: gap 2 try 1 (carried inside points to their old triangle's heaviest corner): wrist edge unchanged; inside points were a symptom.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3 (items 2, 3 and 4 have targets now).
-- Tries used: as in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 18 Nov: Kiln gap 2 (nylon sleeve) 1 of 2 (try 2 not yet run; limbcentre not counted); 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
+- Tries used: as in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 18 Nov: Kiln gap 2 (nylon sleeve) 2 of 2 used, both failed; the third route (S6 fit) running; 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
 - API spend: US$1.15 (8 Nov) plus US$2.62 (16 Nov); none 17 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help (or with no arguments when its docstring shows required ones); let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools.
