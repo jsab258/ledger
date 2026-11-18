@@ -1,0 +1,93 @@
+BalanceLab, run headless in the cloud lane 18 Nov 2026 10:24 Swiss time, argument 200 (runs per plan; 197 of 200 reach Act III), .NET 8.0.134 on Linux, from a scratch copy of ledger/BalanceLab, ledger/Assets/Scripts/Core and Game/EconomySetup.cs at branch lane-2026-11 commit eff0f9e (wip merged). Unchanged code; nuget sources cleared (no packages used). Full console output below.
+Run time: about 9 seconds wall clock (timed with the shell's time command).
+
+weeks/policy=200  talk/h=0.1  witness=0.5
+policy            win% exposed% castout%   avg$ avgHeat avgDC$  got$ visits  part
+do-nothing        56.0     44.0      0.0   1539    0.78      0     0    0.0   0.0
+job-skipper        0.0      0.0    100.0    544    0.51      0     0    0.0   0.0
+briber            72.5     27.5      0.0   1089    0.60    841     0    0.0   0.0
+intimidator       72.5     27.5      0.0   1931    0.60      0     0    0.0   0.0
+discrediter       98.0      2.0      0.0   1878    0.64      0     0    0.0   0.0
+smart             99.0      1.0      0.0   1210    0.48    886     0    0.0   0.0
+beat-keeper       99.5      0.5      0.0   1329    0.39    671     0    0.0   0.0
+hook-user         96.0      4.0      0.0   1845    0.62      0     0    0.0   0.0
+collector         56.0     44.0      0.0   1599    0.78      0    60    1.0   0.0
+collector+purse   56.0     44.0      0.0   1599    0.78      0    60    1.0   0.0
+warm-collect      56.0     44.0      0.0   1719    0.78      0   180    2.0   0.0
+warm-collect+purse  56.0     44.0      0.0   1719    0.78      0   180    3.0   1.0
+
+== open city (21 days; week won -> empire; smart DC throughout) ==
+plan          reach%    cash  falls  cutoff%  stage  rounds$  broke%   street  prices  nosupp% drawers$
+Control        98.5%    2267   0.05     0.0%    0.0        0    0.0%     0.48    1.00     0.0%      348
+Aggressive     98.5%    2070   0.72     0.0%    3.0     1298    0.0%     0.29    1.16     0.0%      204
+Cautious       98.5%    1895   0.16     0.0%    1.0      428    0.0%     0.40    1.07     0.0%      307
+  street 0.00-1.00 (0.55 = ordinary) · prices 1.00 = ordinary · nosupp% = a supplier walked · drawers$ = six days of refill after a day-15 sweep — the street's prosperity, read out of pockets
+
+== the ending matrix (21-day worlds, resolved three ways) ==
+plan         inspector      n   Both  Kingdom  Straight   Burn  strain
+Control      ignored      197   0.0%     0.0%     49.2%  50.8%    0.57
+Control      answered     197   0.0%     0.0%     49.2%  50.8%    0.44
+Control      stonewalled  197   0.0%     0.0%     49.2%  50.8%    0.77
+Control      answered+deflect  197   0.0%     0.0%     49.2%  50.8%    0.35
+Aggressive   ignored      197   0.0%     0.0%      0.0% 100.0%    0.90
+Aggressive   answered     197   0.0%     9.6%      0.0%  90.4%    0.73
+Aggressive   stonewalled  197   0.0%     0.0%      0.0% 100.0%    1.00
+Aggressive   answered+deflect  197   0.0%    31.0%      0.0%  69.0%    0.60
+Cautious     ignored      197   5.6%    31.0%      0.0%  63.5%    0.71
+Cautious     answered     197   5.6%    59.9%      0.0%  34.5%    0.55
+Cautious     stonewalled  197   5.1%     2.0%      0.0%  92.9%    0.90
+Cautious     answered+deflect  197  12.7%    82.2%      0.0%   5.1%    0.44
+  strain = what the inspection SEES (books x scope x deflection); above 0.62 you keep nothing.
+  Quiet is absent by construction: handing over is a deliberate act and the lab bot never reaches for it.
+  Both without deflect is the information-landscape road (act3-draft answer 3): reachable, and roughly half the rate of taking her deal — refusing is the hardest line, as approved.
+
+== is violence ever the efficient path? (combat-spec §2) ==
+answer            lead police          $cost  quiet? bodies
+leave-it          0.28 None                0    100%    0.0
+bribe             0.19 None              404    100%    0.0
+intimidate        0.22 None                0    100%    0.0
+kill-one          0.92 Manhunt             0     11%    1.0
+kill-all          0.99 Manhunt             0      0%    3.0
+  lead = strongest surviving story a magistrate could be handed. Below 0.50 the case is answerable.
+  THE TEST: killing must not beat paying. A body cannot be discredited, bought, scared quiet or waited out, so the lead it leaves is 1.00 forever —
+  which is worse than the story it was meant to bury, and worse the more of it you do. If these rows ever say otherwise, the design is wrong.
+
+== the exchange itself: is Tom Novak bad at this? (combat-spec §2) ==
+policy        win%  down%  hurt  blows  gassed%
+mash           13%    69%  2.54    8.9     100%
+guard-then-hit    0%     3%  2.07   11.0     100%
+patient        26%    46%  2.39    9.6       0%
+shove-and-go    0%     0%  0.00    2.0       0%
+back-off        0%     0%  0.00    0.0       0%
+  hurt = punishment TOM took, in units where 1.0 puts a man down.
+  THE TEST: mashing must not be the best line, and winning must still hurt.
+  If the mash row wins most and takes little, Tom is a brawler and the
+  fiction is broken — combat-spec §2, 'if the player feels GOOD at
+  fighting, the fiction and the systems both break'.
+
+--- perception lab (8000 events) ---
+  sound only        28.4%
+  nothing           26.4%
+  act, no actor     20.8%
+  aftermath         12.2%
+  full               4.3%
+  partial            3.7%
+  actor, no act      3.2%
+  flight             1.0%
+  precursor only     0.1%
+  -> full=4.3%  named=1.5%  anyone-saw-anything=73.6%
+  OK: partial observation is the common case
+  -> somebody could name him at 6.1% of events (day 8.0%, night 3.3%); 6.2% of acquaintances present managed it
+  OK: being named is rare across a whole street
+  (population is a random street: 25% know him, uniform hour — his own neighbourhood is far worse)
+  OK: darkness is cover — naming falls 2.4x from day to night
+  accident available in 10.1% of situations
+  OK: the stairs are an opportunity, not a strategy
+  brandish/Freeze          35.8%
+  brandish/Escalate        31.0%
+  brandish/CallTheBluff    19.0%
+  brandish/Comply           7.1%
+  brandish/FleeScreaming    7.0%
+  OK: pointing it at somebody is not a solution to everything
+  survivor names you in 65.7% of cases, knows your face in 34.3%
+  OK: failing to kill a stranger is survivable — it is a risk, not a trap
