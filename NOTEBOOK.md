@@ -2769,3 +2769,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: session about 0.3 h; machine 3 minutes.
 - What failed and why: twice the tests used a made-up file shape (plain lists, then a label at the top level) while the real files differed; each first real run came out not made. Always add one test that reads a real output file.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-J4-B2-2026-11-18.md
+
+### 2026-11-18 Reference drapes in the commercial cloth program, no clicks (n16-1, v1 line 5)
+- Made: reference drapes of three v1 garments (work trousers, pleated skirt, donkey jacket) on two saved bodies, for comparing the in-house cloth tool against the commercial one before its subscription ends.
+- Method: import each body once with the proven import job (unit scale set so centimetres read right, arrangement points on, the program's own size and pose guess off), save it in the program's own avatar format, then every garment job loads that saved body and places pieces by name on its arrangement points; jobs run through the in-program bridge one at a time.
+- Tools: the program's Python API through the bridge's inbox; a Python read of the exported OBJs for placement.
+- Target and check: every piece placed and every seam sewn; waistband, hem and collar heights against the body's measured waist and wrists.
+- Cost: helper about 0.3 h; machine about 7 minutes for all three (the earlier per-job body import waited 1 h 48 min on a hidden box).
+- What failed and why: the first trousers drape imported the body at scale 1.0, so a centimetre body came in at a tenth of its size, no arrangement points formed, a box waited for a click and the pieces fell in a heap. Pressed folds and zips are not in this API version; a body with no head was not tried, for fear of a box nobody can close.
+- Evidence: F:/LedgerTools/tool-dev/reports/MD-REFERENCE-DRAPES-2026-11-18.md
