@@ -73,3 +73,13 @@ tests/systems2_test.py, added 18 Nov 2026. Same set-up as the first round (headl
 - Skipped, not reachable: paying or striking out a debt, Sheila's book scene, and jobs (all written scenes or talk decisions that wait on key presses).
 - Finding, kept as an expected failure: Ron sets off home at 23:36 and stops about 3 metres from the rank, still marked as walking, until at least 03:00.
 - Not a test, noted: on Tuesday night the game paused and did not resume within a minute (Monday night's forced bedtime at about 04:30 resumes after its fade). Cause not found; so only the first night is stepped through.
+
+## Rule checks (catching a changed number)
+
+tests/rules_test.py, added 18 Nov 2026, run with pytest (python -m pytest tests/rules_test.py; the unittest command above does not run it). It guards the rules in production/lane/PROTOTYPE-RULES-READ-2026-11-18.md, by that file's rule ids, so a Fable round that changes a rule's number names the rule that moved.
+
+- Static, no browser: one table of 112 rows (rule id, plain name with its number, the piece of the bundle holding it, how often it occurs). A row fails when its piece is gone or occurs a different number of times. Rules with no number, absences (no wages, no hop limit) and rules read from the design notes only are left out, listed in the file.
+- Most rows search by the bundler's shortened names and carry the bundle_names mark (tests/conftest.py names it). When Fable's readable source replaces the bundle, the table is to be re-pointed at it, same ids; until then a rebuild that renames things fails those rows without any rule changing. pytest -m "not bundle_names" runs only the rest.
+- Live, through the hook (needs LEDGER_PROTO_ASSETS, skipped otherwise, also skipped if Chromium cannot start): the week starts Monday 15:36; 45 real seconds of step are one game hour; 23.50 clean to start; Mickey's five debts and amounts; Ron's schedule; Sheila's, Darren's and Ron's traits; the ten who never make a statement; save version 4 in the browser; heat on a planted memory fades by e^(-minutes/1700); the hook's arrest (assaulting an officer, so counted as running) holds him 7 hours and bills 40.00 from clean, the rest owed to Agar. The 4-hour, 25.00 arrest needs the constable's talk choice, a key press, so only the static row holds it.
+- Two readings in the rules file were found wrong and corrected there (18 Nov): 28 named people, not 31 (the bundle's 30 schedules include the fare passenger and the yard lad), and 51 kinds of act, not 45; the tests assert the corrected numbers.
+- After the correction: 126 tests (115 static, 11 live), all pass, about 37 seconds with the pictures; without them the 12 live checks skip and the static ones take under a second.
