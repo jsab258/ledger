@@ -55,6 +55,25 @@ UNTAGGED = "untagged"
 # token_audit drops an open window entirely; the main session should give both the same limit on merge.
 OPEN_LIMIT_H = 4
 KILN_CAP = 15.0   # RULINGS 13 Nov, as tools/token_measures.py KILN_CAP
+# Fable's weekly cap (his pick 18 Nov, advisors 227-228; the backstop of 21:35): the last reading pace_line.py stored.
+PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
+FABLE_CAP = 40.0
+
+
+def fable_refusal(inp, state_path=PACE_STATE):
+    """A refusal reason when a new helper asks for model fable while Fable's stored weekly reading is at its cap, else None."""
+    if str(inp.get("model") or "").lower() != "fable":
+        return None
+    try:
+        with io.open(state_path, encoding="utf-8") as f:
+            st = json.load(f)
+    except (OSError, ValueError):
+        return None
+    fable = st.get("fable")
+    if isinstance(fable, (int, float)) and fable >= FABLE_CAP:
+        return ("Fable reads %.0f%% of its week (at %s), at or over his %.0f%% cap: no new Fable helper; use Opus "
+                "or wait for the reset (pace_line.py --fable)." % (fable, st.get("fable_at", "?"), FABLE_CAP))
+    return None
 
 
 def code_in(text):
@@ -120,6 +139,10 @@ def hook_helper(payload, helpers=HELPERS, current=CURRENT, at=None):
     if payload.get("tool_name") not in ("Agent", "Task"):
         return None, None
     inp = dict(payload.get("tool_input") or {})
+    refusal = fable_refusal(inp)
+    if refusal:
+        return {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                       "permissionDecisionReason": refusal}}, None
     desc = inp.get("description") if isinstance(inp.get("description"), str) else ""
     item = code_in(desc) or code_in(inp.get("prompt"))
     out = None

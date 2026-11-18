@@ -113,6 +113,10 @@ image and in speech, and it voids decisions already taken.
 - Violence stays, including blood and light gore. No torture and no cruelty
   as spectacle.
 - Killing is possible, rare, permanent, and the town remembers it forever.
+- Cars (his pick, 18 Nov 2026, 22:07, keeping his July answer): a car can knock
+  a person down and hurt them badly, and never kills; only the player's car can
+  strike anybody, AI drivers always brake for people. Then the choice: stop and
+  help, or drive off and be chased as a hit-and-run.
 - Full period swearing is allowed. NO SLURS OF ANY KIND.
 - Drugs exist as an off-screen economy other people run: never shown, never
   used, never a player verb.

@@ -15,7 +15,7 @@
     "monday-audit",
     "tools/driving_feel_check.py::gearbox automatic by default"
    ],
-   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both."
+   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both. Cars canon 18 Nov (advisor 234): a car hurts, never kills; enforcers owed: a Core/simulation test that no car contact produces a death (none yet: no car contact code exists), and the cloud lane publish gate clumsy-player tester; Monday audit checks both exist once cars hit people."
   },
   {
    "line": "5 and 6 Nov: Full scope stays the target",
@@ -167,9 +167,11 @@
     "tools/pace_line.py::FIRST_LEG_TOP = 99.0",
     "tools/fresh_gate.py::WAIT the week was",
     "advisor:watchdog",
-    "tools/push_guard.py"
+    "tools/push_guard.py",
+    "tools/pace_line.py::Fable at its cap",
+    "tools/lane/item_tags.py::no new Fable helper"
    ],
-   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98 Fable 40% this week (18 Nov, advisor 228): each hourly row names the Fable helpers and the week's Fable share (get_usage Weekly Fable); the advisor watchdog reads the rows."
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98 Fable 40% this week (18 Nov, advisor 228): each hourly row names the Fable helpers and the week's Fable share (get_usage Weekly Fable); the advisor watchdog reads the rows. Fable 40% (backstop 21:35, built 18 Nov 22:45): pace_line.py N --fable F stores the reading; the Agent hook refuses a model-fable helper at 40% or more; selftests."
   },
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
@@ -262,7 +264,7 @@
     "monday-audit",
     "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present"
    ],
-   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar."
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar. GTA VI no-spoiler (advisor 235): anything about GTA VI passes a fresh reviewer spoiler screen before it reaches him; Monday audit checks."
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
@@ -610,7 +612,7 @@
    "by": [
     "monday-audit"
    ],
-   "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit"
+   "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit Play builds (advisor 233): Monday audit checks every publish to him has a gate pass and known-issues note, and packaged builds he plays the clumsy-player pass."
   }
  ]
 }

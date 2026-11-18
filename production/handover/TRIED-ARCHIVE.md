@@ -102,3 +102,5 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 18 Nov: R4 refit: the j3 source drape's own crossings make the start check refuse every target.
 - 18 Nov: four Fable helpers at max took the week from 0 to 12% in about 1.5 h; two at most while ahead.
 (standing, 18 Nov) **Quay Run (advisor 222):** his desktop shortcut opens F:/LedgerTools/quay-run/index.html in Chrome; whenever the driving study (https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq) is republished, copy its index.html there again (Artifact read with path) and run tools/driving_feel_check.py: a copy newer than the ruling must start automatic.
+- 18 Nov: Kiln stiffness 5-7 (Fable, lane stiffness2 82c87f1): switches off identical to main; switches on 2 of 2 failed, 26 lines outside (XPBD budget doubles solves; j3 must stretch past its cap; its 20 mm stage never calms). One different researched method may follow (KILN_XPBD_EQUIV its likely start) when pace allows.
+- 18 Nov: coat try 2: layout fixed (950 to 0 cloth crossings) but the pattern check chose the sleeve tube as the hanging ring.
