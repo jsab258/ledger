@@ -12,7 +12,7 @@ and how, how many questions got 'that's all I know', how long each reply took to
 anything that broke the illusion of a living town. One paragraph in the overview each morning,
 with the numbers compared to the night before."
 
-WHAT IT DOES, run at 02:30 by Windows' Task Scheduler (the task "LEDGER nightly walk"):
+WHAT IT DOES, run at 01:30 by Windows' Task Scheduler (the task "LEDGER nightly walk"):
 1. THE WALK, played as a player would (tools/route_walk.py --town, on his played copy of the
    finished game): the route with real key presses, the deed at Rita's window, the town's hours,
    save, quit, Continue, then Sheila, Ron and Darren greeted in turn with the same neutral line.
@@ -28,6 +28,8 @@ WHAT IT DOES, run at 02:30 by Windows' Task Scheduler (the task "LEDGER nightly 
    what broke the illusion of a living town.
 5. THE REPORT, text only (production/playtest/nightly/<date>.json and .md; pictures stay on F:):
    the numbers beside the night before, and the paragraph the builder puts in the overview by 07:30.
+6. ONLY WHEN ASKED, after the report: the thirty-minute session of proof P4 (a) (tools/long_session.py), once,
+   when production/playtest/nightly/long-session-request.json exists and the run can end by 03:15.
 
 EVERY NUMBER SAYS WHERE IT CAME FROM (CLAUDE.md): the walk's reply times are the stand-in's words
 with the real voice, not the real path; the bench's count is the real engine's words.
@@ -497,7 +499,27 @@ def main():
     rep = report(date, night, since_ts, verdict, bench, eyes)
     log("done")
     print(rep["paragraph"])
+    long_session_if_requested(date, night)
     return 0
+
+
+LONG_REQUEST = os.path.join(REPORTS, "long-session-request.json")
+
+
+def long_session_if_requested(date, night, request=LONG_REQUEST, now=None, runner=None):
+    """THE THIRTY-MINUTE SESSION, ONLY WHEN ASKED (proof P4 (a), 18 November): after the night's report, and only
+    when the session dropped production/playtest/nightly/long-session-request.json (tools/long_session.py --request).
+    No file: nothing is read, logged or run, so the night is as it was. The request is renamed before play (run
+    once) and waits for the next night when the run could not end by 03:15 (long_session.NIGHT_DEADLINE)."""
+    if not os.path.exists(request):
+        return None
+    try:
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import long_session
+        return long_session.night_run(date, night, request, log=log, now=now, runner=runner)
+    except Exception as e:                       # never the night's report's failure
+        log("long session failed: %s" % e)
+        return {"did": "failed", "error": str(e)}
 
 
 def selftest():
@@ -579,6 +601,36 @@ def selftest():
               found == ["step-001.jpg", "step-002.jpg", "step-003.png"])
     check("the tester saves its pictures as .jpg (play.py), which the search must cover",
           '"step-%03d.jpg"' in open(os.path.join(REPO, "tools", "ai-tester", "play.py"), encoding="utf-8").read())
+    # THE THIRTY-MINUTE SESSION IS OPT-IN (proof P4 (a), 18 November): no request, nothing happens; a request, once
+    import io
+    import contextlib
+    with tempfile.TemporaryDirectory() as td:
+        req, calls = os.path.join(td, "long-session-request.json"), []
+        runner = lambda out, date, hard_stop=None: calls.append(date) or {"headline": "fake"}
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            none = long_session_if_requested("2026-11-19", td, request=req, runner=runner)
+        check("no request: nothing run, nothing logged", none is None and not calls and buf.getvalue() == "")
+        src = open(__file__, encoding="utf-8").read()
+        check("no request: the night's walk is the same walk (route_walk --town --sit --out)",
+              '"route_walk.py"), "--town", "--sit", "--out", out]' in src
+              and src.index("rep = report(date, night, since_ts, verdict, bench, eyes)") < src.index("    long_session_if_requested(date, night)\n"))
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import long_session
+        long_session.write_request("2026-11-18", req)
+        early = long_session.at_local(dt.date(2026, 11, 19), (2, 15))
+        with contextlib.redirect_stdout(io.StringIO()):
+            a = long_session_if_requested("2026-11-19", td, request=req, now=early, runner=runner)
+            b = long_session_if_requested("2026-11-19", td, request=req, now=early, runner=runner)
+        check("a request runs the long session once, then is gone", a["did"] == "ran" and b is None and calls == ["2026-11-19"]
+              and not os.path.exists(req))
+        # F6 (review, 18 Nov): a long session that raises is logged; the night's report and exit are untouched
+        def boom(*a, **k):
+            raise RuntimeError("x")
+        long_session.write_request("2026-11-19", req)
+        with contextlib.redirect_stdout(io.StringIO()):
+            f = long_session_if_requested("2026-11-19", td, request=req, now=early, runner=boom)
+        check("a long session that raises returns failed and raises nothing", f["did"] == "failed" and f["error"] == "x")
     print("nightly_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

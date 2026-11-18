@@ -61,14 +61,14 @@ TAPE_W = 12.0
 ZIP_SEAM = (("tapeR", "tapeRLowI", "tapeRTopI"), ("tapeL", "tapeLLowI", "tapeLTopI"))
 # The job's one sewing call, shared by every job writer here (jeans.py, work_trousers.py, pleated_skirt.py,
 # nylon_jacket.py): a plan seam with "zipper" is an opening of the real garment (a zip, a fly, a placket), sewn as any
-# seam and then marked with SetSeamlineZipper; Marvelous's API has no such call (the docstring: no API call makes a
-# zipper), so there it is skipped.
+# seam and then marked with Kiln's kiln_api.kiln_set_seam_zipper; Marvelous's API has no such call (the docstring: no API
+# call makes a zipper), so there it is skipped.
 SEW = """# OPENINGS (Kiln's pattern check): a seam the real garment opens (a zip, a fly, a placket) is sewn, then marked a zipper
 def sew(s):
     (pa, la, fa), (pb, lb, fb) = s["a"], s["b"]
     ok = bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb))
-    if s.get("zipper") and hasattr(pattern_api, "SetSeamlineZipper"):
-        pattern_api.SetSeamlineZipper(pattern_api.GetSeamlinePairGroupCount() - 1, True)
+    if s.get("zipper") and "kiln_api" in globals():
+        kiln_api.kiln_set_seam_zipper(pattern_api.GetSeamlinePairGroupCount() - 1, True)
     return ok
 """
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
