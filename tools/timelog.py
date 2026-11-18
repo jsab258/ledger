@@ -110,7 +110,20 @@ def week_report(events, day, until=None):
 def cmd_start(path, task, phase, kind, at=None):
     if kind not in KINDS:
         raise SystemExit("time-log: kind must be one of %s" % (KINDS,))
-    append(path, {"event": "start", "at": (at or now()).isoformat(), "task": task, "phase": str(phase), "kind": kind})
+    ev = {"event": "start", "at": (at or now()).isoformat(), "task": task, "phase": str(phase), "kind": kind}
+    # Order items on every start (blind-spots point 4, his yes 18 Nov; advisor 218): the task's item code goes in an
+    # "item" field and becomes the current item the session and helper hooks read (tools/lane/item_tags.py).
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lane"))
+        import item_tags
+        code = item_tags.code_in(task)
+        if code:
+            ev["item"] = code
+            if os.path.abspath(path) == os.path.abspath(LOG):
+                item_tags.set_current(code, note=task)
+    except Exception:
+        pass
+    append(path, ev)
 
 
 def cmd_stop(path, note="", at=None):

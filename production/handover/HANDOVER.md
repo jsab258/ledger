@@ -4,8 +4,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-18 08:36 (the hourly run; the last session set its Stopped line at 08:23)
 
-**Row due:** 2026-11-18 08:15 (last 07:15; page and advisor read 07:13, nothing new; last ack 216 at 02:55)
-**Stopped:** 2026-11-18 08:23 (history past its point at an item's end. Kiln main 424695a: every re-sourcing batch, row 28 and the new baseline in; advisor 217 and 218 acked, their steps first below. No helper or job running.)
+**Row due:** 2026-11-18 10:31 (last 09:31; page and advisor read 09:20, nothing new; last ack the 08:10 watchdog, 08:38)
+**Stopped:** 2026-11-18 09:30 (history at 234k of 250k at an item's end, too close to start the next machine item. Kiln main 3869f3e, all 58 values replaced; no helper or job running.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 65% at 04:25 against 78%, 13 behind. His 17 Nov 22:12 direction (advisor 213): Kiln's share aims at 60% of spend from this morning (25.5% at 04:25). This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -28,36 +28,30 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (06:22 on; details in DECISIONS 06:29 on)
-- Page and advisor read 06:24 to 08:09 every 15 min; advisor 217 and 218 at 08:09 (acked). Rows 06:32, 07:15, 08:09. wip pushed 5d91f1a87 (ci 105/105).
-- Kiln main now f8b8f6e (cargo 116, Python 133). Merged this run, each after its review: resource-public + resource-rewrite (rows 2-58 batches PUBLIC/DROP and "script calls"; the review's three fixes), stderrlog (the front drains the engine's stderr as it is written; KILN_ENGINE_LOG; bad bytes replaced), resource-window (rows 15, 16, 43-46; keys.rs), resource-lineinfo (rows 31-36; ExportPatternJSON returns False, kiln_api.export_pieces; both review fixes), resource-thread (row 39: one 0.5 mm drawing default). The work-jacket writer, ledger-local tools/md/make_jacket_job.py, now calls kiln_api.export_pieces on Kiln (its Kiln copy re-hashed; stream 290 calls, 35 add_seam, sha256 6c90aa10).
-- Waiting item 14 (talk, usual day) was already built at 01:20 (4438999c0); a helper moved it into CastDay.TalkLines with eight tests (d2b997f18 on wip, all eight suites pass). Order ledger: mark item 14 done with that evidence.
-- Row 39's research-reader brief was refused by the permission check (06:31): the thread value stays unverified (drawing only).
+## Done this run (08:36 on; details in DECISIONS 08:44 on)
+- Advisor 218 done: RULINGS (Kiln's share as the week's order sets, 70% this week; three proofs before props/vehicles/buildings modules; monthly cold skill re-run; six line-up frames), condensed to 4,900; fight lab test in PLAN.md phase 3; enforcers updated. Kiln's share counted per step by order item (token_audit.is_kiln, KILN_ITEMS n16-1 and n09-6; untimed steps by what they touch): 64.2% since Monday (old 22.8%); week-shape.json kiln_share 70. Pushed 470b96b74 (ci 105/105).
+- Lane branch lane-2026-11 merged into wip (its own folders only). timelog.py start now writes "item" and production/current-item.json (gitignored). Wiring item_tags' SessionStart and Agent hooks into .claude/settings.json was REFUSED by the unattended safety check: not worked round; needs Jafar at the PC (an ACTION item only if nothing else can: he can paste the two hooks from production/lane/ITEM-TAGS-MERGE-NOTE-2026-11-18.md step 2).
+- Row 28 second reading: PASS WITH FIXES (tests only). Fixes written, NOT BUILT: Kiln branch lane-position-tests de5bc5e (worktree C:/LedgerTools/kiln-lanes/position-tests); swap_body.py/shrink_body.py comment edits on wip.
+- Rest label checked on the baseline's real lines: says nothing yet (all "moving"; leftover share unit doubtful; donkey jacket no window): KILN-REST-LABEL-REAL-LINES-2026-11-18.md, three fixes listed.
+- C: freed 4.3 GB (merged lanes rewrite, window, public, position and two build folders): C: 44.9 GB.
 
-## Running at the stop
-- Nothing running. Baseline re-taken 08:23 on c52c3ab (Kiln 424695a; runs F:/LedgerTools/tool-dev/runs/kiln-baseline-2026-11-18-c52c3ab). Row 28 (resource-position) merged 07:20 into Kiln main c52c3ab after its gate (j3, jacket, jeans, layered identical to the 02:52 gate; cargo 118, Python 136). Kiln main is now free of every REWRITE, PUBLIC and DROP row the plan listed except row 27.
+## Running
+- Nothing. Kiln main 3869f3e: row 27 (Z step stays 2 mm, Kiln's own sweep) and row 28's test fixes merged 09:30; engine tests 121; Python 136 with one failure already on 424695a (test_regression_gate, link_cap_solves): look at it. All 58 decompiled values replaced. His licence item updated 09:29 (facts; "not yet, briefly").
 
 ## Next, in order
-0. Verdicts after 2026-11-18T07:05:00Z; advisor after 2026-11-18T08:20:00+01:00 (last ack 218, both 217 and 218 acked 08:09). Row due 09:09.
-0a. Advisor 218 (his 08:05 yes to all ten blind-spots points; exact wording in advisor doc 2026-11-18-0820-218): today, within RULINGS' cap (condense), each with its rulings-enforcers.json entry: the monthly cold skill re-run (replaces 13 Oct "no recipe tests"); no Kiln props/vehicles/buildings modules before its three proofs; the fight lab test's place in PLAN.md; six public-footage frames kept for one blind line-up; the Kiln share line notes the week's order may set another (70% this week).
-0b. token_measures.py --kiln-share: count by order item (n16-1 and Kiln's items) against the week's share, not task names against 15%; corrected share from Monday in the next row.
-0c. Advisor 217.3: the public-docs line on the licence item before his tap; tap-to-game time in a row; re-source row 27.
-0d. After Kiln (218): P4 talk run in a night walk before the corner is copied; hair fallback choice only if this week's verdict fails; merge the cloud lane's paper parts.
-1. Row 28 merged without a second reader (the gate was the plan's check): a small review of c52c3ab's row-28 diff when a place is free; old probe jobs that set the style first now place differently (listed in its report).
-2. Step 6 left: row 27 (Z-step sweep, machine). The 58-value list then has no decompiled row left but 27 and any the plan marks PHYSICS; check the plan's group totals.
-3. Baseline done (424695a). Still owed: check rest_label on real lines; then the cantilever convergence check.
-4. Public names lane: gate alone (every switch off), merge, then the writer edits.
-5. A gate with KILN_STRAIN_LAST=1 on every job, alone; if all pass with body through 0, decide making it the default.
-6. R4, J4, B2 (drapes after a gate).
-7. Gap 2 (nylon right wrist) SET ASIDE 06:05 after three routes; only a removing fix under an hour or a new researched method closing a third. Listed: rule 4 refuses uncapped rib at the solver's limit while rule 2 does not.
-8. On his licence answer: trousers merge (ron-kiln-trousers-import 536ce6307), import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Then 0c daytime talk run; Darren's head remake (advisor 215); bending try 2 (a); n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
-- C: sits near its 40 GB floor (40.7 at 06:55): reuse C:/LedgerTools/cargo-target/lane-resource-lineinfo for builds; the merged lanes' worktrees and build folders (resource-public, resource-rewrite, lineinfo, window, thread, stderrlog, position after merge) are my own leftovers to delete through the map, one DECISIONS line.
+00. NOT PUSHED: the last commit is local only. ci fails attribution: the lane's prototype bundle (tools/lane/prototype/src/bundle/part-01.js, part-02.js) is a copy of three.js (third-party, MIT: check the allowlist and SHIPPED-LIBRARIES-LICENCES-2026-11-18.md), with no attribution entry; .js is deliberately not classed not-asset. Add its THIRD-PARTY.md/attribution entry (or class .js with a rule naming the bundle), run ci to failed=none, push wip.
+0. Verdicts after 2026-11-18T08:20:00Z; advisor after 2026-11-18T08:20:00+01:00.
+1. Licence item's remaining two (outside the 58): the start values read from the installed program's data files (time step, air damping, substeps, ground, self-collision stiffness, thread presets) and the leg/torso arrangement fits made against Marvelous's drapes: re-source to physics, Kiln's own measurement or LEDGER's references, one lane each, gate alone; then the item back to him with "yes" recommended. Also check Kiln no longer serves the ~22 names absent from the public docs.
+2. Step 4: public names lane, gate alone, merge, writer edits. Step 5: KILN_STRAIN_LAST=1 gate. Step 6: R4, J4, B2. Cantilever convergence check.
+3. After Kiln (advisor 218): P4, a thirty-minute played session: route_walk/nightly_walk have no thirty-minute mode yet; write it as a bounded task (stand-in talk, minute-by-minute log as 3-PROOFS.md P4) and run it in a night walk before the corner is copied. Hair fallback only if this week's verdict fails.
+4. Gap 2 (nylon wrist) stays set aside. On his licence answer: trousers path as before (handover 08:23 step 8), then n16-6, n16-8, n16-7.
+- Use tools/timelog.py start "<item> ..." at every task; the time log had no line from 17 Nov 14:30 to 08:58 today.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 18 Nov: Kiln gap 2 (nylon right wrist): two tries and the S6 fit route failed; the cuff is too short for the forearm it lands on (details in TRIED-ARCHIVE.md, 18 Nov).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3 (items 2, 3 and 4 have targets now).
-- Tries used: as in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 18 Nov: Kiln gap 2 (nylon sleeve) 2 of 2 used, both failed; the third route (S6 fit) running; 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
+- Tries used: 18 Nov Kiln row 27: 1 of 2 (passed, 2 mm kept). As in git show 570374d9a:production/handover/HANDOVER.md ('Tries used'), plus git show 8e4584953:production/handover/HANDOVER.md; 18 Nov: Kiln gap 2 (nylon sleeve) 2 of 2 used, both failed; the third route (S6 fit) running; 17 Nov: Kiln convergence 2 of 2 (passed); bending 1 of 2 (try 2 not yet run); cantilever bench 1 (passed as a bench); double precision 2 of 2 (try 2 passed, merged); retention step 2: 3 tries (the third under RULINGS 7 Nov, closing the gap; a fourth only if it closes a third of what is left with no new fault); hair round 5b within the 8 h cap.
 - API spend: US$1.15 (8 Nov) plus US$2.62 (16 Nov); none 17 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help (or with no arguments when its docstring shows required ones); let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools.

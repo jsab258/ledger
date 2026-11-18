@@ -804,3 +804,6 @@
 {"event": "stop", "at": "2026-11-17T14:02:00", "note": ""}
 {"event": "start", "at": "2026-11-17T14:25:00", "task": "n16-10 backup low findings and online-only test", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-17T14:30:00", "note": ""}
+{"event": "start", "at": "2026-11-18T08:51:51", "task": "n16-10 advisor 218 rulings, kiln share by item; lane merge", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-18T08:58:09", "task": "n16-1 kiln row 27 sweep (helper) and lane hooks", "phase": "0", "kind": "production", "item": "n16-1"}
+{"event": "stop", "at": "2026-11-18T09:30:47", "note": "row 27 merged, row 28 fixes merged, licence item updated"}

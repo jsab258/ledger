@@ -215,7 +215,7 @@ def person_of(item, desc=None):
 # name saying kiln or tool loop); a step under another order item (nNN-M other than Kiln's) is not; a step in no task
 # or a session-wide task is Kiln's when its own tool calls or its helper's brief touch Kiln (its repository, lanes,
 # gates, engine or the garment writers). Kiln's order items are listed per order below.
-KILN_ITEMS = {"n16-1"}
+KILN_ITEMS = {"n16-1", "n09-6"}  # n09-6, clothing, closed into n16-1; add each later Kiln item
 KILN_NAME = re.compile(r"kiln|tool loop", re.I)
 ORDER_ITEM = re.compile(r"\bn\d\d-\d+\b")
 KILN_TOUCH = re.compile(r"kiln|tool-dev|tool loop|held-?back|drape-studio|make_\w*_job|cargo|ledger-cloth", re.I)

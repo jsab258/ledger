@@ -9,7 +9,8 @@ FAB = r"C:\Users\Public\Documents\MarvelousDesigner\New Assets\Fabric"
 utility_api.NewProject()
 # the stock man enlarged (C["lukaScale"]) so the shells his arrangement points place the pieces on clear our body
 # (a bigger man than he is): Marvelous ignores the offset that would set a piece's distance from the body
-# (SetArrangementPosition moved nothing; research MD-LAPEL-FOLD-TURNED-2026-10-02.md)
+# (in Marvelous SetArrangementPosition moved nothing; research MD-LAPEL-FOLD-TURNED-2026-10-02.md; Kiln places the
+# piece at once since 18 Nov)
 lo = ApiTypes.ImportExportOption()
 lo.scale = float(C.get("lukaScale", 1.0))
 import_api.ImportAvatar(LUKA, lo)
@@ -23,7 +24,8 @@ for key, o in C.get("orient", {}).items():
 for key, z in C.get("z", {}).items():
     a = pattern_api.GetArrangementOfPattern(names[key])
     pattern_api.SetArrangementPosition(names[key], int(a["ArrangementOffsetX"]), int(a["ArrangementOffsetY"]), int(z))
-# the offsets take effect only when the pieces are placed again (setting them alone moved nothing before the swap)
+# in Marvelous the offsets take effect only when the pieces are placed again (setting them alone moved nothing before
+# the swap; in Kiln since 18 Nov the position call places at once, and placing again resets the offsets to the point's)
 for key, pt in C["place"].items():
     pattern_api.SetArrangement(names[key], arr[pt])
 eo = ApiTypes.ImportExportOption()

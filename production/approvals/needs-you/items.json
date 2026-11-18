@@ -1226,7 +1226,7 @@
    "text": "Kiln reuses Drape Studio's job interface (the command names only, not its engine, presets or files) so Marvelous's job scripts run unchanged. The design note made this your licence call before any Kiln garment is adopted.",
    "why": [
     "Ron's work trousers are the first Kiln garment heading for the game; adopting them waits on this.",
-    "Correction (18 Nov): Kiln's cloth engine is Drape Studio's, and 58 of its values and behaviours were taken by decompiling Marvelous. Earlier this item said only command names were reused; that was wrong."
+    "Since this morning all 58 values once taken by decompiling Marvelous are replaced by Kiln's own (public instructions, own rules or own measurement; the last, 18 Nov 09:40). Every command Ron's trousers use is in Marvelous's public scripting docs (two return-key spellings unconfirmed); about 22 other names Kiln serves are not, and Kiln stops serving them."
    ],
    "steps": [
     "Tap Yes or No below"
@@ -1237,7 +1237,7 @@
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "recommendation": "Not yet: replace those 58 first (about 28 helper hours and 5 machine hours in all; Ron's trousers can be cleared first, in about 10 and 4). 22 turn out to be in Marvelous's public instructions; the rest Kiln redoes in its own way or by measuring. Then this comes back to you.",
+   "recommendation": "Not yet, briefly: two things outside the 58 are still open (a few start values read from the installed program's data files, and the leg and torso start fits made against Marvelous's drapes); Kiln refits them to our own measurements, then this comes back to you.",
    "options": [
     [
      "notyet",
