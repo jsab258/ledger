@@ -2733,3 +2733,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 4 h helpers, 1 h session, 0.3 h machine.
 - What failed and why: two lanes appending to the same docs table conflicted, and each had removed different old rows; lesson: when lanes edit one table, merge the second by keeping both additions and both removals, never one side.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-RESOURCE-LINEINFO-REVIEW-2026-11-18.md, KILN-LANE-RESOURCE-WINDOW-REVIEW-2026-11-18.md
+
+## Kiln: public names only in the script front end (18 Nov 2026)
+- Made: every command name the tool's script front end serves now comes from the vendor's public scripting pages; retired names answer only behind a legacy switch; the garment writers call the tool's own commands for marks the vendor's interface lacks (zipper marks, pleat folds).
+- Method: names checked against the public page by plain-text search; a lane rewrote the front end and listed the writer changes it could not make; the gate's job list got replace rules so old job scripts still run with the new names; the session rebased the lane onto main (one conflict: keep the lane's new names and main's newer range checks), made the writer edits, then ran the gate alone.
+- Tools: worktree lane, regression gate with replace rules, names tests, a shared lock so gate runs never overlap.
+- Target and check: gate inside every band with solver counts identical to the baseline; names tests 7/7.
+- Cost: lane about 2 h (17-18 Nov); session about 0.5 h; machine 0.4 h (build 1.7 min, gate about 22 min).
+- What failed and why: an existence guard (hasattr) never protected runs, because the front end answers True for every name; lesson: test for the tool explicitly, not for a method.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-PUBLICNAMES-2026-11-18.md; gate output F:/LedgerTools/tool-dev/runs/kiln-publicnames-gate-2026-11-18
