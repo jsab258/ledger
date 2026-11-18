@@ -5,7 +5,7 @@ import { act, seed, logLine } from './events.js';
 import { statements } from './police.js';
 import { note, meet } from './ledger.js';
 import { KINDS } from './kinds.js';
-import { SPOTS, zoneAt } from './map.js';
+import { SPOTS, ROOMS, zoneAt } from './map.js';
 import { sub, say, scene, $ } from './ui.js';
 import { fl, tomAt } from './work.js';
 import { hyp } from './util.js';
@@ -65,7 +65,7 @@ export function jobHotspots(out) {
           sub(
             j.n === 1
               ? 'A cheap holdall under the bench. Heavier than it looks.'
-              : 'A parcel in sacking behind the door. It clinks.',
+              : 'A parcel in sacking behind the door. Tied tight, and heavier than it looks.',
             '',
             'over',
           );
@@ -142,7 +142,7 @@ const beatPts = (J) => {
   ];
 };
 export function startBeat(j, J) {
-  if (G.story.arrest) return; // the constable is already about something else
+  if (G.story.arrest && !G.story.arrest.violent) return; // the constable is already about something else
   const P = G.people.pc;
   if (!P || P.dead) return;
   const pts = beatPts(J);
@@ -183,10 +183,14 @@ export function watchStep(dt) {
     J = JOBS[j.n],
     P = G.people.pc,
     t = G.tom;
-  if (!P || P.dead || P.gone || G.story.arrest) return endBeat(j, 'called away');
-  if (j.st !== 'carry') return endBeat(j, 'job over');
+  if (!P || P.dead || P.gone || (G.story.arrest && !G.story.arrest.violent)) return endBeat(j, 'called away');
+  if (j.st !== 'carry') return endBeat(j, w.st === 'search' ? w.how : 'job over'); // a save made mid-search
   w.t += dt;
-  const d = t.space === P.space && !t.inCar ? hyp(P.x, P.z, t.x, t.z) : Infinity;
+  // where he would look for Tom: on foot, the cab, or the street door of the room he went into (as policeStep)
+  const tx = t.space === 'street' ? (t.inCar ? G.car.x : t.x) : ROOMS[t.space] ? ROOMS[t.space].street[0] : t.x,
+    tz = t.space === 'street' ? (t.inCar ? G.car.z : t.z) : ROOMS[t.space] ? ROOMS[t.space].street[1] : t.z;
+  const d = hyp(P.x, P.z, tx, tz),
+    seeable = t.space === 'street';
   if (w.st === 'beat') {
     if (w.t > W.beatLastsAtMostRealSeconds) return endBeat(j, 'beat over');
     // back and forth along the way
@@ -219,9 +223,9 @@ export function watchStep(dt) {
         goToPoint(P, t.x, t.z, W.beatWalkMetresPerSecond);
       }
     }
-    const moved = w.seenAt ? hyp(t.x, t.z, w.seenAt.x, w.seenAt.z) : 0;
-    if (d < W.searchesWithinMetres) return caught(j, J, P, false);
-    if (t.run || moved > W.startsChaseWhenTomMovesMetres || d > W.challengesWithinMetres + W.chaseIfFurtherByMetres) {
+    const moved = w.seenAt ? hyp(tx, tz, w.seenAt.x, w.seenAt.z) : 0;
+    if (d < W.searchesWithinMetres && seeable && !t.inCar) return caught(j, J, P, false);
+    if (w.ct > W.challengeLastsAtMostRealSeconds || !seeable || t.inCar || t.run || moved > W.startsChaseWhenTomMovesMetres || d > W.challengesWithinMetres + W.chaseIfFurtherByMetres) {
       w.st = 'chase';
       w.ct = 0;
       w.lost = 0;
@@ -235,13 +239,13 @@ export function watchStep(dt) {
   if (w.st === 'chase') {
     w.ct += dt;
     w.look -= dt;
-    const los = d < RULES.police.seesHimWithinMetres && G.env.los(P.x, P.z, t.x, t.z);
+    const los = seeable && d < RULES.police.seesHimWithinMetres && G.env.los(P.x, P.z, tx, tz);
     w.lost = los ? 0 : w.lost + dt;
     if (w.look <= 0) {
       w.look = RULES.police.looksAgainWhenChasingEveryRealSeconds;
-      if (los) goToPoint(P, t.x, t.z, RULES.police.chasingMetresPerSecond);
+      if (los) goToPoint(P, tx, tz, RULES.police.chasingMetresPerSecond);
     }
-    if (d < RULES.police.catchesWithinMetres) return caught(j, J, P, true);
+    if (d < RULES.police.catchesWithinMetres && seeable && !t.inCar) return caught(j, J, P, true);
     if (
       w.lost > RULES.police.losesHimAfterRealSecondsUnseen ||
       d > RULES.police.losesHimBeyondMetres ||
@@ -263,17 +267,20 @@ async function caught(j, J, P, ran) {
   j.carrying = false;
   j.st = 'lost';
   fl()['job' + j.n] = 'lost';
-  endBeat(j, ran ? 'caught running' : 'searched');
+  w.st = 'search';
   w.how = ran ? 'caught running' : 'searched';
+  P.route = null;
+  P.hold = true;
   await scene(async () => {
     await say('pc', ran ? 'Nobody runs from me with an empty bag. Let\'s see it.' : "Let's have a look, then.");
     await say(
       'pc',
       j.n === 1
         ? "Well. That's not your washing. I'll keep this. Name? I'll be writing it down, son."
-        : "Clinks, doesn't it. I'll keep this. Name? I'll be writing it down, son.",
+        : "Heavy, for a parcel. I'll keep this. Name? I'll be writing it down, son.",
     );
   });
+  endBeat(j, w.how);
   note(`The constable took ${J.name} on the way to ${J.toZ}. He wrote the name down.`, 'police', null, {
     how: 'Did it',
     ev: E.id,

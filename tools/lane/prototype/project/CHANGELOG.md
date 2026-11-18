@@ -23,6 +23,10 @@ round 1's part for part; with him in, the week bot meets him, so the week's reco
 4. Tests: test/watch2.mjs (the beat starts at the pick-up; unseen behind him in the dark; searched when
    standing; a chase lost round a corner keeps the bag and the drop still works); oldsave passes (saves
    without the watch load). The playtester carries the bag a step at a time and runs when called out to.
+5. After a fresh review (PASS WITH FIXES, all applied): a taken bag leaves the to-do list; getting into the cab
+   or a doorway is no instant escape (he looks for the cab or the door, as in an arrest; the 7 s unseen rule
+   decides); a call-out lasts at most 12 real seconds (`jobs.challengeLastsAtMostRealSeconds`); he stays for his
+   own search lines; only a constable's arrest (not DS Ellis's) stops the beat; the parcel no longer clinks.
 
 ## 18 November 2026, lane round 1. The eight fixes from the first playtest
 

@@ -279,6 +279,7 @@ export const RULES = {
     beatTurnsWithinMetres: 1.5,
     challengeHoldsRealSeconds: 0.5,
     challengeFollowsEveryRealSeconds: 1,
+    challengeLastsAtMostRealSeconds: 12,
     subtitleRealSeconds: 5,
   },
 

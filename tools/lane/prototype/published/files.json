@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "39f1c04c40850934b434d4fc2854f4765258afff57df355d10b0d0b9e788d69f",
+ "ledgerJsSha256": "ed8a6cf4d57ae0ee66707ebd8e9eccbc47cf646faf7354ea069ceb22f89ca322",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -172,7 +172,7 @@
      "path": "source/src/jobs.js",
      "as": "src/jobs.js",
      "what": "The night jobs: the bag, the parcel, the scrapyard. Where the drop doors are and what they pay.",
-     "bytes": 9988,
+     "bytes": 10599,
      "text": true
     },
     {
@@ -186,7 +186,7 @@
      "path": "source/src/ledger.js",
      "as": "src/ledger.js",
      "what": "The Ledger's records: only what Tom himself believes, from what he saw and heard.",
-     "bytes": 20564,
+     "bytes": 20583,
      "text": true
     },
     {
@@ -256,7 +256,7 @@
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 51652,
+     "bytes": 51693,
      "text": true
     },
     {
@@ -270,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 70135,
+     "bytes": 70154,
      "text": true
     },
     {
@@ -516,7 +516,7 @@
      "path": "source/test/watch2.mjs",
      "as": "test/watch2.mjs",
      "what": "The lane's round 2 checks: the carry under watch (the beat, the search, the chase).",
-     "bytes": 5389,
+     "bytes": 5386,
      "text": true
     },
     {

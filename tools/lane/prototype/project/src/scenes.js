@@ -1585,7 +1585,7 @@ function marks() {
     G.story.objective =
       'It is Friday. The door in the back room is open, and Sheila is waiting behind her desk.';
   }
-  if (ask1Due() && !f.ask1obj) {
+  if (ask1Due() && !f.ask1obj && !P_('ron').dead) {
     // round 2: the first night's offer was easy to miss (the playtester's newcomer never heard it in an hour)
     f.ask1obj = 1;
     G.story.objective = 'Evening. Ron Kirby is waiting at the cab rank. He wants a word before the last ferry.';

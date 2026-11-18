@@ -63,7 +63,7 @@ try {
   // 3. in front, 1.5 m, standing still: called out to, then searched; the bag is taken
   await place(1.5, false);
   const c1 = await stepFor(0.5);
-  ok(c1.watch.state === 'challenge' || c1.watch.state === 'over', 'in front of him he calls out: ' + c1.watch.state);
+  ok(['challenge', 'search', 'over'].includes(c1.watch.state), 'in front of him he calls out: ' + c1.watch.state);
   const c2 = await stepFor(2);
   const c3 = await h.ev(() => ({
     flag: LEDGER.G.story.flags.job1,

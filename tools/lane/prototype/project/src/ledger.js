@@ -373,7 +373,7 @@ export function openNow() {
       how: 'Ron says',
     });
   const j = G.story.job;
-  if (j && j.st !== 'done' && j.st !== 'missed')
+  if (j && j.st !== 'done' && j.st !== 'missed' && j.st !== 'lost')
     o.push({
       key: 'job' + j.n,
       who: 'ron',
