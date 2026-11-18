@@ -1,0 +1,434 @@
+diff --git a/game-design/balance-findings-economy.md b/game-design/balance-findings-economy.md
+index 282ad54..1410090 100644
+--- a/game-design/balance-findings-economy.md
++++ b/game-design/balance-findings-economy.md
+@@ -13,16 +13,16 @@ spiral; the district simulation is now inside it and gated by it.
+ 
+ | plan | reach% | end cash | falls | broke% | street | prices | supplier lost |
+ |---|---|---|---|---|---|---|---|
+-| Control (takes nothing) | 100% | $2279 | 0.07 | 0% | 0.48 | 1.00 | 0% |
+-| Aggressive | 100% | $2185 | 0.62 | 0% | 0.22 | 1.21 | 0% |
+-| Cautious | 100% | $1866 | 0.15 | 0% | 0.39 | 1.07 | 0% |
++| Control (takes nothing) | 100% | £2279 | 0.07 | 0% | 0.48 | 1.00 | 0% |
++| Aggressive | 100% | £2185 | 0.62 | 0% | 0.22 | 1.21 | 0% |
++| Cautious | 100% | £1866 | 0.15 | 0% | 0.39 | 1.07 | 0% |
+ 
+ *street: 0–1, 0.55 is ordinary · prices: 1.00 is ordinary*
+ 
+ ## What it says
+ 
+-**The loop works, and it is a real trade.** Aggressive play earns **$1697**
+-in racket income over three weeks and ends with **$94 less** than a
++**The loop works, and it is a real trade.** Aggressive play earns **£1697**
++in racket income over three weeks and ends with **£94 less** than a
+ campaign that ran no rackets at all. The rackets pay; the street pays for
+ the rackets; the bar's till is where the bill arrives. There is no
+ dominant strategy, which is the entire point of building this rather than
+@@ -48,7 +48,7 @@ Changed so that **neglect loses a supplier, and a poor neighbourhood only
+ makes him dearer.** Paying on time buys more standing (0.28/week) than the
+ worst squeeze-and-heat drift can take away (0.245/week), so a man who is
+ paid every Thursday keeps coming however hard you squeeze the street — he
+-just charges more for it, and you hear him do it ("*he asks $118 for it
++just charges more for it, and you hear him do it ("*he asks £118 for it
+ now. He doesn't explain the difference*"). Losing Mitch is now something
+ the player did, not something the difficulty curve did.
+ 
+@@ -76,7 +76,7 @@ reverse, and it is the thing worth checking.
+ 400 weeks per policy. Two new rows, plus two that turned out to prove nothing
+ and are kept because knowing why is worth a line:
+ 
+-| policy | avg$ | collected | visits | part-payments |
++| policy | avg £ | collected | visits | part-payments |
+ |---|---|---|---|---|
+ | collector | 1642 | 60 | 1.0 | 0.0 |
+ | collector+purse | 1642 | 60 | 1.0 | 0.0 |
+@@ -85,23 +85,23 @@ and are kept because knowing why is worth a line:
+ 
+ **The plain collector rows are identical, and that is correct rather than a
+ null result.** Sam's authored loyalty is 0.3, so he refuses whatever is in his
+-pocket and the purse is never opened; Rocco is willing and can afford his $60
++pocket and the purse is never opened; Rocco is willing and can afford his £60
+ outright. Nothing about finite purses can matter to a player who never made
+ anybody willing to pay in the first place.
+ 
+ **The warm rows are the test.** They model a player who did the favours first
+ and is now collecting from people who want to pay. Without purses, willing
+-means paid in full on the spot: two visits, $180, done. With purses, willing
+-means paying what is in the drawer — Sam produces $45 against a $120 marker,
++means paid in full on the spot: two visits, £180, done. With purses, willing
++means paying what is in the drawer — Sam produces £45 against a £120 marker,
+ goes to his uncle that night, and closes it out on a later visit.
+ 
+-**Same money. Same end cash to the dollar. One more visit and one
++**Same money. Same end cash to the penny. One more visit and one
+ part-payment.** That is exactly the intended result: the shape of collection
+ changed and the optimum did not move. Nothing was nerfed, and a debt stopped
+ being a transaction.
+ 
+-The open-city table is unchanged by this — aggressive play still earns $1697
+-in rackets and still finishes $94 behind a campaign that runs none.
++The open-city table is unchanged by this — aggressive play still earns £1697
++in rackets and still finishes £94 behind a campaign that runs none.
+ 
+ **What this does NOT yet test:** a squeezed street's effect on purses. In week
+ mode prosperity sits at the ordinary half by construction, so the coupling
+diff --git a/game-design/balance-findings-open.md b/game-design/balance-findings-open.md
+index 9d49031..4c79298 100644
+--- a/game-design/balance-findings-open.md
++++ b/game-design/balance-findings-open.md
+@@ -11,27 +11,27 @@ in-game wiring: same tunables, same Fall consequences, same rival ladder.
+ 
+ ## Results (300 runs/plan)
+ 
+-| plan | reached open | end cash | falls/run | cut off | rival stage | racket $ | broke |
++| plan | reached open | end cash | falls/run | cut off | rival stage | racket £ | broke |
+ |---|---|---|---|---|---|---|---|
+-| Control (no empire) | 99.7% | $2825 | 0.06 | 0% | 0.0 | 0 | 0% |
+-| Aggressive (debt+squeeze, 2 crew, 2 rounds) | 99.7% | $3138 | 0.61 | 0% | 3.7 | $1708 | 0% |
+-| Cautious (clean buy, 1 crew, 1 round, slow) | 99.7% | $2512 | 0.12 | 0% | 1.0 | $469 | 0% |
++| Control (no empire) | 99.7% | £2825 | 0.06 | 0% | 0.0 | 0 | 0% |
++| Aggressive (debt+squeeze, 2 crew, 2 rounds) | 99.7% | £3138 | 0.61 | 0% | 3.7 | £1708 | 0% |
++| Cautious (clean buy, 1 crew, 1 round, slow) | 99.7% | £2512 | 0.12 | 0% | 1.0 | £469 | 0% |
+ 
+ ## Reading
+ 
+ 1. **No death spiral.** Zero bankruptcies anywhere: the stage-2 rival tax
+-   ($40/day) plus heat-taxed takings never compounds into an unrecoverable
++   (£40 a day) plus heat-taxed takings never compounds into an unrecoverable
+    hole, because the Fall clears heat (the street *knows*, so it stops
+    guessing) and the bar's base income survives everything. The scarring
+    fail state is survivable in practice, not just in principle.
+-2. **Aggression is high-drama, thin-margin.** +$313 over control (+11%)
++2. **Aggression is high-drama, thin-margin.** +£313 over control (+11%)
+    buys 10x the Falls and a rival at poach/threat stage. That is a
+    defensible v1 shape — the empire's real payoff is capacity and position,
+    not raw cash — but if playtests want empire to feel more lucrative,
+    first knobs: racket income up (60/80 -> 80/100) or rival tax onset later
+    (stage-2 threshold 0.5 -> 0.6).
+-3. **Caution loses money inside 21 days.** The $900 clean purchase hasn't
+-   amortized by day 21 (+$480 income at zero heat, plus wash capacity).
++3. **Caution loses money inside 21 days.** The £900 clean purchase hasn't
++   paid for itself by day 21 (+£480 income at zero heat, plus wash capacity).
+    Long-game correct, short-window negative — a genuinely interesting
+    choice, and worth surfacing diegetically (Lena could say the shop pays
+    for itself in a month).
+diff --git a/game-design/cast-tier1-batch2.md b/game-design/cast-tier1-batch2.md
+index 531cce4..e5a5e27 100644
+--- a/game-design/cast-tier1-batch2.md
++++ b/game-design/cast-tier1-batch2.md
+@@ -43,7 +43,7 @@ name as a gentle reminder that he knows it.
+ 
+ **Mechanical notes:** head of the second rival arm ("the machine"). His arm
+ attacks the CLEAN side: injunctions and inspections that tax bar/front
+-income, a lawyer's letter instead of a slow beer. Unbribable with cash;
++income, a lawyer's letter instead of a slow cup of tea. Unbribable with cash;
+ his currency is favors and silence. Act II's PP2 is his letter.
+ 
+ ## Sera Kest — "the Widow", the Dockside syndicate
+diff --git a/game-design/combat-spec.md b/game-design/combat-spec.md
+index 2fc7748..089fc58 100644
+--- a/game-design/combat-spec.md
++++ b/game-design/combat-spec.md
+@@ -240,7 +240,7 @@ a real spread of dispositions, then a week of the street doing what the
+ street does.
+ 
+ ```
+-answer            lead police          $cost  quiet? bodies
++answer            lead police          £cost  quiet? bodies
+ leave-it          0.28 None                0    100%    0.0
+ bribe             0.18 None              414    100%    0.0
+ intimidate        0.23 None                0    100%    0.0
+diff --git a/game-design/counterparty-purses-spec.md b/game-design/counterparty-purses-spec.md
+index 82430bf..c453a10 100644
+--- a/game-design/counterparty-purses-spec.md
++++ b/game-design/counterparty-purses-spec.md
+@@ -13,8 +13,8 @@ The living economy (M7) made the district's money finite in one direction:
+ squeezing the street lowers prosperity, prosperity lowers what your pub takes.
+ That half is real and the balance lab proves it.
+ 
+-But every *counterparty* still has infinite pockets. Rita owes $180 and Rita
+-pays $180, in one movement, whenever you ask. The street can be starving and
++But every *counterparty* still has infinite pockets. Rita owes £180 and Rita
++pays £180, in one movement, whenever you ask. The street can be starving and
+ the man in front of you still produces the exact sum from nowhere. That is a
+ payout table wearing a person's face, and it is the same failure the rest of
+ this project is built to avoid.
+@@ -60,8 +60,8 @@ fourth and it is the interesting one: **paid what they could.** They empty
+ the drawer, the balance stays on the page, and they remember that you stood
+ there while they counted.
+ 
+-This changes the shape of a big marker. A $400 debt against a man who turns
+-over $90 a week is not one collection, it is a relationship — four visits, or
++This changes the shape of a big marker. A £400 debt against a man who turns
++over £90 a week is not one collection, it is a relationship — four visits, or
+ one visit and a decision about what you are willing to do to shorten it.
+ 
+ ### 3. They can go and get it — and that costs them something
+diff --git a/game-design/empire-roster.md b/game-design/empire-roster.md
+index 4165d0f..058f76b 100644
+--- a/game-design/empire-roster.md
++++ b/game-design/empire-roster.md
+@@ -13,8 +13,8 @@ broader-scope decision (open-city-spec §5.1). Everything here is data
+ 
+ | Business | Owner | Routes in | Books |
+ |---|---|---|---|
+-| The pawnshop | **Victor** (generated, promoted; nerve 0.4 folds to a squeeze) | clean $900 · his marker $250 then squeeze · his skim (weak hook) | +$60/day clean, washes $80/day |
+-| The market stall | **Marla** (ring) | clean $500 · her thumb-on-the-scale (weak hook, Sam knows) | +$40/day clean, washes $30/day |
++| The pawnshop | **Victor** (generated, promoted; nerve 0.4 folds to a squeeze) | clean £900 · his marker £250 then squeeze · his skim (weak hook) | +£60 a day clean, washes £80 a day |
++| The market stall | **Marla** (ring) | clean £500 · her thumb-on-the-scale (weak hook, Sam knows) | +£40 a day clean, washes £30 a day |
+ 
+ Next candidates when their owners walk (from the batch): the teahouse
+ (magda), the steam laundry, the corner bakery (danica), the boarding house.
+@@ -25,8 +25,8 @@ business, when she goes live.
+ 
+ | Racket | Pay | Base risk | Notes |
+ |---|---|---|---|
+-| Collection round | $60/day dirty | 0.35 | the debt book made recurring |
+-| Protection round | $80/day dirty | 0.5 | higher pay, louder |
++| Collection round | £60 a day dirty | 0.35 | the debt book made recurring |
++| Protection round | £80 a day dirty | 0.5 | higher pay, louder |
+ 
+ Runner competence (from traits at recruitment) shades both witness odds and
+ story confidence; rotten hook-crew (loyalty < 0.3) skim a quarter, visibly.
+@@ -35,11 +35,11 @@ story confidence; rotten hook-crew (loyalty < 0.3) skim a quarter, visibly.
+ 
+ | Who | Route in | The need |
+ |---|---|---|
+-| Sam | $120 | cash, counted twice |
+-| Joey | $100 | a Downtown reference for his daughter |
+-| Marla | $150 | someone to lean on her supplier |
+-| Victor | $200 | a slice of his gambling marker cleared |
+-| Any live batch resident | $120 default | their card's own need, quoted |
++| Sam | £120 | cash, counted twice |
++| Joey | £100 | a Downtown reference for his daughter |
++| Marla | £150 | someone to lean on her supplier |
++| Victor | £200 | a slice of his debt cleared |
++| Any live batch resident | £120 default | their card's own need, quoted |
+ 
+ Core cast (Lena, Ada, Rocco, Noor) are not recruitable — they are the life,
+ not the business.
+@@ -48,7 +48,7 @@ not the business.
+ 
+ The Dockside street arm, flat structure (Nemesis-safe). Attention rises
+ only from observable moves (acquisitions, establishments, recruits, racket
+-witnesses reaching the night circle). Ladder: slow beer (0.25) -> $40/day
++witnesses reaching the night circle). Ladder: slow cup of tea (0.25) -> £40 a day
+ street rent (0.5) -> poach the least loyal (0.75; loyal crew warn instead)
+ -> the wordless threat (0.9). Balance: fully exercised under aggressive
+ play, dormant under none (balance-findings-open.md).
+@@ -62,14 +62,14 @@ play, dormant under none (balance-findings-open.md).
+ 
+ ## Round 2-3 additions (2026-07-26, CI run 30204710961)
+ 
+-- **Fencing line** ($100/day, risk 0.4) — requires owning the pawnshop;
++- **Fencing line** (£100 a day, risk 0.4) — requires owning the pawnshop;
+   Rita's criminal secret is the natural unlock, her recruitment the natural
+   staffing. Rackets can now require fronts (`RequiresBusinessId`).
+-- **The cut** (§6.5 daily): fair / generous (-$15/day, +loyalty — the
+-  anti-poach investment) / skim (+$15/day, -loyalty, counted and remembered
++- **The cut** (§6.5 daily): fair / generous (-£15 a day, +loyalty — the
++  anti-poach investment) / skim (+£15 a day, -loyalty, counted and remembered
+   in their memory file). Set in conversation with assigned crew.
+-- **Businesses**: + Magda's teahouse ($600, +$45/day, washes $40),
+-  Donna's bakery ($550 or her $150 marker, +$45/day, washes $25) — both
++- **Businesses**: + Magda's teahouse (£600, +£45 a day, washes £40),
++  Donna's bakery (£550 or her £150 marker, +£45 a day, washes £25) — both
+   owners generated, their batch secrets are the leverage route.
+ - **The break**: skipping drops while the rackets pay recontextualizes the
+   outfit cut-off as declared independence (+0.25 rival attention).
+@@ -85,7 +85,7 @@ play, dormant under none (balance-findings-open.md).
+   them, the reason sits in their memory file. Hook-crew cannot leave; that
+   is the hook route's brittle bargain in both directions. Winning a
+   quitter back revives their line rather than duplicating it.
+-- **The day job** (§6.6): Meridian Parcel courier rounds, $40 clean a
++- **The day job** (§6.6): Meridian Parcel courier rounds, £40 clean a
+   morning, and the cover of steady work (day-circle suspicion decays after
+   a worked day). Zlata is the dispatcher now that her card is approved.
+ 
+@@ -102,7 +102,7 @@ someone who already had an employer. Their arm loses the roster line,
+ loses 0.35 standing, gains 0.2 attention; the person's memory records who
+ they used to answer to. Allegiance: `PledgeTo` (standing ≥ 0.2 required)
+ flies an arm's colors — their attention decays, their protection is real,
+-$50/day tribute, the other two read it as a side taken. `BreakWith` always
++£50 a day tribute, the other two read it as a side taken. `BreakWith` always
+ ends below zero standing and spikes their attention; their people
+ remember the day.
+ 
+diff --git a/game-design/how-to-play.md b/game-design/how-to-play.md
+index 44b0ebd..507284b 100644
+--- a/game-design/how-to-play.md
++++ b/game-design/how-to-play.md
+@@ -61,7 +61,7 @@ standing in the street.
+ By day the bar earns **clean** money, taxed by how hot the street's talk
+ about you runs. At 22:00 the outfit posts a drop — find the glow before
+ 02:00 for **dirty** pay. Witnesses seed rumors; rumors travel person to
+-person and cool only if nobody feeds them. The till washes $120/day of
++person and cool only if nobody feeds them. The till washes £120 a day of
+ dirty money — hoard more and Lena starts counting.
+ 
+ Talk your way through it: pay people off, lean on them, plant doubt, learn
+@@ -80,7 +80,7 @@ street stops guessing and starts *knowing*. Then you start again from there.
+ 
+ **The honest morning.** Meridian Parcel's board goes up by the docks each
+ morning until noon. Take the satchel, walk the route, deliver before
+-evening: $40 clean, and something money can't buy — a day in company
++evening: £40 clean, and something money can't buy — a day in company
+ colors reads honest, and the whole day circle relaxes a little about you.
+ One round a day. The morning you spend on parcels is a morning you don't
+ spend on the other ledger; that's the point.
+@@ -96,7 +96,7 @@ The empire verbs appear in conversation:
+   person's **cut** — generous buys the loyalty that survives poaching;
+   skimming is free money on a fuse they can hear.
+ - **The Dockside arm** watches everything its people can see. First a slow
+-  beer at your pub, then the street's rent, then your least-loyal crew get
++  cup of tea at your pub, then the street's rent, then your least-loyal crew get
+   offers. What they take was always a function of what you built and who
+   you underpaid.
+ - **Two more organizations** are watching different things. The machine
+diff --git a/game-design/imagegen-batch-2.md b/game-design/imagegen-batch-2.md
+index cc39c8e..e131bba 100644
+--- a/game-design/imagegen-batch-2.md
++++ b/game-design/imagegen-batch-2.md
+@@ -86,11 +86,11 @@ Counts are for a town of seven districts. They are sized so no single item is
+ load-bearing — a picture that comes back wrong is dropped, not fixed.
+ 
+ **FASCIAS — the shopfront name boards.** The proven kind, and the one with a
+-home in the code. ~24: the pub, pawnbroker, fish market, laundry (batch 1's
++home in the code. ~21: the pub, pawnbroker, fish market, laundry (batch 1's
+ four, already good), plus chandler, ironmonger, butcher, baker, greengrocer,
+-newsagent, betting shop, chip shop, cafe, barber, chemist, off-licence,
++newsagent, chip shop, cafe, barber, chemist,
+ haberdasher, cobbler, tobacconist, garage, taxi office, funeral director,
+-amusement arcade, launderette. **In-world names only, no real trade marks, no
++launderette. **In-world names only, no real trade marks, no
+ identifiable person** — the rules clause is in `prompts.json` and every prompt
+ carries it.
+ 
+@@ -98,9 +98,9 @@ carries it.
+ (batch 1's three), plus ferry, harbour master, weighbridge, public telephone,
+ gentlemen, left luggage, no waiting, private mooring, way out, taxis.
+ 
+-**NOTICES AND POSTERS — the paper layer, and R1 governs them.** ~16: dock
++**NOTICES AND POSTERS — the paper layer, and R1 governs them.** ~15: dock
+ regulations, ferry board, gig bill (batch 1's three), plus tide table, fly
+-posters, missing cat, jumble sale, darts league, coach excursions, bingo,
++posters, missing cat, jumble sale, darts league, coach excursions,
+ council notice, planning notice, election bill, cinema bill, wanted notice,
+ church fete. **Every one specified as a bold title over blocks.**
+ 
+diff --git a/game-design/m15-the-world-speaks.md b/game-design/m15-the-world-speaks.md
+index 69f75a6..cbda12d 100644
+--- a/game-design/m15-the-world-speaks.md
++++ b/game-design/m15-the-world-speaks.md
+@@ -25,7 +25,7 @@ and the player learns to read behaviour the way you learn to read a face.
+ Three things follow from that principle, and all three are load-bearing:
+ 
+ **a. The world is busy without you, and it never announces itself.** Two
+-villagers argue about a debt you have nothing to do with. A drunk sings. The
++villagers argue about a debt you have nothing to do with. Someone sings in the street. The
+ information channel is *ambient and overheard*, not addressed to the player.
+ This is what makes a place feel like it existed before you arrived.
+ 
+diff --git a/game-design/open-city-spec.md b/game-design/open-city-spec.md
+index 7a425a7..127fda6 100644
+--- a/game-design/open-city-spec.md
++++ b/game-design/open-city-spec.md
+@@ -100,7 +100,7 @@ cut per doc risk #1). ⚠ Nemesis patent note (§6.5): the rival's internal
+ structure stays flat at v1; no promotion-by-player-defeat anywhere.
+ 
+ **What Empire v1 deliberately excludes:** multiple districts, the other
+-two rival organizations, combat, vehicles, protection/smuggling/gambling
++two rival organizations, combat, vehicles, protection/smuggling
+ rackets, crew-vs-crew operations. One of each first — the slice rule
+ (doc risk #5) applies to the sandbox too.
+ 
+diff --git a/game-design/production-plan-audio-art.md b/game-design/production-plan-audio-art.md
+index 2214891..4e4a02b 100644
+--- a/game-design/production-plan-audio-art.md
++++ b/game-design/production-plan-audio-art.md
+@@ -115,7 +115,7 @@ Per test:
+ | consistency (10 lines, one character) | *"consistent but literally all of them sound the same"* | passed **degenerately** — uniformity, not character |
+ | direction (same line BORED vs GRAVE) | *"same"* | **total failure**, the most important result on this page |
+ | emphasis ("That's **your** problem") | *"no stress"* | failure |
+-| numbers ($120, day 8) | *"read correctly"* | pass — but table stakes |
++| numbers (£120, day 8) | *"read correctly"* | pass — but table stakes |
+ | long dialogue | *"doesn't change but I wouldn't call it alive"* | flat |
+ | speed | median RTF **0.04** on CPU | 25× faster than real time |
+ 
+diff --git a/game-design/roadmap-history.md b/game-design/roadmap-history.md
+index c9a957f..edec26e 100644
+--- a/game-design/roadmap-history.md
++++ b/game-design/roadmap-history.md
+@@ -384,8 +384,8 @@ The gaps, in the order they are now being closed:
+   **The loop:** squeezing the street makes the street poorer, and a poorer
+   street spends less in your bar — so the racket that pays dirty money at
+   night quietly costs clean money in the morning. The lab confirms it is a
+-  genuine trade rather than a tax: aggressive play earns $1697 in racket
+-  income over three weeks and ends **$94 down** on a campaign that ran no
++  genuine trade rather than a tax: aggressive play earns £1697 in racket
++  income over three weeks and ends **£94 down** on a campaign that ran no
+   rackets at all. No dominant strategy, which is why this was worth
+   building instead of adding another income line.
+ 
+@@ -427,7 +427,7 @@ The gaps, in the order they are now being closed:
+   somebody nobody has heard of, others only to somebody who already is
+   somebody), dress, an introduction, money, the hour, leverage on the
+   doorman, headcount. The cheapest key held wins, so a player carrying both
+-  an introduction and sixty dollars does not silently spend the sixty. A
++  an introduction and sixty quid does not silently spend the sixty. A
+   refusal is a person talking who names the way in you came *closest* to
+   having, with the figure — a door you cannot open and cannot learn about
+   is level geometry rather than a system. A gate with no keys is a design
+@@ -479,7 +479,7 @@ The gaps, in the order they are now being closed:
+   **Pacing is deterministic and checked before any call is made**: two
+   pressures in flight at most, three days minimum between passes, and a
+   window of one to four days so the player always has a day to see it
+-  coming. Demands are capped at $800 — a demand nobody could meet is an
++  coming. Demands are capped at £800 — a demand nobody could meet is an
+   ending, not a pressure — and grievances at 0.2, the same ceiling the
+   router's novel actions live under.
+ 
+@@ -642,7 +642,7 @@ The gaps, in the order they are now being closed:
+ 
+   The living economy (M7) made the district's money finite in one direction:
+   squeeze the street, the street gets poorer, the bar takes less. But every
+-  COUNTERPARTY still had infinite pockets — Rita owed $180 and produced $180
++  COUNTERPARTY still had infinite pockets — Rita owed £180 and produced £180
+   on demand, out of a starving street, in one movement. That is a payout table
+   wearing a person's face, which is the exact failure the rest of this project
+   is built to avoid.
+@@ -1068,7 +1068,7 @@ you.
+   rather than quietly paying less. Nothing is left open on purses.
+ - ~~**The lab does not test a squeezed street's effect on purses.**~~
+   MEASURED 2026-07-28 in the open lab, where prosperity moves: six days of
+-  refill after a day-15 collection sweep reads 346/306/203 dollars for
++  refill after a day-15 collection sweep reads £346/£306/£203 for
+   Control/Cautious/Aggressive (street 0.48/0.40/0.29). Squeezing the
+   street empties the pockets you later collect from, ~40% at the hard end.
+ 
+diff --git a/game-design/tier2-batch-1.json b/game-design/tier2-batch-1.json
+index 7151512..f98120e 100644
+--- a/game-design/tier2-batch-1.json
++++ b/game-design/tier2-batch-1.json
+@@ -2717,7 +2717,7 @@
+   "hardFacts": [
+    "I've worked at the customs shed for eleven years.",
+    "I file the manifests for every boat that docks at the harbor.",
+-   "I owe the pawnshop for my sister's medical bills.",
++   "I owe the pawnshop for my sister's rent arrears.",
+    "I've never been late to a shift.",
+    "I take messages at the harbor office phone since mine got cut off for non-payment, and I always write the caller's name down twice in case I lose the first slip."
+   ],
+diff --git a/game-design/weapons-spec.md b/game-design/weapons-spec.md
+index d8c0dec..377a1ac 100644
+--- a/game-design/weapons-spec.md
++++ b/game-design/weapons-spec.md
+@@ -649,7 +649,7 @@ observation model returns *Aftermath* with the wrong content: a man fell down
+ the stairs. Nobody is looking for anybody.
+ 
+ Stairs and railings. A window. The dock. A road and a moving car. Fire. Water.
+-The machinery in the back of a workshop. A bad drink and a long walk home.
++The machinery in the back of a workshop. A dark night and a long walk home.
+ 
+ These use places we have already built, they need no new weapon art, and they
+ are **thematically exact for Tom Novak** — a man who runs a bar and is not a

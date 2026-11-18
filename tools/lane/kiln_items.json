@@ -1,0 +1,5 @@
+{
+  "why": "Kiln's order items, counted by code, not by task name (blind-spots item 4, adopted 18 Nov). Add each new Kiln item here when an order names one.",
+  "items": ["n16-1", "n09-6"],
+  "notes": {"n16-1": "Kiln, clothing (order of 16 Nov)", "n09-6": "Clothing (order of 9 Nov), closed into n16-1"}
+}
