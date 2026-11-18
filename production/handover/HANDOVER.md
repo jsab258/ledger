@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 00:22 (the hourly run; the last session set its Stopped line at 00:10)
+**Started:** 2026-11-18 01:07 (the hourly run; the last session set its Stopped line at 01:02)
 
 **Row due:** 2026-11-18 02:00 (last 01:00; page and advisor read 01:00; last ack 215 at 23:24)
 **Stopped:** 2026-11-18 01:02 (history 232k of its 250k point at an item's end, verdict UNDER; stopped early on judgement: every next step needs the machine after the night build and walk (from about 04:30), and the remaining room would only be spent waiting through the stop hook. No helper or background job running.)
@@ -28,7 +28,13 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (00:22 to the stop)
+## Done this run (01:07 to the stop)
+- Page and advisor read 01:08 and 01:25: nothing new (no verdicts after 00:00Z; no advisor after ack 215).
+- Provot 1995 read from its scan by eye (pages extracted locally; secs. 5-7): one pass (two better), structural and shear springs only, never bending, held ends fixed, 10% (5% flag), no collisions in his tests. Lane strainorder's code read against Provot and Bridson: order, weights, edges all agree; its tests' expectations look right for the new order (no edit). Note appended to STRAIN-LIMIT-SOURCES-2026-11-18.md; DECISIONS 01:10.
+- n16-2 gap 1 built: CastDay.OwnWeekWords + TalkHelper's scene gets "Your usual week: ..." for every live talker (Ron can say where he will be tonight). CoreTests 5,255 and TalkTests 132 pass; full ci-checks run before the night build. Still owed: one live talk sample in the packaged game asking "where will you be tonight?" (API, daytime). NOTEBOOK and DECISIONS 01:20.
+- Diagnoser helper (Opus, read-only) on the nylon jacket's sleeveR stretch (gap 2): report to F:/LedgerTools/tool-dev/reports/KILN-NYLON-SLEEVE-DIAGNOSIS-2026-11-18.md.
+
+## Done the run before (00:22 to 01:02)
 - Page and advisor read 00:24 and 00:50: nothing new (no verdicts after 22:45Z; no advisor after ack 215). The licence item kiln-front-end-licence-2026-11-17 has NO verdict yet (the last handover's "answered yes" was wrong): trousers step I waits.
 - Strain-limit lane reviewed, rebased onto a8368f3, cargo test 56/56 (off still bit for bit), gate alone PASS (F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-strainlimit/gate.out; donkey_jacket NOT MADE as in the baseline run). Merged: Kiln main (F:/LedgerTools/tool-dev/kiln) at 1231324. Review finding kept in the merge message: the repair runs after body contact, so keep it off until a garment run with it on shows body-through 0. Worktree and its cargo target (1.3 GB) removed, recorded.
 - Hourly rows 00:30 and 01:00 (Fable's own weekly meter 40% then 43%, not used by this session). Study leftovers DECISION on his page 00:57. Reading helper: papers unreadable to it; the builder read Bridson 2002 in full (pdftotext), finding the order fault; DECISIONS 01:0x.

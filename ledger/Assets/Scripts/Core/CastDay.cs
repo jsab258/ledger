@@ -488,6 +488,38 @@ namespace Ledger.Core
         /// Where somebody is this hour, in plain words, or null when off the street or unknown.
         public string WhereWords(string id, int day, int hour) => SaidOf(PlaceOf(id, day, hour));
 
+        /// THEIR OWN WEEK, as they would tell it (n16-2, gap 1 of
+        /// production/research/phase2-plan/RON-ROUTINE-TALK-2026-11-17.md): each
+        /// group of weekdays with the same day, every change of place from the
+        /// first hour after a change ("Monday to Saturday: seven in the morning,
+        /// inside the cafe; ...; eleven in the evening, off the street"), places
+        /// in their plain words. Only this hour's place reached the talk before,
+        /// so "where will you be tonight?" had no source. A place with no words
+        /// is said as "somewhere off Quay Street", never by its id. Null for
+        /// somebody not in the cast.
+        public string OwnWeekWords(string id)
+        {
+            if (id == null || !_daily.ContainsKey(id)) return null;
+            string Words(string place) => place == Off ? "off the street"
+                : SaidOf(place) ?? (AreaOf(place) is string a && AreaNames(a).Count > 0 ? AreaNames(a)[0] : "somewhere off Quay Street");
+            // A morning hour said as one ("eight in the morning"), so seven is never read as the evening.
+            string When(int h) => h > 0 && h < 12 && !TimeWords(h, false).EndsWith("morning") ? TimeWords(h, false) + " in the morning" : TimeWords(h, false);
+            var groups = new List<(string said, List<int> days)>();
+            for (int d = 0; d < 7; d++)
+            {
+                var day = new string[24];
+                for (int h = 0; h < 24; h++) day[h] = PlaceOf(id, d, h);
+                var bits = new List<string>();
+                for (int h = 0; h < 24; h++)
+                    if (day[h] != day[(h + 23) % 24]) bits.Add(When(h) + ", " + Words(day[h]));
+                string said = bits.Count == 0 ? Words(day[0]) + " all day" : string.Join("; ", bits);
+                int g = groups.FindIndex(x => x.said == said);
+                if (g < 0) groups.Add((said, new List<int> { d })); else groups[g].days.Add(d);
+            }
+            if (groups.Count == 1) return "every day: " + groups[0].said;
+            return string.Join(". ", groups.ConvertAll(x => DaysWords(x.days) + ": " + x.said));
+        }
+
         /// Where they stand, or null when off the street or unknown.
         public (double x, double z)? Where(string id, int day, int hour)
         {

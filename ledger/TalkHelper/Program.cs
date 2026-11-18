@@ -696,6 +696,10 @@ static class Program
             // scene the game sends (the same for everybody until now).
             var where = Cast?.WhereWords(key, day, hour);
             if (where != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + "Where you are: " + where + ".";
+            // THEIR USUAL WEEK, from the same routine (n16-2 gap 1, 18 Nov): asked
+            // where they will be tonight or on a Sunday, they now have a source.
+            var ownWeek = Cast?.OwnWeekWords(key);
+            if (ownWeek != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + "Your usual week: " + ownWeek + ".";
             LastScene = scene;
 
             var sw = Stopwatch.StartNew();
@@ -2513,7 +2517,10 @@ static class Program
         await placed.Answer("{\"id\":81,\"to\":\"sam\",\"say\":\"Morning.\",\"day\":" + placedDay + ",\"hour\":" + placedHour + ",\"scene\":\"Quay Street, by the parade.\"}");
         string placedPrompt = placed.EngineFor("sam") == null ? "" : placed.EngineFor("sam").BuildSystemPrompt("Morning.", new GameTime(placedDay, placedHour, 0), "");
         Ok("the cast's routines are read, and a person is told where they are this hour beside the game's scene",
-           placed.Cast != null && placedWords != null && placed.LastScene == "Quay Street, by the parade. Where you are: " + placedWords + ".", placed.LastScene ?? "no scene");
+           placed.Cast != null && placedWords != null && placed.LastScene == "Quay Street, by the parade. Where you are: " + placedWords + ". Your usual week: " + placed.Cast.OwnWeekWords("sam") + ".", placed.LastScene ?? "no scene");
+        // And their own week beside it (n16-2 gap 1, 18 Nov): asked about tonight or Sunday, they have a source.
+        Ok("and their own usual week, every day group from the same routine, no ids",
+           placed.LastScene != null && placed.LastScene.Contains("Your usual week: ") && placed.LastScene.Contains("Sundays: ") && !placed.LastScene.Contains("_"), placed.LastScene ?? "no scene");
         Ok("and who they know on the street, where their friends usually are, and the street's places (town list 6ad)",
            placedPrompt.Contains("- Ron Kirby, who keeps Mickey's door and the rank; you know each other well; usually at Mickey's most of the day.")
            && placedPrompt.Contains("; everybody on the street knows who that is.") && placedPrompt.Contains("The street's places, as people call them: "), placedPrompt);

@@ -3733,6 +3733,12 @@ namespace Ledger.CoreTests
                       && hookP.UsualWords("joey") == "the quay in the mornings, Mickey's in the afternoons"
                       && hookP.UsualWords("filip") == "the warehouses in the evenings and at night",
                       "the street's names for people, what they do, and where they usually are", hookP.UsualWords("joey") ?? "");
+                // Their own week in plain words (n16-2 gap 1, 18 Nov): Ron can say where he will be tonight and on a Sunday.
+                var ronWeek = hookP.OwnWeekWords("rocco") ?? "";
+                Check(ronWeek == "Monday to Saturday: seven in the morning, inside the cafe across the street from Mickey's; eight in the morning, the pavement at Mickey's door, where the cabs wait; twelve, the pavement outside the fish market; one, the pavement at Mickey's door, where the cabs wait; five, the quay at the bottom of Quay Street; seven in the evening, the front room of Mickey's, the cab office; eleven in the evening, off the street. "
+                      + "Sundays: ten in the morning, the allotments by the railway; one, off the street; seven in the evening, the front room of Mickey's, the cab office; eleven in the evening, off the street"
+                      && hookP.OwnWeekWords("nobody") == null && !ronWeek.Contains("_"),
+                      "a person's own week in plain words, every change of place, no ids", ronWeek);
                 Check(missing == null && ron.Exists(l => l.StartsWith("Sheila Dunn, Mickey's bookkeeper; you know each other well; usually at Mickey's"))
                       && ron.Exists(l => l.StartsWith("Here with you now: ") && l.Contains("Sheila Dunn"))
                       && ron.Exists(l => l.StartsWith("The street's places, as people call them: ") && l.Contains("the chapel") && !l.Contains("the fish dock"))
