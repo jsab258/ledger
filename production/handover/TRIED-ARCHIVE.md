@@ -96,3 +96,9 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 18 Nov 05:40: gap 2 try 2 (band started fully wrapped and stretched): refused by Kiln's pattern check, the cuff too short for the forearm where it lands (cut for another body).
 - 18 Nov 04:40: causal check, cuffs' closing seams held to the 20 mm stage's end: frames 1-3 identical, so that seam is not the cause (not a try).
 - 18 Nov 03:40: gap 2 try 1 (carried inside points to their old triangle's heaviest corner): wrist edge unchanged; inside points were a symptom.
+
+- 18 Nov: merge candidate 1: the torso start change (e1d17f4) moved the jacket, layered and skirt starts out of band.
+- 18 Nov: leg start: swept shares, a waist/floor landmark, an offline screen of two researched rules: none within about 1 mm (Fable has it).
+- 18 Nov: R4 refit: the j3 source drape's own crossings make the start check refuse every target.
+- 18 Nov: four Fable helpers at max took the week from 0 to 12% in about 1.5 h; two at most while ahead.
+(standing, 18 Nov) **Quay Run (advisor 222):** his desktop shortcut opens F:/LedgerTools/quay-run/index.html in Chrome; whenever the driving study (https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq) is republished, copy its index.html there again (Artifact read with path) and run tools/driving_feel_check.py: a copy newer than the ruling must start automatic.
