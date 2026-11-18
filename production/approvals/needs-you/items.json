@@ -1249,6 +1249,38 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "study-leftovers-delete-2026-11-18",
+   "added": "2026-11-18 00:55",
+   "tag": "DECISION",
+   "title": "Delete the old game-file readers your outside-only ruling retired?",
+   "text": "Since your 17 Nov ruling, other games are studied from outside only. Three leftovers from the old way sit on the F: drive: the FModel file reader (100 MB), the Silent Hill 2 reader and its outputs (59 MB), and an empty inZOI folder. Nothing uses them; a check now fails the build if such a reader comes back.",
+   "why": [
+    "They are things you asked for, so deleting them needs your yes (your 29 Oct ruling).",
+    "Kept, they are tools your ruling no longer allows anyone to run."
+   ],
+   "steps": [
+    "Tap Yes or No below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: nothing uses them and your ruling retired them; the study notes in our own words stay.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete all three (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
