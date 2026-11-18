@@ -1184,18 +1184,18 @@
    "tag": "ACTION",
    "his_hands": true,
    "only_you": "his-setting",
-   "tried": "Claude switched it on itself at 20:33; the app's safety check refused a change to the project's hook settings, so only your word in the chat can allow it.",
-   "title": "One message in the chat: switch on the tool-output cap",
-   "text": "Type one line in tonight's working session so Claude may switch on the cap on long tool output (about US$40 a day saved).",
+   "tried": "Claude switched both on itself (17 Nov 20:33, 18 Nov 08:50); the app's safety check refused each change to the project's hook settings, so only your word in the chat can allow them.",
+   "title": "One message in the chat: switch on the output cap and the order-item hooks",
+   "text": "Type one line in the working session so Claude may switch on two project settings: the cap on long tool output (about US$40 a day saved) and the hooks that tag each session and helper with its order item.",
    "why": [
-    "Long command output carried through later steps cost US$67 yesterday (advisor's review).",
-    "The cap is built, reviewed and tested (126 checks); nothing is hidden, the full output stays one read away."
+    "Long command output cost US$67 in a day; the cap is built, reviewed and tested.",
+    "The item hooks make Monday's spend-by-item numbers exact (Kiln's share among them)."
    ],
    "steps": [
     "Claude app: Scheduled tasks",
     "Open \"LEDGER: the hourly fresh session\"",
-    "History: Today at 8:07 PM (or the newest run)",
-    "Type: Switch the output cap hook on",
+    "History: Today at 11:12 AM (or the newest run)",
+    "Type: Switch the output cap hook and the order-item hooks on",
     "Click Allow if asked",
     "Tap Done below"
    ],
@@ -1205,7 +1205,7 @@
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "recommendation": "Do it today: the saving starts with the next command.",
+   "recommendation": "Do it today: both start working with the next command.",
    "options": [
     [
      "done",

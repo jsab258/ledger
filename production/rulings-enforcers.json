@@ -49,7 +49,7 @@
    ]
   },
   {
-   "line": "11 Nov: efficiency, never at the cost of quality",
+   "line": "11 Nov: efficiency, never at quality",
    "by": [
     "advisor:watchdog",
     "advisor:daily-backstop",
@@ -602,6 +602,13 @@
    "by": [
     "tools/nightly_package.py::wip has moved since the played copy"
    ]
+  },
+  {
+   "line": "18 Nov, prototype: a round runs only",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "advisor 219: a changelog check refusing a round entry that names no real-game item or spec is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit"
   }
  ]
 }
