@@ -2660,3 +2660,49 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1.5 h helper, 0.3 h review, 0.1 h session.
 - What failed and why: the reviewer could not reach the page with its allowed tool; the session checked the quotes directly.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-RESOURCE-TROUSERS-REVIEW-2026-11-18.md
+
+## 2026-11-18: hardening a pattern-file importer (SVG and DXF)
+- Made: a garment-pattern importer that samples arcs, reads every closed sub-path, refuses outlines lying inside or across another (naming both) and returns a report of units and of everything left out.
+- Method: a written list of the importer's known faults from its code, one unit test per fault, a fresh reviewer measuring real files from another tool; the reviewer found that pieces stored as separate DXF blocks at the origin all "overlap", so outlines are compared only within one block.
+- Tools: the engine's own tests; four real DXF exports from an open-source pattern generator.
+- Target and check: each real file imports all its pieces, none refused (14, 12, 16, 6); merged tree tests pass.
+- Cost: about 3.5 h helper, 0.7 h fixes, 0.5 h review.
+- What failed and why: the first version tested only hand-made files; real exporters place every piece in its own block at the origin.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-C2-2026-11-18.md and KILN-LANE-C2-REVIEW-2026-11-18.md
+
+## 2026-11-18: a safety guard that switched itself off outside its home folder
+- Made: the output-path check now fails closed: it looks beside the tool and then in a fixed tool folder, and refuses to run when it finds neither.
+- Method: tests written first that a relative and an off-root path are refused; run against the old code to see them fail (the control), then against the new.
+- Tools: Python unittest, git worktrees, a small fresh reviewer.
+- Target and check: the two refusal tests fail before and pass after; 80 existing tests pass.
+- Cost: about 0.3 h session, 0.1 h review.
+- What failed and why: the guard imported its rule from a relative folder and silently skipped the check when the import failed, so copies in side folders wrote anywhere.
+- Evidence: Kiln main 5d25aa6; F:/LedgerTools/tool-dev/reports/KILN-LANE-B1-2026-11-18.md (the finding).
+
+## 2026-11-18: re-targeting a finished drape project to another body
+- Made: a drape project can be re-pointed at a different body, and the start check then runs over every piece, not only new ones.
+- Method: behind a flag, off reproduces the old open and save byte for byte; four acceptance cases as tests; the reviewer planted faults (count check off, start check written false) and each was caught by exactly one test.
+- Tools: the engine's tests, git merge-tree for conflicts, a scratch merge worktree.
+- Target and check: four cases pass; merged tree 79 tests pass; planted faults caught.
+- Cost: about 3.5 h helper, 0.5 h review.
+- What failed and why: nothing failed; two narrow follow-ups listed (refuse a points file marked failed; a docstring naming the wrong keys).
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R3-2026-11-18.md and KILN-LANE-R3-REVIEW-2026-11-18.md
+
+## 2026-11-18: a garment's job script made from a data file
+- Made: one generic writer that turns a garment spec (pattern design and options, a seam table, an arrangement table, fabrics by preset name) into the cloth tool's job script; two existing garments reproduced from their own specs with no code change.
+- Method: record every call each old hand-written job makes to a fake session, then require the spec-built job to make the same calls with the same arguments; plant faults in the spec to prove the comparison bites.
+- Tools: Python unittest, a recording fake of the tool's script interface, the existing writers' helpers imported, not copied.
+- Target and check: 106 and 108 calls equal, call for call; fabric file byte for byte; no garment name in the writer; 10 planted faults all caught by a fresh reviewer.
+- Cost: about 1.0 h helper, 0.5 h review.
+- What failed and why: nothing; seam ends are still named by corners rather than the pattern library's own path names (a note for the next writer).
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-C3-2026-11-18.md and KILN-LANE-C3-REVIEW-2026-11-18.md
+
+## 2026-11-18: a cuff that cannot close round the limb where the sleeve brings it (set aside after two tries)
+- Made: two engine changes at the start of a drape (inside points carried to their old triangle; a short band started fully wrapped and stretched on the limb's outline), both behind switches, both tested on simple limbs.
+- Method: measure first where the tangle is born (frame 0 wraps half round), then fit circles rather than averaging a half ring, then compare the band's length with the limb's girth where it lands.
+- Tools: the engine's debug dump of frame 0; least-squares circle fits; plane sections of the body mesh (convex-hull perimeter as a tape girth).
+- Target and check: winding 1 held to the last frame, no cloth through the body.
+- Cost: about 3 h session, 2 h helpers, 0.3 h machine.
+- What failed and why: both tries treated the engine's start as the fault; the band was too short for the limb where it lands (rest 172 mm, stretched limit 219, needed 235), which the half wrap hid until the tool's own fit check measured a full ring. Lesson: before changing how a band is placed, compare its rest length and stretch limit with the girth where it lands.
+- Third route: the garment re-cut to the measurements of the body it drapes on (the old cut was for an earlier body); body-through fell from 112 to 44 but the wrist was unchanged and a new seam gap appeared, so the fault was set aside. Lesson: measure the body a garment drapes on before drafting; it fixed other faults, not this one.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-BANDSTRETCH-2026-11-18.md, KILN-LANE-LIMBCENTRE-2026-11-18.md, KILN-NYLON-S6-FIT-2026-11-18.md
