@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 05:20 (the hourly run; the last session set its Stopped line at 05:11)
+**Started:** 2026-11-18 06:22 (the hourly run; the last session set its Stopped line at 06:17)
 
-**Row due:** 2026-11-18 07:13 (last 06:13; page and advisor read 06:00, nothing new; last ack 216 at 02:55)
+**Row due:** 2026-11-18 08:15 (last 07:15; page and advisor read 07:13, nothing new; last ack 216 at 02:55)
 **Stopped:** 2026-11-18 06:17 (history past its point at an item's end. Kiln main 278e006, eight pieces merged this run; gap 2 set aside after three routes; resource-rewrite reviewed MERGE WITH FIXES, fixes not applied. No helper running.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -28,26 +28,26 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **His page items (advisors 199, 200):** tagged ACTION, DECISION or REVIEW; title, at most two why bullets, numbered steps; places named as he sees them; after Done, check it happened and say so in the row.
 - **Before writing Stopped: end every background job of your own.**
 
-## Done this run (05:20 on; details in DECISIONS 05:25 on)
-- Page and advisor read 05:21, 05:28, 05:41, 05:50, 06:00: nothing new. Rows 05:22, 06:13.
-- Kiln main now 278e006 (cargo 90, Python 107): seampartial (compat's long partial-seam forms refused) and figuresurface (the built-in figure's face pushes) merged after small reviews; before them outpath-closed (the output-path guard refused nothing from lane folders; now fails closed), R3 re-target (review MERGE), C2 import hardening (fixes applied), r3-passfalse (R3's follow-ups), C3 garment as data, C1 spec-to-job check. cargo 88 passed, Python suite OK on main.
-- Gap 2 try 2 (of 2) used and FAILED: KILN_BAND_STRETCH (lane bandstretch 300ee5d, not merged) wrapped the cuffs fully; Kiln's own pattern check refused before frame 1 (cuffR rest 172 mm, 219 at the rib's limit, needs 235 where its seams bring it). The half wrap on main hid the shortfall. Girth measured (session scratchpad girth.py): 209-263 mm across the cuff's landing, 193 mm 20 mm nearer the hand.
-- Cause found in the writer's own docstring: the nylon draft is at MH_SamC5's measures but drapes on MH_SamS6 (unmeasured, moved up to 56 mm).
-- Shoulder probe (KILN-SHOULDER-PROBE): the built-in figure has no surface for face pushes; sample only.
+## Done this run (06:22 on; details in DECISIONS 06:29 on)
+- Page and advisor read 06:24, 06:38, 06:55: nothing new. Row 06:32.
+- Kiln main now f8b8f6e (cargo 116, Python 133). Merged this run, each after its review: resource-public + resource-rewrite (rows 2-58 batches PUBLIC/DROP and "script calls"; the review's three fixes), stderrlog (the front drains the engine's stderr as it is written; KILN_ENGINE_LOG; bad bytes replaced), resource-window (rows 15, 16, 43-46; keys.rs), resource-lineinfo (rows 31-36; ExportPatternJSON returns False, kiln_api.export_pieces; both review fixes), resource-thread (row 39: one 0.5 mm drawing default). The work-jacket writer, ledger-local tools/md/make_jacket_job.py, now calls kiln_api.export_pieces on Kiln (its Kiln copy re-hashed; stream 290 calls, 35 add_seam, sha256 6c90aa10).
+- Waiting item 14 (talk, usual day) was already built at 01:20 (4438999c0); a helper moved it into CastDay.TalkLines with eight tests (d2b997f18 on wip, all eight suites pass). Order ledger: mark item 14 done with that evidence.
+- Row 39's research-reader brief was refused by the permission check (06:31): the thread value stays unverified (drawing only).
 
 ## Running at the stop
-- Nothing. resource-rewrite's review came back MERGE WITH FIXES (KILN-LANE-RESOURCE-REWRITE-REVIEW-2026-11-18.md; scratch merge into 278e006: cargo 97 passed; Python 119 with fix 1): three fixes, all from main's seampartial merge: (1) test_compat_public's 11/12-argument test expects NotSupported, (2) MECHANICS.md's partial-seam row conflict, (3) the stale "More calls" CutPatternAlongInternalShapes row; exact text in that report.
+- Nothing running. Row 28 (resource-position) merged 07:20 into Kiln main c52c3ab after its gate (j3, jacket, jeans, layered identical to the 02:52 gate; cargo 118, Python 136). Kiln main is now free of every REWRITE, PUBLIC and DROP row the plan listed except row 27.
 
 ## Next, in order
-0. Verdicts after 2026-11-18T05:00:00Z; advisor after 2026-11-18T02:55:00+01:00 (last ack 216). Row due 07:13, with Kiln's share. Then item 0b: apply resource-rewrite's three review fixes in its lane (exact text in its review), merge lane-resource-rewrite (it carries resource-public) into main, cargo and Python on main, DECISIONS and NOTEBOOK lines (18 + 14 rows re-sourced).
-1. Gap 2 (nylon right wrist) SET ASIDE 06:05 after the S6 fit route (KILN-NYLON-S6-FIT): unchanged winding 0, new 10.2 mm seam gap. Listed; only a removing or simplifying fix under an hour, or a new researched method that closes a third with no new fault. The S6 draft and measures stay on F: for the jacket when it resumes.
-2. After resource-rewrite merges: step 6's remaining REWRITE batches (line info and export 31-36 with the work-jacket writer; window 15, 16, 43-46), row 39, row 28 (needs a gate).
-3. Run alone, no helper compiling: make_baseline.sh at current Kiln main (about 1 h), commit regression_baseline.json; the gate with every switch off must match it; check rest_label on real lines. Then the cantilever convergence check.
-4. Public names lane: gate alone (every switch off, against 9ca019e), merge, then the writer edits.
+0. Verdicts after 2026-11-18T05:55:00Z; advisor after 2026-11-18T02:55:00+01:00 (last ack 216). Row due 07:32.
+1. Row 28 merged without a second reader (the gate was the plan's check): a small review of c52c3ab's row-28 diff when a place is free; old probe jobs that set the style first now place differently (listed in its report).
+2. Step 6 left: row 27 (Z-step sweep, machine). The 58-value list then has no decompiled row left but 27 and any the plan marks PHYSICS; check the plan's group totals.
+3. Run alone, no helper compiling: make_baseline at current Kiln main (regression_gate.py baseline: plain run plus +1/-1 mm nudged runs, about 1 h), commit regression_baseline.json; the gate with every switch off must match it; check rest_label on real lines. Then the cantilever convergence check.
+4. Public names lane: gate alone (every switch off), merge, then the writer edits.
 5. A gate with KILN_STRAIN_LAST=1 on every job, alone; if all pass with body through 0, decide making it the default.
-6. Row 27 Z-step sweep (machine) toward clearing Ron's trousers; R4, J4, B2 (drapes after a gate).
-7. Listed: rule 4 refuses uncapped rib at the solver's limit while rule 2 does not; the placement log line lost (the front reads the engine's stderr only at exit).
+6. R4, J4, B2 (drapes after a gate).
+7. Gap 2 (nylon right wrist) SET ASIDE 06:05 after three routes; only a removing fix under an hour or a new researched method closing a third. Listed: rule 4 refuses uncapped rib at the solver's limit while rule 2 does not.
 8. On his licence answer: trousers merge (ron-kiln-trousers-import 536ce6307), import (never 01:15-04:30), shipped check, nightly_package.py, -WearHeld film. Then 0c daytime talk run; Darren's head remake (advisor 215); bending try 2 (a); n16-6 Sonnet 5.5 packaged run; n16-8, n16-7.
+- C: sits near its 40 GB floor (40.7 at 06:55): reuse C:/LedgerTools/cargo-target/lane-resource-lineinfo for builds; the merged lanes' worktrees and build folders (resource-public, resource-rewrite, lineinfo, window, thread, stderrlog, position after merge) are my own leftovers to delete through the map, one DECISIONS line.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 18 Nov 05:40: gap 2 try 2 (band started fully wrapped and stretched): refused by Kiln's pattern check, the cuff too short for the forearm where it lands (cut for another body).

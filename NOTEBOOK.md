@@ -2706,3 +2706,30 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - What failed and why: both tries treated the engine's start as the fault; the band was too short for the limb where it lands (rest 172 mm, stretched limit 219, needed 235), which the half wrap hid until the tool's own fit check measured a full ring. Lesson: before changing how a band is placed, compare its rest length and stretch limit with the girth where it lands.
 - Third route: the garment re-cut to the measurements of the body it drapes on (the old cut was for an earlier body); body-through fell from 112 to 44 but the wrist was unchanged and a new seam gap appeared, so the fault was set aside. Lesson: measure the body a garment drapes on before drafting; it fixed other faults, not this one.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-BANDSTRETCH-2026-11-18.md, KILN-LANE-LIMBCENTRE-2026-11-18.md, KILN-NYLON-S6-FIT-2026-11-18.md
+
+## Kiln: decompiled values replaced, batches PUBLIC/DROP and "script calls" (18 Nov 2026)
+- Made: 32 of the tool's 58 values traced to decompiling the reference program replaced: 15 re-sourced to the public scripting reference (every quote found word for word on the raw page), 3 dropped, 14 rewritten as the tool's own rules with a written reason each; the decompiled addresses removed from code and docs.
+- Method: list every value with its origin; for each, public source first (quote checked by script on the raw page), else the tool's own rule in its own words, else drop; a fresh reviewer greps the merged code for every old address and wording.
+- Tools: raw-page fetch with tag stripping and scripted quote search; grep of every writer that calls a changed call; engine and Python suites.
+- Target and check: no decompiled residue in this batch's rows; no gate job or writer changes behaviour (call stream hash unchanged).
+- Cost: about 3 h helpers, 0.5 h session.
+- What failed and why: the lane was cut before a main merge that refused two seam forms, so one of its tests expected the old answer; lesson: re-merge main into a lane right before its review, not after.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-RESOURCE-REWRITE-2026-11-18.md, KILN-LANE-RESOURCE-REWRITE-REVIEW-2026-11-18.md
+
+## Kiln: engine messages read as they arrive (18 Nov 2026)
+- Made: the tool's scripting front reads the solver's message stream on its own thread, keeps the last lines and can log every line to a file.
+- Method: a stand-in engine that floods its message stream before each reply; the old front must fail against it (negative control) and the new one pass; a small reviewer looks for races, leaks and decoding faults.
+- Tools: a fake engine script run in place of the real one; unit tests with a patched process start.
+- Target and check: no stall, no lost last line, a dying engine's last line in the error; 124 tests pass.
+- Cost: about 0.5 h session, 0.1 h helper.
+- What failed and why: the first version died on one non-UTF-8 byte and leaked the engine on a bad log path (found by review). Lesson: a pipe drainer must decode leniently and open its own files before starting the child.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-STDERRLOG-REVIEW-2026-11-18.md
+
+## Kiln: line info, export and the window's words re-sourced (18 Nov 2026)
+- Made: line-info answers in the public layout with the tool's own direction, location and midpoint rules; the deprecated export answers False as documented, the tool's own export under its own name; the window's tool names, panels, colour views, folds and a 39-key map chosen afresh; the thread list replaced by one drawing default.
+- Method: two lanes in parallel from one main, each reviewed (full reviewer where a writer's behaviour changed, small reviewer for labels), merged one after the other with the second re-merging main; a call-stream hash shows exactly which calls moved, and a writer's copy plus hash pins any change to a writer.
+- Tools: worktree lanes, call-stream diff, raw-page quote search, engine and Python suites.
+- Target and check: no decompiled residue in these rows; stream back to 290 calls and 35 seams after the writer switch; cargo 115, Python 133.
+- Cost: about 4 h helpers, 1 h session, 0.3 h machine.
+- What failed and why: two lanes appending to the same docs table conflicted, and each had removed different old rows; lesson: when lanes edit one table, merge the second by keeping both additions and both removals, never one side.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-RESOURCE-LINEINFO-REVIEW-2026-11-18.md, KILN-LANE-RESOURCE-WINDOW-REVIEW-2026-11-18.md
