@@ -148,6 +148,18 @@ which clauses the gate checks and which it does not claim to.
 - Deterministic Core decides every outcome the player feels. LLMs classify, never
   adjudicate.
 
+## Pillar: verbs first, talk as the consequence (Jafar, 18 November 2026)
+- The player mostly acts: jobs done with the hands, break-ins, fights,
+  driving, working the street. The living town watches and reacts. Talk is
+  where the consequences surface and how they are dealt with; the Ledger
+  keeps track. Talk stays the moat, never the main thing the player does.
+- Targets (Study 2 and the player study): about ten distinct activities per
+  thirty minutes; nothing new for at most about five minutes; talk well
+  under half of play time.
+- Enforced by the prototype's AI playtester, which measures the activity
+  mix and empty minutes against these targets every round, and by P4 in
+  the real game (advisor 224; his words 18 Nov 15:19).
+
 ## What LEDGER is not (D24, decided 2026-09-14)
 - NOT an open-world sandbox, NOT a shooter, NOT a driving game, NOT an
   economy simulation, NOT a story-first narrative game. It is a small
