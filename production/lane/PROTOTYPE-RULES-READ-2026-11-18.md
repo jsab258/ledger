@@ -36,7 +36,7 @@ Confidence: "read" = the code was read and the meaning is clear; "inferred" = th
 | Naming: face score = familiarity x (0.35 + 0.65 clarity); coat at night x0.4; in the cab x0.6 if under 10 m and lit, else x0.1 | thresholds 0.36 (Tom), 0.2 (the new owner); below that a man, a coat or a cab; naming also needs knowing of the inheritance or familiarity over 0.5 | `s>.36&&o?"tom"` and `n.coat&&qn()>.5&&(s*=.4)` | read (matches notes) |
 | Each act has a severity, a moral value and a crime level (0 to 3); 51 kinds (corrected 18 Nov by rules_test.py; first read said 45), from arrive (0.3) to kill (1.0, crime 3, never fades below 0.6 heat) | table | `inherit:xt(.5,0,0` | read |
 | Seeing raises familiarity; a non-act glance at most once every 20 game minutes | +0.02 to 0.05 if named, else up to 0.6 cap | `seenCool=x.t+20` | read |
-| Timid people (nerve under 0.62) step back when they see a crime or anything at night; others pause their walk 0.9 to 2.5 seconds | nerve 0.62 | `nerve==null?.5:i.def.nerve)<.62` | read |
+| A witness who is walking pauses 0.9 to 2.5 seconds whatever their nerve; one standing still steps back if timid (nerve under 0.62) and it is a crime or night (corrected 18 Nov by review) | nerve 0.62 | `nerve==null?.5:i.def.nerve)<.62` | read |
 | Night is a smooth 0 to 1 by hour | day 07:45 to 17:15, full night 18:45 to 06:15, blends between | `i>=7.75&&i<17.25?0` | read |
 
 ## 2. Gossip and rumour
@@ -77,7 +77,7 @@ Confidence: "read" = the code was read and the meaning is clear; "inferred" = th
 |---|---|---|---|
 | Tom starts with 23.50 clean, nothing dirty | 2350p | `clean:2350` | read (matches notes) |
 | Mickey's book: five debts, all open, no due date stored | Dennis Iveson 80.00, Lee Drewery 15.00, Darren Milner 22.00, Julie Kettlewell 9.00, Wayne Harrison 30.00 | `dennis:{owed:8e3` | read |
-| A debtor pays in full when asked if afraid (fear over 0.45), or if they like him (over 0.3) and owe 15 or less; otherwise refuses | 0.45, 0.3, 1500p | `i.mind.fear>.45||i.mind.regard>.3&&o.owed<=1500` | read |
+| A debtor pays in full when asked if afraid (fear over 0.45), or if they like him (over 0.3) and owe 15 or less; otherwise refuses. Pressed on the fighting ladder, a debt demand met at rung 2 pays half, at rung 3 or more in full (`VS(i,t>=3?1:.5)`, added 18 Nov by review) | 0.45, 0.3, 1500p | `i.mind.fear>.45||i.mind.regard>.3&&o.owed<=1500` | read |
 | A collected debt goes in the tin (dirty money) | n/a | `oh(n,!0)` in `VS` | read |
 | Striking a debt out: liking +0.5 | 0.5 | `regard+.5` in `WS` | read |
 | Julie offers to pay her fare when he drives her; he may waive it and strike the slate | slate 9.00 | `Nine pounds, since the summer` | read |

@@ -11,9 +11,9 @@ Lane helper, 18 November 2026. Searched game-design/, production/specs/, canon.m
 
 ## Counts
 
-- 118 dollar hits in game-design/ and production/specs/ (none in canon.md).
-- 49 are in-game money written in dollars: these should be pounds. 2 of them are player-facing (how-to-play.md, which is marked as the player's instructions for the prototype).
-- 2 only describe the old switch away from dollars and need no change.
+- 123 dollar hits in game-design/ and production/specs/ (none in canon.md), counting lines in text files outside archives; 7 more lines hold "$" only as a pattern-matching sign, not money (clip-findings.txt 5, roadmap-history.md 2754, asset-budgets.json 140). Corrected 18 Nov by review: the first count was 118 and missed three table headers and two switch lines.
+- 52 are in-game money written in dollars: these should be pounds. 2 of them are player-facing (how-to-play.md, which is marked as the player's instructions for the prototype).
+- 4 only describe the old switch away from dollars and need no change.
 - 67 are real-world spending (asset packs, voice services, Anthropic key costs). Those prices really are charged in US dollars, so they are listed below as a group with a proposal, not as faults.
 - The player-facing line data has no dollar sign, "dollars" or "bucks" anywhere. One American money idea turned up in the town cards: "medical bills" (twice, the design copy and the game copy).
 - The simulation and tool code: 6 places where in-game money is named or written in dollars (listed at the end), no change made.
@@ -45,6 +45,7 @@ Lane helper, 18 November 2026. Searched game-design/, production/specs/, canon.m
 | game-design/counterparty-purses-spec.md | 17 | "pays $180, in one movement" | "pays £180, in one movement" | no |
 | game-design/counterparty-purses-spec.md | 63 | "A $400 debt against a man who turns" | "A £400 debt against a man who turns" | no |
 | game-design/counterparty-purses-spec.md | 64 | "over $90 a week" | "over £90 a week" | no |
+| game-design/balance-findings-economy.md | 79 | table header: "avg$" | "avg £" | no |
 | game-design/balance-findings-economy.md | 16 | table row: Control, end cash "$2279" | "£2279" | no |
 | game-design/balance-findings-economy.md | 17 | table row: Aggressive, "$2185" | "£2185" | no |
 | game-design/balance-findings-economy.md | 18 | table row: Cautious, "$1866" | "£1866" | no |
@@ -57,6 +58,7 @@ Lane helper, 18 November 2026. Searched game-design/, production/specs/, canon.m
 | game-design/balance-findings-economy.md | 98 | "Same end cash to the dollar" | "Same end cash to the penny" | no |
 | game-design/balance-findings-economy.md | 103 | "aggressive play still earns $1697" | "still earns £1697" | no |
 | game-design/balance-findings-economy.md | 104 | "finishes $94 behind" | "finishes £94 behind" | no |
+| game-design/balance-findings-open.md | 14 | table header: "racket $" | "racket £" | no |
 | game-design/balance-findings-open.md | 16 | table row: Control, "$2825" | "£2825" | no |
 | game-design/balance-findings-open.md | 17 | table row: Aggressive, "$3138" and "$1708" | "£3138" and "£1708" | no |
 | game-design/balance-findings-open.md | 18 | table row: Cautious, "$2512" and "$469" | "£2512" and "£469" | no |
@@ -70,6 +72,7 @@ Lane helper, 18 November 2026. Searched game-design/, production/specs/, canon.m
 | game-design/roadmap-history.md | 482 | "Demands are capped at $800" | "capped at £800" | no |
 | game-design/roadmap-history.md | 645 | "Rita owed $180 and produced $180" | "Rita owed £180 and produced £180" | no |
 | game-design/roadmap-history.md | 1071 | "reads 346/306/203 dollars" | "reads £346/£306/£203" | no |
+| game-design/combat-spec.md | 243 | table header in a code block: "$cost" (the bribe column) | "£cost" | no |
 | game-design/production-plan-audio-art.md | 118 | voice test row: "numbers ($120, day 8)" | "numbers (£120, day 8)"; the voice test should read the pound sign, since that is what the game shows | no |
 
 Roadmap-history is a dated history file; changing old entries is a choice for the builder. The other design notes are current and should change.
@@ -80,6 +83,8 @@ No "amount to check" marks: every figure above matches the number the game alrea
 
 | File | Line | Text | Proposed | Player-facing |
 |---|---|---|---|---|
+| game-design/setting-britain-2026-07-31.md | 29 | table row: magistrate, 5, `$`, economy-wide | none, it lists what the switch changed | no |
+| game-design/setting-britain-2026-07-31.md | 77 | "**1. Currency: `$` → `£`.**" | none, it describes the change | no |
 | game-design/setting-britain-2026-07-31.md | 79 | "plausible late-analog sterling, not as dollar figures with a different glyph" | none, it describes the change | no |
 | game-design/story-outline-2026-09-28.md | 7 | "Where the July drafts assumed a pub, drink or dollars" | none, it describes the change | no |
 
