@@ -6,7 +6,7 @@ Written by the lane session. The tool is tools/lane/driving_drives.py, with test
 
 LEDGER's driving comes in stages. First a browser prototype (Fable's JavaScript game), then the Unreal car. What carries over is how the car behaves, never its physics settings: the same numbers feel different in a different physics engine. So both cars run the same fixed, scripted test drives, a script drives each one instead of a person, and both export the same telemetry. This tool turns that telemetry into the shared metric numbers (M1 to M10) and checks them:
 
-- against target ranges: the feel-targets sheet's game band (the real range widened by the game departures the sheet allows), in two named sets, "ordinary" (the default car, an ordinary 1990 small hatch) and "fast" (a 1990 fast hatch), and
+- against target ranges, in three named sets: "game" (the default since his rulings of 18 Nov: fun and easy first, like open-world games that are not sims; real 1990 figures a floor only; automatic gearbox by default; every number provisional until next week's footage measurements), and two older alternatives from 17 Nov, "ordinary" (an ordinary 1990 small hatch, the real range widened by the allowed game departures) and "fast" (a 1990 fast hatch), and
 - car against car: the Unreal result against the browser result.
 
 The tool also has a small reference car written in Python: a simple bicycle model with linear tyres that stop at a grip limit, weight transfer, and simple roll and pitch springs. It is not the game's handling. It is only there to make test telemetry and to show what a car that runs the drives looks like.
@@ -64,14 +64,14 @@ From the repository folder:
 
 - `python tools/lane/driving_drives.py reference --out FOLDER` runs every drive on the reference car and writes its telemetry and result.json.
 - `python tools/lane/driving_drives.py metrics FOLDER --out result.json` reads a car's telemetry files and writes its numbers.
-- `python tools/lane/driving_drives.py targets --set ordinary --out targets.json` writes a named target set (ordinary or fast; ordinary is the default).
-- `python tools/lane/driving_drives.py compare result.json --set fast` (or `--targets targets.json`) checks numbers against the ranges.
+- `python tools/lane/driving_drives.py targets --out targets.json` writes the default game set; add `--set ordinary` or `--set fast` for the older sets.
+- `python tools/lane/driving_drives.py compare result.json` checks numbers against the game set (or `--set ordinary`, `--set fast`, `--targets targets.json`).
 - `python tools/lane/driving_drives.py compare unreal.json --against browser.json` checks Unreal against the browser.
 - Tests: `python -m pytest tools/lane/test_driving_drives.py` (or `python -m unittest tools/lane/test_driving_drives.py`).
 
 ## Pass rules
 
-- Against targets: a number passes when it lies inside its range, edges included. A "first" target with no number fails. A "placeholder" is reported and never fails.
+- Against targets: a number passes when it lies inside its range, edges included. A "provisional" or "first" target with no number fails. A "placeholder" is reported and never fails.
 - Car against car: a number passes when the gap is at most 5% of the browser's number, or an absolute allowance by unit if that is larger: 0.05 s, 0.3 m, 1 mph, 0.3 degrees, 1 percentage point, 0.02 g. A number missing on one side fails.
 
 ## Choices made here (17 November 2026)
@@ -81,4 +81,4 @@ From the repository folder:
 - Readings "at 0.5 g" and "at 0.8 g" are read off a straight line fitted to the run's samples, since a hatch brakes at about 0.65 to 0.7 g and may never reach 0.8 g.
 - Camera lag is worked out from the distance data: extra distance at speed divided by speed. That is what a camera trailing by that many seconds shows.
 - The handbrake drive pulls for 0.6 s and then brakes straight, so it measures a real handbrake turn (pull, release, stop) and how fast it settles, not an endless spin.
-- The reference car meets every target in the ordinary set (it was retuned on 17 November for the sheet's game band; it has a little spin damping once well sideways, as many game cars do). That proves the tool, not any handling choice.
+- The reference car meets every target in the ordinary set (it was retuned on 17 November for that set; it has a little spin damping once well sideways, as many game cars do). It is not retuned for the game set, so the reference command checks it against the ordinary set. That proves the tool, not any handling choice.
