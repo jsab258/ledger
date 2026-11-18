@@ -38,6 +38,11 @@ TAGS = ("ACTION", "DECISION", "REVIEW")
 # item names in "only_you" exactly one of these reasons and in "tried" one line saying which other routes were tried
 # and why each fails; the check refuses it otherwise, and the page shows both under the title.
 ONLY_YOU = ("sign-in", "purchase", "licence", "taste", "his-setting")
+# A DECISION ONLY WHEN IT IS HIS (his message of 18 Nov 12:13, advisor 221): an open DECISION item names in "kind" one of
+# CLAUDE.md's categories he alone decides. His own tools are not licences; deleting something nothing uses, guarded
+# by a check, is not his decision either.
+DECISION_KINDS = ("money", "sign-in", "hands", "licence-off-list", "canon", "story", "scope", "frame-look", "person-look",
+                  "taste", "identity")
 PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
 # OWN LEFTOVERS NEVER REACH HIS PAGE (his decision, 16 Nov 12:23, advisor 174; RULINGS 29 Oct): an open item asking him
 # whether to delete the session's own outputs (test or run outputs, leftovers, temporary files) is refused. An item
@@ -87,6 +92,9 @@ def faults(data, check_files=True):
             if it.get("only_you") not in ONLY_YOU or not tried or "\n" in tried:
                 out.append("%s: an ACTION item needs only_you (one of %s) and tried (one line: the other routes and why "
                            "each fails); his hands only when nothing else can (advisors 203, 204)" % (it.get("id"), ", ".join(ONLY_YOU)))
+        if it.get("state") == "open" and it.get("tag") == "DECISION" and it.get("kind") not in DECISION_KINDS:
+            out.append("%s: a DECISION item needs kind (one of %s); anything else is decided by the session "
+                       "(his message 18 Nov 12:13, advisor 221)" % (it.get("id"), ", ".join(DECISION_KINDS)))
         if it.get("state") == "open" and it.get("tag") not in TAGS:
             out.append("%s lacks its tag (one of %s; his message 17 Nov 14:38)" % (it.get("id"), ", ".join(TAGS)))
         seen.add(it.get("id"))
@@ -194,12 +202,15 @@ def selftest():
             bad += 1
             print("needs_you_page selftest FAIL " + name)
     good = {"items": [{"id": "a", "added": "2026-11-02 07:00", "text": "Do a.", "links": [{"label": "A", "url": "https://x.y/a"}],
-                       "recommendation": "Yes.", "state": "open", "tag": "DECISION", "title": "Pick a.", "why": ["Because."]},
+                       "recommendation": "Yes.", "state": "open", "tag": "DECISION", "kind": "story", "title": "Pick a.", "why": ["Because."]},
                       {"id": "b", "added": "2026-11-01 07:00", "text": "Did b.", "links": [], "recommendation": "No.", "state": "done",
                        "closed": "2026-11-02 08:00, answered no"}]}
     check("a clean list has no faults", faults(good) == [])
     check("only open items are drawn", [s["key"] for s in spec(good)["sections"]] == ["a"])
     check("the tag comes first on the page", spec(good)["sections"][0]["name"] == "DECISION: Pick a.")
+    check("a DECISION without its kind is refused (advisor 221)",
+          faults({"items": [dict(good["items"][0], kind=None)]}) != []
+          and faults({"items": [dict(good["items"][0], kind="cleanup")]}) != [])
     act = dict(good["items"][0], tag="ACTION", only_you="sign-in", tried="The runner and the gate cannot sign in to Fab for him.")
     check("an ACTION without numbered steps is refused", faults({"items": [dict(act, steps=[])]}) != [])
     check("an ACTION with steps passes and they reach the page",

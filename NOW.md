@@ -11,7 +11,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md). Phase 1's open exits and
 - [ ] n16-6 talk provider-neutral, bake-off (the second provider's client built and reviewed 16 Nov, ledger/DevTools/OpenAiCompatibleClient.cs; next the Sonnet 5.5 leg, other hosts with the router key on the waiting list); n16-7 people alive; n16-8 hair.
 - [ ] n16-9 parked cars; n16-10 efficiency and safety; n16-11 the games' numbers.
 
-STATE (18 Nov 09:55): two lanes re-source Kiln's last borrowed values, then his licence item returns; Ron's trousers wait on it.
+STATE (18 Nov 13:10): Kiln v1 first (0 of 6 lines); helpers on its lines; the Python suite is clean; Ron's trousers wait on the leg and torso fits.
 
 ## Handovers
 

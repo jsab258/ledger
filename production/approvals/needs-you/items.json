@@ -1216,7 +1216,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-18 12:15, his word in the chat (12:15): the output cap and the order-item hooks switched on in the project's settings the same minute"
   },
   {
    "id": "kiln-front-end-licence-2026-11-17",
@@ -1252,7 +1253,8 @@
      "No: Kiln garments reach the game only through Marvelous"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-18 12:16, withdrawn on his message of 12:13 (advisor 221): Kiln is his own tool, not a licence; decided by the session (12:16): Ron's trousers adopted once the start values and the leg and torso fits are on our own measurements"
   },
   {
    "id": "study-leftovers-delete-2026-11-18",
@@ -1284,7 +1286,8 @@
      "No, keep them"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-18 12:16, withdrawn on his message of 12:13 (advisor 221): the old readers stay; nothing runs them and the build check fails if one is used"
   }
  ]
 }

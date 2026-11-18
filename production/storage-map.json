@@ -1408,6 +1408,16 @@
    "proposal": "keep until the lane's last merge after 23 Nov 07:00; then by the working shelf's rule",
    "backup": "no",
    "expiry": "14 days, or once its numbers are recorded; a superseded review picture keeps its preview only"
+  },
+  {
+   "path": "F:/LedgerTools/quay-run",
+   "shelf": "lasting",
+   "gb": 0.001,
+   "last_write": "18 Nov",
+   "serves": "his desktop shortcut Quay Run: the driving study opened outside claude.ai so his controller works (advisor 222)",
+   "source": "copied again from the study artifact UdoyuRSba3tseVmA5daeFq whenever it is republished",
+   "proposal": "keep while the driving study runs",
+   "expiry": "when the driving study ends"
   }
  ],
  "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."
