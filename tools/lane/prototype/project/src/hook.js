@@ -36,7 +36,7 @@ import { LS, PARTS, ledgerRows, peoplePages } from './ledger_screen.js';
 import { measures, activeAsk } from './measures.js';
 import { serialize } from './saving.js';
 import { makeChecks } from './checks.js';
-import { frontUp as fightFrontUp, setOn as fightSetOn, input as fightInput, block as fightBlock, climb as fightClimb, end as fightEnd } from './fight.js';
+import { frontUp as fightFrontUp, setOn as fightSetOn, input as fightInput, block as fightBlock, climb as fightClimb, end as fightEnd, grab as fightGrab, faceOf as fightFaceOf, handProps as fightHandProps, carried as fightCarried } from './fight.js';
 
 const r2 = (v) => Math.round(v * 100) / 100;
 const r1 = (v) => Math.round(v * 10) / 10;
@@ -553,7 +553,7 @@ export function installHook(x) {
     F: x.F,
     tick: (dt) => x.logic(dt), // one game step of dt real seconds (round 3: the drills step at 1/60 s)
     isBlocked: (px, pz) => mapBlocked(px, pz), // round 3: the wall drill looks for a wall
-    fight: { frontUp: fightFrontUp, setOn: fightSetOn, input: fightInput, block: fightBlock, climb: fightClimb, end: fightEnd }, // round 3: the melee drills drive the fight directly
+    fight: { frontUp: fightFrontUp, setOn: fightSetOn, input: fightInput, block: fightBlock, climb: fightClimb, end: fightEnd, grab: fightGrab, faceOf: fightFaceOf, handProps: fightHandProps, carried: fightCarried }, // round 3: the melee drills drive the fight directly
     startNew: x.startNew,
     simStep: x.simStep,
     enterRoom,

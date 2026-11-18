@@ -5,7 +5,7 @@ import { hyp, clamp, chance, rnd, angDiff, pick } from './util.js';
 import { act, logLine } from './events.js';
 import { menaceTo } from './gossip.js';
 import { meet } from './ledger.js';
-import { blocked } from './map.js';
+import { blocked, PROPS } from './map.js';
 import { sub, bubble, show, $, tomName } from './ui.js';
 import { S } from './render/sync.js';
 import { RULES } from './rules.js';
@@ -86,6 +86,39 @@ const STAND = [
   ["You'll have to do better than that.", "I've been threatened by better."],
   ["Right. You've done it now."],
 ];
+// round 4: what a man says when he will not be shown up in front of folk, or when he is put against a wall
+const FACE = [
+  "Not in front of this lot, you don't.",
+  "Everybody's looking, son. I'm not crawling to you.",
+  "In the street? With them watching? Go on, then.",
+];
+const CORNER = ["You've got me against a wall. Big mistake.", 'Nowhere to go, have I? Right.'];
+// round 4: improvised things break (melee sheet C12); a wheel brace or a cargo hook, like a pipe, does not
+const BREAKS = {
+  chair: LAD.chairBreaksAfterBlows,
+  brick: LAD.brickBreaksAfterBlows,
+  'dustbin lid': LAD.dustbinLidBreaksAfterBlows,
+};
+const SINGLE = { chair: 1, 'dustbin lid': 1 };
+// round 4: Tom picks a thing up outside a fight (the G prompt): remembered so that it can break later
+export function carried(p) {
+  F.wProp = p;
+  p.wHits = 0;
+}
+const BROKEN = { chair: 'The chair goes to pieces.', brick: 'The brick crumbles in his hand.', 'dustbin lid': 'The lid buckles and he drops it.' };
+// round 4: the things on the street a man can snatch up (for the drills)
+export const handProps = () => PROPS.filter((p) => p.hand);
+// round 4: folk near enough to see a man backed down: each one makes backing down cost him more
+export function faceOf(P, al) {
+  let n = 0;
+  for (const Q of G.named.concat(G.crowd)) {
+    if (Q === P || Q.gone || Q.dead || Q.down || Q.inCar || Q.space !== P.space || Q.space === 'home') continue;
+    if (al && al.includes(Q)) continue;
+    if (hyp(Q.x, Q.z, P.x, P.z) > LAD.faceWatchersWithinMetres) continue;
+    n++;
+  }
+  return Math.min(LAD.faceNerveAtMost, n * LAD.faceNervePerWatcher);
+}
 // Tom will not lay hands on women, on anyone of sixty or over, or on the priest. The ladder stops at a threat for them.
 const soft = (P) =>
   P.def.sex === 'f' ||
@@ -131,6 +164,13 @@ export function frontUp(P, demand) {
   F.demand = demand || (G.hooks.demandFor ? G.hooks.demandFor(P) : null);
   F.struck = false;
   F.usedW = false;
+  F.face = 0;
+  F.standWhy = '';
+  F.wHits = 0;
+  // round 4: the name Tom carries as he steps up. Each rung's own pressure already prices that rung, so the
+  // stare, threat and shove of this one fronting-up are not counted a second time as his name grows mid-ladder
+  // (they were: a threat and a shove added 0.24, and no debtor ever stood).
+  F.menace0 = menaceTo(P);
   P.hold = true;
   P.route = null;
   P.moving = false;
@@ -188,10 +228,11 @@ export function climb() {
   const al = allies(P),
     pressure =
       [0, LAD.pressureOfStare, LAD.pressureOfSquareUp, LAD.pressureOfThreat, LAD.pressureOfShove][next] +
-      menaceTo(P) +
+      F.menace0 +
       (t.armed ? LAD.pressureAddedWhenArmed : 0) -
       al.length * LAD.pressureLostPerAlly -
       t.hurt * LAD.pressureLostPerHurt;
+  let cornered = false;
   if (next === LAD.shoveRung) {
     const dx = P.x - t.x,
       dz = P.z - t.z,
@@ -202,13 +243,19 @@ export function climb() {
       P.x = nx;
       P.z = nz;
     } else {
-      // shoved back into a wall: it shows (what he feels about it stays the ladder's own rule)
+      // shoved back into a wall: it shows; round 4: with nowhere to go he is likelier to come off it swinging
+      cornered = true;
       sub('Back into the wall.', '', 'over', LAD.wallLineRealSeconds);
       if (G.hooks.sfx) G.hooks.sfx('thud');
       if (G.hooks.shake) G.hooks.shake(LAD.wallSlamShake);
     }
   }
-  if (pressure > (d.nerve ?? LAD.nerveAssumed) + (P.lad ? LAD.ladsNerveAdded : 0)) {
+  const nerve0 = (d.nerve ?? LAD.nerveAssumed) + (P.lad ? LAD.ladsNerveAdded : 0),
+    face = faceOf(P, al),
+    corner = cornered ? LAD.corneredNerveAdded : 0;
+  F.face = face;
+  F.last = { rung: next, pressure, nerve: nerve0, face, corner, allies: al.length, menace: F.menace0 };
+  if (pressure > nerve0 + face + corner) {
     m.fear = clamp(m.fear + LAD.fearAddedPerRungWhenYielding * next, 0, 1);
     m.regard = clamp(m.regard - LAD.regardLostPerRungWhenYielding * next, -1, 1);
     mood(P, next >= LAD.threatRung ? 'cower' : 'stand');
@@ -216,11 +263,16 @@ export function climb() {
     if (next > 1) sub(line, tomName(P));
     else bubble(P, line);
     F.yielded = true;
+    F.standWhy = '';
     if (F.demand && next >= 2 && G.hooks.yielded) G.hooks.yielded(P, F.demand, next);
   } else {
     F.yielded = false;
     mood(P, next >= 2 ? 'square' : 'stare');
-    sub(pick(STAND[next]), tomName(P));
+    // round 4: say why he stands when the corner or the watchers tipped it, so the player can read it
+    const why = pressure > nerve0 + face ? 'corner' : pressure > nerve0 && next >= 2 ? 'face' : '';
+    F.standWhy = why;
+    sub(pick(why === 'corner' ? CORNER : why === 'face' ? FACE : STAND[next]), tomName(P));
+    if (why) tl('stands', { actor: who(P), why });
     if (
       next === LAD.shoveRung ||
       (next === LAD.threatRung &&
@@ -309,6 +361,7 @@ function startFight(P, tomFirst) {
 // Others can start on Tom (Cammack's lads, late on).
 export function setOn(list) {
   if (F.on) return;
+  F.wHits = 0;
   F.on = true;
   F.settled = false;
   F.proxy = false;
@@ -368,6 +421,46 @@ export function input(kind) {
     tl('invuln_start', { actor: 'player' });
     F.cool = LAD.dodgeCoolDownRealSeconds;
   }
+}
+// round 4: snatch up whatever is to hand mid-fight (G): it takes a moment, and he is open while he does it
+export function grab() {
+  if (!F.on || F.rung < LAD.strikeRung) return false;
+  if (F.st !== 'idle' && F.st !== 'block') return false;
+  const t = G.tom;
+  let best = null,
+    bd = Infinity;
+  for (const p of PROPS) {
+    if (!p.hand || p.broken || p.hand === (t.armed ? t.weapon : null)) continue;
+    const d = hyp(t.x, t.z, p.x, p.z) - p.r;
+    if (d < LAD.grabReachMetres && d < bd) {
+      bd = d;
+      best = p;
+    }
+  }
+  if (!best) {
+    sub('Nothing to hand here.', '', 'over', LAD.grabLineRealSeconds);
+    return false;
+  }
+  F.st = 'grab';
+  F.t = LAD.grabRealSeconds;
+  F.grabbing = best;
+  tl('input', { actor: 'player', action: 'grab' });
+  tl('grab_start', { actor: 'player', weapon: best.hand });
+  return true;
+}
+function breakWeapon() {
+  const t = G.tom,
+    w = t.weapon;
+  if (F.wProp && SINGLE[F.wProp.hand]) F.wProp.broken = true; // a skip or a scrap heap has more where that came from
+  F.wProp = null;
+  t.weapon = null;
+  t.armed = false;
+  F.rung = LAD.strikeRung;
+  F.wHits = 0;
+  tl('weapon_break', { actor: 'player', weapon: w });
+  sub(BROKEN[w] || 'It breaks.', '', 'over', LAD.grabLineRealSeconds);
+  if (G.hooks.sfx) G.hooks.sfx('thud');
+  ladderUI();
 }
 export function block(on) {
   if (!F.on || F.rung < LAD.strikeRung) return;
@@ -561,6 +654,12 @@ export function step(dt) {
           F.heavy,
         );
         F.rec = F.heavy ? LAD.heavyHitRecoverRealSeconds : LAD.lightHitRecoverRealSeconds;
+        if (t.armed && BREAKS[t.weapon]) {
+          // the blows are counted on the thing itself, so a chair carried from one fight to the next keeps its count
+          const w = F.wProp && F.wProp.hand === t.weapon ? F.wProp : F;
+          w.wHits = (w.wHits || 0) + 1;
+          if (w.wHits >= BREAKS[t.weapon]) breakWeapon();
+        }
       } else {
         F.rec = F.heavy ? LAD.heavyMissRecoverRealSeconds : LAD.lightMissRecoverRealSeconds;
         F.open = F.rec;
@@ -568,6 +667,25 @@ export function step(dt) {
         tl('miss', { actor: 'player' });
         if (hit && G.hooks.sfx) G.hooks.sfx('block');
       } // a miss leaves you open
+    }
+  } else if (F.st === 'grab') {
+    S.tomAnim.mode = 'guard';
+    F.t -= dt;
+    if (F.t <= 0) {
+      const p = F.grabbing;
+      F.grabbing = null;
+      F.st = 'idle';
+      if (p) {
+        if (t.weapon && t.weapon !== p.hand) sub('He lets the ' + t.weapon + ' fall.', '', 'over', LAD.grabLineRealSeconds);
+        p.wHits = 0;
+        t.weapon = p.hand;
+        t.armed = false;
+        F.wProp = p;
+        F.wHits = 0;
+        tl('grab_end', { actor: 'player', weapon: p.hand });
+        drawWeapon();
+        sub('A ' + p.hand + ', snatched up.', '', 'over', LAD.grabLineRealSeconds);
+      }
     }
   } else if (F.st === 'strike') {
     F.t -= dt;
@@ -767,6 +885,8 @@ export function end(hostile) {
   F.rung = 0;
   F.endT = 0;
   F.st = 'idle';
+  F.grabbing = null;
+  if (!G.tom.weapon || !F.wProp || F.wProp.hand !== G.tom.weapon) F.wProp = null; // still carried: keep it for the next fight
   G.tom.armed = false;
   S.tomAnim.mode = 'stand';
   show('ladder', false);
@@ -802,5 +922,5 @@ function ladderUI(canFinish) {
           `<div class="r ${i + 1 === F.rung ? 'on' : i + 1 < F.rung ? 'done' : ''}">${i + 1}. ${r}${i === 5 ? (t.weapon ? ' (' + t.weapon + ')' : ' (none carried)') : ''}</div>`,
       )
       .join('') +
-    `<div class="k">${F.rung < LAD.strikeRung ? '[R] step up  ·  [X] walk away' : '[LMB/J] hit, hold for heavy · [RMB/K] block · [Space] step back · [X] break off' + (t.weapon && !t.armed ? ' · [R] weapon out' : '') + (canFinish ? '<br><b>[V] use it on a man who is down. This cannot be undone.</b>' : '')}</div>`;
+    `<div class="k">${F.rung < LAD.strikeRung ? '[R] step up  ·  [X] walk away' : '[LMB/J] hit, hold for heavy · [RMB/K] block · [Space] step back · [G] grab what is to hand · [X] break off' + (t.weapon && !t.armed ? ' · [R] weapon out' : '') + (canFinish ? '<br><b>[V] use it on a man who is down. This cannot be undone.</b>' : '')}</div>`;
 }

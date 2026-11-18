@@ -1,5 +1,29 @@
 # LEDGER loop prototype: changelog
 
+## 18 November 2026, lane round 4. A debt that can come to blows (melee, part 2)
+
+Built by the cloud lane. Design question: can a debt turn into a fight in the first hour, decided by where
+and how Tom fronts a man up, and do things to hand make that fight a moment a player would retell? Serves the
+panel's second complaint of round 3 (nothing kicks off: all five debtors gave way), his combat pick of 18 Nov
+(fists and things to hand every day, guns rare) and the melee feel sheet's C12 (hits before breaking). KCD2 is
+the measuring stick. The town's simulation (witnesses, gossip, memory, routines) is untouched.
+
+1. Face: a man fronted up with folk within 12 m has more to lose by backing down: 0.06 nerve for each one,
+   at most 0.24. The same debtor who gives way in a quiet yard may stand in the street, and then it comes to
+   blows in front of witnesses. He says why ("Not in front of this lot, you don't.").
+2. Corners: a man shoved back into a wall with nowhere to go gets 0.2 nerve and is likelier to come off it
+   swinging ("You've got me against a wall. Big mistake.").
+3. Tom's name is read once, when he starts to front a man up. Before, each stare, threat and shove of the
+   same fronting-up went into the man's memory and was counted again on the next rung (0.24 by the shove),
+   so nobody ever stood.
+4. Things to hand mid-fight: [G] snatches up the nearest chair, brick, dustbin lid, wheel brace or cargo hook
+   within reach. It takes half a second and a blow landing in that moment stops it; it comes out as a weapon,
+   with what that costs Tom in the town.
+5. Breakage (C12): a chair goes to pieces after 2 blows, a brick crumbles after 3, a dustbin lid buckles after
+   4; a wheel brace or a cargo hook, like the sheet's pipe, does not break. A broken chair or lid stays broken;
+   a skip or a scrap heap has more. The count stays with the thing, carried from one fight to the next.
+6. Test: test/melee4.mjs (face, corner, grab, drill M7 for each thing, a lid carried across two fights).
+
 ## 18 November 2026, lane round 3. Fists with weight (melee, part 1)
 
 Built by the cloud lane. Design question: when a debt turns into a fight, do the blows land with weight, can

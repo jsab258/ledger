@@ -7,7 +7,7 @@ import { nightF } from './seeing.js';
 
 import { BARKS } from './cast.js';
 import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
-import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target } from './fight.js';
+import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target, grab as fightGrab, carried as fightCarried } from './fight.js';
 import { stepCar, nearCar, exitPoint } from './drive.js';
 import { hotspots, beatFor } from './scenes.js';
 import { fareAccept } from './fares.js';
@@ -171,7 +171,11 @@ export function onKey(code) {
     if (F.on) climb();
   } else if (code === 'KeyX') backDown();
   else if (code === 'KeyC') coat();
-  else if (code === 'KeyG') useKey('G');
+  else if (code === 'KeyG') {
+    // round 4: in a fight, G snatches up whatever is to hand
+    if (F.on && F.rung >= LAD.strikeRung) fightGrab();
+    else useKey('G');
+  }
   else if (code === 'KeyY') fareAccept();
   else if (code === 'KeyJ') fightInput('light');
   else if (code === 'KeyU') fightInput('heavy');
@@ -312,12 +316,13 @@ export function buildPrompts() {
       });
     if (nearCar(TOMS.cabWithinMetres) && G.car.keys) out.push({ k: 'F', t: 'Get in the cab' });
     for (const p of PROPS)
-      if (p.hand && hyp(t.x, t.z, p.x, p.z) < p.r + TOMS.reachesAThingWithinMetres && t.weapon !== p.hand) {
+      if (p.hand && !p.broken && hyp(t.x, t.z, p.x, p.z) < p.r + TOMS.reachesAThingWithinMetres && t.weapon !== p.hand) {
         out.push({
           k: 'G',
           t: 'Pick up a ' + p.hand,
           run: () => {
             t.weapon = p.hand;
+            fightCarried(p); // round 4: so it can break, and a broken one stays broken
             sub('A ' + p.hand + ', to hand if it comes to that.', '', 'over', 3);
           },
         });

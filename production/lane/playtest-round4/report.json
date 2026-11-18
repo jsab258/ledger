@@ -1,0 +1,6692 @@
+{
+ "started": "2026-11-18-184756",
+ "seed": 19901120,
+ "live_talk": "untested (runs only inside claude.ai)",
+ "errors": [],
+ "sweep": {
+  "prompt_faults": [
+   {
+    "kind": "prompt names someone else",
+    "where": "Tuesday 10.00pm, A lad in a shell suit (lad2), approached at 2.0 m, +34 deg",
+    "detail": "facing Tom at 2.0 m: A lad in a shell suit (lad2, m, age 22); prompt says 'Talk to Darren Milner' = Darren Milner (darren, m) at 1.6 m, 23 deg off Tom's facing",
+    "sex_mismatch": false,
+    "in_front": "lad2",
+    "named": "darren"
+   }
+  ],
+  "people": {
+   "sheila": {
+    "id": "sheila",
+    "name": "Sheila Dunn",
+    "desc": "the bookkeeper at Mickey's",
+    "sex": "f",
+    "age": 53,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the bookkeeper at Mickey's"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": null,
+      "blocked_by": "The cot: rest"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the bookkeeper at Mickey's"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Sheila Dunn"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Sheila Dunn"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Sheila Dunn"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Sheila Dunn"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": null,
+      "blocked_by": "The cot: rest"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Sheila Dunn"
+     }
+    ]
+   },
+   "ron": {
+    "id": "ron",
+    "name": "Ron Kirby",
+    "desc": "the big man on the rank",
+    "sex": "m",
+    "age": 58,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Ron Kirby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Ron Kirby"
+     }
+    ]
+   },
+   "darren": {
+    "id": "darren",
+    "name": "Darren Milner",
+    "desc": "the lad on the pavement with the pager",
+    "sex": "m",
+    "age": 25,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the lad on the pavement with the pager"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the lad on the pavement with the pager"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the lad on the pavement with the pager"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Darren Milner"
+     }
+    ]
+   },
+   "june": {
+    "id": "june",
+    "name": "June Suddaby",
+    "desc": "a woman in a good coat, not from the street now",
+    "sex": "f",
+    "age": 38,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a woman in a good coat, not from the street now"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a woman in a good coat, not from the street now"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a woman in a good coat, not from the street now"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to June Suddaby"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to June Suddaby"
+     }
+    ]
+   },
+   "alison": {
+    "id": "alison",
+    "name": "Alison Sedman",
+    "desc": "a woman with a notebook",
+    "sex": "f",
+    "age": 30,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a woman with a notebook"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a woman with a notebook"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a woman with a notebook"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Alison Sedman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Alison Sedman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Alison Sedman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Alison Sedman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Alison Sedman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Alison Sedman"
+     }
+    ]
+   },
+   "walsh": {
+    "id": "walsh",
+    "name": "Father Walsh",
+    "desc": "the priest",
+    "sex": "m",
+    "age": 61,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the priest"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the priest"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the priest"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Father Walsh"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Father Walsh"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Father Walsh"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Father Walsh"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Father Walsh"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Father Walsh"
+     }
+    ]
+   },
+   "pauline": {
+    "id": "pauline",
+    "name": "Pauline Kitching",
+    "desc": "the woman on the radio at Mickey's",
+    "sex": "f",
+    "age": 44,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman on the radio at Mickey's"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman on the radio at Mickey's"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman on the radio at Mickey's"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Pauline Kitching"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Pauline Kitching"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Pauline Kitching"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Pauline Kitching"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Pauline Kitching"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Pauline Kitching"
+     }
+    ]
+   },
+   "kevin": {
+    "id": "kevin",
+    "name": "Kevin Needham",
+    "desc": "the day driver",
+    "sex": "m",
+    "age": 36,
+    "anon": false,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the day driver"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the day driver"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the day driver"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Kevin Needham"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Kevin Needham"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Kevin Needham"
+     }
+    ]
+   },
+   "terry": {
+    "id": "terry",
+    "name": "Terry Hodgson",
+    "desc": "the night driver",
+    "sex": "m",
+    "age": 52,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the night driver"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the night driver"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the night driver"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Terry Hodgson"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Terry Hodgson"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Terry Hodgson"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Terry Hodgson"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Terry Hodgson"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Terry Hodgson"
+     }
+    ]
+   },
+   "rita": {
+    "id": "rita",
+    "name": "Rita Welburn",
+    "desc": "the woman behind the pawnshop grille",
+    "sex": "f",
+    "age": 56,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman behind the pawnshop grille"
+     }
+    ]
+   },
+   "wayne": {
+    "id": "wayne",
+    "name": "Wayne Harrison",
+    "desc": "the lad from Rita's back room",
+    "sex": "m",
+    "age": 27,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the lad from Rita's back room"
+     }
+    ]
+   },
+   "brenda": {
+    "id": "brenda",
+    "name": "Brenda Laverack",
+    "desc": "the woman at the fish shop",
+    "sex": "f",
+    "age": 50,
+    "anon": false,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman at the fish shop"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman at the fish shop"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman at the fish shop"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Brenda Laverack"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Brenda Laverack"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Brenda Laverack"
+     }
+    ]
+   },
+   "lee": {
+    "id": "lee",
+    "name": "Lee Drewery",
+    "desc": "a young casual off the quay",
+    "sex": "m",
+    "age": 24,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a young casual off the quay"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a young casual off the quay"
+     }
+    ]
+   },
+   "grace": {
+    "id": "grace",
+    "name": "Grace Rinaldi",
+    "desc": "the woman who keeps the caff",
+    "sex": "f",
+    "age": 58,
+    "anon": false,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman who keeps the caff"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman who keeps the caff"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman who keeps the caff"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Grace Rinaldi"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Grace Rinaldi"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Grace Rinaldi"
+     }
+    ]
+   },
+   "lily": {
+    "id": "lily",
+    "name": "Lily Tang",
+    "desc": "the woman at the takeaway hatch",
+    "sex": "f",
+    "age": 45,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the woman at the takeaway hatch"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the woman at the takeaway hatch"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the woman at the takeaway hatch"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Lily Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Lily Tang"
+     }
+    ]
+   },
+   "hal": {
+    "id": "hal",
+    "name": "Hal Metcalfe",
+    "desc": "the old man at the coin shop",
+    "sex": "m",
+    "age": 66,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the old man at the coin shop"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the old man at the coin shop"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the old man at the coin shop"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Hal Metcalfe"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Hal Metcalfe"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Hal Metcalfe"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Hal Metcalfe"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Hal Metcalfe"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Hal Metcalfe"
+     }
+    ]
+   },
+   "susan": {
+    "id": "susan",
+    "name": "Susan Coverdale",
+    "desc": "a woman in a customs uniform",
+    "sex": "f",
+    "age": 38,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a woman in a customs uniform"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a woman in a customs uniform"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a woman in a customs uniform"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Susan Coverdale"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Susan Coverdale"
+     }
+    ]
+   },
+   "nora": {
+    "id": "nora",
+    "name": "Nora Cronin",
+    "desc": "the priest's housekeeper",
+    "sex": "f",
+    "age": 67,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the priest's housekeeper"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the priest's housekeeper"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the priest's housekeeper"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Nora Cronin"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Nora Cronin"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Nora Cronin"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Nora Cronin"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Nora Cronin"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Nora Cronin"
+     }
+    ]
+   },
+   "albert": {
+    "id": "albert",
+    "name": "Albert Suggitt",
+    "desc": "an old man mending nets",
+    "sex": "m",
+    "age": 78,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to An old man mending nets"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to An old man mending nets"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to An old man mending nets"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Albert Suggitt"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Albert Suggitt"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Albert Suggitt"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Albert Suggitt"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Albert Suggitt"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Albert Suggitt"
+     }
+    ]
+   },
+   "sylvia": {
+    "id": "sylvia",
+    "name": "Sylvia Rennison",
+    "desc": "the landlady at Regent House",
+    "sex": "f",
+    "age": 64,
+    "anon": false,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the landlady at Regent House"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the landlady at Regent House"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the landlady at Regent House"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Sylvia Rennison"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Sylvia Rennison"
+     }
+    ]
+   },
+   "dennis": {
+    "id": "dennis",
+    "name": "Dennis Iveson",
+    "desc": "the scrap dealer",
+    "sex": "m",
+    "age": 62,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the scrap dealer"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the scrap dealer"
+     }
+    ]
+   },
+   "julie": {
+    "id": "julie",
+    "name": "Julie Kettlewell",
+    "desc": "a young woman with a carrier bag",
+    "sex": "f",
+    "age": 29,
+    "anon": false,
+    "seen": 1,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to a young woman with a carrier bag"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to a young woman with a carrier bag"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to a young woman with a carrier bag"
+     }
+    ]
+   },
+   "shaun": {
+    "id": "shaun",
+    "name": "Shaun Hewson",
+    "desc": "the sign painter on the ladder",
+    "sex": "m",
+    "age": 26,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the sign painter on the ladder"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the sign painter on the ladder"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the sign painter on the ladder"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Shaun Hewson"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Shaun Hewson"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Shaun Hewson"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Shaun Hewson"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Shaun Hewson"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Shaun Hewson"
+     }
+    ]
+   },
+   "k_news": {
+    "id": "k_news",
+    "name": "the newsagent",
+    "desc": "the newsagent",
+    "sex": "m",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the newsagent"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the newsagent"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the newsagent"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the newsagent"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the newsagent"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the newsagent"
+     }
+    ]
+   },
+   "k_grocer": {
+    "id": "k_grocer",
+    "name": "the grocer",
+    "desc": "the grocer",
+    "sex": "f",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the grocer"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the grocer"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the grocer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the grocer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the grocer"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the grocer"
+     }
+    ]
+   },
+   "k_laund": {
+    "id": "k_laund",
+    "name": "the washeteria attendant",
+    "desc": "the washeteria attendant",
+    "sex": "f",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the washeteria attendant"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the washeteria attendant"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the washeteria attendant"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the washeteria attendant"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the washeteria attendant"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the washeteria attendant"
+     }
+    ]
+   },
+   "k_iron": {
+    "id": "k_iron",
+    "name": "the ironmonger",
+    "desc": "the ironmonger",
+    "sex": "m",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the ironmonger"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the ironmonger"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the ironmonger"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the ironmonger"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the ironmonger"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the ironmonger"
+     }
+    ]
+   },
+   "k_tea": {
+    "id": "k_tea",
+    "name": "the tea room lady",
+    "desc": "the tea room lady",
+    "sex": "f",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the tea room lady"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the tea room lady"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the tea room lady"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the tea room lady"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the tea room lady"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the tea room lady"
+     }
+    ]
+   },
+   "k_chand": {
+    "id": "k_chand",
+    "name": "the chandler",
+    "desc": "the chandler",
+    "sex": "m",
+    "age": 50,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the chandler"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the chandler"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the chandler"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to the chandler"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to the chandler"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to the chandler"
+     }
+    ]
+   },
+   "c0": {
+    "id": "c0",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 65,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c1": {
+    "id": "c1",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 65,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c2": {
+    "id": "c2",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 35,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c4": {
+    "id": "c4",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 65,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c5": {
+    "id": "c5",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 35,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c6": {
+    "id": "c6",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 35,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c7": {
+    "id": "c7",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 35,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c8": {
+    "id": "c8",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 35,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c9": {
+    "id": "c9",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 65,
+    "anon": true,
+    "seen": 4,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c10": {
+    "id": "c10",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 35,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c11": {
+    "id": "c11",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 35,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c12": {
+    "id": "c12",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 35,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c13": {
+    "id": "c13",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 65,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "c14": {
+    "id": "c14",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 65,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "c15": {
+    "id": "c15",
+    "name": "a passer-by",
+    "desc": "a woman",
+    "sex": "f",
+    "age": 65,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a woman"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a woman"
+     }
+    ]
+   },
+   "yardlad": {
+    "id": "yardlad",
+    "name": "Iveson's yard lad",
+    "desc": "a big lad in overalls",
+    "sex": "m",
+    "age": 28,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 9.30am",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a big lad in overalls"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a big lad in overalls"
+     }
+    ]
+   },
+   "peter": {
+    "id": "peter",
+    "name": "Peter Tang",
+    "desc": "the man at the takeaway",
+    "sex": "m",
+    "age": 47,
+    "anon": false,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the man at the takeaway"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the man at the takeaway"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the man at the takeaway"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Peter Tang"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Peter Tang"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Peter Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Peter Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Peter Tang"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Peter Tang"
+     }
+    ]
+   },
+   "c3": {
+    "id": "c3",
+    "name": "a passer-by",
+    "desc": "a man",
+    "sex": "m",
+    "age": 35,
+    "anon": true,
+    "seen": 3,
+    "prompts": [
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 1.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a man"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a man"
+     }
+    ]
+   },
+   "norman": {
+    "id": "norman",
+    "name": "Norman Dent",
+    "desc": "the night watchman on the row",
+    "sex": "m",
+    "age": 57,
+    "anon": false,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to the night watchman on the row"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to the night watchman on the row"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to the night watchman on the row"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Talk to Norman Dent"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Norman Dent"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Talk to Norman Dent"
+     }
+    ]
+   },
+   "lad0": {
+    "id": "lad0",
+    "name": "one of Cammack's lads",
+    "desc": "a lad in a shell suit",
+    "sex": "m",
+    "age": 22,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     }
+    ]
+   },
+   "lad1": {
+    "id": "lad1",
+    "name": "one of Cammack's lads",
+    "desc": "a lad in a shell suit",
+    "sex": "m",
+    "age": 22,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     }
+    ]
+   },
+   "lad2": {
+    "id": "lad2",
+    "name": "one of Cammack's lads",
+    "desc": "a lad in a shell suit",
+    "sex": "m",
+    "age": 22,
+    "anon": true,
+    "seen": 2,
+    "prompts": [
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 6.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "1.2 m, +0 deg",
+      "text": "Speak to a lad in a shell suit"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, +34 deg",
+      "text": "Talk to Darren Milner"
+     },
+     {
+      "when": "Tuesday 10.00pm",
+      "approach": "2.0 m, -34 deg",
+      "text": "Speak to a lad in a shell suit"
+     }
+    ]
+   }
+  },
+  "times": [
+   "Tuesday 9.30am",
+   "Tuesday 1.00pm",
+   "Tuesday 6.00pm",
+   "Tuesday 10.00pm"
+  ],
+  "layout": [],
+  "talks": [
+   {
+    "id": "sheila",
+    "shown": "The bookkeeper at Mickey's",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 4,
+    "jobs": [
+     "greet",
+     "personal",
+     "personal",
+     "personal"
+    ],
+    "lines": [
+     "New management.",
+     "Sheila Dunn.",
+     "The weather isn't in the book. I only discuss what's in the book.",
+     "Same as ever. Less of it.",
+     "That's all I have for you. The book's waiting."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "own",
+     "stock",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "sys",
+      "text": "A note, once: when you talk freely, the town answers in words written by an AI. What people know, and what your words do, is decided by the game."
+     },
+     {
+      "who": "me",
+      "text": "Hello there."
+     },
+     {
+      "who": "npc",
+      "text": "New management."
+     },
+     {
+      "who": "npc",
+      "text": "Sheila Dunn."
+     },
+     {
+      "who": "me",
+      "text": "I'm still finding my feet here."
+     },
+     {
+      "who": "npc",
+      "text": "The weather isn't in the book. I only discuss what's in the book."
+     },
+     {
+      "who": "me",
+      "text": "It's all new to me, this."
+     },
+     {
+      "who": "npc",
+      "text": "Same as ever. Less of it."
+     },
+     {
+      "who": "me",
+      "text": "What do people do round here of a Sunday?"
+     },
+     {
+      "who": "npc",
+      "text": "That's all I have for you. The book's waiting."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello there.",
+      "personal: What do you make of the street these days?",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "personal: I'm still finding my feet here.",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: It's all new to me, this.",
+      "leave: I won't stop, then."
+     ],
+     [
+      "personal: What do people do round here of a Sunday?",
+      "leave: I'll not hold you up."
+     ],
+     [
+      "leave: I'll let you get on."
+     ]
+    ]
+   },
+   {
+    "id": "ron",
+    "shown": "Ron Kirby",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 3,
+    "jobs": [
+     "personal",
+     "personal",
+     "personal"
+    ],
+    "lines": [
+     "One suitcase. I saw you get off the bus, Tom.",
+     "Thirty years on the dock, I never minded rain. It's the standing still.",
+     "It's been wet since August.",
+     "Right, boss. I'd best watch the rank."
+    ],
+    "classes": [
+     "other",
+     "own",
+     "stock",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "One suitcase. I saw you get off the bus, Tom."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Thirty years on the dock, I never minded rain. It's the standing still."
+     },
+     {
+      "who": "me",
+      "text": "What's the best thing about this street?"
+     },
+     {
+      "who": "npc",
+      "text": "It's been wet since August."
+     },
+     {
+      "who": "me",
+      "text": "Have you always lived round here?"
+     },
+     {
+      "who": "npc",
+      "text": "Right, boss. I'd best watch the rank."
+     }
+    ],
+    "offered": [
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "personal: What's the best thing about this street?",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "personal: Have you always lived round here?",
+      "leave: Another time, then."
+     ],
+     [
+      "leave: I won't stop, then."
+     ]
+    ]
+   },
+   {
+    "id": "darren",
+    "shown": "The lad on the pavement with the pager",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 6,
+    "jobs": [
+     "personal"
+    ],
+    "lines": [
+     "One suitcase. I saw you get off the bus, Nowak.",
+     "I'm Darren Milner.",
+     "And a fiver gets a good word put about for you. Yeah?",
+     "No bother. Offer stands.",
+     "So listen, you got a minute? No? No. Fair enough.",
+     "If it's about the twenty-two pounds on Mickey's book, I know about it."
+    ],
+    "classes": [
+     "other",
+     "other",
+     "other",
+     "other",
+     "own",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "One suitcase. I saw you get off the bus, Nowak."
+     },
+     {
+      "who": "npc",
+      "text": "I'm Darren Milner."
+     },
+     {
+      "who": "npc",
+      "text": "And a fiver gets a good word put about for you. Yeah?"
+     },
+     {
+      "who": "me",
+      "text": "No. Not today."
+     },
+     {
+      "who": "npc",
+      "text": "No bother. Offer stands."
+     },
+     {
+      "who": "me",
+      "text": "Have you always lived round here?"
+     },
+     {
+      "who": "npc",
+      "text": "So listen, you got a minute? No? No. Fair enough."
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the twenty-two pounds on Mickey's book, I know about it."
+     }
+    ],
+    "offered": [
+     [
+      "personal: Have you always lived round here?",
+      "leave: I'll leave you to it."
+     ]
+    ]
+   },
+   {
+    "id": "june",
+    "shown": "A woman in a good coat, not from the street now",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 3,
+    "jobs": [
+     "greet",
+     "personal",
+     "personal"
+    ],
+    "lines": [
+     "Mr Nowak.",
+     "I'm June Suddaby.",
+     "Aye, well. There it is.",
+     "I've said what I'm going to say, Mr Nowak."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "stock",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Is now a good time?"
+     },
+     {
+      "who": "npc",
+      "text": "Mr Nowak."
+     },
+     {
+      "who": "npc",
+      "text": "I'm June Suddaby."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Aye, well. There it is."
+     },
+     {
+      "who": "me",
+      "text": "What's the best thing about this street?"
+     },
+     {
+      "who": "npc",
+      "text": "I've said what I'm going to say, Mr Nowak."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Is now a good time?",
+      "personal: Who should I get to know round here?",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: What's the best thing about this street?",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "alison",
+    "shown": "A woman with a notebook",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "personal",
+     "personal"
+    ],
+    "lines": [
+     "Kevin says you were out on Quay Street, the quay end in the small hours, Mr Nowak.",
+     "Sedman. Alison Sedman.",
+     "You get used to the quiet. You never get to like it.",
+     "I've a deadline. Another time."
+    ],
+    "classes": [
+     "other",
+     "other",
+     "stock",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "Kevin says you were out on Quay Street, the quay end in the small hours, Mr Nowak."
+     },
+     {
+      "who": "npc",
+      "text": "Sedman. Alison Sedman."
+     },
+     {
+      "who": "me",
+      "text": "What's the best thing about this street?"
+     },
+     {
+      "who": "npc",
+      "text": "You get used to the quiet. You never get to like it."
+     },
+     {
+      "who": "me",
+      "text": "Have you always lived round here?"
+     },
+     {
+      "who": "npc",
+      "text": "I've a deadline. Another time."
+     }
+    ],
+    "offered": [
+     [
+      "personal: What's the best thing about this street?",
+      "leave: I won't stop, then."
+     ],
+     [
+      "personal: Have you always lived round here?",
+      "leave: I'll not hold you up."
+     ],
+     [
+      "leave: I'll let you get on."
+     ]
+    ]
+   },
+   {
+    "id": "walsh",
+    "shown": "The priest",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "God be with you. You're welcome here, whatever brings you.",
+     "Father. Father Walsh.",
+     "Go in peace. I have the roof to worry about."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Have you got a minute?"
+     },
+     {
+      "who": "npc",
+      "text": "God be with you. You're welcome here, whatever brings you."
+     },
+     {
+      "who": "npc",
+      "text": "Father. Father Walsh."
+     },
+     {
+      "who": "me",
+      "text": "Who should I get to know round here?"
+     },
+     {
+      "who": "npc",
+      "text": "Go in peace. I have the roof to worry about."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Have you got a minute?",
+      "personal: What do people do round here of a Sunday?",
+      "leave: I'll let you get on."
+     ],
+     [
+      "personal: Who should I get to know round here?",
+      "leave: I won't keep you."
+     ],
+     [
+      "leave: Right. I'd best be off."
+     ]
+    ]
+   },
+   {
+    "id": "pauline",
+    "shown": "The woman on the radio at Mickey's",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Hello, love. Hang on. Car two, where are you? Go on, love.",
+     "Pauline Kitching.",
+     "Hang on, love, the radio's going. We'll talk after."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello there."
+     },
+     {
+      "who": "npc",
+      "text": "Hello, love. Hang on. Car two, where are you? Go on, love."
+     },
+     {
+      "who": "npc",
+      "text": "Pauline Kitching."
+     },
+     {
+      "who": "me",
+      "text": "I'm still finding my feet here."
+     },
+     {
+      "who": "npc",
+      "text": "Hang on, love, the radio's going. We'll talk after."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello there.",
+      "personal: What do you make of the street these days?",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: I'm still finding my feet here.",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "kevin",
+    "shown": "The day driver",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 1,
+    "jobs": [
+     "personal"
+    ],
+    "lines": [
+     "Grace says you were out on Quay Street, the quay end in the small hours.",
+     "Kevin. Kevin Needham.",
+     "I've a car in bits. Go on."
+    ],
+    "classes": [
+     "other",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "Grace says you were out on Quay Street, the quay end in the small hours."
+     },
+     {
+      "who": "npc",
+      "text": "Kevin. Kevin Needham."
+     },
+     {
+      "who": "me",
+      "text": "I'm still finding my feet here."
+     },
+     {
+      "who": "npc",
+      "text": "I've a car in bits. Go on."
+     }
+    ],
+    "offered": [
+     [
+      "personal: I'm still finding my feet here.",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "terry",
+    "shown": "The night driver",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Morning.",
+     "Terry. Terry Hodgson.",
+     "That's me, then. I've a fare waiting."
+    ],
+    "classes": [
+     "stock",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Is now a good time?"
+     },
+     {
+      "who": "npc",
+      "text": "Morning."
+     },
+     {
+      "who": "npc",
+      "text": "Terry. Terry Hodgson."
+     },
+     {
+      "who": "me",
+      "text": "Have you always lived round here?"
+     },
+     {
+      "who": "npc",
+      "text": "That's me, then. I've a fare waiting."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Is now a good time?",
+      "personal: What's the best thing about this street?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "personal: Have you always lived round here?",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "leave: Another time, then."
+     ]
+    ]
+   },
+   {
+    "id": "rita",
+    "shown": "The woman behind the pawnshop grille",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "I'll look at it. Looking costs you nothing.",
+     "Looking's done. Buy something or let me shut."
+    ],
+    "classes": [
+     "own",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello there."
+     },
+     {
+      "who": "npc",
+      "text": "I'll look at it. Looking costs you nothing."
+     },
+     {
+      "who": "me",
+      "text": "What do people do round here of a Sunday?"
+     },
+     {
+      "who": "npc",
+      "text": "Looking's done. Buy something or let me shut."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello there.",
+      "personal: It's all new to me, this.",
+      "leave: I won't keep you."
+     ],
+     [
+      "personal: What do people do round here of a Sunday?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "leave: I'll leave you to it."
+     ]
+    ]
+   },
+   {
+    "id": "wayne",
+    "shown": "The lad from Rita's back room",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 6,
+    "jobs": [
+     "greet"
+    ],
+    "lines": [
+     "Alright. Buying or selling?",
+     "If it's about the thirty pounds on Mickey's book, I know about it."
+    ],
+    "classes": [
+     "own",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Is now a good time?"
+     },
+     {
+      "who": "npc",
+      "text": "Alright. Buying or selling?"
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the thirty pounds on Mickey's book, I know about it."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Is now a good time?",
+      "personal: What was Mickey like?",
+      "leave: I won't stop, then."
+     ]
+    ]
+   },
+   {
+    "id": "brenda",
+    "shown": "The woman at the fish shop",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Now then, love. Filleted, or do you want to wrestle it yourself?",
+     "Brenda. Brenda Laverack.",
+     "I've fish to see to, love."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Is now a good time?"
+     },
+     {
+      "who": "npc",
+      "text": "Now then, love. Filleted, or do you want to wrestle it yourself?"
+     },
+     {
+      "who": "npc",
+      "text": "Brenda. Brenda Laverack."
+     },
+     {
+      "who": "me",
+      "text": "I'm still finding my feet here."
+     },
+     {
+      "who": "npc",
+      "text": "I've fish to see to, love."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Is now a good time?",
+      "personal: What do you make of the street these days?",
+      "leave: I'll let you get on."
+     ],
+     [
+      "personal: I'm still finding my feet here.",
+      "leave: I won't keep you."
+     ],
+     [
+      "leave: Right. I'd best be off."
+     ]
+    ]
+   },
+   {
+    "id": "lee",
+    "shown": "A young casual off the quay",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 6,
+    "jobs": [
+     "greet"
+    ],
+    "lines": [
+     "Alright.",
+     "If it's about the fifteen pounds on Mickey's book, I know about it."
+    ],
+    "classes": [
+     "own",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Sorry to bother you."
+     },
+     {
+      "who": "npc",
+      "text": "Alright."
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the fifteen pounds on Mickey's book, I know about it."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Sorry to bother you.",
+      "personal: What do you make of the street these days?",
+      "leave: I won't stop, then."
+     ]
+    ]
+   },
+   {
+    "id": "grace",
+    "shown": "The woman who keeps the caff",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "personal"
+    ],
+    "lines": [
+     "Ron says you were out on Quay Street, the quay end in the small hours.",
+     "Rinaldi. Grace Rinaldi.",
+     "Tea? Twenty pence. Sit by the window and you'll hear the lot.",
+     "It'll be here.",
+     "Drink your tea and let me get on."
+    ],
+    "classes": [
+     "other",
+     "other",
+     "other",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "Ron says you were out on Quay Street, the quay end in the small hours."
+     },
+     {
+      "who": "npc",
+      "text": "Rinaldi. Grace Rinaldi."
+     },
+     {
+      "who": "npc",
+      "text": "Tea? Twenty pence. Sit by the window and you'll hear the lot."
+     },
+     {
+      "who": "me",
+      "text": "No. Not just now."
+     },
+     {
+      "who": "npc",
+      "text": "It'll be here."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Drink your tea and let me get on."
+     }
+    ],
+    "offered": [
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: I'll let you get on."
+     ],
+     [
+      "leave: I won't keep you."
+     ]
+    ]
+   },
+   {
+    "id": "lily",
+    "shown": "The woman at the takeaway hatch",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Hello. What can I get you?",
+     "I'm Lily Tang.",
+     "I'd best see to the counter."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Sorry to bother you."
+     },
+     {
+      "who": "npc",
+      "text": "Hello. What can I get you?"
+     },
+     {
+      "who": "npc",
+      "text": "I'm Lily Tang."
+     },
+     {
+      "who": "me",
+      "text": "What do people do round here of a Sunday?"
+     },
+     {
+      "who": "npc",
+      "text": "I'd best see to the counter."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Sorry to bother you.",
+      "personal: It's all new to me, this.",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: What do people do round here of a Sunday?",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "hal",
+    "shown": "The old man at the coin shop",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "We're between stock.",
+     "I'm Hal Metcalfe.",
+     "Nothing more in stock, that included."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Have you got a minute?"
+     },
+     {
+      "who": "npc",
+      "text": "We're between stock."
+     },
+     {
+      "who": "npc",
+      "text": "I'm Hal Metcalfe."
+     },
+     {
+      "who": "me",
+      "text": "What do you make of the street these days?"
+     },
+     {
+      "who": "npc",
+      "text": "Nothing more in stock, that included."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Have you got a minute?",
+      "personal: Where's good for a cup of tea round here?",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: What do you make of the street these days?",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "susan",
+    "shown": "A woman in a customs uniform",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Anything to declare?",
+     "Susan. Susan Coverdale.",
+     "Nothing further to declare, then."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Is now a good time?"
+     },
+     {
+      "who": "npc",
+      "text": "Anything to declare?"
+     },
+     {
+      "who": "npc",
+      "text": "Susan. Susan Coverdale."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Nothing further to declare, then."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Is now a good time?",
+      "personal: Who should I get to know round here?",
+      "leave: Another time, then."
+     ],
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: I won't stop, then."
+     ],
+     [
+      "leave: I'll not hold you up."
+     ]
+    ]
+   },
+   {
+    "id": "nora",
+    "shown": "The priest's housekeeper",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Ah, it's yourself.",
+     "I'm Nora Cronin.",
+     "Away with you now. I've things on."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello there."
+     },
+     {
+      "who": "npc",
+      "text": "Ah, it's yourself."
+     },
+     {
+      "who": "npc",
+      "text": "I'm Nora Cronin."
+     },
+     {
+      "who": "me",
+      "text": "What do people do round here of a Sunday?"
+     },
+     {
+      "who": "npc",
+      "text": "Away with you now. I've things on."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello there.",
+      "personal: It's all new to me, this.",
+      "leave: I won't keep you."
+     ],
+     [
+      "personal: What do people do round here of a Sunday?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "leave: I'll leave you to it."
+     ]
+    ]
+   },
+   {
+    "id": "albert",
+    "shown": "An old man mending nets",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Now then, young 'un.",
+     "Albert Suggitt.",
+     "That's me talked out, young 'un."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Sorry to bother you."
+     },
+     {
+      "who": "npc",
+      "text": "Now then, young 'un."
+     },
+     {
+      "who": "npc",
+      "text": "Albert Suggitt."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "That's me talked out, young 'un."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Sorry to bother you.",
+      "personal: Who should I get to know round here?",
+      "leave: I'll let you get on."
+     ],
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: I won't keep you."
+     ],
+     [
+      "leave: Right. I'd best be off."
+     ]
+    ]
+   },
+   {
+    "id": "sylvia",
+    "shown": "The landlady at Regent House",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Feet. Mat. Thank you.",
+     "Rennison. Sylvia Rennison.",
+     "Feet. Mat. Door. Thank you."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Sorry to bother you."
+     },
+     {
+      "who": "npc",
+      "text": "Feet. Mat. Thank you."
+     },
+     {
+      "who": "npc",
+      "text": "Rennison. Sylvia Rennison."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Feet. Mat. Door. Thank you."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Sorry to bother you.",
+      "personal: Who should I get to know round here?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "leave: Another time, then."
+     ]
+    ]
+   },
+   {
+    "id": "dennis",
+    "shown": "The scrap dealer",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 6,
+    "jobs": [
+     "greet"
+    ],
+    "lines": [
+     "If it's about the eighty quid, I'm out.",
+     "If it's about the eighty pounds on Mickey's book, I know about it."
+    ],
+    "classes": [
+     "own",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "All right? Can I have a word?"
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the eighty quid, I'm out."
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the eighty pounds on Mickey's book, I know about it."
+     }
+    ],
+    "offered": [
+     [
+      "greet: All right? Can I have a word?",
+      "personal: I'm still finding my feet here.",
+      "leave: I'll let you get on."
+     ]
+    ]
+   },
+   {
+    "id": "julie",
+    "shown": "A young woman with a carrier bag",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 6,
+    "jobs": [
+     "greet"
+    ],
+    "lines": [
+     "Hiya.",
+     "Julie. Julie Kettlewell.",
+     "If it's about the nine pounds on Mickey's book, I know about it."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Have you got a minute?"
+     },
+     {
+      "who": "npc",
+      "text": "Hiya."
+     },
+     {
+      "who": "npc",
+      "text": "Julie. Julie Kettlewell."
+     },
+     {
+      "who": "npc",
+      "text": "If it's about the nine pounds on Mickey's book, I know about it."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Have you got a minute?",
+      "personal: Have you always lived round here?",
+      "leave: I won't keep you."
+     ]
+    ]
+   },
+   {
+    "id": "shaun",
+    "shown": "The sign painter on the ladder",
+    "anon": false,
+    "when": "Tuesday 9.30am",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Mind the ladder.",
+     "I'm Shaun Hewson.",
+     "I'd best get back up the ladder."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Hello. Have you got a minute?"
+     },
+     {
+      "who": "npc",
+      "text": "Mind the ladder."
+     },
+     {
+      "who": "npc",
+      "text": "I'm Shaun Hewson."
+     },
+     {
+      "who": "me",
+      "text": "Who should I get to know round here?"
+     },
+     {
+      "who": "npc",
+      "text": "I'd best get back up the ladder."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Hello. Have you got a minute?",
+      "personal: What do people do round here of a Sunday?",
+      "leave: I'll let you get on."
+     ],
+     [
+      "personal: Who should I get to know round here?",
+      "leave: I won't keep you."
+     ],
+     [
+      "leave: Right. I'd best be off."
+     ]
+    ]
+   },
+   {
+    "id": "k_news",
+    "shown": "The newsagent",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Mind the step."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "k_grocer",
+    "shown": "The grocer",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Cash only. Always has been."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "k_laund",
+    "shown": "The washeteria attendant",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Number four's broke. Don't use number four."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "k_iron",
+    "shown": "The ironmonger",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Keys cut while you wait. If you wait."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "k_tea",
+    "shown": "The tea room lady",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Scones are yesterday's. I'll not lie."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "k_chand",
+    "shown": "The chandler",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Not many boats left to sell rope to."
+    ],
+    "classes": [
+     "own"
+    ]
+   },
+   {
+    "id": "c0",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Turned out wet again."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c1",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Now then."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c2",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Lovely weather for ducks."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c4",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Morning."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c5",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Y'alright."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c6",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "c7",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Nowt doing down the dock."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c8",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Aye."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c9",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "It never stops, this."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c10",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "Mind yourself."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "c11",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "c12",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "c13",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "c14",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "c15",
+    "shown": "A woman",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "yardlad",
+    "shown": "A big lad in overalls",
+    "anon": true,
+    "when": "Tuesday 9.30am",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "peter",
+    "shown": "The man at the takeaway",
+    "anon": false,
+    "when": "Tuesday 1.00pm",
+    "talk": "talk",
+    "turns": 2,
+    "jobs": [
+     "greet",
+     "personal"
+    ],
+    "lines": [
+     "Ten minutes for anything hot.",
+     "Peter. Peter Tang.",
+     "Ten minutes is up. Next."
+    ],
+    "classes": [
+     "own",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "me",
+      "text": "Sorry to bother you."
+     },
+     {
+      "who": "npc",
+      "text": "Ten minutes for anything hot."
+     },
+     {
+      "who": "npc",
+      "text": "Peter. Peter Tang."
+     },
+     {
+      "who": "me",
+      "text": "Do you get many strangers down here?"
+     },
+     {
+      "who": "npc",
+      "text": "Ten minutes is up. Next."
+     }
+    ],
+    "offered": [
+     [
+      "greet: Sorry to bother you.",
+      "personal: Who should I get to know round here?",
+      "leave: I won't keep you."
+     ],
+     [
+      "personal: Do you get many strangers down here?",
+      "leave: Right. I'd best be off."
+     ],
+     [
+      "leave: I'll leave you to it."
+     ]
+    ]
+   },
+   {
+    "id": "c3",
+    "shown": "A man",
+    "anon": true,
+    "when": "Tuesday 1.00pm",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "norman",
+    "shown": "The night watchman on the row",
+    "anon": false,
+    "when": "Tuesday 6.00pm",
+    "talk": "talk",
+    "turns": 1,
+    "jobs": [
+     "personal"
+    ],
+    "lines": [
+     "Ron says you were out on Quay Street, the quay end in the small hours.",
+     "Norman Dent.",
+     "I couldn't say more. Sorry."
+    ],
+    "classes": [
+     "other",
+     "other",
+     "other"
+    ],
+    "repeats": 0,
+    "log": [
+     {
+      "who": "npc",
+      "text": "Ron says you were out on Quay Street, the quay end in the small hours."
+     },
+     {
+      "who": "npc",
+      "text": "Norman Dent."
+     },
+     {
+      "who": "me",
+      "text": "I'm still finding my feet here."
+     },
+     {
+      "who": "npc",
+      "text": "I couldn't say more. Sorry."
+     }
+    ],
+    "offered": [
+     [
+      "personal: I'm still finding my feet here.",
+      "leave: I'll leave you to it."
+     ],
+     [
+      "leave: Another time, then."
+     ]
+    ]
+   },
+   {
+    "id": "lad0",
+    "shown": "A lad in a shell suit",
+    "anon": true,
+    "when": "Tuesday 6.00pm",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "lad1",
+    "shown": "A lad in a shell suit",
+    "anon": true,
+    "when": "Tuesday 6.00pm",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [
+     "You're the cab bloke. We know you."
+    ],
+    "classes": [
+     "stock"
+    ]
+   },
+   {
+    "id": "lad2",
+    "shown": "A lad in a shell suit",
+    "anon": true,
+    "when": "Tuesday 6.00pm",
+    "talk": "bark only",
+    "turns": 0,
+    "lines": [],
+    "classes": []
+   },
+   {
+    "id": "ada",
+    "shown": "The old woman at the window opposite",
+    "anon": false,
+    "talk": "not on the street now",
+    "where": "home"
+   },
+   {
+    "id": "ellis",
+    "shown": "A woman in a mac who looks at doors",
+    "anon": false,
+    "talk": "not on the street now",
+    "where": "off"
+   },
+   {
+    "id": "pc",
+    "shown": "A constable",
+    "anon": false,
+    "talk": "not on the street now",
+    "where": "off"
+   },
+   {
+    "id": "pax0",
+    "shown": "A man with a bag",
+    "anon": true,
+    "talk": "not on the street now",
+    "where": "off"
+   },
+   {
+    "id": "pax1",
+    "shown": "A woman in a headscarf",
+    "anon": true,
+    "talk": "not on the street now",
+    "where": "off"
+   },
+   {
+    "id": "pax2",
+    "shown": "A man with a bag",
+    "anon": true,
+    "talk": "not on the street now",
+    "where": "off"
+   }
+  ]
+ },
+ "shots_sweep": [
+  {
+   "file": "01-sweep-Tue-0930.png",
+   "note": "sweep at Tue 09:30",
+   "clock": "Tuesday 9.30am"
+  },
+  {
+   "file": "02-sweep-Tue-1300.png",
+   "note": "sweep at Tue 13:00",
+   "clock": "Tuesday 1.00pm"
+  },
+  {
+   "file": "03-sweep-Tue-1800.png",
+   "note": "sweep at Tue 18:00",
+   "clock": "Tuesday 6.00pm"
+  },
+  {
+   "file": "04-sweep-Tue-2200.png",
+   "note": "sweep at Tue 22:00",
+   "clock": "Tuesday 10.00pm"
+  }
+ ],
+ "newcomer": {
+  "book": {
+   "walking": 1043.5595875005686,
+   "talking": 858.0606060606065,
+   "waiting": 1403.0,
+   "driving": 209.20920033857857,
+   "fronting up": 39.0,
+   "job actions": 51.56004476519794
+  },
+  "timeline": [
+   [
+    0.0,
+    "walking",
+    3.247456092756323,
+    "objective: Mickey's door"
+   ],
+   [
+    3.247456092756323,
+    "talking",
+    17.272727272727273,
+    ""
+   ],
+   [
+    20.520183365483597,
+    "walking",
+    3.247456092756323,
+    "objective: Mickey's door"
+   ],
+   [
+    23.76763945823992,
+    "talking",
+    18.484848484848484,
+    ""
+   ],
+   [
+    42.252487943088404,
+    "walking",
+    2.0,
+    "Go into Mickey's Cars"
+   ],
+   [
+    44.252487943088404,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    47.252487943088404,
+    "walking",
+    0.6428243465332243,
+    "objective: Mickey's door"
+   ],
+   [
+    47.89531228962163,
+    "walking",
+    2.0,
+    "Go into Mickey's Cars"
+   ],
+   [
+    49.89531228962163,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    52.89531228962163,
+    "talking",
+    9.696969696969697,
+    ""
+   ],
+   [
+    62.592281986591324,
+    "talking",
+    21.12121212121212,
+    "talk pauline"
+   ],
+   [
+    83.71349410780344,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    86.71349410780344,
+    "talking",
+    64.57575757575758,
+    ""
+   ],
+   [
+    151.28925168356102,
+    "talking",
+    29.27272727272727,
+    "talk sheila"
+   ],
+   [
+    180.5619789562883,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    183.5619789562883,
+    "walking",
+    1.223901092530569,
+    "to Ron Kirby"
+   ],
+   [
+    184.78588004881888,
+    "talking",
+    29.878787878787882,
+    "talk ron"
+   ],
+   [
+    214.66466792760679,
+    "walking",
+    0.6818181818181818,
+    "to Ron Kirby"
+   ],
+   [
+    215.34648610942497,
+    "talking",
+    28.96969696969697,
+    "talk ron"
+   ],
+   [
+    244.31618307912194,
+    "walking",
+    1.2034729358976122,
+    "to the cab"
+   ],
+   [
+    245.51965601501956,
+    "waiting",
+    15.0,
+    "in the cab for the radio"
+   ],
+   [
+    260.51965601501956,
+    "driving",
+    3.0,
+    "fare offered"
+   ],
+   [
+    263.51965601501956,
+    "driving",
+    5.565578642423446,
+    "to the fare"
+   ],
+   [
+    269.08523465744304,
+    "driving",
+    25.069395723733052,
+    "fare to the warehouse row"
+   ],
+   [
+    294.1546303811761,
+    "walking",
+    51.2089837886006,
+    "to Ron Kirby"
+   ],
+   [
+    345.3636141697757,
+    "talking",
+    44.27272727272727,
+    ""
+   ],
+   [
+    389.636341442503,
+    "talking",
+    28.363636363636367,
+    "talk ron"
+   ],
+   [
+    417.9999778061394,
+    "walking",
+    1.1334508122550575,
+    "to The day driver"
+   ],
+   [
+    419.1334286183944,
+    "talking",
+    6.9393939393939394,
+    "talk kevin"
+   ],
+   [
+    426.07282255778836,
+    "walking",
+    2.5459455695232767,
+    "to Darren Milner"
+   ],
+   [
+    428.6187681273116,
+    "talking",
+    61.18181818181819,
+    "talk darren"
+   ],
+   [
+    489.80058630912987,
+    "fronting up",
+    9,
+    "front up darren"
+   ],
+   [
+    498.80058630912987,
+    "walking",
+    17.027499027763756,
+    "to The lad from Rita's back room"
+   ],
+   [
+    515.8280853368934,
+    "talking",
+    48.78787878787879,
+    "talk wayne"
+   ],
+   [
+    564.6159641247723,
+    "fronting up",
+    9,
+    "front up wayne"
+   ],
+   [
+    573.6159641247723,
+    "walking",
+    11.282101124574444,
+    "to The night driver"
+   ],
+   [
+    584.898065249347,
+    "talking",
+    7.242424242424242,
+    "talk terry"
+   ],
+   [
+    592.1404894917713,
+    "walking",
+    4.988619279324649,
+    "to The night watchman on the row"
+   ],
+   [
+    597.129108771096,
+    "talking",
+    13.878787878787879,
+    "talk norman"
+   ],
+   [
+    611.0078966498838,
+    "walking",
+    26.761114165986417,
+    "to An old man mending nets"
+   ],
+   [
+    637.7690108158688,
+    "talking",
+    12.969696969696969,
+    "talk albert"
+   ],
+   [
+    650.7387077855658,
+    "walking",
+    26.116520926211738,
+    "looking about: the rank"
+   ],
+   [
+    676.855228711777,
+    "walking",
+    1.8096390215813067,
+    "looking about: Mickey's door"
+   ],
+   [
+    678.6648677333584,
+    "walking",
+    29.620882738616643,
+    "looking about: Rinaldi's (street door)"
+   ],
+   [
+    708.2857504719734,
+    "walking",
+    26.19459915313438,
+    "looking about: Laverack's (street door)"
+   ],
+   [
+    734.4803496251068,
+    "walking",
+    18.867494129076704,
+    "to A woman in a customs uniform"
+   ],
+   [
+    753.3478437541833,
+    "talking",
+    13.272727272727273,
+    "talk susan"
+   ],
+   [
+    766.6205710269105,
+    "job actions",
+    1.5600447651979363,
+    "job pick-up"
+   ],
+   [
+    768.1806157921085,
+    "job actions",
+    3.0,
+    "Take the holdall"
+   ],
+   [
+    771.1806157921085,
+    "job actions",
+    44.0,
+    "carrying to the drop"
+   ],
+   [
+    815.1806157921085,
+    "job actions",
+    3.0,
+    "Knock"
+   ],
+   [
+    818.1806157921085,
+    "talking",
+    7.636363636363637,
+    ""
+   ],
+   [
+    825.8169794284721,
+    "walking",
+    34.808428790682754,
+    "to A constable"
+   ],
+   [
+    860.6254082191562,
+    "talking",
+    19.60606060606061,
+    "talk pc"
+   ],
+   [
+    880.2314688252168,
+    "walking",
+    63.94521237708423,
+    "to the cab"
+   ],
+   [
+    944.1766812023014,
+    "waiting",
+    120.0,
+    "in the cab for the radio"
+   ],
+   [
+    1064.1766812023016,
+    "walking",
+    3.0,
+    "out of Regent House"
+   ],
+   [
+    1067.1766812023016,
+    "talking",
+    10.303030303030305,
+    ""
+   ],
+   [
+    1077.4797115053318,
+    "talking",
+    19.0,
+    "talk sylvia"
+   ],
+   [
+    1096.479711505332,
+    "walking",
+    3.0,
+    "out of Regent House"
+   ],
+   [
+    1099.479711505332,
+    "walking",
+    29.500000000000007,
+    "looking about: the Washeteria (street door)"
+   ],
+   [
+    1128.9797115053289,
+    "walking",
+    0.22604212289375208,
+    "to The woman at the takeaway hatch"
+   ],
+   [
+    1129.2057536282225,
+    "talking",
+    23.545454545454547,
+    "talk lily"
+   ],
+   [
+    1152.751208173677,
+    "walking",
+    3.0,
+    "out of the Washeteria"
+   ],
+   [
+    1155.751208173677,
+    "walking",
+    3.818181818181819,
+    "to Laverack's"
+   ],
+   [
+    1159.5693899918588,
+    "talking",
+    22.333333333333336,
+    "talk brenda"
+   ],
+   [
+    1181.902723325192,
+    "walking",
+    3.0,
+    "out of Laverack's"
+   ],
+   [
+    1184.902723325192,
+    "walking",
+    26.19459915313438,
+    "to Rinaldi's"
+   ],
+   [
+    1211.0973224783254,
+    "talking",
+    7.0,
+    "talk grace"
+   ],
+   [
+    1218.0973224783254,
+    "waiting",
+    2.0,
+    "paused: tea at the caff"
+   ],
+   [
+    1220.0973224783254,
+    "walking",
+    3.0,
+    "out of Rinaldi's"
+   ],
+   [
+    1223.0973224783254,
+    "talking",
+    35.42424242424242,
+    "talk lee"
+   ],
+   [
+    1258.521564902568,
+    "fronting up",
+    7,
+    "front up lee"
+   ],
+   [
+    1265.521564902568,
+    "walking",
+    3.0,
+    "out of Rinaldi's"
+   ],
+   [
+    1268.521564902568,
+    "walking",
+    1.0498371031103035,
+    "looking about: Hook Stores (street door)"
+   ],
+   [
+    1269.5714020056782,
+    "talking",
+    12.696969696969697,
+    ""
+   ],
+   [
+    1282.268371702648,
+    "waiting",
+    2.0,
+    "paused: custody at the town station"
+   ],
+   [
+    1284.268371702648,
+    "walking",
+    17.847230752875152,
+    "looking about: Hook Stores (street door)"
+   ],
+   [
+    1302.115602455524,
+    "walking",
+    3.5890818135649694,
+    "to The sign painter on the ladder"
+   ],
+   [
+    1305.704684269089,
+    "talking",
+    14.181818181818183,
+    "talk shaun"
+   ],
+   [
+    1319.8865024509073,
+    "walking",
+    12.026631948848268,
+    "to A young woman with a carrier bag"
+   ],
+   [
+    1331.9131343997547,
+    "talking",
+    37.24242424242424,
+    "talk julie"
+   ],
+   [
+    1369.155558642179,
+    "fronting up",
+    7,
+    "front up julie"
+   ],
+   [
+    1376.155558642179,
+    "walking",
+    11.50854246144041,
+    "to A woman with a notebook"
+   ],
+   [
+    1387.6641011036181,
+    "talking",
+    14.484848484848486,
+    "talk alison"
+   ],
+   [
+    1402.1489495884666,
+    "walking",
+    21.913824931775267,
+    "to The priest's housekeeper"
+   ],
+   [
+    1424.062774520241,
+    "talking",
+    6.9393939393939394,
+    "talk nora"
+   ],
+   [
+    1431.002168459635,
+    "walking",
+    9.518615949116597,
+    "to The priest"
+   ],
+   [
+    1440.5207844087524,
+    "talking",
+    13.030303030303031,
+    ""
+   ],
+   [
+    1453.5510874390554,
+    "talking",
+    17.21212121212121,
+    "talk walsh"
+   ],
+   [
+    1470.7632086511767,
+    "walking",
+    35.51317413566527,
+    "to A woman in a good coat, not from the street now"
+   ],
+   [
+    1506.2763827868405,
+    "talking",
+    12.424242424242426,
+    ""
+   ],
+   [
+    1518.700625211083,
+    "talking",
+    8.151515151515152,
+    "talk june"
+   ],
+   [
+    1526.8521403625982,
+    "walking",
+    56.33191629430366,
+    "to the cab"
+   ],
+   [
+    1583.1840566569008,
+    "waiting",
+    45.0,
+    "in the cab for the radio"
+   ],
+   [
+    1628.1840566569008,
+    "driving",
+    3.0,
+    "fare offered"
+   ],
+   [
+    1631.1840566569008,
+    "driving",
+    10.808394686683357,
+    "to the fare"
+   ],
+   [
+    1641.9924513435842,
+    "driving",
+    15.862428191326828,
+    "fare to Dock Road"
+   ],
+   [
+    1657.854879534911,
+    "walking",
+    68.88361921289976,
+    "looking about: the Golden River (street door)"
+   ],
+   [
+    1726.7384987478076,
+    "walking",
+    9.160754416946418,
+    "looking about: Peart's (street door)"
+   ],
+   [
+    1735.899253164754,
+    "walking",
+    3.318181818181818,
+    "looking about: the ironmonger's (street door)"
+   ],
+   [
+    1739.2174349829356,
+    "walking",
+    3.318181818181818,
+    "looking about: the Copper Kettle (street door)"
+   ],
+   [
+    1742.5356168011172,
+    "walking",
+    11.837833311914013,
+    "looking about: Rita's (street door)"
+   ],
+   [
+    1754.3734501130316,
+    "walking",
+    3.6363636363636367,
+    "looking about: the chandlery (street door)"
+   ],
+   [
+    1758.0098137493953,
+    "walking",
+    4.3181818181818175,
+    "looking about: Regent House (street door)"
+   ],
+   [
+    1762.3279955675773,
+    "walking",
+    8.100734585606803,
+    "looking about: Metcalfe's (street door)"
+   ],
+   [
+    1770.4287301531842,
+    "walking",
+    15.013492554288826,
+    "looking about: the chapel (street door)"
+   ],
+   [
+    1785.4422227074717,
+    "walking",
+    49.70412457734264,
+    "looking about: the Harbour Office (street door)"
+   ],
+   [
+    1835.1463472848116,
+    "walking",
+    10.676497707852752,
+    "looking about: Ada's front room (street door)"
+   ],
+   [
+    1845.822844992664,
+    "waiting",
+    150.0,
+    "nothing to do"
+   ],
+   [
+    1995.822844992664,
+    "waiting",
+    1.0,
+    "paused: dead on his feet: to bed"
+   ],
+   [
+    1996.822844992664,
+    "waiting",
+    15.0,
+    "nothing to do"
+   ],
+   [
+    2011.822844992664,
+    "walking",
+    3.0,
+    "out of Regent House"
+   ],
+   [
+    2014.822844992664,
+    "walking",
+    1.0239930127367372,
+    "objective: Mickey's door"
+   ],
+   [
+    2015.8468380054007,
+    "talking",
+    11.787878787878789,
+    ""
+   ],
+   [
+    2027.6347167932795,
+    "waiting",
+    2.0,
+    "paused: custody at the town station"
+   ],
+   [
+    2029.6347167932795,
+    "walking",
+    35.839755445785826,
+    "objective: Mickey's door"
+   ],
+   [
+    2065.474472239068,
+    "walking",
+    29.98116488620622,
+    "to The woman behind the pawnshop grille"
+   ],
+   [
+    2095.455637125269,
+    "talking",
+    14.484848484848486,
+    "talk rita"
+   ],
+   [
+    2109.9404856101173,
+    "waiting",
+    30.0,
+    "nothing to do"
+   ],
+   [
+    2139.9404856101173,
+    "walking",
+    3.0,
+    "out of Rita's"
+   ],
+   [
+    2142.9404856101173,
+    "walking",
+    74.4064252313097,
+    "to the cab"
+   ],
+   [
+    2217.3469108414192,
+    "waiting",
+    75.0,
+    "in the cab for the radio"
+   ],
+   [
+    2292.3469108414192,
+    "driving",
+    3.0,
+    "fare offered"
+   ],
+   [
+    2295.3469108414192,
+    "driving",
+    34.890159255736066,
+    "to the fare"
+   ],
+   [
+    2330.237070097155,
+    "driving",
+    22.574688536057373,
+    "fare to the fish dock"
+   ],
+   [
+    2352.8117586332123,
+    "waiting",
+    375.0,
+    "nothing to do"
+   ],
+   [
+    2727.8117586332123,
+    "waiting",
+    1.0,
+    "paused: dead on his feet: to bed"
+   ],
+   [
+    2728.8117586332123,
+    "waiting",
+    15.0,
+    "nothing to do"
+   ],
+   [
+    2743.8117586332123,
+    "walking",
+    3.0,
+    "out of Regent House"
+   ],
+   [
+    2746.8117586332123,
+    "walking",
+    37.5,
+    "to Mickey's Cars"
+   ],
+   [
+    2784.311758633205,
+    "talking",
+    7.0,
+    "talk sheila"
+   ],
+   [
+    2791.311758633205,
+    "talking",
+    13.030303030303031,
+    ""
+   ],
+   [
+    2804.342061663508,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    2807.342061663508,
+    "talking",
+    28.969696969696972,
+    "talk sheila"
+   ],
+   [
+    2836.3117586332046,
+    "walking",
+    3.0,
+    "out of Mickey's Cars"
+   ],
+   [
+    2839.3117586332046,
+    "walking",
+    29.784938508975806,
+    "to the cab"
+   ],
+   [
+    2869.0966971421817,
+    "waiting",
+    30.0,
+    "in the cab for the radio"
+   ],
+   [
+    2899.0966971421817,
+    "driving",
+    3.0,
+    "fare offered"
+   ],
+   [
+    2902.0966971421817,
+    "driving",
+    13.622902275442266,
+    "to the fare"
+   ],
+   [
+    2915.719599417624,
+    "driving",
+    19.53962509435954,
+    "fare to the Infirmary"
+   ],
+   [
+    2935.2592245119836,
+    "waiting",
+    165.0,
+    "nothing to do"
+   ],
+   [
+    3100.2592245119836,
+    "walking",
+    32.974771849284956,
+    "to The scrap dealer"
+   ],
+   [
+    3133.233996361271,
+    "talking",
+    45.39393939393939,
+    "talk dennis"
+   ],
+   [
+    3178.6279357552103,
+    "fronting up",
+    7,
+    "front up dennis"
+   ],
+   [
+    3185.6279357552103,
+    "waiting",
+    255.0,
+    "nothing to do"
+   ],
+   [
+    3440.6279357552103,
+    "walking",
+    9.485474976889146,
+    "to the cab"
+   ],
+   [
+    3450.1134107320977,
+    "waiting",
+    15.0,
+    "in the cab for the radio"
+   ],
+   [
+    3465.1134107320977,
+    "driving",
+    3.0,
+    "fare offered"
+   ],
+   [
+    3468.1134107320977,
+    "driving",
+    19.60455258431699,
+    "to the fare"
+   ],
+   [
+    3487.7179633164146,
+    "driving",
+    26.671475348499662,
+    "fare to Dock Road"
+   ],
+   [
+    3514.3894386649145,
+    "waiting",
+    90.0,
+    "nothing to do"
+   ]
+  ],
+  "novelty": [
+   {
+    "t": 0.0,
+    "kind": "place",
+    "what": "Quay Street, the quay end"
+   },
+   {
+    "t": 3.247456092756323,
+    "kind": "scene",
+    "what": "The lad on the pavement with the pager: So listen. You're him, yeah? The nephew. One suitc"
+   },
+   {
+    "t": 8.095940941241171,
+    "kind": "scene",
+    "what": "Darren Milner: Darren. I did bits for Mickey. Messages. Watching "
+   },
+   {
+    "t": 15.06563791093814,
+    "kind": "scene",
+    "what": "Darren Milner: Anything you want to know round here, I'm not sayi"
+   },
+   {
+    "t": 23.76763945823992,
+    "kind": "scene",
+    "what": "Ron Kirby: You'll be the nephew. Ron Kirby. I do the door and"
+   },
+   {
+    "t": 29.525215215815678,
+    "kind": "scene",
+    "what": "Ron Kirby: Thirty years on that dock till they finished the s"
+   },
+   {
+    "t": 37.40400309460355,
+    "kind": "scene",
+    "what": "Ron Kirby: Boss. You want the door watched, or you want it wa"
+   },
+   {
+    "t": 42.252487943088404,
+    "kind": "place",
+    "what": "Mickey's Cars"
+   },
+   {
+    "t": 52.89531228962163,
+    "kind": "person",
+    "what": "pauline"
+   },
+   {
+    "t": 52.89531228962163,
+    "kind": "scene",
+    "what": "The woman on the radio at Mickey's: Car to the station, two minutes. No, love, two rea"
+   },
+   {
+    "t": 56.834706229015566,
+    "kind": "scene",
+    "what": "Pauline Kitching: You'll be him. Pauline. I'm the voice. Sheila's in"
+   },
+   {
+    "t": 62.592281986591324,
+    "kind": "action",
+    "what": "talk"
+   },
+   {
+    "t": 86.71349410780344,
+    "kind": "person",
+    "what": "sheila"
+   },
+   {
+    "t": 86.71349410780344,
+    "kind": "scene",
+    "what": "Sheila Dunn: New management. Sit down, you're making the place "
+   },
+   {
+    "t": 89.74379713810647,
+    "kind": "scene",
+    "what": "Sheila Dunn: Sheila Dunn. I kept your uncle's books. Thirty-one"
+   },
+   {
+    "t": 96.41046380477314,
+    "kind": "scene",
+    "what": "Sheila Dunn: The fare book. Every fare Pauline calls goes in it"
+   },
+   {
+    "t": 101.8650092593186,
+    "kind": "scene",
+    "what": "Sheila Dunn: The radio. Nobody in this building can help overhe"
+   },
+   {
+    "t": 107.31955471386405,
+    "kind": "scene",
+    "what": "Sheila Dunn: The yard, through there. Two ways out. Your uncle "
+   },
+   {
+    "t": 110.95591835022769,
+    "kind": "scene",
+    "what": "Sheila Dunn: And his other book. The debts. Iveson eighty pound"
+   },
+   {
+    "t": 127.34985774416708,
+    "kind": "scene",
+    "what": "Sheila Dunn: The real book. You'll see it when I've decided wha"
+   },
+   {
+    "t": 135.53167592598527,
+    "kind": "scene",
+    "what": "Sheila Dunn: Keys to car two. Kevin has car one. Drive it yours"
+   },
+   {
+    "t": 144.31955471386405,
+    "kind": "scene",
+    "what": "Sheila Dunn: Mrs Rennison at Regent House has your room, top of"
+   },
+   {
+    "t": 184.78588004881888,
+    "kind": "person",
+    "what": "ron"
+   },
+   {
+    "t": 245.51965601501956,
+    "kind": "action",
+    "what": "sit in the cab"
+   },
+   {
+    "t": 260.51965601501956,
+    "kind": "action",
+    "what": "drive the cab"
+   },
+   {
+    "t": 260.51965601501956,
+    "kind": "action",
+    "what": "take a fare"
+   },
+   {
+    "t": 294.1546303811761,
+    "kind": "place",
+    "what": "the warehouse row"
+   },
+   {
+    "t": 345.3636141697757,
+    "kind": "scene",
+    "what": "Ron Kirby: Boss. Got a minute? It's a thing of Mickey's that "
+   },
+   {
+    "t": 349.60603841219995,
+    "kind": "scene",
+    "what": "Ron Kirby: Last ferry of a Monday, a bag gets left under the "
+   },
+   {
+    "t": 359.90906871523026,
+    "kind": "scene",
+    "what": "Ron Kirby: Sixty quid for the walk. There's a coat on the hoo"
+   },
+   {
+    "t": 373.87876568492726,
+    "kind": "scene",
+    "what": "Ron Kirby: Half ten the ferry's in. The customs woman goes of"
+   },
+   {
+    "t": 383.27270507886664,
+    "kind": "scene",
+    "what": "Ron Kirby: And boss. This street's quieter than you think aft"
+   },
+   {
+    "t": 419.1334286183944,
+    "kind": "person",
+    "what": "kevin"
+   },
+   {
+    "t": 428.6187681273116,
+    "kind": "person",
+    "what": "darren"
+   },
+   {
+    "t": 489.80058630912987,
+    "kind": "action",
+    "what": "front up"
+   },
+   {
+    "t": 515.8280853368934,
+    "kind": "place",
+    "what": "Chapel Lane"
+   },
+   {
+    "t": 515.8280853368934,
+    "kind": "person",
+    "what": "wayne"
+   },
+   {
+    "t": 584.898065249347,
+    "kind": "place",
+    "what": "Quay Street"
+   },
+   {
+    "t": 584.898065249347,
+    "kind": "person",
+    "what": "terry"
+   },
+   {
+    "t": 597.129108771096,
+    "kind": "person",
+    "what": "norman"
+   },
+   {
+    "t": 637.7690108158688,
+    "kind": "person",
+    "what": "albert"
+   },
+   {
+    "t": 753.3478437541833,
+    "kind": "place",
+    "what": "the quay"
+   },
+   {
+    "t": 753.3478437541833,
+    "kind": "person",
+    "what": "susan"
+   },
+   {
+    "t": 766.6205710269105,
+    "kind": "action",
+    "what": "night job"
+   },
+   {
+    "t": 768.1806157921085,
+    "kind": "place",
+    "what": "the ferry landing"
+   },
+   {
+    "t": 773.1806157921085,
+    "kind": "action",
+    "what": "carry past a constable"
+   },
+   {
+    "t": 818.1806157921085,
+    "kind": "scene",
+    "what": "Hal Metcalfe: You're not Mickey."
+   },
+   {
+    "t": 820.1806157921085,
+    "kind": "scene",
+    "what": "Hal Metcalfe: No coat. He always wore the coat. Somebody'll have"
+   },
+   {
+    "t": 823.8169794284721,
+    "kind": "scene",
+    "what": "Hal Metcalfe: Sixty. Count it somewhere else."
+   },
+   {
+    "t": 860.6254082191562,
+    "kind": "person",
+    "what": "pc"
+   },
+   {
+    "t": 1067.1766812023016,
+    "kind": "person",
+    "what": "sylvia"
+   },
+   {
+    "t": 1067.1766812023016,
+    "kind": "scene",
+    "what": "Sylvia Rennison: Mr Nowak. Feet. Mat. Thank you. Your uncle paid th"
+   },
+   {
+    "t": 1072.0251660507863,
+    "kind": "scene",
+    "what": "Sylvia Rennison: Front door's locked at eleven and I hear who comes"
+   },
+   {
+    "t": 1129.2057536282225,
+    "kind": "person",
+    "what": "lily"
+   },
+   {
+    "t": 1159.5693899918588,
+    "kind": "person",
+    "what": "brenda"
+   },
+   {
+    "t": 1211.0973224783254,
+    "kind": "person",
+    "what": "grace"
+   },
+   {
+    "t": 1223.0973224783254,
+    "kind": "person",
+    "what": "lee"
+   },
+   {
+    "t": 1269.5714020056782,
+    "kind": "scene",
+    "what": "PC Ibbotson: Thomas Nowak? We've had a statement, sir. That you"
+   },
+   {
+    "t": 1275.0259474602237,
+    "kind": "scene",
+    "what": "PC Ibbotson: I'd like you to come along to the station, sir. It"
+   },
+   {
+    "t": 1305.704684269089,
+    "kind": "person",
+    "what": "shaun"
+   },
+   {
+    "t": 1331.9131343997547,
+    "kind": "person",
+    "what": "julie"
+   },
+   {
+    "t": 1387.6641011036181,
+    "kind": "person",
+    "what": "alison"
+   },
+   {
+    "t": 1424.062774520241,
+    "kind": "person",
+    "what": "nora"
+   },
+   {
+    "t": 1440.5207844087524,
+    "kind": "person",
+    "what": "walsh"
+   },
+   {
+    "t": 1440.5207844087524,
+    "kind": "scene",
+    "what": "The priest: You're Michael's nephew. I buried him from here th"
+   },
+   {
+    "t": 1445.975329863298,
+    "kind": "scene",
+    "what": "The priest: He sat at the back and left before the end. I alwa"
+   },
+   {
+    "t": 1506.2763827868405,
+    "kind": "person",
+    "what": "june"
+   },
+   {
+    "t": 1506.2763827868405,
+    "kind": "scene",
+    "what": "June Suddaby: You're Tom. June Suddaby. His daughter, for what t"
+   },
+   {
+    "t": 1510.821837332295,
+    "kind": "scene",
+    "what": "June Suddaby: I'm here for a box of photographs and I go home Fr"
+   },
+   {
+    "t": 1657.854879534911,
+    "kind": "place",
+    "what": "Dock Road"
+   },
+   {
+    "t": 1785.4422227074717,
+    "kind": "place",
+    "what": "the Hook"
+   },
+   {
+    "t": 2095.455637125269,
+    "kind": "person",
+    "what": "rita"
+   },
+   {
+    "t": 2352.8117586332123,
+    "kind": "place",
+    "what": "the fish dock"
+   },
+   {
+    "t": 2791.311758633205,
+    "kind": "scene",
+    "what": "Sheila Dunn: The book says 71 fares on a wet Thursday. We have "
+   },
+   {
+    "t": 2797.372364693811,
+    "kind": "scene",
+    "what": "Sheila Dunn: I've put it through. It doesn't add up, and I'm th"
+   },
+   {
+    "t": 2935.2592245119836,
+    "kind": "place",
+    "what": "the Infirmary"
+   },
+   {
+    "t": 3133.233996361271,
+    "kind": "person",
+    "what": "dennis"
+   }
+  ],
+  "log": [
+   "    53s Monday 3.44pm | scene with The woman on the radio at Mickey's",
+   "    87s Monday 3.48pm | scene with The bookkeeper at Mickey's",
+   "   261s Monday 4.31pm | fare offered on the radio",
+   "   294s Monday 5.13pm | fare dropped at the warehouse row, paid 210p",
+   "   345s Monday 6.24pm | scene with Ron Kirby",
+   "   418s Monday 6.31pm | objective names hal, who is not on the street now: \"Tonight: the coat is on the hook in the back room [C to wear it]. After the last ferry, half past ten, a holdall under the bench in the landing shelter. Take it to Metcalfe's back door, in the alley off Chapel Lane.\"",
+   "   426s Monday 6.34pm | objective names hal, who is not on the street now: \"Tonight: the coat is on the hook in the back room [C to wear it]. After the last ferry, half past ten, a holdall under the bench in the landing shelter. Take it to Metcalfe's back door, in the alley off Chapel Lane.\"",
+   "   771s Monday 10.46pm | job: pressed E (Take the holdall)",
+   "   818s Monday 11.45pm | job: pressed E (Knock)",
+   "  1064s Tuesday 9.00am | two minutes in the cab, no fare offered",
+   "  1067s Tuesday 9.00am | scene with The landlady at Regent House",
+   "  1129s Tuesday 9.45am | objective not followable by name: 'Tuesday. Walk the street and hear what it made of yesterday. The Ledger [L] holds only what you have seen and heard yourself.'",
+   "  1441s Tuesday 5.02pm | scene with The priest",
+   "  1506s Tuesday 5.54pm | scene with A woman in a good coat, not from the street now",
+   "  1628s Tuesday 8.14pm | fare offered on the radio",
+   "  1658s Tuesday 8.51pm | fare dropped at Dock Road, paid 160p",
+   "  2065s Wednesday 2.09pm | objective names ada, who is not on the street now: \"Ada has asked you to tea at seven tonight: her door is opposite Mickey's. She does not ask twice.\"",
+   "  2110s Wednesday 2.52pm | objective names ada, who is not on the street now: \"Ada has asked you to tea at seven tonight: her door is opposite Mickey's. She does not ask twice.\"",
+   "  2292s Wednesday 6.56pm | fare offered on the radio",
+   "  2353s Wednesday 8.14pm | fare dropped at the fish dock, paid 200p",
+   "  2428s Wednesday 9.54pm | objective names ada, who is not on the street now: \"Tea at Ada's was missed. She said she does not ask twice.\"",
+   "  2443s Wednesday 10.14pm | objective names ada, who is not on the street now: \"Tea at Ada's was missed. She said she does not ask twice.\"",
+   "  2899s Thursday 11.38am | fare offered on the radio",
+   "  2935s Thursday 12.24pm | fare dropped at the Infirmary, paid 180p",
+   "  3465s Thursday 11.08pm | fare offered on the radio",
+   "  3514s Friday 12.11am | fare dropped at Dock Road, paid 220p"
+  ],
+  "transcript": [
+   "The lad on the pavement with the pager: So listen. You're him, yeah? The nephew. One suitcase. I said to Ron, that'll be him.",
+   "Darren Milner: Darren. I did bits for Mickey. Messages. Watching a door. I owe the book a few quid an' all, I'm not hiding it.",
+   "Darren Milner: Anything you want to know round here, I'm not saying I know. I'm saying I could find out.",
+   "Ron Kirby: You'll be the nephew. Ron Kirby. I do the door and the rank, same as I did for Mickey.",
+   "Ron Kirby: Thirty years on that dock till they finished the scheme. Now I stand here. I see who comes down this street and I don't forget it.",
+   "Ron Kirby: Boss. You want the door watched, or you want it watched proper? Different money. Think on.",
+   "The woman on the radio at Mickey's: Car to the station, two minutes. No, love, two real minutes. Hang on.",
+   "Pauline Kitching: You'll be him. Pauline. I'm the voice. Sheila's in the back and she's been expecting somebody since the funeral.",
+   "--- talk with The woman on the radio at Mickey's (pauline), Monday 3.44pm",
+   "  [sys] A note, once: when you talk freely, the town answers in words written by an AI. What people know, and what your words do, is decided by the game.",
+   "  [me] Hello there.",
+   "  [npc] Hello, love. Hang on. Car two, where are you? Go on, love.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] It's been wet since August.",
+   "  [me] It's all new to me, this.",
+   "  [npc] Hang on, love, the radio's going. We'll talk after.",
+   "Sheila Dunn: New management. Sit down, you're making the place look untidy.",
+   "Sheila Dunn: Sheila Dunn. I kept your uncle's books. Thirty-one years. I know what a quiet week costs, and this is a quiet year.",
+   "Sheila Dunn: The fare book. Every fare Pauline calls goes in it. That's the clean money, such as it is.",
+   "Sheila Dunn: The radio. Nobody in this building can help overhearing it. Remember that before you say anything near it.",
+   "Sheila Dunn: The yard, through there. Two ways out. Your uncle liked a choice.",
+   "Sheila Dunn: And his other book. The debts. Iveson eighty pounds, Harrison thirty, young Milner twenty-two, Drewery fifteen, the Kettlewell girl nine. Nobody on it can pay, and they all know I know.",
+   "(decided scene: What's behind it?)",
+   "Sheila Dunn: The real book. You'll see it when I've decided what you are. I told Mickey I'd look you over first, and I keep what I tell people.",
+   "Sheila Dunn: Keys to car two. Kevin has car one. Drive it yourself if you want the book to look honest. Pauline will call you fares when you're sat in it.",
+   "Sheila Dunn: Mrs Rennison at Regent House has your room, top of the street on this side. Mickey paid the week. After that, rent's Friday.",
+   "--- talk with The bookkeeper at Mickey's (sheila), Monday 3.48pm",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] Yes?",
+   "  [me] Who should I get to know round here?",
+   "  [npc] The weather isn't in the book. I only discuss what's in the book.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] Same as ever. Less of it.",
+   "  [me] What's the best thing about this street?",
+   "  [npc] That's all I have for you. The book's waiting.",
+   "--- talk with Ron Kirby (ron), Monday 3.56pm",
+   "  [me] All right? Can I have a word?",
+   "  [npc] Now then, boss.",
+   "  [me] What's the best thing about this street?",
+   "  [npc] Thirty years on the dock, I never minded rain. It's the standing still.",
+   "  [me] Have you always lived round here?",
+   "  [npc] You get used to the quiet. You never get to like it.",
+   "  [me] What was Mickey like?",
+   "  [npc] Right, boss. I'd best watch the rank.",
+   "--- talk with Ron Kirby (ron), Monday 4.03pm",
+   "  [me] Hello. Is now a good time?",
+   "  [npc] Boss.",
+   "  [me] Where's good for a cup of tea round here?",
+   "  [npc] Thirty years on the dock, I never minded rain. It's the standing still.",
+   "  [me] What do you make of the street these days?",
+   "  [npc] Aye, well. There it is.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] Right, boss. I'd best watch the rank.",
+   "Ron Kirby: Boss. Got a minute? It's a thing of Mickey's that didn't die with him.",
+   "Ron Kirby: Last ferry of a Monday, a bag gets left under the bench in the shelter on the landing. It goes to Metcalfe's back door. The coin shop. Round by the alley off Chapel Lane.",
+   "Ron Kirby: Sixty quid for the walk. There's a coat on the hook in the back room goes with it. Mickey always wore the coat.",
+   "(decided scene: I'll do it. Tell them it's on. / Yes. Tell them it's on.)",
+   "Ron Kirby: Half ten the ferry's in. The customs woman goes off at eleven, and the landing lamp goes off with her. Your choice which you'd rather have: her eyes or the dark.",
+   "Ron Kirby: And boss. This street's quieter than you think after midnight. A footstep carries. Rain helps. Stay out from under the lamps.",
+   "--- talk with Ron Kirby (ron), Monday 6.25pm",
+   "  [me] Hello. Is now a good time?",
+   "  [npc] Now then, boss.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] Thirty years on the dock, I never minded rain. It's the standing still.",
+   "  [me] What's the best thing about this street?",
+   "  [npc] Aye, well. There it is.",
+   "  [me] Have you always lived round here?",
+   "  [npc] Right, boss. I'd best watch the rank.",
+   "--- talk with The day driver (kevin), Monday 6.32pm",
+   "  [npc] One suitcase. I saw you get off the bus, Nowak.",
+   "  [npc] Kevin. Kevin Needham.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] I've a car in bits. Go on.",
+   "--- talk with Darren Milner (darren), Monday 6.37pm",
+   "(decided word: Yes. Five pounds.)",
+   "(decided debt: I've come for the twenty-two pounds on the book. / Yes. Today.)",
+   "  [me] Hello there.",
+   "  [npc] Alright, chief.",
+   "  [npc] And a fiver gets a good word put about for you. Yeah?",
+   "  [me] Yes. Five pounds.",
+   "  [npc] Nothing going round that I've heard. Honest. And I'll put it about that you're all right. Leave it with me.",
+   "  [me] What was Mickey like?",
+   "  [npc] Mickey was Mickey. Paid what he owed, most weeks.",
+   "  [npc] If it's about the twenty-two pounds on Mickey's book, I know about it.",
+   "  [me] I've come for the twenty-two pounds on the book.",
+   "  [npc] You want it now? Today?",
+   "  [me] Yes. Today.",
+   "  [sys] You could leave it, strike it out, or front up to them on the street [Q].",
+   "  [npc] Twenty-two quid? I've got a pager and my mam's settee. Do the sums.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] So listen, you got a minute? No? No. Fair enough.",
+   "--- fronts up to darren, Monday 6.42pm",
+   "  (ladder: rung 4, he gave way)",
+   "--- talk with The lad from Rita's back room (wayne), Monday 7.08pm",
+   "(decided debt: I've come for the thirty pounds on the book. / Yes. Today.)",
+   "(decided wares: I'll have the cosh. / Yes. Cash.)",
+   "  [me] Hello. Is now a good time?",
+   "  [npc] Alright. Buying or selling?",
+   "  [npc] If it's about the thirty pounds on Mickey's book, I know about it.",
+   "  [me] I've come for the thirty pounds on the book.",
+   "  [npc] You want it now? Today?",
+   "  [me] Yes. Today.",
+   "  [sys] You could leave it, strike it out, or front up to them on the street [Q].",
+   "  [npc] Rita pays me Fridays. You'll have it Friday, if she does.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] That's me done. Places to be.",
+   "  [npc] If you want something that's not in the window: a cosh, \u00a38.00. Or a flick knife, \u00a312.00.",
+   "  [me] I'll have the cosh.",
+   "  [npc] \u00a38.00. Cash. Yes?",
+   "  [me] Yes. Cash.",
+   "  [npc] You never got that here. You following?",
+   "--- fronts up to wayne, Monday 7.11pm",
+   "  (ladder: rung 4, he gave way)",
+   "--- talk with The night driver (terry), Monday 7.29pm",
+   "  [npc] They say you came with one suitcase.",
+   "  [npc] Terry. Terry Hodgson.",
+   "  [me] What's the best thing about this street?",
+   "  [npc] That's me, then. I've a fare waiting.",
+   "--- talk with The night watchman on the row (norman), Monday 7.37pm",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] I couldn't say. Sorry. What was it?",
+   "  [npc] Norman Dent.",
+   "  [me] It's all new to me, this.",
+   "  [npc] I couldn't say more. Sorry.",
+   "--- talk with An old man mending nets (albert), Monday 8.17pm",
+   "  [me] Sorry to bother you.",
+   "  [npc] Now then, young 'un.",
+   "  [npc] Albert Suggitt.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] That's me talked out, young 'un.",
+   "--- talk with A woman in a customs uniform (susan), Monday 10.41pm",
+   "  [me] Hello. Is now a good time?",
+   "  [npc] Anything to declare?",
+   "  [npc] Susan. Susan Coverdale.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] Nothing further to declare, then.",
+   "Hal Metcalfe: You're not Mickey.",
+   "Hal Metcalfe: No coat. He always wore the coat. Somebody'll have seen your face.",
+   "Hal Metcalfe: Sixty. Count it somewhere else.",
+   "--- talk with A constable (pc), Tuesday 12.32am",
+   "  [me] Mind if I stop a minute?",
+   "  [npc] Sir.",
+   "  [npc] PC Ibbotson.",
+   "  [me] It's all new to me, this.",
+   "  [npc] Aye, well. There it is.",
+   "  [me] What do people do round here of a Sunday?",
+   "  [npc] I'll be on my way, sir.",
+   "Sylvia Rennison: Mr Nowak. Feet. Mat. Thank you. Your uncle paid the week. Your room is through there.",
+   "Sylvia Rennison: Front door's locked at eleven and I hear who comes in after. Rent's Friday, and Friday means Friday.",
+   "--- talk with The landlady at Regent House (sylvia), Tuesday 9.00am",
+   "  [me] Sorry to bother you.",
+   "  [npc] Feet. Mat. Thank you.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] Same as ever. Less of it.",
+   "  [me] What's the best thing about this street?",
+   "  [npc] Feet. Mat. Door. Thank you.",
+   "--- talk with The woman at the takeaway hatch (lily), Tuesday 9.45am",
+   "  [me] Sorry to bother you.",
+   "  [npc] Hello. What can I get you?",
+   "  [npc] I'm Lily Tang.",
+   "  [me] What do people do round here of a Sunday?",
+   "  [npc] You get used to the quiet. You never get to like it.",
+   "  [me] Who should I get to know round here?",
+   "  [npc] I'd best see to the counter.",
+   "--- talk with The woman at the fish shop (brenda), Tuesday 9.55am",
+   "  [me] Hello. Is now a good time?",
+   "  [npc] Now then, love. Filleted, or do you want to wrestle it yourself?",
+   "  [npc] Brenda. Brenda Laverack.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] It's been wet since August.",
+   "  [me] It's all new to me, this.",
+   "  [npc] I've fish to see to, love.",
+   "--- talk with The woman who keeps the caff (grace), Tuesday 10.36am",
+   "(decided tea: Yes. Tea, and I'll sit a while.)",
+   "  [npc] They say you laid hands on Darren Milner, Tom.",
+   "  [npc] Rinaldi. Grace Rinaldi.",
+   "  [npc] Tea? Twenty pence. Sit by the window and you'll hear the lot.",
+   "  [me] Yes. Tea, and I'll sit a while.",
+   "--- talk with A young casual off the quay (lee), Tuesday 11.01am",
+   "(decided debt: I've come for the fifteen pounds on the book. / Yes. Today.)",
+   "  [me] Sorry to bother you.",
+   "  [npc] Alright.",
+   "  [npc] If it's about the fifteen pounds on Mickey's book, I know about it.",
+   "  [me] I've come for the fifteen pounds on the book.",
+   "  [npc] You want it now? Today?",
+   "  [me] Yes. Today.",
+   "  [sys] You could leave it, strike it out, or front up to them on the street [Q].",
+   "  [npc] The foreman's not picked me all week. Come back when he does.",
+   "  [me] What do people do round here of a Sunday?",
+   "  [npc] Right. See you.",
+   "--- fronts up to lee, Tuesday 11.04am",
+   "  (ladder: rung 3, he gave way)",
+   "PC Ibbotson: Thomas Nowak? We've had a statement, sir. That you carried a holdall along the ferry landing at night.",
+   "PC Ibbotson: I'd like you to come along to the station, sir. It's better done quietly. [Go with him. | Run.]",
+   "--- talk with The sign painter on the ladder (shaun), Tuesday 3.35pm",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] Mind the ladder.",
+   "  [npc] I'm Shaun Hewson.",
+   "  [me] Who should I get to know round here?",
+   "  [npc] I'd best get back up the ladder.",
+   "--- talk with A young woman with a carrier bag (julie), Tuesday 3.54pm",
+   "(decided debt: I've come for the nine pounds on the book. / Yes. Today.)",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] Hiya.",
+   "  [npc] Julie. Julie Kettlewell.",
+   "  [npc] If it's about the nine pounds on Mickey's book, I know about it.",
+   "  [me] I've come for the nine pounds on the book.",
+   "  [npc] You want it now? Today?",
+   "  [me] Yes. Today.",
+   "  [sys] You could leave it, strike it out, or front up to them on the street [Q].",
+   "  [npc] I've been on nothing since June. Mickey knew that when he lent it.",
+   "  [me] What do you make of the street these days?",
+   "  [npc] Anyway. See you.",
+   "--- fronts up to julie, Tuesday 3.57pm",
+   "  (ladder: rung 3, he gave way)",
+   "--- talk with A woman with a notebook (alison), Tuesday 4.15pm",
+   "  [me] Sorry to bother you.",
+   "  [npc] Mr Nowak. Have you a minute? Everybody has a minute.",
+   "  [npc] Sedman. Alison Sedman.",
+   "  [me] Have you always lived round here?",
+   "  [npc] I've a deadline. Another time.",
+   "--- talk with The priest's housekeeper (nora), Tuesday 4.47pm",
+   "  [npc] So you're carrying on where Mickey left off. That's what I hear, Mr Nowak.",
+   "  [npc] I'm Nora Cronin.",
+   "  [me] It's all new to me, this.",
+   "  [npc] Away with you now. I've things on.",
+   "The priest: You're Michael's nephew. I buried him from here three weeks ago. A good turnout. He'd have counted it.",
+   "The priest: He sat at the back and left before the end. I always took that as a kind of prayer. You're welcome to the same seat.",
+   "--- talk with The priest (walsh), Tuesday 5.02pm",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] God be with you. You're welcome here, whatever brings you.",
+   "  [npc] Father. Father Walsh.",
+   "  [me] Who should I get to know round here?",
+   "  [npc] Go in peace. I have the roof to worry about.",
+   "June Suddaby: You're Tom. June Suddaby. His daughter, for what that was worth to either of us.",
+   "June Suddaby: I'm here for a box of photographs and I go home Friday. I want nothing from that office. I'll say it as often as you need.",
+   "--- talk with A woman in a good coat, not from the street now (june), Tuesday 5.54pm",
+   "  [npc] They say you laid hands on Darren Milner.",
+   "  [me] Who should I get to know round here?",
+   "  [npc] I've said what I'm going to say, Mr Nowak.",
+   "PC Ibbotson: Thomas Nowak? We've had a statement, sir. That you threatened Lee Drewery on the Hook.",
+   "PC Ibbotson: I'd like you to come along to the station, sir. It's better done quietly. [Go with him. | Run.]",
+   "--- talk with The woman behind the pawnshop grille (rita), Wednesday 2.49pm",
+   "  [npc] Heard Julie Kettlewell paid up. Wonders never cease, Tom.",
+   "  [me] It's all new to me, this.",
+   "  [npc] It's been wet since August.",
+   "  [me] What do people do round here of a Sunday?",
+   "  [npc] Looking's done. Buy something or let me shut.",
+   "--- talk with Sheila Dunn (sheila), Thursday 10.11am",
+   "(decided wash: Yes. Put it through.)",
+   "  [npc] Heard Julie Kettlewell paid up. Wonders never cease.",
+   "  [npc] There's \u00a3128.00 in the tin that never came off a meter. The fare book will hide about \u00a314.56 of it. Do you want it put through?",
+   "  [me] Yes. Put it through.",
+   "Sheila Dunn: The book says 71 fares on a wet Thursday. We have two cars. That's \u00a3113.44 I can't hide behind anything.",
+   "Sheila Dunn: I've put it through. It doesn't add up, and I'm the one who has to add it. Don't make me say this twice.",
+   "--- talk with Sheila Dunn (sheila), Thursday 10.12am",
+   "  [me] Hello. Have you got a minute?",
+   "  [npc] Yes?",
+   "  [me] What do you make of the street these days?",
+   "  [npc] The weather isn't in the book. I only discuss what's in the book.",
+   "  [me] I'm still finding my feet here.",
+   "  [npc] Same as ever. Less of it.",
+   "  [me] It's all new to me, this.",
+   "  [npc] That's all I have for you. The book's waiting.",
+   "--- talk with The scrap dealer (dennis), Thursday 4.49pm",
+   "(decided debt: I've come for the eighty pounds on the book. / Yes. Today.)",
+   "  [me] All right? Can I have a word?",
+   "  [npc] If it's about the eighty quid, I'm out.",
+   "  [npc] If it's about the eighty pounds on Mickey's book, I know about it.",
+   "  [me] I've come for the eighty pounds on the book.",
+   "  [npc] You want it now? Today?",
+   "  [me] Yes. Today.",
+   "  [sys] You could leave it, strike it out, or front up to them on the street [Q].",
+   "  [npc] Eighty quid? Your uncle's dead, son. Dead men don't send bills.",
+   "  [me] Who should I get to know round here?",
+   "  [npc] It's been wet since August.",
+   "  [me] Do you get many strangers down here?",
+   "  [npc] That's me. I've iron to shift.",
+   "--- fronts up to dennis, Thursday 4.53pm",
+   "  (ladder: rung 3, he gave way)"
+  ],
+  "layout": [
+   {
+    "kind": "words overlap",
+    "where": "newcomer 20 min",
+    "what": "prompt over subs",
+    "text": "TTea, and sit a while (20p)ETalk to Grac | Darren Milner and A woman in a good coat",
+    "contained": false
+   },
+   {
+    "kind": "words overlap",
+    "where": "newcomer 35 min",
+    "what": "obj over noted",
+    "text": "WED \u00b7 TO DOAda has asked you to tea at s | Noted in the Ledger: 4 things",
+    "contained": true
+   }
+  ],
+  "played_s": 3604.3894386649145,
+  "tense": [
+   {
+    "t": 489.80058630912987,
+    "kind": "choice under pressure",
+    "what": "front up to darren over the debt"
+   },
+   {
+    "t": 498.80058630912987,
+    "kind": "seen doing it",
+    "what": "paid_info, 4 witnesses"
+   },
+   {
+    "t": 498.80058630912987,
+    "kind": "seen doing it",
+    "what": "stare, 4 witnesses"
+   },
+   {
+    "t": 498.80058630912987,
+    "kind": "seen doing it",
+    "what": "shove, 4 witnesses"
+   },
+   {
+    "t": 564.6159641247723,
+    "kind": "choice under pressure",
+    "what": "front up to wayne over the debt"
+   },
+   {
+    "t": 771.1806157921085,
+    "kind": "risk of being seen",
+    "what": "job: Take the holdall"
+   },
+   {
+    "t": 773.1806157921085,
+    "kind": "risk of being seen",
+    "what": "constable on his beat 28 m away, carrying"
+   },
+   {
+    "t": 818.1806157921085,
+    "kind": "risk of being seen",
+    "what": "job: Knock"
+   },
+   {
+    "t": 825.8169794284721,
+    "kind": "seen doing it",
+    "what": "parcel, 1 witness"
+   },
+   {
+    "t": 825.8169794284721,
+    "kind": "seen doing it",
+    "what": "parcel, 1 witness"
+   },
+   {
+    "t": 1064.1766812023016,
+    "kind": "seen doing it",
+    "what": "night_out, 2 witnesses"
+   },
+   {
+    "t": 1064.1766812023016,
+    "kind": "seen doing it",
+    "what": "night_out, 1 witness"
+   },
+   {
+    "t": 1064.1766812023016,
+    "kind": "seen doing it",
+    "what": "night_out, 2 witnesses"
+   },
+   {
+    "t": 1064.1766812023016,
+    "kind": "seen doing it",
+    "what": "cab_night, 1 witness"
+   },
+   {
+    "t": 1258.521564902568,
+    "kind": "choice under pressure",
+    "what": "front up to lee over the debt"
+   },
+   {
+    "t": 1265.521564902568,
+    "kind": "seen doing it",
+    "what": "stare, 1 witness"
+   },
+   {
+    "t": 1265.521564902568,
+    "kind": "seen doing it",
+    "what": "threat, 1 witness"
+   },
+   {
+    "t": 1282.268371702648,
+    "kind": "choice under pressure",
+    "what": "PC Ibbotson: I'd like you to come along to the station, sir. It"
+   },
+   {
+    "t": 1302.115602455524,
+    "kind": "seen doing it",
+    "what": "arrested, 3 witnesses"
+   },
+   {
+    "t": 1369.155558642179,
+    "kind": "choice under pressure",
+    "what": "front up to julie over the debt"
+   },
+   {
+    "t": 1376.155558642179,
+    "kind": "seen doing it",
+    "what": "stare, 2 witnesses"
+   },
+   {
+    "t": 1376.155558642179,
+    "kind": "seen doing it",
+    "what": "threat, 2 witnesses"
+   },
+   {
+    "t": 1835.1463472848116,
+    "kind": "seen doing it",
+    "what": "night_out, 1 witness"
+   },
+   {
+    "t": 1835.1463472848116,
+    "kind": "seen doing it",
+    "what": "night_out, 1 witness"
+   },
+   {
+    "t": 1835.1463472848116,
+    "kind": "seen doing it",
+    "what": "night_out, 2 witnesses"
+   },
+   {
+    "t": 1875.822844992664,
+    "kind": "seen doing it",
+    "what": "night_out, 1 witness"
+   },
+   {
+    "t": 2027.6347167932795,
+    "kind": "choice under pressure",
+    "what": "PC Ibbotson: I'd like you to come along to the station, sir. It"
+   },
+   {
+    "t": 2065.474472239068,
+    "kind": "seen doing it",
+    "what": "arrested, 3 witnesses"
+   },
+   {
+    "t": 3178.6279357552103,
+    "kind": "choice under pressure",
+    "what": "front up to dennis over the debt"
+   },
+   {
+    "t": 3185.6279357552103,
+    "kind": "seen doing it",
+    "what": "stare, 3 witnesses"
+   },
+   {
+    "t": 3185.6279357552103,
+    "kind": "seen doing it",
+    "what": "threat, 3 witnesses"
+   },
+   {
+    "t": 3514.3894386649145,
+    "kind": "seen doing it",
+    "what": "cab_night, 4 witnesses"
+   },
+   {
+    "t": 3514.3894386649145,
+    "kind": "seen doing it",
+    "what": "cab_night, 3 witnesses"
+   },
+   {
+    "t": 3514.3894386649145,
+    "kind": "seen doing it",
+    "what": "cab_night, 1 witness"
+   },
+   {
+    "t": 3529.3894386649145,
+    "kind": "seen doing it",
+    "what": "night_out, 1 witness"
+   },
+   {
+    "t": 3604.3894386649145,
+    "kind": "seen doing it",
+    "what": "night_out, 2 witnesses"
+   }
+  ],
+  "fights": [],
+  "novelty_stats": {
+   "windows": [
+    {
+     "from_min": 0.0,
+     "to_min": 30.0,
+     "new_things": 71
+    },
+    {
+     "from_min": 30.0,
+     "to_min": 60.0,
+     "new_things": 6
+    },
+    {
+     "from_min": 60.0,
+     "to_min": 60.07315731108191,
+     "new_things": 0
+    }
+   ],
+   "longest_gap_min": 7.852590705060728,
+   "longest_gap_from_min": 52.22056660602118
+  },
+  "tense_stats": {
+   "count": 36,
+   "per_30_min": 18.0,
+   "by_kind": {
+    "risk of being seen": 3,
+    "seen doing it": 26,
+    "pursuit": 0,
+    "fight": 0,
+    "escape": 0,
+    "choice under pressure": 7
+   }
+  }
+ },
+ "shots_newcomer": [
+  {
+   "file": "01-newcomer-000min.png",
+   "note": "newcomer at 0 min",
+   "clock": "Monday 3.36pm"
+  },
+  {
+   "file": "02-newcomer-006min.png",
+   "note": "newcomer at 7 min",
+   "clock": "Monday 6.31pm"
+  },
+  {
+   "file": "03-newcomer-010min.png",
+   "note": "newcomer at 10 min",
+   "clock": "Monday 7.40pm"
+  },
+  {
+   "file": "04-newcomer-017min.png",
+   "note": "newcomer at 18 min",
+   "clock": "Tuesday 9.00am"
+  },
+  {
+   "file": "05-newcomer-020min.png",
+   "note": "newcomer at 20 min",
+   "clock": "Tuesday 11.01am"
+  },
+  {
+   "file": "06-newcomer-025min.png",
+   "note": "newcomer at 25 min",
+   "clock": "Tuesday 5.55pm"
+  },
+  {
+   "file": "07-newcomer-030min.png",
+   "note": "newcomer at 31 min",
+   "clock": "Wednesday 12.56am"
+  },
+  {
+   "file": "08-newcomer-035min.png",
+   "note": "newcomer at 35 min",
+   "clock": "Wednesday 2.52pm"
+  },
+  {
+   "file": "09-newcomer-040min.png",
+   "note": "newcomer at 40 min",
+   "clock": "Wednesday 9.34pm"
+  },
+  {
+   "file": "10-newcomer-045min.png",
+   "note": "newcomer at 45 min",
+   "clock": "Thursday 4.14am"
+  },
+  {
+   "file": "11-newcomer-050min.png",
+   "note": "newcomer at 50 min",
+   "clock": "Thursday 2.04pm"
+  },
+  {
+   "file": "12-newcomer-055min.png",
+   "note": "newcomer at 55 min",
+   "clock": "Thursday 7.35pm"
+  }
+ ],
+ "fight_sample": {
+  "secs": 12.900000000000048,
+  "foes": 2,
+  "watchMax": 4,
+  "landed": 6,
+  "took": 7,
+  "blocked": 2,
+  "walls": 0,
+  "downs": 0,
+  "watchers": 4,
+  "outcome": "Tom beaten",
+  "said": [
+   [
+    "Kevin Needham",
+    "Leave him, he's had enough!"
+   ],
+   [
+    "a passer-by",
+    "You asked for it!"
+   ],
+   [
+    "a passer-by",
+    "Have that!"
+   ]
+  ],
+  "setup": {
+   "lads": [
+    "a passer-by",
+    "a passer-by"
+   ],
+   "on": true
+  },
+  "shot": "/root/.cache/ledger-proto-work/lane-test-logs/playtest/shots/01-fight-sample.png"
+ },
+ "wall_seconds": 203
+}

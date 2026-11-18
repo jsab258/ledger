@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "ed8a6cf4d57ae0ee66707ebd8e9eccbc47cf646faf7354ea069ceb22f89ca322",
+ "ledgerJsSha256": "f9cbca0dc8fd5419161c52f4736d9b28a9503fe2a3aff7a8378cc5e17fe6acf1",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -22,7 +22,7 @@
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 20581,
+     "bytes": 26124,
      "text": true
     },
     {
@@ -62,7 +62,7 @@
      "path": "RESULTS.md",
      "as": "RESULTS.md",
      "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
-     "bytes": 12109,
+     "bytes": 16359,
      "text": true
     }
    ]
@@ -144,7 +144,7 @@
      "path": "source/src/fight.js",
      "as": "src/fight.js",
      "what": "The street's way: an escalation ladder Tom can stop on at any rung. Most of it ends before a blow.",
-     "bytes": 22393,
+     "bytes": 33707,
      "text": true
     },
     {
@@ -165,7 +165,7 @@
      "path": "source/src/hook.js",
      "as": "src/hook.js",
      "what": "The test hook: window.LEDGER.",
-     "bytes": 23388,
+     "bytes": 24128,
      "text": true
     },
     {
@@ -235,7 +235,7 @@
      "path": "source/src/player.js",
      "as": "src/player.js",
      "what": "Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.",
-     "bytes": 20274,
+     "bytes": 20551,
      "text": true
     },
     {
@@ -256,7 +256,7 @@
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 51693,
+     "bytes": 54665,
      "text": true
     },
     {
@@ -270,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 70154,
+     "bytes": 70650,
      "text": true
     },
     {
@@ -420,7 +420,7 @@
      "path": "source/package.json",
      "as": "package.json",
      "what": "three pinned at 0.187.0; the build and test commands.",
-     "bytes": 1414,
+     "bytes": 1462,
      "text": true
     },
     {
@@ -517,6 +517,20 @@
      "as": "test/watch2.mjs",
      "what": "The lane's round 2 checks: the carry under watch (the beat, the search, the chase).",
      "bytes": 5386,
+     "text": true
+    },
+    {
+     "path": "source/test/melee3.mjs",
+     "as": "test/melee3.mjs",
+     "what": "The lane's round 3: the melee feel sheet's drills (jab, heavy, a man against a wall, three men, stamina) at 1/60 s, with the drills' record.",
+     "bytes": 10407,
+     "text": true
+    },
+    {
+     "path": "source/test/melee4.mjs",
+     "as": "test/melee4.mjs",
+     "what": "The lane's round 4: face and corners on the ladder, things to hand snatched up mid-fight, and drill M7 (how many blows a chair, a brick, a lid take before they break).",
+     "bytes": 14034,
      "text": true
     },
     {

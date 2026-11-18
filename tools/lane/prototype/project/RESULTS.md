@@ -1,5 +1,34 @@
 # Results of the checks
 
+## 18 November 2026, lane round 4 (a debt that can come to blows): the drills and the AI playtester before and after
+
+Drills (test/melee4.mjs, all pass): alone, a man of nerve 0.56 gives way at the shove; with three men watching
+(0.18 more) the same man stands and it comes to blows, saying why; face is capped at 0.24; a timid man (0.30)
+still gives way in front of six; shoved against a wall with nowhere to go, the 0.56 man comes off it swinging.
+G with nothing to hand does nothing; G by a thing takes 0.5 s and brings it out as a weapon. Drill M7 (sheet
+C12): chair breaks after 2 blows (band 1 to 3), brick 3 (2 to 5), dustbin lid 4, wheel brace not in 25 (like
+the sheet's pipe, at least 20). A lid picked up before a fight keeps its count across two fights and breaks on
+its fourth blow, then stays broken.
+
+AI playtester, newcomer's first hour (round 3, then round 4; one run each, run-to-run noise about 3 min on the
+longest stretch):
+
+| measure | round 3 | round 4 |
+|---|---|---|
+| waiting | 46% | 39% |
+| walking | 22% | 29% |
+| talking | 24% | 24% |
+| driving | 5% | 6% |
+| kinds of activity | 6 | 6 |
+| new things, minutes 0 to 30 / 30 to 60 | 69 / 4 | 71 / 6 |
+| longest stretch with nothing new | 13.5 min | 7.9 min |
+| tense moments per 30 minutes | 15.0 | 18.0 |
+| fights, pursuits, escapes | 0, 0, 0 | 0, 0, 0 |
+
+Every debtor the newcomer fronted up still gave way (Darren at the shove with four watching: nerve 0.30 and
+0.24 face is under a shove; Wayne at the shove; Lee, Julie and Dennis at the threat, by when Tom's name had
+grown from the Darren shove seen by four). No new fault in the sweep. Live AI talk is untested here.
+
 ## 18 November 2026, lane round 3 (fists with weight): the drills and the AI playtester before and after
 
 The melee feel sheet's drills, run in the build through the test hook at 1/60 s (test/melee3.mjs), against the
