@@ -159,6 +159,11 @@ which clauses the gate checks and which it does not claim to.
 - Enforced by the prototype's AI playtester, which measures the activity
   mix and empty minutes against these targets every round, and by P4 in
   the real game (advisor 224; his words 18 Nov 15:19).
+- His words, 18 November 2026 (16:02, advisor 226): "we don't want a gossip
+  simulator. We want an exciting, immersive, novel game." The town's memory
+  and gossip are the engine under the hood, not the show; what the player
+  feels is tension, risk and a rise to power, and every job is tense because
+  the town is watching.
 
 ## What LEDGER is not (D24, decided 2026-09-14)
 - NOT an open-world sandbox, NOT a shooter, NOT a driving game, NOT an

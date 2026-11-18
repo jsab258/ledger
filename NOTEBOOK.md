@@ -2760,3 +2760,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: helper about 1.3 h; session 0.1 h; machine a few minutes.
 - What failed and why: the importer looked only for the old program's avatar name; a skeleton's shoulders sit wider than a narrow chest allows (set aside; a pose test decides); the skin job's verdict reads PASS on a garment's own source body, so its verdict alone proves nothing: read the per-pose numbers.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-M5-SHARED-STEPS-2026-11-18.md
+
+### 2026-11-18 Cloth tool: the identity check split from rest (n16-1, v1 line 2)
+- Made: a check that a finished drape is the same thing every time it is opened: reopen it twice, run the same extra frames, compare end places and export bytes; the move after reopening reported separately and judged only against the gate's own still-or-moving label.
+- Method: keep pass-or-fail repeatability apart from rest information; derive the tolerance from the tool's own rest speed times frames times time step, never a written number.
+- Tools: the cloth tool's session interface, a Python check, unit tests with a fake session plus one test on a real gate result.
+- Target and check: runs within 0.1 mm of each other, exports byte-identical; rest agrees with the gate's label.
+- Cost: session about 0.3 h; machine 3 minutes.
+- What failed and why: twice the tests used a made-up file shape (plain lists, then a label at the top level) while the real files differed; each first real run came out not made. Always add one test that reads a real output file.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-J4-B2-2026-11-18.md

@@ -1,4 +1,6 @@
 # PERCEPTION, WEAPONS AND VIOLENCE — spec v5, APPROVED, BUILDING
+> **18 November 2026, his decisions (advisor 226):** combat's end state is option A: fists and improvised weapons every day; guns rare and heavily consequential, AAA in feel when used; melee first, guns after. An **escalation dial**, built once guns exist: the game starts as A; if the player pushes the war (arms his crew, buys from the docks), guns spread through the town, rivals arm up, the police bring in armed cars, everyone gets jumpier, and the town remembers who brought the guns in. The **suppressed .22 is dropped** (barely plausible in 1990 Britain; a quiet shot works against the town hearing it): every row and line naming it below is void.
+
 
 > **STATUS: SPEC.** The design for M16 — perception, weapons and violence. Stable reference:
 > build state lives in `roadmap.md`, not here. A spec that disagrees
@@ -635,7 +637,7 @@ within the hour. ([GunMag Warehouse — Guns of the Mob](https://gunmagwarehouse
 | **.22 target pistol** | Quiet for a gun, small, and **contemptuous** — a .22 to the back of the head says *this was a job*, and the street reads it that way |
 | **.38 snub revolver** | The everyman's gun. **Leaves no casing**, because revolvers do not eject — a real forensic difference at zero art cost |
 | **.45 automatic** | Loud, war surplus, **throws brass onto the pavement** that Ellis can find and tie to the weapon |
-| **Suppressed .22** | The quiet one. A radius, not a mute button |
+| **Suppressed .22** (DROPPED 18 Nov) | The quiet one. A radius, not a mute button |
 | **Sawn-off shotgun** | Not concealable, one use, one message, and no taking it back |
 
 **The revolver-versus-automatic distinction is the kind of depth that costs
@@ -715,12 +717,12 @@ Worked examples, so the table is not abstract:
 | **Wire** | **None** | ~2s, both hands | **No** | **No** | Nothing | A mark on the neck | His hand getting under it |
 | **.38 snub** | **Very loud** | ~1.5s, seen | Yes, but the draw was seen | No | Nothing | **No casing** | Missing, and now everyone is coming |
 | **.45 auto** | **Very loud** | ~1.5s, seen | Same | No | Nothing | **Brass on the pavement** | Same, plus evidence |
-| **Suppressed .22** | One room | ~1.5s, seen | Same | No | Nothing | A casing, no memory of a bang | Missing, quietly |
+| **Suppressed .22** (DROPPED 18 Nov) | One room | ~1.5s, seen | Same | No | Nothing | A casing, no memory of a bang | Missing, quietly |
 | **Stairs** | A fall | — | Until you touch him | Once | Nothing | **A man who fell down the stairs** | Him surviving it |
 
 ### 5.4 Situations, which is how a player actually thinks
 
-- **Crowded street, must be now** → suppressed .22. He drops; nobody knows
+- (DROPPED 18 Nov) **Crowded street, must be now** → suppressed .22. He drops; nobody knows
   where it came from. *Victim + Aftermath* for everyone, no actor slot at all.
 - **Alone with him in the back room, on a busy night** → any knife. He cries
   out; the jukebox eats it. Masking is the entire reason this works.
@@ -1673,7 +1675,7 @@ heard by the quiet street outside once occlusion has taken its cut.
 | Shout | 65 |
 | Bottle smashing | 70 |
 | Wire | — |
-| Suppressed .22 | 62 |
+| Suppressed .22 (DROPPED 18 Nov) | 62 |
 | .38 snub | 100 |
 
 **These numbers are the second draft, not the first.** The v4 review pass
@@ -1688,8 +1690,8 @@ Worked, so the table can be checked rather than trusted:
 |---|---|---|
 | Walking footstep | residential, 3am | **3.6m** — behind you, and only if he is listening |
 | Walking footstep | daytime street | **nothing** |
-| Suppressed .22 | the bar, busy | **nothing** |
-| Suppressed .22 | residential, 3am | **86m** — the length of the street |
+| Suppressed .22 (DROPPED 18 Nov) | the bar, busy | **nothing** |
+| Suppressed .22 (DROPPED 18 Nov) | residential, 3am | **86m** — the length of the street |
 | .38 snub | daytime street | **177m** |
 | Shout | market at noon | **2.2m** — which is why shouting in a market does not work |
 

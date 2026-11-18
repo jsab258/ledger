@@ -15,7 +15,7 @@
     "monday-audit",
     "tools/driving_feel_check.py::gearbox automatic by default"
    ],
-   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual"
+   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both."
   },
   {
    "line": "5 and 6 Nov: Full scope stays the target",
@@ -169,7 +169,7 @@
     "advisor:watchdog",
     "tools/push_guard.py"
    ],
-   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98"
+   "note": "the lane: its task instructions, the watchdog's Lane rows, the push guard on what reaches wip; reset at 98-99% (17 Nov 21:12, advisor 210): pace_line's first leg tops at 99, the advisor's watchdog step 6b alerts at 98 Fable 40% this week (18 Nov, advisor 228): each hourly row names the Fable helpers and the week's Fable share (get_usage Weekly Fable); the advisor watchdog reads the rows."
   },
   {
    "line": "13 Nov: Kiln serves LEDGER: each piece names",
@@ -259,10 +259,10 @@
   {
    "line": "17 Nov: other games are studied from the outside only",
    "by": [
-    "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
-    "monday-audit"
+    "monday-audit",
+    "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present"
    ],
-   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six)"
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar."
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
