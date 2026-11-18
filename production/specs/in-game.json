@@ -160,6 +160,18 @@
    "as": "lasting/judge",
    "first": true,
    "why": "the judge folder (advisor 197); fixers never read the backup"
+  },
+  {
+   "path": "F:/LedgerTools/tool-dev/LOOP.md",
+   "as": "kiln/plan/LOOP.md",
+   "first": true,
+   "why": "Kiln's plan, in neither git nor the backup until 18 Nov (handover next step 6)"
+  },
+  {
+   "path": "F:/LedgerTools/tool-dev/reports",
+   "as": "kiln/reports",
+   "first": true,
+   "why": "Kiln's lane reports and plans (1.3 MB), the evidence its decisions cite; in neither git nor the backup until 18 Nov"
   }
  ]
 }

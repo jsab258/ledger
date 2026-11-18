@@ -807,3 +807,5 @@
 {"event": "start", "at": "2026-11-18T08:51:51", "task": "n16-10 advisor 218 rulings, kiln share by item; lane merge", "phase": "0", "kind": "production"}
 {"event": "start", "at": "2026-11-18T08:58:09", "task": "n16-1 kiln row 27 sweep (helper) and lane hooks", "phase": "0", "kind": "production", "item": "n16-1"}
 {"event": "stop", "at": "2026-11-18T09:30:47", "note": "row 27 merged, row 28 fixes merged, licence item updated"}
+{"event": "start", "at": "2026-11-18T09:44:11", "task": "n16-1 Kiln licence item: last two values re-sourced", "phase": "2", "kind": "production", "item": "n16-1"}
+{"event": "start", "at": "2026-11-18T11:13:10", "task": "his page republish and hourly row", "phase": "0", "kind": "production"}

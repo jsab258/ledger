@@ -1194,7 +1194,7 @@
    "steps": [
     "Claude app: Scheduled tasks",
     "Open \"LEDGER: the hourly fresh session\"",
-    "History: Today at 9:37 AM (or the newest run)",
+    "History: Today at 11:12 AM (or the newest run)",
     "Type: Switch the output cap hook and the order-item hooks on",
     "Click Allow if asked",
     "Tap Done below"
