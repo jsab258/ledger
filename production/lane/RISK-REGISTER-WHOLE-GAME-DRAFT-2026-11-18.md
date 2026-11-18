@@ -1,6 +1,6 @@
 # Risk register for the whole game: draft (18 November 2026)
 
-Blind-spots recommendation 9, adopted 18 Nov. Draft by the cloud lane, not yet reviewed. It would replace production/research/pre-production/6-RISKS.md, which covers only the thirty-minute friends' build and was last reviewed 5 Oct.
+Blind-spots recommendation 9, adopted 18 Nov. Draft by the cloud lane, reviewed 18 Nov (production/lane/reviews/REVIEW-RISK-REGISTER-WHOLE-GAME-2026-11-18.md); review points 7 to 9 closed 18 Nov 09:40 (production/lane/reviews/REVIEW-LANE-DRAFT-CLOSURES-2026-11-18.md). It would replace production/research/pre-production/6-RISKS.md, which covers only the thirty-minute friends' build and was last reviewed 5 Oct.
 
 The aim at risk: one full release late in 2027, 15 to 20 hours, the Hook plus the docks, combat, one main story, live talk (RULINGS.md, 28 Oct). L = likelihood, I = impact (low, med, high). Hours are estimates unless a file is named. "If not retired" names one choice for him: change method, spend, or cut.
 
@@ -22,7 +22,7 @@ The aim at risk: one full release late in 2027, 15 to 20 hours, the Hook plus th
 
 **3. Live talk costs too much per played hour at release.**
 - Evidence: $0.12 an hour at 15 replies, small talk only, nothing cached (production/research/llm-inference-economics/COST-PER-HOUR-2026-11-02.md); the budget counter's own figure for the same run is $0.327, unexplained; real questions go to Sonnet 5 at twice the price. At release each copy's allowance must sit above a playthrough's measured cost (RULINGS.md, 28 Oct). Estimate from its run D and the bake-off prices (production/research/lane/TALK-BAKEOFF-CANDIDATES-2026-11-18.md): today about $1.80 to 2.40 a 15 to 20 hour playthrough; with replies on gpt-6-luna (a tenth of Haiku's talk share, a floor; the talk share is not yet split from the checker's, so unverified) perhaps $0.05 an hour, $0.75 to 1.00 a playthrough; at four times as many replies an hour (unverified), four times that. Real replies per hour of play are not measured. Speed sits at 2.02 s against 2.0 (progress.json).
-- L med, I high.
+- L med (re-rate after the bake-off: with the $0.327 counter figure unexplained it may be low), I high.
 - Test: the bake-off arms (n16-6, under its $4 cap) plus a replies-per-hour count from his own play. About 4 session hours, 2 PC hours (estimate).
 - By 7 Dec 2026, the first monthly re-forecast (progress.json). Owner: main session.
 - If not retired: change method (cache the briefing and move small talk to the cheapest arm or the local model).
@@ -31,8 +31,8 @@ The aim at risk: one full release late in 2027, 15 to 20 hours, the Hook plus th
 - Evidence: RULINGS.md, "Faces, hair and voices" (30 Sep, 3 Oct, 26 and 27 Oct); VCTK consent a stated risk (24 Sep).
 - L med, I high.
 - Test: a blind listening sheet, ten clips per cast voice, each asked "where is this speaker from, and does it fit 1990": the friends' evening plus at least three native listeners. About 4 session hours, 1 PC hour (estimate).
-- By 15 Jan 2027. Owner: lane writes the sheet; Jafar only for who listens.
-- If not retired: spend (a paid native listener panel, priced first).
+- By 15 Jan 2027. Owner: lane writes the sheet; the main session asks Jafar who listens as one batched page item, never a direct ask.
+- If not retired: change method: recast the failing voice from the allowlisted voice sets, picking speakers by the native listeners' answers, and re-run the sheet on the recast clips; the recast voice goes on his page as a listening item and is cast only on his yes (RULINGS 24 Sep). No paid panel: RULINGS 24 Sep, "no hiring, ever". (Changed 18 Nov 09:40, review points 7 and 9.)
 
 **5. The recipe does not transfer.** RECIPE.md has never been re-run by a session without the history.
 - Evidence: RECIPE.md (phase 1 rewrite, 9 Nov); re-reading history was 53% of spend in the week to 1 Nov (production/research/token-audit/MONDAY-AUDIT-2026-11-09.md line 53), 40% the next week and 24% in the week to 15 Nov (progress.json), so sessions lean on what they remember.
