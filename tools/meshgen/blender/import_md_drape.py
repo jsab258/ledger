@@ -52,7 +52,8 @@ log = {"drape": DRAPE, "plan": PLAN, "pieces": {}, "checks": {}}
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.wm.obj_import(filepath=DRAPE, global_scale=0.001, forward_axis="NEGATIVE_Z", up_axis="Y", use_split_groups=True)
 objs = {o.name: o for o in bpy.data.objects if o.type == "MESH"}
-lod0 = next((o for n, o in objs.items() if n.endswith("_LOD0")), None)
+# The avatar group: Marvelous names it "<body>_LOD0"; Kiln names it "Avatar" (18 Nov, M5 shared step 1).
+lod0 = next((o for n, o in objs.items() if n.endswith("_LOD0")), None) or objs.get("Avatar")
 for n, o in list(objs.items()):
     if "_LOD" in n and not n.endswith("_LOD0"):
         bpy.data.objects.remove(o, do_unlink=True)
