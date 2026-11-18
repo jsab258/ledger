@@ -1,0 +1,13 @@
+{
+  "note": "Lane data for the side road across Quay Street's end. Every distance marked placeholder is to be measured on the PC from the level (the lane spline's length, where the camera sees it, the mouth of Quay Street). The reference model and goldens use these values; when the PC measures new ones, the goldens are regenerated with make_goldens.py and the Unreal follower is checked against the new set.",
+  "lanes": [
+    {"name": "side road, towards the quay", "length_m": 140.0, "view_from_m": 50.0, "view_to_m": 90.0,
+     "entry_speed_mps": 11.0,
+     "speed_caps": [{"name": "mouth of Quay Street", "from_m": 62.0, "to_m": 78.0, "lookahead_m": 60.0, "cap_mps": 8.9}],
+     "placeholder": true},
+    {"name": "side road, from the quay", "length_m": 140.0, "view_from_m": 50.0, "view_to_m": 90.0,
+     "entry_speed_mps": 11.0,
+     "speed_caps": [{"name": "mouth of Quay Street", "from_m": 62.0, "to_m": 78.0, "lookahead_m": 60.0, "cap_mps": 8.9}],
+     "placeholder": true}
+  ]
+}

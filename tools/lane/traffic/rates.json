@@ -1,0 +1,52 @@
+{
+  "note": "How often a car passes, both directions together, by game hour. From TRAFFIC-COST-2026-11-17.md section 2 (est.), rounded to whole game hours because a game hour lasts 30 real seconds (2 game minutes a real second, LiveClock). Mean gaps are in real seconds of unpaused street time. His data file to change.",
+  "lanes_sharing_rate": 2,
+  "bands": [
+    {
+      "from": "07:00",
+      "to": "10:00",
+      "mean_gap_s": 50,
+      "max_in_view": 2,
+      "name": "morning rush"
+    },
+    {
+      "from": "10:00",
+      "to": "16:00",
+      "mean_gap_s": 75,
+      "max_in_view": 2,
+      "name": "day"
+    },
+    {
+      "from": "16:00",
+      "to": "19:00",
+      "mean_gap_s": 50,
+      "max_in_view": 2,
+      "name": "evening rush"
+    },
+    {
+      "from": "19:00",
+      "to": "23:00",
+      "mean_gap_s": 150,
+      "max_in_view": 1,
+      "name": "evening"
+    },
+    {
+      "from": "23:00",
+      "to": "06:00",
+      "mean_gap_s": 450,
+      "max_in_view": 1,
+      "name": "night"
+    },
+    {
+      "from": "06:00",
+      "to": "07:00",
+      "mean_gap_s": 75,
+      "max_in_view": 2,
+      "name": "early"
+    }
+  ],
+  "min_gap_same_lane_s": 4.0,
+  "max_defer_s": 10,
+  "pool_size": 3,
+  "spawn_clear_m": 12.0
+}

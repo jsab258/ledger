@@ -1,0 +1,11 @@
+{
+  "note": "The background car's behaviour numbers. Follower: IDM city values (Treiber and Kesting, Traffic Flow Dynamics, Table 11.2: T 1.0 s, s0 2 m, delta 4, a 1.0 m/s2, b 1.5 m/s2), desired speed drawn per car for a 30 mph town road (20 to 28 mph, est.). Horn and give-way timings from TRAFFIC-COST section 3 (est.). Wheel radius from a 175/70 R13 tyre (Golf II, HATCH-CLASS-AND-PLATES): 330.2 mm rim + 2 x 122.5 mm sidewall = 575.2 mm across.",
+  "length_m": 4.0,
+  "wheel_radius_m": 0.2876,
+  "variants": ["hatch", "hatch_b"],
+  "colour_count": 8,
+  "desired_speed_mps": {"min": 8.9, "max": 12.5},
+  "follower": {"a": 1.0, "b": 1.5, "T": 1.0, "s0": 2.0, "delta": 4, "b_max": 6.0,
+               "detect_m": 30.0, "person_standoff_m": 1.5, "contact_m": 0.3, "brake_lamp_below_mps2": -0.3},
+  "horn": {"stopped_below_mps": 0.3, "after_s": [3.0, 10.0]}
+}
