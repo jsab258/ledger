@@ -92,3 +92,7 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 16 Nov 22:09: four stamps written without Get-Date, one 25 minutes off; read the clock in the same call that writes.
 - 17 Nov: zips gate-r3 stopped before judging (its space check called retention.py mid-edit): not a try. A wait loop matched its own command line (searching process command lines for 'regression_gate' finds the bash running the search): match on python.exe or the exe by name. Two heredoc edits lost backslashes (memory bash-heredoc-backslashes): write such edits with chr(92) or the Edit tool. Registering a Windows scheduled task refused by the app's safety check; superseded by the gate route.
 - 17 Nov evening: git worktree remove of the PC lane copy refused by the app's safety check (not retried). A helper's cherry-pick of the hinge onto the generic step refused by its guard (engine edit not in its brief). The catalogue reads commas inside a research line as folder names: no parentheses there. FINDINGS and CATALOGUE sit at their caps: trim a word elsewhere to add one.
+
+- 18 Nov 05:40: gap 2 try 2 (band started fully wrapped and stretched): refused by Kiln's pattern check, the cuff too short for the forearm where it lands (cut for another body).
+- 18 Nov 04:40: causal check, cuffs' closing seams held to the 20 mm stage's end: frames 1-3 identical, so that seam is not the cause (not a try).
+- 18 Nov 03:40: gap 2 try 1 (carried inside points to their old triangle's heaviest corner): wrist edge unchanged; inside points were a symptom.
