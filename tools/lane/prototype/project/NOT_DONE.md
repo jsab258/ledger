@@ -2,6 +2,17 @@
 
 18 November 2026, second round. Most important first.
 
+## Lane round 1 (18 Nov, the eight fixes): what is still open
+
+- A person closes a talk in their own voice when their written lines run out, but the talk stays open with only
+  Leave offered; typing your own words still gets the closing line again. Live talk (inside claude.ai) is not
+  limited this way and was not tested here.
+- Bubbles are hidden behind walls only on the street (rooms have no line-of-sight test), and "on screen" means
+  within 20 m and in sight, not checked against the camera's frame.
+- Only Ada's window prompt was found naming someone too early; other prompts were not searched one by one.
+- Only Ada's tea note was found outliving its hour; the Friday rent note and the scrapyard's seven o'clock were
+  not checked the same way.
+
 ## 1. Every walk arrives in the two cases asked for, not wherever Tom stands
 
 Both arrivals checks pass: Tom away, and Tom kept at the rank for the whole 26 hours. But the rule that

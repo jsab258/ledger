@@ -3,7 +3,7 @@ import { G, day, hour, resetState, pausedWhile, setPaused } from './state.js';
 import { hyp, pick, rnd, money, pounds, clamp, listAnd } from './util.js';
 import { act, seed, logLine } from './events.js';
 import { comeback, markSaid, tell, loudness, nameLevel } from './gossip.js';
-import { heardCall, meet, note, ledgerSeen, learnName } from './ledger.js';
+import { heardCall, meet, note, ledgerSeen, learnName, knownNames } from './ledger.js';
 import { attached, tomNotices, sense, tomTarget, nightF } from './seeing.js';
 import { KINDS, NAMES } from './kinds.js';
 import { comebackLine, OVERHEARD, HEADLINES } from './talk_lines.js';
@@ -721,8 +721,8 @@ export function beatFor(P) {
   }
   return null;
 }
-function ronEyes() {
-  // what the door saw that Tom did not
+function ronEyes(dry) {
+  // what the door saw that Tom did not; dry: only whether there is anything, changing nothing
   const out = [];
   const led = G.ledger.acts;
   for (let i = G.events.length - 1; i >= 0 && out.length < 2; i--) {
@@ -734,6 +734,7 @@ function ronEyes() {
       if (!W || W.anon || W.id === 'ron' || (a && a.seen[id])) continue;
       const m = W.mind.by[E.id];
       if (!m) continue;
+      if (dry) return true;
       ledgerSeen(E, W, 'bought');
       out.push(
         `${W.def.name} ${W.space === 'home' || m.window ? 'was at a window' : 'was looking'} when you ${KINDS[E.kind].mine(E).replace(/^./, (c) => c.toLowerCase())}`,
@@ -741,15 +742,17 @@ function ronEyes() {
       break;
     }
   }
+  if (dry) return false;
   return out.length
     ? out.join('. And ') + ". That's what the door saw."
     : "Nobody saw a thing you don't already know about, boss. That's worth knowing an' all.";
 }
-function darrenHeard(p) {
+function darrenHeard(p, dry) {
   const D = P_('darren');
   let b = null;
   for (const m of D.mind.mem)
     if (attached(m) && m.src === 'told' && G.ev[m.e].kind !== 'inherit' && (!b || m.heat > b.heat)) b = m;
+  if (dry) return !!b; // only whether he has heard anything, changing nothing
   let s = b
     ? `${comebackLine(D, b)} ${b.from && G.people[b.from] ? 'Had it off ' + G.people[b.from].def.name.split(' ')[0] + '.' : ''}`
     : "Nothing going round that I've heard. Honest.";
@@ -1034,7 +1037,7 @@ function mattersFor(P) {
           ),
         ),
       );
-    else if (today('door'))
+    else if (today('door') && ronEyes(true)) // offered only when the door has seen something Tom has not
       a.push({
         key: 'door',
         direct: true,
@@ -1062,7 +1065,7 @@ function mattersFor(P) {
       });
   }
   if (id === 'darren') {
-    if (today('heard'))
+    if (today('heard') && darrenHeard(0, true)) // offered only when he has heard something
       a.push({
         key: 'heard',
         direct: true,
@@ -1484,10 +1487,10 @@ export function hotspots() {
           t: "Knock at Ada's",
           run: () => teaScene(hour() > STORY.teaIsLateAfterHour || G.tom.hurt > STORY.teaIsLateAboveHurt),
         });
-      else if (A.space === 'home' && A.awake && A.atWindow)
+      else if (A.space === 'home' && A.awake && A.atWindow && tomNotices(A))
         out.push({
           k: 'E',
-          t: 'Speak up to Ada at her window',
+          t: knownNames().ada ? 'Speak up to Ada at her window' : 'Speak up to the old woman at the window',
           run: () => {
             const b = beatFor(A);
             if (b) b();
@@ -1745,6 +1748,7 @@ export function clock() {
   if (f.teaInvited && !f.tea && (d > 2 || (d === 2 && h >= STORY.teaUntilHour))) {
     f.tea = 'snub';
     seed('tea_snub', ['ada']);
+    if (/tea/i.test(G.story.objective || '')) G.story.objective = 'Tea at Ada\'s was missed. She said she does not ask twice.'; // the note never outlives its hour
     P_('ada').mind.regard = clamp(P_('ada').mind.regard - STORY.adaRegardLostForTheSnub, -1, 1);
   }
   // "Friday, by six": the rent is late from six on Friday evening, as Mrs Rennison says
@@ -1857,7 +1861,12 @@ export function initStory() {
     arrestNow,
     clock,
     ellisTalk,
-    bought: (P, p) => (P.id === 'ron' ? ronEyes() : P.id === 'darren' ? darrenHeard(p) : null),
+    bought: (P, p) =>
+      P.id === 'ron' && ronEyes(true)
+        ? ronEyes()
+        : P.id === 'darren' && (darrenHeard(0, true) || p >= STORY.goodWordFromPence)
+          ? darrenHeard(p)
+          : null, // nothing invented: with nothing to tell they only take it
     demandFor: (P) => (G.debts[P.id] && G.debts[P.id].st === 'open' ? { type: 'debt' } : null),
     killed: (P) => {
       news('MAN FOUND DEAD ON THE HOOK', 'Police appeal for witnesses');

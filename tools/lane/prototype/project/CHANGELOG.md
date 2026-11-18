@@ -1,5 +1,39 @@
 # LEDGER loop prototype: changelog
 
+## 18 November 2026, lane round 1. The eight fixes from the first playtest
+
+Built by the cloud lane, not Fable. Design question: does the loop hold up for a first hour once the faults
+that break a playtest are gone? Serves the real game's talk spec (written-line fallback, conditions on lines,
+barks and subtitles), its interaction-targeting rule, the Ledger's knowledge rule, objective text and the
+paid-information rule. No new systems, places, people or story; the town's simulation is untouched (the seeded
+week's events, memories, stories, money, debts and Ledger are the same part for part; only the save's talk
+log, stats and time stamps differ, so its record was rewritten).
+
+1. Talk never gives the same answer twice in one talk. A person's own stock answers come first; the shared
+   pool ("Same as ever. Less of it.", "He'd have liked the turnout") is used at most once a talk and each shared
+   line by one person a day. With nothing fitting left, the person closes the talk in their own voice (one line
+   each for the named people) and only a way to leave is offered.
+2. The talk prompt, E and Q go to the person Tom faces: within about 30 degrees (`ladder.targetWithinFacingRadians`
+   0.52, was 1.2) and a named or marked person preferred only when within 0.3 m of the nearest
+   (`ladder.namedPreferredByMetres` 0.3, was 1.2; the extra metre for marked people is gone).
+3. Speech bubbles only from someone within earshot (`talk.bubbleHeardWithinMetres` 20) and, on the street, in
+   Tom's line of sight; no empty bubbles; the same line from a second person within 10 real seconds stays unsaid
+   (`talk.sameBubbleQuietRealSeconds`).
+4. Greetings follow the hour: Morning, Afternoon or Evening by the clock (`talk.morningUntilHour` 12,
+   `talk.afternoonUntilHour` 18, `talk.eveningGreetingUntilHour` 4).
+5. No name before Tom has learned it: Ada's window prompt says "the old woman at the window" until he knows her
+   name, and shows only when he can see her there.
+6. The to-do note never outlives its hour: when Ada's tea passes unattended, it says the tea was missed.
+7. A street matter (a debt, an offer) never leaves the talk dead: Leave is always offered beside it, a no to
+   the matter itself drops it and brings the ordinary lines back, and a matter with nothing left to say lapses.
+8. Paying for help gives something or is not offered: Ron's fiver for the door and Darren's three pounds are
+   offered only when they know something Tom does not; a pound pressed on them with nothing to tell buys only
+   their goodwill (and silence with the police), never an invented "nobody saw a thing".
+
+Tests: `test/fixes1.mjs`, one check a fix (in Node for 1 and 4, in the source for 3 and 8, on the page for 2,
+5, 6 and 7), added to `npm test`. All earlier tests pass; an old save loads. The playtester's numbers before and
+after are in RESULTS.md.
+
 ## 18 November 2026, second round. Every number in the rules table, routines retimed, three fixes
 
 No new systems. Walking pace and the rules of seeing and pausing are as they were. Old saves still load.

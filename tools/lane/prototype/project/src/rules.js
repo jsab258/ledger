@@ -457,8 +457,8 @@ export const RULES = {
     ageAssumedYears: 30,
     handsOffFromAgeYears: 60,
     targetWithinMetres: 3.6,
-    targetWithinFacingRadians: 1.2,
-    namedPreferredByMetres: 1.2,
+    targetWithinFacingRadians: 0.52,
+    namedPreferredByMetres: 0.3,
     alliesWithinMetres: 9,
     moodShowsRealSeconds: 2.5,
     strikeRung: 5,
@@ -736,6 +736,11 @@ export const RULES = {
   },
 
   talk: {
+    bubbleHeardWithinMetres: 20,
+    sameBubbleQuietRealSeconds: 10,
+    morningUntilHour: 12,
+    afternoonUntilHour: 18,
+    eveningGreetingUntilHour: 4,
     fiverPounds: 5,
     tennerPounds: 10,
     sortingWaitsRealMilliseconds: 9000,

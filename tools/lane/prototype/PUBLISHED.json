@@ -5,8 +5,8 @@
  "note": "Fable's second round of 18 Nov (every rule's number in LEDGER.rules, routines retimed, three fixes): the readable source is project/ (published under source/ on the page). The pictures and the people rig stay on the page; git holds none of them. The build must reproduce ledger.js and index.html byte for byte.",
  "built": {
   "ledger.js": {
-   "bytes": 1324009,
-   "sha256": "178306842355d40a4ba9d990295ddb3f1f6697926939b76c507c02f0d34fe6aa"
+   "bytes": 1327200,
+   "sha256": "f64066a864992cf1971146fd9570bcdd883bb7939f4f25e2c7662a6b2e5eaf3e"
   },
   "index.html": {
    "bytes": 22687,
@@ -89,6 +89,18 @@
  ],
  "previous": [
   {
+   "version": "1794997640-def7",
+   "round": "Fable's second round of 18 Nov",
+   "ledger.js": {
+    "bytes": 1324009,
+    "sha256": "178306842355d40a4ba9d990295ddb3f1f6697926939b76c507c02f0d34fe6aa"
+   },
+   "index.html": {
+    "bytes": 22687,
+    "sha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61"
+   }
+  },
+  {
    "version": "1794992731-61ca",
    "round": "Fable's first round of 18 Nov",
    "ledger.js": {
@@ -96,5 +108,6 @@
     "sha256": "73245b8eb8b353a9cbebb0bdb7be20c05c148f7c47de63917c21c03142fcd29e"
    }
   }
- ]
+ ],
+ "round": "lane round 1: the eight fixes (18 Nov)"
 }

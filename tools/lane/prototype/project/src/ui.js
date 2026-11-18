@@ -85,6 +85,7 @@ export function hud(dt) {
     for (const b of list) {
       const P = b.P;
       if (P && (P.gone || (P.space !== G.tom.space && P.space !== 'home'))) continue;
+      if (P && !b.cls && !inEarshot(P)) continue;
       const home = P && P.space === 'home' && P.win,
         x = P ? (home ? P.win.x : P.x) : b.x,
         z = P ? (home ? P.win.z : P.z) : b.z,
@@ -215,9 +216,27 @@ export function sub(text, who, cls = '', secs) {
     ui.subs.shift();
   }
 }
+const TALK_RULES = RULES.talk;
 export function bubble(P, text, secs = 3.5) {
+  // no empty bubbles; the same line from a second person within a few seconds stays unsaid
+  if (!text || !String(text).replace(/[\s.…“”"']/g, '')) return;
+  const now = Date.now(),
+    seen = (ui.saidAt || (ui.saidAt = new Map())).get(text);
+  if (seen && seen.P !== P && now - seen.at < TALK_RULES.sameBubbleQuietRealSeconds * 1000) return;
+  ui.saidAt.set(text, { P, at: now });
   ui.bubs = ui.bubs.filter((b) => b.P !== P);
   ui.bubs.push({ P, text, t: secs });
+}
+// a bubble shows only for someone Tom could see and hear: in range and not behind a wall
+function inEarshot(P) {
+  const t = G.tom,
+    home = P.space === 'home' && P.win,
+    x = home ? P.win.x : P.x,
+    z = home ? P.win.z : P.z,
+    tx = t.inCar && G.car ? G.car.x : t.x,
+    tz = t.inCar && G.car ? G.car.z : t.z;
+  if (Math.hypot(x - tx, z - tz) > TALK_RULES.bubbleHeardWithinMetres) return false;
+  return G.tom.space !== 'street' || !G.env || !G.env.los || G.env.los(tx, tz, x, z);
 }
 export function news(headline, sb = '') {
   const el = $('news');

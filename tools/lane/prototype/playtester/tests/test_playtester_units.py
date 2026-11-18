@@ -79,3 +79,21 @@ class StockLines(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_tense_stats_counts_and_rate():
+    from playtest import Tense, tense_stats
+    t = Tense()
+    t.add("fight", "a fight")
+    t.add("risk of being seen", "job: Leave the parcel")
+    t.add("choice under pressure", "talk decision: debt")
+    st = tense_stats(t.events, 3600.0)
+    assert st["count"] == 3 and st["per_30_min"] == 1.5
+    assert st["by_kind"]["fight"] == 1 and st["by_kind"]["pursuit"] == 0
+
+
+def test_pressure_words():
+    from playtest import PRESSURE, PRESSURE_DECISIONS
+    assert PRESSURE.search("Will you carry the bag tonight?")
+    assert not PRESSURE.search("Tea? Twenty pence.")
+    assert "debt".startswith(PRESSURE_DECISIONS) and not "tea".startswith(PRESSURE_DECISIONS)

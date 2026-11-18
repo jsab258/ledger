@@ -39,6 +39,7 @@ import math
 import os
 import subprocess
 import sys
+import re
 import tempfile
 import threading
 import time
@@ -237,7 +238,7 @@ def talk_log(g):
     return g.js("Array.from(document.querySelectorAll('#tlog p')).map(p => ({ who: p.className, text: p.textContent }))")
 
 
-def clear_boxes(g, book, novelty, transcript, choice=0, answer="yes", limit=120):
+def clear_boxes(g, book, novelty, transcript, choice=0, answer="yes", limit=120, tense=None):
     """Answer whatever box is up until the game runs again; book the reading time as talking."""
     for _ in range(limit):
         r = read_box(g)
@@ -249,6 +250,8 @@ def clear_boxes(g, book, novelty, transcript, choice=0, answer="yes", limit=120)
                                              (" [" + " | ".join(w["choices"]) + "]") if w.get("choices") else ""))
             book.add("talking", max(LINE_MIN_S, len((w.get("text") or "").split()) / READ_WPS) + (CHOOSE_S if w.get("choices") else 0))
             if w.get("choices"):
+                if tense is not None and PRESSURE.search((w.get("text") or "") + " " + " ".join(w["choices"])):
+                    tense.add("choice under pressure", "%s: %s" % (w.get("speaker") or "narration", (w.get("text") or "")[:50]))
                 g.js("(n) => LEDGER.written.choose(n)", min(choice, len(w["choices"]) - 1))
             else:
                 g.js("LEDGER.written.next()")
@@ -258,6 +261,8 @@ def clear_boxes(g, book, novelty, transcript, choice=0, answer="yes", limit=120)
                 g.js("LEDGER.talk.idle()")
                 continue
             if t.get("deciding"):
+                if tense is not None and str(t["deciding"]).startswith(PRESSURE_DECISIONS):
+                    tense.add("choice under pressure", "talk decision: %s" % t["deciding"])
                 a = g.js("(w) => LEDGER.talk.answer(w)", answer)
                 transcript.append("(decided %s: %s)" % (t["deciding"], " / ".join(a.get("said") or [])))
                 book.add("talking", CHOOSE_S + 4)
@@ -484,9 +489,49 @@ class Novelty:
         return True
 
 
+PRESSURE = re.compile(r"\b(police|polis|job|carry|carrying|parcel|bag|deliver|owe[sd]?|debt|threat|warn|knife|cosh|fight|run|drop|tin|refuse|errand|garbutt|iveson)\b", re.I)
+PRESSURE_DECISIONS = ("debt", "wash", "job", "ask", "errand", "wares")
+
+
+class Tense:
+    """Tense moments (lane task 4l, 18 Nov): a risk of being seen, a pursuit, a fight, an escape, a choice under pressure.
+    Counted from what the game itself records: a job step taken in the open; an act of Tom's the town actually saw
+    (a new event with witnesses); a fight begun; a police chase or an escape (none exist in the prototype yet, so
+    they stay 0 until a round adds them); a decision on a debt, a job, the tin or the like, or a written choice whose
+    words name such stakes (a word list, PRESSURE: an estimate, not a judgement)."""
+    KINDS = ("risk of being seen", "seen doing it", "pursuit", "fight", "escape", "choice under pressure")
+
+    def __init__(self):
+        self.events = []
+        self.book = None
+        self.last_ev = None
+
+    def add(self, kind, what):
+        self.events.append({"t": self.book.t if self.book else 0.0, "kind": kind, "what": what})
+
+    def poll(self, g):
+        """New acts of Tom's that somebody saw, since the last poll."""
+        evs = g.js("(LEDGER.G.events || []).map((e) => ({id: e.id, kind: e.kind, wit: (e.wit || []).length}))") or []
+        if self.last_ev is None:
+            self.last_ev = len(evs)
+            return
+        for e in evs[self.last_ev:]:
+            if e["wit"] and e["kind"] not in ("inherit",):
+                self.add("seen doing it", "%s, %d witness%s" % (e["kind"], e["wit"], "" if e["wit"] == 1 else "es"))
+        self.last_ev = len(evs)
+
+
+def tense_stats(events, total_s):
+    per30 = len(events) * 1800.0 / total_s if total_s else 0.0
+    by = {k: sum(1 for e in events if e["kind"] == k) for k in Tense.KINDS}
+    return {"count": len(events), "per_30_min": round(per30, 1), "by_kind": by}
+
+
 def newcomer(g, stock, minutes=60.0):
     book, nov = Book(), Novelty()
     nov.book = book
+    tense = Tense()
+    tense.book = book
     transcript = []
     talked = {}
     stuck = {}
@@ -526,7 +571,7 @@ def newcomer(g, stock, minutes=60.0):
             g.step(secs / n)
             book.add(kind, secs / n, note=label)
             if read_box(g)["box"]:
-                clear_boxes(g, book, nov, transcript)
+                clear_boxes(g, book, nov, transcript, tense=tense)
         place = g.js("LEDGER.read().tom.place")
         nov.see("place", place)
 
@@ -550,7 +595,7 @@ def newcomer(g, stock, minutes=60.0):
         nov.see("person", pid)
         if st.get("written", {}).get("open"):
             note("scene with %s" % (p["shownAs"]))
-            clear_boxes(g, book, nov, transcript)
+            clear_boxes(g, book, nov, transcript, tense=tense)
             st = g.js("(id) => LEDGER.talk.open(id, { free: true })", pid)
         if not st.get("open"):
             return True
@@ -582,7 +627,7 @@ def newcomer(g, stock, minutes=60.0):
             transcript.append("  [%s] %s" % (ln["who"], ln["text"]))
         g.js("LEDGER.talk.say('leave')")
         g.js("LEDGER.talk.leave()")
-        clear_boxes(g, book, nov, transcript)
+        clear_boxes(g, book, nov, transcript, tense=tense)
         return True
 
     def do_fare():
@@ -610,7 +655,7 @@ def newcomer(g, stock, minutes=60.0):
             g.step(d / DRIVE_MPS)
             book.add("driving", d / DRIVE_MPS, note="to the fare")
             g.js("LEDGER.fare.pickUp()")
-            clear_boxes(g, book, nov, transcript)
+            clear_boxes(g, book, nov, transcript, tense=tense)
             f = g.js("LEDGER.fare.read()")
         if f and f["state"] == "carrying":
             d = math.hypot(f["dropOff"]["xMetres"] - f["pickUp"]["xMetres"], f["dropOff"]["zMetres"] - f["pickUp"]["zMetres"]) * ROAD_FACTOR
@@ -619,7 +664,7 @@ def newcomer(g, stock, minutes=60.0):
             nov.see("place", f["toPlace"])
             r = g.js("LEDGER.fare.dropOff()")
             note("fare dropped at %s, paid %sp" % (f["toPlace"], r.get("paidPence")))
-            clear_boxes(g, book, nov, transcript)
+            clear_boxes(g, book, nov, transcript, tense=tense)
         g.js("LEDGER.cab.getOut()")
         return True
 
@@ -638,7 +683,7 @@ def newcomer(g, stock, minutes=60.0):
         if j and j["state"] == "carrying":
             walk_to(j["drop"]["xMetres"], j["drop"]["zMetres"], "job drop", kind="job actions")
             press_job_key()
-        clear_boxes(g, book, nov, transcript)
+        clear_boxes(g, book, nov, transcript, tense=tense)
         return True
 
     def press_job_key():
@@ -647,6 +692,7 @@ def newcomer(g, stock, minutes=60.0):
             if not p["text"].startswith(("Talk to", "Speak to", "Go into", "Coat", "Front up", "Get in", "Pick up a")):
                 g.js("(k) => LEDGER.press(k)", p["key"])
                 book.add("job actions", 3.0, note=p["text"])
+                tense.add("risk of being seen", "job: " + p["text"])
                 note("job: pressed %s (%s)" % (p["key"], p["text"]))
                 return True
         note("job: no job prompt at the spot; prompts %s" % [p["text"] for p in ps])
@@ -681,7 +727,7 @@ def newcomer(g, stock, minutes=60.0):
                 best = (score, name)
         return ("place", best[1]) if best else None
 
-    clear_boxes(g, book, nov, transcript)
+    clear_boxes(g, book, nov, transcript, tense=tense)
     nov.see("place", g.js("LEDGER.read().tom.place"))
     while book.t < budget:
         print("  t=%.0fs %s toDo=%r" % (book.t, g.clock(), (g.js("LEDGER.read().toDo") or "")[:50]), flush=True)
@@ -693,14 +739,16 @@ def newcomer(g, stock, minutes=60.0):
         if g.js("LEDGER.read().weekEnded"):
             note("the week ended")
             break
-        box = clear_boxes(g, book, nov, transcript)
+        box = clear_boxes(g, book, nov, transcript, tense=tense)
         if box == "stuck":
             note("a box would not close")
             g.step(1)
             book.add("waiting", 1, note="stuck box")
             continue
+        tense.poll(g)
         if g.js("!!(LEDGER.F && LEDGER.F.on)"):
-            nov.see("action", "fight")
+            if nov.see("action", "fight") or not (tense.events and tense.events[-1]["kind"] == "fight"):
+                tense.add("fight", "a fight")
             g.step(2)
             book.add("fighting", 2)
             continue
@@ -725,7 +773,7 @@ def newcomer(g, stock, minutes=60.0):
                     g.js("LEDGER.press('E')")
                     nov.see("place", door["text"][8:])
                     book.add("walking", 2.0, note=door["text"])
-                    clear_boxes(g, book, nov, transcript)
+                    clear_boxes(g, book, nov, transcript, tense=tense)
                 continue
         elif obj and tgt is None and stuck.get((obj, None), 0) == 0:
             stuck[(obj, None)] = 1
@@ -767,8 +815,9 @@ def newcomer(g, stock, minutes=60.0):
             continue
         g.step(WAIT_STEP_S)
         book.add("waiting", WAIT_STEP_S, note="nothing to do")
+    tense.poll(g)
     return {"book": book.by, "timeline": book.timeline, "novelty": nov.events, "log": log, "transcript": transcript,
-            "layout": layout, "played_s": book.t}
+            "layout": layout, "played_s": book.t, "tense": tense.events}
 
 
 def novelty_stats(events, total_s, window_s=1800.0):
@@ -826,6 +875,12 @@ def write_reports(out, res):
         for w in ns["windows"]:
             L.append("- minutes %.0f to %.0f: %d new things" % (w["from_min"], w["to_min"], w["new_things"]))
         L.append("- longest stretch with nothing new: %.1f min, from minute %.1f" % (ns["longest_gap_min"], ns["longest_gap_from_min"]))
+        ts = nc.get("tense_stats") or tense_stats(nc.get("tense") or [], tot)
+        L += ["", "## Tense moments", "", "- %d in %.1f min, %.1f per 30 minutes" % (ts["count"], tot / 60, ts["per_30_min"])]
+        for k, v in ts["by_kind"].items():
+            L.append("- %s: %d" % (k, v))
+        for e in nc.get("tense") or []:
+            L.append("    - %.1f min: %s, %s" % (e["t"] / 60, e["kind"], e["what"]))
         L += ["", "## New things in order", ""]
         for e in nc["novelty"]:
             L.append("- %.1f min: %s, %s" % (e["t"] / 60, e["kind"], e["what"]))
@@ -868,6 +923,7 @@ def main(argv=None):
         try:
             nc = newcomer(g, stock, a.minutes)
             nc["novelty_stats"] = novelty_stats(nc["novelty"], nc["played_s"])
+            nc["tense_stats"] = tense_stats(nc.get("tense") or [], nc["played_s"])
             res["newcomer"] = nc
             res["errors"] += g.errors
             res["shots_newcomer"] = g.shots
@@ -883,6 +939,7 @@ def main(argv=None):
     if nc:
         print("newcomer: %.1f min booked; %s; longest with nothing new %.1f min" % (
             nc["played_s"] / 60, {k: round(v / 60, 1) for k, v in nc["book"].items()}, nc["novelty_stats"]["longest_gap_min"]))
+        print("tense moments: %(count)d, %(per_30_min).1f per 30 minutes, %(by_kind)s" % nc["tense_stats"])
     if res["errors"]:
         print("page errors:", res["errors"][:5])
     return 0

@@ -67,11 +67,11 @@ export function target() {
     let d = hyp(P.x, P.z, t.x, t.z);
     if (d > LAD.targetWithinMetres) continue;
     if (Math.abs(angDiff(t.ang, Math.atan2(P.x - t.x, P.z - t.z))) > LAD.targetWithinFacingRadians) continue;
-    d -= (P.anon ? 0 : LAD.namedPreferredByMetres) + (P.mark ? 1 : 0);
+    d -= P.anon && !P.mark ? 0 : LAD.namedPreferredByMetres; // a named or marked person wins only when about as near as the nearest
     if (d > bd) continue;
     bd = d;
     best = P;
-  } // named people, and anyone with something to say, come first
+  } // the person in front of Tom, within about 30 degrees of his facing; the same one for the prompt, E and Q
   return best;
 }
 function allies(P) {

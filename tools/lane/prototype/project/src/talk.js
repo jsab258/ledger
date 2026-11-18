@@ -7,7 +7,7 @@ import { act, logLine } from './events.js';
 import { attached } from './seeing.js';
 import { comeback, markSaid, menaceTo, callName } from './gossip.js';
 import { meet, heardCall, ledgerSeen, note, knownNames, heardNames, hearName } from './ledger.js';
-import { comebackLine, describeMem, greet, fb, vocative } from './talk_lines.js';
+import { comebackLine, describeMem, greet, fb, vocative, fbReset, FBT } from './talk_lines.js';
 import { NAME_ONLY } from './cast.js';
 import {
   openTalk,
@@ -623,6 +623,7 @@ const st = (n) => {
 };
 function reset(P) {
   T.P = P;
+  fbReset();
   T.hist = [];
   T.used = new Set();
   T.lines = [];
@@ -670,7 +671,24 @@ function buildLines() {
         const x = unused(D.keep);
         if (x) L.push({ job: 'keep', text: x });
       }
+      if (!D.resolve) {
+        // a street matter never takes away the way out: Leave is always last
+        const lv = unused(LEAVES, n + T.turn);
+        if (lv) L.splice(Math.min(L.length, TALKING.suggestedLinesAtMost - 1), L.length, { job: 'leave', text: lv });
+      }
     }
+  }
+  if (D && !L.length && !D.resolve) {
+    // a street decision with nothing left to say on it never leaves the talk dead: it lapses and the ordinary lines return
+    T.dec = null;
+    return buildLines();
+  }
+  if (D) {
+    // the decision's lines stand
+  } else if (FBT.closed) {
+    // they have closed the talk in their own voice: only a way to leave is offered
+    const lv = unused(LEAVES, n + T.turn);
+    if (lv) L.push({ job: 'leave', text: lv });
   } else {
     if (!T.said) {
       const x = unused(GREETS, n);
@@ -971,6 +989,10 @@ async function decStep(P, text, line) {
     );
     if (D.direct) {
       if (D.resolve) return finish(D, D.noIdx == null ? -1 : D.noIdx);
+      T.dec = null;
+      suggest(P);
+    } else if (D.q == null) {
+      // a no to the matter itself: it is dropped, and the ordinary lines and Leave come back
       T.dec = null;
       suggest(P);
     } else D.q = null;

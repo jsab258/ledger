@@ -1,7 +1,7 @@
 // Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.
 // {n} what they call him, {src} who told them, {t} the other party, {z} place, {d} day, {w} weapon.
-import { pick, DAYS, cap } from './util.js';
-import { G } from './state.js';
+import { pick, DAYS, cap, R } from './util.js';
+import { G, hour, day } from './state.js';
 import { KINDS } from './kinds.js';
 import { nameLevel } from './gossip.js';
 import { attached } from './seeing.js';
@@ -377,12 +377,91 @@ const FBOWN = {
   },
   pc: { defiant: ["That's an offence, sir."], notake: ["That's an offence, sir."] },
 };
+// Within one talk nobody says the same line twice; a shared line (FB) is said by one person a day at most and used once a talk;
+// when nothing fitting is left, the person closes the talk in their own voice (talk.js then offers only a Leave).
+const CLOSE = {
+  sheila: "That's all I have for you. The book's waiting.",
+  ron: "Right, boss. I'd best watch the rank.",
+  darren: "So listen, I've got to be somewhere. Laters, yeah?",
+  ada: "That's enough for one sitting. Off you go.",
+  june: "I've said what I'm going to say, Mr Nowak.",
+  ellis: "That'll be all for now, Mr Nowak.",
+  alison: "I've a deadline. Another time.",
+  walsh: 'Go in peace. I have the roof to worry about.',
+  pauline: "Hang on, love, the radio's going. We'll talk after.",
+  kevin: "I've a car in bits. Go on.",
+  terry: "That's me, then. I've a fare waiting.",
+  rita: "Looking's done. Buy something or let me shut.",
+  wayne: "That's me done. Places to be.",
+  brenda: "I've fish to see to, love.",
+  lee: 'Right. See you.',
+  grace: "Drink your tea and let me get on.",
+  peter: "Ten minutes is up. Next.",
+  lily: "I'd best see to the counter.",
+  hal: 'Nothing more in stock, that included.',
+  susan: "Nothing further to declare, then.",
+  nora: "Away with you now. I've things on.",
+  albert: "That's me talked out, young 'un.",
+  sylvia: 'Feet. Mat. Door. Thank you.',
+  dennis: "That's me. I've iron to shift.",
+  norman: "I couldn't say more. Sorry.",
+  julie: 'Anyway. See you.',
+  shaun: "I'd best get back up the ladder.",
+  pc: "I'll be on my way, sir.",
+};
+const SHARED = new Set(Object.values(FB).flat());
+export const FBT = { used: new Set(), shared: false, closed: false, day: -1, sharedBy: new Map() };
+export function fbReset() {
+  FBT.used = new Set();
+  FBT.shared = false;
+  FBT.closed = false;
+}
+export function fbNote(line) {
+  if (line) FBT.used.add(line);
+}
 export function fb(P, key) {
-  const o = FBOWN[P.id];
-  return pick(o && o[key] ? o[key] : FB[key] || FB.ok);
+  const o = FBOWN[P.id],
+    r = R.f(); // one draw, as before, so the seeded week keeps its course
+  const d = day();
+  if (FBT.day !== d) {
+    FBT.day = d;
+    FBT.sharedBy = new Map();
+  }
+  const own = (o && o[key] ? o[key] : []).filter((x) => !FBT.used.has(x));
+  let line = null;
+  if (own.length) line = own[Math.floor(r * own.length) % own.length];
+  else if (!FBT.shared) {
+    const pool = (FB[key] || FB.ok).filter((x) => {
+      const by = FBT.sharedBy.get(x);
+      return !FBT.used.has(x) && (!by || by === P.id);
+    });
+    if (pool.length) {
+      line = pool[Math.floor(r * pool.length) % pool.length];
+      FBT.shared = true;
+      FBT.sharedBy.set(line, P.id);
+    }
+  }
+  if (!line) {
+    line = CLOSE[P.id] || (P.def.sex === 'f' ? "Anyway, love. I'd best get on." : "Anyway. I'd best get on.");
+    FBT.closed = true;
+  }
+  FBT.used.add(line);
+  return line;
+}
+export const isSharedLine = (x) => SHARED.has(x);
+// Greetings follow the hour: a "Morning." at night or an "Evening." at breakfast is put right.
+function timely(s) {
+  const h = hour(),
+    w =
+      h >= TALKING.eveningGreetingUntilHour && h < TALKING.morningUntilHour
+        ? 'Morning'
+        : h >= TALKING.morningUntilHour && h < TALKING.afternoonUntilHour
+          ? 'Afternoon'
+          : 'Evening';
+  return s.replace(/\b(Morning|Afternoon|Evening)\b/g, w);
 }
 export function greet(P) {
-  return pick(GREET[P.id] || ['Aye?']);
+  return timely(pick(GREET[P.id] || ['Aye?']));
 }
 
 // Things overheard when two people are talking and it is not about Tom. key marks the Ledger note.
