@@ -36,7 +36,7 @@ What these share (J):
   - 5p was made smaller in 1990 (24 mm to 18 mm), so both sizes appear that year. When the old one stopped being legal tender was not found.
   - 10p stayed large until 1992.
   - No £2 coin in circulation (from 1997). No halfpenny (demonetised December 1984).
-- Stamps (edinphoto rate table) (S): first class 20p and second class 15p from 2 October 1989; 22p and 17p from 17 November 1990; 24p and 18p from 16 September 1991.
+- Stamps (edinphoto rate table) (S): first class 20p and second class 15p from 2 October 1989; 22p and 17p from 17 November 1990 (to recheck: other references give 17 September 1990; a stamp sum on screen should avoid autumn 1990 until settled); 24p and 18p from 16 September 1991.
 - VAT: 15% in 1990. Norman Lamont raised it to 17.5% in his budget of 19 March 1991 (Wikipedia, 1991 budget) (S). The date it took effect was not confirmed (E: spring 1991).
 - Real banknote designs: whether a game may reproduce them was not researched. Canon bars real logos. Recommend generic notes in the right colours and sizes, never a copy (J).
 
@@ -52,7 +52,7 @@ What these share (J):
 - Carbon copies, rubber stamps: not sourced (P marks them a HOLE). Blue-violet carbon blur is a judgement.
 - Police pocket notebooks: serial-numbered, pages never removed, errors struck through once, ends ruled off and signed (P, same note, citing its sources).
 - Witness statements under section 9 of the Criminal Justice Act 1967 carry a signed declaration that the account is true to the best of the maker's knowledge and belief, knowing that falsehood can be prosecuted (legislation.gov.uk) (S). The page read shows the current text, amended since; the exact 1990 printed form was not seen.
-- Interviews were noted by hand before tape; taping became routine across England and Wales only from 1 January 1993 (P, british-policing-1988-1992). The pre-1994 caution's wording is unverified (P): no one speaks it until the original is read.
+- Interviews were noted by hand before tape. Taping began in 1988, became compulsory for serious offences in some police areas from 1 January 1992 and reached the rest of England and Wales on 1 January 1993; which areas went first is not known (P, british-policing-1988-1992). So in 1990 a handwritten interview record is the safe default. The pre-1994 caution's wording is unverified (P): no one speaks it until the original is read.
 
 ### Phones and pagers
 - The KX100 phone box arrived in 1985; about 3,000 a month went in from 1987 to 1989; BT had 81,000 housed payphones in 1989 (Wikipedia, KX telephone boxes) (S). Cardphones began in July 1981 (S).

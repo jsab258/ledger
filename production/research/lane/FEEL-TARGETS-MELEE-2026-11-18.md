@@ -6,7 +6,7 @@ His rule (RULINGS, 17 Nov): other games are studied from the outside only (gamep
 
 Rules this sheet obeys: his design "LEDGER Combat: Final State" (game-design/combat-design.md) with his 30 Oct ruling, quoted from RULINGS.md: "fists knock a man out and never kill on their own; a fall against a kerb, wall or step after a blow can kill, rarely, and the town treats it as a killing". Tom cannot die. No lock-on, no combat music, no health bar. Nothing to do with drink: no bottles or glasses as weapons, so the improvised weapons here are a chair, a brick and a length of pipe (the design's list).
 
-Note on Study 14: some numbers below come from Study 14 (28 Oct), which read KCD2's and Mafia's own files before his 17 Nov ruling replaced that method. They are quoted from our own notes as they stand; nothing was opened for this sheet, and none of them was re-checked today.
+Note on Study 14: some numbers below come from Study 14 (28 Oct), which read KCD2's and Mafia's own files before his 17 Nov ruling replaced that method. They are quoted from our own notes as they stand; nothing was opened for this sheet, and none of them was re-checked today. Every Study 14 number is pre-ruling: it may guide a first tuning, but it is not evidence under the 17 Nov rule and must be re-measured from the footage in (e) before any band rests on it.
 
 ## In short
 
