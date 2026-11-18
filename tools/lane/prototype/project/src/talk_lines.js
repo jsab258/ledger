@@ -130,6 +130,10 @@ export const SAY = {
     saw: ['You ran from a policeman. On this street.'],
     told: ['They say you legged it from the police.'],
   },
+  bag_taken: {
+    saw: ["I saw the constable take that bag off you. Under the lamp, an' all."],
+    told: ['Word is the police had a bag off you. Whose was it, love?'],
+  },
   ellis_asked: {
     saw: ['That detective stopped me about you.'],
     told: ['Word is Ellis was down the street after you.'],

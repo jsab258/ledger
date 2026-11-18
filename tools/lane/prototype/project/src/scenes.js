@@ -16,7 +16,7 @@ import { F, frontUp, setOn, recover } from './fight.js';
 import { pay, earn, wash, washCap } from './money.js';
 import { rest, advanceTo, workStep, beaten, tomAt } from './work.js';
 import { fareOffer } from './fares.js';
-import { startJob, jobHotspots, jobClock } from './jobs.js';
+import { startJob, jobHotspots, jobClock, watchStep } from './jobs.js';
 import { nightly } from './police.js';
 import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
@@ -1585,6 +1585,11 @@ function marks() {
     G.story.objective =
       'It is Friday. The door in the back room is open, and Sheila is waiting behind her desk.';
   }
+  if (ask1Due() && !f.ask1obj) {
+    // round 2: the first night's offer was easy to miss (the playtester's newcomer never heard it in an hour)
+    f.ask1obj = 1;
+    G.story.objective = 'Evening. Ron Kirby is waiting at the cab rank. He wants a word before the last ferry.';
+  }
   if (ask1Due() && !P_('ron').override)
     send(P_('ron'), 'rank', 'idle', G.t + STORY.ronWaitsAtTheRankGameMinutes);
   if (ask2Due()) {
@@ -1813,6 +1818,7 @@ export function storyStep(dt) {
   }
   clock();
   workStep(dt);
+  watchStep(dt);
   lads(dt);
   ambient(dt);
   tick += dt;

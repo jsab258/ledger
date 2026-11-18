@@ -267,6 +267,19 @@ export const RULES = {
     knockNoiseMetres: 9,
     missedFromHourNextDay: 3.5,
     missedUntilHourNextDay: 12,
+    // the carry under watch (lane round 2): a constable's beat between the pick-up and the drop
+    beatStartsAlongTheWayFraction: 0.35,
+    beatEndsShortOfTheDropFraction: 0.15,
+    beatWalkMetresPerSecond: 1.1,
+    beatLastsAtMostRealSeconds: 240,
+    challengesWithinMetres: 16,
+    searchesWithinMetres: 2.2,
+    startsChaseWhenTomMovesMetres: 3,
+    chaseIfFurtherByMetres: 4,
+    beatTurnsWithinMetres: 1.5,
+    challengeHoldsRealSeconds: 0.5,
+    challengeFollowsEveryRealSeconds: 1,
+    subtitleRealSeconds: 5,
   },
 
   fares: {
@@ -982,6 +995,7 @@ export const RULES = {
     good_word: { newsworthyZeroToOne: 0.35, readsMinusOneMenaceToOneDecent: 0.4, crimeLevel: 0 },
     arrested: { newsworthyZeroToOne: 0.8, readsMinusOneMenaceToOneDecent: -0.4, crimeLevel: 0 },
     ran_police: { newsworthyZeroToOne: 0.8, readsMinusOneMenaceToOneDecent: -0.6, crimeLevel: 1 },
+    bag_taken: { newsworthyZeroToOne: 0.85, readsMinusOneMenaceToOneDecent: -0.5, crimeLevel: 1 },
     ellis_asked: { newsworthyZeroToOne: 0.6, readsMinusOneMenaceToOneDecent: -0.3, crimeLevel: 0 },
     wash: { newsworthyZeroToOne: 0.4, readsMinusOneMenaceToOneDecent: -0.4, crimeLevel: 0 },
     rent_paid: { newsworthyZeroToOne: 0.2, readsMinusOneMenaceToOneDecent: 0.3, crimeLevel: 0 },

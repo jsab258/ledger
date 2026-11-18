@@ -208,6 +208,15 @@ function jobRead() {
     payPence: J.pay,
     doorsOpenFromHour: J.after,
     doorsShutAtHour: RULES.jobs.doorsShutAtHour,
+    // round 2: the constable on his beat during the carry (null before the pick-up or on old saves)
+    watch: j.watch
+      ? {
+          state: j.watch.st,
+          how: j.watch.how || null,
+          constable: { xMetres: r1(G.people.pc.x), zMetres: r1(G.people.pc.z) },
+          metresAway: r1(hyp(G.people.pc.x, G.people.pc.z, G.tom.x, G.tom.z)),
+        }
+      : null,
   };
 }
 function fareRead() {

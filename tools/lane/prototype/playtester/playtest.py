@@ -60,6 +60,7 @@ DRIVE_MPS = 8.0       # town driving, metres a second, over the straight-line di
 ROAD_FACTOR = 1.35
 READ_WPS = 3.3        # reading speed, words a second (about 200 a minute)
 LINE_MIN_S = 2.0      # the shortest time a line stays read
+RUN_MPS = 4.5         # a newcomer running from the constable (round 2)
 CHOOSE_S = 3.0        # picking a reply or a choice
 WAIT_STEP_S = 15.0    # one wait with nothing to do
 
@@ -677,8 +678,8 @@ def newcomer(g, stock, minutes=60.0):
 
     def do_job():
         j = g.js("LEDGER.job.read()")
-        if not j:
-            return False
+        if not j or j["state"] not in ("to pick up", "carrying"):
+            return False  # done, missed or taken: nothing more to do for it (looped forever before round 2)
         h = g.js("LEDGER.read().hour")
         if j.get("doorsOpenFromHour") is not None and h < j["doorsOpenFromHour"] and h > 6:
             return False
@@ -688,10 +689,67 @@ def newcomer(g, stock, minutes=60.0):
             press_job_key()
         j = g.js("LEDGER.job.read()")
         if j and j["state"] == "carrying":
-            walk_to(j["drop"]["xMetres"], j["drop"]["zMetres"], "job drop", kind="job actions")
-            press_job_key()
+            if carry_under_watch(j):
+                press_job_key()
         clear_boxes(g, book, nov, transcript, tense=tense)
         return True
+
+    def carry_under_watch(j):
+        """Round 2 (18 Nov): the carry with a constable on his beat. Walks to the drop a second at a time;
+        called out to, a newcomer runs (away from him, at a run of RUN_MPS, through the script's straight
+        lines, which ignore walls: an estimate) until he gives up or catches him. True if still carrying."""
+        warned = False
+        for _ in range(400):
+            j = g.js("LEDGER.job.read()")
+            if not j or j["state"] != "carrying":
+                return False
+            w = j.get("watch") or {}
+            st = w.get("state")
+            if st == "beat" and not warned and (w.get("metresAway") or 999) < 30:
+                warned = True
+                tense.add("risk of being seen", "constable on his beat %.0f m away, carrying" % w["metresAway"])
+                nov.see("action", "carry past a constable")
+            if st in ("challenge", "chase"):
+                tense.add("choice under pressure", "called out to with the bag: run")
+                nov.see("action", "run from the constable")
+                tense.add("pursuit", "the constable after him with the bag")
+                for _ in range(90):
+                    j = g.js("LEDGER.job.read()")
+                    w = (j or {}).get("watch") or {}
+                    if not j or w.get("state") not in ("challenge", "chase"):
+                        break
+                    t = where_now()
+                    c = w["constable"]
+                    dx, dz = t["xMetres"] - c["xMetres"], t["zMetres"] - c["zMetres"]
+                    n = math.hypot(dx, dz) or 1.0
+                    g.js("([x, z]) => { const T = LEDGER.G.tom; T.run = true; T.ang = Math.atan2(x - T.x, z - T.z); LEDGER.goTo({ xMetres: x, zMetres: z }); }",
+                         [t["xMetres"] + dx / n * RUN_MPS, t["zMetres"] + dz / n * RUN_MPS])
+                    g.step(1.0)
+                    book.add("running", 1.0, note="from the constable")
+                    if read_box(g)["box"]:
+                        clear_boxes(g, book, nov, transcript, tense=tense)
+                g.js("() => { LEDGER.G.tom.run = false; }")
+                j = g.js("LEDGER.job.read()")
+                w = (j or {}).get("watch") or {}
+                how = w.get("how")
+                note("job: chase ended: %s" % how)
+                if how == "lost him":
+                    tense.add("escape", "lost the constable, still carrying")
+                    nov.see("action", "escape with the bag")
+                continue
+            t = where_now()
+            dx, dz = j["drop"]["xMetres"] - t["xMetres"], j["drop"]["zMetres"] - t["zMetres"]
+            d = math.hypot(dx, dz)
+            if d < 1.5:
+                return True
+            stepm = min(d, WALK_MPS)
+            g.js("([x, z]) => { const T = LEDGER.G.tom; T.ang = Math.atan2(x - T.x, z - T.z); LEDGER.goTo({ xMetres: x, zMetres: z }); }",
+                 [t["xMetres"] + dx / d * stepm, t["zMetres"] + dz / d * stepm])
+            g.step(stepm / WALK_MPS)
+            book.add("job actions", stepm / WALK_MPS, note="carrying to the drop")
+            if read_box(g)["box"]:
+                clear_boxes(g, book, nov, transcript, tense=tense)
+        return False
 
     def press_job_key():
         ps = g.js("LEDGER.prompts()")

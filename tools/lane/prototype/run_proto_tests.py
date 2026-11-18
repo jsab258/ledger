@@ -34,7 +34,7 @@ import build  # noqa: E402
 
 # Fable's npm test order (second round of 18 Nov), the lane's round-1 checks, then oldsave, which needs an older build
 ORDER = ["numbers", "walks", "same_week", "week", "publish_set", "arrivals", "nights", "town",
-         "ledger_rules", "layout", "files", "talk", "eyes", "fixes1", "oldsave"]
+         "ledger_rules", "layout", "files", "talk", "eyes", "fixes1", "watch2", "oldsave"]
 SCRIPTS = {"numbers": ["tools/numbers.mjs", "left"], "walks": ["tools/walk_times.mjs"],
            "publish_set": ["tools/publish_set.mjs"]}
 
@@ -89,6 +89,7 @@ def run(assets, only=None, work=None, timeout=1200, playtest_minutes=60.0):
             out, code = p.stdout + p.stderr, p.returncode
         except subprocess.TimeoutExpired:
             out, code = "TIMEOUT", 124
+        os.makedirs(logs, exist_ok=True)  # the playtester's own build clears the work folder, logs and all
         with open(os.path.join(logs, "playtest.log"), "w", encoding="utf-8") as f:
             f.write(out)
         results["playtest"] = "SEE" if code == 0 else "FAIL"

@@ -257,6 +257,12 @@ export const KINDS = {
     (e) => `Ran from the police`,
     { loud: 1 },
   ),
+  bag_taken: K(
+    'bag_taken',
+    (e) => `A constable stopped Tom with a bag on ${e.zone} and took it`,
+    (e) => `The constable took the bag on ${e.zone}`,
+    { loud: 1 },
+  ),
   ellis_asked: K(
     'ellis_asked',
     () => 'DS Ellis came down Quay Street asking about Tom',
