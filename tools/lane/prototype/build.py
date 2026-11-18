@@ -27,6 +27,8 @@ Usage:
   python build.py --work DIR          the work folder (default: ~/.cache/ledger-proto-work)
 """
 import argparse
+import contextlib
+import fcntl
 import hashlib
 import json
 import os
@@ -69,6 +71,31 @@ def check_assets(folder, published=None):
     return problems
 
 
+@contextlib.contextmanager
+def work_lock(work=None, wait=True):
+    """Hold the work folder alone: two builds (or a build and a test run) never share it.
+
+    The lock is a file beside the work folder (<work>.lock), so clearing the folder never drops
+    it. A second caller waits (or, with wait=False, stops with a message) until the first ends.
+    """
+    work = os.path.abspath(work or DEFAULT_WORK)
+    if _inside_repo(work) or _inside_repo(work + ".lock"):
+        raise SystemExit("the work folder must be outside the repository: " + work)
+    os.makedirs(os.path.dirname(work), exist_ok=True)
+    fh = open(work + ".lock", "w")
+    try:
+        flags = fcntl.LOCK_EX | (0 if wait else fcntl.LOCK_NB)
+        try:
+            fcntl.flock(fh, flags)
+        except BlockingIOError:
+            raise SystemExit("another build or test run holds the work folder: " + work)
+        fh.write(str(os.getpid()))
+        fh.flush()
+        yield work
+    finally:
+        fh.close()
+
+
 def _inside_repo(path):
     path = os.path.realpath(path)
     return path == REPO or path.startswith(REPO + os.sep)
@@ -105,8 +132,13 @@ def prepare_work(work=None, log=print):
     return work
 
 
-def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print):
-    """Build into dist. Returns the list of problems (empty when the build matches the page)."""
+def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print, locked=False):
+    """Build into dist. Returns the list of problems (empty when the build matches the page).
+
+    Takes the work folder's lock unless the caller already holds it (locked=True)."""
+    if not locked:
+        with work_lock(work):
+            return build(assets_dir, allow_changed, dist, work, log, locked=True)
     pub = load_published()
     problems = []
     if assets_dir:

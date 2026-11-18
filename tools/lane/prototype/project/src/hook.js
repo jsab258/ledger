@@ -18,8 +18,9 @@
 //   LEDGER.check                 arrivals() and nights(): see checks.js
 //   LEDGER.step(realSeconds)     run the game forward by hand (set window.LEDGER_MANUAL = true first)
 //   LEDGER.restore(text)         load a saved week exactly as Continue does;  LEDGER.saveText() gives one
-import { G, day, hour, PAUSE } from './state.js';
+import { G, day, hour, PAUSE, TALLY } from './state.js';
 import { RULES } from './rules.js';
+import { act } from './events.js';
 import { clockText, dateText, DAYS, hyp } from './util.js';
 import { KINDS } from './kinds.js';
 import { SPOTS, DESTS, ROOMS, INSIDE, roomPos, zoneAt } from './map.js';
@@ -30,7 +31,7 @@ import { fareOffer, fareAccept, farePlaces } from './fares.js';
 import { JOBS } from './jobs.js';
 import { washCap } from './money.js';
 import { callName } from './gossip.js';
-import { book, bookFaults, knownNames, openNow, moneyNow, syncOpen } from './ledger.js';
+import { book, bookFaults, knownNames, openNow, moneyNow, syncOpen, ledgerSeen } from './ledger.js';
 import { LS, PARTS, ledgerRows, peoplePages } from './ledger_screen.js';
 import { measures, activeAsk } from './measures.js';
 import { serialize } from './saving.js';
@@ -475,6 +476,7 @@ export function installHook(x) {
     },
     read: () => ({
       open: ui.modal === 'ledger',
+      said: LS.said || null, // the one line the book says back ("Jump to which letter?", "Not that one.")
       part: LS.part,
       parts: PARTS.slice(),
       person: LS.person,
@@ -506,6 +508,23 @@ export function installHook(x) {
       syncOpen();
       return book().entries.map((e) => Object.assign({}, e, { when: dateText(e.t) + ', ' + clockText(e.t) }));
     },
+    // As if Tom had just learned that this person knows of that act (he saw them see it, or they said so): the
+    // game's own way of writing a belief, so a test can make a watcher turn up when it wants one.
+    learn(eventId, personId, basis = 'said') {
+      const E = G.ev[eventId],
+        P = G.people[personId];
+      if (!E || !P) return false;
+      ledgerSeen(E, P, basis);
+      return true;
+    },
+    // As if Tom had just done this, where he stands: the game's own act(), with its witnesses and its entry.
+    // For a test that needs an act at a moment of its choosing. Returns the event's id.
+    act(kind, o = {}) {
+      const E = act(kind, o);
+      return E ? E.id : null;
+    },
+    // the acts still waiting to see whether anybody saw them ("Nobody saw" is written only after the wait)
+    waiting: () => (book().waiting || []).map((w) => ({ eventId: w.ev, sinceGameMinute: w.t })),
     openItems: openNow, // what is waiting on him now, as the game computes it
     moneySums: moneyNow, // the sums Tom knows, in pence
     faults: bookFaults,
@@ -589,6 +608,28 @@ export function installHook(x) {
     ledger,
     measures,
     measuresJSON: () => JSON.stringify(measures(), null, 2),
+    // The gossip table: per day, sightings, stories passed on, how far the furthest story travelled (in tellings),
+    // and which named people stood within talking distance. Counted since this week was started or loaded.
+    gossip() {
+      const days = [];
+      for (let d = 0; d <= day(); d++) {
+        const row = TALLY.days[d] || { sightings: 0, heard: 0, met: {} };
+        let far = 0;
+        for (const id in G.minds)
+          for (const r of G.minds[id].mem || [])
+            if (Math.floor(r.t / 1440) === d && (r.hop || 0) > far) far = r.hop;
+        days.push({
+          dayIndex: d,
+          date: dateText(d * 1440),
+          sightings: row.sightings,
+          heardOnly: row.heard,
+          storiesPassedOn: G.transfers.filter((t) => Math.floor(t.t / 1440) === d).length,
+          furthestStoryTellings: far,
+          pairsWhoMet: Object.keys(row.met).sort(),
+        });
+      }
+      return days;
+    },
     // the files published beside the page: list them, read one as text, gather them all as one zip (a Blob)
     files: x.files,
     pauses: () =>

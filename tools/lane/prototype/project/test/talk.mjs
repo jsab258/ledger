@@ -71,7 +71,11 @@ async function run(mode) {
   log(mode, 'log:', JSON.stringify(await ev(() => [...document.querySelectorAll('#tlog p')].map((x) => x.className + ': ' + x.textContent.slice(0, 90)))));
   log(mode, 'stats:', JSON.stringify(await ev(() => ({ live: LEDGER.G.stats.live, fb: LEDGER.G.stats.fallback, talks: LEDGER.G.stats.talks }))), '| calls:', JSON.stringify(await ev(() => window.CALLS)));
   log(mode, 'errors:', errs.length ? errs : 'none');
+  if (errs.length) failed++;
   await p.close();
 }
-try { for (const m of ['ok', 'none', 'refuse', 'banned']) await run(m); } catch (e) { console.log('FAILED', e); }
+let failed = 0;
+try { for (const m of ['ok', 'none', 'refuse', 'banned']) await run(m); } catch (e) { failed++; console.log('FAILED', e); }
 await b.close(); srv.close();
+console.log(failed ? 'FAIL' : 'PASS: all four cases ran with no error');
+process.exit(failed ? 1 : 0);

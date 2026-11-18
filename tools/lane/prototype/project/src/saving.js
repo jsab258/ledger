@@ -1,5 +1,5 @@
 // Saving the week. To the viewer's Claude account when the page can (so it follows them between devices), and to this browser as well.
-import { G, VERSION, setPaused } from './state.js';
+import { G, VERSION, setPaused, TALLY } from './state.js';
 
 const KEYS = [
   'v',
@@ -63,6 +63,7 @@ export function restore(json) {
   const o = JSON.parse(json);
   if (o.v !== VERSION) return false;
   for (const k of KEYS) if (o[k] !== undefined) G[k] = o[k];
+  TALLY.days = []; // the gossip table counts are not saved: a loaded week starts them again
   if (o.measures === undefined) G.measures = null; // an older save: the measures start from here
   G.ev = {};
   for (const E of G.events) G.ev[E.id] = E;

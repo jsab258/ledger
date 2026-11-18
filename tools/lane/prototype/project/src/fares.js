@@ -10,6 +10,7 @@ import { setMarker } from './render/sync.js';
 import { fl } from './work.js';
 import { earn } from './money.js';
 import { RULES } from './rules.js';
+const CROWD = RULES.crowd;
 
 const FARE = RULES.fares;
 
@@ -95,7 +96,7 @@ export function fareAccept() {
   const f = G.story.fare;
   if (!f || f.st !== 'offer') return;
   f.st = 'pickup';
-  const P = f.who ? G.people[f.who] : G.people['pax' + Math.floor(rnd(0, 3))];
+  const P = f.who ? G.people[f.who] : G.people['pax' + Math.floor(rnd(0, CROWD.faresCount))];
   f.pid = P.id;
   P.override = null;
   P.hold = true;

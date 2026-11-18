@@ -7,6 +7,7 @@ import { KINDS } from './kinds.js';
 import { eye, attached } from './seeing.js';
 import { feel, BR, mkEvent } from './events.js';
 import { callName } from './gossip.js';
+const NAME = RULES.naming;
 
 export function ledgerSelf(E) {
   if (!G.ledger.acts.find((a) => a.e === E.id)) G.ledger.acts.push({ e: E.id, t: Math.round(G.t), seen: {} });
@@ -77,9 +78,9 @@ export function note(text, kind = 'note', key, x = {}) {
 export function meet(P) {
   if (G.ledger.met[P.id]) return;
   G.ledger.met[P.id] = 1;
-  P.mind.fam = Math.max(P.mind.fam, 0.5);
+  P.mind.fam = Math.max(P.mind.fam, NAME.familiarityAtLeastOnceMet);
   for (const r of P.mind.mem)
-    if (r.who === 'man' && r.src === 'saw' && r.sure > 0.45) {
+    if (r.who === 'man' && r.src === 'saw' && r.sure > NAME.knownAsTomAboveSureness) {
       r.who = 'tom';
       r.linked = 1;
       feel(P, r);
@@ -166,7 +167,35 @@ export function book() {
     L.book = { n: 1, entries: [] };
     migrateOldLedger();
   }
+  if (L.book.waiting && L.book.waiting.length && !settling) settleUnseen(L.book);
   return L.book;
+}
+
+// "Nobody saw" is written only once an act has gone unseen, so far as Tom knows, for
+// ledger.unseenHeldAfterGameMinutes. Until then the act waits here. Once written the line is never taken out:
+// if a watcher turns up later it is struck through with the day and the reason.
+let settling = false;
+function settleUnseen(B) {
+  settling = true;
+  try {
+    const due = B.waiting.filter((w) => G.t - w.t >= LED.unseenHeldAfterGameMinutes);
+    if (due.length) B.waiting = B.waiting.filter((w) => !due.includes(w));
+    for (const w of due) {
+      if (B.entries.some((e) => e.kind === 'belief' && e.ev === w.ev)) continue; // somebody saw: nothing to write
+      entry({
+        kind: 'unseen',
+        key: 'unseen:' + w.ev,
+        what: 'Nobody saw',
+        how: 'Saw nobody',
+        sure: 'thinks so',
+        ev: w.ev,
+        t: w.t,
+        place: w.place,
+      });
+    }
+  } finally {
+    settling = false;
+  }
 }
 
 // Something Tom was told, read or noticed: logged as an event so the entry has a source.
@@ -270,21 +299,12 @@ const mineOf = (E) => {
   return KINDS[E.kind].mine(P ? Object.assign({}, E, { name: lowerFirst(shownAs(E.target)) }) : E);
 };
 
-// His own act goes in the day book, with the belief that nobody saw it until he learns otherwise.
+// His own act goes in the day book. That nobody saw it is written later, if it stays so (see settleUnseen).
 function bookAct(E) {
   const B = book();
   if (B.entries.find((e) => e.kind === 'did' && e.ev === E.id)) return;
   entry({ kind: 'did', what: mineOf(E), how: 'Did it', ev: E.id, t: Math.round(E.t), place: E.zone });
-  entry({
-    kind: 'unseen',
-    key: 'unseen:' + E.id,
-    what: 'Nobody saw',
-    how: 'Saw nobody',
-    sure: 'thinks so',
-    ev: E.id,
-    t: Math.round(E.t),
-    place: E.zone,
-  });
+  (B.waiting || (B.waiting = [])).push({ ev: E.id, t: Math.round(E.t), place: E.zone }); // "Nobody saw", if it stays so
 }
 
 // What somebody knows of an act: one line on their page, brought up to date when he learns more.
@@ -304,11 +324,10 @@ function bookBelief(E, P, basis, from) {
   });
   const B = book(),
     none = B.entries.find((e) => e.key === 'unseen:' + E.id && !e.struck);
-  if (!none) return;
-  // Seen in the very moment of doing it: "nobody saw" was never a belief he held, so the line is not kept.
-  // Learned later, it was a wrong belief: struck through with the day and the reason.
-  if (G.t - E.t < LED.unseenHeldAfterGameMinutes) B.entries.splice(B.entries.indexOf(none), 1);
-  else strike(none, upperFirst(shownAs(id)) + (basis === 'talking' ? ' may have heard' : ' knows'));
+  // Seen before "Nobody saw" was written: it is not written. Learned after: it was a wrong belief, and the line
+  // stays, struck through with the day and the reason. A line once written is never taken out.
+  if (B.waiting) B.waiting = B.waiting.filter((w) => w.ev !== E.id);
+  if (none) strike(none, upperFirst(shownAs(id)) + (basis === 'talking' ? ' may have heard' : ' knows'));
 }
 
 // What somebody calls him. A new name strikes the old one through.

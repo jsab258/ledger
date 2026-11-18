@@ -1,0 +1,37 @@
+{
+ "seed": 19901015,
+ "ended": true,
+ "whole": "6e859584cd20ea3d7ab0",
+ "parts": {
+  "at": "86da4b6e0def8807b9a1",
+  "car": "3a381224c731562126e6",
+  "debts": "e5b8b0fcd26a19fb9e16",
+  "events": "b7035cc39dc5cba9c32b",
+  "ledger": "c3f58216d3f116283c04",
+  "log": "8cc6db57f67286c8c54f",
+  "measures": "a7f34f46bc7bbb184c1d",
+  "minds": "628d0147cb34b70bbd08",
+  "money": "73d5ebed7e6daee264c7",
+  "nextE": "8241649609f88ccd2a0a",
+  "played": "74a32cfb9bdb7a3837de",
+  "sightIdx": "837f91eddd8b1717b238",
+  "stats": "ff56f78dd9d152516aa3",
+  "story": "7cbde0d4a8b2df6d14b5",
+  "t": "706ebfaebf700dcad581",
+  "tom": "52cf90fa682c2d22ddc2",
+  "transfers": "56fa5deb579e966c083e",
+  "v": "4b227777d4dd1fc61c6f",
+  "weather": "cb5dae85233079e15aea"
+ },
+ "counts": {
+  "events": 91,
+  "storiesPassedOn": 197,
+  "ledgerEntries": 151,
+  "pocketPence": 6800,
+  "tinPence": 0,
+  "ledgerOpens": 7,
+  "notedLinesShown": 25,
+  "talks": 13,
+  "gameMinute": 7934.546666666244
+ }
+}

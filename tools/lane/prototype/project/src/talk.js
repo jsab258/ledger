@@ -23,6 +23,8 @@ import {
   after,
 } from './ui.js';
 import { slipHTML, tomKnows } from './ledger_screen.js';
+import { RULES as NUMBERS } from './rules.js';
+const TALKING = NUMBERS.talk;
 
 const T = {
   sample: null,
@@ -80,8 +82,8 @@ function localIntent(text) {
   let amount = 0;
   const m = s.match(/£\s*(\d+)/) || s.match(/(\d+)\s*(quid|pounds?|nicker)/);
   if (m) amount = +m[1];
-  else if (/fiver/.test(s)) amount = 5;
-  else if (/tenner/.test(s)) amount = 10;
+  else if (/fiver/.test(s)) amount = TALKING.fiverPounds;
+  else if (/tenner/.test(s)) amount = TALKING.tennerPounds;
   let intent = 'smalltalk',
     denies = false;
   if (
@@ -145,7 +147,7 @@ ${pending ? 'The character has just asked him: "' + pending + '"\n' : ''}Player 
   try {
     const r = await timed(
       (signal) => T.sample.json(prompt, { modelTier: 'quick', signal }),
-      T.consent ? 9000 : 0,
+      T.consent ? TALKING.sortingWaitsRealMilliseconds : 0,
     );
     T.consent = true;
     if (r && INTENTS.includes(r.intent))
@@ -155,7 +157,7 @@ ${pending ? 'The character has just asked him: "' + pending + '"\n' : ''}Player 
         topic: ['me', 'fire', 'mickey', 'rivals', 'debt', 'person', 'other'].includes(r.topic)
           ? r.topic
           : loc.topic,
-        amount: Math.max(0, Math.min(500, +r.amount || loc.amount || 0)),
+        amount: Math.max(0, Math.min(TALKING.offerAtMostPounds, +r.amount || loc.amount || 0)),
         denies: !!r.denies,
       };
   } catch (e) {
@@ -180,7 +182,7 @@ function noteFail(e) {
     if (T.P)
       talkLine('sys', 'The live voices are not available here. People will answer in their written lines.');
   } else if (c === 'rate_limited') {
-    T.cool = Date.now() + 60000;
+    T.cool = Date.now() + TALKING.liveVoiceRestsAfterLimitRealMilliseconds;
   }
 }
 
@@ -188,18 +190,18 @@ function feeling(P) {
   const m = P.mind,
     a = [];
   a.push(
-    m.regard > 0.35
+    m.regard > TALKING.feelsWarmAboveRegard
       ? 'You have warmed to him.'
-      : m.regard > 0.1
+      : m.regard > TALKING.feelsAllRightAboveRegard
         ? 'You think he might be all right.'
-        : m.regard < -0.4
+        : m.regard < -TALKING.feelsDistrustBelowMinusRegard
           ? 'You dislike and distrust him.'
-          : m.regard < -0.12
+          : m.regard < -TALKING.feelsCoolBelowMinusRegard
             ? 'You have cooled on him and are wary.'
             : 'You have not made your mind up about him.',
   );
-  if (m.fear > 0.5) a.push('He frightens you.');
-  else if (m.fear > 0.25) a.push('He makes you uneasy.');
+  if (m.fear > TALKING.frightenedAboveFear) a.push('He frightens you.');
+  else if (m.fear > TALKING.uneasyAboveFear) a.push('He makes you uneasy.');
   return a.join(' ');
 }
 function prompt(P, directive, text) {
@@ -207,14 +209,14 @@ function prompt(P, directive, text) {
     mems = P.mind.mem
       .filter((m) => G.ev[m.e].kind !== 'inherit')
       .sort((a, b) => b.heat - a.heat)
-      .slice(0, 8);
+      .slice(0, TALKING.remembersForATalkAtMost);
   const name = callName(P),
     v = vocative(P);
   const facts = mems.length
     ? mems.map((m) => '- ' + describeMem(P, m)).join('\n')
     : '- Nothing in particular.';
   const hist = T.hist
-    .slice(-6)
+    .slice(-TALKING.pastTurnsGivenToTheVoice)
     .map((h) => (h.role === 'user' ? 'Tom: ' : P.def.name + ': ') + h.content)
     .join('\n');
   return `You are voicing one character in LEDGER, a grounded British noir game set in Meridian, a fictional port town on the Humber, in October 1990. The docks are dying and nobody has money. Reply with ONLY the words the character says aloud: one to three short spoken sentences. No narration, no stage directions, no quotation marks, no asterisks, no dashes, no lists. Dry northern English understatement, never American.
@@ -228,9 +230,9 @@ WHAT THEY KNOW OF THE WAREHOUSE FIRE: ${c.fire}
 WHAT THEY KNOW OF THE NAMES IN TOWN: ${c.rivals} (${Object.values(NAME_ONLY).join('; ')}.)
 ${c.secret ? 'WHAT THEY KNOW BUT WILL NOT TELL HIM: ' + c.secret + '\n' : ''}
 WHO THEY ARE TALKING TO: Tom Nowak, 32, nephew of the late Mickey Suddaby, who has inherited Mickey's Cars, the minicab office on Quay Street. Nobody knows anything of his life before and nobody asks.
-${!P.mind.inh && P.mind.fam < 0.3 ? 'They do not know who he is yet: to them he is a stranger.' : `They ${name ? 'call him "' + name + '"' : 'do not use a name for him yet'}${v ? ' and may address him as "' + v + '"' : ''}.`}
+${!P.mind.inh && P.mind.fam < TALKING.strangerBelowFamiliarity ? 'They do not know who he is yet: to them he is a stranger.' : `They ${name ? 'call him "' + name + '"' : 'do not use a name for him yet'}${v ? ' and may address him as "' + v + '"' : ''}.`}
 ${feeling(P)}
-NOW: ${DAYS[day() % 7]}, ${hhmm(hour())}, ${G.weather.rain > 0.4 ? 'raining' : G.weather.rain > 0.1 ? 'drizzle' : 'dry and overcast'}, at ${G.tom.space === 'street' ? G.tom.zone : ui.roomName || 'indoors'}.
+NOW: ${DAYS[day() % 7]}, ${hhmm(hour())}, ${G.weather.rain > TALKING.saysRainingAboveRain ? 'raining' : G.weather.rain > TALKING.saysDrizzleAboveRain ? 'drizzle' : 'dry and overcast'}, at ${G.tom.space === 'street' ? G.tom.zone : ui.roomName || 'indoors'}.
 
 ALL THEY KNOW ABOUT TOM'S DOINGS (nothing else has happened; they must never invent events about him; asked about anything not listed, they say in character that they do not know):
 ${facts}
@@ -249,8 +251,9 @@ function clean(s) {
     .replace(/\s+/g, ' ')
     .trim();
   const parts = s.match(/[^.!?]+[.!?]+/g);
-  if (parts && parts.length > 3) s = parts.slice(0, 3).join('').trim();
-  return s.slice(0, 380);
+  if (parts && parts.length > TALKING.replySentencesAtMost)
+    s = parts.slice(0, TALKING.replySentencesAtMost).join('').trim();
+  return s.slice(0, TALKING.replyCharactersAtMost);
 }
 // One spoken line from the model, cleaned. Null if it broke a content rule.
 async function sampleLine(P, directive, text, onText) {
@@ -265,7 +268,7 @@ async function sampleLine(P, directive, text, onText) {
           onText(BANNED.test(c) ? '' : c);
         },
       }),
-    T.consent ? 14000 : 0,
+    T.consent ? TALKING.replyWaitsRealMilliseconds : 0,
   );
   T.consent = true;
   const out = clean(r && r.text);
@@ -392,12 +395,20 @@ function decide(P, it, text) {
   switch (it.intent) {
     case 'ask': {
       if (it.topic === 'me') {
-        if (m.regard > -0.35 || m.fear > 0.45 || m.bought) {
+        if (
+          m.regard > -TALKING.tellsAboutHimAboveMinusRegard ||
+          m.fear > TALKING.tellsAboutHimAboveFear ||
+          m.bought
+        ) {
           const mm = bestMem(P);
           if (mm) {
             const E = G.ev[mm.e],
               line = comebackLine(P, mm),
-              tellSrc = mm.src === 'told' && mm.from && mm.from !== 'someone' && (m.regard > 0.1 || m.bought);
+              tellSrc =
+                mm.src === 'told' &&
+                mm.from &&
+                mm.from !== 'someone' &&
+                (m.regard > TALKING.namesTheSourceAboveRegard || m.bought);
             mm.said = true;
             ledgerSeen(E, P, 'asked', tellSrc ? mm.from : null);
             return {
@@ -459,34 +470,37 @@ function decide(P, it, text) {
           directive: 'He has threatened a police officer. You note it, coldly and exactly.',
         };
       }
-      act('threat', { target: P.id, noiseR: 12 });
-      const pressure = 0.5 + menaceTo(P) + (G.tom.armed ? 0.2 : 0);
+      act('threat', { target: P.id, noiseR: TALKING.spokenThreatNoiseCarriesMetres });
+      const pressure =
+        TALKING.spokenThreatPressure +
+        menaceTo(P) +
+        (G.tom.armed ? TALKING.spokenThreatPressureAddedWhenArmed : 0);
       if (pressure > d.nerve) {
-        m.fear = clamp(m.fear + 0.4, 0, 1);
-        m.regard = clamp(m.regard - 0.3, -1, 1);
+        m.fear = clamp(m.fear + TALKING.fearAddedWhenAThreatWorks, 0, 1);
+        m.regard = clamp(m.regard - TALKING.regardLostWhenAThreatWorks, -1, 1);
         return {
           fb: 'scared',
           directive:
             'This threat frightens you. You back down. You will say nothing to the police, though you cannot promise what the street says.',
         };
       }
-      m.regard = clamp(m.regard - 0.35, -1, 1);
-      m.fear = clamp(m.fear + 0.08, 0, 1);
+      m.regard = clamp(m.regard - TALKING.regardLostWhenAThreatFails, -1, 1);
+      m.fear = clamp(m.fear + TALKING.fearAddedWhenAThreatFails, 0, 1);
       return {
         fb: 'defiant',
         directive: 'You are not frightened by this threat. Answer with contempt or cold calm, in character.',
       };
     }
     case 'bribe': {
-      const p = Math.round((it.amount || 5) * 100);
+      const p = Math.round((it.amount || TALKING.bribeAssumedPounds) * 100);
       if (G.money.clean + G.money.dirty < p)
         return {
           fb: 'flat',
           directive: 'He offers money he plainly has not got on him. React, in character.',
         };
-      if ((d.venal ?? 0.3) >= 0.5 && !d.police) {
+      if ((d.venal ?? TALKING.venalAssumed) >= TALKING.takesMoneyFromVenal && !d.police) {
         spend(p);
-        m.regard = clamp(m.regard + 0.2, -1, 1);
+        m.regard = clamp(m.regard + TALKING.regardAddedWhenBought, -1, 1);
         m.bought = true;
         act('paid_info', { target: P.id });
         const extra = G.hooks.bought ? G.hooks.bought(P, p) : null;
@@ -498,7 +512,7 @@ function decide(P, it, text) {
             (extra ? ' Then tell him this, in your own words: ' + extra : ''),
         };
       }
-      m.regard = clamp(m.regard - 0.15, -1, 1);
+      m.regard = clamp(m.regard - TALKING.regardLostWhenABribeIsRefused, -1, 1);
       act('bribe_try', { target: P.id });
       if (d.police) G.story.flags.bribePolice = 1;
       return {
@@ -507,8 +521,11 @@ function decide(P, it, text) {
       };
     }
     case 'flatter': {
-      const soft = (d.talk ?? 0.5) > 0.55 && d.voice !== 'dry' && d.voice !== 'official';
-      if (soft) m.regard = clamp(m.regard + 0.05, -1, 1);
+      const soft =
+        (d.talk ?? TALKING.talkativeAssumed) > TALKING.flatteryWorksAboveTalkative &&
+        d.voice !== 'dry' &&
+        d.voice !== 'official';
+      if (soft) m.regard = clamp(m.regard + TALKING.regardAddedByFlattery, -1, 1);
       return {
         fb: soft ? 'flatok' : 'flat',
         directive: soft
@@ -518,8 +535,8 @@ function decide(P, it, text) {
     }
     case 'lie': {
       const mm = bestMem(P, (x) => KINDS[G.ev[x.e].kind].val < 0);
-      if (mm && (mm.src === 'saw' || mm.src === 'self') && mm.sure > 0.55) {
-        m.regard = clamp(m.regard - 0.2, -1, 1);
+      if (mm && (mm.src === 'saw' || mm.src === 'self') && mm.sure > TALKING.knowsALieAboveSureness) {
+        m.regard = clamp(m.regard - TALKING.regardLostWhenCaughtLying, -1, 1);
         act('lied', { target: P.id, silent: true });
         return {
           fb: 'caught',
@@ -527,8 +544,8 @@ function decide(P, it, text) {
         };
       }
       if (mm) {
-        mm.sure *= 0.6;
-        mm.heat *= 0.7;
+        mm.sure *= TALKING.denialCutsSurenessTimes;
+        mm.heat *= TALKING.denialCutsHeatTimes;
         return {
           fb: 'believed',
           directive: 'You only had it second hand. You half accept what he says, without warmth.',
@@ -546,8 +563,8 @@ function decide(P, it, text) {
     default: {
       if ((m.chatDay || -1) !== day()) {
         m.chatDay = day();
-        m.fam = clamp(m.fam + 0.1, 0, 1);
-        m.regard = clamp(m.regard + 0.03, -1, 1);
+        m.fam = clamp(m.fam + TALKING.familiarityAddedPerDayOfTalk, 0, 1);
+        m.regard = clamp(m.regard + TALKING.regardAddedPerDayOfTalk, -1, 1);
       }
       return { fb: 'small', directive: 'Make brief small talk, in character.' };
     }
@@ -644,12 +661,12 @@ function buildLines() {
       }
     } else {
       D.opts.forEach((o, i) => {
-        if (L.length < 3 && o.say) {
+        if (L.length < TALKING.suggestedLinesAtMost && o.say) {
           const x = unused(o.say);
           if (x) L.push({ job: 'prop', i, text: x });
         }
       });
-      if (L.length < 3 && D.keep) {
+      if (L.length < TALKING.suggestedLinesAtMost && D.keep) {
         const x = unused(D.keep);
         if (x) L.push({ job: 'keep', text: x });
       }
@@ -865,7 +882,7 @@ async function freeStep(P, text, line) {
   if (line && line.job === 'leave') {
     npc(P, BYES[(P.def.name || P.id).length % BYES.length]);
     logLine(`Left ${tomName(P)} with: ${text}`, 'talk');
-    after(1.3, () => {
+    after(TALKING.goodbyeAfterRealSeconds, () => {
       if (T.P === P) endTalk();
     });
     return;
@@ -889,14 +906,14 @@ async function freeStep(P, text, line) {
     T.first = null;
     if (res.after) await res.after();
     if (res.close && T.P === P) {
-      after(1.6, () => {
+      after(TALKING.closesAfterRealSeconds, () => {
         if (T.P === P) endTalk();
       });
       return;
     }
   }
   heardCall(P);
-  G.t += 1.5;
+  G.t += TALKING.turnTakesGameMinutes;
   await afterReply(P, firstTurn);
 }
 // A decision: the yes and the no are both the game's lines, with a third that keeps talking. Only a yes is taken.
@@ -1008,7 +1025,7 @@ async function suggest(P) {
       } catch (e) {
         /* */
       }
-    }, 6000); // six seconds, then the written lines stand
+    }, TALKING.liveVoiceWaitsRealMilliseconds); // six seconds, then the written lines stand
   try {
     const r = await T.sample.json(sugPrompt(P), { modelTier: 'quick', cache: false, signal: ctl.signal });
     if (late || seq !== T.sug.seq || T.P !== P || T.dec) return;
@@ -1039,7 +1056,13 @@ function okLine(x) {
   x = clean(x)
     .replace(/^["'“]+|["'”]+$/g, '')
     .trim();
-  if (!x || x.split(/\s+/).length > 12 || x.length > 96 || T.used.has(x)) return null;
+  if (
+    !x ||
+    x.split(/\s+/).length > TALKING.followUpWordsAtMost ||
+    x.length > TALKING.followUpCharactersAtMost ||
+    T.used.has(x)
+  )
+    return null;
   if (BANNED.test(x) || /\b(tom|tommy|thomas|nowak)\b/i.test(x) || DEAL.test(x)) return null;
   const kn = knownNames(),
     hd = heardNames(),
@@ -1061,7 +1084,7 @@ function okLine(x) {
 function sugPrompt(P) {
   const k = tomKnows(P),
     talk = T.hist
-      .slice(-8)
+      .slice(-TALKING.pastTurnsGivenForFollowUps)
       .map((h) => `${h.role === 'user' ? 'He said' : 'They said'}: ${h.content}`)
       .join('\n');
   return `You write short spoken lines for one man, in his own plain words: a newcomer of 32 who has just inherited a minicab office on Quay Street in the port town of Meridian, on the Humber, in October 1990. Northern English, dry, few words, period speech.

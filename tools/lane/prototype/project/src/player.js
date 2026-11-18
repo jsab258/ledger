@@ -13,6 +13,11 @@ import { hotspots, beatFor } from './scenes.js';
 import { fareAccept } from './fares.js';
 import { startTalk } from './talk.js';
 import { setInside } from './render/effects.js';
+import { RULES } from './rules.js';
+const SHOPS = RULES.shops;
+const LAD = RULES.ladder;
+const TOMS = RULES.tom;
+const STORY = RULES.story;
 
 export const keys = {},
   cam = {
@@ -37,19 +42,19 @@ let mdown = 0,
   camera = null,
   canvasEl = null;
 const HOURS = {
-  caff: [6, 17],
-  fish: [7.4, 17.4],
-  laund: [8, 20],
-  grocer: [8, 17.5],
-  tangs: [17, 23.6],
-  news: [6.5, 19],
-  iron: [8.5, 17.5],
-  tearoom: [9.5, 17],
-  rita: [8.5, 18],
-  chandler: [8.5, 17.5],
-  coin: [9.5, 18],
-  chapel: [7, 19.3],
-  harbour: [8, 22.9],
+  caff: [SHOPS.caffOpensAtHour, SHOPS.caffShutsAtHour],
+  fish: [SHOPS.fishOpensAtHour, SHOPS.fishShutsAtHour],
+  laund: [SHOPS.launderetteOpensAtHour, SHOPS.launderetteShutsAtHour],
+  grocer: [SHOPS.grocerOpensAtHour, SHOPS.grocerShutsAtHour],
+  tangs: [SHOPS.chipShopOpensAtHour, SHOPS.chipShopShutsAtHour],
+  news: [SHOPS.newsagentOpensAtHour, SHOPS.newsagentShutsAtHour],
+  iron: [SHOPS.ironmongerOpensAtHour, SHOPS.ironmongerShutsAtHour],
+  tearoom: [SHOPS.tearoomOpensAtHour, SHOPS.tearoomShutsAtHour],
+  rita: [SHOPS.ritasOpensAtHour, SHOPS.ritasShutsAtHour],
+  chandler: [SHOPS.chandlerOpensAtHour, SHOPS.chandlerShutsAtHour],
+  coin: [SHOPS.coinShopOpensAtHour, SHOPS.coinShopShutsAtHour],
+  chapel: [SHOPS.chapelOpensAtHour, SHOPS.chapelShutsAtHour],
+  harbour: [SHOPS.harbourOpensAtHour, SHOPS.harbourShutsAtHour],
 };
 const isOpen = (id) => {
   const o = HOURS[id];
@@ -94,7 +99,7 @@ export function initPlayer(cv, cameraObj) {
     if (ui.modal || G.story.phase !== 'play') return;
     mdown = performance.now();
     mbtn = e.button;
-    if (F.on && F.rung >= 5) {
+    if (F.on && F.rung >= LAD.strikeRung) {
       if (e.button === 2) fightBlock(true);
     }
     if (!locked && cv.requestPointerLock && !G.settings.touch) {
@@ -108,8 +113,8 @@ export function initPlayer(cv, cameraObj) {
   });
   addEventListener('mouseup', (e) => {
     if (mbtn === 2) fightBlock(false);
-    if (mbtn === 0 && F.on && F.rung >= 5 && !ui.modal)
-      fightInput(performance.now() - mdown > 320 ? 'heavy' : 'light');
+    if (mbtn === 0 && F.on && F.rung >= LAD.strikeRung && !ui.modal)
+      fightInput(performance.now() - mdown > LAD.heavyWhenHeldRealMilliseconds ? 'heavy' : 'light');
     mbtn = -1;
   });
   addEventListener('mousemove', (e) => {
@@ -173,7 +178,7 @@ export function onKey(code) {
   else if (code === 'KeyK') fightBlock(true);
   else if (code === 'KeyV') fightInput('finish');
   else if (code === 'Space') {
-    if (F.on && F.rung >= 5) fightInput('dodge');
+    if (F.on && F.rung >= LAD.strikeRung) fightInput('dodge');
   }
 }
 function coat() {
@@ -195,7 +200,7 @@ function carKey() {
     c = G.car;
   if (F.on) return;
   if (t.inCar) {
-    if (Math.abs(c.v) > 1.5) return;
+    if (Math.abs(c.v) > TOMS.cabLeftBelowMetresPerSecond) return;
     const [x, z] = exitPoint();
     t.inCar = false;
     t.x = x;
@@ -204,7 +209,7 @@ function carKey() {
     if (G.hooks.sfx) G.hooks.sfx('cardoor');
     return;
   }
-  if (t.space !== 'street' || !nearCar(3.2)) return;
+  if (t.space !== 'street' || !nearCar(TOMS.cabWithinMetres)) return;
   if (!c.keys) return sub('Locked. The keys will be in the office.', '', 'over');
   t.inCar = true;
   c.v = 0;
@@ -228,7 +233,7 @@ export function enterRoom(id, quiet) {
   snapCam();
   if (!quiet && G.hooks.sfx) G.hooks.sfx('door');
   if (G.hooks.ambience) G.hooks.ambience(id);
-  if (id === 'boarding' && (hour() >= 23 || hour() < 5.5)) {
+  if (id === 'boarding' && (hour() >= TOMS.landladyHearsFromHour || hour() < TOMS.landladyHearsUntilHour)) {
     const S = G.people.sylvia;
     if (S && S.space === 'home') {
       S.wake = 1;
@@ -259,7 +264,7 @@ export function buildPrompts() {
     out = [];
   if (ui.modal || G.paused) return out;
   if (t.inCar) {
-    if (Math.abs(G.car.v) < 1.5) out.push({ k: 'F', t: 'Get out' });
+    if (Math.abs(G.car.v) < TOMS.cabLeftBelowMetresPerSecond) out.push({ k: 'F', t: 'Get out' });
     if (G.story.fare && G.story.fare.st === 'offer')
       out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
     return out;
@@ -268,7 +273,7 @@ export function buildPrompts() {
   for (const h of hotspots()) out.push(h);
   // people
   const P = target();
-  if (P && hyp(P.x, P.z, t.x, t.z) < 2.7) {
+  if (P && hyp(P.x, P.z, t.x, t.z) < TOMS.talksWithinMetres) {
     if (!out.some((o) => o.k === 'E'))
       out.push({
         k: 'E',
@@ -282,7 +287,7 @@ export function buildPrompts() {
     for (const id in ROOMS) {
       const r = ROOMS[id];
       if (r.locked) continue;
-      if (hyp(t.x, t.z, r.street[0], r.street[1]) < 1.7 && !out.some((o) => o.k === 'E'))
+      if (hyp(t.x, t.z, r.street[0], r.street[1]) < TOMS.doorWithinMetres && !out.some((o) => o.k === 'E'))
         out.push({
           k: 'E',
           t: isOpen(id) ? 'Go into ' + r.name : r.name + ': shut',
@@ -293,7 +298,7 @@ export function buildPrompts() {
         });
     }
     const y = ROOMS.mickeys.exit2.street;
-    if (hyp(t.x, t.z, y[0], y[1]) < 1.6 && !out.some((o) => o.k === 'E'))
+    if (hyp(t.x, t.z, y[0], y[1]) < TOMS.yardDoorWithinMetres && !out.some((o) => o.k === 'E'))
       out.push({
         k: 'E',
         t: "Back door of Mickey's",
@@ -305,9 +310,9 @@ export function buildPrompts() {
           t.ang = -1.57;
         },
       });
-    if (nearCar(3.2) && G.car.keys) out.push({ k: 'F', t: 'Get in the cab' });
+    if (nearCar(TOMS.cabWithinMetres) && G.car.keys) out.push({ k: 'F', t: 'Get in the cab' });
     for (const p of PROPS)
-      if (p.hand && hyp(t.x, t.z, p.x, p.z) < p.r + 1.3 && t.weapon !== p.hand) {
+      if (p.hand && hyp(t.x, t.z, p.x, p.z) < p.r + TOMS.reachesAThingWithinMetres && t.weapon !== p.hand) {
         out.push({
           k: 'G',
           t: 'Pick up a ' + p.hand,
@@ -322,11 +327,11 @@ export function buildPrompts() {
     const r = ROOMS[t.space];
     if (r) {
       const [mx, mz] = roomPos(r.id, r.mat[0], r.mat[1]);
-      if (hyp(t.x, t.z, mx, mz) < 1.5 && !out.some((o) => o.k === 'E'))
+      if (hyp(t.x, t.z, mx, mz) < TOMS.doorMatWithinMetres && !out.some((o) => o.k === 'E'))
         out.push({ k: 'E', t: 'Leave', run: () => leaveRoom(false) });
       if (r.exit2) {
         const [ex, ez] = roomPos(r.id, r.exit2.mat[0], r.exit2.mat[1]);
-        if (hyp(t.x, t.z, ex, ez) < 1.4 && !out.some((o) => o.k === 'E'))
+        if (hyp(t.x, t.z, ex, ez) < TOMS.wayOutWithinMetres && !out.some((o) => o.k === 'E'))
           out.push({ k: 'E', t: 'Out to ' + r.exit2.label, run: () => leaveRoom(true) });
       }
     }
@@ -338,8 +343,14 @@ export function buildPrompts() {
 // What the E prompt does beside a person: the written scene that is waiting with them, or else a talk.
 export function talkTo(P) {
   if (P.anon) {
-    bubble(P, pick(P.def.bark || (P.lad ? BARKS.lads : nightF() > 0.6 ? BARKS.night : BARKS.day)), 3.5);
-    P.mind.look = 3;
+    bubble(
+      P,
+      pick(
+        P.def.bark || (P.lad ? BARKS.lads : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day),
+      ),
+      3.5,
+    );
+    P.mind.look = STORY.looksAfterBarkingRealSeconds;
     return;
   }
   if (P.fight || P.down) return;
@@ -356,13 +367,14 @@ function useKey(k) {
   if (p) p.run();
 }
 function solidFor(x, z) {
-  if (blocked(x, z, 0.32)) return true;
+  if (blocked(x, z, TOMS.bodyRadiusMetres)) return true;
   if (G.tom.space === 'street') {
     const c = G.car;
     for (const k of [1.3, 0, -1.3])
-      if (hyp(x, z, c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k) < 1.15) return true;
-    if (!G.people.kevin?.gone || hour() < 7 || hour() > 18.4) {
-      for (const k of [1.3, 0, -1.3]) if (hyp(x, z, 4.1, 32.2 + k) < 1.15) return true;
+      if (hyp(x, z, c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k) < TOMS.cabBodyRadiusMetres)
+        return true;
+    if (!G.people.kevin?.gone || hour() < TOMS.kevinsCabOutFromHour || hour() > TOMS.kevinsCabBackAtHour) {
+      for (const k of [1.3, 0, -1.3]) if (hyp(x, z, 4.1, 32.2 + k) < TOMS.cabBodyRadiusMetres) return true;
     }
   }
   return false;
@@ -373,7 +385,7 @@ export function stepPlayer(dt) {
     my = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + touch.y;
   const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my) < 0.1;
   ui.wait = waiting;
-  G.fast = waiting ? 12 : 1;
+  G.fast = waiting ? TOMS.waitingTimeRunsTimes : 1;
   if (t.inCar) {
     stepCar(dt, { x: clamp(mx, -1, 1), y: clamp(my, -1, 1), hb: !!keys.Space });
     t.run = false;
@@ -381,7 +393,7 @@ export function stepPlayer(dt) {
     stepCar(dt, { x: 0, y: 0 });
     const l = Math.hypot(mx, my);
     let sp = 0;
-    if (l > 0.1 && !(F.on && F.rung < 5 && F.rung > 0 && false)) {
+    if (l > 0.1 && !(F.on && F.rung < LAD.strikeRung && F.rung > 0 && false)) {
       mx /= Math.max(1, l);
       my /= Math.max(1, l);
       const fx = Math.sin(cam.yaw),
@@ -390,35 +402,52 @@ export function stepPlayer(dt) {
         rz = Math.sin(cam.yaw),
         wx = fx * my + rx * mx,
         wz = fz * my + rz * mx;
-      const fighting = F.on && F.rung >= 5,
-        run = (keys.ShiftLeft || keys.ShiftRight || touch.run) && !fighting && t.hurt < 0.7 && !t.carry;
+      const fighting = F.on && F.rung >= LAD.strikeRung,
+        run =
+          (keys.ShiftLeft || keys.ShiftRight || touch.run) &&
+          !fighting &&
+          t.hurt < TOMS.cannotRunAboveHurt &&
+          !t.carry;
       sp =
-        (fighting ? 1.9 : run ? 4.5 : 1.85) *
-        (1 - t.hurt * 0.4) *
+        (fighting
+          ? TOMS.fightingMetresPerSecond
+          : run
+            ? TOMS.runningMetresPerSecond
+            : TOMS.walkingMetresPerSecond) *
+        (1 - t.hurt * TOMS.hurtSlowsByShare) *
         Math.min(1, l) *
-        (F.st === 'block' ? 0.4 : 1);
+        (F.st === 'block' ? TOMS.blockingSlowsToShare : 1);
       t.run = run;
-      if (!fighting) t.ang += clamp(angDiff(t.ang, Math.atan2(wx, wz)), -10 * dt, 10 * dt);
+      if (!fighting)
+        t.ang += clamp(
+          angDiff(t.ang, Math.atan2(wx, wz)),
+          -TOMS.turnsRadiansPerSecond * dt,
+          TOMS.turnsRadiansPerSecond * dt,
+        );
       const nx = t.x + wx * sp * dt,
         nz = t.z + wz * sp * dt;
       if (!solidFor(nx, t.z)) t.x = nx;
       if (!solidFor(t.x, nz)) t.z = nz;
-      t.puff = clamp((t.puff || 0) + (run ? dt * 0.12 : -dt * 0.08), 0, 1);
+      t.puff = clamp(
+        (t.puff || 0) + (run ? dt * TOMS.puffGainedPerSecondRunning : -dt * TOMS.puffLostPerSecondWalking),
+        0,
+        1,
+      );
       t.still = 0;
     } else {
       t.run = false;
       t.still += dt;
-      t.puff = Math.max(0, (t.puff || 0) - dt * 0.1);
+      t.puff = Math.max(0, (t.puff || 0) - dt * TOMS.puffLostPerSecondStill);
     }
     t.v = sp;
     // do not stand inside people
     for (const P of G.named.concat(G.crowd)) {
       if (P.gone || P.space !== t.space || P.down || P.inCar) continue;
       const d = hyp(P.x, P.z, t.x, t.z);
-      if (d < 0.55 && d > 0.01) {
-        const px = t.x + ((t.x - P.x) / d) * (0.55 - d),
-          pz = t.z + ((t.z - P.z) / d) * (0.55 - d);
-        if (!blocked(px, pz, 0.3)) {
+      if (d < TOMS.pushedApartWithinMetres && d > 0.01) {
+        const px = t.x + ((t.x - P.x) / d) * (TOMS.pushedApartWithinMetres - d),
+          pz = t.z + ((t.z - P.z) / d) * (TOMS.pushedApartWithinMetres - d);
+        if (!blocked(px, pz, TOMS.pushedBodyRadiusMetres)) {
           t.x = px;
           t.z = pz;
         }

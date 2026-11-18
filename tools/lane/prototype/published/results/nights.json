@@ -1,0 +1,116 @@
+{
+ "arrivalsTuesdayNightTomAtTheRank": {
+  "from": "Tue 16 Oct, 10.00pm",
+  "until": "Wed 17 Oct, 7.00am",
+  "tomAt": "Quay Street, the quay end",
+  "tomPutBackThereTimes": 0,
+  "walksSetOff": 29,
+  "walksArrived": 19,
+  "walksGivenUpForAnotherPlace": 0,
+  "ofThoseToOrFromTheMapEdge": 0,
+  "stillWalkingAtTheEnd": [
+   {
+    "person": "Ron Kirby",
+    "goingTo": "Rinaldi's",
+    "setOffAt": "Wed 17 Oct, 6.36am"
+   },
+   {
+    "person": "Ada",
+    "goingTo": "the chapel",
+    "setOffAt": "Wed 17 Oct, 6.12am"
+   },
+   {
+    "person": "Alison Sedman",
+    "goingTo": "Rinaldi's",
+    "setOffAt": "Wed 17 Oct, 7.00am"
+   },
+   {
+    "person": "Pauline Kitching",
+    "goingTo": "Mickey's Cars",
+    "setOffAt": "Wed 17 Oct, 7.00am"
+   },
+   {
+    "person": "Kevin Needham",
+    "goingTo": "Rinaldi's",
+    "setOffAt": "Wed 17 Oct, 6.30am"
+   },
+   {
+    "person": "Terry Hodgson",
+    "goingTo": "Quay Street, the quay end (7, 36)",
+    "setOffAt": "Wed 17 Oct, 5.30am"
+   },
+   {
+    "person": "Brenda Laverack",
+    "goingTo": "the fish dock (57, 57)",
+    "setOffAt": "Wed 17 Oct, 5.48am"
+   },
+   {
+    "person": "Lee Drewery",
+    "goingTo": "the fish dock (51, 56)",
+    "setOffAt": "Wed 17 Oct, 6.00am"
+   },
+   {
+    "person": "Susan Coverdale",
+    "goingTo": "the ferry landing (-55, 61)",
+    "setOffAt": "Wed 17 Oct, 6.00am"
+   },
+   {
+    "person": "Albert Suggitt",
+    "goingTo": "the fish dock (45, 56)",
+    "setOffAt": "Wed 17 Oct, 6.30am"
+   }
+  ],
+  "longestWalkGameMinutes": 170,
+  "stoodStill": [],
+  "gaveUp": [],
+  "pauseNeverEnded": null,
+  "everyoneArrived": true,
+  "ok": true
+ },
+ "nights": {
+  "nights": [
+   {
+    "night": "Tue 16 Oct",
+    "from": "Tue 16 Oct, 10.00pm",
+    "until": "Wed 17 Oct, 6.00am",
+    "tomAt": "Regent House",
+    "pauses": [
+     {
+      "at": "Wed 17 Oct, 4.24am",
+      "gameMinute": 3144.5,
+      "reason": "dead on his feet: to bed",
+      "resumed": true,
+      "resumedBecause": "dead on his feet: to bed: done",
+      "realSecondsPaused": 0
+     }
+    ],
+    "pausesWithNoResume": []
+   },
+   {
+    "night": "Wed 17 Oct",
+    "from": "Wed 17 Oct, 10.00pm",
+    "until": "Thu 18 Oct, 6.00am",
+    "tomAt": "Regent House",
+    "pauses": [
+     {
+      "at": "Thu 18 Oct, 4.24am",
+      "gameMinute": 4584,
+      "reason": "dead on his feet: to bed",
+      "resumed": true,
+      "resumedBecause": "dead on his feet: to bed: done",
+      "realSecondsPaused": 0
+     }
+    ],
+    "pausesWithNoResume": []
+   }
+  ],
+  "pauseNeverEnded": null,
+  "watchdogFaults": 0,
+  "ok": true,
+  "now": {
+   "day": 3,
+   "hour": 9
+  }
+ },
+ "pass": true
+}

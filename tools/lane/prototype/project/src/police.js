@@ -46,7 +46,14 @@ export function policeStep(dt) {
           t.space === 'street' ? (t.inCar ? G.car.x : t.x) : ROOMS[t.space] ? ROOMS[t.space].street[0] : t.x,
         tz =
           t.space === 'street' ? (t.inCar ? G.car.z : t.z) : ROOMS[t.space] ? ROOMS[t.space].street[1] : t.z;
-      goToPoint(P, tx, tz, a.st === 'chase' ? POL.chasingMetresPerSecond : POL.walkingMetresPerSecond);
+      // While Tom stays where he was at the last look and the walk to him is under way, the constable keeps to
+      // it. Planned afresh from wherever he stood, the way could flip between two ways round the lane east of
+      // Quay Street, and he walked back and forth there and never arrived.
+      if (!P.route || a.tx === undefined || hyp(a.tx, a.tz, tx, tz) > POL.keepsHisWayWhileTomWithinMetres) {
+        a.tx = tx;
+        a.tz = tz;
+        goToPoint(P, tx, tz, a.st === 'chase' ? POL.chasingMetresPerSecond : POL.walkingMetresPerSecond);
+      }
     }
     if (a.st === 'come' && d < POL.speaksWithinMetres && !t.inCar && !G.paused) arrestScene(P, a);
     if (a.st === 'chase') {
@@ -278,7 +285,7 @@ export function ellisStep(dt) {
     E.chat = { with: P.id, t: POL.ellisAsksForRealSeconds };
     P.chat = { with: 'ellis', t: POL.ellisAsksForRealSeconds };
     P.hold = true;
-    after(4, () => {
+    after(POL.personHeldWhileAskedRealSeconds, () => {
       P.hold = false;
     });
     const Ev = G.ev[e.ev];

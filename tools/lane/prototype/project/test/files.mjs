@@ -7,11 +7,12 @@ import { execSync } from 'child_process';
 import crypto from 'crypto';
 import os from 'os';
 import path from 'path';
+const SITE = process.env.SITE || 'site'; // the published set, written by tools/publish_set.mjs
 let bad = 0;
 const check = (name, ok, extra = '') => { if (!ok) bad++; console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${extra ? ' | ' + extra : ''}`); };
 
 // 1. no save door (as in a plain browser tab)
-let h = await launch({ port: 8821, dist: 'site' });
+let h = await launch({ port: 8821, dist: SITE });
 await sleep(600);
 await h.page.click('[data-act="titlefiles"]'); await sleep(900);
 const list = await h.ev(() => ({ links: document.querySelectorAll('table.files button.link').length, rows: document.querySelectorAll('table.files tr').length, zipHidden: document.getElementById('fzip').classList.contains('hidden'), modal: LEDGER.ui.modal, paused: LEDGER.read().paused }));
@@ -45,7 +46,7 @@ if (h.errors.length) { bad++; console.log(' errors', h.errors.slice(0, 3)); }
 await h.close();
 
 // 2. with a stand-in for the host's save door
-h = await launch({ port: 8822, dist: 'site', before: () => { window.__saved = []; window.claude = { use: async (n) => (n === 'downloads' ? { save: async (r) => { if (window.__decline) { const e = new Error('no'); e.code = 'declined'; throw e; } window.__saved.push({ filename: r.filename, bytes: r.data.size != null ? r.data.size : r.data.length }); return { status: 'saved' }; } } : null) }; } });
+h = await launch({ port: 8822, dist: SITE, before: () => { window.__saved = []; window.claude = { use: async (n) => (n === 'downloads' ? { save: async (r) => { if (window.__decline) { const e = new Error('no'); e.code = 'declined'; throw e; } window.__saved.push({ filename: r.filename, bytes: r.data.size != null ? r.data.size : r.data.length }); return { status: 'saved' }; } } : null) }; } });
 await sleep(600);
 await h.page.click('[data-act="titlefiles"]'); await sleep(900);
 check('with a save door the zip button shows', await h.ev(() => !document.getElementById('fzip').classList.contains('hidden')));

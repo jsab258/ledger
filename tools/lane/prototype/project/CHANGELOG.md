@@ -1,6 +1,108 @@
 # LEDGER loop prototype: changelog
 
-## 18 November 2026. Readable source, known faults, test hook, Ledger screen test
+## 18 November 2026, second round. Every number in the rules table, routines retimed, three fixes
+
+No new systems. Walking pace and the rules of seeing and pausing are as they were. Old saves still load.
+
+### 1. Every rule's number in `LEDGER.rules`, changing nothing
+
+- Moved into `src/rules.js`, each under a plain name with its unit: the confrontation ladder (129 names),
+  the story's hours, distances and regard (107), talk (55), the routines and the anonymous crowd (59), the 52
+  kinds of thing the town can know, each person's numbers (28 people), the 28 weekly schedules, Tom's own
+  pace, shop hours, driving, traffic, and smaller groups in police, rest, naming, light, weather and time.
+  `rules.js` now holds 1,313 numbers in 32 sections.
+- A move cannot change a value: `tools/numbers.mjs` writes each number's own text into the table. The kinds
+  and the cast were also compared whole, before and after: identical, key order included.
+- Left where they are, 375 numbers in the 22 rule files, counted by reason so none can be added unnoticed
+  (`npm run numbers`): 58 unit conversions, 69 indexes and plain arithmetic, 29 text and layout, 53 places on
+  the map, 84 camera and controls, 82 how people and things look. The numbers 0, 1 and 2 (1,053 of them)
+  were left in place without being looked at one by one.
+- Proof that nothing changed: one full scripted week, played with a fixed seed on a clock the test owns,
+  gives exactly the same save on the page published earlier today and on the build with the numbers moved.
+  All 19 parts of the save are the same (events, every mind's memories, stories passed on, money, debts, the
+  Ledger, the measures): whole digest `d45ae942a389fab4d9a4` both times, and the same again on a second and
+  third run. This is now a test, `test/same_week.mjs`, with its record in `test/golden/`.
+
+### 2. Routines retimed
+
+- What the check found first: with Tom kept at the rank, 59 of the 157 walks in the schedules had too little
+  time, not only the walks to the map's edge and the watchman's rounds. Within 90 metres of Tom people walk at
+  their real pace, a game minute to the metre, and the rank is where the quay end's routines cross.
+- The rule used: every row leaves room for its walk and a quarter again, with Tom away and with Tom at the
+  rank. `tools/walk_times.mjs` works this out from the game's own paths: all 145 walks now fit.
+- Twenty-two people have longer rows:
+  - The drivers. Kevin makes one run away a day (10.12am to 1.12pm) instead of two. Terry makes two runs a
+    night instead of three. Each walk to or from the map's edge has three hours.
+  - The watchman. Norman makes three rounds a night instead of five, each leg with about an hour and three
+    quarters, and comes in for his chips at 3.54pm.
+  - Lunch and errands lengthened by 6 to 70 minutes: Sheila, Ron, Rita, Wayne, Hal, Shaun, Father Walsh,
+    Mrs Rennison, Julie, Susan, Brenda, Darren.
+  - Long walks through the quay end given three to four hours: Lee and Dennis (lunch at the caff), Nora (the
+    fish queue), Alison (her round now runs 7am to 6.12pm), June (the ferry landing), Susan (in at 6am).
+  - Stops that went, because the day could not hold them: Albert's breakfast at the caff, June's Monday
+    evening walk to the ferry.
+  - Ada goes to chapel at 6.12am on Wednesdays, not 8am, so she is back at her window to ask Tom to tea.
+- `LEDGER.check.arrivals()` now keeps Tom at the place named for the whole of it. Before, the game put him to
+  bed at 4.24am and the rest of the check ran with him indoors.
+- Both checks over 26 game hours, from Mon 15 Oct 3.42pm (`test/arrivals.mjs`, results in `RESULTS.md`):
+
+| Tom | Walks set off | Arrived | Given up for another place | Still on their way at the end | Stood still | Pause never ended |
+| --- | --- | --- | --- | --- | --- | --- |
+| Away, before | 163 | 142 | 16 (9 at the map's edge) | 5 | 0 | no |
+| Away, after | 153 | 150 | 0 | 3 | 0 | no |
+| At the rank, before (until 4.24am only) | 163 | 136 | 22 (9 at the map's edge) | 5 | 0 | no |
+| At the rank, after (the whole 26 hours) | 153 | 142 | 0 | 11 | 0 | no |
+
+- The gossip before and after. One scripted week with the same seed on each build; each cell is before then
+  after. A sighting is one person seeing Tom do a thing (an act that goes on is counted each time it is seen
+  again). A pair has met when two named people stood within talking distance. `LEDGER.gossip()` returns it.
+
+| Day | Sightings | Stories passed on | Furthest story (tellings) | Pairs of named people who met |
+| --- | --- | --- | --- | --- |
+| Mon 15 Oct | 161 then 98 | 11 then 16 | 2 then 3 | 14 then 27 |
+| Tue 16 Oct | 6 then 11 | 52 then 87 | 4 then 5 | 48 then 79 |
+| Wed 17 Oct | 0 then 0 | 31 then 18 | 8 then 6 | 43 then 69 |
+| Thu 18 Oct | 2 then 3 | 31 then 14 | 9 then 4 | 53 then 73 |
+| Fri 19 Oct | 0 then 0 | 22 then 53 | 5 then 8 | 54 then 82 |
+| Sat 20 Oct | 0 then 0 | 6 then 9 | 5 then 8 | 17 then 29 |
+| The week | 169 then 112 | 153 then 197 | 9 then 8 | 62 then 95 |
+
+Met in the week after, not before (43): ada + albert; ada + june; ada + nora; ada + walsh; albert + alison; albert + brenda; albert + nora; albert + walsh; alison + julie; alison + kevin; brenda + nora; brenda + susan; brenda + terry; darren + lee; darren + nora; darren + norman; dennis + grace; dennis + julie; dennis + rita; dennis + shaun; dennis + sheila; dennis + wayne; grace + kevin; grace + lee; julie + kevin; julie + lee; julie + nora; julie + sheila; june + lee; june + susan; kevin + norman; lily + norman; lily + terry; nora + ron; nora + sylvia; norman + peter; norman + ron; norman + susan; norman + terry; pauline + terry; peter + terry; rita + shaun; rita + sheila.
+
+Met in the week before, not after (10): ada + darren; albert + kevin; albert + susan; alison + darren; alison + dennis; alison + june; alison + sylvia; darren + julie; june + kevin; lee + susan.
+
+- In short: more people cross each other's paths (62 pairs then 95) because they are out on the street for
+  longer, and more stories are passed on (153 then 197). The furthest story travelled 9 tellings, then 8.
+
+### 3. Small fixes
+
+- a) "Nobody saw" never disappears. An act waits two game minutes; if no watcher is known by then the line is
+  written, and from then on it can only be struck through with the day and the reason. If a watcher is known
+  before the wait is over, nothing is written. No entry is ever taken out of the book.
+- b) In People, `/` and then a letter jumps to that letter: any letter, E, L and Q among them. It goes to the
+  first page under the letter and says so when nobody is under it. Esc lets the jump go.
+- c) The two first-round scripts are replaced by tests through the hook that pass or fail, and both are in
+  `npm test`: `test/town.mjs` (what `logic.mjs` printed: being seen, the ladder and the priest, the police
+  and custody, Ada's tea, the second ask, Iveson's yard, DS Ellis, the lads, saving and loading) and thirteen
+  checks added to `test/week.mjs` (what `play.mjs` printed). `test/ledger_rules.mjs` checks a) and b).
+
+### 4. Found on the way, and fixed
+
+- A constable coming for Tom could walk back and forth in the lane east of Quay Street and never arrive: he
+  planned his way afresh every second and a half, and there the way flipped between two ways round. He now
+  keeps to his way while Tom stays where he was. The town test could not pass without this.
+
+### 5. Test hook additions
+
+- `LEDGER.gossip()`: the gossip table, day by day.
+- `LEDGER.ledger.act(kind)`: an act at a moment of the test's choosing. `LEDGER.ledger.learn(eventId,
+  personId)`: a watcher turns up. `LEDGER.ledger.waiting()`: acts still waiting to see whether anybody saw.
+  `LEDGER.ledger.read().said`: the line the book says back.
+- `LEDGER.check.arrivals()` reports `tomPutBackThereTimes`.
+- The test harness has a seeded, stepped mode (`launch({ seed })`): the same seed gives the same week on any
+  machine.
+
+## 18 November 2026, first round. Readable source, known faults, test hook, Ledger screen test
 
 No new systems. Rules, story, numbers and saves are as they were except where a fault below is fixed.
 Old saves still load.

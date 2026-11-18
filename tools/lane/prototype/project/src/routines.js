@@ -5,6 +5,7 @@ import { CAST, KEEPERS } from './cast.js';
 import { NODES, nearNode, path, SPOTS, ROOMS, WINDOWS, EXITS, roomPos, zoneAt } from './map.js';
 import { newMind } from './events.js';
 import { RULES } from './rules.js';
+const CROWD = RULES.crowd;
 
 const WALK = RULES.routines;
 
@@ -112,11 +113,11 @@ export function initPeople() {
       desc: k.desc,
       sex: k.sex,
       look: randomLook(k.sex, true),
-      talk: 0.5,
-      nerve: 0.6,
+      talk: CROWD.keeperTalkativeZeroToOne,
+      nerve: CROWD.keeperNerveZeroToOne,
       voice: 'plain',
       bark: k.bark,
-      age: 50,
+      age: CROWD.keeperAgeYears,
     });
     P.anon = true;
     P.keeper = k;
@@ -125,19 +126,19 @@ export function initPeople() {
     G.keepers.push(P);
     delete G.minds[k.id];
   }
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < CROWD.walkersAtMost; i++) {
     const sex = chance(0.5) ? 'm' : 'f',
-      old = chance(0.35);
+      old = chance(CROWD.walkerIsOldChance);
     const P = mkPerson('c' + i, {
       id: 'c' + i,
       name: 'a passer-by',
       desc: sex === 'm' ? 'a man' : 'a woman',
       sex,
       look: randomLook(sex, old),
-      talk: 0.5,
-      nerve: rnd(0.3, 0.7),
+      talk: CROWD.walkerTalkativeZeroToOne,
+      nerve: rnd(CROWD.walkerNerveAtLeast, CROWD.walkerNerveAtMost),
       voice: 'plain',
-      age: old ? 65 : 35,
+      age: old ? CROWD.oldWalkerAgeYears : CROWD.walkerAgeYears,
       old,
     });
     P.anon = true;
@@ -145,7 +146,7 @@ export function initPeople() {
     G.crowd.push(P);
     delete G.minds['c' + i];
   }
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < CROWD.ladsCount; i++) {
     const P = mkPerson('lad' + i, {
       id: 'lad' + i,
       name: "one of Cammack's lads",
@@ -160,10 +161,10 @@ export function initPeople() {
         bot: ['trackies', '#1a1a2a'],
         x: [],
       },
-      talk: 0.4,
-      nerve: 0.7,
+      talk: CROWD.ladTalkativeZeroToOne,
+      nerve: CROWD.ladNerveZeroToOne,
       voice: 'plain',
-      age: 22,
+      age: CROWD.ladAgeYears,
       lad: 1,
     });
     P.anon = true;
@@ -171,7 +172,7 @@ export function initPeople() {
     G.crowd.push(P);
     delete G.minds['lad' + i];
   }
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < CROWD.faresCount; i++) {
     const sex = i === 1 ? 'f' : 'm';
     const P = mkPerson('pax' + i, {
       id: 'pax' + i,
@@ -179,10 +180,10 @@ export function initPeople() {
       desc: sex === 'm' ? 'a man with a bag' : 'a woman in a headscarf',
       sex,
       look: randomLook(sex, i === 1),
-      talk: 0.5,
-      nerve: 0.5,
+      talk: CROWD.fareTalkativeZeroToOne,
+      nerve: CROWD.fareNerveZeroToOne,
       voice: 'plain',
-      age: 45,
+      age: CROWD.fareAgeYears,
       sched: [],
     });
     P.anon = true;
@@ -207,14 +208,14 @@ export function initPeople() {
         bot: ['trousers', '#3a4a5a'],
         x: [],
       },
-      talk: 0.3,
-      nerve: 0.8,
+      talk: CROWD.yardLadTalkativeZeroToOne,
+      nerve: CROWD.yardLadNerveZeroToOne,
       voice: 'plain',
-      age: 28,
+      age: CROWD.yardLadAgeYears,
       sched: [
         [0, 'off'],
-        [7.6, 'scraplad', 'work'],
-        [21.6, 'off'],
+        [CROWD.yardLadWorksFromHour, 'scraplad', 'work'],
+        [CROWD.yardLadWorksUntilHour, 'off'],
       ],
     });
     P.anon = true;
@@ -283,7 +284,7 @@ function placeNow(P) {
     const r = ROOMS[P.keeper.room],
       s = r.spots[P.keeper.spot];
     const [x, z] = roomPos(r.id, s[0], s[1]);
-    const open = hour() >= 8 && hour() < 18;
+    const open = hour() >= WALK.shopsOpenFromHour && hour() < WALK.shopsShutAtHour;
     P.x = x;
     P.z = z;
     P.ang = s[2];
@@ -404,15 +405,15 @@ function planTo(P, g, act) {
   }
   const tx = g.kind === 'room' ? g.door[0] : g.x,
     tz = g.kind === 'room' ? g.door[1] : g.z;
-  if (hyp(sx, sz, tx, tz) > 6) {
+  if (hyp(sx, sz, tx, tz) > WALK.takesThePathsBeyondMetres) {
     const a = nearNode(sx, sz),
       b = nearNode(tx, tz),
-      off = P.lane ?? (P.lane = rnd(-0.7, 0.7)),
+      off = P.lane ?? (P.lane = rnd(-WALK.laneOffsetAtMostMetres, WALK.laneOffsetAtMostMetres)),
       ns = path(a, b);
     while (
       ns.length > 1 &&
       hyp(sx, sz, NODES[ns[1]].x, NODES[ns[1]].z) <=
-        hyp(NODES[ns[0]].x, NODES[ns[0]].z, NODES[ns[1]].x, NODES[ns[1]].z) + 0.6
+        hyp(NODES[ns[0]].x, NODES[ns[0]].z, NODES[ns[1]].x, NODES[ns[1]].z) + WALK.pathEndSlackMetres
     )
       ns.shift(); // never walk back to a node behind you
     while (
@@ -424,10 +425,11 @@ function planTo(P, g, act) {
           NODES[ns[ns.length - 2]].x,
           NODES[ns[ns.length - 2]].z,
         ) +
-          0.6
+          WALK.pathEndSlackMetres
     )
       ns.pop();
-    for (const n of ns) legs.push({ x: NODES[n].x + off * 0.6, z: NODES[n].z + off * 0.6 });
+    for (const n of ns)
+      legs.push({ x: NODES[n].x + off * WALK.laneOffsetScale, z: NODES[n].z + off * WALK.laneOffsetScale });
   }
   legs.push({ x: tx, z: tz });
   if (g.kind === 'room') {
@@ -458,7 +460,7 @@ export function stepPerson(P, dt, near) {
     if (P.moving && !P.fight) return;
   } // a pause in the walk while they look
   if (P.keeper) {
-    const open = hour() >= 8 && hour() < 18;
+    const open = hour() >= WALK.shopsOpenFromHour && hour() < WALK.shopsShutAtHour;
     if (open === P.gone) placeNow(P);
     return;
   }
@@ -481,12 +483,12 @@ export function stepPerson(P, dt, near) {
         P.awake = true;
         P.atWindow = !!P.win;
         P.winLit = true;
-        P.winT = G.t + 22;
+        P.winT = G.t + WALK.windowLightStaysGameMinutes;
       }
     }
     if (P.alert && P.awake && P.win && !P.atWindow) {
       P.atWindow = true;
-      P.winT = G.t + 30;
+      P.winT = G.t + WALK.atWindowStaysGameMinutes;
     }
     if (P.winT && G.t > P.winT) {
       P.winT = 0;
@@ -501,9 +503,11 @@ export function stepPerson(P, dt, near) {
   if (!P.moving && P.space !== 'off') {
     if (P.chat && G.people[P.chat.with]) {
       const o = G.people[P.chat.with];
-      turn(P, Math.atan2(o.x - P.x, o.z - P.z), dt, 4);
-    } else if (P.alert) turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, 5);
-    else if (P.route === null && P.homeAng !== undefined) turn(P, P.homeAng, dt, 3);
+      turn(P, Math.atan2(o.x - P.x, o.z - P.z), dt, WALK.turnsToTalkerRadiansPerSecond);
+    } else if (P.alert)
+      turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, WALK.turnsToAlertRadiansPerSecond);
+    else if (P.route === null && P.homeAng !== undefined)
+      turn(P, P.homeAng, dt, WALK.turnsHomeRadiansPerSecond);
   }
 }
 function turn(P, a, dt, k) {
@@ -536,7 +540,7 @@ function walkRoute(P, dt, near) {
   }
   const pace = P.def.frail
     ? WALK.frailMetresPerSecond
-    : P.def.age > 60
+    : P.def.age > WALK.slowerAboveAgeYears
       ? WALK.over60MetresPerSecond
       : WALK.walkingMetresPerSecond;
   const sp = pace * (P.hurry || 1) * (near ? 1 : WALK.paceOutOfHisSightTimes);
@@ -545,7 +549,7 @@ function walkRoute(P, dt, near) {
     const dx = leg.x - P.x,
       dz = leg.z - P.z,
       d = Math.hypot(dx, dz);
-    if (d <= budget + 0.05) {
+    if (d <= budget + WALK.arrivesWithinMetres) {
       P.x = leg.x;
       P.z = leg.z;
       budget -= d;
@@ -555,7 +559,12 @@ function walkRoute(P, dt, near) {
     } else {
       P.x += (dx / d) * budget;
       P.z += (dz / d) * budget;
-      turn(P, Math.atan2(dx, dz), Math.min(dt, 0.1), 7);
+      turn(
+        P,
+        Math.atan2(dx, dz),
+        Math.min(dt, WALK.turnStepAtMostRealSeconds),
+        WALK.walkingTurnRadiansPerSecond,
+      );
       budget = 0;
     }
   }
@@ -566,7 +575,19 @@ function walkRoute(P, dt, near) {
 // ---------- the anonymous crowd ----------
 function crowdTarget() {
   const h = hour();
-  return h < 5 ? 1 : h < 6.5 ? 3 : h < 8 ? 9 : h < 18 ? 16 : h < 21 ? 10 : h < 23.5 ? 5 : 2;
+  return h < CROWD.smallHoursUntilHour
+    ? 1
+    : h < CROWD.dawnUntilHour
+      ? CROWD.walkersAtDawn
+      : h < CROWD.earlyUntilHour
+        ? CROWD.walkersEarly
+        : h < CROWD.dayUntilHour
+          ? CROWD.walkersByDay
+          : h < CROWD.eveningUntilHour
+            ? CROWD.walkersInTheEvening
+            : h < CROWD.lateUntilHour
+              ? CROWD.walkersLate
+              : 2;
 }
 function randomNode() {
   for (let i = 0; i < 20; i++) {
@@ -592,9 +613,12 @@ function respawnWalker(P, anywhere) {
   P.space = 'street';
   P.gone = false;
   P.awake = true;
-  P.lane = rnd(-0.8, 0.8);
+  P.lane = rnd(-CROWD.walkerLaneOffsetAtMostMetres, CROWD.walkerLaneOffsetAtMostMetres);
   P.route = {
-    legs: path(a, b).map((n) => ({ x: NODES[n].x + P.lane * 0.6, z: NODES[n].z + P.lane * 0.6 })),
+    legs: path(a, b).map((n) => ({
+      x: NODES[n].x + P.lane * WALK.laneOffsetScale,
+      z: NODES[n].z + P.lane * WALK.laneOffsetScale,
+    })),
     g: { kind: 'street', x: NODES[b].x, z: NODES[b].z, ang: rnd(0, 6.28) },
     act: 'idle',
   };
@@ -606,7 +630,8 @@ function respawnWalker(P, anywhere) {
 }
 function stepWalker(P, dt, near) {
   if (P.gone) {
-    if (chance(dt * 0.05) && +P.id.slice(1) < crowdTarget()) respawnWalker(P, false);
+    if (chance(dt * CROWD.walkerComesBackChancePerRealSecond) && +P.id.slice(1) < crowdTarget())
+      respawnWalker(P, false);
     return;
   }
   if (P.route) {
@@ -614,11 +639,14 @@ function stepWalker(P, dt, near) {
     return;
   }
   P.waitT += dt;
-  if (P.alert) turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, 5);
-  if (P.waitT > (P.waitFor || (P.waitFor = rnd(4, 26)))) {
+  if (P.alert) turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, WALK.turnsToAlertRadiansPerSecond);
+  if (
+    P.waitT >
+    (P.waitFor || (P.waitFor = rnd(CROWD.walkerWaitsRealSecondsAtLeast, CROWD.walkerWaitsRealSecondsAtMost)))
+  ) {
     P.waitFor = 0;
     P.waitT = 0;
-    if (+P.id.slice(1) >= crowdTarget() || chance(0.25)) {
+    if (+P.id.slice(1) >= crowdTarget() || chance(CROWD.walkerLeavesChance)) {
       const e = pick(Object.values(EXITS));
       const a = nearNode(P.x, P.z),
         b = nearNode(e[0], e[1]);
@@ -631,7 +659,10 @@ function stepWalker(P, dt, near) {
       const a = nearNode(P.x, P.z),
         b = randomNode();
       P.route = {
-        legs: path(a, b).map((n) => ({ x: NODES[n].x + P.lane * 0.6, z: NODES[n].z + P.lane * 0.6 })),
+        legs: path(a, b).map((n) => ({
+          x: NODES[n].x + P.lane * WALK.laneOffsetScale,
+          z: NODES[n].z + P.lane * WALK.laneOffsetScale,
+        })),
         g: { kind: 'street', x: NODES[b].x, z: NODES[b].z, ang: rnd(0, 6.28) },
         act: 'idle',
       };
@@ -644,11 +675,11 @@ function ladRoutine(P, init, dt, near) {
   const i = +P.id.slice(3),
     h = hour();
   const where =
-    h >= 18 && h < 23.6
+    h >= CROWD.ladsOutFromHour && h < CROWD.ladsMoveOnAtHour
       ? i < 2
         ? ['lads1', 'lads2'][i]
         : 'video'
-      : (h >= 23.6 || h < 1.8) && i < 2 && [0, 2, 3].includes(day() % 7)
+      : (h >= CROWD.ladsMoveOnAtHour || h < CROWD.ladsLateUntilHour) && i < 2 && [0, 2, 3].includes(day() % 7)
         ? ['lads3', 'lads4'][i]
         : 'off';
   if (P.fightT) return;
@@ -665,20 +696,23 @@ function ladRoutine(P, init, dt, near) {
   }
   if (dt) {
     walkRoute(P, dt, near);
-    if (!P.moving && P.alert) turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, 5);
+    if (!P.moving && P.alert)
+      turn(P, Math.atan2(P.alert.x - P.x, P.alert.z - P.z), dt, WALK.turnsToAlertRadiansPerSecond);
   }
 }
 export function stepPeople(dt) {
   const t = G.tom,
     cx = t.inCar ? G.car.x : t.x,
     cz = t.inCar ? G.car.z : t.z;
-  for (const P of G.named) stepPerson(P, dt, P.space === t.space && hyp(P.x, P.z, cx, cz) < 90);
-  for (const P of G.crowd) stepPerson(P, dt, P.space === t.space && hyp(P.x, P.z, cx, cz) < 90);
+  for (const P of G.named)
+    stepPerson(P, dt, P.space === t.space && hyp(P.x, P.z, cx, cz) < WALK.fullyStepsWithinMetres);
+  for (const P of G.crowd)
+    stepPerson(P, dt, P.space === t.space && hyp(P.x, P.z, cx, cz) < WALK.fullyStepsWithinMetres);
 }
 // Walk someone to an arbitrary point on the street (police, Ellis). They hold there until released.
-export function goToPoint(P, x, z, speed = 1.35) {
+export function goToPoint(P, x, z, speed = WALK.walkingMetresPerSecond) {
   P.hold = true;
-  P.hurry = speed / 1.35;
+  P.hurry = speed / WALK.walkingMetresPerSecond;
   planTo(P, { kind: 'street', x, z, ang: P.ang }, 'idle');
 }
 // Send someone somewhere for the story; they walk there and stay until released.
@@ -690,7 +724,7 @@ export function send(P, where, act = 'idle', untilT) {
 export function release(P) {
   P.override = null;
 }
-export function isNear(P, d = 3) {
+export function isNear(P, d = WALK.besideTomWithinMetres) {
   const t = G.tom;
   return P.space === t.space && !P.gone && hyp(P.x, P.z, t.x, t.z) < d;
 }

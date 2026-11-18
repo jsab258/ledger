@@ -8,14 +8,16 @@ One page, built with three.js 0.187.0. No server. The published page is `dist/in
 
     npm ci
     npm run build        # writes dist/
-    npm test             # nights, layout, files, one full week (needs Chrome, see BUILD.md)
+    npm test             # every check below (needs Chrome, see BUILD.md)
 
 Read `BUILD.md` for the build, `CHANGELOG.md` for what changed and when, `NOT_DONE.md` for what is missing,
 `DESIGN_NOTES.md` for every choice made without asking.
 
 ## The source, one file per part
 
-All of it is under `src/`. Every rule's number is in `src/rules.js`, with the unit in its name.
+All of it is under `src/`. Every rule's number is in `src/rules.js`, with the unit in its name: the ladder, the
+story's hours, talk, each person's numbers and their weekly schedule, the kinds of thing the town can know.
+`npm run numbers` lists what is still written elsewhere and why, and fails if a new number appears there.
 
 | Part | Files |
 | --- | --- |
@@ -29,7 +31,7 @@ All of it is under `src/`. Every rule's number is in `src/rules.js`, with the un
 | Saving | `saving.js` (save, restore, old saves), `state.js` (what a week holds, the pause book) |
 | Scenes | `scenes.js` (the week's beats and written scenes), `work.js` (passing time, sleep, being beaten), `fight.js` (the confrontation ladder) |
 | Rendering | `render/core.js`, `town.js`, `rooms.js`, `cars.js`, `figures.js`, `rig.js`, `tailor.js`, `actors.js`, `extras.js`, `effects.js`, `sync.js` |
-| Rules | `rules.js` (the one table, exposed as `LEDGER.rules`) |
+| Rules | `rules.js` (the one table, exposed as `LEDGER.rules`: 1,313 numbers in 32 sections) |
 | Test hook | `hook.js` (`window.LEDGER`), `checks.js` (`LEDGER.check.arrivals()`, `LEDGER.check.nights()`) |
 | The rest | `main.js` (boot, the loop, menus), `ui.js` (HUD, panels, the Noted line), `player.js` (keys, walking, camera), `drive.js`, `audio.js`, `util.js`, `end_screen.js`, `design_notes.js`, `design_notes_text.js`, `files_panel.js`, `index.html` (the page and its styles) |
 
@@ -45,20 +47,39 @@ seconds.
 - `LEDGER.written`: `read()`, `next()`, `choose(n)`.
 - `LEDGER.job`: `read()`, `goToPickUp()`, `goToDrop()`; the drop door is `press('E')` at its prompt.
 - `LEDGER.fare`: `places()`, `call()`, `accept()`, `pickUp()`, `dropOff()`. `LEDGER.cab`: `getIn()`, `driveTo(place)`, `getOut()`.
-- `LEDGER.ledger`: `open(part)`, `close()`, `read()`, `rows()`, `pages()`, `key(code)`, `mark()`, `book()`, `openItems()`, `moneySums()`, `faults()`.
-- `LEDGER.measures()`, `LEDGER.measuresJSON()`.
+- `LEDGER.ledger`: `open(part)`, `close()`, `read()`, `rows()`, `pages()`, `key(code)`, `mark()`, `book()`, `openItems()`, `moneySums()`, `faults()`, `act(kind)`, `learn(eventId, personId)`, `waiting()`.
+- `LEDGER.measures()`, `LEDGER.measuresJSON()`, `LEDGER.gossip()` (the gossip table, day by day).
 - `LEDGER.pauses()`, `LEDGER.pauseFaults()`, `LEDGER.check.arrivals(options)`, `LEDGER.check.nights(options)`.
 - `LEDGER.saveText()`, `LEDGER.restore(text)`, `LEDGER.step(realSeconds)`, `LEDGER.wait(...)`.
 
 ## Tests
 
-Headless Chrome through puppeteer-core. `test/harness.mjs` serves a folder and opens the page.
+Headless Chrome through puppeteer-core. `test/harness.mjs` serves a folder and opens the page. With
+`launch({ seed })` it also gives the page a seeded random number generator and a clock the test owns, so the
+same seed plays the same week on any machine.
 
-- `test/week.mjs`: one full week through the hook alone; writes `out/measures.json`.
-- `test/nights.mjs`: everyone who sets off arrives or is accounted for; no pause without a resume.
+- `test/same_week.mjs`: one full scripted week with a fixed seed must give exactly the recorded save, part by
+  part (`test/golden/week.json`). A change meant to alter nothing must leave it passing.
+- `test/week.mjs`: one full week through the hook alone (`test/week_bot.mjs` is the script); thirteen checks;
+  writes `out/measures.json`.
+- `test/arrivals.mjs`: `LEDGER.check.arrivals()` over 26 game hours, with Tom away and with Tom at the rank:
+  no walk given up, nobody standing still, every pause resumed.
+- `test/nights.mjs`: Tuesday night arrivals, a self-test that a held person is caught, and no pause without a
+  resume on Tuesday and Wednesday nights.
+- `test/town.mjs`: being seen, the ladder and the priest, the police and custody, Ada's tea, the second ask,
+  Iveson's yard, DS Ellis, the lads, saving and loading.
+- `test/ledger_rules.mjs`: "Nobody saw" is never taken out; `/` and a letter jumps in People.
 - `test/layout.mjs`: the slip, the subtitles and the Ledger over a talk, at four window sizes.
 - `test/files.mjs`: the files beside the page can be listed and read, the zip unpacks, the export falls back.
-- `test/talk.mjs`: live talk with a stand-in for the page's Claude (working, switched off, refused, a broken rule).
-- `test/oldsave.mjs`: a save written by an older build loads in this one, and its Ledger is rebuilt with a
-  source event on every entry. `OLD=<folder with an older build> node test/oldsave.mjs`.
+- `test/talk.mjs`: live talk with a stand-in for the page's Claude.
+- `test/oldsave.mjs`: a save written by an older build loads in this one.
+  `OLD=<folder with an older build> node test/oldsave.mjs`.
 - `test/eyes.mjs`: the town's eyes setting, off and on.
+
+## Tools
+
+- `tools/build.mjs`: the build. `tools/publish_set.mjs`: gathers what is published.
+- `tools/numbers.mjs`: lists the numbers in a file, moves them into `rules.js` by name, and checks none are
+  left that the record (`tools/numbers_kept.json`) does not allow.
+- `tools/walk_times.mjs`: every walk in every schedule against the time its row has (`npm run walks`).
+- `tools/gossip_table.mjs`: the gossip of one seeded week on two builds, as a table.

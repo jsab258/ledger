@@ -5,7 +5,7 @@
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "73245b8eb8b353a9cbebb0bdb7be20c05c148f7c47de63917c21c03142fcd29e",
+ "ledgerJsSha256": "178306842355d40a4ba9d990295ddb3f1f6697926939b76c507c02f0d34fe6aa",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -15,42 +15,82 @@
      "path": "README.md",
      "as": "README.md",
      "what": "What this is, and the source file by file.",
-     "bytes": 4757,
+     "bytes": 6350,
      "text": true
     },
     {
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 7189,
+     "bytes": 15155,
      "text": true
     },
     {
      "path": "NOT_DONE.md",
      "as": "NOT_DONE.md",
      "what": "What could not be done, and why.",
-     "bytes": 4709,
+     "bytes": 3832,
      "text": true
     },
     {
      "path": "BUILD.md",
      "as": "BUILD.md",
      "what": "The build command, the pinned versions, the checksums.",
-     "bytes": 2504,
+     "bytes": 2817,
      "text": true
     },
     {
      "path": "DESIGN_NOTES.md",
      "as": "DESIGN_NOTES.md",
      "what": "Every choice made without asking.",
-     "bytes": 30309,
+     "bytes": 34225,
      "text": true
     },
     {
      "path": "measures.json",
      "as": "measures.json",
      "what": "The measures from one full week, played by a script through the test hook.",
-     "bytes": 5742,
+     "bytes": 5242,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "Results of the checks",
+   "files": [
+    {
+     "path": "RESULTS.md",
+     "as": "RESULTS.md",
+     "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
+     "bytes": 9329,
+     "text": true
+    },
+    {
+     "path": "results/arrivals.json",
+     "as": "results/arrivals.json",
+     "what": "LEDGER.check.arrivals() over 26 game hours: Tom away, and Tom at the rank.",
+     "bytes": 2588,
+     "text": true
+    },
+    {
+     "path": "results/nights.json",
+     "as": "results/nights.json",
+     "what": "LEDGER.check.nights(): Tuesday and Wednesday nights, every pause and its resume.",
+     "bytes": 2600,
+     "text": true
+    },
+    {
+     "path": "results/gossip_before.json",
+     "as": "results/gossip_before.json",
+     "what": "The gossip of the seeded week before the retiming, day by day.",
+     "bytes": 5550,
+     "text": true
+    },
+    {
+     "path": "results/gossip_after.json",
+     "as": "results/gossip_after.json",
+     "what": "The gossip of the same seeded week after the retiming.",
+     "bytes": 8140,
      "text": true
     }
    ]
@@ -69,14 +109,14 @@
      "path": "source/src/cast.js",
      "as": "src/cast.js",
      "what": "The people of the Hook. Canon names, ages and voices; routines, looks and the small facts each holds.",
-     "bytes": 42360,
+     "bytes": 40630,
      "text": true
     },
     {
      "path": "source/src/checks.js",
      "as": "src/checks.js",
      "what": "Checks the test hook can run: LEDGER.check.arrivals() and LEDGER.check.nights().",
-     "bytes": 10450,
+     "bytes": 11065,
      "text": true
     },
     {
@@ -90,21 +130,21 @@
      "path": "source/src/design_notes.js",
      "as": "src/design_notes.js",
      "what": "How the town watches, the Design notes and the opening letter.",
-     "bytes": 8026,
+     "bytes": 8084,
      "text": true
     },
     {
      "path": "source/src/design_notes_text.js",
      "as": "src/design_notes_text.js",
      "what": "The Design notes as text: every choice made without asking, newest round first after Scope.",
-     "bytes": 30958,
+     "bytes": 34928,
      "text": true
     },
     {
      "path": "source/src/drive.js",
      "as": "src/drive.js",
      "what": "Arcade driving and light traffic. Britain drives on the left.",
-     "bytes": 7906,
+     "bytes": 10505,
      "text": true
     },
     {
@@ -118,21 +158,21 @@
      "path": "source/src/events.js",
      "as": "src/events.js",
      "what": "Events and memories: what Tom does becomes an event; each witness keeps a memory of it.",
-     "bytes": 5815,
+     "bytes": 5846,
      "text": true
     },
     {
      "path": "source/src/fares.js",
      "as": "src/fares.js",
      "what": "The cab: the radio offer, the pick-up, the drop-off and the fare.",
-     "bytes": 8287,
+     "bytes": 8329,
      "text": true
     },
     {
      "path": "source/src/fight.js",
      "as": "src/fight.js",
      "what": "The street's way: an escalation ladder Tom can stop on at any rung. Most of it ends before a blow.",
-     "bytes": 18204,
+     "bytes": 22286,
      "text": true
     },
     {
@@ -146,14 +186,14 @@
      "path": "source/src/gossip.js",
      "as": "src/gossip.js",
      "what": "Gossip: how a memory passes from one person to the next, fades, comes back to Tom, and what the street calls him.",
-     "bytes": 6821,
+     "bytes": 6942,
      "text": true
     },
     {
      "path": "source/src/hook.js",
      "as": "src/hook.js",
      "what": "The test hook: window.LEDGER.",
-     "bytes": 21005,
+     "bytes": 23009,
      "text": true
     },
     {
@@ -167,35 +207,35 @@
      "path": "source/src/kinds.js",
      "as": "src/kinds.js",
      "what": "Every kind of thing the town can know about Tom.",
-     "bytes": 9187,
+     "bytes": 9116,
      "text": true
     },
     {
      "path": "source/src/ledger.js",
      "as": "src/ledger.js",
      "what": "The Ledger's records: only what Tom himself believes, from what he saw and heard.",
-     "bytes": 19567,
+     "bytes": 20564,
      "text": true
     },
     {
      "path": "source/src/ledger_screen.js",
      "as": "src/ledger_screen.js",
      "what": "The Ledger screen, the slip beside a talk, and the Noted line. It shows only what Tom believes.",
-     "bytes": 23298,
+     "bytes": 24118,
      "text": true
     },
     {
      "path": "source/src/light.js",
      "as": "src/light.js",
      "what": "One light field for both the picture and the rules. The same numbers draw the lamp pools on the ground",
-     "bytes": 4043,
+     "bytes": 4201,
      "text": true
     },
     {
      "path": "source/src/main.js",
      "as": "src/main.js",
      "what": "a week on Quay Street. Boot, the frame loop, menus.",
-     "bytes": 23595,
+     "bytes": 23614,
      "text": true
     },
     {
@@ -209,7 +249,7 @@
      "path": "source/src/measures.js",
      "as": "src/measures.js",
      "what": "The Ledger screen test: what is measured, and the scripted \"find the fact\" asks.",
-     "bytes": 8746,
+     "bytes": 8892,
      "text": true
     },
     {
@@ -223,70 +263,70 @@
      "path": "source/src/player.js",
      "as": "src/player.js",
      "what": "Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.",
-     "bytes": 18463,
+     "bytes": 20274,
      "text": true
     },
     {
      "path": "source/src/police.js",
      "as": "src/police.js",
      "what": "Police: what reaches the station, the constable, custody, and DS Ellis asking the street.",
-     "bytes": 11358,
+     "bytes": 11848,
      "text": true
     },
     {
      "path": "source/src/routines.js",
      "as": "src/routines.js",
      "what": "People as agents: routines, walking, windows, the anonymous crowd. No rendering here.",
-     "bytes": 19619,
+     "bytes": 21561,
      "text": true
     },
     {
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 13833,
+     "bytes": 50876,
      "text": true
     },
     {
      "path": "source/src/saving.js",
      "as": "src/saving.js",
      "what": "Saving the week. To the viewer's Claude account when the page can (so it follows them between devices), and to this browser as well.",
-     "bytes": 4097,
+     "bytes": 4197,
      "text": true
     },
     {
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 65528,
+     "bytes": 69006,
      "text": true
     },
     {
      "path": "source/src/seeing.js",
      "as": "src/seeing.js",
      "what": "Seeing: who can see Tom, how well, and what they make of him. Light, facing, distance and noise.",
-     "bytes": 11135,
+     "bytes": 11229,
      "text": true
     },
     {
      "path": "source/src/state.js",
      "as": "src/state.js",
      "what": "The state of one week: everything the save file holds, the settings, and the pause book.",
-     "bytes": 4781,
+     "bytes": 5583,
      "text": true
     },
     {
      "path": "source/src/talk.js",
      "as": "src/talk.js",
      "what": "Live talk. The model only voices the line and names the intent; the game's rules decide what happens.",
-     "bytes": 38743,
+     "bytes": 40476,
      "text": true
     },
     {
      "path": "source/src/talk_lines.js",
      "as": "src/talk_lines.js",
      "what": "Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.",
-     "bytes": 20603,
+     "bytes": 20800,
      "text": true
     },
     {
@@ -307,7 +347,7 @@
      "path": "source/src/work.js",
      "as": "src/work.js",
      "what": "The working day: passing time, sleep, being beaten, and the one step that runs fares, jobs and police.",
-     "bytes": 5040,
+     "bytes": 5124,
      "text": true
     },
     {
@@ -408,14 +448,14 @@
      "path": "source/package.json",
      "as": "package.json",
      "what": "three pinned at 0.187.0; the build and test commands.",
-     "bytes": 911,
+     "bytes": 1366,
      "text": true
     },
     {
      "path": "source/package-lock.json",
      "as": "package-lock.json",
      "what": "Every package at its exact version.",
-     "bytes": 71450,
+     "bytes": 71477,
      "text": true
     },
     {
@@ -429,7 +469,7 @@
      "path": "source/tools/publish_set.mjs",
      "as": "tools/publish_set.mjs",
      "what": "Gather what is published: the page, the art, the documents, the measures from the last full-week run,",
-     "bytes": 5715,
+     "bytes": 7298,
      "text": true
     },
     {
@@ -437,6 +477,34 @@
      "as": "tools/pack_people.mjs",
      "what": "Packs Quaternius' Universal Base Characters (CC0) and Universal Animation Library (CC0) into one compact file for LEDGER.",
      "bytes": 11156,
+     "text": true
+    },
+    {
+     "path": "source/tools/numbers.mjs",
+     "as": "tools/numbers.mjs",
+     "what": "Numbers and the rules table.",
+     "bytes": 6919,
+     "text": true
+    },
+    {
+     "path": "source/tools/walk_times.mjs",
+     "as": "tools/walk_times.mjs",
+     "what": "How long every walk in every schedule takes, against the time its row has.",
+     "bytes": 5379,
+     "text": true
+    },
+    {
+     "path": "source/tools/gossip_table.mjs",
+     "as": "tools/gossip_table.mjs",
+     "what": "The gossip before and after a change, as a table. Reads two files written by test/same_week.mjs",
+     "bytes": 1805,
+     "text": true
+    },
+    {
+     "path": "source/tools/numbers_kept.json",
+     "as": "tools/numbers_kept.json",
+     "what": "How many numbers may stay outside rules.js in each file, and why.",
+     "bytes": 967,
      "text": true
     },
     {
@@ -462,21 +530,56 @@
      "path": "source/test/harness.mjs",
      "as": "test/harness.mjs",
      "what": "Shared test harness: serves dist/, opens the game in headless Chrome, and returns helpers.",
-     "bytes": 3485,
+     "bytes": 7607,
+     "text": true
+    },
+    {
+     "path": "source/test/week_bot.mjs",
+     "as": "test/week_bot.mjs",
+     "what": "The full-week script, shared by test/week.mjs (measures) and test/same_week.mjs (the seeded, repeatable week).",
+     "bytes": 17020,
      "text": true
     },
     {
      "path": "source/test/week.mjs",
      "as": "test/week.mjs",
-     "what": "One full week, Monday to Friday, played through the test hook alone (no key presses), as a player might:",
-     "bytes": 15747,
+     "what": "One full week played by script through the test hook (see week_bot.mjs). Writes out/measures.json and",
+     "bytes": 1807,
+     "text": true
+    },
+    {
+     "path": "source/test/same_week.mjs",
+     "as": "test/same_week.mjs",
+     "what": "The same week, exactly. One full scripted week (week_bot.mjs) is played with a fixed seed on a clock the",
+     "bytes": 3642,
+     "text": true
+    },
+    {
+     "path": "source/test/arrivals.mjs",
+     "as": "test/arrivals.mjs",
+     "what": "Everyone who sets off for a place gets there. LEDGER.check.arrivals() is passed over 26 game hours twice,",
+     "bytes": 2495,
      "text": true
     },
     {
      "path": "source/test/nights.mjs",
      "as": "test/nights.mjs",
      "what": "The hook's two checks, run as tests:",
-     "bytes": 3675,
+     "bytes": 4037,
+     "text": true
+    },
+    {
+     "path": "source/test/town.mjs",
+     "as": "test/town.mjs",
+     "what": "The town's harder turns, through the test hook, pass or fail. It checks what the first round's logic script",
+     "bytes": 10469,
+     "text": true
+    },
+    {
+     "path": "source/test/ledger_rules.mjs",
+     "as": "test/ledger_rules.mjs",
+     "what": "Two rules of the Ledger, pass or fail.",
+     "bytes": 6534,
      "text": true
     },
     {
@@ -490,14 +593,14 @@
      "path": "source/test/files.mjs",
      "as": "test/files.mjs",
      "what": "The files published beside the page: the game lists them, shows any of them as text, gathers them as one",
-     "bytes": 7479,
+     "bytes": 7571,
      "text": true
     },
     {
      "path": "source/test/talk.mjs",
      "as": "test/talk.mjs",
      "what": "Live talk with a stand-in for the page's Claude: the Settings check, the on/off switch, and a real street conversation with streaming.",
-     "bytes": 9731,
+     "bytes": 9889,
      "text": true
     },
     {
@@ -512,6 +615,20 @@
      "as": "test/eyes.mjs",
      "what": "The town's eyes setting (testing only): off by default, and what switching it on shows.",
      "bytes": 2736,
+     "text": true
+    },
+    {
+     "path": "source/test/golden/week.json",
+     "as": "test/golden/week.json",
+     "what": "The record of the seeded week: what test/same_week.mjs compares with.",
+     "bytes": 967,
+     "text": true
+    },
+    {
+     "path": "source/test/golden/week_published_18nov.json",
+     "as": "test/golden/week_published_18nov.json",
+     "what": "The same record for the page as published on 18 Nov, before the numbers were moved.",
+     "bytes": 967,
      "text": true
     }
    ]
@@ -530,7 +647,7 @@
      "path": "ledger.js",
      "as": "dist/ledger.js",
      "what": "The game, built from src/ by npm run build.",
-     "bytes": 1278063,
+     "bytes": 1324009,
      "text": false
     }
    ]

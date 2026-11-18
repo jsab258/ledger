@@ -1,6 +1,6 @@
 // LEDGER. Events and memories: what Tom does becomes an event; each witness keeps a memory of it.
 import { clamp } from './util.js';
-import { G } from './state.js';
+import { G, tally } from './state.js';
 import { KINDS } from './kinds.js';
 import { tomTarget, sense, attached, knowsWho, perceivers, witness } from './seeing.js';
 import { ledgerSelf, ledgerSeen } from './ledger.js';
@@ -146,6 +146,7 @@ export function act(kind, x = {}) {
       const s = sense(P, T);
       if (s.see) witness(P, E, s, T);
       else if (s.hear && k.loud && !s.asleep) {
+        tally('heard');
         remember(P, E, { src: 'heard', who: 'man', sure: MEM.heardSure, heat: MEM.heardHeat });
         P.alert = { x: T.x, z: T.z, t: MEM.alertLastsRealSeconds };
       } else if (s.hear && s.asleep && k.loud) P.wake = 1;

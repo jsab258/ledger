@@ -1,10 +1,11 @@
 // LEDGER. Seeing: who can see Tom, how well, and what they make of him. Light, facing, distance and noise.
 import { clamp, hyp, angDiff, smooth } from './util.js';
-import { G, day, hour } from './state.js';
+import { G, day, hour, tally } from './state.js';
 import { KINDS } from './kinds.js';
 import { NONE, mkEvent, logLine, link, remember } from './events.js';
 import { ledgerSelf, ledgerSeen } from './ledger.js';
 import { RULES } from './rules.js';
+const LAD = RULES.ladder;
 
 const TIME = RULES.time,
   SEE = RULES.seeing,
@@ -173,6 +174,7 @@ export function witness(P, E, s, T, fixedWho) {
   const sure =
     clamp(SEE.sureBase + SEE.surePerClarity * s.c, 0, 1) * (who === 'tom' ? 1 : SEE.sureIfNotNamedTimes);
   const firstSight = !P.mind.by[E.id];
+  tally('sightings');
   const r = remember(P, E, {
     src: 'saw',
     who,
@@ -195,7 +197,7 @@ export function witness(P, E, s, T, fixedWho) {
       P.pauseT = WATCH.pauseInWalkRealSeconds + WATCH.pauseAddedPerSeverityRealSeconds * k.sev;
       P.bodyAt = G.played;
     } else if (
-      (P.def.nerve == null ? 0.5 : P.def.nerve) < WATCH.stepBackIfNerveBelow &&
+      (P.def.nerve == null ? LAD.nerveAssumed : P.def.nerve) < WATCH.stepBackIfNerveBelow &&
       (nightF() > WATCH.stepBackWhenNightAbove || k.crime) &&
       !P.keeper &&
       !P.chat
@@ -255,6 +257,7 @@ export function perceiveTick(dt) {
         if (!m.heardT || G.t - m.heardT > NOISE.sameNoiseRemarkedEveryGameMinutes) {
           m.heardT = G.t;
           const E = sightEvent('noise');
+          tally('heard');
           remember(P, E, { src: 'heard', who: 'man', sure: NOISE.heardSure, heat: NOISE.heardHeat });
         }
       }

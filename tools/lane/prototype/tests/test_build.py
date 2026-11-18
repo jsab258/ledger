@@ -110,6 +110,31 @@ class BuildTests(unittest.TestCase):
             finally:
                 build.PROJECT = orig
 
+    def test_work_folder_lock_keeps_a_second_run_out(self):
+        # two builds (or a build and a test run) never share the work folder (lost log, 18 Nov)
+        with tempfile.TemporaryDirectory() as tmp:
+            work = os.path.join(tmp, "work")
+            with build.work_lock(work):
+                code = ("import sys; sys.path.insert(0, %r); import build\n"
+                        "with build.work_lock(%r, wait=False): pass") % (ROOT, work)
+                p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+                self.assertNotEqual(p.returncode, 0)
+                self.assertIn("another build or test run holds the work folder", p.stderr + p.stdout)
+            # once released, the next run gets in
+            with build.work_lock(work, wait=False):
+                pass
+
+    def test_lane_test_runner_lists_fables_npm_test_order(self):
+        import run_proto_tests
+        with open(os.path.join(build.PROJECT, "package.json"), encoding="utf-8") as f:
+            npm = json.load(f)["scripts"]["test"]
+        names = []
+        for part in npm.split("&&"):
+            script = part.split()[1]
+            base = os.path.basename(script).replace(".mjs", "")
+            names.append({"walk_times": "walks"}.get(base, base))
+        self.assertEqual(run_proto_tests.ORDER[:-1], names)
+
 
 if __name__ == "__main__":
     unittest.main()

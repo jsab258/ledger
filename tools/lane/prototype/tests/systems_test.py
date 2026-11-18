@@ -192,7 +192,9 @@ class Systems(unittest.TestCase):
           heat: 0.6, t: LEDGER.G.t, said: false, hop: 1, face: 0}; m.mem.push(s); m.by[%d] = s; })()""" % (e, e))
         self.assertEqual(self.counts(), (known + 1, right, missed + 1))
         row = [l for l in self.js(GOSSIP) if l.startswith("- Tom wore the runner's coat")][0]
-        self.assertIn("told: Brenda Laverack", row)
+        # since Fable's second round (retimed routines) others may be told first: Brenda is one of the told
+        told = row.split("told:")[1].split("|")[0]
+        self.assertIn("Brenda Laverack", told)
         self.assertNotIn("Brenda", row.split("ledger believed:")[1])
 
     # 3. Money and the tin -------------------------------------------------------------

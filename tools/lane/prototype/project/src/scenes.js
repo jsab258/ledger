@@ -20,6 +20,8 @@ import { startJob, jobHotspots, jobClock } from './jobs.js';
 import { nightly } from './police.js';
 import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
+const STORY = RULES.story;
+const LAD = RULES.ladder;
 
 const REST = RULES.rest,
   MONEY = RULES.money,
@@ -29,8 +31,8 @@ const fl = () => G.story.flags;
 const P_ = (id) => G.people[id];
 let tick = 0,
   sayCool = 0,
-  overCool = 8,
-  barkCool = 10,
+  overCool = STORY.overheardFirstAfterRealSeconds,
+  barkCool = STORY.barkFirstAfterRealSeconds,
   ladT = 0;
 
 export function newWeek() {
@@ -61,24 +63,35 @@ export function newWeek() {
   G.story.objective = "Find Mickey's. The letter says Quay Street, the quay end, under the blue sign.";
   tick = 0;
   sayCool = 0;
-  overCool = 8;
+  overCool = STORY.overheardFirstAfterRealSeconds;
 }
 const askVia = () =>
   P_('ron').dead ? 'darren' : fl().ask1 === 'yes' ? 'ron' : P_('darren').dead ? 'ron' : 'darren';
-const ask1Due = () => fl().tour && !fl().ask1 && day() === 0 && hour() >= 17.2;
-const ask15Due = () => day() === 1 && hour() >= 17 && fl().job1 === 'done' && !fl().ask15;
-const ask2Due = () => day() === 2 && hour() >= 16.3 && hour() < 22 && !fl().ask2;
-const alisonDue = () => day() >= 2 && !fl().alison && hour() >= 9.3 && hour() < 17.2;
-const endReady = () => !G.story.ended && (day() > 4 || (day() === 4 && hour() >= 16));
-const job3On = () => fl().ask2 === 'yes' && !fl().job3 && day() === 2 && hour() >= 18.6 && hour() < 22;
-const teaOn = () => fl().teaInvited && !fl().tea && day() === 2 && hour() >= 18.5 && hour() < 21.6;
+const ask1Due = () => fl().tour && !fl().ask1 && day() === 0 && hour() >= STORY.ronAsksFromHour;
+const ask15Due = () =>
+  day() === 1 && hour() >= STORY.secondNightOfferedFromHour && fl().job1 === 'done' && !fl().ask15;
+const ask2Due = () =>
+  day() === 2 && hour() >= STORY.secondAskFromHour && hour() < STORY.secondAskUntilHour && !fl().ask2;
+const alisonDue = () =>
+  day() >= 2 && !fl().alison && hour() >= STORY.alisonAsksFromHour && hour() < STORY.alisonAsksUntilHour;
+const endReady = () =>
+  !G.story.ended &&
+  (day() > STORY.lastDayIndex || (day() === STORY.lastDayIndex && hour() >= STORY.weekEndsFromHour));
+const job3On = () =>
+  fl().ask2 === 'yes' &&
+  !fl().job3 &&
+  day() === 2 &&
+  hour() >= STORY.scrapyardJobFromHour &&
+  hour() < STORY.scrapyardJobUntilHour;
+const teaOn = () =>
+  fl().teaInvited && !fl().tea && day() === 2 && hour() >= STORY.teaFromHour && hour() < STORY.teaUntilHour;
 
 // ---------- scenes ----------
 const tour = () =>
   scene(async () => {
     const t = G.tom;
     meet(P_('sheila'));
-    P_('sheila').mind.fam = 0.9;
+    P_('sheila').mind.fam = STORY.sheilaFamiliarityOnMeeting;
     await say('sheila', "New management. Sit down, you're making the place look untidy.");
     await say(
       'sheila',
@@ -132,7 +145,7 @@ const tour = () =>
 const ronIntro = () =>
   scene(async () => {
     meet(P_('ron'));
-    P_('ron').mind.fam = 0.85;
+    P_('ron').mind.fam = STORY.ronFamiliarityOnMeeting;
     fl().metRon = 1;
     await say(
       'ron',
@@ -150,7 +163,7 @@ const ronIntro = () =>
 const darrenIntro = () =>
   scene(async () => {
     meet(P_('darren'));
-    P_('darren').mind.fam = 0.8;
+    P_('darren').mind.fam = STORY.darrenFamiliarityOnMeeting;
     fl().metDarren = 1;
     await say(
       'darren',
@@ -168,7 +181,7 @@ const darrenIntro = () =>
 const juneIntro = () =>
   scene(async () => {
     meet(P_('june'));
-    P_('june').mind.fam = 0.6;
+    P_('june').mind.fam = STORY.juneFamiliarityOnMeeting;
     fl().metJune = 1;
     await say('june', "You're Tom. June Suddaby. His daughter, for what that was worth to either of us.");
     await say(
@@ -179,7 +192,7 @@ const juneIntro = () =>
 const paulineIntro = () =>
   scene(async () => {
     meet(P_('pauline'));
-    P_('pauline').mind.fam = 0.7;
+    P_('pauline').mind.fam = STORY.paulineFamiliarityOnMeeting;
     fl().metPauline = 1;
     await say('pauline', 'Car to the station, two minutes. No, love, two real minutes. Hang on.');
     await say(
@@ -190,7 +203,7 @@ const paulineIntro = () =>
 const sylviaIntro = () =>
   scene(async () => {
     meet(P_('sylvia'));
-    P_('sylvia').mind.fam = 0.6;
+    P_('sylvia').mind.fam = STORY.sylviaFamiliarityOnMeeting;
     fl().metSylvia = 1;
     await say(
       'sylvia',
@@ -204,7 +217,7 @@ const sylviaIntro = () =>
 const walshIntro = () =>
   scene(async () => {
     meet(P_('walsh'));
-    P_('walsh').mind.fam = 0.5;
+    P_('walsh').mind.fam = STORY.walshFamiliarityOnMeeting;
     fl().metWalsh = 1;
     await say(
       'walsh',
@@ -275,7 +288,7 @@ const ask15 = () =>
     );
     if (i === 0) {
       startJob(2);
-      send(P_('wayne'), 'ritaside', 'smoke', G.t + 60 * 9);
+      send(P_('wayne'), 'ritaside', 'smoke', G.t + 60 * STORY.wayneStaysOutGameHours);
       await say(
         'ron',
         'After ten. Same rules. Rita works late with her light on, mind. That window sees the whole corner.',
@@ -323,7 +336,7 @@ const ask2 = () =>
     if (i === 0) {
       fl().ask2 = 'yes';
       act('job_yes', { silent: true, told: [via] });
-      send(P_('dennis'), 'scrap', 'work', G.t + 60 * 6);
+      send(P_('dennis'), 'scrap', 'work', G.t + 60 * STORY.dennisAtTheYardGameHours);
       await say(
         via,
         via === 'ron'
@@ -377,9 +390,13 @@ const teaScene = (late) =>
   scene(async () => {
     const A = P_('ada'),
       t = G.tom;
-    act(late ? 'tea_late' : 'tea', { told: ['ada'], noiseR: 4 });
+    act(late ? 'tea_late' : 'tea', { told: ['ada'], noiseR: STORY.teaNoiseCarriesMetres });
     fl().tea = late ? 'late' : 'yes';
-    A.mind.regard = clamp(A.mind.regard + (late ? 0.1 : 0.4), -1, 1);
+    A.mind.regard = clamp(
+      A.mind.regard + (late ? STORY.adaRegardAddedForLateTea : STORY.adaRegardAddedForTea),
+      -1,
+      1,
+    );
     A.mind.fam = 1;
     if (G.hooks.enterRoom) G.hooks.enterRoom('ada', true);
     {
@@ -417,7 +434,7 @@ const teaScene = (late) =>
         (m) => attached(m) && !['inherit', 'tea', 'tea_late'].includes(G.ev[m.e].kind) && m.src !== 'self',
       )
       .sort((a, b) => b.heat - a.heat)
-      .slice(0, 3);
+      .slice(0, STORY.adaTellsStoriesAtMost);
     if (!ms.length)
       await say('ada', "Nothing. You've been careful or you've been dull, and I can't yet tell which.");
     for (const m of ms) {
@@ -451,7 +468,7 @@ const teaScene = (late) =>
     A.atWindow = true;
     A.state = 'window';
     A.goalKey = 'home|window';
-    advanceTo(G.t + 75, false);
+    advanceTo(G.t + STORY.teaTakesGameMinutes, false);
     if (G.hooks.leaveRoom) G.hooks.leaveRoom();
     G.story.objective = 'Thursday and Friday are yours. Sheila will want an answer by Friday evening.';
   });
@@ -478,10 +495,10 @@ const alisonAsk = () =>
         'alison',
         "That's what Mrs Dunn told the police, word for word. Funny how a fare book learns a sentence.",
       );
-      A.mind.regard -= 0.05;
+      A.mind.regard -= STORY.adaRegardLostForOneSentence;
     } else if (i === 1) {
       await say('alison', "Then I'll hold a paragraph for you. I'm at Rinaldi's most mornings.");
-      A.mind.regard = clamp(A.mind.regard + 0.3, -1, 1);
+      A.mind.regard = clamp(A.mind.regard + STORY.adaRegardAddedForTalking, -1, 1);
       note(
         'Promised the reporter a look in the book for the night of the fire. The real book: not seen yet.',
         'fire',
@@ -490,7 +507,7 @@ const alisonAsk = () =>
       );
     } else {
       await say('alison', "That's a quote, in its way. Good morning, Mr Nowak.");
-      A.mind.regard -= 0.15;
+      A.mind.regard -= STORY.adaRegardLostForLeaving;
     }
     note(
       "Evening Mail reporter: one of Mickey's cars was on the warehouse row the night No. 4 burned.",
@@ -515,11 +532,11 @@ const ellisTalk = () =>
       DEC.ellis,
     );
     if (i === 2) {
-      E.mind.regard = clamp(E.mind.regard + 0.2, -1, 1);
+      E.mind.regard = clamp(E.mind.regard + STORY.ellisRegardAddedForTheDeal, -1, 1);
       fl().ellisDeal = 1;
       await say('ellis', "I'll hold you to that. Most people I hold to things regret it.");
     } else if (i === 1) {
-      P_('sheila').mind.regard -= 0.15;
+      P_('sheila').mind.regard -= STORY.sheilaRegardLostWhenBlamed;
       fl().blamedSheila = 1;
       await say('ellis', "I have. She's very good. Thirty-one years of very good.");
     } else await say('ellis', 'No. They never do, first time.');
@@ -534,7 +551,7 @@ const dennisScene = () =>
     meet(D);
     await say('dennis', "If it's about the eighty quid, I'm out.");
     const i = await decision('dennis', "Your uncle's dead, son. Dead men don't send bills.", DEC.dennis);
-    if (i === 0) after(0.05, () => frontUp(D, { type: 'debt' }));
+    if (i === 0) after(STORY.frontsUpAfterRealSeconds, () => frontUp(D, { type: 'debt' }));
     else if (i === 1) {
       forgive(D);
       fl().job3 = 'forgave';
@@ -550,7 +567,7 @@ function forgive(P) {
   if (!d || d.st !== 'open') return;
   d.st = 'forgiven';
   act('debt_forgive', { target: P.id });
-  P.mind.regard = clamp(P.mind.regard + 0.5, -1, 1);
+  P.mind.regard = clamp(P.mind.regard + STORY.regardAddedForStrikingOutADebt, -1, 1);
 }
 function collect(P, part = 1) {
   const d = G.debts[P.id];
@@ -595,7 +612,7 @@ const endScene = () =>
         (no ? `You told them no ${no === 2 ? 'twice' : 'once'}. ` : '') +
         (G.money.booksOff > 0
           ? 'You put more through my fare book than it could hold. '
-          : G.money.fareCount > 3
+          : G.money.fareCount > STORY.droveFaresHimselfAboveCount
             ? 'You drove fares yourself, and the book liked it. '
             : '') +
         (f.tea === 'yes'
@@ -613,7 +630,7 @@ const endScene = () =>
     }
     const choice = ['wind', 'take', 'silent'][i];
     f.choice = choice;
-    const earned = lv >= 3 || S.mind.regard > 0.15;
+    const earned = lv >= STORY.earnedItFromStreetLevel || S.mind.regard > STORY.earnedItAboveSheilaRegard;
     if (i === 0)
       await say('sheila', "Then I'll tell Garbutt myself. He'll not take it from you. He might from me.");
     else if (i === 1) await say('sheila', "Then you'd better learn to read this faster than he did.");
@@ -644,7 +661,7 @@ export async function endWeek(choice) {
       : 'By Saturday dinner time the whole of Quay Street knows what you said in that back room.',
   );
   st.endT = Math.round(G.t);
-  advanceTo(G.t + 20 * 60);
+  advanceTo(G.t + STORY.afterTheChoiceGameHours * 60);
   nightly(day());
   if (G.hooks.save) G.hooks.save();
   if (G.hooks.end) G.hooks.end();
@@ -693,7 +710,13 @@ export function beatFor(P) {
       }
       break;
     case 'ada':
-      if (day() === 2 && hour() >= 9 && hour() < 18.5 && !f.teaInvited) return adaInvite;
+      if (
+        day() === 2 &&
+        hour() >= STORY.adaInvitesFromHour &&
+        hour() < STORY.adaInvitesUntilHour &&
+        !f.teaInvited
+      )
+        return adaInvite;
       break;
   }
   return null;
@@ -704,7 +727,7 @@ function ronEyes() {
   const led = G.ledger.acts;
   for (let i = G.events.length - 1; i >= 0 && out.length < 2; i--) {
     const E = G.events[i];
-    if (G.t - E.t > 1440 * 1.2 || KINDS[E.kind].noself) continue;
+    if (G.t - E.t > 1440 * STORY.saysToFaceWithinGameDays || KINDS[E.kind].noself) continue;
     const a = led.find((x) => x.e === E.id);
     for (const id of E.wit) {
       const W = G.people[id];
@@ -731,7 +754,7 @@ function darrenHeard(p) {
     ? `${comebackLine(D, b)} ${b.from && G.people[b.from] ? 'Had it off ' + G.people[b.from].def.name.split(' ')[0] + '.' : ''}`
     : "Nothing going round that I've heard. Honest.";
   if (b) ledgerSeen(G.ev[b.e], D, 'bought', b.from);
-  if (p >= 500) {
+  if (p >= STORY.goodWordFromPence) {
     seed('good_word', ['darren']);
     s += " And I'll put it about that you're all right. Leave it with me.";
   }
@@ -1031,7 +1054,7 @@ function mattersFor(P) {
               mark('door');
               if (!pay(PRICE.ronWatchesTheDoorPence)) return "Come back when you've got it, boss.";
               act('paid_info', { target: 'ron' });
-              P.mind.regard = clamp(P.mind.regard + 0.1, -1, 1);
+              P.mind.regard = clamp(P.mind.regard + STORY.darrenRegardAddedWhenPaid, -1, 1);
               return ronEyes();
             },
           },
@@ -1059,7 +1082,7 @@ function mattersFor(P) {
               if (!pay(PRICE.darrenSaysWhatHeHeardPence))
                 return "So listen, I'd love to, but I've got to eat.";
               act('paid_info', { target: 'darren' });
-              return darrenHeard(300);
+              return darrenHeard(STORY.darrenSmallPaymentPence);
             },
           },
         ],
@@ -1083,7 +1106,7 @@ function mattersFor(P) {
               mark('word');
               if (!pay(PRICE.darrenPutsAGoodWordAboutPence)) return 'Not for nothing, chief.';
               act('paid_info', { target: 'darren' });
-              return darrenHeard(500);
+              return darrenHeard(STORY.darrenLargePaymentPence);
             },
           },
         ],
@@ -1108,7 +1131,10 @@ function mattersFor(P) {
           keep: ASK,
           keepSay: asked + ' You want it now?',
           take: () => {
-            if (P.mind.fear > 0.45 || (P.mind.regard > 0.3 && d.owed <= 1500)) {
+            if (
+              P.mind.fear > STORY.paysUpAboveFear ||
+              (P.mind.regard > STORY.paysUpAboveRegard && d.owed <= STORY.paysUpWhenOwingAtMostPence)
+            ) {
               const amt = collect(P);
               return `Here. ${money(amt)}. That's us square. Tell Sheila to cross it through.`;
             }
@@ -1159,7 +1185,7 @@ function mattersFor(P) {
         },
       ],
     });
-  if (id === 'sylvia' && day() >= 3 && !f.rent)
+  if (id === 'sylvia' && day() >= STORY.rentRaisedFromDayIndex && !f.rent)
     a.push({
       key: 'rent',
       direct: true,
@@ -1181,7 +1207,7 @@ function mattersFor(P) {
             if (!pay(MONEY.rentPence, true)) return "That's not eighteen pounds, Mr Nowak. I can count.";
             f.rent = 1;
             act('rent_paid', { target: 'sylvia' });
-            P.mind.regard = clamp(P.mind.regard + 0.25, -1, 1);
+            P.mind.regard = clamp(P.mind.regard + STORY.sylviaRegardAddedWhenPaid, -1, 1);
             return 'Thank you. On the Friday. I shall say so if anybody asks.';
           },
         },
@@ -1240,7 +1266,13 @@ function mattersFor(P) {
         },
       ],
     });
-  if (id === 'june' && day() === 4 && hour() >= 12 && !f.juneFare && !f.juneGone)
+  if (
+    id === 'june' &&
+    day() === STORY.juneFareDayIndex &&
+    hour() >= STORY.juneFareFromHour &&
+    !f.juneFare &&
+    !f.juneGone
+  )
     a.push({
       key: 'june',
       direct: true,
@@ -1259,9 +1291,9 @@ function mattersFor(P) {
             f.juneFare = 1;
             endTalk();
             const s = SPOTS.laundrygate;
-            send(P, 'laundrygate', 'idle', G.t + 240);
+            send(P, 'laundrygate', 'idle', G.t + STORY.juneWaitsGameMinutes);
             sub("I'll be outside Regent House in a few minutes. Bring the car round.", tomName(P));
-            after(4, () =>
+            after(STORY.juneFareOfferedAfterRealSeconds, () =>
               fareOffer({ from: 'Regent House', sx: s[0], sz: s[1] + 14, dest: 'station', who: 'june' }),
             );
           },
@@ -1296,9 +1328,9 @@ function yielded(P, demand, rung) {
   if (!demand || demand.type !== 'debt') return;
   const d = G.debts[P.id];
   if (!d || d.st !== 'open') return;
-  const amt = collect(P, rung >= 3 ? 1 : 0.5);
+  const amt = collect(P, rung >= LAD.threatRung ? 1 : STORY.collectsShareBelowAThreat);
   sub(
-    rung >= 3
+    rung >= LAD.threatRung
       ? `Take it. ${money(amt)}. Take it and get out of my yard.`
       : `Here\'s ${money(amt)}. It\'s all there is today.`,
     tomName(P),
@@ -1314,7 +1346,7 @@ function yielded(P, demand, rung) {
 }
 function fightOver() {
   const D = P_('dennis');
-  if (fl().ask2 === 'yes' && !fl().job3 && (D.down || D.hurt > 0.5) && F.struck) {
+  if (fl().ask2 === 'yes' && !fl().job3 && (D.down || D.hurt > STORY.yardLadBeatenAboveHurt) && F.struck) {
     fl().job3 = 'done';
     earn(PRICE.scrapyardCollectionPayPence, true);
     note("Iveson has stopped laughing. £100.00 from Garbutt's people is in the tin.", 'money', null, {
@@ -1335,7 +1367,9 @@ async function teaSit() {
   });
   for (const P of here) P.mind.fam = clamp(P.mind.fam + REST.caffFamiliarityGain, 0, 1);
   const talkers = here.filter((p) =>
-    p.mind.mem.some((m) => attached(m) && m.heat > 0.2 && G.ev[m.e].kind !== 'inherit'),
+    p.mind.mem.some(
+      (m) => attached(m) && m.heat > STORY.overheardNeedsHeatAbove && G.ev[m.e].kind !== 'inherit',
+    ),
   );
   if (talkers.length >= 2) {
     sub(`${tomName(talkers[0])} and ${tomName(talkers[1])} stop talking when you look up.`, '', 'over', 5);
@@ -1361,7 +1395,7 @@ function overhear(force) {
   const o = pick(OVERHEARD.filter((x) => (force ? x.n : true)));
   sub(o.s, 'overheard', 'over', 5);
   if (o.n) note(o.n, 'rival', 'ov:' + o.k, { how: 'Overheard it' });
-  overCool = rnd(16, 30);
+  overCool = rnd(STORY.overheardEveryRealSecondsAtLeast, STORY.overheardEveryRealSecondsAtMost);
 }
 export function hotspots() {
   const out = [],
@@ -1413,14 +1447,15 @@ export function hotspots() {
   } else if (sp === 'news') {
     if (at(INSIDE.paperCounter)) out.push({ k: 'T', t: 'Evening Mail (20p)', run: paper });
   } else if (sp === 'tangs') {
-    if (at(INSIDE.chipCounter) && hour() >= 17)
+    if (at(INSIDE.chipCounter) && hour() >= STORY.chipShopOpenFromHour)
       out.push({
         k: 'T',
         t: 'Chips (45p)',
         run: () => {
           if (pay(PRICE.chipsPence, true)) {
             sub("Ten minutes. If I say ten, it's ten.", tomName(P_('peter')));
-            for (const id of ['peter', 'lily']) P_(id).mind.fam = clamp(P_(id).mind.fam + 0.08, 0, 1);
+            for (const id of ['peter', 'lily'])
+              P_(id).mind.fam = clamp(P_(id).mind.fam + STORY.familiarityAddedWhenSpokenTo, 0, 1);
           }
         },
       });
@@ -1442,9 +1477,13 @@ export function hotspots() {
   } else if (sp === 'street') {
     const A = P_('ada'),
       ad = SPOTS.adadoor;
-    if (tomAt(ad[0], ad[1], 2.2)) {
+    if (tomAt(ad[0], ad[1], STORY.adaDoorWithinMetres)) {
       if (teaOn())
-        out.push({ k: 'E', t: "Knock at Ada's", run: () => teaScene(hour() > 19.9 || G.tom.hurt > 0.2) });
+        out.push({
+          k: 'E',
+          t: "Knock at Ada's",
+          run: () => teaScene(hour() > STORY.teaIsLateAfterHour || G.tom.hurt > STORY.teaIsLateAboveHurt),
+        });
       else if (A.space === 'home' && A.awake && A.atWindow)
         out.push({
           k: 'E',
@@ -1472,11 +1511,11 @@ function comebacks() {
   for (const P of G.named) {
     if (P.gone || P.dead || P.down || P.space !== t.space || !P.awake || P.fight || P.def.police) continue;
     const d = hyp(P.x, P.z, t.x, t.z);
-    if (d > 5.5) continue;
-    if (d > 3 && !sense(P, T).see) continue;
+    if (d > STORY.saysToFaceWithinMetres) continue;
+    if (d > STORY.saysToFaceUnseenWithinMetres && !sense(P, T).see) continue;
     const m = comeback(P);
     if (!m) continue;
-    const sc = m.heat * (1.4 - d / 8);
+    const sc = m.heat * (STORY.saysToFaceNearnessBonus - d / STORY.saysToFaceNearnessOverMetres);
     if (sc > bs) {
       bs = sc;
       best = P;
@@ -1487,11 +1526,11 @@ function comebacks() {
   const line = comebackLine(best, bm);
   markSaid(best, bm);
   heardCall(best);
-  best.mind.look = 6;
-  best.alert = { x: t.x, z: t.z, t: 5 };
+  best.mind.look = STORY.looksAfterSayingRealSeconds;
+  best.alert = { x: t.x, z: t.z, t: STORY.alertAfterSayingRealSeconds };
   sub(line, tomName(best), 'face', 6.5);
   bubble(best, '“…”', 4);
-  sayCool = G.t + 7;
+  sayCool = G.t + STORY.saysToFaceEveryGameMinutes;
   if (G.hooks.sfx) G.hooks.sfx('face');
   logLine(`${best.def.name} said it to his face: ${line}`, 'face');
 }
@@ -1511,22 +1550,29 @@ function marks() {
     ask1Due() || ask15Due() || (ask2Due() && askVia() === 'ron') ? '!' : f.ask1 === 'think' ? '?' : null;
   P_('darren').mark = ask2Due() && askVia() === 'darren' ? '!' : null;
   P_('alison').mark = alisonDue() ? '?' : null;
-  P_('sylvia').mark = d === 4 && !f.rent ? '£' : null;
+  P_('sylvia').mark = d === MONEY.rentDueDayIndex && !f.rent ? '£' : null;
   P_('dennis').mark = job3On() && G.debts.dennis.st === 'open' ? '!' : null;
   // nobody carries a mark over their head now: someone who wants a word turns, lifts a hand and says so
   if (!ui.modal && !G.paused && !F.on)
     for (const id of ['sheila', 'ron', 'darren', 'alison', 'sylvia']) {
       const P = P_(id),
         t = G.tom;
-      if (!P.mark || P.gone || P.dead || P.space !== t.space || t.inCar || hyp(P.x, P.z, t.x, t.z) > 12)
+      if (
+        !P.mark ||
+        P.gone ||
+        P.dead ||
+        P.space !== t.space ||
+        t.inCar ||
+        hyp(P.x, P.z, t.x, t.z) > STORY.hailsWithinMetres
+      )
         continue;
       const now = performance.now();
       if ((P.hailAt || 0) > now) continue;
-      P.hailAt = now + 50000;
-      P.mind.look = Math.max(P.mind.look || 0, 3.5);
+      P.hailAt = now + STORY.hailsAgainAfterRealMilliseconds;
+      P.mind.look = Math.max(P.mind.look || 0, STORY.looksAfterHailingRealSeconds);
       if (!P.moving) {
         P.react = 'point';
-        P.reactT = 1.4;
+        P.reactT = STORY.pointShowsRealSeconds;
       }
       sub(HAIL[id][(d + (P.hailN = (P.hailN || 0) + 1)) % HAIL[id].length], tomName(P), '', 4);
     }
@@ -1536,23 +1582,24 @@ function marks() {
     G.story.objective =
       'It is Friday. The door in the back room is open, and Sheila is waiting behind her desk.';
   }
-  if (ask1Due() && !P_('ron').override) send(P_('ron'), 'rank', 'idle', G.t + 400);
+  if (ask1Due() && !P_('ron').override)
+    send(P_('ron'), 'rank', 'idle', G.t + STORY.ronWaitsAtTheRankGameMinutes);
   if (ask2Due()) {
     const M = P_(askVia());
-    if (!M.override) send(M, askVia() === 'ron' ? 'rank' : 'pave', 'idle', G.t + 300);
+    if (!M.override) send(M, askVia() === 'ron' ? 'rank' : 'pave', 'idle', G.t + STORY.askerWaitsGameMinutes);
   }
-  if (d === 3 && h >= 8 && !f.d4obj) {
+  if (d === STORY.thursdayDayIndex && h >= STORY.thursdayToDoFromHour && !f.d4obj) {
     f.d4obj = 1;
     if (!G.story.objective.includes('Friday'))
       G.story.objective =
         'Thursday. Fares, the book of debts, the street. Rent is due at Regent House tomorrow. Sheila will want an answer by Friday evening.';
   }
-  if (d === 1 && h >= 7.5 && !f.d2obj) {
+  if (d === 1 && h >= STORY.morningToDoFromHour && !f.d2obj) {
     f.d2obj = 1;
     G.story.objective =
       'Tuesday. Walk the street and hear what it made of yesterday. The Ledger [L] holds only what you have seen and heard yourself.';
   }
-  if (d === 2 && h >= 7.5 && !f.d3obj) {
+  if (d === 2 && h >= STORY.morningToDoFromHour && !f.d3obj) {
     f.d3obj = 1;
     if (!f.teaInvited)
       G.story.objective =
@@ -1567,11 +1614,18 @@ function proximity() {
     const P = P_(id);
     return !P.gone && P.space === t.space && hyp(P.x, P.z, t.x, t.z) < r && !P.dead;
   };
-  if (!f.metDarren && day() === 0 && nearP('darren', 6)) return darrenIntro();
-  if (!f.metRon && nearP('ron', 4.5)) return ronIntro();
-  if (!f.metJune && nearP('june', 3.2)) return juneIntro();
-  if (!f.metPauline && nearP('pauline', 3.6) && t.space === 'mickeys') return paulineIntro();
-  if (!f.adaSaw && t.space === 'street' && tomAt(-6.5, 32, 6) && P_('ada').atWindow && nightF() < 0.5) {
+  if (!f.metDarren && day() === 0 && nearP('darren', STORY.darrenSpeaksWithinMetres)) return darrenIntro();
+  if (!f.metRon && nearP('ron', STORY.ronSpeaksWithinMetres)) return ronIntro();
+  if (!f.metJune && nearP('june', STORY.juneSpeaksWithinMetres)) return juneIntro();
+  if (!f.metPauline && nearP('pauline', STORY.paulineSpeaksWithinMetres) && t.space === 'mickeys')
+    return paulineIntro();
+  if (
+    !f.adaSaw &&
+    t.space === 'street' &&
+    tomAt(-6.5, 32, STORY.adaSeesWithinMetres) &&
+    P_('ada').atWindow &&
+    nightF() < STORY.adaSpeaksBelowNight
+  ) {
     f.adaSaw = 1;
     sub("You'll be the Suddaby nephew. You've his walk.", 'A voice from the window above', 'face', 6);
     note("An old woman sits at the window opposite Mickey's. She knew Tom by his walk.", 'note', 'adawin', {
@@ -1580,25 +1634,26 @@ function proximity() {
   }
   if (
     day() === 2 &&
-    hour() >= 9 &&
-    hour() < 18.5 &&
+    hour() >= STORY.adaInvitesFromHour &&
+    hour() < STORY.adaInvitesUntilHour &&
     !f.teaInvited &&
     t.space === 'street' &&
-    tomAt(-6.5, 32, 7) &&
+    tomAt(-6.5, 32, STORY.adaInvitesWithinMetres) &&
     P_('ada').atWindow
   )
     return adaInvite();
-  if (alisonDue() && nearP('alison', 5) && t.space === 'street') return alisonAsk();
+  if (alisonDue() && nearP('alison', STORY.alisonSpeaksWithinMetres) && t.space === 'street')
+    return alisonAsk();
 }
 function ambient(dt) {
   const t = G.tom;
   overCool -= dt;
   barkCool -= dt;
   if (overCool <= 0 && !G.paused) {
-    overCool = 6;
+    overCool = STORY.overheardChecksEveryRealSeconds;
     for (const P of G.named) {
       if (!P.chat || P.space !== t.space || P.gone) continue;
-      if (hyp(P.x, P.z, t.x, t.z) < 9 && tomNotices(P)) {
+      if (hyp(P.x, P.z, t.x, t.z) < STORY.overheardWithinMetres && tomNotices(P)) {
         overhear(false);
         break;
       }
@@ -1607,9 +1662,13 @@ function ambient(dt) {
   if (barkCool <= 0 && !G.paused && !t.inCar) {
     for (const P of G.crowd) {
       if (P.gone || P.space !== t.space || P.lad || P.pax) continue;
-      if (hyp(P.x, P.z, t.x, t.z) < 2.6 && P.mind.look > 0) {
-        bubble(P, pick(P.keeper ? P.def.bark : nightF() > 0.6 ? BARKS.night : BARKS.day), 3);
-        barkCool = rnd(14, 26);
+      if (hyp(P.x, P.z, t.x, t.z) < STORY.barksWithinMetres && P.mind.look > 0) {
+        bubble(
+          P,
+          pick(P.keeper ? P.def.bark : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day),
+          3,
+        );
+        barkCool = rnd(STORY.barksEveryRealSecondsAtLeast, STORY.barksEveryRealSecondsAtMost);
         break;
       }
     }
@@ -1623,18 +1682,28 @@ function lads(dt) {
     return;
   }
   const near = G.crowd.filter(
-    (p) => p.lad && !p.gone && !p.down && !p.dead && p.space === 'street' && hyp(p.x, p.z, t.x, t.z) < 5.5,
+    (p) =>
+      p.lad &&
+      !p.gone &&
+      !p.down &&
+      !p.dead &&
+      p.space === 'street' &&
+      hyp(p.x, p.z, t.x, t.z) < STORY.ladsNoticeWithinMetres,
   );
   if (!near.length) {
     ladT = Math.max(0, ladT - dt);
     return;
   }
-  const night = nightF() > 0.6,
-    hot = loudness() > 1.2 || t.carry === 'bag' || fl().ask1 === 'no' || fl().ask2 === 'no';
+  const night = nightF() > STORY.nightVoicesAboveNight,
+    hot =
+      loudness() > STORY.ladsHotAboveLoudness ||
+      t.carry === 'bag' ||
+      fl().ask1 === 'no' ||
+      fl().ask2 === 'no';
   if (ladT === 0) {
     bubble(near[0], pick(BARKS.lads), 4);
     near.forEach((p) => {
-      p.alert = { x: t.x, z: t.z, t: 6 };
+      p.alert = { x: t.x, z: t.z, t: STORY.ladsAlertRealSeconds };
     });
     if (!fl().ladsNote) {
       fl().ladsNote = 1;
@@ -1646,7 +1715,7 @@ function lads(dt) {
     }
   }
   ladT += dt;
-  if (night && hot && ladT > 5.5 && near.length >= 2 && !fl().ladsDone) {
+  if (night && hot && ladT > STORY.ladsSetOnAfterRealSeconds && near.length >= 2 && !fl().ladsDone) {
     fl().ladsDone = day() + 1;
     ladT = 0;
     sub('Cammack says hello.', tomName(near[0]), 'face');
@@ -1657,26 +1726,26 @@ export function clock() {
   const d = day(),
     h = hour(),
     f = fl();
-  if (h >= 4 && d >= 1) nightly(d - 1);
+  if (h >= STORY.nightEndsAtHour && d >= 1) nightly(d - 1);
   jobClock();
   ellisClock();
-  if (f.ask1 === 'think' && (d > 0 || h < 4) && d >= 1 && h >= 3.5) {
+  if (f.ask1 === 'think' && (d > 0 || h < STORY.nightEndsAtHour) && d >= 1 && h >= STORY.noShowFromHour) {
     f.ask1 = 'noshow';
     P_('ron').pendingAsk = null;
     seed('no_show', ['ron']);
   }
-  if (d === 1 && h >= 8.75 && !f.nudge) {
+  if (d === 1 && h >= STORY.nudgeFromHour && !f.nudge) {
     f.nudge = 1;
     nudge();
   }
-  if (f.ask2 === 'yes' && !f.job3 && (d > 2 || (d === 2 && h >= 22.2))) {
+  if (f.ask2 === 'yes' && !f.job3 && (d > 2 || (d === 2 && h >= STORY.scrapyardNoShowFromHour))) {
     f.job3 = 'noshow';
     seed('no_show', [askVia(), 'dennis']);
   }
-  if (f.teaInvited && !f.tea && (d > 2 || (d === 2 && h >= 21.6))) {
+  if (f.teaInvited && !f.tea && (d > 2 || (d === 2 && h >= STORY.teaUntilHour))) {
     f.tea = 'snub';
     seed('tea_snub', ['ada']);
-    P_('ada').mind.regard = clamp(P_('ada').mind.regard - 0.35, -1, 1);
+    P_('ada').mind.regard = clamp(P_('ada').mind.regard - STORY.adaRegardLostForTheSnub, -1, 1);
   }
   // "Friday, by six": the rent is late from six on Friday evening, as Mrs Rennison says
   const rentLateFrom = MONEY.rentDueDayIndex * 1440 + MONEY.rentLateFromHour * 60;
@@ -1684,7 +1753,14 @@ export function clock() {
     f.rentLate = 1;
     seed('rent_late', ['sylvia']);
   }
-  if (d === 2 && h >= 13 && h < 18 && !f.teaInvited && !G.paused && !P_('ada').dead) {
+  if (
+    d === 2 &&
+    h >= STORY.adaAsksByWordFromHour &&
+    h < STORY.adaAsksByWordUntilHour &&
+    !f.teaInvited &&
+    !G.paused &&
+    !P_('ada').dead
+  ) {
     f.teaInvited = 1;
     learnName('ada');
     sub(
@@ -1736,7 +1812,7 @@ export function storyStep(dt) {
   lads(dt);
   ambient(dt);
   tick += dt;
-  if (tick < 0.4) return;
+  if (tick < STORY.storyChecksEveryRealSeconds) return;
   tick = 0;
   marks();
   comebacks();

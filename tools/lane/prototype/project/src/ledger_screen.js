@@ -191,11 +191,12 @@ export function tomKnows(P) {
 // =====================================================================================================
 // The Ledger screen test. Four parts: People, Day book, Open, Money. Words only: no percentages, bars,
 // colours or icons. L opens it anywhere and L or Esc closes it; Q and E change part; it opens on the part
-// last used. Up and Down move along the entries, Left and Right turn the page, a typed letter jumps in People.
+// last used. Up and Down move along the entries, Left and Right turn the page, a typed letter jumps in People,
+// and "/" then a letter jumps to any letter (E, L and Q are keys of their own).
 // =====================================================================================================
 export const PARTS = ['people', 'daybook', 'open', 'money'];
 const PART_NAME = { people: 'People', daybook: 'Day book', open: 'Open', money: 'Money' };
-export const LS = { part: 'people', person: null, dayIdx: null, cur: 0, rows: [], said: '' };
+export const LS = { part: 'people', person: null, dayIdx: null, cur: 0, rows: [], said: '', jump: false };
 
 const when = (t) => dateText(t) + ', ' + clockText(t);
 const heading = (id) => {
@@ -317,6 +318,7 @@ export function ledgerHTML() {
       letters = [...new Set(pages.map((id) => heading(id).sort[0].toUpperCase()))].sort();
     side =
       `<div class="lidx">${letters.map((c) => `<u data-letter="${c}">${c}</u>`).join(' ') || ''}</div>` +
+      (letters.length ? '<div class="was">/ then a letter jumps there</div>' : '') +
       pages
         .map(
           (id) =>
@@ -378,8 +380,25 @@ export function ledgerInput(code, device = 'keyboard') {
     } else if (LS.part === 'daybook') LS.dayIdx = Math.max(0, Math.min(LS.dayIdx - n, day()));
     LS.cur = 0;
   };
+  // "/" and then a letter jumps to that letter in People: any letter, E, L and Q among them, which by
+  // themselves change part or close the book. Esc, or any other key, lets the jump go.
+  if (LS.jump) {
+    LS.jump = false;
+    LS.said = '';
+    if (/^Key[A-Z]$/.test(code)) {
+      if (!jumpTo(code.slice(3))) LS.said = 'Nobody under ' + code.slice(3) + ' yet.';
+      return true;
+    }
+    if (code === 'Escape' || code === 'Slash') return true;
+  }
   if (code === 'KeyL' || code === 'Escape') return 'close';
   LS.said = '';
+  if (code === 'Slash' || code === 'NumpadDivide') {
+    if (LS.part !== 'people') LS.part = 'people';
+    LS.jump = true;
+    LS.said = 'Jump to which letter?';
+    return true;
+  }
   if (code === 'KeyQ' || code === 'KeyE') {
     LS.part = PARTS[(PARTS.indexOf(LS.part) + (code === 'KeyE' ? 1 : PARTS.length - 1)) % PARTS.length];
     LS.cur = 0;

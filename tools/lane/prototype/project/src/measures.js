@@ -4,6 +4,7 @@
 import { G } from './state.js';
 import { RULES } from './rules.js';
 import { book, bookFaults } from './ledger.js';
+const ASKING = RULES.asks;
 
 const LED = RULES.ledger;
 const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : 0);
@@ -91,7 +92,7 @@ const isLive = (e) => !e.struck && !e.closed;
 export const ASKS = [
   {
     id: 'bus',
-    fromGameMinute: 1440 + 9.5 * 60, // Tue 9.30am
+    fromGameMinute: 1440 + ASKING.busAskFromHour * 60, // Tue 9.30am
     question: 'Who saw Tom get off the bus on Monday?',
     where: 'People, or the Day book under Monday',
     target: (row) =>
@@ -103,21 +104,21 @@ export const ASKS = [
   },
   {
     id: 'rent',
-    fromGameMinute: 2 * 1440 + 12 * 60, // Wed 12 noon
+    fromGameMinute: 2 * 1440 + ASKING.rentAskFromHour * 60, // Wed 12 noon
     question: 'What rent is due, and on what day?',
     where: 'Open',
     target: (row) => row.entry && row.entry.kind === 'open' && row.entry.key === 'rent',
   },
   {
     id: 'call',
-    fromGameMinute: 3 * 1440 + 10 * 60, // Thu 10am
+    fromGameMinute: ASKING.callAskDayIndex * 1440 + ASKING.callAskFromHour * 60, // Thu 10am
     question: 'What does Ron Kirby call Tom now?',
     where: "People, on Ron Kirby's page",
     target: (row) => row.entry && row.entry.kind === 'call' && row.entry.who === 'ron' && isLive(row.entry),
   },
   {
     id: 'tin',
-    fromGameMinute: 4 * 1440 + 9 * 60, // Fri 9am
+    fromGameMinute: ASKING.tinAskDayIndex * 1440 + ASKING.tinAskFromHour * 60, // Fri 9am
     question: 'How much is in the tin?',
     where: 'Money',
     target: (row) => row.sum === 'tin',

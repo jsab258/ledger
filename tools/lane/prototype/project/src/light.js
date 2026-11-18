@@ -5,6 +5,7 @@ import { BOUNDS, LAMPS, GLOWS, SHADE, los } from './map.js';
 import { hour } from './state.js';
 import { nightF } from './seeing.js';
 import { RULES } from './rules.js';
+const LIGHTS = RULES.light;
 
 const LIGHT = RULES.light;
 export const CELL = LIGHT.gridCellMetres;
@@ -13,7 +14,8 @@ export const GW = Math.ceil((BOUNDS.x1 - BOUNDS.x0) / CELL),
 // channels: 0 sodium lamps, 1 always-on glows, 2 late shop windows, 3 early-closing windows
 export const field = [0, 1, 2, 3].map(() => new Float32Array(GW * GH));
 export const FERRY = LAMPS.find((l) => l.ferry);
-const chan = (g) => (g.until >= 30 ? 1 : g.until > 22 ? 2 : 3);
+const chan = (g) =>
+  g.until >= LIGHTS.allNightChannelFromUntilHour ? 1 : g.until > LIGHTS.lateChannelAboveUntilHour ? 2 : 3;
 let baked = false;
 
 export function bake() {
@@ -82,4 +84,9 @@ export function lightAt(x, z, space) {
   const v = s.day + s.on * (lamp + sample(1, x, z)) + s.late * sample(2, x, z) + s.early * sample(3, x, z);
   return clamp(v, 0, 1);
 }
-export const lightWord = (L) => (L < 0.2 ? 'IN THE DARK' : L < 0.5 ? 'HALF LIT' : 'IN THE LIGHT');
+export const lightWord = (L) =>
+  L < LIGHTS.wordDarkBelowLight
+    ? 'IN THE DARK'
+    : L < LIGHTS.wordHalfLitBelowLight
+      ? 'HALF LIT'
+      : 'IN THE LIGHT';

@@ -62,6 +62,15 @@ put(
   'The measures from one full week, played by a script through the test hook.',
 );
 
+// what the checks found, this round
+const RES = 'Results of the checks';
+put(RES, 'RESULTS.md', 'RESULTS.md', 'RESULTS.md', 'Both arrivals checks, the nights check, the same-week proof, the gossip table.');
+const result = (from, name, what) => { if (fs.existsSync(from)) put(RES, from, 'results/' + name, 'results/' + name, what); };
+result('out/arrivals.json', 'arrivals.json', 'LEDGER.check.arrivals() over 26 game hours: Tom away, and Tom at the rank.');
+result('out/nights.json', 'nights.json', 'LEDGER.check.nights(): Tuesday and Wednesday nights, every pause and its resume.');
+result('out/gossip_before.json', 'gossip_before.json', 'The gossip of the seeded week before the retiming, day by day.');
+result('out/gossip_after.json', 'gossip_after.json', 'The gossip of the same seeded week after the retiming.');
+
 const SRC = 'The source, one file per part (src/)';
 for (const f of ls('src', /\.js$/)) put(SRC, `src/${f}`, `src/${f}`, `source/src/${f}`, firstLine(`src/${f}`));
 put(SRC, 'src/index.html', 'src/index.html', 'source/src/index.html', 'The page and its styles.');
@@ -76,14 +85,20 @@ put(BLD, 'package-lock.json', 'package-lock.json', 'source/package-lock.json', '
 put(BLD, 'tools/build.mjs', 'tools/build.mjs', 'source/tools/build.mjs', firstLine('tools/build.mjs'));
 put(BLD, 'tools/publish_set.mjs', 'tools/publish_set.mjs', 'source/tools/publish_set.mjs', firstLine('tools/publish_set.mjs'));
 put(BLD, 'tools/pack_people.mjs', 'tools/pack_people.mjs', 'source/tools/pack_people.mjs', firstLine('tools/pack_people.mjs'));
+for (const t of ['numbers.mjs', 'walk_times.mjs', 'gossip_table.mjs'])
+  put(BLD, `tools/${t}`, `tools/${t}`, `source/tools/${t}`, firstLine(`tools/${t}`));
+put(BLD, 'tools/numbers_kept.json', 'tools/numbers_kept.json', 'source/tools/numbers_kept.json', 'How many numbers may stay outside rules.js in each file, and why.');
 put(BLD, '.prettierrc.json', '.prettierrc.json', 'source/prettierrc.json', 'Formatting rules (kept as .prettierrc.json).');
 put(BLD, '.eslintrc.json', '.eslintrc.json', 'source/eslintrc.json', 'Lint rules (kept as .eslintrc.json).');
 
 const TST = 'The tests (test/)';
-const TESTS = (process.env.TESTS || 'harness week nights layout files talk oldsave eyes').split(' ');
+const TESTS = (process.env.TESTS || 'harness week_bot week same_week arrivals nights town ledger_rules layout files talk oldsave eyes').split(' ');
 for (const t of TESTS)
   if (fs.existsSync(`test/${t}.mjs`))
     put(TST, `test/${t}.mjs`, `test/${t}.mjs`, `source/test/${t}.mjs`, firstLine(`test/${t}.mjs`));
+
+put(TST, 'test/golden/week.json', 'test/golden/week.json', 'source/test/golden/week.json', 'The record of the seeded week: what test/same_week.mjs compares with.');
+put(TST, 'test/golden/week_published_18nov.json', 'test/golden/week_published_18nov.json', 'source/test/golden/week_published_18nov.json', 'The same record for the page as published on 18 Nov, before the numbers were moved.');
 
 const PAGE = 'The built page (dist/)';
 put(PAGE, 'dist/index.html', 'dist/index.html', 'index.html', 'The page, copied from src/index.html.');

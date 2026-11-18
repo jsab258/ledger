@@ -357,6 +357,7 @@ function openLedger(device = 'keyboard', part) {
   else if (PARTS.includes(G.settings.ledgerPart)) LS.part = G.settings.ledgerPart;
   LS.cur = 0;
   LS.said = '';
+  LS.jump = false;
   if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
   unlock();
   ui.modal = 'ledger';

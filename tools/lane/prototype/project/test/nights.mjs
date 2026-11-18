@@ -3,11 +3,13 @@
 //      night Ron used to stand three metres from the rank until morning);
 //   2. the same check must catch a person who is held on the spot (so we know it can fail);
 //   3. nights: Tuesday and Wednesday night with Tom out on the street: every pause has a resume.
+import fs from 'fs';
 import { launch } from './harness.mjs';
 const h = await launch({ port: 8796 });
 const L = (fn, ...a) => h.ev(fn, ...a);
 const log = (...a) => console.log(...a);
 let ok = true;
+const results = {};
 try {
   await h.newWeek();
   // past the first meetings, so the nights are ordinary nights
@@ -16,7 +18,8 @@ try {
   log('ARRIVALS Tue night, Tom at the rank:', JSON.stringify({ from: a.from, until: a.until, walksSetOff: a.walksSetOff, walksArrived: a.walksArrived, walksGivenUp: a.walksGivenUpForAnotherPlace, toOrFromTheMapEdge: a.ofThoseToOrFromTheMapEdge, longestWalkGameMinutes: a.longestWalkGameMinutes, stoodStill: a.stoodStill, pauseNeverEnded: a.pauseNeverEnded, ok: a.ok }));
   for (const f of a.gaveUp) log('   gave up:', f.person, '|', f.from, '->', f.goingTo, '|', f.setOffAt, '|', f.fault, f.involvesTheMapEdge ? '| map edge' : '');
   log(' Ron at the end:', JSON.stringify(await L(() => { const p = LEDGER.person('ron'); return { place: p.place, walking: p.walking, doing: p.doing }; })));
-  ok = ok && a.ok;
+  ok = ok && a.ok && a.walksGivenUpForAnotherPlace === 0; // since the retiming, no walk may be given up either
+  results.arrivalsTuesdayNightTomAtTheRank = a;
   // the check must be able to fail: hold somebody on the spot and see that it says so
   await L(() => { const G = LEDGER.G; G.story.lastSleepDay = 9; });
   const b = await L(async () => { const G = LEDGER.G; const P = G.people.kevin; P.pauseT = 1e9; const r = await LEDGER.check.arrivals({ forGameHours: 14, stoodStillRealSeconds: 30 }); P.pauseT = 0; return r; });
@@ -40,7 +43,12 @@ try {
   }
   log('NIGHTS', JSON.stringify({ pauseNeverEnded: n.pauseNeverEnded, watchdogFaults: n.watchdogFaults, ok: n.ok, now: n.now }));
   ok = ok && n.ok;
+  results.nights = n;
 } catch (e) { ok = false; log('TEST FAIL', String(e.stack || e).slice(0, 700)); }
 log('ERRORS', g.errors.length, g.errors.slice(0, 4).join('\n '));
 await g.close();
+results.pass = ok;
+fs.mkdirSync('out', { recursive: true });
+fs.writeFileSync('out/nights.json', JSON.stringify(results, null, 1));
 log(ok ? 'PASS' : 'FAIL');
+process.exit(ok ? 0 : 1);

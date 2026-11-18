@@ -31,6 +31,11 @@ from; the rows now hold the new numbers and say so):
   8.06  restore through the hook: it now rebuilds the people around their memories, as Continue.
   act table: 52 kinds, was 51 (a new private kind, "word", for a thing Tom is told).
 
+Changed by Fable's second round of 18 Nov (every number moved into rules.js; routines retimed):
+  6.06  Ron back at the rank after Tang's: was 17.9 (17:54), now 18.5 (18:30).
+  6.07  Sheila back at the office after the caff: was 13.1 (13:06), now 14.3 (14:18).
+  18 rows that searched source text now read the rules table (see PROTOTYPE-OUTSIDE-RULES-2026-11-18.md).
+
 Run with pytest (python -m pytest tests/rules_test.py). Rule reads found wrong are kept as strict
 expected failures, so a later fix to the reading file or the game shows up (none at present).
 """
@@ -67,26 +72,27 @@ def U(file, search, count=1):
     return ("use", file, search, count)
 
 
-def sched(rows):
-    """A cast.js schedule as Prettier writes it (six spaces before each row)."""
-    def item(v):
-        return "'%s'" % v if isinstance(v, str) else repr(v)
-    body = "".join("      [%s],\n" % ", ".join(item(v) for v in row) for row in rows)
-    return "    sched: [\n" + body + "    ],"
 
 
-def traits(nerve, venal, talk, discretion):
-    return "    nerve: %r,\n    venal: %r,\n    talk: %r,\n    discretion: %r," % (nerve, venal, talk, discretion)
+def sched_rows(rows):
+    """A schedule as the rules table holds it (schedules.<person>): fromHour, place, doing."""
+    out = []
+    for row in rows:
+        d = {"fromHour": row[0], "place": row[1]}
+        if len(row) > 2:
+            d["doing"] = row[2]
+        out.append(d)
+    return out
 
 
-def kind_row(name, sev, val, crime):
-    return "  %s: K(\n    %r,\n    %r,\n    %r," % (name, sev, val, crime)
+
+
 
 
 RON_SCHED = [[0, "home", "sleep"], [6.6, "caff:s1", "sit"], [8.1, "rank", "idle"], [12.3, "fish:q1", "queue"],
-             [12.8, "rank", "idle"], [17.4, "tangs:q1", "queue"], [17.9, "rank", "smoke"], [23.6, "home", "sleep"]]
+             [12.8, "rank", "idle"], [17.4, "tangs:q1", "queue"], [18.5, "rank", "smoke"], [23.6, "home", "sleep"]]
 SHEILA_SCHED = [[0, "off"], [7.5, "mickeys:sheila", "work"], [12.5, "caff:s7", "sit"],
-                [13.1, "mickeys:sheila", "work"], [18.2, "off"]]
+                [14.3, "mickeys:sheila", "work"], [18.2, "off"]]
 GRACE_SCHED = [[0, "home", "sleep"], [6, "caff:grace", "work"], [17.2, "home", "idle"], [22.5, "home", "sleep"]]
 
 # (rule id, plain name with its number, checks, kind)
@@ -142,15 +148,16 @@ RULES = [
     ("1.20", "named as Tom above face score 0.36", [R("seeing.namesHimAboveFace", 0.36)], RT),
     ("1.20b", "the coat at night cuts the face score x0.4",
      [R("seeing.coatAtNightFaceTimes", 0.4), R("seeing.coatHidesWhenNightAbove", 0.5)], RT),
-    ("1.21", "act table: inherit severity 0.5", [F("kinds.js", kind_row("inherit", 0.5, 0, 0))], OUT),
-    ("1.21b", "act table: arrive severity 0.3", [F("kinds.js", kind_row("arrive", 0.3, 0, 0))], OUT),
-    ("1.21c", "act table: kill severity 1, crime 3", [F("kinds.js", kind_row("kill", 1, -1, 3))], OUT),
+    ("1.21", "act table: inherit severity 0.5", [U("kinds.js", "sev: KN[id].newsworthyZeroToOne,"), R("kinds.inherit", {"newsworthyZeroToOne": 0.5, "readsMinusOneMenaceToOneDecent": 0, "crimeLevel": 0})], RT),
+    ("1.21b", "act table: arrive severity 0.3", [U("kinds.js", "sev: KN[id].newsworthyZeroToOne,"), R("kinds.arrive", {"newsworthyZeroToOne": 0.3, "readsMinusOneMenaceToOneDecent": 0, "crimeLevel": 0})], RT),
+    ("1.21c", "act table: kill severity 1, crime 3", [U("kinds.js", "sev: KN[id].newsworthyZeroToOne,"), R("kinds.kill", {"newsworthyZeroToOne": 1, "readsMinusOneMenaceToOneDecent": -1, "crimeLevel": 3})], RT),
     ("1.22", "a non-act glance raises familiarity once every 20 game minutes",
      [R("seeing.plainSightingEveryGameMinutes", 20)], RT),
-    # The default nerve 0.5 (a person with none set) is still written in seeing.js.
+    # The default nerve 0.5 (a person with none set) is in the rules table since the second round (ladder.nerveAssumed).
     ("1.23", "timid people (nerve under 0.62) step back",
      [R("watching.stepBackIfNerveBelow", 0.62),
-      F("seeing.js", "(P.def.nerve == null ? 0.5 : P.def.nerve) < WATCH.stepBackIfNerveBelow")], OUT),
+      R("ladder.nerveAssumed", 0.5),
+      U("seeing.js", "(P.def.nerve == null ? LAD.nerveAssumed : P.def.nerve) < WATCH.stepBackIfNerveBelow")], RT),
     ("1.24", "night: day 07:45 to 17:15, full night 18:45 to 06:15",
      [R("time.dayFullHour", 7.75), R("time.duskStartsHour", 17.25), R("time.nightFullHour", 18.75),
       R("time.dawnStartsHour", 6.25)], RT),
@@ -176,7 +183,7 @@ RULES = [
     ("2.10", "certainty does not fade, only heat",
      [F("gossip.js", "m.heat = Math.max(fl, m.heat * f);")], OUT),
     ("2.11", "Tuesday push at 08:45 on day 1",
-     [F("scenes.js", "if (d === 1 && h >= 8.75 && !f.nudge) {")], OUT),
+     [R("story.nudgeFromHour", 8.75), U("scenes.js", "if (d === 1 && h >= STORY.nudgeFromHour && !f.nudge) {")], RT),
     ("2.12", "seeing two tell a story within 18 m makes a note", [R("gossip.tomCatchesThemWithinMetres", 18)], RT),
     ("2.13", "knowing score 0.25 + 0.09 per kind (up to 6) + 0.4 familiarity",
      [R("naming.knowsOfInheritance", 0.25), R("naming.perKindOfActKnown", 0.09),
@@ -208,10 +215,12 @@ RULES = [
       R("prices.owedByJuliePence", 900), R("prices.owedByWaynePence", 3000),
       U("state.js", "dennis: { owed: RULES.prices.owedByIvesonPence, st: 'open' },")], RT),
     ("4.03", "a debtor pays if fear over 0.45, or liking over 0.3 and owing 15 or less",
-     [F("scenes.js", "if (P.mind.fear > 0.45 || (P.mind.regard > 0.3 && d.owed <= 1500)) {")], OUT),
+     [R("story.paysUpAboveFear", 0.45), U("scenes.js", "P.mind.fear > STORY.paysUpAboveFear ||"), R("story.paysUpAboveRegard", 0.3), R("story.paysUpWhenOwingAtMostPence", 1500),
+      U("scenes.js", "(P.mind.regard > STORY.paysUpAboveRegard && d.owed <= STORY.paysUpWhenOwingAtMostPence)")], RT),
     ("4.04", "a collected debt goes in the tin", [F("scenes.js", "earn(amt, true);")], OUT),
     ("4.05", "striking a debt out: liking +0.5",
-     [F("scenes.js", "P.mind.regard = clamp(P.mind.regard + 0.5, -1, 1);")], OUT),
+     [R("story.regardAddedForStrikingOutADebt", 0.5),
+      U("scenes.js", "P.mind.regard = clamp(P.mind.regard + STORY.regardAddedForStrikingOutADebt, -1, 1);")], RT),
     ("4.06", "Julie's slate: nine pounds", [F("fares.js", "Nine pounds, since the summer", 2)], OUT),
     ("4.07", "fare 80p plus 0.9p a metre, rounded to 10p",
      [R("fares.flagFallPence", 80), R("fares.penceAddedPerMetre", 0.9), R("fares.roundedToPence", 10)], RT),
@@ -252,7 +261,7 @@ RULES = [
      [R("beaten.plastersPence", 800), U("work.js", "Math.min(m.clean, BEAT.plastersPence)")], RT),
     # 5. Suspicion and police
     ("5.01", "statements taken at 04:00 from Tuesday",
-     [F("scenes.js", "if (h >= 4 && d >= 1) nightly(d - 1);")], OUT),
+     [R("story.nightEndsAtHour", 4), U("scenes.js", "if (h >= STORY.nightEndsAtHour && d >= 1) nightly(d - 1);")], RT),
     ("5.02", "a statement needs sure at least 0.55", [R("police.statementNeedsSureAtLeast", 0.55)], RT),
     ("5.03", "ten people never make a statement", [F("cast.js", "    nostmt: 1,\n", 10)], OUT),
     ("5.04", "violence (crime 2+) sends Ellis", [R("police.violentFromCrimeLevel", 2)], RT),
@@ -271,7 +280,7 @@ RULES = [
       R("police.ellisUntilHour", 13)], RT),
     ("5.09b", "Ellis walks at loudness 2.2", [R("police.ellisComesAtLoudness", 2.2)], RT),
     ("5.09c", "Ellis asks up to 5 locals", [R("police.ellisAsksPeopleAtMost", 5)], RT),
-    ("5.10", "Cammack's lads at loudness over 1.2", [F("scenes.js", "loudness() > 1.2")], OUT),
+    ("5.10", "Cammack's lads at loudness over 1.2", [R("story.ladsHotAboveLoudness", 1.2), U("scenes.js", "loudness() > STORY.ladsHotAboveLoudness")], RT),
     ("5.11", "fear +0.07 told, +0.18 seen",
      [R("memory.fearFromSeriousCrimeTold", 0.07), R("memory.fearFromSeriousCrimeSeen", 0.18)], RT),
     ("5.12", "liking moves x0.15 told, x0.26 seen",
@@ -281,20 +290,24 @@ RULES = [
     ("6.02", "a new week starts Monday 15:36 (save version 4)",
      [R("time.weekStartsGameMinute", 936), F("state.js", "export const VERSION = 4;")], OUT),
     ("6.05", "the weather list", [F("clock.js", "['mist', 'drizzle', 'drizzle', 'rain', 'dry', 'heavy']")], OUT),
-    ("6.06", "Ron: home 00:00, caff 06:36, rank 08:06, fish 12:18, rank 12:48, Tang's 17:24, rank 17:54, home 23:36",
-     [F("cast.js", sched(RON_SCHED))], OUT),
-    ("6.07", "Sheila: office 07:30 to 18:12, caff 12:30", [F("cast.js", sched(SHEILA_SCHED))], OUT),
-    ("6.07b", "Grace: caff 06:00 to 17:12", [F("cast.js", sched(GRACE_SCHED))], OUT),
-    ("6.08", "Sheila: nerve 0.95, talk 0.15, discretion 0.92", [F("cast.js", traits(0.95, 0, 0.15, 0.92))], OUT),
-    ("6.08b", "Darren: nerve 0.3, talk 0.95, discretion 0.05", [F("cast.js", traits(0.3, 0.95, 0.95, 0.05))], OUT),
-    ("6.08c", "Ron: nerve 0.85, talk 0.7, discretion 0.35", [F("cast.js", traits(0.85, 0.8, 0.7, 0.35))], OUT),
+    ("6.06", "Ron: home 00:00, caff 06:36, rank 08:06, fish 12:18, rank 12:48, Tang's 17:24, rank 18:30, home 23:36",
+     [U("cast.js", "sched: week('ron'),"), R("schedules.ron", sched_rows(RON_SCHED))], RT),
+    ("6.07", "Sheila: office 07:30 to 18:12, caff 12:30 to 14:18", [U("cast.js", "sched: week('sheila'),"), R("schedules.sheila", sched_rows(SHEILA_SCHED))], RT),
+    ("6.07b", "Grace: caff 06:00 to 17:12", [U("cast.js", "sched: week('grace'),"), R("schedules.grace", sched_rows(GRACE_SCHED))], RT),
+    ("6.08", "Sheila: nerve 0.95, talk 0.15, discretion 0.92", [U("cast.js", "nerve: PEOPLE.sheila.nerveZeroToOne,"), R("people.sheila.nerveZeroToOne", 0.95), R("people.sheila.venalZeroToOne", 0),
+      R("people.sheila.talkativeZeroToOne", 0.15), R("people.sheila.discretionZeroToOne", 0.92)], RT),
+    ("6.08b", "Darren: nerve 0.3, talk 0.95, discretion 0.05", [U("cast.js", "nerve: PEOPLE.darren.nerveZeroToOne,"), R("people.darren.nerveZeroToOne", 0.3), R("people.darren.venalZeroToOne", 0.95),
+      R("people.darren.talkativeZeroToOne", 0.95), R("people.darren.discretionZeroToOne", 0.05)], RT),
+    ("6.08c", "Ron: nerve 0.85, talk 0.7, discretion 0.35", [U("cast.js", "nerve: PEOPLE.ron.nerveZeroToOne,"), R("people.ron.nerveZeroToOne", 0.85), R("people.ron.venalZeroToOne", 0.8),
+      R("people.ron.talkativeZeroToOne", 0.7), R("people.ron.discretionZeroToOne", 0.35)], RT),
     # 7. Talk
     ("7.01", "Tab opens the suggested lines", [F("talk.js", "if (code === 'Tab') {\n    T.open = !T.open;")], OUT),
-    ("7.02", "at most three suggested lines", [F("talk.js", "L.length < 3 && D.keep")], OUT),
+    ("7.02", "at most three suggested lines", [R("talk.suggestedLinesAtMost", 3), U("talk.js", "L.length < TALKING.suggestedLinesAtMost && D.keep")], RT),
     ("7.05", "a live reply is cut to three sentences and 380 characters",
-     [F("talk.js", "if (parts && parts.length > 3) s = parts.slice(0, 3).join('').trim();\n  return s.slice(0, 380);")],
-     OUT),
-    ("7.07", "talking costs 1.5 game minutes an exchange", [F("talk.js", "G.t += 1.5;")], OUT + " inferred"),
+     [R("talk.replySentencesAtMost", 3), R("talk.replyCharactersAtMost", 380),
+      U("talk.js", "parts.length > TALKING.replySentencesAtMost"),
+      U("talk.js", "return s.slice(0, TALKING.replyCharactersAtMost);")], RT),
+    ("7.07", "talking costs 1.5 game minutes an exchange", [R("talk.turnTakesGameMinutes", 1.5), U("talk.js", "G.t += TALKING.turnTakesGameMinutes;")], RT + " inferred"),
     # 8. Saving
     ("8.01", "save version 4; any other refused",
      [F("state.js", "export const VERSION = 4;"), F("saving.js", "if (o.v !== VERSION) return false;")], OUT),
@@ -380,7 +393,8 @@ def test_static_rule_ids_unique():
 def test_static_rules_table_is_what_the_game_reads():
     # Every source file that reads a rule imports the one table; none keeps a copy of it.
     t = rules_table()
-    assert len(t) == 20, "rules.js has %d sections, 20 when re-pointed" % len(t)
+    # 20 sections in Fable's first round of 18 Nov; 32 in his second (every rule's number moved in)
+    assert len(t) == 32, "rules.js has %d sections, 32 when re-pointed (second round)" % len(t)
     readers = [f for f in os.listdir(SRC) if f.endswith(".js") and "from './rules.js'" in source(f)]
     assert {"seeing.js", "gossip.js", "police.js", "money.js", "fares.js", "jobs.js", "hook.js"} <= set(readers)
 
@@ -397,9 +411,11 @@ def test_static_act_table_has_52_kinds():
     assert "word" in kinds and "choice_silent" in kinds
 
 
-# 30 schedule blocks: 28 named people (cast.js) plus the fare passenger and the yard lad (routines.js).
+# 30 schedule blocks: 28 named people (since the second round in the rules table, schedules.<person>,
+# which cast.js reads with week('<person>')) plus the fare passenger and the yard lad (routines.js).
 def test_static_30_schedule_blocks():
-    assert source("cast.js").count("sched: [") == 28
+    assert len(rules_table()["schedules"]) == 28
+    assert source("cast.js").count("sched: week('") == 28
     assert source("routines.js").count("sched: [") == 2
 
 
@@ -476,9 +492,8 @@ def test_live_4_02_mickeys_book(js):
 
 
 def test_live_6_06_rons_schedule(js):
-    assert js("LEDGER.G.people.ron.def.sched") == [
-        [0, "home", "sleep"], [6.6, "caff:s1", "sit"], [8.1, "rank", "idle"], [12.3, "fish:q1", "queue"],
-        [12.8, "rank", "idle"], [17.4, "tangs:q1", "queue"], [17.9, "rank", "smoke"], [23.6, "home", "sleep"]]
+    # the game's own copy, as the rules table's rows become arrays (Fable's second round of 18 Nov)
+    assert js("LEDGER.G.people.ron.def.sched") == RON_SCHED
 
 
 def test_live_6_08_traits(js):

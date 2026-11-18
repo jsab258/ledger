@@ -5,7 +5,8 @@ Fable's tests use puppeteer-core and a system Chrome. Here the lane builds the p
 readable source (build.py, in a work folder outside the repository), puts its stand-in
 shim/puppeteer-core (the same calls, carried out by Playwright's installed Chromium) in place of
 the real package in the work folder's node_modules, and runs the tests unchanged, in Fable's
-order (npm test): week, publish set, nights, layout, files, talk, eyes. oldsave runs only with
+order (npm test): numbers, walks, same week, week, publish set, arrivals, nights,
+town, ledger rules, layout, files, talk, eyes. oldsave runs only with
 OLD=<folder holding an older build of the page>.
 
 Needs the pictures: --assets DIR or LEDGER_PROTO_ASSETS (checked against PUBLISHED.json).
@@ -28,7 +29,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build  # noqa: E402
 
-ORDER = ["week", "publish_set", "nights", "layout", "files", "talk", "eyes", "oldsave"]
+# Fable's npm test order (second round of 18 Nov), then oldsave, which needs an older build
+ORDER = ["numbers", "walks", "same_week", "week", "publish_set", "arrivals", "nights", "town",
+         "ledger_rules", "layout", "files", "talk", "eyes", "oldsave"]
+SCRIPTS = {"numbers": ["tools/numbers.mjs", "left"], "walks": ["tools/walk_times.mjs"],
+           "publish_set": ["tools/publish_set.mjs"]}
 
 
 def verdict(name, code, out):
@@ -39,11 +44,13 @@ def verdict(name, code, out):
         return "FAIL"
     if name == "publish_set":
         return "PASS"
+    if name in ("numbers", "walks"):
+        return "PASS" if re.search(r"^PASS\b", out, re.M) else "FAIL"
     if re.search(r"\bTEST FAIL\b|\bFAILED\b|PAGEERR", out):
         return "FAIL"
-    if last == "PASS" or last.endswith(" PASS"):
+    if last == "PASS" or last.endswith(" PASS") or last.startswith("PASS:"):
         return "PASS"
-    if last == "FAIL" or re.search(r"^FAIL\b", last):
+    if last == "FAIL" or re.search(r"^FAIL\b", last) or last.startswith("FAIL:"):
         return "FAIL"
     if name == "week":
         return "PASS" if re.search(r"^MEASURES ", out, re.M) and "TEST FAIL" not in out else "FAIL"
@@ -60,8 +67,15 @@ def install_shim(work):
 
 
 def run(assets, only=None, work=None, timeout=1200):
+    """Build and run the tests, holding the work folder's lock the whole time."""
     work = work or build.DEFAULT_WORK
-    probs = build.build(assets_dir=assets, dist=os.path.join(work, "dist-check"), work=work)
+    with build.work_lock(work):
+        return _run(assets, only, work, timeout)
+
+
+def _run(assets, only, work, timeout):
+    probs = build.build(assets_dir=assets, dist=os.path.join(work, "dist-check"), work=work,
+                        locked=True)
     if probs:
         print("build:", "; ".join(probs))
         return {"build": "FAIL"}
@@ -77,10 +91,10 @@ def run(assets, only=None, work=None, timeout=1200):
             results[name] = "SKIP (no OLD build given)"
             print("%-12s %s" % (name, results[name]))
             continue
-        script = "tools/publish_set.mjs" if name == "publish_set" else "test/%s.mjs" % name
+        script = SCRIPTS.get(name, ["test/%s.mjs" % name])
         t0 = time.time()
         try:
-            p = subprocess.run(["node", script], cwd=work, env=env, capture_output=True, text=True,
+            p = subprocess.run(["node"] + script, cwd=work, env=env, capture_output=True, text=True,
                                timeout=timeout)
             out, code = p.stdout + p.stderr, p.returncode
         except subprocess.TimeoutExpired as e:

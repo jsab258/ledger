@@ -1,5 +1,6 @@
 // LEDGER. The state of one week: everything the save file holds, the settings, and the pause book.
 import { RULES } from './rules.js';
+const WEATHER = RULES.weather;
 
 // The one mutable game state. Everything the save file holds lives under G.
 export const VERSION = 4;
@@ -11,7 +12,13 @@ export function freshState() {
     v: VERSION,
     t: START_T, // game minutes since Monday 00:00 (15 Oct 1990)
     played: 0, // real seconds played
-    weather: { kind: 'drizzle', rain: 0.28, mist: 0.35, wet: 0.8, next: START_T + 150 },
+    weather: {
+      kind: 'drizzle',
+      rain: WEATHER.startsRain,
+      mist: WEATHER.startsMist,
+      wet: WEATHER.startsWet,
+      next: START_T + WEATHER.firstChangeAfterGameMinutes,
+    },
     tom: {
       x: -5.4,
       z: 21,
@@ -111,6 +118,19 @@ export const G = Object.assign(freshState(), {
 export function resetState() {
   const f = freshState();
   for (const k of Object.keys(f)) G[k] = f[k];
+  TALLY.days = [];
+}
+
+// ---------- the gossip table ----------
+// Counts for LEDGER.gossip(): per day, how often someone saw Tom do a thing, how often he was only heard, and
+// which named people stood within talking distance of each other. Counting only: nothing reads these back,
+// no random number is drawn for them, and they are kept while the page is open, not saved with the week.
+export const TALLY = { days: [] };
+export function tally(what, pair) {
+  const d = Math.floor(G.t / 1440),
+    row = TALLY.days[d] || (TALLY.days[d] = { sightings: 0, heard: 0, met: {} });
+  if (what === 'met') row.met[pair] = (row.met[pair] || 0) + 1;
+  else row[what]++;
 }
 export const day = () => Math.floor(G.t / 1440);
 export const hour = () => (G.t % 1440) / 60;

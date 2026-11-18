@@ -83,8 +83,8 @@ export function makeChecks(hook, x) {
 
   return {
     // Does every named person who sets off for a place get there?
-    // Steps the game from now (or fromGameMinute) for forGameHours, with Tom wherever he is (or at tomAt, a
-    // named place), and reads the record the routines keep of every walk: set off, arrived, or turned for
+    // Steps the game from now (or fromGameMinute) for forGameHours, with Tom wherever he is (or kept at tomAt, a
+    // named place, the whole time), and reads the record the routines keep of every walk: set off, arrived, or turned for
     // somewhere else before arriving. It also watches for anyone marked as walking who is not moving.
     //   stoodStill: anyone marked as walking who has not moved for stoodStillRealSeconds (must be none);
     //   gaveUp: every walk given up for another place before arriving (the routine gave it too little time).
@@ -97,6 +97,10 @@ export function makeChecks(hook, x) {
         dt = o.stepRealSeconds || 0.25;
       if (o.fromGameMinute != null && o.fromGameMinute > G.t) advanceTo(o.fromGameMinute);
       if (o.tomAt) hook.goTo(o.tomAt);
+      // Tom is kept at tomAt for the whole of it: when the game itself takes him somewhere (dead on his feet in
+      // the small hours, it puts him to bed), he is put back as soon as the game runs again, and that is counted.
+      const post = o.tomAt ? { x: G.tom.x, z: G.tom.z, space: G.tom.space } : null;
+      let putBack = 0;
       const from = G.t,
         mark = TRIPS.length,
         watch = {},
@@ -104,6 +108,14 @@ export function makeChecks(hook, x) {
       const where = (kind, x, z) =>
         kind === 'off' ? 'away' : kind === 'home' ? 'home' : ROOMS[kind] ? ROOMS[kind].name : zoneAt(x, z);
       const each = () => {
+        if (
+          post &&
+          !G.paused &&
+          (G.tom.space !== post.space || Math.hypot(G.tom.x - post.x, G.tom.z - post.z) > 3)
+        ) {
+          hook.goTo(o.tomAt);
+          putBack++;
+        }
         for (const P of G.named) {
           const going = P.moving && P.route && !P.fight && !P.gone && !P.chat && !P.hold;
           if (!going) {
@@ -159,6 +171,7 @@ export function makeChecks(hook, x) {
         from: stamp(from),
         until: stamp(G.t),
         tomAt: hook.read().tom.place,
+        tomPutBackThereTimes: putBack,
         walksSetOff: trips.length + walking.filter((P) => P.trip.setOffGameMinute >= from).length,
         walksArrived: arrived.length,
         walksGivenUpForAnotherPlace: turned.length,

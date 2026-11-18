@@ -49,7 +49,9 @@ function wrapPage(pg) {
       else if (name === 'pageerror') pg.on('pageerror', handler);
       else pg.on(name, handler);
     },
-    screenshot: (o) => pg.screenshot(o),
+    // Playwright gives a screenshot 30 s; Puppeteer waits up to its protocol timeout (180 s). The
+    // first picture with software graphics can take longer than 30 s, so give it Puppeteer's wait.
+    screenshot: (o = {}) => pg.screenshot({ timeout: 180000, ...o }),
     close: () => pg.close(),
   };
 }
@@ -59,6 +61,12 @@ async function launch(o = {}) {
   const args = (o.args || []).filter((a) => !a.startsWith('--window-size'));
   const b = await chromium.launch({ headless: o.headless !== false, args });
   const ctx = await b.newContext();
+  // The cloud cannot reach Google Fonts (the proxy refuses it), and a hanging font request held
+  // each page load about 90 s. Refuse it at once instead: the page falls back to system fonts,
+  // as it did before, only sooner. LEDGER_ALLOW_FONTS=1 lets the requests through (on the PC).
+  if (!process.env.LEDGER_ALLOW_FONTS) {
+    await ctx.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//, (r) => r.abort());
+  }
   return {
     newPage: async () => wrapPage(await ctx.newPage()),
     close: () => b.close(),

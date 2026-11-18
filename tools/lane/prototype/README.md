@@ -1,37 +1,39 @@
-# LEDGER loop prototype: source project (stage 0)
+# LEDGER loop prototype: source project (stage 1)
 
-Written by the cloud lane, 18 Nov 2026, for the order's waiting item 16 ("the loop prototype as a source project in the repository: build step, tests, published to the same page"). A draft home: the main session moves the folder where PLAN.md places the prototype (the scope draft suggests prototype/ at the root) when it adopts it.
+Written by the cloud lane, 18 Nov 2026. Stage 0 (the published bundle, rebuilt and smoke-tested) is replaced by stage 1: Fable's readable source, built here byte for byte. A draft home: the main session moves the folder where PLAN.md places the prototype when it adopts it.
 
 ## What is here
 
-- src/index.html and src/bundle/part-01.js, part-02.js: the published page exactly as it stood in version 1794862482-9f9b (read 18 Nov with the Artifact tool). The game script is one 1.21 MB file, over git's 1 MB limit for non-code text, so it is kept in two parts cut at line ends; the build joins them back byte for byte.
-- src/MANIFEST.json: the page, its version, and a checksum for every file. The 13 pictures and the people rig (people.txt, 1.5 MB) stay on the published page and are not copied into git; a publish copies them server side from the page itself.
-- build.py: joins the parts, checks every byte against the published checksums, writes dist/ (git ignores it): the page and its script (two files, not the single file the scope draft imagined; the pictures sit beside them) and dist/publish-files.json, the files map for one Artifact publish to the same page, so his link never changes. Its paths are from the repository root. It names only the script, because an update keeps the pictures it does not name; it records the page version it was built on, so the publisher reads the live page first and merges any newer change, and compares checksums after publishing. With --assets it also copies a local set of pictures in, checked, for offline play and tests.
-- tests/test_build.py: 6 checks, no browser needed (rebuild identical to the published page, every source file under 1 MB, the publish map, the page names its script and people rig, an edited source refused unless allowed, the test hook present).
-- tests/smoke_test.py: plays the built page in headless Chromium through the game's own test hook (window.LEDGER): every file loads, title screen, a new week, the clock moves, people move, at least 10 people, the week ended with the silent choice and the end report saying so, no page errors. Needs the pictures in a folder named by LEDGER_PROTO_ASSETS; skipped otherwise. Passed here on 18 Nov (Swiss time) with software graphics, in about 55 seconds.
+- project/: Fable's source as published beside the page under source/ (his second round of 18 Nov, page version 1794997640-def7), with his BUILD.md, CHANGELOG.md, DESIGN_NOTES.md, NOT_DONE.md, README.md and RESULTS.md from the page's top level. Nothing in it is edited by the lane.
+- published/: the page's files.json, measures.json and results/ (Fable's check results), for reference.
+- PUBLISHED.json: the page, its version, the checksums the build must reproduce (ledger.js 17830684..., index.html f0e85bbb...), the checksums of the 12 pictures and the people rig, and the first round's pin under "previous".
+- build.py: runs Fable's own build (npm ci --ignore-scripts, then node tools/build.mjs: esbuild 0.28.2 bundling three.js 0.187.0) in a work folder outside the repository and checks ledger.js and index.html byte for byte against PUBLISHED.json. A lock beside the work folder keeps two builds, or a build and a test run, from sharing it (a parallel build lost a log on the first try). With --assets DIR it copies the pictures in, checked.
+- run_proto_tests.py: Fable's own tests, unchanged, in his npm test order (numbers, walks, same week, week, publish set, arrivals, nights, town, ledger rules, layout, files, talk, eyes) plus oldsave when OLD names an older build. They run in the cloud's Playwright Chromium through shim/puppeteer-core, a stand-in for the calls the tests use. The shim refuses Google Fonts requests at once (the cloud cannot reach them; each page load had waited about 90 s) and gives screenshots Puppeteer's 180 s instead of Playwright's 30 s. On the PC, set LEDGER_ALLOW_FONTS=1 when using the shim, or layout is measured with fallback fonts there too.
+- tests/: the lane's own checks (rules, systems, Ron stopping, smoke, build), reading the readable source and LEDGER.rules.
 
-Run: python build.py, then python -m unittest discover -s tests -p "*test*.py".
+The pictures and the people rig (13 files, 4.5 MB; people.txt is 1.5 MB, over the size guard) are not in git. Fetch them from the page (Artifact tool: action read, the page url, paths = the asset names, out_dir outside the repository) and check them with python build.py --check-assets DIR.
 
-## What it shows
+Run: python build.py; python -m pytest tests (set LEDGER_PROTO_ASSETS for the live checks); python run_proto_tests.py --assets DIR.
 
-The page's script is a bundle: three.js 0.187.0 (the page's own REVISION string says 187; npm lists 0.187.0 as MIT, published 30 Oct 2026, checked with npm view on 18 Nov) and the game's code, with the game's names shortened by the bundler. So the repository can rebuild and test the page today, but nobody can read or edit its rules yet. No readable source was found in the repository or on the page (whether Fable kept one in its chat is unverified).
+## Results here, 18 Nov 12:20 to 12:50 (second round's source)
 
-The game exposes a test hook, window.LEDGER: G (the whole game state), step, simStep, startNew, passTime, enterRoom, leaveRoom, endWeek, reportText, saveNow, restore, talk, rig, benchmark, and the engine's own scene, camera, THREE, ui, cam and F. endWeek needs a choice (endWeek('silent') works; with none it fails inside the game). Per-system checks can use this before any split.
+- Build: ledger.js and index.html byte for byte the published ones (a second machine, after Fable's own). The first round's source, from git, also rebuilds its own published ledger.js (73245b8e...).
+- Fable's tests: numbers, walks, same week (the seeded week gives his recorded save, digest 6e859584cd20ea3d7ab0, 19 parts, so the seeded week is the same on this machine too), week, publish set, arrivals, nights, town, ledger rules, files, talk and oldsave (a first-round save loads in the second-round build) pass; eyes prints its findings with no error. layout passes at three of four sizes; at 1280 by 720 the subtitles had not yet moved up 600 ms after the slip unfolded, right after a slow software-graphics screenshot. Without the screenshot, or with 4 s to settle, it passes: a timing effect of the cloud's graphics, not a layout fault (a slow machine would show the overlap for a moment). arrivals' first run crashed the browser tab while a second browser ran beside it; alone it passes.
+- The lane's checks: see the sections below; numbers in production/lane/LANE-LOG.md.
 
-## Stages from here
+## Licences for the builder
 
-1. Stage 0 (this folder): rebuild and smoke test the page as published. Done.
-2. Stage 1, the readable source: ask Fable for its source files as written, before bundling (added as the last line of production/lane/FABLE-DRIVING-NEXT-ROUND.md; the same ask belongs in his next prototype round). With them, src/ becomes one file per system plus three.js pinned at 0.187.0 from npm, and the build bundles with esbuild (MIT). If Fable has no source, the fallback is to unbundle by hand: split three.js out, reformat, and rename the game's code system by system, a few hours per system, checked after each step by the smoke test and the system's checks.
-3. Stage 2, per-system checks in Node through the hook, in the scope draft's order (production/lane/PROTOTYPE-SCOPE-DRAFT.md: seeing and naming, gossip, the Ledger, money, police, fighting, saving first); the golden rows from tools/lane/simwasm/ where the C# Core has them.
-4. Stage 3, publishing from the build: one Artifact publish of dist/index.html with dist/publish-files.json's files map to the same page, by whoever owns the page (the lane never publishes it).
+three.js 0.187.0 (MIT), esbuild 0.28.2 (MIT), acorn 8.19.0 (MIT, Fable's numbers tool only), prettier 3.3.3 and eslint 8.57.0 (MIT, formatting only), puppeteer-core 25.17.0 (Apache 2.0, Fable's tests only; not used here) are not on the allowlist by name. MIT is listed for other tools; the lines are his list's to add. The page also loads Google Fonts (mostly OFL 1.1, listed; Special Elite is Apache 2.0, unverified here). The art: Quaternius figures and Poly Haven textures, both CC0 by Fable's BUILD.md.
 
 ## Open points for the main session
 
-- Licence lines: three.js (MIT) and esbuild (MIT) are not on the allowlist by name; the page also loads Google Fonts (mostly OFL 1.1, which is listed; Special Elite is Apache 2.0, unverified here). MIT is listed for other tools, so likely a one-line addition, but it is his list.
-- The page uses claude.use("db"), ("user") and ("sample") (save, sign-in and live talk). Outside claude.ai these are absent, so tests run with saves in the browser only and live talk off; talk checks must use its fallback lines.
-- The pictures and the people rig live only on the page (and in this run's scratch copy). Keep a checked copy in F:\LedgerTools (MANIFEST.json has the checksums) so the smoke test runs on the PC and a lost page can be rebuilt.
+- The page uses claude.use("db"), ("user"), ("sample") and ("downloads"). Outside claude.ai these are absent, so tests run with saves in the browser only and live talk through Fable's stand-in.
+- Keep a checked copy of the pictures in F:\LedgerTools (PUBLISHED.json has the checksums) so the checks run on the PC and a lost page can be rebuilt.
+- Fable's NOT_DONE.md item 1 needs a decision if the real game takes the routines over: walks fit only with Tom away or at the rank.
 
 ## Per-system checks (stage 2, first four)
+
+The sections below were written for the bundle and re-pointed at the readable source on 18 Nov; their counts are the first run's. Fable's first round fixed the two findings kept as expected failures (restore through the hook, Ron stopping by the rank); they are now ordinary passing tests.
 
 tests/systems_test.py, added 18 Nov 2026. It plays one new week in headless Chromium through the game's test hook only, with the clock stopped between steps, in about 40 seconds. Needs LEDGER_PROTO_ASSETS like the smoke test; skipped otherwise.
 

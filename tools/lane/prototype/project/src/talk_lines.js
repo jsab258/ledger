@@ -5,6 +5,8 @@ import { G } from './state.js';
 import { KINDS } from './kinds.js';
 import { nameLevel } from './gossip.js';
 import { attached } from './seeing.js';
+import { RULES } from './rules.js';
+const TALKING = RULES.talk;
 
 export const SAY = {
   night_out: {
@@ -191,7 +193,7 @@ const OWN = {
     strike: 'I saw you hit {t}. Your uncle hit people. It never mended anything.',
   },
 };
-const dayOf = (t) => DAYS[Math.floor((t - 300) / 1440) % 7]; // the small hours belong to the night before
+const dayOf = (t) => DAYS[Math.floor((t - TALKING.smallHoursBelongToTheDayBeforeUntilGameMinute) / 1440) % 7]; // the small hours belong to the night before
 export function vocative(P) {
   if (P.id === 'sheila') return G.story.flags.sheilaNamed ? 'Tom' : 'new management';
   const l = nameLevel(P);
@@ -231,7 +233,7 @@ export function comebackLine(P, m) {
   if (m.who === 'owner' && m.src !== 'self')
     s = pick(["I'm not saying it was you. ", 'Might have been you, might not. ', 'Somebody your size. ']) + s;
   const v = vocative(P);
-  if (v && !/boss|new management|listen/i.test(s) && Math.random() < 0.5)
+  if (v && !/boss|new management|listen/i.test(s) && Math.random() < TALKING.addressWordChance)
     s = s.replace(/[.?]$/, (c) => ', ' + v + c);
   return s;
 }
@@ -461,5 +463,5 @@ export function describeMem(P, m) {
     : ' (does not know it was Tom: saw only ' +
       ({ coat: 'a man in a long dark coat', man: 'a man', cab: "one of Mickey's cars" }[m.who] || 'a man') +
       ')';
-  return `${k.truth(E)}, ${dayOf(E.t)}${who}. [${how}, ${m.sure > 0.7 ? 'sure' : m.sure > 0.45 ? 'fairly sure' : 'not sure'}]`;
+  return `${k.truth(E)}, ${dayOf(E.t)}${who}. [${how}, ${m.sure > TALKING.soundsSureAboveSureness ? 'sure' : m.sure > TALKING.soundsFairlySureAboveSureness ? 'fairly sure' : 'not sure'}]`;
 }

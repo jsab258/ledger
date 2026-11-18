@@ -49,7 +49,12 @@ export async function rest(where) {
     add("Rest till this evening, six o'clock.", d * 1440 + REST.eveningAtHour * 60);
   if (!night && h < REST.ferryOfferedUntilHour)
     add('Wait for the last ferry, quarter past ten.', d * 1440 + REST.lastFerryAtHour * 60);
-  add(!night && h < 19 ? 'Sleep through to the morning.' : 'Sleep till morning.', morning);
+  add(
+    !night && h < REST.sleepThroughOfferedBeforeHour
+      ? 'Sleep through to the morning.'
+      : 'Sleep till morning.',
+    morning,
+  );
   opts.push('Not now.');
   const i = await scene(() =>
     choose(
@@ -69,7 +74,7 @@ export async function passTime(tEnd, text = '') {
     await fade(true, text);
     const before = day();
     advanceTo(tEnd);
-    if (day() !== before || hour() < 9) wake();
+    if (day() !== before || hour() < REST.wakesProperlyBeforeHour) wake();
     G.tom.still = 0;
     if (G.hooks.save) G.hooks.save();
     await fade(false);
