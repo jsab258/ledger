@@ -92,6 +92,8 @@ const FACE = [
   "Everybody's looking, son. I'm not crawling to you.",
   "In the street? With them watching? Go on, then.",
 ];
+// round 5: a debtor with someone bigger behind him (Lee: Cammack's lads have offered him easier money, his card) stands
+const BACKED = ["Cammack's lot said I'd not be on my own. So go on.", "I've got friends now. Bigger than Mickey's lot ever were."];
 const CORNER = ["You've got me against a wall. Big mistake.", 'Nowhere to go, have I? Right.'];
 // round 4: improvised things break (melee sheet C12); a wheel brace or a cargo hook, like a pipe, does not
 const BREAKS = {
@@ -250,11 +252,12 @@ export function climb() {
       if (G.hooks.shake) G.hooks.shake(LAD.wallSlamShake);
     }
   }
-  const nerve0 = (d.nerve ?? LAD.nerveAssumed) + (P.lad ? LAD.ladsNerveAdded : 0),
+  const backed = d.backed ? LAD.backedNerveAdded : 0,
+    nerve0 = (d.nerve ?? LAD.nerveAssumed) + (P.lad ? LAD.ladsNerveAdded : 0) + backed,
     face = faceOf(P, al),
     corner = cornered ? LAD.corneredNerveAdded : 0;
   F.face = face;
-  F.last = { rung: next, pressure, nerve: nerve0, face, corner, allies: al.length, menace: F.menace0 };
+  F.last = { rung: next, pressure, nerve: nerve0, face, corner, backed, allies: al.length, menace: F.menace0 };
   if (pressure > nerve0 + face + corner) {
     m.fear = clamp(m.fear + LAD.fearAddedPerRungWhenYielding * next, 0, 1);
     m.regard = clamp(m.regard - LAD.regardLostPerRungWhenYielding * next, -1, 1);
@@ -269,9 +272,19 @@ export function climb() {
     F.yielded = false;
     mood(P, next >= 2 ? 'square' : 'stare');
     // round 4: say why he stands when the corner or the watchers tipped it, so the player can read it
-    const why = pressure > nerve0 + face ? 'corner' : pressure > nerve0 && next >= 2 ? 'face' : '';
+    const why =
+      pressure > nerve0 + face
+        ? 'corner'
+        : pressure > nerve0 && next >= 2
+          ? 'face'
+          : backed && pressure > nerve0 - backed && next >= 2
+            ? 'backed'
+            : '';
     F.standWhy = why;
-    sub(pick(why === 'corner' ? CORNER : why === 'face' ? FACE : STAND[next]), tomName(P));
+    sub(
+      pick(why === 'corner' ? CORNER : why === 'face' ? FACE : why === 'backed' ? BACKED : STAND[next]),
+      tomName(P),
+    );
     if (why) tl('stands', { actor: who(P), why });
     if (
       next === LAD.shoveRung ||

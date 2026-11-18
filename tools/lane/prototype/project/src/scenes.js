@@ -1128,7 +1128,15 @@ function mattersFor(P) {
       opts: [
         {
           say: [`I've come for the ${owe} on the book.`, `It's the ${owe}. I want it paid.`],
-          q: 'You want it now? Today?',
+          // round 5: each debtor asks it in his own words (the panel heard the same question five times in an hour)
+          q:
+            {
+              dennis: "Now? You've some front, son. Today?",
+              wayne: 'What, now? Before Friday?',
+              darren: 'So listen, you mean now? Like, today?',
+              julie: "Today? You're not serious.",
+              lee: "Now? Off a casual's money? Today?",
+            }[P.id] || 'You want it now? Today?',
           yes: ['Yes. Today.', 'Yes. Now.'],
           no: ['No. It can wait a bit.', 'No. Not today.'],
           keep: ASK,

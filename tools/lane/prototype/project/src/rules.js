@@ -499,6 +499,8 @@ export const RULES = {
     faceNervePerWatcher: 0.06,
     faceNerveAtMost: 0.24,
     corneredNerveAdded: 0.2,
+    // round 5 (18 Nov): a debtor with someone bigger behind him (Lee, courted by Cammack's lads) holds his ground
+    backedNerveAdded: 0.3,
     // round 4: things to hand in a fight (melee sheet C12: chair 1 to 3 blows, brick 2 to 5, a pipe does not break)
     grabReachMetres: 1.1,
     grabRealSeconds: 0.5,
@@ -782,6 +784,10 @@ export const RULES = {
   },
 
   talk: {
+    // round 5 (18 Nov): fallback lines remembered across talks (the panel: the same lines from four people)
+    ownLineAgainAfterDays: 1,
+    sharedLineAgainOnStreetAfterDays: 7,
+    copperRowBelowZ: -96, // the cut: south of it is Copper Row, north of it the Hook
     bubbleHeardWithinMetres: 20,
     sameBubbleQuietRealSeconds: 10,
     morningUntilHour: 12,

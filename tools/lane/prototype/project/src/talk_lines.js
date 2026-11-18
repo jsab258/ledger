@@ -6,6 +6,7 @@ import { KINDS } from './kinds.js';
 import { nameLevel } from './gossip.js';
 import { attached } from './seeing.js';
 import { RULES } from './rules.js';
+import { ROOMS } from './map.js';
 const TALKING = RULES.talk;
 
 export const SAY = {
@@ -413,7 +414,65 @@ const CLOSE = {
   shaun: "I'd best get back up the ladder.",
   pc: "I'll be on my way, sir.",
 };
-const SHARED = new Set(Object.values(FB).flat());
+// Round 5 (18 Nov): small talk that answers the question asked. Shared answers any of the street may give, and a few
+// of a person's own. The panel heard "It's been wet since August" from four people and Ron's dock line in three talks.
+export const FBQ = {
+  tea: [
+    "Rinaldi's, on the corner of Chapel Lane. Grace does a proper pot.",
+    "Grace's. Sit by the window and you'll hear the whole street by ten.",
+  ],
+  street: [
+    "Quieter since the scheme. Quieter isn't the same as better.",
+    "Less work and more watching. Everybody knows whose car is whose.",
+  ],
+  newcomer: [
+    "You'll find them. This street finds you first, mind.",
+    "Keep your eyes open and your business shut. That's the Hook.",
+  ],
+  sunday: [
+    'Mass, for them that go. Father Walsh is after money for the roof.',
+    "Sleep, mostly. The fish dock's quiet and you can hear the river.",
+  ],
+  know: [
+    'Sheila. She knows what everybody owes, and that is most of knowing.',
+    "Brenda at the fish shop. What she's told on Monday, the street has by Tuesday.",
+  ],
+  strangers: ["Off the ferry, now and then. They don't stop long.", 'Not many. We notice the ones we get. We noticed you.'],
+  lived: ['Long enough to remember the dock working.', 'All my life, near enough. It was busier.'],
+};
+const FBQOWN = {
+  ron: {
+    tea: ["Grace's. Tell her Ron sent you and she'll charge you double."],
+    strangers: ['I see every one. Off the bus, off the ferry. You were the one with one suitcase.'],
+    lived: ['Born on Chapel Lane. Thirty years on the dock, then this door.'],
+  },
+  sheila: {
+    know: ["Nobody. Know their numbers. It's safer."],
+    tea: ["There's a kettle in the back. It's mine."],
+  },
+  darren: {
+    know: ['Me, yeah? I know everybody. Well. Most of them.'],
+    sunday: ["So listen, Sunday's for lying low. My mam does a dinner."],
+  },
+  ada: {
+    strangers: ['Every one of them walks past this window. I could tell you their shoes.'],
+    street: ["It had a heart when the dock worked. Now it's got a memory."],
+  },
+};
+const TOPICS = [
+  ['tea', /\b(tea|caff|eat)\b/i],
+  ['street', /street these days|best thing about this street/i],
+  ['newcomer', /finding my feet|all new/i],
+  ['sunday', /sunday/i],
+  ['know', /get to know/i],
+  ['strangers', /strangers/i],
+  ['lived', /always lived/i],
+];
+export function topicOf(text) {
+  for (const [k, re] of TOPICS) if (re.test(text || '')) return k;
+  return null;
+}
+const SHARED = new Set(Object.values(FB).flat().concat(Object.values(FBQ).flat()));
 export const FBT = { used: new Set(), shared: false, closed: false, day: -1, sharedBy: new Map() };
 export function fbReset() {
   FBT.used = new Set();
@@ -423,32 +482,76 @@ export function fbReset() {
 export function fbNote(line) {
   if (line) FBT.used.add(line);
 }
-export function fb(P, key) {
-  const o = FBOWN[P.id],
-    r = R.f(); // one draw, as before, so the seeded week keeps its course
-  const d = day();
+// Round 5: what has been said is remembered across talks and saved with the week (in the story, so an older save
+// simply starts with nothing heard). A person's own line comes again only on a later day; a line any of the street
+// may give is said once a week on each street, by whoever says it first.
+// The street is where the talk happens, read from Tom (the person may have just walked in from off the map).
+export function streetOf(P) {
+  const t = G.tom && Number.isFinite(G.tom.z) ? G.tom : P,
+    r = t.space && ROOMS[t.space];
+  const z = r && r.street ? r.street[1] : t.z;
+  return z < TALKING.copperRowBelowZ ? 'Copper Row' : 'the Hook';
+}
+function heard() {
+  const s = G.story;
+  if (!s.heard || typeof s.heard !== 'object') s.heard = { own: {}, st: {} };
+  return s.heard;
+}
+const TITLES = new Set(['Father', 'DS', 'PC', 'Mr', 'Mrs', 'Miss']);
+const firstName = (P) => (P.def.name || '').split(' ').filter((w) => !TITLES.has(w))[0] || '';
+// not born on the street: they never claim to have lived here all their lives
+const INCOMERS = new Set(['walsh', 'lily', 'peter', 'june', 'ellis', 'alison', 'susan', 'pc']);
+export function fb(P, key, text) {
+  const r = R.f(); // one draw, as before, so the seeded week keeps its course
+  const d = day(),
+    H = heard(),
+    mine = H.own[P.id] || (H.own[P.id] = {}),
+    st = streetOf(P),
+    here = H.st[st] || (H.st[st] = {}),
+    me = firstName(P);
   if (FBT.day !== d) {
     FBT.day = d;
     FBT.sharedBy = new Map();
   }
-  const own = (o && o[key] ? o[key] : []).filter((x) => !FBT.used.has(x));
-  let line = null;
-  if (own.length) line = own[Math.floor(r * own.length) % own.length];
-  else if (!FBT.shared) {
-    const pool = (FB[key] || FB.ok).filter((x) => {
-      const by = FBT.sharedBy.get(x);
-      return !FBT.used.has(x) && (!by || by === P.id);
-    });
+  const topic = key === 'small' ? topicOf(text) : null,
+    keys = topic ? [topic, key] : [key];
+  // small talk and the topics: once a week on each street. The working replies (ok, no, take, scared...) keep the
+  // round-1 rule, one person a day, since their pools are two or three lines and a refusal must not close a talk.
+  const weekly = (k) => k === 'small' || k === topic;
+  const ownOK = (x) => !FBT.used.has(x) && !(mine[x] != null && d - mine[x] < TALKING.ownLineAgainAfterDays);
+  const sharedOK = (k) => (x) => {
+    if (FBT.used.has(x) || (me && x.includes(me))) return false; // nobody recommends themselves by name
+    if (k === 'lived' && INCOMERS.has(P.id)) return false;
+    if (weekly(k)) return !(here[x] != null && d - here[x] < TALKING.sharedLineAgainOnStreetAfterDays);
+    const by = FBT.sharedBy.get(x);
+    return !by || by === P.id;
+  };
+  let line = null,
+    sharedK = null;
+  for (const k of keys) {
+    // the question first, in their own words, then the street's; then ordinary small talk the same way
+    const o = (topic === k ? FBQOWN[P.id] : FBOWN[P.id]) || {};
+    const own = (o[k] || []).filter(ownOK);
+    if (own.length) {
+      line = own[Math.floor(r * own.length) % own.length];
+      break;
+    }
+    if (FBT.shared) break; // one line from the street's stock a talk; after it, their own words or a close (round 1)
+    const pool = ((topic === k ? FBQ[k] : FB[k]) || (k === key ? FB.ok : [])).filter(sharedOK(k));
     if (pool.length) {
       line = pool[Math.floor(r * pool.length) % pool.length];
-      FBT.shared = true;
-      FBT.sharedBy.set(line, P.id);
+      sharedK = k;
+      break;
     }
   }
   if (!line) {
     line = CLOSE[P.id] || (P.def.sex === 'f' ? "Anyway, love. I'd best get on." : "Anyway. I'd best get on.");
     FBT.closed = true;
-  }
+  } else if (sharedK) {
+    FBT.shared = true;
+    if (weekly(sharedK)) here[line] = d;
+    else FBT.sharedBy.set(line, P.id);
+  } else mine[line] = d;
   FBT.used.add(line);
   return line;
 }

@@ -293,7 +293,7 @@ async function voice(P, res, text) {
     p.remove();
   }
   G.stats.fallback++;
-  const line = res.say || fb(P, res.fb || 'ok');
+  const line = res.say || fb(P, res.fb || 'ok', text);
   talkLine('npc', line);
   return line;
 }

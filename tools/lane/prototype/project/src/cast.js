@@ -512,6 +512,7 @@ export const CAST = [
     talk: PEOPLE.lee.talkativeZeroToOne,
     discretion: PEOPLE.lee.discretionZeroToOne,
     nostmt: 1,
+    backed: 1, // round 5: Cammack's lads have offered him easier money (his card), so he stands when fronted up
     close: ['darren', 'albert', 'brenda', 'wayne'],
     look: {
       h: 1.79,

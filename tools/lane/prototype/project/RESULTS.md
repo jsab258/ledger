@@ -1,5 +1,36 @@
 # Results of the checks
 
+## 18 November 2026, lane round 5 (talk that does not repeat; a debtor who stands): the AI playtester before and after
+
+Checks (test/talk5.mjs, all pass): Ron's own dock line once a day across talks and again the next day; a shared
+line said on the Hook is not repeated there for a week but is free over the bridge on Copper Row; a week of
+talks with ten people on the Hook hears no shared line twice; asked about tea, Brenda answers about tea and Ron
+in his own words; asked about Sunday, Ron answers the question, not with his dock line; Grace and the priest
+never name themselves; the detective never claims a lifetime on the street; agreeing replies still come day
+after day; the memory is saved with the story. Lee, fronted up, stands at the threat saying Cammack's lot are
+behind him and it comes to blows at the shove; without the backing he gives way at the threat. The seeded week:
+with the new memory set aside, the save is the same as round 4's part for part (new record written).
+
+AI playtester, newcomer's first hour (round 4, then round 5; one run each; three runs of round 5's builds during
+the round gave a longest stretch of 9.1, 12.0 and 10.8 min, so the noise is about 3 min):
+
+| measure | round 4 | round 5 |
+|---|---|---|
+| waiting | 39% | 41% |
+| walking | 29% | 26% |
+| talking | 24% | 25% |
+| driving | 6% | 5% |
+| kinds of activity | 6 | 7 (fighting) |
+| new things, minutes 0 to 30 / 30 to 60 | 71 / 6 | 69 / 14 |
+| longest stretch with nothing new | 7.9 min | 10.8 min |
+| tense moments per 30 minutes | 18.0 | 19.5 |
+| fights, pursuits, escapes | 0, 0, 0 | 1, 0, 0 |
+| lines heard more than once in the hour's talks | 11 (the weather from four people) | 4 (sign-offs and greetings only) |
+
+Lee stood and it came to blows in the first half hour (21 min). The sweep's one prompt fault (a lad and Darren at
+night, as round 4) and one words-on-screen overlap (the to-do over the Noted note, seen in rounds 3 and 4) are not
+new. Live AI talk is untested here.
+
 ## 18 November 2026, lane round 4 (a debt that can come to blows): the drills and the AI playtester before and after
 
 Drills (test/melee4.mjs, all pass): alone, a man of nerve 0.56 gives way at the shove; with three men watching

@@ -1,5 +1,38 @@
 # LEDGER loop prototype: changelog
 
+## 18 November 2026, lane round 5. Talk that does not repeat, and a debtor who stands
+
+Built by the cloud lane. Design question: when the street answers Tom without the live AI, does each person
+sound like themselves across a week instead of a shared stock of lines, so talk reads as a consequence and not
+as filler; and does at least one debtor stand his ground in the first hour, so a debt can come to blows? Serves
+the panel's top complaint of rounds 3 and 4 (free talk repeats across talks and people: 8 of 8, then 6 of 8;
+"It's been wet since August" from four people in an hour) and its second (nothing kicks off: every debtor gave
+way). Under the canon pillar "verbs first, talk as the consequence". The town's simulation (witnesses, gossip,
+memory, routines) is untouched: with the new memory of lines set aside, the seeded week matches round 4's part
+for part.
+
+1. Lines remembered across talks, and saved with the week: a person's own line comes again only on a later
+   day; a line any of the street may give (the weather, "Same as ever. Less of it.") is said once a week on
+   each street, the Hook and Copper Row, by whoever says it first. The working replies (agreeing, refusing,
+   taking money, frightened) keep the old rule, one person a day, so a refusal never closes a talk. An older
+   save starts with nothing heard.
+2. Small talk answers the question: asked where to get a cup of tea, who to know, what folk do of a Sunday,
+   whether there are many strangers, whether they always lived here, how the street is, or told Tom is finding
+   his feet, people answer that, in their own words first (Ron, Sheila, Darren, Ada) and then the street's.
+   As since round 1, a talk takes at most one line from the street's stock; after it, people answer in their
+   own words or close the talk. The street is the one Tom stands on (inside, the one the door lets out on).
+   Nobody recommends themselves by name, and incomers (the priest, the Tangs, the detective, the reporter, the
+   customs officer, June) never claim a lifetime on the street.
+3. When nothing fitting is left, the person closes the talk in their own voice (as since round 1), so talks
+   grow shorter as the week goes on.
+4. A debtor who stands: Lee Drewery, whom Cammack's lads have offered easier money (his card), holds his
+   ground when fronted up (0.3 nerve) and says why ("Cammack's lot said I'd not be on my own. So go on."); at
+   the shove it comes to blows. Without that backing he gives way at the threat, as before.
+5. Each debtor asks "You want it now?" in his own words (the panel heard the same question five times).
+6. Test: test/talk5.mjs (lines across talks and days, the two streets, a week of talks with no shared line
+   twice, the topic answers, the saved memory, Lee's ladder with and without his backing). test/fixes1.mjs
+   keeps its round-1 checks.
+
 ## 18 November 2026, lane round 4. A debt that can come to blows (melee, part 2)
 
 Built by the cloud lane. Design question: can a debt turn into a fight in the first hour, decided by where
