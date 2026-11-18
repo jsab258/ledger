@@ -1,6 +1,6 @@
 # Risk register for the whole game: draft (18 November 2026)
 
-Blind-spots recommendation 9, adopted 18 Nov. Draft by the cloud lane, reviewed 18 Nov (production/lane/reviews/REVIEW-RISK-REGISTER-WHOLE-GAME-2026-11-18.md); review points 7 to 9 closed 18 Nov 09:40 (production/lane/reviews/REVIEW-LANE-DRAFT-CLOSURES-2026-11-18.md). It would replace production/research/pre-production/6-RISKS.md, which covers only the thirty-minute friends' build and was last reviewed 5 Oct.
+Blind-spots recommendation 9, adopted 18 Nov. Draft by the cloud lane, reviewed 18 Nov (production/lane/reviews/REVIEW-RISK-REGISTER-WHOLE-GAME-2026-11-18.md); review points 7 to 9 closed 18 Nov 09:30 (production/lane/reviews/REVIEW-LANE-DRAFT-CLOSURES-2026-11-18.md). It would replace production/research/pre-production/6-RISKS.md, which covers only the thirty-minute friends' build and was last reviewed 5 Oct.
 
 The aim at risk: one full release late in 2027, 15 to 20 hours, the Hook plus the docks, combat, one main story, live talk (RULINGS.md, 28 Oct). L = likelihood, I = impact (low, med, high). Hours are estimates unless a file is named. "If not retired" names one choice for him: change method, spend, or cut.
 
@@ -32,7 +32,7 @@ The aim at risk: one full release late in 2027, 15 to 20 hours, the Hook plus th
 - L med, I high.
 - Test: a blind listening sheet, ten clips per cast voice, each asked "where is this speaker from, and does it fit 1990": the friends' evening plus at least three native listeners. About 4 session hours, 1 PC hour (estimate).
 - By 15 Jan 2027. Owner: lane writes the sheet; the main session asks Jafar who listens as one batched page item, never a direct ask.
-- If not retired: change method: recast the failing voice from the allowlisted voice sets, picking speakers by the native listeners' answers, and re-run the sheet on the recast clips; the recast voice goes on his page as a listening item and is cast only on his yes (RULINGS 24 Sep). No paid panel: RULINGS 24 Sep, "no hiring, ever". (Changed 18 Nov 09:40, review points 7 and 9.)
+- If not retired: change method: recast the failing voice from the allowlisted voice sets, picking speakers by the native listeners' answers, and re-run the sheet on the recast clips; the recast voice goes on his page as a listening item and is cast only on his yes (RULINGS 24 Sep). No paid panel: RULINGS 24 Sep, "no hiring, ever". (Changed 18 Nov 09:30, review points 7 and 9.)
 
 **5. The recipe does not transfer.** RECIPE.md has never been re-run by a session without the history.
 - Evidence: RECIPE.md (phase 1 rewrite, 9 Nov); re-reading history was 53% of spend in the week to 1 Nov (production/research/token-audit/MONDAY-AUDIT-2026-11-09.md line 53), 40% the next week and 24% in the week to 15 Nov (progress.json), so sessions lean on what they remember.

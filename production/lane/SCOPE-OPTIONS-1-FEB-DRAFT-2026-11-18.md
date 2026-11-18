@@ -5,7 +5,7 @@ Blind-spots recommendation 5: a ready answer for his 5 and 6 Nov rulings (cost p
 ## The basis
 
 - Weeks per phase: production/progress-page/progress.json, stations 5 to 10, "fc_w" (advisor's estimate, 5 Nov, re-forecast monthly, next 7 Dec). The Hook 15 to 20 W; crime and combat 6 to 8; empire 4 to 5; docks 6 to 8; story 9 to 12; release 5 to 7.
-- Hours per W: about 205 main-line hours in the double week at about 170% (production/orders/2026-11-16.md, line 5), so 205 / 1.7 = about 120 h a normal week (estimate). The hours below use progress.json's planned 99 production hours a week (its phase 2 note; 99 h is CLAUDE.md's 70% production share; whether the advisor's later weeks assume it is unverified); at 120 h every hour figure rises by about a fifth and the weeks do not change. The page shows weeks only. (Changed 18 Nov 09:40 from 120 h, review point 6.)
+- Hours per W: about 205 main-line hours in the double week at about 170% (production/orders/2026-11-16.md, line 5), so 205 / 1.7 = about 120 h a normal week (estimate). The hours below use progress.json's planned 99 production hours a week (its phase 2 note; 99 h is CLAUDE.md's 70% production share; whether the advisor's later weeks assume it is unverified); at 120 h every hour figure rises by about a fifth and the weeks do not change. The page shows weeks only. (Changed 18 Nov 09:30 from 120 h, review point 6.)
 - Where the forecast lands: phases 1 to 10 sum to 52.5 to 71.2 W from 8 Nov 2026 (progress.json, summed as index.html's forecast() does): 11 Nov 2027 to 20 Mar 2028. The target, 30 Nov 2027, is 55.3 W away, so the slow end is about 16 W (about 1,600 h) over.
 - tools/lane/forecast.py is not used: 95% of logged hours carry no item code, so its P50 and P80 are not yet honest (production/lane/B12-FORECASTING-METHOD-2026-11-17.md).
 - No named person's cost is measured yet (progress.json, "person_hours": null), so every saving is an estimate.
@@ -73,6 +73,6 @@ The page goes up if, on 1 Feb 2027, the logged hours of the second complete name
 
 ## Open questions
 
-- progress.json's 1 Feb check uses a different number: "more than about 4 weeks behind". Proposed (18 Nov 09:40): cost per piece is the page's trigger (his ruling's words); the 4-week lateness decides only whether the docks are told or asked (see the docks line under the page). The main session rewrites progress.json's check note to name the re-forecast against 30 Nov 2027, not behind_w, when it merges. The main session lines up progress.json's check note with this when it merges.
+- progress.json's 1 Feb check uses a different number: "more than about 4 weeks behind". Proposed (18 Nov 09:30): cost per piece is the page's trigger (his ruling's words); the 4-week lateness decides only whether the docks are told or asked (see the docks line under the page). The main session rewrites progress.json's check note to name the re-forecast against 30 Nov 2027, not behind_w, when it merges. The main session lines up progress.json's check note with this when it merges.
 - The 0.5 threshold is proposed, not ruled.
 - Guns are probably under-counted in phase 6's 6 to 8 W.
