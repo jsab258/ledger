@@ -166,3 +166,12 @@ Run of 17:16:
 4l-5. DONE 18 Nov 20:16 to 21:25: prototype round 5, talk that does not repeat and a debtor who stands. Design question: does each person sound like themselves across a week instead of a shared stock, and does one debtor stand in the first hour so a debt comes to blows? talk_lines.js (lines remembered across talks and saved in the story: own lines once a day, the street's stock once a week per street, working replies one person a day; small talk answers the question; nobody names themselves; incomers never claim a lifetime here), fight.js and cast.js (Lee backed by Cammack's lads, 0.3 nerve, says why), scenes.js (each debtor's own "now?"), rules.js numbers; test/talk5.mjs; fixes1 unchanged in substance; seeded week same part for part with the memory set aside (record rewritten). Fresh review: one fault (topic order) and two risks applied. All tests pass, oldsave passes. Published as page version 1795032844-05a0. Playtester: repeated lines 11 to 4 (sign-offs only), fights 0 to 1 (Lee, 20.7 min), tense 18.0 to 19.5 per 30 min, waiting 39% to 41%, longest empty 7.9 to 10.8 min (noise about 3). Panel 2 of 8 up; top complaint waiting and empty stretches (7 of 8).
 
 100. Next: round 6. Candidates: (a) a new non-talk activity for the empty middle of the hour (the cab fares made into play with pressure, or a break-in with a risk of being seen); (b) closing lines that vary by talk, folded in. Recommended (a) with (b).
+
+The synthesis (4n, advisor 20:55 on 18 Nov, his "1" at 20:47), above everything; item 100 (round 6) waits until "Vision approved:".
+
+4n-1. DONE 18 Nov 23:17 to 23:25: the pack. production/lane/synthesis/pack/ (README.md and eight digests, about 60,000 words, each line sourced; game-file numbers marked as leads). Eight helpers, Sonnet and Opus at medium. 4p's GTA VI first read joins it after 19 Nov.
+4n-2. NEXT: the author (one Fable helper at max): VISION.md, DESIGN.md, TRACE.md, BUILD-ORDER.md, QUESTIONS.md in production/lane/synthesis/.
+4n-3. Then: a fresh Opus reviewer at high; one fix by the author.
+4n-4. Then: the two Claude Docs ("LEDGER: the vision", "LEDGER: the whole game"), links in the end row.
+4p. From 19 Nov: GTA VI first read (systems only, no spoilers).
+4o. After 4n: the publish gate (tools/lane/gate/, tools/lane/driving-gate/, DRIVING-ROUND4-FINDINGS.md).
