@@ -4,8 +4,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-18 00:22 (the hourly run; the last session set its Stopped line at 00:10)
 
-**Row due:** 2026-11-18 01:30 (last 00:30; page and advisor read 00:24; last ack 215 at 23:24)
-**Stopped:** 2026-11-18 00:10 (history 242k of its 250k point at an item's end; the next item, the strain-limit review and gate, could not finish under it; no helper or background job running)
+**Row due:** 2026-11-18 02:00 (last 01:00; page and advisor read 01:00; last ack 215 at 23:24)
+**Stopped:** 2026-11-18 01:02 (history 232k of its 250k point at an item's end, verdict UNDER; stopped early on judgement: every next step needs the machine after the night build and walk (from about 04:30), and the remaining room would only be spent waiting through the stop hook. No helper or background job running.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). The doubled line, full pace: 37% at 16:47 against 52.5%, about 15 behind. This week (RULINGS, his picks 17 Nov): eight helpers a session, a machine-free lane session, Fable up to 20% for the hardest code (3.3% today), high effort on hard code and reviews. week-shape.json's reset_at stays null until HE presses the spare reset.
@@ -31,17 +31,17 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Done this run (00:22 to the stop)
 - Page and advisor read 00:24 and 00:50: nothing new (no verdicts after 22:45Z; no advisor after ack 215). The licence item kiln-front-end-licence-2026-11-17 has NO verdict yet (the last handover's "answered yes" was wrong): trousers step I waits.
 - Strain-limit lane reviewed, rebased onto a8368f3, cargo test 56/56 (off still bit for bit), gate alone PASS (F:/LedgerTools/tool-dev/runs/kiln-gate-2026-11-18-strainlimit/gate.out; donkey_jacket NOT MADE as in the baseline run). Merged: Kiln main (F:/LedgerTools/tool-dev/kiln) at 1231324. Review finding kept in the merge message: the repair runs after body contact, so keep it off until a garment run with it on shows body-through 0. Worktree and its cargo target (1.3 GB) removed, recorded.
-- Hourly row 00:30 (Fable's own weekly meter read 40%: no Fable work planned).
+- Hourly rows 00:30 and 01:00 (Fable's own weekly meter 40% then 43%, not used by this session). Study leftovers DECISION on his page 00:57. Reading helper: papers unreadable to it; the builder read Bridson 2002 in full (pdftotext), finding the order fault; DECISIONS 01:0x.
 - Earlier run (23:22-00:10): Ron's Kiln work trousers steps A-H (c009b0d87; F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md); Kiln main to a8368f3 (speed path, gate bands work not seconds).
 
 ## Next, in order
-0. FIRST: verdicts after 2026-11-17T23:50:00Z; advisor after 2026-11-17T23:24:00+01:00 (last ack 215).
-1. After the night (from 04:30, quiet machine): a new gate baseline (base plus calibration runs; regression_gate.py baseline) so link_cap_solves is banded.
+0. FIRST: verdicts after 2026-11-18T00:00:00Z; advisor after 2026-11-17T23:24:00+01:00 (last ack 215).
+1. After the night (from 04:30, quiet machine, after the walk and runner are done): bash C:/LedgerTools/kiln-runs/baseline-2026-11-18/make_baseline.sh (build main 1231324, base and two nudged runs, about 1 h), then commit regression_baseline.json on Kiln main; the old one is copied beside the runs.
 2. His licence tap (kiln-front-end-licence-2026-11-17), when answered yes: trousers step I (held row in production/specs/garments.json, import_garments in mh-assemble, garments_shipped_check), then step J (nightly package, -WearHeld film). Never in Unreal 01:15-04:30.
-3. Strain limit on a garment: one Kiln run with KILN_STRAIN_LAST=1 on Ron's trousers job, body-through and leftover read (not beside a gate, not in the night).
+3. Strain limit, per the primary source (Bridson, Fedkiw and Anderson 2002 sec. 4, read 01:05; notes F:/LedgerTools/tool-dev/reports/STRAIN-LIMIT-SOURCES-2026-11-18.md): collisions must come last. Lane strainorder (C:/LedgerTools/kiln-lanes/strainorder, bfe9e1e, written in the night, NOT built or tested): the sweep moved to each substep after the caps, before contact; the frame-end and layer-finish sweeps removed; author list fixed. After the night: CARGO_TARGET_DIR=C:/LedgerTools/cargo-target/lane-strainorder cargo test --release in engines/drapestudio (the on-strip test may need its expectation updated: contact now follows the sweep), gate alone, merge; then one Kiln run with KILN_STRAIN_LAST=1 on Ron's trousers job, body-through and leftover read. Provot 1995 and Wang 2010 still unread.
 4. Darren's head remake when the editor is free (advisor 215), outside the night.
 5. Bending try 2 option (a) (script C:/LedgerTools/kiln-runs/bending2-2026-11-17/try2-a/bending2.sh), not beside a gate.
-6. His study ruling leftovers: a DECISION on his page in the morning's first batch (delete FModel, the SH2 reader, the empty inZOI folder in F:/LedgerTools/aaa-study; recommended yes).
+6. DONE 00:57: study leftovers DECISION on his page (study-leftovers-delete-2026-11-18); on yes, delete via retention and record each line.
 7. n16-6: next is the packaged run with Sonnet 5.5 for core moments (BAKEOFF-SONNET55-2026-11-16.md line 52), daytime. Retention plan (not beside a gate); n16-8 Tom's crown, n16-7.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
