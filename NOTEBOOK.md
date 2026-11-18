@@ -2642,3 +2642,21 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 1.5 h helpers, 0.3 h session.
 - What failed and why: nothing; a reviewer found an answer saying ok when no body was tested (fixed with a body_tested field).
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANES-REVIEW-2026-11-18.md, KILN-LANE-J1-REVIEW-2026-11-18.md
+
+## 2026-11-18: where a sleeve-through-limb tangle is born (set aside: carried-inside fix failed; the cause found)
+- Made: a measured cause for a cloth tube's end lying beside the limb it should wrap; no fix yet.
+- Method: count how many times each ring of the tube (a row of points in pattern order, closed across its seam) winds round the limb's axis, frame by frame from the placed start; then measure each ring's centre offset and radius against the limb's measured centre. A worst-edge-per-piece summary hides such a fault (a crossing reads as chord over spacing, so it doubles when the mesh is refined); measure the topology, not the stretch.
+- Tools: the engine's debug dumps (frame 0 placed and lifted, chosen frames), read-only Python readers with NumPy.
+- Target and check: every ring winds once round the limb. Frame 0: all rings wind once, but the end ring and the band sewn to it cover only about half the circle (a circle fit, not the mean of the points: the mean of a half ring sits far off its centre, which misled the first reading); frame 1 closes them beside the limb. The band looks narrower than the limb where it lands. Holding the band's own closing seam late changed nothing.
+- Cost: about 1 h session, 0.2 h machine, two read-only diagnoses.
+- What failed and why: moving carried points that landed inside the body to their old triangle's corner, because inside points were the symptom of triangles lying through the limb, not the cause.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-NYLON-WRIST-AFTER-FIX-DIAGNOSIS-2026-11-18.md; F:/LedgerTools/tool-dev/runs/kiln-carryinside-2026-11-18/frame0-debug and latecuff.
+
+## 2026-11-18: re-sourcing a tool's constants from public documentation without changing behaviour
+- Made: nine rows of a tool's documentation and labels moved from decompiled origins to the vendor's public API page or to the tool's own stated rules.
+- Method: one lane per path through the code; each row's new source quoted with its date; behaviour-changing rewrites listed, not made; a fresh reviewer greps for leftover addresses and diffs for code changes; the quotes then checked word for word in the raw page text (a summarising fetch is not verification).
+- Tools: git worktrees, grep, curl of the public page.
+- Target and check: no old address left for those rows; exports unchanged; tests pass.
+- Cost: about 1.5 h helper, 0.3 h review, 0.1 h session.
+- What failed and why: the reviewer could not reach the page with its allowed tool; the session checked the quotes directly.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-RESOURCE-TROUSERS-REVIEW-2026-11-18.md
