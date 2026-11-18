@@ -6,6 +6,8 @@ Date: 2026-11-18. Helper research, about 30 minutes. Problem given: where strain
 
 Nobody in the literature or the production docs read here runs strain repair as the very last thing with nothing after it. The established patterns are either (a) strain repair, then collisions last, accepting some leftover stretch in contact areas (Bridson 2002, Narain 2012, PBD long range attachments, Vellum's post collision passes), or (b) strain limits and contact solved in the same loop, so neither undoes the other (Wang 2010, Vellum's interleaving, Wētā's Loki 2025, C-IPC 2021). For Kiln the recommended default is (b) in its cheap form: alternate strain repair and an outward-only body projection inside one loop, with contact points weighted as heavy in the strain repair, and end the loop on the body projection. Layer finishing should move inside that loop. Details and costs below.
 
+Plain summary: today the stretch fix and the push-out-of-the-body fix take turns once and undo each other; the published way is to let them take turns several times in one short loop, always finishing with the push out of the body, and to report any stretch that remains as a garment that does not fit. Checked by a fresh reviewer 2026-11-18.
+
 ## 1. What each paper says about order
 
 Narain, Samii, O'Brien, "Adaptive Anisotropic Remeshing for Cloth Simulation", 2012 (ARCSim). https://escholarship.org/content/qt5s1775xd/qt5s1775xd.pdf?t=rbpzun , read 2026-11-18.
@@ -36,13 +38,13 @@ Müller, "Ten Minute Physics 15: self collision" notes, https://matthias-researc
 Zhai, Schweickart, Haryono, Ilinov, Merlo (Wētā FX), "Stabilizing Impossible Collisions with Loki", supplemental, 2025. https://www-ext.wetafx.co.nz/assets/Uploads/PDFs/Stabilizing_Supplement.pdf , read 2026-11-18.
 - Directly on Kiln's question. A strain limit run as a post-collision step "can invalidate collision resolution and lead to penetrations", because "the collision pass is unaware of the edge shrinking process". Two fixes named: "iterate between these passes until convergence" or "unify the constraints into a single solvable system". Loki does the second.
 
-Bridson, Fedkiw, Anderson 2002 (already read by the team): collisions last, after strain repair. Consistent with Narain and Müller.
+Bridson, Fedkiw, Anderson 2002, https://www.cs.ubc.ca/~rbridson/docs/cloth2002.pdf (reviewer read 2026-11-18): strain limiting (Provot-style, on velocities, Section 4) is part of the internal dynamics that produce candidate velocities; repulsions, then collision resolution and impact zones, follow in Section 5's step. So collisions last, after strain repair. Consistent with Narain and Müller.
 
 ## 2. Methods that make the two compatible, and their cost
 
 - Interleave (Gauss-Seidel alternation). Alternate strain repair and contact projection in one loop and finish on contact. Wang 2010, Bender and Bayer 2008, Vellum (below), Loki's first option. Cost: roughly the cost of one contact projection per strain sweep; cheap when contact is a point-versus-body-field test, as Kiln's body push is. Does not converge if the garment is genuinely too small; leftover stretch must then be reported, not hidden.
 - Contact-aware weighting. When repairing an edge, give an endpoint that is in contact zero or reduced weight along the contact normal (it behaves like a pinned point), so the free endpoint takes the correction. This is the standard PBD inverse-mass mechanism and how Wang treats "boundary conditions". Cost: negligible.
-- One-sided (outward-only) contact projection. Body contact only pushes points out along the body normal and never pulls them in, so a final contact pass cannot shorten or lengthen anything except by the push itself. Vellum's "post collision passes" are this, and its docs warn that because "these passes don't interact with the constraints, you will get protrusions" (local spikes).
+- One-sided (outward-only) contact projection. Body contact only pushes points out along the body normal and never pulls them in, so a final contact pass cannot shorten or lengthen anything except by the push itself. Vellum's "post collision passes" are this, and its tips page warns: "Because these passes don't interact with the constraints, you will get protrusions where the cloth is pushed out in the shape of the collider" (vellumtips page; the solver node page does not contain this sentence).
 - Unified solve. Strain limits and contact as one optimisation: C-IPC (Li et al. 2021, https://arxiv.org/abs/2012.04457v3 , abstract read 2026-11-18) claims "strict satisfaction of strain-limit inequalities" together with interpenetration-free contact, via barrier energies in a Newton solve; Loki 2025 builds on it; Wang, Wang, Tang, Tong 2016 (https://link.springer.com/article/10.1007/s41095-016-0042-8 , abstract read 2026-11-18) uses semidefinite programming. Cost: a different solver class (Newton with line search and continuous collision detection, or SDP), many times slower per step and weeks of work. Not proportionate for Kiln.
 - Long range attachments / tethers. One-sided distance limits from holds (or from a pinned seam) to every point, with geodesic rest lengths, inside the same loop and before the contact projection. Cost under 2 percent (Müller 2012). They stop global stretch; they do not fix local spikes at a layer or seam.
 
@@ -70,17 +72,17 @@ Diagnosis from the facts given: the 2.875 edge comes from passes that run after 
 Option A: stretch-last as the default (today's switch, on).
 - Changes: worst edge drops to near its limit; leftover reported.
 - Risk: the Wētā and Bridson point. Edge shortening can pull points back into the body or into another layer. One clean trousers run (body-through 0, 1.242) is one sample, and 1.242 is still over the 1.12 class of limits, so it did not converge. Tight garments (jacket, layered over shirt) are where it will fail.
-- Size: 0.5 h (flip the default). Not recommended alone.
+- Size (estimate): 0.5 h (flip the default). Not recommended alone.
 
 Option B (recommended): one closing loop that does both, collisions last.
 - Changes: replace the tail of the frame and of the layer finish with a loop of K rounds (start K = 8): (1) Provot edge repair, with points currently in body contact weighted heavy (inverse mass scaled toward 0 along the contact normal) and held points fixed; (2) seam closure and layer separation as constraints inside the same round, not after it; (3) outward-only body projection (push along body normal to the surface plus thickness, never pull). Stop when worst ratio is within limit plus tolerance and body-through is 0, or after K rounds. Always end on step (3). Report leftover per fabric and where it is (which panel, near which contact).
-- Risk: does not converge where the garment is too small for the body or two layers fight; then stretch stays and must be reported as a fit fault (Wang's dragon is the published example of this). Possible small spikes from the final push (Vellum's protrusions); a small smoothing pass before the final push limits them. Extra cost per frame about K times one strain sweep plus one body query, offline so acceptable.
-- Size: 6 to 10 h for an AI coder including tests (loop and stop rule 2 h, contact weighting 1 to 2 h, moving layer finish and seam join into the loop 2 to 3 h, reporting and gate wiring 1 to 2 h, runs on the gate jobs 1 h).
+- Risk: does not converge where the garment is too small for the body or two layers fight; then stretch stays and must be reported as a fit fault (Wang's dragon is the published example of this). Possible bulges from the final push where cloth takes the body's shape (Vellum's protrusions); a small smoothing pass before the final push may limit them (untested suggestion). Extra cost per frame about K times one strain sweep plus one body query, offline so acceptable.
+- Size (estimate): 6 to 10 h for an AI coder including tests (loop and stop rule 2 h, contact weighting 1 to 2 h, moving layer finish and seam join into the loop 2 to 3 h, reporting and gate wiring 1 to 2 h, runs on the gate jobs 1 h).
 
 Option C (add after B if global stretch remains): long range attachments from holds.
 - Changes: one-sided geodesic tethers from waistband or shoulder holds, inside the loop before step (3).
 - Risk: geodesic precompute on garments with seams across panels; euclidean is "very prone to artifacts" (Chaos docs).
-- Size: 4 to 6 h.
+- Size (estimate): 4 to 6 h.
 
 Option D (not recommended now): unified barrier solve (C-IPC style). Strict guarantees, but a new solver, many times slower, weeks of work.
 
@@ -100,4 +102,4 @@ Measurable check that proves Option B, on every gate job (trousers, jacket, each
 - Unreal current UChaosClothConfig page, https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/ChaosCloth/UChaosClothConfig : page returned no content.
 - Thomaszewski et al. 2009 full text: only the abstract page was found.
 - C-IPC (Li et al. 2021) and Wang et al. 2016: abstracts only; cost figures not read.
-- Bridson, Fedkiw, Anderson 2002 and Provot 1995: not re-read this run (team has read them).
+- Provot 1995: not re-read this run (team has read it). Bridson 2002 was re-read by the reviewer, see section 1.
