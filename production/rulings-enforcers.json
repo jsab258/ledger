@@ -606,11 +606,11 @@
    ]
   },
   {
-   "line": "18 Nov, prototype: a round runs only",
+   "line": "18 Nov, prototype: each round names",
    "by": [
     "monday-audit"
    ],
-   "note": "advisor 219: a changelog check refusing a round entry that names no real-game item or spec is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit"
+   "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit"
   }
  ]
 }

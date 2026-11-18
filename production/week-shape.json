@@ -2,6 +2,6 @@
   "note": "Draft of the double week (advisor 118, 12 Nov). OFF: set active to true only on his tap adopting the order of 16 Nov; reset_at (Swiss YYYY-MM-DD HH:MM) when he presses the spare reset. Read by tools/pace_line.py and tools/fresh_gate.py. kiln_share: the share of the week's spend his order sets for Kiln (advisor 193: about 70% this week; advisor 218); read by tools/token_measures.py --kiln-share, 15% when absent or another week.",
   "active": true,
   "monday": "2026-11-16",
-  "reset_at": null,
+  "reset_at": "2026-11-18 15:20",
   "kiln_share": 70
 }

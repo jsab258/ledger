@@ -810,3 +810,19 @@
 {"event": "start", "at": "2026-11-18T09:44:11", "task": "n16-1 Kiln licence item: last two values re-sourced", "phase": "2", "kind": "production", "item": "n16-1"}
 {"event": "start", "at": "2026-11-18T11:13:10", "task": "his page republish and hourly row", "phase": "0", "kind": "production"}
 {"event": "start", "at": "2026-11-18T12:15:01", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": ""}
+{"event": "start", "at": "2026-11-18T12:28:03", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "b4cc4e19-2eba-4fe0-90f4-0f0c0151e49e"}
+{"event": "start", "at": "2026-11-18T12:33:27", "task": "n16-1 Kiln v1 lanes: eight helpers briefed", "phase": "0", "kind": "production", "item": "n16-1"}
+{"event": "start", "at": "2026-11-18T12:35:07", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "203675c8-8c22-4759-af21-c40385325ce0"}
+{"event": "start", "at": "2026-11-18T12:41:26", "task": "n16-1 Kiln: pytests lane merged", "phase": "0", "kind": "production", "item": "n16-1"}
+{"event": "start", "at": "2026-11-18T12:51:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "e7260196-2c32-45ba-80dd-35c2ac53570f"}
+{"event": "start", "at": "2026-11-18T13:06:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "70b1491d-8487-485c-a97f-7031f0020c18"}
+{"event": "start", "at": "2026-11-18T13:21:12", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "da250ee6-e9d8-4e52-8be0-671751172ea8"}
+{"event": "start", "at": "2026-11-18T13:36:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "161d7578-945f-4e53-b294-1a12d5e2f31d"}
+{"event": "start", "at": "2026-11-18T13:51:12", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "01200e30-a1ef-4962-ab5e-5d250ec9d6f9"}
+{"event": "start", "at": "2026-11-18T14:06:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "eb6e80f4-6c75-45a3-a66f-5d0d9ea6d244"}
+{"event": "start", "at": "2026-11-18T14:21:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "8d01f778-7b79-4e9c-a5ea-17ea9a2842c7"}
+{"event": "start", "at": "2026-11-18T14:36:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "e7736dc5-947d-473f-8d45-5ab93c1f4e42"}
+{"event": "start", "at": "2026-11-18T14:51:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "bbe4ae5e-8247-4d25-b3f2-6d26745aa8d7"}
+{"event": "start", "at": "2026-11-18T15:06:14", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "ba9f24d1-b3cb-466c-aa6d-94c73d8c23c6"}
+{"event": "start", "at": "2026-11-18T15:21:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "557b97c1-86ea-4a9a-9249-23cc0a5e5158"}
+{"event": "start", "at": "2026-11-18T15:23:58", "task": "advisor 224 canon pillar and push", "phase": "0", "kind": "production"}

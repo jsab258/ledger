@@ -2751,3 +2751,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: helper about 0.15 h; session 0.05 h.
 - What failed and why: each lane passed its own tests before merging; the duplicate creation only shows after both merges. Lesson: run the whole suite on main after every merge, not only the lane's tests.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-PYTESTS-2026-11-18.md
+
+### 2026-11-18 Cloth tool into the game: the shared checks before skinning (n16-1, v1 line 3 step 1)
+- Made: five shared checks that every simulated garment passes before it is skinned to the game skeleton: the importer reads the tool's export; a record of how each standard body's arms were straightened, proven by bending back; the weights body matches the full body; each skeleton sits inside its body; the tool's own skinning runs as a job on a game mesh.
+- Method: one check per step, each with a numeric bar and an evidence file; read the outliers before accepting a tool's FAIL (one body's failure was all in the neck join, not the arms the record is about).
+- Tools: background Blender scripts, the importer, bend-back and skin-transfer scripts, the cloth tool's skin job.
+- Target and check: bend-back under 0.05 mm; weights difference 0; joints within 10 mm of a reference skeleton; pose counts under the tool bar.
+- Cost: helper about 1.3 h; session 0.1 h; machine a few minutes.
+- What failed and why: the importer looked only for the old program's avatar name; a skeleton's shoulders sit wider than a narrow chest allows (set aside; a pose test decides); the skin job's verdict reads PASS on a garment's own source body, so its verdict alone proves nothing: read the per-pose numbers.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-M5-SHARED-STEPS-2026-11-18.md
