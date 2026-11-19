@@ -892,3 +892,15 @@
 {"event": "start", "at": "2026-11-19T05:35:49", "task": "Ron trousers M5 steps 7-8 re-run on the boots drape (importer helper)", "phase": "0", "kind": "production"}
 {"event": "start", "at": "2026-11-19T05:37:12", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "4d05aebf-3de4-4482-9220-149d28604e88"}
 {"event": "stop", "at": "2026-11-19T05:41:08", "note": ""}
+{"event": "start", "at": "2026-11-19T05:46:12", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "3781087a-94fb-4b1a-aeb7-51bad486f2ab"}
+{"event": "start", "at": "2026-11-19T05:48:09", "task": "n16-2 Ron trousers seat sitting fit try 1", "phase": "0", "kind": "production", "item": "n16-2"}
+{"event": "stop", "at": "2026-11-19T05:51:15", "note": ""}
+{"event": "start", "at": "2026-11-19T06:09:13", "task": "n16-2 session startup (auto)", "item": "n16-2", "phase": "2", "kind": "production", "auto": "session-startup", "session": "2e822614-f508-4f90-b2c6-0232dbc8453a"}
+{"event": "start", "at": "2026-11-19T06:21:22", "task": "n16-2 session startup (auto)", "item": "n16-2", "phase": "2", "kind": "production", "auto": "session-startup", "session": "3f3efb7b-654a-49f7-910d-f78cdd78ae54"}
+{"event": "start", "at": "2026-11-19T06:36:22", "task": "n16-2 session startup (auto)", "item": "n16-2", "phase": "2", "kind": "production", "auto": "session-startup", "session": "567e2189-385b-4c6d-b70a-dce17fd19d35"}
+{"event": "start", "at": "2026-11-19T06:51:21", "task": "n16-2 session startup (auto)", "item": "n16-2", "phase": "2", "kind": "production", "auto": "session-startup", "session": "4c555ce4-9adc-465e-968d-5deeaad1e904"}
+{"event": "start", "at": "2026-11-19T07:03:13", "task": "n16-2 session startup (auto)", "item": "n16-2", "phase": "2", "kind": "production", "auto": "session-startup", "session": "58935672-5f42-41dc-96c8-74610bfe0579"}
+{"event": "start", "at": "2026-11-19T07:06:44", "task": "n16-2 Ron's work trousers: seated film (-SitProof, held)", "phase": "0", "kind": "production", "item": "n16-2"}
+{"event": "stop", "at": "2026-11-19T07:22:38", "note": ""}
+{"event": "start", "at": "2026-11-19T07:22:38", "task": "n16-1 Kiln Thursday checkpoint: held-back run 1 and B2 on main", "phase": "0", "kind": "production", "item": "n16-1"}
+{"event": "start", "at": "2026-11-19T07:24:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f92ce49f-bcde-449d-86cc-3835fe4bb04a"}
