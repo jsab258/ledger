@@ -104,3 +104,9 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 (standing, 18 Nov) **Quay Run (advisor 222):** his desktop shortcut opens F:/LedgerTools/quay-run/index.html in Chrome; whenever the driving study (https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq) is republished, copy its index.html there again (Artifact read with path) and run tools/driving_feel_check.py: a copy newer than the ruling must start automatic.
 - 18 Nov: Kiln stiffness 5-7 (Fable, lane stiffness2 82c87f1): switches off identical to main; switches on 2 of 2 failed, 26 lines outside (XPBD budget doubles solves; j3 must stretch past its cap; its 20 mm stage never calms). One different researched method may follow (KILN_XPBD_EQUIV its likely start) when pace allows.
 - 18 Nov: coat try 2: layout fixed (950 to 0 cloth crossings) but the pattern check chose the sleeve tube as the hanging ring.
+- 19 Nov 05:52: the import worktree held a stale STAGED copy reversing its own last commit; git checkout -- restored the stale index, not HEAD: run git restore --staged first.
+- 19 Nov 05:20: coat on the joined lane: collar assembly inside the neck.
+- 19 Nov 07:20: the held-back jobs made nothing on main without KILN_LEGACY_NAMES=1 (old SetSeamlineZipper name); with it they ran unchanged.
+- 19 Nov 07:08: -SitProof alone films nothing (never-seated, a stale clip name); pair it with -IdleFilm for a seated film.
+- 19 Nov 05:54: the trousers' first import raised TypeError (int of None): a new garment folder needs its line in asset-budgets.json (folders and a parts entry), as Sheila's on 11 Nov.
+- 19 Nov 05:21: the trousers' boots job on Kiln main stopped at once on SetSeamlineZipper (renamed kiln_api.kiln_set_seam_zipper on 18 Nov); KILN_LEGACY_NAMES=1 runs the job unchanged.
