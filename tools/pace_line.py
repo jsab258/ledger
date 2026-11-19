@@ -145,12 +145,14 @@ def verdict(now, percent, shape=None, fable=None):
 FABLE_CAP = 95.0  # 19 Nov, advisor 245: no cap; a warning at 95% of Fable's own meter, the reset item at about 98%
 
 
-def fable_verdict(fable):
-    if fable >= 98:
+# 19 Nov 14:10 (advisor 247, his words 14:06 "fable reset is rare"): the press item goes up at Fable 97% or the week
+# 73%, whichever first; from Fable 95% no new long Fable helper, short ones only; until the press every helper on Fable.
+def fable_verdict(fable, week=None):
+    if fable >= 97 or (week is not None and week >= 73):
         return "Fable %.0f%% of its week: RESET ITEM NOW (his page: Press a Fable reset now), full speed after" % fable
     if fable >= FABLE_CAP:
-        return "Fable %.0f%% of its week: WARN (%.0f%%), the reset item at about 98%%" % (fable, FABLE_CAP)
-    return "Fable %.0f%% of its week (no cap; warning at %.0f%%)" % (fable, FABLE_CAP)
+        return "Fable %.0f%% of its week: WARN (%.0f%%): no new long Fable helper, short ones only; the reset item at 97%%" % (fable, FABLE_CAP)
+    return "Fable %.0f%% of its week (no cap; warning at %.0f%%; every helper on Fable until the press)" % (fable, FABLE_CAP)
 
 
 def selftest():
@@ -188,6 +190,9 @@ def selftest():
         ("245: 70% gives no warning", "WARN" in fable_verdict(70), False),
         ("245: 95% warns", "WARN" in fable_verdict(95), True),
         ("245: 98% asks for the reset", "RESET ITEM NOW" in fable_verdict(98), True),
+        ("247: 97% asks for the reset", "RESET ITEM NOW" in fable_verdict(97), True),
+        ("247: week 73% asks for the reset", "RESET ITEM NOW" in fable_verdict(60, 73), True),
+        ("247: 96% and week 60 only warns", "RESET ITEM NOW" in fable_verdict(96, 60), False),
     ]
     c246 = dict(c237, fable_reset_pending=True, fable_share_per_pct=0.46, hard_stop=75)
     thu = datetime.datetime(2026, 11, 19, 13, 40)
@@ -222,7 +227,7 @@ def main(a):
     if "--fable" in a:
         state["fable"] = float(a[a.index("--fable") + 1])
         state["fable_at"] = state["at"]
-        print(fable_verdict(state["fable"]))
+        print(fable_verdict(state["fable"], float(a[0])))
     else:
         try:   # keep the last Fable reading when only the pace is given
             with open(STATE, encoding="utf-8") as fh:
