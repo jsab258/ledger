@@ -13,7 +13,9 @@ are derived here from the order ledger (production/orders, their home) and never
 street's days are the morning pictures found in production/previews.
 
   python tools/progress_page.py            # refresh progress.json; print the files a publish must carry
-  python tools/progress_page.py --check    # fail when progress.json disagrees with the ledger or the pictures
+  python tools/progress_page.py --check    # fail when progress.json disagrees with the ledger or the pictures, lacks a key, or is stale
+  python tools/progress_page.py --published  # record a publish (run right after the Artifact publish)
+  python tools/progress_page.py --selftest
 """
 import datetime
 import json
@@ -112,6 +114,99 @@ def derived():
     return name, studies, carried, days
 
 
+LANE = os.path.join(ROOT, "production", "lane")
+NEEDED = ("prototype", "joins", "week", "date_move")  # advisor 253: the new layout's keys; a missing one fails the check
+STALE_H = 26  # advisor 253: progress.json, or its last publish, over 26 hours old fails the check
+PUBLISHED = os.path.join(ROOT, "production", "progress-page", "published.json")
+
+
+def prototype_now(proto, lane=LANE):
+    """THE PROTOTYPE'S TRACK (advisor 254, his words 19 Nov: "1 shot the entire thing", then loops): the 33 rounds are
+    replaced by the one-shot (night of 19 Nov, in the cloud) and loops after it. The round is read from the lane's files:
+    REVIEWS-loop<n>.md gives 'Loop n', REVIEWS-oneshot.md 'The one-shot'; the panel per review file ('Thumbs up: N of M');
+    hours from ROUND-HOURS.md when it is there. BUILD-ORDER's four stages stay as the map, without round numbers."""
+    p = dict(proto or {})
+    files = os.listdir(lane) if os.path.isdir(lane) else []
+    loops = sorted(int(m.group(1)) for f in files for m in [re.match(r"^REVIEWS-loop(\d+)\.md$", f)] if m)
+    shot = "REVIEWS-oneshot.md" in files
+    p.pop("of", None)
+    if loops:
+        p["round"], p["round_note"] = "Loop %d" % loops[-1], "the one-shot, then loops; loop %d reviewed" % loops[-1]
+    elif shot:
+        p["round"], p["round_note"] = "The one-shot", "built in the cloud, reviewed; loops next"
+    else:
+        p["round"], p["round_note"] = "The one-shot", "the night of 19 November, in the cloud; then loops"
+    for s in p.get("stages", []):
+        s.pop("rounds", None)
+    panel = []
+    for key, short, f in ([("one-shot", "1S", "REVIEWS-oneshot.md")] if shot else []) + [
+            ("loop %d" % n, "L%d" % n, "REVIEWS-loop%d.md" % n) for n in loops]:
+        m = re.search(r"Thumbs up:\s*(\d+)\s+of\s+(\d+)", open(os.path.join(lane, f), encoding="utf-8").read())
+        if m:
+            panel.append({"round": key, "short": short, "up": int(m.group(1)), "of": int(m.group(2))})
+    p["panel"] = panel
+    hours = os.path.join(lane, "ROUND-HOURS.md")
+    if os.path.exists(hours):
+        txt = open(hours, encoding="utf-8").read()
+        got = [(k, m.group(1)) for k in ("one-shot",) + tuple("loop %d" % n for n in loops)
+               for m in [re.search(r"(?im)^.*%s\D*?([\d.]+)\s*h" % re.escape(k), txt)] if m]
+        p["hours"] = {"estimate": "the one-shot about 10 h overnight, then loops",
+                      "actual": "; ".join("%s %s h" % kv for kv in got) or "not measured yet"}
+    else:
+        p["hours"] = {"estimate": "the one-shot about 10 h overnight, then loops", "actual": "not measured yet"}
+    return p
+
+
+def age_hours(stamp, now=None):
+    """Hours since a stamp written as 'Thursday 19 November 2026, 18:15 (...)' or ISO; None when unreadable."""
+    now = now or datetime.datetime.now()
+    m = re.search(r"(\d{1,2}) (\w+) (\d{4}), (\d{1,2}):(\d\d)", stamp or "")
+    try:
+        t = (datetime.datetime.strptime("%s %s %s %s:%s" % m.groups(), "%d %B %Y %H:%M") if m
+             else datetime.datetime.fromisoformat(stamp))
+    except (TypeError, ValueError):
+        return None
+    return (now - t).total_seconds() / 3600.0
+
+
+def fresh_faults(d, published, now=None):
+    """Advisor 253: the page stayed at 17 Nov for two nights because the write ran and no session published. Faults when
+    a needed key or a boss's 'blocks' is missing, progress.json's 'updated' is over 26 h old, or its last publish is."""
+    out = ["progress.json lacks %s (the new layout's key)" % k for k in NEEDED if k not in d]
+    out += ["boss %s has no 'blocks'" % b.get("name") for b in d.get("bosses", []) if not b.get("blocks")]
+    a = age_hours(d.get("updated"), now)
+    if a is None or a > STALE_H:
+        out.append("progress.json was last updated %s, over %d hours ago: run tools/progress_page.py" % (d.get("updated"), STALE_H))
+    pa = age_hours((published or {}).get("at"), now)
+    if pa is None or pa > STALE_H:
+        out.append("the page was last published %s, over %d hours ago: publish production/progress-page with the Artifact "
+                   "tool, then run tools/progress_page.py --published" % ((published or {}).get("at"), STALE_H))
+    return out
+
+
+def selftest():
+    import tempfile
+    ok = []
+    with tempfile.TemporaryDirectory() as tmp:
+        p = prototype_now({"round": 6, "of": 33, "stages": [{"key": "A", "rounds": [6, 11]}]}, tmp)
+        ok.append(p["round"] == "The one-shot" and "of" not in p and "rounds" not in p["stages"][0])
+        open(os.path.join(tmp, "REVIEWS-oneshot.md"), "w").write("- Thumbs up: 3 of 8 (x)\n")
+        open(os.path.join(tmp, "REVIEWS-loop2.md"), "w").write("- Thumbs up: 5 of 8\n")
+        open(os.path.join(tmp, "ROUND-HOURS.md"), "w").write("| one-shot | 9.5 h |\n| loop 2 | 3 h |\n")
+        p = prototype_now({}, tmp)
+        ok.append(p["round"] == "Loop 2" and [x["up"] for x in p["panel"]] == [3, 5] and "9.5 h" in p["hours"]["actual"])
+    now = datetime.datetime(2026, 11, 19, 21, 0)
+    good = {k: 1 for k in NEEDED}
+    good.update(bosses=[{"name": "T", "blocks": "x"}], updated="Thursday 19 November 2026, 18:15 (note)")
+    ok.append(fresh_faults(good, {"at": "2026-11-19T20:00:00"}, now) == [])
+    ok.append(any("publish" in f for f in fresh_faults(good, {"at": "2026-11-17T05:13:00"}, now)))
+    ok.append(any("updated" in f for f in fresh_faults(dict(good, updated="Tuesday 17 November 2026, 5:13"), {"at": "2026-11-19T20:00:00"}, now)))
+    ok.append(any("date_move" in f for f in fresh_faults({k: v for k, v in good.items() if k != "date_move"}, {"at": "2026-11-19T20:00:00"}, now)))
+    ok.append(any("blocks" in f for f in fresh_faults(dict(good, bosses=[{"name": "T"}]), {"at": "2026-11-19T20:00:00"}, now)))
+    print("progress_page selftest: passed=%d/%d failed=%d" % (sum(ok), len(ok), len(ok) - sum(ok)))
+    return 0 if all(ok) else 1
+
+
 def line_2027(stations, today=None):
     """THE 2027 LINE (his order of 2 November, n02-7-2): each phase's weeks against the top of the plan's own estimate
     (PLAN.md), a positive total being weeks behind. The open phase's weeks are counted from its "began" date to today;
@@ -128,8 +223,19 @@ def line_2027(stations, today=None):
 
 
 def main(argv):
+    if "--selftest" in argv:
+        return selftest()
     path = os.path.join(PAGE, "progress.json")
     d = json.load(open(path, encoding="utf-8"))
+    published = json.load(open(PUBLISHED, encoding="utf-8")) if os.path.exists(PUBLISHED) else {}
+    if "--published" in argv:
+        # the session ran this right after publishing production/progress-page to the page's one link
+        import hashlib
+        rec = {"at": datetime.datetime.now().isoformat(timespec="minutes"),
+               "sha256": hashlib.sha256(open(path, "rb").read()).hexdigest()}
+        json.dump(rec, open(PUBLISHED, "w", encoding="utf-8"), indent=2)
+        print("progress page: publish recorded at %s" % rec["at"])
+        return 0
     order, studies, carried, days = derived()
     want = {"studies": {"done": sum(1 for s in studies if s["status"] == "done"), "total": 16, "order": order, "list": studies},
             "carried": carried}
@@ -156,6 +262,12 @@ def main(argv):
             bad.append("forecast")
         if missing:
             print("progress-page FAIL morning pictures not on the page: %s" % ", ".join(missing))
+        for f in fresh_faults(d, published):
+            print("progress-page FAIL " + f)
+            bad.append("fresh")
+        if d.get("prototype") and d["prototype"] != prototype_now(d["prototype"]):
+            print("progress-page FAIL the prototype block disagrees with production/lane's files: run tools/progress_page.py")
+            bad.append("prototype")
         # the 2027 line agrees with the stations' own weeks as written (not with today's date, which moves)
         behind = round(sum(st["actual_w"] - st["planned_w"][1] for st in d["stations"] if "actual_w" in st and st.get("planned_w")), 1)
         if d.get("line2027", {}).get("behind_w") != behind:
@@ -165,6 +277,8 @@ def main(argv):
               "FAIL" if bad or missing else "PASS"))
         return 1 if bad or missing else 0
     d.update(want)
+    d["prototype"] = prototype_now(d.get("prototype"))
+    d.setdefault("date_move", None)
     d["stations"], behind = line_2027(d["stations"])
     d["line2027"]["behind_w"] = behind
     d["line2027"]["as_of"] = datetime.date.today().strftime("%A %d %B").replace(" 0", " ")
@@ -175,6 +289,8 @@ def main(argv):
     for day in days:
         for v in VIEWS:
             print("  street/morning-%s-%s.jpg <- production/previews/morning-%s-%s.jpg" % (v, day, v, day))
+    print("NOT YET ON THE PAGE: publish production/progress-page (index.html, progress.json, the pictures above) to "
+          "https://claude.ai/artifact/EEcWMTp5E9VqKrQsC8KBdk with the Artifact tool, then run tools/progress_page.py --published")
     return 0
 
 

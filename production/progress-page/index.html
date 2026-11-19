@@ -442,7 +442,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       add("Moved since last Monday", d.date_move || "Not re-forecast this week", "Re-forecast " + (F.next_reforecast ? "next on " + fdate(iso(F.next_reforecast)) : "monthly") + ", from measured costs.");
     }
     const P = d.prototype;
-    if (P) add("What the game is", "Round " + P.round + " of " + P.of, (P.stages.find(x => x.state === "here") || {}).name || "");
+    if (P) add("What the game is", P.of ? "Round " + P.round + " of " + P.of : String(P.round), (P.stages.find(x => x.state === "here") || {}).name || "");
     const here = d.stations.find(s => s.n === d.here) || d.stations[0];
     add("What it looks like", "Phase " + here.n + ": " + here.name, d.line2027 ? (d.line2027.behind_w > 0 ? d.line2027.behind_w + " weeks behind plan" : d.line2027.behind_w < 0 ? (-d.line2027.behind_w) + " weeks ahead of plan" : "on plan") + ", " + d.line2027.as_of : "");
     const fight = d.bosses.filter(b => b.state !== "defeated").length;
@@ -470,16 +470,16 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     const P = d.prototype; if (!P) return;
     const t = $("protoTicket"); t.replaceChildren();
     const add = (label, v, small, big) => { const f = el("div", "field"); f.append(el("span", "label", label)); const vv = el("span", "v" + (big ? " big" : ""), v); if (small) vv.append(el("small", null, small)); f.append(vv); t.append(f); };
-    add("Round", P.round + " of " + P.of, P.round_note || "", true);
+    add("Round", P.of ? P.round + " of " + P.of : String(P.round), P.round_note || "", true);
     const last = (P.panel || []).slice(-1)[0];
-    if (last) add("Panel", last.up + " of " + last.of, "would recommend it, round " + last.round, true);
+    if (last) add("Panel", last.up + " of " + last.of, "would recommend it, " + (typeof last.round === "number" ? "round " + last.round : last.round), true);
     if (P.hours) add("Cloud hours", P.hours.actual || "not measured", "estimate " + P.hours.estimate);
     const r = $("protoRoute"); r.replaceChildren();
     for (const s of P.stages){
       const li = el("li", "stop " + (s.state === "here" ? "here" : s.state === "passed" ? "passed" : "next")); if (s.state === "here") li.setAttribute("aria-current", "step");
       li.append(el("span", "dot"));
       const b = el("div", "body");
-      b.append(el("span", "stop-n", "Stage " + s.key + " \u00b7 rounds " + s.rounds[0] + " to " + s.rounds[1]));
+      b.append(el("span", "stop-n", "Stage " + s.key + (s.rounds ? " \u00b7 rounds " + s.rounds[0] + " to " + s.rounds[1] : "")));
       b.append(el("span", "stop-name", s.name));
       b.append(el("p", "stop-get", s.builds));
       const meta = el("div", "stop-meta");
@@ -505,7 +505,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
         const h = Math.max(2, y(0) - y(p.up));
         sv("rect", {x, y: y(0) - h, width: bw, height: h, class: "p-bar" + (p.up === 0 ? " zero" : "")}, svg);
         sv("text", {x: x + bw / 2 - 4, y: y(0) - h - 4, class: "p-val"}, svg, String(p.up));
-        sv("text", {x: x + bw / 2 - 4, y: H - 6}, svg, "R" + p.round);
+        sv("text", {x: x + bw / 2 - 4, y: H - 6}, svg, p.short || ("R" + p.round));
       });
       sv("line", {x1: L, x2: Wd - 4, y1: y(goal), y2: y(goal), class: "p-tgt"}, svg);
       sv("text", {x: Wd - 70, y: y(goal) - 5, class: "p-tt"}, svg, "goal " + goal);

@@ -141,6 +141,13 @@ def verdict(now, percent, shape=None, fable=None):
     if ceiling is not None and "hard_stop" in shp and percent >= float(shp["hard_stop"]):
         return "pace: %.0f%% against the line's %.1f%%; HARD STOP: the weekly reading has reached %.0f%%, start nothing new" % (
             percent, line, float(shp["hard_stop"]))
+    if ceiling is not None and shp.get("prototype_first"):
+        # advisor 254 (his words 19 Nov 19:00-20:05): the prototype one-shot and its loops come before Kiln on the
+        # allowance; the cloud's spend counts first, Kiln's Fable lanes yield at the ceiling.
+        what = ("ABOVE THE CEILING: Kiln's Fable lanes stop first, the prototype's cloud run keeps going; still above at the next row, start nothing new"
+                if percent > ceiling else
+                "under the ceiling: the prototype first, then Kiln; at the ceiling Kiln's Fable lanes yield")
+        return "pace: %.0f%% against the line's %.1f%%, %+.1f points; ceiling %.1f%%; %s" % (percent, line, ahead, ceiling, what)
     if ceiling is not None:
         what = ("ABOVE THE CEILING: the lane stops first; still above at the next row, start nothing new"
                 if percent > ceiling else "under the ceiling: Kiln first, work within his rules")
@@ -236,6 +243,14 @@ def selftest():
         ("251: 30% at 16:54 is under", "under the ceiling" in verdict(t1654, 30, c251, 14), True),
         ("251: 95% is a hard stop", "HARD STOP" in verdict(t1654, 95, c251, 14), True),
         ("251: no press item after the press", "RESET ITEM" in fable_verdict(98, 80, c251), False),
+    ]
+    c254 = dict(c251, prototype_first=True)
+    t2100 = datetime.datetime(2026, 11, 19, 21, 0)
+    cases += [
+        ("254: under the ceiling the prototype comes first", "prototype first" in verdict(t2100, 48, c254, 44), True),
+        ("254: above the ceiling Kiln's Fable lanes stop", "Kiln's Fable lanes stop first" in verdict(t2100, 60, c254, 44), True),
+        ("254: 95% is still a hard stop", "HARD STOP" in verdict(t2100, 95, c254, 44), True),
+        ("254: without the flag Kiln stays first", "Kiln first" in verdict(t2100, 48, c251, 44), True),
     ]
     bad = [n for n, got, want in cases if got != want]
     print("pace_line selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
