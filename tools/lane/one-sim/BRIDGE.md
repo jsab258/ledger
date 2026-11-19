@@ -1,14 +1,17 @@
 # The plain bridge between the prototype and the one town (step 3a)
 
-Task 4s, run 2, 19 November 2026. Written and tested the same day. Nothing in the prototype's own source was changed: the swap is step 4, a later round through the publish gate. Not yet seen by a fresh reviewer.
+Task 4s, run 2, 19 November 2026. Written and tested the same day. Nothing in the prototype's own source was changed: the swap is step 4, a later round through the publish gate.
+
+Seen by a fresh reviewer the same day (production/lane/REVIEW-ONE-SIM-RUN2.md: pass with fixes). Run 3, also 19 November, closed the holes it found in the bridge's own checks, added the way in for a save from before the swap, and ran a breaker over the result. Run 3's work has not had a fresh reviewer.
 
 ## In five lines
 
-1. The bridge is one small JavaScript file, wasm/one-sim-bridge.mjs (15 KB, under 6 KB compressed), over the loader (wasm/one-sim.mjs). It holds no town rule.
+1. The bridge is one JavaScript file, wasm/one-sim-bridge.mjs (41 KB, 14 KB compressed; 15 KB before run 3 added the refusals, the old-save reader and the table of the prototype's kinds), over the loader (wasm/one-sim.mjs). It holds no town rule.
 2. The prototype hands it its clock every simulation step. The bridge turns the clock into the same calls, in the same order, that the packaged game makes to its town code.
 3. It hands back what each new hour did (who found the damage, who went to the police, DS Ellis, an arrest, Ada's invitation, Ron's envelope), and on request where people are and who knows what.
 4. The town travels in the prototype's save as one plain object. Loaded into a fresh copy of the simulation it plays on exactly as if it had never stopped (tested, 6 of 6 weeks, under Node and in a real page).
 5. Money, debts, jobs, fares, fights and talk stay in the prototype's own code. So do its street, its walking, its light and lines of sight, its weather, its car and its screens.
+6. (run 3) A call the town would take in silence and that would leave it wrong is refused by the bridge with its reason, and changes nothing: an act out of turn, a second deed, an area or a story name the town does not know, a save whose pieces do not fit. A save from before the swap keeps loading.
 
 ## What the prototype calls each tick
 
@@ -17,7 +20,8 @@ One call, in clock.js simStep, right after the clock has moved (`G.t += dm`):
     for (const hour of town.tick(G.t, area)) onTownHour(hour);
 
 - `G.t` is the prototype's own clock: game minutes since Monday 00:00, fractions and all.
-- `area` is where he stands, as the cast file names areas (mickeys, ritas, quay and so on). The town uses it for one thing: who sees it when a constable takes him at ten. The game falls back to "mickeys" when it cannot tell, and so does the bridge.
+- `area` is where he stands, as the cast file names areas (mickeys, ritas, quay and so on). The town uses it for one thing: who sees it when a constable takes him at ten. The game falls back to "mickeys" when it cannot tell, and so does the bridge when no area is given. An area the cast file does not have is refused (run 3): the prototype's own street names, such as "Quay Street", are not areas. `town.areas()` lists the cast file's.
+- Handle the whole list before moving the clock again. If the handling of an arrest hour starts a clock skip from inside the loop, the hours of that skip reach the page before the rest of this list. The breaker tried it: every hour still comes once, the later ones first.
 - Most calls do nothing and return an empty list. Once a game minute the bridge lets the town's talk run up to that minute. Once a game hour it runs the hour's scheduled steps and returns that hour.
 
 What happens inside, which is the packaged game's own order (CrimeProbe.cpp, ClockHours and the clock's tick, lines 7946 to 7961 and 9108 to 9113):
@@ -58,15 +62,24 @@ On request, at any time:
 
 ## What it tells the town when he does something
 
-Each takes the prototype's clock at that moment. The clock must have been ticked to that minute first, so that an hour that has begun has had its steps before he acts in it. The bridge refuses an act out of turn and says why.
+Each takes the prototype's clock at that moment. The clock must have been ticked to that minute first, so that an hour that has begun has had its steps before he acts in it. The bridge refuses an act out of turn and says why. Since run 3 that holds for every call below, the tea's minutes and the week's end included (the review found three that skipped the check).
 
-| Call | When |
-|---|---|
-| `town.deed({ minute, area, thing, said, witnesses, fact, words, certainty })` | He damages something. `witnesses` is who saw it and how well: `[{ id, rung }]`. Whoever is in the area and did not see it done finds it at once, and others as they come by. |
-| `town.saw({ minute, who, rung, fact, area, words, certainty })` | Somebody saw him do something that is no damage. One call a witness. |
-| `town.answerAsk(askDay, answer, minute)` | His answer to a night's ask: the envelope handed over, a no, no show. |
-| `town.teaMinute(minute)` | A minute he spends at Ada's tea. |
-| `town.weekAsk(minute)`, `town.weekGive(answer, minute)` | Sheila's question at the week's end, and his answer. |
+| Call | When | What comes back |
+|---|---|---|
+| `town.deed({ minute, area, thing, said, witnesses, fact, words, certainty })` | He damages something. `witnesses` is who saw it and how well: `[{ id, rung }]`. Whoever is in the area and did not see it done finds it at once, and others as they come by. | `{ taken, dropped }`: the witnesses the town took, by the cast's ids, and the ones it does not know, each with why. |
+| `town.saw({ minute, who, rung, fact, area, words, certainty })` | Somebody saw him do something that is no damage. One call a witness. | true, or false when the witness is nobody of the cast. |
+| `town.answerAsk(askDay, answer, minute)` | His answer to a night's ask: the envelope handed over, a no, no show. | true if the town took it. |
+| `town.teaMinute(minute)` | A minute he spends at Ada's tea. | |
+| `town.weekAsksNow(minute)`, `town.weekAsk(minute)`, `town.weekGive(answer, minute)` | Whether Sheila asks now, her question at the week's end, and his answer. | true or false. |
+
+What the town does with them, and what it does not (run 3, after the review):
+
+- The town follows one deed. The rules keep one deed's story and its witnesses (TownWeek.h Deed), and a second deed would replace the first, witnesses and all. Before run 3 a second, unseen deed made the first one's witness never go to the police. Now a second deed is refused with that reason, and `town.deedHeld()` says which deed the town holds. A further piece of damage can be told with `saw`, one call a witness: it becomes talk. The damage itself is then not there for passers-by to find.
+- Only the deed reaches the police, and always as damage. A sighting goes into the talk and can bring DS Ellis, but it is never a statement and never an arrest. A blow, a weapon or a killing has no call that reports it. The raw front door has one (`policeReport`, `takeIn`), used by one scripted week of the tests; the bridge does not wrap it. Whether it should is decision 5 of DIFFERENCES.md.
+- Every sighting is kept as about his hidden life. An open or decent act has no call (DIFFERENCES.md, section 10).
+- Most of the prototype's people are not in the cast (19 of 28). A witness the cast does not have is left out and named in `dropped`, never taken in silence. A witness named twice counts once.
+- In turn means: at the clock's minute or later, inside an hour that has had its steps. An act given a later minute of that hour is taken, and it moves the town's clock to that minute, so a tick at an earlier minute after it is refused as a clock gone back. The prototype's acts happen at its own clock, where the two are the same.
+- Refused, with the reason, and nothing changed: an area the cast file does not have; a story name that is not letters, digits and underscores; a story name the town's own rules use for their own stories (the asks, an arrest, DS Ellis asking, the week's end, a threat, his name, his arrival); a rung outside 0 to 4 (or -1 for a thing known); a certainty outside just above 0 to 1; a call with no arguments or the wrong kind.
 
 Who saw him, and how well, is still the prototype's to work out: its own geometry (distance, light, line of sight) and, for now, its own way of turning that into "how well". The real rule for "how well" is in the town code and in the golden table, but has no call on the front door yet (see "Not done yet").
 
@@ -77,8 +90,33 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 
 - `save()` returns one plain object. Inside are the same texts the packaged game writes into its save folder (CrimeProbe.cpp SaveEncounterToDisk): the town's talk (the game's agents.json), each person's memory as text (memory-<id>.md), the week's pieces (town.json), and the few lines the game keeps beside them (the deed's story and time, who saw it, her first visit, his first arrest). Each is written and read by the town code's own save routines. The bridge adds its place in the week: the minute it has run to, and the next hour due.
 - Size: the biggest save in the tested weeks is 16,826 characters. The prototype stores its save in pieces of 150,000.
-- Checked before anything is loaded, each refused with its reason: not a saved town, a later version, another cast file, a piece missing, the week's pieces from a later version or no object at all, the talk cut short. A town saved, loaded and saved again gives the same save, character for character.
-- A prototype save from before the swap has no town in it. Step 4 must choose: such a save starts a fresh town at its clock (people remember nothing of the old week), or is not offered. Recommended: not offered, since the prototype's save version changes with the swap anyway.
+- A town saved, loaded and saved again gives the same save, character for character.
+- `openTown({ saved: G.town })` with nothing in `G.town` is refused (run 3). Before, it opened a new week at minute zero without a word, and the next tick would have played every hour since Monday over a week already lived.
+
+What is checked before a save is taken (run 3 added most of these after the review; each is refused with its reason, and the town that is refused is dropped whole):
+
+- It is a saved town, of a version this build reads, with a way of talking it knows.
+- Every piece is there and is the piece it says it is: the talk and the week's pieces are JSON objects; the talk holds every person of the cast; the week's pieces say how far the talk has run; there is a memory for every person, it is text, and it is that person's memory; the lines beside the week read.
+- The clock fits itself: a whole minute, and the next hour due is the one after it (or the minute's own hour, for a town saved on the stroke of an hour before that hour ran).
+- The clock fits the town: the town's own record of how far its talk has run is not past the saved minute, and not short of the last hour said to have run. A clock moved back would play hours over a town that has lived them; a clock moved on would skip hours it never had.
+- The town's own readers then refuse what they refuse: a talk that is no whole text, a week from a later version.
+
+The cast file and the save (run 3, the review's finding 7). The save carries a mark of what it rests on in the cast file: who is in the town, and its areas with their places. It is no longer a mark of the file's text, which changed with a Windows checkout's line endings and would have refused every save.
+
+- The file's byte-order mark, line endings and spacing, its notes, its routines, its ties and its coordinates may change, and the save still loads. The town then plays on by the new file, as the packaged game does: its save holds no cast at all.
+- If people, areas or places are added, taken away or renamed, the save is refused with a plain message that names who is in the save and not in the cast, and the other way round. Loading such a save "with the people still present" is not built. The names decision (DIFFERENCES.md, decision 1) changes what people are called, not their ids, so it does not trip this.
+
+A prototype save from before the swap (run 3, the review's finding 3):
+
+    const { town, hours, fed, dropped, lost } = await openTownFromOldSave({ wasm, castJson, old, areaOf, wordsOf });
+
+- It has no town in it. It opens a fresh town at the save's clock (`old.t`). `hours` is what the first tick ran, to be handled like any tick's.
+- Each thing its people saw him do with their own eyes is told to the town at that minute, as a sighting, under the kind's name with the event's number (strike_e7). `fed` lists them.
+- The rung is read from the old memory. This is the bridge's reading of the prototype's memory, not a town rule, and step 4 may hand in another (`rungOf`): "tom" or "owner" (they tie it to him): recognised. "coat" or "cab" (a thing of his): a mark. "man" with a face score above 0.2, the prototype's own line for placing him later: a face. Any other "man": a silhouette.
+- Left out, each named in `dropped` with its reason: what somebody was only told, or only heard; what people who are not in the cast saw; the kinds the town makes itself, cannot be told, or never passes on (DIFFERENCES.md, section 10); a place with no area in the cast.
+- `lost` says in plain lines what the player loses, counted from that very save: the tea if its hour has passed, the asks already past, and the rest.
+- `areaOf(event)` must give the cast file's area for where an old event happened. That table is step 4's (below); the default is the game's own fallback, "mickeys".
+- The save version of the prototype stays as it is.
 
 ## The people and the places
 
@@ -88,6 +126,15 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 - Places: the cast file has 30 places in 24 areas. A table from those to the prototype's spots and rooms is step 4's work. Some real places have no spot on the prototype's map yet (DIFFERENCES.md, section 2).
 
 ## Not done yet (for step 4, the swap)
+
+Added in run 3, from the review:
+
+- No call reports violence. Only the damage deed reaches the police (above; decision 5).
+- The town follows one deed, and the prototype has no act that damages a thing (decision 6).
+- No call for an open or decent act: ten of the prototype's kinds have no home (decision 7; a change to the front door, not to the rules).
+- No golden row covers two deeds, and none covers a sighting that is no damage. The bridge's handling of both is held by its own checks only.
+
+From run 2:
 
 1. How well a witness sees him. The real rule (Perception, Observation, Sighting) is in the town code, and the golden table's rows for it pass in the browser build (T1). It has no call on the front door yet. Step 4 needs one that takes what the prototype knows (distance, light, in view or not, the coat, in the cab) and gives the rung.
 2. The words. The hour gives "Ada asked him in" as yes or no, not her line; the arrest's words and his rights are in the town code too. Add when a screen needs them.
@@ -99,16 +146,18 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 
 ## How it is tested
 
-All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. Last full run 17:07 to 17:10 UTC: exit 0 in 196 s, "one-sim: everything passed".
+All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. The run's time and result are in PROGRESS.md.
 
 | Check | What it shows | Result |
 |---|---|---|
 | T8 the bridge, talk by the hour | The six scripted weeks of the C# Core's table, driven by a clock in odd steps (7.3 game minutes) through the bridge, with the prototype's own id for Darren. Each hour against the C# Core's row. | 225 of 225 hours agree, field for field. The bridge's "held" agrees with the hour's answer at all 225. |
 | T9 the bridge, talk by the minute | The same weeks the packaged game's way, with the clock ticked every game minute, every 0.37 and every 7.3 (13,146, 35,736 and 2,060 ticks) | The same town to the last character in all three. |
 | T10 a save in the middle | Each week saved after two fifths of its hours, at a minute inside an hour, written out as text, loaded into a fresh module, played on | 6 of 6 end exactly as the week played straight through. Held in the cells at the save, he is still held after the load, until the same minute. |
-| T11 rough handling | A week starting at 15:36 (the prototype's start), a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump, a save loaded and saved again, and sixteen things that must be refused: four clocks (going back, no number, no end, a jump of a thousand years), two acts out of turn, eight saves, two cast files | All as they should be. |
-| T4x | The same town in Node and in Chromium, the bridge's weeks included | The bridge's weeks give digest d678e26b179e7b68 in both. |
+| T11 rough handling (run 3: the review's holes) | A week starting at 15:36, a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump, a save loaded and saved again; a deed's witnesses taken and dropped by name; the first deed's witness still going to the police on Wednesday at nine, and the constable on Thursday at ten, after a second deed was refused; the cast file as Windows writes it and with its spacing taken out; and 42 things that must be refused | All as they should be. Of the 42, 17 are run 2's (one more save added) and 25 are new: the tea and the week's end out of turn, unknown areas, a story name of the town's own, a second deed, saves whose pieces do not fit or hold nothing, a saved town that is not there, a cast with other people. |
+| T12 a save from before the swap (run 3) | An old save written by hand in the prototype's shape (Wednesday 14:00, eight minds) | 4 first-hand memories told at the rungs they support, 8 left out each with its reason, the old save untouched, the losses said in 7 lines. Two days on the blow is held by 23 people and has brought no statement and no arrest; DS Ellis came once, for the talk. The town then saves and loads like any other. |
+| T4x | The same town in Node and in Chromium, the bridge's weeks included | The bridge's weeks give digest d678e26b179e7b68 in both: the same as before run 3, so the fixes changed no town. |
 | selftest | One hour of the table spoiled on purpose | T8 sees exactly that hour. |
+| breaker (run 3, wasm/breaker.mjs) | 185 tries to make the bridge misbehave: opening it (16), the clock out of order (23), bad calls (46), spoiled saves (59), spoiled old saves (11), and a sound save at 30 awkward moments. A refused call must also leave the town's save as it was; a sound save must load, save again the same and play on to the same town. | First pass: 137 of 150 held. Eleven real holes were closed and two wrong expectations of the breaker put right (PROGRESS.md lists them). Now 185 of 185 hold. |
 
 Size, measured: with the save routines inside, the simulation file is 423,015 bytes, 142,080 with gzip, 108,526 with Brotli. Before the save it was 301,665 and 79,767. So the download is now 109 KB, not 80 KB: the save cost 29 KB.
 

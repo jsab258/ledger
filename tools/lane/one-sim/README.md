@@ -10,12 +10,13 @@ No town rule lives in this folder. The rules are compiled from where they live. 
 
 ## What is here
 
-- one-sim.sh: every command (setup, reference, wasm, test, selftest, browser, breaks, differences, all).
+- one-sim.sh: every command (setup, reference, wasm, test, selftest, breaker, browser, breaks, differences, all).
 - reference/: project files that build the REAL C# Core and its own check programs (PerceptionGolden, Soak, CoreTests) by path, with all output outside the repository. The three check programs are built from these lane-written project files, which list the same sources as the originals (ledger/PerceptionGolden, ledger/Soak, ledger/CoreTests). `reference` asks the build tool for both lists on every run and stops if they differ (compare_sources.py). Run 1 also switched on invariant globalisation, which the originals do not have; it was not needed and is removed. The programs therefore need an ICU library on the machine, as .NET on Linux does by default (Ubuntu 24.04 has libicu74). conda_unpack.py unpacks the .NET SDK from conda-forge; zstd-requirements.txt pins the one Python module it needs.
 - wasm/one_sim.cpp: the front door. It only calls the port.
 - wasm/one-sim.mjs: the loader. A page, a Web Worker or Node imports it. No library needed.
-- wasm/one-sim-bridge.mjs: the plain bridge for the prototype, over the loader: its clock in, each hour's doings out, the town in its save (BRIDGE.md). No rule of its own.
-- differences/measure.mjs: loads the prototype's own rule files, unchanged, beside the real town and measures three differences (DIFFERENCES.md).
+- wasm/one-sim-bridge.mjs: the plain bridge for the prototype, over the loader: its clock in, each hour's doings out, the town in its save, and the way in for a save from before the swap (BRIDGE.md). No rule of its own. It also holds the table of the prototype's kinds of act and what the town is told of each.
+- wasm/breaker.mjs: tries to make the bridge misbehave (bad calls, ticks out of order, spoiled saves) and marks each try held or not held. Part of `all`.
+- differences/measure.mjs: loads the prototype's own rule files, unchanged, beside the real town, measures three differences and checks the table of kinds against the prototype's own list (DIFFERENCES.md).
 - wasm/checks.mjs: the checks, one copy, run under Node (test_one_sim.mjs) and in a real page (browser/index.html through browser_test.py).
 - wasm/selftest.mjs: spoils the table on purpose. The checks must fail.
 - wasm/breaks.py: plants one-line breaks in a copy of the port and runs every check on each, the whole table included. Does anything see them?
@@ -47,9 +48,10 @@ The full list of calls is in one-sim.mjs. The prototype does not call these one 
     const town = await openTown({ wasm, castJson, startMinute: G.t });   // or { wasm, castJson, saved: G.town }
     for (const hour of town.tick(G.t, area)) { /* who found it, who went to the police, DS Ellis, an arrest, Ada, Ron */ }
     G.town = town.save();                      // the town, as one plain object, for the prototype's save
+    const { town, lost } = await openTownFromOldSave({ wasm, castJson, old });   // a save from before the swap: a fresh town at its clock
 
 The prototype's own source is not changed yet. That swap is step 4, a later round through the publish gate.
 
 ## Licences
 
-Nothing here is published yet. The parts that would ship inside one-sim.wasm, and the tools, are listed with their licences in the study, section 4. The tools are on the allowlist (item 17, his yes of 19 November). The pieces that ship inside the simulation file are not: that line is held, so nothing with one-sim.wasm inside may be published until the allowlist carries it. The full licence texts are in production/licences/one-sim/.
+Nothing here is published yet. The parts that would ship inside one-sim.wasm, and the tools, are listed with their licences in the study, section 4. Both licence lines are on the allowlist, each with his yes of 19 November: the tools (item 17, 16:18), and the pieces of the LLVM C++ library, the helper routines and wasi-libc that the compiler builds into the simulation file (item 18, 17:29, "notices kept"). So no licence holds publishing any more. Two things still stand before a page with one-sim.wasm inside goes out: the credits file that "notices kept" asks for (it needs four notice files that have not been read yet; the study, section 4), and the swap itself through the publish gate (step 4). The full licence texts read so far are in production/licences/one-sim/.
