@@ -1,33 +1,17 @@
-# LEDGER: three questions for him
+# LEDGER: questions for him
 
-18 November 2026. Only canon and scope; none costs money. Each has a recommended answer. The design carries on meanwhile and works under any of them.
+19 November 2026. Only canon, story and scope; none costs money. Each round builds to the recommended answer and flips if he picks otherwise, so nothing waits on his hands. For his page, at most three a day, in the order they are needed: 4, 6, 5, 3, 2, 1.
 
-## 1. How many endings? (canon; needed before round 32)
+1. Endings (ruling against the approved outline; before round 32): his 28 Oct ruling says two or three, the outline he approved on 28 Sep and the built story have five. **(a) Keep the five built states and show three endings (the Kingdom, the Straight Life, Burn Both), each with a better and a plainer way to turn out, recommended**; (b) five endings as approved, and the 28 Oct line changed; (c) two, with Burn Both shown as the Kingdom lost.
 
-His ruling of 28 Oct says two or three. The story as built and wired has five (D58, 21 Sep).
+2. Anyone Tom will not hit (canon; before round 14): the prototype invented a rule that he never lays hands on a woman, anyone of sixty or over, or the priest. **(a) Keep it as Tom's own line, recommended**; (b) no line; (c) only the priest and the very old. Note: sparing the priest for being a priest brushes canon's "religion never a mechanic".
 
-- **(a) Three, each with a better and a plainer way to turn out. Recommended.**
-  - The Kingdom: he keeps the business and the books hold. At its best one friend still counts him (the built "Both").
-  - The Straight Life: no business, one friendship. At its best he handed the firm to someone who can keep it (the built "Quiet").
-  - Burn Both: neither.
-  - Nothing already built is thrown away: the five states stay underneath and three names are shown.
-- (b) Keep five separate endings, and change the 28 Oct ruling.
-- (c) Two: the Kingdom and the Straight Life, with Burn Both shown as the Kingdom lost.
+3. Each person their own temper (scope; before the one-simulation switch): open since 29 Sep, the real simulation gives everyone the same middling nerve and loyalty. **(a) Every named person gets their own nerve, loyalty and readiness to talk, measured before it lands, recommended**; (b) everyone ordinary until Act II; (c) only the principals and Mickey's five debtors for now.
 
-## 2. Is there anyone Tom will not hit? (canon; needed before round 14)
+4. The first hour (story; before round 7): his approved hour of 29 Sep, restaged for the pillar of 18 Nov (arrival by ferry, a first fare at 2:30, the debt book at 4:30)? **(a) Yes, as DESIGN section 15 stages it, recommended**; (b) the approved staging as written, with the fare after the walk-round; (c) the approved staging, and no fare in the first hour.
 
-The prototype invented a rule that is in no ruling: Tom never lays hands on a woman, on anyone of sixty or over, or on the priest. For them a confrontation stops at a threat, and if they have a man with them it is the man he fights.
+5. Which game canon describes (canon): the 18 Nov pillar puts verbs first, while the older "What LEDGER is not" makes what people know "the mechanic" and gives everything else the smallest budget. **(a) Rewrite that section to the pillar: verbs get their full budget, memory and gossip are the engine, recommended**; (b) keep both lines as they are.
 
-- **(a) Keep it, as Tom's own line. Recommended.** It fits canon's "no cruelty as spectacle". It makes the watchers at the windows the people he cannot silence with his fists, which is the game's tension. It covers 19 of the thirty regulars, so every fight move is made for one kind of body and not three (an estimate of the saving, not a measure).
-- (b) No line. Anyone can be struck, and the town answers as hard as it can.
-- (c) A narrower line: only the priest and the very old.
+6. The cab as the day's main verb (scope; before round 8): canon says "not a driving game". **(a) Prototype it within the spend rule until the playtester shows fares stay fresh over a week, driving under a quarter of play, recommended**; (b) adopt it now; (c) keep fares a side activity.
 
-## 3. Does each person get their own temper? (scope; needed before the one-simulation switch in the order of 23 Nov)
-
-Open since 29 Sep. In the real simulation every person has the same middling nerve and loyalty, so nobody reports him, nobody stands up to him, and the street has one temper. The prototype gives 28 people their own, and its best moments came from that (Lee stands; Darren gives way).
-
-- **(a) Yes: every named person gets their own nerve, loyalty and readiness to talk, from the prototype's numbers and the draft of 29 Sep, measured before it lands. Recommended.** The design's tension depends on it: the same deed must go differently with different people there.
-- (b) Everyone stays ordinary until Act II is built.
-- (c) Only the principals and Mickey's five debtors get their own for now.
-
-Points that are already his and are not asked again here are listed in TRACE.md, section 1: the police after a witnessed killing (C5), the clock and how far a story travels (C11), Sheila's trust (C12), and the fight source test (C13).
+Open points already on his page, not asked twice: the police after a witnessed killing (C5; DESIGN is provisional and works under either answer), the clock and how far a story travels (C11), Sheila's trust (C12), and the fight source test (C13). His stored answer on the ending signs of 30 Sep is read from his page before question 1 is put.
