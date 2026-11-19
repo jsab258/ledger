@@ -1,11 +1,88 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Wednesday 18 November, 12:16",
+ "kicker": "LEDGER · Needs you · 2 open · updated Thursday 19 November, 0:56",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "font-pick-2026-11-19",
+   "name": "DECISION: A typewriter font for the browser prototype only (Apache 2.0)",
+   "why": [
+    "Apache 2.0 is not on the font line of the list (only OFL); the 21:10 yes covered the four tools, not the font.",
+    "Read at source: Google Fonts' own listing says license APACHE2 (18 Nov)."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "The font's licence at source",
+     "url": "https://raw.githubusercontent.com/google/fonts/main/apache/specialelite/METADATA.pb"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "",
+   "tried": "",
+   "recommendation": "Yes, for the prototype only: an open licence, and nothing of it reaches the game.",
+   "added": "2026-11-19 00:56",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "yes",
+     "Yes, prototype only (recommended)"
+    ],
+    [
+     "no",
+     "No, use an OFL font"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "dinov3-pick-2026-11-19",
+   "name": "DECISION: Image-to-3D lab test: allow Meta's DINOv3 helper model?",
+   "why": [
+    "Without it the test cannot run on this PC's card.",
+    "Licence read in full 19 Nov: royalty-free, commercial use allowed; no weapons or military use; a lab measurement only, nothing adopted on its result."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "DINOv3's model card (licence)",
+     "url": "https://huggingface.co/timm/vit_large_patch16_dinov3.lvd1689m"
+    },
+    {
+     "label": "DINOv3 licence (full text)",
+     "url": "https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "",
+   "tried": "",
+   "recommendation": "Yes, lab test only: worldwide, royalty-free, outputs ours with no limit beyond its banned uses (real weapons, trade controls); the licence copy goes with anything shared. Read 18 Nov 21:45 through a fetch summary of https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md; re-read the full text before publishing.",
+   "added": "2026-11-19 00:56",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "yes",
+     "Yes, lab test only (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ]
+  }
+ ]
 }

@@ -1288,6 +1288,78 @@
    ],
    "state": "done",
    "closed": "2026-11-18 12:16, withdrawn on his message of 12:13 (advisor 221): the old readers stay; nothing runs them and the build check fails if one is used"
+  },
+  {
+   "id": "font-pick-2026-11-19",
+   "tag": "DECISION",
+   "kind": "licence-off-list",
+   "title": "A typewriter font for the browser prototype only (Apache 2.0)",
+   "text": "May the browser prototype use the Special Elite font (Apache 2.0, by Astigmatic)? Never shipped in the game.",
+   "why": [
+    "Apache 2.0 is not on the font line of the list (only OFL); the 21:10 yes covered the four tools, not the font.",
+    "Read at source: Google Fonts' own listing says license APACHE2 (18 Nov)."
+   ],
+   "links": [
+    {
+     "label": "The font's licence at source",
+     "url": "https://raw.githubusercontent.com/google/fonts/main/apache/specialelite/METADATA.pb"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes, for the prototype only: an open licence, and nothing of it reaches the game.",
+   "options": [
+    [
+     "yes",
+     "Yes, prototype only (recommended)"
+    ],
+    [
+     "no",
+     "No, use an OFL font"
+    ]
+   ],
+   "state": "open",
+   "added": "2026-11-19 00:56"
+  },
+  {
+   "id": "dinov3-pick-2026-11-19",
+   "tag": "DECISION",
+   "kind": "licence-off-list",
+   "title": "Image-to-3D lab test: allow Meta's DINOv3 helper model?",
+   "text": "The props test (waiting item 11) runs TRELLIS.2 (MIT, allowed) through trellis.cpp, which needs Meta's DINOv3 image model under its own 'dinov3-license', not on the list. Allow it for the lab test only?",
+   "why": [
+    "Without it the test cannot run on this PC's card.",
+    "Licence read in full 19 Nov: royalty-free, commercial use allowed; no weapons or military use; a lab measurement only, nothing adopted on its result."
+   ],
+   "links": [
+    {
+     "label": "DINOv3's model card (licence)",
+     "url": "https://huggingface.co/timm/vit_large_patch16_dinov3.lvd1689m"
+    },
+    {
+     "label": "DINOv3 licence (full text)",
+     "url": "https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes, lab test only: worldwide, royalty-free, outputs ours with no limit beyond its banned uses (real weapons, trade controls); the licence copy goes with anything shared. Read 18 Nov 21:45 through a fetch summary of https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md; re-read the full text before publishing.",
+   "options": [
+    [
+     "yes",
+     "Yes, lab test only (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "open",
+   "added": "2026-11-19 00:56"
   }
  ]
 }

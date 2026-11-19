@@ -1,0 +1,2507 @@
+{
+ "made": "2026-11-19 00:56:07",
+ "method": "One Python script using os.scandir walked each folder (junctions and links not followed, unreadable entries counted) and searched repository tools, .claude, retention.json and CATALOGUE.md text for each path or name.",
+ "drives": [
+  {
+   "drive": "C:",
+   "total_gb": 930.69,
+   "free_gb": 37.41
+  },
+  {
+   "drive": "D:",
+   "total_gb": 0.1,
+   "free_gb": 0.07
+  },
+  {
+   "drive": "E:",
+   "total_gb": 931.31,
+   "free_gb": 15.34
+  },
+  {
+   "drive": "F:",
+   "total_gb": 111.26,
+   "free_gb": 40.53
+  },
+  {
+   "drive": "G:",
+   "total_gb": 15.0,
+   "free_gb": 1.52
+  },
+  {
+   "drive": "H:",
+   "total_gb": 297.99,
+   "free_gb": 51.11
+  },
+  {
+   "drive": "I:",
+   "total_gb": 400.0,
+   "free_gb": 35.54
+  }
+ ],
+ "folders": [
+  {
+   "path": "F:\\LedgerTools\\aaa-study",
+   "size_gb": 0.24,
+   "file_count": 212,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/outside_only_check.py",
+    "tools/push_guard.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\accent-id",
+   "size_gb": 0.08,
+   "file_count": 47,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/voice-live/accent_check.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\ai-video",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/needs_you_page.py",
+    "tools/meshgen/blender/cmu_clips.py",
+    "tools/meshgen/blender/cmu_measure.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\approvals",
+   "size_gb": 0.1,
+   "file_count": 2204,
+   "last_modified": "2026-10-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approvals.py",
+    "tools/approval_page.py",
+    "tools/attribution-check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\approved-cast-2026-09-25",
+   "size_gb": 0.89,
+   "file_count": 328,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\asset-checks",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-11-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/progress_page.py",
+    "tools/ue/asset_checks.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\ast-grep",
+   "size_gb": 0.1,
+   "file_count": 9,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\atlas-01-2026-09-22",
+   "size_gb": 0.06,
+   "file_count": 173,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\atlas-01-2026-10-06",
+   "size_gb": 0.0,
+   "file_count": 20,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\backup-staging",
+   "size_gb": 0.01,
+   "file_count": 4,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\blender52",
+   "size_gb": 0.89,
+   "file_count": 7228,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/art-recipes/mickeys-props/desk-contact-sheet.py",
+    "tools/art-recipes/shopfront-kit/bay-contact-sheet.py",
+    "tools/blender-live/start-blender-live.ps1"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\blender_mcp",
+   "size_gb": 0.08,
+   "file_count": 7537,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\bodies",
+   "size_gb": 1.33,
+   "file_count": 323,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/capsay.py",
+    "tools/clip-reach.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\bound",
+   "size_gb": 0.05,
+   "file_count": 44,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\bpyenv",
+   "size_gb": 0.79,
+   "file_count": 6143,
+   "last_modified": "2026-10-21",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/art-recipes/front_for_game.py",
+    "tools/art-recipes/front_wear.py",
+    "tools/art-recipes/kit_stain.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\casting-candidates",
+   "size_gb": 0.0,
+   "file_count": 37,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\casting-work",
+   "size_gb": 0.03,
+   "file_count": 65,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\checkers",
+   "size_gb": 0.43,
+   "file_count": 2049,
+   "last_modified": "2026-11-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/publish-talk-helper.ps1",
+    "tools/checkers/checker_beside_game.py",
+    "tools/checkers/checker_server.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\cleanup-2026-09-26",
+   "size_gb": 0.0,
+   "file_count": 10,
+   "last_modified": "2026-09-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\dotnet10",
+   "size_gb": 0.17,
+   "file_count": 480,
+   "last_modified": "2026-10-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\dotnet10-download",
+   "size_gb": 0.07,
+   "file_count": 3,
+   "last_modified": "2026-10-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\drapestudio-test",
+   "size_gb": 0.02,
+   "file_count": 33,
+   "last_modified": "2026-11-14",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\drapestudio-test-2026-11-11",
+   "size_gb": 0.12,
+   "file_count": 165,
+   "last_modified": "2026-11-11",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\drapestudio-test-2026-11-13",
+   "size_gb": 0.01,
+   "file_count": 8,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\drapestudio-test-2026-11-13-final",
+   "size_gb": 0.08,
+   "file_count": 108,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\fab",
+   "size_gb": 1.69,
+   "file_count": 18,
+   "last_modified": "2026-11-02",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/import_fab_clothes.py",
+    ".claude/skills/asset-import/SKILL.md",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\freesewing",
+   "size_gb": 0.02,
+   "file_count": 306,
+   "last_modified": "2026-10-01",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/candidate_page.py",
+    "tools/md/jaeger_spec.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\friends-evenings",
+   "size_gb": 0.0,
+   "file_count": 49,
+   "last_modified": "2026-10-05",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/friends/evening.ps1"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs",
+   "size_gb": 3.52,
+   "file_count": 2340,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py",
+    "tools/bc1_pictures.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-voice",
+   "size_gb": 0.0,
+   "file_count": 12,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-voice2",
+   "size_gb": 0.0,
+   "file_count": 9,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garmentcode-lab",
+   "size_gb": 0.52,
+   "file_count": 14020,
+   "last_modified": "2026-11-11",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/md-bridge/pleated_skirt.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments",
+   "size_gb": 6.74,
+   "file_count": 4546,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/body-proportions.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\gate",
+   "size_gb": 6.06,
+   "file_count": 5950,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/chandler_joinery_check.py",
+    "tools/flemish_tile.py",
+    "tools/office_look.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\hf",
+   "size_gb": 1.11,
+   "file_count": 41,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/checkers/measure_checkers.py",
+    "tools/checkers/train_checker.py",
+    "tools/voice-live/pocket-server.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\keys",
+   "size_gb": 0.0,
+   "file_count": 4,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "tools/checkers/gemini_training_data.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\lab",
+   "size_gb": 0.92,
+   "file_count": 694,
+   "last_modified": "2026-10-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\lane-research",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\latency",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/first_token_sample.py",
+    "tools/gamecheck.py",
+    "tools/imagegen/imagegen.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\md-bridge",
+   "size_gb": 0.0,
+   "file_count": 91,
+   "last_modified": "2026-10-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/md/build_cuffs.py",
+    "tools/md/look_md.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\md-jobs",
+   "size_gb": 0.0,
+   "file_count": 176,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/md-bridge/ledger_md_bridge.py",
+    "tools/md-bridge/md_job.py",
+    "tools/md-bridge/open_marvelous.ps1"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress",
+   "size_gb": 19.76,
+   "file_count": 3656,
+   "last_modified": "2026-11-07",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/garments_shipped_check.py",
+    "tools/outside_only_check.py",
+    "tools/ue/cloth_graph_probe.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mickeys-props",
+   "size_gb": 0.03,
+   "file_count": 87,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/art-recipes/shop-room.py",
+    "tools/art-recipes/mickeys-props/ashtray.py",
+    "tools/art-recipes/mickeys-props/bench.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\models",
+   "size_gb": 0.08,
+   "file_count": 6,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/attribution-check.py",
+    "tools/body-proportions.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\n16-6-parked",
+   "size_gb": 0.0,
+   "file_count": 3,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\nightly",
+   "size_gb": 0.01,
+   "file_count": 180,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "tools/ci-checks.sh",
+    "tools/close_games.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\page-frames",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\parler-tts",
+   "size_gb": 0.01,
+   "file_count": 12,
+   "last_modified": "2026-09-24",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/ingame_page.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\pip-cache",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\played-game",
+   "size_gb": 6.03,
+   "file_count": 649,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/corner_people.py",
+    "tools/long_session.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\playtest",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-10-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/ci-checks.sh",
+    "tools/cleanup.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\pocket-tts",
+   "size_gb": 0.73,
+   "file_count": 21792,
+   "last_modified": "2026-10-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/voice-live/latency.py",
+    "tools/voice-live/longer_takes.py",
+    "tools/voice-live/pocket-server.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\polyhaven",
+   "size_gb": 0.7,
+   "file_count": 1321,
+   "last_modified": "2026-11-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/hdr-to-longlat.py",
+    "tools/photo_flemish_tile.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\presets",
+   "size_gb": 0.04,
+   "file_count": 63,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/weekend_page.py",
+    "tools/md-bridge/donkey_jacket.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\proof-2.1-setaside",
+   "size_gb": 0.02,
+   "file_count": 5,
+   "last_modified": "2026-10-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\proof-2.2-paused",
+   "size_gb": 0.01,
+   "file_count": 3,
+   "last_modified": "2026-10-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\pso-record",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\pylib",
+   "size_gb": 0.98,
+   "file_count": 38301,
+   "last_modified": "2026-10-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\quay-run",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/driving_feel_check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\reference-other-games",
+   "size_gb": 0.0,
+   "file_count": 7,
+   "last_modified": "2026-09-23",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/ue/portrait_sheet.py",
+    ".claude/skills/gate/SKILL.md"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\renders",
+   "size_gb": 0.04,
+   "file_count": 10,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/clip-motion.py",
+    "tools/clothes_page.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\replay-2026-11-08",
+   "size_gb": 0.0,
+   "file_count": 27,
+   "last_modified": "2026-11-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\retention",
+   "size_gb": 0.06,
+   "file_count": 101,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "tools/ci-checks.sh",
+    "tools/git-size-guard.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\retired",
+   "size_gb": 0.04,
+   "file_count": 41,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py",
+    "tools/hook-pair.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\review-faces-2026-09-26",
+   "size_gb": 0.01,
+   "file_count": 22,
+   "last_modified": "2026-09-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\review-voice-2026-09-25",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\review-voice-2026-09-26",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\ron-voice",
+   "size_gb": 0.01,
+   "file_count": 32,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\sash-window",
+   "size_gb": 0.0,
+   "file_count": 47,
+   "last_modified": "2026-10-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/progress_page.py",
+    "tools/art-recipes/terrace-front.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\saved-branches-2026-10-05",
+   "size_gb": 0.12,
+   "file_count": 11,
+   "last_modified": "2026-10-05",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\scratch",
+   "size_gb": 0.0,
+   "file_count": 10,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/decal-ink.py",
+    "tools/hdr-to-longlat.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\selfcheck-voice-2026-09-26",
+   "size_gb": 0.0,
+   "file_count": 14,
+   "last_modified": "2026-09-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\shopfront-kit",
+   "size_gb": 0.02,
+   "file_count": 54,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/street_wear.py",
+    "tools/art-recipes/terrace-front.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\shops-wip-2026-10-03",
+   "size_gb": 0.02,
+   "file_count": 3,
+   "last_modified": "2026-10-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\south-quay-work",
+   "size_gb": 0.0,
+   "file_count": 24,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\steps-sources",
+   "size_gb": 0.0,
+   "file_count": 3,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/make_steps.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\sw-scratch",
+   "size_gb": 0.51,
+   "file_count": 1065,
+   "last_modified": "2026-10-24",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\terms-2026-10-03",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-10-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "CATALOGUE.md"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\texture-tools",
+   "size_gb": 1.06,
+   "file_count": 438,
+   "last_modified": "2026-11-12",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/import_crate_test.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tmp",
+   "size_gb": 0.24,
+   "file_count": 6605,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ingame_page.py",
+    "tools/long_session.py",
+    "tools/output_cap.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev",
+   "size_gb": 4.25,
+   "file_count": 14963,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "tools/fresh_gate.py",
+    "tools/kiln_to_game.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-tests-2026-11",
+   "size_gb": 0.92,
+   "file_count": 1170,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/method_line_check.py",
+    "tools/output_cap.py",
+    "tools/md-bridge/pleated_skirt.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\town-scratch",
+   "size_gb": 0.16,
+   "file_count": 1158,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/publish-talk-helper.ps1",
+    "tools/checkers/claim_label_trial.py",
+    "tools/checkers/gemini_training_data.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\trellis",
+   "size_gb": 0.0,
+   "file_count": 11,
+   "last_modified": "2026-09-24",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/content-gate.py",
+    "tools/meshgen/meshgen.py",
+    "tools/meshgen/probe-tools.ps1"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\uv",
+   "size_gb": 2.87,
+   "file_count": 65645,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\vctk-north",
+   "size_gb": 0.05,
+   "file_count": 246,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\vctk-young-men",
+   "size_gb": 0.04,
+   "file_count": 104,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\voice-env-export",
+   "size_gb": 2.1,
+   "file_count": 54706,
+   "last_modified": "2026-10-26",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\voice-graphs",
+   "size_gb": 1.32,
+   "file_count": 4,
+   "last_modified": "2026-10-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/voice-live/nano_step_graph.py",
+    "tools/voice-live/off_card.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\voice-portable",
+   "size_gb": 4.06,
+   "file_count": 17819,
+   "last_modified": "2026-11-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/retention.py",
+    "tools/voice-live/latency.py",
+    "tools/voice-live/make_portable.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\zen",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\blender",
+   "size_gb": 0.87,
+   "file_count": 6034,
+   "last_modified": "2026-10-27",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/candidate_page.py"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\cargo-target",
+   "size_gb": 19.78,
+   "file_count": 40446,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\chatterbox-nano",
+   "size_gb": 4.06,
+   "file_count": 20325,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/checkers/checker_beside_game.py",
+    "tools/checkers/checker_server.py"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\kiln-lanes",
+   "size_gb": 4.09,
+   "file_count": 17809,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\kiln-runs",
+   "size_gb": 0.29,
+   "file_count": 1814,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\LedgerTools\\mh-assemble",
+   "size_gb": 4.14,
+   "file_count": 1098,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/garments_shipped_check.py",
+    "tools/outside_only_check.py"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\mh-assemble-before-dressing-2026-09-24",
+   "size_gb": 0.34,
+   "file_count": 62,
+   "last_modified": "2026-09-24",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/outside_only_check.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\mocap-solve",
+   "size_gb": 2.67,
+   "file_count": 119,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/outside_only_check.py"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\python312",
+   "size_gb": 0.02,
+   "file_count": 34,
+   "last_modified": "2024-12-03",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/cleanup.py",
+    "tools/ai-tester/play.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\worktrees",
+   "size_gb": 0.06,
+   "file_count": 760,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/git-size-guard.py"
+   ]
+  },
+  {
+   "path": "C:\\LedgerTools\\zen",
+   "size_gb": 12.61,
+   "file_count": 3526,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\.claude",
+   "size_gb": 0.0,
+   "file_count": 21,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/candidate_page.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\.git",
+   "size_gb": 4.42,
+   "file_count": 7158,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/runner/reconnect.ps1",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\.githooks",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\.github",
+   "size_gb": 0.0,
+   "file_count": 3,
+   "last_modified": "2026-11-12",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/git-size-guard.py",
+    "tools/morning_pictures.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\content",
+   "size_gb": 0.0,
+   "file_count": 14,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approvals.py",
+    "tools/approval_page.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\game-design",
+   "size_gb": 0.04,
+   "file_count": 598,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/branch_sweep.py",
+    "tools/canon-gate.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger",
+   "size_gb": 1.74,
+   "file_count": 3686,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approval_page.py",
+    "tools/attribution-check.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger-imagegen",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/imagegen/1 MAKE THE PICTURES.bat",
+    "tools/imagegen/imagegen.py",
+    "tools/imagegen/README.md"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger-v2",
+   "size_gb": 0.0,
+   "file_count": 8,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/canon-gate.py",
+    "tools/ci-checks.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\legacy",
+   "size_gb": 0.11,
+   "file_count": 2367,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approvals.py",
+    "tools/attribution-check.py",
+    "tools/canon-gate.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\production",
+   "size_gb": 3.54,
+   "file_count": 28249,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approvals.py",
+    "tools/approval_page.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\research",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approval_page.py",
+    "tools/attribution-check.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\tools",
+   "size_gb": 0.06,
+   "file_count": 869,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/register_backup_task.ps1",
+    "tools/meshgen/blender/cmu_clips.py",
+    "tools/meshgen/blender/cmu_measure.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ue-probe",
+   "size_gb": 16.33,
+   "file_count": 9097,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/clip-from-frames.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\voice-candidates",
+   "size_gb": 0.01,
+   "file_count": 67,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\ambientcg",
+   "size_gb": 0.03,
+   "file_count": 12,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/bc1_pictures.py",
+    "tools/decal-ink.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\brick-flemish-n16-4",
+   "size_gb": 0.02,
+   "file_count": 6,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/flemish_tile.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\brick-flemish-photo-n16-4",
+   "size_gb": 0.03,
+   "file_count": 6,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/photo_flemish_tile.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\brick-flemish-photo-n16-5-grey",
+   "size_gb": 0.03,
+   "file_count": 6,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-2026-11-17",
+   "size_gb": 0.05,
+   "file_count": 38,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/meshgen/blender/cmu_clips.py",
+    "tools/meshgen/blender/cmu_measure.py",
+    "tools/ue/cmu_bone_dump.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-2026-11-17-cm",
+   "size_gb": 0.05,
+   "file_count": 27,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-2026-11-17-try1",
+   "size_gb": 0.05,
+   "file_count": 20,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/cmu_ue_retarget.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-2026-11-17-try2",
+   "size_gb": 0.05,
+   "file_count": 20,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-2026-11-18-hipcentre",
+   "size_gb": 0.05,
+   "file_count": 34,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\cmu-measure-gate-2026-11-17",
+   "size_gb": 0.0,
+   "file_count": 42,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\fab-check",
+   "size_gb": 0.4,
+   "file_count": 99,
+   "last_modified": "2026-10-22",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/outside_only_check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\fab-megascans",
+   "size_gb": 0.25,
+   "file_count": 61,
+   "last_modified": "2026-11-11",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\game-design",
+   "size_gb": 0.0,
+   "file_count": 4,
+   "last_modified": "2026-11-06",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/branch_sweep.py",
+    "tools/canon-gate.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\gasp",
+   "size_gb": 1.43,
+   "file_count": 1437,
+   "last_modified": "2026-10-25",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/outside_only_check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\glass-bake",
+   "size_gb": 0.07,
+   "file_count": 33,
+   "last_modified": "2026-11-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/glass_bake.py",
+    "tools/ue/import_glass_bake.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\kept-scripts",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\kiln-to-game",
+   "size_gb": 0.02,
+   "file_count": 13,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/kiln_to_game.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\ledger",
+   "size_gb": 0.15,
+   "file_count": 114,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approval_page.py",
+    "tools/attribution-check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\loomwright-darren",
+   "size_gb": 0.0,
+   "file_count": 7,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\m5-ron-trousers",
+   "size_gb": 0.0,
+   "file_count": 3,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\pipeline-caches",
+   "size_gb": 0.0,
+   "file_count": 5,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\pipeline-caches-old",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-10-23",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\polyhaven",
+   "size_gb": 0.02,
+   "file_count": 6,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/hdr-to-longlat.py",
+    "tools/photo_flemish_tile.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\game-inputs\\production",
+   "size_gb": 0.82,
+   "file_count": 344,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approvals.py",
+    "tools/approval_page.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\darren",
+   "size_gb": 0.13,
+   "file_count": 169,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\darren_belt_pager",
+   "size_gb": 0.01,
+   "file_count": 21,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/meshgen/blender/finish_trousers.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\darren_tshirt",
+   "size_gb": 0.01,
+   "file_count": 14,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\md_suit_jacket",
+   "size_gb": 0.03,
+   "file_count": 37,
+   "last_modified": "2026-10-02",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\ron",
+   "size_gb": 0.2,
+   "file_count": 215,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/kiln_to_game.py",
+    "tools/md-bridge/donkey_jacket.py",
+    "tools/md-bridge/work_trousers.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\ron_boots",
+   "size_gb": 0.05,
+   "file_count": 57,
+   "last_modified": "2026-10-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/meshgen/blender/carry_footwear.py",
+    "tools/meshgen/blender/model_footwear.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\ron_cc0_outfit",
+   "size_gb": 0.25,
+   "file_count": 134,
+   "last_modified": "2026-10-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\ron_plain_outfit",
+   "size_gb": 0.17,
+   "file_count": 125,
+   "last_modified": "2026-10-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\shared-masks",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-11-11",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/import_garments.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\sheila",
+   "size_gb": 0.43,
+   "file_count": 460,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/candidate_page.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\sheila_blouse",
+   "size_gb": 0.02,
+   "file_count": 14,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\sheila_handbag",
+   "size_gb": 0.01,
+   "file_count": 12,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\sheila_skirt",
+   "size_gb": 0.01,
+   "file_count": 11,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/md-bridge/pleated_skirt.py",
+    "tools/meshgen/blender/model_skirt.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\sheila_spectacles",
+   "size_gb": 0.01,
+   "file_count": 30,
+   "last_modified": "2026-09-30",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\suit_jacket_test",
+   "size_gb": 0.04,
+   "file_count": 63,
+   "last_modified": "2026-10-01",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ue/make_cloth_garment.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\garments\\tom",
+   "size_gb": 5.37,
+   "file_count": 3182,
+   "last_modified": "2026-11-11",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/md/pose_body.py",
+    "tools/md-bridge/donkey_jacket.py",
+    "tools/md-bridge/jeans.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\before",
+   "size_gb": 0.05,
+   "file_count": 13,
+   "last_modified": "2026-10-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\last-good",
+   "size_gb": 0.59,
+   "file_count": 152,
+   "last_modified": "2026-11-05",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/chandler_joinery_check.py",
+    ".claude/skills/gate/SKILL.md",
+    ".claude/skills/shopfront/SKILL.md"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\new",
+   "size_gb": 5.05,
+   "file_count": 5023,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/chandler_joinery_check.py",
+    "tools/flemish_tile.py",
+    "tools/office_look.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\page-check-2026-10-22",
+   "size_gb": 0.06,
+   "file_count": 195,
+   "last_modified": "2026-10-21",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\page-frames-2026-10-22",
+   "size_gb": 0.04,
+   "file_count": 8,
+   "last_modified": "2026-10-21",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\prev",
+   "size_gb": 0.01,
+   "file_count": 4,
+   "last_modified": "2026-10-08",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\gate\\work",
+   "size_gb": 0.23,
+   "file_count": 554,
+   "last_modified": "2026-11-09",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\md-jobs\\done",
+   "size_gb": 0.0,
+   "file_count": 81,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\md-jobs\\inbox",
+   "size_gb": 0.0,
+   "file_count": 0,
+   "last_modified": null,
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/md-bridge/ledger_md_bridge.py",
+    "tools/md-bridge/md_job.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\md-jobs\\out",
+   "size_gb": 0.0,
+   "file_count": 79,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress\\Config",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-23",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/attribution-check.py",
+    "tools/cleanup.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress\\Content",
+   "size_gb": 19.48,
+   "file_count": 3282,
+   "last_modified": "2026-11-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/approvals.py",
+    "tools/approval_page.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress\\DerivedDataCache",
+   "size_gb": 0.01,
+   "file_count": 24,
+   "last_modified": "2026-09-24",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/retention.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress\\Intermediate",
+   "size_gb": 0.13,
+   "file_count": 10,
+   "last_modified": "2026-11-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approvals.py",
+    "tools/attribution-check.py",
+    "tools/cleanup.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\mh-dress\\Saved",
+   "size_gb": 0.14,
+   "file_count": 323,
+   "last_modified": "2026-11-07",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\played-game\\Windows",
+   "size_gb": 6.03,
+   "file_count": 647,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py",
+    "tools/canon-gate.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\__pycache__",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-11-14",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/canon-gate.py",
+    "tools/outside_only_check.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\drapestudio",
+   "size_gb": 0.02,
+   "file_count": 141,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/kiln_to_game.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\judge",
+   "size_gb": 0.1,
+   "file_count": 327,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\kiln",
+   "size_gb": 0.78,
+   "file_count": 4341,
+   "last_modified": "2026-11-19",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/backup-to-dropbox.py",
+    "tools/md/pose_check.py",
+    "tools/md-bridge/donkey_jacket.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\kiln-bench-range",
+   "size_gb": 0.0,
+   "file_count": 146,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\loomwright",
+   "size_gb": 0.0,
+   "file_count": 133,
+   "last_modified": "2026-11-17",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/strand_skin_check.py",
+    "tools/ue/groom_on_darren.py",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\motionsmith",
+   "size_gb": 0.03,
+   "file_count": 269,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/tool-tests/hmc_ue_retarget.py",
+    "tools/tool-tests/measure_fbx_legs.py",
+    "tools/tool-tests/motionsmith_r1.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\reports",
+   "size_gb": 0.0,
+   "file_count": 110,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/body-proportions.py",
+    "tools/clip-from-frames.py",
+    "tools/container-setup.sh"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\runs",
+   "size_gb": 3.3,
+   "file_count": 8925,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/kiln_to_game.py",
+    "tools/scale_ladder.ps1",
+    "production/retention.json"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\vendor",
+   "size_gb": 0.02,
+   "file_count": 567,
+   "last_modified": "2026-11-13",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/body-proportions.py",
+    "tools/brand-verify.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Adversary",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-09-23",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Assets",
+   "size_gb": 1.56,
+   "file_count": 2829,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/api_batch.py",
+    "tools/attribution-check.py",
+    "tools/bc1_pictures.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\BackendCheck",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/lint-conditional-reach.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\BalanceLab",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-28",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/reach-check.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\BarkGen",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/body-proportions.py",
+    "tools/reach-check.sh",
+    "tools/shape-check.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\ClaimBench",
+   "size_gb": 0.01,
+   "file_count": 58,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/nightly_walk.py",
+    "tools/checkers/claim_label_trial.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\ConvoProbe",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\CoreTests",
+   "size_gb": 0.02,
+   "file_count": 53,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/body-proportions.py",
+    "tools/ci-checks.sh",
+    "tools/git-size-guard.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\DevTools",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-11-16",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/lane/prototype/src/bundle/part-01.js"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\GameCheck",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/container-setup.sh",
+    "tools/gamecheck.py",
+    "tools/slopcheck.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\LineTest",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/approval_page.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Packages",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/container-setup.sh",
+    "tools/fetch-onnxruntime.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\PerceptionGolden",
+   "size_gb": 0.01,
+   "file_count": 46,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/port-golden-check.sh",
+    "tools/port_own_lines.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\ProjectSettings",
+   "size_gb": 0.0,
+   "file_count": 1,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\ReachCheck",
+   "size_gb": 0.02,
+   "file_count": 60,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/lint-unreached.py",
+    "tools/reach-check.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Relay",
+   "size_gb": 0.0,
+   "file_count": 33,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\RouterFloor",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\SaveChaos",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\ShapeCheck",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/container-setup.sh",
+    "tools/gamecheck.py",
+    "tools/lint-conditional-reach.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\SimHarness",
+   "size_gb": 0.0,
+   "file_count": 28,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/reach-check.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Soak",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": []
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\SpeechBench",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/voice-live/bench-binding.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\StrangerTest",
+   "size_gb": 0.01,
+   "file_count": 46,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\TalkHelper",
+   "size_gb": 0.1,
+   "file_count": 257,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    "tools/first_token_sample.py",
+    "tools/launch_line_check.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\TalkTests",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/ci-checks.sh",
+    ".claude/skills/speech-bench/SKILL.md"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\Tier2Gen",
+   "size_gb": 0.0,
+   "file_count": 2,
+   "last_modified": "2026-09-29",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/reach-check.sh"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\TownReach",
+   "size_gb": 0.0,
+   "file_count": 26,
+   "last_modified": "2026-11-18",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/route_week_check.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-local\\ledger\\breaks",
+   "size_gb": 0.0,
+   "file_count": 22,
+   "last_modified": "2026-09-22",
+   "unreadable": 0,
+   "is_uproject_folder": false,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py",
+    "tools/clip-from-frames.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\Dropbox\\LEDGER backup\\metahuman",
+   "size_gb": 4.84,
+   "file_count": 1018,
+   "last_modified": "2026-09-25",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/approval_page.py",
+    "tools/attribution-check.py",
+    "tools/backup-to-dropbox.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-exec\\ue-probe",
+   "size_gb": 0.0,
+   "file_count": 57,
+   "last_modified": "2026-09-16",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/clip-from-frames.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-lab\\ue-probe",
+   "size_gb": 0.01,
+   "file_count": 112,
+   "last_modified": "2026-10-07",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/clip-from-frames.py"
+   ]
+  },
+  {
+   "path": "C:\\Users\\Jafar\\ledger-talk\\ue-probe",
+   "size_gb": 0.01,
+   "file_count": 112,
+   "last_modified": "2026-10-07",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/attribution-check.py",
+    "tools/cleanup.py",
+    "tools/clip-from-frames.py"
+   ]
+  },
+  {
+   "path": "F:\\LedgerTools\\tool-dev\\motionsmith\\ue_check",
+   "size_gb": 0.0,
+   "file_count": 6,
+   "last_modified": "2026-11-12",
+   "unreadable": 0,
+   "is_uproject_folder": true,
+   "referenced_by": [
+    "tools/tool-tests/hmc_ue_retarget.py"
+   ]
+  }
+ ]
+}
