@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-19 12:31 (the hourly run; the last session set its Stopped line at 12:26)
+**Started:** 2026-11-19 13:36 (the hourly run; the last session set its Stopped line at 12:52)
 
-**Row due:** by 13:24 (last row 12:24; page and advisor read 12:24: advisor 245 acked)
-**Stopped:** 2026-11-19 12:26 (at an item's end: advisor 245 recorded, history 240k near its point; nothing of mine running, lock free)
+**Row due:** by 13:38 (last row 12:38; page and advisor read 12:33: nothing new after advisor 245, no verdicts since 12:24)
+**Stopped:** 2026-11-19 12:52 (still above the week's ceiling: 45% against 44.1%, Fable 48%; page and advisor read 12:52, nothing new after advisor 245, no verdicts since 12:24; the reset item still open; started nothing, spends nothing while the ceiling rises)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 37% at 05:07 against 12.2% (+24.8), under the ceiling; Fable 45%, at its cap. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -34,7 +34,12 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (11:04 to about 11:40; DECISIONS 19 Nov 11:05, 11:2x)
+## Done this run (12:31 to 12:4x)
+- ACTION item fable-reset-2026-11-19 on his page (only_you his-setting; asks how many resets remain), published v163, NEEDS YOU sent. The page check now lets a third batch a day through only when the item names in 'blocks' what it stops (RULINGS 8 Nov), self-tested. Commit 77aa82bab pushed, ci 108/108. Row 12:38.
+- Fable brief for the layered fault written, ready to send as is: F:/LedgerTools/tool-dev/briefs/FABLE-LAYERED-2026-11-19.md (problem, both tries' reports, no conclusion, lane rules, report lines).
+- Read-back of his page already done today (19 Nov files present).
+
+## Done the run before (11:04 to 12:26)
 - Advisors 241-245 recorded and acked (DECISIONS 11:05-12:2x): canon's 'not' list to the pillar, docks, OPEN 3 the approved design; RULINGS points 3-7 of 241; Fable uncapped (245); waiting list 27 (driving) and 28 (241's order items). Commits pushed, ci 108/108.
 - Marvelous export: 52 projects (Tom's jacket v2-v25b, jumper j1-j3, jeans n2-n7, plus the kiln-md-compare run's 6) all have their drape OBJ beside them; none has FBX or pattern JSON. Bridge dead since 04:30; four Marvelous copies since 16 Nov, three not responding; start_bridge refuses (none named): try 1 of 2. ACTION item marvelous-copies-2026-11-19 on his page; NEEDS YOU sent. Row 11:16.
 - Kiln layered try 2 handed to one Opus diagnoser (lane lane-layered2, report F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERED2-2026-11-19.md). RESULT: failed (In flight).
@@ -43,7 +48,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Nothing running; heavy lock free (helper confirmed). Layered try 2 FAILED (296 to 302 through over 3 mm, worst 3.110, 289 s; interleave cuts pass-through to ~200 but ~100 stay and finish_layers adds more); patch at F:/LedgerTools/tool-dev/runs/kiln-layered2-2026-11-19/layered2.patch, not committed. Two Opus tries used: Fable next.
 
 ## Next, in order
-0. Verdicts and advisor reads (advisor after 11:45 +01:00; last ack 245). FIRST (advisor 245): the weekly ceiling now blocks Fable work (42% vs about 42.8%), so put one ACTION item on his page at once, only_you, one step 'Press a Fable reset now', with Fable's meter, the weekly reading and what waits on it; if the records (his page item fable-verdict-2026-11-10, week-shape.json) cannot tell how many resets are left and whether they expire, ask in that item. Record when he presses it in week-shape.json. Then Fable helpers at max (agent model fable, effort max) on the coat's last try, the trousers' legs, the blouse, the jacket over the jumper, a different stiffness method, the donkey jacket, R4, in parallel as the heavy lock allows; Opus/Sonnet for merges, gates, imports, checks. RULINGS: at most eight helpers this week. Allowance, pace_line (ceiling about pace+25; at 11:15: 42% vs 42.7%), a row within the hour of the last.
+0. Verdicts (UTC, after 2026-11-19T11:38) and advisor (after 12:28 +01:00; last ack 245). If he tapped Done on fable-reset-2026-11-19, record reset_at in production/week-shape.json and close the item. Then pace_line: under the ceiling (it rises about 1.1 point an hour), send the ready Fable brief (agent model fable, effort max) at once, then Fable helpers on the coat's last try, the trousers' legs, the blouse, a different stiffness method, the donkey jacket, R4, in parallel as the heavy lock allows; Opus/Sonnet for merges, gates, imports, checks. Still above it: start nothing new, write the row, stop as this run did. At most eight helpers this week.
 1. When he taps Done on marvelous-copies: md_job.py --start, then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports' section; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments (that run folder expires in 14 days). Then the reference drapes (Kiln v1 line 5: trousers 100 mm low, skirt pleats unpressed, nylon jacket held).
 2. Kiln: layered try 2 failed (Opus 2/2); its Fable brief gets the problem, both tries' numbers (KILN-LANE-LAYERED2 and LAYERTRACE reports), no conclusion.
 3. History rewrite: before it, decide the 4 unstaged files and the n09-12 line's two other homes; HELD for his word at the PC.
@@ -58,3 +63,4 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Tries used: Marvelous bridge start 1/2 (19 Nov, four copies, his item); cloud core install 2/2 (passed), its scipy fault 1/2 (passed); layered stage trace (no try); layered fix 2/2 (both failed 19 Nov: pass weighting, interleave; Fable next); trousers seat 1/2 (passed); trousers seated hem gap 0/2; coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
 - API spend: US$3.77 this month (8 and 16 Nov); none 17-18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).
+

@@ -1403,7 +1403,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-19 13:39, done (his tap 13:28): renewal cancelled; exports finish before 26 Nov"
   },
   {
    "id": "marvelous-copies-2026-11-19",
@@ -1440,7 +1441,8 @@
      "Not now"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-19 13:39, done (his tap 13:29): one Marvelous copy running since 13:29, responding; the bridge start follows"
   },
   {
    "id": "fable-reset-2026-11-19",
@@ -1476,8 +1478,48 @@
      "Not now"
     ]
    ],
+   "state": "done",
+   "blocks": "Every new Fable piece of Kiln v1 waits: the week is above its ceiling",
+   "closed": "2026-11-19 13:39, held, not pressed (his pick 13:31, advisor 246): burn Fable first; the item returns at about 98% of Fable's meter"
+  },
+  {
+   "id": "marvelous-box-2026-11-19",
+   "added": "2026-11-19 13:45",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The bridge's starter (13:43) found one copy, as wanted, but a small box of its own sits over the main window, so it stops by design; a scheduled run has no computer use, and Claude clicks nothing in a box it cannot read.",
+   "title": "Answer the small Marvelous box, then leave Marvelous open",
+   "text": "The Marvelous you opened at 13:29 shows a small box over its main window (about 392 by 174), which blocks the bridge that exports every garment before 26 Nov.",
+   "why": [
+    "The export of every Marvelous project to open files waits on it.",
+    "Every garment is already saved on F:, so nothing is lost."
+   ],
+   "steps": [
+    "Look at Marvelous Designer on the PC",
+    "Answer or close the small box in front of it (a sign-in box: sign in; anything else: OK or Close)",
+    "Leave Marvelous open, then tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the Marvelous bridge and the export of every Marvelous project before 26 Nov",
+   "recommendation": "Do it today when you are at the PC: about one minute.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
    "state": "open",
-   "blocks": "Every new Fable piece of Kiln v1 waits: the week is above its ceiling"
+   "closed": null
   }
  ]
 }

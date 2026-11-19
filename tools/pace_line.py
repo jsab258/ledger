@@ -96,10 +96,32 @@ def ceiling_at(now, shape=None):
     return line_at(now, shape) + double["margin"]
 
 
-def verdict(now, percent, shape=None):
+# UNTIL HIS FABLE RESET (advisor 246, his pick 13:31, 19 Nov): the ceiling counts only non-Fable use: the weekly
+# reading less Fable's share (week-shape.json "fable_share_per_pct", 0.46 points per Fable percent, corrected from
+# readings), and new work stops outright when the weekly reading itself reaches "hard_stop" (75). Active while
+# "fable_reset_pending" is true; set it false with the press time once he has pressed the reset.
+def non_fable(percent, fable, shape=None):
+    shape = read_shape() if shape is None else shape
+    if fable is None or not shape.get("fable_reset_pending"):
+        return None
+    return percent - float(shape.get("fable_share_per_pct", 0.46)) * fable
+
+
+def verdict(now, percent, shape=None, fable=None):
     line = line_at(now, shape)
     ahead = percent - line
     ceiling = ceiling_at(now, shape)
+    nf = non_fable(percent, fable, shape)
+    if ceiling is not None and nf is not None:
+        stop = float((read_shape() if shape is None else shape).get("hard_stop", 75))
+        if percent >= stop:
+            what = "HARD STOP: the weekly reading has reached %.0f%%, start nothing new" % stop
+        elif nf > ceiling:
+            what = "ABOVE THE CEILING (non-Fable): the lane stops first; still above at the next row, start nothing new"
+        else:
+            what = "under the ceiling (non-Fable): Fable at max on Kiln before the reset"
+        return ("pace: %.0f%% against the line's %.1f%%; non-Fable %.1f%% against the ceiling %.1f%%; hard stop at %.0f%%; %s"
+                % (percent, line, nf, ceiling, stop, what))
     if ceiling is not None:
         what = ("ABOVE THE CEILING: the lane stops first; still above at the next row, start nothing new"
                 if percent > ceiling else "under the ceiling: Kiln first, work within his rules")
@@ -167,6 +189,14 @@ def selftest():
         ("245: 95% warns", "WARN" in fable_verdict(95), True),
         ("245: 98% asks for the reset", "RESET ITEM NOW" in fable_verdict(98), True),
     ]
+    c246 = dict(c237, fable_reset_pending=True, fable_share_per_pct=0.46, hard_stop=75)
+    thu = datetime.datetime(2026, 11, 19, 13, 40)
+    cases += [
+        ("246: 47% with Fable 51 is under (non-Fable 23.5)", "under the ceiling (non-Fable)" in verdict(thu, 47, c246, 51), True),
+        ("246: 75% is a hard stop", "HARD STOP" in verdict(thu, 75, c246, 10), True),
+        ("246: without a Fable reading the plain ceiling", "ABOVE THE CEILING:" in verdict(thu, 47, c246), True),
+        ("246: after the press the plain ceiling", "ABOVE THE CEILING:" in verdict(thu, 47, dict(c246, fable_reset_pending=False), 51), True),
+    ]
     bad = [n for n, got, want in cases if got != want]
     print("pace_line selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
     return 1 if bad else 0
@@ -176,12 +206,19 @@ def main(a):
     if "--selftest" in a:
         return selftest()
     now = datetime.datetime.now()
-    print(verdict(now, float(a[0])))
+    fable = float(a[a.index("--fable") + 1]) if "--fable" in a else None
+    print(verdict(now, float(a[0]), fable=fable))
     state = {"at": now.strftime("%Y-%m-%d %H:%M"), "percent": float(a[0]), "ahead": round(float(a[0]) - line_at(now), 2)}
     ceiling = ceiling_at(now)
     if ceiling is not None:
         state["ceiling"] = round(ceiling, 2)
-        state["ahead"] = round(float(a[0]) - ceiling + 6.0, 2)
+        nf = non_fable(float(a[0]), fable)
+        measured = float(a[0]) if nf is None else nf
+        state["ahead"] = round(measured - ceiling + 6.0, 2)
+        if nf is not None:
+            state["non_fable"] = round(nf, 2)
+            if float(a[0]) >= float(read_shape().get("hard_stop", 75)):
+                state["ahead"] = 99.0
     if "--fable" in a:
         state["fable"] = float(a[a.index("--fable") + 1])
         state["fable_at"] = state["at"]
