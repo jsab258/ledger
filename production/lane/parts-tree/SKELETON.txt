@@ -1,0 +1,274 @@
+# Parts tree skeleton (ids and names). Working list for helpers; PARTS-TREE.json is the source of truth.
+0 | LEDGER | the whole game
+1 | What the player does with his hands | the verbs
+1.1 | Moving on foot | walking the town with the camera
+1.1.1 | Walk, run and turn | locomotion feel on keys and pad
+1.1.2 | On-foot camera follow | the street camera following Tom as he moves
+1.1.3 | Doors, stairs and thresholds | going through doors, up stairs, into rooms; no jump
+1.1.4 | Carrying | holding a load: suitcase, holdall, envelope, a box; how it shows and slows
+1.1.5 | Hiding and keeping out of sight | doorways, shadow, crouching or standing still to avoid being seen
+1.1.6 | Tailing on foot | following a person without being made
+1.2 | Driving | the cab and other cars
+1.2.1 | Car handling | acceleration, braking, steering, grip, sway: the feel
+1.2.2 | Car camera | chase camera behind the car, widening with speed
+1.2.3 | Getting in and out | doors, seats, a blocked door, passengers
+1.2.4 | Crashes, damage and unsticking | damage stages, never stuck, the firm fetches a dead car
+1.2.5 | Cars and people | knock-down that hurts and never kills; stop or drive off
+1.2.6 | Tailing and being tailed by car | following a car; a car in the mirror
+1.2.7 | Driving with passengers | fares and crew in the car, talk while driving
+1.3 | Fighting | fists, things to hand, weapons
+1.3.1 | Blows and contact | strike timing, hit-stop, camera close-in, sound layers
+1.3.2 | Reading and answering blows | block, dodge, readable wind-ups
+1.3.3 | Targeting without lock-on | the man the stick points at; warp to range
+1.3.4 | The lower rungs | stare, square up, threaten, shove or grab as acts
+1.3.5 | The street as a weapon | walls, railings, bonnets, kerbs, quay edge moves
+1.3.6 | Things to hand and carried weapons | chair, brick, lid, pipe; cosh, knuckleduster, knife, bat
+1.3.7 | Condition without bars | posture, breath, blood, limp, knock-out, the fall rule
+1.3.8 | Odds, crowds and nerve in a fight | two against one, spacing, a man who stands or gives way
+1.3.9 | How a fight ends | back off, run, down, police, people step in; Tom beaten comes round
+1.3.10 | Firearms | rare, late guns: drawing, firing, what a shot does
+1.4 | Being seen | the felt side of the town's eyes
+1.4.1 | Reading watchers | head turns, longer looks, figures at windows, cue before knowing
+1.4.2 | Light and dark as cover | readable light on Tom; dark doorways
+1.4.3 | Hearing his own noise | his noise mixed by its reach; a street that has noticed goes quiet
+1.4.4 | Give-aways and the coat | coat, blood, dirt, weapon in hand, running, the car
+1.4.5 | Reaching the witness | catching a witness on the walk to the phone box
+1.4.6 | Seeing assist | optional outline of watchers facing Tom, off by default
+1.5 | Chases | on foot and by car
+1.5.1 | Fleeing on foot | from a constable or men; losing them by breaking sight
+1.5.2 | Pursuing on foot | after a runner fare, a man who ran from a fight, a witness
+1.5.3 | Car chases | refused stop, hit-and-run, a rival's car
+1.5.4 | Pursuers | how constables, rivals and police cars chase and give up
+1.6 | Jobs with the hands | the work of the night and day
+1.6.1 | Getting in | key lent or copied, a back way, force; no lockpicking game
+1.6.2 | Searching and taking | rooms, drawers, safes, things; what is found
+1.6.3 | Lifts and the hot mark | taking goods, the owner never forgets, selling them on
+1.6.4 | Fronting up | collections and pressure in person, between talk and fists
+1.6.5 | Minding and waiting | standing at a door, sitting in the car, being seen at a shoulder
+1.6.6 | Getting ready | coat on, two things in the pockets, which car, who comes
+1.6.7 | Getting rid of things | weapons, blood washed, goods dumped, a body moved
+1.6.8 | Using the world | object interaction: phones, phone box, radio, doors, switches, tin
+1.7 | Running the crew | orders and the firm
+1.7.1 | Orders in the field | with me, wait here, watch that, fetch him, take this, drive, lean on him
+1.7.2 | Sending (the eight verbs) | D56's owed verbs through named men, Act II
+1.7.3 | The board | chalkboard: cars, drivers, ranks, shifts
+2 | The town under the hood | the engine
+2.1 | Routines and the living town | everyone's day
+2.1.1 | Schedules of named people | routines with places, caps and owners
+2.1.2 | The crowd's clock windows | unnamed people by hour, from 1990 research
+2.1.3 | Off-screen life | unseen people go on perceiving, remembering, talking
+2.1.4 | Weather and hour change who is out | rain empties the street; night thins it
+2.2 | Perception | the moat
+2.2.1 | Seven slots per act | precursor, draw, act, victim, actor, flight, aftermath
+2.2.2 | Identification ladder | someone, shape, mark, face, recognition by relationship
+2.2.3 | Sight by distance and light | 35, 18, 8 m; light scale
+2.2.4 | Sound reach | by act, hour and rain
+2.2.5 | Give-away rules | what makes a witness catch more
+2.3 | Memory | permanent per person
+2.3.1 | Per-person memory store | nothing wiped, survives save and skip
+2.3.2 | Witness certainty | a noise or a shape is suspicion, never "he did it"
+2.4 | Gossip | talk through meetings
+2.4.1 | Transmission | between people who know each other and meet, within 6 m, weaker each telling
+2.4.2 | Cooling by kind | hot for 1 to 7 game days by kind; a body never cools
+2.4.3 | Showing what people know | notice, watch, comment, avoid, refuse, confront
+2.4.4 | It comes back | said to his face within a game day in week one
+2.5 | Witnesses after a deed | what people do
+2.5.1 | The walk to tell | to a friend, a phone box or the station, seen going
+2.5.2 | Stopping a witness | talked round, paid, threatened, helped; a threat stops the police, never the talk
+2.5.3 | Crowd reaction to a deed | look, gather, drift back, quieter talk for an hour
+2.6 | Police and law | pressure, never the end
+2.6.1 | The beat constable | walks the street at night, challenges on suspicion
+2.6.2 | Challenge and search | stand and be searched, or run
+2.6.3 | Statements and arrest rule | named statement or officer seen
+2.6.4 | Custody as hours | hours by deed, duty solicitor, the street sees him go
+2.6.5 | DS Ellis and the four stages | asking round, investigating, manhunt, each with its sign
+2.6.6 | Armed response and the dial's police | armed officers slowly, armed cars at War
+2.7 | Money | two pots
+2.7.1 | Clean money and the fare book | the firm's clean record
+2.7.2 | Night money and the tin | money that cannot be explained
+2.7.3 | The wash | £10 plus 80% of fares driven; Sheila's warning
+2.7.4 | Rent and running costs | Friday rent, wages, cars
+2.7.5 | Purses, tills and shops | people pay what they hold; shop hours, restock, haggle, refuse
+2.7.6 | Fencing | Rita's back room about 0.4 of honest price
+2.7.7 | Flows ledger | every pound traced
+2.8 | Debts | Mickey's debt book
+2.8.1 | The five debtors | Darren, Wayne, Lee, Julie, Dennis, each a lesson
+2.8.2 | Partial payment and the book | pay what the purse holds; squeeze or let go is told
+2.9 | The outfit and the arrangement | the run to the landing
+2.9.1 | The asks | nights one, three, five, seven; the envelope
+2.9.2 | Keeping or ending the arrangement | what each brings
+2.10 | Rivals | three heads
+2.10.1 | Rival ladders | noticed, a visit, pressure, a threat, a sit-down
+2.10.2 | Rival eyes | each knows only what its people saw
+2.10.3 | Pressures and answers | pay, defy, counter
+2.10.4 | The Fixer | true reads, a meeting, one truce
+2.11 | Crew under the hood | men who know
+2.11.1 | Recruiting | meet a need or spend a hook
+2.11.2 | Nerve, loyalty and breaking | signs first, then talk
+2.11.3 | Crew fates | poached, frightened, arrested, killed
+2.12 | Position in the town | the rise under the hood
+2.12.1 | The name ladder | the new owner, Nowak, Tom, Tommy; Sheila's exception
+2.12.2 | Rung table | what he holds and what opens at each of four rungs
+2.12.3 | Access and soft keys | standing, dress, introduction, appointment
+2.12.4 | Greetings by regard | how the rise is heard in the street
+2.13 | The escalation dial | fists, shown, fired, war
+2.14 | Each person's temper | nerve, loyalty, readiness to talk per named person
+2.15 | The firm runs without him | drivers drive, the book fills, the firm's name
+2.16 | Death, bodies and the missing | killings permanent, a missing routine noticed
+3 | Story and people | what happens and who
+3.1 | The main story | one story, three acts
+3.1.1 | Act I, The Inheritance | week one, five threads, Sunday's question
+3.1.2 | Act II, The Rise and the Squeeze | seven weeks, state-fired beats, the collision, the sit-down
+3.1.3 | Act III, The Ledger Comes Due | the inspection week
+3.1.4 | The endings | two or three states, better and plainer ways
+3.1.5 | Ending signs and Tom's reading | every cost shows before it decides
+3.1.6 | Mickey's past | the real book, the warehouse fire, the street's version
+3.2 | The cast | named people
+3.2.1 | Principals | Sheila, Ron, Darren, Ada, June, Walsh, Alison, Danby, Ellis, Agar, Jensen, Cammack, Garbutt
+3.2.2 | The firm's people | Pauline, Kevin, Terry
+3.2.3 | The thirty regulars | cards as written
+3.2.4 | The crowd | unnamed townspeople, adults only
+3.2.5 | Someone worth being honest for | Alison or Danby
+3.3 | Side stories | 25 to 40 found on foot
+3.4 | Fares | few and chosen, each a person
+3.4.1 | Fare people | named passengers going where their routine goes
+3.4.2 | Wrinkles | talker, parcel, tail, runner, wait, hurry, face
+3.4.3 | Pauline and the radio | directions by landmark; the leak
+3.5 | Job content | authored jobs
+3.5.1 | Carries | the envelope and later carries
+3.5.2 | Collections | the five debts and later ones
+3.5.3 | Break-in sites | rooms by privacy and night rule
+3.5.4 | Tails, minding and lifts content | authored instances
+3.5.5 | Sit-downs | steps that decide an act
+3.6 | Dialogue | talk content and system
+3.6.1 | Live talk | every named character if possible; latency, brush-off
+3.6.2 | Claim check | a character says only what the simulation knows
+3.6.3 | Written street lines | own lines for regulars, shared lines, frequency
+3.6.4 | Crowd lines by situation | greetings by regard, bumping, rain, work
+3.6.5 | Decision lines | the game's own yes, no, keep talking; asked twice
+3.6.6 | Suggested lines | Tab, controller
+3.6.7 | AI notice and line report | before first talk; report any line
+4 | The place | Meridian's Hook and docks
+4.1 | The Hook's layout | the map as data
+4.1.1 | Quay Street | the built street, three sides
+4.1.2 | The rest of the Hook | streets, alleys, yards, back ways
+4.1.3 | Landmarks and signs | street signs, landmarks used for directions
+4.1.4 | The soft edge | west and north roads
+4.2 | The docks | the Hook's working waterfront
+4.2.1 | Ferry landing and quay | arrival, the landing
+4.2.2 | Old Basin, fish dock, cold stores | work places
+4.2.3 | Dock gate, customs, Harbour Board | the gate the rivals want
+4.3 | Interiors | rooms where jobs and stories go
+4.3.1 | Mickey's office and yard | the front room, radio, yard with two escapes
+4.3.2 | The flat above | Tom's home
+4.3.3 | Shops and workplaces | caff, Rita's back room, Hal's shop, pawn, launderette, chandler
+4.3.4 | Homes | Ada's front room, others
+4.3.5 | Iveson's yard and hut | the scrapyard
+4.3.6 | The chapel and hall | Father Walsh
+4.3.7 | The police station | custody
+4.3.8 | Hospital and Grace Rinaldi's kitchen | where a beaten Tom wakes
+4.4 | Props and street furniture | lamps, phone box, bins, railings
+4.5 | Traffic and parked cars | AI drivers, always brake for people
+4.6 | Vehicles | the firm's cabs, period cars, police cars, vans, all fictional
+4.7 | Day and night | the clock's light
+4.8 | Weather | dry overcast, drizzle, rain; one wetness value
+4.9 | 1990 detail | signage, posters, brands bible, CCTV, phone boxes
+4.10 | Pubs without drink and the closed school | places with no drink and no children
+5 | How it looks and sounds | presentation
+5.1 | Characters | people on screen
+5.1.1 | Faces | MetaHuman faces from casting sheets
+5.1.2 | Bodies | body types
+5.1.3 | Hair | strands
+5.1.4 | Clothes | Kiln garments, outfits, the rise in clothes
+5.1.5 | Crowd variety | many people, no repeats noticed
+5.2 | Animation | movement
+5.2.1 | Locomotion | motion matching walk and run
+5.2.2 | Fight animation | blows, reactions, falls
+5.2.3 | Interaction animation | doors, carrying, sitting, phones, car in and out
+5.2.4 | Faces and mouths | lip movement, expression, glances
+5.2.5 | Crowd and idle animation | work, wait, smoke, talk
+5.2.6 | Body language of knowing | posture first (D29)
+5.3 | Environment art | buildings and ground
+5.3.1 | Building kits | windows, doors, shopfronts, brick
+5.3.2 | Materials and grime | wear layer
+5.3.3 | Wet street | puddles, reflections
+5.4 | Lighting and picture | light and grade
+5.4.1 | Day exposure and sky | one stop darker, photographed sky
+5.4.2 | Night lighting | pools of lamp light, lit windows
+5.4.3 | Grade, grain and depth of field | presentation
+5.5 | Sound | the street heard
+5.5.1 | Footsteps and foley | surface and gait
+5.5.2 | Doors and impacts | creak, hit, latch; forced door
+5.5.3 | Street beds and states | three parts, four hour states
+5.5.4 | Rain and rooms | rain value, echo at doorways
+5.5.5 | Car sound | 1990 by sound
+5.5.6 | Fight sound | four layers
+5.5.7 | The mix | quietest lead voice sets the mix
+5.6 | Voices | spoken lines
+5.6.1 | Cast voices | chosen voices per character, his yes
+5.6.2 | Voice generation and watermark | local voice, watermark
+5.6.3 | Thinking sound and timing | glance before a live answer
+5.7 | Music | silence commonest, never combat music
+5.8 | Cameras and cut scenes | camera system and short scenes
+5.8.1 | Camera rig by state | street, run, room, talk, fight, car rows
+5.8.2 | Cut scenes | few, short, skippable
+5.9 | Effects | blood, rain, breath, smoke, glass
+6 | The interface and the Ledger | what is on screen
+6.1 | On screen in play | minimal screen
+6.1.1 | The prompt | names the person ahead and in view
+6.1.2 | Subtitles | only with audio, large
+6.1.3 | The belief line | a line low on screen when he believes something new
+6.1.4 | Light and sound cues | vignette by light value
+6.2 | The Ledger notebook | Tom's notebook
+6.2.1 | People | what he knows and believes they know
+6.2.2 | Day book | events in order
+6.2.3 | Open | jobs, debts, promises, appointments
+6.2.4 | Money in words | what he has and owes
+6.2.5 | Tom's reading | how things stand as he sees them
+6.3 | The paper map | only places he has been or been told of
+6.4 | Menus | title, pause, settings, save and load
+6.5 | Teaching the player | hints on first need, piece by piece
+6.6 | Controls | keyboard and mouse, pad, rebinding
+6.7 | Talk screen | typing, suggested lines, Leave
+7 | The game's shape | pacing and structure
+7.1 | The first hour | minute by minute
+7.2 | An evening | day, dusk, job, count, morning
+7.3 | A week | Act I's week
+7.4 | Acts II and III pacing | state-fired beats
+7.5 | The hour budget | activity shares
+7.6 | Tension and retellable moments | sources and counts
+7.7 | Rising in position, felt | what changes on the street
+7.8 | Saving | autosave after every deed
+7.9 | Failure without reload | beaten, arrested, refused
+7.10 | Difficulty as assists | no stats, assists only
+7.11 | Waiting and time skips | wait until, sleep
+7.12 | Always something to do | idle probe
+7.13 | The game clock | 45 real seconds a game hour
+7.14 | Variety | no set piece twice in 30 minutes
+8 | Technical | runs well on his PC
+8.1 | Performance | 60 fps at 3440x1440 on the RX 6700
+8.2 | Stability and saves that never break | crashes, corruption, soak
+8.3 | Settings | graphics, audio, controls
+8.4 | Accessibility | text, hearing, motor, cognition
+8.5 | Install and launch | shortcut, first run, start-up
+8.6 | Live talk service | server relay, key, allowance, spending stop, offline
+8.7 | Local models on the card | voice and fallback talk
+8.8 | Runtime content guards | content rule on live speech and crowd generation
+8.9 | Text and language | English only, text out of code
+9 | The machinery | how the game is made
+9.1 | Kiln | clothing pipeline and later modules
+9.2 | Art pipeline | MetaHuman, Blender kits, asset plan, catalogue
+9.3 | One simulation | C# Core, C++ port, browser build, goldens
+9.4 | Prototype to Unreal port | each system ported under the same tests
+9.5 | Testing and gates | bot, scripts, hands-on, panel, nightly walk, publish gate
+9.6 | The tuning table | one home for every number
+9.7 | Records and guards | doc caps, approvals, retention, git guards
+9.8 | Talk bench | model choice by moment
+9.9 | Feel measurement | measuring sheets for driving and the other verbs
+10 | Shipping | getting it out
+10.1 | Release build | packaged build, installer
+10.2 | Store, rating and disclosure | store page, age rating, AI disclosure
+10.3 | Friends' builds | one per phase from phase 4
+10.4 | Credits and notices | third-party notices, credits
+10.5 | Release testing | final passes
+10.6 | After release | patches, new districts

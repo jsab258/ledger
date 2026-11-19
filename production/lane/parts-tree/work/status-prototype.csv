@@ -1,0 +1,209 @@
+part_id,proto_status,evidence,review_themes
+1,built shallow,"rollup of 44 sub-parts: 16 built, 14 designed, 12 built shallow, 2 passes",
+1.1,built shallow,"rollup of 6 sub-parts: 2 built, 2 built shallow, 1 passes, 1 designed",
+1.1.1,passes,"src/player.js eased walk and run; test/gate6.mjs: full pace in 0.12 s, stop over 0.1 s, early E/F press counts, pad stick analogue (ER-INPUT-01); run blocked while carrying",round6 gate: feel not yet tried on a PC (hands-on incomplete)
+1.1.2,built,"src/player.js camera follow; gate6 camera: 48 views indoors clear, big props pull camera in front; NOT_DONE: camera does not yet give way to vans, lamp posts or people",round6 gate: camera hid Tom indoors (fixed); gate review: camera jerk in real time not measured
+1.1.3,built shallow,"src/player.js, scenes.js hotspots: doors by E, rooms are single-level sets with the fourth wall away, no jump; no stairs anywhere; gate6 every door blocked and clumsy shop-door walk pass",round6: E pressed twice after a talk types e into the talk box (hands-on minor)
+1.1.4,built,"src/jobs.js, work.js, player.js: suitcase, holdall, parcel carried; no running while carrying; carry under watch (test/watch2.mjs); no box or envelope",round5: holdall past the constable and Hal line most exciting (2 of 8)
+1.1.5,built shallow,"src/seeing.js standing noise 0.5 m, light sets sight (6 m in dark doorway); src/player.js has no crouch or hide key; no doorway cover mechanic",round1 to 4: no tense non-talk activity
+1.1.6,designed,"no tail verb in src; DESIGN s5 and BUILD-ORDER round 16b (tail, wait, hurry)",
+1.2,built shallow,"rollup of 7 sub-parts: 3 built shallow, 2 built, 1 passes, 1 designed",
+1.2.1,built,"src/drive.js arcade cab, top 14.5 m/s (32 mph); gate6 key steering eases in 0.28 s and centres in 0.5 s (ER-DRIVE-02); NOT_DONE: no tail swing, no lane change at 60 mph, key vs pad course not timed",round6 gate: his jerky keyboard steering (fixed round 6); driving study round 4 findings
+1.2.2,built shallow,"src/player.js camera behind cab (dist + 3.4), does not widen with speed; gate6 camera in front of scrap heap at the wheel passes",round6: cab hidden behind scrap heap (fixed)
+1.2.3,passes,"src/drive.js, player.js: F in and out, exitPoint; gate6: F with every door against a wall puts Tom on clear ground, F pressed early taken, out onto open ground; fare passenger steps in and out",round6 gate: never stranded; E-key double press minor
+1.2.4,built,"src/drive.js damage 1 to 4 stages, top speed -5% each, told in words, never stuck (gate6 six crashes, wedged, boxed in); NOT_DONE: cab never stops driving so no dead car and no firm fetch",round6 gate: damage never told (fixed); lamp posts ghost (fixed); stranded cab (fixed)
+1.2.5,built shallow,"src/drive.js run-down hurts by speed, alive, named on screen same frame (gate6 at 9, 15, 30 mph); NOT_DONE: no stop-or-drive-off choice (ER-DRIVE-05, round 16), KNOWN.json carries it",round6 gate: run-down not told and no choice (told fixed; choice open to round 16)
+1.2.6,designed,"no tail or mirror car in src/drive.js; DESIGN s5, BUILD-ORDER round 16b",
+1.2.7,built shallow,"src/fares.js passenger rides, radio fare docket; no talk while driving, no crew in car","round5: GTA player quit at 5 min (talk, waiting, little driving)"
+1.3,built,"rollup of 10 sub-parts: 8 built, 1 built shallow, 1 designed",
+1.3.1,built,"src/fight.js hit-stop 0.04/0.09/0.10 s, shake, timings in melee bands; test/melee3.mjs M1 M6 M9 pass, RESULTS round 3 table in band; NOT_DONE (CHANGELOG r3): camera close-in C10, four sound layers (audio.js hit/thud/block only)",round5: most exciting moment the Lee fight (5 of 8); X3 clunky combat 25%
+1.3.2,built,"src/fight.js wind-up 0.28/0.7 s, shouts before heavy, block (K / right mouse), dodge (Space); melee3 M1 and M6 check reels and gaps",round5: P4 skill-based melee 12% (KCD2 17.7%)
+1.3.3,built,"src/fight.js target() by angle off facing, 0.2 s hold; no lock-on; gate6 prompt check passes; no warp to range found",round5 sweep: prompt named Darren for a lad ahead (fixed round 6)
+1.3.4,built,"src/fight.js ladder stare, square up, threaten, shove as acts; test/town.mjs priest ladder stops at threat; melee4 face and corner pass",round5: debt ladder the same five times (systems player); round3: ladder never explained
+1.3.5,built shallow,"src/fight.js wall slam only (wallBehindWithinMetres 0.9); src/map.js railings drawn; NOT_DONE (CHANGELOG r3): kerb fall rule C7; no bonnets, quay-edge moves",
+1.3.6,built,"src/fight.js chair, brick, dustbin lid, wheel brace, cargo hook by G; cosh and flick knife bought from Wayne; breakage counts; test/melee4.mjs passes; no pipe, knuckleduster or bat",round4: things to hand built for retellable fights
+1.3.7,built,"src/render/rig.js posture layer (stoop, breath, guard arm, limp), optional health bar (state.js healthBar), down state, beaten Tom wakes at Rinaldi (work.js); no kerb fall rule",
+1.3.8,built,"src/fight.js face (0.06 nerve per watcher, max 0.24), corners, two attackers at most, allies (Lee backed by Cammack lads); melee3 M6, melee4 pass",round4: every debtor gave way (fixed round 5: Lee stands)
+1.3.9,built,"src/fight.js yield, flee, down, finish; src/police.js constable chase and arrest after violence; src/work.js beaten Tom comes round; test/town.mjs blows ended, beaten comes round; no onlookers stepping in except minder",round3/4: arrests lead nowhere visible; round5: fight with Lee then arrest most exciting (5 of 8)
+1.3.10,designed,"NOT_DONE/design notes: guns not built; DESIGN s7, BUILD-ORDER round 29",
+1.4,built shallow,"rollup of 6 sub-parts: 3 built shallow, 2 built, 1 designed",
+1.4.1,built,"src/seeing.js, rules.js watching: head turns, longer looks at known man, step back, glance while talking, figures at Ada window; Ledger notes only watchers Tom noticed (rules.noticing); test/eyes.mjs prints findings only",round2: sightings with no visible cost (systems player)
+1.4.2,built,"src/light.js one light field for picture and rules; seeing.js visRange (35 m under lamp, 6 m dark doorway); noticing.darkWindowHidesBeyondMetres; no screen cue for how lit Tom is",
+1.4.3,built shallow,"src/seeing.js noise radius by hour and rain; src/audio.js footsteps carry at night; no mix by reach, no street that goes quiet on noticing",
+1.4.4,built shallow,"src/seeing.js coat at night x0.4, cab x0.1 to 0.6, headlamps seen from range, running noise, weapon out noise; no blood or dirt",
+1.4.5,designed,src/police.js statements are nightly with no walk shown; DESIGN s2 and BUILD-ORDER round 9 and 13,round2/3: arrests and sightings with no visible cost
+1.4.6,built shallow,"src/ui.js, settings eyes (""Show the town eyes (testing only)""): marks over watchers, off by default; not a player assist as designed",
+1.5,designed,"rollup of 4 sub-parts: 2 designed, 1 built, 1 built shallow",
+1.5.1,built,"src/police.js constable chase (3.3 m/s, loses him after 7 s unseen), src/jobs.js watchStep chase; test/watch2.mjs chase after escape passes",round5: pursuit 0 in the hour (playtester record); round1: no pursuit
+1.5.2,designed,no verb for Tom pursuing; BUILD-ORDER round 8 (the runner wrinkle) and 16,"round2/3/4: nothing kicks off, pursuit 0"
+1.5.3,designed,"no car chase in src/drive.js; BUILD-ORDER round 16 (hit and run, chase)",
+1.5.4,built shallow,"src/police.js constable and DS Ellis seek Tom on foot; no rival cars, no police cars chasing",
+1.6,designed,"rollup of 8 sub-parts: 5 designed, 2 built shallow, 1 built",
+1.6.1,designed,"no break-in verb; night jobs only knock at drop doors (src/jobs.js); DESIGN s4, BUILD-ORDER round 12",round5 candidate (a): a break-in with a risk of being seen
+1.6.2,designed,"no search or take verb for Tom; only the constable searches him; DESIGN s4, round 12",
+1.6.3,designed,"no lifts or hot goods; DESIGN s4, round 12",
+1.6.4,built,"src/fight.js frontUp (Q), src/scenes.js collect(), five debts; test/town.mjs yard lad blows and debt settled; melee4 face and corner",round5: debt ladder same five times; Lee stands (fixed r5)
+1.6.5,designed,no minding or waiting job; only waiting for a fare or the ferry (src/work.js rest); DESIGN s4 and round 16b,"round5: waiting 41% (the playtester idling, not play)"
+1.6.6,built shallow,"src/player.js coat toggle (C), Mickey coat taken from hook; no pockets, no choice of car or company",
+1.6.7,designed,"nothing disposes of weapons, goods, blood or bodies; DESIGN s6 and s7 death; BUILD-ORDER round 27",
+1.6.8,built shallow,"src/scenes.js hotspots (E): doors, coat hook, photograph, back door, cot, bed; radio in cab; phone box drawn but not used; no switches or tin as objects",round6: to-do still says Find Mickey inside it (hands-on minor)
+1.7,designed,rollup of 3 sub-parts: 3 designed,
+1.7.1,designed,"no crew orders in src; cast.js only has story lines; DESIGN s12, BUILD-ORDER round 21",
+1.7.2,designed,"no owed verbs; DESIGN s12, BUILD-ORDER rounds 26 and 27",
+1.7.3,designed,"no board; Kevin and Terry only have schedules; DESIGN s12, BUILD-ORDER round 22",
+2,built shallow,"rollup of 50 sub-parts: 20 built shallow, 17 built, 11 designed, 2 passes",
+2.1,built shallow,"rollup of 4 sub-parts: 2 built, 2 built shallow",
+2.1.1,built,"src/cast.js and rules.js schedules for 28 named people; test/arrivals.mjs no walk given up over 26 h (Tom away and at rank), nights.mjs; no caps or owners on places; NOT_DONE 1: only holds with Tom at the rank",round5: P3 living world 50% praised (KCD2 24.5%); X15 hollow world 25%
+2.1.2,built shallow,"src/rules.js crowd walkers by hour (3, 9, 16, 10, 5) and 3 lads; not the 1990 research windows",
+2.1.3,built,"src/work.js advanceTo and clock.js: hidden world keeps perceiving, gossiping, walking (paceOutOfHisSight x3.2); same_week golden and arrivals pass",
+2.1.4,built shallow,hour thins crowd (rules.crowd) but nothing in routines.js reads rain or weather; shops have hours (rules.shops),
+2.2,built shallow,"rollup of 5 sub-parts: 3 built shallow, 2 built",
+2.2.1,built shallow,"src/events.js one event per act with witnesses; 53 act kinds in kinds.js; no seven slots (precursor, victim, flight, aftermath)",PROTOTYPE-VS-DESIGN row 12: prototype ladder differs from the Core
+2.2.2,built shallow,"src/events.js RANK man, coat, cab, owner, tom; face score 0.36 names him; not the Core five rungs (VS-DESIGN row 12)",
+2.2.3,built,"src/seeing.js sight 4 m plus 44 m by light, rain and mist cuts, 120 degree field; src/light.js; python tests live checks; ranges differ from Core 35/18/8 m (VS-DESIGN row 12)",
+2.2.4,built,"src/seeing.js noiseRadius by act, hour (x0.5 noon to x2 small hours) and rain (-60%)",
+2.2.5,built shallow,"src/seeing.js coat, cab, headlamps, running, weapon noise; no blood, dirt, weapon in hand sighted",
+2.3,built,"rollup of 2 sub-parts: 1 passes, 1 built",
+2.3.1,passes,"src/events.js, saving.js mind.mem kept per person, log trimmed but memory not; test/same_week.mjs part for part, town.mjs save loads back same week, oldsave.mjs",
+2.3.2,built,"src/events.js memory sure value, who: man, coat, cab; stranger can join the dots later; statements need sure >= 0.55",
+2.4,built,"rollup of 4 sub-parts: 3 built, 1 built shallow",
+2.4.1,built,"src/gossip.js tells within 4.8 m street / 8 m indoors, x0.8 sure each telling, any two awake named people (Core: 6 m, friendship ties only; VS-DESIGN rows 3 to 5)",round5 Meridian line: gossip table in CHANGELOG r2; decision 2 open
+2.4.2,built shallow,src/gossip.js heat halves in about 20 game hours; kinds.js forever flag for a killing; not 1 to 7 days by kind,VS-DESIGN row 6
+2.4.3,built,"rules.watching (look, pause, step back, glance), gossip comebacks, talk refusals; Ledger notes only what Tom noticed",round2: sightings with no visible cost
+2.4.4,built,"src/scenes.js comebacks(), Tuesday forced telling so day 2 has a line; week.mjs checks something said to his face",round1 design: comes back by day 2
+2.5,built shallow,"rollup of 3 sub-parts: 2 built shallow, 1 built",
+2.5.1,built shallow,"src/police.js nightly statements, src/gossip.js passers-by carry what they saw to a named person within 3.2 m; no walk to a phone box or station shown",round3/4: arrests lead nowhere visible
+2.5.2,built shallow,src/talk.js threaten and bribe intents work on a person; statement rule needs not paid and not frightened; no timed reach before they tell,
+2.5.3,built,"src/fight.js onlookers within 20 m stare or cower, some shout; src/gossip.js; no hour of quieter talk afterwards",
+2.6,built shallow,"rollup of 6 sub-parts: 3 built shallow, 2 built, 1 designed",
+2.6.1,built shallow,src/jobs.js watchStep: constable beat only during the carry; PC Ibbotson has a schedule; not a general night beat,round5: holdall past the constable most exciting (2 of 8)
+2.6.2,built,"src/jobs.js challenge at 16 m, search within 2.2 m, chase if Tom moves; test/watch2.mjs challenge and chase pass",
+2.6.3,built,"src/police.js statements(): saw, named, sure >= 0.55, not afraid, not paid, not cooled; python test live 5.03 who never makes a statement; town.mjs statement given and constable came",round3/4: arrest without consequence
+2.6.4,built shallow,"src/police.js held 4 h (5 violent, +2 ran), Agar bill 25 or 40 pounds; design is hours by deed, duty solicitor free, caution or charge (VS-DESIGN row 10); station is an outside building and a fade",round3/4: arrest without consequence; street does not see him go
+2.6.5,built shallow,"src/police.js ellisStep: DS Ellis walks Quay Street Thursday and Friday 10 to 13 when loudness >= 2.2, asks up to five; no four stages or signs; town.mjs Ellis comes and word gets about",
+2.6.6,designed,no armed police in src; BUILD-ORDER round 29,
+2.7,built shallow,"rollup of 7 sub-parts: 3 built, 3 built shallow, 1 designed",
+2.7.1,built,"src/money.js, fares.js: pocket and book, fare 80p + 0.9p/m; week.mjs money off the meter and through the book",
+2.7.2,built,"src/money.js tin, dirty earn; night jobs 60, 40 and 100 pounds into the tin; Friday tin ask (rules.asks)",
+2.7.3,built,"src/money.js, rules.money: hides 10.00 + 80% of fares, over it Sheila notices and regard -0.12 (VS-DESIGN row 16: prototype rule wins)",
+2.7.4,built shallow,"rules.money rent 18.00 Friday by six, late from 18:00; week.mjs rent paid; no wages, no running costs, no cars to pay for",
+2.7.5,built shallow,"rules.shops opening hours; scenes.js prices (chips, paper, cosh, knife); no purses, tills, restock or haggle (VS-DESIGN row 14)",
+2.7.6,designed,"no fence trade; Rita sells nothing back-room and buys nothing; Wayne sells cosh and knife only; DESIGN s9, BUILD-ORDER round 12",
+2.7.7,built shallow,"src/ledger.js moneySums, end_screen run report counts clean, tin, spent; no every-pound trace",
+2.8,built shallow,"rollup of 2 sub-parts: 1 built, 1 built shallow",
+2.8.1,built,"src/scenes.js five debts (Dennis 80, Wayne 30, Darren 22, Lee 15, Julie 9), own refusals, Lee stands with Cammack backing (test/talk5.mjs Lee ladder)",round5: debt ladder same five times (systems player); round2: same refusal line (fixed r3)
+2.8.2,built shallow,"src/scenes.js collect(), forgive(): pays full or refuses, half at rung 2; no purses or part payment (VS-DESIGN row 14); striking out is told",
+2.9,built shallow,"rollup of 2 sub-parts: 1 built, 1 built shallow",
+2.9.1,built,"src/scenes.js ask1 (Ron, the holdall), ask2 (second ask against Ada tea), Friday question; test/town.mjs second ask put and taken; not nights 1, 3, 5, 7 on a landing",round5: Ron sign-off lines repeat
+2.9.2,built shallow,"src/scenes.js endWeek(choice), end_screen.js: week ends on Sheila question and choice; no outfit and landing run",
+2.10,designed,"rollup of 4 sub-parts: 3 designed, 1 built shallow",
+2.10.1,built shallow,"src/scenes.js lads(): two of Cammack lads set on him at night when loud; no ladder of noticed, visit, pressure, threat, sit-down",
+2.10.2,designed,"no rival eyes; Cammack lads use the town rules only; DESIGN s13, BUILD-ORDER rounds 23 to 25",
+2.10.3,designed,"no pressures to pay, defy or counter; DESIGN s13, round 23 to 25",
+2.10.4,designed,"Garbutt is a name only (cast.js, overheard lines); no meeting; DESIGN s13, round 28",
+2.11,designed,rollup of 3 sub-parts: 3 designed,
+2.11.1,designed,"no recruiting; DESIGN s12, round 21",
+2.11.2,designed,"no crew nerve or loyalty; DESIGN s12, rounds 21 and 23",
+2.11.3,designed,"no crew fates; DESIGN s12, rounds 23 and 26",
+2.12,designed,"rollup of 4 sub-parts: 2 designed, 1 built, 1 built shallow",
+2.12.1,built,"src/gossip.js callName: new owner 0.2, Nowak 0.5, Tom 0.8, Tommy 1.05; street name = 40% of locals; Sheila says new management to the end",
+2.12.2,designed,"no rung table; DESIGN s14, BUILD-ORDER round 22",
+2.12.3,designed,"no standing, dress or appointment gating; only the coat; DESIGN s14",
+2.12.4,built shallow,"src/talk_lines.js greet() is by person and hour, not by regard; street name used in comebacks",
+2.13,designed,"ladder weapon-out rung is per fight; no town dial of fists, shown, fired, war; DESIGN s7, round 29",
+2.14,passes,"src/rules.js people: nerve, talk, discretion, upright, fear and liking per named person; python test live 6.08 traits and named people as found pass (the Core has all at 0.5, VS-DESIGN row 7, decision 3 open)",
+2.15,built shallow,"Kevin and Terry have schedules and drive; no book filling, no firm name effect; DESIGN s14, round 22",
+2.16,built shallow,"src/fight.js killing needs weapon, a man down and the V key; kinds.js killing never cools; no missing-routine noticed found",
+3,built shallow,"rollup of 30 sub-parts: 12 built shallow, 9 built, 9 designed",
+3.1,designed,"rollup of 6 sub-parts: 3 designed, 2 built shallow, 1 built",
+3.1.1,built,"src/scenes.js week Monday 15 to Friday 19 Oct 1990: arrival, Sheila tour, Ron ask, Darren debt, Ada tea, scrapyard, Friday rent and Sheila question; test/week.mjs 13 checks, same_week golden",round5: X1 thin or cliched story 62%; P1 story and characters 38%; X2 too short 75%
+3.1.2,designed,"no Act II in src; DESIGN s16, BUILD-ORDER stage C rounds 21 to 30",
+3.1.3,designed,"no Act III or inspection week; DESIGN s16, round 31",
+3.1.4,built shallow,"src/end_screen.js CHOICE by Sheila question, run report; no two or three ending states",
+3.1.5,designed,"end screen shows truth beside the Ledger as a playtest view only; no ending signs or Tom reading; DESIGN s16, round 32",
+3.1.6,built shallow,"DESIGN_NOTES: the fire (invented, not canon), each character holds one true thing; no real book or warehouse fire",
+3.2,built shallow,"rollup of 5 sub-parts: 3 built shallow, 1 built, 1 designed",
+3.2.1,built shallow,"src/cast.js: Sheila, Ron, Darren, Ada, June, Walsh, Alison, Ellis present; Agar, Jensen, Cammack, Garbutt names only; Danby not found",
+3.2.2,built,"src/cast.js Pauline, Kevin, Terry with schedules, radio and cab",
+3.2.3,built shallow,"src/cast.js about 17 further named people (Rita, Wayne, Brenda, Lee, Grace, Peter, Lily, Hal, Susan, Nora, Albert, Sylvia, Dennis, Norman, Julie, Shaun, ...) plus six shopkeepers who only bark; fewer than thirty",round5 sweep: shopkeepers bark only
+3.2.4,built shallow,"src/rules.js crowd: up to 16 walkers, 3 lads; round 5 sweep: several walkers (c2, c3, c4) with no line at all",
+3.2.5,designed,Alison exists but no honest-for verb; DESIGN s16,
+3.3,designed,"no side stories in src; DESIGN s4, round 19",round5: P12 choices 12% (KCD2 7.1%)
+3.4,built shallow,"src/fares.js random pickup and destination, three generic passengers, June one special fare","round5: waiting 41%, driving 5% of the hour (GTA player quit at 5 min)"
+3.4.1,built shallow,src/fares.js passengers pax0 to pax2 are generic; only June named; no passengers going where their routine goes,
+3.4.2,designed,"no wrinkles (talker, parcel, tail, runner, wait, hurry, face); BUILD-ORDER round 8 and 16b",round5 candidate (a): fares made into play with pressure
+3.4.3,built shallow,"src/fares.js radio docket with Pauline lines; no directions by landmark, no leak",
+3.5,built shallow,night jobs and debts only; see 3.5.x,
+3.5.1,built,"src/jobs.js Monday bag 60 pounds, Tuesday parcel 40, carry under watch; test/watch2.mjs",round5: holdall past the constable most exciting (2 of 8)
+3.5.2,built,src/scenes.js five debts plus Wednesday scrapyard 80 pounds; town.mjs yard debt settled,round5: same ladder five times
+3.5.3,designed,"no break-in sites; DESIGN s4, round 12",
+3.5.4,designed,"no tails, minding, lifts content; DESIGN s4, rounds 12 and 16b",
+3.5.5,designed,"no sit-down; Sheila Friday question is the only deciding scene; DESIGN s13 and s16, round 28",
+3.6,built,"src/talk.js, talk_lines.js; see 3.6.x","round5: X4 slow opening, too much talk 100%; P10 voice acting 38%; talk 22 to 25% of hour"
+3.6.1,built,src/talk.js live talk through window.claude sample with written fallback and a switch; test/talk.mjs uses a stand-in; NOT_DONE: live voices untested in sandbox,round5: P15 humour 38%; Ron sign-off in two talks (AI sceptic quit at 10 min)
+3.6.2,built shallow,src/talk.js: model voices a line from the character card with only facts that person holds; word filter drops content-rule breaks; no check of the line against the simulation,
+3.6.3,built,"src/talk_lines.js own lines and shared pool; test/talk5.mjs no shared line twice in a week, fixes1.mjs no repeat in one talk; NOT_DONE: closing line stays when lines run out",round5: free talk ends in same sign-off (6 of 8); rounds 2 to 4: repeats across people (8 of 8)
+3.6.4,built shallow,"src/talk_lines.js barks, greet by hour; crowd lines sparse; no greetings by regard",round5 sweep: several walkers silent
+3.6.5,built,"src/talk.js answer yes, no, keep; asked twice for the second ask (town.mjs); scenes.js choose()",
+3.6.6,built,"src/talk.js suggested lines by Tab, pad Y; layout.mjs; gate6 pad",round6: layout test fails at 1280 by 720 (subtitles under open talk box)
+3.6.7,built shallow,settings: live talk switch and Check the live voices button; AI note shown; no report of any line,"round5: AI sceptic note (required disclosure, expected friction)"
+6,built,"rollup of 15 sub-parts: 8 built, 4 built shallow, 2 designed, 1 passes",
+6.1,built shallow,"rollup of 4 sub-parts: 1 passes, 1 built shallow, 1 built, 1 designed",
+6.1.1,passes,"src/fight.js target(), ui.js prompt; test/gate6.mjs prompt takes stranger straight ahead 2.0 m over named man 21 degrees off, holds a choice 0.2 s, pad names its buttons",round5 sweep: prompt named someone else (fixed round 6); playtester since round 4
+6.1.2,built shallow,"src/ui.js sub(): subtitles ride above talk box; no voices in the prototype so shown always, not only with audio; size fixed",round6: layout fails at 1280 by 720 (subtitles under talk box)
+6.1.3,built,"src/ui.js Noted line (one in ten seconds, merged as Noted in the Ledger: n things), src/ledger.js notes only on belief; tests/layout.mjs, fixes1.mjs",round6 gate review: damage word merged into Noted n things (damage now told by sub)
+6.1.4,designed,no vignette or light cue on screen; DESIGN s17,
+6.2,built,"rollup: four parts People, Day book, Open, Money built; no Tom reading",
+6.2.1,built,"src/ledger_screen.js People (A to Z index, / jump), ledger.js: only what Tom believes, wrong belief struck through; test/ledger_rules.mjs Nobody saw never taken out",
+6.2.2,built,"src/ledger_screen.js Day book by day, events in order",
+6.2.3,built,"src/ledger_screen.js Open part: jobs, debts, promises (kind open)",
+6.2.4,built,"src/ledger_screen.js Money part in words, no bars (moneyNow, moneySums)",
+6.2.5,designed,"no Tom reading; end screen truth view only; DESIGN s10 and s16, round 32",
+6.3,built shallow,"src/ledger_screen.js paper map canvas The Hook draws the whole town (roads, buildings, lamps, labels); no gating by places visited or told",
+6.4,built,"src/main.js title, pause, settings, save and load, Sure press again on destructive buttons (gate6); NOT_DONE: pause buttons need the mouse",round6 gate: Continue at the wheel puts Tom at the door (known shortfall)
+6.5,built shallow,src/ui.js to-do objective line; settings hints flag exists but no hints on first need; hint on hesitation is round 7 (not built),round5: X4 slow opening; nobody explains the systems (expected friction)
+6.6,built shallow,"src/player.js keys and mouse, pad (round 6 gate6), touch; no rebinding; pad cannot type words; ER-INPUT-03 same-evening-by-each-device check not written",
+6.7,built,"src/talk.js, ui.js talk box with typing, Tab suggested lines, Leave; gate6 typing moves nothing and clock stands; talk.mjs, layout.mjs",round6: layout fails at 1280 by 720; E pressed twice after a talk types e (minor)
+7,built shallow,"rollup of 14 sub-parts: 8 built shallow, 2 built, 2 passes, 1 designed, 1 missing",
+7.1,built shallow,"newcomer first hour playable ferry to Mickey, Darren, Ron, Sheila, debts, night; first verb at 4.1 min vs 3 min design; round 7 restage not built","round5: X4 slow opening 100%; impatient player quit at 3 min, talk-heavy opening (Darren, Ron, Pauline, Sheila 9 lines)"
+7.2,built shallow,"day, dusk, job, count with Sheila, morning (week.mjs facts); empty middle of the hour; round 8 to 10 not built","round5: waiting 41%, longest empty 10.8 min"
+7.3,built,"Act I week Mon to Fri plays through; test/week.mjs 13 checks, same_week.mjs golden record; RESULTS 18 Nov",round5: X2 too short 75%
+7.4,designed,no Acts II or III; BUILD-ORDER stages C and D,
+7.5,built shallow,"playtest-round5/newcomer.md measures shares: waiting 41%, walking 26%, talking 25%, driving 5%, jobs 1%; targets waiting <10%, talk <30%, ~10 kinds per 30 min; 7 kinds per hour; round 6 mean waiting 44.0% (round 5 42.7%)","round5: waiting 41%, longest empty 10.8 min"
+7.6,built shallow,"newcomer.md 39 tense moments in 60 min (19.5 per 30), 28 of 39 one kind (seen doing it); target >= 12 from 4+ sources none over half; pursuit 0, escape 0",round5: nothing kicks off (rounds 2 to 4); retellable about 1 per hour vs target 1 in 30 min
+7.7,built shallow,"src/gossip.js name ladder, street calls him; greetings not by regard; nothing visibly changes with rise",
+7.8,built shallow,"src/saving.js saves on sleep, each beat and pause (not after every deed), browser and Claude account; test/town.mjs save loads same week, oldsave.mjs; ER-SAVE-02 Continue at wheel puts Tom at door",round6 review: Continue after save at the wheel puts Tom at the door
+7.9,passes,"src/work.js beaten Tom wakes at Rinaldi (8 pounds), src/police.js custody hours then released, debts refused; town.mjs beaten comes round and game goes on, custody lets him go",round3/4: arrest leads nowhere visible
+7.10,built shallow,"settings: health bar off, invert Y, touch, hints flag, town eyes; no difficulty assists beyond these",
+7.11,built,"src/work.js rest(): till evening, last ferry, sleep to morning; hold Z passes time; clock stops in talk","round5: waiting 41% (waiting here is idle play, not the skip)"
+7.12,built shallow,"src/scenes.js nudge() for day 2; fares by radio; but longest stretch with nothing new 10.8 min (target <= 5), 9.3 to 12.1 in round 6 runs; waiting 40 to 48%","round5: waiting 41%, longest empty 10.8 min"
+7.13,passes,"rules.time 45 real seconds per game hour; python test live 6.01 one game hour is 45 real seconds; VS-DESIGN row 1: Unreal runs 30 s, owner decision 1 open",
+7.14,missing,nothing enforces or measures no set piece twice in 30 minutes; playtester only counts 7 kinds per hour vs about 10 per 30,round5: debt ladder same five times; panel X5 boring 100%
+4.1.1,built,"src/map.js Quay Street about 240 m z -226 to 112 with buildings, signs, lamps, cobbles, drawn art pass (Quaternius people, Poly Haven textures); no shadow maps",
+4.1.2,built shallow,"src/map.js yards, Copper Row slice over the bridge, chapel yard, ferry landing, scrapyard, back exits; BOUNDS x -130 to 162, not the whole Hook",
+4.2.1,built,"src/map.js ferry landing, shelter, landing lamp, last ferry 22:15 (rules.rest), customs",
+4.2.2,built shallow,"src/map.js fish dock and fish shop room, smoke house; no Old Basin or cold stores",
+4.3.1,built,"src/map.js ROOMS mickeys with front room, radio, cot, partition, yard with two exits; gate6 camera indoors at Mickey's",round6: camera clear indoors (fixed)
+4.3.2,built shallow,"no flat above; Tom lodges in a room at Regent House (ROOMS boarding, bed) and the office cot",
+4.3.3,built,"src/map.js ROOMS caff, rita, coin (Hal), laund, chandler, fish, grocer, news, iron, tearoom, tangs: small sets; no pawn as separate shop",
+4.3.4,built shallow,src/map.js ROOMS ada (Ada's front room) only; no other homes (DESIGN_NOTES Not built),
+4.3.5,built,"src/map.js Iveson's yard, scrap heaps, hut (scrapcabin) and gate as street space; Wednesday collection; no hut interior",
+4.3.6,built shallow,src/map.js ROOMS chapel; no hall,
+4.3.7,built shallow,"src/map.js station is an exterior building; custody is a fade and text in police.js, no cells room",round3/4: arrest without consequence
+4.3.8,built shallow,src/work.js: Rinaldi kitchen is a fade scene with text and cost; no hospital and no kitchen room,
+4.5,built,"src/drive.js initTraffic, stepTraffic: cars and buses by hour, stop for Tom, cab, cars and people within 1.5 m, bus stops; no dedicated test found",
+4.7,built,"src/clock.js, light.js, rules.time: dusk and dawn, lamp pools, lit windows, night grade; 45 s per game hour",
+4.8,built,"src/clock.js weather: dry, drizzle, rain, heavy, mist with one wet value; street wets and dries; seeing, noise and audio read it",
+5.5.1,built shallow,"src/audio.js synthesised step sound, wetter on rain; no surface or gait variants, no recordings (BUILD-ORDER: street sound is Unreal work)",
+5.5.2,built shallow,"src/audio.js door, cardoor, thud, hit, block, crash synthesised; no forced door",
+5.5.3,built shallow,"src/audio.js river, gulls, ship horn, hum by night and quiet; no three-part bed with four hour states",
+5.5.4,built shallow,"src/audio.js rain gain by rain, reverb when inside; no echo at doorways",
+5.5.5,built shallow,src/audio.js engine oscillator by speed; no 1990 car character,
+5.5.6,built shallow,"src/audio.js hit, block, shout, thud; not four layers (CHANGELOG r3: not built)",round5: X3 clunky combat 25%
+5.5.7,designed,no voices aloud and no lead-voice mix; DESIGN s17,round5: P10 voice acting 38% (panel read live lines)
+5.8.1,built shallow,"src/player.js camera rows: street 6.4, room 5.2, talk and cab +3.4; no run, talk or fight rows as designed; wheel zoom",round6: camera indoors and props fixed; vans and people open
+8.1,built shallow,"DESIGN_NOTES Art pass frame time: 11.5 ms (87 fps) on RX 6700 High in Chrome at 2298 by 1252, 541 draw calls; 3440 by 1440 not measured; auto resolution scale; round 6 heavier frame",
+8.3,built shallow,"src/ui.js settingsHTML: quality low/medium/high, auto res, bloom, health bar, sensitivity, invert Y, touch, volume, score; no rebinding, no resolution list",
+8.4,built shallow,"subtitles always shown, invert Y, touch controls, no text size, hearing or cognition options",
+9.5,built,"tools/lane/gate: clumsy.py, invariants.py, HANDS-ON route, gate.py (pytest 21 pass), melee drills, playtester and panel; round 6 verdict not passed (layout fails 1280 by 720, hands-on incomplete)",GATE-REVIEW 19 Nov: two told-on-screen checks measured wrongly (fixed 4o-c); round6 finish: not ready to publish
+9.6,passes,"src/rules.js 1,313 numbers in 32 sections; npm run numbers fails on a new number; python test rules table is what the game reads; NOT_DONE 3: 1,053 zeros, ones, twos and map and camera numbers not in the table",

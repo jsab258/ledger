@@ -1,0 +1,274 @@
+part_id,unreal_status,evidence
+0,built shallow,Rollup of 10 children: 10 built shallow
+1,built shallow,"Rollup of 7 children: 4 designed, 3 built shallow"
+1.1,built shallow,"Rollup of 6 children: 3 designed, 1 built shallow, 1 built, 1 passes"
+1.1.1,passes,"Walk passed his eye 26 Oct and became the default (production/archive/DECISIONS-to-2026-11-09.md line 691; RULINGS People line); MotionMatchAnim.cpp, LocomotionAnim.cpp. Open: treads on the spot at Mickey's front, slide unmeasured since 22 Oct (FINDINGS.md); Ron's walk slides (phase1-exit EXIT-B 9 Nov)"
+1.1.2,built,"Street camera fixed from his pictures 28 Oct (RULINGS Look: 3.1 m, 86 degree lens; production/specs/camera.json). Open: camera enters office walls and Tom's head (phase1-exit EXIT-A 9 Nov NOT MET)"
+1.1.3,built shallow,"E opens Mickey's door (CrimeProbe.cpp door-leaf code, SliceCharacter RequestAct) and the office bench; no stairs (flat upstairs is a line of text, DayOne.h); no other doors reached"
+1.1.4,designed,"production/lane/synthesis/DESIGN.md s1 and s6 carry; only static props (Sheila's handbag fixed rigid to the hand, FINDINGS.md); no Tom carry verb in SliceCharacter keys; night carry exists only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.1.5,designed,production/lane/synthesis/DESIGN.md s2 and s6; no hide or crouch input in SliceCharacter.cpp; Core Sighting by light is ported but no player cover verb
+1.1.6,designed,"production/lane/synthesis/DESIGN.md s4; no tailing code in ue-probe; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.2,designed,Rollup of 7 children: 7 designed
+1.2.1,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for car handling; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.2,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for car camera; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.3,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for getting in and out; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.4,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for crashes and damage; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.5,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for cars and people; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.6,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for tailing by car; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.2.7,designed,"production/lane/synthesis/DESIGN.md s5 (the cab and the car); production/lane/FEEL-TARGETS and driving rounds 1-6 for passengers; no vehicle code in ue-probe beyond a parked-car placer (street-vehicles.json ""vehicles"" is empty); browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; progress.json: driving measured on the PC from 23 Nov"
+1.3,designed,Rollup of 10 children: 10 designed
+1.3.1,designed,"game-design/combat-design.md (his final-state design, RULINGS Combat 12 Oct); production/lane/synthesis/DESIGN.md s7; Combat.cs (460 lines) has no port header (R04); no punch or hit code in ue-probe; melee rounds 3-5 in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.2,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.3,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.4,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.5,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.6,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.7,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.8,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.9,designed,"combat-design.md and combat-spec.md, production/lane/synthesis/DESIGN.md s7, FEEL-TARGETS-MELEE-2026-11-18.md; Combat.cs not ported (R04); no fight code in ue-probe; fight lab is PLAN phase 3, not started; melee only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.3.10,designed,"combat-design.md (guns rare, late; RULINGS Combat 18 Nov); Arsenal.cs in Core, not ported; production/lane/synthesis/DESIGN.md s7; nothing in ue-probe"
+1.4,built shallow,"Rollup of 6 children: 4 designed, 2 built shallow"
+1.4.1,built shallow,"PersonAnim.h: head turns and glances at about 10 m, half-recognition glance (RULINGS D29); people turn toward the smash (friends-build MAP.md basic 16, ""in the game""); no figures at windows, no longer looks"
+1.4.2,designed,"production/lane/synthesis/DESIGN.md s2 and s6; Core LightModel.cs unported; LedgerTalkLight.h is the conversation light only, not cover; no dark-doorway cover logic in ue-probe"
+1.4.3,built shallow,Perception.h ports the hearing half incl. rain adding to ambient (Perception.cs 220-364); Silence.h makes the street go quiet after a threat; player-facing noise mixing and the street noticing are not built
+1.4.4,designed,"Core Coat.cs not ported; production/lane/synthesis/DESIGN.md s2; give-away constants only partly in StreetVoice.h Stance; no coat, blood or dirt state on Tom in ue-probe"
+1.4.5,designed,"Telling.h ports the telling side only; the witness walk is not drawn (FINDINGS.md: speakers are moved between spots in one frame, not walked); production/lane/synthesis/DESIGN.md s2 (the walk is the timer)"
+1.4.6,designed,"production/lane/synthesis/DESIGN.md s2 (optional outline, off by default); no code in ue-probe"
+1.5,designed,Rollup of 4 children: 4 designed
+1.5.1,designed,"production/lane/synthesis/DESIGN.md s5 and s8 (fleeing); the Flight slot is ported in Observation.h but no chase is drawn or driven; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.5.2,designed,"production/lane/synthesis/DESIGN.md s5 and s8 (pursuing); the Flight slot is ported in Observation.h but no chase is drawn or driven; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.5.3,designed,"production/lane/synthesis/DESIGN.md s5 and s8 (car chases); the Flight slot is ported in Observation.h but no chase is drawn or driven; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.5.4,designed,"production/lane/synthesis/DESIGN.md s5 and s8 (pursuers); the Flight slot is ported in Observation.h but no chase is drawn or driven; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.6,built shallow,"Rollup of 8 children: 7 designed, 1 built shallow"
+1.6.1,designed,"production/lane/synthesis/DESIGN.md s4; Rita's window smash is the only entry (E, CrimeProbe.cpp); no key, back way or force verbs; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.6.2,designed,production/lane/synthesis/DESIGN.md s4; Core has no port header for it; nothing in ue-probe
+1.6.3,designed,production/lane/synthesis/DESIGN.md s4 and s9; Core Economy.cs/Purses.cs unported; nothing in ue-probe
+1.6.4,designed,"production/lane/synthesis/DESIGN.md s4; fronting-up ladder built in round 4 of browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal; Press.cs/Negotiation.cs unported"
+1.6.5,designed,"production/lane/synthesis/DESIGN.md s4; Z wait and the office bench exist (Waiting.h) but no minding or door-standing job; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.6.6,designed,"production/lane/synthesis/DESIGN.md s4; no coat, pockets or car choice in ue-probe"
+1.6.7,designed,production/lane/synthesis/DESIGN.md s4; Harm.cs/Homicide.cs unported beyond Inquiry and SummonsEllis; nothing in ue-probe
+1.6.8,built shallow,"Three interactables via E: Rita's window, Mickey's door, the office bench (R04 summary; SliceCharacter.cpp 1414-1428); no phone, radio or phone-box use in play (Phones.cs unported)"
+1.7,designed,Rollup of 3 children: 3 designed
+1.7.1,designed,"production/lane/synthesis/DESIGN.md s12; Companionship.cs/Director.cs unported; no crew in the game; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.7.2,designed,"RULINGS D56 (eight verbs owed); production/lane/synthesis/DESIGN.md s12; unported; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+1.7.3,designed,production/lane/synthesis/DESIGN.md s12 (the board); no board in ue-probe; game-design specs only
+2,built shallow,"Rollup of 16 children: 7 designed, 7 built shallow, 2 built"
+2.1,built shallow,"Rollup of 4 children: 2 designed, 2 built"
+2.1.1,built,"Schedule.h, CastDay.h, TownWeek.h, LiveClock.h ported with golden rows (R04: 102,997 checks 0 failures, run 19 Nov); hook-cast.json holds 41 residents with hours. Only 13 figures stand in the street, 3 perceive (CATALOGUE.md disagreement 4); Soak runs 7 residents (R04 finding 8)"
+2.1.2,designed,production/research/precomputed-day; Core Occupancy.cs unported; no unnamed crowd clock in ue-probe; production/lane/synthesis/DESIGN.md s2
+2.1.3,built,TownRounds.h ports the hourly rounds so unseen people talk and remember (golden rows); CATALOGUE.md: 38 of 41 residents never drawn but simulated
+2.1.4,designed,"PLAN weather proof; production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md; no weather state drives attendance in ue-probe (friends-build MAP.md: one dry day, one wet night)"
+2.2,built shallow,"Rollup of 5 children: 1 built shallow, 4 built"
+2.2.1,built,"Observation.h, Observation.cs port (seven slots) with PerceptionGolden rows; ue-probe/perception-golden/ part-01 to 05 (about 103,000 lines)"
+2.2.2,built,"PlayerIdentity.h and Perception.h (silhouette 35 m, mark 18 m, recognition by familiarity); golden rows pass (R04)"
+2.2.3,built,"Perception.h constants 35 and 18 m, facing readable 18 m, light scale; golden rows pass (R04)"
+2.2.4,built,"Perception.h hearing half incl. AmbientRainAdds, speech as sound; golden rows pass (R04)"
+2.2.5,built shallow,Give-aways partly in Perception.h and StreetVoice.h Stance; Coat.cs unported; 11 of 30 planted one-line breaks in the port fail no test (CATALOGUE.md)
+2.3,built,Rollup of 2 children: 2 built
+2.3.1,built,MemoryStore.h and TownSave.h/SaveCodec.h ported; golden rows plus SaveChaos pass (R04); packaged save and reload verified 5 Oct (friends-build MAP.md basic 20)
+2.3.2,built,"Suspicion.h, Suspecting.h, Observation.h ported with golden rows; the packaged encounter regression for the witness fails on about 4 nights in 10 (R04 finding 1)"
+2.4,built shallow,"Rollup of 4 children: 1 built shallow, 3 built"
+2.4.1,built,"Gossip.h (+GossipFuzz.h; 650,000 random runs found no C#/C++ difference, CATALOGUE.md); packaged regression ""and-his-mate"" second hop fails 23 of 57 nightly runs since 28 Oct (R04 finding 1)"
+2.4.2,built,GossipMill::Age in Gossip.h with golden rows; hot days by kind from the Core
+2.4.3,built shallow,"StreetVoice.h Recognition/RegardFor, PersonAnim glances, OwnLines.h; notice, comment and glance shown; avoid, refuse, confront not shown (Reaction.h ports the arrest section only); FINDINGS.md: nothing in the game reads the port's suspicion yet"
+2.4.4,built,StreetVoice.h Recognition banks say it to his face; golden rows pass; same packaged regression flaky (R04 finding 1)
+2.5,built shallow,Rollup of 3 children: 3 built shallow
+2.5.1,built shallow,"Telling.h ports who tells; the walk to tell is not drawn (FINDINGS.md: speakers moved in one frame, not walked; neighbours witness nothing)"
+2.5.2,built shallow,"Silence.h (threat talks a witness round, RULINGS 1 Oct) ported; TOWN.md brief 1 (N3) still open and not started; paying and helping a witness not built"
+2.5.3,built shallow,Reaction/Silence give a quieter hour; people turn to the smash (friends-build MAP.md basic 16); gather and drift back not built
+2.6,built shallow,"Rollup of 6 children: 2 designed, 2 built shallow, 2 built"
+2.6.1,built shallow,TownWeek.h/Waiting.h run the constable's beat and stop a wait for him; whether he is drawn walking is not evidenced (FINDINGS.md quay end lines)
+2.6.2,designed,"game-design/arrest-2026-09-29.md, police-asking-2026-09-29.md; no challenge or search code in Core or ue-probe (grep)"
+2.6.3,built,PoliceFile.h and Reaction.h (arrest section) ported with golden rows; FINDINGS.md: three police-file faults set aside for a detective crime the game lacks
+2.6.4,built,"Custody.cs ported inside PoliceFile.h (hours by offence, bail); the street seeing him go is not drawn"
+2.6.5,built shallow,"Homicide.cs Inquiry and SummonsEllis ported for asking round only; DS Ellis ""only a line on the screen"" (production/playtest/thirty-minutes-2026-10-03.md); investigating and manhunt stages not ported"
+2.6.6,designed,production/lane/synthesis/DESIGN.md s7 and s8; Arsenal.cs unported; no armed response in ue-probe
+2.7,designed,Rollup of 7 children: 7 designed
+2.7.1,designed,"Economy.cs, Wallet.cs in Core with CoreTests; production/lane/synthesis/DESIGN.md s9; no wallet or fare book in ue-probe (grep: no purse, economy or fare code)"
+2.7.2,designed,"Economy.cs; production/lane/synthesis/DESIGN.md s9; unported; money prototype only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.7.3,designed,Economy.cs (wash rule); production/lane/synthesis/DESIGN.md s9; unported
+2.7.4,designed,Economy.cs; production/lane/synthesis/DESIGN.md s9; unported
+2.7.5,designed,game-design/counterparty-purses-spec.md; Purses.cs; unported
+2.7.6,designed,production/lane/synthesis/DESIGN.md s9 (fencing); Economy.cs; unported
+2.7.7,designed,"Core flows ledger and RULINGS prototype line (Unreal ports money under the same tests, 18-19 Nov); nothing in ue-probe"
+2.8,designed,Rollup of 2 children: 2 designed
+2.8.1,designed,"Debts.cs (190 lines) in Core, unported (R04); production/lane/JULIE-DEBT-LEDGER-RULE-2026-11-18.md; debtors in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.8.2,designed,Debts.cs unported; counterparty-purses-spec.md; prototype ledger round 5
+2.9,built,Rollup of 2 children: 2 built
+2.9.1,built,"Arrangement.h ports Arrangement.cs and TheLanding.cs (asks on nights one, three, five, seven; envelope) with golden rows (Ask, AskStory, Landing)"
+2.9.2,built,"Arrangement.h: refuse, stay away and wind down end it (Ended, EndedWhy); golden rows; ""what each brings"" beyond the ask is not evidenced"
+2.10,designed,Rollup of 4 children: 4 designed
+2.10.1,designed,"Empire.cs (1,200 lines) and ActTwo.cs in Core, unported (R04); production/lane/synthesis/DESIGN.md s13; rivals only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.10.2,designed,"Empire.cs (1,200 lines) and ActTwo.cs in Core, unported (R04); production/lane/synthesis/DESIGN.md s13; rivals only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.10.3,designed,"Empire.cs (1,200 lines) and ActTwo.cs in Core, unported (R04); production/lane/synthesis/DESIGN.md s13; rivals only in browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.10.4,designed,the-fixer casting sheet approved (production/casting/the-fixer/SHEET.md.approval.json); production/lane/synthesis/DESIGN.md s13; no code in ue-probe
+2.11,designed,Rollup of 3 children: 3 designed
+2.11.1,designed,"production/lane/synthesis/DESIGN.md s12; Companionship.cs and Empire.cs unported; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.11.2,designed,"production/lane/synthesis/DESIGN.md s12; Companionship.cs and Empire.cs unported; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.11.3,designed,"production/lane/synthesis/DESIGN.md s12; Companionship.cs and Empire.cs unported; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+2.12,built shallow,"Rollup of 4 children: 2 designed, 1 built shallow, 1 built"
+2.12.1,built shallow,"StreetVoice.h greets ""the new owner""; PlayerIdentity.h holds the Nowak surname; the Tom and Tommy rungs and Sheila's exception are not evidenced in the port"
+2.12.2,designed,Empire.cs and Access.cs unported; production/lane/synthesis/DESIGN.md s14
+2.12.3,designed,Access.cs unported; production/lane/synthesis/DESIGN.md s14
+2.12.4,built,StreetVoice.h RegardFor and Recognition ported with golden rows; own street lines approved for three people (production/casting/ron-kirby/STREET-LINES.md.approval.json)
+2.13,designed,"Core has the dial in 11 files, none ported; production/lane/synthesis/DESIGN.md s7; RULINGS Combat 18 Nov"
+2.14,built shallow,"Character cards for 3 people only (production/cast/cards: lena, rocco, sam) used by StreetVoice stance; the 38 other residents have no card in the game; his story question on each person's temper is open (progress.json week)"
+2.15,designed,production/lane/synthesis/DESIGN.md s12 and s14; Operation.cs/Campaign.cs unported; progress.json prototype stage C
+2.16,designed,"Homicide.cs (564 lines) unported beyond the inquiry; RULINGS Combat (a fall can kill, rarely); production/lane/synthesis/DESIGN.md s7"
+3,built shallow,"Rollup of 6 children: 2 designed, 4 built shallow"
+3.1,built shallow,"Rollup of 6 children: 5 designed, 1 built shallow"
+3.1.1,built shallow,"FirstWeek.h, DayOne.h, FirstMoments.h, WeeksEnd.h ported; first hour approved (game-design/first-hour-2026-09-29.md.approval.json); the game has one deed and four verbs, 11 of 30 minutes empty (R04 finding 2)"
+3.1.2,designed,ActTwo.cs (Core) unported; game-design/story-outline-2026-09-28.md approved; production/lane/synthesis/DESIGN.md s16
+3.1.3,designed,ActThree.cs (648 lines) unported; story outline approved; production/lane/synthesis/DESIGN.md s16
+3.1.4,designed,"story outline approved; ActThree.cs holds five endings against RULINGS two or three (audit M8, question open); DESIGN s16"
+3.1.5,designed,game-design/ending-signs-2026-09-30.md; his 30 Sep answer not stored (audit M8); no signs in the game
+3.1.6,designed,game-design/warehouse-fire-2026-09-29.md approved; production/lane/synthesis; FINDINGS.md: Mickey's past disagrees with itself; no in-game read
+3.2,built shallow,"Rollup of 5 children: 1 missing, 3 designed, 1 built shallow"
+3.2.1,built shallow,"Three of 13 principals are in the game and speak (Ron, Sheila, Darren: MH_RoccoP2, MH_LenaS4, MH_SamC5); 10 principals have approved casting sheets as text only (CATALOGUE.md Approved; audit REVIEW-05)"
+3.2.2,designed,"Pauline, Kevin, Terry appear only in production/casting/regulars/REGULARS.md and game-design/side-stories-2026-11-08.md; no cards or bodies"
+3.2.3,designed,production/casting/regulars/REGULARS.md approved as written (REGULARS.md.approval.json); none cast or built in Unreal
+3.2.4,missing,"audit M17: crowd concept sheets never made, 38 of 41 residents never drawn; three placeholder Mixamo figures only (FINDINGS.md)"
+3.2.5,designed,Alison Sedman and Philip Danby sheets approved; the choice is a story question; no in-game character
+3.3,designed,game-design/side-stories-2026-11-08.md (25 to 40 found on foot); nothing built
+3.4,designed,Rollup of 3 children: 3 designed
+3.4.1,designed,"production/lane/synthesis/DESIGN.md s4; fares unported; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+3.4.2,designed,"production/lane/synthesis/DESIGN.md s4; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+3.4.3,designed,production/lane/synthesis/DESIGN.md s5 and s2 (the radio leak); Pauline has no sheet in play; no radio code in ue-probe
+3.5,built shallow,"Rollup of 5 children: 4 designed, 1 built shallow"
+3.5.1,built shallow,"The envelope carry is in Arrangement.h (Ron brings it, Tom takes it to the landing) as simulation; no carry verb in the game"
+3.5.2,designed,Debts.cs; production/lane/synthesis/DESIGN.md s4 and s9; unported
+3.5.3,designed,production/lane/synthesis/DESIGN.md s4; Rita's window is the one site; nothing else authored in Unreal
+3.5.4,designed,"production/lane/synthesis/DESIGN.md s4; browser prototype only (production/lane/LANE-LOG.md rounds 1-6), which counts as design for Unreal"
+3.5.5,designed,production/lane/synthesis/DESIGN.md s16 (sit-downs decide an act); unported
+3.6,built shallow,"Rollup of 7 children: 3 built shallow, 4 built"
+3.6.1,built shallow,"LedgerTalk.exe (the C# Core) ships with the game; three people talk (Ron, Sheila, Darren); median first speech 2.02 s against 2.0 s bar, 7 of 30 at 4 s or more (FINDINGS.md; production/research/voice-latency/IN-GAME-2026-11-02.md); R04: only three can be talked to"
+3.6.2,built,"ClaimCheck.cs, ResponseValidator.cs in the shipped talk program; ClaimBench/TalkTests exist; invented detail remains in 16 of 240 turns (7%) (FINDINGS.md); TOWN.md brief 1 (N3) open"
+3.6.3,built shallow,"OwnLines.h (generated by tools/port_own_lines.py) and StreetVoice.h; own lines approved for Ron, Darren, Sheila (own-lines-three yes 1 Oct); Walsh, June, Alison, Ada lines not evidenced in game"
+3.6.4,built shallow,StreetVoice.h shared banks incl. bumping and weather talk; greetings by regard built; the crowd to say them is missing
+3.6.5,built,Suggest.cs; Tom's written lines approved (RULINGS Talk 1 Oct); decision lines shown in the talk screen (CrimeProbe.cpp)
+3.6.6,built,"CrimeProbe.cpp ""Tab to write your own words""; LedgerSettings SuggestAlways; his answers suggest-written yes and ui-suggest-who pad-tab (approvals INDEX.md 1 Oct)"
+3.6.7,built,"F1 notice (RequestNotice) and R report (RequestReport) bound in SliceCharacter.cpp; AiNotice.cs in Core; friends-build MAP.md listed it ""not built"" on 5 Oct, so later work; no packaged proof read"
+4,built shallow,"Rollup of 10 children: 2 designed, 8 built shallow"
+4.1,built shallow,"Rollup of 4 children: 3 designed, 1 built"
+4.1.1,built,"Quay Street built, 48 m (RULINGS Look; production/specs/vignette-scene.json: east parade, west south, west north, chandler); composition accepted by him 3 Oct (proof-view steps.json 2.1); phase 2 exit (whole-street day and night walk) not passed; PS5-level gap list large (progress.json phase 2)"
+4.1.2,designed,production/art/atlas-01/data/atlas.json adopted 5 Oct; district plans; canon seven districts; nothing built beyond Quay Street and a south quay
+4.1.3,designed,tools/lane/street_signs.py (57 tests) and production/specs/brand-bible-v1.md; shop signs exist on fronts but no street-sign set in the game is evidenced
+4.1.4,designed,canon.md districts; atlas-01; the quay end shows plain brick walls (CATALOGUE.md disagreement 1); nothing built
+4.2,built shallow,"Rollup of 3 children: 2 designed, 1 built shallow"
+4.2.1,built shallow,"South quay scripted (tools/art-recipes/south-quay: road, quay, basin, jetty) and in the game, almost black at night (FINDINGS.md 30 Sep); the ferry landing as a place is not built (TheLanding.cs is simulation only)"
+4.2.2,designed,atlas-01 and canon; the south quay's basin only; fish dock and cold stores have 1 to 2 design mentions (game-design)
+4.2.3,designed,canon (Harbour Board); atlas-01; production/specs mentions; nothing built
+4.3,built shallow,"Rollup of 8 children: 6 designed, 2 built shallow"
+4.3.1,built shallow,"Mickey's office built from the room kit with real glass and props (production/art/mickeys-props, production/specs/mickeys-office.json); phase 1 exit A NOT MET: camera in walls, black frame, 1990 wear and scuffed counter not shown (EXIT-A 9 Nov); yard not evidenced"
+4.3.2,designed,"DayOne.h line only (""your flat's upstairs""); no room in the build (friends-build MAP.md: Mickey's office ""blockout only"" on 5 Oct, flat not mentioned)"
+4.3.3,built shallow,"Seven shopfronts with painted rooms behind glass passed their gates (production/audits/gate-ritas-front, gate-ironmonger, gate-newsagent, gate-tea-rooms, gate-grocer, gate-chandler, gate-launderette, gate-west-eaves); walkable shop interiors not built; Hal, caff, Rita's back room not built; fishmonger and empty unit not yet (RULINGS 8 Nov)"
+4.3.4,designed,Ada's tea is simulated (Arrangement/Waiting beats) but no room is built; production/specs/shop-interiors.json covers shops only
+4.3.5,designed,one mention in game-design/side-stories-2026-11-08.md; nothing built
+4.3.6,designed,six game-design mentions (chapel); Father Emil sheet approved; nothing built
+4.3.7,designed,production/lane/synthesis/DESIGN.md s8 mentions the station; Custody is simulated only; no room or spec found
+4.3.8,designed,"production/lane/synthesis/DESIGN.md s7 (death: comes round on the pavement, in Grace Rinaldi's kitchen or hospital); nothing built"
+4.4,built shallow,"19 props in ue-probe/Content/Ledger/Props (lamp posts, bins, barrier, cones, crates, posters, chimney); lamp-post-C passed its gate (production/audits/gate-lamp-post-C); only about 3 kinds beyond lamps; S-FURNITURE-BUILD-PLAN-2026-11-17.md plans about ten; phase 2 plan 33 to 53 h not done"
+4.5,designed,"tools/lane/traffic (reference model, 59 tests, goldens G1-G8), TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18.md; Traffic.cs in Core unported; no cars in play (street-vehicles.json empty; friends-build MAP.md ""No cars until convincing"")"
+4.6,built shallow,"Two hatchback glbs exist (production/assets/vehicles: hatch-bluegrey, hatch-navy) and SpawnVehicles can place them, but they are kept off the street; no cab, police car or van; n16-9 parked cars not started (NOW.md)"
+4.7,built shallow,"Day and night as two conditions in the playable street (RULINGS Look 7 Oct: states with transitions later, no moving sun); night pools of lamp light and lit windows built; game clock runs (LiveClock.h) but light does not move with it"
+4.8,built shallow,"One dry overcast day and one wet night exist as look states (production/specs/unreal-look.json wet_floor, water_level_day/night); no drizzle or rain state, no wetting or drying over time, no effect on crowd or sound (PLAN weather proof not done)"
+4.9,built shallow,"production/specs/brand-bible-v1.md, content/brands, brand-verify.py; shop signs, glass lettering, posters (SM_poster) built; no CCTV; KX100 phone box ruled to stay; coverage thin"
+4.10,designed,production/specs/the-pub-without-drink.md; nothing built
+5,built shallow,"Rollup of 9 children: 1 designed, 7 built shallow, 1 built"
+5.1,built shallow,"Rollup of 5 children: 1 missing, 4 built shallow"
+5.1.1,built shallow,"Four faces approved by him and frozen (Ron P2, Sheila S4, Darren S6, Tom L1: RULINGS Faces); about 4 of about 50 cast faces made (audit M17); Sheila's and Darren's fail their sheets (FINDINGS.md; audit M16)"
+5.1.2,built shallow,"Four bodies: MH_RoccoP2, MH_SamC5, MH_LenaS4 and Tom L1 (CLOTHES.md; F:\LedgerTools\bodies); no crowd bodies (audit M17)"
+5.1.3,built shallow,"LedgerHair.h sets colour only; Loomwright strand rounds on Darren drew curls but ""no hair has passed"" (progress.json bosses; RULINGS 3 Nov); Ron's hair dark not grey (EXIT-B)"
+5.1.4,built shallow,"Tom wears three Marvelous-made garments in the game; Ron and Darren have interim-approved jeans, jumpers and boots (8 Nov); Sheila and the rest in the white base layer; Kiln v1 0 of 6, no Kiln garment in game (NOW.md, progress.json week)"
+5.1.5,missing,No crowd figures; three placeholder Mixamo people out of period (FINDINGS.md; audit M2); crowd concept sheets never made (audit M17)
+5.2,built shallow,"Rollup of 6 children: 1 designed, 4 built shallow, 1 passes"
+5.2.1,passes,"Motion matching on Epic's sample passed his eye 26 Oct (RULINGS People; DECISIONS archive line 691); night walk 16 of 17 stages, 58.2 fps (progress.json Testing)"
+5.2.2,designed,"combat-design.md; FEEL-TARGETS-MELEE; no fight animation in ue-probe (grep: no punch, no strike)"
+5.2.3,built shallow,Sit and stand packaged with the face up (progress.json People in motion); head swings in the drop; Ron never sits down in exit review (EXIT-B 9 Nov); door swing built; no phone or car animation
+5.2.4,built shallow,"Live lines' mouths follow the voice's loudness (CrimeProbe.cpp MouthTick, RULINGS Voices 1 Oct); prepared lines via Epic's audio-driven mouths researched (production/research/lip-sync, metahuman-audio-driven-animation); Sheila's talking face faults researched 1 Oct; glances in PersonAnim.h"
+5.2.5,built shallow,"PersonAnim.h idle breaks over the loop (2 Nov); tester called speakers stiff; work, smoke and talk idles not built"
+5.2.6,built shallow,PersonAnim.h glance for a stranger and for half-recognition (D29 posture first) built; avoid and lean variants not evidenced
+5.3,built,Rollup of 3 children: 3 built
+5.3.1,built,"Shopfront kit, sash window, terrace carcass kit built (production/art/shopfront-kit, sash-window; tools/art-recipes) and seven fronts gated; ue-probe/Content/Ledger/Kit; ""approved building kit re-seeded"" is phase 2 (PLAN)"
+5.3.2,built,"Seeded wear layer and M_LedgerGrime built (VignetteShot.cpp, production/specs/kit-materials.json, kit-wear/lamp_post_C.json); Rita's wear met lightly (EXIT-A); audit: Mickey's wear not shown, walls clean and new (progress.json phase 2 gap list)"
+5.3.3,built,Wet ground as two layers passed at second try 29 Oct (NOTEBOOK.md); wet night street in the game; seam and icy near lane and wet road numbers still out (FINDINGS.md)
+5.4,built shallow,"Rollup of 3 children: 1 designed, 2 built"
+5.4.1,built,Exposure one stop darker kept (RULINGS 29 Oct); sky and haze pass narrowly in three fresh reviews (proof-view steps.json 2.2); hill haze still short (FINDINGS.md)
+5.4.2,built,Lamp pools (unreal-look.json lantern_*) and lit windows built; lamp-post-C and Rita's night window passed gates; south quay almost black (FINDINGS.md); progress.json: night gap medium
+5.4.3,designed,"RULINGS Look lines on grain and grade; audit M11 lists ""grain and grade"" as owed with no item; ue-probe turns grain, bloom and blur off in captures only (VignetteShot.cpp)"
+5.5,built shallow,"Rollup of 7 children: 4 designed, 2 built shallow, 1 unknown"
+5.5.1,built shallow,"Footsteps in time ""in the game"" (friends-build MAP.md basic 18, 5 Oct); production/research/footsteps; surface and gait variation not evidenced; only 1 traffic wav in production/assets/sounds"
+5.5.2,unknown,"Repository shows no door, latch or impact sound asset or code: production/assets/sounds holds only traffic-distant.wav; the smash sound is not traced"
+5.5.3,built shallow,ue-probe StreetSounds.cpp places positional beds and voices from production/specs/street-sounds.json (16 lines used); one distant-traffic bed; no hour states
+5.5.4,designed,production/lane/STREET-SOUND-SOURCES-AND-LISTENING-PLAN-2026-11-17.md; no rain or room-echo code; weather not built
+5.5.5,designed,production/lane/CAR-NOISE-ANCHORS-2026-11-18.md; no cars in game
+5.5.6,designed,FEEL-TARGETS-MELEE-2026-11-18.md; combat-design.md; no fight in game
+5.5.7,designed,Mixing.cs in Core (unported); street-sounds plan; no mix logic in ue-probe
+5.6,built shallow,"Rollup of 3 children: 2 built shallow, 1 built"
+5.6.1,built shallow,"Voices chosen with his yes for Ron p227, Sheila p267, Darren p286, Agar p226, dispatcher p280 (RULINGS 19 Nov); Danny, June, Walsh need a listening page; the rest not cast (audit M11)"
+5.6.2,built shallow,"Pocket local voice runs in the game (LedgerVoice.h seam); no watermark code in pocket-server.py against D50 (audit H13); Pocket outside the allowlist, consent risk his (RULINGS 19 Nov)"
+5.6.3,built,Thinking sounds for Ron and Darren approved (production/approvals/2026-09-28/thinking-*.wav.approval.json); glance before a live answer built; timing bar 2.0 s missed at 2.02 s (FINDINGS.md)
+5.7,designed,"Core MusicModel.cs; RULINGS silence commonest, no combat music; nothing in ue-probe"
+5.8,built shallow,"Rollup of 2 children: 1 designed, 1 built shallow"
+5.8.1,built shallow,"Street, talk (LedgerTalkLight, talk camera) and office cameras exist; no run, fight or car rows; office camera in walls (EXIT-A)"
+5.8.2,designed,RULINGS genre line (few short skippable); production/lane/synthesis/DESIGN.md s17; nothing built
+5.9,built shallow,"Broken window shows scattered glass and an empty frame, no crack (FINDINGS.md); chimney prop exists (SM_roll_top_chimney); no blood, rain, breath or smoke effects"
+6,built shallow,"Rollup of 7 children: 2 designed, 3 built shallow, 2 built"
+6.1,built shallow,"Rollup of 4 children: 2 designed, 2 built"
+6.1.1,built,"CrimeProbe.cpp PromptSet: ""T  talk to Sheila"" names the person near, kept off faces (2 Nov, 29 Oct fixes); friends-build MAP.md basic 8 ""partly"""
+6.1.2,built,"LedgerSettings.h subtitles, size 34 to 54 units, speaker names; LedgerPaper backing; a subtitle only with its audio (MAP.md ""in the game"")"
+6.1.3,designed,"RULINGS D12, D20, D37; no belief line in ue-probe (grep: no belief)"
+6.1.4,designed,Core ValuePanel.cs/LightModel.cs; DES s17; no vignette or cue code in ue-probe
+6.2,designed,Rollup of 5 children: 5 designed
+6.2.1,designed,"LedgerPause.cpp: ""Tom's notebook is not in this build yet""; screens drawn in production/design/ui/step2 and production/lane/synthesis/DESIGN.md s10; research/LEDGER-SCREEN-STUDY-2026-11-18.md (People)"
+6.2.2,designed,"LedgerPause.cpp: ""Tom's notebook is not in this build yet""; screens drawn in production/design/ui/step2 and production/lane/synthesis/DESIGN.md s10; research/LEDGER-SCREEN-STUDY-2026-11-18.md (Day book)"
+6.2.3,designed,"LedgerPause.cpp: ""Tom's notebook is not in this build yet""; screens drawn in production/design/ui/step2 and production/lane/synthesis/DESIGN.md s10; research/LEDGER-SCREEN-STUDY-2026-11-18.md (Open)"
+6.2.4,designed,"LedgerPause.cpp: ""Tom's notebook is not in this build yet""; screens drawn in production/design/ui/step2 and production/lane/synthesis/DESIGN.md s10; research/LEDGER-SCREEN-STUDY-2026-11-18.md (Money in words)"
+6.2.5,designed,"LedgerPause.cpp: ""Tom's notebook is not in this build yet""; screens drawn in production/design/ui/step2 and production/lane/synthesis/DESIGN.md s10; research/LEDGER-SCREEN-STUDY-2026-11-18.md (Tom's reading)"
+6.3,designed,production/lane/synthesis/DESIGN.md s17; atlas-01; no map screen in ue-probe
+6.4,built,"TitleScreen.cpp (New game, Continue, Picture, Quit), LedgerPause.cpp, LedgerSettings.cpp; Esc pause and resume on Shipping 5 Oct; Evening Paper style approved (ui-direction C, 1 Oct); phase 0 requirement 5 passed"
+6.5,built shallow,"Hints built (HintActed in CrimeProbe.cpp, handovers/6y-hints.md); friends-build MAP.md basic 7 hint per key ""partly"""
+6.6,built shallow,"Keyboard, mouse and pad bound (SliceCharacter.cpp, LedgerSettings Controls section); no rebinding (grep: none)"
+6.7,built,"Typed talk box, suggested lines and Tab built (CrimeProbe.cpp); first typed letter lands at the end and apostrophe opens the debugger in Development (FINDINGS.md)"
+7,built shallow,"Rollup of 14 children: 8 designed, 3 built shallow, 3 built"
+7.1,built shallow,"DayOne.h, FirstMoments.h ported; Sheila's walk-round gives a first purpose (MAP.md basic 6); thirty-minute run found 11 of 30 empty minutes (R04 finding 2); the approved first hour is not fully staged"
+7.2,designed,"game-design/first-hour-2026-09-29.md, day-one, production/lane/synthesis/DESIGN.md s6 and s15; no job, count or morning in the game (R04: days have nothing to do)"
+7.3,built shallow,"FirstWeek.h, WeeksEnd.h, TownWeek.h, Arrangement.h, Waiting.h simulate Act I's week; route-week test passes (ue-probe/tests/route-week-test.cpp); little to do in it for the player"
+7.4,designed,production/lane/synthesis/DESIGN.md s16; ActTwo.cs and ActThree.cs unported
+7.5,designed,canon.md pillar lines 160-163 (ten activities per thirty minutes); production/lane/synthesis/DESIGN.md s3; measured only in the prototype playtester
+7.6,designed,production/lane/synthesis/DESIGN.md s3; canon pillar; prototype panel counts only (audit H18)
+7.7,designed,production/lane/synthesis/DESIGN.md s14; canon; unported Empire.cs
+7.8,built,TownSave.h and SaveCodec.h; autosave and Continue verified on Shipping 5 Oct (MAP.md basic 20); SaveChaos passes (R04)
+7.9,built shallow,Arrest and custody as hours are ported (PoliceFile.h); beaten-comes-round and refused-by-the-street not built (DES s7)
+7.10,designed,RULINGS D33-34 (assists only); DES s17; a pad prompt and subtitle assists exist but no difficulty assists
+7.11,built,Waiting.h with Z in SliceCharacter.cpp; a wait stops for what the town has for him; golden rows
+7.12,designed,production/lane/synthesis/DESIGN.md s3; the idle probe lives in the prototype playtester only; nightly walk does not report empty minutes (R04 finding 2)
+7.13,built,"LiveClock.h and GameTime.h built: two game minutes per real second, 30 real seconds an hour, held when paused; the skeleton and design say 45 seconds, so the number needs checking (no record of a change)"
+7.14,designed,production/lane/synthesis/DESIGN.md s3; canon pillar; only measured in the prototype
+8,built shallow,"Rollup of 9 children: 5 built shallow, 4 built"
+8.1,built shallow,"Phase 1 exit D 9 Nov NOT MET: median and p99 met with voice (10.9-15.2 ms, p99 18.9-21.3 ms), card headroom and 6 GB line not met (walking 6,145 MB; peaks 6,523-8,716 MB); progress.json: night walk 58.2 fps, worst frame 22.37 ms"
+8.2,built,"SaveChaos, Soak (7 residents, not 41), CoreTests, PerceptionGolden pass in CI (R04); gossip regression flaky on 23 of 57 nights; main cloud check red 544 runs; 25 walks: 2 frames over 33.3 ms in 45,000"
+8.3,built,"LedgerSettings.cpp (Picture, Sound, Controls, Subtitles); tools/settings_check.py; title picks the level by benchmark; Low/Medium/High not all measured (MAP.md basic 4)"
+8.4,built shallow,"Subtitle size and speaker names, controller input, suggest-always built; no hearing, motor or cognition options beyond that (LedgerSettings.h), research/ui-design list unbuilt"
+8.5,built,"Shipping launch through the shortcut, first-run shader progress and picture choice, own talk program and voice (production/playtest/shipping-launch-2026-10-05.md; phase 0 exit req 5 passed 6 Oct); played copy is a Development build, UPDATE FROM CLAUDE shortcut no longer opens (FINDINGS.md)"
+8.6,built shallow,"ledger/Relay (Relay.cs), BudgetedClient.cs, evening spend cap kept across restart and refused at cap (evening-restart-2026-10-05.md); the server is ""when friends need it"" (RULINGS); deployment on the Hetzner server not evidenced"
+8.7,built shallow,Voice runs locally on the card (Pocket; LedgerVoice.h); local fallback talk model not built (RULINGS Talk: later); fast checker local model built then switched off (production/research/unit-costs)
+8.8,built,"ContentRule.cs, SafetyRule.cs, ContentWords.cs, ResponseValidator.cs ship in LedgerTalk.exe; tools/content-gate.py passes; gate never reads source strings and some leaks remain in simulation text (audit M6)"
+8.9,built shallow,Text out of code is partly kept: content/dialogue json exists but OwnLines.h and StreetVoice.h embed generated strings in C++; English only
+9,built shallow,"Rollup of 9 children: 2 designed, 5 built shallow, 2 built"
+9.1,built shallow,"Kiln v1 0 of 6; four garments drape in Kiln, none in the game; engine values replaced after a decompile finding; code on F: not in repo (NOW.md; audit REVIEW-06; MARVELOUS-RENEWAL-OPTIONS-2026-11-18.md)"
+9.2,built,"tools/art-recipes (shopfront-kit, sash-window, south-quay, mickeys-props), tools/ue stage and import scripts, tools/catalogue.py, production/research/asset-plan/SUMMARY.md; gated family samples pass; MetaHuman route works for four people"
+9.3,built shallow,"C# Core 140 files and 50,561 lines; C++ port 63 headers covering 27 Core files; 102,997 checks 0 failures; browser build matched 102,949 answers (progress.json); but three rulebooks exist, 11 of 30 planted breaks undetected, 21 disagreements (audit H20; CATALOGUE.md)"
+9.4,designed,"RULINGS 18-19 Nov (Unreal ports money, debts, jobs, fights, talk under the same tests); production/lane/SKELETON-FIRST-OPTIONS-2026-11-18.md; no system beyond the 27 modules ported yet"
+9.5,built shallow,"Nightly walk (tools/nightly_walk.py, route_walk.py, 17 stages) built but its reports stopped reaching git after 27 Oct (R04 finding 9); publish gate and driving gate built in the lane (tools/lane/gate, driving-gate; round 6 gate fails on layout at 1280x720); hands-on session not completed; StrangerTest never played (R04 finding 8)"
+9.6,built shallow,"Prototype LEDGER.rules holds 1,313 numbers in 32 sections (progress.json prototype note); Unreal numbers sit in specs/*.json (unreal-look.json, camera.json, asset-budgets.json) with no single table"
+9.7,built,"tools/doc-caps.py, approvals.py, retention.py, git-size-guard.py, push_guard.py, order_ledger.py in tools/ci-checks.sh; phase 0 exit passed 6 Oct; audit H9: ""enforced"" rulings mostly a phrase check; H10: cloud check red"
+9.8,built shallow,"ledger/SpeechBench, ClaimBench, RouterFloor, BudgetedClient built; n16-6 bake-off: second provider client built and reviewed 16 Nov, Sonnet leg next (NOW.md); TALK-BAKEOFF-CANDIDATES-2026-11-18.md"
+9.9,designed,"production/lane/DRIVING-MEASUREMENT-METHOD-2026-11-19.md, FEEL-TARGETS-DRIVING and -MELEE; tools/driving_feel_check.py; measuring starts 23 Nov (progress.json prototype beside)"
+10,built shallow,"Rollup of 6 children: 1 missing, 3 designed, 2 built shallow"
+10.1,built shallow,"Packaged Shipping launch worked once 5 Oct; the nightly package is ""-clientconfig=Development"" and no Shipping build path exists in tools/ (R04 finding 8); installer not evidenced"
+10.2,designed,production/lane/G4-RATING-AND-STORE-2026-11-17.md; Steam AI disclosure approved (production/store/steam-ai-disclosure.md.approval.json); no store page
+10.3,designed,production/friends-build/MAP.md; G1-FRIENDS-PLAYTEST-PLAN-2026-11-17.md; tools/friends/evening.ps1 built and tested 4-5 Oct; builds start from phase 4 (RULINGS)
+10.4,built shallow,"LedgerCredits.cpp credits page built; THIRD-PARTY.md; production/specs/credits.json unchanged since 30 Oct with Pocket, Kyutai, CMU missing (audit M23); attribution-check.py --package passes rows"
+10.5,designed,PLAN.md phase exits and production/friends-build/MAP.md twenty basics; RUN THE STRANGER TEST.bat study never run; no release test run
+10.6,missing,only a scope line in RULINGS 28 Oct (more districts in updates after release); no patch or district plan found
