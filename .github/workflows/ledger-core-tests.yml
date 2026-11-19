@@ -45,8 +45,22 @@ jobs:
           dotnet-version: "8.0.x"
       # THE TWO LIBRARIES THE PC HAS (19 Nov, audit H10): nine selftests import numpy or Pillow and the
       # job had been red on every push since 29 Oct; the versions are this PC's.
+      # 19 Nov, try 2: the --user --break-system-packages install into the image's own Python failed
+      # (step 4 red, every check skipped); GitHub's documented way is setup-python, then a plain pip
+      # install. pip's last lines go to the public summary, since the log needs a signed-in owner.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Python libraries the checks use
-        run: python3 -m pip install --user --break-system-packages numpy==2.2.2 pillow==11.1.0
+        run: |
+          set +e
+          python3 -m pip install numpy==2.2.2 pillow==11.1.0 > pip.log 2>&1
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "::error title=pip install::$(tail -n 3 pip.log | tr '\n' ' ')"
+            tail -n 20 pip.log >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit $rc
 
       # THE CHECKS ARE NOT STEPS ANY MORE, AND THAT IS THE FIX.
       #
