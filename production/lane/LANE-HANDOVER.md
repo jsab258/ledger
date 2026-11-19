@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 09:16 on 19 Nov, stopped about 09:52. 4n complete: the synthesis fixed (Opus, no Fable), checked by a fresh reviewer, and published as two Claude Docs, "LEDGER: the vision" https://claude.ai/artifact/RpXGpHEG32nJwkZXF3Vtax and "LEDGER: the whole game" https://claude.ai/artifact/1NJwscSew2VWCVo4BMVhkJ . Next: nothing new until the queue's 'Vision approved:' line shows his yes; then 4l, round by round in BUILD-ORDER.md's order, and tie the gates' invariants to DESIGN.md's rule ids. Check the newest main row for the budget first.
+**Cloud lane, last run:** started 09:16 on 19 Nov, stopped 09:39. 4n complete: the synthesis fixed (Opus, no Fable), checked by a fresh reviewer, and published as two Claude Docs, "LEDGER: the vision" https://claude.ai/artifact/RpXGpHEG32nJwkZXF3Vtax and "LEDGER: the whole game" https://claude.ai/artifact/1NJwscSew2VWCVo4BMVhkJ . Next: nothing new until the queue's 'Vision approved:' line shows his yes; then 4l, round by round in BUILD-ORDER.md's order, and tie the gates' invariants to DESIGN.md's rule ids. Check the newest main row for the budget first.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
