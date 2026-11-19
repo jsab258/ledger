@@ -4,9 +4,9 @@ Every gameplay part the one-shot (Friday 20 Nov, 22:10) builds into the browser 
 
 Rules for the one-shot: never change tools/lane/one-sim/; the town simulation stays the real one where the switch has landed; no polish (art, animation detail, voices, clothes and faces are never the browser's work); the content rule; a play build reaches him only through the publish gate. 'Now' is the prototype's status before the one-shot, from evidence (round 5 published, round 6 built and not published).
 
-Parts: 189. Already passing their standard: 6 (keep them passing).
+Parts: 191. Already passing their standard: 6 (keep them passing).
 
-## Stage A: one evening that holds (119 parts)
+## Stage A: one evening that holds (121 parts)
 
 - [ ] 1.1.1 Walk, run and turn. Now: built. Design: DESIGN §17 (input only); feel not designed. Test: feel numbers inside measured bands (input probe); H: 'did moving feel heavy or slippery?'; his eye in Unreal.
 - [ ] 1.1.2 On-foot camera follow. Now: built. Design: DESIGN §17. Test: B soak with clip detector; S frames counted for feet in frame; H screenshots in tight rooms.
@@ -21,7 +21,7 @@ Parts: 189. Already passing their standard: 6 (keep them passing).
 - [ ] 1.2.5 Cars and people. Now: built shallow. Design: DESIGN §5. Test: S: 1,000 seeded crossings with no contact; hits at 5, 15, 30, 50 mph, nobody dies; both choices seeded.
 - [ ] 1.2.7 Driving with passengers. Now: built shallow. Design: DESIGN §5, §11 staging. Test: H: fare log; S: a staged back-seat talk with the car moving.
 - [ ] 1.3.1 Blows and contact. Now: built. Design: DESIGN §7 Feel. Test: S: melee drills at 1/60 s inside C1 to C15 (tools/lane/melee_drills.py); his feel check.
-- [ ] 1.3.2 Reading and answering blows. Now: built. Design: DESIGN §7. Test: S: drills; H: 'did you see the blow coming?'.
+- [ ] 1.3.2 Reading and answering blows. Now: built. Design: DESIGN §7; DESIGN-ADDENDUM-2026-11-20 §A29 (guard, slip, counter, breath, grab). Test: S: drills; H: 'did you see the blow coming?'; addendum rules ER-DEFEND-01 to 02.
 - [ ] 1.3.3 Targeting without lock-on. Now: built. Design: DESIGN §7. Test: S: targeting script with three men round Tom.
 - [ ] 1.3.4 The lower rungs. Now: built. Design: DESIGN §7. Test: S: each rung exposes seven slots; H: rung reached and why.
 - [ ] 1.3.5 The street as a weapon. Now: built shallow. Design: DESIGN §7. Test: S: each of seven places triggers its move; content check: no finisher shown at length.
@@ -29,6 +29,7 @@ Parts: 189. Already passing their standard: 6 (keep them passing).
 - [ ] 1.3.7 Condition without bars. Now: built. Design: DESIGN §7. Test: S: 10,000 simulated fights, deaths only by the fall rule; H: 'who was winning?'.
 - [ ] 1.3.8 Odds, crowds and nerve in a fight. Now: built. Design: DESIGN §7. Test: S: scripted patient and mashing fighters; seeded nerve cases.
 - [ ] 1.3.9 How a fight ends. Now: built. Design: DESIGN §7 Death. Test: S: each of five endings scripted; beaten route timed.
+- [ ] 1.3.12 Fighter types. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A29. Test: S: the job data; addendum rules ER-TYPES-01.
 - [ ] 1.4.1 Reading watchers. Now: built. Design: DESIGN §2. Test: H: the three questions at ten random moments, 8 of 10 right, sound off and light cue off.
 - [ ] 1.4.2 Light and dark as cover. Now: built. Design: DESIGN §2, §6. Test: H: screenshots at the darkest spots; S: light value matches the cue.
 - [ ] 1.4.3 Hearing his own noise. Now: built shallow. Design: DESIGN §2, §17. Test: H: sound-only test.
@@ -106,6 +107,7 @@ Parts: 189. Already passing their standard: 6 (keep them passing).
 - [ ] 6.1.2 Subtitles. Now: built shallow. Design: DESIGN §17. Test: S: layout test at four sizes.
 - [ ] 6.1.3 The belief line. Now: built. Design: DESIGN §10. Test: S: trigger each perceivable change.
 - [ ] 6.1.4 Light and sound cues. Now: designed. Design: DESIGN §2. Test: H: ER-EYES-01 with the cue off and on.
+- [ ] 6.1.5 Knowing the time. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A31. Test: S: the watch glance; H: 'what time is it?'; addendum rules ER-TIME-01.
 - [ ] 6.2.1 People. Now: built. Design: DESIGN §10. Test: S: no entry without a source event.
 - [ ] 6.2.2 Day book. Now: built. Design: DESIGN §10. Test: S: struck through, never removed.
 - [ ] 6.2.3 Open. Now: built. Design: DESIGN §10. Test: H: 'what next, and where' from the Ledger alone.
@@ -148,7 +150,7 @@ Parts: 189. Already passing their standard: 6 (keep them passing).
 - [ ] 2.4.5 The paper and the news. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A19. Test: S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01.
 - [ ] 2.6.5 DS Ellis and the four stages. Now: built shallow. Design: DESIGN §8. Test: S: every route to a manhunt passes its signs.
 - [ ] 2.6.7 Traffic police and stops. Now: designed. Design: DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12. Test: S: a stop starts only on reckless driving in sight; ends within 2 minutes; addendum rules ER-TRAFFIC-01 to 02.
-- [ ] 2.7.5 Purses, tills and shops. Now: built shallow. Design: DESIGN §9. Test: S: a shop refuses and remembers.
+- [ ] 2.7.5 Purses, tills and shops. Now: built shallow. Design: DESIGN §9; DESIGN-ADDENDUM-2026-11-20 §A30 (haggling). Test: S: a shop refuses and remembers; addendum rules ER-HAGGLE-01.
 - [ ] 2.7.6 Fencing. Now: designed. Design: DESIGN §4, §9. Test: S: golden rows.
 - [ ] 2.7.8 Spending. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A21. Test: S: each shop sells its list; H: 'what did you spend on?'; addendum rules ER-SPEND-01.
 - [ ] 2.9.2 Keeping or ending the arrangement. Now: built shallow. Design: DESIGN §16. Test: S: both branches reach Act II.

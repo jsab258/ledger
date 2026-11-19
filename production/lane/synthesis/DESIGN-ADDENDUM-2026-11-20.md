@@ -15,6 +15,7 @@ Found by the parts tree's own walk of group 1 (DESIGN gives the light scale but 
 - Turning away. With his back to a watcher, Tom's face cannot be caught; a mark (the coat) still can.
 - Among people. In a group of three or more people within 2 m, a watcher's glance at Tom takes twice as long (the 0.35 s glance becomes 0.7 s).
 - Behind things. A parked van, a stall, a skip once real (ruling 2 Oct), a corner: no line of sight, nothing caught. The same line-of-sight test the watchers use.
+- Walking slowly (a held key or a light touch on the stick) halves his footsteps' reach; there is no crouch.
 - Nothing on screen says "hidden". The light cue (DESIGN section 2) and the watchers' bodies are the only signs.
 
 Experience rules:
@@ -43,6 +44,7 @@ Found by the walk of group 1. Somebody runs: a runner fare, a man from a fight, 
 - A runner takes the routes he knows: through yards and alleys of his own routine.
 - Catching him is a hand on the collar when Tom is within 1 m from behind, then the choice: let go, talk, or the lower rungs of the ladder.
 - Breaking sight for 7 s or 70 m loses him, the same rule as the police use on Tom (DESIGN section 8). He goes home or to a friend, where he can be found later.
+- The other way round: a constable who loses Tom walks to the last place he saw him and looks round for about a game hour (half a real minute at most on the spot), so the law stays near.
 
 Experience rules:
 - ER-PURSUE-01 Every foot chase ends, caught or lost, within 90 real seconds. Check S: 50 seeded chases.
@@ -120,7 +122,7 @@ Experience rules:
 ## A10. Street manners, stopping and ground rules (1.4.7, 1.1.7, 2.2.6)
 
 Found by the red teams. Verbs first means the smallest acts are verbs too.
-- Street manners on one key, picked by the stick: a nod, a greeting, a hard look, a shove. Each is an act with the seven slots and is answered in body or voice within 1 s. A greeting raises nothing; a hard look and a shove are rungs 1 and 4 of the ladder.
+- Street manners on one key, picked by the stick: a nod, a greeting, a hard look, a shove, and a call ("Oi!") that stops a walker for about 2 s and turns him round: the way to stop a witness on her walk before talking. Each is an act with the seven slots and is answered in body or voice within 1 s. A greeting raises nothing; a hard look and a shove are rungs 1 and 4 of the ladder.
 - Stopping: sit on a bench, a wall or a step; lean in a doorway; light a cigarette. A stopped man who belongs (sitting, smoking, waiting at the bus stop) is caught as a shape like anyone, and draws no second look; a man standing about at night without a reason draws one.
 - Ground rules: every place carries a label: public, open by hours, private, forbidden. Public is free. Open by hours is free in hours, private out of them. Private: the owner or a neighbour warns, warns again, then calls or acts within half a minute (DESIGN section 4). Forbidden (the customs shed, the Harbour Board's back office) skips the first warning.
 
@@ -155,6 +157,7 @@ Experience rules:
 ## A13. Bought men, charges and the office searched (2.6.8, 2.6.9)
 
 Found by both red teams and the mechanics check. Canon: police are corruptible as individuals, never as a thesis.
+- A constable's challenge gets a third answer besides standing and running: a word. Talked round if he has no cause, a note offered if he is one of the bought men; offered to an honest one, it is a crime he saw.
 - Bought men: two named officers in the Hook can be paid or leaned on, each with a price and a limit (one looks away from a car; the other loses a statement once). Buying one is an act a colleague may see. Ellis cannot be bought. The station as a whole never changes.
 - Charges: an arrest ends in a caution, or a charge and bail (DESIGN sections 8, 18). A charge joins Ellis's case and is read at the ending. No court scene and no prison: the case is the consequence.
 - The office searched: once Ellis reaches investigating (DESIGN section 8), she may search the office once, with notice the evening before (the sign). What is stored there (A5) counts for the case.
@@ -246,7 +249,7 @@ Experience rules:
 
 Found by the red teams. What money buys is position (DESIGN section 9).
 - Spending: the newsagent and tobacconist (cigarettes, the paper), the caff (a meal, a place to sit), the ironmonger (a crowbar, a torch, a key cut), the outfitter and the second-hand shop (coats), the dealer (a car), the solicitor (a brief on call), a bribe (A13). Purses and the weekly restock hold (DESIGN section 9).
-- Wardrobe: the three outfits of the rise and the dark coat (DESIGN section 14); a second coat bought after a deed breaks the mark rung for anybody who saw the first (DESIGN section 2); a barber changes the look for a week.
+- Wardrobe: the three outfits of the rise and the dark coat (DESIGN section 14); a second coat bought after a deed breaks the mark rung for anybody who saw the first (DESIGN section 2); a barber changes the look for a week; a scarf up and a hat down at night break the face rung, but are themselves a mark and draw a look by day.
 - Marks: a beaten Tom carries bruises and a cut lip for three game days and a limp for one; others see them (a give-away, DESIGN section 2) and say so. A retired doctor in a terrace by the quay stitches without asking, for money, and remembers.
 
 Experience rules:
@@ -278,6 +281,8 @@ Experience rules:
 ## A24. Riding as a passenger, repairs, plates and paint (1.2.8, 1.2.9)
 
 Found by the red teams. It also eases "not a driving game".
+- Looking back: a key turns the car camera to the rear window while held, for the car in the mirror (DESIGN section 5).
+- Ramming: a car can ram another car; the cars take damage by closing speed (DESIGN section 5) and nobody inside is killed (canon: a car never kills).
 - Riding: Tom can be driven by Kevin, Terry or a crewman: he says where, by landmark, and can skip the ride, which passes its real time on the clock. Talk with the driver is possible on the way.
 - Repairs: a wrecked cab is fetched and is off the road a day (DESIGN section 5); a dent stays until the firm mends it at the yard overnight.
 - Plates and paint: a witness notes the plate as a mark. Shaun Hewson's paint (DESIGN section 12) makes a car not look like a cab: the roof sign off and a new colour, after which earlier sightings of the cab no longer name this car.
@@ -325,3 +330,37 @@ Found by the red team and the mechanics check (things to do with people that are
 
 Experience rule:
 - ER-PASTIME-01 No stakes of any kind anywhere in a pastime. Check S: the content gate and the money flows.
+
+## A29. Fight defence and fighter types (1.3.2, 1.3.12)
+
+Found by the lane's merged reference mechanics (REFERENCE-MECHANICS-2026-11-20, gaps 1 to 3, 8 to 10, 15 to 17, 32). His combat design stands (12 Oct; no lock-on, no meters, no finishers). This makes 'reading a blow' something the player can answer.
+- Guard: a held key raises Tom's guard; a blocked fist does little, a blocked heavy blow staggers him a little, a swung weapon breaks through.
+- Slip: a tap with a direction slips a blow (a step and a duck, about 0.3 s, to measure against the melee sheet), from the same 0.45 to 0.80 s tell.
+- Counter: a blow thrown inside the first part of the other man's recovery after a slip or a block lands as a heavy blow at a jab's speed. No icon: the tell is in his shoulders, his feet and a breath (DESIGN section 17: nothing over heads).
+- Breath, not a bar: throwing many blows fast makes Tom breathe hard and slows his next blows (the melee sheet: mashing empties him in 6 to 10 jabs, back in 4 to 8 s); the player hears and sees it.
+- Grab: at rung 4 a grab holds a man for about 2 s: push him into one of the street places (DESIGN section 7), take what is in his hand (a knife, a bat: the disarm), or let go.
+- Fighter types: every fight's men are written as one of a few kinds (a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps distance), so authored fights differ.
+- After a fight: a man down can be searched (what he carried, A4's rule for time), which is seen like any act.
+
+Experience rules:
+- ER-DEFEND-01 Every incoming blow can be guarded or slipped by a player who reads its tell, and a counter only lands after one. Check S: the drills, a scripted fighter who guards and slips on the tell wins most fair one-on-ones.
+- ER-DEFEND-02 No defence cue is drawn on screen. Check S: screen inventory in a fight.
+- ER-TYPES-01 No two fights in a row use the same mix of fighter types. Check S: the job data.
+
+## A30. Haggling without a meter (2.7.5, 2.7.6)
+
+Found by the lane's merged reference mechanics (gap 34). The fence and the shops haggle (DESIGN section 9), and there is no slider or meter.
+- A haggle is three offers in talk at most: the buyer names a price, Tom asks more, takes it, or walks. The buyer's answers come from his purse, how hot the goods are and how he regards Tom; his face and words show how close Tom is.
+- Walking away is remembered: he may call Tom back, or not next time.
+
+Experience rule:
+- ER-HAGGLE-01 A haggle never takes more than three offers and never shows a number other than the prices spoken. Check S.
+
+## A31. Knowing the time (6.1.5)
+
+Found by the lane's merged reference mechanics (gaps 20, 21). Windows, appointments and 'wait until' need the hour, and nothing on screen shows it.
+- Tom's watch: a key raises his wrist; the hour shows on the watch face for 2 s.
+- Street clocks: the clock over the Harbour Board and the office clock. The chapel bell strikes the hours by day.
+
+Experience rule:
+- ER-TIME-01 The hour can be known within 3 s anywhere, without a screen clock. Check S.

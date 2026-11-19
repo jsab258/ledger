@@ -12,3 +12,7 @@ ER = {"1.1.5": "ER-HIDE-01 to 03", "1.1.6": "ER-TAIL-01 to 03", "1.2.6": "ER-TAI
 by = {p["id"]: p for p in PARTS}
 for k, v in ER.items():
     by[k]["t"] = by[k].get("t", "") + "; addendum rules " + v
+for k, v in {"1.3.2": "ER-DEFEND-01 to 02", "1.3.12": "ER-TYPES-01", "2.7.5": "ER-HAGGLE-01", "6.1.5": "ER-TIME-01"}.items():
+    by[k]["t"] = by[k].get("t", "") + "; addendum rules " + v
+by["1.3.2"]["des"] = by["1.3.2"]["des"] + "; " + "DESIGN-ADDENDUM-2026-11-20 §A29 (guard, slip, counter, breath, grab)"
+by["2.7.5"]["des"] = by["2.7.5"]["des"] + "; DESIGN-ADDENDUM-2026-11-20 §A30 (haggling)"

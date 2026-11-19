@@ -132,3 +132,9 @@ P("10.11", "Player data and privacy", "Consent and data protection for what play
   h="0|16|guess", rk="medium|" + RT + " (both)", t="a privacy notice and consent before the first talk")
 P("10.12", "Demo, price and wishlists", "A demo of the first hour, the price, the wishlist plan.", std="none; price is money, his", ss=RT, des="not designed", tr="unreal", f=0, o="builder",
   h="0|24|guess", rk="low|" + RT + " (both)", t="his yes on price")
+P("1.3.12", "Fighter types", "Authored kinds of opponent: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps distance.",
+  std="No two fights in a row use the same mix (ER-TYPES-01); players punish the same loop (PLAYERS punish 9)", ss="PLAYERS.md; DESIGN §18", des=AD + "§A29", tr="both", f=1, o="lane", n=["1.3.2"],
+  h="1|40|guess", rk="medium|found by the lane's merged reference mechanics", t="S: the job data")
+P("6.1.5", "Knowing the time", "Tom's watch on a key, street clocks, the chapel bell by day: the hour without a screen clock.",
+  std="The hour known within 3 s anywhere (ER-TIME-01); no timers on screen (ruling 23 Sep)", ss="rulings; addendum", des=AD + "§A31", tr="both", f=1, o="lane", n=["4.4"],
+  h="0.5|8|guess", rk="low|found by the lane's merged reference mechanics", t="S: the watch glance; H: 'what time is it?'")

@@ -41,6 +41,7 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.3.9 How a fight ends*. P:built U:designed
   - 1.3.10 Firearms*. P:designed U:designed +research
   - 1.3.11 Marks that last*. P:designed U:designed
+  - 1.3.12 Fighter types*. P:designed U:designed
 - 1.4 Being seen*. P:shallow U:shallow
   - 1.4.1 Reading watchers*. P:built U:shallow +research
   - 1.4.2 Light and dark as cover*. P:built U:designed +research
@@ -294,6 +295,7 @@ What is on screen: almost nothing, plus Tom's notebook and a paper map.
   - 6.1.2 Subtitles*. P:shallow U:built
   - 6.1.3 The belief line*. P:built U:designed
   - 6.1.4 Light and sound cues*. P:designed U:designed
+  - 6.1.5 Knowing the time*. P:designed U:designed
 - 6.2 The Ledger notebook*. P:built U:designed
   - 6.2.1 People*. P:built U:designed
   - 6.2.2 Day book*. P:built U:designed
