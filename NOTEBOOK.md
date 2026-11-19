@@ -2778,3 +2778,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: helper about 0.3 h; machine about 7 minutes for all three (the earlier per-job body import waited 1 h 48 min on a hidden box).
 - What failed and why: the first trousers drape imported the body at scale 1.0, so a centimetre body came in at a tenth of its size, no arrangement points formed, a box waited for a click and the pieces fell in a heap. Pressed folds and zips are not in this API version; a body with no head was not tried, for fear of a box nobody can close.
 - Evidence: F:/LedgerTools/tool-dev/reports/MD-REFERENCE-DRAPES-2026-11-18.md
+
+## 19 Nov 2026: layered cloth, outer over inner, interleaved contact (set aside after try 2)
+- Made: a switch that runs the layer contact (point push, then face push) every 10 constraint passes inside each substep, the end round kept.
+- Method: Vellum's interleaved collisions (collision rounds between constraint iterations, a final round after), read at source.
+- Tools: the cloth engine's lane, cargo tests, the regression gate under the heavy lock.
+- Target and check: through over 3 mm at most 133 and worst edge under 3.0 on the layered job; every other job byte-identical.
+- Cost: about 0.3 h of session, 7.5 min of helper plus two gate runs.
+- Failed and why: interleaving cuts the points pushed through during the passes (about 2,000 to 200) but a floor of about 100 stays through, and the end-of-drape clean-up adds more each call; the cost rose 60%. The remaining fault lies in the clean-up and the first drape, not in how often contact runs.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERED2-2026-11-19.md.

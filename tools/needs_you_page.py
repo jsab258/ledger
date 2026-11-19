@@ -130,7 +130,8 @@ def faults(data, check_files=True):
             out.append("%s: a placeholder on his page (RULINGS 3 Oct: never on his page)" % it.get("id"))
     days = {}
     for it in data.get("items", []):
-        if it.get("state") == "open":
+        # "unless something blocks" (RULINGS 8 Nov): an item naming in "blocks" the work it stops is outside the count
+        if it.get("state") == "open" and not str(it.get("blocks", "")).strip():
             added = str(it.get("added", ""))
             days.setdefault(added[:10], set()).add(added)
     for day, times in sorted(days.items()):
@@ -301,6 +302,8 @@ def selftest():
     batch = [dict(good["items"][0], id="t%d" % n, added="2026-11-16 %02d:00" % (8 + n)) for n in range(3)]
     check("three batches of open items in one day are refused", faults({"items": batch}) != [])
     check("two batches in one day pass", faults({"items": batch[:2]}) == [])
+    check("a third batch naming what it blocks passes",
+          faults({"items": batch[:2] + [dict(batch[2], blocks="the Fable work waits on it")]}) == [])
     # --waiting (advisor 231): a waiting line asking him needs an open item's id; K1-K7 and past answers pass
     import tempfile
     with tempfile.TemporaryDirectory() as td:

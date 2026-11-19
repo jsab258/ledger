@@ -489,6 +489,10 @@ OURS = {
     "production/assets/office-print": "Mickey's office's printed matter (fares, licence, calendar, the fare book, the drivers' board, notes, the radio's faceplate), drawn by tools/props/make_office_print.py in the project's OFL fonts and Patrick Hand (OFL, credited in THIRD-PARTY.md), the calendar's picture a crop of a Poly Haven CC0 photograph already credited there",
     # The cloud lane's outline drawings, 17 Nov: flat SVG outlines drawn by tools/lane/car_loft.py from class dimensions (numbers only), no fetched asset as an input.
     "production/lane": "flat SVG outlines of fictional vehicles drawn by tools/lane/car_loft.py from class dimensions measured off published sizes (numbers only), this project's own work, no fetched asset as an input",
+    # The cloud lane's browser prototype, 19 Nov (merged at 13:5x): its own source code and test drivers, written by the
+    # lane; three.js (MIT) arrives only through npm into the built bundle, never copied into these folders.
+    "tools/lane/prototype/project/src": "the loop prototype's own source code, written by the cloud lane (three.js comes from npm into the built page, not copied here); a browser prototype, never in the game",
+    "tools/lane/driving-gate": "the cloud lane's clumsy-player test driver for the browser prototype, its own code, no fetched input",
     "production/previews": "reduced copies (about 1600 px, JPEG) of this project's own frames, each proof-view step's and each picture on Jafar's pages, made by tools/make_preview.py from the Unreal probe's renders of this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately; no other game's frame",
     # His one page's pictures, 4 November (the corner's midweek page, the first): the packaged game's own frames at full
     # size, ignored by git, published beside the page and gone once the item closes (tools/needs_you_page.py PICTURES_REL).

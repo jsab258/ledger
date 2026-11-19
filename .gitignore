@@ -250,3 +250,6 @@ production/handover/gate-blocked.jsonl
 # Epic MetaHuman files never go to GitHub (RULINGS 3 Oct; backup review 17 Nov)
 ue-probe/Content/MetaHumans/
 production/handover/backup-start.lock
+
+# The cloud lane playtest screenshots: kept on its branch and in F:/LedgerTools/game-inputs, never in wip (push guard: pictures only in production/previews)
+production/lane/playtest-round*/shots/
