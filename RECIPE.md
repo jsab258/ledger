@@ -165,3 +165,10 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Target and check: no skin, clipping or floating cloth seated; listed shortfalls no worse than standing. Failed: a few pixels of bare ankle between hem and boot top when the knee bends.
 - Cost: about 0.5 h. Evidence: F:/LedgerTools/game-inputs/films/ron-work-trousers-2026-11-19/seated/REVIEW-SEATED-1.md
 - Lesson: film every garment indoors under even light as well as outdoors: the crotch drop read mild on the street and plain in the office.
+
+### Sitting shape bars from a passed garment (19 Nov 2026)
+- Made: bars for a seated shape check (gap from seat and thighs to the cloth, hem shape against rest), set from a garment already passed in the game, then applied to a new garment on another body.
+- Method: run the same posed check on the passed reference in the same pose; bar = reference x 1.10 + 1 mm; judge new garments against it beside the through/inside counts.
+- Tools: the project's posed-check script (no Blender), skinned FBX and the wearer's weights body. Cost: 0.1 h, 4 s machine.
+- Failed and why: the hem measure reads zero on any skinned garment, because hem points follow the shin and foot bones rigidly; a seated gap between hem and footwear needs the footwear in the check, or the film.
+- Evidence: F:/LedgerTools/tool-dev/runs/sit-shape-2026-11-19/RESULT.md

@@ -6983,6 +6983,15 @@ int main(int argc, char** argv)
 				++Drawn;
 				bool DOk = false;
 				Slurp((Rw.DrawnMap + ".png").c_str(), DOk);
+				// THE CLOUD CHECKOUT HAS NO NEW PICTURES (19 Nov, audit H10): since 8 Nov new drawn
+				// maps live on F: game-inputs and are gitignored (cover_iron), so the cloud machine
+				// cannot see them; there the miss is printed as unchecked, never passed. On this PC
+				// (every push runs ci-checks here first) a missing map still fails.
+				if (!DOk && std::getenv("GITHUB_ACTIONS") != nullptr)
+				{
+					std::cout << "unchecked on the cloud (picture kept off git): " << Rw.DrawnMap << "\n";
+					continue;
+				}
 				Check(DOk, "a drawn surface the sidecar names is on disk", Rw.DrawnMap);
 			}
 		}

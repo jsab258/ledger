@@ -43,6 +43,10 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
+      # THE TWO LIBRARIES THE PC HAS (19 Nov, audit H10): nine selftests import numpy or Pillow and the
+      # job had been red on every push since 29 Oct; the versions are this PC's.
+      - name: Python libraries the checks use
+        run: python3 -m pip install --user --break-system-packages numpy==2.2.2 pillow==11.1.0
 
       # THE CHECKS ARE NOT STEPS ANY MORE, AND THAT IS THE FIX.
       #
