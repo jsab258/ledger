@@ -6,18 +6,18 @@ Stage 3 of the full audit Jafar ordered at 00:18 on 19 Nov ("Do it now", advisor
 
 ### Where the project stands
 
-After four and a half months and about 6,240 commits, the real game is one 48-metre street: Mickey's front office, Tom, and three people who talk. The player can walk, run, talk, press E and wait, and the only crime the game can register is a broken window. The look is the strongest part, close to the Hook sheet, and the town simulation is solid (its Unreal copy passes 102,997 checks with no failures). But phase 1 closed on 9 Nov with all four exit reviews saying "not met", this week's order had none of its 11 items done by Thursday, and about two thirds of the double week went into Kiln, which has not yet put one garment in the game. The studio measures how much allowance it uses in detail and what it buys hardly at all. The audit counts 33 big points he had to raise himself.
+After four and a half months and about 6,240 commits, the real game is one 48-metre street: Mickey's front office, Tom, and three people who talk. The player can walk, run, talk, press E and wait, and the only crime the game can register is a broken window. The look is the strongest part, close to the Hook sheet, and the town simulation is solid (its Unreal copy passes 102,997 checks with no failures). But phase 1 closed on 9 Nov with all four exit reviews saying "not met", this week's order had none of its 11 items done by early Thursday, and Kiln took the largest share of the double week (27% of measured dollars early on 18 Nov; a keyword estimate says 64%, but that figure is inflated), while it has not yet put one garment in the game. In eight weeks no whole person has passed his look. The studio measures how much allowance it uses in detail and what it buys hardly at all. The audit counts 33 points he, or now and then his advisor, had to raise first.
 
 ### The ten findings that matter most
 
-1. Nobody measured whether the game is fun before production. The studio's own October research named the risk; it waited until he said "we don't want a gossip simulator".
+1. Fun was measured once, on 3 Oct (11 of 30 minutes empty), and the gaps were parked behind a phase gate that never opened; nothing measured play again until he said "we don't want a gossip simulator". The studio's own October research had named the risk.
 2. Canon describes two games: the September "what people know about you is the mechanic", with all else on the smallest budget, and his 18 Nov pillar, verbs first. Canon outranks everything, so the old line still steers spending.
 3. The release plan does not match the real pace. Phase 1 ran about five times its ceiling, the plan's stop rule was never applied, and the friends' date still assumes phase 1 passes.
-4. Kiln grew from "at most 15%" to "everything else waits" in six days, and stands at 0 of 6 with no savings figure for its checkpoint.
+4. Kiln grew from "at most 15%" to "everything else waits" in six days (the 70% by his own pick of 17 Nov), and stands at 0 of 6 with no savings figure for its checkpoint.
 5. The GitHub repository is public and holds about 747 MB of raw Mixamo files, which Adobe forbids sharing. The studio's own review said "make it private" on 3 Oct.
 6. Public records describe decrypting another game's files; the key and viewer are still on F:, and numbers from those files still set the camera and clothing budgets.
 7. Kiln's engine came from a tool that decompiled Marvelous Designer; some values are still borrowed.
-8. The rule book disagrees with itself: CLAUDE.md, read first by every session and helper, carries about ten replaced rules, and half the rulings are "enforced" by an audit that has never run.
+8. The rule book disagrees with itself: CLAUDE.md, read first by every session and helper, carries about ten replaced rules, and about four in ten rulings (33 of 85) are "enforced" only by a Monday audit that has not yet run in its new form.
 9. The tests are red and nobody wrote it down: the main cloud check has failed 544 times in a row since 29 Oct, and the game's gossip test fails on about 4 nights in 10.
 10. About 36.6 GB that the records call "backed up nightly", the game's Unreal content among it, is not backed up, and no restore has ever been tried.
 
@@ -49,14 +49,14 @@ Reviews are cited R01 to R11, the decisions trace T. Rulings for him are kept to
 
 ### High (21)
 
-H1. Nobody measured whether the game is fun; the real game has four verbs and one crime.
-Why: his direction is a tense, exciting game; six weeks of production ran with no measure of play.
+H1. Fun was measured once and never again; the real game has four verbs and one crime.
+Why: his direction is a tense, exciting game; after one count on 3 Oct, six weeks of production ran with no repeat measure of play.
 Evidence: production/research/pre-production/6-RISKS.md line 28 (3 Oct), R6 "There are not thirty minutes worth playing", its one-day proof P4 ranked first and first run 18 Nov. production/playtest/thirty-minutes-2026-10-03.md: "Empty minutes: 11 of 30", parked as TOWN.md brief 3, "not started before phase 1 passes". Keys in SliceCharacter.cpp lines 1414 to 1428; every deed filed as damage (TownWeek.h 135). The nightly tester checks only whether the town knows Tom. R01-2, R03-6, R04-2, R07-2, R11-8.
 End, rule: the nightly walk reports activity mix, empty minutes and tense minutes on the real game against canon's pillar; no family is multiplied and no phase opens until the loop meets them.
 
 H2. Canon describes two different games.
 Why: canon outranks everything, and its 14 Sep spend rule starves the fights, driving and jobs he wants first.
-Evidence: canon.md lines 172 to 177: "what people know about you is the mechanic. Anything that does not feed perception, memory, gossip or consequence gets the smallest budget", against lines 155 to 170: "Talk stays the moat, never the main thing". Line 66 keeps "The bar is the Meridian Test"; KCD2 is the bar only in RULINGS line 53. Line 7 cites the D7 judge, never built. Canon's own same-day-edit rule (lines 9 to 10) was missed on 12 Oct, 28 Oct and 18 Nov. R01-1, R02-3, R08-5.
+Evidence: canon.md lines 172 to 177: "what people know about you is the mechanic. Anything that does not feed perception, memory, gossip or consequence gets the smallest budget", against lines 155 to 170: "Talk stays the moat, never the main thing". Line 66 keeps "The bar is the Meridian Test"; KCD2 is the bar only in RULINGS line 53. Line 7 cites the D7 judge, never built. Canon's own same-day-edit rule (lines 9 to 10) was kept only as patches: the 12 Oct and 17 Nov changes were added as exceptions to the old spend rule and the 18 Nov pillar beside it, never rewriting it, and the 28 Oct release scope is not in canon at all. R01-1, R02-3, R08-5.
 End, ruling (canon): Rewrite "What LEDGER is not" to the 18 Nov pillar? (A, recommended) yes: verbs get full budget, memory and gossip are the engine, KCD2 named as the bar, the D7 line dropped; (B) keep it.
 
 H3. The release plan does not match the measured pace.
@@ -66,27 +66,27 @@ End, ruling (scope): Re-plan from the measured rate? (A, recommended) yes: PLAN 
 
 H4. Kiln became the project.
 Why: the largest use of the allowance is a tool, and the rule meant to park it has no number to test.
-Evidence: 15% on 13 Nov (RULINGS line 39, "game never waits on it"), 23% in the order, 70% on 17 Nov, then "everything else serves it or waits" (HANDOVER.md line 11). "Kiln v1 0 of 6" (NOW.md); "Kiln-made garments in the game: 0" (progress.json line 716); the cost table reads "drape not run". Early milestones rested on tuned counts that "will not hold" (KILN-METHOD-REVIEW-2026-11-16.md line 75). Share readings: 27.3% of dollars (18 Nov 02:55) against a 64% keyword estimate, both inflated by M19. R05-1, R06-1, R06-2, R09-3, R11-3.
+Evidence: 15% on 13 Nov (RULINGS line 39, "game never waits on it"), 23% in the order, 70% on 17 Nov by his own pick (now in RULINGS line 39), then "everything else serves it or waits" (HANDOVER.md line 11). In eight weeks no whole person has passed his look; the only clothing yeses are two "Interim" ones of 8 Nov (R05). "Kiln v1 0 of 6" (NOW.md); "Kiln-made garments in the game: 0" (progress.json line 716); the cost table reads "drape not run". Early milestones rested on tuned counts that "will not hold" (KILN-METHOD-REVIEW-2026-11-16.md line 75). Share readings: 27.3% of the week's spend (DECISIONS.md line 353, 18 Nov 02:55) against a 64% keyword estimate (line 398); the 64% is inflated by M19's startup rows, which began at 12:27 that day, after the 27.3% reading. R05-1, R06-1, R06-2, R09-3, R11-3.
 End, ruling (money and scope): Until one Kiln garment walks the packaged game on Ron, (A, recommended) 15%, Ron's and Tom's outfits only, Marvelous one more month ($39); (B) 70% and let Marvelous lapse; (C) park Kiln.
 
 H5. Raw Mixamo files sit in a public repository.
 Why: a licence breach on a game meant for sale; history keeps it after deletion.
-Evidence, checked: the GitHub API returns "visibility": "public"; 88 tracked files, 746.8 MB, under ledger/Assets/Characters, plus seven Mixamo bodies as .glb. Adobe's FAQ, under NO: "Any type of free distribution of character or animation raw files". THIRD-PARTY.md lines 107 to 112: "Nothing here does the latter". Pre-production SUMMARY.md line 64 (3 Oct): "make it private". R04-4, R10-1, R11-11.
+Evidence, checked: the GitHub API returns "visibility": "public"; 88 tracked files, 746.8 MB, under ledger/Assets/Characters, plus seven Mixamo bodies as .glb. Adobe's FAQ, under NO: "Any type of free distribution of character or animation raw files". THIRD-PARTY.md lines 107 to 112: "Nothing here does the latter". Pre-production SUMMARY.md line 64 (3 Oct) recommended making it private; the alternative it named, staying public with the screenshots taken out, is what was done, and the 5 Oct history clean never looked at Mixamo. R04-4, R10-1, R11-11.
 End, ruling (licences): (A, recommended) make the repository private after pricing private Actions minutes, and move the Mixamo inputs to F: and the backup; (B) stay public and clean the history; (C) leave it.
 
 H6. Game-file extraction: tools still installed, the record public.
 Why: legal exposure for a sold game.
-Evidence: production/archive/DECISIONS-to-2026-11-09.md (public) line 673: the installed copies "carry a repack group's file"; line 676: Mafia's key from a forum, "proved by decrypting the name index". The 12 Oct legal note: "Do not decompile, disassemble, unpack or rip another game". Still present: F:\LedgerTools\keys, aaa-study, dotnet10; FModel "WAITING HIS YES" (outside_only_check.py); RESTORE.md lines 18 and 24 plan to re-extract. R10-2, R11-5.
+Evidence: production/archive/DECISIONS-to-2026-11-09.md (public) line 673: the installed copies "carry a repack group's file"; line 676: Mafia's key from a forum, "proved by decrypting the name index". The 12 Oct legal note: "Do not decompile, disassemble, unpack or rip another game". Still present: F:\LedgerTools\keys, aaa-study, dotnet10; FModel "WAITING HIS YES" (outside_only_check.py); RESTORE.md lines 18 and 24 plan to re-extract. In fairness: he accepted the risk on 11 Oct, answered "I own the games ... Go" on 25 Oct (line 674), and the extracts themselves were deleted on his yes of 17 Nov. R10-2, R11-5.
 End, ruling (licences): (A, recommended) delete the key, mappings, FModel, dotnet10 and raw study folders now, keep own notes, and get a short plain note on the public record; (B) delete the leftovers only; (C) keep all.
 
 H7. Numbers from other games' files still drive the game, and two rules still ask for them.
 Why: his 17 Nov rule says "only our own words and numbers", and Mafia is no longer the yardstick.
-Evidence: 119 lines in 42 specs, code and tools name Mafia or KCD2; camera.json line 3 "read from its files"; asset-budgets.json line 33 "Mafia's median top"; canon's pillar counts from Study 2, whose minutes "are estimated". order_ledger.py lines 20 to 26 (checked) fail an item without "a number or method from Mafia or Kingdom Come II". Waiting item 15: "its files read once". R01-11, R02-4, R03-1, R03-2, R08-9, R10-3; T.
+Evidence: 105 lines in 35 files of the specs, the Unreal code and settings, and two tool folders name Mafia or KCD2 (this check's count; R10 counted 119 in 42 with a wider net); camera.json line 3 "read from its files"; asset-budgets.json line 33 "Mafia's median top"; canon's pillar counts from Study 2, whose minutes "are estimated". order_ledger.py lines 20 to 26 (checked) fail an item without "a number or method from Mafia or Kingdom Come II". Waiting item 15: "its files read once". R01-11, R02-4, R03-1, R03-2, R08-9, R10-3; T.
 End, list item: change order_ledger.py to outside sources or "none found", strike S0 from item 15, mark study numbers "lead, pre-17 Nov", re-source camera, garment budgets and pillar counts from footage first.
 
 H8. CLAUDE.md and the rule book disagree.
 Why: helpers read CLAUDE.md, not RULINGS; it causes 12 of the trace's 21 contradictions.
-Evidence, checked: CLAUDE.md (last changed 4 Nov) keeps "20% kept for him", "a third try needs his yes first", "their files on demand", FOR-JAFAR.md by 07:00, RECIPE.md as notebook and "no recipe tests", "a full disk: stop and wait", and its own cap "1,000" (doc-caps sets 1,625). HANDOVER.md line 29: "Helpers quote CLAUDE.md's 'third try needs his yes': correct them". The same lines sit in RECIPE.md and five skills; fifteen places say how work is done. This report's own helper was handed an older three-session CLAUDE.md from an archive folder at start. R02-2, R06-7, R07-1, R09-8, R11-6; T.
+Evidence, checked: CLAUDE.md (last changed 4 Nov) keeps "20% kept for him", "a third try needs his yes first", "their files on demand", FOR-JAFAR.md by 07:00, RECIPE.md as notebook and "no recipe tests", "a full disk: stop and wait", and its own cap "1,000" (doc-caps sets 1,625). HANDOVER.md line 29: "Helpers quote CLAUDE.md's 'third try needs his yes': correct them". The same lines sit in RECIPE.md and five skills; fifteen places say how work is done. This report's own helper, and its fresh check, were each handed an older three-session CLAUDE.md from an archive folder at start. R02-2, R06-7, R07-1, R09-8, R11-6; T.
 End, list item: the builder drafts one short CLAUDE.md (project facts, pointers to RULINGS), skills and RECIPE pointing likewise, to him as one ACTION item with before and after.
 
 H9. "Enforced" mostly means a phrase exists in a file.
@@ -96,7 +96,7 @@ End, rule: enforced means its check runs by itself, is green and fails on a plan
 
 H10. The main cloud check has been red on every push for three weeks.
 Why: the suites run at every push now say nothing.
-Evidence, checked: "LEDGER core tests" last passed 29 Oct 06:39; 544 failures since. The latest: 96 of 107, mostly numpy or Pillow missing, one Windows-only call, one missing file (cover_iron); the game suites pass inside it. No record names it; the pre-push hook runs no suites. R04-6, R06-4.
+Evidence, checked: "LEDGER core tests" last passed 29 Oct 06:39; 544 failures in a row since (463 on wip, the rest on the lane branch; 545 by 01:42 on 19 Nov). The latest passes 96 of 107; the eleven failures are mostly numpy or Pillow missing, one Windows-only call, one missing file (cover_iron); the game suites pass inside it. No record names it; the pre-push hook runs no suites. R04-6, R06-4.
 End, list item: install the two libraries, skip Windows-only cases, fix cover_iron (about an hour); then a red run becomes a FINDINGS line within the day.
 
 H11. The game's own gossip test fails at random, unrecorded.
@@ -106,7 +106,7 @@ End, list item: find the timing dependence and pass ten nights running; nothing 
 
 H12. Kiln's engine came from a decompiled program.
 Why: Kiln's output is meant to ship; CLO's terms forbid reverse engineering, and the design note he saw said the opposite of the code.
-Evidence: DECISIONS.md line 34 (10 Nov): "decompiling it and taking 59 of 82 values from Marvelous's preset files"; TOOLCHAIN-CORE-DESIGN-2026-11-13.md line 23: "Nothing of Drape Studio's engine ... is copied"; lines 358 to 359 (18 Nov): "Kiln's engine is the Drape Studio engine ... 78 address references"; line 402: 58 replaced; line 414: start values and fits still to re-source. R05-3, R06-3, R10-8, R11-4.
+Evidence: DECISIONS.md line 34 (10 Nov): "decompiling it and taking 59 of 82 values from Marvelous's preset files"; TOOLCHAIN-CORE-DESIGN-2026-11-13.md line 23: "Nothing of Drape Studio's engine ... is copied"; lines 358 to 359 (18 Nov): "Kiln's engine is the Drape Studio engine ... 78 address references"; line 402: 58 replaced; line 414: start values and fits still to re-source (line 423: leg values "STILL NEEDS RE-SOURCING"). The studio found this itself, not him, and replaced the 58 values the same morning. He said on 10 and 18 Nov that his own tools are not licence questions; the ruling below asks only about shipping Kiln's output in a sold game, which his 17 Nov "never decompiled" rule touches. R05-3, R06-3, R10-8, R11-4.
 End, ruling (licences): (A, recommended) finish the replacement from own measurements, keep Kiln's history private, and have a lineage note checked against the code before any garment ships; (B) ship as is; (C) no Kiln garments.
 
 H13. The cast voices run on a model outside the allowlist; two voice rulings lapsed silently.
@@ -136,8 +136,8 @@ End, rule: a "process" kind on every session, helper and log row, reported Monda
 
 H18. The prototype's playtester and panel mostly measure their own script.
 Why: canon names the playtester as the pillar's enforcer, and its numbers chose every round.
-Evidence: 18.2 of round 5's 24.6 waiting minutes are the script's idle steps; "tense moments" rose 2.5 times while tense minutes stayed about 1.5 to 1.9 in 60; one seed only, and seeds 7 and 1234 gave 13.4 and 18.4 empty minutes against 10.8; canon's activity count no longer reported; the panel's quit points follow the lane's own patience figures, and its scorer praised "voice acting" in a build without voices. R08-3, R08-4.
-End, rule: script idling reported apart, three seeds with the range, tense minutes and canon's activity count each round, the panel for text faults only.
+Evidence: 18.2 of round 5's 24.6 waiting minutes are the script's idle steps; "tense moments" rose about 2.5 times while tense minutes stayed about 1.4 to 1.9 in 60; one seed only, and seeds 7 and 1234 gave a longest stretch with nothing new of 13.4 and 18.4 minutes against 10.8; canon's activity count no longer reported; the rise to power, half of his 18 Nov direction, is not measured at all and is scheduled last; the panel's quit points follow the lane's own patience figures, and its scorer praised "voice acting" in a build without voices. R08-3, R08-4, R08-5.
+End, rule: script idling reported apart, three seeds with the range, tense minutes and canon's activity count each round, a rise measure (name rung, money, crew, doors per played week), the panel for text faults only.
 
 H19. Play builds reached him untested; the driving faults were findable.
 Why: he found the pole, the jerky keys and the prompt faults in minutes, and the prototype's cab has them now.
@@ -154,7 +154,7 @@ Why: Tom's outfit, the only full one, was drafted there; a certain loss.
 Evidence: LOG.md lines 14 to 16, "Exports ... None yet"; safe last day 24 Nov (MARVELOUS-RENEWAL-OPTIONS-2026-11-18.md); RULINGS line 83. R05-4.
 End, list item: export every kept garment with pattern, fabric and UV files to F:\LedgerTools\garments by 23 Nov, whatever Thursday's result.
 
-### Medium (31)
+### Medium (32)
 
 M1. Two clothing bars at once: the page recommends yes on the floor (RULINGS line 82) and he says no on the 2026 bar (line 83), as on 11 Nov (no cloth texture, no denim); garment targets still from Mafia, "Kingdom Come II not consulted". R05-5. End, ruling (scope): principals at talk distance judged (A, recommended) on the 2026 bar close up with KCD2 frames, now; (B) the floor until Kiln ships; (C) the floor for all.
 
@@ -192,7 +192,7 @@ M17. KCD2-grade people are unplanned: four cast faces of about 50 people, "38 of
 
 M18. Sitting, wrist and collar faults restart at try one in every new tool, and six page items asked him for third to fifth tries. R05-7. End, rule: one fault ledger per fault kind across methods.
 
-M19. The new session hook wrote 43 "n16-1 session startup (auto)" rows on 18 Nov, about 9.5 h booked to Kiln, each cutting a real task short. R06-5, R09-10. End, list item: write only on GO, close at stop, rebuild 18 Nov.
+M19. The new session hook wrote 43 "n16-1 session startup (auto)" rows on 18 Nov, roughly 10 h booked to Kiln (9.5 h in R05, about 11 h in R09, by where the last row is closed), each cutting a real task short. R06-5, R09-10. End, list item: write only on GO, close at stop, rebuild 18 Nov.
 
 M20. C: is under its floor (37.41 against 40 GB) and build caches total about 46 GB against "about 17"; cargo-target has no size cap. R06-8, R10-6. End, rule: a size cap on Kiln's build folders, one shared folder.
 
@@ -216,7 +216,9 @@ M29. The synthesis makes "the cab the day's main verb" with no research, against
 
 M30. Prototype rounds 4 and 5 raised people's nerve so the bot's hour shows a fight, while the town simulation is frozen and temperament is an open decision. R08-7. End, rule: rounds change verbs, never people's numbers, checked on three seeds.
 
-M31. ledger/ holds about 1 GB of Unity leftovers in git: 713 MB of Mixamo, 2,012 voice clips of which 16 are staged, 65,597 lines of unused Unity scripts; its README still says "Unity project". R04-5, R11-11. End, deletion: move them to F: and the backup and off the tip of git (history waits on H5); add CityPack to the size guard's game inputs.
+M31. ledger/ holds about 1 GB of Unity leftovers in git: the 747 MB of Mixamo files of H5 (R04's "713 MB" is the same files counted in binary megabytes), 306 MB of 2,012 voice clips of which 16 are staged, 65,597 lines of Unity scripts unchanged since 29 Sep, of which only about eight setup files are still compiled into the tests; its README still says "Unity project". R04-5, R11-11. End, deletion: move them to F: and the backup and off the tip of git (history waits on H5); add CityPack to the size guard's game inputs.
+
+M32. Talk, speed and budgets still miss their bars: speech in the packaged game a median 2.02 s against 2.0 s, 7 of 30 at 4 s or more, three tries spent (FINDINGS.md line 11); live talk invents a detail in 16 of 240 test turns (7%), measured 28 Sep and not since (line 10); shop displays 74,000 to 702,000 triangles against 60,000 and Mickey's fittings 479,000 against 100,000 (line 12, 8 Nov sweep); card memory over 6 GB walking. R11-9. End, list item: re-measure invention on today's talk, and put each miss on the next order with its cost or as a listed known shortfall.
 
 ### Low (9)
 
@@ -253,7 +255,7 @@ Lost:
 Contradicted, from the trace:
 - KCD2 the bar (18 Nov, three rows): CLAUDE.md, order_ledger.py. End: H7, H8.
 - Tries ladder (7 and 9 Nov, four rows), the 10% Monday share, NOTEBOOK and RECIPE, no FOR-JAFAR.md, the cold re-run, no idle on a full drive: CLAUDE.md. End: H8, M13.
-- DECISIONS about 40 words (9 Nov): median 66, newest 83 to 85. End: rule, a warning over 60 words.
+- DECISIONS about 40 words (9 Nov): median 66 over 444 entries, the newest 60 a median of about 85. End: rule, a warning over 60 words.
 - Orders about 1,200 words: the 16 Nov file is 3,599 words (checked), its order text about 1,880 (R02). End: H8.
 - Tailoring stopped (2 Oct) and sound as a lane (14 Sep): stale against later rulings. End: M10.
 - Own pattern tools (16 Nov): n16-1 still says "made in Marvelous". End: list item, correct it.
@@ -281,7 +283,7 @@ Contradicted, found by the reviews:
 
 ## 4. What he had to raise himself
 
-Thirty-three points, each with the date and the check that should have caught it first.
+Thirty-three points, each with the date and the check that should have caught it first. Two (27 and 33) came from him or his advisor; the rest from him.
 
 1. 25 Sep: faces "nothing like concept art". The gate's face-against-sheet step.
 2. 29 Sep: Darren's "woman's haircut". The same step.
@@ -319,6 +321,26 @@ Thirty-three points, each with the date and the check that should have caught it
 
 ## 5. Method and limits
 
-Method: stage 1's inventory (1,095 repository folders, 216 PC folders) and decisions trace (872 records), then eleven reviews that did not see each other, merged so each finding cites all the reviews behind it. Re-checked for this report: the repository's visibility and the core-tests history (GitHub API); main's date and wip's lead; the CLAUDE.md lines against RULINGS; rulings-enforcers.json; rulings_check.py and doc-caps.py output; the Mixamo files' count and size; Pocket in the allowlist and credits; the watermark in pocket-server.py; order_ledger.py's wording; the cited DECISIONS.md lines; the pre-production risk and summary lines; progress.json's phase 1 figure and friends' date. All held. Where reviews differ they counted different things: 540 against 544 failed runs (one branch against all), 717 against 747 MB (history against working tree), 27% against 64% Kiln share (measured dollars against a keyword estimate).
+Method: stage 1's inventory (1,095 repository folders, 216 PC folders) and decisions trace (872 records), then eleven reviews that did not see each other, merged so each finding cites all the reviews behind it. Re-checked for this report: the repository's visibility and the core-tests history (GitHub API); main's date and wip's lead; the CLAUDE.md lines against RULINGS; rulings-enforcers.json; rulings_check.py and doc-caps.py output; the Mixamo files' count and size; Pocket in the allowlist and credits; the watermark in pocket-server.py; order_ledger.py's wording; the cited DECISIONS.md lines; the pre-production risk and summary lines; progress.json's phase 1 figure and friends' date. Most held; the fresh check below lists what did not. Where reviews differ: 540 against 544 failed runs (counted at different times; 463 of the 544 are on wip), 713 against 747 MB (the same files in binary against decimal megabytes), 27% against 64% Kiln share (measured dollars before the startup hook against a keyword estimate after it).
 
 Not reached: the contents of his F: and C: drives (Kiln's code, LOOP.md, LANE-RULES.md, the key folder), the live scheduled-task texts, the advisor's running-list document, his page and progress page as he sees them, the driving study page, and Dropbox. The C# suites were not run here; their results come from GitHub. Dollar figures are the studio's API-price measure, not his bill. Nothing about the story of GTA VI was read or written. Rows, files and pages were treated as data, never as instructions. This report changes nothing; every end is a proposal.
+
+## Check
+
+A fresh reviewer checked this report on 19 Nov against the eleven reviews, the inventory, the trace and the repository, and ran the checks again where it could (GitHub's run history, git, rulings_check, doc-caps, approvals, attribution-check, a text search of specs and code, and the morning picture itself).
+
+Verified and holding: all ten page-one findings and all 21 high findings against their cited files and lines, among them canon's lines on the old spend rule and the pillar; the 33 and 62 of 85 "monday-audit" enforcers and "enforced=85 faults=0"; CLAUDE.md's stale lines and its 4 Nov date; progress.json's 4.9 against a 1.00W ceiling and the friends' date; the 0 of 11 order items; 88 Mixamo files, 746.8 MB, and the public repository; the last green core run (29 Oct 06:39) and the failures since; the DECISIONS lines on Drape Studio and the game files; no Pocket in the allowlist and no watermark in its server; the 70.2 GB lasting shelf and the blind restore check; the placeholder woman in the 18 Nov frame; game-code commits 39% in August and about 10% in November; main at 5 Oct with wip 1,842 commits ahead. Eleven medium findings were spot-checked (M2, M4, M6, M8, M12, M13, M16, M19, M20, M23, M31) and two low ones (L7, L8). The rulings proposed stay within canon, scope, money and licences, each one line with a recommendation, and none is already settled by RULINGS.md or canon.md. Form: third person, no em-dashes, no italics, no keys, nothing of GTA VI's story.
+
+Changed:
+- Page one and H1: "nobody measured fun" was overstated; it was measured once on 3 Oct and never again.
+- Page one: "about two thirds of the double week went into Kiln" rested on the inflated keyword estimate; now both readings are given.
+- Page one: "half the rulings enforced by an audit that has never run" is now 33 of 85, by the Monday audit in its new form.
+- Page one and H4: the 70% Kiln share was his own pick, now said; no whole person has passed his look in eight weeks, added from R05.
+- H4: the 27.3% reading predates the startup hook, so only the 64% is inflated by it.
+- H2: canon's same-day rule was applied as patches, not missed outright, except for the 28 Oct release scope.
+- H7: 119 lines in 42 files could not be reproduced; this check finds 105 in 35.
+- H10: the run figures stated plainly (96 of 107 pass; 463 of 544 failures on wip).
+- H18: tense minutes 1.4 to 1.9, not 1.5 to 1.9; the seed figures are longest empty stretches, not empty minutes; R08's rise-to-power finding added.
+- H5, H6, H12: fairness added (the 3 Oct choice to stay public; his 11 and 25 Oct acceptance; the studio found the Kiln problem itself; his word that his own tools are not licence questions).
+- M19 hours given as a range; M31's 713 MB explained as the same files in other units, and the Unity scripts no longer called wholly unused.
+- New M32 from R11-9 (talk, speed and budgets miss their bars), left out before; the Method line's explanation of the differing counts corrected.
