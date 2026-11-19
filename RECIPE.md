@@ -172,3 +172,13 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Tools: the project's posed-check script (no Blender), skinned FBX and the wearer's weights body. Cost: 0.1 h, 4 s machine.
 - Failed and why: the hem measure reads zero on any skinned garment, because hem points follow the shin and foot bones rigidly; a seated gap between hem and footwear needs the footwear in the check, or the film.
 - Evidence: F:/LedgerTools/tool-dev/runs/sit-shape-2026-11-19/RESULT.md
+
+### Layered garment fix, set aside (19 Nov 2026)
+- Made: two tries to keep an outer garment over a frozen inner one inside its bars; both failed. Cost: 8 h lane, 37 min machine, 5.5 h waiting on a shared lock.
+- Method and failure: split the count by cause first (a no-normal "outside" test beside the judge's normal-ray rule): 124 of 296 points were the inner garment's own folded cuffs, which a normal-ray rule reads as through. Try 2 fixed the stretch but opened a seam: seams must have the last word after the strain limit.
+- Lesson: prove a count measures the fault before tuning a solver to it. Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERED3-2026-11-19.md
+
+### Garment refit across bodies (19 Nov 2026)
+- Made: one drape refitted onto two other bodies, passing every check. Cost: 7 h lane.
+- Method: untangle seam-side crossings before the start check, refit, sew with bands frozen, settle; two band measures, the line set before any run. Shortfall: one band 0.3 points over a self-set line, less than the source itself moves; the cure is a source at rest.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md

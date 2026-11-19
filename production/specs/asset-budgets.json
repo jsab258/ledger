@@ -68,6 +68,7 @@
     ["/Game/Ledger/MetaHumans/Garments/SheilaSkirt", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/SheilaShoes", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments/RonWorkTrousers", "garment_trousers"],
+    ["/Game/Ledger/MetaHumans/Garments/RonJumperOverTrousers", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
     ["/Game/MetaHumans", "exempt"],
