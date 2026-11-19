@@ -1,5 +1,5 @@
 {
-  "updated": "Tuesday 17 November 2026, 5:13",
+  "updated": "Thursday 19 November 2026, 20:59",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -178,7 +178,7 @@
         7.7
       ],
       "began": "2026-11-09",
-      "actual_w": 1.1
+      "actual_w": 1.4
     },
     {
       "n": 3,
@@ -200,7 +200,7 @@
     {
       "n": 4,
       "name": "Friends' evening",
-      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening; parked cars and background traffic in the street (your ruling of 17 November).",
+      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening.",
       "size": "About a week",
       "state": "ahead",
       "milestone": true,
@@ -262,7 +262,7 @@
     {
       "n": 8,
       "name": "The docks",
-      "get": "The docks beside the Hook (traffic moved into the friends' build by your ruling of 17 November).",
+      "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
       "state": "sketch",
       "short": "The docks",
       "next_step": "Waits for the Empire. Your ruling of 28 October makes it the first cut if time runs short; the advisor suggests moving it to the first update after release, your call at the 1 July check.",
@@ -301,7 +301,7 @@
     {
       "n": 11,
       "name": "After release: more districts, driving yourself",
-      "get": "Updates after release: Meridian's other districts. Driving: an arcade car once the map is bigger, then driving to AAA standard as the end state, costed for you first (your ruling of 17 November).",
+      "get": "Updates after release: Meridian's other districts, and driving yourself.",
       "state": "sketch",
       "terminus": true,
       "short": "After",
@@ -317,7 +317,8 @@
       "state": "fighting",
       "start_label": "phase 2 began 9 Nov",
       "last": "11 Nov: Sheila filmed in the packaged game; the neckband shards at her collar pass, the cardigan still shows through the collar fall in strips (two tries spent, set aside). Tom's jacket stays set aside.",
-      "route": "Our own refit, with MetaTailor (free version) and Houdini's cloth (Vellum) on test."
+      "route": "Our own refit, with MetaTailor (free version) and Houdini's cloth (Vellum) on test.",
+      "blocks": "the cast’s clothes in phase 2. Kiln is its weapon (v1: 0 of 6); Marvelous lapses 26 November."
     },
     {
       "name": "People in motion",
@@ -325,7 +326,8 @@
       "display": "The walk passed your eye (26 Oct); the sit's head swing and two motion clips set aside",
       "state": "fighting",
       "last": "Sitting and standing work packaged with the face up; his head swings in the drop. Two clips made from video were set aside after two tries each.",
-      "route": "Cascadeur's physics tools (on test), the free CMU motion library, real footage as reference, the larger video model later."
+      "route": "Cascadeur's physics tools (on test), the free CMU motion library, real footage as reference, the larger video model later.",
+      "blocks": "walking, sitting and turning, phases 2 and 3."
     },
     {
       "name": "Hair",
@@ -333,7 +335,8 @@
       "display": "Not started at the gate; strands stay (9 Nov)",
       "state": "fighting",
       "last": "No character's hair has passed yet. Houdini's free licence cooks headless but cannot export the hair to Unreal (needs Indie, about US$299 a year): asked only if Houdini still wins after its cloth test.",
-      "route": "Houdini on test (Darren's curls)."
+      "route": "Houdini on test (Darren's curls).",
+      "blocks": "the principals close up, phase 2."
     },
     {
       "name": "The crowd and card memory",
@@ -341,7 +344,8 @@
       "display": "6,005 MB in the 8 Nov walk (a middle reading, not the peak)",
       "state": "fighting",
       "last": "Whether the reading is the game alone is still being checked; the crowd beyond the named people is not yet priced.",
-      "route": "AMD's memory tools, if you say yes."
+      "route": "AMD's memory tools, if you say yes.",
+      "blocks": "a full street of people within the card’s memory, phase 2 and the Hook."
     },
     {
       "name": "Testing",
@@ -349,7 +353,8 @@
       "display": "8 Nov walk: 16 of 17 stages, 58.2 fps, worst frame 22.37 ms",
       "state": "fighting",
       "last": "Lean checks: one added only when a fault slipped past, dropped after a month of catching nothing.",
-      "route": "The nightly walk plus the session's own packaged films."
+      "route": "The nightly walk plus the session's own packaged films.",
+      "blocks": "every phase exit: the packaged walk."
     }
   ],
   "street": {
@@ -404,24 +409,24 @@
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-19",
-      "line": "Morning, Thursday 19 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
+      "date": "2026-11-17",
+      "line": "Morning, Tuesday 17 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-19.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-18.jpg"
+          "today": "production/previews/morning-hook-day-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-16.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-19.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-18.jpg"
+          "today": "production/previews/morning-reverse-day-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-16.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-19.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-18.jpg"
+          "today": "production/previews/morning-night-2026-11-17.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-16.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
@@ -534,8 +539,8 @@
   },
   "carried": [],
   "line2027": {
-    "as_of": "Tuesday 17 November",
-    "behind_w": -0.5,
+    "as_of": "Thursday 19 November",
+    "behind_w": -0.2,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   },
   "forecast": {
@@ -726,5 +731,139 @@
         "Live talk's two-second bar on a newcomer's real questions is not yet met inside the packaged game (2.02 s median, 4 November); the bake-off may move it."
       ]
     }
-  ]
+  ],
+  "prototype": {
+    "round": "The one-shot",
+    "page": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A",
+    "round_note": "the night of 19 November, in the cloud; then loops",
+    "stages": [
+      {
+        "key": "A",
+        "name": "One evening that holds",
+        "state": "here",
+        "builds": "The first hour, fares, the constable on his beat, the Ledger.",
+        "hands_to": "Phases 3 and 4: thirty minutes that hold, the friends’ evening",
+        "panel_target": 4
+      },
+      {
+        "key": "B",
+        "name": "A week that holds",
+        "state": "ahead",
+        "builds": "Witnesses and arrests, police, break-ins, fists.",
+        "hands_to": "Phase 3’s fight lab, then phase 6: crime and combat",
+        "panel_target": 5
+      },
+      {
+        "key": "C",
+        "name": "The rise",
+        "state": "ahead",
+        "builds": "Crew, the firm, the rivals, guns and the escalation dial.",
+        "hands_to": "Phases 7 and 8: the empire, the docks",
+        "panel_target": 6
+      },
+      {
+        "key": "D",
+        "name": "The end",
+        "state": "ahead",
+        "builds": "Acts II and III, the endings, a whole playthrough from the ferry to an ending.",
+        "hands_to": "Phase 9: the story",
+        "panel_target": 6
+      }
+    ],
+    "panel": [],
+    "hours": {
+      "estimate": "the one-shot about 10 h overnight, then loops",
+      "actual": "not measured yet"
+    },
+    "beside": [
+      {
+        "name": "One simulation",
+        "status": "proven",
+        "line": "The game’s own town code runs in the browser and matched all 102,949 test answers and six played weeks. It joins the prototype as one round."
+      },
+      {
+        "name": "Driving",
+        "status": "measuring from Monday",
+        "line": "Eight games approved for study, measured on the PC from Monday 23 November, right after the Marvelous export and before the rest of Kiln; walking, fights, being seen and chases on foot join once you approve their list; then one Fable round; then its car replaces the prototype’s cab."
+      }
+    ]
+  },
+  "joins": {
+    "2": [
+      "Stage A: the experience rules and the clumsy-player tester, in every packaged build"
+    ],
+    "3": [
+      "Stage A: the first minutes on foot and the Ledger",
+      "Stage B: fists, in the fight lab"
+    ],
+    "4": [
+      "Stage A: the first minutes on foot"
+    ],
+    "5": [
+      "Stages A and B: the cab, fares, cars and people"
+    ],
+    "6": [
+      "Stage B: police, break-ins, fists",
+      "Stage C: guns and the dial, last"
+    ],
+    "7": [
+      "Stage C: crew, the firm, the rivals"
+    ],
+    "8": [
+      "Stage C: crew, the firm, the rivals"
+    ],
+    "9": [
+      "Stage D: Acts II and III, the endings"
+    ]
+  },
+  "week": {
+    "label": "Week of 16 to 23 November, so far (Thursday 19)",
+    "finished": [
+      "The whole-game design and its vision, approved by you.",
+      "A full audit of the project: 61 findings, each with your ruling.",
+      "The publish gate: nothing reaches you to play without passing it.",
+      "The driving games chosen for study: eight, with your yes.",
+      "The real town simulation running in the browser, matching the game’s own tests.",
+      "The backup gap closed and the build checks green again."
+    ],
+    "blocked": [
+      {
+        "boss": "The Tailor",
+        "item": "Kiln v1 is 0 of 6: the jacket over the jumper, the coat’s collar and the blouse’s underarm still fail. Monday 13:00 will most likely be missed."
+      },
+      {
+        "boss": "The Tailor",
+        "item": "Marvelous lapses on 26 November: everything made in it must be exported before then."
+      }
+    ],
+    "try": [
+      {
+        "label": "The prototype",
+        "url": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A",
+        "note": "round 5; round 6, with your driving complaints fixed, comes after its last checks"
+      },
+      {
+        "label": "The design deck",
+        "url": "https://claude.ai/artifact/VoDvh3gqj1q5CGiAhBLSqK",
+        "note": "the whole game in 28 slides"
+      },
+      {
+        "label": "The driving study",
+        "url": "https://claude.ai/artifact/UdoyuRSba3tseVmA5daeFq",
+        "note": "round 3; the next round follows the measurements"
+      }
+    ],
+    "decisions": [
+      {
+        "label": "Your page",
+        "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8",
+        "note": "anything waiting for you"
+      },
+      {
+        "label": "Three story questions",
+        "note": "the first hour’s staging, each person’s own temper, anyone Tom won’t hit; built to the recommendation meanwhile, they reach your page when needed"
+      }
+    ]
+  },
+  "date_move": null
 }

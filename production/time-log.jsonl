@@ -905,3 +905,29 @@
 {"event": "start", "at": "2026-11-19T07:22:38", "task": "n16-1 Kiln Thursday checkpoint: held-back run 1 and B2 on main", "phase": "0", "kind": "production", "item": "n16-1"}
 {"event": "start", "at": "2026-11-19T07:24:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f92ce49f-bcde-449d-86cc-3835fe4bb04a"}
 {"event": "stop", "at": "2026-11-19T08:00:08", "note": ""}
+{"event": "start", "at": "2026-11-19T08:10:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "afc9e00c-b125-4316-a8f8-8526f2b2fc05"}
+{"event": "start", "at": "2026-11-19T08:11:37", "task": "kiln-checklist fri-sun rows", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-19T08:14:05", "note": ""}
+{"event": "start", "at": "2026-11-19T08:14:15", "task": "kiln layered job fix", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-19T08:17:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "953e8ff0-fc51-4fa0-b44d-206d6093619c"}
+{"event": "start", "at": "2026-11-19T08:36:23", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "385008a0-f056-44f7-8c4c-67a62f12bfb8"}
+{"event": "start", "at": "2026-11-19T08:51:23", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "d75d0d06-3dea-4b34-abca-1097f04029d4"}
+{"event": "start", "at": "2026-11-19T09:01:45", "task": "advisor 238 cloud check red", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-19T09:06:11", "task": "advisor 238 backup gap", "phase": "0", "kind": "production"}
+{"event": "start", "at": "2026-11-19T09:06:22", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "d64c580c-c7a4-4ad5-b7a2-9cdc2a2bf9d4"}
+{"event": "stop", "at": "2026-11-19T09:10:40", "note": ""}
+{"event": "start", "at": "2026-11-19T09:10:45", "task": "advisor 238 placeholder out of frame", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-19T09:11:46", "note": ""}
+{"event": "start", "at": "2026-11-19T09:12:47", "task": "advisor 239-240 history clean-up prep", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-19T09:14:46", "note": ""}
+{"event": "start", "at": "2026-11-19T09:16:14", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f8ee9735-118e-4729-9c44-529e113d811a"}
+{"event": "stop", "at": "2026-11-19T09:31:47", "note": ""}
+{"event": "start", "at": "2026-11-19T09:36:23", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "e69c81d8-a705-4942-b40f-092dd7cb7f11"}
+{"event": "start", "at": "2026-11-19T09:56:14", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "8ccc73af-e794-4f8a-9ebf-5784a2d3a06e"}
+{"event": "start", "at": "2026-11-19T10:06:23", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "2d70e7d0-edb0-494d-a692-927ba099eb76"}
+{"event": "start", "at": "2026-11-19T11:03:15", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "9a847466-317a-45ff-a1b0-e65d1ab362fa"}
+{"event": "start", "at": "2026-11-19T11:27:15", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "15a56e91-3b03-4882-b8db-f99f6db9b800"}
+{"event": "start", "at": "2026-11-19T11:36:24", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "50cca8b2-de7f-44d0-a78e-f3612b7a8294"}
+{"event": "start", "at": "2026-11-19T11:51:24", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "227a319d-a40e-481c-9607-e95cf63ea81f"}
+{"event": "start", "at": "2026-11-19T12:06:25", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f099cf0f-9b31-4d04-b938-aafb4efe681c"}
+{"event": "start", "at": "2026-11-19T12:21:25", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "8c1c9880-ef23-423a-963a-fcf8c60f8329"}
