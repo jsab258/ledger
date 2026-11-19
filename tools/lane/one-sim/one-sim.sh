@@ -8,6 +8,7 @@
 #   tools/lane/one-sim/one-sim.sh browser     the same checks inside a real web page (headless Chromium)
 #   tools/lane/one-sim/one-sim.sh selftest    the checks themselves: a wrong table must fail them
 #   tools/lane/one-sim/one-sim.sh breaks      seven planted one-line breaks: does the whole table, or the front door, see them?
+#   tools/lane/one-sim/one-sim.sh differences the prototype's own JavaScript town against the real rules, measured (DIFFERENCES.md)
 #   tools/lane/one-sim/one-sim.sh all         reference, wasm, test, selftest, browser, and Node against the browser
 #
 # NOTHING IS WRITTEN UNDER ledger/ OR ue-probe/. Their files are compiled from where they
@@ -250,9 +251,19 @@ breaks() {
   ( cd "$W" && $NICE python3 -I "$HERE/wasm/breaks.py" --repo "$REPO" --work "$W" --cxx "$CXX" --golden "$TABLE" --json "$W/logs/breaks.json" )
 }
 
+# A measurement, not a gate: the prototype's frozen rule files (read, never changed) beside the real town.
+differences() {
+  need "$W/wasm/one-sim.wasm" "the browser build" wasm
+  command -v node >/dev/null 2>&1 || { say "NOTHING MEASURED: no node"; return 3; }
+  mkdir -p "$W/logs"
+  ( cd "$W" && $NICE node --no-warnings "$HERE/differences/measure.mjs" --brain "$W/wasm/one-sim.wasm" --specs "$REPO/production/specs" \
+      --prototype "$REPO/tools/lane/prototype/project/src" --json "$W/logs/differences.json" )
+}
+
 case "${1:-}" in
   setup)     setup;     exit $? ;;
   breaks)    breaks;    exit $? ;;
+  differences) differences; exit $? ;;
   reference) reference; exit $? ;;
   wasm)      wasm;      exit $? ;;
   test)      test_;     exit $? ;;
@@ -272,5 +283,5 @@ case "${1:-}" in
     fi
     [ $rc -eq 0 ] && say "one-sim: everything passed" || say "one-sim: NOT all passed (exit $rc)"
     exit $rc ;;
-  *) say "usage: one-sim.sh setup|reference|wasm|test|selftest|browser|breaks|all"; exit 2 ;;
+  *) say "usage: one-sim.sh setup|reference|wasm|test|selftest|browser|breaks|differences|all"; exit 2 ;;
 esac
