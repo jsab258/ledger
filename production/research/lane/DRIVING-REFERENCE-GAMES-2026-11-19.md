@@ -10,19 +10,19 @@ Tags: [READ] read at the source today; [I] our own judgement or general knowledg
 
 Shortlist, in order (why in one line each, full scores below):
 
-1. GTA V: the genre's yardstick for fun driving and the most footage of any game; the upper bound for grip and forgiveness.
+1. GTA V: the genre's yardstick for fun driving and, as far as we can tell [I], the most footage of any game; the upper bound for grip and forgiveness.
 2. GTA IV: the same studio's heavy, swaying cars; the upper bound for body roll and weight, the other side of GTA V.
-3. Sleeping Dogs: left-hand traffic in dense, narrow streets with arcade driving players and critics call fun; the closest feel-and-street match.
-4. Mafia: Definitive Edition: the only shortlisted game with a speedometer on screen and old, slow cars; good for timings, one data point only.
+3. Sleeping Dogs: left-hand traffic in dense, narrow streets with arcade driving critics call fun (players are split); the closest feel-and-street match.
+4. Mafia: Definitive Edition: the only shortlisted game with a speedometer on screen confirmed so far, and old, slow cars; good for timings, one data point only.
 5. Watch Dogs: Legion: real London streets, left-hand traffic, kerbs and tight corners; used for the camera in tight spaces and street scale, not for handling, which players dislike.
-6. The Getaway: London, left-hand traffic, fragile smoking cars, no HUD; used for crashes, damage and what happens after, not for timings (low frame rate).
+6. The Getaway: London, left-hand traffic, cars said to be fragile, no HUD; used for crashes, damage and what happens after, not for timings (low frame rate).
 
 Contrast games:
 
 - Forza Horizon 4: real 1980s British cars on British roads with a speedometer; shows what a period car does when a studio tunes it for fun, without on-foot play.
 - Driver: San Francisco: a driving-only game critics praise for weighty arcade handling; shows how far "fun first" can go.
 
-Biggest gap: no clip below has yet been checked for length, frame rate, mods or minute marks. Search results do not show them. The first part of the measuring sheet is the builder doing that check on his PC (about 25 minutes a game, about 3.5 hours for all eight). Player reception is thin where Reddit could not be searched.
+Biggest gap: no clip below has yet been checked for length, frame rate, mods or minute marks. Search results do not show them, so every D score is provisional until the clip check. The first part of the measuring sheet is the main session doing that check on his PC (about 25 minutes a game, about 3.5 hours for all eight, included in the totals). Player reception is thin where Reddit could not be searched.
 
 ## The scoring
 
@@ -34,7 +34,7 @@ Each game gets 0 to 3 on five tests from the task:
 - D. Long unedited footage at 60 frames a second with the normal camera, plenty of it; a speedometer on screen counts extra, since it makes timings exact.
 - E. Close to LEDGER: left-hand traffic, older or small everyday cars, tight streets.
 
-D is the gate for measuring: a game below 2 on D can still teach behaviours (crashes, damage, the camera) but gives no timing numbers.
+D is the gate for measuring, and is provisional (scored from titles) until the clip check: a game below 2 on D can still teach behaviours (crashes, damage, the camera) but gives no timing numbers.
 
 | Game | A | B | C | D | E | Total | Speedometer on screen |
 |---|---|---|---|---|---|---|---|
@@ -65,43 +65,43 @@ Totals are a guide, not the rank: the rank weighs what each game can be measured
 ### GTA IV (2008)
 - A: open world, third person, Liberty City [I].
 - B and C. Traxion: "GTA IV's vehicles possess a depth to their handling that satisfies the urge for a driving challenge" and "it's difficult to drive a car well" [READ] (link above). Kotaku (Patricia Hernandez, 19 Jan 2016): car physics "more realistic in GTA IV" [READ] https://kotaku.com/15-small-things-gta-iv-does-better-than-gta-v-1753859687 . The Drive: IV's cars "more lumbering and slippery"; "handbrake turns are notably tougher" [READ]. Players: Steam thread, 6 driving comments read of 197: 2 positive ("best steering and physics of ANY game of this genre"), 4 negative ("Good god the steering is awful") [READ] https://steamcommunity.com/app/12210/discussions/0/5913784177866547198 . Loved by some, disliked by many: the split itself is the lesson.
-- D: "Grand Theft Auto 4 - Liberty City - Open World Free Roam Gameplay (PC UHD) [4K60FPS]", Throneful, 5 Feb 2026, no mods mentioned https://www.youtube.com/watch?v=PJTSKYNknSw ; "GTA 4 4K 60FPS HDR Gameplay (Free Roam)" https://www.youtube.com/watch?v=tu8cYarXb1M . Earlier: "Gameplay Driving Around" https://www.youtube.com/watch?v=Qdeq-hMoBA8 and "Driving is Stressful in GTA 4, Free Roam PC" https://www.youtube.com/watch?v=ACt2evMb1rw (FEEL-TARGETS section e). Caution [I, not checked]: the PC version is often said to behave differently at high frame rates; the measurer compares one PC clip with one console clip on the same manoeuvre before trusting PC numbers.
+- D: "Grand Theft Auto 4 - Liberty City - Open World Free Roam Gameplay (PC UHD) [4K60FPS]", Throneful, 5 Feb 2026, no mods mentioned https://www.youtube.com/watch?v=PJTSKYNknSw ; "GTA 4 4K 60FPS HDR Gameplay (Free Roam)" https://www.youtube.com/watch?v=tu8cYarXb1M . Earlier: "Gameplay Driving Around" https://www.youtube.com/watch?v=Qdeq-hMoBA8 and "Driving is Stressful in GTA 4, Free Roam PC" https://www.youtube.com/watch?v=ACt2evMb1rw (FEEL-TARGETS section e). Minute marks not found; to be found by the measurer. Caution [I, not checked]: the PC version is often said to behave differently at high frame rates; the measurer compares one PC clip with one console clip on the same manoeuvre before trusting PC numbers.
 - E: right-hand traffic, but heavy, swaying cars closer to a 1990 saloon than GTA V's.
 
 ### Sleeping Dogs (2012, Definitive Edition 2014)
 - A: open world, third person, Hong Kong streets [READ, PC Gamer].
 - B and C. PC Gamer (Tom Senior, 6 Sep 2012, 74/100): "an arcade driving model that almost glues your car to the road"; "a ludicrous shunt move throws your vehicle suddenly sideways" [READ] https://www.pcgamer.com/sleeping-dogs-review/ . Sportskeeda: "The arcade-like feel of driving in this game is practically unmatched by any other open-world title" [READ] (link above). Players: one r/patientgamers thread read through a mirror, 11 driving comments: 3 positive ("felt so much better than GTA"), 7 negative ("everything handles so badly"), 1 neutral [READ] https://lr.us.psf.lt/r/patientgamers/comments/13d01dr/sleeping_dogs_if_only_there_was_a_sequel . Critics like it more than players.
-- D: "Sleeping Dogs Definitive Edition (Hong Kong) FREE ROAM Open World Gameplay (4K 60FPS) PC", Repeat Good Gameplays, 9 May 2025, no mods mentioned https://www.youtube.com/watch?v=CGho8_UOzSk . Earlier: "Free Roam Driving" https://www.youtube.com/watch?v=kybmFm0Zdbo (FEEL-TARGETS section e). Thin: the measurer may need to search for one more long clip.
+- D: "Sleeping Dogs Definitive Edition (Hong Kong) FREE ROAM Open World Gameplay (4K 60FPS) PC", Repeat Good Gameplays, 9 May 2025, no mods mentioned https://www.youtube.com/watch?v=CGho8_UOzSk . Earlier: "Free Roam Driving" https://www.youtube.com/watch?v=kybmFm0Zdbo (FEEL-TARGETS section e). Minute marks not found; to be found by the measurer. Thin: the measurer may need to search for one more long clip.
 - E: left-hand traffic, dense narrow streets, small and mid-size cars; modern era.
 
 ### Mafia: Definitive Edition (2020)
 - A: open world, third person, 1930s Lost Heaven [READ, PC Gamer 79 https://pcgamer.com/mafia-definitive-edition-review ].
 - B and C. GameRevolution: "Overly slippery handling, poor turning radii, and slow acceleration turn driving into a chore" [READ] https://www.gamerevolution.com/review/660782-mafia-definitive-edition-review-ps4-xbox-one-pc . Sportskeeda: "a handling model that feels truly authentic and natural" [READ]. Steam summary (VaporLens, a third-party summary, not Steam itself): 80% positive overall, "poor driving mechanics" a top complaint with 49 mentions [READ] https://vaporlens.app/app/1030840/mafia_definitive_edition . Tally: 1 positive, 2 negative.
-- D: the HUD has a speedometer (the patch notes say the minimal HUD can "hide HUD elements including the mini-map, the speedometer") [READ] https://www.dsogaming.com/news/first-mafia-definitive-edition-patch-adds-custom-hud-options-noir-mode/ . Footage: "Mafia Definitive Edition Free Ride Clean Driving Night + Heavy Rain" https://www.youtube.com/watch?v=qHZiCpGntQM ; "Mafia Definitive Edition: Free Ride Taxi Driving & Races!" https://www.youtube.com/watch?v=E1_fAJkC9mU ; "Free Ride - Countriside & City + Police Fight" https://www.youtube.com/watch?v=6r4b-N_8PT0 . Lengths and frame rates not found.
-- E: right-hand traffic, but old, slow, upright cars; the slowest acceleration on the list, nearest to a 1990 hatch's.
+- D: the HUD has a speedometer (the patch notes say the minimal HUD can "hide HUD elements including the mini-map, the speedometer") [READ] https://www.dsogaming.com/news/first-mafia-definitive-edition-patch-adds-custom-hud-options-noir-mode/ . Footage: "Mafia Definitive Edition Free Ride Clean Driving Night + Heavy Rain" https://www.youtube.com/watch?v=qHZiCpGntQM ; "Mafia Definitive Edition: Free Ride Taxi Driving & Races!" https://www.youtube.com/watch?v=E1_fAJkC9mU ; "Free Ride - Countriside & City + Police Fight" https://www.youtube.com/watch?v=6r4b-N_8PT0 . Lengths, frame rates and minute marks not found; to be found by the measurer.
+- E: right-hand traffic, but old, slow, upright cars; critics call the acceleration slow (GameRevolution), likely nearest to a 1990 hatch's [I, not yet measured].
 
 ### Watch Dogs: Legion (2020)
 - A: open world, third person, London [I].
 - B and C. Gamepressure (Mike Manka, 6 Oct 2020): "they still feel like driving bathtubs with different top speeds" [READ] https://www.gamepressure.com/editorials/5-likes-yikes-watch-dogs-legion/zd328 . The News Wheel (12 Sep 2022): "Cars, trucks, and motorcycles all have a satisfying weight" [READ] https://thenewswheel.com/?p=132851 . Steam summary (VaporLens): 46% positive overall, "poor driving and physics" cited 52 times [READ] https://vaporlens.app/app/2239550/watch_dogs_legion . Disliked.
-- D: "Watch Dogs Legion - Night Gameplay Free Roam London 4K 60FPS HDR + Ray Tracing", Shirrako, 27 Oct 2020 https://www.youtube.com/watch?v=2wQVnwcOO3A ; "Watch Dogs Legion - A Scenic Drive Through the Streets of London" https://www.youtube.com/watch?v=DKzkyAlU5rw ; "Night Drive Around London In Foggy Wet Streets" https://www.youtube.com/watch?v=N2kk_Nvra84 .
-- E: left-hand traffic, real London road widths, kerbs, bollards and British markings; modern cars. The best street scale on the list.
+- D: "Watch Dogs Legion - Night Gameplay Free Roam London 4K 60FPS HDR + Ray Tracing", Shirrako, 27 Oct 2020 https://www.youtube.com/watch?v=2wQVnwcOO3A ; "Watch Dogs Legion - A Scenic Drive Through the Streets of London" https://www.youtube.com/watch?v=DKzkyAlU5rw ; "Night Drive Around London In Foggy Wet Streets" https://www.youtube.com/watch?v=N2kk_Nvra84 . Minute marks not found; to be found by the measurer.
+- E: left-hand traffic in London; road widths, kerbs, bollards and British markings expected but not yet checked [I]; modern cars. Likely the best street scale on the list.
 
 ### The Getaway (2002)
-- A: open world London with a free roam mode [READ, The Drive].
-- B and C. The Drive (date not shown): its cars had "more weight to toss around"; no HUD, not even a crosshair; you can use indicators and obey traffic laws [READ] https://www.thedrive.com/news/why-london-studios-the-getaway-is-still-a-special-driving-game-22-years-later . Metacritic 72 from 49 critics; users 7.6 from 97 ratings [READ] https://www.metacritic.com/game/the-getaway/ . HonestGamers reader (29 Jul 2004): "the steering feels far too twitchy, especially at high speeds" [READ] https://www.honestgamers.com/2705/playstation-2/the-getaway/review.html .
-- D: PS2 footage, so the game itself ran at a low frame rate [I]; "4K 60FPS" titles are upscaled. "The Getaway - Full Game Longplay Walkthrough (PS2 Gameplay)" https://www.youtube.com/watch?v=Nr05btaRfmM ; "The Getaway - All Secret Car Locations (Free Roam Mode)" https://www.youtube.com/watch?v=V1GXBLJrcpY ; earlier "First 10 Minutes" https://www.youtube.com/watch?v=yeKnslu4pas .
-- E: London, left-hand traffic, licensed early-2000s British and European cars, narrow roads, fragile cars that smoke. The closest in place and in crash behaviour.
+- A: open-world London (The Drive: "an open-world feel"); a free roam mode is named in a YouTube title (below).
+- B and C. The Drive (28 Feb 2024): its cars had "more weight to toss around"; no HUD, not even a crosshair; you can use indicators and obey traffic laws [READ] https://www.thedrive.com/news/why-london-studios-the-getaway-is-still-a-special-driving-game-22-years-later . Metacritic 72 from 49 critics; users 7.6 from 97 ratings [READ] https://www.metacritic.com/game/the-getaway/ . HonestGamers reader (29 Jul 2004): "the steering feels far too twitchy, especially at high speeds" [READ] https://www.honestgamers.com/2705/playstation-2/the-getaway/review.html .
+- D: PS2 footage, so the game itself ran at a low frame rate [I]; "4K 60FPS" titles are upscaled. "The Getaway - Full Game Longplay Walkthrough (PS2 Gameplay)" https://www.youtube.com/watch?v=Nr05btaRfmM ; "The Getaway - All Secret Car Locations (Free Roam Mode)" https://www.youtube.com/watch?v=V1GXBLJrcpY ; earlier "First 10 Minutes" https://www.youtube.com/watch?v=yeKnslu4pas . Minute marks not found; to be found by the measurer.
+- E: London, left-hand traffic, licensed early-2000s British and European cars, narrow roads; cars fragile and smoking after crashes by earlier lane research (FEEL-TARGETS-DRIVING-2026-11-17.md, M11), not read today [I]. The closest in place, and probably in crash behaviour.
 
 ### Driver: San Francisco (2011), contrast
 - A: open city, chase camera, but driving only (no on-foot play) [READ, VideoGamer].
 - B and C. VideoGamer: "an arcade-like but weighty handling model that allows for rewarding, drift-heavy fun" [READ] https://www.videogamer.com/reviews/20110927160001-driver-san-francisco-review . Metacritic PC 80 from 11 critics; users 7.3 from 461 ratings [READ] https://legacy.prod.metacritic.com/game/pc/driver-san-francisco/user-reviews . Tally: 3 positive, 1 mixed.
-- D: many PC 60 fps per-car clips, e.g. "Driver San Francisco - Pontiac LeMans - Open World Free Roam Gameplay (PC UHD) [4K60FPS]" https://www.youtube.com/watch?v=IUaX8uDC4tE ; "Free roam + All Unlocked Cars" https://www.youtube.com/watch?v=0113QiXPdk8 .
+- D: many PC 60 fps per-car clips, e.g. "Driver San Francisco - Pontiac LeMans - Open World Free Roam Gameplay (PC UHD) [4K60FPS]" https://www.youtube.com/watch?v=IUaX8uDC4tE ; "Free roam + All Unlocked Cars" https://www.youtube.com/watch?v=0113QiXPdk8 . Minute marks not found; to be found by the measurer.
 - E: right-hand traffic, wide steep streets.
 
 ### Forza Horizon 4 (2018), contrast
 - A: open world Britain, chase camera, driving only [I].
 - B and C. PC Gamer (Phil Savage, 25 Sep 2018, 89/100): "forgiving arcade handling with an obsessive attention to detail"; weight, speed and torque give cars "a personality beyond class and category" [READ] https://www.pcgamer.com/forza-horizon-4-review/ .
-- D: speedometer on screen [I]. Earlier lane research found "Exploring the Edinburgh City, Spring" https://www.youtube.com/watch?v=VGEmAS05ch0 and period-car clips "1984 Rover SD1 Vitesse" https://www.youtube.com/watch?v=sC1-UKYL9Vw and "1986 Ford Escort RS Turbo" https://www.youtube.com/watch?v=WG5W9dyq0A0 (FEEL-TARGETS section e).
+- D: speedometer on screen [I]. Earlier lane research found "Exploring the Edinburgh City, Spring" https://www.youtube.com/watch?v=VGEmAS05ch0 and period-car clips "1984 Rover SD1 Vitesse" https://www.youtube.com/watch?v=sC1-UKYL9Vw and "1986 Ford Escort RS Turbo" https://www.youtube.com/watch?v=WG5W9dyq0A0 (FEEL-TARGETS section e). Minute marks not found; to be found by the measurer.
 - E: left-hand traffic, British towns, real 1980s British cars; but mostly country roads and fast cars.
 
 ### Not shortlisted
@@ -120,14 +120,14 @@ Totals are a guide, not the rank: the rank weighs what each game can be measured
 | GTA IV | Yes, by road markings | Yes (roll upper bound) | Yes |
 | Sleeping Dogs | Yes | Yes | Yes |
 | Mafia: Definitive Edition | Yes, by speedometer (the most exact) | Yes | Yes |
-| Watch Dogs: Legion | Only as a check | Yes (British street scale) | Yes, tight spaces |
-| The Getaway | No (frame rate) | Camera framing only | Yes, crashes and damage |
-| Forza Horizon 4 (contrast) | Yes, by speedometer, period cars | Yes | Few (no people on foot) |
-| Driver: San Francisco (contrast) | Yes | Yes | Few |
+| Watch Dogs: Legion | No (handling disliked) | M6 and M10 (British street scale) | Yes, tight spaces |
+| The Getaway | No (frame rate) | M10 framing only | Yes, crashes and damage |
+| Forza Horizon 4 (contrast) | M1 to M3 and M8, by speedometer, period cars | M10 only | Few (no people on foot) |
+| Driver: San Francisco (contrast) | M1 to M3 and M8 | M10 only | Few |
 
 ## For his approval
 
-The advisor brings him: approve these six and two contrast games for measuring? Recommended: yes. The alternative is to drop Watch Dogs: Legion and The Getaway (they teach streets and crashes, not handling) and measure four, which saves about 8 hours on the PC (about 20 hours in all instead of 28).
+The advisor brings him: approve these six and two contrast games for measuring? Recommended: yes. The alternative is to drop Watch Dogs: Legion and The Getaway (they teach streets and crashes, not handling) and measure four, which saves about 3.5 hours on the PC (about 20 hours in all instead of 23.5).
 
 ## Sources not reached
 Reddit and ResetEra searches by domain were refused by the search service; Steam threads for Mafia II and Watch Dogs 2 showed no comments; the Black Monday review pages (Kikizo, Impulse Gamer) were seen only as titles [UNREACHED]. No player tally is given for those games.
