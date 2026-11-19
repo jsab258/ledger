@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-19 13:36 (the hourly run; the last session set its Stopped line at 12:52)
+**Started:** 2026-11-19 16:51 (the hourly run; the last session set its Stopped line at 15:10)
 
 **Row due:** by 16:10 (last row 15:10; page and advisor read 15:09: nothing new after advisor 247, no verdicts)
 **Stopped:** 2026-11-19 15:10 (history OVER at an item end; six Fable helpers still running in this session, reports due as listed under In flight: read them first, then check for leftover runs and the lock; the press item is up, waiting on his tap)

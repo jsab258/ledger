@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 2 open · updated Thursday 19 November, 15:09",
+ "kicker": "LEDGER · Needs you · 1 open · updated Thursday 19 November, 16:55",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -31,41 +31,6 @@
    "tried": "The bridge's starter (13:43) found one copy, as wanted, but a small box of its own sits over the main window, so it stops by design; a scheduled run has no computer use, and Claude clicks nothing in a box it cannot read.",
    "recommendation": "Do it today when you are at the PC: about one minute.",
    "added": "2026-11-19 13:45",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ],
-    [
-     "no",
-     "Not now"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "fable-press-2026-11-19",
-   "name": "ACTION: Press your Fable reset now",
-   "why": [
-    "Fable reaches 97% about 15:20 and 100% about 15:25.",
-    "The week is at 68%; after the press Fable's use leaves it."
-   ],
-   "steps": [
-    "Press the Fable usage reset in the Claude app",
-    "Tap Done below"
-   ],
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "only_you": "his-setting",
-   "tried": "Only you can press a usage reset in the Claude app.",
-   "recommendation": "Press it as soon as you see this.",
-   "added": "2026-11-19 15:10",
    "pictures": [],
    "detail": [],
    "options": [
