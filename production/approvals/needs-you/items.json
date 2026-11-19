@@ -1404,6 +1404,43 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "marvelous-copies-2026-11-19",
+   "added": "2026-11-19 11:21",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The bridge's own starter (11:19) refuses to pick among four copies by design; a scheduled run has no computer use, and Claude does not close your Marvelous.",
+   "title": "Close the extra Marvelous windows, keep one",
+   "text": "Four copies of Marvelous have been open since 16 Nov and three are frozen, so Claude cannot reach Marvelous to export every garment before it lapses on 26 Nov.",
+   "why": [
+    "The export of every Marvelous project to open files waits on one working copy.",
+    "Every garment is already saved on F:, so nothing is lost by closing."
+   ],
+   "steps": [
+    "Close every Marvelous Designer window (choose Don't save if asked)",
+    "Open Marvelous Designer once",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today when you are at the PC: about two minutes.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

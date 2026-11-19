@@ -57,7 +57,7 @@ OPEN_LIMIT_H = 4
 KILN_CAP = 15.0   # RULINGS 13 Nov, as tools/token_measures.py KILN_CAP
 # Fable's weekly cap (his pick 18 Nov, advisors 227-228; the backstop of 21:35): the last reading pace_line.py stored.
 PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
-FABLE_CAP = 40.0
+FABLE_CAP = 70.0  # 19 Nov 11:07, advisor 244: "Fable cap to 70%"
 
 
 def fable_refusal(inp, state_path=PACE_STATE):
