@@ -1320,8 +1320,9 @@
      "No, use an OFL font"
     ]
    ],
-   "state": "open",
-   "added": "2026-11-19 00:56"
+   "state": "done",
+   "added": "2026-11-19 00:56",
+   "closed": "2026-11-19 07:51, answered yes (07:43): on the licence list, line 14, prototype only"
   },
   {
    "id": "dinov3-pick-2026-11-19",
@@ -1358,8 +1359,9 @@
      "No"
     ]
    ],
-   "state": "open",
-   "added": "2026-11-19 00:56"
+   "state": "done",
+   "added": "2026-11-19 00:56",
+   "closed": "2026-11-19 07:51, answered yes (07:43): on the licence list, line 15, lab test only"
   }
  ]
 }
