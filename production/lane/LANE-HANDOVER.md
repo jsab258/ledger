@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** 21:17 to 21:59, 19 Nov (stopped at the budget ceiling): 4m done (REFERENCE-MECHANICS and TEARDOWN-BRIEF, both 2026-11-20, reviewed and fixed once). Next: 4f, then 4t. Round 6 still unpublished (queue 104); 4s next 105. Parts tree session started 21:11: leave parts-tree/, DESIGN.md and the addendum alone while it runs; when it stops, merge 4m's results in (step 1c). 4d: no round4/ seen.
+**Cloud lane, last run:** 22:16 to 22:25, 19 Nov: stopped at the budget ceiling with no new work (main row 21:37 read 51%, since then the 21:17 lane run and the parts tree session both spent to about the ceiling; the one-shot comes first). Parts tree done 22:04 (ONESHOT-CHECKLIST.md ready); its leftover is a status sweep of 92 late parts and the RN items after 4f. Next: 4f, then the parts sweep, then 4t (aim before the one-shot ends Saturday). From 21:00 Fri 20 Nov to 08:30 Sat only 4d, 4f, 4t. 4d: no round4/ seen.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
