@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 07:16 on 19 Nov, stopped about 08:06. 4o-c done: both gates fixed after the review (see the queue); 4o is complete. Next: nothing new until 'Vision approved:'. Only 4n's Fable fix (held while Fable is over 40% of its week; 45% at 06:55), then the two Docs. When DESIGN.md is published, tie the gates' invariants to its rule ids. Check the newest main row (doc_id ending -row or -main) for the budget first. Pictures for the gate: Artifact read of the prototype page into a folder outside the repository.
+**Cloud lane, last run:** started 09:16 on 19 Nov, stopped about 09:52. 4n complete: the synthesis fixed (Opus, no Fable), checked by a fresh reviewer, and published as two Claude Docs, "LEDGER: the vision" https://claude.ai/artifact/RpXGpHEG32nJwkZXF3Vtax and "LEDGER: the whole game" https://claude.ai/artifact/1NJwscSew2VWCVo4BMVhkJ . Next: nothing new until the queue's 'Vision approved:' line shows his yes; then 4l, round by round in BUILD-ORDER.md's order, and tie the gates' invariants to DESIGN.md's rule ids. Check the newest main row for the budget first.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
