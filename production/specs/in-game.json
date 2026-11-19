@@ -172,6 +172,138 @@
    "as": "kiln/reports",
    "first": true,
    "why": "Kiln's lane reports and plans (1.3 MB), the evidence its decisions cite; in neither git nor the backup until 18 Nov"
+  },
+  {
+   "path": "F:/LedgerTools/approved-cast-2026-09-25",
+   "as": "lasting/approved-cast-2026-09-25",
+   "first": true,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/aaa-study",
+   "as": "lasting/aaa-study",
+   "first": false,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/bound",
+   "as": "lasting/bound",
+   "first": false,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/vctk-north",
+   "as": "lasting/vctk-north",
+   "first": false,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/saved-branches-2026-10-05",
+   "as": "lasting/saved-branches-2026-10-05",
+   "first": false,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/atlas-01-2026-09-22",
+   "as": "lasting/atlas-01-2026-09-22",
+   "first": false,
+   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
+  },
+  {
+   "path": "F:/LedgerTools/atlas-01-2026-10-06",
+   "as": "lasting/atlas-01-2026-10-06",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/casting-candidates",
+   "as": "lasting/casting-candidates",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/casting-work",
+   "as": "lasting/casting-work",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/friends-evenings",
+   "as": "lasting/friends-evenings",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/mickeys-props",
+   "as": "lasting/mickeys-props",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/n16-6-parked",
+   "as": "lasting/n16-6-parked",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/presets",
+   "as": "lasting/presets",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/proof-2.1-setaside",
+   "as": "lasting/proof-2.1-setaside",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/proof-2.2-paused",
+   "as": "lasting/proof-2.2-paused",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/ron-voice",
+   "as": "lasting/ron-voice",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/shopfront-kit",
+   "as": "lasting/shopfront-kit",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/shops-wip-2026-10-03",
+   "as": "lasting/shops-wip-2026-10-03",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/steps-sources",
+   "as": "lasting/steps-sources",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/terms-2026-10-03",
+   "as": "lasting/terms-2026-10-03",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/trellis",
+   "as": "lasting/trellis",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/vctk-young-men",
+   "as": "lasting/vctk-young-men",
+   "first": false,
+   "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
   }
  ]
 }

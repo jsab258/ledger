@@ -332,10 +332,12 @@ def restore_check(srcs, dest, n=20, seed=None):
     pick = random.Random(seed).sample(plan, min(n, len(plan)))
     vroot = os.path.join(dest, "versions")
     bad = []
+    skipped = 0
     with tempfile.TemporaryDirectory() as t:
         for i, (s, d) in enumerate(pick):
             if free_gb(t) - os.path.getsize(d) / 1e9 < FLOOR_GB:
-                continue        # the temporary copy never takes C: below its floor (backup review 17 Nov)
+                skipped += 1    # the temporary copy never takes C: below its floor (backup review 17 Nov);
+                continue        # a skipped file is unchecked, never OK (audit H14, 19 Nov)
             back = os.path.join(t, "%02d_%s" % (i, os.path.basename(d)))
             shutil.copy2(d, back)
             if not os.path.exists(s) or sha(back) == sha(s):
@@ -345,8 +347,10 @@ def restore_check(srcs, dest, n=20, seed=None):
                                                 if os.path.exists(os.path.join(vroot, v, rel)))
             if not held:
                 bad.append(d)
-    return "restoreCheck=%s sampled=%d differ=%d%s" % ("OK" if not bad else "DIFFER", len(pick), len(bad),
-                                                       (" first=" + bad[0].replace(" ", "~")) if bad else "")
+    checked = len(pick) - skipped
+    status = "DIFFER" if bad else ("UNCHECKED" if checked == 0 else "OK")
+    return "restoreCheck=%s sampled=%d checked=%d skipped=%d differ=%d%s" % (
+        status, len(pick), checked, skipped, len(bad), (" first=" + bad[0].replace(" ", "~")) if bad else "")
 
 
 def selftest():
@@ -418,6 +422,13 @@ def selftest():
         check("a failed run does not count as the last good one",
               stale(["2026-09-24T04:00:00 a backupToDropbox=OK", "2026-09-25T20:00:00 b backupToDropbox=BROKEN-COPY"], when)[0])
         check("the restore check finds the copies whole", restore_check(lst, dst, seed=1).startswith("restoreCheck=OK"))
+        global FLOOR_GB
+        kept_floor, FLOOR_GB = FLOOR_GB, 1e9          # no room for any temporary copy
+        try:
+            check("a restore check that compared nothing says UNCHECKED, never OK (audit H14)",
+                  restore_check(lst, dst, seed=1).startswith("restoreCheck=UNCHECKED"))
+        finally:
+            FLOOR_GB = kept_floor
         check("keys are refused case-blind", refused("F:/LedgerTools/Keys/x.txt") and refused("C:/a/Secrets.JSON"))
         check("a stale line after a failed bundle", stale(["2026-09-25T04:00:00 a bundle=FAILED backupToDropbox=OK"], when)[0])
         check("a DEFERRED night is not a backup", stale(["2026-09-25T04:00:00 a backupToDropbox=DEFERRED-LOW-SPACE"], when)[0])
