@@ -83,20 +83,6 @@
         "It's not the price. It's that they say it like it's normal.",
         "My rent's the same, my wages are the same, and yet."
       ]
-    },
-    {
-      "person": "elizabeth-idle",
-      "voice": "crowd_f3",
-      "clips": [
-        "crowd_f3/de87b64c.wav",
-        "crowd_f3/56364260.wav",
-        "crowd_f3/92bcc5d7.wav"
-      ],
-      "lines": [
-        "Cold gets in at this hour.",
-        "Quiet, isn't it. Properly quiet.",
-        "Cold one."
-      ]
     }
   ],
   "cues": [
