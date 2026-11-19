@@ -1441,6 +1441,43 @@
     ]
    ],
    "state": "open"
+  },
+  {
+   "id": "fable-reset-2026-11-19",
+   "added": "2026-11-19 12:32",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Only you can press a usage reset in the Claude app; the records do not say how many resets you have left or when they expire.",
+   "title": "Press a Fable reset now",
+   "text": "The week's usage is at 44%, just above the ceiling for this point of the week (43.8%); Fable's own meter is at 47%. Above the ceiling Claude starts nothing new, so the Fable work on Kiln waits.",
+   "why": [
+    "Waiting on it: Fable at full effort on Kiln's hardest pieces (the coat, the trousers' legs, Sheila's blouse, the jacket over the jumper, the donkey jacket, a new stiffness method).",
+    "Your 19 Nov ruling: Fable at full speed, your resets undoing the cost."
+   ],
+   "steps": [
+    "Press one usage reset in the Claude app",
+    "Tap Done below, or tell the advisor how many resets you have left and when they expire"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Press it now: Kiln v1 is due Monday 13:00.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open",
+   "blocks": "Every new Fable piece of Kiln v1 waits: the week is above its ceiling"
   }
  ]
 }
