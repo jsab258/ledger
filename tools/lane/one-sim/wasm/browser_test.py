@@ -4,7 +4,8 @@
   python -I browser_test.py --brain one-sim.wasm --check one-sim-check.wasm \
          --golden TABLE.txt --specs production/specs --site DIR [--json OUT.json]
 
-Copies the page (browser/index.html), the loader and the checks (one-sim.mjs, checks.mjs), the
+Copies the page (browser/index.html), the loader, the bridge and the checks (one-sim.mjs,
+one-sim-bridge.mjs, checks.mjs), the
 two modules, the golden table the C# Core wrote and the three data files into DIR (outside the
 repository), serves DIR on this machine only, opens the page and waits for its result. The
 checks are the same file the Node test runs. Exit 0 only if every check passed in the page.
@@ -31,7 +32,7 @@ def main():
 
     os.makedirs(a.site, exist_ok=True)
     shutil.copy(os.path.join(HERE, "browser", "index.html"), a.site)
-    for f in ("one-sim.mjs", "checks.mjs"):
+    for f in ("one-sim.mjs", "one-sim-bridge.mjs", "checks.mjs"):
         shutil.copy(os.path.join(HERE, f), a.site)
     shutil.copy(a.brain, os.path.join(a.site, "one-sim.wasm"))
     shutil.copy(a.check, os.path.join(a.site, "one-sim-check.wasm"))

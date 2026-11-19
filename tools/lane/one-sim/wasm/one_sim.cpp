@@ -1,11 +1,13 @@
-// ONE SIMULATION IN THE BROWSER: the front door (first slice, 19 November 2026).
+// ONE SIMULATION IN THE BROWSER: the front door (first slice, 19 November 2026;
+// the save, a sighting and "held until" added the same day for the bridge).
 //
 // This file holds NO town rule. Every rule it runs is the game's own C++ port,
 // included from ue-probe/Source/LedgerProbe/Public exactly as the Unreal module
 // and the port's golden test include it. This file only lets JavaScript call
 // those rules: make a town from a cast file, run a game hour in the game's own
-// order (TownWeek::RunHour), do what the player does between hours, and read
-// the state back as text.
+// order (TownWeek::RunHour), do what the player does between hours, read
+// the state back as text, and save and load the town as the game's own save
+// pieces write and read it.
 //
 // Two builds come from this one file (tools/lane/one-sim/one-sim.sh wasm):
 //   one-sim.wasm        the brain a page would load;
@@ -21,6 +23,8 @@
 #include "CastDay.h"
 #include "Gossip.h"
 #include "MemoryStore.h"
+#include "SaveCodec.h"
+#include "TownSave.h"
 #include "TownWeek.h"
 
 #ifdef ONE_SIM_CHECK
@@ -123,9 +127,9 @@ extern "C"
 	OS_EXPORT(os_version) const char* os_version()
 	{
 #ifdef ONE_SIM_CHECK
-		return "one-sim 1 (check build: the game's port plus its golden reader)";
+		return "one-sim 2 (check build: the game's port plus its golden reader)";
 #else
-		return "one-sim 1 (the game's port, ue-probe/Source/LedgerProbe/Public)";
+		return "one-sim 2 (the game's port, ue-probe/Source/LedgerProbe/Public)";
 #endif
 	}
 
@@ -273,6 +277,32 @@ extern "C"
 		return C ? 1 : 0;
 	}
 
+	/// HELD UNTIL: when the custody holding him at this moment lets him out, in
+	/// minutes from day 0's midnight; -1 when nothing holds him. The game keeps
+	/// this itself (CrimeProbe.cpp ConstableHour: GHeldUntil = the custody's
+	/// OutAt), so a host must too: the town only says that he is held.
+	OS_EXPORT(os_held_until) double os_held_until(int Day, int Hour, int Minute)
+	{
+		if (!gTown || !Time(Day, Hour, Minute)) return -1;
+		const std::shared_ptr<Custody> C = gTown->Week->Holding(At(Day, Hour, Minute));
+		return C ? (double)C->OutAt().TotalMinutes() : -1;
+	}
+
+	/// A SIGHTING THAT IS NO DAMAGE: this person saw this themselves, at this
+	/// rung (GossipMill::Witness, the mill's own rule for a first-hand story;
+	/// the deed above calls the same for each of its witnesses). The story is
+	/// "player.<Fact>" with the place as its value, kept as about his hidden
+	/// life (sensitive) as the deed's is. 1 if the mill took it, 0 if it was
+	/// dropped (nobody of that id, or no number for the certainty).
+	OS_EXPORT(os_witness) int os_witness(const char* Person, const char* StoryFact, const char* Area, const char* Said,
+	                                     int Day, int Hour, int Minute, double Certainty, int Rung)
+	{
+		if (!gTown || !Time(Day, Hour, Minute)) return 0;
+		const int Before = gTown->Mill->WitnessesDropped();
+		gTown->Mill->Witness(Str(Person), Fact("player", Str(StoryFact), Str(Area)), Str(Said), true, At(Day, Hour, Minute), Certainty, false, Rung);
+		return gTown->Mill->WitnessesDropped() == Before ? 1 : 0;
+	}
+
 	// ---- reading the town back ----------------------------------------------
 	/// The week's state as the game's own save pieces write it (each piece's
 	/// own ToJson, the ones TownSave bundles), as one JSON text.
@@ -341,6 +371,98 @@ extern "C"
 			}
 		}
 		return Out(J + "]");
+	}
+
+	// ---- the save: the same texts the packaged game writes ---------------------
+	// The game's save is several files (CrimeProbe.cpp SaveEncounterToDisk): agents.json
+	// (the town's talk, Save::CaptureMillAgents), memory-<id>.md (each person's memory,
+	// MemoryStore::ToMarkdown), town.json (the week's pieces, one TownSave), and a few
+	// lines beside them (the deed's story, its time, who saw it, her first visit, his
+	// first arrest). Each call below hands out, or takes back, one of those texts as
+	// the port's own code writes and reads it. Nothing is worked out here.
+
+	/// The town's talk: every person's stories, what they have learned, how much they suspect.
+	OS_EXPORT(os_save_agents) const char* os_save_agents() { return Out(gTown ? Save::CaptureMillAgents(*gTown->Mill) : std::string()); }
+	/// One person's memory, as markdown.
+	OS_EXPORT(os_save_memory) const char* os_save_memory(const char* Person)
+	{
+		if (!gTown) return Out("");
+		const GossiperPtr G = gTown->Mill->Get(Str(Person));
+		return Out(G && G->Memory ? G->Memory->ToMarkdown() : std::string());
+	}
+	/// The week's pieces: the asks, the tea, the police file, the damage, the arrests, the hours talked, the week's end.
+	OS_EXPORT(os_save_town) const char* os_save_town()
+	{
+		if (!gTown) return Out("");
+		const TownWeek& W = *gTown->Week;
+		TownSave T;
+		T.Asks = W.Asks;
+		if (W.Tea) T.Tea.reset(new AdasTea(*W.Tea));
+		T.Police = W.Police;
+		T.Damage = W.Damage;
+		T.Arrests = W.Arrests;
+		T.Hours = W.Hours;
+		T.Week = W.Week;
+		return Out(T.ToJson());
+	}
+	/// What the week holds beside its pieces, as one small JSON text: the deed's story, its day, its minute
+	/// from day 0's midnight (-1: none yet), who saw it and at what rung, her first visit, his first arrest.
+	OS_EXPORT(os_save_week) const char* os_save_week()
+	{
+		if (!gTown) return Out("{}");
+		const TownWeek& W = *gTown->Week;
+		std::string J = "{\"deedTopic\":" + Json(W.DeedTopic) + ",\"deedDay\":" + Int(W.DeedDay) + ",\"deedAt\":" + Int(W.DeedDay < 0 ? -1 : W.DeedAt.TotalMinutes()) + ",\"witnesses\":[";
+		for (size_t I = 0; I < W.Witnesses.size(); ++I) J += std::string(I ? "," : "") + "[" + Json(W.Witnesses[I].first) + "," + Int(W.Witnesses[I].second) + "]";
+		return Out(J + "],\"ellisFirst\":" + Json(W.EllisFirst) + ",\"takenFirst\":" + Json(W.TakenFirst) + "}");
+	}
+
+	/// LOADING, into a town just made from the same cast (os_town_new first). Each returns 1, or 0 with os_error.
+	OS_EXPORT(os_load_agents) int os_load_agents(const char* Json)
+	{
+		if (!gTown) { gErr = "no town to load into"; return 0; }
+		const std::string Text = Str(Json);
+		if (!Save::WellFormed(Text)) { gErr = "the town's talk was not read: not a whole JSON text"; return 0; }
+		Save::RestoreMillAgents(Text, *gTown->Mill);
+		return 1;
+	}
+	OS_EXPORT(os_load_memory) int os_load_memory(const char* Person, const char* Markdown)
+	{
+		if (!gTown) { gErr = "no town to load into"; return 0; }
+		const GossiperPtr G = gTown->Mill->Get(Str(Person));
+		if (!G || !G->Memory) { gErr = "nobody of that id in this cast: " + Str(Person); return 0; }
+		G->Memory->LoadFrom(Str(Markdown));
+		return 1;
+	}
+	/// The week's pieces, as the game puts a TownSave back (CrimeProbe.cpp, the load): a save from a later
+	/// version is refused with the save's own words, and nothing is changed.
+	OS_EXPORT(os_load_town) int os_load_town(const char* Json)
+	{
+		if (!gTown) { gErr = "no town to load into"; return 0; }
+		TownSave T;
+		std::string Err;
+		if (!TownSave::FromJson(Str(Json), T, Err)) { gErr = Err; return 0; }
+		TownWeek& W = *gTown->Week;
+		W.Asks = T.Asks;
+		W.Tea.reset(T.Tea ? new AdasTea(*T.Tea) : nullptr);
+		W.Police = T.Police;
+		W.Damage = T.Damage;
+		W.Arrests = T.Arrests;
+		W.Hours = T.Hours;
+		W.Week = T.Week;
+		return 1;
+	}
+	OS_EXPORT(os_load_week) int os_load_week(const char* DeedTopic, int DeedDay, double DeedAtMinutes, const char* Witnesses,
+	                                         const char* EllisFirst, const char* TakenFirst)
+	{
+		if (!gTown) { gErr = "no town to load into"; return 0; }
+		TownWeek& W = *gTown->Week;
+		W.DeedTopic = Str(DeedTopic);
+		W.DeedDay = DeedDay < 0 ? -1 : DeedDay;
+		W.DeedAt = DeedDay < 0 || !(DeedAtMinutes >= 0 && DeedAtMinutes < 1e9) ? GameTime() : GameTime::FromTotalMinutes((long long)DeedAtMinutes);
+		W.Witnesses = Saw(Str(Witnesses));
+		W.EllisFirst = Str(EllisFirst).empty() ? std::string("never") : Str(EllisFirst);
+		W.TakenFirst = Str(TakenFirst).empty() ? std::string("no") : Str(TakenFirst);
+		return 1;
 	}
 
 #ifdef ONE_SIM_CHECK

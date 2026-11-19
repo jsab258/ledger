@@ -1,4 +1,5 @@
-// ONE SIMULATION IN THE BROWSER: the loader (first slice, 19 November 2026).
+// ONE SIMULATION IN THE BROWSER: the loader (first slice, 19 November 2026; the save, a sighting
+// and "held until" added the same day for the bridge, one-sim-bridge.mjs).
 //
 // Loads one-sim.wasm (the game's own C++ town rules, compiled for the browser) and
 // gives JavaScript a plain object to call. It runs the same in a web page, in a Web
@@ -110,12 +111,33 @@ export async function loadOneSim(wasm, { print = (text) => console.log(text) } =
     weekGive: (answer, day, hour, minute) => call('os_week_give', answer, day, hour, minute) === 1,
     policeReport: (who, topic, offence, rung, day) => call('os_police_report', who, topic, offence, rung, day) === 1,
     takeIn: (topic, day, hour, minute) => call('os_take_in', topic, day, hour, minute) === 1,
+    // Held until: the minute (from day 0's midnight) the custody holding him at this moment lets him out, or -1.
+    heldUntil: (day, hour, minute = 0) => call('os_held_until', day, hour, minute),
+    // A sighting that is no damage: this person saw it themselves, at this rung (0 someone to 4 recognised, -1 not given).
+    witness: (person, storyFact, area, said, day, hour, minute, certainty = 1.0, rung = -1) =>
+      call('os_witness', person, storyFact, area, said, day, hour, minute, certainty, rung) === 1,
 
     // Reading the town back.
     state: () => text('os_state'),          // the week's pieces as the game's own save writes them (JSON text)
     stories: () => text('os_stories'),      // who holds which story, one line a person
     // The Ledger's facts: who knows what, and how. A list of { who, topic, value, saw, hops, from, rung, names, sure, private, said }.
     knows: () => JSON.parse(text('os_knows')),
+
+    // The save: the same texts the packaged game writes to its save folder, one call each.
+    saveAgents: () => text('os_save_agents'),                 // the town's talk (the game's agents.json)
+    saveMemory: (person) => text('os_save_memory', person),   // one person's memory, as markdown (memory-<id>.md)
+    saveTown: () => text('os_save_town'),                     // the week's pieces (town.json)
+    saveWeek: () => text('os_save_week'),                     // the deed's story, its time, who saw it, her first visit, his first arrest (JSON text)
+    // Loading, into a town just made from the same cast (newTown first). Each throws with the reason if it is refused.
+    loadAgents(json) { if (!call('os_load_agents', json)) throw new Error(text('os_error')); },
+    loadMemory(person, markdown) { if (!call('os_load_memory', person, markdown)) throw new Error(text('os_error')); },
+    loadTown(json) { if (!call('os_load_town', json)) throw new Error(text('os_error')); },
+    loadWeek(week) {
+      const w = week || {};
+      const saw = (Array.isArray(w.witnesses) ? w.witnesses : []).map(([id, rung]) => `${id}:${Number.isInteger(rung) ? rung : -1}`).join(',');
+      const day = Number.isInteger(w.deedDay) ? w.deedDay : -1;
+      if (!call('os_load_week', String(w.deedTopic ?? ''), day, Number.isFinite(w.deedAt) ? w.deedAt : -1, saw, String(w.ellisFirst ?? ''), String(w.takenFirst ?? ''))) throw new Error(text('os_error'));
+    },
 
     // The proof, in the check build only: any row of the C# Core's golden table.
     check: x.os_check_row

@@ -19,7 +19,16 @@
 // T5  speed, measured;
 // T6  rough handling: wrong calls must not knock the module over;
 // T7  the Ledger's facts (who knows what, and how) read back through the bridge.
+//
+// And the bridge the prototype will call (one-sim-bridge.mjs), which turns its clock into those calls:
+// T8  the six scripted weeks again, driven by a clock in odd steps through the bridge, the town's
+//     talk run by the hour as the reference week runs it: every hour against the C# Core's rows;
+// T9  the same with the talk run by the minute, the packaged game's way: the same town whatever
+//     the size of the clock's steps, and a count of the hours that differ from the C# rows;
+// T10 a save in the middle of each week, loaded into a fresh module, played on: the same town;
+// T11 rough handling of the bridge.
 import { loadOneSim, NightAnswer, WeekAnswer, Offence } from './one-sim.mjs';
+import { openTown, PROTOTYPE_TO_CAST, BRIDGE_SAVE_VERSION } from './one-sim-bridge.mjs';
 
 async function sha256(text) {
   const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -270,6 +279,169 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     report.T6 = { problems, jumpThirtyDaysMs: Math.round(jumpMs) };
     result('T6 the front door takes rough handling', problems.length === 0, problems.length ? problems.join('; ')
       : `calls before a town, broken cast files, times that are no time, answers outside the list, empty and odd text, a thirty-day jump (${Math.round(jumpMs)} ms), a second town: nothing fell over`);
+  }
+
+  // ---- T8 to T11: the bridge the prototype will call ----------------------------------------------
+  {
+    const want = new Map();
+    for (const l of byRule.get('TownWeekHour') ?? []) { const f = l.split('|'); want.set(f.slice(1, 4).join('|'), f.slice(4).join('|')); }
+    const RUNS = ['no', 'away', 'held', 'days', 'winddown', 'teaday'];
+    const span = (run) => ({
+      from: run === 'held' ? 14 : run === 'days' || run === 'teaday' ? 9 : run === 'winddown' ? 6 * 24 + 9 : 19,
+      to: run === 'days' ? 5 * 24 : run === 'winddown' ? 7 * 24 + 7 : run === 'teaday' ? 2 * 24 + 12 : 24 + 7,
+    });
+    const cast = castText['hook-cast.json'];
+    const window_ = (minute, fact) => ({ minute, area: 'ritas', thing: 'rita_window', said: "somebody put Rita's window in",
+      witnesses: [{ id: 'darren', rung: 4 }], fact, words: "the new owner put Rita's window in", certainty: 1.0 });   // 'darren' is the prototype's id for the cast's 'sam'
+
+    // ONE SCRIPTED WEEK THROUGH THE BRIDGE. The clock moves in `step` game minutes (any size, fractions
+    // too), stopping on each whole hour, as a clock ticked many times a minute does. What he does is the
+    // same script as T3's, done at its own minute after the clock has been ticked to it. With saveAfter,
+    // the town is saved once that many hours have run (at a minute inside an hour), written out as text,
+    // and the week goes on in a FRESH module loaded from that text.
+    async function bridgeWeek(run, { talk, step, saveAfter = -1 }) {
+      const { from, to } = span(run);
+      let town = await openTown({ wasm: brainBytes, castJson: cast, startMinute: from * 60, talk, print: quiet.print });
+      if (run === 'held') { town.sim.policeReport('sam', 'player.cut_d0', Offence.Wounding, 4, 0); town.sim.takeIn('player.cut_d0', 0, 14, 0); }
+      const due = [], lines = [], rows = [];
+      const at = (minute, fn) => due.push([minute, fn]);
+      let hours = 0, heldBad = 0, savedBytes = 0, heldAtSave = null, heldAfterLoad = null, ticks = 0, ms = 0;
+      const afterHour = (ev) => {
+        const { day, hour: hod, minute: H } = ev;
+        if (run === 'no' && day === 0 && hod === 21 && town.askDelivered(0)) at(H + 30, () => town.answerAsk(0, NightAnswer.Refused, H + 30));
+        if (run === 'days') {
+          if (day === 1 && hod === 12) at(H + 30, () => town.deed(window_(H + 30, 'window_d1')));
+          if (day === town.teaDay() && (hod === 21 || hod === 22)) { for (let m = 0; m < (hod === 21 ? 60 : 31); m++) at(H + m, () => town.teaMinute(H + m)); }
+          else if (hod === 22 && town.asksOn(day) && town.askDelivered(day)) at(H + 30, () => town.answerAsk(day, NightAnswer.Did, H + 30));
+        }
+        if (run === 'teaday' && day === 0 && hod === 12) at(H + 30, () => town.deed(window_(H + 30, 'window_d0')));
+        if (run === 'winddown' && day === town.weekDay() && hod === 10 && town.weekAsksNow(H + 30, true)) {
+          at(H + 30, () => town.weekAsk(H + 30));
+          at(H + 40, () => town.weekGive(WeekAnswer.WindDown, H + 40));
+        }
+      };
+      const end = (to - 1) * 60;
+      for (let t = from * 60; ;) {
+        const t0 = performance.now();
+        const evs = town.tick(t, 'mickeys');
+        ms += performance.now() - t0;
+        ticks++;
+        for (const ev of evs) {
+          hours++;
+          lines.push(`${run}|${ev.day}|${ev.hour}|${ev.row}\n`);
+          rows.push([`${run}|${ev.day}|${ev.hour}`, ev.row]);
+          if ((town.held() !== null) !== ev.held) heldBad++;       // the bridge's own "held" against the hour's answer
+          afterHour(ev);
+        }
+        while (due.length && due[0][0] <= t) due.shift()[1]();
+        if (saveAfter >= 0 && !savedBytes && hours >= saveAfter && t % 60 !== 0 && !due.length) {
+          heldAtSave = town.held();
+          const text = JSON.stringify(town.save());
+          savedBytes = text.length;
+          town = await openTown({ wasm: brainBytes, castJson: cast, saved: JSON.parse(text), print: quiet.print });
+          heldAfterLoad = town.held();
+        }
+        if (t >= end && !due.length) break;
+        t = Math.min(t + step, (Math.floor(t / 60) + 1) * 60, due.length ? due[0][0] : Infinity);
+      }
+      lines.push(town.sim.state() + '\n' + town.sim.stories() + '\n');
+      return { digest: await sha256(lines.join('')), rows, hours, heldBad, savedBytes, heldAtSave, heldAfterLoad, ticks, ms };
+    }
+    const allWeeks = async (opts) => { const out = {}; for (const run of RUNS) out[run] = await bridgeWeek(run, typeof opts === 'function' ? opts(run) : opts); return out; };
+    const against = (weeks) => {
+      let rows = 0, bad = 0; const first = [], fields = {};
+      for (const run of RUNS) for (const [key, row] of weeks[run].rows) {
+        rows++;
+        const w = want.get(key);
+        if (w === row) continue;
+        bad++;
+        if (first.length < 4) first.push(`${key}\n       got  ${row}\n       want ${w}`);
+        const a = row.split('|'), b = (w ?? '').split('|');
+        ['found', 'went', 'ellis', 'taken', 'invite', 'ron', 'tea', 'held', 'asks', 'outfit', 'stories', 'ellisFirst', 'takenFirst'].forEach((name, i) => { if (a[i] !== b[i]) fields[name] = (fields[name] ?? 0) + 1; });
+      }
+      return { rows, bad, first, fields };
+    };
+    const sum = (weeks, k) => RUNS.reduce((n, run) => n + weeks[run][k], 0);
+
+    // T8: by the hour, in steps of 7.3 game minutes.
+    const hourly = await allWeeks({ talk: 'by the hour', step: 7.3 });
+    const h = against(hourly);
+    report.T8 = { rows: h.rows, bad: h.bad, tableRows: want.size, heldBad: sum(hourly, 'heldBad') };
+    result('T8 the bridge, talk by the hour, gives the C# Core\'s rows', h.rows > 0 && h.bad === 0 && h.rows === want.size && report.T8.heldBad === 0,
+      `${h.rows} game hours of the six scripted weeks, the clock ticked in steps of 7.3 game minutes through the bridge (${sum(hourly, 'ticks')} ticks): ` +
+      `${h.rows - h.bad} agree with the C# Core's TownWeekHour rows field for field, ${h.bad} differ; the bridge's own "held" disagreed with the hour's answer at ${report.T8.heldBad} hours`);
+    for (const b of h.first) log('     ' + b);
+
+    // T9: by the minute, the packaged game's way, in three sizes of step.
+    const byStep = {};
+    for (const step of [1, 0.37, 7.3]) byStep[step] = await allWeeks({ talk: 'by the minute', step });
+    const digestOf = (weeks) => RUNS.map((run) => weeks[run].digest.slice(0, 16)).join(' ');
+    const sameTown = digestOf(byStep[1]) === digestOf(byStep[0.37]) && digestOf(byStep[1]) === digestOf(byStep[7.3]);
+    const m = against(byStep[1]);
+    const perDay = (sum(byStep[1], 'ms') / m.rows) * 24;
+    report.T9 = { sameTown, rows: m.rows, differFromHourlyRows: m.bad, fields: m.fields, heldBad: sum(byStep[1], 'heldBad') + sum(byStep[0.37], 'heldBad') + sum(byStep[7.3], 'heldBad'),
+      msPerGameDay: Number(perDay.toFixed(3)), ticks: { 1: sum(byStep[1], 'ticks'), 0.37: sum(byStep[0.37], 'ticks'), 7.3: sum(byStep[7.3], 'ticks') } };
+    report.bridge = { digest: (await sha256(digestOf(byStep[1]))).slice(0, 16) };
+    result('T9 the bridge, talk by the minute, gives the same town whatever the clock\'s steps', sameTown && m.rows === want.size && report.T9.heldBad === 0,
+      `the six weeks with the clock ticked every game minute, every 0.37 and every 7.3 (${report.T9.ticks[1]}, ${report.T9.ticks[0.37]} and ${report.T9.ticks[7.3]} ticks): ` +
+      `${sameTown ? 'the same digest of every hour, final state and held story in all three' : 'DIFFERENT towns: ' + [1, 0.37, 7.3].map((k) => digestOf(byStep[k])).join(' / ')}; ` +
+      `the bridge's own "held" disagreed with the hour's answer at ${report.T9.heldBad} hours`);
+    log(`info T9 by the minute against the C# Core's rows (which are played by the hour): ${m.rows - m.bad} of ${m.rows} hours identical, ${m.bad} differ` +
+      (m.bad ? `, by field ${JSON.stringify(m.fields)}` : '') + `. A measurement, not a check: the order of talk and steps inside an hour is the game's here, the reference week's there.`);
+    for (const b of m.first.slice(0, 2)) log('     ' + b);
+    log(`info T9 speed: the bridge's ticks cost ${perDay.toFixed(2)} ms a game day when ticked every game minute (the Hook's cast)`);
+
+    // T10: a save in the middle of each week.
+    const saveAfter = (run) => Math.floor((span(run).to - span(run).from) * 0.4);
+    const reloaded = await allWeeks((run) => ({ talk: 'by the minute', step: 7.3, saveAfter: saveAfter(run) }));
+    const sameAfterLoad = RUNS.filter((run) => reloaded[run].digest === byStep[7.3][run].digest && reloaded[run].savedBytes > 0);
+    const heldKept = reloaded.held.heldAtSave !== null && reloaded.held.heldAfterLoad !== null && reloaded.held.heldAtSave.until === reloaded.held.heldAfterLoad.until;
+    const biggest = Math.max(...RUNS.map((run) => reloaded[run].savedBytes));
+    report.T10 = { weeks: RUNS.length, same: sameAfterLoad.length, heldKept, biggestSaveChars: biggest, savedAfterHours: Object.fromEntries(RUNS.map((run) => [run, saveAfter(run)])) };
+    result('T10 a saved town, loaded into a fresh module, plays on the same', sameAfterLoad.length === RUNS.length && heldKept,
+      `each of the six weeks saved after two fifths of its hours (as text, at a minute inside an hour) and played on in a fresh module: ${sameAfterLoad.length} of ${RUNS.length} end as the ` +
+      `week played straight through (same digest); in the cells at the save, he is still held after the load until the same minute: ${heldKept ? 'yes' : 'NO'}; the biggest save is ${biggest} characters`);
+
+    // T11: rough handling of the bridge.
+    const problems = [];
+    const refuses = async (what, fn, word) => {
+      try { await fn(); problems.push(`${what}: accepted`); }
+      catch (e) { if (!String(e.message).includes(word)) problems.push(`${what}: refused with other words, ${String(e.message).slice(0, 100)}`); }
+    };
+    const fresh = () => openTown({ wasm: brainBytes, castJson: cast, startMinute: 936, print: quiet.print });   // Monday 15:36, where the prototype's week starts
+    const town = await fresh();
+    const first = town.tick(936.4);
+    if (first.length !== 0) problems.push(`a week that starts at 15:36 ran ${first.length} hour(s) before sixteen o'clock`);
+    const two = town.tick(17 * 60 + 5);
+    if (two.map((e) => e.hour).join() !== '16,17') problems.push(`a jump from 15:36 to 17:05 gave hours ${two.map((e) => e.hour).join()}, not 16,17`);
+    await refuses('a clock that goes back', () => town.tick(900), 'went back');
+    await refuses('a clock that is no number', () => town.tick(NaN), 'not a number');
+    await refuses('an act in an hour the clock has not reached', () => town.answerAsk(0, NightAnswer.Did, 19 * 60 + 30), 'tick the clock');
+    await refuses('an act before the town\'s clock', () => town.saw({ minute: 100, who: 'ron', rung: 3, fact: 'x_d0', area: 'mickeys', words: 'x' }), 'before the town');
+    if (town.saw({ minute: 17 * 60 + 5, who: 'nobody_at_all', rung: 3, fact: 'seen_d0', area: 'mickeys', words: 'somebody saw him' }) !== false) problems.push('a sighting by nobody in the cast was taken');
+    const knewBefore = town.knows().length;
+    if (town.saw({ minute: 17 * 60 + 5, who: 'ron', rung: 3, fact: 'seen_d0', area: 'mickeys', words: 'Ron saw him on the rank' }) !== true) problems.push('a sighting by Ron (the prototype\'s id) was not taken');
+    const ronKnows = town.knows().filter((f) => f.who === PROTOTYPE_TO_CAST.ron && f.topic === 'player.seen_d0');
+    if (town.knows().length !== knewBefore + 1 || ronKnows.length !== 1 || ronKnows[0].saw !== true || ronKnows[0].rung !== 3) problems.push(`Ron's sighting is not in the Ledger's facts as his own, at a face: ${JSON.stringify(ronKnows).slice(0, 160)}`);
+    if (town.placeOf('ron', 12 * 60) !== town.placeOf('rocco', 12 * 60) || town.placeOf('ron', 12 * 60) === '') problems.push('the prototype\'s id for Ron does not reach his routine');
+    if (town.placeOf('nobody_at_all', 12 * 60) !== '') problems.push('somebody not in the cast has a place');
+    const t0 = performance.now();
+    const month = town.tick(30 * 1440 + 17 * 60 + 5);
+    const jumpMs = performance.now() - t0;
+    if (month.length !== 30 * 24) problems.push(`a jump of thirty days gave ${month.length} hours, not 720`);
+    const good = town.save();
+    await refuses('a save that is no save', () => openTown({ wasm: brainBytes, castJson: cast, saved: { hello: 1 } }), 'not a saved town');
+    await refuses('a save from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, v: BRIDGE_SAVE_VERSION + 1 } }), 'this build reads');
+    await refuses('a save made with another cast', () => openTown({ wasm: brainBytes, castJson: castText['quay-cast.json'], saved: good }), 'another cast');
+    await refuses('a save with a piece missing', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: undefined } } }), 'not whole');
+    await refuses('a save whose week\'s pieces are from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: '{"version":99}' } } }), 'version');
+    await refuses('a save whose talk is cut short', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) } } }), 'not a whole');
+    await refuses('no cast file', () => openTown({ wasm: brainBytes, castJson: '' }), 'no cast file');
+    await refuses('a broken cast file', () => openTown({ wasm: brainBytes, castJson: '{not json' }), 'cast not read');
+    report.T11 = { problems, jumpThirtyDaysMs: Math.round(jumpMs) };
+    result('T11 the bridge takes rough handling', problems.length === 0, problems.length ? problems.join('; ')
+      : `a week starting at 15:36, a jump over two hours, a clock going back, a clock that is no number, acts out of turn, a sighting by nobody, the prototype's own ids, ` +
+        `a thirty-day jump (720 hours, ${Math.round(jumpMs)} ms), and eight saves and casts that must be refused: all as they should be`);
   }
 
   if (printed.length) log(`info the modules printed ${printed.length} line(s); first: ${printed[0].slice(0, 120)}`);

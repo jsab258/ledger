@@ -31,8 +31,12 @@ def compare(node, page):
         return 3, "NOTHING MEASURED: an empty T4 digest (Node %r, %s %r)" % (a, where, b)
     if a != b:
         return 1, "FAIL T4x the same calls give a different town in Node (%s) and in %s (%s)" % (a, where, b)
-    return 0, "ok   T4x the same town in Node and in %s: digest %s in both (the same %d rows of table, %s)" % (
-        where, a, node["table"].get("rows", 0), node["table"].get("sha256"))
+    # The bridge's weeks too (T9's digest), when both reports carry one.
+    c, d = (node.get("bridge") or {}).get("digest"), (page.get("bridge") or {}).get("digest")
+    if (c or d) and c != d:
+        return 1, "FAIL T4x the bridge's weeks give a different town in Node (%s) and in %s (%s)" % (c, where, d)
+    return 0, "ok   T4x the same town in Node and in %s: digest %s in both%s (the same %d rows of table, %s)" % (
+        where, a, ", and the bridge's weeks %s in both" % c if c else "", node["table"].get("rows", 0), node["table"].get("sha256"))
 
 
 def selftest():
@@ -40,6 +44,9 @@ def selftest():
     cases = [
         ("the same digest passes", compare(good, dict(good, browser="Chromium 1"))[0] == 0),
         ("a different digest fails", compare(good, dict(good, T4={"first": "9999"}))[0] == 1),
+        ("the same bridge digest passes", compare(dict(good, bridge={"digest": "77"}), dict(good, bridge={"digest": "77"}))[0] == 0),
+        ("a different bridge digest fails", compare(dict(good, bridge={"digest": "77"}), dict(good, bridge={"digest": "78"}))[0] == 1),
+        ("a bridge digest on one side only fails", compare(dict(good, bridge={"digest": "77"}), good)[0] == 1),
         ("a different table fails", compare(good, dict(good, table={"sha256": "bb"}))[0] == 1),
         ("a report with no T4 is nothing measured", compare(good, {"table": {"sha256": "aa"}})[0] == 3),
         ("an empty digest is nothing measured", compare(good, dict(good, T4={"first": ""}))[0] == 3),

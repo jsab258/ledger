@@ -41,7 +41,9 @@ ok('T1 sees the one row nobody can answer', bad.T1.unknown === 1);
 ok('T2 (routines through the bridge) sees the one wrong place', bad.T2.bad === 1);
 ok('T3 (the week through the bridge) sees the one wrong hour', bad.T3.bad === 1);
 ok('T4 (same town twice) is untouched by a spoiled table', bad.T4.first === good.T4.first && bad.T4.second === good.T4.second);
-ok('and the run as a whole fails', bad.failed >= 3);
+ok('T8 (the week through the prototype\'s bridge) sees the one wrong hour', bad.T8.bad === 1);
+ok('T9 and T10 (the bridge by the minute, the save) are untouched by a spoiled table', bad.T9.sameTown === true && bad.bridge.digest === good.bridge.digest && bad.T10.same === good.T10.same);
+ok('and the run as a whole fails', bad.failed >= 4);
 
 console.log(`one-sim selftest: passed=${pass}/${pass + fail} failed=${fail}`);
 process.exit(fail ? 4 : 0);
