@@ -70,7 +70,7 @@ P("1.3", "Fighting", "Fists first, things to hand, carried weapons, guns rare an
   std="Melee sheet C1 to C15 (provisional) until re-measured from footage", ss="FEEL-TARGETS-MELEE-2026-11-18; his combat design 12 Oct; ruling 30 Oct", des="DESIGN §7; game-design/combat-design.md")
 P("1.3.1", "Blows and contact", "Strike timing and how contact is sold: freeze, camera close-in, shake, four sound layers.",
   std="ER-FIGHT-01 (timings inside the melee sheet bands C1 to C15): C1 blow starts within 0.1 s; C2 jab 0.25 to 0.40 s to contact, heavy 0.63 to 0.85 s; C3 hit-stop 0.025 to 0.13 s by blow; camera close-in held about 0.8 s", ss="FEEL-TARGETS-MELEE (c); DESIGN §7", des="DESIGN §7 Feel", tr="both", f=1, o="lane", n=["5.5.6"],
-  h="2|80|guess; combat 'not yet thrown in Unreal' (risk register)", rk="high|AAA bar; most bands rest on judgement, not measurement (melee sheet 'In short')", rn=[],
+  h="2|80|guess; combat 'not yet thrown in Unreal' (risk register)", rk="high|AAA bar; most bands rest on judgement, not measurement (melee sheet 'In short')", rn=["RN-05"],
   t="S: melee drills at 1/60 s inside C1 to C15 (tools/lane/melee_drills.py); his feel check")
 P("1.3.2", "Reading and answering blows", "Block and dodge on sight of a readable wind-up.",
   std="Every incoming blow readable 0.45 to 0.80 s before it lands; at most two men swing at once, 0.4 s apart (ER-FIGHT-02)", ss="DESIGN §7; melee sheet", des="DESIGN §7", tr="both", f=1, o="lane", n=["1.3.1"],
@@ -86,7 +86,7 @@ P("1.3.5", "The street as a weapon", "Walls, doorways, railings, car bonnets, st
   h="2|50|guess", rk="high|paired animations by height cost the most in Unreal; no cruelty as spectacle (canon)", t="S: each of seven places triggers its move; content check: no finisher shown at length")
 P("1.3.6", "Things to hand and carried weapons", "Chair, brick, dustbin lid, pipe; cosh, knuckleduster, knife, bat: seen, found, got rid of.",
   std="Breaks after chair 2, brick 3, lid 4 blows, wheel brace never; C2 swing 0.80 to 1.05 s; a weapon drawn cannot be undrawn unseen", ss="DESIGN §7; melee sheet C2", des="DESIGN §7", tr="both", f=1, o="lane", n=["1.3.1", "1.6.6"],
-  h="1.5|30|guess", rk="medium|no glass or bottles (content rule)", t="S: breakage counts; a weapon out on a held input only (ER-FIGHT-08)")
+  h="1.5|30|guess", rk="medium|no glass or bottles (content rule)", t="S: breakage counts; a weapon out on a held input only (ER-FIGHT-08); a cosh from behind on an unaware man knocks out and is seen as a strike")
 P("1.3.7", "Condition without bars", "Posture, breath, a dropped guard, blood and a limp show a man's state; knock-outs; the fall rule.",
   std="No health bar; fists never kill; only a fall against kerb, wall or step within 3 s of a blow can, rarely (ER-FIGHT-05); knock-out 10 to 30 s", ss="ruling 30 Oct; DESIGN §7; melee sheet", des="DESIGN §7", tr="both", f=1, o="lane", n=["5.2.2", "5.9"],
   h="1|40|guess", rk="high|readability without bars is unproven; blood within canon's light gore", t="S: 10,000 simulated fights, deaths only by the fall rule; H: 'who was winning?'")
@@ -188,7 +188,7 @@ P("2.1.1", "Schedules of named people", "Routines with places, each place with a
   h="2|40|guess; a person's routine not measured (measured-hours)", rk="medium|walks near Tom are slow and can outlast their row (NOT_DONE 1)", t="S: walk checks wherever Tom stands; no jammed doorway in a seeded week")
 P("2.1.2", "The crowd's clock windows", "Unnamed people by hour, their hours from 1990 research.",
   std="Hours from 1990 research (owed)", ss="DESIGN §2; aaa-s01-05", des="DESIGN §2 (hours owed)", tr="both", f=1, o="town", n=[],
-  h="1|40|guess", rk="high|the crowd beyond named people is unpriced (risk R5, draft 7)", rn=[], t="S: crowd counts by hour match the researched table")
+  h="1|40|guess", rk="high|the crowd beyond named people is unpriced (risk R5, draft 7)", rn=["RN-11"], t="S: crowd counts by hour match the researched table")
 P("2.1.3", "Off-screen life", "Unseen people go on perceiving, remembering and talking.",
   std="Unseen people keep the same rules as seen ones (DESIGN §2)", ss="DESIGN §2", des="DESIGN §2", tr="both", f=0, o="town", n=["9.3"],
   h="1|24|guess", rk="medium|cost at full town size; Soak runs 7 residents against 41 (status-unreal)", t="S: a seeded week gives the same result watched or unwatched")
@@ -236,7 +236,7 @@ P("2.4.3", "Showing what people know", "Notice, watch, comment, avoid, refuse, c
   h="1.5|30|guess", rk="high|the 23 Sep rumour study found knowledge shown too faintly", t="H: 'who in the street knew about last night?'")
 P("2.4.4", "It comes back", "Every plainly seen deed is said to Tom's face by somebody he has met.",
   std="ER-EYES-08: in week one within one game day; and within the first 30 real minutes at the playing clock (gossip timeliness, map-players S4)", ss="DESIGN §2; PLAYERS second study", des="DESIGN §2", tr="both", f=1, o="lane", n=["2.4.1", "3.6.3"],
-  h="1|8|guess", rk="medium|the clock is 30 real s a game hour in code and 45 in DESIGN (status-unreal note; C11 open on his page)", t="S: 16 seeded weeks; timeliness at the playing clock")
+  h="1|8|guess", rk="medium|the Unreal clock is 30 real s a game hour, DESIGN and the prototype 45 (C11 open on his page)", t="S: 16 seeded weeks; timeliness at the playing clock")
 
 P("2.5", "Witnesses after a deed", "What people do once they have seen something.", tr="both", o="town", f=1,
   std="ER-EYES-04, ER-EYES-09", ss="DESIGN §2", des="DESIGN §2")
@@ -288,7 +288,7 @@ P("2.7.5", "Purses, tills and shops", "People pay only what they hold; shops kee
   h="1|16|guess", rk="low|", t="S: a shop refuses and remembers")
 P("2.7.6", "Fencing", "Rita's back room buys hot goods at about 0.4 of an honest price.",
   std="About 0.4 (lead; the 1990 rate owed)", ss="DESIGN §4", des="DESIGN §4, §9", tr="both", f=1, o="town", n=[],
-  h="0.5|8|guess", rk="low|", rn=[], t="S: golden rows")
+  h="0.5|8|guess", rk="low|", rn=["RN-13"], t="S: golden rows")
 P("2.7.7", "Flows ledger", "Every pound traced through a sum of flows.", std="ER-MONEY-01", ss="DESIGN §9", des="DESIGN §9", tr="both", f=0, o="town",
   h="0.5|4|guess", rk="low|", t="S: no money from nowhere")
 P("2.8", "Debts", "Mickey's debt book.", tr="both", o="town", f=1, std="DESIGN §4", ss="DESIGN §4", des="DESIGN §4")

@@ -73,8 +73,8 @@ P("7.11", "Waiting and time skips", "'Wait until' each known appointment; sleep 
 P("7.12", "Always something to do", "By day, with no job live, a fare, a debt or a person with a word for him within 30 real seconds.",
   std="ER-CORE-07; ER-CORE-05 (never more than 5 minutes with nothing new)", ss="DESIGN §1", des="DESIGN §1", tr="both", f=1, o="lane", n=["3.4.1", "3.3"],
   h="2|0|guess", rk="high|longest empty stretch 10.8 min in round 5", t="S: idle probe at 20 daytime moments; H empty minutes")
-P("7.13", "The game clock", "How fast a game hour passes in real time.", std="45 real s a game hour in DESIGN (his feel decision still open, C11); the code runs 30", ss="DESIGN §15; C11 on his page", des="DESIGN §15", tr="both", f=1, o="lane", n=["9.6"],
-  h="0.5|4|guess", rk="medium|DESIGN and code disagree (status-unreal note)", t="S: one value in the tuning table, read by both")
+P("7.13", "The game clock", "How fast a game hour passes in real time.", std="45 real s a game hour in DESIGN and the prototype (rules.js); the Unreal clock runs 30 (LiveClock.h, two game minutes a real second, the town 29 Sep); his feel decision still open (C11)", ss="DESIGN §15; C11 on his page", des="DESIGN §15", tr="both", f=1, o="lane", n=["9.6"],
+  h="0.5|4|guess", rk="medium|prototype and Unreal clocks disagree (45 against 30 real s an hour)", t="S: one value in the tuning table, read by both")
 P("7.14", "Variety", "No set piece twice in 30 minutes; no fare wrinkle twice running.", std="ER-JOB-06", ss="DESIGN §4", des="DESIGN §4", tr="both", f=1, o="lane", n=["3.4.2"],
   h="1|8|guess", rk="medium|nothing measures it yet (status-prototype)", t="H: the log")
 P("7.15", "After the ending", "What happens when the story ends: the close, credits, and whether play continues.", std="Optional presentation after the ending (ruling 23 Sep floor)", ss="ruling 23 Sep", des="DESIGN-ADDENDUM §A7", tr="both", f=1, o="lane", n=["3.1.4", "10.4"],

@@ -111,7 +111,7 @@ P("5.6.3", "Thinking sound and timing", "A short thinking sound with a glance be
   h="0.5|8|guess", rk="low|", t="S: timing")
 P("5.7", "Music", "Silence is the commonest music; never combat music.", std="DESIGN §17; never combat music", ss="DESIGN §17", des="DESIGN §17 (one line); DESIGN-ADDENDUM §A8", tr="unreal", f=1, o="builder",
   h="0|40|guess", rk="medium|music barely designed; PLAYERS praise 9 (music and sound) is a loved theme", rn=["RN-16"], t="his ear")
-P("5.7.1", "Radio programmes and period songs", "What plays on radios in cabs, shops and the office; the pirate radio station the brand bible owes.", std="No real bands, lyrics or brands (canon); content from the allowlist or our own", ss="canon Brands and law", des="not designed", tr="unreal", f=1, o="builder", n=["4.9"],
+P("5.7.1", "Radio programmes and period songs", "What plays on radios in cabs, shops and the office; the pirate radio station the brand bible owes.", std="No real bands, lyrics or brands (canon); content from the allowlist or our own, only on licences that never expire", ss="canon Brands and law", des="not designed", tr="unreal", f=1, o="builder", n=["4.9"],
   h="0|40|guess", rk="medium|found by the departments check", t="canon gate; his ear")
 P("5.8", "Cameras and cut scenes", "The camera system and the few short scenes.", tr="both", o="builder", f=1, std="ER-CAM-01, 02", ss="DESIGN §17", des="DESIGN §17")
 P("5.8.1", "Camera rig by state", "One arm read from rows: street, run, room, talk, fight, car; blends of a second or less.", std="Ruling 28 Oct (street, talk closer, fights wider); blends 1 s or less; shake obeys Reduce motion", ss="RULINGS 28 Oct; DESIGN §17", des="DESIGN §17", tr="both", f=1, o="builder",

@@ -25,8 +25,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (VISION.md; DESIGN.md); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -156,7 +156,9 @@
     "1.1.3",
     "1.1.4",
     "1.1.5",
-    "1.1.6"
+    "1.1.6",
+    "1.1.7",
+    "1.1.8"
    ],
    "leaf": false
   },
@@ -187,6 +189,8 @@
    "needs": [],
    "blocks": [
     "1.1.4",
+    "1.1.7",
+    "1.1.8",
     "1.5.1",
     "1.5.2",
     "5.2.1"
@@ -428,7 +432,7 @@
     "level": "medium",
     "why": "no explicit verb existed before the addendum; risk of a stealth minigame creeping in"
    },
-   "test": "S: standing still in a doorway lowers what is caught versus walking past; H: 'where would you stand to not be seen?'",
+   "test": "S: standing still in a doorway lowers what is caught versus walking past; H: 'where would you stand to not be seen?'; addendum rules ER-HIDE-01 to 03",
    "owner": "lane",
    "checklist_items": [
     "A05.16",
@@ -473,6 +477,7 @@
     "2.2.3"
    ],
    "blocks": [
+    "1.6.11",
     "3.5.4"
    ],
    "hours": {
@@ -484,12 +489,100 @@
     "level": "medium",
     "why": "tail missions are a punished theme when they are slow and fail on distance (PLAYERS punish 5, 9)"
    },
-   "test": "S: a scripted tail is made at the addendum's rule and never fails on a hidden distance; H: 'did losing him feel fair?'",
+   "test": "S: a scripted tail is made at the addendum's rule and never fails on a hidden distance; H: 'did losing him feel fair?'; addendum rules ER-TAIL-01 to 03",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [
     "P14 Stealth, lockpicking and pickpocketing that work"
    ],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.1.7",
+   "level": 3,
+   "parent": "1.1",
+   "name": "Stopping and blending in",
+   "what": "Sit on a bench or wall, lean in a doorway, light a cigarette, wait at a bus stop: standing still without looking suspicious.",
+   "felt": true,
+   "standard": "A stopped Tom draws less notice than a loiterer; tobacco allowed (canon); waiting under 10% of play (ER-CORE-06)",
+   "standard_source": "canon content rule; DESIGN §1",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A10",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.1.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: a seated or smoking Tom is caught less than one standing about; H: minding feels like play; addendum rules ER-STOP-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.1.8",
+   "level": 3,
+   "parent": "1.1",
+   "name": "Vaulting low walls and fences",
+   "what": "A context vault over low walls, yard fences and bins at set places; no jump key.",
+   "felt": true,
+   "standard": "Recommended answer to QUESTIONS-FOR-JAFAR-2026-11-20 Q1, built to it meanwhile; never a jump (ruling 23 Sep); vault speed and heights to be measured",
+   "standard_source": "ruling 23 Sep; Q1 (open)",
+   "research_items": [
+    "RN-08"
+   ],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer)",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer)); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer)); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.1.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "his ruling's edge; found by the red team and the mechanics check"
+   },
+   "test": "S: each vault point works in a chase; no vault anywhere else; addendum rules ER-VAULT-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
    "notes": [],
    "children": [],
    "leaf": true
@@ -539,7 +632,10 @@
     "1.2.4",
     "1.2.5",
     "1.2.6",
-    "1.2.7"
+    "1.2.7",
+    "1.2.8",
+    "1.2.9",
+    "1.2.10"
    ],
    "leaf": false
   },
@@ -724,7 +820,9 @@
    "needs": [
     "1.2.1"
    ],
-   "blocks": [],
+   "blocks": [
+    "1.2.9"
+   ],
    "hours": {
     "prototype": "2",
     "unreal": "30",
@@ -834,7 +932,7 @@
     "level": "medium",
     "why": "car tails are a commonly punished mission type when fail states are hidden"
    },
-   "test": "S: scripted car tail; H: 'did you know how close was too close?'",
+   "test": "S: scripted car tail; H: 'did you know how close was too close?'; addendum rules ER-TAIL-01 to 03",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [
@@ -895,6 +993,137 @@
    "leaf": true
   },
   {
+   "id": "1.2.8",
+   "level": 3,
+   "parent": "1.2",
+   "name": "Riding as a passenger",
+   "what": "Kevin, Terry or a crewman drives Tom; the ride can be skipped as passed time.",
+   "felt": true,
+   "standard": "A crewman told to drive is an AI driver and always brakes for people (DESIGN §12); a skipped ride costs its real time on the clock",
+   "standard_source": "DESIGN §12; canon",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A24",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.7.1",
+    "4.5.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: a ride arrives; skip advances the clock by the drive's time; addendum rules ER-RIDE-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.2.9",
+   "level": 3,
+   "parent": "1.2",
+   "name": "Repairs, plates and paint",
+   "what": "The firm fetches and mends a wrecked cab; Shaun Hewson's paint makes a cab not look like a cab; plates are what witnesses note.",
+   "felt": true,
+   "standard": "A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18)",
+   "standard_source": "DESIGN §5, §12, §18",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A24",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.2.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: a repainted car is not named as the firm's by a witness who saw the old paint; addendum rules ER-PAINT-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.2.10",
+   "level": 3,
+   "parent": "1.2",
+   "name": "Taking a parked car",
+   "what": "Getting into a car that is not his by force (a window, a tool), loud, no minigame; the owner reports it.",
+   "felt": true,
+   "standard": "Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car",
+   "standard_source": "Q2 (open)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer)",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer)); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer)); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.6.1",
+    "4.5.2"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "scope is his; found by the red team and the mechanics check"
+   },
+   "test": "S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "1.3",
    "level": 2,
    "parent": "1",
@@ -942,7 +1171,8 @@
     "1.3.7",
     "1.3.8",
     "1.3.9",
-    "1.3.10"
+    "1.3.10",
+    "1.3.11"
    ],
    "leaf": false
   },
@@ -955,7 +1185,9 @@
    "felt": true,
    "standard": "ER-FIGHT-01 (timings inside the melee sheet bands C1 to C15): C1 blow starts within 0.1 s; C2 jab 0.25 to 0.40 s to contact, heavy 0.63 to 0.85 s; C3 hit-stop 0.025 to 0.13 s by blow; camera close-in held about 0.8 s",
    "standard_source": "FEEL-TARGETS-MELEE (c); DESIGN §7",
-   "research_items": [],
+   "research_items": [
+    "RN-05"
+   ],
    "designed_in": "DESIGN §7 Feel",
    "track": "both",
    "status": {
@@ -976,7 +1208,8 @@
     "1.3.5",
     "1.3.6",
     "1.3.10",
-    "5.2.2"
+    "5.2.2",
+    "7.16"
    ],
    "hours": {
     "prototype": "2",
@@ -1139,6 +1372,7 @@
     "1.3.8"
    ],
    "blocks": [
+    "1.4.7",
     "1.6.4"
    ],
    "hours": {
@@ -1245,7 +1479,7 @@
     "level": "medium",
     "why": "no glass or bottles (content rule)"
    },
-   "test": "S: breakage counts; a weapon out on a held input only (ER-FIGHT-08)",
+   "test": "S: breakage counts; a weapon out on a held input only (ER-FIGHT-08); a cosh from behind on an unaware man knocks out and is seen as a strike",
    "owner": "lane",
    "checklist_items": [
     "A08.11",
@@ -1289,7 +1523,9 @@
     "5.2.2",
     "5.9"
    ],
-   "blocks": [],
+   "blocks": [
+    "1.3.11"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "40",
@@ -1347,7 +1583,8 @@
     "2.5.3"
    ],
    "blocks": [
-    "1.3.4"
+    "1.3.4",
+    "1.7.4"
    ],
    "hours": {
     "prototype": "1.5",
@@ -1493,6 +1730,49 @@
    "leaf": true
   },
   {
+   "id": "1.3.11",
+   "level": 3,
+   "parent": "1.3",
+   "name": "Marks that last",
+   "what": "Bruises, a cut lip and a limp stay on a beaten Tom for days; others see them; a doctor who asks no questions.",
+   "felt": true,
+   "standard": "Condition shows in the body, never a bar (DESIGN §7); a mark is a give-away (DESIGN §2)",
+   "standard_source": "DESIGN §2, §7",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A21",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.3.7"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: a marked Tom is caught more; marks fade on the clock; addendum rules ER-MARK-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "1.4",
    "level": 2,
    "parent": "1",
@@ -1536,7 +1816,9 @@
     "1.4.3",
     "1.4.4",
     "1.4.5",
-    "1.4.6"
+    "1.4.6",
+    "1.4.7",
+    "1.4.8"
    ],
    "leaf": false
   },
@@ -1669,7 +1951,9 @@
     "2.2.4",
     "5.5.7"
    ],
-   "blocks": [],
+   "blocks": [
+    "8.4.1"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "20",
@@ -1717,7 +2001,8 @@
     "5.1.4"
    ],
    "blocks": [
-    "1.6.7"
+    "1.6.7",
+    "1.6.10"
    ],
    "hours": {
     "prototype": "1",
@@ -1827,6 +2112,93 @@
     "why": "small and optional"
    },
    "test": "S: screen inventory with the assist on",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.4.7",
+   "level": 3,
+   "parent": "1.4",
+   "name": "Street manners",
+   "what": "A nod, a greeting, a hard look, a shove on one key: the smallest acts, answered by the person.",
+   "felt": true,
+   "standard": "Answered in body or voice within 1 s; each is an act with the seven slots (canon moat)",
+   "standard_source": "canon; DESIGN §7 lower rungs",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A10",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.3.4",
+    "2.12.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: each gesture answered within 1 s and remembered; addendum rules ER-MANNER-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.4.8",
+   "level": 3,
+   "parent": "1.4",
+   "name": "Drawing a watcher away",
+   "what": "A noise or a thrown thing turns a watcher's head or moves him off a door.",
+   "felt": true,
+   "standard": "Uses the sound reach rule (DESIGN §2); a watcher drawn away remembers the noise",
+   "standard_source": "DESIGN §2",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A23",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.2.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the mechanics check"
+   },
+   "test": "S: a noise inside reach turns a head; outside reach does nothing",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -1971,7 +2343,7 @@
     "level": "medium",
     "why": "not designed before the addendum"
    },
-   "test": "S: a runner can be caught by a direct line and lost by a slow one; ends within 90 s",
+   "test": "S: a runner can be caught by a direct line and lost by a slow one; ends within 90 s; addendum rules ER-PURSUE-01 to 02",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [
@@ -2011,7 +2383,8 @@
     "1.5.4"
    ],
    "blocks": [
-    "1.2.5"
+    "1.2.5",
+    "2.6.7"
    ],
    "hours": {
     "prototype": "2",
@@ -2132,7 +2505,9 @@
     "1.6.6",
     "1.6.7",
     "1.6.8",
-    "1.6.9"
+    "1.6.9",
+    "1.6.10",
+    "1.6.11"
    ],
    "leaf": false
   },
@@ -2163,6 +2538,7 @@
     "4.3"
    ],
    "blocks": [
+    "1.2.10",
     "3.5.3"
    ],
    "hours": {
@@ -2223,7 +2599,7 @@
     "level": "medium",
     "why": "not designed before the addendum; KCD2 pickpocket/lockpick praised when it works (PLAYERS praise 14)"
    },
-   "test": "S: every container searchable, each search timed and heard at its reach",
+   "test": "S: every container searchable, each search timed and heard at its reach; addendum rules ER-SEARCH-01 to 02",
    "owner": "lane",
    "checklist_items": [
     "A11.16",
@@ -2555,18 +2931,19 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §7 Weapons; DESIGN-ADDENDUM §A5); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §7 Weapons; DESIGN-ADDENDUM §A5); build not checked by the status sweep"
     }
    },
    "needs": [],
    "blocks": [
     "1.6.6",
-    "2.6.2"
+    "2.6.2",
+    "2.6.9"
    ],
    "hours": {
     "prototype": "1",
@@ -2577,7 +2954,7 @@
     "level": "low",
     "why": "small, but found by the checklist mapping as a missing part (16 items)"
    },
-   "test": "S: a search finds what is carried; office storage keeps across saves",
+   "test": "S: a search finds what is carried; office storage keeps across saves; addendum rules ER-POCKET-01 to 02",
    "owner": "lane",
    "checklist_items": [
     "A36.01",
@@ -2597,6 +2974,94 @@
     "A36.17",
     "A36.21"
    ],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.10",
+   "level": 3,
+   "parent": "1.6",
+   "name": "Tom's wardrobe",
+   "what": "Buying and changing clothes: the three outfits of the rise, the dark coat, a second coat after a deed, a barber.",
+   "felt": true,
+   "standard": "Three outfits across the game each changing how strangers speak and which doors open (DESIGN §14); his to approve in the game's camera",
+   "standard_source": "DESIGN §14; rulings 29 Sep, 3 Oct",
+   "research_items": [],
+   "designed_in": "DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.4.4",
+    "5.1.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "clothes are Kiln's slowest pipeline"
+   },
+   "test": "S: a change of coat lowers a witness's mark rung; H: strangers greet differently; addendum rules ER-COAT-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.11",
+   "level": 3,
+   "parent": "1.6",
+   "name": "Casing a place",
+   "what": "Watching a place by day to learn its hours, who keeps the key, which way is left open.",
+   "felt": true,
+   "standard": "What is learned goes in the Ledger as a sourced line (ER-LEDG-01); windows, not minutes (DESIGN §4)",
+   "standard_source": "DESIGN §4, §10",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A23",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.1.6",
+    "6.2.3"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "20",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: a cased place's hours appear in the Ledger and match the routines; addendum rules ER-CASE-01",
+   "owner": "lane",
+   "checklist_items": [],
    "review_themes": [],
    "notes": [],
    "children": [],
@@ -2643,7 +3108,8 @@
    "children": [
     "1.7.1",
     "1.7.2",
-    "1.7.3"
+    "1.7.3",
+    "1.7.4"
    ],
    "leaf": false
   },
@@ -2674,8 +3140,10 @@
     "6.6"
    ],
    "blocks": [
+    "1.2.8",
     "1.6.6",
-    "1.7.2"
+    "1.7.2",
+    "1.7.4"
    ],
    "hours": {
     "prototype": "2",
@@ -2779,7 +3247,9 @@
     "2.15",
     "6.2"
    ],
-   "blocks": [],
+   "blocks": [
+    "2.15.1"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "16",
@@ -2790,6 +3260,50 @@
     "why": "management screen creep is the risk (his lesson 8: management on the street)"
    },
    "test": "S: placements change sightings; H: minutes spent at the board",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.7.4",
+   "level": 3,
+   "parent": "1.7",
+   "name": "Men at his side",
+   "what": "Crew who follow, ride along and stand in a fight with him, without blocking doors.",
+   "felt": true,
+   "standard": "A follower keeps up or waits and never fails the job (ER-CREW-02); two against one is deadly both ways (DESIGN §7)",
+   "standard_source": "DESIGN §7, §12",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A16",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A16); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A16); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.7.1",
+    "1.3.8"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "60",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "companion AI cost; found by the red team"
+   },
+   "test": "B: followers never block; S: a fight with Ron at his side goes as the odds say; addendum rules ER-SIDE-01",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -2851,7 +3365,10 @@
     "2.13",
     "2.14",
     "2.15",
-    "2.16"
+    "2.16",
+    "2.17",
+    "2.18",
+    "2.19"
    ],
    "leaf": false
   },
@@ -2898,7 +3415,8 @@
     "2.1.2",
     "2.1.3",
     "2.1.4",
-    "2.1.5"
+    "2.1.5",
+    "2.1.6"
    ],
    "leaf": false
   },
@@ -2931,6 +3449,7 @@
     "1.1.6",
     "1.6.1",
     "2.1.5",
+    "2.1.6",
     "2.4.1",
     "2.5.1",
     "2.6.1",
@@ -2968,7 +3487,9 @@
    "felt": true,
    "standard": "Hours from 1990 research (owed)",
    "standard_source": "DESIGN §2; aaa-s01-05",
-   "research_items": [],
+   "research_items": [
+    "RN-11"
+   ],
    "designed_in": "DESIGN §2 (hours owed)",
    "track": "both",
    "status": {
@@ -3165,6 +3686,49 @@
    "leaf": true
   },
   {
+   "id": "2.1.6",
+   "level": 3,
+   "parent": "2.1",
+   "name": "The town's calendar",
+   "what": "Market day, Saturday's match, Sunday, and two dated days in the window (Bonfire Night with adults only, Remembrance Sunday).",
+   "felt": true,
+   "standard": "No real people or events spoken of (canon: no real people); no children (canon)",
+   "standard_source": "canon",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A20",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A20); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A20); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.1.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "Bonfire Night against no children; found by the red team"
+   },
+   "test": "S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "2.2",
    "level": 2,
    "parent": "2",
@@ -3207,7 +3771,8 @@
     "2.2.2",
     "2.2.3",
     "2.2.4",
-    "2.2.5"
+    "2.2.5",
+    "2.2.6"
    ],
    "leaf": false
   },
@@ -3239,7 +3804,8 @@
    "blocks": [
     "1.3.4",
     "1.6.5",
-    "2.2.5"
+    "2.2.5",
+    "2.2.6"
    ],
    "hours": {
     "prototype": "0",
@@ -3387,7 +3953,9 @@
     "9.6"
    ],
    "blocks": [
-    "1.4.3"
+    "1.4.3",
+    "1.4.8",
+    "4.11.1"
    ],
    "hours": {
     "prototype": "0.5",
@@ -3448,6 +4016,49 @@
     "why": ""
    },
    "test": "S: golden rows per give-away",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.2.6",
+   "level": 3,
+   "parent": "2.2",
+   "name": "Ground rules and trespass",
+   "what": "Whose ground it is (public, shop hours, private, forbidden) and the warnings given.",
+   "felt": true,
+   "standard": "Rooms labelled by privacy with a night rule; a challenge warns, warns again, then acts within half a minute (DESIGN §4)",
+   "standard_source": "DESIGN §4",
+   "research_items": [],
+   "designed_in": "DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.2.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: every place has a label and the warnings fire in order; addendum rules ER-GROUND-01",
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
@@ -3528,6 +4139,7 @@
    "blocks": [
     "1.6.3",
     "2.16",
+    "2.19",
     "3.6.2",
     "6.2.1"
    ],
@@ -3643,7 +4255,8 @@
     "2.4.1",
     "2.4.2",
     "2.4.3",
-    "2.4.4"
+    "2.4.4",
+    "2.4.5"
    ],
    "leaf": false
   },
@@ -3830,7 +4443,7 @@
    },
    "risk": {
     "level": "medium",
-    "why": "the clock is 30 real s a game hour in code and 45 in DESIGN (status-unreal note; C11 open on his page)"
+    "why": "the Unreal clock is 30 real s a game hour, DESIGN and the prototype 45 (C11 open on his page)"
    },
    "test": "S: 16 seeded weeks; timeliness at the playing clock",
    "owner": "lane",
@@ -3844,6 +4457,51 @@
     "S3 Something has to come back (memory that interrupts)",
     "S4 gossip timeliness in the first 30 real minutes"
    ],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.4.5",
+   "level": 3,
+   "parent": "2.4",
+   "name": "The paper and the news",
+   "what": "Alison Sedman's stories in the local paper: what she knows, printed; read in the caff and talked about.",
+   "felt": true,
+   "standard": "The press works only through a person, Alison (D56); a story prints only what she knows (canon moat)",
+   "standard_source": "D56; DESIGN §11",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A19",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "3.2.1"
+   ],
+   "blocks": [
+    "6.10"
+   ],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "the paper's name is owed by the brand bible; found by the red team"
+   },
+   "test": "S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
    "notes": [],
    "children": [],
    "leaf": true
@@ -3921,7 +4579,8 @@
    ],
    "blocks": [
     "1.4.5",
-    "1.5.2"
+    "1.5.2",
+    "2.18"
    ],
    "hours": {
     "prototype": "1.5",
@@ -4094,7 +4753,10 @@
     "2.6.3",
     "2.6.4",
     "2.6.5",
-    "2.6.6"
+    "2.6.6",
+    "2.6.7",
+    "2.6.8",
+    "2.6.9"
    ],
    "leaf": false
   },
@@ -4268,7 +4930,9 @@
    "needs": [
     "4.3.7"
    ],
-   "blocks": [],
+   "blocks": [
+    "2.6.9"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "16",
@@ -4317,6 +4981,7 @@
    ],
    "blocks": [
     "1.2.5",
+    "2.6.8",
     "3.1.3"
    ],
    "hours": {
@@ -4383,6 +5048,138 @@
    "leaf": true
   },
   {
+   "id": "2.6.7",
+   "level": 3,
+   "parent": "2.6",
+   "name": "Traffic police and stops",
+   "what": "A patrol car; reckless driving in its sight starts a stop; the plate is noted.",
+   "felt": true,
+   "standard": "Reckless driving in a police car's sight starts a stop; refusing it is a chase (DESIGN §5); no fines as a system (DESIGN §18)",
+   "standard_source": "DESIGN §5, §18",
+   "research_items": [],
+   "designed_in": "DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "4.5.1",
+    "1.5.3"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: a stop starts only on reckless driving in sight; ends within 2 minutes; addendum rules ER-TRAFFIC-01 to 02",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.6.8",
+   "level": 3,
+   "parent": "2.6",
+   "name": "Bought men and squaring the law",
+   "what": "A named officer who can be paid or leaned on; never the force as a whole.",
+   "felt": true,
+   "standard": "Police corruptible as individuals, never as a thesis (canon)",
+   "standard_source": "canon",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A13",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.6.5",
+    "2.7.2"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "menace; found by the red team and the mechanics check"
+   },
+   "test": "S: one bought officer, his limits; the rest of the station unchanged; addendum rules ER-BOUGHT-01",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.6.9",
+   "level": 3,
+   "parent": "2.6",
+   "name": "Charges, bail and the office searched",
+   "what": "A charge joins Ellis's case and the endings; bail; at the investigating stage, one search of the office.",
+   "felt": true,
+   "standard": "An arrest is hours, a caution, or a charge and bail; no prison terms (DESIGN §8, §18)",
+   "standard_source": "DESIGN §8, §18",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A13",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.6.4",
+    "1.6.9"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: a charge reaches the endings; a search finds what is stored at the office; addendum rules ER-SEARCHED-01",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "2.7",
    "level": 2,
    "parent": "2",
@@ -4427,7 +5224,8 @@
     "2.7.4",
     "2.7.5",
     "2.7.6",
-    "2.7.7"
+    "2.7.7",
+    "2.7.8"
    ],
    "leaf": false
   },
@@ -4500,6 +5298,7 @@
    },
    "needs": [],
    "blocks": [
+    "2.6.8",
     "2.7.3"
    ],
    "hours": {
@@ -4634,6 +5433,7 @@
     "2.1.1"
    ],
    "blocks": [
+    "2.7.8",
     "2.8.2"
    ],
    "hours": {
@@ -4672,7 +5472,9 @@
    "felt": true,
    "standard": "About 0.4 (lead; the 1990 rate owed)",
    "standard_source": "DESIGN §4",
-   "research_items": [],
+   "research_items": [
+    "RN-13"
+   ],
    "designed_in": "DESIGN §4, §9",
    "track": "both",
    "status": {
@@ -4748,6 +5550,51 @@
    "checklist_items": [
     "A37.16"
    ],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.7.8",
+   "level": 3,
+   "parent": "2.7",
+   "name": "Spending",
+   "what": "What money buys and where: tobacco, food at the caff, tools at the ironmonger, clothes, a solicitor, a bribe, a car.",
+   "felt": true,
+   "standard": "What money buys is position (DESIGN §9); purses and weekly restock, no price tables (DESIGN §18)",
+   "standard_source": "DESIGN §9, §18",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A21",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.7.5"
+   ],
+   "blocks": [
+    "2.15.1"
+   ],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "£23.50 only bites if money has uses; found by the red team"
+   },
+   "test": "S: each shop sells its list; H: 'what did you spend on?'; addendum rules ER-SPEND-01",
+   "owner": "town",
+   "checklist_items": [],
    "review_themes": [],
    "notes": [],
    "children": [],
@@ -5320,7 +6167,9 @@
    "needs": [
     "3.2.3"
    ],
-   "blocks": [],
+   "blocks": [
+    "2.17"
+   ],
    "hours": {
     "prototype": "1.5",
     "unreal": "16",
@@ -5472,7 +6321,8 @@
     "2.12.1",
     "2.12.2",
     "2.12.3",
-    "2.12.4"
+    "2.12.4",
+    "2.12.5"
    ],
    "leaf": false
   },
@@ -5547,6 +6397,8 @@
     "2.12.3"
    ],
    "blocks": [
+    "2.12.5",
+    "2.17",
     "3.1.2",
     "7.7"
    ],
@@ -5640,7 +6492,9 @@
    "needs": [
     "3.6.4"
    ],
-   "blocks": [],
+   "blocks": [
+    "1.4.7"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "16",
@@ -5657,6 +6511,49 @@
     "JP1 The town reacts to you (reputation, crime, NPC memory)",
     "S5 Standing ladder is the cheapest early recognition"
    ],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.12.5",
+   "level": 3,
+   "parent": "2.12",
+   "name": "Property that reacts",
+   "what": "The office fills, the flat stops being Mickey's, a lock-up, a second phone line.",
+   "felt": true,
+   "standard": "Each rung changes three things a newcomer can point to (ER-RISE-03)",
+   "standard_source": "DESIGN §14",
+   "research_items": [],
+   "designed_in": "DESIGN §14",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.12.2"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the mechanics check"
+   },
+   "test": "H: office at rung 1 and rung 3 compared",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
    "notes": [],
    "children": [],
    "leaf": true
@@ -5778,7 +6675,8 @@
    ],
    "blocks": [
     "1.2.5",
-    "1.7.3"
+    "1.7.3",
+    "2.15.3"
    ],
    "hours": {
     "prototype": "1",
@@ -5790,6 +6688,142 @@
     "why": ""
    },
    "test": "S: fares counted for a week after a drive-off",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [
+    "2.15.1",
+    "2.15.2",
+    "2.15.3"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "2.15.1",
+   "level": 3,
+   "parent": "2.15",
+   "name": "Fleet and drivers",
+   "what": "Buying a car, hiring and losing drivers, shifts on the board.",
+   "felt": true,
+   "standard": "Two cars and two drivers at rung 1, five cars at rung 3 (DESIGN §14)",
+   "standard_source": "DESIGN §14",
+   "research_items": [],
+   "designed_in": "DESIGN §12, §14; DESIGN-ADDENDUM-2026-11-20 §A14",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §12, §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §12, §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.7.3",
+    "2.7.8"
+   ],
+   "blocks": [
+    "2.15.2"
+   ],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "management creep; found by the red team"
+   },
+   "test": "S: a bought car joins the board and the ranks; addendum rules ER-FIRM-01 to 02",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.15.2",
+   "level": 3,
+   "parent": "2.15",
+   "name": "Ranks and accounts",
+   "what": "Winning a rank, the cold-store shift contract, regular customers.",
+   "felt": true,
+   "standard": "The cold-store contract is the daily loop that earns and explains money (DESIGN §14)",
+   "standard_source": "DESIGN §14",
+   "research_items": [],
+   "designed_in": "DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A14",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.15.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: an account adds fares to the book; addendum rules ER-FIRM-01",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.15.3",
+   "level": 3,
+   "parent": "2.15",
+   "name": "Other firms on the ranks",
+   "what": "The other minicab firm people ring after a hit-and-run; a presence, not a fourth rival.",
+   "felt": true,
+   "standard": "'People ring another firm for a while' (DESIGN §5); the three rivals stay three (canon)",
+   "standard_source": "DESIGN §5; canon",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A14",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.15"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: fares move to the other firm after a drive-off and come back",
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
@@ -5847,6 +6881,137 @@
    "leaf": true
   },
   {
+   "id": "2.17",
+   "level": 2,
+   "parent": "2",
+   "name": "Fronts and rackets held",
+   "what": "Taking a share of a business, putting a man in, money and trouble coming back; run through people, never sliders.",
+   "felt": true,
+   "standard": "A first front and a first round at rung 3 (DESIGN §14); empire as management on the street (his lesson 8); not an economy game (canon)",
+   "standard_source": "DESIGN §14; canon",
+   "research_items": [],
+   "designed_in": "DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A15",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A15); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A15); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.12.2",
+    "2.11.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "60",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "high",
+    "why": "Act II rests on it; found by the red team (both)"
+   },
+   "test": "S: a front pays through its man; trouble at it reaches Tom through people; addendum rules ER-FRONT-01 to 02",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.18",
+   "level": 2,
+   "parent": "2",
+   "name": "Ambulance and the hospital",
+   "what": "Someone hurt is taken to hospital after a call from the phone box; stopping to help means making that call.",
+   "felt": true,
+   "standard": "Stop and help costs minutes and puts his face beside the cab (DESIGN §5)",
+   "standard_source": "DESIGN §5",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A22",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A22); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A22); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.5.1",
+    "4.3.8"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "S: an ambulance arrives after a call within its set time; addendum rules ER-AMB-01",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.19",
+   "level": 2,
+   "parent": "2",
+   "name": "Lasting marks on the town",
+   "what": "A forced door shows for a day; glass stays broken until mended; his cars on the ranks; things stay where they were left.",
+   "felt": true,
+   "standard": "Force shows on the door for a day (DESIGN §4); nothing is ever wiped (canon)",
+   "standard_source": "DESIGN §4; canon",
+   "research_items": [],
+   "designed_in": "DESIGN §4",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.3.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: marks persist across save and load for their set time",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "3",
    "level": 1,
    "parent": "0",
@@ -5890,7 +7055,8 @@
     "3.3",
     "3.4",
     "3.5",
-    "3.6"
+    "3.6",
+    "3.7"
    ],
    "leaf": false
   },
@@ -6310,6 +7476,7 @@
     "5.6.1"
    ],
    "blocks": [
+    "2.4.5",
     "2.6.5",
     "2.10.1"
    ],
@@ -6537,8 +7704,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN (Ron as one complete person, n16-2)); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -6860,7 +8027,8 @@
     "3.5.3",
     "3.5.4",
     "3.5.5",
-    "3.5.6"
+    "3.5.6",
+    "3.5.7"
    ],
    "leaf": false
   },
@@ -7116,12 +8284,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -7131,6 +8299,8 @@
     "1.7.2",
     "3.3",
     "3.5.1",
+    "3.5.7",
+    "3.7",
     "6.2.3"
    ],
    "hours": {
@@ -7144,6 +8314,49 @@
    },
    "test": "S: job data checks; every outcome reached by script",
    "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "3.5.7",
+   "level": 3,
+   "parent": "3.5",
+   "name": "How jobs reach him",
+   "what": "Callers at the office, the phone, a message left with Sheila or Pauline, a man waiting by the car.",
+   "felt": true,
+   "standard": "A job is offered by a person, on a state, never by a marker or the clock alone (DESIGN §4 law 1)",
+   "standard_source": "DESIGN §4",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A17",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A17); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A17); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "3.5.6"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: every job has a giver and a channel; H: 'how did you hear of it?'; addendum rules ER-REACH-01",
+   "owner": "town",
    "checklist_items": [],
    "review_themes": [],
    "notes": [],
@@ -7197,7 +8410,8 @@
     "3.6.4",
     "3.6.5",
     "3.6.6",
-    "3.6.7"
+    "3.6.7",
+    "3.6.8"
    ],
    "leaf": false
   },
@@ -7560,6 +8774,92 @@
    "leaf": true
   },
   {
+   "id": "3.6.8",
+   "level": 3,
+   "parent": "3.6",
+   "name": "How the player speaks",
+   "what": "Typing on a keyboard, suggested lines on a pad, whether Tom is heard aloud.",
+   "felt": true,
+   "standard": "Suggested lines on Tab, shown at once on a controller (ruling 1 Oct); Tom's written lines approved; no voice for Tom without his yes (24 Sep)",
+   "standard_source": "RULINGS 1 Oct, 24 Sep",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A25",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A25); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A25); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "6.7"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "a pad cannot type (NOT_DONE); found by the red team"
+   },
+   "test": "S: a whole talk by pad alone; addendum rules ER-SPEAK-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "3.7",
+   "level": 2,
+   "parent": "3",
+   "name": "Street happenings",
+   "what": "Small authored incidents placed on the clock and the town's state: a row on the pavement, a breakdown, a shoplifter, a lost tourist.",
+   "felt": true,
+   "standard": "Authored, each with a spec and a check, never rolled at random (ruling 13 Nov; DESIGN §18 cuts random encounters); no set piece twice in 30 minutes (ER-JOB-06)",
+   "standard_source": "ruling 13 Nov; DESIGN §4, §18",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A18",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A18); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A18); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "3.5.6"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "3",
+    "unreal": "80",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "must stay authored, not random; found by the red team (both)"
+   },
+   "test": "S: placement by state; H: empty minutes fall; addendum rules ER-HAPPEN-01 to 02",
+   "owner": "town",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "4",
    "level": 1,
    "parent": "0",
@@ -7573,8 +8873,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (canon; atlas-01; DESIGN §6); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -7626,8 +8926,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (atlas-01); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -7781,8 +9081,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4; street_signs tool); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -7794,7 +9094,8 @@
    ],
    "blocks": [
     "3.4.3",
-    "6.3"
+    "6.3",
+    "6.9"
    ],
    "hours": {
     "prototype": "1",
@@ -7834,8 +9135,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §5); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -7878,8 +9179,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (study 04 (rules, not yet a spec)); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -7917,8 +9218,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (canon; atlas proposal); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -7944,7 +9245,8 @@
    "children": [
     "4.2.1",
     "4.2.2",
-    "4.2.3"
+    "4.2.3",
+    "4.2.4"
    ],
    "leaf": false
   },
@@ -7973,7 +9275,9 @@
    "needs": [
     "4.1.2"
    ],
-   "blocks": [],
+   "blocks": [
+    "4.2.4"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "120",
@@ -8052,8 +9356,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §13); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -8080,6 +9384,49 @@
    "leaf": true
   },
   {
+   "id": "4.2.4",
+   "level": 3,
+   "parent": "4.2",
+   "name": "The water's edge",
+   "what": "Quay edges, ladders, the dock water: Tom never walks in; a man knocked in climbs out at a ladder.",
+   "felt": true,
+   "standard": "Never stuck (ER-CORE-01); Tom cannot die (his ruling); water never kills",
+   "standard_source": "DESIGN §1; his rulings",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A11",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A11); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A11); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "4.2.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "a port makes it certain on night one; found by the red team (both)"
+   },
+   "test": "B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "4.3",
    "level": 2,
    "parent": "4",
@@ -8093,8 +9440,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §6 Rooms); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -8457,7 +9804,8 @@
    },
    "needs": [],
    "blocks": [
-    "1.3.9"
+    "1.3.9",
+    "2.18"
    ],
    "hours": {
     "prototype": "1",
@@ -8573,6 +9921,96 @@
    ],
    "review_themes": [],
    "notes": [],
+   "children": [
+    "4.5.1",
+    "4.5.2"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "4.5.1",
+   "level": 3,
+   "parent": "4.5",
+   "name": "Traffic drivers",
+   "what": "AI drivers at junctions, giving way, reacting to crashes and people; always braking for people.",
+   "felt": true,
+   "standard": "AI drivers always brake for people (canon); ER-DRIVE-04",
+   "standard_source": "canon; DESIGN §5",
+   "research_items": [],
+   "designed_in": "TRAFFIC-STAGE1-REFERENCE-MODEL",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (TRAFFIC-STAGE1-REFERENCE-MODEL); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (TRAFFIC-STAGE1-REFERENCE-MODEL); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "4.6"
+   ],
+   "blocks": [
+    "1.2.8",
+    "2.6.7"
+   ],
+   "hours": {
+    "prototype": "2",
+    "unreal": "80",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: 1,000 seeded crossings; 40 minutes lawful driving with no hits",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "4.5.2",
+   "level": 3,
+   "parent": "4.5",
+   "name": "Parked cars",
+   "what": "Parked cars dressed along the kerbs from the car kit.",
+   "felt": true,
+   "standard": "His look at one parked car before twenty (ruling 17 Nov)",
+   "standard_source": "RULINGS cars 17 Nov",
+   "research_items": [],
+   "designed_in": "PLAN-PARKED-CARS-2026-11-17",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (PLAN-PARKED-CARS-2026-11-17); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "4.6.1"
+   ],
+   "blocks": [
+    "1.2.10"
+   ],
+   "hours": {
+    "prototype": "0",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": ""
+   },
+   "test": "the gate",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -8598,7 +10036,8 @@
     "9.1"
    ],
    "blocks": [
-    "4.5"
+    "4.5",
+    "4.5.1"
    ],
    "hours": {
     "prototype": "0",
@@ -8620,6 +10059,85 @@
     "P8 Historical accuracy and period detail",
     "P17 Driving and riding that feel good"
    ],
+   "notes": [],
+   "children": [
+    "4.6.1",
+    "4.6.2"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "4.6.1",
+   "level": 3,
+   "parent": "4.6",
+   "name": "Car designs",
+   "what": "Fictional 1990 makes that read as period without any real make.",
+   "felt": true,
+   "standard": "Fictional makes only; no real car models (canon)",
+   "standard_source": "canon Brands and law",
+   "research_items": [],
+   "designed_in": "car kit tools",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (car kit tools); build not checked by the status sweep"
+    }
+   },
+   "needs": [],
+   "blocks": [
+    "4.5.2"
+   ],
+   "hours": {
+    "prototype": "0",
+    "unreal": "80",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "trademark risk at shipping; found by the red team"
+   },
+   "test": "the gate; a look-alike check against real makes",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "4.6.2",
+   "level": 3,
+   "parent": "4.6",
+   "name": "Working vehicles",
+   "what": "Vans, lorries, dock trucks, a bus as scenery, police cars, an ambulance.",
+   "felt": true,
+   "standard": "Boats and buses scenery (ruling 23 Sep)",
+   "standard_source": "RULINGS 23 Sep",
+   "research_items": [],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "60",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team"
+   },
+   "test": "the gate",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
    "notes": [],
    "children": [],
    "leaf": true
@@ -8735,8 +10253,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (STYLE-SHEET-1990-DRAFT); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -8786,8 +10304,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (canon); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -8852,6 +10370,51 @@
     "A25.14",
     "A25.15"
    ],
+   "review_themes": [],
+   "notes": [],
+   "children": [
+    "4.11.1"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "4.11.1",
+   "level": 3,
+   "parent": "4.11",
+   "name": "Yard dogs",
+   "what": "A dog in a yard barks at a stranger: a witness by sound only, never hurt.",
+   "felt": true,
+   "standard": "A bark is a noise at its reach (DESIGN §2); no harm to animals shown",
+   "standard_source": "DESIGN §2",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A23",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.2.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the mechanics check"
+   },
+   "test": "S: a bark draws the owner within the rule; addendum rules ER-DOG-01",
+   "owner": "lane",
+   "checklist_items": [],
    "review_themes": [],
    "notes": [],
    "children": [],
@@ -9104,6 +10667,7 @@
    ],
    "blocks": [
     "1.4.4",
+    "1.6.10",
     "3.2.6",
     "5.1.5"
    ],
@@ -9223,7 +10787,9 @@
     "5.2.4",
     "5.2.5",
     "5.2.6",
-    "5.2.7"
+    "5.2.7",
+    "5.2.8",
+    "5.2.9"
    ],
    "leaf": false
   },
@@ -9404,7 +10970,9 @@
    "needs": [
     "5.6.2"
    ],
-   "blocks": [],
+   "blocks": [
+    "5.2.9"
+   ],
    "hours": {
     "prototype": "0",
     "unreal": "40",
@@ -9505,8 +11073,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (D29; DESIGN §2); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -9552,8 +11120,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -9574,6 +11142,86 @@
     "why": "found by the departments check (no capture budget)"
    },
    "test": "each clip's source and licence recorded",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "5.2.8",
+   "level": 3,
+   "parent": "5.2",
+   "name": "Physical reactions and falls",
+   "what": "Stagger, fall, being knocked down by a car, getting up: authored moves blended with physics.",
+   "felt": true,
+   "standard": "A struck man reels by the side he was hit (DESIGN §7); nothing through walls",
+   "standard_source": "DESIGN §7",
+   "research_items": [
+    "RN-18"
+   ],
+   "designed_in": "DESIGN §7",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §7); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "8.10"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "60",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "high",
+    "why": "GTA IV's bodies are the comparison players make; found by the red team"
+   },
+   "test": "his eye; drills",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "5.2.9",
+   "level": 3,
+   "parent": "5.2",
+   "name": "Live-talk faces",
+   "what": "Mouths, gestures and glances for lines that are made live, not prepared.",
+   "felt": true,
+   "standard": "Live lines' mouths follow the voice's loudness (ruling 1 Oct)",
+   "standard_source": "RULINGS 1 Oct",
+   "research_items": [],
+   "designed_in": "RULINGS",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "5.2.4"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "his eye at talking distance",
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
@@ -9776,8 +11424,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -9904,8 +11552,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built",
@@ -9999,8 +11647,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §17 Sound); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -10540,8 +12188,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS; DESIGN §11); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built",
@@ -10606,7 +12254,7 @@
     "level": "medium",
     "why": "music barely designed; PLAYERS praise 9 (music and sound) is a loved theme"
    },
-   "test": "his ear",
+   "test": "his ear; addendum rules ER-MUSIC-01",
    "owner": "builder",
    "checklist_items": [
     "A30.07",
@@ -10634,7 +12282,7 @@
    "name": "Radio programmes and period songs",
    "what": "What plays on radios in cabs, shops and the office; the pirate radio station the brand bible owes.",
    "felt": true,
-   "standard": "No real bands, lyrics or brands (canon); content from the allowlist or our own",
+   "standard": "No real bands, lyrics or brands (canon); content from the allowlist or our own, only on licences that never expire",
    "standard_source": "canon Brands and law",
    "research_items": [],
    "designed_in": "not designed",
@@ -10680,8 +12328,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN §17); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -10708,7 +12356,8 @@
    "notes": [],
    "children": [
     "5.8.1",
-    "5.8.2"
+    "5.8.2",
+    "5.8.3"
    ],
    "leaf": false
   },
@@ -10737,6 +12386,7 @@
    "needs": [],
    "blocks": [
     "1.1.2",
+    "5.8.3",
     "6.8"
    ],
    "hours": {
@@ -10826,6 +12476,49 @@
    "leaf": true
   },
   {
+   "id": "5.8.3",
+   "level": 3,
+   "parent": "5.8",
+   "name": "Staged scenes in play",
+   "what": "Scripted moments inside play: blocking, performance and timing of a story beat without taking control away.",
+   "felt": true,
+   "standard": "No talk scene runs 60 s without a choice or control (ER-TALK-06)",
+   "standard_source": "DESIGN §11",
+   "research_items": [],
+   "designed_in": "DESIGN §11, §15",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §11, §15); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §11, §15); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "5.8.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "60",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "H: control returns; S: timing",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "5.9",
    "level": 2,
    "parent": "5",
@@ -10891,8 +12584,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (the Hook sheet); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -10960,7 +12653,9 @@
     "6.5",
     "6.6",
     "6.7",
-    "6.8"
+    "6.8",
+    "6.9",
+    "6.10"
    ],
    "leaf": false
   },
@@ -11386,7 +13081,9 @@
    "needs": [
     "3.5.6"
    ],
-   "blocks": [],
+   "blocks": [
+    "1.6.11"
+   ],
    "hours": {
     "prototype": "0.5",
     "unreal": "8",
@@ -11536,7 +13233,9 @@
    "needs": [
     "4.1.3"
    ],
-   "blocks": [],
+   "blocks": [
+    "6.9"
+   ],
    "hours": {
     "prototype": "1",
     "unreal": "16",
@@ -11818,7 +13517,8 @@
    "needs": [],
    "blocks": [
     "3.6.5",
-    "3.6.6"
+    "3.6.6",
+    "3.6.8"
    ],
    "hours": {
     "prototype": "1",
@@ -11893,6 +13593,93 @@
    "leaf": true
   },
   {
+   "id": "6.9",
+   "level": 2,
+   "parent": "6",
+   "name": "Finding the way",
+   "what": "Addresses, house numbers, street-name plates, passengers' 'left here', asking a stranger, a nudge when lost.",
+   "felt": true,
+   "standard": "A newcomer reaches a named place unaided within 3 minutes (ER-JOB-01); no markers (ruling 23 Sep)",
+   "standard_source": "DESIGN §4; rulings",
+   "research_items": [],
+   "designed_in": "DESIGN §4 Guidance; DESIGN-ADDENDUM-2026-11-20 §A9",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4 Guidance; DESIGN-ADDENDUM-2026-11-20 §A9); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN §4 Guidance; DESIGN-ADDENDUM-2026-11-20 §A9); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "4.1.3",
+    "6.3"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "high",
+    "why": "fares cannot work without it; found by the red team (both)"
+   },
+   "test": "H: ten named places reached unaided; S: every place has an address and a landmark; addendum rules ER-WAY-01 to 03",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "6.10",
+   "level": 2,
+   "parent": "6",
+   "name": "Letters and papers in hand",
+   "what": "Things to read: the paper, Agar's solicitor's letters, the VAT letter, notes, posters.",
+   "felt": true,
+   "standard": "Nothing Tom could not know on screen (ER-SCREEN-01)",
+   "standard_source": "DESIGN §17",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A19",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "2.4.5"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the mechanics check"
+   },
+   "test": "S: each letter opens and goes in the Ledger",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "7",
    "level": 1,
    "parent": "0",
@@ -11945,7 +13732,8 @@
     "7.12",
     "7.13",
     "7.14",
-    "7.15"
+    "7.15",
+    "7.16"
    ],
    "leaf": false
   },
@@ -12444,7 +14232,7 @@
     "level": "medium",
     "why": "PLAYERS punish 12: too hard early; assists not listed before the addendum"
    },
-   "test": "S: each assist changes only its own thing; H: an impatient player finishes the first hour with assists on",
+   "test": "S: each assist changes only its own thing; H: an impatient player finishes the first hour with assists on; addendum rules ER-ASSIST-01 to 02",
    "owner": "lane",
    "checklist_items": [
     "A20.16",
@@ -12564,7 +14352,7 @@
    "name": "The game clock",
    "what": "How fast a game hour passes in real time.",
    "felt": true,
-   "standard": "45 real s a game hour in DESIGN (his feel decision still open, C11); the code runs 30",
+   "standard": "45 real s a game hour in DESIGN and the prototype (rules.js); the Unreal clock runs 30 (LiveClock.h, two game minutes a real second, the town 29 Sep); his feel decision still open (C11)",
    "standard_source": "DESIGN §15; C11 on his page",
    "research_items": [],
    "designed_in": "DESIGN §15",
@@ -12590,7 +14378,7 @@
    },
    "risk": {
     "level": "medium",
-    "why": "DESIGN and code disagree (status-unreal note)"
+    "why": "prototype and Unreal clocks disagree (45 against 30 real s an hour)"
    },
    "test": "S: one value in the tuning table, read by both",
    "owner": "lane",
@@ -12669,11 +14457,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "designed in DESIGN-ADDENDUM-2026-11-20; no code evidence gathered"
+     "evidence": "design exists (DESIGN-ADDENDUM §A7); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM §A7); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -12690,7 +14478,50 @@
     "level": "low",
     "why": ""
    },
-   "test": "S: the close plays, credits roll, the player returns to a stated place",
+   "test": "S: the close plays, credits roll, the player returns to a stated place; addendum rules ER-AFTER-01",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "7.16",
+   "level": 2,
+   "parent": "7",
+   "name": "Pastimes",
+   "what": "Things to do with people that are not crime: the recommended answer is an amateur boxing club.",
+   "felt": true,
+   "standard": "Recommended answer to Q3, built to it meanwhile; no stakes, no drink (canon)",
+   "standard_source": "Q3 (open); canon",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer)",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer)); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer)); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.3.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "scope is his; found by the red team and the mechanics check"
+   },
+   "test": "H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -12765,7 +14596,9 @@
     }
    },
    "needs": [],
-   "blocks": [],
+   "blocks": [
+    "8.1.3"
+   ],
    "hours": {
     "prototype": "0",
     "unreal": "60",
@@ -12807,7 +14640,8 @@
    ],
    "children": [
     "8.1.1",
-    "8.1.2"
+    "8.1.2",
+    "8.1.3"
    ],
    "leaf": false
   },
@@ -12825,8 +14659,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (study 12 (budgets owed)); build not checked by the status sweep"
     }
    },
    "needs": [
@@ -12892,6 +14726,47 @@
    "leaf": true
   },
   {
+   "id": "8.1.3",
+   "level": 3,
+   "parent": "8.1",
+   "name": "Player PCs and shader stutter",
+   "what": "A minimum machine, scaling steps, shader compilation and traversal hitches fixed by precaching.",
+   "felt": true,
+   "standard": "Epic's PSO precaching for shader stutter; minimum spec to be set",
+   "standard_source": "Epic tech blog on shader stutter (red team source)",
+   "research_items": [
+    "RN-17"
+   ],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [
+    "8.1"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "40",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "high",
+    "why": "UE5 releases are marked down for stutter; found by the red team (both)"
+   },
+   "test": "S: hitch count on first run of a clean install",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "8.2",
    "level": 2,
    "parent": "8",
@@ -12905,8 +14780,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (simulation tests); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built",
@@ -12965,6 +14840,45 @@
     "X19 A save system that costs time"
    ],
    "notes": [],
+   "children": [
+    "8.2.1"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "8.2.1",
+   "level": 3,
+   "parent": "8.2",
+   "name": "Crash and bug reporting",
+   "what": "Unreal's crash reporter, an in-game bug report, consented play records.",
+   "felt": false,
+   "standard": "none yet: what is collected and with what consent",
+   "standard_source": "found by the red team",
+   "research_items": [],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team (both)"
+   },
+   "test": "a crash produces a report",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -12992,7 +14906,8 @@
    },
    "needs": [],
    "blocks": [
-    "6.4"
+    "6.4",
+    "8.3.1"
    ],
    "hours": {
     "prototype": "0.5",
@@ -13037,6 +14952,47 @@
     "X17 Menus, controls, camera and interface",
     "A9 Photo mode"
    ],
+   "notes": [],
+   "children": [
+    "8.3.1"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "8.3.1",
+   "level": 3,
+   "parent": "8.3",
+   "name": "PC display options",
+   "what": "Upscalers and frame generation, ultrawide, field of view, uncapped frame rate, HDR.",
+   "felt": true,
+   "standard": "ER-START-01 presets; 3440x1440 is his own screen (ruling 23 Sep)",
+   "standard_source": "DESIGN §17; RULINGS 23 Sep",
+   "research_items": [],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [
+    "8.3"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team"
+   },
+   "test": "S: each option applies",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
    "notes": [],
    "children": [],
    "leaf": true
@@ -13114,6 +15070,51 @@
     "A46.14",
     "F7"
    ],
+   "review_themes": [],
+   "notes": [],
+   "children": [
+    "8.4.1"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "8.4.1",
+   "level": 3,
+   "parent": "8.4",
+   "name": "Visual stand-ins for sound cues",
+   "what": "For deaf and hard-of-hearing players: what sound tells (noise reach, a street gone quiet) shown another way, as an option.",
+   "felt": true,
+   "standard": "ER-SND-01's information reachable without sound, never as a meter of others' minds (D33)",
+   "standard_source": "DESIGN §17; D33",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 §A6",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A6); build not checked by the status sweep"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A6); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "1.4.3"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "sound carries the town's eyes; found by the red team"
+   },
+   "test": "H: ER-EYES-01 with sound off and the option on; addendum rules ER-ASSIST-01",
+   "owner": "lane",
+   "checklist_items": [],
    "review_themes": [],
    "notes": [],
    "children": [],
@@ -13196,7 +15197,8 @@
    },
    "needs": [],
    "blocks": [
-    "3.6.1"
+    "3.6.1",
+    "8.6.1"
    ],
    "hours": {
     "prototype": "0",
@@ -13215,6 +15217,47 @@
     "A01.13",
     "A49.10"
    ],
+   "review_themes": [],
+   "notes": [],
+   "children": [
+    "8.6.1"
+   ],
+   "leaf": false
+  },
+  {
+   "id": "8.6.1",
+   "level": 3,
+   "parent": "8.6",
+   "name": "Talk service longevity and offline",
+   "what": "Cost per player hour, outages, the day the service ends, typing with a pad.",
+   "felt": false,
+   "standard": "Offline: the written street carries on (ruling 23 Sep); allowance above a playthrough's measured cost (24 Sep)",
+   "standard_source": "RULINGS 23, 24 Sep",
+   "research_items": [],
+   "designed_in": "RULINGS",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
+    }
+   },
+   "needs": [
+    "8.6"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "high",
+    "why": "found by the red team (both)"
+   },
+   "test": "the game played whole with the service off",
+   "owner": "builder",
+   "checklist_items": [],
    "review_themes": [],
    "notes": [],
    "children": [],
@@ -13275,8 +15318,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (canon); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built",
@@ -13318,8 +15361,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -13379,7 +15422,9 @@
    "needs": [
     "5.2.2"
    ],
-   "blocks": [],
+   "blocks": [
+    "5.2.8"
+   ],
    "hours": {
     "prototype": "0.5",
     "unreal": "40",
@@ -13417,8 +15462,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RULINGS); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built shallow",
@@ -13521,8 +15566,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13558,8 +15603,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13595,8 +15640,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13632,8 +15677,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13669,8 +15714,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13706,8 +15751,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13743,8 +15788,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13780,8 +15825,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (KILN-TO-GAME-PLAN); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -13862,8 +15907,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "built shallow",
+     "evidence": "the real town rules compiled for the browser match 102,949 golden rows and six weeks (ONE-SIM-METHOD-2026-11-19, tools/lane/one-sim, run 3 breaker 191 of 191), but not yet swapped into the prototype (DIFFERENCES.md: seven decisions for the swap)"
     },
     "unreal": {
      "status": "built shallow",
@@ -13894,7 +15939,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'designed': the real town rules compiled for the browser match 102,949 golden rows and six weeks (ONE-SIM-METHOD-2026-11-19, tools/lane/one-sim, run 3 breaker 191 of 191), but not yet swapped into the prototype (DIFFERENCES.md: seven decisions for the swap)"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13912,8 +15959,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (ONE-SHOT-PORTING.md (to be written)); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -14007,8 +16054,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/rules.js 1,313 numbers in 32 sections; npm run numbers fails on a new number; python test rules table is what the game reads; NOT_DONE 3: 1,053 zeros, ones, twos and map and camera numbers not in the table"
+     "status": "built",
+     "evidence": "src/rules.js holds 1,313 numbers and npm run numbers fails on a new one, but 1,053 small numbers were never examined (NOT_DONE 3), so the one-home standard is not yet met"
     },
     "unreal": {
      "status": "built shallow",
@@ -14036,7 +16083,9 @@
    "review_themes": [
     "S4 Two clocks: 30 real minutes against one in-game week"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': src/rules.js holds 1,313 numbers and npm run numbers fails on a new one, but 1,053 small numbers were never examined (NOT_DONE 3), so the one-home standard is not yet met"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14054,8 +16103,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (tools/); build not checked by the status sweep"
     },
     "unreal": {
      "status": "built",
@@ -14102,12 +16151,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (license-allowlist.md); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (license-allowlist.md); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -14143,12 +16192,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RECIPE.md); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (RECIPE.md); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -14223,8 +16272,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (DRIVING-MEASUREMENT-METHOD; FEEL-MEASUREMENT-METHOD-2026-11-20 (pending)); build not checked by the status sweep"
     },
     "unreal": {
      "status": "designed",
@@ -14270,12 +16319,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (PLAN.md; order ledgers); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (PLAN.md; order ledgers); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -14311,12 +16360,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (aaa-reference studies); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (aaa-reference studies); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -14352,12 +16401,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (production/lane/synthesis/); build not checked by the status sweep"
     },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "design exists (production/lane/synthesis/); build not checked by the status sweep"
     }
    },
    "needs": [],
@@ -14423,7 +16472,9 @@
     "10.7",
     "10.8",
     "10.9",
-    "10.10"
+    "10.10",
+    "10.11",
+    "10.12"
    ],
    "leaf": false
   },
@@ -14842,6 +16893,80 @@
     "why": "his area (money)"
    },
    "test": "his yes",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "10.11",
+   "level": 2,
+   "parent": "10",
+   "name": "Player data and privacy",
+   "what": "Consent and data protection for what players type that is sent to the talk service.",
+   "felt": false,
+   "standard": "none yet: UK and EU data protection to be researched",
+   "standard_source": "found by the red team",
+   "research_items": [],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "found by the red team (both)"
+   },
+   "test": "a privacy notice and consent before the first talk",
+   "owner": "builder",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "10.12",
+   "level": 2,
+   "parent": "10",
+   "name": "Demo, price and wishlists",
+   "what": "A demo of the first hour, the price, the wishlist plan.",
+   "felt": false,
+   "standard": "none; price is money, his",
+   "standard_source": "found by the red team",
+   "research_items": [],
+   "designed_in": "not designed",
+   "track": "unreal",
+   "status": {
+    "unreal": {
+     "status": "unknown",
+     "evidence": "no evidence gathered (part added after the status sweep)"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "0",
+    "unreal": "24",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "found by the red team (both)"
+   },
+   "test": "his yes on price",
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],

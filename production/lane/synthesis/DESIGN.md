@@ -1,3 +1,5 @@
+Addendum: DESIGN-ADDENDUM-2026-11-20.md (same folder) designs the gameplay parts the parts tree found missing or thin (hiding, tailing, searching, finding the way, the water's edge, traffic stops, the firm's growth, fronts, street happenings and more); read it with this file.
+
 # LEDGER: the whole game
 
 18 November 2026. One design by one author, built from canon.md, RULINGS.md and the synthesis pack. Canon outranks it and his rulings stand. Anything here that would change either is a question in QUESTIONS.md or a "conflict" line in TRACE.md, never settled here.

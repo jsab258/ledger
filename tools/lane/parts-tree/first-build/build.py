@@ -1,6 +1,6 @@
 import csv, json, re, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-import tree_a, tree_b, tree_c  # noqa
+import tree_a, tree_b, tree_c, tree_d, tree_e  # noqa
 from tree_a import PARTS
 W = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "production", "lane", "parts-tree", "work") + "/"
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "production", "lane", "parts-tree", "PARTS-TREE.json")
@@ -40,6 +40,10 @@ themes.setdefault("10.2", []).append("P7/X2 price, length and value")
 themes.setdefault("2.4.4", []).append("S4 gossip timeliness in the first 30 real minutes")
 themes.setdefault("10.6", []).append("A10 mods position")
 
+OVR = {
+ ("9.3", "prototype"): ("built shallow", "the real town rules compiled for the browser match 102,949 golden rows and six weeks (ONE-SIM-METHOD-2026-11-19, tools/lane/one-sim, run 3 breaker 191 of 191), but not yet swapped into the prototype (DIFFERENCES.md: seven decisions for the swap)"),
+ ("9.6", "prototype"): ("built", "src/rules.js holds 1,313 numbers and npm run numbers fails on a new one, but 1,053 small numbers were never examined (NOT_DONE 3), so the one-home standard is not yet met"),
+}
 STAT = {"missing", "designed", "built shallow", "built", "passes", "unknown"}
 def norm(s):
     s = (s or "").strip().lower()
@@ -60,16 +64,22 @@ for pid in sorted(parts, key=key):
         ev = r["evidence"] if r else "no evidence gathered (part added after the status sweep)"
         if s == "passes" and p.get("rn"):
             s = "built"; notes.append("prototype check passes its rule, but the feel standard is a research item, so not 'passes'")
-        if not r and str(p.get("des", "")).startswith("DESIGN-ADDENDUM"):
-            s, ev = "designed", "designed in DESIGN-ADDENDUM-2026-11-20; no code evidence gathered"
+        if not r and "not designed" not in str(p.get("des", "not designed")):
+            s, ev = "designed", "design exists (%s); build not checked by the status sweep" % p.get("des")
         st["prototype"] = {"status": s, "evidence": ev}
     if tr in ("both", "unreal"):
         r = unreal.get(pid)
         s = norm(r["unreal_status"]) if r else "unknown"
         ev = r["evidence"] if r else "no evidence gathered (part added after the status sweep)"
+        if not r and "not designed" not in str(p.get("des", "not designed")):
+            s, ev = "designed", "design exists (%s); build not checked by the status sweep" % p.get("des")
         st["unreal"] = {"status": s, "evidence": ev}
     if tr == "unreal" and pid in proto and norm(proto[pid]["proto_status"]) not in ("unknown", "missing", "designed"):
         notes.append("prototype has a stand-in: " + proto[pid]["evidence"][:160])
+    for (oid, tk), (os_, oev) in OVR.items():
+        if oid == pid and tk in st:
+            notes.append("status set by the parts-tree session over the sweep's '%s': %s" % (st[tk]["status"], oev))
+            st[tk] = {"status": os_, "evidence": oev}
     rev = proto.get(pid, {}).get("review_themes", "") if pid in proto else ""
     std = p.get("std", "none")
     rec = {
