@@ -8,8 +8,8 @@ So the lane can continue. Times are Swiss.
 - 21:28 to 21:37 all ten groups authored (tools/lane/parts-tree/first-build/), JSON built, check.py, 0 faults; pushed.
 - 21:37 to 21:44 red team (Fable and Opus, blind) and the reference-mechanics check.
 - 21:44 to 22:00 DESIGN-ADDENDUM (A1 to A28), DESIGN.md pointer, questions, decisions pending, gaps, research list, plan view, one-shot checklist; pushed.
-- 22:00 the lane's merged reference mechanics read; A29 to A31; pushed.
-- 22:05 to 22:20 fresh Opus review: pass with fixes; all fixed (REVIEW-2026-11-20.md).
+- 21:54 the lane's merged reference mechanics read; A29 to A31; pushed.
+- 21:56 to 22:02 fresh Opus review: pass with fixes; all fixed (REVIEW-2026-11-20.md).
 
 ## Next (for the lane, when budget allows)
 - Status sweep of the 92 parts added after the first sweep: they show "designed" from their design, build not checked (list in work/added-ids.txt). Edit their statuses in the JSON, then rollup.py, render_md.py, render_views.py, check.py.
