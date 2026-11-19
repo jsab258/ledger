@@ -109,7 +109,7 @@
     "advisor:needs-you-check",
     "monday-audit"
    ],
-   "note": "page (and advisor rows) read within 15 min; acks are judgement"
+   "note": "page (and advisor rows) read within 15 min; acks are judgement 19 Nov (advisor 241 point 6): a mid-week pick waits for Monday's order unless he writes 'now' with the hours displaced; enforced by tools/order_ledger.py's waiting list (anything new joins section 3) and the Monday audit."
   },
   {
    "line": "2 Nov, his page: \"LEDGER: Needs you\"",
@@ -181,7 +181,7 @@
     "tools/token_audit.py::KILN BY ORDER ITEM",
     "monday-audit"
    ],
-   "note": "token_measures.py --kiln-share counts each step by order item (token_audit.is_kiln; untimed steps by what they touch) against week-shape.json's kiln_share (70% the week of 16 Nov, else 15%; advisor 218). The three proofs before props, vehicles or buildings modules (18 Nov): monday-audit checks no such module started before them."
+   "note": "token_measures.py --kiln-share counts each step by order item (token_audit.is_kiln; untimed steps by what they touch) against week-shape.json's kiln_share (70% the week of 16 Nov, else 15%; advisor 218). The three proofs before props, vehicles or buildings modules (18 Nov): monday-audit checks no such module started before them. 19 Nov (advisor 241 points 3-4): share 70% kept after 23 Nov, checked by the Monday audit's Kiln share; Kiln's origins and licence are never raised: the Monday audit's brief skips them (judgement, no automatic check: a word screen would also catch Kiln's own design notes)."
   },
   {
    "line": "8 Nov, models: helpers are the project's agents",
@@ -391,7 +391,8 @@
    "by": [
     "tools/voice-cast-check.py::Every principal has a voice that can actually reach them",
     "tools/attribution-check.py::p286"
-   ]
+   ],
+   "note": "19 Nov (advisor 241 point 5): Pocket kept, consent risk his in writing; enforced by the licence allowlist's SHIP-SAFE 16 and the license gate."
   },
   {
    "line": "25 Sep: Ron's and Darren's lines made in advance",
@@ -409,7 +410,8 @@
    "line": "3 Oct: Clothes are the one exception to the",
    "by": [
     "monday-audit"
-   ]
+   ],
+   "note": "19 Nov (advisor 241 point 7): principals at talking distance judged on the 2026 bar against KCD2 frames; enforced by the gate skill's clothing step (reviewer briefs) and the final-reviewer."
   },
   {
    "line": "3 Oct: People wear only gated garments from",
@@ -417,7 +419,8 @@
     "tools/garments_shipped_check.py::a garment absent from the shipping project is missing",
     "tools/attribution-check.py::an asset directory with no entry fails the build",
     "monday-audit"
-   ]
+   ],
+   "note": "19 Nov (advisor 241 point 3): Marvelous lapses 26 Nov; the export to F: before then is his page's and the handover's first item; enforced by the storage map's Marvelous shelf and the Monday audit."
   },
   {
    "line": "30 Sep: Game clothes are skinned meshes",
