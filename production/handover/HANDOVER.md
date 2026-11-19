@@ -4,8 +4,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-19 05:06 (the hourly run; the 04:36 run set its Stopped line at 04:37)
 
-**Row due:** at the next start (last row 05:07, 37% under a 37.2% ceiling; page and advisor read 05:20: nothing new; last ack 00:54, advisor 237)
-**Stopped:** 2026-11-19 04:37 (still above the ceiling at the 04:37 row, so nothing new started; Fable 45%, at cap; nothing of mine running, lock clear, no work to commit, so this handover stays uncommitted)
+**Row due:** at the next start (last row 05:07; page and advisor read 05:32: nothing new; last ack 00:54, advisor 237)
+**Stopped:** 2026-11-19 05:41 (history at its point after the trousers' chain re-run; nothing of mine running, lock free; work committed with this file)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 37% at 05:07 against 12.2% (+24.8), under the ceiling; Fable 45%, at its cap. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -37,6 +37,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Done this run (05:06 on; details in DECISIONS 05:10 on)
 - Advisor 231 closed: needs_you_page.py --waiting in ci-checks and rulings-enforcers.json; no RULINGS words (4,899 of 4,900).
 - Coat: on the joined lane (9a3c5a1) with KILN_SKIN_NECK_OVER_JOINT=1 it drapes to the end for the first time; fails only at the collar assembly (stand 44.8, collar 69 mm inside the neck; stretch 6.5-6.8; seams 27-36 mm open; rest p99 1.24). Same fault; its last try is Fable's, Fable at cap: set aside to Mon 13:00 or his word. Lane report, 19 Nov section.
+- Ron's trousers steps 7-8 re-run on the boots drape (importer helper): all steps pass as before (9,636 triangles, flat maps none, hems clean); sitting misses the bar: body through 304 (299; was 297), cloth inside 71 (44; was 62), in the seat. Held row files NOT replaced (new fault). chain-boots/REPORT-2026-11-19.md.
 - Ron's trousers M5 step 6 PASSES offline: boots proxy (Tom's n6 maker) as a Kiln collider (import_collider) beside the standard body; drape twice on main 9b5141d with KILN_LEGACY_NAMES=1, identical; 0 points inside the boots (575 bare-foot), nearest 2.6 mm; crotch layer crossings 265 (main's gate 231: known). Kiln pictures do not draw colliders. F:/LedgerTools/garments/ron/kiln-trousers-chain/boots-proxy/STEP6-BOOTS-2026-11-19.md.
 
 ## In flight at the stop
@@ -45,7 +46,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 0. Verdicts after the last read (UTC); advisor after 2026-11-19T00:54:00+01:00 (last ack 237). Allowance, pace_line, a row.
-1. Ron's trousers steps 7-8 again on boots-proxy/drape1/work_trousers.obj (the hem changed): the 17 Nov chain's commands in F:/LedgerTools/garments/ron/kiln-trousers-chain/REPORT.md (kiln_to_game.py, unpose_garment.py, import_md_drape.py, retopo_pieces.py, uv_pack_low.py, zip_bake.py, the wear pass wear/wear_from_mesh.py, skin_garment.py --piece-attr none, jeans_zones.py + garment_pose_check.py) into a new folder chain-boots/, numbers beside the old (pose bar 299 through, 44 inside); then the held row's files on branch ron-kiln-trousers-import (STEP-I-PREPARED) and the import into mh-assemble; step 9 re-clear Ron's jumper; step 10 the packaged held film with the real boots.
+1. Ron's trousers: the seat's sitting fit (try 1 of 2; research first: M5 method section 4, check 4, and the jeans' chain-n7 sitting fixes): body through 304 to under 299, cloth inside 71 toward 44, on chain-boots/ (skin weights or the seat zone, not the drape). The exact commands are in chain-boots/REPORT-2026-11-19.md; pose check needs --garment work_trousers. Then the held row's files on branch ron-kiln-trousers-import (STEP-I-PREPARED) from chain-boots, the import into mh-assemble; step 9 re-clear Ron's jumper; step 10 the packaged held film with the real boots.
 2. Thursday's checkpoint by this evening (KILN-V1-CHECKLIST section c): which lines miss 24 Nov, for the Marvelous recommendation.
 3. Marvelous before 25 Nov: Darren's nylon jacket needs a body with a head; a look by eye at the three drapes; the money DECISION item by Tue 24 Nov.
 4. Fable pieces (coat collar try 2, legs, blouse, R4) wait for Fable's reset Mon 13:00; Opus only by RULINGS' tries.
