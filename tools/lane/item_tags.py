@@ -57,7 +57,7 @@ OPEN_LIMIT_H = 4
 KILN_CAP = 15.0   # RULINGS 13 Nov, as tools/token_measures.py KILN_CAP
 # Fable's weekly cap (his pick 18 Nov, advisors 227-228; the backstop of 21:35): the last reading pace_line.py stored.
 PACE_STATE = os.path.join(ROOT, "production", "handover", "pace-state.json")
-FABLE_CAP = 70.0  # 19 Nov 11:07, advisor 244: "Fable cap to 70%"
+FABLE_CAP = 100.0  # 19 Nov 11:09/11:41, advisor 245: no Fable cap, full speed; refused only when its own meter is spent (a reset is then his ACTION item)
 
 
 def fable_refusal(inp, state_path=PACE_STATE):
@@ -71,8 +71,8 @@ def fable_refusal(inp, state_path=PACE_STATE):
         return None
     fable = st.get("fable")
     if isinstance(fable, (int, float)) and fable >= FABLE_CAP:
-        return ("Fable reads %.0f%% of its week (at %s), at or over his %.0f%% cap: no new Fable helper; use Opus "
-                "or wait for the reset (pace_line.py --fable)." % (fable, st.get("fable_at", "?"), FABLE_CAP))
+        return ("Fable reads %.0f%% of its week (at %s), its own meter spent (%.0f%%): put the "Press a Fable reset now" "
+                "ACTION item on his page (advisor 245), meanwhile Opus." % (fable, st.get("fable_at", "?"), FABLE_CAP))
     return None
 
 
