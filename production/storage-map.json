@@ -481,7 +481,7 @@
    "source": "game extracts re-made from C:/Games with FModel and the key in F: keys (kcd2, mafia 1.75 GB); study notes small",
    "proposal": "kcd2 and mafia extracts removed 17 Nov 14:41 by his yes; notes and other studies kept",
    "backup": "no",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never backed up: other games' study extracts (audit H6); deletion held for his own confirmation (advisor 239)"
   },
   {
    "path": "F:/LedgerTools/tool-dev",
@@ -1418,6 +1418,16 @@
    "source": "copied again from the study artifact UdoyuRSba3tseVmA5daeFq whenever it is republished",
    "proposal": "keep while the driving study runs",
    "expiry": "when the driving study ends"
+  },
+  {
+   "path": "F:/LedgerTools/mixamo-raw-2026-11-19",
+   "shelf": "lasting",
+   "gb": 0.74,
+   "last_write": "19 Nov",
+   "serves": "the street figures and the old animation set, out of the public repository",
+   "source": "copied from the repository 19 Nov (95 files, byte-checked)",
+   "proposal": "keep, lasting input",
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov"
   }
  ],
  "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."

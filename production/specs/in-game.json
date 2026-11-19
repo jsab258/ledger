@@ -180,12 +180,6 @@
    "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
   },
   {
-   "path": "F:/LedgerTools/aaa-study",
-   "as": "lasting/aaa-study",
-   "first": false,
-   "why": "lasting, off the backup until 19 Nov (audit H14, advisor 238)"
-  },
-  {
    "path": "F:/LedgerTools/bound",
    "as": "lasting/bound",
    "first": false,
@@ -304,6 +298,12 @@
    "as": "lasting/vctk-young-men",
    "first": false,
    "why": "lasting, under 50 MB, off the backup until 19 Nov (audit H14)"
+  },
+  {
+   "path": "F:/LedgerTools/mixamo-raw-2026-11-19",
+   "as": "lasting/mixamo-raw-2026-11-19",
+   "first": true,
+   "why": "raw Mixamo inputs moved off the public repository (advisor 239, audit H5)"
   }
  ]
 }
