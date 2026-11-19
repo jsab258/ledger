@@ -11,13 +11,15 @@ Nothing is published to him unless this passes. Four parts:
     python gate.py --assets DIR [--out DIR] [--known KNOWN.json] [--hands-on FILE] [--skip-scripted]
 
 A round passes when the scripted tests pass, the clumsy newcomer shows no failure that is not in the known
-list (KNOWN.json: rule names with the reason each is known and accepted for now), and the hands-on write-up
-names no new fault marked "blocker". Exit code 0 means pass.
+list (KNOWN.json: "rule | what it was about" keys, as signature() writes them, with the reason each is known and
+accepted for now), and the hands-on write-up is given and names no new fault marked BLOCKER or MAJOR. Exit code 0
+means pass.
 """
 import argparse
 import datetime
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -42,19 +44,41 @@ def scripted(assets, out):
     return runs
 
 
+SIGNATURE_KEYS = ("phase", "target", "prop", "room", "where", "person")
+FAULT_LINE = re.compile(r"^\W*(known\s+)?(blocker|major)\b\s*[:\-]", re.I)
+
+
+def signature(r):
+    """A failure's key in KNOWN.json: the rule plus what it was about (the phase, the target, the room...), so one
+    accepted fault never hides a new fault of the same rule somewhere else."""
+    for k in SIGNATURE_KEYS:
+        if r.get(k):
+            return "%s | %s" % (r["rule"], r[k])
+    return r["rule"]
+
+
+def hands_on_faults(text):
+    """The BLOCKER and MAJOR lines of the hands-on write-up that are not marked known. A line counts only when it
+    starts with the marker ("BLOCKER: ...", "- MAJOR - ..."), so "No blockers" and "unknown" are never misread."""
+    out = []
+    for line in (text or "").splitlines():
+        m = FAULT_LINE.match(line)
+        if m and not m.group(1):
+            out.append(line.strip())
+    return out
+
+
 def judge(clumsy_report, known, hands_on_text=None, scripted_runs=None):
-    """Pure: decide pass or fail from the parts' results. Returns (ok, new_failures, known_failures, blockers)."""
+    """Pure: decide pass or fail from the parts' results. Returns (ok, new_failures, known_failures, blockers).
+    Without the hands-on write-up the gate never passes. New BLOCKER and MAJOR faults from it both block."""
     new, old = [], []
     for r in clumsy_report.get("results", []):
         if r["ok"]:
             continue
-        (old if r["rule"] in known else new).append(r)
-    blockers = []
-    if hands_on_text:
-        for line in hands_on_text.splitlines():
-            low = line.lower()
-            if "blocker" in low and "known blocker" not in low:
-                blockers.append(line.strip())
+        (old if signature(r) in known else new).append(r)
+    blockers = hands_on_faults(hands_on_text)
+    if not (hands_on_text or "").strip():
+        blockers.append("no hands-on write-up given (HANDS-ON-PROMPT.md)")
     scripted_ok = all(s["ok"] for s in (scripted_runs or []))
     return scripted_ok and not new and not blockers, new, old, blockers
 
@@ -64,11 +88,11 @@ def note(clumsy_report, known, new, try_lines):
     lines = ["What to try:"] + ["- " + t for t in try_lines] + ["", "Known issues:"]
     seen = set()
     for r in clumsy_report.get("results", []):
-        if r["ok"] or r["rule"] in seen:
+        if r["ok"] or signature(r) in seen:
             continue
-        seen.add(r["rule"])
-        why = known.get(r["rule"], "new, not yet fixed")
-        lines.append("- %s (%s)" % (r["rule"], why))
+        seen.add(signature(r))
+        why = known.get(signature(r), "new, not yet fixed")
+        lines.append("- %s (%s)" % (signature(r), why))
     if not seen:
         lines.append("- none found by the gate")
     lines.append("Live AI talk only runs inside claude.ai: untested here.")
@@ -93,7 +117,7 @@ def main(argv=None):
     rep = json.load(open(os.path.join(a.out, "clumsy", "report.json")))
     ho = open(a.hands_on).read() if a.hands_on else None
     ok, new, old, blockers = judge(rep, known, ho, runs)
-    result = {"pass": bool(ok and ho), "scripted": runs, "new_failures": new, "known_failures": len(old), "hands_on_blockers": blockers,
+    result = {"pass": bool(ok), "scripted": runs, "new_failures": new, "known_failures": len(old), "hands_on_blockers": blockers,
               "hands_on_given": bool(ho)}
     with open(os.path.join(a.out, "GATE.json"), "w") as f:
         json.dump(result, f, indent=1)
@@ -102,7 +126,7 @@ def main(argv=None):
     print("PASS" if ok else "FAIL", "-", len(new), "new failures,", len(old), "known,", len(blockers), "hands-on blockers")
     if not ho:
         print("hands-on write-up not given: the gate is not complete until it is (HANDS-ON-PROMPT.md)")
-    return 0 if ok and ho else 1
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

@@ -14,8 +14,8 @@ const LIMITS = {
 
 function perFrame(rows) {
   if (!rows.length) return [];
-  const out = [rows[0]]; let next = rows[0].t + FRAME - 1e-9;
-  for (const r of rows) if (r.t >= next) { out.push(r); next = r.t + FRAME - 1e-9; }
+  const out = [rows[0]]; let next = rows[0].t + FRAME - 2e-4;   // tolerance: times are rounded to 4 places
+  for (const r of rows) if (r.t >= next) { out.push(r); next = r.t + FRAME - 2e-4; }
   return out;
 }
 
@@ -52,6 +52,53 @@ function yawSmooth(rows) {
   const typ = median(moving);
   const jerk = max > LIMITS.yawStep && (typ === 0 || max > LIMITS.yawStepRatio * typ);
   return { maxStep: +max.toFixed(3), typicalStep: +typ.toFixed(3), jerk };
+}
+
+// Steering moves: the press, the release and the switch from one side to the other, each judged on its own.
+// rows: [{t, v}] (any fixed step; looked at once per 60 Hz frame). events: [{t, label}] in time order: the moment
+// a key or stick changed. Each event's window runs to the next event. For each one: the value just before (from),
+// where it settles (to, the mean of the window's last 3 frames), the time from 10% to 90% of that move (linear
+// between frames), and the biggest change in one frame. A move under minMove is not timed (only its steps).
+// Pass: the 10-90% time is at least minRise (about 0.1 s) and no frame changes it by more than maxStep.
+const MOVE = {
+  minRise: 0.1,         // seconds from 10% to 90% of a move
+  riseSlack: 0.005,     // measuring tolerance on that time
+  steerStep: 0.15,      // most a steering value (1 = full lock) may change in one 60 Hz frame; a ramp that just
+                        // meets 0.1 s for a full press changes about 0.13 a frame
+  yawStep: 0.15,        // most the yaw rate may change in one frame, rad/s
+  minMove: { steer: 0.05, yaw: 0.1 },
+};
+
+function judgeMoves(rows, events, { maxStep, minMove, minRise = MOVE.minRise } = {}) {
+  const f = perFrame(rows), out = [];
+  for (let e = 0; e < events.length; e++) {
+    const t0 = events[e].t, t1 = e + 1 < events.length ? events[e + 1].t : Infinity;
+    let bi = -1; for (let i = 0; i < f.length; i++) { if (f[i].t < t0 - 1e-9) bi = i; else break; }
+    const win = f.filter((r) => r.t >= t0 - 1e-9 && r.t < t1 - 1e-9);
+    if (!win.length) { out.push({ label: events[e].label, empty: true }); continue; }
+    const before = bi >= 0 ? f[bi] : win[0], seq = [before, ...win.filter((r) => r !== before)];
+    const v0 = before.v, tail = win.slice(-3), v1 = tail.reduce((a, r) => a + r.v, 0) / tail.length, move = v1 - v0;
+    let step = 0, stepAt = 0; for (let i = 1; i < seq.length; i++) { const d = Math.abs(seq[i].v - seq[i - 1].v); if (d > step) { step = d; stepAt = seq[i].t - t0; } }
+    let rise = null, done = false;
+    if (Math.abs(move) >= minMove) {
+      const at = (k) => { for (let i = 1; i < seq.length; i++) { const a = (seq[i - 1].v - v0) / move, b = (seq[i].v - v0) / move;
+        if (b >= k) return a >= k ? seq[i - 1].t : seq[i - 1].t + (seq[i].t - seq[i - 1].t) * (k - a) / (b - a); } return null; };
+      const ta = at(0.1), tb = at(0.9);
+      if (ta !== null && tb !== null) { rise = +(tb - ta).toFixed(3); done = true; }
+    }
+    const snap = done && rise < minRise - MOVE.riseSlack, jump = step > maxStep;
+    out.push({ label: events[e].label, from: +v0.toFixed(3), to: +v1.toFixed(3), riseS: rise, maxStep: +step.toFixed(3), stepAt: +stepAt.toFixed(3), snap, jump, pass: !snap && !jump });
+  }
+  return out;
+}
+const judgeSteer = (rows, events) => judgeMoves(rows, events, { maxStep: MOVE.steerStep, minMove: MOVE.minMove.steer });
+const judgeYaw = (rows, events) => judgeMoves(rows, events, { maxStep: MOVE.yawStep, minMove: MOVE.minMove.yaw });
+
+// Damage in words: a message counts only if it was shown at or after the hit, within `within` seconds, and
+// speaks of damage or what to do about it. toasts: [{t, text}].
+const DAMAGE_WORDS = /damag|dent|crumpl|wreck|broken|smash|will not drive|won't drive|repair/i;
+function damageTold(toasts, hitT, within = 3) {
+  return toasts.filter((m) => m.t >= hitT - 1e-6 && m.t <= hitT + within && DAMAGE_WORDS.test(m.text));
 }
 
 // Stranded: after the player has stopped, does anything they do move them within `within` seconds?
@@ -100,4 +147,4 @@ function flatShare(hist) {
   return total ? top / total : 0;
 }
 
-module.exports = { LIMITS, perFrame, inputSmooth, yawSmooth, strandedStops, longestDeadInput, flatShare };
+module.exports = { LIMITS, MOVE, judgeMoves, judgeSteer, judgeYaw, damageTold, DAMAGE_WORDS, perFrame, inputSmooth, yawSmooth, strandedStops, longestDeadInput, flatShare };

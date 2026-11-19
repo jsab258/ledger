@@ -6,6 +6,8 @@ device usable, every state change shown or said, no failure without warning, cam
 no page errors, no stretch where nothing responds.
 """
 import math
+import os
+import re
 
 STUCK_LIMIT_S = 5.0      # able to move again within this many seconds of any stop
 MOVED_M = 0.5            # counts as moving again
@@ -40,26 +42,105 @@ def longest_unresponsive(rows, eps_m=0.05):
     return {"ok": best <= UNRESPONSIVE_S, "longest_s": round(best, 2)}
 
 
-DAMAGE_WORDS = ["damage", "dent", "crash", "bumper", "wing", "smash", "scrape", "knock", "wreck", "broke", "headlamp", "radiator"]
-HIT_WORDS = ["knock", "hit", "down", "hurt", "ambulance", "run over", "ran over", "cab hit", "bleed"]
-MESSAGE_PLACES = ["subs", "news", "noted", "called", "bubbles", "obj", "dialog"]
+# ---------------------------------------------------------------- the game's own words, read from its source
+# The "told on screen" checks match on the game's own event kinds and on the lines its source writes for them
+# (kinds.js: what the Ledger's Noted line says; talk_lines.js: what people who saw it say), never on guessed
+# English words. test_invariants.py builds these from the source, so the test breaks if the wording drifts.
+SRC = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "prototype", "project", "src")
+SCREEN_PLACES = ("subs", "noted", "news", "bubbles")  # places a player can read; "queued" notes are not yet shown
 
 
-def said(before, after_frames, limit_s=SILENT_LIMIT_S, about=None, where=None):
-    """before: the words on screen (dict of element -> text) just before a state change.
-    after_frames: list of (seconds_after, words dict). ok when any element shows new words within limit_s."""
-    for t, words in after_frames:
-        if t > limit_s:
-            break
-        for k, v in words.items():
-            if where and k not in where:
-                continue
-            v = (v or "").strip()
-            if about and not any(w in v.lower() for w in about):
-                continue
-            if v and v != (before.get(k) or "").strip():
-                return {"ok": True, "after_s": round(t, 2), "where": k, "words": v[:120]}
-    return {"ok": False, "after_s": None}
+def _template_rx(t):
+    """A source string or template literal as a regex: ${...} and {t} stand for any words."""
+    parts = re.split(r"\$\{[^}]*\}|\{[a-z]+\}", t)
+    return r".+?".join(re.escape(p) for p in parts)
+
+
+def _literals(text):
+    return [m.group(2) for m in re.finditer(r"([`'\"])((?:\\.|(?!\1).)*)\1", text)]
+
+
+def source_phrases(kind, src=SRC):
+    """Regexes for every line the game's source writes about an event of this kind (kinds.js, talk_lines.js)."""
+    out = []
+    kinds = open(os.path.join(src, "kinds.js"), encoding="utf-8").read()
+    m = re.search(r"\n  %s: K\(\s*'%s',\s*\(e\) => (`[^`]*`|'[^']*'),\s*\(e\) => (`[^`]*`|'[^']*')" % (kind, kind), kinds)
+    if m:
+        truth, mine = m.group(1)[1:-1], m.group(2)[1:-1]
+        out.append(_template_rx(truth))
+        # the Noted line (ledger_screen.js believedLine): "Noted in the Ledger: WHO knows|may have seen ... that you MINE."
+        out.append(r"Noted in the Ledger: .+? that you " + _template_rx(mine[:1].lower() + mine[1:]))
+    talk = open(os.path.join(src, "talk_lines.js"), encoding="utf-8").read()
+    for blk in re.finditer(r"\n  %s: (\{.*?\}|'(?:\\.|[^'])*'|\"(?:\\.|[^\"])*\"),?\n" % kind, talk, re.S):
+        for lit in _literals(blk.group(1)):
+            if len(lit) > 8:
+                out.append(_template_rx(lit.replace("\\'", "'")))
+    return [re.compile(p, re.I) for p in out]
+
+
+def count_line_rx(src=SRC):
+    """The merged Noted line ("Noted in the Ledger: 11 things", ui.js): it names no event."""
+    ui = open(os.path.join(src, "ui.js"), encoding="utf-8").read()
+    m = re.search(r"`(Noted in the Ledger: )\$\{n\}( things)`", ui)
+    return re.compile(re.escape(m.group(1)) + r"\d+" + re.escape(m.group(2))) if m else None
+
+
+def told(before, frames, patterns, limit_s=SILENT_LIMIT_S, count_rx=None):
+    """before: the game's message lists just before the event (dict place -> list of texts or a text).
+    frames: list of (seconds after the event frame, lists). ok when a place a player can read shows a new text
+    matching one of the game's own lines for the event within limit_s. Also says when the line was only queued
+    (the Noted queue, not yet on screen), only a count line showed, or the line came late."""
+    def texts(d, k):
+        v = d.get(k) or []
+        return [v] if isinstance(v, str) else list(v)
+    seen = {k: set(texts(before, k)) for k in SCREEN_PLACES + ("queued",)}
+    res = {"ok": False, "after_s": None, "queued_at_s": None, "count_line_at_s": None, "late_at_s": None}
+    for t, d in frames:
+        for k in SCREEN_PLACES + ("queued",):
+            for v in texts(d, k):
+                v = (v or "").strip()
+                if not v or v in seen[k]:
+                    continue
+                if any(p.search(v) for p in patterns):
+                    if k == "queued":
+                        if res["queued_at_s"] is None:
+                            res["queued_at_s"] = round(t, 2)
+                        continue
+                    if t <= limit_s + 1e-9:
+                        res.update(ok=True, after_s=round(t, 2), where=k, words=v[:160])
+                        return res
+                    if res["late_at_s"] is None:
+                        res.update(late_at_s=round(t, 2), late_words=v[:160])
+                elif count_rx and k == "noted" and count_rx.search(v) and res["count_line_at_s"] is None:
+                    res["count_line_at_s"] = round(t, 2)
+    return res
+
+
+# ---------------------------------------------------------------- steering
+STEER_MIN_RISE_S = 0.1     # the 10%-to-90% move of the turn rate takes at least this long (about: 0.09 accepted)
+STEER_MAX_STEP = 0.2       # no single frame moves the turn rate by more than this share of the whole change
+
+
+def steer_change(rates, dt, start=None, end=None):
+    """rates: the turn rate each frame, from the last frame before the key changed. start/end: the rates before
+    and after (default: the first and the last of the series). Returns the 10%-to-90% time and the biggest one-frame
+    step as a share of the change; ok when the move is eased (rise >= about 0.1 s, every step <= STEER_MAX_STEP)."""
+    if len(rates) < 2:
+        return {"ok": False, "reason": "no samples"}
+    r0 = rates[0] if start is None else start
+    r1 = rates[-1] if end is None else end
+    swing = r1 - r0
+    if abs(swing) < 1e-6:
+        return {"ok": False, "reason": "the turn rate did not change", "from": round(r0, 3), "to": round(r1, 3)}
+    share = [(r - r0) / swing for r in rates]
+    i10 = next((i for i, s in enumerate(share) if s >= 0.1), None)
+    i90 = next((i for i, s in enumerate(share) if s >= 0.9), None)
+    if i10 is None or i90 is None:
+        return {"ok": False, "reason": "never reached 90% of the change", "from": round(r0, 3), "to": round(r1, 3)}
+    rise = (i90 - i10) * dt
+    step = max(abs(share[i] - share[i - 1]) for i in range(1, len(share)))
+    return {"ok": rise >= STEER_MIN_RISE_S - 0.011 and step <= STEER_MAX_STEP + 1e-9, "rise_10_90_s": round(rise, 3),
+            "biggest_frame_step_share": round(step, 3), "from": round(r0, 3), "to": round(r1, 3)}
 
 
 def camera_clear(hit_m, cam_dist_m, near_ignore_m, slack_m=0.3):
@@ -80,4 +161,38 @@ def summarise(results):
         if not r["ok"]:
             s["failed"] += 1
             s["failures"].append(r)
+    return out
+
+
+# ---------------------------------------------------------------- what the game draws, read from its source
+# The street furniture the game draws (render/town.js draws map.js's LAMPS and PROPS; render/sync.js places the
+# parked cars). The game's own data code is run in node, as written, so the gate aims at what is drawn and not
+# only at what the collision map knows.
+NOT_SOLID_BY_DESIGN = {"shelter"}  # the ferry shelter is a roof to stand under
+
+
+def drawn_props(src=SRC):
+    import json
+    import subprocess
+    mp = open(os.path.join(src, "map.js"), encoding="utf-8").read()
+    sy = open(os.path.join(src, "render", "sync.js"), encoding="utf-8").read()
+    props = mp[mp.index("export const PROPS = []"):mp.index("// Sodium street lamps")]
+    lamps = mp[mp.index("export const LAMPS = []"):mp.index("export const GLOWS")]
+    a = sy.index("// a few parked cars for life")
+    parked = sy[sy.index("for (const [k, c, x, z, a] of", a) + len("for (const [k, c, x, z, a] of"):sy.index("]) {", a) + 1]
+    js = ("const hyp = Math.hypot;\n" + (props + lamps).replace("export const", "const")
+          + "\nconst PARKED = " + parked + ";\nconsole.log(JSON.stringify({PROPS, LAMPS, PARKED}));")
+    p = subprocess.run(["node", "-e", js], capture_output=True, text=True, timeout=60)
+    if p.returncode:
+        raise RuntimeError("could not read the drawn props from the source: " + p.stderr[:300])
+    d = json.loads(p.stdout)
+    out = []
+    for q in d["PROPS"]:
+        if q["t"] not in NOT_SOLID_BY_DESIGN:
+            out.append({"type": q["t"], "x": q["x"], "z": q["z"], "r": max(q.get("r") or 0, 0.1), "w": q.get("w")})
+    for l in d["LAMPS"]:
+        if l["k"] == 1:  # a column lamp stands on the ground; k 2 and 3 hang on walls
+            out.append({"type": "lamp post", "x": l["x"], "z": l["z"], "r": 0.11})
+    for k, c, x, z, a in d["PARKED"]:
+        out.append({"type": "parked car", "kind": k, "x": x, "z": z, "r": 1.5, "ang": a})
     return out

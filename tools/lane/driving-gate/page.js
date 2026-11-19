@@ -26,6 +26,17 @@ const PAD_INIT = `(() => {
   navigator.getGamepads = () => [pad, null, null, null];
 })();`;
 
+// Catches requestAnimationFrame so the gate can run the page's own frame loop at a fixed 60 Hz (driver.js
+// __pump). Outside pump mode every callback runs as normal.
+const RAF_INIT = `(() => {
+  const nat = window.requestAnimationFrame.bind(window);
+  const R = { manual: false, q: [], last: 0 };
+  window.__raf = R;
+  const wrap = (cb) => (ts) => { if (R.manual) R.q.push(cb); else { R.last = ts; cb(ts); } };
+  window.requestAnimationFrame = (cb) => { if (R.manual) { R.q.push(cb); return 0; } return nat(wrap(cb)); };
+  R.release = () => { R.manual = false; for (const cb of R.q.splice(0)) nat(wrap(cb)); };
+})();`;
+
 // One row per frame: game time, speed, yaw rate, steering in and out, damage, who is driving, camera, toast.
 const RECORDER = `(() => {
   window.__rows = []; window.__errs = [];
@@ -46,6 +57,7 @@ async function open(file, { pad = false } = {}) {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 960, height: 540 }, deviceScaleFactor: 1 });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.abort());
+  await ctx.addInitScript(RAF_INIT);
   if (pad) await ctx.addInitScript(PAD_INIT);
   const page = await ctx.newPage();
   const errors = [];
