@@ -1,5 +1,48 @@
 # Results of the checks
 
+## 19 November 2026, lane round 6 finish: the second playtester sample (paired) and the hands-on session
+
+Paired runs: the round 5 build (rebuilt from commit 375622e, byte for byte against its pin) and the round 6 build,
+the same playtester, newcomer's first hour, the same seed for each pair, three seeds. Waiting share of the hour:
+
+| seed | round 5 | round 6 | change |
+|---|---|---|---|
+| 19901120 | 47% | 44% | -3 |
+| 7 | 39% | 40% | +1 |
+| 42 | 42% | 48% | +6 |
+| mean | 42.7% | 44.0% | +1.3 |
+
+Same build and same seed do not repeat exactly: round 5 on seed 19901120 gave 36% this morning and 47% now, so a
+single run moves by about ten points. Against that, a mean change of 1.3 points over three pairs (one down, two
+up) shows no real rise. The 45% of the first sample was noise. The largest pair gap (seed 42, +6) has the same
+number of fares in both builds (four, plus the night job); round 6's fares happened to go to near places
+(Quay Street, the chapel) where round 5's went to the station and Chapel Lane, so 1.2 fewer minutes were driven
+and 3.7 more were "nothing to do". Fare places are drawn at random; nothing round 6 built chooses them.
+
+Activity mix against its targets (DESIGN ER-CORE-06, BUILD-ORDER M4: about ten kinds per 30 minutes, talk under
+30%, waiting under 10%): talk 22 to 25% in round 6 against 23 to 27% in round 5 (inside the target); 7 kinds in
+the hour in all six runs (short of the target, unchanged); waiting 40 to 48% against 39 to 47% (far over the
+target in both builds, unchanged; round 8 is meant to move it). Longest stretch with nothing new: 11.1, 12.1 and
+9.3 min against 11.3, 8.8 and 8.3. Tense moments per 30 minutes 15.0, 14.0, 16.0 against 16.5, 16.5, 16.0.
+Page errors 0 in all six. The mix did not move away from its targets.
+
+The hands-on session (production/lane/HANDS-ON-round6-2026-11-19.md) was not completed: in the cloud's software
+renderer the game runs at about a third of real speed (8 frames a second at 640 by 360 on low), and the scripted
+player did not find the back room to Sheila, so stops 4 to 10 were not reached. Found on the way, all minor:
+the to-do still says "Find Mickey's" once inside it (carried from earlier rounds); a second E just after a talk
+opens is typed into the talk box as "e" and Enter then says "e"; the parked cab outside Mickey's is in the
+straight path from the start (backing off always frees Tom). Part 3 still needs a run on a real graphics card.
+
+The full gate (gate.py, same afternoon): the clumsy newcomer exactly as in the build run (0 new failures, 1
+known: the choice after a run-down); lane checks 165 pass, 4 skipped; the gate's own checks 21 pass. The
+prototype tests failed seven of nineteen in the gate's run, which shared the machine with the hands-on browser;
+run again alone, same week, arrivals, nights, melee3 and melee4 pass and eyes prints its findings, but layout
+fails at 1280 by 720 twice in a row (the subtitles under the open talk box 600 ms after the slip unfolds; the
+other three sizes pass). The round 5 build passes the same test alone on the same machine. Round 6 changed no
+layout code (ui.js only renames the prompt keys for a pad), so this is most likely the known slow-screenshot
+timing effect at that size made worse by round 6's heavier frame, but it is not shown either way. oldsave was
+not run in this pass. Gate verdict: not passed (layout open, and the hands-on part incomplete).
+
 ## 19 November 2026, lane round 6 (the gate): the publish gate and the AI playtester before and after
 
 Checks (test/gate6.mjs, all pass). On keys the steering eases to full lock in 0.283 s and centres itself in
