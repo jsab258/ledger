@@ -56,7 +56,12 @@ def double_for(now, shape):
         reset = datetime.datetime.strptime(reset, "%Y-%m-%d %H:%M") if reset else None
     except ValueError:
         reset = None
-    return {"reset": reset}
+    out = {"reset": reset}
+    if "post_reset_top" in shape:
+        out["top"] = float(shape["post_reset_top"])
+    if "ceiling_margin" in shape:
+        out["margin"] = float(shape["ceiling_margin"])
+    return out
 
 
 def line_at(now, shape=None):
@@ -69,7 +74,8 @@ def line_at(now, shape=None):
         if reset is None or now < reset:
             return min(FIRST_LEG_TOP, FIRST_LEG_TOP * (now - monday).total_seconds() / 3600 / FIRST_LEG_HOURS)
         span = max(1.0, (end - reset).total_seconds() / 3600)
-        return min(90.0, 90.0 * (now - reset).total_seconds() / 3600 / span)
+        top = float(double.get("top", 90.0))
+        return min(top, top * (now - reset).total_seconds() / 3600 / span)
     return min(90.0, 90.0 * (now - monday).total_seconds() / 3600 / WEEK_HOURS)
 
 
@@ -78,9 +84,26 @@ def line_per_hour(now, shape=None):
     return max(0.01, line_at(now + datetime.timedelta(hours=1), shape) - line_at(now, shape))
 
 
+# ONE CEILING FOR BOTH SESSIONS (advisor 237, 19 Nov 00:25, replacing 236's two-row projection): after the reset the
+# line runs 0 to 99 (week-shape.json "post_reset_top") and the ceiling is the line plus "ceiling_margin" (25). Above
+# the ceiling the lane stops first; still above at the next row, nothing new starts until back under. The gate reads
+# the stored "ahead" against its 6-point limit, so while a ceiling applies "ahead" is stored as percent - ceiling + 6.
+def ceiling_at(now, shape=None):
+    shape = read_shape() if shape is None else shape
+    double = double_for(now, shape)
+    if not double or double["reset"] is None or now < double["reset"] or "margin" not in double:
+        return None
+    return line_at(now, shape) + double["margin"]
+
+
 def verdict(now, percent, shape=None):
     line = line_at(now, shape)
     ahead = percent - line
+    ceiling = ceiling_at(now, shape)
+    if ceiling is not None:
+        what = ("ABOVE THE CEILING: the lane stops first; still above at the next row, start nothing new"
+                if percent > ceiling else "under the ceiling: Kiln first, work within his rules")
+        return "pace: %.0f%% against the line's %.1f%%, %+.1f points; ceiling %.1f%%; %s" % (percent, line, ahead, ceiling, what)
     if line >= 90.0 and not double_for(now, read_shape() if shape is None else shape):
         what = "full pace: Monday morning, the last 10% shared with him"
     elif ahead > 6:
@@ -122,6 +145,7 @@ def selftest():
     off = {"active": False, "monday": "2026-11-16"}
     on = {"active": True, "monday": "2026-11-16"}
     pressed = dict(on, reset_at="2026-11-18 15:00")
+    c237 = dict(on, reset_at="2026-11-18 15:20", post_reset_top=99, ceiling_margin=25)
     tue = datetime.datetime(2026, 11, 17, 14, 0)
     cases += [
         ("double off keeps the single line", abs(line_at(tue, off) - line_at(tue, {})) < 1e-9, True),
@@ -131,6 +155,11 @@ def selftest():
         ("reset at 15:00, 0 just after", line_at(datetime.datetime(2026, 11, 18, 15, 30), pressed) < 0.5, True),
         ("reset, Monday 07:00 is 90", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), pressed) - 90) < 0.01, True),
         ("another week ignores it", abs(line_at(fri, on) - line_at(fri, {})) < 1e-9, True),
+        ("237: ceiling at Thursday 00:52 about 33.4", abs(ceiling_at(datetime.datetime(2026, 11, 19, 0, 52), c237) - 33.45) < 0.1, True),
+        ("237: 31% is under", "under the ceiling" in verdict(datetime.datetime(2026, 11, 19, 0, 52), 31, c237), True),
+        ("237: 40% is above", "ABOVE" in verdict(datetime.datetime(2026, 11, 19, 0, 52), 40, c237), True),
+        ("237: Monday 07:00 line is 99", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), c237) - 99) < 0.01, True),
+        ("no ceiling without its margin", ceiling_at(datetime.datetime(2026, 11, 19, 0, 52), pressed) is None, True),
         ("double climbs about 1.98 an hour", abs(line_per_hour(tue, on) - 1.98) < 0.01, True),
         ("Fable under its cap", "AT CAP" in fable_verdict(33), False),
         ("Fable at its cap", "AT CAP" in fable_verdict(40), True),
@@ -146,6 +175,10 @@ def main(a):
     now = datetime.datetime.now()
     print(verdict(now, float(a[0])))
     state = {"at": now.strftime("%Y-%m-%d %H:%M"), "percent": float(a[0]), "ahead": round(float(a[0]) - line_at(now), 2)}
+    ceiling = ceiling_at(now)
+    if ceiling is not None:
+        state["ceiling"] = round(ceiling, 2)
+        state["ahead"] = round(float(a[0]) - ceiling + 6.0, 2)
     if "--fable" in a:
         state["fable"] = float(a[a.index("--fable") + 1])
         state["fable_at"] = state["at"]
