@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 19:17 on 19 Nov, stopped about 20:40. Round 6 (the gate) checked but still NOT published: waiting did not truly rise; fresh review PASS WITH FIXES, no must; gate.py FAIL on layout at 1280 by 720 (round 5 passes) and the hands-on session incomplete. Queue item 104 is next for 4l. 4s run 3 done (queue 4s-3): all 13 run-2 findings fixed, breaker 191 of 191, one-sim.sh all exit 0; next 105. Allowlist items 17 and 18 both on wip now. Open point: CLAUDE.md line 59 (helpers never send clicks or keys) against the gate's keys to a headless test browser. 4d: no round4/ on the driving page (checked 19:20). Budget used: main row 18:10, 38% against a ceiling near 50%.
+**Cloud lane, last run:** 21:17 to about 22:05, 19 Nov: 4m done (REFERENCE-MECHANICS and TEARDOWN-BRIEF, both 2026-11-20, reviewed and fixed once). Next: 4f, then 4t. Round 6 still unpublished (queue 104); 4s next 105. Parts tree session started 21:11: leave parts-tree/, DESIGN.md and the addendum alone while it runs; when it stops, merge 4m's results in (step 1c). 4d: no round4/ seen.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
