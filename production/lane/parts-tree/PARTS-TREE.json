@@ -26,11 +26,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (VISION.md; DESIGN.md); build not checked by the status sweep"
+     "evidence": "rollup of 233 leaves: missing 2, designed 95, built shallow 68, built 65, passes 1, unknown 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 10 children: 10 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 295 leaves: missing 5, designed 181, built shallow 53, built 40, unknown 16"
     }
    },
    "needs": [],
@@ -77,12 +77,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 44 sub-parts: 16 built, 14 designed, 12 built shallow, 2 passes"
+     "status": "designed",
+     "evidence": "rollup of 57 leaves: designed 27, built shallow 12, built 18"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 7 children: 4 designed, 3 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 57 leaves: designed 51, built shallow 4, built 2"
     }
    },
    "needs": [],
@@ -126,12 +126,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 6 sub-parts: 2 built, 2 built shallow, 1 passes, 1 designed"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 3, built shallow 2, built 3"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 3 designed, 1 built shallow, 1 built, 1 passes"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 5, built shallow 1, built 2"
     }
    },
    "needs": [],
@@ -182,8 +182,8 @@
      "evidence": "src/player.js eased walk and run; test/gate6.mjs: full pace in 0.12 s, stop over 0.1 s, early E/F press counts, pad stick analogue (ER-INPUT-01); run blocked while carrying"
     },
     "unreal": {
-     "status": "passes",
-     "evidence": "Walk passed his eye 26 Oct and became the default (production/archive/DECISIONS-to-2026-11-09.md line 691; RULINGS People line); MotionMatchAnim.cpp, LocomotionAnim.cpp. Open: treads on the spot at Mickey's front, slide unmeasured since 22 Oct (FINDINGS.md); Ron's walk slides (phase1-exit EXIT-B 9 Nov)"
+     "status": "built",
+     "evidence": "walk passed his eye 26 Oct for its look (RULINGS People's moves), but ER-INPUT-01 is not measured in Unreal and feel numbers are a research item; open faults: treads on the spot at Mickey's front, foot slide unmeasured since 22 Oct (FINDINGS.md)"
     }
    },
    "needs": [],
@@ -228,7 +228,8 @@
     "round6 gate: feel not yet tried on a PC (hands-on incomplete)"
    ],
    "notes": [
-    "prototype check passes its rule, but the feel standard is a research item, so not 'passes'"
+    "prototype check passes its rule, but the feel standard is a research item, so not 'passes'",
+    "status set by the parts-tree session over the sweep's 'passes': walk passed his eye 26 Oct for its look (RULINGS People's moves), but ER-INPUT-01 is not measured in Unreal and feel numbers are a research item; open faults: treads on the spot at Mickey's front, foot slide unmeasured since 22 Oct (FINDINGS.md)"
    ],
    "children": [],
    "leaf": true
@@ -601,12 +602,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 7 sub-parts: 3 built shallow, 2 built, 1 passes, 1 designed"
+     "status": "designed",
+     "evidence": "rollup of 10 leaves: designed 4, built shallow 3, built 3"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 7 children: 7 designed"
+     "evidence": "rollup of 10 leaves: designed 10"
     }
    },
    "needs": [],
@@ -758,8 +759,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/drive.js, player.js: F in and out, exitPoint; gate6: F with every door against a wall puts Tom on clear ground, F pressed early taken, out onto open ground; fare passenger steps in and out"
+     "status": "built",
+     "evidence": "F in and out works and a blocked door never strands him (gate6.mjs), but gate6 accepts up to 5 s at a blocked door against ER-DRIVE-07's 2 s, and both sides are not timed"
     },
     "unreal": {
      "status": "designed",
@@ -791,7 +792,9 @@
    "review_themes": [
     "round6 gate: never stranded; E-key double press minor"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': F in and out works and a blocked door never strands him (gate6.mjs), but gate6 accepts up to 5 s at a blocked door against ER-DRIVE-07's 2 s, and both sides are not timed"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1138,11 +1141,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 10 sub-parts: 8 built, 1 built shallow, 1 designed"
+     "evidence": "rollup of 12 leaves: designed 3, built shallow 1, built 8"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 10 children: 10 designed"
+     "evidence": "rollup of 12 leaves: designed 12"
     }
    },
    "needs": [],
@@ -1832,12 +1835,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 6 sub-parts: 3 built shallow, 2 built, 1 designed"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 3, built shallow 3, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 4 designed, 2 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 6, built shallow 2"
     }
    },
    "needs": [],
@@ -2267,11 +2270,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 4 sub-parts: 2 designed, 1 built, 1 built shallow"
+     "evidence": "rollup of 4 leaves: designed 2, built shallow 1, built 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 4 children: 4 designed"
+     "evidence": "rollup of 4 leaves: designed 4"
     }
    },
    "needs": [],
@@ -2519,11 +2522,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 8 sub-parts: 5 designed, 2 built shallow, 1 built"
+     "evidence": "rollup of 11 leaves: designed 8, built shallow 2, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 8 children: 7 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 11 leaves: designed 10, built shallow 1"
     }
    },
    "needs": [],
@@ -3128,11 +3131,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 3 sub-parts: 3 designed"
+     "evidence": "rollup of 4 leaves: designed 4"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 3 children: 3 designed"
+     "evidence": "rollup of 4 leaves: designed 4"
     }
    },
    "needs": [],
@@ -3371,12 +3374,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 50 sub-parts: 20 built shallow, 17 built, 11 designed, 2 passes"
+     "status": "designed",
+     "evidence": "rollup of 64 leaves: designed 25, built shallow 19, built 19, unknown 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 16 children: 7 designed, 7 built shallow, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 64 leaves: designed 38, built shallow 9, built 16, unknown 1"
     }
    },
    "needs": [],
@@ -3433,11 +3436,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 4 sub-parts: 2 built, 2 built shallow"
+     "evidence": "rollup of 6 leaves: designed 1, built shallow 2, built 2, unknown 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 4 children: 2 designed, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 6 leaves: designed 3, built 2, unknown 1"
     }
    },
    "needs": [],
@@ -3789,11 +3792,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 5 sub-parts: 3 built shallow, 2 built"
+     "evidence": "rollup of 6 leaves: designed 1, built shallow 3, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 5 children: 1 built shallow, 4 built"
+     "status": "built",
+     "evidence": "rollup of 6 leaves: designed 1, built shallow 1, built 4"
     }
    },
    "needs": [],
@@ -4127,11 +4130,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 2 sub-parts: 1 passes, 1 built"
+     "evidence": "rollup of 2 leaves: built 2"
     },
     "unreal": {
      "status": "built",
-     "evidence": "Rollup of 2 children: 2 built"
+     "evidence": "rollup of 2 leaves: built 2"
     }
    },
    "needs": [],
@@ -4170,8 +4173,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/events.js, saving.js mind.mem kept per person, log trimmed but memory not; test/same_week.mjs part for part, town.mjs save loads back same week, oldsave.mjs"
+     "status": "built",
+     "evidence": "memory kept per person and a scripted week compares part for part after save and load (same_week.mjs, town.mjs), but the reload-at-random-moments test did not run"
     },
     "unreal": {
      "status": "built",
@@ -4208,7 +4211,9 @@
     "JP1 The town reacts to you (reputation, crime, NPC memory)",
     "S2 Forgetting is loud, remembering is quiet"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': memory kept per person and a scripted week compares part for part after save and load (same_week.mjs, town.mjs), but the reload-at-random-moments test did not run"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4274,11 +4279,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 4 sub-parts: 3 built, 1 built shallow"
+     "evidence": "rollup of 5 leaves: designed 1, built shallow 1, built 3"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 4 children: 1 built shallow, 3 built"
+     "status": "built",
+     "evidence": "rollup of 5 leaves: designed 1, built shallow 1, built 3"
     }
    },
    "needs": [],
@@ -4567,11 +4572,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 3 sub-parts: 2 built shallow, 1 built"
+     "evidence": "rollup of 3 leaves: built shallow 2, built 1"
     },
     "unreal": {
      "status": "built shallow",
-     "evidence": "Rollup of 3 children: 3 built shallow"
+     "evidence": "rollup of 3 leaves: built shallow 3"
     }
    },
    "needs": [],
@@ -4767,12 +4772,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 6 sub-parts: 3 built shallow, 2 built, 1 designed"
+     "status": "designed",
+     "evidence": "rollup of 9 leaves: designed 4, built shallow 3, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 2 designed, 2 built shallow, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 9 leaves: designed 5, built shallow 2, built 2"
     }
    },
    "needs": [],
@@ -5240,11 +5245,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 7 sub-parts: 3 built, 3 built shallow, 1 designed"
+     "evidence": "rollup of 8 leaves: designed 2, built shallow 3, built 3"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 7 children: 7 designed"
+     "evidence": "rollup of 8 leaves: designed 8"
     }
    },
    "needs": [],
@@ -5661,11 +5666,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 2 sub-parts: 1 built, 1 built shallow"
+     "evidence": "rollup of 2 leaves: built shallow 1, built 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 2 children: 2 designed"
+     "evidence": "rollup of 2 leaves: designed 2"
     }
    },
    "needs": [],
@@ -5797,11 +5802,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 2 sub-parts: 1 built, 1 built shallow"
+     "evidence": "rollup of 2 leaves: built shallow 1, built 1"
     },
     "unreal": {
      "status": "built",
-     "evidence": "Rollup of 2 children: 2 built"
+     "evidence": "rollup of 2 leaves: built 2"
     }
    },
    "needs": [],
@@ -5932,11 +5937,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 4 sub-parts: 3 designed, 1 built shallow"
+     "evidence": "rollup of 4 leaves: designed 3, built shallow 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 4 children: 4 designed"
+     "evidence": "rollup of 4 leaves: designed 4"
     }
    },
    "needs": [],
@@ -6158,11 +6163,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 3 sub-parts: 3 designed"
+     "evidence": "rollup of 3 leaves: designed 3"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 3 children: 3 designed"
+     "evidence": "rollup of 3 leaves: designed 3"
     }
    },
    "needs": [],
@@ -6340,11 +6345,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 4 sub-parts: 2 designed, 1 built, 1 built shallow"
+     "evidence": "rollup of 5 leaves: designed 3, built shallow 1, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 4 children: 2 designed, 1 built shallow, 1 built"
+     "status": "designed",
+     "evidence": "rollup of 5 leaves: designed 3, built shallow 1, built 1"
     }
    },
    "needs": [],
@@ -6662,8 +6667,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/rules.js people: nerve, talk, discretion, upright, fear and liking per named person; python test live 6.08 traits and named people as found pass (the Core has all at 0.5, VS-DESIGN row 7, decision 3 open)"
+     "status": "built",
+     "evidence": "src/rules.js gives each named person nerve, talk, discretion, fear and liking; test 6.08 checks only that values sit in the table; nothing tests that the same deed goes differently by person; the standard waits on his answer to QUESTIONS 3"
     },
     "unreal": {
      "status": "built shallow",
@@ -6690,7 +6695,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': src/rules.js gives each named person nerve, talk, discretion, fear and liking; test 6.08 checks only that values sit in the table; nothing tests that the same deed goes differently by person; the standard waits on his answer to QUESTIONS 3"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6708,12 +6715,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "Kevin and Terry have schedules and drive; no book filling, no firm name effect; DESIGN s14, round 22"
+     "status": "designed",
+     "evidence": "rollup of 3 leaves: designed 3"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "production/lane/synthesis/DESIGN.md s12 and s14; Operation.cs/Campaign.cs unported; progress.json prototype stage C"
+     "evidence": "rollup of 3 leaves: designed 3"
     }
    },
    "needs": [
@@ -7071,12 +7078,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 30 sub-parts: 12 built shallow, 9 built, 9 designed"
+     "status": "designed",
+     "evidence": "rollup of 31 leaves: designed 13, built shallow 10, built 8"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 2 designed, 4 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 32 leaves: missing 1, designed 21, built shallow 6, built 4"
     }
    },
    "needs": [],
@@ -7121,11 +7128,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 6 sub-parts: 3 designed, 2 built shallow, 1 built"
+     "evidence": "rollup of 6 leaves: designed 3, built shallow 2, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 5 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 6 leaves: designed 5, built shallow 1"
     }
    },
    "needs": [],
@@ -7462,11 +7469,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 5 sub-parts: 3 built shallow, 1 built, 1 designed"
+     "evidence": "rollup of 5 leaves: designed 1, built shallow 3, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 5 children: 1 missing, 3 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 6 leaves: missing 1, designed 4, built shallow 1"
     }
    },
    "needs": [],
@@ -7845,11 +7852,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "src/fares.js random pickup and destination, three generic passengers, June one special fare"
+     "evidence": "rollup of 3 leaves: designed 1, built shallow 2"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 3 children: 3 designed"
+     "evidence": "rollup of 3 leaves: designed 3"
     }
    },
    "needs": [],
@@ -8036,12 +8043,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "night jobs and debts only; see 3.5.x"
+     "status": "designed",
+     "evidence": "rollup of 7 leaves: designed 5, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 5 children: 4 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 7 leaves: designed 6, built shallow 1"
     }
    },
    "needs": [],
@@ -8424,11 +8431,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "src/talk.js, talk_lines.js; see 3.6.x"
+     "evidence": "rollup of 8 leaves: designed 1, built shallow 3, built 4"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 7 children: 3 built shallow, 4 built"
+     "status": "built",
+     "evidence": "rollup of 8 leaves: designed 1, built shallow 3, built 4"
     }
    },
    "needs": [],
@@ -8920,11 +8927,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (canon; atlas-01; DESIGN §6); build not checked by the status sweep"
+     "evidence": "rollup of 22 leaves: designed 8, built shallow 7, built 7"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 10 children: 2 designed, 8 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 27 leaves: designed 18, built shallow 7, built 1, unknown 1"
     }
    },
    "needs": [],
@@ -8973,11 +8980,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (atlas-01); build not checked by the status sweep"
+     "evidence": "rollup of 4 leaves: designed 2, built shallow 1, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 4 children: 3 designed, 1 built"
+     "status": "designed",
+     "evidence": "rollup of 5 leaves: designed 4, built 1"
     }
    },
    "needs": [],
@@ -9265,11 +9272,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (canon; atlas proposal); build not checked by the status sweep"
+     "evidence": "rollup of 4 leaves: designed 2, built shallow 1, built 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 3 children: 2 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 4 leaves: designed 3, built shallow 1"
     }
    },
    "needs": [],
@@ -9486,12 +9493,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §6 Rooms); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "rollup of 8 leaves: built shallow 5, built 3"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 8 children: 6 designed, 2 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 6, built shallow 2"
     }
    },
    "needs": [],
@@ -9935,12 +9942,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built",
-     "evidence": "src/drive.js initTraffic, stepTraffic: cars and buses by hour, stop for Tom, cab, cars and people within 1.5 m, bus stops; no dedicated test found"
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "tools/lane/traffic (reference model, 59 tests, goldens G1-G8), TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18.md; Traffic.cs in Core unported; no cars in play (street-vehicles.json empty; friends-build MAP.md \"No cars until convincing\")"
+     "evidence": "rollup of 2 leaves: designed 2"
     }
    },
    "needs": [
@@ -10075,8 +10082,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Two hatchback glbs exist (production/assets/vehicles: hatch-bluegrey, hatch-navy) and SpawnVehicles can place them, but they are kept off the street; no cab, police car or van; n16-9 parked cars not started (NOW.md)"
+     "status": "designed",
+     "evidence": "rollup of 2 leaves: designed 1, unknown 1"
     }
    },
    "needs": [
@@ -10393,11 +10400,15 @@
     "RN-15"
    ],
    "designed_in": "not designed",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
+    },
     "unreal": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
     }
    },
    "needs": [],
@@ -10478,11 +10489,15 @@
    "standard_source": "RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate",
    "research_items": [],
    "designed_in": "RULINGS The look; Faces; Clothes",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "built shallow",
+     "evidence": "rollup of 12 leaves: designed 5, built shallow 7"
+    },
     "unreal": {
      "status": "built shallow",
-     "evidence": "Rollup of 9 children: 1 designed, 7 built shallow, 1 built"
+     "evidence": "rollup of 37 leaves: missing 2, designed 12, built shallow 14, built 7, unknown 2"
     }
    },
    "needs": [],
@@ -10530,7 +10545,7 @@
    "status": {
     "unreal": {
      "status": "built shallow",
-     "evidence": "Rollup of 5 children: 1 missing, 4 built shallow"
+     "evidence": "rollup of 5 leaves: missing 1, built shallow 4"
     }
    },
    "needs": [],
@@ -10802,11 +10817,15 @@
    "standard_source": "RULINGS 5, 6 Nov",
    "research_items": [],
    "designed_in": "RULINGS People's moves",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
+    },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 1 designed, 4 built shallow, 1 passes"
+     "status": "designed",
+     "evidence": "rollup of 9 leaves: designed 4, built shallow 4, built 1"
     }
    },
    "needs": [],
@@ -10854,8 +10873,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "passes",
-     "evidence": "Motion matching on Epic's sample passed his eye 26 Oct (RULINGS People; DECISIONS archive line 691); night walk 16 of 17 stages, 58.2 fps (progress.json Testing)"
+     "status": "built",
+     "evidence": "third motion-matching try is the default (RULINGS, his eye 26 Oct); foot slide is an open fault (FINDINGS.md, phase1-exit EXIT-B 9 Nov) and its test never ran"
     }
    },
    "needs": [
@@ -10888,7 +10907,9 @@
     "A09.23"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': third motion-matching try is the default (RULINGS, his eye 26 Oct); foot slide is an open fault (FINDINGS.md, phase1-exit EXIT-B 9 Nov) and its test never ran"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11291,7 +11312,7 @@
    "status": {
     "unreal": {
      "status": "built",
-     "evidence": "Rollup of 3 children: 3 built"
+     "evidence": "rollup of 4 leaves: designed 1, built 3"
     }
    },
    "needs": [],
@@ -11507,11 +11528,15 @@
    "standard_source": "RULINGS 30 Sep",
    "research_items": [],
    "designed_in": "RULINGS",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
+    },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 3 children: 1 designed, 2 built"
+     "status": "built",
+     "evidence": "rollup of 3 leaves: missing 1, built 2"
     }
    },
    "needs": [],
@@ -11650,8 +11675,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "designed",
-     "evidence": "RULINGS Look lines on grain and grade; audit M11 lists \"grain and grade\" as owed with no item; ue-probe turns grain, bloom and blur off in captures only (VignetteShot.cpp)"
+     "status": "missing",
+     "evidence": "no design in detail and no build evidence (D28 owed)"
     }
    },
    "needs": [],
@@ -11676,7 +11701,9 @@
    "review_themes": [
     "JX1 The look called poor, dated or glitchy"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'designed': no design in detail and no build evidence (D28 owed)"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11694,12 +11721,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §17 Sound); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "rollup of 7 leaves: designed 1, built shallow 6"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 7 children: 4 designed, 2 built shallow, 1 unknown"
+     "status": "designed",
+     "evidence": "rollup of 7 leaves: designed 4, built shallow 2, unknown 1"
     }
    },
    "needs": [],
@@ -12098,11 +12125,15 @@
    "standard_source": "RULINGS 30 Sep",
    "research_items": [],
    "designed_in": "RULINGS voices",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
+    },
     "unreal": {
      "status": "built shallow",
-     "evidence": "Rollup of 3 children: 2 built shallow, 1 built"
+     "evidence": "rollup of 3 leaves: built shallow 2, built 1"
     }
    },
    "needs": [],
@@ -12286,8 +12317,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "designed",
-     "evidence": "Core MusicModel.cs; RULINGS silence commonest, no combat music; nothing in ue-probe"
+     "status": "unknown",
+     "evidence": "rollup of 1 leaves: unknown 1"
     }
    },
    "needs": [],
@@ -12376,11 +12407,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §17); build not checked by the status sweep"
+     "evidence": "rollup of 2 leaves: designed 1, built shallow 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 2 children: 1 designed, 1 built shallow"
+     "status": "designed",
+     "evidence": "rollup of 3 leaves: designed 2, built shallow 1"
     }
    },
    "needs": [],
@@ -12669,11 +12700,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 15 sub-parts: 8 built, 4 built shallow, 2 designed, 1 passes"
+     "evidence": "rollup of 17 leaves: designed 5, built shallow 4, built 8"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 7 children: 2 designed, 3 built shallow, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 18 leaves: designed 11, built shallow 2, built 4, unknown 1"
     }
    },
    "needs": [],
@@ -12720,12 +12751,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 4 sub-parts: 1 passes, 1 built shallow, 1 built, 1 designed"
+     "status": "designed",
+     "evidence": "rollup of 5 leaves: designed 2, built shallow 1, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 4 children: 2 designed, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 5 leaves: designed 3, built 2"
     }
    },
    "needs": [],
@@ -12771,8 +12802,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/fight.js target(), ui.js prompt; test/gate6.mjs prompt takes stranger straight ahead 2.0 m over named man 21 degrees off, holds a choice 0.2 s, pad names its buttons"
+     "status": "built",
+     "evidence": "gate6.mjs checks the prompt's target and hold, but 'everything usable has a prompt' is unchecked (NOT_DONE: prompts not searched one by one; GATE-REVIEW-2026-11-19: no help prompt after a run-down)"
     },
     "unreal": {
      "status": "built",
@@ -12804,7 +12835,9 @@
     "X17 Menus, controls, camera and interface",
     "X20 Systems nobody explains"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': gate6.mjs checks the prompt's target and hold, but 'everything usable has a prompt' is unchecked (NOT_DONE: prompts not searched one by one; GATE-REVIEW-2026-11-19: no help prompt after a run-down)"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13017,11 +13050,11 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup: four parts People, Day book, Open, Money built; no Tom reading"
+     "evidence": "rollup of 5 leaves: designed 1, built 4"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "Rollup of 5 children: 5 designed"
+     "evidence": "rollup of 5 leaves: designed 5"
     }
    },
    "needs": [],
@@ -13785,11 +13818,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 14 sub-parts: 8 built shallow, 2 built, 2 passes, 1 designed, 1 missing"
+     "evidence": "rollup of 16 leaves: missing 1, designed 3, built shallow 8, built 3, passes 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 14 children: 8 designed, 3 built shallow, 3 built"
+     "status": "designed",
+     "evidence": "rollup of 16 leaves: designed 10, built shallow 3, built 3"
     }
    },
    "needs": [],
@@ -14244,8 +14277,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "passes",
-     "evidence": "src/work.js beaten Tom wakes at Rinaldi (8 pounds), src/police.js custody hours then released, debts refused; town.mjs beaten comes round and game goes on, custody lets him go"
+     "status": "built",
+     "evidence": "beaten Tom wakes at Rinaldi's and custody ends (test/town.mjs), but no failure route is timed against ER-CORE-04's 2 minutes; NOT_DONE: ER-CORE-02 to 04 checked only for a crash, a run-down and a wedged cab"
     },
     "unreal": {
      "status": "built shallow",
@@ -14283,7 +14316,9 @@
     "X12 Difficulty too hard early, forced, or too easy later",
     "X19 A save system that costs time"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': beaten Tom wakes at Rinaldi's and custody ends (test/town.mjs), but no failure route is timed against ER-CORE-04's 2 minutes; NOT_DONE: ER-CORE-02 to 04 checked only for a crash, a run-down and a wedged cab"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14451,7 +14486,7 @@
    "status": {
     "prototype": {
      "status": "passes",
-     "evidence": "rules.time 45 real seconds per game hour; python test live 6.01 one game hour is 45 real seconds; VS-DESIGN row 1: Unreal runs 30 s, owner decision 1 open"
+     "evidence": "rules.js realSecondsPerGameHour 45; the prototype's live test 6.01 (round 6 build) shows one game hour is 45 real s; his clock decision C11 is still open"
     },
     "unreal": {
      "status": "built",
@@ -14479,7 +14514,9 @@
    "review_themes": [
     "S4 Two clocks: 30 real minutes against one in-game week"
    ],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'passes': rules.js realSecondsPerGameHour 45; the prototype's live test 6.01 (round 6 build) shows one game hour is 45 real s; his clock decision C11 is still open"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14631,11 +14668,15 @@
    "standard_source": "ruling 23 Sep",
    "research_items": [],
    "designed_in": "DESIGN §17",
-   "track": "unreal",
+   "track": "both",
    "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "rollup of 4 leaves: designed 3, unknown 1"
+    },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 9 children: 5 built shallow, 4 built"
+     "status": "unknown",
+     "evidence": "rollup of 12 leaves: designed 3, built shallow 2, built 2, unknown 5"
     }
    },
    "needs": [],
@@ -14682,8 +14723,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Phase 1 exit D 9 Nov NOT MET: median and p99 met with voice (10.9-15.2 ms, p99 18.9-21.3 ms), card headroom and 6 GB line not met (walking 6,145 MB; peaks 6,523-8,716 MB); progress.json: night walk 58.2 fps, worst frame 22.37 ms"
+     "status": "unknown",
+     "evidence": "rollup of 3 leaves: designed 1, unknown 2"
     }
    },
    "needs": [],
@@ -14868,15 +14909,11 @@
    "standard_source": "CLAUDE.md simulation tests; PLAYERS",
    "research_items": [],
    "designed_in": "simulation tests",
-   "track": "both",
+   "track": "unreal",
    "status": {
-    "prototype": {
-     "status": "designed",
-     "evidence": "design exists (simulation tests); build not checked by the status sweep"
-    },
     "unreal": {
-     "status": "built",
-     "evidence": "SaveChaos, Soak (7 residents, not 41), CoreTests, PerceptionGolden pass in CI (R04); gossip regression flaky on 23 of 57 nights; main cloud check red 544 runs; 25 walks: 2 frames over 33.3 ms in 45,000"
+     "status": "unknown",
+     "evidence": "rollup of 1 leaves: unknown 1"
     }
    },
    "needs": [],
@@ -14984,15 +15021,11 @@
    "standard_source": "DESIGN §17",
    "research_items": [],
    "designed_in": "DESIGN §17",
-   "track": "both",
+   "track": "unreal",
    "status": {
-    "prototype": {
-     "status": "built shallow",
-     "evidence": "src/ui.js settingsHTML: quality low/medium/high, auto res, bloom, health bar, sensitivity, invert Y, touch, volume, score; no rebinding, no resolution list"
-    },
     "unreal": {
-     "status": "built",
-     "evidence": "LedgerSettings.cpp (Picture, Sound, Controls, Subtitles); tools/settings_check.py; title picks the level by benchmark; Low/Medium/High not all measured (MAP.md basic 4)"
+     "status": "unknown",
+     "evidence": "rollup of 1 leaves: unknown 1"
     }
    },
    "needs": [],
@@ -15102,12 +15135,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "subtitles always shown, invert Y, touch controls, no text size, hearing or cognition options"
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Subtitle size and speaker names, controller input, suggest-always built; no hearing, motor or cognition options beyond that (LedgerSettings.h), research/ui-design list unbuilt"
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
     }
    },
    "needs": [],
@@ -15282,8 +15315,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "built shallow",
-     "evidence": "ledger/Relay (Relay.cs), BudgetedClient.cs, evening spend cap kept across restart and refused at cap (evening-restart-2026-10-05.md); the server is \"when friends need it\" (RULINGS); deployment on the Hetzner server not evidenced"
+     "status": "designed",
+     "evidence": "rollup of 1 leaves: designed 1"
     }
    },
    "needs": [],
@@ -15554,11 +15587,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (RULINGS); build not checked by the status sweep"
+     "evidence": "rollup of 10 leaves: missing 1, designed 6, built shallow 1, built 2"
     },
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 9 children: 2 designed, 5 built shallow, 2 built"
+     "status": "designed",
+     "evidence": "rollup of 20 leaves: missing 1, designed 14, built shallow 4, built 1"
     }
    },
    "needs": [],
@@ -15607,8 +15640,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Kiln v1 0 of 6; four garments drape in Kiln, none in the game; engine values replaced after a decompile finding; code on F: not in repo (NOW.md; audit REVIEW-06; MARVELOUS-RENEWAL-OPTIONS-2026-11-18.md)"
+     "status": "designed",
+     "evidence": "rollup of 8 leaves: designed 8"
     }
    },
    "needs": [],
@@ -16050,12 +16083,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (ONE-SHOT-PORTING.md (to be written)); build not checked by the status sweep"
+     "status": "missing",
+     "evidence": "ONE-SHOT-PORTING.md does not exist yet (advisor 254 asks for it)"
     },
     "unreal": {
-     "status": "designed",
-     "evidence": "RULINGS 18-19 Nov (Unreal ports money, debts, jobs, fights, talk under the same tests); production/lane/SKELETON-FIRST-OPTIONS-2026-11-18.md; no system beyond the 27 modules ported yet"
+     "status": "missing",
+     "evidence": "ONE-SHOT-PORTING.md does not exist yet; no system has been ported from the prototype under shared tests"
     }
    },
    "needs": [
@@ -16076,7 +16109,10 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "status set by the parts-tree session over the sweep's 'designed': ONE-SHOT-PORTING.md does not exist yet (advisor 254 asks for it)",
+    "status set by the parts-tree session over the sweep's 'designed': ONE-SHOT-PORTING.md does not exist yet; no system has been ported from the prototype under shared tests"
+   ],
    "children": [],
    "leaf": true
   },
@@ -16195,11 +16231,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (tools/); build not checked by the status sweep"
+     "evidence": "rollup of 2 leaves: designed 2"
     },
     "unreal": {
-     "status": "built",
-     "evidence": "tools/doc-caps.py, approvals.py, retention.py, git-size-guard.py, push_guard.py, order_ledger.py in tools/ci-checks.sh; phase 0 exit passed 6 Oct; audit H9: \"enforced\" rulings mostly a phrase check; H10: cloud check red"
+     "status": "designed",
+     "evidence": "rollup of 2 leaves: designed 2"
     }
    },
    "needs": [],
@@ -16533,8 +16569,8 @@
    "track": "unreal",
    "status": {
     "unreal": {
-     "status": "built shallow",
-     "evidence": "Rollup of 6 children: 1 missing, 3 designed, 2 built shallow"
+     "status": "unknown",
+     "evidence": "rollup of 12 leaves: missing 1, designed 3, built shallow 2, unknown 6"
     }
    },
    "needs": [],

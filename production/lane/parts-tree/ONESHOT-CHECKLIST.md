@@ -4,7 +4,7 @@ Every gameplay part the one-shot (Friday 20 Nov, 22:10) builds into the browser 
 
 Rules for the one-shot: never change tools/lane/one-sim/; the town simulation stays the real one where the switch has landed; no polish (art, animation detail, voices, clothes and faces are never the browser's work); the content rule; a play build reaches him only through the publish gate. 'Now' is the prototype's status before the one-shot, from evidence (round 5 published, round 6 built and not published).
 
-Parts: 191. Already passing their standard: 6 (keep them passing).
+Parts: 191. Already passing their standard: 1 (keep them passing).
 
 ## Stage A: one evening that holds (121 parts)
 
@@ -16,7 +16,7 @@ Parts: 191. Already passing their standard: 6 (keep them passing).
 - [ ] 1.1.7 Stopping and blending in. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A10. Test: S: a seated or smoking Tom is caught less than one standing about; H: minding feels like play; addendum rules ER-STOP-01.
 - [ ] 1.2.1 Car handling. Now: built. Design: DESIGN §5; driving study rounds 1 to 3. Test: S: drives D1 to D8 by keys and pad inside the bands; his feel check.
 - [ ] 1.2.2 Car camera. Now: built shallow. Design: DESIGN §17. Test: S: D8 camera run; B: 40-minute soak with no clipped frame.
-- [ ] 1.2.3 Getting in and out. Now: passes. Design: DESIGN §5. Test: S: enter and exit timed from both sides, door blocked.
+- [ ] 1.2.3 Getting in and out. Now: built. Design: DESIGN §5. Test: S: enter and exit timed from both sides, door blocked.
 - [ ] 1.2.4 Crashes, damage and unsticking. Now: built. Design: DESIGN §5. Test: S: pole and wall hits at 10, 20, 35, 50 mph; B: 30 minutes of crashing.
 - [ ] 1.2.5 Cars and people. Now: built shallow. Design: DESIGN §5. Test: S: 1,000 seeded crossings with no contact; hits at 5, 15, 30, 50 mph, nobody dies; both choices seeded.
 - [ ] 1.2.7 Driving with passengers. Now: built shallow. Design: DESIGN §5, §11 staging. Test: H: fare log; S: a staged back-seat talk with the car moving.
@@ -57,7 +57,7 @@ Parts: 191. Already passing their standard: 6 (keep them passing).
 - [ ] 2.2.4 Sound reach. Now: built. Design: DESIGN §2. Test: S: reach rows by act, hour and rain.
 - [ ] 2.2.5 Give-away rules. Now: built shallow. Design: DESIGN §2. Test: S: golden rows per give-away.
 - [ ] 2.2.6 Ground rules and trespass. Now: designed. Design: DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10. Test: S: every place has a label and the warnings fire in order; addendum rules ER-GROUND-01.
-- [ ] 2.3.1 Per-person memory store. Now: passes. Design: DESIGN §2; C# Core. Test: S: SaveChaos; reload at random moments and compare.
+- [ ] 2.3.1 Per-person memory store. Now: built. Design: DESIGN §2; C# Core. Test: S: SaveChaos; reload at random moments and compare.
 - [ ] 2.3.2 Witness certainty. Now: built. Design: DESIGN §2. Test: S: golden rows.
 - [ ] 2.4.1 Transmission. Now: built. Design: DESIGN §2; C# Core. Test: S: golden rows; Soak.
 - [ ] 2.4.2 Cooling by kind. Now: built shallow. Design: DESIGN §2 (a town task with new golden rows). Test: S: new golden rows.
@@ -103,7 +103,7 @@ Parts: 191. Already passing their standard: 6 (keep them passing).
 - [ ] 4.1.4 The soft edge. Now: designed. Design: DESIGN §5. Test: S: leaving the map edge in the cab.
 - [ ] 4.2.4 The water's edge. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A11. Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02.
 - [ ] 4.5.1 Traffic drivers. Now: designed. Design: TRAFFIC-STAGE1-REFERENCE-MODEL. Test: S: 1,000 seeded crossings; 40 minutes lawful driving with no hits.
-- [ ] 6.1.1 The prompt. Now: passes. Design: DESIGN §17. Test: H: walk-up sweep.
+- [ ] 6.1.1 The prompt. Now: built. Design: DESIGN §17. Test: H: walk-up sweep.
 - [ ] 6.1.2 Subtitles. Now: built shallow. Design: DESIGN §17. Test: S: layout test at four sizes.
 - [ ] 6.1.3 The belief line. Now: built. Design: DESIGN §10. Test: S: trigger each perceivable change.
 - [ ] 6.1.4 Light and sound cues. Now: designed. Design: DESIGN §2. Test: H: ER-EYES-01 with the cue off and on.
@@ -122,7 +122,7 @@ Parts: 191. Already passing their standard: 6 (keep them passing).
 - [ ] 7.2 An evening. Now: built shallow. Design: DESIGN §1, §3. Test: H: the evening run and the panel.
 - [ ] 7.6 Tension and retellable moments. Now: built shallow. Design: DESIGN §3. Test: H: tense log; panel 'most exciting moment'.
 - [ ] 7.8 Saving. Now: built shallow. Design: DESIGN §17. Test: S: reload at random moments; SaveChaos.
-- [ ] 7.9 Failure without reload. Now: passes. Design: DESIGN §1, §4, §7, §8. Test: S: every failure route timed.
+- [ ] 7.9 Failure without reload. Now: built. Design: DESIGN §1, §4, §7, §8. Test: S: every failure route timed.
 - [ ] 7.11 Waiting and time skips. Now: built. Design: DESIGN §6; waiting design 29 Sep. Test: S: the week of waits.
 - [ ] 7.12 Always something to do. Now: built shallow. Design: DESIGN §1. Test: S: idle probe at 20 daytime moments; H empty minutes.
 - [ ] 7.13 The game clock. Now: passes. Design: DESIGN §15. Test: S: one value in the tuning table, read by both.
@@ -155,7 +155,7 @@ Parts: 191. Already passing their standard: 6 (keep them passing).
 - [ ] 2.7.8 Spending. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A21. Test: S: each shop sells its list; H: 'what did you spend on?'; addendum rules ER-SPEND-01.
 - [ ] 2.9.2 Keeping or ending the arrangement. Now: built shallow. Design: DESIGN §16. Test: S: both branches reach Act II.
 - [ ] 2.10.2 Rival eyes. Now: designed. Design: DESIGN §13. Test: S: every rival move traces; ER-EYES-05 no all-knowing town: every reaction by a neighbour, the police or a rival prints its chain of sightings.
-- [ ] 2.14 Each person's temper. Now: passes. Design: QUESTIONS 3 (recommended). Test: S: the same deed goes differently with different people there.
+- [ ] 2.14 Each person's temper. Now: built. Design: QUESTIONS 3 (recommended). Test: S: the same deed goes differently with different people there.
 - [ ] 2.16 Death, bodies and the missing. Now: built shallow. Design: DESIGN §7 Death. Test: S: a missing routine is noticed; a body never cools.
 - [ ] 2.19 Lasting marks on the town. Now: designed. Design: DESIGN §4. Test: S: marks persist across save and load for their set time.
 - [ ] 3.1.1 Act I, The Inheritance. Now: built. Design: DESIGN §16; game-design first-week designs. Test: H: the week run; panel M1.

@@ -41,6 +41,17 @@ themes.setdefault("2.4.4", []).append("S4 gossip timeliness in the first 30 real
 themes.setdefault("10.6", []).append("A10 mods position")
 
 OVR = {
+ ("1.1.1", "unreal"): ("built", "walk passed his eye 26 Oct for its look (RULINGS People's moves), but ER-INPUT-01 is not measured in Unreal and feel numbers are a research item; open faults: treads on the spot at Mickey's front, foot slide unmeasured since 22 Oct (FINDINGS.md)"),
+ ("5.2.1", "unreal"): ("built", "third motion-matching try is the default (RULINGS, his eye 26 Oct); foot slide is an open fault (FINDINGS.md, phase1-exit EXIT-B 9 Nov) and its test never ran"),
+ ("2.14", "prototype"): ("built", "src/rules.js gives each named person nerve, talk, discretion, fear and liking; test 6.08 checks only that values sit in the table; nothing tests that the same deed goes differently by person; the standard waits on his answer to QUESTIONS 3"),
+ ("7.9", "prototype"): ("built", "beaten Tom wakes at Rinaldi's and custody ends (test/town.mjs), but no failure route is timed against ER-CORE-04's 2 minutes; NOT_DONE: ER-CORE-02 to 04 checked only for a crash, a run-down and a wedged cab"),
+ ("1.2.3", "prototype"): ("built", "F in and out works and a blocked door never strands him (gate6.mjs), but gate6 accepts up to 5 s at a blocked door against ER-DRIVE-07's 2 s, and both sides are not timed"),
+ ("6.1.1", "prototype"): ("built", "gate6.mjs checks the prompt's target and hold, but 'everything usable has a prompt' is unchecked (NOT_DONE: prompts not searched one by one; GATE-REVIEW-2026-11-19: no help prompt after a run-down)"),
+ ("2.3.1", "prototype"): ("built", "memory kept per person and a scripted week compares part for part after save and load (same_week.mjs, town.mjs), but the reload-at-random-moments test did not run"),
+ ("7.13", "prototype"): ("passes", "rules.js realSecondsPerGameHour 45; the prototype's live test 6.01 (round 6 build) shows one game hour is 45 real s; his clock decision C11 is still open"),
+ ("9.4", "prototype"): ("missing", "ONE-SHOT-PORTING.md does not exist yet (advisor 254 asks for it)"),
+ ("9.4", "unreal"): ("missing", "ONE-SHOT-PORTING.md does not exist yet; no system has been ported from the prototype under shared tests"),
+ ("5.4.3", "unreal"): ("missing", "no design in detail and no build evidence (D28 owed)"),
  ("9.3", "prototype"): ("built shallow", "the real town rules compiled for the browser match 102,949 golden rows and six weeks (ONE-SIM-METHOD-2026-11-19, tools/lane/one-sim, run 3 breaker 191 of 191), but not yet swapped into the prototype (DIFFERENCES.md: seven decisions for the swap)"),
  ("9.6", "prototype"): ("built", "src/rules.js holds 1,313 numbers and npm run numbers fails on a new one, but 1,053 small numbers were never examined (NOT_DONE 3), so the one-home standard is not yet met"),
 }
@@ -99,6 +110,23 @@ for r in out:
         else: print("MISSING NEED", r["id"], n)
 for r in out:
     r["leaf"] = not r["children"]
+ORDER = ["missing", "designed", "built shallow", "built", "passes", "unknown"]
+def leaves_under(r):
+    if r["leaf"]: return [r]
+    return [x for c in r["children"] for x in leaves_under(by[c])]
+for r in out:
+    if r["leaf"]: continue
+    lv = leaves_under(r)
+    for t in list(r["status"].keys()):
+        cnt = {}
+        for x in lv:
+            if t in x["status"]: cnt[x["status"][t]["status"]] = cnt.get(x["status"][t]["status"], 0) + 1
+        if not cnt:
+            del r["status"][t]; continue
+        mode = max(cnt, key=lambda k: (cnt[k], -ORDER.index(k)))
+        r["status"][t] = {"status": mode, "evidence": "rollup of %d leaves: %s" % (sum(cnt.values()), ", ".join("%s %d" % (k, cnt[k]) for k in ORDER if k in cnt))}
+    ks = set(r["status"])
+    r["track"] = "both" if ks == {"prototype", "unreal"} else next(iter(ks))
 doc = {"title": "LEDGER parts tree", "version": "2026-11-20", "built_by": "parts-tree cloud session, Opus 5.5",
        "statuses": sorted(STAT), "parts": out, "ruled_out_checks": ruled, "research_items": RN}
 json.dump(doc, open(OUT, "w"), indent=1, ensure_ascii=False)

@@ -13,9 +13,9 @@ What blocks the most (parts that the most other parts need, directly or through 
 - 9.3 One simulation: 88 parts wait on it; status built shallow.
 - 2.1.1 Schedules of named people: 42 parts wait on it; status built.
 - 7.8 Saving: 41 parts wait on it; status built shallow.
-- 2.3.1 Per-person memory store: 23 parts wait on it; status passes.
+- 2.3.1 Per-person memory store: 23 parts wait on it; status built.
 - 2.2.1 Seven slots per act: 20 parts wait on it; status built shallow.
-- 2.14 Each person's temper: 18 parts wait on it; status passes.
+- 2.14 Each person's temper: 18 parts wait on it; status built.
 - 3.5.6 Job template and step states: 18 parts wait on it; status designed.
 - 3.6.2 Claim check: 16 parts wait on it; status built shallow.
 - 1.1.1 Walk, run and turn: 15 parts wait on it; status built.
@@ -45,7 +45,7 @@ What blocks the most (parts that the most other parts need, directly or through 
 - 3.5.6 Job template and step states: 18 parts wait on it; status designed.
 - 3.6.2 Claim check: 16 parts wait on it; status built.
 - 9.8 Talk bench: 16 parts wait on it; status built shallow.
-- 1.1.1 Walk, run and turn: 15 parts wait on it; status passes.
+- 1.1.1 Walk, run and turn: 15 parts wait on it; status built.
 - 3.6.1 Live talk: 15 parts wait on it; status built shallow.
 - 5.1.1 Faces: 15 parts wait on it; status built shallow.
 - 5.6.1 Cast voices: 15 parts wait on it; status built shallow.

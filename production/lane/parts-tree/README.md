@@ -17,14 +17,14 @@ LEDGER as one multilevel parts list, like a bill of materials: level 0 the game,
 - work/: the helpers' raw mappings the tree was built from (checklist, players, departments, studies and risks, mechanics, prototype and Unreal status, measured hours).
 - SKELETON.txt: the first list of ids the helpers mapped against (kept for traceability; the JSON supersedes it).
 
-Tools (tools/lane/parts-tree/): check.py validates and prints totals (exit 1 on any fault; --json for the progress page); render_md.py writes PARTS-TREE.md; render_views.py writes the checklist, plan view and research list. first-build/ holds the scripts that first assembled the JSON from the helpers' files; later edits go into the JSON directly.
+Tools (tools/lane/parts-tree/): rollup.py recomputes headings' statuses from their leaves after any status edit; check.py validates and prints totals (exit 1 on any fault; --json for the progress page); render_md.py writes PARTS-TREE.md; render_views.py writes the checklist, plan view and research list. first-build/ holds the scripts that first assembled the JSON from the helpers' files; later edits go into the JSON directly.
 
 ## Fields of each part (PARTS-TREE.json, "parts")
 
 - id: like 1.3.2; the first number is the group. level: 0 to 4. parent; children; leaf (true for a buildable part).
 - name; what: one plain line.
 - felt: true if the player feels it (all of group 1 and the felt parts of 2, 5, 6, 7 and others).
-- standard: a reference game and what to measure, a measured number, or a rule from canon, his rulings or DESIGN; "none yet" when there is none (then research_items must name the research).
+- standard: a reference game and what to measure, a measured number, or a rule from canon, his rulings or DESIGN; "none yet" when there is none; for a felt part research_items must then name the research; parts nobody feels (such as 10.9 support or 10.10 company admin) may stand on "none" without an item.
 - standard_source: where the standard comes from.
 - research_items: ids in the top-level "research_items" (RN-01 and on): what to measure, in which games, how.
 - designed_in: DESIGN section, the addendum's section, a ruling, a spec, or "not designed".

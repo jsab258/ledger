@@ -82,7 +82,7 @@ Found by the walk of group 7 and by the red team. D11: no stats, difficulty only
 - Driving help: steering eased more on keys, braking stronger.
 - Longer walks: a witness's walk lasts 50% longer.
 - Hints again: first hints can be shown again from the Ledger.
-- Sound shown (for deaf and hard-of-hearing players, 8.4.1): his own noise reach shown as a faint ring at his feet, and a short word at the screen's edge when the street goes quiet or a shout is heard. It shows what Tom hears, never what anyone knows or thinks (D33).
+- Sound shown (for deaf and hard-of-hearing players, 8.4.1): captions for sounds, as subtitles are for speech: a short word at the screen's edge when Tom makes a loud noise (a door forced, glass broken, running on cobbles), when the street goes quiet, or when a shout or a car is heard. No ring, gauge or other measure is drawn. It shows what Tom hears, never what anyone knows or thinks (D33).
 
 Experience rules:
 - ER-ASSIST-01 Each assist changes only what its name says. Check S: with each assist on alone, every other measure is unchanged.
@@ -158,7 +158,7 @@ Experience rules:
 
 Found by both red teams and the mechanics check. Canon: police are corruptible as individuals, never as a thesis.
 - A constable's challenge gets a third answer besides standing and running: a word. Talked round if he has no cause, a note offered if he is one of the bought men; offered to an honest one, it is a crime he saw.
-- Bought men: two named officers in the Hook can be paid or leaned on, each with a price and a limit (one looks away from a car; the other loses a statement once). Buying one is an act a colleague may see. Ellis cannot be bought. The station as a whole never changes.
+- Bought men: two named officers in the Hook can be paid or leaned on, each with a price and a limit (one looks away from a car; the other loses a statement once). Buying one is an act a colleague may see. Whether DS Ellis herself can be bought is not decided here: her casting sheet leaves it open, and it is his. The station as a whole never changes.
 - Charges: an arrest ends in a caution, or a charge and bail (DESIGN sections 8, 18). A charge joins Ellis's case and is read at the ending. No court scene and no prison: the case is the consequence.
 - The office searched: once Ellis reaches investigating (DESIGN section 8), she may search the office once, with notice the evening before (the sign). What is stored there (A5) counts for the case.
 
@@ -169,9 +169,9 @@ Experience rules:
 ## A14. The firm grows: fleet, drivers, ranks, other firms (2.15.1 to 2.15.3)
 
 Found by the red teams (the vision's last picture is his cars on every rank).
-- A car is bought from a man selling one, or from the used-car lot on the Hook's north road edge. A driver is hired from the regulars (DESIGN section 12's two roads) or a stranger who asks at the counter. Drivers leave if unpaid or frightened.
-- Ranks: the rank outside Mickey's is his; the ferry rank and the station rank are won by being there with a car on the board enough days, or by a word with whoever holds them. Accounts: the cold-store shift contract (DESIGN section 14), then the Harbour Board's late men, then a solicitor's office.
-- Other firms: one other minicab firm works the Hook, run by a regular, with its own two cars. It takes the fares people stop giving Mickey's after a hit-and-run and gives them back as the talk fades. It is a business, never a fourth rival and never a crime faction.
+- A car is bought from a man selling one, or from a used-car lot by the Hook's north road (a place still to be put in the atlas, D13). A driver is hired from the regulars (DESIGN section 12's two roads) or a stranger who asks at the counter. Drivers leave if unpaid or frightened.
+- Ranks: the rank outside Mickey's is his; the ferry rank and a second rank (where it stands is still to be put in the atlas, D13) are won by being there with a car on the board enough days, or by a word with whoever holds them. Accounts: the cold-store shift contract (DESIGN section 14), then the Harbour Board's late men, then a solicitor's office.
+- Other firms: one other minicab firm works the Hook, a small outfit with two cars whose owner is a new minor person, not one of the approved regulars. It takes the fares people stop giving Mickey's after a hit-and-run and gives them back as the talk fades. It is a business, never a fourth rival and never a crime faction.
 - All of it is run on the board and through people. No screen of numbers.
 
 Experience rules:
@@ -271,7 +271,7 @@ Experience rule:
 Found by the red teams and the mechanics check.
 - Casing: watching a place from across the street or a parked car for a while learns its hours, who holds the key and which way is left open, each written in the Ledger as Tom sees it. It is a tail on a place (A2).
 - Drawing a watcher away: a thrown stone or a rattled bin makes a noise at its reach; a watcher inside it turns his head or walks to look, and remembers there was a noise.
-- The quiet blow: a cosh or a fist from behind on a man who has not seen Tom knocks him out (10 to 30 s, the melee sheet). It is a strike with the seven slots like any other, and the man may have caught a shape. No prompt, no finisher shown at length (canon: no cruelty as spectacle).
+- The quiet blow: a cosh or a fist from behind on a man who has not seen Tom knocks him out (10 to 30 s: the melee sheet's figure for a fist; for a cosh it is LEDGER's own first value). It is a strike with the seven slots like any other, and the man may have caught a shape. No prompt, no finisher shown at length (canon: no cruelty as spectacle).
 - Yard dogs: a dog in a yard barks at a stranger; a bark is a noise that draws the owner. A scrap of food quiets it for a while. Dogs are never hurt.
 
 Experience rules:

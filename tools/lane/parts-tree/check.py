@@ -80,6 +80,17 @@ def main():
                 faults.append("%s: research item %s not defined" % (pid, r))
         if p.get("felt") and not has_standard(p) and not p.get("research_items"):
             faults.append("%s: felt part with no standard and no research item" % pid)
+    # headings: their status must be the rollup of their leaves
+    def leaves_under(p):
+        return [p] if p.get("leaf") else [x for c in p.get("children", []) for x in leaves_under(by[c])]
+    for p in parts:
+        if p.get("leaf") or p.get("id") not in by:
+            continue
+        for t, s in p.get("status", {}).items():
+            cnt = Counter(x["status"][t]["status"] for x in leaves_under(p) if t in x.get("status", {}))
+            want = "rollup of %d leaves: " % sum(cnt.values())
+            if not s.get("evidence", "").startswith(want) or any("%s %d" % (k, v) not in s["evidence"] for k, v in cnt.items()):
+                faults.append("%s: %s rollup out of date (re-run the rollup)" % (p["id"], t))
     # loops in needs
     WHITE, GREY, BLACK = 0, 1, 2
     colour = defaultdict(int)

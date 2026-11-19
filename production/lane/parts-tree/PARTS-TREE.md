@@ -9,8 +9,8 @@ Each line: id, name, then status as P (prototype) and U (Unreal): missing, desig
 
 The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
 
-- 1.1 Moving on foot*. P:shallow U:shallow
-  - 1.1.1 Walk, run and turn*. P:built U:PASSES +research
+- 1.1 Moving on foot*. P:designed U:designed
+  - 1.1.1 Walk, run and turn*. P:built U:built +research
   - 1.1.2 On-foot camera follow*. P:built U:built +research
   - 1.1.3 Doors, stairs and thresholds*. P:shallow U:shallow
   - 1.1.4 Carrying*. P:built U:designed +research
@@ -18,10 +18,10 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.1.6 Tailing on foot*. P:designed U:designed research
   - 1.1.7 Stopping and blending in*. P:designed U:designed
   - 1.1.8 Vaulting low walls and fences*. P:designed U:designed +research
-- 1.2 Driving*. P:shallow U:designed
+- 1.2 Driving*. P:designed U:designed
   - 1.2.1 Car handling*. P:built U:designed
   - 1.2.2 Car camera*. P:shallow U:designed
-  - 1.2.3 Getting in and out*. P:PASSES U:designed
+  - 1.2.3 Getting in and out*. P:built U:designed
   - 1.2.4 Crashes, damage and unsticking*. P:built U:designed
   - 1.2.5 Cars and people*. P:shallow U:designed
   - 1.2.6 Tailing and being tailed by car*. P:designed U:designed research
@@ -42,7 +42,7 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.3.10 Firearms*. P:designed U:designed +research
   - 1.3.11 Marks that last*. P:designed U:designed
   - 1.3.12 Fighter types*. P:designed U:designed
-- 1.4 Being seen*. P:shallow U:shallow
+- 1.4 Being seen*. P:designed U:designed
   - 1.4.1 Reading watchers*. P:built U:shallow +research
   - 1.4.2 Light and dark as cover*. P:built U:designed +research
   - 1.4.3 Hearing his own noise*. P:shallow U:shallow
@@ -56,7 +56,7 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.5.2 Pursuing on foot*. P:designed U:designed research
   - 1.5.3 Car chases*. P:designed U:designed +research
   - 1.5.4 Pursuers*. P:shallow U:designed
-- 1.6 Jobs with the hands*. P:designed U:shallow
+- 1.6 Jobs with the hands*. P:designed U:designed
   - 1.6.1 Getting in*. P:designed U:designed
   - 1.6.2 Searching and taking*. P:designed U:designed research
   - 1.6.3 Lifts and the hot mark*. P:designed U:designed
@@ -78,14 +78,14 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
 
 The engine: routines, perception, memory, gossip, witnesses, police, money, debts, the outfit, rivals, crew, position.
 
-- 2.1 Routines and the living town*. P:shallow U:shallow
+- 2.1 Routines and the living town*. P:shallow U:designed
   - 2.1.1 Schedules of named people*. P:built U:built
   - 2.1.2 The crowd's clock windows*. P:shallow U:designed +research
   - 2.1.3 Off-screen life. P:built U:built
   - 2.1.4 Weather and hour change who is out*. P:shallow U:designed
   - 2.1.5 Crowd movement and avoidance*. P:? U:? research
   - 2.1.6 The town's calendar*. P:designed U:designed
-- 2.2 Perception. P:shallow U:shallow
+- 2.2 Perception. P:shallow U:built
   - 2.2.1 Seven slots per act. P:shallow U:built
   - 2.2.2 Identification ladder. P:shallow U:built
   - 2.2.3 Sight by distance and light*. P:built U:built +research
@@ -93,9 +93,9 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.2.5 Give-away rules. P:shallow U:shallow
   - 2.2.6 Ground rules and trespass*. P:designed U:designed
 - 2.3 Memory. P:built U:built
-  - 2.3.1 Per-person memory store. P:PASSES U:built
+  - 2.3.1 Per-person memory store. P:built U:built
   - 2.3.2 Witness certainty. P:built U:built
-- 2.4 Gossip*. P:built U:shallow
+- 2.4 Gossip*. P:built U:built
   - 2.4.1 Transmission. P:built U:built
   - 2.4.2 Cooling by kind. P:shallow U:built
   - 2.4.3 Showing what people know*. P:built U:shallow
@@ -105,7 +105,7 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.5.1 The walk to tell*. P:shallow U:shallow
   - 2.5.2 Stopping a witness*. P:shallow U:shallow
   - 2.5.3 Crowd reaction to a deed*. P:built U:shallow
-- 2.6 Police and law*. P:shallow U:shallow
+- 2.6 Police and law*. P:designed U:designed
   - 2.6.1 The beat constable*. P:shallow U:shallow
   - 2.6.2 Challenge and search*. P:built U:designed
   - 2.6.3 Statements and the arrest rule. P:built U:built
@@ -139,15 +139,15 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.11.1 Recruiting*. P:designed U:designed
   - 2.11.2 Nerve, loyalty and breaking*. P:designed U:designed
   - 2.11.3 Crew fates*. P:designed U:designed
-- 2.12 Position in the town*. P:designed U:shallow
+- 2.12 Position in the town*. P:designed U:designed
   - 2.12.1 The name ladder*. P:built U:shallow
   - 2.12.2 Rung table*. P:designed U:designed
   - 2.12.3 Access and soft keys*. P:designed U:designed
   - 2.12.4 Greetings by regard*. P:shallow U:built
   - 2.12.5 Property that reacts*. P:designed U:designed
 - 2.13 The escalation dial*. P:designed U:designed
-- 2.14 Each person's temper. P:PASSES U:shallow
-- 2.15 The firm runs without him*. P:shallow U:designed
+- 2.14 Each person's temper. P:built U:shallow
+- 2.15 The firm runs without him*. P:designed U:designed
   - 2.15.1 Fleet and drivers*. P:designed U:designed
   - 2.15.2 Ranks and accounts*. P:designed U:designed
   - 2.15.3 Other firms on the ranks*. P:designed U:designed
@@ -160,14 +160,14 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
 
 One main story with two or three endings, the cast, side stories, fares, jobs, dialogue.
 
-- 3.1 The main story*. P:designed U:shallow
+- 3.1 The main story*. P:designed U:designed
   - 3.1.1 Act I, The Inheritance*. P:built U:shallow
   - 3.1.2 Act II, The Rise and the Squeeze*. P:designed U:designed
   - 3.1.3 Act III, The Ledger Comes Due*. P:designed U:designed
   - 3.1.4 The endings*. P:shallow U:designed
   - 3.1.5 Ending signs and Tom's reading*. P:designed U:designed
   - 3.1.6 Mickey's past*. P:shallow U:designed
-- 3.2 The cast*. P:shallow U:shallow
+- 3.2 The cast*. P:shallow U:designed
   - 3.2.1 Principals*. P:shallow U:shallow
   - 3.2.2 The firm's people*. P:built U:designed
   - 3.2.3 The thirty regulars*. P:shallow U:designed
@@ -179,7 +179,7 @@ One main story with two or three endings, the cast, side stories, fares, jobs, d
   - 3.4.1 Fare people*. P:shallow U:designed
   - 3.4.2 Wrinkles*. P:designed U:designed
   - 3.4.3 Pauline and the radio*. P:shallow U:designed
-- 3.5 Job content*. P:shallow U:shallow
+- 3.5 Job content*. P:designed U:designed
   - 3.5.1 Carries*. P:built U:shallow
   - 3.5.2 Collections*. P:built U:designed
   - 3.5.3 Break-in sites*. P:designed U:designed
@@ -187,7 +187,7 @@ One main story with two or three endings, the cast, side stories, fares, jobs, d
   - 3.5.5 Sit-downs*. P:designed U:designed
   - 3.5.6 Job template and step states. P:designed U:designed
   - 3.5.7 How jobs reach him*. P:designed U:designed
-- 3.6 Dialogue*. P:built U:shallow
+- 3.6 Dialogue*. P:built U:built
   - 3.6.1 Live talk*. P:built U:shallow
   - 3.6.2 Claim check. P:shallow U:built
   - 3.6.3 Written street lines*. P:built U:shallow
@@ -202,18 +202,18 @@ One main story with two or three endings, the cast, side stories, fares, jobs, d
 
 Meridian's Hook and its docks: one port, dense, known by heart.
 
-- 4.1 The Hook's layout*. P:designed U:shallow
+- 4.1 The Hook's layout*. P:designed U:designed
   - 4.1.1 Quay Street*. P:built U:built
   - 4.1.2 The rest of the Hook*. P:shallow U:designed
   - 4.1.3 Landmarks and signs*. P:designed U:designed
   - 4.1.4 The soft edge*. P:designed U:designed
   - 4.1.5 Street build rules*. U:designed
-- 4.2 The docks*. P:designed U:shallow
+- 4.2 The docks*. P:designed U:designed
   - 4.2.1 Ferry landing and quay*. P:built U:shallow
   - 4.2.2 Old Basin, fish dock, cold stores*. P:shallow U:designed
   - 4.2.3 Dock gate, customs, Harbour Board*. P:designed U:designed
   - 4.2.4 The water's edge*. P:designed U:designed
-- 4.3 Interiors*. P:designed U:shallow
+- 4.3 Interiors*. P:shallow U:designed
   - 4.3.1 Mickey's office and yard*. P:built U:shallow
   - 4.3.2 The flat above*. P:shallow U:designed
   - 4.3.3 Shops and workplaces*. P:built U:shallow
@@ -223,17 +223,17 @@ Meridian's Hook and its docks: one port, dense, known by heart.
   - 4.3.7 The police station*. P:shallow U:designed
   - 4.3.8 Where a beaten Tom wakes*. P:shallow U:designed
 - 4.4 Props and street furniture*. U:shallow
-- 4.5 Traffic and parked cars*. P:built U:designed
+- 4.5 Traffic and parked cars*. P:designed U:designed
   - 4.5.1 Traffic drivers*. P:designed U:designed
   - 4.5.2 Parked cars*. U:designed
-- 4.6 Vehicles*. U:shallow
+- 4.6 Vehicles*. U:designed
   - 4.6.1 Car designs*. U:designed
   - 4.6.2 Working vehicles*. U:?
 - 4.7 Day and night*. P:built U:shallow
 - 4.8 Weather*. P:built U:shallow
 - 4.9 1990 detail*. P:designed U:shallow
 - 4.10 Pubs without drink and the closed school*. P:designed U:designed
-- 4.11 Animals and birds*. U:? research
+- 4.11 Animals and birds*. P:designed U:designed research
   - 4.11.1 Yard dogs*. P:designed U:designed
 
 ## 5 How it looks and sounds
@@ -246,8 +246,8 @@ Presentation: people, motion, places, light, sound, voices, music, camera, effec
   - 5.1.3 Hair*. U:shallow
   - 5.1.4 Clothes*. U:shallow
   - 5.1.5 Crowd variety*. U:missing research
-- 5.2 Animation*. U:shallow
-  - 5.2.1 Locomotion*. U:PASSES
+- 5.2 Animation*. P:designed U:designed
+  - 5.2.1 Locomotion*. U:built
   - 5.2.2 Fight animation*. U:designed
   - 5.2.3 Interaction animation*. U:shallow
   - 5.2.4 Faces and mouths*. U:shallow
@@ -261,11 +261,11 @@ Presentation: people, motion, places, light, sound, voices, music, camera, effec
   - 5.3.2 Materials and grime*. U:built
   - 5.3.3 Wet street*. U:built
   - 5.3.4 Shop glass and windows*. U:designed
-- 5.4 Lighting and picture*. U:shallow
+- 5.4 Lighting and picture*. P:designed U:built
   - 5.4.1 Day exposure and sky*. U:built
   - 5.4.2 Night lighting*. P:designed U:built
-  - 5.4.3 Grade, grain and depth of field*. U:designed
-- 5.5 Sound*. P:designed U:shallow
+  - 5.4.3 Grade, grain and depth of field*. U:missing
+- 5.5 Sound*. P:shallow U:designed
   - 5.5.1 Footsteps and foley*. P:shallow U:shallow
   - 5.5.2 Doors and impacts*. P:shallow U:?
   - 5.5.3 Street beds and states*. P:shallow U:shallow
@@ -273,13 +273,13 @@ Presentation: people, motion, places, light, sound, voices, music, camera, effec
   - 5.5.5 Car sound*. P:shallow U:designed
   - 5.5.6 Fight sound*. P:shallow U:designed
   - 5.5.7 The mix*. P:designed U:designed
-- 5.6 Voices*. U:shallow
+- 5.6 Voices*. P:designed U:shallow
   - 5.6.1 Cast voices*. U:shallow
   - 5.6.2 Voice generation and watermark. U:shallow
   - 5.6.3 Thinking sound and timing*. P:designed U:built
-- 5.7 Music*. U:designed +research
+- 5.7 Music*. U:? +research
   - 5.7.1 Radio programmes and period songs*. U:?
-- 5.8 Cameras and cut scenes*. P:designed U:shallow
+- 5.8 Cameras and cut scenes*. P:designed U:designed
   - 5.8.1 Camera rig by state*. P:shallow U:shallow
   - 5.8.2 Cut scenes*. U:designed
   - 5.8.3 Staged scenes in play*. P:designed U:designed
@@ -290,8 +290,8 @@ Presentation: people, motion, places, light, sound, voices, music, camera, effec
 
 What is on screen: almost nothing, plus Tom's notebook and a paper map.
 
-- 6.1 On screen in play*. P:shallow U:shallow
-  - 6.1.1 The prompt*. P:PASSES U:built
+- 6.1 On screen in play*. P:designed U:designed
+  - 6.1.1 The prompt*. P:built U:built
   - 6.1.2 Subtitles*. P:shallow U:built
   - 6.1.3 The belief line*. P:built U:designed
   - 6.1.4 Light and sound cues*. P:designed U:designed
@@ -323,7 +323,7 @@ Pacing and structure: a minute, an evening, a week, three acts.
 - 7.6 Tension and retellable moments*. P:shallow U:designed
 - 7.7 Rising in position, felt*. P:shallow U:designed
 - 7.8 Saving*. P:shallow U:built
-- 7.9 Failure without reload*. P:PASSES U:shallow
+- 7.9 Failure without reload*. P:built U:shallow
 - 7.10 Difficulty as assists*. P:shallow U:designed
 - 7.11 Waiting and time skips*. P:built U:built
 - 7.12 Always something to do*. P:shallow U:designed
@@ -336,18 +336,18 @@ Pacing and structure: a minute, an evening, a week, three acts.
 
 Runs well on his PC and on players' PCs.
 
-- 8.1 Performance*. U:shallow
+- 8.1 Performance*. U:?
   - 8.1.1 Frame, memory and crowd budget. U:designed
   - 8.1.2 Streaming and loading*. U:? research
   - 8.1.3 Player PCs and shader stutter*. U:? +research
-- 8.2 Stability and saves that never break*. P:designed U:built
+- 8.2 Stability and saves that never break*. U:?
   - 8.2.1 Crash and bug reporting. U:?
-- 8.3 Settings*. P:shallow U:built
+- 8.3 Settings*. U:?
   - 8.3.1 PC display options*. U:?
-- 8.4 Accessibility*. P:shallow U:shallow
+- 8.4 Accessibility*. P:designed U:designed
   - 8.4.1 Visual stand-ins for sound cues*. P:designed U:designed
 - 8.5 Install and launch*. U:built
-- 8.6 Live talk service. U:shallow
+- 8.6 Live talk service. U:designed
   - 8.6.1 Talk service longevity and offline. U:designed
 - 8.7 Local models on the card. U:shallow
 - 8.8 Runtime content guards. P:designed U:built
@@ -358,7 +358,7 @@ Runs well on his PC and on players' PCs.
 
 How the game is made: Kiln, the art pipeline, one simulation, the port, tests, records.
 
-- 9.1 Kiln. U:shallow
+- 9.1 Kiln. U:designed
   - 9.1.1 Drape. U:designed
   - 9.1.2 Kiln-to-game adapter. U:designed
   - 9.1.3 Garment mesh chain (weld, retopology, layout, bake). U:designed
@@ -369,10 +369,10 @@ How the game is made: Kiln, the art pipeline, one simulation, the port, tests, r
   - 9.1.8 Cloth hand-off in game (Chaos, for skirts). U:designed
 - 9.2 Art pipeline. U:built
 - 9.3 One simulation. P:shallow U:shallow
-- 9.4 Prototype to Unreal port. P:designed U:designed
+- 9.4 Prototype to Unreal port. P:missing U:missing
 - 9.5 Testing and gates. P:built U:shallow
 - 9.6 The tuning table. P:built U:shallow
-- 9.7 Records and guards. P:designed U:built
+- 9.7 Records and guards. P:designed U:designed
   - 9.7.1 Licence and terms record. P:designed U:designed
   - 9.7.2 Recipe and handover. P:designed U:designed
 - 9.8 Talk bench. U:shallow
