@@ -122,7 +122,7 @@ PUBLISHED = os.path.join(ROOT, "production", "progress-page", "published.json")
 
 def prototype_now(proto, lane=LANE):
     """THE PROTOTYPE'S TRACK (advisor 254, his words 19 Nov: "1 shot the entire thing", then loops): the 33 rounds are
-    replaced by the one-shot (night of 19 Nov, in the cloud) and loops after it. The round is read from the lane's files:
+    replaced by the one-shot (moved to Friday 20 Nov night by advisor 257, after the parts tree) and loops after it. The round is read from the lane's files:
     REVIEWS-loop<n>.md gives 'Loop n', REVIEWS-oneshot.md 'The one-shot'; the panel per review file ('Thumbs up: N of M');
     hours from ROUND-HOURS.md when it is there. BUILD-ORDER's four stages stay as the map, without round numbers."""
     p = dict(proto or {})
@@ -135,7 +135,7 @@ def prototype_now(proto, lane=LANE):
     elif shot:
         p["round"], p["round_note"] = "The one-shot", "built in the cloud, reviewed; loops next"
     else:
-        p["round"], p["round_note"] = "The one-shot", "the night of 19 November, in the cloud; then loops"
+        p["round"], p["round_note"] = "The one-shot", "Friday night, 20 November, in the cloud, after the parts tree (advisor 257); then loops"
     for s in p.get("stages", []):
         s.pop("rounds", None)
     panel = []
