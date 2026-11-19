@@ -167,11 +167,16 @@ Run of 17:16:
 
 100. Next: round 6. Candidates: (a) a new non-talk activity for the empty middle of the hour (the cab fares made into play with pressure, or a break-in with a risk of being seen); (b) closing lines that vary by talk, folded in. Recommended (a) with (b).
 
+The full audit (4q, his order "Do it now", 00:18 on 19 Nov, advisor 237), ahead of 4n's remaining steps; 4n's author's review and fix now wait for the audit report (prompt of 00:30, 19 Nov).
+4q-1. DONE 19 Nov 01:16 to 01:36: stage 1. production/audits/full-2026-11/INVENTORY.md and inventory.json (1,095 folders), DECISIONS-TRACE.md and decisions-trace.json (872 decision records from seven sources: lost 11, contradicted 21, open 49), README.md (method, sources, stage 2 estimate 5 to 8 points, under the 10-point line). Scripts with tests in tools/lane/audit/ (14 pass). 15 Sonnet helpers plus 1 for the script.
+4q-2. IN HAND: stage 2, eleven fresh Opus reviewers at high. DONE 19 Nov 01:40 to 02:05: six of eleven (REVIEW-01 canon and design, 02 decisions and rulings, 04 game code, 07 process and sessions, 08 prototype and driving, 11 blind outsider). NEXT: the other five with the same brief (production/audits/full-2026-11/work/REVIEWER-BRIEF.md): 03 research and the studies, 05 art (faces, bodies, clothes, asset plans), 06 Kiln and the tools (repository notes plus pc-inventory.json), 09 spending and pace (token audits, time logs, DAILY files, the rows' allowance readings), 10 licences, the outside-only rule, backup and disk (REVIEW-04 found the repository public with raw Mixamo files: 10 must verify).
+4q-3. Then: stage 3, AUDIT-REPORT.md and the Claude Doc "LEDGER: full audit", a fresh check against the evidence first.
+
 The synthesis (4n, advisor 20:55 on 18 Nov, his "1" at 20:47), above everything; item 100 (round 6) waits until "Vision approved:".
 
 4n-1. DONE 18 Nov 23:17 to 23:25: the pack. production/lane/synthesis/pack/ (README.md and eight digests, about 60,000 words, each line sourced; game-file numbers marked as leads). Eight helpers, Sonnet and Opus at medium. 4p's GTA VI first read joins it after 19 Nov.
 4n-2. DONE 18 Nov 23:26 to 00:13: the author (one Fable helper at max, the week's only Fable use in the lane) wrote production/lane/synthesis/VISION.md (806 words), DESIGN.md (about 11,100; 91 experience rules with ids in 21 families), TRACE.md (all 145 lines: 104 carried, 41 left out; 16 conflict or open lines), BUILD-ORDER.md (29 rounds in four stages, the gate as round 6, the one-simulation switch between stages A and B), QUESTIONS.md (three: endings, Tom's line on who he will not hit, each person's own nerve and loyalty).
-4n-3. NEXT: a fresh Opus reviewer at high (canon.md, RULINGS.md and the five files only); then one fix by a fresh Fable helper given the review (the author of 23:26 cannot be resumed in a new run).
+4n-3. WAITS for the audit report (then: a fresh Opus reviewer at high (canon.md, RULINGS.md and the five files only); then one fix by a fresh Fable helper given the review (the author of 23:26 cannot be resumed in a new run).
 4n-4. Then: the two Claude Docs ("LEDGER: the vision", "LEDGER: the whole game"), links in the end row.
 4p. From 19 Nov: GTA VI first read (systems only, no spoilers).
 4o. After 4n: the publish gate (tools/lane/gate/, tools/lane/driving-gate/, DRIVING-ROUND4-FINDINGS.md).

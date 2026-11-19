@@ -29,7 +29,7 @@ def mb(b):
 
 
 def esc(t):
-    return str(t or "").replace("|", "/").replace("\n", " ")[:120]
+    return str(t or "").replace("|", "/").replace("\n", " ").replace("\u2014", ",")[:120]
 
 
 def render(inv, pc):

@@ -168,7 +168,7 @@ How to read the status: live (changed lately or referred to and in use), referen
 | tools/md |  | builder | 2026-11-18 | 0.3 | 40 | 33 | live (touched 1 days before newest commit; 28 refs) |
 | tools/md-bridge |  | builder | 2026-11-18 | 0.3 | 29 | 45 | live (touched 1 days before newest commit; 40 refs) |
 | tools/meshgen | LIVE. Verified 2026-09-01. The code is the source of truth; this file | builder | 2026-11-18 | 2.0 | 111 | 179 | live (touched 1 days before newest commit; 52 refs) |
-| tools/mixamo-pick | UPDATE.bat — pulls the latest project. Always first. | builder | 2026-09-21 | 2.1 | 19 | 22 | stale (last commit 59 days before newest; still referenced by 18 files) |
+| tools/mixamo-pick | UPDATE.bat, pulls the latest project. Always first. | builder | 2026-09-21 | 2.1 | 19 | 22 | stale (last commit 59 days before newest; still referenced by 18 files) |
 | tools/play |  | builder | 2026-09-29 | 0.0 | 2 | 8 | stale (last commit 51 days before newest; still referenced by 8 files) |
 | tools/props |  | builder | 2026-11-08 | 1.0 | 13 | 43 | live (touched 11 days before newest commit; 43 refs) |
 | tools/runner |  | builder | 2026-10-05 | 0.0 | 2 | 178 | stale (last commit 45 days before newest; still referenced by 178 files) |
