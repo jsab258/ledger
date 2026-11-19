@@ -904,3 +904,4 @@
 {"event": "stop", "at": "2026-11-19T07:22:38", "note": ""}
 {"event": "start", "at": "2026-11-19T07:22:38", "task": "n16-1 Kiln Thursday checkpoint: held-back run 1 and B2 on main", "phase": "0", "kind": "production", "item": "n16-1"}
 {"event": "start", "at": "2026-11-19T07:24:13", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f92ce49f-bcde-449d-86cc-3835fe4bb04a"}
+{"event": "stop", "at": "2026-11-19T08:00:08", "note": ""}
