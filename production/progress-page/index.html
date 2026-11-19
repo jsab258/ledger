@@ -1,11 +1,12 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
 <title>The Meridian Line</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;700&display=swap">
 <style>
-/* Layout: a transit poster. Ticket up top, the line and its bosses side by side on wide screens, the street's flipbook across the foot. */
+/* Layout: a transit poster. One date on the ticket; this week; two tracks side by side (what the game is, what it looks like) with the bosses hung on what they block; the road; the street across the foot. */
 :root{
   --paper:#E9EEEC; --surface:#F7F9F8; --ink:#13201E; --muted:#55645F; --rule:#C2CCC9; --track:#D5DDDA;
   --line:#0B6D65; --brick:#AD3F2A; --ok:#2B7A4C;
@@ -212,6 +213,36 @@ figcaption{font-size:14px;color:var(--muted)}
 .rdetail dt{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .rdetail dd{margin:0;font-size:14.5px}
 .rdetail dd small{color:var(--muted)}
+/* This week and the prototype track (19 Nov, his yes to one structure) */
+.weekgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.wcard{background:var(--surface);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.wcard ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14.5px}
+.wcard a{color:var(--line);font-weight:700}
+.wcard .bk{font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brick);margin-right:6px}
+.ticket.mini{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.ticket.mini .field{padding:10px 14px}
+.ticket.mini .field .v{font-size:15px}
+.ticket.mini .field .v.big{font-size:20px}
+.joins{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.join{font:600 12.5px/1.25 var(--display);padding:5px 8px;border:1px dashed var(--line);color:var(--ink);background:transparent}
+.join b{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--line);margin-right:5px}
+.bchips{display:grid;gap:6px;margin-top:6px}
+.bchip{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:7px 10px;background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--brick);font-size:13.5px}
+.bchip.defeated{border-left-color:var(--ok)}
+.bchip .bn{font-weight:800}
+.bchip .bh{font:700 11px/1 var(--mono);color:var(--brick);font-variant-numeric:tabular-nums}
+.bchip.defeated .bh{color:var(--ok)}
+.bchip .bb{grid-column:1 / -1;color:var(--muted);font-size:13px}
+.blocks{margin:0;font-size:13.5px;border-left:3px solid var(--brick);padding-left:9px}
+.panel{background:var(--surface);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:8px;min-width:0}
+.panel svg{display:block;width:100%;height:auto}
+.panel svg text{font-family:var(--mono);fill:var(--muted);font-size:11px}
+.p-grid{stroke:var(--rule);stroke-width:1}
+.p-bar{fill:var(--line)}
+.p-bar.zero{fill:var(--track);stroke:var(--rule)}
+.p-tgt{stroke:var(--brick);stroke-width:2;stroke-dasharray:5 3}
+.panel svg text.p-tt{fill:var(--brick);font-weight:700}
+.panel svg text.p-val{fill:var(--ink);font-weight:700}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
 .err{color:var(--brick);font-weight:600}
 </style>
@@ -220,50 +251,47 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   <header class="mast">
     <div class="kicker">LEDGER &middot; progress</div>
     <h1>The Meridian Line</h1>
-    <p class="lede">From one street in 1990 to the finished game: where the game is now, what stands in its way, and how Quay Street has grown.</p>
-    <div class="ticket" id="ticket" aria-label="Where the game is now">
+    <p class="lede">One date, and the two tracks that move it: what the game is, proved in the prototype, and what it looks like, built in Unreal. Bosses sit on what they block.</p>
+    <div class="ticket" id="ticket" aria-label="The date and where the game is now">
       <div class="field"><span class="label">Now</span><span class="v">Loading...</span></div>
     </div>
   </header>
 
-  <div class="board">
-    <section class="col" aria-labelledby="h-line">
-      <div><h2 id="h-line">The line</h2></div>
-      <p class="sub">Eleven stops from here to release, and one after it. The solid line is the adopted plan; the dotted line is still a sketch.</p>
-      <ol class="route" id="route"></ol>
-      <p class="sketch-note" id="sketchNote"></p>
+  <section class="col" aria-labelledby="h-week" id="weekSec">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <h2 id="h-week">This week</h2>
+      <span class="bosses-count" id="weekLabel"></span>
+    </div>
+    <div class="weekgrid" id="weekGrid"></div>
+  </section>
+
+  <div class="board tracks">
+    <section class="col" aria-labelledby="h-proto">
+      <div><span class="kicker">Track 1</span><h2 id="h-proto">What the game is</h2></div>
+      <p class="sub">The prototype in the browser: the whole design, round by round, played and judged before Unreal takes each part over.</p>
+      <div class="ticket mini" id="protoTicket"></div>
+      <ol class="route" id="protoRoute"></ol>
+      <div class="panel" id="panel"></div>
+      <ul class="pieces" id="beside"></ul>
     </section>
 
-    <section class="col" aria-labelledby="h-boss">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
-        <h2 id="h-boss">Phase 1 bosses</h2>
-        <span class="bosses-count" id="bossCount"></span>
-      </div>
-      <p class="sub">What stands between this stop and the next. A boss falls when its number reaches its goal, or when you rule the goal met.</p>
-      <div class="bosses" id="bosses"></div>
-      <p class="small" id="bossesClosed"></p>
+    <section class="col" aria-labelledby="h-line">
+      <div><span class="kicker">Track 2</span><h2 id="h-line">What the game looks like</h2></div>
+      <p class="sub">The Unreal game, phase by phase. The solid line is the adopted plan; the dotted line is still a sketch. Each phase shows what it takes from the prototype.</p>
+      <ol class="route" id="route"></ol>
+      <p class="sketch-note" id="sketchNote"></p>
+      <p class="small" id="hoursToGo"></p>
     </section>
   </div>
 
-  <section class="col" aria-labelledby="h-eff" style="margin-top:24px">
+  <section class="col" aria-labelledby="h-boss">
     <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
-      <h2 id="h-eff">Efficiency bosses</h2>
-      <span class="bosses-count" id="effCount"></span>
+      <h2 id="h-boss">Bosses</h2>
+      <span class="bosses-count" id="bossCount"></span>
     </div>
-    <p class="sub" id="effNote"></p>
-    <div class="bosses" id="effBosses"></div>
-    <p class="small" id="hoursToGo"></p>
-  </section>
-
-  <section class="col" aria-labelledby="h-week" style="margin-top:24px" id="weekSec" hidden>
-    <h2 id="h-week">The week's numbers</h2>
-    <p class="sub">Each Monday: what the week spent, how much of it went on records, what was done and what failed, and five risks.</p>
-    <div id="weekList"></div>
-  </section>
-
-  <section class="col" aria-labelledby="h-tools" style="margin-top:24px">
-    <h2 id="h-tools">Tools in test</h2>
-    <ul class="pieces" id="toolsList"></ul>
+    <p class="sub">Each boss is named on the thing it blocks. A boss falls when its number reaches its goal, or when you rule the goal met.</p>
+    <div class="bosses" id="bosses"></div>
+    <p class="small" id="bossesClosed"></p>
   </section>
 
   <section class="road" aria-labelledby="h-road">
@@ -288,19 +316,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     <p class="small" id="costNote"></p>
   </section>
 
-  <div class="ledger">
-    <section class="col" aria-labelledby="h-study">
-      <h2 id="h-study">The AAA study</h2>
-      <p class="sub">Sixteen studies of Mafia: The Old Country and Kingdom Come: Deliverance II, run beside the work; each ends with its numbers going to the item that needs them.</p>
-      <div class="sbar"><div class="sbar-label"><span>Studies done</span><span id="studyNum"></span></div><div class="sbar-track" id="studyBar" role="meter" aria-valuemin="0" aria-valuemax="16"></div></div>
-      <ul class="slist" id="studyList"></ul>
-    </section>
-    <section class="col" aria-labelledby="h-carried">
-      <h2 id="h-carried">Carried over</h2>
-      <p class="sub">What is still open from earlier weeks. Nothing leaves it unless it is done or you drop it.</p>
-      <details class="carried" id="carried"><summary id="carriedSum"></summary><ul class="clist" id="carriedList"></ul></details>
-    </section>
-  </div>
+  <section class="col" aria-labelledby="h-nums" id="numsSec" hidden>
+    <h2 id="h-nums">The week's numbers</h2>
+    <p class="sub">Each Monday: what the week spent, what was done and what failed, and the risks.</p>
+    <div id="weekList"></div>
+  </section>
 
   <section class="street" aria-labelledby="h-street">
     <h2 id="h-street">Quay Street, day by day</h2>
@@ -338,7 +358,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   </section>
 
   <footer>
-    <span>Numbers come from the builder's own measurements and your rulings, as recorded in the project. The builder refreshes this page each night.</span>
+    <span>Numbers come from the builder's own measurements, the cloud lane's records and your rulings, as recorded in the project. The builder refreshes this page each night; the date is re-forecast monthly from measured costs.</span>
     <span id="updated"></span>
   </footer>
 </div>
@@ -410,24 +430,89 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
 
   function renderTicket(d){
     const t = $("ticket"); t.replaceChildren();
-    const here = d.stations.find(s => s.n === d.here) || d.stations[0];
-    const next = d.stations.find(s => s.n === d.here + 1);
-    const down = d.bosses.filter(b => b.state === "defeated").length;
     const add = (label, v, small, big) => {
       const f = el("div", "field"); f.append(el("span", "label", label));
       const vv = el("span", "v" + (big ? " big" : ""), v); if (small) vv.append(el("small", null, small));
       f.append(vv); t.append(f);
     };
-    add("You are here", "Phase " + here.n + ": " + here.name);
-    if (next) add("Next stop", next.name, next.size || "");
-    add("Bosses down", down + " of " + d.bosses.length, null, true);
-    add("Friends' evening", d.friends_eta, d.friends_eta_note);
-    if (d.line2027){
-      const w = d.line2027.behind_w;
-      add("Against the plan", (w > 0 ? w + " weeks behind" : w < 0 ? (-w) + " weeks ahead" : "on time"), d.line2027.as_of);
+    const f = forecast(d, true), F = d.forecast;
+    if (f){
+      const target = iso(F.release_target.date), late = Math.round((f.rel.end - target) / (7 * DAY));
+      add("The date: release", fmon(f.rel.end), "Range " + fmon(f.rel.early) + " to " + fmon(f.rel.late) + ". " + (late > 0 ? late + " weeks after" : late < 0 ? (-late) + " weeks before" : "on") + " the late-2027 target.", true);
+      add("Moved since last Monday", d.date_move || "Not re-forecast this week", "Re-forecast " + (F.next_reforecast ? "next on " + fdate(iso(F.next_reforecast)) : "monthly") + ", from measured costs.");
     }
-    const f = forecast(d, true);
-    if (f) add("Release forecast", fmon(f.rel.early) + " to " + fmon(f.rel.late), "advisor's estimate, 5 Nov, re-forecast monthly; the target is late 2027");
+    const P = d.prototype;
+    if (P) add("What the game is", "Round " + P.round + " of " + P.of, (P.stages.find(x => x.state === "here") || {}).name || "");
+    const here = d.stations.find(s => s.n === d.here) || d.stations[0];
+    add("What it looks like", "Phase " + here.n + ": " + here.name, d.line2027 ? (d.line2027.behind_w > 0 ? d.line2027.behind_w + " weeks behind plan" : d.line2027.behind_w < 0 ? (-d.line2027.behind_w) + " weeks ahead of plan" : "on plan") + ", " + d.line2027.as_of : "");
+    const fight = d.bosses.filter(b => b.state !== "defeated").length;
+    add("Bosses standing", fight + " of " + d.bosses.length, null, true);
+  }
+
+  // THIS WEEK (19 Nov): finished, blocked, what to try, decisions
+  function renderWeek(d){
+    const W = d.week, g = $("weekGrid"); g.replaceChildren();
+    if (!W){ $("weekSec").hidden = true; return; }
+    $("weekLabel").textContent = W.label || "";
+    const card = (title, items, fn) => {
+      const c = el("div", "wcard"); c.append(el("h3", null, title));
+      const ul = el("ul"); for (const it of (items || [])) ul.append(fn(it)); if (!(items || []).length) ul.append(el("li", null, "Nothing this week."));
+      c.append(ul); g.append(c);
+    };
+    card("Finished", W.finished, x => el("li", null, x));
+    card("Blocked", W.blocked, x => { const li = el("li"); if (x.boss) li.append(el("span", "bk", x.boss)); li.append(document.createTextNode(x.item)); return li; });
+    card("Try it", W.try, x => { const li = el("li"); const a = el("a", null, x.label); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; li.append(a); if (x.note) li.append(document.createTextNode(": " + x.note)); return li; });
+    card("Decisions", W.decisions, x => { const li = el("li"); if (x.url){ const a = el("a", null, x.label); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; li.append(a); } else li.append(document.createTextNode(x.label)); if (x.note) li.append(document.createTextNode(": " + x.note)); return li; });
+  }
+
+  // TRACK 1, THE PROTOTYPE (19 Nov): stages, the panel's verdict per round, what runs beside it
+  function renderProto(d){
+    const P = d.prototype; if (!P) return;
+    const t = $("protoTicket"); t.replaceChildren();
+    const add = (label, v, small, big) => { const f = el("div", "field"); f.append(el("span", "label", label)); const vv = el("span", "v" + (big ? " big" : ""), v); if (small) vv.append(el("small", null, small)); f.append(vv); t.append(f); };
+    add("Round", P.round + " of " + P.of, P.round_note || "", true);
+    const last = (P.panel || []).slice(-1)[0];
+    if (last) add("Panel", last.up + " of " + last.of, "would recommend it, round " + last.round, true);
+    if (P.hours) add("Cloud hours", P.hours.actual || "not measured", "estimate " + P.hours.estimate);
+    const r = $("protoRoute"); r.replaceChildren();
+    for (const s of P.stages){
+      const li = el("li", "stop " + (s.state === "here" ? "here" : s.state === "passed" ? "passed" : "next")); if (s.state === "here") li.setAttribute("aria-current", "step");
+      li.append(el("span", "dot"));
+      const b = el("div", "body");
+      b.append(el("span", "stop-n", "Stage " + s.key + " \u00b7 rounds " + s.rounds[0] + " to " + s.rounds[1]));
+      b.append(el("span", "stop-name", s.name));
+      b.append(el("p", "stop-get", s.builds));
+      const meta = el("div", "stop-meta");
+      meta.append(el("span", "pill " + (s.state === "here" ? "here" : s.state === "passed" ? "done" : ""), s.state === "here" ? "You are here" : s.state === "passed" ? "Passed" : "Ahead"));
+      if (s.panel_target) meta.append(el("span", "pill", "Goal: " + s.panel_target + " of 8 recommend"));
+      b.append(meta);
+      if (s.hands_to){ const j = el("div", "joins"); const c = el("span", "join"); c.append(el("b", null, "Hands to"), document.createTextNode(s.hands_to)); j.append(c); b.append(j); }
+      li.append(b); r.append(li);
+    }
+    // the panel, one bar per round, against the next stage goal
+    const pn = $("panel"); pn.replaceChildren();
+    const list = P.panel || [];
+    if (list.length){
+      pn.append(el("h3", null, "The reviewer panel"));
+      pn.append(el("p", "small", "Eight kinds of player read each round's play record. Bars: how many would recommend it. Dashed: this stage's goal."));
+      const goal = (P.stages.find(x => x.state === "here") || {}).panel_target || 4;
+      const Wd = 320, H = 130, L = 26, B = 22, top = 10, n = list.length, bw = Math.min(34, (Wd - L - 10) / n - 8);
+      const y = v => top + (H - top - B) * (1 - v / 8);
+      const svg = sv("svg", {viewBox: "0 0 " + Wd + " " + H, role: "img", "aria-label": "Panel recommendations per round: " + list.map(p => "round " + p.round + " " + p.up + " of 8").join(", ")}, null);
+      for (const v of [0, 4, 8]){ sv("line", {x1: L, x2: Wd - 4, y1: y(v), y2: y(v), class: "p-grid"}, svg); sv("text", {x: 2, y: y(v) + 4}, svg, String(v)); }
+      list.forEach((p, i) => {
+        const x = L + 8 + i * ((Wd - L - 10) / n);
+        const h = Math.max(2, y(0) - y(p.up));
+        sv("rect", {x, y: y(0) - h, width: bw, height: h, class: "p-bar" + (p.up === 0 ? " zero" : "")}, svg);
+        sv("text", {x: x + bw / 2 - 4, y: y(0) - h - 4, class: "p-val"}, svg, String(p.up));
+        sv("text", {x: x + bw / 2 - 4, y: H - 6}, svg, "R" + p.round);
+      });
+      sv("line", {x1: L, x2: Wd - 4, y1: y(goal), y2: y(goal), class: "p-tgt"}, svg);
+      sv("text", {x: Wd - 70, y: y(goal) - 5, class: "p-tt"}, svg, "goal " + goal);
+      pn.append(svg);
+    }
+    const bl = $("beside"); bl.replaceChildren();
+    for (const x of (P.beside || [])){ const li = el("li"); li.append(el("span", "pn", x.name)); li.append(el("span", "ps", x.status || "")); li.append(el("span", "pl", x.line)); bl.append(li); }
   }
 
   function renderRoute(d){
@@ -455,6 +540,18 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (s.note) b.append(el("p", "note", s.note));
       if (s.arrived && s.arrived.length){
         const c = el("div", "chips"); for (const a of s.arrived) c.append(el("span", "chip", a)); b.append(c);
+      }
+      const J = (d.joins || {})[String(s.n)];
+      if (J && J.length){ const j = el("div", "joins"); for (const x of J){ const c = el("span", "join"); c.append(el("b", null, "From the prototype"), document.createTextNode(x)); j.append(c); } b.append(j); }
+      if (s.n === d.here && d.bosses && d.bosses.length){
+        const bc = el("div", "bchips");
+        for (const bo of d.bosses){
+          const c = el("div", "bchip" + (bo.state === "defeated" ? " defeated" : ""));
+          c.append(el("span", "bn", bo.name), el("span", "bh", bo.state === "defeated" ? "Down" : bo.state === "unchecked" ? "HP ?" : "HP " + hpOf(bo) + "%"));
+          if (bo.blocks) c.append(el("span", "bb", "Blocks: " + bo.blocks));
+          bc.append(c);
+        }
+        b.append(bc);
       }
       // A PHASE'S PLANNED PIECES (8 Nov, n09-4): folded shut; each piece its hours, then what is measured weekly
       if (Array.isArray(s.plan) && s.plan.length){
@@ -486,21 +583,16 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
 
   function renderBosses(d){
     renderBossList(d.bosses, "bosses", "bossCount");
-    if (d.bosses_title) $("h-boss").textContent = d.bosses_title;
+    if (d.bosses_title) $("h-boss").textContent = d.bosses_title.replace(/^Phase (\d+) bosses$/, "Bosses on phase $1");
     $("bossesClosed").textContent = d.bosses_closed || "";
-    // EFFICIENCY BOSSES, HOURS TO GO, TOOLS IN TEST (11 Nov, advisor 112, his pick A)
-    if (Array.isArray(d.eff_bosses)){
-      renderBossList(d.eff_bosses, "effBosses", "effCount");
-      if (d.eff_title) $("h-eff").textContent = d.eff_title;
-      $("effNote").textContent = d.eff_note || "";
-    }
+    // Efficiency now lives in the Monday audit; tools sit under the boss they serve (19 Nov, one structure)
     const h = d.hours_to_go;
     if (h && h.points){
       $("hoursToGo").textContent = h.title + ": " + h.points.map(p => short(p.date) + " " + p.lo + " to " + p.hi + " h").join("; ") + (h.next ? ". Next point " + h.next + ". " : ". ") + (h.note || "");
     }
     // THE WEEK'S NUMBERS (RULINGS 9 Nov: each Monday spend, process share, done, failed, five risks), newest first
     if (Array.isArray(d.weeks) && d.weeks.length){
-      $("weekSec").hidden = false;
+      $("numsSec").hidden = false;
       const wl = $("weekList"); wl.replaceChildren();
       for (const w of d.weeks){
         const det = el("details"); if (w === d.weeks[0]) det.open = true;
@@ -515,11 +607,6 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
         wl.append(det);
       }
     }
-    const tl = $("toolsList"); tl.replaceChildren();
-    if (d.tools_title) $("h-tools").textContent = d.tools_title;
-    for (const t of (d.tools || [])){
-      const li = el("li"); li.append(el("span", "pn", t.name)); li.append(el("span", "ps", "Decide: " + t.decide)); li.append(el("span", "pl", t.status)); tl.append(li);
-    }
   }
 
   function renderBossList(list, gridId, countId){
@@ -533,6 +620,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       h.append(el("span", "state", b.state === "defeated" ? "Defeated" + (b.when ? " " + b.when : "") : b.state === "unchecked" ? "Not re-checked" : "Fighting"));
       a.append(h);
       a.append(el("p", "what", b.what));
+      if (b.blocks) a.append(el("p", "blocks", "Blocks: " + b.blocks));
       const bar = el("div", "hp");
       const lab = el("div", "hp-label"); lab.append(el("span", null, "HP")); lab.append(el("span", "hpnum", b.state === "unchecked" ? "?" : hp + "%"));
       const track = el("div", "hp-track"); track.setAttribute("role", "meter"); track.setAttribute("aria-valuemin", "0"); track.setAttribute("aria-valuemax", "100"); track.setAttribute("aria-valuenow", String(hp)); track.setAttribute("aria-label", b.name + " health");
@@ -855,7 +943,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   }
 
   fetch("progress.json", {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-    renderTicket(d); renderRoute(d); renderBosses(d); renderStudies(d); renderCarried(d); renderStreet(d); if (d.forecast) renderRoad(d);
+    renderTicket(d); renderWeek(d); renderProto(d); renderRoute(d); renderBosses(d); renderStreet(d); if (d.forecast) renderRoad(d);
     $("updated").textContent = "Updated " + d.updated + ".";
   }).catch(() => {
     const t = $("ticket"); t.replaceChildren();
