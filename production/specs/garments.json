@@ -745,6 +745,43 @@
    },
    "made": "Ron's passed boots (v2, with their maps) carried onto Darren's S6 feet point by point (tools/meshgen/blender/carry_footwear.py), Ron's weights kept, the leather 4.5 mm off his skin, the sole 20 mm under the bare floor; he was barefoot (n02-9-dress-the-cast)",
    "released": "8 November 16:30: worn in the player's game; his page passed both men twice (dressed-men-look, knit-jumpers-look); held since 7 Nov until a packaged walk and his page, this night's walk is that walk (DECISIONS)"
+  },
+  {
+   "who": "Rocco",
+   "name": "RonWorkTrousers",
+   "fbx": "F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/seat-try1/skinned/work_trousers_skinned.fbx",
+   "hides": [
+    "lower"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/wear/work_trousers_wear_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/bake/work_trousers_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/wear/work_trousers_wear_packed.png",
+    "tint": [
+     0.045,
+     0.045,
+     0.05
+    ],
+    "tapecolour": [
+     0.045,
+     0.045,
+     0.05
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ],
+    "detail": "F:/LedgerTools/garments/tom/jeans/twill/twill_normal_dx.png",
+    "detail_tiling": 73,
+    "detail_strength": 0.5
+   },
+   "handed": "2026-11-17",
+   "made": "Ron's dark grey work trousers (n16-2 gap 1): FreeSewing's Titan at his measures draped in Kiln over a stand-in for his boots (0 cloth points inside the boots), welded and retopologised to 9,636 triangles, maps at 2048 (hits 100%; steep normals front left 1.4%, front right 1.1%, over the 1% target, listed), wear pass (flat maps none), skinned from Ron's own weights (skin_garment.py --piece-attr none --crotch-fade 0.04), sitting body through 244 (bar 299), cloth inside 56 (bar 44, listed); records F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/REPORT-2026-11-19.md and F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/seat-try1/SEAT-TRY1-2026-11-19.md. Tint: a dark grey twill, an estimate (no colour measured from a photograph yet), his look at the whole-person gate.",
+   "replaces": "RonJeans",
+   "two_sided": true,
+   "two_sided_why": "as Tom's and Ron's jeans (2 November: the packaged sit film showed a hole behind the knee as the cloth folded through itself); the back faces drawn too (tools/ue/import_garments.py).",
+   "hold": "19 Nov 2026: imported held for the packaged -WearHeld films only; not worn until those films, fresh reviewers and his whole-person look; the jeans stay the worn pair. Released only once the leg and torso start values are on our own measurements (DECISIONS 18 Nov 12:16)."
   }
  ]
 }
