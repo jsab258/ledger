@@ -67,6 +67,7 @@
     ["/Game/Ledger/MetaHumans/Garments/SheilaBlouse", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments/SheilaSkirt", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/SheilaShoes", "garment_shoes"],
+    ["/Game/Ledger/MetaHumans/Garments/RonWorkTrousers", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
     ["/Game/MetaHumans", "exempt"],
@@ -104,6 +105,11 @@
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJeansTC"],
       "parts": ["SKM_TomJeansTC", "MI_TomJeansTC", "T_TomJeansTC_ColourAO", "T_TomJeansTC_Normal", "T_TomJeansTC_Packed", "T_TomJeansTC_Detail_Normal", "T_TomJeansTC_Wear_Mask"],
       "source": "production/specs/garments.json (TomJeansTC, held: the texturing test's jeans, MAP-2026-11-10.md chain 1) and tools/ue/import_garments.py's names"
+    },
+    "ron-work-trousers": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/RonWorkTrousers"],
+      "parts": ["SKM_RonWorkTrousers", "MI_RonWorkTrousers", "T_RonWorkTrousers_ColourAO", "T_RonWorkTrousers_Normal", "T_RonWorkTrousers_Packed", "T_RonWorkTrousers_Detail_Normal", "T_LedgerMask_Black", "T_LedgerMask_Neutral", "Wool"],
+      "source": "production/specs/garments.json (RonWorkTrousers, held: Kiln's first garment, 19 Nov) and tools/ue/import_garments.py's names"
     },
     "sheila-cardigan": {
       "folders": ["/Game/Ledger/MetaHumans/Garments/SheilaCardigan"],
