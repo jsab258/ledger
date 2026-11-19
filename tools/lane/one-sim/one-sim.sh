@@ -7,9 +7,10 @@
 #   tools/lane/one-sim/one-sim.sh test        the browser copy against the reference, under Node
 #   tools/lane/one-sim/one-sim.sh browser     the same checks inside a real web page (headless Chromium)
 #   tools/lane/one-sim/one-sim.sh selftest    the checks themselves: a wrong table must fail them
+#   tools/lane/one-sim/one-sim.sh breaker     tries to make the prototype's bridge misbehave: bad calls, ticks out of order, spoiled saves
 #   tools/lane/one-sim/one-sim.sh breaks      seven planted one-line breaks: does the whole table, or the front door, see them?
 #   tools/lane/one-sim/one-sim.sh differences the prototype's own JavaScript town against the real rules, measured (DIFFERENCES.md)
-#   tools/lane/one-sim/one-sim.sh all         reference, wasm, test, selftest, browser, and Node against the browser
+#   tools/lane/one-sim/one-sim.sh all         reference, wasm, test, selftest, breaker, browser, and Node against the browser
 #
 # NOTHING IS WRITTEN UNDER ledger/ OR ue-probe/. Their files are compiled from where they
 # live, never copied; every toolchain and build output goes to $ONE_SIM_WORK (default
@@ -230,6 +231,14 @@ selftest() {
   return $rc
 }
 
+# The bridge handled roughly, try by try (wasm/breaker.mjs). With "all" it prints only what did not hold, and the count.
+breaker() { # [--brief]
+  need "$W/wasm/one-sim.wasm" "the browser build" wasm
+  command -v node >/dev/null 2>&1 || { say "NOTHING MEASURED: no node"; return 3; }
+  mkdir -p "$W/logs"
+  ( cd "$W" && $NICE node --no-warnings "$HERE/wasm/breaker.mjs" --brain "$W/wasm/one-sim.wasm" --specs "$REPO/production/specs" --json "$W/logs/breaker.json" "$@" )
+}
+
 browser() {
   table_current || return $?
   need "$W/wasm/one-sim.wasm" "the browser build" wasm
@@ -263,6 +272,7 @@ differences() {
 case "${1:-}" in
   setup)     setup;     exit $? ;;
   breaks)    breaks;    exit $? ;;
+  breaker)   shift; breaker "$@"; exit $? ;;
   differences) differences; exit $? ;;
   reference) reference; exit $? ;;
   wasm)      wasm;      exit $? ;;
@@ -278,10 +288,11 @@ case "${1:-}" in
     if [ $rc -le 1 ]; then
       test_; fold $?
       selftest; fold $?
+      breaker --brief; fold $?
       browser; fold $?
       engines_agree; fold $?
     fi
     [ $rc -eq 0 ] && say "one-sim: everything passed" || say "one-sim: NOT all passed (exit $rc)"
     exit $rc ;;
-  *) say "usage: one-sim.sh setup|reference|wasm|test|selftest|browser|breaks|differences|all"; exit 2 ;;
+  *) say "usage: one-sim.sh setup|reference|wasm|test|selftest|breaker|browser|breaks|differences|all"; exit 2 ;;
 esac

@@ -69,7 +69,7 @@ const clockOf = (minute) => {
   return [day, Math.floor(rest / 60), rest % 60];
 };
 const plain = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
-const quote = (x) => { try { return typeof x === 'string' ? `'${x.slice(0, 60)}'` : String(JSON.stringify(x)).slice(0, 60); } catch (e) { return typeof x; } };
+const quote = (x) => { try { return String(JSON.stringify(typeof x === 'string' ? x.slice(0, 60) : x)).slice(0, 70); } catch (e) { return typeof x; } };
 
 // The cast file as the page reads it: its areas, each with its places. The town reads the file
 // itself (one_sim.cpp os_town_new); this second reading only serves the bridge's own checks.
@@ -150,7 +150,8 @@ export async function openTown(options = {}) {
   if (wantsSaved) {
     // Everything that can be checked is checked before anything is loaded, each refusal with its reason.
     if (!plain(saved) || saved.kind !== 'one-sim town') throw new Error('one-sim bridge: this is not a saved town');
-    if (!(saved.v >= 1) || saved.v > BRIDGE_SAVE_VERSION) throw new Error(`one-sim bridge: the saved town is version ${quote(saved.v)}, this build reads ${BRIDGE_SAVE_VERSION}`);
+    if (!Number.isInteger(saved.v) || saved.v < 1 || saved.v > BRIDGE_SAVE_VERSION) throw new Error(`one-sim bridge: the saved town is version ${quote(saved.v)}, this build reads ${BRIDGE_SAVE_VERSION}`);
+    if (saved.talk !== 'by the minute' && saved.talk !== 'by the hour') throw new Error(`one-sim bridge: the saved town is not whole: its way of talking reads ${quote(saved.talk)}`);
     const t = saved.texts;
     // The talk and the week's pieces must each be a JSON object's text. (They are not parsed here: the town code
     // reads its own texts, and writes numbers a JavaScript reader would refuse. Its own reader would take a week's
@@ -168,6 +169,13 @@ export async function openTown(options = {}) {
     const noText = people.filter((p) => typeof t.memories[p] !== 'string');
     if (noText.length) throw new Error(`one-sim bridge: the saved town is not whole: the memory of ${noText.slice(0, 6).join(', ')} is no text`);
     if (saved.cast !== mark) throw new Error('one-sim bridge: the saved town was made with another cast file: its areas or places are not the same');
+    // Each piece must be the piece it says it is. The town's own readers take a text that holds nothing (an empty
+    // object, a memory with no heading) as a town that knows nothing, which for a save is a loss nobody is told of.
+    const wrongMemory = people.filter((p) => t.memories[p] !== `# Memory: ${p}` && !t.memories[p].startsWith(`# Memory: ${p}\n`));
+    if (wrongMemory.length) throw new Error(`one-sim bridge: the saved town is not whole: the memory kept for ${wrongMemory.slice(0, 6).join(', ')} is not that person's memory`);
+    const noTalk = people.filter((p) => !t.agents.includes(`"id":${JSON.stringify(p)}`));
+    if (noTalk.length) throw new Error(`one-sim bridge: the saved town is not whole: its talk does not hold ${noTalk.slice(0, 6).join(', ')}`);
+    if (!/"hours"\s*:\s*\{/.test(t.town)) throw new Error('one-sim bridge: the saved town is not whole: its week does not say how far the talk has run');
     // Its place in the week: a whole minute, and the next hour due the one that follows it (or the minute's own
     // hour, for a town saved on the stroke of an hour before that hour ran).
     if (!Number.isInteger(saved.at) || saved.at < 0 || saved.at > LAST_MINUTE || !Number.isInteger(saved.nextHour)) throw new Error('one-sim bridge: the saved town is not whole: its clock is no whole minute of a week');
@@ -175,7 +183,10 @@ export async function openTown(options = {}) {
     if (saved.nextHour !== hourNow + 1 && !unrun) throw new Error(`one-sim bridge: the saved town's clock does not fit itself (minute ${saved.at}, next hour ${saved.nextHour})`);
     let week;
     try { week = JSON.parse(t.week); } catch (e) { throw new Error('one-sim bridge: the saved town is not whole'); }
-    if (!plain(week)) throw new Error('one-sim bridge: the saved town is not whole');
+    if (!plain(week) || typeof week.deedTopic !== 'string' || !Number.isInteger(week.deedDay) || week.deedDay < -1 || !Number.isInteger(week.deedAt) || week.deedAt < -1
+        || typeof week.ellisFirst !== 'string' || typeof week.takenFirst !== 'string' || !Array.isArray(week.witnesses)
+        || week.witnesses.some((w) => !Array.isArray(w) || w.length !== 2 || typeof w[0] !== 'string' || !Number.isInteger(w[1])))
+      throw new Error('one-sim bridge: the saved town is not whole: the lines beside its week (the deed, who saw it, her first visit, his first arrest) do not read');
     sim.loadAgents(t.agents);
     for (const person of people) sim.loadMemory(person, t.memories[person]);
     sim.loadTown(t.town);
@@ -187,7 +198,7 @@ export async function openTown(options = {}) {
     const last = Math.floor(saved.at / ROUND_MINUTES) * ROUND_MINUTES + ROUND_MINUTES;
     if (round === null || round > last || (round >= 0 && (unrun || round < (saved.nextHour - 1) * 60 + ROUND_MINUTES)) || round < -1)
       throw new Error(`one-sim bridge: the saved town's clock does not fit the town (minute ${saved.at}, next hour ${saved.nextHour}; the town's own talk has run to ${round === null ? 'no minute it can name' : 'minute ' + (round - ROUND_MINUTES)})`);
-    talk = saved.talk === 'by the hour' ? 'by the hour' : 'by the minute';
+    talk = saved.talk;
     at = saved.at;
     nextHour = saved.nextHour;
     const until = sim.heldUntil(...clockOf(at));
@@ -297,7 +308,9 @@ export async function openTown(options = {}) {
     /// one call a witness, and it becomes talk. Returns { taken, dropped }: the witnesses the
     /// town took, by the cast's ids, and the ones it does not know (most of the prototype's
     /// people have no match in the cast), each with why.
-    deed({ minute, area, thing, said, witnesses = [], fact, words, certainty = 1 } = {}) {
+    deed(what = {}) {
+      if (!plain(what)) throw new Error(`one-sim bridge: a deed is { minute, area, thing, said, witnesses, fact, words }, not ${quote(what)}`);
+      const { minute, area, thing, said, witnesses = [], fact, words, certainty = 1 } = what;
       inTurn(minute);
       needArea(area, 'the deed\'s place');
       needText(thing, 'the thing damaged'); needText(said, 'what is said of the damage'); needText(words, 'the story\'s words');
@@ -320,7 +333,9 @@ export async function openTown(options = {}) {
     },
     /// Something seen that is no damage: one person saw it themselves, at this rung. True if the town took it,
     /// false if the witness is nobody of the cast. It becomes talk; it is never a statement to the police.
-    saw({ minute, who, rung = -1, fact, area, words, certainty = 1 } = {}) {
+    saw(what = {}) {
+      if (!plain(what)) throw new Error(`one-sim bridge: a sighting is { minute, who, rung, fact, area, words }, not ${quote(what)}`);
+      const { minute, who, rung = -1, fact, area, words, certainty = 1 } = what;
       inTurn(minute);
       needArea(area, 'the sighting\'s place');
       needFact(fact); needText(words, 'the story\'s words'); needSure(certainty); needRung(rung);
@@ -417,7 +432,8 @@ export const PROTOTYPE_ACTS = Object.freeze({
 export function oldMemoryRung(memory) {
   if (memory.who === 'tom' || memory.who === 'owner') return Rung.Recognised;
   if (memory.who === 'coat' || memory.who === 'cab') return Rung.Mark;
-  return memory.face > 0.2 ? Rung.Face : Rung.Silhouette;
+  if (memory.who !== 'man') return -1;                       // none of the prototype's five words: no rung can be read
+  return typeof memory.face === 'number' && memory.face > 0.2 ? Rung.Face : Rung.Silhouette;
 }
 
 /// Opens a fresh town at an old save's clock and tells it what the old save's people saw.
@@ -439,14 +455,17 @@ export async function openTownFromOldSave({ wasm, castJson, old, acts = PROTOTYP
   for (const e of old.events) if (plain(e) && Number.isInteger(e.id)) events.set(e.id, e);
 
   // Every first-hand memory, oldest event first, then by person: the same save always gives the same town.
-  const all = [];
+  const all = [], unread = [];
   for (const [person, mind] of Object.entries(old.minds)) {
     if (!plain(mind) || !Array.isArray(mind.mem)) continue;
-    for (const memory of mind.mem) if (plain(memory)) all.push({ person, memory, event: events.get(memory.e) });
+    for (const memory of mind.mem) {
+      if (plain(memory)) all.push({ person, memory, event: events.get(memory.e) });
+      else unread.push({ who: person, kind: null, event: null, why: 'not a memory at all' });
+    }
   }
   all.sort((a, b) => ((a.event?.t ?? 0) - (b.event?.t ?? 0)) || ((a.memory.e ?? 0) - (b.memory.e ?? 0)) || (a.person < b.person ? -1 : a.person > b.person ? 1 : 0));
 
-  const fed = [], dropped = [], deedWitnesses = new Map();
+  const fed = [], dropped = [...unread], deedWitnesses = new Map();
   const drop = (x, why) => dropped.push({ who: x.person, kind: x.event?.kind ?? null, event: x.memory.e ?? null, why });
   const sightings = [];
   for (const x of all) {
@@ -461,7 +480,7 @@ export async function openTownFromOldSave({ wasm, castJson, old, acts = PROTOTYP
     if (memory.src === 'heard') { drop(x, 'only heard: a noise alone is no story about him'); continue; }
     if (memory.src !== 'saw' && memory.src !== 'self') { drop(x, 'not first-hand'); continue; }
     if (!inCast.has(id)) { drop(x, 'not in the cast'); continue; }
-    const sure = Math.min(1, memory.sure);
+    const sure = typeof memory.sure === 'number' ? Math.min(1, memory.sure) : NaN;
     if (!(sure > 0)) { drop(x, 'no certainty kept'); continue; }
     const rung = rungOf(memory, old.minds[person]);
     if (!Number.isInteger(rung) || rung < 0 || rung > 4) { drop(x, 'no rung could be read'); continue; }

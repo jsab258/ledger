@@ -439,9 +439,10 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     await refuses('a save from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, v: BRIDGE_SAVE_VERSION + 1 } }), 'this build reads');
     await refuses('a save made with another cast', () => openTown({ wasm: brainBytes, castJson: castText['quay-cast.json'], saved: good }), 'another cast');
     await refuses('a save with a piece missing', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: undefined } } }), 'not whole');
-    await refuses('a save whose week\'s pieces are from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: '{"version":99}' } } }), 'version');
+    await refuses('a save whose week\'s pieces are from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: good.texts.town.replace(/"version":\d+/, '"version":99') } } }), 'version 99');
     await refuses('a save whose talk is cut short', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) } } }), 'not whole');
-    await refuses('a save whose talk is cut short inside, braces whole', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) + '}' } } }), 'not a whole');
+    await refuses('a save whose talk is cut short inside, braces whole', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) + '}' } } }), 'its talk does not hold');
+    await refuses('a save whose talk names everybody and is still no whole text', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.replace('"rumors":[', '"rumors":[[') } } }), 'not a whole');
     await refuses('a save whose week is no object', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: '[]' } } }), 'not whole');
     // And the good save itself still loads, twice over, and comes out as the same text: saving is not a one-way street.
     const again = await openTown({ wasm: brainBytes, castJson: cast, saved: JSON.parse(JSON.stringify(good)), print: quiet.print });
@@ -489,6 +490,10 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     await refuses('a save with one memory that is no text', with_({ texts: { ...g2.texts, memories: { ...g2.texts.memories, sam: 7 } } }), 'is no text');
     await refuses('a save whose clock is moved back, its next hour in step', with_({ at: g2.at - 600, nextHour: g2.nextHour - 10 }), 'does not fit the town');
     await refuses('a save whose clock is moved on, its next hour in step', with_({ at: g2.at + 6000, nextHour: g2.nextHour + 100 }), 'does not fit the town');
+    await refuses("a save whose week's pieces are an empty object", with_({ texts: { ...g2.texts, town: '{}' } }), 'how far the talk has run');
+    await refuses("a save with two people's memories changed over", with_({ texts: { ...g2.texts, memories: { ...g2.texts.memories, sam: g2.texts.memories.rita, rita: g2.texts.memories.sam } } }), "not that person's memory");
+    await refuses("a save whose deed's witnesses do not read", with_({ texts: { ...g2.texts, week: g2.texts.week.replace('[["sam",4]]', '[null]') } }), 'do not read');
+    await refuses('a save with a way of talking it does not know', with_({ talk: 'now and then' }), 'way of talking');
     await refuses('a saved town asked for and not there', () => openTown({ wasm: brainBytes, castJson: cast, saved: undefined }), 'no saved town');
     await refuses('a saved town and a start minute together', () => openTown({ wasm: brainBytes, castJson: cast, saved: g2, startMinute: 0 }), 'not both');
     // Finding 7: the cast file as Windows writes it, and with its spacing changed, still loads the save; other people do not.
@@ -507,8 +512,8 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     result('T11 the bridge takes rough handling', problems.length === 0, problems.length ? problems.join('; ')
       : `a week starting at 15:36, a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump (720 hours, ${Math.round(jumpMs)} ms), ` +
         `a save loaded and saved again, a deed's witnesses taken and dropped by name, the first deed's witness still at the police after a second deed was refused, the cast file as Windows writes it, ` +
-        `and ${refusedCount} things that must be refused (${refusedCount - newRefusals} from run 2; ${newRefusals} new: the tea and the week's end out of turn, unknown areas, a story name of the town's own, a second deed, ` +
-        `saves whose pieces do not fit, a saved town that is not there, a cast with other people): all as they should be`);
+        `and ${refusedCount} things that must be refused (${refusedCount - newRefusals} as in run 2, with one more save; ${newRefusals} new: the tea and the week's end out of turn, unknown areas, a story name of the town's own, a second deed, ` +
+        `saves whose pieces do not fit each other or the town or hold nothing, a saved town that is not there, a cast with other people): all as they should be`);
   }
 
   // ---- T12: a save from before the swap --------------------------------------------------------

@@ -8,11 +8,13 @@
 //   M1  where is each of the nine people both casts hold, at the half of every hour of a week?
 //   M2  on what minutes do people move?
 //   M3  one story, seen by Darren alone on Tuesday at half past twelve: who holds it at the end of each day?
-// A measurement, not a check: it fails only if it cannot measure.
+//   M4  (run 3) what the town is told: the bridge's table of the prototype's kinds of act (PROTOTYPE_ACTS) against
+//       the prototype's own list and numbers (kinds.js). This one is a check: the table is derived, kinds.js is its home.
+// M1 to M3 are measurements, not checks: they fail only if they cannot measure.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
-import { openTown, PROTOTYPE_TO_CAST } from '../wasm/one-sim-bridge.mjs';
+import { openTown, PROTOTYPE_TO_CAST, PROTOTYPE_ACTS } from '../wasm/one-sim-bridge.mjs';
 
 const arg = (name, dflt) => { const i = process.argv.indexOf('--' + name); return i > 0 ? process.argv[i + 1] : dflt; };
 const brain = arg('brain'), specs = arg('specs'), proto = arg('prototype'), jsonOut = arg('json');
@@ -140,7 +142,7 @@ async function prototypeWeek(seed) {
   }
   const stat = (day, key) => { const v = runs.map((r) => r[day][key]).sort((a, b) => a - b); return { least: v[0], middle: v[Math.floor(v.length / 2)], most: v[v.length - 1] }; };
   out.M3 = { kind: KIND, seenAtMinute: SEEN, seeds: seeds.length, taken: done, prototype: DAYS.map((d, i) => ({ day: d, all: stat(i, 'all'), nine: stat(i, 'nine'), namesHim: stat(i, 'namesHim') })), real: realEnds.map((e) => ({ ...e, day: DAYS[e.day] })),
-    prototypeNamed: CAST.length, realPeople: real.people.length, prototypeMsPerWeek: Math.round(protoMs / seeds.length) };
+    prototypeNamed: CAST.length, prototypeWhoCanHear: CAST.filter((c) => !c.police).length, realPeople: real.people.length, prototypeMsPerWeek: Math.round(protoMs / seeds.length) };
   console.log(`M3 one story (he hit a man), seen by Darren alone on Tuesday at 12:30, nobody watching him after: how many hold it at the end of each day`);
   console.log(`   the real town took the sighting: ${done}`);
   console.log(`   day   prototype, of its ${CAST.length} named (least / middle / most of ${seeds.length} seeded weeks)   real rules, of its ${real.people.length}   | of the nine in both: prototype middle, real`);
@@ -148,6 +150,29 @@ async function prototypeWeek(seed) {
   const last = out.M3.prototype[6];
   console.log(`   by the end of Sunday, of those who hold it, those whose copy names him: prototype ${last.namesHim.least} / ${last.namesHim.middle} / ${last.namesHim.most}; real rules ${out.M3.real[6].namesHim} of ${out.M3.real[6].all}`);
   console.log(`   (the prototype's week took ${out.M3.prototypeMsPerWeek} ms a run here)`);
+  console.log(`   of the prototype's ${CAST.length} named people, ${out.M3.prototypeWhoCanHear} can hear a story at all: its talk leaves out the ${CAST.length - out.M3.prototypeWhoCanHear} police (${CAST.filter((c) => c.police).map((c) => c.name).join(', ')})`);
+}
+
+// ---- M4: what the town is told --------------------------------------------------------------------------
+// The bridge's table against the prototype's own list: every kind has a row and no row is left over; a kind told
+// as a sighting reads badly in the prototype's own numbers (below 0), since the town keeps every sighting as about
+// his hidden life; a kind marked open reads 0 or better. Printed grouped, as DIFFERENCES.md prints it.
+let tableFaults = 0;
+{
+  const kinds = Object.keys(KINDS), rows = Object.keys(PROTOTYPE_ACTS);
+  const missing = kinds.filter((k) => !PROTOTYPE_ACTS[k]), left = rows.filter((k) => !KINDS[k]);
+  const wrong = kinds.filter((k) => PROTOTYPE_ACTS[k] && ((PROTOTYPE_ACTS[k].tell === 'saw' && !(KINDS[k].val < 0)) || (PROTOTYPE_ACTS[k].tell === 'open' && !(KINDS[k].val >= 0))));
+  tableFaults = missing.length + left.length + wrong.length;
+  const by = {};
+  for (const k of kinds) if (PROTOTYPE_ACTS[k]) (by[PROTOTYPE_ACTS[k].tell] ??= []).push(k);
+  out.M4 = { kinds: kinds.length, rows: rows.length, missing, left, wrong, by, crimes: kinds.filter((k) => KINDS[k].crime >= 2), damage: kinds.filter((k) => PROTOTYPE_ACTS[k]?.tell === 'deed') };
+  console.log(`M4 what the town is told: the prototype knows ${kinds.length} kinds (kinds.js); the bridge's table has ${rows.length} rows; ` +
+    `${missing.length} kinds without a row${missing.length ? ' (' + missing.join(', ') + ')' : ''}, ${left.length} rows without a kind${left.length ? ' (' + left.join(', ') + ')' : ''}, ` +
+    `${wrong.length} against the rule (a sighting reads below 0, an open act 0 or better)${wrong.length ? ' (' + wrong.join(', ') + ')' : ''}`);
+  for (const tell of ['saw', 'step', 'open', 'none', 'never', 'deed']) if (by[tell]) console.log(`   ${tell.padEnd(5)} ${String(by[tell].length).padStart(2)}: ${by[tell].map((k) => k + (PROTOTYPE_ACTS[k].by ? ' [' + PROTOTYPE_ACTS[k].by + ']' : '')).join(', ')}`);
+  console.log(`   the prototype's crimes of violence or worse (crime level 2 and 3): ${out.M4.crimes.join(', ')}; kinds that are damage to a thing: ${out.M4.damage.length ? out.M4.damage.join(', ') : 'none'}`);
+  if (tableFaults) console.log('FAIL M4: the table of kinds and the prototype\'s own list disagree');
 }
 if (jsonOut) writeFileSync(jsonOut, JSON.stringify(out, null, 1));
-console.log('one-sim differences: measured');
+console.log(tableFaults ? 'one-sim differences: measured, and the table of kinds is WRONG' : 'one-sim differences: measured');
+process.exit(tableFaults ? 1 : 0);
