@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 12:16 on 19 Nov, stopped 13:46 at the budget ceiling (main row 12:38: 44% against 43.8%). Round 6 (the gate) is built and tested in tools/lane/prototype/project, pinned in PUBLISHED.json (ledger.js 3a97363a...), committed, NOT published: the page is still round 5 (1795032844-05a0). Next run, if under the ceiling: a second playtester sample, the gate's hands-on session, a fresh reviewer on the diff and the three gate changes, gate.py, then publish to XYNhFAFNxTtNQN9yYjYh3A and run the panel. 4d: the driving study page has no round4/ yet (checked 12:20). 4r waits for his approval of the games list.
+**Cloud lane, last run:** started 14:17 on 19 Nov, stopped about 15:20. 4s steps 1 and 2 done by one Fable helper (C++ town port to WebAssembly in tools/lane/one-sim/, goldens and scripted weeks equal to the C# Core; study ONE-SIM-METHOD-2026-11-19.md); fresh review PASS WITH FIXES, 12 fixes not yet applied (queue item 102). Round 6 (the gate) still built, NOT published: the page is round 5 (1795032844-05a0); queue item 101 (second playtester sample, hands-on, fresh reviewer, gate.py, publish, panel) is next for 4l. Assets for the build: fetch the 13 pictures from the page to a folder outside the repo. 4d: no round4/ on the driving page (checked 14:20). 4r done; its list waits for his approval.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
