@@ -416,6 +416,8 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     if (two.map((e) => e.hour).join() !== '16,17') problems.push(`a jump from 15:36 to 17:05 gave hours ${two.map((e) => e.hour).join()}, not 16,17`);
     await refuses('a clock that goes back', () => town.tick(900), 'went back');
     await refuses('a clock that is no number', () => town.tick(NaN), 'not a number');
+    await refuses('a clock with no end', () => town.tick(Infinity), 'not a number');
+    await refuses('a clock that jumps a thousand years', () => town.tick(1000 * 366 * 1440), 'more than a year');
     await refuses('an act in an hour the clock has not reached', () => town.answerAsk(0, NightAnswer.Did, 19 * 60 + 30), 'tick the clock');
     await refuses('an act before the town\'s clock', () => town.saw({ minute: 100, who: 'ron', rung: 3, fact: 'x_d0', area: 'mickeys', words: 'x' }), 'before the town');
     if (town.saw({ minute: 17 * 60 + 5, who: 'nobody_at_all', rung: 3, fact: 'seen_d0', area: 'mickeys', words: 'somebody saw him' }) !== false) problems.push('a sighting by nobody in the cast was taken');
@@ -435,13 +437,18 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     await refuses('a save made with another cast', () => openTown({ wasm: brainBytes, castJson: castText['quay-cast.json'], saved: good }), 'another cast');
     await refuses('a save with a piece missing', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: undefined } } }), 'not whole');
     await refuses('a save whose week\'s pieces are from a later version', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: '{"version":99}' } } }), 'version');
-    await refuses('a save whose talk is cut short', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) } } }), 'not a whole');
+    await refuses('a save whose talk is cut short', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) } } }), 'not whole');
+    await refuses('a save whose talk is cut short inside, braces whole', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, agents: good.texts.agents.slice(0, 200) + '}' } } }), 'not a whole');
+    await refuses('a save whose week is no object', () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...good, texts: { ...good.texts, town: '[]' } } }), 'not whole');
+    // And the good save itself still loads, twice over, and comes out as the same text: saving is not a one-way street.
+    const again = await openTown({ wasm: brainBytes, castJson: cast, saved: JSON.parse(JSON.stringify(good)), print: quiet.print });
+    if (JSON.stringify(again.save()) !== JSON.stringify(good)) problems.push('a town saved, loaded and saved again does not give the same save');
     await refuses('no cast file', () => openTown({ wasm: brainBytes, castJson: '' }), 'no cast file');
     await refuses('a broken cast file', () => openTown({ wasm: brainBytes, castJson: '{not json' }), 'cast not read');
     report.T11 = { problems, jumpThirtyDaysMs: Math.round(jumpMs) };
     result('T11 the bridge takes rough handling', problems.length === 0, problems.length ? problems.join('; ')
-      : `a week starting at 15:36, a jump over two hours, a clock going back, a clock that is no number, acts out of turn, a sighting by nobody, the prototype's own ids, ` +
-        `a thirty-day jump (720 hours, ${Math.round(jumpMs)} ms), and eight saves and casts that must be refused: all as they should be`);
+      : `a week starting at 15:36, a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump (720 hours, ${Math.round(jumpMs)} ms), ` +
+        `a save loaded and saved again, and sixteen things that must be refused (four clocks, two acts out of turn, eight saves, two cast files): all as they should be`);
   }
 
   if (printed.length) log(`info the modules printed ${printed.length} line(s); first: ${printed[0].slice(0, 120)}`);

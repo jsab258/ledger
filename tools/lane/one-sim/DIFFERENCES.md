@@ -6,14 +6,14 @@ Task 4s, run 2, 19 November 2026. Nothing in the prototype's source was changed.
 
 - The prototype's side: its frozen JavaScript town as it stands in tools/lane/prototype/project/src (rules.js, cast.js, routines.js, seeing.js, gossip.js, events.js, ledger.js, police.js, state.js, clock.js). The readable source, read today. The earlier comparison (production/lane/PROTOTYPE-VS-DESIGN-2026-11-18.md, 18 rows) had to read a squeezed copy; its row numbers are given below as "V3", "V10" and so on, and its numbers were checked against the readable source wherever they are used here.
 - The real side: the game's own town code as the browser copy runs it (one-sim.wasm), which gives the C# Core's answers on every row of the golden table. Numbers are from the port's own files, named each time.
-- Measured where it could be: `tools/lane/one-sim/one-sim.sh differences` runs differences/measure.mjs, which loads the prototype's own rule files under Node, unchanged, beside the real town through the bridge, and asks both the same questions. Last run 16:49 UTC, 6 s. Three measurements, M1 to M3 below.
+- Measured where it could be: `tools/lane/one-sim/one-sim.sh differences` runs differences/measure.mjs, which loads the prototype's own rule files under Node, unchanged, beside the real town through the bridge, and asks both the same questions. Last run 17:11 UTC, 6 s. Three measurements, M1 to M3 below.
 - Read, not measured, where no call exists yet to ask the real rule from JavaScript, or where the prototype's file needs the drawing library to load (police.js). Each such line says "read".
 
 What stays the prototype's own after the swap, so is not compared: money, debts, jobs, fares, fights and talk, and its street (the map, walking, light, lines of sight, weather, the cab, the screens).
 
 ## The short answer
 
-After the swap the player meets a larger, quieter, more regular street. More people (41, not 28), most of them without a name yet. People stand elsewhere than he remembers: of the nine people both casts hold, somebody who is out is in the same part of the street in both only about a third of the time. Everybody moves on the hour. A story about him reaches about as many people on its first day, then stops sooner: fewer of the people he knows by name will have heard it. It does not cool in a day. The police follow a fixed timetable, a day slower and two hours longer in the cells. And three things he has today have no counterpart behind the bridge yet: how well a witness sees him by the real rule, what the street calls him, and how much each person likes or fears him.
+After the swap the player meets a larger, quieter, more regular street. More people (41, not 28), most of them without a name yet. People stand elsewhere than he remembers: of the nine people both casts hold, somebody who is out is in the same part of the street in both only about a third of the time. Everybody moves on the hour. A story about him reaches about as many people on its first day, then stops sooner: fewer of the people he knows by name will have heard it. It does not cool in a day. The police follow a fixed timetable, a day slower and two hours longer in the cells. And four things he has today have no counterpart behind the bridge yet: how well a witness sees or hears him by the real rule, what the street calls him, how much each person likes or fears him, and the moment of catching two people talking about him.
 
 ## 1. The people
 
@@ -97,6 +97,7 @@ Limits of M3: one story, one witness, one seed of the real rules (they have only
 | Which way they look | About 124 degrees, and wider for anybody within 3 m | 120 degrees, with a sharp middle of 60 and a rule of its own for a man standing still (V12) |
 | How well | One number for clarity; with it a "face score" | Five rungs: someone, a silhouette, a mark, a face, recognised |
 | Is it him | Named above a face score of 0.36 if they know who he is (familiarity over 0.5, or they know of the inheritance); else "a man", "a coat", "a cab" | The top rung, for those whose familiarity with him is 0.35 or more |
+| Hearing him | A distance for what he is doing (standing, walking, running, the cab), larger in the small hours and smaller in rain and through a window; somebody who only hears a loud act remembers "a man" (seeing.js) | Loudness set against the street's own noise at that hour, and less through a wall (Perception.h). Not behind the bridge either. |
 
 The real rule's rows pass in the browser copy (T1), but JavaScript cannot ask it yet: the bridge takes "how well" from the caller. So this difference is the main thing still to build for the swap, and it was not measured. For the player it will change who can name him and from how far. The light map and the rain stay the prototype's.
 
@@ -133,13 +134,24 @@ For the player: this is the part of the swap with no clean answer today. If the 
 
 For the player: the prototype's week is five days and its beats sit at its own hours. The real week is seven, and it will not be hurried. Tried today through the bridge: on Friday at half past four the real rules refuse Sheila's question, and on Sunday morning they take it. So the five-day week, which the earlier note (V18) recommends keeping, does not fit the real rules as they stand. Either the prototype's week grows to seven days, or the day of Sheila's question becomes something the game can set, which is a change to the Core and its golden rows. It is a choice about the week, so it is his.
 
-## 8. Saves (read and tested)
+## 8. The Ledger (read)
+
+The prototype's Ledger is his own book: only what he himself saw and heard (ledger.js). That rule stays the prototype's. What feeds it changes.
+
+- Who saw him do it: still worked out by the prototype's own geometry, so unchanged until the real rule for seeing is behind the bridge (section 4).
+- Who says it to his face, and whom he catches talking about him. Today both come from the prototype's own town: when a story about him passes between two people within 18 m of him and he can see one of them, they turn to look and his book notes it (gossip.js). After the swap, who holds a story comes from the town (`town.knows()`). It says who first saw it and how many tellings away each holder is. It does not report each telling as it happens, so the moment of catching two people talking has nothing to start it. The town code knows each telling; the front door does not hand them out yet.
+- The end screen's truth beside his book (a playtest view) reads the prototype's own minds today: who saw it, who was told, who holds it without knowing it was him. After the swap it would read the town's facts, which carry the same three and add how well the first witness saw him.
+
+For the player: his book works as before but fills from a different town, and "two people stop talking as you pass" is lost unless that call is added before the swap.
+
+## 9. Saves (read and tested)
 
 The prototype's save holds its own town: each person's mind, every event, who told whom (saving.js). After the swap it holds the town object the bridge hands it (BRIDGE.md). A save from before the swap has no town in it. For the player: a week saved before the swap cannot be continued after it. The prototype's save version must go up, so that such a save is not offered.
 
 ## What was not measured, and why
 
 - Seeing (section 4): no call on the front door for the real rule yet.
+- The Ledger (section 8): read on both sides; nothing to run until the swap.
 - The police on the prototype's side (section 5): its police.js loads only with the drawing library, which was not installed here. Read instead.
 - A whole played week on both sides with a player in it: the prototype's player, fights and talk need the page. The prototype's own tests do this in a browser; they were not run here.
 - The other 19 prototype people against the real cast's unnamed 32: no certain match to measure by.

@@ -2,7 +2,7 @@
 
 Run 1, 19 November 2026, 13:19 to 14:12 UTC, in the cloud: the study and the first build (steps 1 and 2). A fresh reviewer checked them the same day (production/lane/REVIEW-ONE-SIM-STEP1-2.md: pass with fixes, 12 findings).
 
-Run 2, 19 November 2026, 16:18 to about 17:10 UTC, in a fresh cloud machine: the 12 fixes, the bridge (step 3a) and the list of differences (step 3b). Everything was rebuilt from nothing. Run 2's work has not had a fresh reviewer yet.
+Run 2, 19 November 2026, 16:18 to about 17:15 UTC, in a fresh cloud machine: the 12 fixes, the bridge (step 3a) and the list of differences (step 3b). Everything was rebuilt from nothing. Run 2's work has not had a fresh reviewer yet.
 
 ## Where it stands, in five lines
 
@@ -14,7 +14,7 @@ Run 2, 19 November 2026, 16:18 to about 17:10 UTC, in a fresh cloud machine: the
 
 ## Done, with evidence
 
-One command, last run with the files as committed: `tools/lane/one-sim/one-sim.sh all`, 17:01 to 17:05 UTC, 228 s, exit 0, last line "one-sim: everything passed". It was run three times in run 2: after the fixes (16:26, 183 s, on the machine as it came), after the bridge went in (16:46, 215 s) and at the end, each time exit 0. Logs are in /home/claude/one-sim-work/logs/ (outside the repository, so they do not last: the numbers are copied here).
+One command, last run with the files as committed: `tools/lane/one-sim/one-sim.sh all`, 17:07 to 17:10 UTC, 196 s, exit 0, last line "one-sim: everything passed" (55 lines of ok, none failing). It was run four times in run 2, each time exit 0: after the fixes (16:26, 183 s, on a machine that had nothing installed), after the bridge went in (16:46, 215 s), after the records (17:01, 228 s) and after the bridge's last hardening. Logs are in /home/claude/one-sim-work/logs/ (outside the repository, so they do not last: the numbers are copied here).
 
 | Name in the output | What it checks | Result |
 |---|---|---|
@@ -31,13 +31,13 @@ One command, last run with the files as committed: `tools/lane/one-sim/one-sim.s
 | T3 the week hour by hour through the front door | Six scripted weeks played by calls from JavaScript, each hour's 13 answers against the Core's TownWeekHour rows | 225 of 225 |
 | T4 the same calls twice give the same town | A digest of every hour, the final state and every held story | 37e81244f129619f both times. Inside one engine this is almost certain by design. |
 | T4x Node against the browser (run 2) | The real test of the same town: `all` compares Node's digest with Chromium's and fails if they differ | 37e81244f129619f in both, and the bridge's weeks d678e26b179e7b68 in both |
-| T5 | Speed and size | 17 to 22 ms a game day over run 2's runs (41 people); one-sim.wasm 423,015 bytes, 142,080 gzip, 108,526 Brotli (run 1, before the save routines: 301,665, 102,362, 79,767); loader 8,938 bytes; bridge 14,155 bytes |
+| T5 | Speed and size | 17 to 22 ms a game day over run 2's runs (41 people); one-sim.wasm 423,015 bytes, 142,080 gzip, 108,526 Brotli (run 1, before the save routines: 301,665, 102,362, 79,767); loader 8,938 bytes; bridge 14,960 bytes |
 | T6 the front door takes rough handling | Calls before a town exists, broken cast files, times that are no time, answers outside the list, odd and long text, a thirty-day jump, a second town | nothing fell over |
 | T7 the Ledger's facts through the front door | Who knows what and how, read back after every scripted hour | the count is the hour's own at all 225 hours; nobody but the witness is said to have seen the window go; the witness holds it first-hand, recognised, at 130 of 130 hours after the deed. The details of each fact are not yet compared with the C# Core; no golden rows exist for them. |
 | T8 the bridge, talk by the hour (run 2) | The six weeks again, driven by a clock in steps of 7.3 game minutes through the bridge, with the prototype's own id for Darren | 225 of 225 hours agree with the C# Core's rows; the bridge's "held" agrees at all 225 |
 | T9 the bridge, talk by the minute (run 2) | The packaged game's order, with the clock ticked every game minute, every 0.37 and every 7.3 | the same town in all three; 15 to 21 ms a game day |
 | T10 a save in the middle (run 2) | Each week saved after two fifths of its hours, as text, loaded into a fresh module, played on | 6 of 6 end as the week played straight through; held in the cells at the save, still held after the load until the same minute; the biggest save 16,826 characters |
-| T11 the bridge takes rough handling (run 2) | The prototype's start at 15:36, jumps, a clock going back, acts out of turn, the prototype's own ids, a thirty-day jump, eight saves and casts that must be refused | all as they should be |
+| T11 the bridge takes rough handling (run 2) | The prototype's start at 15:36, jumps, the prototype's own ids, a thirty-day jump, a save loaded and saved again, and sixteen things that must be refused (four clocks, two acts out of turn, eight saves, two cast files) | all as they should be |
 | selftest | Four rows spoiled on purpose must be caught, each by its own check; the three small comparers checked too | 9 of 9, 8 of 8, 5 of 5 |
 | browser | The same checks inside a real page, headless Chromium 157.0.8103.78 | all passed |
 | stale table (run 2, tried by hand) | `test`, `selftest`, `browser`, `breaks` with a table that is not the committed one | each stops with NOTHING MEASURED, exit 3 |

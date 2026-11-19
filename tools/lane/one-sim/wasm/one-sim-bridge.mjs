@@ -41,6 +41,9 @@ export const Rung = Object.freeze({ Someone: 0, Silhouette: 1, Mark: 2, Face: 3,
 export const HOUR_FIELDS = Object.freeze(['found', 'went', 'ellis', 'taken', 'invite', 'ron', 'tea', 'held', 'asks', 'outfit', 'stories', 'ellisFirst', 'takenFirst']);
 
 const MIN_PER_DAY = 1440;
+/// The longest jump of the clock one tick will follow: a year. A wilder number is a fault in the caller, and is
+/// refused before the page is left running hours by the million.
+const LONGEST_JUMP_MINUTES = 366 * MIN_PER_DAY;
 const unEsc = (s) => s.replace(/~/g, ' ').replace(/\^/g, '\n').replace(/!/g, '|');   // the golden table's escaping, undone
 // A mark of the cast file's text (FNV-1a, 32 bits): a save made with one cast is not loaded into another.
 function castMark(text) {
@@ -99,7 +102,11 @@ export async function openTown({ wasm, castJson, startMinute = 0, saved = null, 
     if (!(saved.v >= 1) || saved.v > BRIDGE_SAVE_VERSION) throw new Error(`one-sim bridge: the saved town is version ${saved.v}, this build reads ${BRIDGE_SAVE_VERSION}`);
     if (saved.cast !== mark) throw new Error('one-sim bridge: the saved town was made with another cast file');
     const t = saved.texts;
-    if (!t || typeof t.agents !== 'string' || typeof t.town !== 'string' || typeof t.week !== 'string' || !t.memories || typeof t.memories !== 'object'
+    // The talk and the week's pieces must each be a JSON object's text. (They are not parsed here: the town code
+    // reads its own texts, and writes numbers a JavaScript reader would refuse. Its own reader would take a week's
+    // text that is no object as a fresh week, which for a save is a loss nobody is told of: refused here instead.)
+    const objectText = (x) => typeof x === 'string' && x.trimStart().startsWith('{') && x.trimEnd().endsWith('}');
+    if (!t || !objectText(t.agents) || !objectText(t.town) || typeof t.week !== 'string' || !t.memories || typeof t.memories !== 'object'
         || !Number.isFinite(saved.at) || !Number.isInteger(saved.nextHour) || saved.at < 0) throw new Error('one-sim bridge: the saved town is not whole');
     let week;
     try { week = JSON.parse(t.week); } catch (e) { throw new Error('one-sim bridge: the saved town is not whole'); }
@@ -154,6 +161,7 @@ export async function openTown({ wasm, castJson, startMinute = 0, saved = null, 
       if (!Number.isFinite(nowMinute)) throw new Error('one-sim bridge: the clock is not a number');
       const now = Math.floor(nowMinute);
       if (now < at) throw new Error(`one-sim bridge: the clock went back (${now} after ${at}); open the town again from its save`);
+      if (now - at > LONGEST_JUMP_MINUTES) throw new Error(`one-sim bridge: the clock jumped more than a year (${at} to ${now})`);
       const hours = [];
       for (; nextHour * 60 <= now; nextHour++) {
         const day = Math.floor(nextHour / 24), hod = nextHour - day * 24;

@@ -4,7 +4,7 @@ Task 4s, run 2, 19 November 2026. Written and tested the same day. Nothing in th
 
 ## In five lines
 
-1. The bridge is one small JavaScript file, wasm/one-sim-bridge.mjs (14 KB, 5 KB compressed), over the loader (wasm/one-sim.mjs). It holds no town rule.
+1. The bridge is one small JavaScript file, wasm/one-sim-bridge.mjs (15 KB, under 6 KB compressed), over the loader (wasm/one-sim.mjs). It holds no town rule.
 2. The prototype hands it its clock every simulation step. The bridge turns the clock into the same calls, in the same order, that the packaged game makes to its town code.
 3. It hands back what each new hour did (who found the damage, who went to the police, DS Ellis, an arrest, Ada's invitation, Ron's envelope), and on request where people are and who knows what.
 4. The town travels in the prototype's save as one plain object. Loaded into a fresh copy of the simulation it plays on exactly as if it had never stopped (tested, 6 of 6 weeks, under Node and in a real page).
@@ -77,7 +77,7 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 
 - `save()` returns one plain object. Inside are the same texts the packaged game writes into its save folder (CrimeProbe.cpp SaveEncounterToDisk): the town's talk (the game's agents.json), each person's memory as text (memory-<id>.md), the week's pieces (town.json), and the few lines the game keeps beside them (the deed's story and time, who saw it, her first visit, his first arrest). Each is written and read by the town code's own save routines. The bridge adds its place in the week: the minute it has run to, and the next hour due.
 - Size: the biggest save in the tested weeks is 16,826 characters. The prototype stores its save in pieces of 150,000.
-- Checked before anything is loaded, each refused with its reason: not a saved town, a later version, another cast file, a piece missing, the week's pieces from a later version, the talk cut short.
+- Checked before anything is loaded, each refused with its reason: not a saved town, a later version, another cast file, a piece missing, the week's pieces from a later version or no object at all, the talk cut short. A town saved, loaded and saved again gives the same save, character for character.
 - A prototype save from before the swap has no town in it. Step 4 must choose: such a save starts a fresh town at its clock (people remember nothing of the old week), or is not offered. Recommended: not offered, since the prototype's save version changes with the swap anyway.
 
 ## The people and the places
@@ -94,17 +94,19 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 3. What the street calls him, and how much each person likes or fears him. The prototype's own today (gossip.js, events.js). The town code has its own (Suspicion, Reaction, StreetVoice), not behind the door.
 4. The two tables: places, and the area he stands in.
 5. Golden rows for the bridge's by-the-minute order (next section), and for the details of each Ledger fact. Both are the C# side's to write, so the main session's.
+6. The tellings. The town code knows each time a story passes from one person to another; the front door hands out who holds what, not each telling. The prototype's "two people stop talking as he passes" needs them (DIFFERENCES.md, section 8).
+7. Two places where the packaged game builds its town a little differently from the front door, which follows the golden table's weeks. The game gives each person the name the street calls them (CrimeProbe.cpp line 5992, the cast file's "called"); the front door names them by id, so a memory line would read "I heard from rocco that". Only words differ, and no screen shows them yet. And the game reads each person's temperament from the cast file for how a witness reacts on the spot (CrimeProbe.cpp, WitnessReacts); that reaction is not behind the door.
 
 ## How it is tested
 
-All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. Last full run 17:01 to 17:05 UTC: exit 0 in 228 s, "one-sim: everything passed".
+All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. Last full run 17:07 to 17:10 UTC: exit 0 in 196 s, "one-sim: everything passed".
 
 | Check | What it shows | Result |
 |---|---|---|
 | T8 the bridge, talk by the hour | The six scripted weeks of the C# Core's table, driven by a clock in odd steps (7.3 game minutes) through the bridge, with the prototype's own id for Darren. Each hour against the C# Core's row. | 225 of 225 hours agree, field for field. The bridge's "held" agrees with the hour's answer at all 225. |
 | T9 the bridge, talk by the minute | The same weeks the packaged game's way, with the clock ticked every game minute, every 0.37 and every 7.3 (13,146, 35,736 and 2,060 ticks) | The same town to the last character in all three. |
 | T10 a save in the middle | Each week saved after two fifths of its hours, at a minute inside an hour, written out as text, loaded into a fresh module, played on | 6 of 6 end exactly as the week played straight through. Held in the cells at the save, he is still held after the load, until the same minute. |
-| T11 rough handling | A week starting at 15:36 (the prototype's start), a jump over two hours, a clock going back, a clock that is no number, acts out of turn, a sighting by nobody, the prototype's own ids, a thirty-day jump, eight saves and casts that must be refused | All as they should be. |
+| T11 rough handling | A week starting at 15:36 (the prototype's start), a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump, a save loaded and saved again, and sixteen things that must be refused: four clocks (going back, no number, no end, a jump of a thousand years), two acts out of turn, eight saves, two cast files | All as they should be. |
 | T4x | The same town in Node and in Chromium, the bridge's weeks included | The bridge's weeks give digest d678e26b179e7b68 in both. |
 | selftest | One hour of the table spoiled on purpose | T8 sees exactly that hour. |
 
