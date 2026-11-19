@@ -618,6 +618,13 @@
     "monday-audit"
    ],
    "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit Play builds (advisor 233): Monday audit checks every publish to him has a gate pass and known-issues note, and packaged builds he plays the clumsy-player pass. 19 Nov (advisors 253, 254): the allowance order by tools/pace_line.py (week-shape prototype_first); the daily publish by tools/progress_page.py --check in ci."
+  },
+  {
+   "line": "19 Nov: one parts tree holds the whole game",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "advisor 257: tools/lane/parts-tree/check.py, run by the cloud lane at every loop (on lane-2026-11 until merged), and the Monday audit."
   }
  ]
 }

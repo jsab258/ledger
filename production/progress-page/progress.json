@@ -1,5 +1,5 @@
 {
-  "updated": "Thursday 19 November 2026, 20:59",
+  "updated": "Thursday 19 November 2026, 21:21",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -735,7 +735,7 @@
   "prototype": {
     "round": "The one-shot",
     "page": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A",
-    "round_note": "the night of 19 November, in the cloud; then loops",
+    "round_note": "Friday night, 20 November, in the cloud, after the parts tree (advisor 257); then loops",
     "stages": [
       {
         "key": "A",
