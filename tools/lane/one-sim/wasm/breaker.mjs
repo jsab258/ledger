@@ -204,6 +204,45 @@ group = 'old saves'; say('[5] SAVES FROM BEFORE THE SWAP');
   await refused('an old save past the last minute a town can be saved at', () => oldOpen({ ...base, t: 7e8 }), 'week starts');
 }
 
+// ------------------------------------------------------------------------------------------------
+// The checks on a save must never refuse a sound one. A town is saved at each of these moments, loaded into a fresh
+// module from the save's text, and both are played on to the same later minute: they must end as the same town.
+group = 'awkward moments'; say('[6] A SOUND SAVE AT AN AWKWARD MOMENT LOADS AND PLAYS ON THE SAME');
+{
+  const WED = 2 * 1440, SUN = 6 * 1440;
+  const moments = [
+    ['just opened on the stroke of an hour, before that hour ran', { startMinute: 960 }, () => {}, 2000],
+    ['just opened inside an hour, never ticked', { startMinute: 936 }, () => {}, 2000],
+    ['just opened at minute nought', { startMinute: 0 }, () => {}, 1000],
+    ['opened inside an hour and ticked on inside it', {}, (t) => { t.tick(950.5); }, 2000],
+    ['on the stroke of an hour, after it ran', {}, (t) => { t.tick(1200); }, 2500],
+    ['one minute before an hour', {}, (t) => { t.tick(1199); }, 2500],
+    ['right after a deed, before the next tick', {}, (t) => { t.tick(TUE); t.deed(windowDeed(TUE)); }, 3 * 1440 + 700],
+    ['right after a sighting later in the hour than the clock', {}, (t) => { t.tick(TUE); t.saw(sighting(TUE + 20)); }, 3 * 1440],
+    ["after a no to Ron's ask", {}, (t) => { t.tick(21 * 60 + 30); t.answerAsk(0, NightAnswer.Refused, 21 * 60 + 30); }, 3 * 1440],
+    ["in the middle of Ada's tea", {}, (t) => { t.tick(WED + 21 * 60); for (let m = 0; m < 25; m++) { t.tick(WED + 21 * 60 + m); t.teaMinute(WED + 21 * 60 + m); } }, 4 * 1440],
+    ['while he is held in the cells', {}, (t) => { t.tick(TUE); t.deed(windowDeed(TUE)); t.tick(3 * 1440 + 11 * 60 + 7); if (!t.held()) throw new Error('he is not held'); }, 4 * 1440 + 600],
+    ["after Sheila's question, before his answer", { startMinute: SUN + 9 * 60 }, (t) => { t.tick(SUN + 10 * 60 + 30); if (!t.weekAsk(SUN + 10 * 60 + 30)) throw new Error('she did not ask'); }, 7 * 1440 + 300],
+    ['after his answer at the week\'s end', { startMinute: SUN + 9 * 60 }, (t) => { t.tick(SUN + 10 * 60 + 30); t.weekAsk(SUN + 10 * 60 + 30); t.tick(SUN + 10 * 60 + 40); t.weekGive(WeekAnswer.WindDown, SUN + 10 * 60 + 40); }, 7 * 1440 + 300],
+    ['after a thirty-day jump', {}, (t) => { t.tick(30 * 1440 + 5); }, 31 * 1440],
+    ['a town made from an old save, right after it opened', 'old', () => {}, 4 * 1440],
+  ];
+  for (const talk of ['by the minute', 'by the hour']) for (const [what, how, play, until] of moments) {
+    await answers(`saved ${what} (talk ${talk})`, async () => {
+      const make = async () => (how === 'old'
+        ? (await openTownFromOldSave({ wasm, castJson: cast, talk, print: quiet, old: { t: 2 * 1440 + 14 * 60, events: [{ id: 1, kind: 'strike', t: 2000 }], minds: { darren: { mem: [{ e: 1, src: 'saw', who: 'tom', sure: 0.9, face: 0.5 }] } } } })).town
+        : open({ talk, ...how }));
+      const straight = await make(), saved = await make();
+      play(straight); play(saved);
+      const text = JSON.stringify(saved.save());
+      const loaded = await openTown({ wasm, castJson: cast, saved: JSON.parse(text), print: quiet });
+      const again = JSON.stringify(loaded.save()) === text;
+      const a = straight.tick(until).map((e) => e.row).join('\n'), b = loaded.tick(until).map((e) => e.row).join('\n');
+      return [again, a === b, JSON.stringify(straight.save()) === JSON.stringify(loaded.save())];
+    }, (g) => g.join() === 'true,true,true', (g) => `saves again the same: ${g[0]}; the same hours after: ${g[1]}; the same town at the end: ${g[2]}`);
+  }
+}
+
 const notHeld = rows.filter((r) => !r.held);
 if (arg('json')) writeFileSync(arg('json'), JSON.stringify({ tries: rows.length, held: rows.length - notHeld.length, notHeld, byGroup: Object.fromEntries([...new Set(rows.map((r) => r.group))].map((g) => [g, rows.filter((r) => r.group === g).length])) }, null, 1));
 const groups = [...new Set(rows.map((r) => r.group))].map((g) => `${g} ${rows.filter((r) => r.group === g).length}`).join(', ');
