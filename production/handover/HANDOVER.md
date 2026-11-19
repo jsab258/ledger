@@ -2,13 +2,13 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-18 22:36 (the hourly run; the last session set its Stopped line at 22:02)
+**Started:** 2026-11-19 05:06 (the hourly run; the 04:36 run set its Stopped line at 04:37)
 
-**Row due:** at the next start (last row 23:18; page and advisor read 23:31, last acks 22:42)
-**Stopped:** 2026-11-18 23:32 (advisor 236's guard tripped at 23:18, so no new work; the coat round returned; nothing of mine running, lock clear; work committed with this handover)
+**Row due:** at the next start (last row 05:07; page and advisor read 05:32: nothing new; last ack 00:54, advisor 237)
+**Stopped:** 2026-11-19 05:41 (history at its point after the trousers' chain re-run; nothing of mine running, lock free; work committed with this file)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
-**The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 26% at 23:18 against 6.4% (+19.6); Kiln his priority item above 6 ahead (advisor 236) under the 99% guard; Fable 36% of its week. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
+**The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 37% at 05:07 against 12.2% (+24.8), under the ceiling; Fable 45%, at its cap. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
 
 ## Standing ways of working (carry across every rewrite)
 - **The night (advisor 42 and 44, 9 Nov):** round the clock; during the night's build and walk only work touching Unreal and heavy local jobs pause; never stop for the night. Space checked before the night build by 23:30.
@@ -29,36 +29,37 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Tries (RULINGS 7 Nov) over CLAUDE.md:** after two failed tries one genuinely different researched method; up to four while each closes the gap by a third with no new fault; none asks him. Helpers quote CLAUDE.md's 'third try needs his yes': correct them.
 - **Helper spawns in an unattended run:** the permission check refuses some briefs (delete wording, cut runs); a leaner brief passes. Never retry a refused brief verbatim.
 - Quay Run: on each driving study republish, copy its index.html to F:/LedgerTools/quay-run and run tools/driving_feel_check.py (advisor 222).
+- **Page read-back, daily by the session (19 Nov):** the nightly task is off since 12 Nov; once a day query verdicts with "at" after the last read-back, out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index` (ci's page-answers-fresh fails after 2 days).
+- **The ceiling (advisor 237):** `python tools/pace_line.py <pct> --fable <pct>` prints it; above it the lane stops first, still above at the next row nothing new starts.
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (22:36 on; details in DECISIONS 22:41 on)
-- Advisors 232-236 and the backstop recorded and acknowledged: canon's cars line (hurt, never kill), RULINGS within the cap (cars, play-build gate, GTA VI no-spoilers, Marvelous by 25 Nov), waiting item 24 (GTA VI footage, about 10 h). Fable cap enforced: `python tools/pace_line.py <pct> --fable <pct>` at each row stores Fable's share; the Agent hook refuses a Fable helper at 40%. Pushed 3fbabe72b.
-- Marvelous reference drapes (v1 line 5): trousers, skirt, donkey jacket done by the .avt route (runs/kiln-md-compare-2026-11-18: bodies/MH_RoccoP2.avt, MH_LenaS4.avt; *_avt folders; report MD-REFERENCE-DRAPES-2026-11-18.md). The 19:31 trousers drape is unusable (body at scale 1.0). Trousers sit about 100 mm low; pleats unpressed (no fold call in this API). Marvelous is free, bridge idle, inbox empty.
-- Coat, Fable try 1 of 2, NOT passed, uncommitted in lane coat (with the earlier try 2): pattern check fixed in general terms (hang from the top opening; cargo 129/129); the drape stops at the start check on the collar stand through the neck (KILN_SKIN_NECK_OVER_JOINT is on main, not in the lane); then likely the under collar (folded in front, 79-88 self-crossings). The helper's lock release was refused four times by the safety check reading rm; no lock is held now. Files: runs/kiln-coat-2026-11-18/fable.
+## Done this run (05:06 on; details in DECISIONS 05:10 on)
+- Advisor 231 closed: needs_you_page.py --waiting in ci-checks and rulings-enforcers.json; no RULINGS words (4,899 of 4,900).
+- Coat: on the joined lane (9a3c5a1) with KILN_SKIN_NECK_OVER_JOINT=1 it drapes to the end for the first time; fails only at the collar assembly (stand 44.8, collar 69 mm inside the neck; stretch 6.5-6.8; seams 27-36 mm open; rest p99 1.24). Same fault; its last try is Fable's, Fable at cap: set aside to Mon 13:00 or his word. Lane report, 19 Nov section.
+- Ron's trousers steps 7-8 re-run on the boots drape (importer helper): all steps pass as before (9,636 triangles, flat maps none, hems clean); sitting misses the bar: body through 304 (299; was 297), cloth inside 71 (44; was 62), in the seat. Held row files NOT replaced (new fault). chain-boots/REPORT-2026-11-19.md.
+- Ron's trousers M5 step 6 PASSES offline: boots proxy (Tom's n6 maker) as a Kiln collider (import_collider) beside the standard body; drape twice on main 9b5141d with KILN_LEGACY_NAMES=1, identical; 0 points inside the boots (575 bare-foot), nearest 2.6 mm; crotch layer crossings 265 (main's gate 231: known). Kiln pictures do not draw colliders. F:/LedgerTools/garments/ron/kiln-trousers-chain/boots-proxy/STEP6-BOOTS-2026-11-19.md.
 
 ## In flight at the stop
-- Nothing of mine running; the heavy lock is free. Bash processes from 17 Nov (shell snapshots) are not this run's: leave them.
-- THE GUARD (advisor 236) TRIPPED at the 23:18 row: 24% at 22:42, 26% at 23:18 (about 1.1 points an hour since 21:30; under 99% by Mon 07:00 needs about 0.7). Start nothing new until a row's rate is back under; then Kiln resumes as his priority item with up to two helpers, Fable allowed under 40% (36% at 23:18).
-- Night space 23:04: C: 40.8, F: 43.5 GB, GO. The stiffness2 lane build (1 GB on C:) is the first of mine to free.
+- Nothing of mine running; the heavy lock free.
+- The ceiling: 37% at 05:07 under 37.2%; Fable 45% at cap. The ceiling rises about 0.9 points an hour.
 
-## Next, in order (when the guard allows)
-0. Verdicts after 2026-11-18T22:30:00Z; advisor after 2026-11-18T22:32:00+01:00 (last acks 22:42: 234-236). A row at once with the projection.
-1. Coat: join lane-coat with main in the lane (main changed sim.rs and serve.rs, which try 2 also changed: expect text conflicts), run the coat job with KILN_SKIN_NECK_OVER_JOINT=1; optional control_work.sh under the lock. Fable try 2 of 2 left. Lock release: word lane briefs so releasing the lock does not read as a delete to the safety check (it refused rm -r of the lockdir at 23:20).
-2. Then legs, blouse, R4 on Fable (priorities); stiffness steps 5-7 only by a genuinely different method.
-3. Marvelous before 25 Nov: Darren's nylon jacket needs a body with a head (or him at the PC for a box); pressed pleats and a zipper are window steps; a look by eye at the three drapes; the money DECISION item by Tue 24 Nov (each v1 line's state after Mon 13:00, what only Marvelous makes, a recommendation).
-4. Ron's trousers M5 steps 6-10 (KILN-V1-CHECKLIST line 3); never Unreal 01:15-04:30.
-5. ADVISOR 231: first batch tomorrow: publish production/approvals/needs-you/next-batch.json (font, DINOv3; re-read the dinov3 licence in full first), then --waiting into ci-checks, enforcers, RULINGS within the cap.
-6. ADVISOR 230: the 23 Nov order's waiting list gets the real game's phase plan checked against the prototype design; RULINGS prototype line (rounds build the approved design).
-7. Morning 19 Nov: the P4 table (long session requested); Thursday's checkpoint (KILN-V1-CHECKLIST section c); the DAILY token file by 19:00.
+## Next, in order
+0. Verdicts after the last read (UTC); advisor after 2026-11-19T00:54:00+01:00 (last ack 237). Allowance, pace_line, a row.
+1. Ron's trousers: the seat's sitting fit (try 1 of 2; research first: M5 method section 4, check 4, and the jeans' chain-n7 sitting fixes): body through 304 to under 299, cloth inside 71 toward 44, on chain-boots/ (skin weights or the seat zone, not the drape). The exact commands are in chain-boots/REPORT-2026-11-19.md; pose check needs --garment work_trousers. Then the held row's files on branch ron-kiln-trousers-import (STEP-I-PREPARED) from chain-boots, the import into mh-assemble; step 9 re-clear Ron's jumper; step 10 the packaged held film with the real boots.
+2. Thursday's checkpoint by this evening (KILN-V1-CHECKLIST section c): which lines miss 24 Nov, for the Marvelous recommendation.
+3. Marvelous before 25 Nov: Darren's nylon jacket needs a body with a head; a look by eye at the three drapes; the money DECISION item by Tue 24 Nov.
+4. Fable pieces (coat collar try 2, legs, blouse, R4) wait for Fable's reset Mon 13:00; Opus only by RULINGS' tries.
+5. The DAILY token file by 19:00; the P4 table.
 - tools/timelog.py start "<item> ..." at every task.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 18 Nov 23:30: coat drape blocked by the collar stand at the start check (the lane lacks main's switch), after the pattern check was fixed.
-- 18 Nov 19:31: Marvelous trousers by FBX import at scale 1.0: body a tenth size, no arrangement points, a hidden box, pieces in a heap. Use the .avt bodies.
+- 19 Nov 05:21: the trousers' boots job on Kiln main stopped at once on SetSeamlineZipper (renamed kiln_api.kiln_set_seam_zipper on 18 Nov); KILN_LEGACY_NAMES=1 runs the job unchanged.
+- 19 Nov 05:20: coat on the joined lane: collar assembly inside the neck (above).
+- 18 Nov 19:31: Marvelous trousers by FBX import at scale 1.0: body a tenth size. Use the .avt bodies.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
-- Tries used 18 Nov: coat Opus 2/2, Fable 1/2; stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
+- Tries used: coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
 - API spend: US$3.77 this month (8 and 16 Nov); none 17-18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).
