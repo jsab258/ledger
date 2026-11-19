@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-C-072",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py (MODEL WRONG), tools/settings_check.py",
+  "by": "",
+  "evidence": "RULINGS.md 8 Nov models line carries it; fresh_gate selftest has a model-wrong case."
+ },
+ {
+  "id": "D-F-028",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Cap in tools/doc-caps.py is 4900 and RULINGS.md header says 4,900; his efficiency line sits first under How the work runs."
+ },
+ {
+  "id": "D-B-015",
+  "status": "enforced",
+  "enforcer": "tools/rulings_check.py",
+  "by": "",
+  "evidence": "production/rulings-enforcers.json exists and rulings_check.py runs in tools/hooks/pre-commit and fresh_gate."
+ },
+ {
+  "id": "D-G-078",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No current text asks a ruling to name its queue item or limits new instruments; searched CLAUDE.md, RULINGS.md, ci-checks.sh. The queue was replaced by the order ledger."
+ },
+ {
+  "id": "D-F-064",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Answers INDEX: schedule-fifteen-minutes done 2026-11-11; DECISIONS.md 11 Nov 18:15 says the 15-minute start took at 17:49."
+ },
+ {
+  "id": "D-C-055",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 9 Nov line, followed in practice; only the judgement-only Monday audit names it and no Monday audit has run yet (first is 23 Nov)."
+ },
+ {
+  "id": "D-A-043",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py (MODEL WRONG), tools/settings_check.py",
+  "by": "",
+  "evidence": "Start check names the model and a wrong model starts only due work; fresh_gate selftest covers it."
+ },
+ {
+  "id": "D-G-174",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 21 Sep and 1 Oct: Hook sheet governs, dated photographs win; the one-off pull-forward of research is long past."
+ },
+ {
+  "id": "D-C-038",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 30 Oct line; needs_you_page.py only refuses setting asks, nothing checks the hourly-row line."
+ },
+ {
+  "id": "D-D-090",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order 2026-11-02 items; phase 1 closed on his 9 Nov 07:17 yes, sitting and Stutter set aside and listed at the exit."
+ },
+ {
+  "id": "D-E-046",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 4 Nov line (12 Nov: advisor quoting his pick counts, not money, licences, canon, accounts) and 12 Nov installs line; no check on the relay."
+ },
+ {
+  "id": "D-E-029",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 53: \"a third try needs his yes first\"",
+  "evidence": "RULINGS 7 Nov tries line (9 Nov: after the fourth, a small removing fix is the builder's call, none asks him) is in force but CLAUDE.md still says the old third-try rule."
+ },
+ {
+  "id": "D-D-110",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Replay run 8 Nov (Sonnet matched one or two of four at about 40% cost), so the Sonnet day did not run; recorded in the decision's own note."
+ },
+ {
+  "id": "D-G-099",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sound ungated by the same terms as D41: no current text says it; RULINGS has only voices by ear (30 Sep) and waiting item 12 'needs his ear'. Searched RULINGS, CLAUDE.md, orders."
+ },
+ {
+  "id": "D-D-140",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Carried into RULINGS.md 11 Nov efficiency line (small first-round pictures, startup files once a day); not checked."
+ },
+ {
+  "id": "D-G-119",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 4 Nov advisor channel; D-G-112 (ratio withdrawn 2026-09-16); 5 Oct CHARTER/PLAN reset",
+  "evidence": "The September standing order (bot reaching studio, 27-setting list, ratio) belongs to the retired studio-v2 regime; nothing of it is in current texts."
+ },
+ {
+  "id": "D-E-030",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-090 (2026-11-16, advisor 183)",
+  "evidence": "Its own note: rewritten 16 Nov into a new form."
+ },
+ {
+  "id": "D-F-080",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Answers: start-gate-advisor-rows a, 13 Nov. DECISIONS 13 Nov 14:26 says option A could not be built in fresh_gate.py; tools/gate_prompt_hook.py (his gate-hook yes 15 Nov) is the route taken. Moderate confidence."
+ },
+ {
+  "id": "D-C-048",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py (three batches a day refused), tools/page_read_hook.py",
+  "by": "",
+  "evidence": "RULINGS.md 8 Nov line; enforcers listed in rulings-enforcers.json."
+ },
+ {
+  "id": "D-D-125",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py",
+  "by": "",
+  "evidence": "Same rule as RULINGS.md 8 Nov line (two batches a day refused); story drafts waiting is judgement."
+ },
+ {
+  "id": "D-G-133",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 30 Oct 'decide it yourself'",
+  "evidence": "The September studio-takes-defaults, Sunday summary and phone cards are replaced by the 30 Oct ruling and the order-ledger regime."
+ },
+ {
+  "id": "D-G-112",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Withdrawal carried out; no studio-versus-game ratio appears in any current text (searched CLAUDE.md, RULINGS.md, tools)."
+ },
+ {
+  "id": "D-D-009",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "All sixteen studies marked done in production/orders/2026-11-16.md Studies section, each with its fresh review."
+ },
+ {
+  "id": "D-D-047",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Recommendations became order-ledger items (n02-/o28c- and n16- items); later phases' items kept or dropped 8 Nov (K1 kept) in order 2026-11-16 Carried section."
+ },
+ {
+  "id": "D-E-104",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py",
+  "by": "",
+  "evidence": "TAGS = ACTION, DECISION, REVIEW in needs_you_page.py; RULINGS.md 2 Nov line carries the 17 Nov tag and place rule."
+ },
+ {
+  "id": "D-G-064",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off in Sept: twelve cards taken at defaults and logged; nothing further needed."
+ },
+ {
+  "id": "D-G-115",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off Sept arrangement; no Telegram bot in current texts (advisor channel since 4 Nov); key-secrecy lives in CLAUDE.md API rule."
+ },
+ {
+  "id": "D-G-160",
+  "status": "enforced",
+  "enforcer": "tools/branch_check.py (in ci-checks.sh)",
+  "by": "",
+  "evidence": "Branch rule checked: stale branch fails the build. The other two conventions (supersede marking, linking) have no check."
+ },
+ {
+  "id": "D-D-113",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "His 7 Nov yes was for a window ending Sunday night 8 Nov; hair, wear and dressing items are now in order 2026-11-16 items n16-2, n16-8."
+ },
+ {
+  "id": "D-D-085",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "production/orders/2026-11-16.md, 3,599 words; CLAUDE.md line 17 says about 1,200",
+  "evidence": "Orders were to stay about 1,200 words; the newest order is about three times that (2026-11-02 8,026, 11-09 6,353). Time log and Monday overview parts are followed."
+ },
+ {
+  "id": "D-C-033",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 11 Nov line, followed (paid-tools items on his page); only the Monday audit names it and none has run yet."
+ },
+ {
+  "id": "D-C-036",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 53: \"a third try needs his yes first\"",
+  "evidence": "RULINGS 7 Nov line (two tries, one researched method, up to four, none asks him) is enforced for its method line by method_line_check.py, but CLAUDE.md still states the old rule."
+ },
+ {
+  "id": "D-D-136",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 53: \"a third try needs his yes first\"",
+  "evidence": "Order 9 Nov rule 8 (research first, up to four tries) is in RULINGS but CLAUDE.md line 53 still says Two tries then his yes."
+ },
+ {
+  "id": "D-F-049",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 53: \"a third try needs his yes first\"",
+  "evidence": "His yes of 9 Nov to the tries rule stands in RULINGS 7 Nov line; CLAUDE.md line 53 states the earlier rule."
+ },
+ {
+  "id": "D-G-162",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 3 Nov (reviews sized to the piece)",
+  "evidence": "The four-director gate card belongs to the September regime; current gate is CLAUDE.md gate plus sized reviews. No sign the pillar-rungs question was kept."
+ },
+ {
+  "id": "D-E-123",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py (DECISION without kind refused, advisor 221)",
+  "by": "",
+  "evidence": "DECISION_KINDS list in needs_you_page.py; the two items themselves were one-off."
+ },
+ {
+  "id": "D-D-080",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-136 / D-C-036 (7 Nov research-then-up-to-four-tries rule)",
+  "evidence": "Its own note: replaced 7 Nov; still echoed by CLAUDE.md line 53."
+ },
+ {
+  "id": "D-E-062",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Both approvals acted on 13 Nov 14:26 (HumanMotionCraft downloaded and tested); the start-gate change could not be built as written (DECISIONS 13 Nov)."
+ },
+ {
+  "id": "D-C-040",
+  "status": "enforced",
+  "enforcer": "tools/md-bridge/start_bridge.ps1",
+  "by": "",
+  "evidence": "Heartbeat-over-30-s check in the script; listed in rulings-enforcers.json."
+ },
+ {
+  "id": "D-D-059",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "NOTEBOOK.md line 42 holds 'Universal AAA starting values'; RECIPE.md line 20 links it."
+ },
+ {
+  "id": "D-D-084",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "CLAUDE.md Talking to Jafar (ten lines, no files, no promised times); page-read part enforced by page_read_hook.py but the chat rule is not checked."
+ },
+ {
+  "id": "D-G-159",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "legacy/INDEX.md records the 2026-09-10 sweep (510 files moved, index written)."
+ },
+ {
+  "id": "D-G-027",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "July completeness audit carried out; its nine gaps were folded into the roadmap (legacy/v1-era audit)."
+ },
+ {
+  "id": "D-G-091",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 5 Oct (CHARTER.md and PLAN.md replace every list)",
+  "evidence": "The September visual-slice week is long gone; plan now runs by phases and weekly orders."
+ },
+ {
+  "id": "D-G-111",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Visual versus structural review boundary appears in no current text (searched CLAUDE.md, RULINGS.md, tools); only legacy/visual-bar-spec.md."
+ },
+ {
+  "id": "D-G-098",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md gate and RULINGS 3 Nov",
+  "evidence": "D41 said no director review for anything visual; current gate runs fresh reviewers on every piece (a small piece still gets one fresh reviewer, RULINGS 3 Nov) and passes only packaged."
+ },
+ {
+  "id": "D-D-111",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Yes ran to 9 Nov 13:00; now standing in order 2026-11-16 section 3 'Waiting, ranked (run only when the week's items wait)'."
+ },
+ {
+  "id": "D-G-163",
+  "status": "unclear",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Old queue 250 and wake-resume report: no trace in TOWN.md, NOW.md or current orders; town simulation now frozen (RULINGS 18 Nov), so cannot tell if it was done or dropped."
+ },
+ {
+  "id": "D-E-001",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Its note: carried out; advisor channel is in RULINGS.md 4 Nov line and CLAUDE.md."
+ },
+ {
+  "id": "D-D-118",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off 'accelerate' of 8 Nov; carried by helpers beside the main session and later by the pace line (RULINGS 6 Nov helpers, 7 and 10 Nov line)."
+ },
+ {
+  "id": "D-D-115",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Weekend 7-8 Nov waiting-list run done; remaining items are now order 2026-11-16 waiting list."
+ },
+ {
+  "id": "D-E-090",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "New audit form first due Monday 23 Nov (file by 12:50, 13:30 run); no MONDAY-AUDIT file exists yet in production/research/token-audit."
+ },
+ {
+  "id": "D-C-061",
+  "status": "enforced",
+  "enforcer": "tools/token_audit.py (MONDAY AUDIT MISSING), tools/doc-caps.py",
+  "by": "",
+  "evidence": "RULINGS.md 16 Nov weekly audit line; token_audit.py --monday-due checks the file; first one is due 23 Nov."
+ },
+ {
+  "id": "D-G-108",
+  "status": "enforced",
+  "enforcer": "tools/rulings_check.py",
+  "by": "",
+  "evidence": "Each RULINGS line must name enforcers or say judgement in rulings-enforcers.json; fails the commit. Gate that checks a claim exists."
+ },
+ {
+  "id": "D-B-014",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py (ACTION without only_you refused)",
+  "by": "",
+  "evidence": "Rule for ACTION items enforced; backup auto-start part is in the advisor watchdog."
+ },
+ {
+  "id": "D-E-015",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off for 8 Nov to Monday 07:00."
+ },
+ {
+  "id": "D-E-079",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off pacing for 15-16 Nov; the week has since moved on (reset pressed 18 Nov)."
+ },
+ {
+  "id": "D-E-085",
+  "status": "enforced",
+  "enforcer": "tools/api_batch.py, tools/settings_check.py",
+  "by": "",
+  "evidence": "RULINGS.md 1 Nov, 16 Nov API line covers scripted checks on the cheapest agreeing model."
+ },
+ {
+  "id": "D-A-050",
+  "status": "enforced",
+  "enforcer": "tools/api_batch.py, tools/settings_check.py",
+  "by": "",
+  "evidence": "Same as RULINGS.md 16 Nov API line; day ceiling refuses a batch."
+ },
+ {
+  "id": "D-D-086",
+  "status": "enforced",
+  "enforcer": "tools/api_batch.py (past today's ceiling refused), tools/settings_check.py",
+  "by": "",
+  "evidence": "RULINGS.md API line; ceiling corrected to credit left over days left."
+ },
+ {
+  "id": "D-G-063",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 7 and 10 Nov pace line (0% to 90%)",
+  "evidence": "The 85 ceiling of the September plan is replaced by the hourly pace line and then the 99% guard (advisor 237)."
+ },
+ {
+  "id": "D-D-096",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Set aside 8 Nov 19:30 (order 2026-11-16 n09-14: no further bulk text); credit month closed with US$10.80 spent."
+ },
+ {
+  "id": "D-E-037",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "RULINGS 7, 10 Nov line excepts his priority items and card or processor jobs; pace_line states it."
+ },
+ {
+  "id": "D-G-001",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Practice and CLAUDE.md 'carry on, nothing waits on his hands' plus RULINGS 16 Sep purchases his alone; unchecked."
+ },
+ {
+  "id": "D-C-063",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py, tools/push_guard.py, advisor watchdog",
+  "by": "",
+  "evidence": "RULINGS.md 16 to 23 Nov line; runs until 23 Nov 07:00."
+ },
+ {
+  "id": "D-D-141",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py (week-shape.json)",
+  "by": "",
+  "evidence": "Order 2026-11-16 intro and RULINGS pace line; week-shape.json and order_current_check.py."
+ },
+ {
+  "id": "D-E-048",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Reset pressed 18 Nov 15:20 (advisor 225), per the decision's note."
+ },
+ {
+  "id": "D-B-013",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-110 (cloud lane, 17 Nov) and D-E-129 (Fable 40%, 18 Nov)",
+  "evidence": "Lane moved to the cloud and Fable cap raised to 40%; eight helpers a session still stands in RULINGS."
+ },
+ {
+  "id": "D-E-129",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py (Fable at its cap), Agent hook",
+  "by": "",
+  "evidence": "pace_line.py N --fable F stores the share; Agent hook refuses a Fable helper at 40%."
+ },
+ {
+  "id": "D-B-032",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py (Fable at its cap)",
+  "by": "",
+  "evidence": "Same Fable 40% rule, in RULINGS.md line 37."
+ },
+ {
+  "id": "D-C-064",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py (Fable at its cap)",
+  "by": "",
+  "evidence": "RULINGS.md 18 Nov Fable 40% clause; applies to 23 Nov."
+ },
+ {
+  "id": "D-D-024",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-030 (2026-10-26 evening: train on Gemini labels, no request to Anthropic)",
+  "evidence": "Its own note."
+ },
+ {
+  "id": "D-A-023",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "MetaTailor free test run and failed 12 Nov (DECISIONS line 115); his free pick of paid-tools-top-three stands as RULINGS 11 Nov tools line."
+ },
+ {
+  "id": "D-E-016",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off for Monday 9 Nov."
+ },
+ {
+  "id": "D-B-006",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-013 (advisors 201 and 202, eight helpers a session) and advisor 237 one ceiling",
+  "evidence": "Helper rule by rate was replaced two days later by the eight-helpers rule and the 99% ceiling in pace_line.py."
+ },
+ {
+  "id": "D-E-009",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "His tap of 9 Nov (advisor 40, up to six helpers)",
+  "evidence": "Helper cap raised; waiting-list part now standing in order 2026-11-16 section 3."
+ },
+ {
+  "id": "D-A-052",
+  "status": "enforced",
+  "enforcer": "tools/settings_check.py (dearer model named), tools/fresh_gate.py",
+  "by": "",
+  "evidence": "RULINGS.md 8 Nov models line covers cheapest model, never general-purpose helpers, three-task replay."
+ },
+ {
+  "id": "D-C-062",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py, tools/fresh_gate.py",
+  "by": "",
+  "evidence": "RULINGS.md 7, 10 Nov line; ceiling changed later by advisor 237 (see enforcers note)."
+ },
+ {
+  "id": "D-E-061",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 7, 10 Nov line 'ahead beats behind if productive (13 Nov)' and no-busywork wording; unchecked."
+ },
+ {
+  "id": "D-E-008",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "Straight line 0% Monday 13:00 to 90% next Monday 07:00 is pace_line.py's week shape."
+ },
+ {
+  "id": "D-E-070",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Its note: Fable project switched off next day (advisor 158); Kiln paced to the line."
+ },
+ {
+  "id": "D-B-011",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order 2026-11-16 n16-1 (17 Nov 10:10, his pick) carries Kiln about 70%; HANDOVER goal line; no check."
+ },
+ {
+  "id": "D-E-080",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-094 (2026-11-16 21:16) then D-E-100",
+  "evidence": "Its own note: changed by his picks of 16 Nov 21:16 and 17 Nov 10:00."
+ },
+ {
+  "id": "D-E-094",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-100 (2026-11-17 10:05, advisor 193)",
+  "evidence": "Its own note: share raised to 70% by advisor 193."
+ },
+ {
+  "id": "D-E-138",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "Priority-item exception above 6 ahead is pace_line.py logic; HANDOVER goal line names Kiln as priority."
+ },
+ {
+  "id": "D-B-036",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "Same as D-E-138; HANDOVER line 11 names Kiln his priority item above 6 ahead."
+ },
+ {
+  "id": "D-B-020",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Kiln share targets 60% Wednesday and 70% Thursday; HANDOVER and order n16-1 carry about 70%; no check."
+ },
+ {
+  "id": "D-E-073",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-094 / D-E-100 (Kiln share and lanes of 16-17 Nov)",
+  "evidence": "Four-hour rounds and 90% aim replaced by parallel lanes and the 99% ceiling (advisor 237); Fable project off remains true."
+ },
+ {
+  "id": "D-D-145",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order 2026-11-16 n16-1 holds his 17 Nov 10:10 pick; n16-5 and rest of n16-3 wait; no check."
+ },
+ {
+  "id": "D-B-012",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Step 4 stiffness capped at 32 h with a failed-capability report due Thursday 19 Nov (today); HANDOVER 18 Nov shows stiffness tries 2/2 and no report yet."
+ },
+ {
+  "id": "D-E-100",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Kiln at about 70% and the stiffness fix started 17 Nov (HANDOVER stiffness lanes)."
+ },
+ {
+  "id": "D-E-110",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Lane moved to the cloud (production/lane, 'cloud lane' items in order 2026-11-16 waiting list); PC lane preparation stopped."
+ },
+ {
+  "id": "D-C-011",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 24 Sep line inside the 28 Oct release item; enforcers file lists only Monday audit (and an unrelated driving check)."
+ },
+ {
+  "id": "D-E-133",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Marvelous decision due by Wed 25 Nov (RULINGS clothes line, HANDOVER next step 3); not yet decided."
+ },
+ {
+  "id": "D-D-021",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Signed up 26 Oct and month ran; the game-use licence judgement is his (RULINGS clothes line)."
+ },
+ {
+  "id": "D-D-075",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS clothes line: everything exported to F: before any month ends; Marvelous month ends 26 Nov; unchecked."
+ },
+ {
+  "id": "D-B-040",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Money DECISION item due Tue 24 Nov with each v1 line's state after Monday 13:00 (HANDOVER next step 3); not yet raised."
+ },
+ {
+  "id": "D-C-081",
+  "status": "enforced",
+  "enforcer": "tools/api_batch.py, tools/settings_check.py",
+  "by": "",
+  "evidence": "RULINGS.md API credit line; per rulings-enforcers.json."
+ },
+ {
+  "id": "D-E-099",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order 2026-11-16 waiting items 'joined 17 Nov, free helper place' show it followed; unchecked."
+ },
+ {
+  "id": "D-C-016",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 5 and 6 Nov line; only Monday audit names it, none run yet."
+ },
+ {
+  "id": "D-D-132",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same line as D-C-016, in RULINGS.md; unchecked."
+ },
+ {
+  "id": "D-B-003",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No new drives: RULINGS 1 Nov 'No new hardware'; the 1.4 points an hour and 93% reset point were changed by advisor 210 (98-99%), the drives part stands."
+ },
+ {
+  "id": "D-C-078",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 1 Nov 'No new hardware'; only Monday audit names it, none run yet."
+ },
+ {
+  "id": "D-D-034",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-038 (2026-10-27 night: keep Darren's present voice)",
+  "evidence": "Livelier reference dropped; no hiring and no paid voice still stand in RULINGS."
+ },
+ {
+  "id": "D-C-080",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 29 Sep 'no paid voice service'; Monday audit only."
+ },
+ {
+  "id": "D-E-098",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No second drive: RULINGS 1 Nov no new hardware and storage-map rules; storage is solved with what exists; unchecked."
+ },
+ {
+  "id": "D-E-020",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off nudge of 8 Nov evening."
+ },
+ {
+  "id": "D-G-104",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Meter-unmeasured exceptions appear in no current text (searched tools/pace_line.py, fresh_gate.py, CLAUDE.md, RULINGS.md)."
+ },
+ {
+  "id": "D-E-043",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 11 Nov tools line; Monday audit only."
+ },
+ {
+  "id": "D-F-066",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "His yes is the RULINGS.md 11 Nov tools line; Monday audit only."
+ },
+ {
+  "id": "D-F-067",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Free route chosen; MetaTailor and FaceBuilder free tests ran first (DECISIONS lines 79 to 115)."
+ },
+ {
+  "id": "D-E-032",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/progress-page/progress.json line 141: 'Phase 2's estimate, re-measured every Monday (it must fall week by week)'; no check."
+ },
+ {
+  "id": "D-G-131",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-063 (2026-09-10, ceiling 85)",
+  "evidence": "Its own note."
+ },
+ {
+  "id": "D-C-077",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 16 Sep line; Monday audit only."
+ },
+ {
+  "id": "D-G-103",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Ten-hour stale meter rule appears in no current text (searched fresh_gate.py, pace_line.py, CLAUDE.md, RULINGS.md); hourly rows carry the reading instead."
+ },
+ {
+  "id": "D-C-030",
+  "status": "enforced",
+  "enforcer": "tools/token_audit.py (share measured), advisor watchdog",
+  "by": "",
+  "evidence": "RULINGS.md 11 Nov line; enforcers note says share measured, not refused."
+ },
+ {
+  "id": "D-D-101",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 6, 7 Nov (10% kept for Monday, line to 90%)",
+  "evidence": "85% stop and 5% spare replaced by the 90% pace line; CLAUDE.md now says 70/10/20."
+ },
+ {
+  "id": "D-E-106",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-110 (cloud lane) and D-E-129 (Fable 40%)",
+  "evidence": "Lane moved to cloud on 17 Nov, Fable raised on 18 Nov; effort high still stands in RULINGS."
+ },
+ {
+  "id": "D-D-029",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off: $7.92 of the $10 spent by 27 Oct; extension to $4 more recorded."
+ },
+ {
+  "id": "D-F-029",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Blind replay run 8 Nov; Sonnet matched too few, so no Sonnet day (SONNET-BLIND-REPLAY-2026-11-08.md)."
+ }
+]

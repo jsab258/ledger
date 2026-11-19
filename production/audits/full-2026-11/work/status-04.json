@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-E-035",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Not in RULINGS, but followed: HANDOVER.md standing line 'His own tools are not licences' and DECISIONS 2026-11-18 12:13 (advisor 221) treats Kiln's interface as his own tool, no licence question."
+ },
+ {
+  "id": "D-F-065",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Accounts made; DECISIONS 2026-11-11 18:15 says both programs installed, and Houdini Apprentice licence confirmed by hython 18:53 (needs-you item closed)."
+ },
+ {
+  "id": "D-A-022",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sign-ups carried out 11 Nov (DECISIONS lines 79-83); the tools-reach-his-page ruling is in RULINGS 11 Nov ('any tool, paid or free...')."
+ },
+ {
+  "id": "D-A-036",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 14:26: v0.3.0 release downloaded, checksum matched, headless test run; set aside 15:25 and uninstalled 16:47."
+ },
+ {
+  "id": "D-F-079",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Install carried out 13 Nov (DECISIONS 14:26), then uninstalled 16:47 after round 1."
+ },
+ {
+  "id": "D-E-069",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 16:47: HumanMotionCraft uninstalled, numbers in HUMANMOTIONCRAFT-ROUND1-2026-11-13.md; ideas (not GPL code) go to Kiln motion notes."
+ },
+ {
+  "id": "D-A-039",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 16:47: F:/LedgerTools/humanmotioncraft removed (323 MB, own install). Only tools/tool-tests/hmc_*.py scripts remain."
+ },
+ {
+  "id": "D-E-057",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-060 (2026-11-13 13:43, combined clothing tool, later named Kiln)",
+  "evidence": "The loop on Loomwright first was replaced the same day by one combined tool built from Seamshift, ClothCraft and DrapeStudio's interface; Loomwright's cloth cluster dropped (DECISIONS 2026-11-13 14:26, advisor 139)."
+ },
+ {
+  "id": "D-A-047",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": ".claude/settings.json UserPromptSubmit hook runs tools/gate_prompt_hook.py with timeout 30."
+ },
+ {
+  "id": "D-E-051",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 08:58 (advisor 128) puts uninstall-or-keep on the waiting list for 25 Nov, tied to Motionsmith's leg rule. Today is 19 Nov, undecided; the 16 Nov order's waiting list, NOW.md and HANDOVER.md do not name Cascadeur, so nothing tracks the 25 Nov date."
+ },
+ {
+  "id": "D-E-072",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 13/14 Nov Kiln line ('by design: no special cases, held-back jobs at each milestone'); HANDOVER.md carries 'special cases: none' and 'held-back jobs never reach a fixer'. No check tests it; the enforcers file lists share checks only."
+ },
+ {
+  "id": "D-D-143",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same RULINGS.md 13/14 Nov line plus M7 count in every round report (HANDOVER.md, M7 count 0). No script tests it; enforcers entry covers Kiln share only."
+ },
+ {
+  "id": "D-E-115",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-17 22:38 records his direction; 2026-11-18 03:06 writes Kiln's product targets into LOOP.md (KILN-PRODUCT-TARGETS-2026-11-18.md), proposed numbers marked."
+ },
+ {
+  "id": "D-E-092",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Inputs part done: body standard kept 16 Nov 22:17 (DECISIONS). The Thursday 19 Nov checkpoint (held-back jobs, M5 counts, else hybrid) is today and not yet recorded; HANDOVER next step 7 names it, v1 shows 0 of 6."
+ },
+ {
+  "id": "D-C-068",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md Kiln line (13, 14, 18 Nov) states it. Enforcers file maps the line to token_measures/token_audit share checks, which do not test special cases or held-back jobs; monday-audit is manual."
+ },
+ {
+  "id": "D-C-067",
+  "status": "enforced",
+  "enforcer": "tools/token_measures.py::KILN OVER share of the week's spend; tools/token_audit.py::KILN BY ORDER ITEM",
+  "by": "",
+  "evidence": "RULINGS.md 13 Nov line; week-shape.json kiln_share and the share check."
+ },
+ {
+  "id": "D-E-063",
+  "status": "enforced",
+  "enforcer": "tools/token_measures.py::KILN OVER share; tools/token_audit.py::KILN BY ORDER ITEM",
+  "by": "",
+  "evidence": "Condition kept in RULINGS 13 Nov (serves LEDGER, game never waits, share cap); 15% overridden by advisor 144 and raised by 187/193 as noted."
+ },
+ {
+  "id": "D-E-095",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-011 / D-D-145 (2026-11-17 10:00, advisor 193, Kiln about 70% now)",
+  "evidence": "The 70% trigger on held-back pass was replaced when Kiln went to about 70% at once (DECISIONS 2026-11-17 10:00). Speed lane itself ran: round 10 measured hybrid 10.6 ms vs 122.8 ms (DECISIONS 2026-11-16 11:44)."
+ },
+ {
+  "id": "D-C-069",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 18 Nov states the three proofs before props, vehicles, buildings. The enforcers note says monday-audit checks no such module started, which is a manual audit, not a script."
+ },
+ {
+  "id": "D-E-044",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 29/30 Oct line carries the 11 Nov Epic launcher and fab.com clicks rule; no script checks it (enforcers: bridge heartbeat check and monday-audit only)."
+ },
+ {
+  "id": "D-F-070",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same ruling now in RULINGS.md 11 Nov text (builder alone may click in Epic launcher and fab.com, no buying or sign-in)."
+ },
+ {
+  "id": "D-F-060",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off MetaHuman content step in the Epic launcher, reported done 11 Nov; nothing further waits."
+ },
+ {
+  "id": "D-D-107",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py; tools/history_check.py",
+  "by": "",
+  "evidence": "Part A in place: hourly fresh-session gate and history switch (tools/fresh_gate.py header quotes his 4 Nov ruling A2; START-COST-2026-11-11.md, QUIET-STARTS-2026-11-14.md). Part B's weekly quality comparison: last file production/audits/lean-start/QUALITY-THISWEEK-2026-11-06.md, none since; the Monday overview it was for is stopped."
+ },
+ {
+  "id": "D-G-060",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Move done: old repo renamed ledger-archive-2026-10, new public jsab258/ledger with cleaned history (production/audits/history-clean-2026-10/README.md). LFS was not used: CLAUDE.md now says git holds text and small files only, big files on F:."
+ },
+ {
+  "id": "D-E-056",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Loomwright hair rounds 2 to 5 ran 13 to 17 Nov (DECISIONS lines 125, 245, 247, 261); order n16-8 continues its hair loop."
+ },
+ {
+  "id": "D-D-148",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Prototype is a source project: tools/lane/prototype/project (src, test, BUILD.md) with build.py and PUBLISHED.json."
+ },
+ {
+  "id": "D-G-125",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05, CHARTER.md and PLAN.md replace every list)",
+  "evidence": "The map page belonged to the studio, paused 22 Sep and moved to legacy/studio-v2 (REACTIVATE.md). Order of phases now lives in PLAN.md and NOW.md."
+ },
+ {
+  "id": "D-G-161",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05)",
+  "evidence": "The second board of tiles was a map-page feature of the paused studio (legacy/studio-v2/tools/map.py). Its rule that new asset kinds need an entry before work lives on as CATALOGUE.md and the catalogue check."
+ },
+ {
+  "id": "D-F-048",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Markerless plugin installed 9 Nov; tools/ue/mocap_solve.py and the MocapSolve project exist."
+ },
+ {
+  "id": "D-D-068",
+  "status": "enforced",
+  "enforcer": "tools/md-bridge/start_bridge.ps1 (heartbeat older than 30 s)",
+  "by": "",
+  "evidence": "RULINGS 29/30 Oct: one UIA use, the bridge menu item; scripted and bounded."
+ },
+ {
+  "id": "D-A-032",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-12 13:40: free test run on his word; failed the refit checks; MetaTailor files deleted 16 Nov."
+ },
+ {
+  "id": "D-E-118",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off overnight instruction 17 Nov; hourly rows and the 23:18 guard in HANDOVER.md show Kiln was monitored."
+ },
+ {
+  "id": "D-E-054",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 11:31: Motionsmith round 3 run and measured."
+ },
+ {
+  "id": "D-E-065",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Name in use everywhere (RULINGS, orders, HANDOVER, tools/kiln_to_game.py)."
+ },
+ {
+  "id": "D-E-066",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 14:50: folders snapshotted and tagged his-final-2026-11-13; tool-dev copies are the only line."
+ },
+ {
+  "id": "D-F-087",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Output cap hook active: .claude/settings.json PreToolUse runs tools/output_cap.py."
+ },
+ {
+  "id": "D-F-016",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Faster page-read check is in place: .claude/settings.json PostToolUse runs tools/page_read_hook.sh (0.13 s a step per the note)."
+ },
+ {
+  "id": "D-F-014",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Session could not change the line; he did it by hand and the hook is now in settings.json (see D-F-016)."
+ },
+ {
+  "id": "D-G-176",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Resolved by events 9 Sep (gallery fix); nothing needed from him; studio pages are legacy now."
+ },
+ {
+  "id": "D-F-075",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Reported done 12 Nov: nightly answers task paused; the advisor channel replaced it."
+ },
+ {
+  "id": "D-E-068",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Panel Cloth and Chaos resizing in Kiln's acceptance suite: no mention in RULINGS, orders, NOW, HANDOVER, DECISIONS or tools. Only 'parity list against Marvelous' (D-E-078, order n16-1) survives. Kiln's own LOOP.md on F: not readable here, so this may live only there."
+ },
+ {
+  "id": "D-G-118",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 / RULINGS 2 Nov (his page 'LEDGER: Needs you')",
+  "evidence": "Glance page was a studio page (legacy/studio-v2/glance.html). His one page is now 'LEDGER: Needs you' plus the progress page."
+ },
+ {
+  "id": "D-D-150",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Waiting item 21 of production/orders/2026-11-16.md: the real C# simulation in the browser, for the order of 23 Nov; needs a machine reaching Microsoft's sites. tools/lane/simwasm exists but the order is not yet written."
+ },
+ {
+  "id": "D-C-082",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 28 Sep line still carries it; no relay needed yet; monday-audit only."
+ },
+ {
+  "id": "D-G-061",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "His orders of 4-5 Oct 2026 (history clean), recorded in production/audits/history-clean-2026-10/README.md",
+  "evidence": "The clean-start question was settled by his 4 and 5 Oct orders: history cleaned, new repo jsab258/ledger, old one archived (production/audits/history-clean-2026-10/README.md)."
+ },
+ {
+  "id": "D-F-050",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS line 17 (2026-11-09 12:30): RIFE allowed for the motion experiment only; that experiment's C: install was deleted 13 Nov."
+ },
+ {
+  "id": "D-G-116",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off 5 Sep order; first textured frames were delivered as images (later Unreal proof views)."
+ },
+ {
+  "id": "D-E-041",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DrapeStudio retested 11 Nov (DECISIONS line 68) and 13 Nov (line 131); his final update is in."
+ },
+ {
+  "id": "D-E-059",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-060 (2026-11-13 13:43, one combined clothing tool)",
+  "evidence": "Replaced by advisor 139 before any work started: Seamshift became the base of the combined tool."
+ },
+ {
+  "id": "D-E-053",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 09:15: Seamshift round 3 run; six of seven faults fixed."
+ },
+ {
+  "id": "D-E-058",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-E-060 (2026-11-13, combined tool Kiln)",
+  "evidence": "Seamshift as a separate tool ended when Kiln was built from it and renamed (DECISIONS 2026-11-13 14:26 and 14:50); no separate round 4 recorded."
+ },
+ {
+  "id": "D-E-067",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-069 / D-E-120 (2026-11-18, three proofs and blind-spots adoption)",
+  "evidence": "The 'no new module until M3' gate was replaced by the three proofs; the judge-first order and props, vehicles, then buildings sequence remain in RULINGS 18 Nov."
+ },
+ {
+  "id": "D-A-026",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Test ran on his word in chat 12 Nov 12:55 (DECISIONS line 115); computer-use approval had been refused in a scheduled run."
+ },
+ {
+  "id": "D-F-068",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off settings change reported done 11 Nov; settings checked on disk (DECISIONS 2026-11-11 18:15)."
+ },
+ {
+  "id": "D-D-097",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "All six exist in .claude/skills: gate, packaged-walk, street-weathering, his-page, speech-bench, asset-import (plus game-garment, shopfront, slate-roofs)."
+ },
+ {
+  "id": "D-F-003",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Closed 08:15 on 2 Nov; stuck nightly session stopped."
+ },
+ {
+  "id": "D-B-026",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": ".claude/settings.json has the output cap (PreToolUse tools/output_cap.py) and order-item hooks (tools/lane/item_tags.py hook-session, hook-helper)."
+ },
+ {
+  "id": "D-F-078",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 08:58: one router account, his key file in place, item closed."
+ },
+ {
+  "id": "D-G-124",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-044 (2026-11-04, advisor channel)",
+  "evidence": "The Telegram daemons were studio machinery, moved to legacy/studio-v2 (START THE TELEGRAM BOT.bat). The advisor channel took over."
+ },
+ {
+  "id": "D-G-032",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D10 retirement of template_sync, 2026-08-31",
+  "evidence": "template_sync was retired in place on 2026-08-31 (D10), as the row's own note says; the studio is now in legacy/."
+ },
+ {
+  "id": "D-E-042",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Tests ran 11-13 Nov: Houdini Vellum set aside after try 3 (DECISIONS line 112); Cascadeur tests 4 and 5 set aside (lines 108-111); nothing from them in the game (RULINGS 25 Oct no trial-made work)."
+ },
+ {
+  "id": "D-E-055",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-13 15:25: HumanMotionCraft tested headless by the builder, set aside; he did nothing by hand."
+ },
+ {
+  "id": "D-G-127",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-044 (2026-11-04, advisor channel)",
+  "evidence": "Telegram photo path belongs to the retired studio bot (legacy/studio-v2)."
+ },
+ {
+  "id": "D-F-025",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-07 19:49: third try acted on, Sheila, Ron then Darren on the Wednesday morning, 'Morning.' as the line."
+ },
+ {
+  "id": "D-E-036",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-10 15:24 and 17:39: TextureCraft 0.5.0 and MaterialCraft 0.3.0 installed and proved headless in the materials test."
+ },
+ {
+  "id": "D-D-093",
+  "status": "enforced",
+  "enforcer": "tools/token_audit.py::MONDAY AUDIT MISSING; tools/token_audit.py::WHAT EACH ITEM AND EACH KIND OF WORK COSTS",
+  "by": "",
+  "evidence": "Audits exist (AUDIT-2026-10-26..., DAILY-2026-11-11..18, MONDAY-AUDIT-2026-11-09.md); RULINGS 16 Nov sets the Monday file by 12:50."
+ },
+ {
+  "id": "D-F-069",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off, reported done 11 Nov; tool tests ran from first start (DECISIONS 2026-11-11)."
+ },
+ {
+  "id": "D-G-007",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D16 engine decision to Unreal, 2026-09-10",
+  "evidence": "Unity-era CI idea. Engine moved to Unreal (legacy/INDEX.md, D16, 10 Sep); no panel-walk test exists in .github/workflows. The principle survives as RULINGS 18 Nov experience rules and the clumsy-player pass."
+ },
+ {
+  "id": "D-F-044",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-09 09:43: 'connectors stay'; nothing further."
+ },
+ {
+  "id": "D-A-020",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py (15-minute quarter gate)",
+  "by": "",
+  "evidence": "Gate runs every 15 minutes; DECISIONS line 81: both settings took effect 17:49 on 11 Nov."
+ },
+ {
+  "id": "D-E-039",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py",
+  "by": "",
+  "evidence": "Same change; tools/fresh_gate.py describes the 15-minute gate and the 18 s hold after a stop."
+ },
+ {
+  "id": "D-D-144",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/week-shape.json active; tools/order_current_check.py exists; NOW.md goal names the order of 16 Nov."
+ },
+ {
+  "id": "D-D-119",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order of 9 Nov adopted 8 Nov; carried items folded into n09-x and then K1-K9 keep-or-drop (production/orders/2026-11-16.md end; his tap 8 Nov 19:34)."
+ },
+ {
+  "id": "D-F-033",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order adopted; its rules went into RULINGS; nine keep-or-drop groups asked once (answered 8 Nov 19:34)."
+ },
+ {
+  "id": "D-F-083",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order of 16 Nov adopted 15 Nov 21:08 (NOW.md goal)."
+ },
+ {
+  "id": "D-B-022",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Waiting items 2-7 of the 16 Nov order carry the 17 Nov target files for the helper places (production/research/phase2-plan)."
+ },
+ {
+  "id": "D-C-044",
+  "status": "enforced",
+  "enforcer": "tools/page_read_hook.py; advisor:needs-you-check",
+  "by": "",
+  "evidence": "RULINGS.md 4 Nov line; page and advisor rows read by hook. Acks and what counts as his order are judgement."
+ },
+ {
+  "id": "D-C-045",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "In RULINGS.md 4 Nov line (12 Nov addition). Enforcers file lists only read checks; nothing tests the quoting rule."
+ },
+ {
+  "id": "D-F-073",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Yes made the quoting rule standing; in RULINGS.md 4 Nov line."
+ },
+ {
+  "id": "D-A-027",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "In RULINGS.md 4 Nov line; DECISIONS lines 136-137 show outside downloads still needed his own chat yes."
+ },
+ {
+  "id": "D-C-046",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 4 Nov line; the enforcers note itself says 'acks are judgement'. No tool checks advisor-acks (only tools/lane/owner_minutes.py reads them)."
+ },
+ {
+  "id": "D-A-051",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-16 14:13: 178 and 179 withdrawn, nothing written."
+ },
+ {
+  "id": "D-D-151",
+  "status": "enforced",
+  "enforcer": "tools/lane/prototype/playtester/playtest.py",
+  "by": "",
+  "evidence": "Canon.md pillar section says the playtester measures activity mix and empty minutes every round; order item 22 repeats it."
+ },
+ {
+  "id": "D-C-050",
+  "status": "enforced",
+  "enforcer": "tools/nightly_walk.py::does the town visibly know Tom; tools/ci-checks.sh::nightly-selftest",
+  "by": "",
+  "evidence": "RULINGS 3 Oct line."
+ },
+ {
+  "id": "D-C-031",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 6 and 7 Nov testing line; enforcers note says lean-check pruning is judgement."
+ },
+ {
+  "id": "D-G-053",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "legacy/INDEX.md is live and holds retired material; retired order files go to production/archive. Own scratch outputs are deleted under RULINGS 29 Oct, which is a different class."
+ },
+ {
+  "id": "D-G-136",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05) and CLAUDE.md 'One session'",
+  "evidence": "Studio lanes ended; one production session with bounded tasks (CLAUDE.md, TOWN.md, CLOTHES.md)."
+ },
+ {
+  "id": "D-C-043",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 29/30 Oct line: ArtCraft's Discord via the advisor on his direct chat ask (15 Nov)."
+ },
+ {
+  "id": "D-B-005",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 17 Nov: ACTION items name reason and routes; CLAUDE.md NEEDS YOU message rule. needs_you_page.py checks form, not the same-hour timing."
+ },
+ {
+  "id": "D-E-086",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-16 14:13: nothing decided; 177's four changes stand."
+ },
+ {
+  "id": "D-G-084",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05)",
+  "evidence": "Inventory tiles belonged to the studio map (legacy/studio-v2). Typed systems list moved to CATALOGUE.md."
+ },
+ {
+  "id": "D-D-001",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 8 Nov models line (order of 9 Nov rule 9)",
+  "evidence": "Opus/Sonnet split reworked 8-9 Nov. Sized reviews live in RULINGS 3 Nov; the rest is practice with no check."
+ },
+ {
+  "id": "D-G-029",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Carried by CLAUDE.md gate ('no visible fault') and RULINGS 'yes only for 2026-grade work'; no check."
+ },
+ {
+  "id": "D-E-013",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/research/token-audit/SONNET-BLIND-REPLAY-2026-11-08.md exists; models line rewritten in RULINGS 8 Nov."
+ },
+ {
+  "id": "D-B-023",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Adopted 18 Nov; tools/lane/kiln_items.json cites 'blind-spots item 4, adopted 18 Nov'; cold re-run and lineup plans in production/lane."
+ },
+ {
+  "id": "D-E-120",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 9 Nov (monthly cold re-run), 18 Nov (three proofs gate), combat lab test line. Enforcers note: monday-audit checks the month has one, manual."
+ },
+ {
+  "id": "D-E-119",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Blind-spots review commissioned and adopted 18 Nov (D-B-023)."
+ },
+ {
+  "id": "D-G-164",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "RULINGS 2 Nov (his page, one permanent link)",
+  "evidence": "Daily brief and cards ended with the studio; no daily pages, one permanent page, items in at most two batches a day (RULINGS 2 and 8 Nov)."
+ },
+ {
+  "id": "D-C-041",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 11 Nov text; no script checks it (only the bridge heartbeat)."
+ },
+ {
+  "id": "D-C-042",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 9, 14 Nov. Note RULINGS 15 Nov routes ArtCraft's Discord through the advisor, so builder reads there are narrowed."
+ },
+ {
+  "id": "D-A-015",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-A-042 (2026-11-14 20:13, discussions read-only) and D-D-142 (2026-11-15)",
+  "evidence": "Widened on 14 Nov to discussions, then Discord reads moved to the advisor on 15 Nov."
+ },
+ {
+  "id": "D-G-040",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Calibration sample and 80% judge tuning appear in no current text. Only a docstring in tools/canon-gate.py says tone needs 'Jafar's calibration sample'. Searched RULINGS, CLAUDE.md, PLAN, CHARTER, orders, canon.md. No sample was ever graded."
+ },
+ {
+  "id": "D-C-217",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md line 9 states it. enforcers list empty; no check."
+ },
+ {
+  "id": "D-C-022",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "CHARTER.md and PLAN.md exist and NOW.md derives from PLAN; enforcers list monday-audit only."
+ },
+ {
+  "id": "D-E-088",
+  "status": "enforced",
+  "enforcer": "tools/settings_check.py::a helper moved to a dearer model is named; tools/fresh_gate.py::MODEL WRONG",
+  "by": "",
+  "evidence": "RULINGS 8 Nov models line; .claude/agents set extractor, importer, small-reviewer, research-reader to sonnet."
+ },
+ {
+  "id": "D-E-022",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS archived (production/archive/DECISIONS-to-2026-11-09.md), TOWN.md and CLOTHES.md are short briefs, summary stopped (RULINGS 9 Nov 'No FOR-JAFAR.md')."
+ },
+ {
+  "id": "D-D-083",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "CLAUDE.md 'Helpers never send clicks or keys'; RULINGS 29/30 Oct. HANDOVER 'Do not click anything outside Marvelous'. No script; RULINGS later widened to Epic launcher."
+ },
+ {
+  "id": "D-C-039",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 29/30 Oct line with later exceptions (Epic launcher, Chrome reads). Only the bridge start is scripted."
+ },
+ {
+  "id": "D-F-045",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 2026-11-09 09:43 acted on chat answers of 08:13."
+ },
+ {
+  "id": "D-D-082",
+  "status": "enforced",
+  "enforcer": "tools/order_ledger.py (fails the push for a new item with no 'Reference:')",
+  "by": "",
+  "evidence": "CLAUDE.md reference-first line (his rule 28 Oct)."
+ },
+ {
+  "id": "D-G-100",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Covered by RULINGS 30 Oct 'decide it yourself' and CLAUDE.md audits rule; no separate text or check."
+ },
+ {
+  "id": "D-C-029",
+  "status": "enforced",
+  "enforcer": "tools/token_audit.py; advisor:daily-backstop",
+  "by": "",
+  "evidence": "RULINGS 11 Nov; DAILY files exist 11 to 18 Nov."
+ },
+ {
+  "id": "D-C-037",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py (refuses items asking him to install or change a setting)",
+  "by": "",
+  "evidence": "RULINGS 30 Oct line."
+ },
+ {
+  "id": "D-D-070",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py (ACTION needs only_you and tried; DECISION needs kind)",
+  "by": "",
+  "evidence": "Same RULINGS 30 Oct line."
+ },
+ {
+  "id": "D-C-057",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "DECISIONS.md lines 440-456 (e.g. 2026-11-18 22:44, 2026-11-19 00:54) and tools/doc-caps.py comment 'DECISIONS.md had no cap and have none'",
+  "evidence": "RULINGS 9 Nov asks for about 40 words a line; the newest 60 DECISIONS.md entries have a median of 83 words and run to 171. doc-caps.py says DECISIONS.md has no cap."
+ },
+ {
+  "id": "D-G-014",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off delegation of 28 Jul night: options C for prison and dirty money for the drayman were written into the fiction (older design, now canon-era records)."
+ },
+ {
+  "id": "D-G-113",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-044 (2026-11-04) and RULINGS 2 Nov",
+  "evidence": "Director's Console was studio machinery (legacy/studio-v2). Reporting now runs through his page, hourly rows and the advisor."
+ },
+ {
+  "id": "D-D-142",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 15 Nov line; order of 16 Nov section 1 item 1. The refusal is the builder's own safety check, not a repo script."
+ },
+ {
+  "id": "D-G-030",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-044 / RULINGS 2 Nov and CLAUDE.md 'Updates in the chat'",
+  "evidence": "Reporting became the Producer's alone on 3 Sep, then the studio paused 22 Sep. Today CLAUDE.md asks for chat updates and hourly rows."
+ },
+ {
+  "id": "D-E-005",
+  "status": "enforced",
+  "enforcer": "tools/token_audit.py; advisor:watchdog; advisor:daily-backstop",
+  "by": "",
+  "evidence": "RULINGS 11 Nov efficiency line (made standing 7 and 11 Nov)."
+ }
+]

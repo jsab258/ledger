@@ -1,14 +1,14 @@
 # Folder inventory (depth <= 3)
 
-Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. Status is a heuristic.
+Made 2026-11-19T00:35:47+00:00; newest commit 2026-11-19; shallow repo: False. Status is a heuristic.
 
 | path | owner | last_commit | size MB | files | refs | status | reason | purpose |
 |---|---|---|---|---|---|---|---|---|
-| .claude | shared | 2026-11-18 | 0.19 | 17 | 243 | live | touched 1 days before newest commit; 243 refs |  |
-| .claude/agents | shared | 2026-11-18 | 0.01 | 7 | 71 | live | touched 1 days before newest commit; 71 refs |  |
-| .claude/skills | shared | 2026-11-17 | 0.18 | 9 | 8 | live | touched 2 days before newest commit; 8 refs |  |
+| .claude | shared | 2026-11-18 | 0.19 | 17 | 250 | live | touched 1 days before newest commit; 250 refs |  |
+| .claude/agents | shared | 2026-11-18 | 0.01 | 7 | 76 | live | touched 1 days before newest commit; 76 refs |  |
+| .claude/skills | shared | 2026-11-17 | 0.18 | 9 | 12 | live | touched 2 days before newest commit; 12 refs |  |
 | .claude/skills/asset-import | shared | 2026-11-09 | 0.02 | 1 | 11 | live | touched 10 days before newest commit; 11 refs |  |
-| .claude/skills/game-garment | clothing | 2026-11-09 | 0.03 | 1 | 21 | live | touched 10 days before newest commit; 21 refs |  |
+| .claude/skills/game-garment | clothing | 2026-11-09 | 0.03 | 1 | 24 | live | touched 10 days before newest commit; 24 refs |  |
 | .claude/skills/gate | shared | 2026-11-09 | 0.01 | 1 | 14 | live | touched 10 days before newest commit; 14 refs |  |
 | .claude/skills/his-page | shared | 2026-11-17 | 0.02 | 1 | 4 | live | touched 2 days before newest commit; 4 refs |  |
 | .claude/skills/packaged-walk | shared | 2026-11-09 | 0.02 | 1 | 12 | live | touched 10 days before newest commit; 12 refs |  |
@@ -18,18 +18,15 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | .claude/skills/street-weathering | shared | 2026-11-09 | 0.03 | 1 | 16 | live | touched 10 days before newest commit; 16 refs |  |
 | .githooks | shared | 2026-09-01 | 0.00 | 1 | 8 | stale | last commit 79 days before newest; still referenced by 8 files |  |
 | .github | shared | 2026-11-12 | 0.20 | 3 | 11 | live | touched 7 days before newest commit; 11 refs |  |
-| .github/workflows | shared | 2026-11-12 | 0.20 | 3 | 154 | live | touched 7 days before newest commit; 154 refs |  |
-| .pytest_cache | shared | - | 0.00 | 5 | 0 | live | no commit date (untracked/new); 0 refs | This directory contains data from the pytest's cache plugin, |
-| .pytest_cache/v | shared | - | 0.00 | 2 | 0 | live | no commit date (untracked/new); 0 refs |  |
-| .pytest_cache/v/cache | shared | - | 0.00 | 2 | 0 | live | no commit date (untracked/new); 0 refs |  |
+| .github/workflows | shared | 2026-11-12 | 0.20 | 3 | 156 | live | touched 7 days before newest commit; 156 refs |  |
 | content | builder | 2026-11-06 | 0.53 | 14 | 32 | live | touched 13 days before newest commit; 32 refs |  |
 | content/brands | builder | 2026-10-04 | 0.01 | 1 | 34 | stale | last commit 46 days before newest; still referenced by 34 files |  |
 | content/dialogue | builder | 2026-10-01 | 0.01 | 2 | 55 | stale | last commit 49 days before newest; still referenced by 55 files |  |
 | content/props | builder | 2026-09-01 | 0.17 | 2 | 15 | stale | last commit 79 days before newest; still referenced by 15 files |  |
-| content/rules | builder | 2026-09-10 | 0.00 | 1 | 6 | stale | last commit 70 days before newest; still referenced by 6 files |  |
+| content/rules | builder | 2026-09-10 | 0.00 | 1 | 8 | stale | last commit 70 days before newest; still referenced by 8 files |  |
 | content/voice | builder | 2026-11-06 | 0.34 | 8 | 2 | live | touched 13 days before newest commit; 2 refs |  |
 | content/voice/acks | builder | 2026-11-06 | 0.34 | 8 | 11 | live | touched 13 days before newest commit; 11 refs |  |
-| game-design | design | 2026-11-18 | 40.03 | 594 | 549 | live | touched 1 days before newest commit; 549 refs |  |
+| game-design | design | 2026-11-18 | 40.03 | 594 | 555 | live | touched 1 days before newest commit; 555 refs |  |
 | game-design/mickeys-office | design | 2026-10-01 | 0.00 | 1 | 3 | stale | last commit 49 days before newest; still referenced by 3 files |  |
 | game-design/picked-clips | design | 2026-11-06 | 4.67 | 23 | 48 | live | touched 13 days before newest commit; 48 refs |  |
 | game-design/reference | design | 2026-10-03 | 0.00 | 1 | 16 | reference | archive / old version / research location | THE FRAMES ARE NOT HERE since 3 October (Jafar: other games' screenshots never in the |
@@ -38,9 +35,9 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | game-design/sim-shots/runs | design | 2026-09-03 | 11.42 | 362 | 18 | stale | last commit 77 days before newest; still referenced by 18 files |  |
 | game-design/voice-conds | design | 2026-11-06 | 6.25 | 45 | 14 | live | touched 13 days before newest commit; 14 refs |  |
 | game-design/voice-live | design | 2026-08-22 | 3.65 | 17 | 14 | stale | last commit 89 days before newest; still referenced by 14 files |  |
-| ledger | town (simulation) | 2026-11-18 | 1578.52 | 2917 | 295 | live | touched 1 days before newest commit; 295 refs | The game. Design documents live in ../game-design/. |
+| ledger | town (simulation) | 2026-11-18 | 1578.52 | 2917 | 298 | live | touched 1 days before newest commit; 298 refs | The game. Design documents live in ../game-design/. |
 | ledger-imagegen | builder | 2026-09-22 | 0.00 | 1 | 1 | stale | last commit 58 days before newest; still referenced by 1 files |  |
-| ledger-v2 | reference (old version) | 2026-11-18 | 0.09 | 8 | 196 | reference | archive / old version / research location |  |
+| ledger-v2 | reference (old version) | 2026-11-18 | 0.09 | 8 | 202 | reference | archive / old version / research location |  |
 | ledger-v2/research | reference (old version) | 2026-11-18 | 0.09 | 8 | 121 | reference | archive / old version / research location |  |
 | ledger-v2/research/full | reference (old version) | 2026-08-31 | 0.07 | 3 | 3 | reference | archive / old version / research location | Both full reports are included; nothing to export manually. |
 | ledger/Adversary | town (simulation) | 2026-09-06 | 0.03 | 2 | 2 | stale | last commit 74 days before newest; still referenced by 2 files |  |
@@ -56,13 +53,13 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | ledger/BarkGen | town (simulation) | 2026-08-13 | 0.03 | 2 | 6 | stale | last commit 98 days before newest; still referenced by 6 files |  |
 | ledger/ClaimBench | town (simulation) | 2026-11-16 | 0.25 | 15 | 25 | live | touched 3 days before newest commit; 25 refs |  |
 | ledger/ConvoProbe | town (simulation) | 2026-09-29 | 0.02 | 2 | 8 | stale | last commit 51 days before newest; still referenced by 8 files |  |
-| ledger/CoreTests | town (simulation) | 2026-11-18 | 1.99 | 10 | 52 | live | touched 1 days before newest commit; 52 refs |  |
+| ledger/CoreTests | town (simulation) | 2026-11-18 | 1.99 | 10 | 61 | live | touched 1 days before newest commit; 61 refs |  |
 | ledger/DevTools | town (simulation) | 2026-11-16 | 0.03 | 2 | 5 | live | touched 3 days before newest commit; 5 refs |  |
 | ledger/GameCheck | town (simulation) | 2026-08-05 | 0.01 | 2 | 2 | stale | last commit 106 days before newest; still referenced by 2 files |  |
 | ledger/GameCheck/Shims | town (simulation) | 2026-08-05 | 0.00 | 1 | 0 | dead | no references to it or below it; last commit 106 days before newest |  |
 | ledger/LineTest | town (simulation) | 2026-09-29 | 0.01 | 2 | 2 | stale | last commit 51 days before newest; still referenced by 2 files |  |
 | ledger/Packages | town (simulation) | 2026-08-21 | 0.00 | 1 | 0 | dead | no references to it or below it; last commit 90 days before newest |  |
-| ledger/PerceptionGolden | town (simulation) | 2026-11-07 | 0.39 | 3 | 27 | live | touched 12 days before newest commit; 27 refs |  |
+| ledger/PerceptionGolden | town (simulation) | 2026-11-07 | 0.39 | 3 | 30 | live | touched 12 days before newest commit; 30 refs |  |
 | ledger/ProjectSettings | town (simulation) | 2026-07-24 | 0.00 | 1 | 2 | stale | last commit 118 days before newest; still referenced by 2 files |  |
 | ledger/ReachCheck | town (simulation) | 2026-10-28 | 0.07 | 3 | 10 | live | touched 22 days before newest commit; 10 refs |  |
 | ledger/Relay | town (simulation) | 2026-09-29 | 0.04 | 4 | 16 | stale | last commit 51 days before newest; still referenced by 16 files |  |
@@ -70,36 +67,36 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | ledger/SaveChaos | town (simulation) | 2026-09-30 | 0.03 | 2 | 8 | stale | last commit 50 days before newest; still referenced by 8 files |  |
 | ledger/ShapeCheck | town (simulation) | 2026-08-08 | 0.02 | 2 | 5 | stale | last commit 103 days before newest; still referenced by 5 files |  |
 | ledger/SimHarness | town (simulation) | 2026-09-29 | 0.06 | 3 | 6 | stale | last commit 51 days before newest; still referenced by 6 files |  |
-| ledger/Soak | town (simulation) | 2026-09-23 | 0.09 | 2 | 15 | stale | last commit 57 days before newest; still referenced by 15 files |  |
+| ledger/Soak | town (simulation) | 2026-09-23 | 0.09 | 2 | 18 | stale | last commit 57 days before newest; still referenced by 18 files |  |
 | ledger/SpeechBench | town (simulation) | 2026-08-14 | 0.04 | 2 | 5 | stale | last commit 97 days before newest; still referenced by 5 files |  |
 | ledger/StrangerTest | town (simulation) | 2026-09-23 | 0.10 | 3 | 7 | stale | last commit 57 days before newest; still referenced by 7 files |  |
-| ledger/TalkHelper | town (simulation) | 2026-11-18 | 0.22 | 2 | 44 | live | touched 1 days before newest commit; 44 refs |  |
+| ledger/TalkHelper | town (simulation) | 2026-11-18 | 0.22 | 2 | 47 | live | touched 1 days before newest commit; 47 refs |  |
 | ledger/TalkTests | town (simulation) | 2026-11-18 | 0.05 | 2 | 6 | live | touched 1 days before newest commit; 6 refs |  |
 | ledger/Tier2Gen | town (simulation) | 2026-09-29 | 0.06 | 2 | 1 | stale | last commit 51 days before newest; still referenced by 1 files |  |
 | ledger/TownReach | town (simulation) | 2026-10-28 | 0.08 | 2 | 12 | live | touched 22 days before newest commit; 12 refs |  |
 | ledger/breaks | town (simulation) | 2026-08-23 | 0.06 | 22 | 3 | stale | last commit 88 days before newest; still referenced by 3 files |  |
-| legacy | none (archive) | 2026-09-26 | 109.66 | 2367 | 10 | reference | archive / old version / research location | STATUS: LIVE. Verified 2026-09-10. Wrong here is a bug, not a stale log: this |
+| legacy | none (archive) | 2026-09-26 | 109.66 | 2367 | 21 | reference | archive / old version / research location | STATUS: LIVE. Verified 2026-09-10. Wrong here is a bug, not a stale log: this |
 | legacy/outbound-refusals-2026-09-03 | none (archive) | 2026-09-10 | 0.54 | 494 | 1 | reference | archive / old version / research location |  |
 | legacy/outbox | none (archive) | 2026-09-09 | 0.00 | 2 | 2 | reference | archive / old version / research location | STATUS: LOG. A message here was written, never sent, and can no longer be sent. |
-| legacy/studio-v2 | none (archive) | 2026-09-26 | 108.66 | 1849 | 5 | reference | archive / old version / research location | Produced 2026-08-31 in the claude.ai planning session, from: the wc26/ledger repo, the game-studio framework repo, the donchitos/claude-code-game-studios repo,  |
+| legacy/studio-v2 | none (archive) | 2026-09-26 | 108.66 | 1849 | 12 | reference | archive / old version / research location | Produced 2026-08-31 in the claude.ai planning session, from: the wc26/ledger repo, the game-studio framework repo, the donchitos/claude-code-game-studios repo,  |
 | legacy/studio-v2/claude | none (archive) | 2026-09-22 | 0.21 | 28 | 1 | reference | archive / old version / research location |  |
-| legacy/studio-v2/game-design | none (archive) | 2026-09-22 | 3.62 | 161 | 7 | reference | archive / old version / research location |  |
+| legacy/studio-v2/game-design | none (archive) | 2026-09-22 | 3.62 | 161 | 19 | reference | archive / old version / research location |  |
 | legacy/studio-v2/handoff | none (archive) | 2026-09-22 | 0.00 | 2 | 1 | reference | archive / old version / research location |  |
 | legacy/studio-v2/old-copies | none (archive) | 2026-09-26 | 3.20 | 145 | 4 | reference | archive / old version / research location |  |
-| legacy/studio-v2/production | none (archive) | 2026-09-22 | 95.77 | 1329 | 2 | reference | archive / old version / research location | queue/ task files, one deliverable each. Folder is the state |
+| legacy/studio-v2/production | none (archive) | 2026-09-22 | 95.77 | 1329 | 8 | reference | archive / old version / research location | queue/ task files, one deliverable each. Folder is the state |
 | legacy/studio-v2/respec | none (archive) | 2026-09-22 | 0.24 | 64 | 5 | reference | archive / old version / research location |  |
 | legacy/studio-v2/studio-v2 | none (archive) | 2026-09-22 | 0.16 | 11 | 1 | reference | archive / old version / research location |  |
-| legacy/studio-v2/tools | none (archive) | 2026-09-22 | 3.32 | 84 | 2 | reference | archive / old version / research location |  |
+| legacy/studio-v2/tools | none (archive) | 2026-09-22 | 3.32 | 84 | 4 | reference | archive / old version / research location |  |
 | legacy/studio-v2/workflows | none (archive) | 2026-09-22 | 0.25 | 8 | 2 | reference | archive / old version / research location |  |
 | legacy/unity-reference-build | none (archive) | 2026-09-10 | 0.02 | 3 | 0 | reference | archive / old version / research location |  |
 | legacy/unity-reference-build/probes | none (archive) | 2026-09-10 | 0.02 | 3 | 0 | reference | archive / old version / research location |  |
-| legacy/v1-era | none (archive) | 2026-09-10 | 0.27 | 12 | 0 | reference | archive / old version / research location |  |
-| legacy/v1-era/act-drafts | none (archive) | 2026-09-10 | 0.02 | 3 | 7 | reference | archive / old version / research location |  |
-| legacy/v1-era/audits | none (archive) | 2026-09-10 | 0.17 | 3 | 1 | reference | archive / old version / research location |  |
+| legacy/v1-era | none (archive) | 2026-09-10 | 0.27 | 12 | 3 | reference | archive / old version / research location |  |
+| legacy/v1-era/act-drafts | none (archive) | 2026-09-10 | 0.02 | 3 | 11 | reference | archive / old version / research location |  |
+| legacy/v1-era/audits | none (archive) | 2026-09-10 | 0.17 | 3 | 5 | reference | archive / old version / research location |  |
 | legacy/v1-era/logs | none (archive) | 2026-09-10 | 0.08 | 5 | 1 | reference | archive / old version / research location |  |
 | legacy/v1-era/voice-fetch | none (archive) | 2026-09-10 | 0.00 | 1 | 1 | reference | archive / old version / research location |  |
 | legacy/week-plans | none (archive) | 2026-09-10 | 0.01 | 2 | 2 | reference | archive / old version / research location |  |
-| production | shared | 2026-11-19 | 796.95 | 5124 | 1653 | live | touched 0 days before newest commit; 1653 refs |  |
+| production | shared | 2026-11-19 | 799.12 | 5146 | 1653 | live | touched 0 days before newest commit; 1653 refs |  |
 | production/approvals | builder | 2026-11-19 | 24.17 | 497 | 17 | live | touched 0 days before newest commit; 17 refs |  |
 | production/approvals/2026-09-25 | builder | 2026-09-25 | 0.04 | 2 | 1 | stale | last commit 55 days before newest; still referenced by 1 files |  |
 | production/approvals/2026-09-25-casting | builder | 2026-09-25 | 0.03 | 2 | 4 | stale | last commit 55 days before newest; still referenced by 4 files |  |
@@ -144,7 +141,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/approvals/2026-10-30 | builder | 2026-10-30 | 0.03 | 3 | 1 | live | touched 20 days before newest commit; 1 refs |  |
 | production/approvals/answers | builder | 2026-11-19 | 0.09 | 315 | 9 | live | touched 0 days before newest commit; 9 refs | Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/pageanswers.py --index; never edited by hand. |
 | production/approvals/needs-you | builder | 2026-11-19 | 0.28 | 6 | 16 | live | touched 0 days before newest commit; 16 refs |  |
-| production/archive | none (archive) | 2026-11-09 | 1.56 | 37 | 32 | reference | archive / old version / research location |  |
+| production/archive | none (archive) | 2026-11-09 | 1.56 | 37 | 35 | reference | archive / old version / research location |  |
 | production/archive/2026-10-05-retired | none (archive) | 2026-10-05 | 0.06 | 7 | 9 | reference | archive / old version / research location | The outside audit's plan, adopted with Jafar's edits as CHARTER.md and PLAN.md, replaced every list. These are the lists and status files it replaced, kept as t |
 | production/archive/branches-2026-10-05 | none (archive) | 2026-10-05 | 0.08 | 12 | 1 | reference | archive / old version / research location | Before the history is cleaned in place (phase 0, item 0.7; his order: "any branch to be deleted has its unique work merged or saved first"), every file that exi |
 | production/archive/workflows-retired-2026-10-05 | none (archive) | 2026-10-05 | 0.12 | 10 | 2 | reference | archive / old version / research location | His order with the new repository: "Retire the two Unity workflows, and check every other workflow for whether it still serves the current game; retire the ones |
@@ -155,12 +152,12 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/art/clothing | clothing | 2026-11-16 | 4.43 | 119 | 30 | live | touched 3 days before newest commit; 30 refs |  |
 | production/art/clutter-2026-09-29 | builder | 2026-09-29 | 0.32 | 10 | 9 | stale | last commit 51 days before newest; still referenced by 9 files | Ten pieces of the street's everyday furniture, each made against the research |
 | production/art/compare | builder | 2026-09-24 | 259.01 | 127 | 8 | stale | last commit 56 days before newest; still referenced by 8 files |  |
-| production/art/concept-copper-row-2026-09-10 | builder | 2026-09-10 | 0.03 | 3 | 3 | stale | last commit 70 days before newest; still referenced by 3 files |  |
+| production/art/concept-copper-row-2026-09-10 | builder | 2026-09-10 | 0.03 | 3 | 6 | stale | last commit 70 days before newest; still referenced by 6 files |  |
 | production/art/concept-fairview-2026-09-10 | builder | 2026-09-10 | 7.83 | 16 | 9 | stale | last commit 70 days before newest; still referenced by 9 files |  |
 | production/art/corner | builder | 2026-11-04 | 0.05 | 9 | 14 | live | touched 15 days before newest commit; 14 refs |  |
 | production/art/facades | builder | 2026-09-28 | 17.31 | 23 | 0 | live | touched 52 days before newest commit; 0 refs |  |
 | production/art/fascia-01 | builder | 2026-09-10 | 0.10 | 7 | 18 | stale | last commit 70 days before newest; still referenced by 18 files |  |
-| production/art/hair-2026-09-29 | builder | 2026-11-13 | 0.03 | 2 | 7 | live | touched 6 days before newest commit; 7 refs |  |
+| production/art/hair-2026-09-29 | builder | 2026-11-13 | 0.03 | 2 | 11 | live | touched 6 days before newest commit; 11 refs |  |
 | production/art/interiors-2026-09-23 | builder | 2026-09-22 | 4.69 | 8 | 8 | stale | last commit 58 days before newest; still referenced by 8 files |  |
 | production/art/lighting | builder | 2026-09-29 | 2.88 | 20 | 0 | live | touched 51 days before newest commit; 0 refs |  |
 | production/art/mickeys-cars | builder | 2026-09-10 | 0.97 | 30 | 22 | stale | last commit 70 days before newest; still referenced by 22 files |  |
@@ -187,9 +184,9 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/assets/vignette | builder | 2026-11-03 | 6.76 | 25 | 9 | live | touched 16 days before newest commit; 9 refs |  |
 | production/audio | builder | 2026-10-01 | 0.46 | 6 | 0 | live | touched 49 days before newest commit; 0 refs |  |
 | production/audio/ui | builder | 2026-10-01 | 0.46 | 6 | 5 | stale | last commit 49 days before newest; still referenced by 5 files |  |
-| production/audits | builder | 2026-11-19 | 3.79 | 195 | 28 | live | touched 0 days before newest commit; 28 refs |  |
+| production/audits | builder | 2026-11-19 | 5.96 | 217 | 28 | live | touched 0 days before newest commit; 28 refs |  |
 | production/audits/clothing | clothing | 2026-10-07 | 0.00 | 1 | 3 | stale | last commit 43 days before newest; still referenced by 3 files |  |
-| production/audits/full-2026-11 | lane | 2026-11-19 | 0.97 | 9 | 2 | live | touched 0 days before newest commit; 2 refs |  |
+| production/audits/full-2026-11 | lane | 2026-11-19 | 3.15 | 31 | 4 | live | touched 0 days before newest commit; 4 refs |  |
 | production/audits/gate-chandler | builder | 2026-10-23 | 0.02 | 1 | 6 | live | touched 27 days before newest commit; 6 refs |  |
 | production/audits/gate-corner | builder | 2026-11-04 | 0.00 | 1 | 2 | live | touched 15 days before newest commit; 2 refs |  |
 | production/audits/gate-found-list-2026-10-21 | builder | 2026-10-21 | 0.00 | 1 | 0 | dead | no references to it or below it; last commit 29 days before newest |  |
@@ -202,8 +199,8 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/audits/gate-tea-rooms | builder | 2026-10-23 | 0.01 | 1 | 5 | live | touched 27 days before newest commit; 5 refs |  |
 | production/audits/gate-west-eaves | builder | 2026-10-23 | 0.01 | 1 | 2 | live | touched 27 days before newest commit; 2 refs |  |
 | production/audits/glass-2026-10-08 | builder | 2026-10-08 | 0.00 | 1 | 6 | stale | last commit 42 days before newest; still referenced by 6 files |  |
-| production/audits/history-clean-2026-10 | builder | 2026-10-05 | 0.36 | 2 | 5 | stale | last commit 45 days before newest; still referenced by 5 files | Phase 0, item 0.7. His orders of 4 and 5 October: clean the history while the sessions are stopped, after he hears the plan and all it touches; then, the new re |
-| production/audits/lean-start | builder | 2026-11-06 | 0.02 | 4 | 3 | live | touched 13 days before newest commit; 3 refs |  |
+| production/audits/history-clean-2026-10 | builder | 2026-10-05 | 0.36 | 2 | 8 | stale | last commit 45 days before newest; still referenced by 8 files | Phase 0, item 0.7. His orders of 4 and 5 October: clean the history while the sessions are stopped, after he hears the plan and all it touches; then, the new re |
+| production/audits/lean-start | builder | 2026-11-06 | 0.02 | 4 | 5 | live | touched 13 days before newest commit; 5 refs |  |
 | production/audits/night-2026-10-08 | builder | 2026-10-08 | 0.00 | 2 | 11 | stale | last commit 42 days before newest; still referenced by 11 files |  |
 | production/audits/office-2026-10-08 | builder | 2026-10-08 | 0.01 | 1 | 9 | stale | last commit 42 days before newest; still referenced by 9 files |  |
 | production/audits/phase0-exit | builder | 2026-10-06 | 0.01 | 1 | 4 | stale | last commit 44 days before newest; still referenced by 4 files |  |
@@ -272,7 +269,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/fonts/oswald | builder | 2026-10-09 | 0.17 | 2 | 3 | stale | last commit 41 days before newest; still referenced by 3 files |  |
 | production/fonts/patrick-hand | builder | 2026-10-04 | 0.21 | 2 | 6 | stale | last commit 46 days before newest; still referenced by 6 files |  |
 | production/friends-build | builder | 2026-10-05 | 0.01 | 1 | 8 | stale | last commit 45 days before newest; still referenced by 8 files |  |
-| production/handover | builder | 2026-11-18 | 0.04 | 5 | 17 | live | touched 1 days before newest commit; 17 refs |  |
+| production/handover | builder | 2026-11-18 | 0.04 | 5 | 21 | live | touched 1 days before newest commit; 21 refs |  |
 | production/handovers | builder | 2026-10-07 | 0.05 | 13 | 28 | stale | last commit 43 days before newest; still referenced by 28 files | For the builder (town list T2, Jafar, 29 September evening: every handover |
 | production/lab | builder | 2026-10-08 | 1.86 | 133 | 16 | stale | last commit 42 days before newest; still referenced by 16 files | A separate session testing one method while the builder works: give the AI an exact, measurable target and check every attempt automatically, in small units, wi |
 | production/lab/1-unreal-source | builder | 2026-10-08 | 0.02 | 3 | 2 | stale | last commit 42 days before newest; still referenced by 2 files |  |
@@ -284,7 +281,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/lab/road | builder | 2026-10-08 | 0.01 | 2 | 7 | stale | last commit 42 days before newest; still referenced by 7 files |  |
 | production/lab/talk-check | builder | 2026-10-08 | 0.02 | 4 | 4 | stale | last commit 42 days before newest; still referenced by 4 files |  |
 | production/lab/tools | builder | 2026-10-08 | 0.04 | 8 | 0 | dead | no references to it or below it; last commit 42 days before newest |  |
-| production/lane | lane | 2026-11-18 | 22.83 | 186 | 23 | live | touched 1 days before newest commit; 23 refs | A second Claude session that does only machine-free work, beside the main production session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov"  |
+| production/lane | lane | 2026-11-18 | 22.83 | 186 | 28 | live | touched 1 days before newest commit; 28 refs | A second Claude session that does only machine-free work, beside the main production session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov"  |
 | production/lane/p9-outlines-2026-11-17 | lane | 2026-11-17 | 0.03 | 4 | 0 | live | touched 2 days before newest commit; 0 refs |  |
 | production/lane/patches | lane | 2026-11-18 | 0.02 | 1 | 3 | live | touched 1 days before newest commit; 3 refs |  |
 | production/lane/playtest-1 | lane | 2026-11-18 | 0.03 | 3 | 1 | live | touched 1 days before newest commit; 1 refs |  |
@@ -296,15 +293,15 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/lane/playtest-round5 | lane | 2026-11-18 | 20.67 | 22 | 3 | live | touched 1 days before newest commit; 3 refs |  |
 | production/lane/reviews | lane | 2026-11-18 | 0.24 | 54 | 18 | live | touched 1 days before newest commit; 18 refs |  |
 | production/lane/reviews-panel | lane | 2026-11-18 | 0.04 | 6 | 5 | live | touched 1 days before newest commit; 5 refs |  |
-| production/lane/synthesis | lane | 2026-11-18 | 0.49 | 15 | 3 | live | touched 1 days before newest commit; 3 refs |  |
+| production/lane/synthesis | lane | 2026-11-18 | 0.49 | 15 | 7 | live | touched 1 days before newest commit; 7 refs |  |
 | production/licences | builder | 2026-10-05 | 0.07 | 9 | 0 | live | touched 45 days before newest commit; 0 refs |  |
 | production/licences/engine | builder | 2026-10-05 | 0.07 | 9 | 7 | stale | last commit 45 days before newest; still referenced by 7 files | Shipped inside every package beside the game's other staged files (tools/ue/stagegamedata.py), because each library's licence asks for its notice to travel with |
-| production/orders | builder | 2026-11-19 | 0.51 | 7 | 43 | live | touched 0 days before newest commit; 43 refs |  |
-| production/orders/archive | builder | 2026-11-15 | 0.24 | 3 | 9 | reference | archive / old version / research location |  |
+| production/orders | builder | 2026-11-19 | 0.51 | 7 | 63 | live | touched 0 days before newest commit; 63 refs |  |
+| production/orders/archive | builder | 2026-11-15 | 0.24 | 3 | 20 | reference | archive / old version / research location |  |
 | production/playtest | builder | 2026-11-16 | 0.23 | 64 | 71 | live | touched 3 days before newest commit; 71 refs |  |
 | production/playtest/nightly | builder | 2026-10-27 | 0.03 | 20 | 20 | live | touched 23 days before newest commit; 20 refs |  |
 | production/playtest/route-walk | builder | 2026-10-30 | 0.10 | 29 | 4 | live | touched 20 days before newest commit; 4 refs |  |
-| production/previews | builder | 2026-11-18 | 148.39 | 1007 | 132 | live | touched 1 days before newest commit; 132 refs |  |
+| production/previews | builder | 2026-11-18 | 148.39 | 1007 | 137 | live | touched 1 days before newest commit; 137 refs |  |
 | production/previews/cloud-week | builder | 2026-10-15 | 73.59 | 603 | 1 | stale | last commit 35 days before newest; still referenced by 1 files |  |
 | production/previews/lab | builder | 2026-10-08 | 18.96 | 104 | 2 | stale | last commit 42 days before newest; still referenced by 2 files |  |
 | production/previews/n16-4 | builder | 2026-11-16 | 0.38 | 2 | 1 | live | touched 3 days before newest commit; 1 refs |  |
@@ -314,12 +311,12 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/previews/n16-5-launderette | builder | 2026-11-17 | 2.50 | 13 | 0 | live | touched 2 days before newest commit; 0 refs |  |
 | production/previews/n16-5-newsagent | builder | 2026-11-17 | 1.66 | 8 | 0 | live | touched 2 days before newest commit; 0 refs |  |
 | production/previews/n16-5-s1 | builder | 2026-11-17 | 1.84 | 10 | 0 | live | touched 2 days before newest commit; 0 refs |  |
-| production/progress-page | builder | 2026-11-18 | 0.08 | 2 | 16 | live | touched 1 days before newest commit; 16 refs |  |
+| production/progress-page | builder | 2026-11-18 | 0.08 | 2 | 19 | live | touched 1 days before newest commit; 19 refs |  |
 | production/proof-view | builder | 2026-10-03 | 0.00 | 2 | 3 | stale | last commit 47 days before newest; still referenced by 3 files | The list's item 2 (Jafar, 3 October): the hook camera by day, built to the Hook sheet through the |
-| production/reference | builder | 2026-10-03 | 5.86 | 10 | 95 | reference | archive / old version / research location | THE ONLY PLACE A REFERENCE LIVES. Every tool, recipe and check that compares |
-| production/research | shared research | 2026-11-18 | 19.97 | 1155 | 62 | reference | archive / old version / research location | WHAT THIS ANSWERS. Before authoring anything, two questions: which research |
+| production/reference | builder | 2026-10-03 | 5.86 | 10 | 99 | reference | archive / old version / research location | THE ONLY PLACE A REFERENCE LIVES. Every tool, recipe and check that compares |
+| production/research | shared research | 2026-11-18 | 19.97 | 1155 | 68 | reference | archive / old version / research location | WHAT THIS ANSWERS. Before authoring anything, two questions: which research |
 | production/research/1990-on-film-stock | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
-| production/research/aaa-reference | shared research | 2026-11-17 | 0.69 | 32 | 18 | reference | archive / old version / research location |  |
+| production/research/aaa-reference | shared research | 2026-11-17 | 0.69 | 32 | 21 | reference | archive / old version / research location |  |
 | production/research/aaa-street | shared research | 2026-11-03 | 0.18 | 21 | 51 | reference | archive / old version / research location |  |
 | production/research/agentic-studio-attempts | shared research | 2026-09-21 | 0.01 | 2 | 0 | reference | archive / old version / research location |  |
 | production/research/ai-npc-demos-hollow | shared research | 2026-10-05 | 0.03 | 2 | 1 | reference | archive / old version / research location |  |
@@ -352,7 +349,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/clothing-assembly-line | shared research | 2026-10-05 | 0.05 | 2 | 2 | reference | archive / old version / research location |  |
 | production/research/clothing-pipeline | shared research | 2026-11-16 | 0.58 | 72 | 93 | reference | archive / old version / research location |  |
 | production/research/content-mass-and-judgement | shared research | 2026-09-21 | 0.01 | 2 | 0 | reference | archive / old version / research location |  |
-| production/research/conversation-model-capability | shared research | 2026-09-23 | 0.02 | 4 | 4 | reference | archive / old version / research location |  |
+| production/research/conversation-model-capability | shared research | 2026-09-23 | 0.02 | 4 | 7 | reference | archive / old version / research location |  |
 | production/research/coverage-audit | shared research | 2026-10-05 | 0.02 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/coverage-audit-disco-elysium | shared research | 2026-10-05 | 0.03 | 2 | 2 | reference | archive / old version / research location |  |
 | production/research/coverage-audit-hitman | shared research | 2026-10-05 | 0.03 | 2 | 2 | reference | archive / old version / research location |  |
@@ -375,7 +372,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/failure-after-arrest | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/faster-builds | shared research | 2026-11-02 | 0.01 | 1 | 4 | reference | archive / old version / research location |  |
 | production/research/feature-coverage | shared research | 2026-09-23 | 0.25 | 5 | 1 | reference | archive / old version / research location |  |
-| production/research/field-scans | shared research | 2026-11-09 | 0.04 | 8 | 4 | reference | archive / old version / research location |  |
+| production/research/field-scans | shared research | 2026-11-09 | 0.04 | 8 | 7 | reference | archive / old version / research location |  |
 | production/research/footsteps | shared research | 2026-09-30 | 0.00 | 1 | 4 | reference | archive / old version / research location |  |
 | production/research/frame-headroom | shared research | 2026-11-16 | 0.25 | 24 | 22 | reference | archive / old version / research location |  |
 | production/research/free-garments | shared research | 2026-10-02 | 0.22 | 12 | 4 | reference | archive / old version / research location |  |
@@ -384,12 +381,12 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/game-clothing-pipeline | shared research | 2026-11-11 | 0.23 | 20 | 35 | reference | archive / old version / research location |  |
 | production/research/games-numbers | shared research | 2026-11-12 | 0.02 | 3 | 1 | reference | archive / old version / research location |  |
 | production/research/gaze-and-knowing | shared research | 2026-09-28 | 0.01 | 1 | 5 | reference | archive / old version / research location |  |
-| production/research/graphify-evaluation | shared research | 2026-09-21 | 0.02 | 2 | 2 | reference | archive / old version / research location |  |
+| production/research/graphify-evaluation | shared research | 2026-09-21 | 0.02 | 2 | 5 | reference | archive / old version / research location |  |
 | production/research/grounded-dialogue-selection | shared research | 2026-09-30 | 0.04 | 2 | 6 | reference | archive / old version / research location |  |
 | production/research/grounded-replies | shared research | 2026-10-07 | 0.04 | 7 | 14 | reference | archive / old version / research location |  |
 | production/research/group-standing-without-a-score | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/hair | shared research | 2026-11-09 | 0.02 | 5 | 5 | reference | archive / old version / research location |  |
-| production/research/hardware-floor | shared research | 2026-10-05 | 0.04 | 3 | 10 | reference | archive / old version / research location |  |
+| production/research/hardware-floor | shared research | 2026-10-05 | 0.04 | 3 | 13 | reference | archive / old version / research location |  |
 | production/research/hitman-density | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/holding-a-large-script | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/holding-information | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
@@ -398,8 +395,8 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/lane | lane | 2026-11-18 | 0.45 | 27 | 36 | reference | archive / old version / research location |  |
 | production/research/lip-sync | shared research | 2026-09-30 | 0.01 | 1 | 6 | reference | archive / old version / research location |  |
 | production/research/live-speech-architecture | shared research | 2026-10-28 | 0.08 | 7 | 13 | reference | archive / old version / research location |  |
-| production/research/llm-inference-economics | shared research | 2026-11-07 | 0.04 | 5 | 11 | reference | archive / old version / research location |  |
-| production/research/local-models | shared research | 2026-09-24 | 1.28 | 115 | 11 | reference | archive / old version / research location |  |
+| production/research/llm-inference-economics | shared research | 2026-11-07 | 0.04 | 5 | 14 | reference | archive / old version / research location |  |
+| production/research/local-models | shared research | 2026-09-24 | 1.28 | 115 | 14 | reference | archive / old version / research location |  |
 | production/research/local-writers | shared research | 2026-09-29 | 0.04 | 4 | 5 | reference | archive / old version / research location | Writing the lines is about 70 percent of what live talk costs |
 | production/research/markerless-mocap | shared research | 2026-10-05 | 0.03 | 3 | 5 | reference | archive / old version / research location |  |
 | production/research/meridian-test-administration | shared research | 2026-09-21 | 0.01 | 2 | 1 | reference | archive / old version / research location |  |
@@ -411,18 +408,18 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/packaged-game-testing | shared research | 2026-09-30 | 0.04 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/people-alive | shared research | 2026-11-09 | 0.03 | 5 | 6 | reference | archive / old version / research location |  |
 | production/research/period-vehicles-and-props | shared research | 2026-11-08 | 0.02 | 2 | 12 | reference | archive / old version / research location |  |
-| production/research/phase2-plan | shared research | 2026-11-18 | 0.20 | 21 | 18 | reference | archive / old version / research location |  |
+| production/research/phase2-plan | shared research | 2026-11-18 | 0.20 | 21 | 22 | reference | archive / old version / research location |  |
 | production/research/phase5-procedural | shared research | 2026-11-08 | 0.11 | 10 | 9 | reference | archive / old version / research location |  |
 | production/research/photoreal-on-a-budget | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/plain-1990-clothes | shared research | 2026-10-01 | 0.02 | 1 | 10 | reference | archive / old version / research location |  |
-| production/research/playbook | shared research | 2026-11-08 | 0.09 | 9 | 4 | reference | archive / old version / research location | Distilled from RECIPE.md, the project's notebook of every finished or set-aside unit, read in full in parts on 8 November 2026 (about 173 headings, 13 October t |
+| production/research/playbook | shared research | 2026-11-08 | 0.09 | 9 | 7 | reference | archive / old version / research location | Distilled from RECIPE.md, the project's notebook of every finished or set-aside unit, read in full in parts on 8 November 2026 (about 173 headings, 13 October t |
 | production/research/player-data-notice | shared research | 2026-09-28 | 0.01 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/players-and-a-world-that-remembers | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/police-response-1990 | shared research | 2026-09-29 | 0.02 | 5 | 10 | reference | archive / old version / research location |  |
 | production/research/pre-production | shared research | 2026-11-18 | 0.61 | 39 | 30 | reference | archive / old version / research location |  |
 | production/research/precomputed-day | shared research | 2026-10-05 | 0.02 | 2 | 2 | reference | archive / old version / research location |  |
 | production/research/prompt-caching | shared research | 2026-09-29 | 0.02 | 1 | 6 | reference | archive / old version / research location |  |
-| production/research/qa-practice | shared research | 2026-11-09 | 0.06 | 10 | 6 | reference | archive / old version / research location |  |
+| production/research/qa-practice | shared research | 2026-11-09 | 0.06 | 10 | 9 | reference | archive / old version / research location |  |
 | production/research/ron-apose | shared research | 2026-11-11 | 0.00 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/ron-whole-person | shared research | 2026-11-12 | 0.03 | 5 | 1 | reference | archive / old version / research location |  |
 | production/research/rumour-propagation | shared research | 2026-10-05 | 0.02 | 2 | 3 | reference | archive / old version / research location |  |
@@ -434,7 +431,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/shop-window-interiors | shared research | 2026-10-04 | 0.10 | 6 | 59 | reference | archive / old version / research location |  |
 | production/research/shopfronts | shared research | 2026-10-06 | 0.02 | 1 | 21 | reference | archive / old version / research location |  |
 | production/research/side-stories | shared research | 2026-11-08 | 0.00 | 1 | 3 | reference | archive / old version / research location |  |
-| production/research/sit-and-turn | shared research | 2026-10-30 | 1.79 | 57 | 33 | reference | archive / old version / research location |  |
+| production/research/sit-and-turn | shared research | 2026-10-30 | 1.79 | 57 | 36 | reference | archive / old version / research location |  |
 | production/research/skills | shared research | 2026-11-08 | 0.07 | 16 | 6 | reference | archive / old version / research location |  |
 | production/research/small-team-shipping | shared research | 2026-10-05 | 0.03 | 2 | 1 | reference | archive / old version / research location |  |
 | production/research/small-town-meetings | shared research | 2026-09-28 | 0.01 | 1 | 2 | reference | archive / old version / research location |  |
@@ -446,7 +443,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/street-lines-1990 | shared research | 2026-09-28 | 0.02 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/street-scale-test | shared research | 2026-11-16 | 0.04 | 5 | 5 | reference | archive / old version / research location |  |
 | production/research/street-wear | shared research | 2026-11-03 | 0.16 | 18 | 49 | reference | archive / old version / research location |  |
-| production/research/study-a-inzoi | shared research | 2026-11-07 | 0.08 | 10 | 5 | reference | archive / old version / research location |  |
+| production/research/study-a-inzoi | shared research | 2026-11-07 | 0.08 | 10 | 8 | reference | archive / old version / research location |  |
 | production/research/study-b-silent-hill-2 | shared research | 2026-11-06 | 0.02 | 3 | 2 | reference | archive / old version / research location |  |
 | production/research/study-recs | shared research | 2026-11-06 | 0.03 | 2 | 3 | reference | archive / old version / research location |  |
 | production/research/systemic-game-postmortems | shared research | 2026-10-05 | 0.02 | 2 | 1 | reference | archive / old version / research location |  |
@@ -458,7 +455,7 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/texture-pipeline | shared research | 2026-11-11 | 0.07 | 10 | 5 | reference | archive / old version / research location |  |
 | production/research/third-person-camera-interiors | shared research | 2026-10-01 | 0.02 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/threats-1990 | shared research | 2026-09-30 | 0.01 | 3 | 3 | reference | archive / old version / research location |  |
-| production/research/token-audit | shared research | 2026-11-18 | 0.20 | 24 | 22 | reference | archive / old version / research location |  |
+| production/research/token-audit | shared research | 2026-11-18 | 0.20 | 24 | 25 | reference | archive / old version / research location |  |
 | production/research/tom-face | shared research | 2026-10-08 | 0.00 | 1 | 3 | reference | archive / old version / research location |  |
 | production/research/tom-whole-person | shared research | 2026-11-08 | 0.01 | 1 | 0 | reference | archive / old version / research location |  |
 | production/research/tool-tests-2026-11 | shared research | 2026-11-17 | 0.33 | 36 | 12 | reference | archive / old version / research location |  |
@@ -472,18 +469,18 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | production/research/voice-alternatives-2026-09-24 | shared research | 2026-09-29 | 0.08 | 13 | 9 | reference | archive / old version / research location | Jafar, 24 September: the four voices cast on 14 August without his approval |
 | production/research/voice-direction | shared research | 2026-09-30 | 0.04 | 2 | 5 | reference | archive / old version / research location |  |
 | production/research/voice-in-the-game | shared research | 2026-09-30 | 0.05 | 2 | 3 | reference | archive / old version / research location |  |
-| production/research/voice-latency | shared research | 2026-11-07 | 0.22 | 21 | 39 | reference | archive / old version / research location |  |
+| production/research/voice-latency | shared research | 2026-11-07 | 0.22 | 21 | 42 | reference | archive / old version / research location |  |
 | production/research/voice-off-card | shared research | 2026-10-07 | 0.03 | 3 | 10 | reference | archive / old version / research location |  |
 | production/research/waiting | shared research | 2026-09-29 | 0.01 | 1 | 5 | reference | archive / old version / research location |  |
 | production/research/wardrobe-at-scale | shared research | 2026-10-01 | 0.08 | 6 | 11 | reference | archive / old version / research location |  |
 | production/sittings | builder | 2026-09-24 | 0.01 | 1 | 1 | stale | last commit 56 days before newest; still referenced by 1 files |  |
-| production/specs | builder | 2026-11-18 | 1.18 | 62 | 546 | live | touched 1 days before newest commit; 546 refs |  |
+| production/specs | builder | 2026-11-18 | 1.18 | 62 | 550 | live | touched 1 days before newest commit; 550 refs |  |
 | production/specs/kit-wear | builder | 2026-10-22 | 0.00 | 1 | 5 | live | touched 28 days before newest commit; 5 refs |  |
 | production/specs/shop-fronts | builder | 2026-10-30 | 0.05 | 16 | 21 | live | touched 20 days before newest commit; 21 refs |  |
 | production/store | builder | 2026-10-03 | 0.01 | 3 | 10 | stale | last commit 47 days before newest; still referenced by 10 files |  |
 | production/stranger-test | builder | 2026-09-23 | 0.03 | 3 | 20 | stale | last commit 57 days before newest; still referenced by 20 files |  |
 | research | shared research | 2026-09-03 | 0.03 | 1 | 92 | reference | archive / old version / research location |  |
-| tools | builder | 2026-11-19 | 59.40 | 837 | 941 | live | touched 0 days before newest commit; 941 refs |  |
+| tools | builder | 2026-11-19 | 59.37 | 839 | 960 | live | touched 0 days before newest commit; 960 refs |  |
 | tools/ai-tester | builder | 2026-11-03 | 0.05 | 2 | 37 | live | touched 16 days before newest commit; 37 refs |  |
 | tools/art-recipes | builder | 2026-11-08 | 2.28 | 59 | 196 | live | touched 11 days before newest commit; 196 refs |  |
 | tools/art-recipes/mickeys-props | builder | 2026-10-06 | 0.55 | 20 | 15 | stale | last commit 44 days before newest; still referenced by 15 files |  |
@@ -496,15 +493,15 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | tools/citypack/shortlist | builder | 2026-09-21 | 43.23 | 6 | 6 | stale | last commit 59 days before newest; still referenced by 6 files |  |
 | tools/citypack/shortlist-2026-09-15-network-blocked-proof | builder | 2026-09-15 | 0.00 | 1 | 3 | stale | last commit 65 days before newest; still referenced by 3 files |  |
 | tools/friends | builder | 2026-10-05 | 0.00 | 1 | 13 | stale | last commit 45 days before newest; still referenced by 13 files |  |
-| tools/hooks | builder | 2026-11-17 | 0.00 | 3 | 12 | live | touched 2 days before newest commit; 12 refs |  |
+| tools/hooks | builder | 2026-11-17 | 0.00 | 3 | 18 | live | touched 2 days before newest commit; 18 refs |  |
 | tools/imagegen | builder | 2026-09-24 | 0.50 | 13 | 82 | stale | last commit 56 days before newest; still referenced by 82 files | Double-click 1 MAKE THE PICTURES.bat. That is the whole thing. |
-| tools/lane | lane | 2026-11-18 | 1.96 | 176 | 37 | live | touched 1 days before newest commit; 37 refs |  |
-| tools/lane/audit | lane | - | 0.06 | 4 | 0 | live | no commit date (untracked/new); 0 refs |  |
-| tools/lane/prototype | lane | 2026-11-18 | 1.46 | 125 | 11 | live | touched 1 days before newest commit; 11 refs | Written by the cloud lane, 18 Nov 2026. Stage 0 (the published bundle, rebuilt and smoke-tested) is replaced by stage 1: Fable's readable source, built here byt |
-| tools/lane/simwasm | lane | 2026-11-17 | 0.00 | 3 | 4 | live | touched 2 days before newest commit; 4 refs | Run from the repository root: python -I tools/lane/simwasm/exportgolden.py /tmp/golden.json && node tools/lane/simwasm/harness.mjs /tmp/golden.json (the JSON is |
+| tools/lane | lane | 2026-11-19 | 1.93 | 178 | 42 | live | touched 0 days before newest commit; 42 refs |  |
+| tools/lane/audit | lane | 2026-11-19 | 0.03 | 6 | 0 | live | touched 0 days before newest commit; 0 refs |  |
+| tools/lane/prototype | lane | 2026-11-18 | 1.46 | 125 | 15 | live | touched 1 days before newest commit; 15 refs | Written by the cloud lane, 18 Nov 2026. Stage 0 (the published bundle, rebuilt and smoke-tested) is replaced by stage 1: Fable's readable source, built here byt |
+| tools/lane/simwasm | lane | 2026-11-17 | 0.00 | 3 | 7 | live | touched 2 days before newest commit; 7 refs | Run from the repository root: python -I tools/lane/simwasm/exportgolden.py /tmp/golden.json && node tools/lane/simwasm/harness.mjs /tmp/golden.json (the JSON is |
 | tools/lane/traffic | lane | 2026-11-18 | 0.07 | 14 | 5 | live | touched 1 days before newest commit; 5 refs |  |
 | tools/md | builder | 2026-11-18 | 0.33 | 40 | 28 | live | touched 1 days before newest commit; 28 refs |  |
-| tools/md-bridge | builder | 2026-11-18 | 0.27 | 29 | 33 | live | touched 1 days before newest commit; 33 refs |  |
+| tools/md-bridge | builder | 2026-11-18 | 0.27 | 29 | 40 | live | touched 1 days before newest commit; 40 refs |  |
 | tools/md-bridge/jobs | builder | 2026-11-02 | 0.03 | 14 | 5 | live | touched 17 days before newest commit; 5 refs |  |
 | tools/md/jobs | builder | 2026-11-18 | 0.03 | 17 | 5 | live | touched 1 days before newest commit; 5 refs |  |
 | tools/meshgen | builder | 2026-11-18 | 1.92 | 111 | 52 | live | touched 1 days before newest commit; 52 refs | LIVE. Verified 2026-09-01. The code is the source of truth; this file |
@@ -515,14 +512,14 @@ Made 2026-11-19T00:23:43+00:00; newest commit 2026-11-19; shallow repo: False. S
 | tools/play | builder | 2026-09-29 | 0.00 | 2 | 8 | stale | last commit 51 days before newest; still referenced by 8 files |  |
 | tools/props | builder | 2026-11-08 | 0.97 | 13 | 43 | live | touched 11 days before newest commit; 43 refs |  |
 | tools/runner | builder | 2026-10-05 | 0.01 | 2 | 178 | stale | last commit 45 days before newest; still referenced by 178 files |  |
-| tools/tool-tests | builder | 2026-11-13 | 0.03 | 6 | 6 | live | touched 6 days before newest commit; 6 refs |  |
+| tools/tool-tests | builder | 2026-11-13 | 0.03 | 6 | 9 | live | touched 6 days before newest commit; 9 refs |  |
 | tools/tts-benchmark | builder | 2026-07-28 | 0.04 | 3 | 4 | stale | last commit 114 days before newest; still referenced by 4 files | One file. Download it, run it. |
-| tools/ue | builder | 2026-11-17 | 1.39 | 84 | 258 | live | touched 2 days before newest commit; 258 refs |  |
+| tools/ue | builder | 2026-11-17 | 1.39 | 84 | 262 | live | touched 2 days before newest commit; 262 refs |  |
 | tools/ue/mocap-solve-project | builder | 2026-11-10 | 0.00 | 4 | 5 | live | touched 9 days before newest commit; 5 refs |  |
 | tools/ui | builder | 2026-10-01 | 0.02 | 4 | 6 | stale | last commit 49 days before newest; still referenced by 6 files |  |
 | tools/voice-fetch | builder | 2026-08-14 | 0.14 | 9 | 21 | stale | last commit 97 days before newest; still referenced by 21 files | Your part is two commands and a listening pass. |
 | tools/voice-gen | builder | 2026-08-26 | 0.05 | 4 | 7 | stale | last commit 85 days before newest; still referenced by 7 files | Run this on your machine, not in CI. The render needs a GPU and chatterbox; |
-| tools/voice-live | builder | 2026-11-06 | 0.86 | 67 | 96 | live | touched 13 days before newest commit; 96 refs |  |
+| tools/voice-live | builder | 2026-11-06 | 0.86 | 67 | 100 | live | touched 13 days before newest commit; 100 refs |  |
 | ue-probe | builder | 2026-11-18 | 12.91 | 151 | 100 | live | touched 1 days before newest commit; 100 refs |  |
 | ue-probe/Config | builder | 2026-11-16 | 0.03 | 4 | 42 | live | touched 3 days before newest commit; 42 refs |  |
 | ue-probe/Content | builder | 2026-11-18 | 4.67 | 49 | 22 | live | touched 1 days before newest commit; 22 refs |  |

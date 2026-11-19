@@ -1,5 +1,5 @@
 {
- "made": "2026-11-19T00:23:43+00:00",
+ "made": "2026-11-19T00:35:47+00:00",
  "shallow": false,
  "newest_commit": "2026-11-19",
  "folders": [
@@ -12,7 +12,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 243,
+    "count": 250,
     "examples": [
      ".gitignore",
      "DECISIONS.md",
@@ -29,9 +29,9 @@
    "in_retention": true,
    "content_hash": "c77445831f77332a263c808fcd1fc214ff505d11",
    "duplicates": [],
-   "referenced_by_incl_descendants": 418,
+   "referenced_by_incl_descendants": 437,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 243 refs",
+   "status_reason": "touched 1 days before newest commit; 250 refs",
    "status_basis": "heuristic"
   },
   {
@@ -43,7 +43,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 71,
+    "count": 76,
     "examples": [
      "RULINGS.md",
      "game-design/art-collaboration.md",
@@ -60,9 +60,9 @@
    "in_retention": false,
    "content_hash": "960ec708b2b2a1055a3568191719ee1e4b4bbbe4",
    "duplicates": [],
-   "referenced_by_incl_descendants": 71,
+   "referenced_by_incl_descendants": 76,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 71 refs",
+   "status_reason": "touched 1 days before newest commit; 76 refs",
    "status_basis": "heuristic"
   },
   {
@@ -74,16 +74,16 @@
    "purpose": "",
    "last_commit": "2026-11-17",
    "referenced_by": {
-    "count": 8,
+    "count": 12,
     "examples": [
      "production/approvals/needs-you/archive.json",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-02.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/orders/2026-11-02.md",
-     "production/orders/2026-11-09.md",
-     "production/research/playbook/README.md",
-     "production/research/playbook/TRAPS-TO-CHECKS-2026-11-08.md",
-     "production/research/skills/SPEECH-BENCH-SKILL-REVIEW-2026-11-02.md",
-     "production/research/token-audit/MONDAY-AUDIT-2026-11-09.md"
+     "production/orders/2026-11-09.md"
     ]
    },
    "owner": "shared",
@@ -91,9 +91,9 @@
    "in_retention": false,
    "content_hash": "706b6407bd96e41281b671132fc909cf8dbf19dd",
    "duplicates": [],
-   "referenced_by_incl_descendants": 104,
+   "referenced_by_incl_descendants": 111,
    "status": "live",
-   "status_reason": "touched 2 days before newest commit; 8 refs",
+   "status_reason": "touched 2 days before newest commit; 12 refs",
    "status_basis": "heuristic"
   },
   {
@@ -136,7 +136,7 @@
    "purpose": "",
    "last_commit": "2026-11-09",
    "referenced_by": {
-    "count": 21,
+    "count": 24,
     "examples": [
      ".claude/skills/asset-import/SKILL.md",
      ".claude/skills/gate/SKILL.md",
@@ -153,9 +153,9 @@
    "in_retention": false,
    "content_hash": "",
    "duplicates": [],
-   "referenced_by_incl_descendants": 21,
+   "referenced_by_incl_descendants": 24,
    "status": "live",
-   "status_reason": "touched 10 days before newest commit; 21 refs",
+   "status_reason": "touched 10 days before newest commit; 24 refs",
    "status_basis": "heuristic"
   },
   {
@@ -421,7 +421,7 @@
    "in_retention": false,
    "content_hash": "9fa4620bf3d38e826d0a9f1bec10de6ae95e6a07",
    "duplicates": [],
-   "referenced_by_incl_descendants": 165,
+   "referenced_by_incl_descendants": 167,
    "status": "live",
    "status_reason": "touched 7 days before newest commit; 11 refs",
    "status_basis": "heuristic"
@@ -435,7 +435,7 @@
    "purpose": "",
    "last_commit": "2026-11-12",
    "referenced_by": {
-    "count": 154,
+    "count": 156,
     "examples": [
      ".claude/skills/packaged-walk/SKILL.md",
      ".claude/skills/street-weathering/SKILL.md",
@@ -452,75 +452,9 @@
    "in_retention": false,
    "content_hash": "55c08fad13c473c7a523cf441ee7a69fb00ce3f0",
    "duplicates": [],
-   "referenced_by_incl_descendants": 154,
+   "referenced_by_incl_descendants": 156,
    "status": "live",
-   "status_reason": "touched 7 days before newest commit; 154 refs",
-   "status_basis": "heuristic"
-  },
-  {
-   "path": ".pytest_cache",
-   "depth": 1,
-   "file_count_direct": 3,
-   "file_count_total": 5,
-   "size_bytes": 1374,
-   "purpose": "This directory contains data from the pytest's cache plugin,",
-   "last_commit": "",
-   "referenced_by": {
-    "count": 0,
-    "examples": []
-   },
-   "owner": "shared",
-   "in_storage_map": false,
-   "in_retention": false,
-   "content_hash": "005f4cafdb595c57cf30c1f5f3f7eeec0ae495af",
-   "duplicates": [],
-   "referenced_by_incl_descendants": 0,
-   "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
-   "status_basis": "heuristic"
-  },
-  {
-   "path": ".pytest_cache/v",
-   "depth": 2,
-   "file_count_direct": 0,
-   "file_count_total": 2,
-   "size_bytes": 844,
-   "purpose": "",
-   "last_commit": "",
-   "referenced_by": {
-    "count": 0,
-    "examples": []
-   },
-   "owner": "shared",
-   "in_storage_map": false,
-   "in_retention": false,
-   "content_hash": "984964e7434d72d2da123d2331ff4a4c76d7d092",
-   "duplicates": [],
-   "referenced_by_incl_descendants": 0,
-   "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
-   "status_basis": "heuristic"
-  },
-  {
-   "path": ".pytest_cache/v/cache",
-   "depth": 3,
-   "file_count_direct": 2,
-   "file_count_total": 2,
-   "size_bytes": 844,
-   "purpose": "",
-   "last_commit": "",
-   "referenced_by": {
-    "count": 0,
-    "examples": []
-   },
-   "owner": "shared",
-   "in_storage_map": false,
-   "in_retention": false,
-   "content_hash": "ec249eb125d35966e458ea3b7e13b327caff8b3b",
-   "duplicates": [],
-   "referenced_by_incl_descendants": 0,
-   "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
+   "status_reason": "touched 7 days before newest commit; 156 refs",
    "status_basis": "heuristic"
   },
   {
@@ -549,7 +483,7 @@
    "in_retention": false,
    "content_hash": "0710a820adf8d3e2d2986900f54e29e3504b3186",
    "duplicates": [],
-   "referenced_by_incl_descendants": 166,
+   "referenced_by_incl_descendants": 168,
    "status": "live",
    "status_reason": "touched 13 days before newest commit; 32 refs",
    "status_basis": "heuristic"
@@ -656,8 +590,10 @@
    "purpose": "",
    "last_commit": "2026-09-10",
    "referenced_by": {
-    "count": 6,
+    "count": 8,
     "examples": [
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-01.json",
      "production/audits/rulings-sweep/TABLE.md",
      "production/audits/rulings-sweep/rulings.json",
      "production/cloud-week/lines/NOTES.md",
@@ -671,9 +607,9 @@
    "in_retention": false,
    "content_hash": "",
    "duplicates": [],
-   "referenced_by_incl_descendants": 6,
+   "referenced_by_incl_descendants": 8,
    "status": "stale",
-   "status_reason": "last commit 70 days before newest; still referenced by 6 files",
+   "status_reason": "last commit 70 days before newest; still referenced by 8 files",
    "status_basis": "heuristic"
   },
   {
@@ -844,7 +780,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 549,
+    "count": 555,
     "examples": [
      ".github/workflows/ledger-core-tests.yml",
      ".github/workflows/ledger-probe-unreal.yml",
@@ -861,9 +797,9 @@
    "in_retention": false,
    "content_hash": "1571f05e05d0d8c4d89ad9a6662f12505a01c923",
    "duplicates": [],
-   "referenced_by_incl_descendants": 801,
+   "referenced_by_incl_descendants": 807,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 549 refs",
+   "status_reason": "touched 1 days before newest commit; 555 refs",
    "status_basis": "heuristic"
   },
   {
@@ -1118,7 +1054,7 @@
    "purpose": "The game. Design documents live in ../game-design/.",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 295,
+    "count": 298,
     "examples": [
      ".github/workflows/ledger-core-tests.yml",
      ".gitignore",
@@ -1135,9 +1071,9 @@
    "in_retention": true,
    "content_hash": "b660a096ac0f94f26f25ea42ccf7ae29eea35dc8",
    "duplicates": [],
-   "referenced_by_incl_descendants": 1231,
+   "referenced_by_incl_descendants": 1252,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 295 refs",
+   "status_reason": "touched 1 days before newest commit; 298 refs",
    "status_basis": "heuristic"
   },
   {
@@ -1173,7 +1109,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 196,
+    "count": 202,
     "examples": [
      "canon.md",
      "content/brands/brand-bible-v1.json",
@@ -1190,7 +1126,7 @@
    "in_retention": false,
    "content_hash": "859237bf77cc147e1ba8be9408d51f8334750307",
    "duplicates": [],
-   "referenced_by_incl_descendants": 320,
+   "referenced_by_incl_descendants": 326,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -3184,7 +3120,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 52,
+    "count": 61,
     "examples": [
      "DECISIONS.md",
      "NOTEBOOK.md",
@@ -3201,9 +3137,9 @@
    "in_retention": false,
    "content_hash": "cef30447ff846ff6c77063bef906bd29a65464eb",
    "duplicates": [],
-   "referenced_by_incl_descendants": 52,
+   "referenced_by_incl_descendants": 61,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 52 refs",
+   "status_reason": "touched 1 days before newest commit; 61 refs",
    "status_basis": "heuristic"
   },
   {
@@ -3337,7 +3273,7 @@
    "purpose": "",
    "last_commit": "2026-11-07",
    "referenced_by": {
-    "count": 27,
+    "count": 30,
     "examples": [
      ".github/workflows/ledger-probe-unreal.yml",
      ".gitignore",
@@ -3354,9 +3290,9 @@
    "in_retention": false,
    "content_hash": "b87fefca794a5ab4b7bbb513bd43927f7e7cab01",
    "duplicates": [],
-   "referenced_by_incl_descendants": 27,
+   "referenced_by_incl_descendants": 30,
    "status": "live",
-   "status_reason": "touched 12 days before newest commit; 27 refs",
+   "status_reason": "touched 12 days before newest commit; 30 refs",
    "status_basis": "heuristic"
   },
   {
@@ -3574,7 +3510,7 @@
    "purpose": "",
    "last_commit": "2026-09-23",
    "referenced_by": {
-    "count": 15,
+    "count": 18,
     "examples": [
      "REUSE.md",
      "game-design/rumour-reach-2026-09-23.md",
@@ -3591,9 +3527,9 @@
    "in_retention": false,
    "content_hash": "facaadc83031ac56e0a4b820d509bd7e61a94fbc",
    "duplicates": [],
-   "referenced_by_incl_descendants": 15,
+   "referenced_by_incl_descendants": 18,
    "status": "stale",
-   "status_reason": "last commit 57 days before newest; still referenced by 15 files",
+   "status_reason": "last commit 57 days before newest; still referenced by 18 files",
    "status_basis": "heuristic"
   },
   {
@@ -3663,7 +3599,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 44,
+    "count": 47,
     "examples": [
      ".claude/skills/packaged-walk/SKILL.md",
      ".claude/skills/speech-bench/SKILL.md",
@@ -3672,7 +3608,7 @@
      "production/archive/DECISIONS-to-2026-09-24.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
      "production/archive/NOW-to-2026-09-24.md",
-     "production/audits/phase1-exit/EXIT-C-REVIEW-2026-11-09.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md"
     ]
    },
    "owner": "town (simulation)",
@@ -3680,9 +3616,9 @@
    "in_retention": false,
    "content_hash": "feb1dbc62a30b527f503fdcf272f32fc137653f1",
    "duplicates": [],
-   "referenced_by_incl_descendants": 44,
+   "referenced_by_incl_descendants": 47,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 44 refs",
+   "status_reason": "touched 1 days before newest commit; 47 refs",
    "status_basis": "heuristic"
   },
   {
@@ -3804,16 +3740,16 @@
    "purpose": "STATUS: LIVE. Verified 2026-09-10. Wrong here is a bug, not a stale log: this",
    "last_commit": "2026-09-26",
    "referenced_by": {
-    "count": 10,
+    "count": 21,
     "examples": [
      "THIRD-PARTY.md",
      "game-design/roadmap-history.md",
-     "production/audits/rulings-sweep/TABLE.md",
-     "production/audits/rulings-sweep/rulings.json",
-     "production/research/pre-production/notes/H1-inventory.md",
-     "tools/canon-gate.py",
-     "tools/content-gate.py",
-     "tools/lane/audit/test_inventory.py"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-02.json",
+     "production/audits/full-2026-11/work/batch-04.json",
+     "production/audits/full-2026-11/work/batch-05.json",
+     "production/audits/full-2026-11/work/batch-06.json"
     ]
    },
    "owner": "none (archive)",
@@ -3821,7 +3757,7 @@
    "in_retention": false,
    "content_hash": "0dc4ce371f92da0e0208b580df0b48977396f3b4",
    "duplicates": [],
-   "referenced_by_incl_descendants": 67,
+   "referenced_by_incl_descendants": 131,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -3884,13 +3820,16 @@
    "purpose": "Produced 2026-08-31 in the claude.ai planning session, from: the wc26/ledger repo, the game-studio framework repo, the donchitos/claude-code-game-studios repo, ",
    "last_commit": "2026-09-26",
    "referenced_by": {
-    "count": 5,
+    "count": 12,
     "examples": [
      ".github/workflows/ledger-probe-unreal.yml",
      "CATALOGUE.md",
      "production/archive/DECISIONS-to-2026-09-24.md",
-     "production/audits/sweep-2026-10-05/SWEEP.md",
-     "tools/ci-checks.sh"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-04.json",
+     "production/audits/full-2026-11/work/dec-G-legacy.jsonl",
+     "production/audits/full-2026-11/work/decisions-merged.json"
     ]
    },
    "owner": "none (archive)",
@@ -3898,7 +3837,7 @@
    "in_retention": false,
    "content_hash": "fd934d35fc168d969058dad2aae5c60b7dabee49",
    "duplicates": [],
-   "referenced_by_incl_descendants": 41,
+   "referenced_by_incl_descendants": 83,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -4008,15 +3947,16 @@
    "purpose": "",
    "last_commit": "2026-09-22",
    "referenced_by": {
-    "count": 7,
+    "count": 19,
     "examples": [
      "legacy/studio-v2/REACTIVATE.md",
      "production/archive/DECISIONS-to-2026-09-24.md",
-     "production/audits/rulings-sweep/SUMMARY.md",
-     "production/audits/rulings-sweep/TABLE.md",
-     "production/audits/rulings-sweep/rulings.json",
-     "production/lane/synthesis/pack/01-canon-rulings-plan.md",
-     "production/research/tts-licensing-and-consent/VOICE-PERMISSIONS-2026-09-24.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-01.json",
+     "production/audits/full-2026-11/work/batch-02.json",
+     "production/audits/full-2026-11/work/batch-03.json",
+     "production/audits/full-2026-11/work/batch-04.json"
     ]
    },
    "owner": "none (archive)",
@@ -4024,7 +3964,7 @@
    "in_retention": false,
    "content_hash": "9e376012471e740f933886492cf5918522406b92",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 19,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5233,9 +5173,15 @@
    "purpose": "queue/ task files, one deliverable each. Folder is the state",
    "last_commit": "2026-09-22",
    "referenced_by": {
-    "count": 2,
+    "count": 8,
     "examples": [
      "legacy/studio-v2/REACTIVATE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-02.json",
+     "production/audits/full-2026-11/work/batch-04.json",
+     "production/audits/full-2026-11/work/batch-05.json",
+     "production/audits/full-2026-11/work/dec-G-legacy.jsonl",
+     "production/audits/full-2026-11/work/decisions-merged.json",
      "production/research/feature-coverage/BRIEF.md"
     ]
    },
@@ -5244,7 +5190,7 @@
    "in_retention": false,
    "content_hash": "8f488302a76d9e62b51a0c393b332038555f8f99",
    "duplicates": [],
-   "referenced_by_incl_descendants": 3,
+   "referenced_by_incl_descendants": 12,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5480,15 +5426,19 @@
    "purpose": "Front matter, then the brief. One task, one deliverable (waste lesson 3).",
    "last_commit": "2026-09-22",
    "referenced_by": {
-    "count": 0,
-    "examples": []
+    "count": 3,
+    "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-07.json"
+    ]
    },
    "owner": "none (archive)",
    "in_storage_map": false,
    "in_retention": false,
    "content_hash": "4e252e1624bd4c3fed0365df81d792dc8b6c13a2",
    "duplicates": [],
-   "referenced_by_incl_descendants": 0,
+   "referenced_by_incl_descendants": 3,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5560,7 +5510,7 @@
    "in_retention": false,
    "content_hash": "c8709729051b0d8de4f3c006d4f8df42e4078e88",
    "duplicates": [],
-   "referenced_by_incl_descendants": 12,
+   "referenced_by_incl_descendants": 24,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5574,15 +5524,16 @@
    "purpose": "",
    "last_commit": "2026-09-22",
    "referenced_by": {
-    "count": 7,
+    "count": 19,
     "examples": [
      "production/archive/DECISIONS-to-2026-09-24.md",
-     "production/audits/rulings-sweep/METHOD.md",
-     "production/audits/rulings-sweep/TABLE.md",
-     "production/audits/rulings-sweep/rulings.json",
-     "production/audits/sweep-2026-10-05/walkers-vs-residents.md",
-     "production/research/pre-production/notes/H1-inventory.md",
-     "tools/meshgen/meshgen.py"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-01.json",
+     "production/audits/full-2026-11/work/batch-02.json",
+     "production/audits/full-2026-11/work/batch-03.json",
+     "production/audits/full-2026-11/work/batch-04.json",
+     "production/audits/full-2026-11/work/batch-05.json"
     ]
    },
    "owner": "none (archive)",
@@ -5590,7 +5541,7 @@
    "in_retention": false,
    "content_hash": "530fa4ec5a8be7a3102c843fecb05915a8e7989d",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 19,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5628,9 +5579,11 @@
    "purpose": "",
    "last_commit": "2026-09-22",
    "referenced_by": {
-    "count": 2,
+    "count": 4,
     "examples": [
      "legacy/studio-v2/REACTIVATE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "tools/ci-checks.sh"
     ]
    },
@@ -5639,7 +5592,7 @@
    "in_retention": false,
    "content_hash": "3282bb491910535cb4020535a4256bc15519f077",
    "duplicates": [],
-   "referenced_by_incl_descendants": 2,
+   "referenced_by_incl_descendants": 4,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5790,15 +5743,19 @@
    "purpose": "",
    "last_commit": "2026-09-10",
    "referenced_by": {
-    "count": 0,
-    "examples": []
+    "count": 3,
+    "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-06.json"
+    ]
    },
    "owner": "none (archive)",
    "in_storage_map": false,
    "in_retention": false,
    "content_hash": "e403267fd2d0fd02f272e9a5d8e4aa203625c660",
    "duplicates": [],
-   "referenced_by_incl_descendants": 10,
+   "referenced_by_incl_descendants": 21,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5812,7 +5769,7 @@
    "purpose": "",
    "last_commit": "2026-09-10",
    "referenced_by": {
-    "count": 7,
+    "count": 11,
     "examples": [
      "game-design/open-city-spec.md",
      "game-design/story-outline-2026-09-28.md",
@@ -5820,7 +5777,8 @@
      "legacy/studio-v2/map.html",
      "legacy/studio-v2/production/queue/400-the-endings-still-speak-of-signing-over-a-pub.md",
      "legacy/studio-v2/production/systems-inventory.json",
-     "production/approvals/2026-09-28-town/index.html"
+     "production/approvals/2026-09-28-town/index.html",
+     "production/audits/full-2026-11/decisions-trace.json"
     ]
    },
    "owner": "none (archive)",
@@ -5828,7 +5786,7 @@
    "in_retention": false,
    "content_hash": "e38490817ad912f668fb215aa56a97fb286e9673",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 11,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5842,9 +5800,13 @@
    "purpose": "",
    "last_commit": "2026-09-10",
    "referenced_by": {
-    "count": 1,
+    "count": 5,
     "examples": [
-     "legacy/INDEX.md"
+     "legacy/INDEX.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-06.json",
+     "production/audits/full-2026-11/work/dec-G-legacy.jsonl",
+     "production/audits/full-2026-11/work/decisions-merged.json"
     ]
    },
    "owner": "none (archive)",
@@ -5852,7 +5814,7 @@
    "in_retention": false,
    "content_hash": "1b301d3e138006977d44a14c17a7ced997b3b4fe",
    "duplicates": [],
-   "referenced_by_incl_descendants": 1,
+   "referenced_by_incl_descendants": 5,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -5934,8 +5896,8 @@
    "path": "production",
    "depth": 1,
    "file_count_direct": 11,
-   "file_count_total": 5124,
-   "size_bytes": 835660744,
+   "file_count_total": 5146,
+   "size_bytes": 837941218,
    "purpose": "",
    "last_commit": "2026-11-19",
    "referenced_by": {
@@ -5954,9 +5916,9 @@
    "owner": "shared",
    "in_storage_map": true,
    "in_retention": true,
-   "content_hash": "7355592cf0556e7816dd29f334407e36722c4981",
+   "content_hash": "0fb7aba3e5f2261edf559f3eaa7c5725a9c69014",
    "duplicates": [],
-   "referenced_by_incl_descendants": 6743,
+   "referenced_by_incl_descendants": 6879,
    "status": "live",
    "status_reason": "touched 0 days before newest commit; 1653 refs",
    "status_basis": "heuristic"
@@ -8835,16 +8797,16 @@
    "purpose": "",
    "last_commit": "2026-11-09",
    "referenced_by": {
-    "count": 32,
+    "count": 35,
     "examples": [
      "DECISIONS.md",
      "FINDINGS.md",
      "FOR-JAFAR.md",
      "production/approvals/2026-09-25-cleanup/index.html",
      "production/approvals/2026-09-25-cleanup/plan.json",
-     "production/audits/phase0-exit/BUNDLE.md",
-     "production/audits/rulings-sweep/SUMMARY.md",
-     "production/audits/rulings-sweep/TABLE.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json"
     ]
    },
    "owner": "none (archive)",
@@ -8852,7 +8814,7 @@
    "in_retention": false,
    "content_hash": "36b1a74e844710bd6bbe09db95c32e8db208c0b0",
    "duplicates": [],
-   "referenced_by_incl_descendants": 44,
+   "referenced_by_incl_descendants": 47,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -9227,7 +9189,7 @@
    "in_retention": true,
    "content_hash": "d5f21def4689baf55a3fa0ac6bf8c9f49e01f589",
    "duplicates": [],
-   "referenced_by_incl_descendants": 548,
+   "referenced_by_incl_descendants": 562,
    "status": "live",
    "status_reason": "touched 3 days before newest commit; 39 refs",
    "status_basis": "heuristic"
@@ -9258,7 +9220,7 @@
    "in_retention": false,
    "content_hash": "4d841f009333a09f09442075b8249219df4b89e9",
    "duplicates": [],
-   "referenced_by_incl_descendants": 118,
+   "referenced_by_incl_descendants": 125,
    "status": "stale",
    "status_reason": "last commit 44 days before newest; still referenced by 76 files",
    "status_basis": "heuristic"
@@ -9350,14 +9312,16 @@
    "purpose": "",
    "last_commit": "2026-10-06",
    "referenced_by": {
-    "count": 6,
+    "count": 13,
     "examples": [
      "CATALOGUE.md",
      "production/art/atlas-01/README.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-01.json",
+     "production/audits/full-2026-11/work/batch-07.json",
      "production/audits/full-2026-11/work/dec-C-rulings-canon.jsonl",
-     "production/audits/sweep-2026-10-05/branches.json",
-     "production/rulings-enforcers.json",
-     "tools/ci-checks.sh"
+     "production/audits/full-2026-11/work/decisions-merged.json"
     ]
    },
    "owner": "builder",
@@ -9365,9 +9329,9 @@
    "in_retention": false,
    "content_hash": "0af8fb9f603909032b8eb48fcb684ccba5c710a4",
    "duplicates": [],
-   "referenced_by_incl_descendants": 6,
+   "referenced_by_incl_descendants": 13,
    "status": "stale",
-   "status_reason": "last commit 44 days before newest; still referenced by 6 files",
+   "status_reason": "last commit 44 days before newest; still referenced by 13 files",
    "status_basis": "heuristic"
   },
   {
@@ -10505,10 +10469,13 @@
    "purpose": "",
    "last_commit": "2026-09-10",
    "referenced_by": {
-    "count": 3,
+    "count": 6,
     "examples": [
      "legacy/studio-v2/production/queue/265-the-next-district-spec-asks-for-children-and-d18-forbids-them.md",
      "legacy/studio-v2/production/wakes/2026-09-11T0400Z-1ed3463a.wake.txt",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-02.json",
      "tools/content-gate.py"
     ]
    },
@@ -10517,9 +10484,9 @@
    "in_retention": false,
    "content_hash": "2288cdaf2119bf12a4c4f368846666feca0b3a34",
    "duplicates": [],
-   "referenced_by_incl_descendants": 3,
+   "referenced_by_incl_descendants": 6,
    "status": "stale",
-   "status_reason": "last commit 70 days before newest; still referenced by 3 files",
+   "status_reason": "last commit 70 days before newest; still referenced by 6 files",
    "status_basis": "heuristic"
   },
   {
@@ -10781,15 +10748,16 @@
    "purpose": "",
    "last_commit": "2026-11-13",
    "referenced_by": {
-    "count": 7,
+    "count": 11,
     "examples": [
      "DECISIONS.md",
      "RULINGS.md",
      "production/approvals/2026-09-30/files.json",
      "production/approvals/2026-09-30/page.json",
-     "production/audits/full-2026-11/work/dec-C-rulings-canon.jsonl",
-     "production/lane/RISK-REGISTER-WHOLE-GAME-DRAFT-2026-11-18.md",
-     "production/research/pre-production/notes/H4a-visual-areas.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-02.json",
+     "production/audits/full-2026-11/work/dec-C-rulings-canon.jsonl"
     ]
    },
    "owner": "builder",
@@ -10797,9 +10765,9 @@
    "in_retention": false,
    "content_hash": "45f5ae3bc301c9b571de36c497b1fdf97556c7b1",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 11,
    "status": "live",
-   "status_reason": "touched 6 days before newest commit; 7 refs",
+   "status_reason": "touched 6 days before newest commit; 11 refs",
    "status_basis": "heuristic"
   },
   {
@@ -12340,8 +12308,8 @@
    "path": "production/audits",
    "depth": 2,
    "file_count_direct": 11,
-   "file_count_total": 195,
-   "size_bytes": 3969376,
+   "file_count_total": 217,
+   "size_bytes": 6249850,
    "purpose": "",
    "last_commit": "2026-11-19",
    "referenced_by": {
@@ -12360,9 +12328,9 @@
    "owner": "builder",
    "in_storage_map": false,
    "in_retention": false,
-   "content_hash": "79c5c998a038aba7a69e85b4238c6886dde75cfa",
+   "content_hash": "2829bad4c0d81f225aea1ffb20feae2c0ed49e4f",
    "duplicates": [],
-   "referenced_by_incl_descendants": 212,
+   "referenced_by_incl_descendants": 219,
    "status": "live",
    "status_reason": "touched 0 days before newest commit; 28 refs",
    "status_basis": "heuristic"
@@ -12396,36 +12364,38 @@
   {
    "path": "production/audits/full-2026-11",
    "depth": 3,
-   "file_count_direct": 2,
-   "file_count_total": 9,
-   "size_bytes": 1021268,
+   "file_count_direct": 4,
+   "file_count_total": 31,
+   "size_bytes": 3301742,
    "purpose": "",
    "last_commit": "2026-11-19",
    "referenced_by": {
-    "count": 2,
+    "count": 4,
     "examples": [
      "DECISIONS.md",
-     "tools/lane/audit/inventory.py"
+     "tools/lane/audit/build_trace.py",
+     "tools/lane/audit/inventory.py",
+     "tools/lane/audit/merge_decisions.py"
     ]
    },
    "owner": "lane",
    "in_storage_map": false,
    "in_retention": false,
-   "content_hash": "c1b259985d338938d161444e855958f577c9d6de",
+   "content_hash": "c328704ea16b95f5ecf6893b214602f461b072b8",
    "duplicates": [],
-   "referenced_by_incl_descendants": 2,
+   "referenced_by_incl_descendants": 4,
    "status": "live",
-   "status_reason": "touched 0 days before newest commit; 2 refs",
+   "status_reason": "touched 0 days before newest commit; 4 refs",
    "status_basis": "heuristic"
   },
   {
    "path": "production/audits/full-2026-11/work",
    "depth": 4,
-   "file_count_direct": 7,
-   "file_count_total": 7,
-   "size_bytes": 297994,
+   "file_count_direct": 27,
+   "file_count_total": 27,
+   "size_bytes": 1496730,
    "purpose": "",
-   "last_commit": "",
+   "last_commit": "2026-11-19",
    "referenced_by": {
     "count": 0,
     "examples": []
@@ -12433,11 +12403,11 @@
    "owner": "lane",
    "in_storage_map": false,
    "in_retention": false,
-   "content_hash": "d0c945bd57c871937f07950ad6221110843f18f1",
+   "content_hash": "6a91d3305b8365b10dfce54661f7059dd97ca456",
    "duplicates": [],
    "referenced_by_incl_descendants": 0,
    "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
+   "status_reason": "touched 0 days before newest commit; 0 refs",
    "status_basis": "heuristic"
   },
   {
@@ -12781,11 +12751,14 @@
    "purpose": "Phase 0, item 0.7. His orders of 4 and 5 October: clean the history while the sessions are stopped, after he hears the plan and all it touches; then, the new re",
    "last_commit": "2026-10-05",
    "referenced_by": {
-    "count": 5,
+    "count": 8,
     "examples": [
      ".github/workflows/ledger-push-guard.yml",
      "NOTEBOOK.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/audits/phase0-exit/BUNDLE.md",
      "tools/push_guard.py"
     ]
@@ -12795,9 +12768,9 @@
    "in_retention": false,
    "content_hash": "58403c3392bbad062a13d24d265bfb3068fc5605",
    "duplicates": [],
-   "referenced_by_incl_descendants": 5,
+   "referenced_by_incl_descendants": 8,
    "status": "stale",
-   "status_reason": "last commit 45 days before newest; still referenced by 5 files",
+   "status_reason": "last commit 45 days before newest; still referenced by 8 files",
    "status_basis": "heuristic"
   },
   {
@@ -12809,10 +12782,12 @@
    "purpose": "",
    "last_commit": "2026-11-06",
    "referenced_by": {
-    "count": 3,
+    "count": 5,
     "examples": [
      "NOTEBOOK.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/research/playbook/PROCESS-2026-11-08.md"
     ]
    },
@@ -12821,9 +12796,9 @@
    "in_retention": false,
    "content_hash": "d0e653173ca8913d4a3a251dae02af6a5ae0e886",
    "duplicates": [],
-   "referenced_by_incl_descendants": 3,
+   "referenced_by_incl_descendants": 5,
    "status": "live",
-   "status_reason": "touched 13 days before newest commit; 3 refs",
+   "status_reason": "touched 13 days before newest commit; 5 refs",
    "status_basis": "heuristic"
   },
   {
@@ -17663,16 +17638,16 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 17,
+    "count": 21,
     "examples": [
      ".claude/skills/his-page/SKILL.md",
      ".gitignore",
      "DECISIONS.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
-     "production/orders/2026-11-02.md",
-     "production/orders/archive/2026-11-02.md",
-     "production/research/clothing-pipeline/MONDAY-NUMBERS-RAW-2026-11-12.md",
-     "production/research/disk/CLEAROUT-LIST-2026-11-17.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/CLASSIFY-BRIEF.md",
+     "production/audits/full-2026-11/work/status-08.json"
     ]
    },
    "owner": "builder",
@@ -17680,9 +17655,9 @@
    "in_retention": true,
    "content_hash": "32d52e7e82bb1f6f8a2e678261f7cf9691b5e9f4",
    "duplicates": [],
-   "referenced_by_incl_descendants": 17,
+   "referenced_by_incl_descendants": 21,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 17 refs",
+   "status_reason": "touched 1 days before newest commit; 21 refs",
    "status_basis": "heuristic"
   },
   {
@@ -18132,16 +18107,16 @@
    "purpose": "A second Claude session that does only machine-free work, beside the main production session (his picks of 17 Nov about 16:05, advisor 202; RULINGS \"7, 10 Nov\" ",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 23,
+    "count": 28,
     "examples": [
      "DECISIONS.md",
      "NOTEBOOK.md",
-     "production/orders/2026-11-16.md",
-     "production/research/lane/FEEL-TARGETS-DRIVING-2026-11-17.md",
-     "production/research/lane/FEEL-TARGETS-MELEE-2026-11-18.md",
-     "production/research/lane/LEDGER-SCREEN-STUDY-2026-11-18.md",
-     "tools/attribution-check.py",
-     "tools/lane/audit/inventory.py"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-02.json",
+     "production/audits/full-2026-11/work/status-06.json",
+     "production/audits/full-2026-11/work/status-08.json",
+     "production/orders/2026-11-16.md"
     ]
    },
    "owner": "lane",
@@ -18149,9 +18124,9 @@
    "in_retention": false,
    "content_hash": "4f5bfcbd2efb56c95f5d589be5d0935eb3c01aca",
    "duplicates": [],
-   "referenced_by_incl_descendants": 70,
+   "referenced_by_incl_descendants": 79,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 23 refs",
+   "status_reason": "touched 1 days before newest commit; 28 refs",
    "status_basis": "heuristic"
   },
   {
@@ -18467,8 +18442,12 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 3,
+    "count": 7,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-02.json",
+     "production/audits/full-2026-11/work/status-08.json",
      "production/lane/LANE-HANDOVER.md",
      "production/lane/LANE-LOG.md",
      "production/lane/LANE-QUEUE.md"
@@ -18479,9 +18458,9 @@
    "in_retention": false,
    "content_hash": "0252a46fbda5fe342230148e9e8826d2e93cbe0e",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 11,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 3 refs",
+   "status_reason": "touched 1 days before newest commit; 7 refs",
    "status_basis": "heuristic"
   },
   {
@@ -18595,7 +18574,7 @@
    "purpose": "",
    "last_commit": "2026-11-19",
    "referenced_by": {
-    "count": 43,
+    "count": 63,
     "examples": [
      ".claude/skills/speech-bench/SKILL.md",
      "DECISIONS.md",
@@ -18603,8 +18582,8 @@
      "NOW.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
      "production/art/corner/CORNER-PLAN-2026-11-02.md",
-     "production/audits/full-2026-11/work/dec-E-advisor.jsonl",
-     "production/handover/HANDOVER.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json"
     ]
    },
    "owner": "builder",
@@ -18612,9 +18591,9 @@
    "in_retention": false,
    "content_hash": "f4c1481d931faf4f01c5acbc38f461de45d17662",
    "duplicates": [],
-   "referenced_by_incl_descendants": 52,
+   "referenced_by_incl_descendants": 83,
    "status": "live",
-   "status_reason": "touched 0 days before newest commit; 43 refs",
+   "status_reason": "touched 0 days before newest commit; 63 refs",
    "status_basis": "heuristic"
   },
   {
@@ -18626,16 +18605,16 @@
    "purpose": "",
    "last_commit": "2026-11-15",
    "referenced_by": {
-    "count": 9,
+    "count": 20,
     "examples": [
      "production/archive/DECISIONS-to-2026-11-09.md",
-     "production/handover/HOURLY-TASK.md",
-     "production/lane/K2-SIM-PORT-FAULTS-2026-11-18.md",
-     "production/lane/synthesis/pack/04-study-lines.md",
-     "production/orders/2026-11-02.md",
-     "production/orders/2026-11-09.md",
-     "production/orders/2026-11-16.md",
-     "production/research/skills/SLATE-ROOFS-SKILL-SOURCES-2026-11-08.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-01.json",
+     "production/audits/full-2026-11/work/batch-03.json",
+     "production/audits/full-2026-11/work/batch-04.json",
+     "production/audits/full-2026-11/work/batch-05.json",
+     "production/audits/full-2026-11/work/batch-07.json"
     ]
    },
    "owner": "builder",
@@ -18643,7 +18622,7 @@
    "in_retention": false,
    "content_hash": "2046a9bdfc1453bf8f4ccb02c87b232221dd206c",
    "duplicates": [],
-   "referenced_by_incl_descendants": 9,
+   "referenced_by_incl_descendants": 20,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -19163,7 +19142,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 132,
+    "count": 137,
     "examples": [
      ".claude/skills/asset-import/SKILL.md",
      ".claude/skills/gate/SKILL.md",
@@ -19180,9 +19159,9 @@
    "in_retention": false,
    "content_hash": "0553f5428755608283564f04de306ac9f3bd4a3c",
    "duplicates": [],
-   "referenced_by_incl_descendants": 285,
+   "referenced_by_incl_descendants": 290,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 132 refs",
+   "status_reason": "touched 1 days before newest commit; 137 refs",
    "status_basis": "heuristic"
   },
   {
@@ -20629,16 +20608,16 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 16,
+    "count": 19,
     "examples": [
      ".claude/skills/his-page/SKILL.md",
      "DECISIONS.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-06.json",
      "production/lane/OWNER-MINUTES-MEASURE-2026-11-18.md",
-     "production/lane/RISK-REGISTER-WHOLE-GAME-DRAFT-2026-11-18.md",
-     "production/lane/SCOPE-OPTIONS-1-FEB-DRAFT-2026-11-18.md",
-     "production/lane/SKELETON-FIRST-OPTIONS-2026-11-18.md",
-     "production/lane/reviews/REVIEW-SCOPE-OPTIONS-1-FEB-2026-11-18.md"
+     "production/lane/RISK-REGISTER-WHOLE-GAME-DRAFT-2026-11-18.md"
     ]
    },
    "owner": "builder",
@@ -20646,9 +20625,9 @@
    "in_retention": false,
    "content_hash": "5e6b710f475246ca04100ecbc8a25d30e23b2ba0",
    "duplicates": [],
-   "referenced_by_incl_descendants": 16,
+   "referenced_by_incl_descendants": 19,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 16 refs",
+   "status_reason": "touched 1 days before newest commit; 19 refs",
    "status_basis": "heuristic"
   },
   {
@@ -20686,7 +20665,7 @@
    "purpose": "THE ONLY PLACE A REFERENCE LIVES. Every tool, recipe and check that compares",
    "last_commit": "2026-10-03",
    "referenced_by": {
-    "count": 95,
+    "count": 99,
     "examples": [
      ".claude/skills/gate/SKILL.md",
      ".gitignore",
@@ -20703,7 +20682,7 @@
    "in_retention": false,
    "content_hash": "b446a527b0325e5ec6d8096707e4f121aeaa5514",
    "duplicates": [],
-   "referenced_by_incl_descendants": 95,
+   "referenced_by_incl_descendants": 99,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -20717,7 +20696,7 @@
    "purpose": "WHAT THIS ANSWERS. Before authoring anything, two questions: which research",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 62,
+    "count": 68,
     "examples": [
      ".claude/skills/asset-import/SKILL.md",
      "CATALOGUE.md",
@@ -20734,7 +20713,7 @@
    "in_retention": true,
    "content_hash": "c67fb503facdf4f62f6ee6cce514c6a69ddb9586",
    "duplicates": [],
-   "referenced_by_incl_descendants": 1509,
+   "referenced_by_incl_descendants": 1561,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -20772,16 +20751,16 @@
    "purpose": "",
    "last_commit": "2026-11-17",
    "referenced_by": {
-    "count": 18,
+    "count": 21,
     "examples": [
      "NOTEBOOK.md",
      "REUSE.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-07.json",
      "production/cloud-week/HANDOVER.md",
-     "production/cloud-week/QUEUE.md",
-     "production/cloud-week/first-30-minutes/DRAFT.md",
-     "production/cloud-week/first-30-minutes/check_draft.py",
-     "production/lane/COMBAT-END-STATE-OPTIONS.md"
+     "production/cloud-week/QUEUE.md"
     ]
    },
    "owner": "shared research",
@@ -20789,7 +20768,7 @@
    "in_retention": false,
    "content_hash": "d9a4280f8df62835fbd2a4f18cf126b6a01ee5fc",
    "duplicates": [],
-   "referenced_by_incl_descendants": 66,
+   "referenced_by_incl_descendants": 72,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -20803,7 +20782,7 @@
    "purpose": "",
    "last_commit": "2026-11-02",
    "referenced_by": {
-    "count": 48,
+    "count": 51,
     "examples": [
      ".claude/skills/shopfront/SKILL.md",
      ".claude/skills/slate-roofs/SKILL.md",
@@ -20820,7 +20799,7 @@
    "in_retention": false,
    "content_hash": "85d0c7bcfe606b8c5a97e613bd408109d9036d65",
    "duplicates": [],
-   "referenced_by_incl_descendants": 48,
+   "referenced_by_incl_descendants": 51,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -21818,10 +21797,13 @@
    "purpose": "",
    "last_commit": "2026-09-23",
    "referenced_by": {
-    "count": 4,
+    "count": 7,
     "examples": [
      "ledger/RouterFloor/Program.cs",
      "production/archive/NOW-to-2026-09-24.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-01.json",
      "production/research/local-models/BRIEF.md",
      "production/research/local-models/DELIVERY.md"
     ]
@@ -21831,7 +21813,7 @@
    "in_retention": false,
    "content_hash": "12013220970eb2bfd75e3207d77e78fe91a212ce",
    "duplicates": [],
-   "referenced_by_incl_descendants": 4,
+   "referenced_by_incl_descendants": 7,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -22416,9 +22398,12 @@
    "purpose": "",
    "last_commit": "2026-11-09",
    "referenced_by": {
-    "count": 4,
+    "count": 7,
     "examples": [
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-07.json",
      "production/orders/2026-11-09.md",
      "production/research/clothing-pipeline/GARMENTCODE-LICENCE-2026-11-08.md",
      "production/research/office-camera/DOOR-PASSAGE-METHOD-2026-11-09.md"
@@ -22429,7 +22414,7 @@
    "in_retention": false,
    "content_hash": "5eb93760152269f2475479f2335a0a1a3713c430",
    "duplicates": [],
-   "referenced_by_incl_descendants": 4,
+   "referenced_by_incl_descendants": 7,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -22736,8 +22721,11 @@
    "purpose": "",
    "last_commit": "2026-09-21",
    "referenced_by": {
-    "count": 2,
+    "count": 5,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-03.json",
      "production/audits/rulings-sweep/TABLE.md",
      "production/audits/rulings-sweep/rulings.json"
     ]
@@ -22747,7 +22735,7 @@
    "in_retention": false,
    "content_hash": "7069079ca362d7021a811ed1c823ef366750c7f0",
    "duplicates": [],
-   "referenced_by_incl_descendants": 2,
+   "referenced_by_incl_descendants": 5,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -22873,16 +22861,16 @@
    "purpose": "",
    "last_commit": "2026-10-05",
    "referenced_by": {
-    "count": 10,
+    "count": 13,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-08.json",
      "production/audits/rulings-sweep/TABLE.md",
      "production/audits/rulings-sweep/rulings.json",
      "production/audits/sweep-2026-10-05/branches.json",
      "production/research/conversation-model-capability/SUMMARY.md",
-     "production/research/live-speech-architecture/SUMMARY.md",
-     "production/research/local-models/DELIVERY.md",
-     "production/research/metahuman-audio-driven-animation/DELIVERY.md",
-     "production/research/pre-production/4-BUDGETS.md"
+     "production/research/live-speech-architecture/SUMMARY.md"
     ]
    },
    "owner": "shared research",
@@ -22890,7 +22878,7 @@
    "in_retention": false,
    "content_hash": "fa9e518adc4143ecdc1ec0db3cdf02c804b328ff",
    "duplicates": [],
-   "referenced_by_incl_descendants": 10,
+   "referenced_by_incl_descendants": 13,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -23156,16 +23144,16 @@
    "purpose": "",
    "last_commit": "2026-11-07",
    "referenced_by": {
-    "count": 11,
+    "count": 14,
     "examples": [
      "NOTEBOOK.md",
      "ledger/Assets/Scripts/Core/ConversationEngine.cs",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-03.json",
      "production/audits/phase1-exit/CLOSE-BRIEF-2026-11-09.md",
-     "production/audits/sweep-2026-10-05/branches.json",
-     "production/lane/RISK-REGISTER-WHOLE-GAME-DRAFT-2026-11-18.md",
-     "production/orders/2026-11-02.md",
-     "production/orders/archive/2026-11-02.md"
+     "production/audits/sweep-2026-10-05/branches.json"
     ]
    },
    "owner": "shared research",
@@ -23173,7 +23161,7 @@
    "in_retention": false,
    "content_hash": "b4638e1feb17109af8ddbbca1bf8b236d6eee4bd",
    "duplicates": [],
-   "referenced_by_incl_descendants": 11,
+   "referenced_by_incl_descendants": 14,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -23187,7 +23175,7 @@
    "purpose": "",
    "last_commit": "2026-09-24",
    "referenced_by": {
-    "count": 11,
+    "count": 14,
     "examples": [
      "ledger/Assets/Scripts/Core/RouterExamples.cs",
      "ledger/RouterFloor/Program.cs",
@@ -23195,8 +23183,8 @@
      "production/archive/FINDINGS-to-2026-09-24.md",
      "production/archive/FOR-JAFAR-to-2026-09-24.md",
      "production/archive/ROADMAP-checklist-to-2026-09-24.md",
-     "production/audits/rulings-sweep/TABLE.md",
-     "production/audits/rulings-sweep/rulings.json"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json"
     ]
    },
    "owner": "shared research",
@@ -23204,7 +23192,7 @@
    "in_retention": false,
    "content_hash": "36c0034093db753b87f7a2f99bfea0ad1a691684",
    "duplicates": [],
-   "referenced_by_incl_descendants": 11,
+   "referenced_by_incl_descendants": 14,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -23589,16 +23577,16 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 18,
+    "count": 22,
     "examples": [
      "DECISIONS.md",
      "NOTEBOOK.md",
      "ledger/Assets/Scripts/Core/CastDay.cs",
      "ledger/TalkTests/Program.cs",
      "production/archive/DECISIONS-to-2026-11-09.md",
-     "production/lane/LANE-HANDOVER.md",
-     "production/lane/RON-TONIGHT-LINE-PLAN-2026-11-17.md",
-     "production/lane/S-FURNITURE-BUILD-PLAN-2026-11-17.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-02.json"
     ]
    },
    "owner": "shared research",
@@ -23606,7 +23594,7 @@
    "in_retention": false,
    "content_hash": "a21efb7e0a177218660f538b70b6f73fbdf90bce",
    "duplicates": [],
-   "referenced_by_incl_descendants": 19,
+   "referenced_by_incl_descendants": 23,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -23730,10 +23718,13 @@
    "purpose": "Distilled from RECIPE.md, the project's notebook of every finished or set-aside unit, read in full in parts on 8 November 2026 (about 173 headings, 13 October t",
    "last_commit": "2026-11-08",
    "referenced_by": {
-    "count": 4,
+    "count": 7,
     "examples": [
      "NOTEBOOK.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-05.json",
      "production/orders/2026-11-02.md",
      "production/orders/2026-11-09.md"
     ]
@@ -23743,7 +23734,7 @@
    "in_retention": false,
    "content_hash": "78c6ea9a94e18a6f4f83119bcf563188590fe172",
    "duplicates": [],
-   "referenced_by_incl_descendants": 4,
+   "referenced_by_incl_descendants": 7,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -24004,14 +23995,16 @@
    "purpose": "",
    "last_commit": "2026-11-09",
    "referenced_by": {
-    "count": 6,
+    "count": 9,
     "examples": [
      "NOTEBOOK.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-07.json",
      "production/orders/2026-11-02.md",
      "production/orders/2026-11-09.md",
-     "production/research/phase2-plan/TARGET-MICKEYS-NIGHT-2026-11-17.md",
-     "tools/route_walk.py"
+     "production/research/phase2-plan/TARGET-MICKEYS-NIGHT-2026-11-17.md"
     ]
    },
    "owner": "shared research",
@@ -24019,7 +24012,7 @@
    "in_retention": false,
    "content_hash": "34677dd88f0ddf53e8515233f6d25dfbec22fcc8",
    "duplicates": [],
-   "referenced_by_incl_descendants": 6,
+   "referenced_by_incl_descendants": 9,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -24365,7 +24358,7 @@
    "purpose": "",
    "last_commit": "2026-10-30",
    "referenced_by": {
-    "count": 33,
+    "count": 36,
     "examples": [
      "FINDINGS.md",
      "NOTEBOOK.md",
@@ -24382,7 +24375,7 @@
    "in_retention": false,
    "content_hash": "d7fe7bcf61737862ad4cc6dd35ae30203808ffaf",
    "duplicates": [],
-   "referenced_by_incl_descendants": 38,
+   "referenced_by_incl_descendants": 41,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -24774,10 +24767,13 @@
    "purpose": "",
    "last_commit": "2026-11-07",
    "referenced_by": {
-    "count": 5,
+    "count": 8,
     "examples": [
      "NOTEBOOK.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-07.json",
      "production/orders/2026-11-02.md",
      "production/orders/archive/2026-11-02.md",
      "production/research/playbook/SPEECH-2026-11-08.md"
@@ -24788,7 +24784,7 @@
    "in_retention": false,
    "content_hash": "3be81042fcef97ab13c11144d169a62f7031034f",
    "duplicates": [],
-   "referenced_by_incl_descendants": 5,
+   "referenced_by_incl_descendants": 8,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -25100,16 +25096,16 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 22,
+    "count": 25,
     "examples": [
      "DECISIONS.md",
      "NOTEBOOK.md",
      "production/approvals/needs-you/items.json",
      "production/approvals/needs-you/morning-batch-2026-11-09.md",
      "production/archive/DECISIONS-to-2026-11-09.md",
-     "production/lane/RISK-REGISTER-WHOLE-GAME-DRAFT-2026-11-18.md",
-     "production/orders/2026-11-02.md",
-     "production/orders/2026-11-09.md"
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json"
     ]
    },
    "owner": "shared research",
@@ -25117,7 +25113,7 @@
    "in_retention": false,
    "content_hash": "bac1bf5592ff4596e1b0d1859f88336d4d02ff30",
    "duplicates": [],
-   "referenced_by_incl_descendants": 22,
+   "referenced_by_incl_descendants": 25,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -25498,7 +25494,7 @@
    "purpose": "",
    "last_commit": "2026-11-07",
    "referenced_by": {
-    "count": 39,
+    "count": 42,
     "examples": [
      ".claude/skills/speech-bench/SKILL.md",
      "FINDINGS.md",
@@ -25515,7 +25511,7 @@
    "in_retention": false,
    "content_hash": "04d1ba5df19e73e984a82ddda85573b99a92ee06",
    "duplicates": [],
-   "referenced_by_incl_descendants": 39,
+   "referenced_by_incl_descendants": 42,
    "status": "reference",
    "status_reason": "archive / old version / research location",
    "status_basis": "heuristic"
@@ -25687,7 +25683,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 546,
+    "count": 550,
     "examples": [
      ".claude/skills/asset-import/SKILL.md",
      ".claude/skills/game-garment/SKILL.md",
@@ -25704,9 +25700,9 @@
    "in_retention": false,
    "content_hash": "8144046c80189ccf30878facb59bf07f425942e6",
    "duplicates": [],
-   "referenced_by_incl_descendants": 572,
+   "referenced_by_incl_descendants": 576,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 546 refs",
+   "status_reason": "touched 1 days before newest commit; 550 refs",
    "status_basis": "heuristic"
   },
   {
@@ -25865,12 +25861,12 @@
    "path": "tools",
    "depth": 1,
    "file_count_direct": 157,
-   "file_count_total": 837,
-   "size_bytes": 62285939,
+   "file_count_total": 839,
+   "size_bytes": 62253612,
    "purpose": "",
    "last_commit": "2026-11-19",
    "referenced_by": {
-    "count": 941,
+    "count": 960,
     "examples": [
      ".claude/agents/extractor.md",
      ".claude/agents/importer.md",
@@ -25885,11 +25881,11 @@
    "owner": "builder",
    "in_storage_map": true,
    "in_retention": true,
-   "content_hash": "0d0eb886c58c3c4494d3b7a4d711d507ac0f5462",
+   "content_hash": "76dd18bbead67ae7ec775683e9fcbdca97195558",
    "duplicates": [],
-   "referenced_by_incl_descendants": 2390,
+   "referenced_by_incl_descendants": 2451,
    "status": "live",
-   "status_reason": "touched 0 days before newest commit; 941 refs",
+   "status_reason": "touched 0 days before newest commit; 960 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26266,16 +26262,16 @@
    "purpose": "",
    "last_commit": "2026-11-17",
    "referenced_by": {
-    "count": 12,
+    "count": 18,
     "examples": [
      ".github/workflows/ledger-push-guard.yml",
      "REUSE.md",
      "production/approvals/needs-you/morning-batch-2026-11-09.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-05.json",
      "production/audits/full-2026-11/work/dec-C-rulings-canon.jsonl",
-     "production/audits/phase0-exit/BUNDLE.md",
-     "production/audits/rulings-sweep/TABLE.md",
-     "production/audits/rulings-sweep/rulings.json",
-     "production/research/pre-production/notes/H1-inventory.md"
+     "production/audits/full-2026-11/work/decisions-merged.json"
     ]
    },
    "owner": "builder",
@@ -26283,9 +26279,9 @@
    "in_retention": false,
    "content_hash": "46e9bd4fdea768fdc7e472808ec430ab916dd273",
    "duplicates": [],
-   "referenced_by_incl_descendants": 12,
+   "referenced_by_incl_descendants": 18,
    "status": "live",
-   "status_reason": "touched 2 days before newest commit; 12 refs",
+   "status_reason": "touched 2 days before newest commit; 18 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26323,41 +26319,41 @@
    "path": "tools/lane",
    "depth": 2,
    "file_count_direct": 30,
-   "file_count_total": 176,
-   "size_bytes": 2051145,
+   "file_count_total": 178,
+   "size_bytes": 2018818,
    "purpose": "",
-   "last_commit": "2026-11-18",
+   "last_commit": "2026-11-19",
    "referenced_by": {
-    "count": 37,
+    "count": 42,
     "examples": [
      "DECISIONS.md",
      "NOTEBOOK.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/batch-06.json",
      "production/audits/full-2026-11/work/dec-C-rulings-canon.jsonl",
-     "production/lane/B12-FORECASTING-METHOD-2026-11-17.md",
-     "production/lane/FOOTAGE-TO-GAME-SET-2026-11-18.md",
-     "production/lane/ITEM-TAGS-MERGE-NOTE-2026-11-18.md",
-     "production/lane/LANE-LOG.md",
-     "production/lane/LANE-QUEUE.md"
+     "production/audits/full-2026-11/work/decisions-merged.json",
+     "production/audits/full-2026-11/work/status-04.json"
     ]
    },
    "owner": "lane",
    "in_storage_map": false,
    "in_retention": false,
-   "content_hash": "d3f708eb51aae55b26e0a3aebaeb962e9891c2d0",
+   "content_hash": "bcd88cc9496337e60c8813a44509877ca62dfbed",
    "duplicates": [],
-   "referenced_by_incl_descendants": 80,
+   "referenced_by_incl_descendants": 98,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 37 refs",
+   "status_reason": "touched 0 days before newest commit; 42 refs",
    "status_basis": "heuristic"
   },
   {
    "path": "tools/lane/audit",
    "depth": 3,
-   "file_count_direct": 2,
-   "file_count_total": 4,
-   "size_bytes": 68095,
+   "file_count_direct": 6,
+   "file_count_total": 6,
+   "size_bytes": 35768,
    "purpose": "",
-   "last_commit": "",
+   "last_commit": "2026-11-19",
    "referenced_by": {
     "count": 0,
     "examples": []
@@ -26365,33 +26361,11 @@
    "owner": "lane",
    "in_storage_map": false,
    "in_retention": false,
-   "content_hash": "7855185342eb1acea697aa010bd4388023e5835b",
+   "content_hash": "272aeca95a6c56d56290ef532903ef16d7e9622b",
    "duplicates": [],
    "referenced_by_incl_descendants": 0,
    "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
-   "status_basis": "heuristic"
-  },
-  {
-   "path": "tools/lane/audit/__pycache__",
-   "depth": 4,
-   "file_count_direct": 2,
-   "file_count_total": 2,
-   "size_bytes": 42096,
-   "purpose": "",
-   "last_commit": "",
-   "referenced_by": {
-    "count": 0,
-    "examples": []
-   },
-   "owner": "lane",
-   "in_storage_map": false,
-   "in_retention": false,
-   "content_hash": "2a0b261c058faf7a46b5ff210e9bd42c5509d60c",
-   "duplicates": [],
-   "referenced_by_incl_descendants": 0,
-   "status": "live",
-   "status_reason": "no commit date (untracked/new); 0 refs",
+   "status_reason": "touched 0 days before newest commit; 0 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26403,16 +26377,16 @@
    "purpose": "Written by the cloud lane, 18 Nov 2026. Stage 0 (the published bundle, rebuilt and smoke-tested) is replaced by stage 1: Fable's readable source, built here byt",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 11,
+    "count": 15,
     "examples": [
      "THIRD-PARTY.md",
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
      "production/audits/full-2026-11/pc-inventory.json",
+     "production/audits/full-2026-11/work/status-01.json",
+     "production/audits/full-2026-11/work/status-08.json",
      "production/lane/LANE-LOG.md",
-     "production/lane/LANE-QUEUE.md",
-     "production/lane/PROTOTYPE-RULES-READ-2026-11-18.md",
-     "production/lane/reviews/REVIEW-LEDGER-STYLE-RULES-2026-11-18.md",
-     "production/lane/reviews/REVIEW-PROTOTYPE-SOURCE-PROJECT-2026-11-18.md",
-     "production/lane/reviews/REVIEW-PROTOTYPE-STAGE1-2026-11-18.md"
+     "production/lane/LANE-QUEUE.md"
     ]
    },
    "owner": "lane",
@@ -26420,9 +26394,9 @@
    "in_retention": false,
    "content_hash": "74cbac77a41f9fead628d14409b2bf46ee363de2",
    "duplicates": [],
-   "referenced_by_incl_descendants": 34,
+   "referenced_by_incl_descendants": 44,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 11 refs",
+   "status_reason": "touched 1 days before newest commit; 15 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26434,8 +26408,11 @@
    "purpose": "Written by the cloud lane, 18 Nov 2026 (advisor item 4k, from his playtest of 13:02). One command after every Fable round:",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 5,
+    "count": 8,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/lane/FABLE-PROTOTYPE-FIXES-1.md",
      "production/lane/LANE-LOG.md",
      "production/lane/LANE-QUEUE.md",
@@ -26448,9 +26425,9 @@
    "in_retention": false,
    "content_hash": "13cf066d6675cffb07b0eab0fa0dc8728e31585f",
    "duplicates": [],
-   "referenced_by_incl_descendants": 5,
+   "referenced_by_incl_descendants": 8,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 5 refs",
+   "status_reason": "touched 1 days before newest commit; 8 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26484,8 +26461,11 @@
    "purpose": "Meridian, a port town on the Humber, October 1990. Tom Nowak inherits Mickey's minicab office. He moves, is",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 5,
+    "count": 8,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/lane/LANE-LOG.md",
      "production/lane/LANE-QUEUE.md",
      "production/lane/synthesis/pack/08-prototype-lane.md",
@@ -26498,9 +26478,9 @@
    "in_retention": false,
    "content_hash": "77907324378cb256d95b27cf7acc87f151ceabaf",
    "duplicates": [],
-   "referenced_by_incl_descendants": 7,
+   "referenced_by_incl_descendants": 10,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 5 refs",
+   "status_reason": "touched 1 days before newest commit; 8 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26814,8 +26794,11 @@
    "purpose": "Run from the repository root: python -I tools/lane/simwasm/exportgolden.py /tmp/golden.json && node tools/lane/simwasm/harness.mjs /tmp/golden.json (the JSON is",
    "last_commit": "2026-11-17",
    "referenced_by": {
-    "count": 4,
+    "count": 7,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/lane/K2-SIM-PORT-FAULTS-2026-11-18.md",
      "production/lane/LANE-LOG.md",
      "production/lane/LANE-QUEUE.md",
@@ -26827,9 +26810,9 @@
    "in_retention": false,
    "content_hash": "6cdab7cd440247f6ac110de95e5916f993058321",
    "duplicates": [],
-   "referenced_by_incl_descendants": 4,
+   "referenced_by_incl_descendants": 7,
    "status": "live",
-   "status_reason": "touched 2 days before newest commit; 4 refs",
+   "status_reason": "touched 2 days before newest commit; 7 refs",
    "status_basis": "heuristic"
   },
   {
@@ -26922,7 +26905,7 @@
    "purpose": "",
    "last_commit": "2026-11-18",
    "referenced_by": {
-    "count": 33,
+    "count": 40,
     "examples": [
      ".claude/skills/game-garment/SKILL.md",
      "DECISIONS.md",
@@ -26939,9 +26922,9 @@
    "in_retention": false,
    "content_hash": "08c210ae7c2376d7f07b9dabaa5423c7aa74680a",
    "duplicates": [],
-   "referenced_by_incl_descendants": 38,
+   "referenced_by_incl_descendants": 45,
    "status": "live",
-   "status_reason": "touched 1 days before newest commit; 33 refs",
+   "status_reason": "touched 1 days before newest commit; 40 refs",
    "status_basis": "heuristic"
   },
   {
@@ -27306,14 +27289,16 @@
    "purpose": "",
    "last_commit": "2026-11-13",
    "referenced_by": {
-    "count": 6,
+    "count": 9,
     "examples": [
+     "production/audits/full-2026-11/DECISIONS-TRACE.md",
+     "production/audits/full-2026-11/decisions-trace.json",
      "production/audits/full-2026-11/pc-inventory.json",
+     "production/audits/full-2026-11/work/status-04.json",
      "production/research/ai-video-motion/CMU-RETARGET-METHOD-2026-11-12.md",
      "production/research/ai-video-motion/CMU-RETARGET-METHOD-REVIEW-2026-11-17.md",
      "production/research/tool-tests-2026-11/HUMANMOTIONCRAFT-ROUND1-2026-11-13.md",
-     "production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md",
-     "tools/ue/cmu_ue_retarget.py"
+     "production/research/tool-tests-2026-11/MOTIONSMITH-ROUND1-2026-11-12.md"
     ]
    },
    "owner": "builder",
@@ -27321,9 +27306,9 @@
    "in_retention": false,
    "content_hash": "21f9766de51de036ecad4f00e67bce1f6ca7bc6e",
    "duplicates": [],
-   "referenced_by_incl_descendants": 6,
+   "referenced_by_incl_descendants": 9,
    "status": "live",
-   "status_reason": "touched 6 days before newest commit; 6 refs",
+   "status_reason": "touched 6 days before newest commit; 9 refs",
    "status_basis": "heuristic"
   },
   {
@@ -27362,7 +27347,7 @@
    "purpose": "",
    "last_commit": "2026-11-17",
    "referenced_by": {
-    "count": 258,
+    "count": 262,
     "examples": [
      ".claude/agents/importer.md",
      ".claude/settings.json",
@@ -27379,9 +27364,9 @@
    "in_retention": true,
    "content_hash": "b17b47290410822c6a1d9df2d178a919cbe100f5",
    "duplicates": [],
-   "referenced_by_incl_descendants": 264,
+   "referenced_by_incl_descendants": 268,
    "status": "live",
-   "status_reason": "touched 2 days before newest commit; 258 refs",
+   "status_reason": "touched 2 days before newest commit; 262 refs",
    "status_basis": "heuristic"
   },
   {
@@ -27557,7 +27542,7 @@
    "purpose": "",
    "last_commit": "2026-11-06",
    "referenced_by": {
-    "count": 96,
+    "count": 100,
     "examples": [
      ".claude/skills/speech-bench/SKILL.md",
      ".github/workflows/ledger-probe-unreal.yml",
@@ -27574,9 +27559,9 @@
    "in_retention": true,
    "content_hash": "85e4829e67f0da2bd6b7526196e45749f10a49f7",
    "duplicates": [],
-   "referenced_by_incl_descendants": 96,
+   "referenced_by_incl_descendants": 100,
    "status": "live",
-   "status_reason": "touched 13 days before newest commit; 96 refs",
+   "status_reason": "touched 13 days before newest commit; 100 refs",
    "status_basis": "heuristic"
   },
   {
