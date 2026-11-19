@@ -599,7 +599,8 @@
    "line": "3 Oct: never MetaHuman files in git; the Dropbox",
    "by": [
     "tools/git-size-guard.py::.uasset",
-    "tools/backup-to-dropbox.py::a changed file is not overwritten"
+    "tools/backup-to-dropbox.py::a changed file is not overwritten",
+    "tools/push_guard.py::a raw Mixamo FBX is refused"
    ]
   },
   {
