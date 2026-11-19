@@ -1,12 +1,21 @@
 {
-  "note": "Draft of the double week (advisor 118, 12 Nov). OFF: set active to true only on his tap adopting the order of 16 Nov; reset_at (Swiss YYYY-MM-DD HH:MM) when he presses the spare reset. Read by tools/pace_line.py and tools/fresh_gate.py. kiln_share: the share of the week's spend his order sets for Kiln (advisor 193: about 70% this week; advisor 218); read by tools/token_measures.py --kiln-share, 15% when absent or another week. post_reset_top and ceiling_margin (advisor 237, 19 Nov 00:25): after the reset the line runs 0 to 99 by Mon 07:00, the ceiling is the line plus 25; both lapse with this week. fable_reset_pending, fable_share_per_pct, hard_stop (advisor 246, his pick 19 Nov 13:31): until his Fable reset the ceiling counts only non-Fable use (weekly less 0.46 points per Fable percent, corrected from readings), hard stop at 75% weekly; at the press set fable_reset_pending false and record the press time; after it about 90% by Mon 07:00, his second reset kept for next week.",
+  "note": "Draft of the double week (advisor 118, 12 Nov). OFF: set active to true only on his tap adopting the order of 16 Nov; reset_at (Swiss YYYY-MM-DD HH:MM) when he presses the spare reset. Read by tools/pace_line.py and tools/fresh_gate.py. kiln_share: the share of the week's spend his order sets for Kiln (advisor 193: about 70% this week; advisor 218); read by tools/token_measures.py --kiln-share, 15% when absent or another week. post_reset_top and ceiling_margin (advisor 237, 19 Nov 00:25): after the reset the line runs 0 to 99 by Mon 07:00, the ceiling is the line plus 25; both lapse with this week. fable_reset_pending, fable_share_per_pct, hard_stop (advisor 246, his pick 19 Nov 13:31): until his Fable reset the ceiling counts only non-Fable use (weekly less 0.46 points per Fable percent, corrected from readings), hard stop at 75% weekly; at the press set fable_reset_pending false and record the press time; after it about 90% by Mon 07:00, his second reset kept for next week. press_at_fable, press_at_week, all_helpers_fable_until_press (advisor 247, 19 Nov 14:10): the press item at Fable 97% or week 73%, whichever first; from Fable 95% no new long Fable helper; until the press every helper on Fable; hourly main row at about :40 with week, Fable and its hourly rise, non-Fable, projected press time and week at the press; a press point between 23:00 and 07:00: carry on with Opus inside the 75% stop. 19 Nov, advisors 248, 250, 251: he pressed before 15:29 (week 22%, Fable 0%); the line runs 22% at 15:29 to 95% at Mon 07:00 (line_from, post_reset_top), the ceiling line+25 capped at 95 (ceiling_cap), hard stop 95 whatever Fable; new work pauses at 95 until the reset unless he says more; his last Fable reset stays untouched, nothing calls for it; Fable at max for Kiln's hard pieces, prototype and simulation, routine helpers on Opus and Sonnet.",
   "active": true,
   "monday": "2026-11-16",
   "reset_at": "2026-11-18 15:20",
   "kiln_share": 70,
-  "post_reset_top": 99,
+  "post_reset_top": 95,
   "ceiling_margin": 25,
-  "fable_reset_pending": true,
+  "fable_reset_pending": false,
   "fable_share_per_pct": 0.46,
-  "hard_stop": 75
+  "hard_stop": 95,
+  "press_at_fable": 97,
+  "press_at_week": 73,
+  "all_helpers_fable_until_press": false,
+  "fable_reset_pressed": "before 2026-11-19 15:29 (his readings: week 22%, Fable 0%)",
+  "line_from": {
+    "at": "2026-11-19 15:29",
+    "percent": 22
+  },
+  "ceiling_cap": 95
 }

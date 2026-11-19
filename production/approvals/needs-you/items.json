@@ -1520,6 +1520,44 @@
    ],
    "state": "open",
    "closed": null
+  },
+  {
+   "id": "fable-press-2026-11-19",
+   "added": "2026-11-19 15:10",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Only you can press a usage reset in the Claude app.",
+   "title": "Press your Fable reset now",
+   "text": "Fable is at 92% of its week at 15:09 and rising about 30 points an hour; six Fable helpers on Kiln stop at 100%. Your pick of 13:31: press at the end of the burn.",
+   "why": [
+    "Fable reaches 97% about 15:20 and 100% about 15:25.",
+    "The week is at 68%; after the press Fable's use leaves it."
+   ],
+   "steps": [
+    "Press the Fable usage reset in the Claude app",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the six Fable helpers on Kiln once Fable reaches 100%",
+   "recommendation": "Press it as soon as you see this.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-19 16:55, He pressed his Fable reset before 15:29 on 19 Nov (week 22%, Fable 0%; advisor 248)"
   }
  ]
 }

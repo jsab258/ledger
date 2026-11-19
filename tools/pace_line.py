@@ -61,6 +61,17 @@ def double_for(now, shape):
         out["top"] = float(shape["post_reset_top"])
     if "ceiling_margin" in shape:
         out["margin"] = float(shape["ceiling_margin"])
+    # AFTER HIS FABLE PRESS (advisors 248, 251, 19 Nov): the line restarts from the reading at the press
+    # ("line_from": {"at", "percent"}) and climbs to "post_reset_top" (95) at Monday 07:00; the ceiling is capped at
+    # "ceiling_cap" (95) and the hard stop holds whether or not a Fable reset is pending.
+    lf = shape.get("line_from") or {}
+    try:
+        out["from_at"] = datetime.datetime.strptime(lf["at"], "%Y-%m-%d %H:%M")
+        out["from_pct"] = float(lf["percent"])
+    except (KeyError, ValueError, TypeError):
+        pass
+    if "ceiling_cap" in shape:
+        out["cap"] = float(shape["ceiling_cap"])
     return out
 
 
@@ -73,8 +84,12 @@ def line_at(now, shape=None):
         reset = double["reset"]
         if reset is None or now < reset:
             return min(FIRST_LEG_TOP, FIRST_LEG_TOP * (now - monday).total_seconds() / 3600 / FIRST_LEG_HOURS)
-        span = max(1.0, (end - reset).total_seconds() / 3600)
         top = float(double.get("top", 90.0))
+        if "from_at" in double and now >= double["from_at"]:
+            span = max(1.0, (end - double["from_at"]).total_seconds() / 3600)
+            base = double["from_pct"]
+            return min(top, base + (top - base) * (now - double["from_at"]).total_seconds() / 3600 / span)
+        span = max(1.0, (end - reset).total_seconds() / 3600)
         return min(top, top * (now - reset).total_seconds() / 3600 / span)
     return min(90.0, 90.0 * (now - monday).total_seconds() / 3600 / WEEK_HOURS)
 
@@ -93,7 +108,7 @@ def ceiling_at(now, shape=None):
     double = double_for(now, shape)
     if not double or double["reset"] is None or now < double["reset"] or "margin" not in double:
         return None
-    return line_at(now, shape) + double["margin"]
+    return min(double.get("cap", 1000.0), line_at(now, shape) + double["margin"])
 
 
 # UNTIL HIS FABLE RESET (advisor 246, his pick 13:31, 19 Nov): the ceiling counts only non-Fable use: the weekly
@@ -122,6 +137,10 @@ def verdict(now, percent, shape=None, fable=None):
             what = "under the ceiling (non-Fable): Fable at max on Kiln before the reset"
         return ("pace: %.0f%% against the line's %.1f%%; non-Fable %.1f%% against the ceiling %.1f%%; hard stop at %.0f%%; %s"
                 % (percent, line, nf, ceiling, stop, what))
+    shp = read_shape() if shape is None else shape
+    if ceiling is not None and "hard_stop" in shp and percent >= float(shp["hard_stop"]):
+        return "pace: %.0f%% against the line's %.1f%%; HARD STOP: the weekly reading has reached %.0f%%, start nothing new" % (
+            percent, line, float(shp["hard_stop"]))
     if ceiling is not None:
         what = ("ABOVE THE CEILING: the lane stops first; still above at the next row, start nothing new"
                 if percent > ceiling else "under the ceiling: Kiln first, work within his rules")
@@ -145,12 +164,18 @@ def verdict(now, percent, shape=None, fable=None):
 FABLE_CAP = 95.0  # 19 Nov, advisor 245: no cap; a warning at 95% of Fable's own meter, the reset item at about 98%
 
 
-def fable_verdict(fable):
-    if fable >= 98:
+# 19 Nov 14:10 (advisor 247, his words 14:06 "fable reset is rare"): the press item goes up at Fable 97% or the week
+# 73%, whichever first; from Fable 95% no new long Fable helper, short ones only; until the press every helper on Fable.
+def fable_verdict(fable, week=None, shape=None):
+    shape = read_shape() if shape is None else shape
+    if not shape.get("fable_reset_pending", True):   # pressed (advisor 248); his last reset stays untouched (advisor 250)
+        return ("Fable %.0f%% of its week (reset pressed; Fable at max for Kiln's hard pieces, prototype and simulation; "
+                "routine helpers on Opus and Sonnet)" % fable)
+    if fable >= 97 or (week is not None and week >= 73):
         return "Fable %.0f%% of its week: RESET ITEM NOW (his page: Press a Fable reset now), full speed after" % fable
     if fable >= FABLE_CAP:
-        return "Fable %.0f%% of its week: WARN (%.0f%%), the reset item at about 98%%" % (fable, FABLE_CAP)
-    return "Fable %.0f%% of its week (no cap; warning at %.0f%%)" % (fable, FABLE_CAP)
+        return "Fable %.0f%% of its week: WARN (%.0f%%): no new long Fable helper, short ones only; the reset item at 97%%" % (fable, FABLE_CAP)
+    return "Fable %.0f%% of its week (no cap; warning at %.0f%%; every helper on Fable until the press)" % (fable, FABLE_CAP)
 
 
 def selftest():
@@ -185,9 +210,12 @@ def selftest():
         ("237: Monday 07:00 line is 99", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), c237) - 99) < 0.01, True),
         ("no ceiling without its margin", ceiling_at(datetime.datetime(2026, 11, 19, 0, 52), pressed) is None, True),
         ("double climbs about 1.98 an hour", abs(line_per_hour(tue, on) - 1.98) < 0.01, True),
-        ("245: 70% gives no warning", "WARN" in fable_verdict(70), False),
-        ("245: 95% warns", "WARN" in fable_verdict(95), True),
-        ("245: 98% asks for the reset", "RESET ITEM NOW" in fable_verdict(98), True),
+        ("245: 70% gives no warning", "WARN" in fable_verdict(70, None, {}), False),
+        ("245: 95% warns", "WARN" in fable_verdict(95, None, {}), True),
+        ("245: 98% asks for the reset", "RESET ITEM NOW" in fable_verdict(98, None, {}), True),
+        ("247: 97% asks for the reset", "RESET ITEM NOW" in fable_verdict(97, None, {}), True),
+        ("247: week 73% asks for the reset", "RESET ITEM NOW" in fable_verdict(60, 73, {}), True),
+        ("247: 96% and week 60 only warns", "RESET ITEM NOW" in fable_verdict(96, 60, {}), False),
     ]
     c246 = dict(c237, fable_reset_pending=True, fable_share_per_pct=0.46, hard_stop=75)
     thu = datetime.datetime(2026, 11, 19, 13, 40)
@@ -196,6 +224,18 @@ def selftest():
         ("246: 75% is a hard stop", "HARD STOP" in verdict(thu, 75, c246, 10), True),
         ("246: without a Fable reading the plain ceiling", "ABOVE THE CEILING:" in verdict(thu, 47, c246), True),
         ("246: after the press the plain ceiling", "ABOVE THE CEILING:" in verdict(thu, 47, dict(c246, fable_reset_pending=False), 51), True),
+    ]
+    c251 = dict(c246, fable_reset_pending=False, line_from={"at": "2026-11-19 15:29", "percent": 22},
+                post_reset_top=95, ceiling_cap=95, hard_stop=95)
+    t1654 = datetime.datetime(2026, 11, 19, 16, 54)
+    cases += [
+        ("251: line at 15:29 is 22", abs(line_at(datetime.datetime(2026, 11, 19, 15, 29), c251) - 22) < 0.01, True),
+        ("251: line at Monday 07:00 is 95", abs(line_at(datetime.datetime(2026, 11, 23, 7, 0), c251) - 95) < 0.01, True),
+        ("251: about 0.83 an hour", abs(line_per_hour(t1654, c251) - 0.834) < 0.01, True),
+        ("251: ceiling never above 95", ceiling_at(datetime.datetime(2026, 11, 22, 23, 0), c251) <= 95, True),
+        ("251: 30% at 16:54 is under", "under the ceiling" in verdict(t1654, 30, c251, 14), True),
+        ("251: 95% is a hard stop", "HARD STOP" in verdict(t1654, 95, c251, 14), True),
+        ("251: no press item after the press", "RESET ITEM" in fable_verdict(98, 80, c251), False),
     ]
     bad = [n for n, got, want in cases if got != want]
     print("pace_line selftest:", "passed (%d cases)" % len(cases) if not bad else "FAILED " + ", ".join(bad))
@@ -222,7 +262,7 @@ def main(a):
     if "--fable" in a:
         state["fable"] = float(a[a.index("--fable") + 1])
         state["fable_at"] = state["at"]
-        print(fable_verdict(state["fable"]))
+        print(fable_verdict(state["fable"], float(a[0])))
     else:
         try:   # keep the last Fable reading when only the pace is given
             with open(STATE, encoding="utf-8") as fh:

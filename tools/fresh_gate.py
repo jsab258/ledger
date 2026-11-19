@@ -195,7 +195,12 @@ def blocked_runs(path=BLOCKED_RUNS, cap=1 << 20):
     return out
 
 
-def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False, with_jobs=False):
+# A STOPPED SESSION'S HELPERS ARE NOT A LIVE SESSION (advisor 251, 19 Nov): the 15:10 session wrote Stopped with six
+# Fable helpers still working; their turns, seconds apart, read as a live session and every hourly run from 15:21 to
+# 16:36 waited (90 minutes, four advisor rows unread). With stopped_ts (the handover's Stopped time), a helper's turns
+# count only while its parent session wrote a turn of its own after that time (a parent woken by a helper's report is
+# live again and holds the gate as before).
+def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False, with_jobs=False, stopped_ts=None):
     """Minutes since the project's newest real turn, this run's own log, those named left out and scripts' runs
     left out; with_log also gives the main session log that turn belongs to (a helper's turn gives its parent's log);
     with_jobs instead gives the main log of the newest log, main or helper, that holds a pending background command
@@ -204,10 +209,17 @@ def last_turn_minutes(now_ts, logs=LOGS, leave_out=(), own=None, with_log=False,
     newest, newest_log = None, None
     job_t, job_log = None, None
     blocked = blocked_runs()
+    parent_turn = {}
     for p in paths:
         sid = os.path.basename(p)[:-6] if os.path.dirname(p) == logs else os.path.basename(os.path.dirname(os.path.dirname(p)))
         if sid in leave_out or (own and sid == own):
             continue
+        if stopped_ts is not None and os.path.dirname(p) != logs:
+            if sid not in parent_turn:
+                main_log = os.path.join(logs, sid + ".jsonl")
+                parent_turn[sid] = last_turn(main_log) if os.path.isfile(main_log) else None
+            if parent_turn[sid] is None or parent_turn[sid] < stopped_ts:
+                continue
         if not own and os.path.dirname(p) == logs and now_ts - os.path.getctime(p) < OWN_RUN_MIN * 60:
             continue
         if os.path.dirname(p) == logs and (sid in blocked or ended_at_wait(p) or script_run(p)):
@@ -550,6 +562,21 @@ def selftest():
     m4 = last_turn_minutes(now_ts, tmp, own="own-run")
     log("helper", "2026-11-04T12:18:00", sub=True)
     m5 = last_turn_minutes(now_ts, tmp, leave_out=("standing-in",), own="own-run")
+    # Advisor 251: a stopped parent's helper does not hold the gate; a parent awake after the stop does.
+    tmp4 = tempfile.mkdtemp(prefix="fresh_gate_stopped_")
+    def log4(name, turn_utc, sub=False):
+        p = os.path.join(tmp4, name, "subagents", "agent-x.jsonl") if sub else os.path.join(tmp4, name + ".jsonl")
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({"type": "user", "timestamp": turn_utc + ".000Z", "message": {"content": "x"}}) + "\n")
+        os.utime(p, (now_ts - 60, now_ts - 60))
+    stop_ts = datetime.datetime(2026, 11, 4, 12, 10, tzinfo=datetime.timezone.utc).timestamp()
+    log4("parent", "2026-11-04T12:00:00")
+    log4("parent", "2026-11-04T12:20:30", sub=True)
+    m_s1 = last_turn_minutes(now_ts, tmp4, own="own-run", stopped_ts=stop_ts)
+    m_s0 = last_turn_minutes(now_ts, tmp4, own="own-run")
+    log4("parent", "2026-11-04T12:15:00")
+    m_s2 = last_turn_minutes(now_ts, tmp4, own="own-run", stopped_ts=stop_ts)
     # A killed session, then hourly runs that each ended at WAIT (7 November): the runs must not read as activity, so
     # the idle time reaches DEAD_MIN and the next run goes; a run that said WAIT and then worked still counts.
     tmp2 = tempfile.mkdtemp(prefix="fresh_gate_wait_")
@@ -597,6 +624,9 @@ def selftest():
         ("a left-out log does not count", "%s" % (m3 is not None and m3 > 190), "True"),
         ("a real turn 2 min ago counts", "%s" % (m4 is not None and m4 < 3), "True"),
         ("a helper's turn counts", "%s" % (m5 is not None and m5 < 4), "True"),
+        ("251: a stopped parent's helper does not count", "%s" % (m_s1 is not None and m_s1 > 20), "True"),
+        ("251: without a Stopped time it still counts", "%s" % (m_s0 is not None and m_s0 < 1), "True"),
+        ("251: a parent awake after the stop: its helper counts", "%s" % (m_s2 is not None and m_s2 < 1), "True"),
     ]
     # Every minute from 00:45 to 05:10 on a day after the one-week branch: WAIT only inside the walk hold (advisor 92).
     night_bad = []
@@ -767,7 +797,10 @@ def main(a):
     path = os.path.join(ROOT, r["handover"]) if r else HANDOVER
     text = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
     reported = os.path.isfile(os.path.join(NIGHTLY, now.strftime("%Y-%m-%d") + ".md"))
-    idle, job_log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_jobs=True)
+    st, sp = line_time(text, "Started"), line_time(text, "Stopped")
+    stopped_ts = sp.timestamp() if (st is not None and sp is not None and sp >= st) else None
+    idle, job_log = last_turn_minutes(now.timestamp(), leave_out=tuple(r["leave_out"]) if r else (), own=own, with_jobs=True,
+                                      stopped_ts=stopped_ts)
     job = job_log is not None
     line = decide(now, text, idle, reported, job, None if r else read_pace(), None if r else run_model(own=own))
     print(("REHEARSAL " + line + " (rehearsal handover %s; left out %s)" % (r["handover"], ", ".join(r["leave_out"])))

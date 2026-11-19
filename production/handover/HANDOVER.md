@@ -2,13 +2,13 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-19 13:36 (the hourly run; the last session set its Stopped line at 12:52)
+**Started:** 2026-11-19 16:51 (the hourly run; the last session set its Stopped line at 15:10)
 
-**Row due:** by 13:38 (last row 12:38; page and advisor read 12:33: nothing new after advisor 245, no verdicts since 12:24)
-**Stopped:** 2026-11-19 12:52 (still above the week's ceiling: 45% against 44.1%, Fable 48%; page and advisor read 12:52, nothing new after advisor 245, no verdicts since 12:24; the reset item still open; started nothing, spends nothing while the ceiling rises)
+**Row due:** by 16:10 (last row 15:10; page and advisor read 15:09: nothing new after advisor 247, no verdicts)
+**Stopped:** 2026-11-19 15:10 (history OVER at an item end; six Fable helpers still running in this session, reports due as listed under In flight: read them first, then check for leftover runs and the lock; the press item is up, waiting on his tap)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
-**The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 37% at 05:07 against 12.2% (+24.8), under the ceiling; Fable 45%, at its cap. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
+**The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
 
 ## Standing ways of working (carry across every rewrite)
 - **The night (advisor 42 and 44, 9 Nov):** round the clock; during the night's build and walk only work touching Unreal and heavy local jobs pause; never stop for the night. Space checked before the night build by 23:30.
@@ -34,29 +34,24 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (12:31 to 12:4x)
-- ACTION item fable-reset-2026-11-19 on his page (only_you his-setting; asks how many resets remain), published v163, NEEDS YOU sent. The page check now lets a third batch a day through only when the item names in 'blocks' what it stops (RULINGS 8 Nov), self-tested. Commit 77aa82bab pushed, ci 108/108. Row 12:38.
-- Fable brief for the layered fault written, ready to send as is: F:/LedgerTools/tool-dev/briefs/FABLE-LAYERED-2026-11-19.md (problem, both tries' reports, no conclusion, lane rules, report lines).
-- Read-back of his page already done today (19 Nov files present).
+## Done this run (13:36 to 14:0x)
+- Advisor 246 (his pick 13:31) recorded and acked: until his Fable reset the ceiling counts non-Fable use only (weekly less 0.46 x Fable %), hard stop 75% weekly; pace_line.py reads week-shape.json's fable_reset_pending / fable_share_per_pct / hard_stop (29 self-test cases). Always pass --fable to pace_line. At 13:37: 47% weekly, Fable 51%, non-Fable 23.5% against 44.8%.
+- His taps 13:28-13:29: Marvelous renewal cancelled; one copy running since 13:29 (closed). fable-reset item closed as held: put it back (ACTION, one step) at about 98% of Fable's meter, record the press time, then set fable_reset_pending false.
+- Bridge: start_bridge -DryRun 13:43: one copy, but a small box (392x174) of Marvelous's own over a disabled main window; the starter stops by design (no try used). ACTION item marvelous-box-2026-11-19, NEEDS YOU sent.
+- Cloud lane merged as one folded commit ceb964611 (17 of its commits carry screenshots the push guard refuses; they are gitignored in wip, copies in F:/LedgerTools/game-inputs/lane-playtest-round5-shots). Fold later lane merges the same way. Attribution rows for its prototype source and driver.
 
-## Done the run before (11:04 to 12:26)
-- Advisors 241-245 recorded and acked (DECISIONS 11:05-12:2x): canon's 'not' list to the pillar, docks, OPEN 3 the approved design; RULINGS points 3-7 of 241; Fable uncapped (245); waiting list 27 (driving) and 28 (241's order items). Commits pushed, ci 108/108.
-- Marvelous export: 52 projects (Tom's jacket v2-v25b, jumper j1-j3, jeans n2-n7, plus the kiln-md-compare run's 6) all have their drape OBJ beside them; none has FBX or pattern JSON. Bridge dead since 04:30; four Marvelous copies since 16 Nov, three not responding; start_bridge refuses (none named): try 1 of 2. ACTION item marvelous-copies-2026-11-19 on his page; NEEDS YOU sent. Row 11:16.
-- Kiln layered try 2 handed to one Opus diagnoser (lane lane-layered2, report F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERED2-2026-11-19.md). RESULT: failed (In flight).
-
-## In flight at the stop
-- Nothing running; heavy lock free (helper confirmed). Layered try 2 FAILED (296 to 302 through over 3 mm, worst 3.110, 289 s; interleave cuts pass-through to ~200 but ~100 stay and finish_layers adds more); patch at F:/LedgerTools/tool-dev/runs/kiln-layered2-2026-11-19/layered2.patch, not committed. Two Opus tries used: Fable next.
+## In flight
+- Six Fable helpers (diagnoser, model fable, effort max; the sixth, 14:05: R4 refit2, KILN-LANE-R4-REFIT2-2026-11-19.md), all under the heavy lock, reports due in F:/LedgerTools/tool-dev/reports unless named: layered3 (KILN-LANE-LAYERED3-2026-11-19.md), coat2 (coat collar, also the donkey jacket's fault: KILN-LANE-COAT2-2026-11-19.md), blouse2 (wrists: KILN-LANE-BLOUSE2-2026-11-19.md), stiffness3 (a third, different method: KILN-LANE-STIFFNESS3-2026-11-19.md), Ron's trousers seat (F:/LedgerTools/garments/ron/kiln-trousers-chain/chain-boots/seat-try2/REPORT.md). If the session stops before they report, the next run reads those reports, then checks for leftover runs (kiln-lanes|regression_gate|heavy*.sh) and the lock.
 
 ## Next, in order
-0. Verdicts (UTC, after 2026-11-19T11:38) and advisor (after 12:28 +01:00; last ack 245). If he tapped Done on fable-reset-2026-11-19, record reset_at in production/week-shape.json and close the item. Then pace_line: under the ceiling (it rises about 1.1 point an hour), send the ready Fable brief (agent model fable, effort max) at once, then Fable helpers on the coat's last try, the trousers' legs, the blouse, a different stiffness method, the donkey jacket, R4, in parallel as the heavy lock allows; Opus/Sonnet for merges, gates, imports, checks. Still above it: start nothing new, write the row, stop as this run did. At most eight helpers this week.
-1. When he taps Done on marvelous-copies: md_job.py --start, then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports' section; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments (that run folder expires in 14 days). Then the reference drapes (Kiln v1 line 5: trousers 100 mm low, skirt pleats unpressed, nylon jacket held).
-2. Kiln: layered try 2 failed (Opus 2/2); its Fable brief gets the problem, both tries' numbers (KILN-LANE-LAYERED2 and LAYERTRACE reports), no conclusion.
-3. History rewrite: before it, decide the 4 unstaged files and the n09-12 line's two other homes; HELD for his word at the PC.
+0. Verdicts (UTC, after 2026-11-19T13:20) and advisor (after 14:10 +01:00; last ack 247). ADVISOR 247: until his press every helper on Fable; the press item (ACTION, one step: press a Fable reset in the Claude app) goes on his page at Fable 97% or week 73%, whichever first (pace_line prints RESET ITEM NOW), NEEDS YOU sent; from Fable 95% no new long Fable helper; a row each hour at about :40 with week, Fable and its hourly rise, non-Fable, projected press time and week then. 15:10: press item fable-press-2026-11-19 up at Fable 92% (about 30 an hour), week 68%; NEEDS YOU sent; start no new Fable helper until he taps Done. After the press: row with its time and both readings, week-shape fable_reset_pending false, normal models and ceiling.
+1. Each Fable report as it lands: a pass goes to a merge candidate on Kiln main with the full gate on a quiet machine (Opus), a fail is recorded with its numbers (tries per RULINGS 7 Nov). Spare places (up to 8): the nylon wrist on Fable, merges and gates on Opus/Sonnet.
+2. When he taps Done on marvelous-box: md_job.py --start (try 2 of 2), then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports'; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments. Then the reference drapes (Kiln v1 line 5).
+3. History rewrite: HELD for his word at the PC (the 4 unstaged files and the n09-12 line's two other homes).
 4. Then: wardrobe list overnight (not 01:15-04:30); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 19 Nov 09:05: ci-checks.sh from the Bash tool in an unattended run: refused by Claude Code's removal safety check (the script runs rm; nobody to answer the prompt). Do not re-issue in the same run; the next run tries once.
-- 19 Nov 09:10: aaa-study joined the backup list by a size-only sweep; it holds game extracts. Read a folder before adding it.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
