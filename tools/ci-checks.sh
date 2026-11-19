@@ -183,6 +183,7 @@ real_table() {
     stain-selftest        "$REPO"                 "$PY tools/ue/make_stain_material.py --selftest" \
     contact-selftest      "$REPO"                 "$PY tools/ue/make_contact_material.py --selftest" \
     token-audit-selftest  "$REPO"                 "$PY tools/token_audit.py --selftest"     needs-you-selftest    "$REPO"                 "$PY tools/needs_you_page.py --selftest"     needs-you-check       "$REPO"                 "$PY tools/needs_you_page.py --check" \
+    needs-you-waiting     "$REPO"                 "$PY tools/needs_you_page.py --waiting" \
     stain-check-selftest  "$REPO"                 "$PY tools/stain_check.py --selftest" \
     driving-feel          "$REPO"                 "$PY tools/driving_feel_check.py" \
     driving-feel-selftest "$REPO"                 "$PY tools/driving_feel_check.py --selftest" \

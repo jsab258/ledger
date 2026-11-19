@@ -117,6 +117,7 @@
     "tools/needs_you_page.py::an ACTION without only_you or tried is refused (advisor 204)",
     "tools/needs_you_page.py::a DECISION without its kind is refused (advisor 221)",
     "tools/needs_you_page.py::three batches of open items in one day are refused",
+    "tools/needs_you_page.py::waiting: only the unmatched order line and the handover's ask",
     "tools/page_read_hook.py",
     "advisor:needs-you-check"
    ]
