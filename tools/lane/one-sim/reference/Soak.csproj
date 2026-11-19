@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The same sources as ledger/Soak/Soak.csproj, by path. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Ledger.Soak</RootNamespace>
+    <AssemblyName>Soak</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Core/**/*.cs" />
+    <Compile Remove="$(RepoRoot)ledger/Assets/Scripts/Core/**/obj/**" />
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Game/EconomySetup.cs" />
+    <Compile Include="$(RepoRoot)ledger/Soak/*.cs" />
+  </ItemGroup>
+</Project>

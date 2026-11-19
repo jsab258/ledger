@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The same sources as ledger/PerceptionGolden/PerceptionGolden.csproj, by path. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Ledger.PerceptionGolden</RootNamespace>
+    <AssemblyName>PerceptionGolden</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Core/**/*.cs" />
+    <Compile Remove="$(RepoRoot)ledger/Assets/Scripts/Core/**/obj/**" />
+    <Compile Include="$(RepoRoot)ledger/PerceptionGolden/*.cs" />
+  </ItemGroup>
+</Project>

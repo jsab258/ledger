@@ -1,0 +1,19 @@
+<Project>
+  <!-- one-sim reference builds: the REAL C# Core and the REAL check programs, compiled
+       from where they live (never copied), with every build output sent outside the
+       repository so nothing is written under ledger/. -->
+  <PropertyGroup>
+    <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../../../../'))</RepoRoot>
+    <OneSimWork Condition="'$(ONE_SIM_WORK)' != ''">$(ONE_SIM_WORK)</OneSimWork>
+    <OneSimWork Condition="'$(OneSimWork)' == ''">/home/claude/one-sim-work</OneSimWork>
+    <ArtifactsPath>$(OneSimWork)/root/artifacts</ArtifactsPath>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS0162;CS0168;CS0219;CS0414;CS0649;CS1998;CS8632</NoWarn>
+  </PropertyGroup>
+</Project>

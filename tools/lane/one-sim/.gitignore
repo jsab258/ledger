@@ -1,0 +1,8 @@
+# Build outputs and toolchains live outside the repository ($ONE_SIM_WORK). Nothing large belongs here.
+*.wasm
+*.o
+bin/
+obj/
+artifacts/
+node_modules/
+__pycache__/

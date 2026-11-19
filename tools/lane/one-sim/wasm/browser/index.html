@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>one-sim: the checks in a real web page</title>
+<!-- The same checks as test_one_sim.mjs (checks.mjs), run inside a browser page.
+     browser_test.py serves this folder and reads window.__oneSim when it is set. -->
+<pre id="out">running the checks...</pre>
+<script type="module">
+  import { runChecks } from './checks.mjs';
+  const out = document.getElementById('out');
+  const log = [];
+  try {
+    const get = async (url, bytes) => {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(url + ' answered ' + r.status);
+      return bytes ? new Uint8Array(await r.arrayBuffer()) : await r.text();
+    };
+    const dataText = {};
+    for (const name of ['hook-cast.json', 'quay-cast.json', 'town-news.json']) dataText[name] = await get(name);
+    const report = await runChecks({
+      brainBytes: await get('one-sim.wasm', true),
+      checkBytes: await get('one-sim-check.wasm', true),
+      tableText: await get('golden.txt'),
+      dataText,
+      log: (line) => { log.push(line); out.textContent = log.join('\n'); },
+    });
+    report.userAgent = navigator.userAgent;
+    window.__oneSim = { report, log };
+  } catch (e) {
+    window.__oneSim = { error: String((e && e.stack) || e), log };
+    out.textContent = log.join('\n') + '\nERROR ' + window.__oneSim.error;
+  }
+</script>

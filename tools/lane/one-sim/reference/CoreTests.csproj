@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The same sources as ledger/CoreTests/CoreTests.csproj, by path. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Ledger.CoreTests</RootNamespace>
+    <AssemblyName>CoreTests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Core/**/*.cs" />
+    <Compile Remove="$(RepoRoot)ledger/Assets/Scripts/Core/**/obj/**" />
+    <Compile Include="$(RepoRoot)ledger/DevTools/OpenAiCompatibleClient.cs" />
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Game/ActOne.cs" />
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Game/AccessSetup.cs" />
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Game/EconomySetup.cs" />
+    <Compile Include="$(RepoRoot)ledger/Assets/Scripts/Game/OperationSetup.cs" />
+    <Compile Include="$(RepoRoot)ledger/CoreTests/*.cs" />
+  </ItemGroup>
+</Project>
