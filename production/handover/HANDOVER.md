@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-19 05:46 (the hourly run; the 05:06 run set its Stopped line at 05:41)
 
-**Row due:** at the next start (last row 05:07; page and advisor read 05:32: nothing new; last ack 00:54, advisor 237)
+**Row due:** by 07:07 (last row 06:07; page and advisor read 06:06: nothing new; last ack 00:54, advisor 237)
 **Stopped:** 2026-11-19 05:41 (history at its point after the trousers' chain re-run; nothing of mine running, lock free; work committed with this file)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,32 +34,35 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (05:06 on; details in DECISIONS 05:10 on)
-- Advisor 231 closed: needs_you_page.py --waiting in ci-checks and rulings-enforcers.json; no RULINGS words (4,899 of 4,900).
-- Coat: on the joined lane (9a3c5a1) with KILN_SKIN_NECK_OVER_JOINT=1 it drapes to the end for the first time; fails only at the collar assembly (stand 44.8, collar 69 mm inside the neck; stretch 6.5-6.8; seams 27-36 mm open; rest p99 1.24). Same fault; its last try is Fable's, Fable at cap: set aside to Mon 13:00 or his word. Lane report, 19 Nov section.
-- Ron's trousers steps 7-8 re-run on the boots drape (importer helper): all steps pass as before (9,636 triangles, flat maps none, hems clean); sitting misses the bar: body through 304 (299; was 297), cloth inside 71 (44; was 62), in the seat. Held row files NOT replaced (new fault). chain-boots/REPORT-2026-11-19.md.
-- Ron's trousers M5 step 6 PASSES offline: boots proxy (Tom's n6 maker) as a Kiln collider (import_collider) beside the standard body; drape twice on main 9b5141d with KILN_LEGACY_NAMES=1, identical; 0 points inside the boots (575 bare-foot), nearest 2.6 mm; crotch layer crossings 265 (main's gate 231: known). Kiln pictures do not draw colliders. F:/LedgerTools/garments/ron/kiln-trousers-chain/boots-proxy/STEP6-BOOTS-2026-11-19.md.
+## Done this run (05:46 on; details in DECISIONS 05:51 on)
+- Ron's trousers' seat, try 1 of 2 PASSED: --crotch-fade 0.04 (was 0.07; the centre seam runs crotch to waistband, so the fade held the seat's middle to the pelvis). Sitting body through 304 to 244 (bar 299), cloth inside 71 to 56 (listed; Tom's passed jeans 106); other poses clean. Kiln's own skin not taken (jeans sitting 159 inside). chain-boots/seat-try1/SEAT-TRY1-2026-11-19.md.
+- Held row on wip (839c5dbff, from branch ron-kiln-trousers-import f867027fc): boots drape, seat-try1 skin, chain-boots wear maps, the twill tile; hold now "-WearHeld films only; released once the legs' start values are our own" (18 Nov 12:16).
+- Imported into mh-assemble (first try raised: no budget kind for the folder; kind and parts line added, re-imported clean: 4 levels, MI_RonWorkTrousers); shipped PASS, assetBudgets OK; ci 108/108; pushed 49af3f1c5. The ue-probe junction shows the files at 05:56.
+- Step 9: the passed jumper measured over the new trousers (clear_layers --measure): nearest 7.7 mm, none under 3: no re-clear, jumper untouched.
+- Packaged build asked about 06:05 (nightly_package ASKED b279668f). Row 06:07 posted.
+- Thursday's checkpoint drafted: F:/LedgerTools/tool-dev/reports/KILN-THURSDAY-CHECKPOINT-2026-11-19.md (tests 1 and 4 missed, 2 met with a listed count, 3 and 5 open).
 
 ## In flight at the stop
-- Nothing of mine running; the heavy lock free.
-- The ceiling: 37% at 05:07 under 37.2%; Fable 45% at cap. The ceiling rises about 0.9 points an hour.
+- The runner's packaged build (Runner.Worker) for the held film; no local Unreal or Kiln gate until it is gone. Nothing else of mine running; the heavy lock free.
+- Ceiling: 38% at 06:07 against 38.1%; Fable 45% at cap.
 
 ## Next, in order
-0. Verdicts after the last read (UTC); advisor after 2026-11-19T00:54:00+01:00 (last ack 237). Allowance, pace_line, a row.
-1. Ron's trousers: the seat's sitting fit (try 1 of 2; research first: M5 method section 4, check 4, and the jeans' chain-n7 sitting fixes): body through 304 to under 299, cloth inside 71 toward 44, on chain-boots/ (skin weights or the seat zone, not the drape). The exact commands are in chain-boots/REPORT-2026-11-19.md; pose check needs --garment work_trousers. Then the held row's files on branch ron-kiln-trousers-import (STEP-I-PREPARED) from chain-boots, the import into mh-assemble; step 9 re-clear Ron's jumper; step 10 the packaged held film with the real boots.
-2. Thursday's checkpoint by this evening (KILN-V1-CHECKLIST section c): which lines miss 24 Nov, for the Marvelous recommendation.
+0. Verdicts after 2026-11-19T05:05 UTC; advisor after 2026-11-19T00:54:00+01:00 (last ack 237). Allowance, pace_line, a row (last 06:07).
+1. Step 10, the held films: DONE standing on build b279668 (game log: Rocco wears RonWorkTrousers, RonJeans replaced): F:/LedgerTools/game-inputs/films/ron-work-trousers-2026-11-19/deg0, deg135, deg180 (through the office window: seat not seen), deg225, and the passed jeans on the same camera (jeans-deg0, jeans-deg135) as the before. Command: packaged LedgerProbe.exe -FaceAB -MouthFilm -MouthFilmWide -PreparedAck -WearHeld=RonWorkTrousers -FilmSize=2560x1440 -LedgerSlice -LedgerCrime -Encounter=live -LiveFresh -TalkFake -NoTitle -MouthFilmDeg=N -log (closes itself in about 3 min; frames in LedgerProbe/Saved/MouthFilm/BP_MH_RoccoP2_*). One fresh final reviewer ran on them: read REVIEW-1.md in that folder (round 1 of 2). By eye: the crotch hangs a little low and baggy. Still owed: a seated film and a back view of the seat (the film camera cannot see his back on the street), then his whole-person page with the films; release only once the legs' start values are our own.
+2. Held-back run 1 on Thursday's main (quiet machine, heavy lock, the session runs it, no fixer told which); B2 and the speed table; then finish the checkpoint this evening.
 3. Marvelous before 25 Nov: Darren's nylon jacket needs a body with a head; a look by eye at the three drapes; the money DECISION item by Tue 24 Nov.
-4. Fable pieces (coat collar try 2, legs, blouse, R4) wait for Fable's reset Mon 13:00; Opus only by RULINGS' tries.
+4. Fable pieces (coat collar try 2, legs, blouse, R4) wait for Fable's reset Mon 13:00.
 5. The DAILY token file by 19:00; the P4 table.
 - tools/timelog.py start "<item> ..." at every task.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 19 Nov 05:54: the trousers' first import raised TypeError (int of None): a new garment folder needs its line in asset-budgets.json (folders and a parts entry), as Sheila's on 11 Nov.
+- 19 Nov 05:52: the import worktree held a stale STAGED copy reversing its own last commit; git checkout -- restored the stale index, not HEAD: run git restore --staged first.
 - 19 Nov 05:21: the trousers' boots job on Kiln main stopped at once on SetSeamlineZipper (renamed kiln_api.kiln_set_seam_zipper on 18 Nov); KILN_LEGACY_NAMES=1 runs the job unchanged.
-- 19 Nov 05:20: coat on the joined lane: collar assembly inside the neck (above).
-- 18 Nov 19:31: Marvelous trousers by FBX import at scale 1.0: body a tenth size. Use the .avt bodies.
+- 19 Nov 05:20: coat on the joined lane: collar assembly inside the neck.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
-- Tries used: coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
+- Tries used: trousers seat 1/2 (passed); coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
 - API spend: US$3.77 this month (8 and 16 Nov); none 17-18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).
