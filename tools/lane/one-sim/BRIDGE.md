@@ -7,7 +7,7 @@ Task 4s, run 2, 19 November 2026. Written and tested the same day. Nothing in th
 1. The bridge is one small JavaScript file, wasm/one-sim-bridge.mjs (14 KB, 5 KB compressed), over the loader (wasm/one-sim.mjs). It holds no town rule.
 2. The prototype hands it its clock every simulation step. The bridge turns the clock into the same calls, in the same order, that the packaged game makes to its town code.
 3. It hands back what each new hour did (who found the damage, who went to the police, DS Ellis, an arrest, Ada's invitation, Ron's envelope), and on request where people are and who knows what.
-4. The town travels in the prototype's save as one plain object. Loaded into a fresh page it plays on exactly as if it had never stopped (tested, 6 of 6 weeks).
+4. The town travels in the prototype's save as one plain object. Loaded into a fresh copy of the simulation it plays on exactly as if it had never stopped (tested, 6 of 6 weeks, under Node and in a real page).
 5. Money, debts, jobs, fares, fights and talk stay in the prototype's own code. So do its street, its walking, its light and lines of sight, its weather, its car and its screens.
 
 ## What the prototype calls each tick
@@ -27,7 +27,7 @@ What happens inside, which is the packaged game's own order (CrimeProbe.cpp, Clo
 
 The same is true when the prototype skips time (sleep, the cells): its own skip already calls simStep in steps, so the town's hours run on meanwhile. A jump of thirty days in one call also works: 720 hours come back, in 0.25 to 0.4 s.
 
-Cost, measured: about 17 thousandths of a second of work for a whole game day when ticked every game minute. At the prototype's clock a game day lasts 18 real minutes.
+Cost, measured: 15 to 21 thousandths of a second of work for a whole game day when ticked every game minute. At the prototype's clock a game day lasts 18 real minutes.
 
 ## What it reads back
 
@@ -62,7 +62,7 @@ Each takes the prototype's clock at that moment. The clock must have been ticked
 
 | Call | When |
 |---|---|
-| `town.deed({ minute, area, thing, said, witnesses, fact, words, certainty })` | He damages something. `witnesses` is who saw it and how well: `[{ id, rung }]`. Whoever is in the area finds it at once, and others as they come by. |
+| `town.deed({ minute, area, thing, said, witnesses, fact, words, certainty })` | He damages something. `witnesses` is who saw it and how well: `[{ id, rung }]`. Whoever is in the area and did not see it done finds it at once, and others as they come by. |
 | `town.saw({ minute, who, rung, fact, area, words, certainty })` | Somebody saw him do something that is no damage. One call a witness. |
 | `town.answerAsk(askDay, answer, minute)` | His answer to a night's ask: the envelope handed over, a no, no show. |
 | `town.teaMinute(minute)` | A minute he spends at Ada's tea. |
@@ -97,7 +97,7 @@ Who saw him, and how well, is still the prototype's to work out: its own geometr
 
 ## How it is tested
 
-All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. Last full run 16:46 to 16:50 UTC: exit 0 in 215 s, "one-sim: everything passed".
+All inside `one-sim.sh all`, under Node and inside a real page in headless Chromium 157. Last full run 17:01 to 17:05 UTC: exit 0 in 228 s, "one-sim: everything passed".
 
 | Check | What it shows | Result |
 |---|---|---|
@@ -110,7 +110,7 @@ All inside `one-sim.sh all`, under Node and inside a real page in headless Chrom
 
 Size, measured: with the save routines inside, the simulation file is 423,015 bytes, 142,080 with gzip, 108,526 with Brotli. Before the save it was 301,665 and 79,767. So the download is now 109 KB, not 80 KB: the save cost 29 KB.
 
-What the module asks of the page grew from four small system calls to seven: the three new ones are the list of settings of the computer (answered: none) and "stop" (answered with an error, never seen in any test). Still no clock, no random numbers, no files.
+What the module asks of the page grew from four small system calls to seven. The three new ones are the computer's list of settings, in two calls (answered: none), and "stop" (answered with an error, never reached in any test). The page still gives it no clock time, no random numbers and no files.
 
 ## Found on the way: the order of talk inside an hour
 
