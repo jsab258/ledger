@@ -234,10 +234,12 @@ export async function openTown(options = {}) {
     if (typeof fact !== 'string' || !/^[A-Za-z0-9_]{1,80}$/.test(fact)) throw new Error(`one-sim bridge: a story's name is letters, digits and underscores, not ${quote(fact)}`);
     if (TOWN_OWN_FACTS.whole.includes(fact) || TOWN_OWN_FACTS.starts.some((p) => fact.startsWith(p))) throw new Error(`one-sim bridge: the story name ${quote(fact)} is one the town's own rules use; pick another`);
   };
-  const needText = (x, what) => { if (typeof x !== 'string') throw new Error(`one-sim bridge: ${what} is text, not ${quote(x)}`); };
+  // Text, and not empty: the town keeps no damage for a thing with no name or nothing said of it, and would still
+  // keep the deed's story, so that the witness went to the police over damage nobody could ever find.
+  const needText = (x, what) => { if (typeof x !== 'string' || x.trim() === '') throw new Error(`one-sim bridge: ${what} is text with something in it, not ${quote(x)}`); };
   const needSure = (x) => { if (!(typeof x === 'number' && x > 0 && x <= 1)) throw new Error(`one-sim bridge: how sure a witness is runs from just above 0 to 1, not ${quote(x)}`); };
   const needRung = (x) => { if (!Number.isInteger(x) || x < -1 || x > 4) throw new Error(`one-sim bridge: how well a witness saw him is 0 to 4 (Rung), or -1 for a thing known, not ${quote(x)}`); };
-  const castId = (id) => (typeof id === 'string' ? PROTOTYPE_TO_CAST[id] ?? id : null);
+  const castId = (id) => (typeof id !== 'string' ? null : Object.prototype.hasOwnProperty.call(PROTOTYPE_TO_CAST, id) ? PROTOTYPE_TO_CAST[id] : id);
   // The week's deed as the town itself holds it (the same lines the save carries), or null: none yet.
   const deedHeld = () => {
     const w = JSON.parse(sim.saveWeek());
@@ -292,7 +294,7 @@ export async function openTown(options = {}) {
     people: () => sim.people(),
     /// Where the town's routine puts someone at a minute: a place id of the cast file. Takes the
     /// prototype's id or the cast's.
-    placeOf(person, minute = at) { const [day, hour] = clockOf(minute); return sim.placeOf(PROTOTYPE_TO_CAST[person] ?? person, day, hour); },
+    placeOf(person, minute = at) { const [day, hour] = clockOf(minute); return sim.placeOf(castId(person) ?? '', day, hour); },
     /// The Ledger's facts: who knows what, and how (saw it or was told, from whom, how well the first witness saw him).
     knows: () => sim.knows(),
     /// The week's pieces as the game's save writes them: asks, police, tea, damage, arrests, hours, week.
@@ -470,7 +472,7 @@ export async function openTownFromOldSave({ wasm, castJson, old, acts = PROTOTYP
   const sightings = [];
   for (const x of all) {
     const { person, memory, event } = x;
-    const id = PROTOTYPE_TO_CAST[person] ?? person;
+    const id = Object.prototype.hasOwnProperty.call(PROTOTYPE_TO_CAST, person) ? PROTOTYPE_TO_CAST[person] : person;
     if (!event || typeof event.kind !== 'string') { drop(x, 'its event is not in the save'); continue; }
     const act = Object.prototype.hasOwnProperty.call(acts, event.kind) ? acts[event.kind] : null;
     if (!act) { drop(x, 'a kind of act the table does not know'); continue; }

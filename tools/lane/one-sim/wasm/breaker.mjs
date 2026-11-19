@@ -100,12 +100,18 @@ group = 'bad calls'; say('[3] BAD CALLS');
     ['witnesses that are text', { witnesses: 'darren:4' }], ['a witness that is null', { witnesses: [null] }], ['a witness whose id is a number', { witnesses: [{ id: 7, rung: 4 }] }],
     ['a witness at rung 9', { witnesses: [{ id: 'darren', rung: 9 }] }], ['a witness at rung 1.5', { witnesses: [{ id: 'darren', rung: 1.5 }] }], ['a witness whose rung is text', { witnesses: [{ id: 'darren', rung: '4' }] }],
     ['a certainty of nought', { certainty: 0 }], ['a certainty of two', { certainty: 2 }], ['a certainty that is no number', { certainty: NaN }], ['a certainty that is text', { certainty: '1' }],
-    ['a minute that is no number', { minute: NaN }], ['a minute that is text', { minute: String(TUE) }]])
+    ['a minute that is no number', { minute: NaN }], ['a minute that is text', { minute: String(TUE) }],
+    ['a thing with no name', { thing: '' }], ['a thing named with spaces only', { thing: '   ' }], ['nothing said of the damage', { said: '' }], ['a story with no words', { words: '' }]])
     await refused(`a deed with ${what}`, () => t.deed(windowDeed(TUE, more)), '', t);
+  await answers("a deed seen by ids that are JavaScript's own words takes nobody, and such an id has no place and sees nothing", async () => {
+    const o = await open(); o.tick(TUE);
+    const got = o.deed(windowDeed(TUE, { witnesses: [{ id: 'constructor', rung: 4 }, { id: '__proto__', rung: 4 }, { id: 'toString', rung: 1 }] }));
+    return [got.taken.length, got.dropped.length, o.placeOf('constructor'), o.placeOf('toString'), o.saw(sighting(TUE, { who: 'hasOwnProperty' }))];
+  }, (g) => g.join('|') === '0|3|||false');
   await answers('a deed whose witness id tries to smuggle in a second witness is taken with nobody seeing it', () => t.deed(windowDeed(TUE, { witnesses: [{ id: 'sam:4,rita', rung: 4 }] })),
     (g) => g.taken.length === 0 && g.dropped.length === 1 && t.deedHeld().witnesses.length === 0);
   await refused('a second deed', () => t.deed(windowDeed(TUE, { fact: 'window2_d1' })), 'one deed', t);
-  for (const [what, more] of [['nobody', { who: undefined }], ['a number for who saw it', { who: 12 }], ['rung 5', { rung: 5 }], ['no words', { words: undefined }], ['no place', { area: null }],
+  for (const [what, more] of [['nobody', { who: undefined }], ['a number for who saw it', { who: 12 }], ['rung 5', { rung: 5 }], ['no words', { words: undefined }], ['empty words', { words: '' }], ['no place', { area: null }],
     ["a story name of the town's own", { fact: 'taken_d1' }], ['a certainty below nought', { certainty: -0.5 }]])
     await refused(`a sighting with ${what}`, () => t.saw(sighting(TUE, more)), '', t);
   await answers('a sighting by somebody the cast does not have is answered false and changes nothing', () => { const was = JSON.stringify(t.save()); return [t.saw(sighting(TUE, { who: 'pauline' })), JSON.stringify(t.save()) === was]; }, (g) => g.join() === 'false,true');
