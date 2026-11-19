@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 05:16 on 19 Nov, stopped 05:53. 4o-a done: the driving gate (tools/lane/driving-gate/) and DRIVING-ROUND4-FINDINGS.md. Next: 4o-b, the loop prototype's gate in tools/lane/gate/, then one fresh reviewer for both gates. 4n's Fable fix still held while Fable is over 40% of its week (45% at 05:07); when under, run it, then the two Docs. Budget at start: 37% at 05:07 against a ceiling of 37.2%; check the newest main row (doc_id ending -row or -main) first.
+**Cloud lane, last run:** started 06:16 on 19 Nov, stopped about 06:55. 4o-b done: the loop prototype's gate (tools/lane/gate/), its first run (production/lane/PROTOTYPE-GATE-FINDINGS.md) and the fresh review of both gates (production/lane/GATE-REVIEW-2026-11-19.md). Next: 4o-c, the review's remaining must-fixes in both gates (see the queue). 4n's Fable fix still held while Fable is over 40% of its week (45% at 06:07); when under, run it, then the two Docs. Budget at start: 38% at 06:07 against a ceiling of 38.1%; check the newest main row (doc_id ending -row or -main) first. Pictures for the gate: Artifact read of the prototype page into a folder outside the repository (README in tools/lane/prototype).
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)
