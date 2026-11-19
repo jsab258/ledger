@@ -12,7 +12,10 @@
 // T2  routines through the bridge: where each person is, each hour of the week;
 // T3  the week hour by hour through the bridge: six scripted weeks, every hour's
 //     thirteen fields against the C# Core's TownWeekHour rows;
-// T4  the same calls twice give the same town, to the last character;
+// T4  the same calls twice give the same town, to the last character. Inside one engine this can
+//     hardly fail (the loader answers the clock and the random numbers with zero). The real test is
+//     across engines: one-sim.sh all compares this digest from Node with the one from the browser
+//     (engines_agree.py, printed as T4x);
 // T5  speed, measured;
 // T6  rough handling: wrong calls must not knock the module over;
 // T7  the Ledger's facts (who knows what, and how) read back through the bridge.

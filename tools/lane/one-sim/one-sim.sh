@@ -7,8 +7,8 @@
 #   tools/lane/one-sim/one-sim.sh test        the browser copy against the reference, under Node
 #   tools/lane/one-sim/one-sim.sh browser     the same checks inside a real web page (headless Chromium)
 #   tools/lane/one-sim/one-sim.sh selftest    the checks themselves: a wrong table must fail them
-#   tools/lane/one-sim/one-sim.sh breaks      seven planted one-line breaks: do the front door's checks see them?
-#   tools/lane/one-sim/one-sim.sh all         reference, wasm, test, selftest, browser
+#   tools/lane/one-sim/one-sim.sh breaks      seven planted one-line breaks: does the whole table, or the front door, see them?
+#   tools/lane/one-sim/one-sim.sh all         reference, wasm, test, selftest, browser, and Node against the browser
 #
 # NOTHING IS WRITTEN UNDER ledger/ OR ue-probe/. Their files are compiled from where they
 # live, never copied; every toolchain and build output goes to $ONE_SIM_WORK (default
@@ -27,7 +27,8 @@ export ONE_SIM_WORK=${ONE_SIM_WORK:-/home/claude/one-sim-work}
 W=$ONE_SIM_WORK
 NICE="nice -n 15"
 
-# The toolchains, pinned by name and checksum (read 19 November 2026).
+# The toolchains, pinned by name and checksum (read 19 November 2026). The one Python module
+# setup needs is pinned the same way, in reference/zstd-requirements.txt.
 CONDA=https://conda.anaconda.org/conda-forge/linux-64
 DOTNET_RUNTIME=dotnet-runtime-8.0.34-h7148c6a_0.conda
 DOTNET_RUNTIME_SHA=3224423dff5be5d33ed20fd21a346f766e58be69696bbdbae041bbb0babf3c87
@@ -68,7 +69,10 @@ setup() {
     fetch "$CONDA/$DOTNET_RUNTIME" "$W/dl/$DOTNET_RUNTIME" "$DOTNET_RUNTIME_SHA" || return 3
     fetch "$CONDA/$DOTNET_SDK" "$W/dl/$DOTNET_SDK" "$DOTNET_SDK_SHA" || return 3
     # A .conda file is a zip holding a zstd tar; Python's zstandard (from PyPI) opens it.
-    [ -d "$W/pylib/zstandard" ] || $NICE python3 -m pip install --quiet --target "$W/pylib" zstandard || return 3
+    # Pinned like the toolchains: one exact file, by version and checksum (reference/zstd-requirements.txt).
+    [ -d "$W/pylib/zstandard" ] || $NICE python3 -m pip install --quiet --target "$W/pylib" --no-deps --only-binary=:all: \
+        --require-hashes -r "$HERE/reference/zstd-requirements.txt" \
+      || { say "setup: the pinned zstandard wheel could not be installed (another Python version needs its own line in reference/zstd-requirements.txt)"; return 3; }
     $NICE python3 -I "$HERE/reference/conda_unpack.py" "$W/pylib" "$W/dotnet8" "$W/dl/$DOTNET_RUNTIME" "$W/dl/$DOTNET_SDK" || return 3
   fi
   if [ ! -x "$CXX" ]; then
@@ -108,8 +112,24 @@ reference() {
   unview
   return $rc
 }
+# The lane's project files must list exactly the sources the originals list. MSBuild itself is
+# asked for both lists (nothing is built, nothing is written; the originals are read through the
+# read-only view), and reference/compare_sources.py compares them.
+sources_match() {
+  local p rc=0 s
+  for p in PerceptionGolden Soak CoreTests; do
+    ( cd "$HERE/reference" && $NICE "$DOTNET" msbuild "$p.csproj" -nologo -getItem:Compile ) > "$W/logs/sources-lane-$p.json" 2> "$W/logs/sources-lane-$p.err"
+    ( cd "$W/ro-repo/ledger/$p" && $NICE "$DOTNET" msbuild "$W/ro-repo/ledger/$p/$p.csproj" -nologo -getItem:Compile ) > "$W/logs/sources-original-$p.json" 2> "$W/logs/sources-original-$p.err"
+    python3 -I "$HERE/reference/compare_sources.py" "$p" "$W/logs/sources-lane-$p.json" "$REPO/" "$W/logs/sources-original-$p.json" "$W/ro-repo/"
+    s=$?
+    case $s in 0) ;; 1) rc=1 ;; *) [ $rc -eq 1 ] || rc=$s ;; esac
+  done
+  return $rc
+}
+
 reference_run() {
   local p rc=0
+  sources_match || return $?
   for p in PerceptionGolden Soak CoreTests; do
     ( cd "$HERE/reference" && $NICE "$DOTNET" build "$p.csproj" -c Release -v q ) > "$W/logs/build-$p.log" 2>&1 \
       || { say "reference: $p did not build (see $W/logs/build-$p.log)"; tail -n 5 "$W/logs/build-$p.log"; return 1; }
@@ -172,11 +192,24 @@ port_test() { # wasm  label
   return $rc
 }
 
-test_() {
+# The table every check reads is the one `reference` last wrote into the work folder. It must
+# still be the committed table: if the committed one has moved on since (or the Core and the
+# committed table disagree), a check run against the old copy would pass against the wrong thing.
+table_current() {
   need "$TABLE" "the golden table from the C# Core" reference
+  if ! cmp -s <(cat "$REPO"/ue-probe/perception-golden/part-*.txt | tr -d '\r') <(tr -d '\r' < "$TABLE"); then
+    say "NOTHING MEASURED: the C# table in the work folder is older than the committed one, or differs from it"
+    say "($TABLE against ue-probe/perception-golden). Run: tools/lane/one-sim/one-sim.sh reference"
+    return 3
+  fi
+}
+
+test_() {
+  table_current || return $?
   need "$W/wasm/one-sim.wasm" "the browser build" wasm
   command -v node >/dev/null 2>&1 || { say "NOTHING MEASURED: no node"; return 3; }
   mkdir -p "$W/data" && cp "$TABLE" "$W/data/golden.txt"
+  rm -f "$W/logs/test-report.json"
   local rc=0
   port_test "$W/wasm/core-port-test.wasm" "port-test-as-wasm-game-flags" || rc=1
   port_test "$W/wasm/core-port-test.eh.wasm" "port-test-as-wasm-with-exceptions" || rc=1
@@ -186,22 +219,33 @@ test_() {
 }
 
 selftest() {
-  need "$TABLE" "the golden table from the C# Core" reference
+  table_current || return $?
   need "$W/wasm/one-sim.wasm" "the browser build" wasm
+  local rc=0
   ( cd "$W" && $NICE node --no-warnings "$HERE/wasm/selftest.mjs" --brain "$W/wasm/one-sim.wasm" --check "$W/wasm/one-sim-check.wasm" \
-      --golden "$TABLE" --specs "$REPO/production/specs" )
+      --golden "$TABLE" --specs "$REPO/production/specs" ) || rc=1
+  python3 -I "$HERE/wasm/engines_agree.py" --selftest || rc=1
+  python3 -I "$HERE/reference/compare_sources.py" --selftest "$W/selftest-sources" || rc=1
+  return $rc
 }
 
 browser() {
-  need "$TABLE" "the golden table from the C# Core" reference
+  table_current || return $?
   need "$W/wasm/one-sim.wasm" "the browser build" wasm
+  rm -f "$W/logs/browser-report.json"
   ( cd "$W" && $NICE python3 -I "$HERE/wasm/browser_test.py" --brain "$W/wasm/one-sim.wasm" --check "$W/wasm/one-sim-check.wasm" \
       --golden "$TABLE" --specs "$REPO/production/specs" --site "$W/browser-site" --json "$W/logs/browser-report.json" )
 }
 
+# Fix 1 of the review: the same town in Node and in the real browser. Both reports are deleted
+# before their runs (above), so a report here is always from the run just made.
+engines_agree() {
+  python3 -I "$HERE/wasm/engines_agree.py" "$W/logs/test-report.json" "$W/logs/browser-report.json"
+}
+
 # A measurement, not a gate: each break is made in a copy under $W/breaks, never in the repository.
 breaks() {
-  need "$TABLE" "the golden table from the C# Core" reference
+  table_current || return $?
   need "$CXX" "wasi-sdk" setup
   ( cd "$W" && $NICE python3 -I "$HERE/wasm/breaks.py" --repo "$REPO" --work "$W" --cxx "$CXX" --golden "$TABLE" --json "$W/logs/breaks.json" )
 }
@@ -216,9 +260,16 @@ case "${1:-}" in
   browser)   browser;   exit $? ;;
   all)
     rc=0
+    # A failed check (1) outranks a check that could not run (3), which outranks good (0).
+    fold() { case $1 in 0) ;; 3) [ $rc -eq 0 ] && rc=3 ;; *) rc=1 ;; esac; return 0; }
     reference || rc=$?
     [ $rc -le 1 ] && { wasm || rc=$?; }
-    [ $rc -le 1 ] && { test_ || rc=1; selftest || rc=1; browser || rc=1; }
+    if [ $rc -le 1 ]; then
+      test_; fold $?
+      selftest; fold $?
+      browser; fold $?
+      engines_agree; fold $?
+    fi
     [ $rc -eq 0 ] && say "one-sim: everything passed" || say "one-sim: NOT all passed (exit $rc)"
     exit $rc ;;
   *) say "usage: one-sim.sh setup|reference|wasm|test|selftest|browser|breaks|all"; exit 2 ;;

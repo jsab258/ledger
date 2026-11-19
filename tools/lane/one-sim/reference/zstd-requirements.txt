@@ -1,0 +1,8 @@
+# The one Python module one-sim.sh setup installs (into the work folder, never system-wide):
+# zstandard, which opens the .conda packages the .NET SDK comes in. A tool, never shipped.
+# Pinned to the exact file: version 0.25.0, the wheel for Python 3.13 on 64-bit Linux
+# (zstandard-0.25.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl), checksum
+# taken from the file PyPI served on 19 November 2026. Licence BSD 3-clause, read in the
+# wheel's own LICENSE file. Another Python version needs another wheel: pip then refuses
+# with a checksum error, which is the intended answer (add that wheel's line here).
+zstandard==0.25.0 --hash=sha256:8e735494da3db08694d26480f1493ad2cf86e99bdd53e8e9771b2752a5c0246a

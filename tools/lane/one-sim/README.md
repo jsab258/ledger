@@ -11,12 +11,13 @@ No town rule lives in this folder. The rules are compiled from where they live. 
 ## What is here
 
 - one-sim.sh: every command (setup, reference, wasm, test, selftest, browser, breaks, all).
-- reference/: project files that build the REAL C# Core and its own check programs (PerceptionGolden, Soak, CoreTests) by path, with all output outside the repository. conda_unpack.py unpacks the .NET SDK from conda-forge.
+- reference/: project files that build the REAL C# Core and its own check programs (PerceptionGolden, Soak, CoreTests) by path, with all output outside the repository. The three check programs are built from these lane-written project files, which list the same sources as the originals (ledger/PerceptionGolden, ledger/Soak, ledger/CoreTests). `reference` asks the build tool for both lists on every run and stops if they differ (compare_sources.py). Run 1 also switched on invariant globalisation, which the originals do not have; it was not needed and is removed. The programs therefore need an ICU library on the machine, as .NET on Linux does by default (Ubuntu 24.04 has libicu74). conda_unpack.py unpacks the .NET SDK from conda-forge; zstd-requirements.txt pins the one Python module it needs.
 - wasm/one_sim.cpp: the front door. It only calls the port.
 - wasm/one-sim.mjs: the loader. A page, a Web Worker or Node imports it. No library needed.
 - wasm/checks.mjs: the checks, one copy, run under Node (test_one_sim.mjs) and in a real page (browser/index.html through browser_test.py).
 - wasm/selftest.mjs: spoils the table on purpose. The checks must fail.
-- wasm/breaks.py: plants one-line breaks in a copy of the port. Do the checks see them?
+- wasm/breaks.py: plants one-line breaks in a copy of the port and runs every check on each, the whole table included. Does anything see them?
+- wasm/engines_agree.py: compares the town's digest from Node with the one from the real browser (the last step of `all`).
 - wasm/run_wasi.mjs: runs the port's own golden test, compiled to WebAssembly, under Node.
 
 ## Run
@@ -35,10 +36,11 @@ Everything large goes to $ONE_SIM_WORK (default /home/claude/one-sim-work). The 
     sim.newTown(castJsonText);                 // production/specs/hook-cast.json, as text
     const fields = sim.hour(0, 19, 'mickeys'); // one game hour, in the game's own order
     sim.placeOf('sam', 0, 12);                 // where someone is
-    sim.knows();                               // the Ledger's facts: who knows what, and how (saw it or was told)
+    sim.knows();                               // the Ledger's facts as the town holds them: who knows what, and how (saw it or was told).
+                                               // Their details are not yet compared with the C# Core: no golden rows exist for them.
 
 The full list of calls is in one-sim.mjs. The plain bridge for the prototype (what it calls each tick, what it reads back) is the next run's work.
 
 ## Licences
 
-Nothing here is published yet. The parts that would ship inside one-sim.wasm, and the tools, are listed with their licences in the study, section 4. None is on the allowlist yet: the lines are his to add.
+Nothing here is published yet. The parts that would ship inside one-sim.wasm, and the tools, are listed with their licences in the study, section 4. The tools are on the allowlist (item 17, his yes of 19 November). The pieces that ship inside the simulation file are not: that line is held until he says yes to its fuller wording, so nothing with one-sim.wasm inside may be published. The full licence texts are in production/licences/one-sim/.

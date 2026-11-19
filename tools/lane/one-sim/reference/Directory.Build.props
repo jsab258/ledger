@@ -12,7 +12,9 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- No InvariantGlobalization here: the originals do not set it, so neither do these
+         (run 1 did; the review's finding 3). The programs therefore need an ICU library on
+         the machine, as .NET does on Linux by default (Ubuntu 24.04: libicu74). -->
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>$(NoWarn);CS0162;CS0168;CS0219;CS0414;CS0649;CS1998;CS8632</NoWarn>
   </PropertyGroup>

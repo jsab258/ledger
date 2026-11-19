@@ -1,6 +1,8 @@
 # one-sim: progress (task 4s, "one simulation in the browser")
 
-Run 1, 19 November 2026, 13:19 to 14:12 UTC, in the cloud. Written by the building helper. Nothing here has had a fresh reviewer yet.
+Run 1, 19 November 2026, 13:19 to 14:12 UTC, in the cloud. Written by the building helper. A fresh reviewer checked steps 1 and 2 the same day (production/lane/REVIEW-ONE-SIM-STEP1-2.md: pass with fixes, 12 findings).
+
+Run 2, 19 November 2026, from 16:18 UTC, in a fresh cloud machine: the 12 fixes applied, everything rebuilt and re-run from nothing. Lines changed by run 2 say so.
 
 ## Where it stands, in five lines
 
@@ -30,24 +32,47 @@ Step 2, the build and its tests:
 | T1b, T1c | Only the two named holes are skipped; the 3,500 seeded GossipFuzz rows are among those checked | ok |
 | T2 routines through the bridge | Where each person is each hour, both cast files, against the Core's CastPlaceOf rows | 8,568 of 8,568 |
 | T3 the week hour by hour through the bridge | Six scripted weeks played by calls from JavaScript, each hour's 13 fields against the Core's TownWeekHour rows | 225 of 225 |
-| T4 the same calls twice give the same town | Determinism: a digest of every hour, the final state and every held story | 37e81244f129619f both times, in Node and in Chromium |
+| T4 the same calls twice give the same town | Determinism: a digest of every hour, the final state and every held story | 37e81244f129619f both times. Inside one engine this is almost certain by design (the loader answers the clock and the random numbers with zero). |
+| T4x Node against the browser (run 2) | The real test of the same town: `all` now compares Node's digest with Chromium's and fails if they differ (wasm/engines_agree.py, with its own self-test, 5 of 5) | 37e81244f129619f in both, over the same table. In run 1 this was read by hand. |
 | T5 | Speed and size | about 15 ms a game day (41 people; 13 to 18 ms over ten runs); one-sim.wasm 301,665 bytes, 102,362 gzip, 79,767 Brotli; loader 6,870 bytes |
-| T7 the Ledger's facts through the front door | Who knows what and how (os_knows), read back after every scripted hour | at all 225 hours the number of facts is the hour's own count (held to the C# Core by T3); nobody but the witness is said to have seen the window go; the witness holds it first-hand, recognised, at 130 of 130 hours after the deed |
+| T7 the Ledger's facts through the front door | Who knows what and how (os_knows), read back after every scripted hour | at all 225 hours the number of facts is the hour's own count (held to the C# Core by T3); nobody but the witness is said to have seen the window go; the witness holds it first-hand, recognised, at 130 of 130 hours after the deed. The details of each fact are not yet compared with the C# Core; no golden rows exist for them. |
 | T6 the front door takes rough handling | Calls before a town exists, broken cast files, times that are no time (refused at the door), answers outside the list, odd and long text, a thirty-day jump, a second town | nothing fell over; the thirty-day jump about 0.16 s |
 | selftest | Four rows spoiled on purpose must be caught, each by its own check | passed 7 of 7 |
 | browser | The same checks inside a real page, headless Chromium 157.0.8103.78 | all passed |
-| breaks (run apart: `one-sim.sh breaks`) | Seven one-line breaks planted in a copy of the port. Do T2 and T3 see them? | 5 of 7 seen. See findings 2 and 3. |
+| breaks (run apart: `one-sim.sh breaks`) | Seven one-line breaks planted in a copy of the port. Does anything see them? (run 2) Both browser builds are made from each broken copy and every check is run, the whole table included. | 5 of 7 fail rows of the whole table (44, 9, 12, 145 and 2,812 of 102,949 rows) and the same 5 fail T2 or T3; 2 are seen by nothing. See findings 2 and 3. 9 minutes 14 s. |
 
 About "CoreTests' cases where they can run": CoreTests is C# code that calls the C# Core, so it runs on the reference side only (all 5,255 checks, above). What it shares with the port is the golden rows, and every row was asked of the browser copy.
 
 The front door (wasm/one_sim.cpp) has 25 calls: a town from a cast file, one game hour in the game's order, the player's acts between hours (the deed, the answer to the ask, the tea, the week's end, a police report, being taken in), and reading back (where someone is, the week's state as the save writes it, and who knows what and how: saw it or was told, how many tellings away, from whom, how well the first witness saw him, how sure).
 
+Run 2, the review's 12 fixes, each once:
+
+1. `all` compares Node's digest with the browser's (T4x above).
+2. breaks.py runs the whole table on every broken copy (the breaks row above).
+3. The lane's project files against the originals: `reference` now compares the two source lists on every run (142, 142 and 153 files, the same) and stops if they differ. Invariant globalisation, which only the lane's files set, is removed: it was not needed here and no result changed. See finding 5 below for what it could have hidden.
+4. `test`, `selftest`, `browser` and `breaks` stop with "NOTHING MEASURED" (exit 3) when the table in the work folder is no longer the committed one.
+5. The study's wrong count of files that mention Unity is corrected (25 of 140, none uses UnityEngine).
+6. T7's limit is said where T7 is named (above, the study, the README).
+7. The study's line 3 of the answer now says "thirteen answers for each hour", not the whole state.
+8. The study's sources say how each web page was reached. No address was guessed in run 2. The tool downloads are recorded in the lane's log for the main session to confirm.
+9. zstandard is pinned by version and checksum (reference/zstd-requirements.txt). Its licence was read: BSD 3-clause.
+10. Licences: rows for the loader and the cast file; the full texts read and what they add written into the study's section 4; the decision record handed to the main session (below).
+11. A plain sentence stands in front of the licence line in the study's section 6.
+12. The study's section 5 says that the game passes its own hooks into the hour and the front door none, and that "held" is the prototype's to keep.
+
+For the main session (things the lane may not write):
+
+- DECISIONS.md has no entry for the two new tools (the allowlist's PROCESS 2 asks for one): wasi-sdk 34 with clang, and the .NET SDK 8.0.428 from conda-forge, both tools never shipped, his yes of 19 November 16:18 (allowlist item 17).
+- The allowlist's item 17 carries the tools line only. The line for the pieces that ship inside the simulation file is held and waits for his yes to the fuller wording in production/licences/one-sim/README.md. Measured in run 2: the helper routines (compiler-rt) are not inside the file today, and nothing from the BSD 3-clause part (musl-fts). The study's section 4 has the detail and what is still to read before a credits file can be written.
+- Playwright (Apache 2.0, read in the installed package) runs the page test here and the prototype's tests. The allowlist's item 13 names puppeteer-core, not Playwright.
+
 ## Findings for whoever owns the port and the table (not fixed here, nothing under ue-probe/ or ledger/ was touched)
 
 1. FirstWeek.h declares AdasTea::Ada in a way the C++14 standard needs a second line for. g++ accepts it. clang does not link it under C++14 ("undefined reference to LedgerCore::AdasTea::Ada"). Tried today with this machine's clang++ 18 and the exact command tools/port-golden-check.sh uses when g++ is missing (-std=c++14 -O1): the port test does not link. So that script's clang path is broken today; its g++ and MSVC paths are not affected as far as seen here (MSVC not tried). The browser build uses C++17, where it is fine.
-2. Planted break, seen by nothing: removing `Week.Close(Now, Mill, Cast);` from TownWeek.h HourEnd fails no golden row (all 102,949 still agree) and changes nothing in the six scripted weeks. The week's end closing each hour is not pinned by any row.
-3. Planted break, seen by nothing: swapping the two nine o'clock calls in TownWeek.h RunHour (DS Ellis before the witnesses' reports) fails no golden row. The TownWeekSteps rows record the step names, which are typed beside the calls, not the calls. Today the swap probably cannot change any outcome, because only damage is ever reported and she comes for a crime only from wounding up (K2's reading). It will matter with the first serious crime.
+2. Planted break, seen by nothing: removing `Week.Close(Now, Mill, Cast);` from TownWeek.h HourEnd fails no golden row (all 102,949 still agree; since run 2 measured by breaks.py itself) and changes nothing in the six scripted weeks. The week's end closing each hour is not pinned by any row.
+3. Planted break, seen by nothing: swapping the two nine o'clock calls in TownWeek.h RunHour (DS Ellis before the witnesses' reports) fails no golden row (0 of 102,949, measured by breaks.py in run 2). The TownWeekSteps rows record the step names, which are typed beside the calls, not the calls. Today the swap probably cannot change any outcome, because only damage is ever reported and she comes for a crime only from wounding up (K2's reading). It will matter with the first serious crime.
 4. The golden reader asks for town-news.json through the same hook as the cast files. A host that hands in only the two cast files gets four rows unanswered (TownNewsWitnesses and three KeepsHisDeeds). Not a fault, but easy to trip on.
+5. (run 2) The Core writes one number with the computer's own language settings. Suspicion.cs lines 122 and 176 build the lines of the suspicion trail with a plain number format, so on a computer set to a decimal comma they read "-0,05" where the tests expect "-0.05". Measured here by running the Core's own checks under four settings: under German (Germany) and Turkish, CoreTests stops at its first failed check, "and a fall still reads as a fall" (CoreTests/Program.cs line 1625), after 237 passed lines, so the rest of its 5,255 checks were not run under those settings; under Swiss German and British, all 5,255 pass. The golden table came out identical to the committed one under all four, and Soak passed under the two it was run with. The port does not carry this trail. On his PC it shows only if Windows is set to a decimal comma.
 
 ## Next (run 2 onwards), in order
 
