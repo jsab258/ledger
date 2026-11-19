@@ -18,7 +18,7 @@ What was found, honestly: very little is published on measuring these verbs from
 - Chases: no source on measuring a chase was found.
 - Not reached, to try from his PC: Eurogamer's "The Lag Factor" (2009), Steve Swink's Game Feel, Nesky's full talk, Naughty Dog's and Ubisoft's motion matching talks, any community detection-range test for Hitman or Splinter Cell.
 
-So the method is ours, built on the driving method, and every number it gives is our own measurement. No number is copied from anyone into a target (his rule of 17 Nov; the driving method section 4).
+So the method is built on the approved driving method (its field-of-view and distance method is sourced; section 3), and every number it gives is our own measurement. No number is copied from anyone into a target (his rule of 17 Nov; the driving method section 4).
 
 ## 2. The numbers, per verb
 
@@ -26,8 +26,8 @@ Each number: what it is, where in the footage, how it is read. Units are seconds
 
 ### Fists (F1 to F9; key names as the melee sheet C1 to C15 where they match)
 
-- F1 Start-up (melee sheet C2): first frame the player's blow leaves its ready pose to the frame of contact. Jab, hook or heavy, each counted separately. Press-to-hit (C1) is not visible in footage; it is measured only in our own build, or from a clip that shows an input overlay if one is found (noted).
-- F2 Recovery: frame after contact to the first frame the player can visibly act again (a new blow starting, a block or a step).
+- F1 Start-up (melee sheet C2): first frame the player's blow leaves its ready pose to the last frame before contact, the convention of the frame-data source above and of the melee sheet's C2. Jab, hook or heavy, each counted separately. Press-to-hit (C1) is not visible in footage; it is measured only in our own build, or from a clip that shows an input overlay if one is found (noted).
+- F2 Recovery: frame after contact to the first frame the player can visibly act again (a new blow starting, a block or a step), less the hit-stop frames (F3), as the melee sheet's rule says (recovery is counted without the freeze).
 - F3 Hit-stop (C3): frames where both bodies are frozen at contact, per kind of blow. Zero is a valid result (the melee sheet notes KCD2 may have none).
 - F4 Reaction of the man struck (C4): contact to his first frame back in a ready pose; light and heavy separately; and whether he staggers, steps back, falls.
 - F5 The incoming blow, readable (C5): first frame of the enemy's wind-up to contact; and what shows it (a shoulder drop, a sound shown by a visible flinch, a flash, a camera move).
@@ -35,6 +35,7 @@ Each number: what it is, where in the footage, how it is read. Units are seconds
 - F7 Camera in a fight: distance change on entering a fight (character height on screen before and after, section 3), the time the change takes, any shake on a hit (frames), any slow motion (frames and how slow).
 - F8 Blows to put a man down (C15): count per fight, with the kind of blow.
 - F9 Rhythm: blows a minute by the player and by enemies over a whole fight; the longest gap with no blow.
+- Also logged where the footage shows them, for the melee sheet's other bands: going down and getting up (C7), two men swinging at once (C8), closing in (C9), tiredness shown (C11), and sounds only where a reaction shows them (C13). Each is a behaviour line with its timing where it can be stepped; RN-05 lists which of C1 to C15 were measured and which wait for our own build.
 
 ### On foot (W1 to W10)
 
@@ -71,12 +72,13 @@ Each number: what it is, where in the footage, how it is read. Units are seconds
 - Chase C7 Bystanders: what passers-by do (step back, block, point, join in).
 - Chase C8 Camera in a chase: distance change, any cut, whether the runaway stays in view, and whether a marker shows him when out of sight.
 
-## 3. Reading scale, field of view and distance from a frame [I]
+## 3. Reading scale, field of view and distance from a frame
 
-No source on doing this from game footage was reached; these are standard geometry, our own and unverified, to be checked once on a game whose field of view is known (a PC game with the setting shown on screen) before the numbers are trusted.
-- Field of view by panning: when the camera turns at a steady rate, time how long a fixed landmark takes to cross from the left edge to the right edge (t), and the time for a full 360-degree turn at the same rate (T). Horizontal field of view is about 360 times t divided by T. Five pans, middle value.
-- Distance from size: with the vertical field of view V (from the horizontal and the frame's shape), a man of height h who fills a fraction f of the frame height stands at about h divided by (2 times f times tan(V/2)) from the camera.
-- Speed: distance from known objects passed (paving slabs, car lengths) divided by the frames taken.
+Reuse the approved driving method's M10 (DRIVING-MEASUREMENT-METHOD-2026-11-19.md, its sources and section 4), which rests on a read source (University of Illinois CS445, lecture 13, Fall 2019: vanishing points of lines at right angles give the focal length; heights from the horizon and an object of known height):
+- Field of view (W8, F7): on a frame with straight building or kerb lines at right angles, the vanishing points give the focal length in pixels and so the field of view. Measured from the background lines, at walking and at sprinting, because cameras often widen when running. Five frames each.
+- Distance (W5, F7): with the focal length known, a man's real height (about 1.75 m) over his height in pixels, times the focal length, gives the camera's distance; height from the horizon line.
+- Speed (W4, chase C4): distance from known objects passed (paving slabs, car lengths) divided by the frames taken.
+- A cross-check only, our own and unverified [I]: when the camera pans at a visibly steady rate, the time a landmark takes to cross the frame against the time of a full turn gives the field of view. Pad cameras speed up and slow down, so this is used only to catch a gross error, never as the number.
 
 ## 4. Sampling, two measurers, what is kept
 
@@ -92,6 +94,7 @@ As the driving method section 3 and 4, unchanged:
 One line each, with the minute mark; each becomes a candidate rule (an ER line with its check, the format of DESIGN's experience rules) once seen in at least two games or twice in one, and is marked "not for LEDGER" where it breaks canon or a ruling.
 - Fists: what a struck bystander or friend does; whether a fight draws a crowd and what it does; how a fight ends (down, surrender, run off) and how long until free play; what the camera does when a second attacker joins; whether a blow from behind is warned of, and how (the sound-only part is a research item, as in the teardown brief).
 - On foot: bumping into people (who stumbles, who speaks); running in a crowd; the camera at a door and on stairs; how the character shows tiredness or a limp.
+- Content rule: a sample taken in a tavern, a bar or a gambling scene is measured for its timings only, and the scene is logged "not for LEDGER" (LEDGER shows no alcohol, gambling or children).
 - Being seen: how a stare is held and broken; what a witness does next (runs, phones, tells a friend, follows); how a recognised man is treated (backing away, refusing to trade, a guard's challenge); whether the player is ever told he was seen when he could not have known (LEDGER says no: ER-CORE-02).
 - Chases: how a chase is offered or forced; what happens on a fall; how a caught runaway behaves; what the town does afterwards.
 
@@ -122,7 +125,7 @@ On foot
   W10 kerb, door, stair: slow-down share
 Being seen
   S1 glance s _ _ _ _ _ at m _ _ _ _ _     S2 how shown, how long
-  S3 glance to alarm s _ _ _ _ _ (what Tom did)   S4 recognition s / m / how shown
+  S3 glance to alarm s _ _ _ _ _ (what the player did)   S4 recognition s / m / how shown
   S5 sight range m day _ night _   S6 sound range m _ (which sound)
   S7 telling: minutes _ on or off screen   S8 calm after leaving sight s _
 Chases on foot
@@ -135,21 +138,21 @@ Notes: numbers marked uncertain and why
 
 ### Hours on his PC, priced per verb
 
-PC hours of the builder's session; none of them his hands. Times per game are our judgement from the driving sheet's figures (its numbers block about 95 minutes for ten numbers), replaced by real ones after the first game.
+PC hours of the builder's session; none of them his hands. Times per game are our judgement from the driving sheet's figures (its numbers block about 95 minutes for ten numbers), replaced by real ones after the first game. The second measurer is priced like the first, as the driving method does once the clip check is taken off (the second picks samples from other moments, so the stepping is the same work).
 
-| Verb | Games | First measurer | Second measurer | Together |
+| Work | Games or videos | First measurer | Second measurer | Together |
 |---|---|---|---|---|
-| Fists (9 numbers, behaviours) | Sleeping Dogs, KCD2, GTA IV full (about 75 min each); Mafia DE light (about 30 min) | about 4.25 h | about 3 h | about 7.25 h |
-| On foot (10 numbers) | GTA IV, Mafia DE, GTA V, RDR2 (about 70 min each) | about 4.75 h | about 3.5 h | about 8.25 h |
-| Being seen (8 numbers; finding the scenes takes longest) | KCD2, RDR2, Hitman, GTA V (about 60 min each) | about 4 h | about 3 h | about 7 h |
-| Chases (8 numbers) | L.A. Noire, Sleeping Dogs, GTA V (about 50 min each) | about 2.5 h | about 2 h | about 4.5 h |
-| New clip checks | Hitman, L.A. Noire (25 min each) | about 0.75 h | reused | about 0.75 h |
-| Field-of-view method check, once (section 3) | one PC game with its setting shown | about 0.5 h | none | about 0.5 h |
-| All four verbs | | about 16.75 h | about 11.5 h | about 28 h |
+| Fists (9 numbers, behaviours) | Sleeping Dogs, KCD2, GTA IV full (about 75 min each); Mafia DE light (about 30 min) | about 4.25 h | about 4.25 h | about 8.5 h |
+| On foot (10 numbers) | GTA IV, Mafia DE, GTA V, RDR2 (about 70 min each) | about 4.75 h | about 4.75 h | about 9.5 h |
+| Being seen (8 numbers) | KCD2, RDR2, Hitman, GTA V (about 60 min each) | about 4 h | about 4 h | about 8 h |
+| Chases (8 numbers) | L.A. Noire, Sleeping Dogs, GTA V (about 50 min each) | about 2.5 h | about 2.5 h | about 5 h |
+| Clip checks for videos not on the driving or teardown lists (25 min each) | Hitman; two L.A. Noire street-crime videos; the melee sheet's three fist clips; the Night Market Chase upload; a Saint Denis walk: eight videos | about 3.3 h | reused | about 3.3 h |
+| Finding the scenes in videos without chapters (about 40 min a video, the teardown brief's basis) | Sleeping Dogs, RDR2, GTA V, GTA IV, Hitman, the driving sheet's own clips where they are not the teardown's: about six videos | about 4 h | reused (marks written on the sheet) | about 4 h |
+| All four verbs | | about 22.8 h | about 15.5 h | about 38.3 h |
 
-Counted once: every clip check for GTA V, GTA IV, Sleeping Dogs, Mafia DE, KCD2 and RDR2 is already priced in the driving sheet or the teardown brief and is not counted here. Where the teardown's early, middle and late pieces contain a fight, a chase or a witness, the builder takes those samples from the same stepping (noted on both sheets) and the time saved comes off this table.
+These totals are upper bounds: where the teardown's pieces or the activity stretches contain a fight, a chase or a witness, the builder takes those samples in the same sitting and notes it on both sheets; the time saved is known only after the first game, and the table is repriced then. Clip checks for videos already chosen for driving or the teardown are not counted here.
 
-Lean order if the week is tight: fists and on foot first (the melee and movement bands are what the one-shot's loops tune), both measurers; then being seen and chases with one measurer, the second later. Fists and on foot with both measurers: about 16 hours.
+Lean order if the week is tight: fists and on foot first (the melee and movement bands are what the one-shot's loops tune), both measurers: 8.5 plus 9.5 hours, plus their clip checks (the three fist clips and the Saint Denis walk, about 1.7 h) and scene finding (Sleeping Dogs, GTA IV, GTA V, RDR2, about 2.7 h): about 22.4 hours. Being seen and chases follow with one measurer, the second later.
 
 ## 7. What comes out
 

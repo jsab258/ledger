@@ -10,7 +10,7 @@ Items: 18. Felt leaves with no standard at all, resting only on an item: 8.
 - Measure: time from rest to full walk and full run, stop distance, turn rate on the spot and while running, walk and run speeds in m/s, camera follow lag and recentre time, camera distance and height on foot
 - Reference games: KCD2 (third-person cut-scenes excluded; its first person only as contrast), GTA V, RDR2, Mafia: Definitive Edition, Sleeping Dogs, The Last of Us Part II
 - How: the driving method (DRIVING-MEASUREMENT-METHOD-2026-11-19): clips played in Chrome, never downloaded; frame-stepped; five samples a number; two independent measurers; bands set as game band and floor; joins next week's block (advisor 256)
-- Status: lane researching the game list tonight (FEEL-REFERENCE-GAMES-2026-11-20, pending)
+- Status: method written 20 Nov; measuring from 23 Nov on his PC
 
 ## RN-02 Carrying a load
 
@@ -42,7 +42,7 @@ Items: 18. Felt leaves with no standard at all, resting only on an item: 8.
 - Measure: C1 to C15 from the melee sheet: contact times, hit-stop, reaction lengths, wind-up readability
 - Reference games: KCD2, GTA V and IV, Sleeping Dogs, RDR2, The Last of Us Part II, Yakuza 0, Mafia: The Old Country
 - How: FEEL-TARGETS-MELEE section (e) frame plan, outside only
-- Status: planned (advisor 256: fighting measured like driving)
+- Status: method written 20 Nov; measuring from 23 Nov on his PC
 
 ## RN-06 Firearm feel for rare guns
 
@@ -58,7 +58,7 @@ Items: 18. Felt leaves with no standard at all, resting only on an item: 8.
 - Measure: time from a watcher's first cue to full detection, distances of first notice by light, how the cue is shown (heads, sound, picture), how often players read it right
 - Reference games: KCD2, Hitman 3, Mafia: Definitive Edition, Watch Dogs: Legion, Thief (2014) as contrast
 - How: as RN-01; plus real-world face recognition distance studies for the 8 m and 25 m first values
-- Status: planned (advisor 256: being seen measured like driving)
+- Status: method written 20 Nov; measuring from 23 Nov on his PC
 
 ## RN-08 Chases on foot and by car
 
@@ -66,7 +66,7 @@ Items: 18. Felt leaves with no standard at all, resting only on an item: 8.
 - Measure: pursuer speed against the player's, how sight is broken, time to lose a pursuer, chase length in seconds, catch rules
 - Reference games: GTA V, Sleeping Dogs, Mafia: Definitive Edition, Mirror's Edge (contrast), The Getaway
 - How: as RN-01
-- Status: planned (advisor 256: chases measured like driving)
+- Status: method written 20 Nov; measuring from 23 Nov on his PC
 
 ## RN-09 Searching rooms
 

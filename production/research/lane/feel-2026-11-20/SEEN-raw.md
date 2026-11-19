@@ -85,3 +85,7 @@ No long unedited witness-scene video with minute marks was found for any game. D
 
 - Fetch results came through a small summariser (it garbled one title, "Splinter Cave"). Treat quoted wording as relayed.
 - Searches run: 15 (Hitman suspicion; RDR2 witnesses; KCD2 witnesses; GDC perception; Hitman dev AI; AC Unity; Watch Dogs Legion; Sleeping Dogs; Mafia DE; Thief/Dishonored; KCD2 video; RDR2 video; Hitman video; plus the Hitman AI and GDC follow-ups counted above).
+
+## Added by the lane after review, 20 Nov 2026
+- Hitman 3 footage, found by the lane's own search on 20 Nov (search snippet only): "HITMAN 3 FULL GAME" (golmake games), an index page https://www.letsplayindex.com/video/hitman-3-full-game-golmake-games-Z804bwGikMs ; frame rate and length unknown.
+- Watch Dogs: Legion, read 20 Nov 2026 through a fetch helper: PC Gamer, Christopher Livingston, 14 Jun 2019, from a trailer and a 30-minute demo: "fascinated by NPCs", bios "cleverly linked" to traits, "not necessarily the deepest simulation", not all bios "super satisfying"; nothing on witnesses, reporting or memory. https://www.pcgamer.com/au/i-am-already-hopelessly-obsessed-with-watch-dogs-legions-npcs/

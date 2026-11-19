@@ -8,20 +8,20 @@ Tags: [READ] page fetched and read on 20 Nov 2026 (fetched pages pass through a 
 
 ## In short
 
-| Verb | Shortlist, in order | Of these, already watched for driving or the teardown |
+| Verb | Shortlist, in order | Of these, already chosen for driving or the teardown |
 |---|---|---|
 | Fists | Sleeping Dogs, Kingdom Come: Deliverance II, GTA IV; Mafia: Definitive Edition as the example not to copy | all four |
 | On foot with the camera | GTA IV, Mafia: Definitive Edition, GTA V, Red Dead Redemption 2 (the heavy end, what to avoid) | all four |
 | Being seen | Kingdom Come: Deliverance II, Red Dead Redemption 2, Hitman (World of Assassination), GTA V | three; Hitman is new |
 | Chases on foot | Sleeping Dogs, L.A. Noire, GTA V | two; L.A. Noire is new |
 
-Two games are added beyond the driving list and the teardown: Hitman (the yardstick for being noticed in a crowd) and L.A. Noire (foot chases in ordinary period streets, caught by a tackle). Everything else reuses videos already opened for driving or the teardown, so the clip checks are counted once (section 6).
+Two games are added beyond the driving list and the teardown: Hitman (the yardstick for being noticed in a crowd) and L.A. Noire (foot chases in ordinary period streets, caught by a tackle). Everything else reuses games already chosen for driving or the teardown (no video has been opened yet; the measuring starts 23 Nov). Where the same video serves several verbs its clip check is counted once; where a verb needs another video, its clip check is priced (FEEL-MEASUREMENT-METHOD section 6).
 
 Biggest gaps, plainly:
 - Footage is the weak part. YouTube pages could not be opened from the cloud (rate limits and failures), so for almost every clip below the frame rate, length and channel come from the title alone, and minute marks for the needed scenes were found only where the teardown's list already had chapter marks (Mafia, KCD2). The builder's clip check on his PC (frame rate, repeated frames, mods, cuts) comes first, as for driving; every footage score is provisional until then.
 - Critic and player counts are small (one to four sources a game, a forum thread at most). They rank the games; they are not a survey. Reddit could not be searched.
 - No public frame data for punches, hit-stop, detection times or chase lengths was found for any of these games. That is why the measuring is needed.
-- Not researched today, for lack of budget: GTA V's fists and on-foot reception, Batman Arkham, Watch Dogs: Legion on foot, Uncharted 4, Assassin's Creed. GTA V is shortlisted on foot and for being seen on the strength of the driving list and the teardown, marked [I] below.
+- Not researched today, for lack of budget: GTA V's fists and on-foot reception, Batman Arkham, Watch Dogs: Legion on foot, Uncharted 4, Assassin's Creed, and The Getaway for any of the four verbs (it is on the driving list for crashes and damage; its PS2 footage runs below 60 frames a second, so it would give behaviours, not timings, and it was not searched tonight). GTA V is shortlisted on foot and for being seen on the strength of the driving list and the teardown, marked [I] below.
 
 ## The scoring
 
@@ -30,27 +30,31 @@ Each game gets 0 to 3 on three tests, for that verb only:
 - B. Long unedited footage at 60 frames a second with the normal camera, with the scenes the verb needs findable; provisional until the clip check.
 - C. Close to LEDGER: grounded, everyday people, town streets, no superpowers.
 
-A and C decide what is worth copying; B decides whether timings can be taken. A game low on A can still be measured as the example to avoid, when it costs almost nothing extra (it is already in the viewing set).
+A and C decide what is worth copying; B decides whether timings can be taken.
+
+Content rule: a sample taken in a tavern, a bar or a gambling scene (the KCD2 tavern brawl, Mafia's bar, Yakuza's clubs, L.A. Noire's vice cases) is measured for its timings only, and the scene itself is logged "not for LEDGER", as the teardown brief does. LEDGER shows no alcohol, gambling or children. A game low on A can still be measured as the example to avoid, when it costs almost nothing extra (it is already in the viewing set).
 
 ## 1. Fists
 
 | Game | A | B | C | Total | Why |
 |---|---|---|---|---|---|
 | Sleeping Dogs | 3 | 2 | 2 | 7 | The open-world fist fight critics and players praise most; martial arts and environment kills go beyond LEDGER |
-| Kingdom Come: Deliverance II | 2 | 2 | 2 | 6 | Grounded, timing-based, ordinary people; reception is for its combat as a whole, fists barely mentioned; first person by default |
+| Kingdom Come: Deliverance II | 2 | 2 [T] | 2 | 6 | Grounded, timing-based, ordinary people; reception is for its combat as a whole, fists barely mentioned; first person by default |
 | Yakuza 0 | 2 | 2 | 1 | 5 | Street brawls everywhere; heat actions are over the top. Contrast only, not shortlisted |
 | Mafia: Definitive Edition | 0 | 2 | 3 | 5 | Closest setting, but its melee is panned; measured as the example not to copy |
-| GTA IV | 1 | 1 | 3 | 5 | More involved street fistfights than GTA V, everyday people; footage of fights not yet found |
+| GTA IV | 1 | 0 | 3 | 4 | More involved street fistfights than GTA V, everyday people; footage of fights not yet found |
 | Red Dead Redemption 2 | 1 | 0 | 2 | 3 | Nothing on its fist fights was read; not shortlisted |
 
 Evidence:
-- Sleeping Dogs. "The sharp combat system makes this especially satisfying" (PC Gamer review, 74) https://www.pcgamer.com/sleeping-dogs-review/ [READ]. "Probably the best combat you can find in an open world game right now" against "I can't say it's as smooth as the Arkham games" and enemy AI that does not "live up to the combat system" (Giant Bomb player thread; 10 of 11 combat posts positive) https://www.giantbomb.com/sleeping-dogs/3030-29441/forums/sleeping-dogs-hand-to-hand-combat-how-good-is-it-1438461/?page=1 [READ]. Footage: RGR29, PC 4K 60 fps, 16:20:55, no chapters https://www.youtube.com/watch?v=nDThIiEgyDA [T]; also "Full Game Walkthrough, No Commentary (4K 60 FPS) Definitive Edition" https://www.youtube.com/watch?v=WZqn5FIdT5U [SS]. Fights to time: the first street fights after the Night Market Chase (early), the fight clubs; minute marks not found.
-- KCD2. VGC 5/5: combat "feels much less clunky than the original" (weapons; fists not mentioned) https://www.videogameschronicle.com/review/kingdom-come-deliverance-2-review/ [READ]. Unarmed combos taught by a trainer (Elbow Uppercut, Direct Strike, Shoulder Throw) https://www.pcgamesn.com/kingdom-come-2-deliverance/combat [READ]. A pacifist run with 535 knockouts was reported (PC Gamer, [SS]). Footage: GameplayOverdose, PC 4K 60 fps, chapters per quest https://www.youtube.com/watch?v=VVp0LS3yD5w [T]; tavern fight clip https://www.youtube.com/watch?v=b0UvcnICXUo [SS]. Fist fights to find: the early tavern brawl and the training bouts; minute marks not found. Note: first person by default, so the camera in a fight is not a reference for LEDGER; the timings and the readable blow are.
-- Mafia DE. "Melee combat is even worse, with successful button-mashing rewarding you with canned finishing-move animations", called "unintentionally hilarious" (Game Informer) https://www.gameinformer.com/review/mafia-definitive-edition/mafia-definitive-edition-review-loyal-to-a-fault [READ]. Footage: Willzyyy, PC 4K 60 fps, chapters per mission https://www.youtube.com/watch?v=tbUqjb7mJ2E [T]; the bar fight early in the game and the fist fights in the first missions (minute marks to find in its chapters).
+- Sleeping Dogs. "The sharp combat system makes this especially satisfying" (PC Gamer review, 74) https://www.pcgamer.com/sleeping-dogs-review/ [READ]. "Probably the best combat you can find in an open world game right now" against "I can't say it's as smooth as the Arkham games" and enemy AI that does not "live up to the combat system" (Giant Bomb player thread; 10 of 11 combat posts positive) https://www.giantbomb.com/sleeping-dogs/3030-29441/forums/sleeping-dogs-hand-to-hand-combat-how-good-is-it-1438461/?page=1 [READ]. Footage: RGR29, PC 4K 60 fps, 16:20:55, no chapters https://www.youtube.com/watch?v=nDThIiEgyDA [T]; also "Full Game Walkthrough, No Commentary (4K 60 FPS) Definitive Edition" https://www.youtube.com/watch?v=WZqn5FIdT5U [SS]. Fights to time: the first street fights after the Night Market Chase (early) and the fights of the early missions [I]; minute marks not found.
+- KCD2. VGC 5/5: combat "feels much less clunky than the original" (weapons; fists not mentioned) https://www.videogameschronicle.com/review/kingdom-come-deliverance-2-review/ [READ]. Unarmed combos taught by a trainer (Elbow Uppercut, Direct Strike, Shoulder Throw) https://www.pcgamesn.com/kingdom-come-2-deliverance/combat [READ]. A pacifist run with 535 knockouts was reported (PC Gamer, [SS]). Footage: GameplayOverdose, PC 4K 60 fps, chapters per quest https://www.youtube.com/watch?v=VVp0LS3yD5w [T]; tavern fight clip https://www.youtube.com/watch?v=b0UvcnICXUo [SS] (a tavern: timings only, the scene not for LEDGER). Fist fights to find: the early brawl and the training bouts; minute marks not found. Note: first person by default, so the camera in a fight is not a reference for LEDGER; the timings and the readable blow are.
+- Mafia DE. "Melee combat is even worse, with successful button-mashing rewarding you with canned finishing-move animations", called "unintentionally hilarious" (Game Informer) https://www.gameinformer.com/review/mafia-definitive-edition/mafia-definitive-edition-review-loyal-to-a-fault [READ]. Footage: Willzyyy, PC 4K 60 fps, chapters per mission https://www.youtube.com/watch?v=tbUqjb7mJ2E [T]; the fist fights in the first missions [I] (minute marks to find in its chapters).
 - GTA IV. "In GTA IV, you can get into more involved fistfights with NPCs. NPCs also have more tolerance, period." (Kotaku, 15 small things) https://kotaku.com/15-small-things-gta-iv-does-better-than-gta-v-1753859687 [READ]. Footage: the driving list's GTA IV clips (DRIVING-REFERENCE-GAMES-2026-11-19.md); a street fight in free play is the scene to find.
 - Yakuza 0. "Whatever you're doing at any particular moment, you're never far from a fight" (PC Gamer, 90) https://www.pcgamer.com/yakuza-0-review/ [READ].
 
-Shortlist: Sleeping Dogs (the fun bar), KCD2 (the grounded bar and its readable blows), GTA IV (everyday street fights); Mafia DE measured only for what not to copy, since its footage is opened anyway. These fit the melee feel sheet already written (FEEL-TARGETS-MELEE-2026-11-18.md), whose bands rest mostly on judgement and wait for exactly these frames.
+First fist clips: the melee feel sheet (FEEL-TARGETS-MELEE-2026-11-18.md, section e) already names clips aimed at exactly these timings: Sleeping Dogs "Combat Walkthrough" (TgiBiJoaQXo), KCD2 "Fist Fight Only Unarmed Combat Challenge Part 1" (l7B5xog9SwU) and Yakuza 0 "Brawler Style: Training". They come first; their clip checks are priced in the method file.
+
+Shortlist: Sleeping Dogs (the fun bar), KCD2 (the grounded bar and its readable blows), GTA IV (everyday street fights; shortlisted above Yakuza 0 for its closeness and because it is already on the driving list, though its fight footage is still to find); Mafia DE measured only for what not to copy, since its video is chosen anyway. These fit the melee feel sheet already written (FEEL-TARGETS-MELEE-2026-11-18.md), whose bands rest mostly on judgement and wait for exactly these frames.
 
 ## 2. On foot with the camera
 
@@ -65,7 +69,7 @@ Shortlist: Sleeping Dogs (the fun bar), KCD2 (the grounded bar and its readable 
 | Red Dead Redemption 2 | 1 | 2 | 2 | 5 | The documented heavy end: long start and stop animations |
 
 Evidence:
-- RDR2, the heavy end. "There's no question about it: Red Dead Redemption 2 feels sluggish compared to other modern games", "considerable input lag on the character's motions" (Push Square) https://www.pushsquare.com/news/2018/11/red_dead_redemption_2s_sluggish_controls_analysed [READ]; "held back by long animation cycles", "never quite allowing the player to have full ownership of his movements" (Screen Rant) https://screenrant.com/red-dead-redemption-2-problem-controls/ [READ]. Three of three sources read criticise it. That is why it is measured: it shows where weight turns into lag, the line LEDGER must stay on the right side of. Footage: MKIceAndFire, PC 4K 60 fps, 27:14:28 https://www.youtube.com/watch?v=AcOpiWppO3k [T]; Saint Denis walks https://www.youtube.com/watch?v=tI0McBGeun0 [SS] (atmosphere videos may carry mods; check). Console RDR2 runs at 30, so only PC footage gives 60 fps timings.
+- RDR2, the heavy end. "There's no question about it: Red Dead Redemption 2 feels sluggish compared to other modern games", "considerable input lag on the character's motions" (Push Square) https://www.pushsquare.com/news/2018/11/red_dead_redemption_2s_sluggish_controls_analysed [READ]; "held back by long animation cycles", "never quite allowing the player to have full ownership of his movements" (Screen Rant) https://screenrant.com/red-dead-redemption-2-problem-controls/ [READ]. Both sources read (three quotes) criticise it; three more complaint pages were seen as titles only. That is why it is measured: it shows where weight turns into lag, the line LEDGER must stay on the right side of. Footage: MKIceAndFire, PC 4K 60 fps, 27:14:28 https://www.youtube.com/watch?v=AcOpiWppO3k [T]; Saint Denis walks https://www.youtube.com/watch?v=tI0McBGeun0 [SS] (atmosphere videos may carry mods; check). Console RDR2 runs at 30, so only PC footage gives 60 fps timings.
 - Mafia DE. "sluggish character movement makes sprinting between, and snapping to, pieces of cover, especially in narrow corridors, feel clumsier than it should" (PC Gamer) https://www.pcgamer.com/uk/mafia-definitive-edition-review/ [READ]. Footage: Willzyyy [T] as above; on-foot street minutes inside its chapters (Ordinary Routine 0:44:31 is a teardown piece).
 - GTA IV. "it offered far more detail in movement and animations" (GameSpot) https://www.gamespot.com/articles/grand-theft-auto-4s-open-world-is-still-excellent-/1100-6458753/ [READ]. Free roam clip "Liberty City Open World Free Roam (PC UHD) [4K60FPS]" https://www.youtube.com/watch?v=PJTSKYNknSw [SS]; avoid any upload naming a graphics mod.
 - GTA V. Footage as the teardown: ComkriTV PS5 https://www.youtube.com/watch?v=NQp7czL_zVU (frame rate not stated) or the Enhanced Edition PC 60 fps full game https://www.youtube.com/watch?v=gEyF0jimPoE [T]; Franklin on foot between missions.
@@ -78,17 +82,19 @@ Shortlist: GTA IV and Mafia DE (closest streets), GTA V (the responsive bar), RD
 
 | Game | A | B | C | Total | Why |
 |---|---|---|---|---|---|
-| Kingdom Come: Deliverance II | 3 | 2 [T] | 3 | 8 | Townsfolk remember, report days later, know your face and stolen goods |
+| Kingdom Come: Deliverance II | 3 | 2 [T] | 3 | 8 | Townsfolk remember, report days later, know your face and a criminal brand |
 | Red Dead Redemption 2 | 2 | 2 [T] | 3 | 7 | Witnesses run to report; a face covering decides whether you are remembered |
-| Hitman (World of Assassination) | 3 | 1 | 2 | 6 | The best-made noticing in crowds; its meter and disguise puzzle are game layers LEDGER does not want |
+| Hitman (World of Assassination) | 3 | 1 [SS] | 2 | 6 | The best-made noticing in crowds; its meter and disguise puzzle are game layers LEDGER does not want |
 | GTA V | 1 | 3 [T] | 2 | 6 | Police search by line of sight and a cone of vision; criticised as tedious |
-| Sleeping Dogs, Mafia DE, Watch Dogs: Legion, Assassin's Creed Unity, Thief or Dishonored | 1 to 2 | 0 to 1 | 1 to 2 | 2 to 4 | Search titles only; placeholders, not evidence |
+| Watch Dogs: Legion | 1 | 0 | 1 | 2 | Its Londoners are people with lives, but the one piece read says nothing of them noticing or remembering the player |
+| Sleeping Dogs, Mafia DE, Assassin's Creed Unity, Thief or Dishonored | 1 to 2 | 0 to 1 | 1 to 2 | 2 to 4 | Search titles only; placeholders, not evidence |
 
 Evidence:
 - KCD2. The crime system "kinda rules", more consequential than any sandbox RPG the writer had played; criticism in the same piece: harsh fines for innocent acts, perhaps "too realistic" (PC Gamer) https://www.pcgamer.com/games/rpg/i-messed-up-so-bad-in-kingdom-come-deliverance-2-that-i-was-literally-branded-a-criminal-and-hours-later-im-still-shunned-by-society/ [READ]. Player anecdotes: a stable girl saw a horse thief flee and the arrest came three days later; a vendor remembered a conversation and named the thief (Gfinity) https://www.gfinityesports.com/article/npcs-in-kingdom-come-deliverance-2-will-snitch-so-dont-leave-witnesses [READ]. Two praise, two mild criticism. Footage: GameplayOverdose [T]; scenes of being caught stealing or seen at night are not marked; the builder looks for them in the town pieces.
 - RDR2. Witnesses "narc on you"; a threatened witness reported "a few moments later"; without a face covering "witnesses will also remember you and report you to the authorities" (GameSpot preview) https://www.gamespot.com/articles/red-dead-redemption-2s-world-is-full-of-snitches/1100-6462203/ [READ]. Footage: MKIceAndFire [T].
-- Hitman. A marker fills to 100% before nearby people raise the alarm; vigilant people, shown by a white circle, see through a disguise if 47 lingers (Gamepressure guide) https://www.gamepressure.com/hitman-iii/stealth/zde21e [READ]. People read the face, even in mirrors (PCGamesN) https://www.pcgamesn.com/hitman-2/ai-detect-mirrors [READ]. Structure of its senses and shared knowledge, no ranges or times (Game Developer, The AI of Hitman 2016) https://gamedeveloper.com/design/the-ai-of-hitman-2016- [READ]. Footage: "HITMAN 3 FULL GAME" (golmake games), an index page found by search https://www.letsplayindex.com/video/hitman-3-full-game-golmake-games-Z804bwGikMs [SS]; frame rate and length unknown. Three praise, no criticism read (a reader's bias is possible).
+- Hitman. A marker fills to 100% before nearby people raise the alarm; vigilant people, shown by a white circle, see through a disguise if 47 lingers (Gamepressure guide) https://www.gamepressure.com/hitman-iii/stealth/zde21e [READ]. People read the face, even in mirrors (PCGamesN) https://www.pcgamesn.com/hitman-2/ai-detect-mirrors [READ]. Structure of its senses and shared knowledge, no ranges or times (Game Developer, The AI of Hitman 2016) https://gamedeveloper.com/design/the-ai-of-hitman-2016- [READ]. Footage: "HITMAN 3 FULL GAME" (golmake games), an index page found by the lane's own search on 20 Nov https://www.letsplayindex.com/video/hitman-3-full-game-golmake-games-Z804bwGikMs [SS]; frame rate and length unknown. Three praise, no criticism read (a reader's bias is possible).
 - GTA V. Police search by line of sight and a cone of vision, "hiding in one spot can shake them"; GTA IV used a circle: "The only way was to run, and run fast"; criticism: "a lengthy, tedious chase sequence" (gameranx) https://gameranx.com/features/id/17567/article/are-the-painfully-tedious-chase-mechanics-of-gta-5-intentional/ [READ].
+- Watch Dogs: Legion. A preview from a trailer and a 30-minute demo: the writer is "fascinated by NPCs" whose bios are "cleverly linked" to their traits, but it is "not necessarily the deepest simulation" and some bios are not "super satisfying"; nothing on witnesses or memory (PC Gamer, Christopher Livingston, 14 Jun 2019) https://www.pcgamer.com/au/i-am-already-hopelessly-obsessed-with-watch-dogs-legions-npcs/ [READ]. It is on the driving list, so it is scored, but it does not make the shortlist.
 - Talks with no public numbers: Martin Walsh, Modeling AI Perception and Awareness in Splinter Cell: Blacklist, GDC 2014 https://gdcvault.com/play/1021236/Modeling-AI-Perception-and-Awareness [READ, abstract only].
 
 Shortlist: KCD2 (the town that remembers, LEDGER's core), RDR2 (witnesses who run to tell), Hitman (how a glance becomes a recognition, shown without breaking the scene; take the readable cues, leave the meter), GTA V (sight cones, already in the viewing).
@@ -122,7 +128,7 @@ These are leads, not rules; each becomes an experience rule only after it is see
 
 ## 6. One viewing for several verbs
 
-| Game | Videos already opened for | Verbs it now also serves |
+| Game | Already chosen for | Verbs it now also serves |
 |---|---|---|
 | GTA V | driving, teardown | on foot, being seen, chases |
 | GTA IV | driving | fists, on foot |
@@ -133,7 +139,7 @@ These are leads, not rules; each becomes an experience rule only after it is see
 | Hitman | new | being seen |
 | L.A. Noire | new | chases |
 
-Only Hitman and L.A. Noire need a new clip check (about 25 minutes each). The hours per verb are in FEEL-MEASUREMENT-METHOD section 6.
+Hitman and L.A. Noire are new games. Some verbs also need videos other than the driving and teardown ones (the melee sheet's fist clips, the Night Market Chase upload, a Saint Denis walk, the KCD2 tavern clip), and the driving sheet itself uses different videos from the teardown, so scenes for these verbs have to be found in unchaptered videos too. All of that is priced in FEEL-MEASUREMENT-METHOD section 6.
 
 ## Sources
 

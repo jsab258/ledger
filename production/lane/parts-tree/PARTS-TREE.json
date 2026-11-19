@@ -17694,7 +17694,8 @@
    "measure": "time from rest to full walk and full run, stop distance, turn rate on the spot and while running, walk and run speeds in m/s, camera follow lag and recentre time, camera distance and height on foot",
    "games": "KCD2 (third-person cut-scenes excluded; its first person only as contrast), GTA V, RDR2, Mafia: Definitive Edition, Sleeping Dogs, The Last of Us Part II",
    "how": "the driving method (DRIVING-MEASUREMENT-METHOD-2026-11-19): clips played in Chrome, never downloaded; frame-stepped; five samples a number; two independent measurers; bands set as game band and floor; joins next week's block (advisor 256)",
-   "status": "lane researching the game list tonight (FEEL-REFERENCE-GAMES-2026-11-20, pending)"
+   "status": "method written 20 Nov; measuring from 23 Nov on his PC",
+   "lane_2026_11_20": "Method and games written 20 Nov (lane 4f): FEEL-REFERENCE-GAMES-2026-11-20.md section 2 (GTA IV, Mafia DE, GTA V, RDR2 as the heavy end) and FEEL-MEASUREMENT-METHOD-2026-11-20.md W1 to W10; measured on his PC from 23 Nov."
   },
   "RN-02": {
    "title": "Carrying a load",
@@ -17714,7 +17715,8 @@
    "measure": "what reference games let a player do to avoid notice in a town without crouch-walk (standing still, turning away, doorways, crowds); detection time in dark against light; how it is shown without meters",
    "games": "KCD2 (town stealth, hoods), Hitman (social stealth, as contrast), Mafia: Definitive Edition, Watch Dogs: Legion",
    "how": "as RN-01; plus published developer talks on KCD2's detection",
-   "status": "open"
+   "status": "open",
+   "lane_2026_11_20": "Partly covered 20 Nov (lane 4f): being seen in FEEL-MEASUREMENT-METHOD-2026-11-20.md S1 to S8 (KCD2, RDR2, Hitman, GTA V); hiding without a stealth mode is logged as behaviours there, not yet as its own numbers."
   },
   "RN-04": {
    "title": "Tailing on foot and by car",
@@ -17736,7 +17738,8 @@
    "measure": "C1 to C15 from the melee sheet: contact times, hit-stop, reaction lengths, wind-up readability",
    "games": "KCD2, GTA V and IV, Sleeping Dogs, RDR2, The Last of Us Part II, Yakuza 0, Mafia: The Old Country",
    "how": "FEEL-TARGETS-MELEE section (e) frame plan, outside only",
-   "status": "planned (advisor 256: fighting measured like driving)"
+   "status": "method written 20 Nov; measuring from 23 Nov on his PC",
+   "lane_2026_11_20": "Method written 20 Nov (lane 4f): FEEL-MEASUREMENT-METHOD-2026-11-20.md F1 to F9 cover C1 (own build only), C2 to C5, C10 in part and C15; C7, C8, C9, C11 and C13 logged as timed behaviours; games Sleeping Dogs, KCD2, GTA IV, Mafia DE (not to copy)."
   },
   "RN-06": {
    "title": "Firearm feel for rare guns",
@@ -17758,7 +17761,8 @@
    "measure": "time from a watcher's first cue to full detection, distances of first notice by light, how the cue is shown (heads, sound, picture), how often players read it right",
    "games": "KCD2, Hitman 3, Mafia: Definitive Edition, Watch Dogs: Legion, Thief (2014) as contrast",
    "how": "as RN-01; plus real-world face recognition distance studies for the 8 m and 25 m first values",
-   "status": "planned (advisor 256: being seen measured like driving)"
+   "status": "method written 20 Nov; measuring from 23 Nov on his PC",
+   "lane_2026_11_20": "Method and games written 20 Nov (lane 4f): FEEL-REFERENCE-GAMES-2026-11-20.md section 3 (KCD2, RDR2, Hitman, GTA V) and FEEL-MEASUREMENT-METHOD-2026-11-20.md S1 to S8. How often players read the cue right and the face-recognition distance studies are not covered there and stay open."
   },
   "RN-08": {
    "title": "Chases on foot and by car",
@@ -17770,7 +17774,8 @@
    "measure": "pursuer speed against the player's, how sight is broken, time to lose a pursuer, chase length in seconds, catch rules",
    "games": "GTA V, Sleeping Dogs, Mafia: Definitive Edition, Mirror's Edge (contrast), The Getaway",
    "how": "as RN-01",
-   "status": "planned (advisor 256: chases measured like driving)"
+   "status": "method written 20 Nov; measuring from 23 Nov on his PC",
+   "lane_2026_11_20": "Method and games written 20 Nov (lane 4f): FEEL-REFERENCE-GAMES-2026-11-20.md section 4 (L.A. Noire, Sleeping Dogs, GTA V) and FEEL-MEASUREMENT-METHOD-2026-11-20.md chase C1 to C8 (foot chases; car chases stay with the driving study)."
   },
   "RN-09": {
    "title": "Searching rooms",
