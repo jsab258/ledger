@@ -34,7 +34,7 @@ The core loop, end to end, inside the frozen town: no change to seeing, gossip, 
 
 Rounds 9 and 10 meet ER-EYES-01 to 04 and 08 by showing the frozen rules' own outputs; the beat constable is a new verb above the simulation (ruling 18 Nov, new verbs welcome), not a change to statements or custody. Any rule that needs the town changed waits for the switch and is listed in the round's known-issues note.
 
-Round 7 builds the first hour as DESIGN restages it, the recommended answer to QUESTIONS 4, and flips to his approved staging if he picks it. Round 8 tests the cab as the day's main verb as a prototype question, not adopted (QUESTIONS 6): it measures whether fares stay fresh, and the week run in stage B decides.
+Round 7 builds the first hour as DESIGN restages it, the recommended answer to QUESTIONS 4, and flips to his approved staging if he picks it. Round 8 tests the cab as the day's main verb as a prototype question, not adopted (QUESTIONS 6): it measures whether fares stay fresh, and his answer to QUESTIONS 6 decides, with the week run's numbers beside it.
 
 | Round | Builds, and its question | DESIGN | Study lines | Rules it must meet | Should move |
 |---|---|---|---|---|---|

@@ -10,7 +10,7 @@
 
 4. The first hour (story; before round 7): his approved hour of 29 Sep, restaged for the pillar of 18 Nov (arrival by ferry, a first fare at 2:30, the debt book at 4:30)? **(a) Yes, as DESIGN section 15 stages it, recommended**; (b) the approved staging as written, with the fare after the walk-round; (c) the approved staging, and no fare in the first hour.
 
-5. Which game canon describes (canon): the 18 Nov pillar puts verbs first, while the older "What LEDGER is not" makes what people know "the mechanic" and gives everything else the smallest budget. **(a) Rewrite that section to the pillar: verbs get their full budget, memory and gossip are the engine, recommended**; (b) keep both lines as they are.
+5. Which game canon describes (canon): the 18 Nov pillar puts verbs first, while the older "What LEDGER is not" makes what people know "the mechanic" and gives everything else the smallest budget, fighting and driving excepted. **(a) Rewrite that section to the pillar: verbs get their full budget, memory and gossip are the engine, recommended**; (b) keep both lines as they are.
 
 6. The cab as the day's main verb (scope; before round 8): canon says "not a driving game". **(a) Prototype it within the spend rule until the playtester shows fares stay fresh over a week, driving under a quarter of play, recommended**; (b) adopt it now; (c) keep fares a side activity.
 

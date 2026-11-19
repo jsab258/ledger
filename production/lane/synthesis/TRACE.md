@@ -263,7 +263,7 @@ Rulings on look, clothes, faces, voices, licences, disk and how the work runs do
 | Content rule: violence with blood and light gore; no torture, no cruelty as spectacle | §7 (finishers cut); §12 (a beating never shown at length) |
 | Content rule: killing possible, rare, permanent, remembered forever | §7 death |
 | Content rule: cars hurt, never kill; only the player's car strikes; stop and help or a hit-and-run | §5 cars and people |
-| Content rule: period swearing, no slurs; racism and sectarianism as facts only; religion never mocked, never a mechanic | Left to the writing rules, which stand. The chapel is a place, never a mechanic (§6). |
+| Content rule: period swearing, no slurs; racism and sectarianism as facts only; religion never mocked, never a mechanic | Left to the writing rules, which stand. The chapel is a place, never a mechanic (§11). |
 | Content rule: drugs off screen, never a verb; no sexual content; no children | §18 |
 | Content rule: police corruptible as individuals, never as a thesis | §8 |
 | The moat: seven slots; five rungs, the top gated by relationship | §2 |
