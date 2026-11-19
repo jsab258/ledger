@@ -128,21 +128,55 @@ const soft = (P) =>
   (P.def.age || LAD.ageAssumedYears) >= LAD.handsOffFromAgeYears ||
   P.id === 'walsh';
 
+// Round 6 (the gate, ER-INPUT-02): the prompt names the person ahead and in view. Of the people in reach and
+// within about 30 degrees of his facing, it is the one most nearly straight ahead; distance only settles a near
+// tie, and a named or marked person wins over a stranger about as far off his facing. A choice once made is held a
+// moment (targetHeldRealSeconds) unless another is clearly better, so the prompt does not flicker between two.
+const HELD = { P: null, cand: null, since: 0, x: 0, z: 0, ang: 0 };
 export function target() {
-  // whoever is in front of Tom, close
   const t = G.tom;
+  const score = (P) => {
+    if (P.gone || P.dead || P.down || P.inCar || P.space !== t.space || P.space === 'home') return null;
+    const d = hyp(P.x, P.z, t.x, t.z);
+    if (d > LAD.targetWithinMetres) return null;
+    const off = Math.abs(angDiff(t.ang, Math.atan2(P.x - t.x, P.z - t.z)));
+    if (off > LAD.targetWithinFacingRadians) return null;
+    // someone with their back to him counts as a little further off than someone facing him: of two people on
+    // one spot, it is the one looking at him
+    const away = Math.abs(angDiff(P.ang || 0, Math.atan2(t.x - P.x, t.z - P.z))) / Math.PI;
+    return (
+      off +
+      d * LAD.targetMetreCountsAsRadians +
+      away * LAD.targetBackTurnedCountsAsRadians -
+      (P.anon && !P.mark ? 0 : LAD.targetNamedPreferredByRadians)
+    );
+  };
   let best = null,
-    bd = LAD.targetWithinMetres;
+    bs = Infinity;
   for (const P of G.named.concat(G.crowd)) {
-    if (P.gone || P.dead || P.down || P.inCar || P.space !== t.space || P.space === 'home') continue;
-    let d = hyp(P.x, P.z, t.x, t.z);
-    if (d > LAD.targetWithinMetres) continue;
-    if (Math.abs(angDiff(t.ang, Math.atan2(P.x - t.x, P.z - t.z))) > LAD.targetWithinFacingRadians) continue;
-    d -= P.anon && !P.mark ? 0 : LAD.namedPreferredByMetres; // a named or marked person wins only when about as near as the nearest
-    if (d > bd) continue;
-    bd = d;
+    const sc = score(P);
+    if (sc === null || sc > bs) continue; // on a dead tie the later one, as before round 6
+    bs = sc;
     best = P;
-  } // the person in front of Tom, within about 30 degrees of his facing; the same one for the prompt, E and Q
+  }
+  // put somewhere else at a stroke (a door, a test): a new place, a new choice, nothing held
+  const jumped =
+    hyp(t.x, t.z, HELD.x, HELD.z) > LAD.targetHeldWithinMetres ||
+    Math.abs(angDiff(t.ang, HELD.ang)) > LAD.targetHeldWithinRadians;
+  HELD.x = t.x;
+  HELD.z = t.z;
+  HELD.ang = t.ang;
+  const hs = HELD.P && HELD.P !== best && !jumped ? score(HELD.P) : null;
+  if (best && hs !== null && hs - bs < LAD.targetHeldUnlessBetterByRadians) {
+    // the one in hand is still about as good: it stays until the other has been better for a moment
+    if (HELD.cand !== best) {
+      HELD.cand = best;
+      HELD.since = G.played;
+    }
+    if (G.played - HELD.since < LAD.targetHeldRealSeconds) return HELD.P;
+  }
+  HELD.P = best;
+  HELD.cand = null;
   return best;
 }
 function allies(P) {

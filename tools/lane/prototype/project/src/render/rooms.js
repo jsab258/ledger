@@ -1,6 +1,6 @@
 // Interiors: small sets with the fourth wall away, furnished from a few shared pieces.
 import { THREE, lit, mat, Batch, boxG, xform, planeXZ, plainTex, textTex, canvas, tex } from './core.js';
-import { ROOMS, FURN } from '../map.js';
+import { ROOMS, FURN, TALL } from '../map.js';
 
 export const rooms = { coat: null, lockDoor: null, suitcase: null, groups: {} };
 let M = null,
@@ -61,9 +61,11 @@ function room(scene, r) {
     d = r.d,
     hw = w / 2,
     hd = d / 2,
-    solid = (FURN[r.id] = []);
+    solid = (FURN[r.id] = []),
+    tall = (TALL[r.id] = []); // round 6: full-height partitions, so the camera can keep Tom in sight
   const B = (bw, bh, bd, x, y, z, col, m = M.flat, ry = 0) => bt.add(m, boxG(bw, bh, bd, x, y, z, ry), col);
   const S = (x, z, sw, sd) => solid.push({ x0: x - sw / 2, x1: x + sw / 2, z0: z - sd / 2, z1: z + sd / 2 });
+  const W = (x, z, sw, sd) => tall.push({ x0: x - sw / 2, x1: x + sw / 2, z0: z - sd / 2, z1: z + sd / 2 });
   const sign = (x, y, sw, sh, t, z = -hd + 0.03) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(sw, sh), lit(new THREE.MeshLambertMaterial({ map: t })));
     m.position.set(x, y, z);
@@ -131,8 +133,10 @@ function room(scene, r) {
   if (k === 'office') {
     B(0.15, 3.1, 4.4, 0.5, 1.55, -1.8, wc, M.wall);
     S(0.5, -1.8, 0.15, 4.4);
+    W(0.5, -1.8, 0.15, 4.4);
     B(0.15, 3.1, 1.5, 0.5, 1.55, 3.3, wc, M.wall);
     S(0.5, 3.3, 0.15, 1.5);
+    W(0.5, 3.3, 0.15, 1.5);
     B(0.15, 0.6, 2.2, 0.5, 2.8, 1.5, wc, M.wall);
     counter(-3.6, -2.2, 2.4, 0.9, '#5a4a36', 0.78);
     B(0.5, 0.34, 0.3, -3.0, 0.98, -2.3, '#2f3a2c', M.iron);
@@ -431,6 +435,7 @@ function room(scene, r) {
   } else if (k === 'boarding') {
     B(0.15, 3.1, 4.3, 1.2, 1.55, -1.35, wc, M.wall);
     S(1.2, -1.35, 0.15, 4.3);
+    W(1.2, -1.35, 0.15, 4.3);
     counter(-3.4, -1.6, 1.8, 0.8, '#4a3526');
     sign(
       -3.4,

@@ -51,6 +51,17 @@ seconds.
 - `LEDGER.measures()`, `LEDGER.measuresJSON()`, `LEDGER.gossip()` (the gossip table, day by day).
 - `LEDGER.pauses()`, `LEDGER.pauseFaults()`, `LEDGER.check.arrivals(options)`, `LEDGER.check.nights(options)`.
 - `LEDGER.saveText()`, `LEDGER.restore(text)`, `LEDGER.step(realSeconds)`, `LEDGER.wait(...)`.
+- Round 6: `LEDGER.isClearOnFoot(x, z)` (the map, lamp posts and parked cars), `LEDGER.cabFeel()` (the eased
+  steering, wedged, stands clear), `LEDGER.cabExitPoint()`, `LEDGER.streetThings()` (lamp posts and cars),
+  `LEDGER.padStep()` (read the pad now, for a test that steps the game by hand).
+
+## What to try in round 6 (19 Nov)
+
+- Drive the cab on the keys: the wheel eases in and centres itself. Hit a lamp post, a wall and a parked car:
+  each crash says what was hit and what it did to the car, and S always backs it out.
+- Walk at lamp posts and parked cars: they are solid. Go into Regent House and walk along the walls: the
+  camera stays inside the room.
+- Plug in a pad: left stick walks and steers, right trigger runs or drives, A is E, Y is the cab, Menu pauses.
 
 ## Tests
 
@@ -75,6 +86,10 @@ same seed plays the same week on any machine.
 - `test/oldsave.mjs`: a save written by an older build loads in this one.
   `OLD=<folder with an older build> node test/oldsave.mjs`.
 - `test/eyes.mjs`: the town's eyes setting, off and on.
+- The lane's rounds: `test/fixes1.mjs` (round 1, the eight fixes), `test/watch2.mjs` (round 2, the carry under
+  watch), `test/melee3.mjs` and `test/melee4.mjs` (rounds 3 and 4, the melee drills), `test/talk5.mjs` (round
+  5, talk that does not repeat), `test/gate6.mjs` (round 6, the gate: eased steering, solid posts and parked
+  cars, crashes and run-downs told in words, never stranded, the camera indoors, the pad, the prompt).
 
 ## Tools
 

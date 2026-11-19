@@ -1,1 +1,3 @@
-{}
+{
+ "a person hit: a choice is offered (stop and help, or drive off)": "Round 16 builds the choice to stop and help or drive off (ER-DRIVE-05 is not one of round 6's rules). In this build a person knocked down is told on screen in the same frame, is hurt and is never killed; nothing yet offers the choice."
+}

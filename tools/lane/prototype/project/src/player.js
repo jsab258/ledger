@@ -1,20 +1,22 @@
 // Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.
 import { G, hour } from './state.js';
 import { hyp, clamp, angDiff, pick } from './util.js';
-import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY } from './map.js';
+import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY, roomSightBlocked, bigThingAt } from './map.js';
 import { inRect } from './util.js';
 import { nightF } from './seeing.js';
 
 import { BARKS } from './cast.js';
 import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
 import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target, grab as fightGrab, carried as fightCarried } from './fight.js';
-import { stepCar, nearCar, exitPoint } from './drive.js';
+import { stepCar, nearCar, exitPoint, footSolid, footClear, clearGround } from './drive.js';
 import { hotspots, beatFor } from './scenes.js';
 import { fareAccept } from './fares.js';
 import { startTalk } from './talk.js';
 import { setInside } from './render/effects.js';
+import { AT_ONCE } from './talk_lines.js';
 import { RULES } from './rules.js';
 const SHOPS = RULES.shops;
+const PADS = RULES.pad;
 const LAD = RULES.ladder;
 const TOMS = RULES.tom;
 const STORY = RULES.story;
@@ -34,6 +36,13 @@ export const keys = {},
     shake: 0,
   };
 const touch = { x: 0, y: 0, on: false, run: false };
+// Round 6 (the gate): what a pad is holding now. The frame loop reads the pad (main.js padStep) and writes it here;
+// its buttons come through onKey like keys. x, y: the left stick (y forward). cx, cy: the right stick. gas, brake:
+// the triggers, 0 to 1.
+export const pad = { x: 0, y: 0, cx: 0, cy: 0, gas: 0, brake: 0, hb: false };
+// what the hands are doing that a save does not hold: how far Tom is into his stride, a press made a moment early,
+// how long he has pushed at something without moving
+const feel = { stride: 0, wx: 0, wz: 0, sp: 0, early: null, stuck: 0 };
 let mdown = 0,
   mbtn = -1,
   lastP = 0,
@@ -84,6 +93,10 @@ export function initPlayer(cv, cameraObj) {
       return;
     }
     keys[e.code] = true;
+    if (ui.pad) {
+      ui.pad = false; // round 6: back on the keys, the prompts show the keys again
+      ui.pk = null;
+    }
     onKey(e.code);
     if (['Space', 'ArrowUp', 'ArrowDown'].includes(e.code) && e.target.tagName !== 'INPUT')
       e.preventDefault();
@@ -199,25 +212,30 @@ function coat() {
   );
   if (G.hooks.sfx) G.hooks.sfx('paper');
 }
-function carKey() {
+function carKey(again) {
   const t = G.tom,
     c = G.car;
   if (F.on) return;
+  const early = () => {
+    if (!again) feel.early = { k: 'F', t: TOMS.earlyPressCountsRealSeconds }; // round 6: a press a moment early still counts
+  };
   if (t.inCar) {
-    if (Math.abs(c.v) > TOMS.cabLeftBelowMetresPerSecond) return;
+    if (Math.abs(c.v) > TOMS.cabLeftBelowMetresPerSecond) return early();
     const [x, z] = exitPoint();
     t.inCar = false;
     t.x = x;
     t.z = z;
     t.v = 0;
+    feel.early = null;
     if (G.hooks.sfx) G.hooks.sfx('cardoor');
     return;
   }
-  if (t.space !== 'street' || !nearCar(TOMS.cabWithinMetres)) return;
-  if (!c.keys) return sub('Locked. The keys will be in the office.', '', 'over');
+  if (t.space !== 'street' || !nearCar(TOMS.cabWithinMetres)) return early();
+  if (!c.keys) return again ? null : sub('Locked. The keys will be in the office.', '', 'over');
   t.inCar = true;
   c.v = 0;
   cam.idle = 9;
+  feel.early = null;
   if (G.hooks.sfx) G.hooks.sfx('cardoor');
 }
 export function enterRoom(id, quiet) {
@@ -365,54 +383,89 @@ export function talkTo(P) {
   if (b) b();
   else startTalk(P);
 }
-function useKey(k) {
+function useKey(k, again) {
   prompts = buildPrompts();
   const p = prompts.find((x) => x.k === k && x.run);
   lastP = 0;
-  if (p) p.run();
+  if (p) {
+    feel.early = null;
+    p.run();
+  } else if (!again) feel.early = { k, t: TOMS.earlyPressCountsRealSeconds }; // round 6 (ER-INPUT-01): a press a moment early still counts
 }
+// Round 6 (the gate): the cabs, lamp posts and parked cars stop a step only when it takes him deeper in, so a man
+// who finds himself inside one (put back from a save made at the wheel, a car that rolled over where he stood) can
+// always walk out.
 function solidFor(x, z) {
   if (blocked(x, z, TOMS.bodyRadiusMetres)) return true;
   if (G.tom.space === 'street') {
-    const c = G.car;
-    for (const k of [1.3, 0, -1.3])
-      if (hyp(x, z, c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k) < TOMS.cabBodyRadiusMetres)
-        return true;
+    const c = G.car,
+      t = G.tom,
+      deeper = (cx, cz) => {
+        const d = hyp(x, z, cx, cz);
+        return d < TOMS.cabBodyRadiusMetres && d < hyp(t.x, t.z, cx, cz);
+      };
+    for (const k of [1.3, 0, -1.3]) if (deeper(c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k)) return true;
     if (!G.people.kevin?.gone || hour() < TOMS.kevinsCabOutFromHour || hour() > TOMS.kevinsCabBackAtHour) {
-      for (const k of [1.3, 0, -1.3]) if (hyp(x, z, 4.1, 32.2 + k) < TOMS.cabBodyRadiusMetres) return true;
+      for (const k of [1.3, 0, -1.3]) if (deeper(4.1, 32.2 + k)) return true;
     }
+    if (footSolid(x, z, t.x, t.z, TOMS.bodyRadiusMetres)) return true;
   }
   return false;
 }
 export function stepPlayer(dt) {
   const t = G.tom;
-  let mx = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0) + touch.x,
+  // keys are on or off; a stick (touch, pad) is analogue
+  const kx = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0),
+    ax = touch.x + pad.x;
+  let mx = kx + ax,
     my = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + touch.y;
-  const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my) < 0.1;
+  const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my + pad.y) < 0.1;
   ui.wait = waiting;
   G.fast = waiting ? TOMS.waitingTimeRunsTimes : 1;
+  // round 6: the pad's right stick looks about, as the mouse does
+  if (pad.cx || pad.cy) {
+    cam.yaw -= pad.cx * PADS.lookRadiansPerSecond * dt;
+    cam.pitch = clamp(
+      cam.pitch + pad.cy * PADS.pitchRadiansPerSecond * dt * (G.settings.invertY ? -1 : 1),
+      PADS.pitchAtLeastRadians,
+      PADS.pitchAtMostRadians,
+    );
+    cam.idle = 0;
+  }
   if (t.inCar) {
-    stepCar(dt, { x: clamp(mx, -1, 1), y: clamp(my, -1, 1), hb: !!keys.Space });
+    // round 6: steering from keys (kx) is eased in the cab; a stick is used as it is. The pad's triggers drive.
+    stepCar(dt, {
+      kx,
+      x: clamp(ax, -1, 1),
+      y: clamp(my + pad.gas - pad.brake, -1, 1),
+      hb: !!keys.Space || pad.hb,
+    });
     t.run = false;
+    feel.stride = 0;
+    feel.stuck = 0;
   } else {
     stepCar(dt, { x: 0, y: 0 });
-    const l = Math.hypot(mx, my);
-    let sp = 0;
-    if (l > 0.1 && !(F.on && F.rung < LAD.strikeRung && F.rung > 0 && false)) {
+    my += pad.y;
+    const l = Math.hypot(mx, my),
+      pressing = l > 0.1,
+      fighting = F.on && F.rung >= LAD.strikeRung;
+    let sp = 0,
+      wx = feel.wx,
+      wz = feel.wz;
+    if (pressing && !(F.on && F.rung < LAD.strikeRung && F.rung > 0 && false)) {
       mx /= Math.max(1, l);
       my /= Math.max(1, l);
       const fx = Math.sin(cam.yaw),
         fz = Math.cos(cam.yaw),
         rx = -Math.cos(cam.yaw),
-        rz = Math.sin(cam.yaw),
-        wx = fx * my + rx * mx,
-        wz = fz * my + rz * mx;
-      const fighting = F.on && F.rung >= LAD.strikeRung,
-        run =
-          (keys.ShiftLeft || keys.ShiftRight || touch.run) &&
-          !fighting &&
-          t.hurt < TOMS.cannotRunAboveHurt &&
-          !t.carry;
+        rz = Math.sin(cam.yaw);
+      wx = fx * my + rx * mx;
+      wz = fz * my + rz * mx;
+      const run =
+        (keys.ShiftLeft || keys.ShiftRight || touch.run || pad.gas > PADS.runsAboveTrigger) &&
+        !fighting &&
+        t.hurt < TOMS.cannotRunAboveHurt &&
+        !t.carry;
       sp =
         (fighting
           ? TOMS.fightingMetresPerSecond
@@ -429,22 +482,54 @@ export function stepPlayer(dt) {
           -TOMS.turnsRadiansPerSecond * dt,
           TOMS.turnsRadiansPerSecond * dt,
         );
-      const nx = t.x + wx * sp * dt,
-        nz = t.z + wz * sp * dt;
-      if (!solidFor(nx, t.z)) t.x = nx;
-      if (!solidFor(t.x, nz)) t.z = nz;
       t.puff = clamp(
         (t.puff || 0) + (run ? dt * TOMS.puffGainedPerSecondRunning : -dt * TOMS.puffLostPerSecondWalking),
         0,
         1,
       );
       t.still = 0;
+      feel.wx = wx;
+      feel.wz = wz;
+      feel.sp = sp;
+      // round 6 (ER-INPUT-01): movement on keys is eased. He comes up to his pace over a few steps of the clock
+      // and does not stop dead. In a fight the feet stay sharp.
+      feel.stride = fighting ? 1 : Math.min(1, feel.stride + dt / TOMS.reachesPaceInRealSeconds);
     } else {
       t.run = false;
       t.still += dt;
       t.puff = Math.max(0, (t.puff || 0) - dt * TOMS.puffLostPerSecondStill);
+      feel.stride = fighting || F.on ? 0 : Math.max(0, feel.stride - dt / TOMS.stopsInRealSeconds);
     }
-    t.v = sp;
+    const go = (pressing ? sp : feel.sp) * feel.stride;
+    if (go > 0) {
+      const x0 = t.x,
+        z0 = t.z,
+        nx = t.x + wx * go * dt,
+        nz = t.z + wz * go * dt;
+      if (!solidFor(nx, t.z)) t.x = nx;
+      if (!solidFor(t.x, nz)) t.z = nz;
+      // round 6 (ER-CORE-01): never stuck. Pushing a way for a second without moving, while standing inside
+      // something solid, puts him on the nearest clear ground.
+      if (pressing && hyp(t.x, t.z, x0, z0) < TOMS.stuckIfSlowerThanMetresPerSecond * dt) {
+        feel.stuck += dt;
+        if (feel.stuck > TOMS.stuckAfterRealSeconds && !footClear(t.x, t.z, TOMS.bodyRadiusMetres)) {
+          const p = clearGround(
+            t.x,
+            t.z,
+            TOMS.bodyRadiusMetres,
+            TOMS.clearGroundSearchMetres,
+            TOMS.clearGroundStepMetres,
+          );
+          if (p) {
+            t.x = p[0];
+            t.z = p[1];
+            sub(AT_ONCE.jam.foot, '', 'over');
+          }
+          feel.stuck = 0;
+        }
+      } else feel.stuck = 0;
+    } else feel.stuck = 0;
+    t.v = pressing ? sp : go;
     // do not stand inside people
     for (const P of G.named.concat(G.crowd)) {
       if (P.gone || P.space !== t.space || P.down || P.inCar) continue;
@@ -452,7 +537,11 @@ export function stepPlayer(dt) {
       if (d < TOMS.pushedApartWithinMetres && d > 0.01) {
         const px = t.x + ((t.x - P.x) / d) * (TOMS.pushedApartWithinMetres - d),
           pz = t.z + ((t.z - P.z) / d) * (TOMS.pushedApartWithinMetres - d);
-        if (!blocked(px, pz, TOMS.pushedBodyRadiusMetres)) {
+        // round 6: nobody shoulders him into a lamp post or a parked car
+        if (
+          !blocked(px, pz, TOMS.pushedBodyRadiusMetres) &&
+          !(t.space === 'street' && footSolid(px, pz, t.x, t.z, TOMS.bodyRadiusMetres))
+        ) {
           t.x = px;
           t.z = pz;
         }
@@ -460,6 +549,13 @@ export function stepPlayer(dt) {
     }
   }
   t.y = groundY(t.x, t.z);
+  // round 6 (ER-INPUT-01): a press made a moment before the thing came into reach is taken when it does
+  if (feel.early) {
+    feel.early.t -= dt;
+    if (feel.early.t <= 0 || ui.modal || G.paused) feel.early = null;
+    else if (feel.early.k === 'F') carKey(true);
+    else useKey(feel.early.k, true);
+  }
   lastP -= dt;
   if (lastP <= 0) {
     lastP = 0.15;
@@ -499,6 +595,28 @@ export function stepCamera(dt) {
     ty = (t.inCar ? 1.35 : 1.5) + (t.y || 0);
   const dist = t.inCar ? cam.dist + 3.4 : room ? Math.max(cam.dist, 5.2) : cam.dist,
     pitch = t.inCar ? Math.max(cam.pitch, 0.2) : cam.pitch;
+  if (room) {
+    // Round 6 (ER-CAM-01): indoors the camera never goes behind a side wall or a partition. Only the part of its
+    // arm that is lower than the walls can be hidden by one; if that part crosses a wall, the camera swings back
+    // toward straight behind him until it is clear.
+    const low = Math.min(
+      Math.cos(pitch) * dist,
+      (TOMS.roomWallHeightMetres - TOMS.lookTargetHeightMetres) / Math.tan(pitch),
+    );
+    let a = angDiff(Math.PI, cam.yaw);
+    const hidden = () =>
+      roomSightBlocked(
+        room,
+        tx,
+        tz,
+        tx + Math.sin(a) * low,
+        tz + Math.cos(a) * low,
+        TOMS.roomCameraKeepsOffWallsMetres,
+      );
+    while (a !== 0 && hidden())
+      a = Math.abs(a) <= TOMS.roomCameraYawStepRadians ? 0 : a - Math.sign(a) * TOMS.roomCameraYawStepRadians;
+    cam.yaw = Math.PI + a;
+  }
   const fx = Math.sin(cam.yaw),
     fz = Math.cos(cam.yaw),
     cp = Math.cos(pitch),
@@ -506,7 +624,11 @@ export function stepCamera(dt) {
   let d = dist;
   if (!room) {
     for (let s = 0.6; s <= dist; s += 0.35) {
-      if (solidCam(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < 9) {
+      if (
+        (solidCam(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < 9) ||
+        // round 6 (ER-CAM-01, ER-DRIVE-06): nor behind a scrap heap, a stall or a crane leg, unless it looks over it
+        (bigThingAt(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < TOMS.cameraClearsBigThingsUnderMetres)
+      ) {
         d = Math.max(0.9, s - 0.45);
         break;
       }

@@ -32,7 +32,17 @@ in ../driving-gate/.
 KNOWN.json lists failures accepted for now, each with its reason, so a round is judged on what it newly breaks.
 Each key is the rule plus what the failure was about, as gate.signature() writes it ("camera clear | indoors:
 Regent House", "keyboard steering eased | release"), so one accepted fault never hides another of the same rule.
-It starts empty: the first round after his yes on the vision decides what goes in it.
+Since round 6 (19 Nov) it holds one line: the choice after a run-down, which round 16 builds.
+
+Three checks were put right in round 6, because they judged the wrong thing (each is marked in clumsy.py):
+- Keyboard steering: the cab is kept on a spot of open ground with its speed held. Before, it ran 27 m along a
+  line checked only down its middle and met a wall, so the A-to-D result ended at no turn at all.
+- The pad: scenes that start by themselves are finished first, and a window in which a box opened is tried
+  again. Before, a written scene at the rank held the game, so nothing could move whatever the game did.
+- Others knocked down beside the person driven at: each must be told on screen, by the name Tom knows, within
+  the limit, and none killed ("everyone knocked down is told on screen"). Before, the check failed whenever
+  anybody else went down; a cab driven through people standing together knocks them all down, and the fault was
+  that nothing said so. The choice after a run-down is now keyed by the rule alone, not by who was hit.
 
 ## Run
 

@@ -32,9 +32,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build  # noqa: E402
 
-# Fable's npm test order (second round of 18 Nov), the lane's round-1 checks, then oldsave, which needs an older build
+# Fable's npm test order (second round of 18 Nov), the lane's own rounds' checks (fixes1 to gate6), then oldsave, which needs an older build
 ORDER = ["numbers", "walks", "same_week", "week", "publish_set", "arrivals", "nights", "town",
-         "ledger_rules", "layout", "files", "talk", "eyes", "fixes1", "watch2", "melee3", "melee4", "talk5", "oldsave"]
+         "ledger_rules", "layout", "files", "talk", "eyes", "fixes1", "watch2", "melee3", "melee4", "talk5", "gate6", "oldsave"]
 SCRIPTS = {"numbers": ["tools/numbers.mjs", "left"], "walks": ["tools/walk_times.mjs"],
            "publish_set": ["tools/publish_set.mjs"]}
 

@@ -58,9 +58,22 @@ import {
   leaveRoom,
   snapCam,
   unlock,
+  onKey,
+  keys,
+  pad,
 } from './player.js';
-import { initTraffic, stepTraffic, clearTraffic, spawnBusLeaving } from './drive.js';
-import { step as fightStep, F } from './fight.js';
+import {
+  initTraffic,
+  stepTraffic,
+  clearTraffic,
+  spawnBusLeaving,
+  exitPoint,
+  cabFeel,
+  footClear,
+  streetThings,
+} from './drive.js';
+import { step as fightStep, F, block as fightBlock } from './fight.js';
+import { RULES } from './rules.js';
 import { initStory, newWeek, storyStep, endWeek } from './scenes.js';
 import { passTime } from './work.js';
 import { initTalk, checkTalk, talkLines, talkState, startTalk } from './talk.js';
@@ -210,7 +223,8 @@ async function boot() {
       const el = $('saved');
       if (el) el.textContent = ok ? 'Saved to ' + saveWhere() + '.' : 'Could not save here.';
     },
-    skip: async (arg) => {
+    skip: async (arg, b) => {
+      if (!sure(b, arg === 'friday' ? 'jump to Friday' : 'jump to tomorrow morning')) return;
       closePanel();
       await passTime(
         arg === 'friday'
@@ -219,7 +233,8 @@ async function boot() {
         'Time passes.',
       );
     },
-    finish: async () => {
+    finish: async (arg, b) => {
+      if (!sure(b, 'end the week now')) return;
       closePanel();
       await endWeek(G.story.flags.choice || 'silent');
     },
@@ -244,7 +259,10 @@ async function boot() {
       saveNow(true);
       toTitle();
     },
-    new: startNew,
+    new: (arg, b) => {
+      if (saveInfo && !sure(b, 'a new week replaces the saved one')) return;
+      startNew();
+    },
     cont: continueWeek,
     copy: copyReport,
     titlehow: () => {
@@ -293,7 +311,20 @@ async function boot() {
     openLedger,
     closeLedger,
     ledgerKey,
+    padStep, // round 6: read the pad now (a test that steps the game by hand has no frames to do it)
+    cabFeel,
+    footClear,
+    exitPoint,
+    streetThings,
   });
+}
+// Round 6 (ER-SAVE-02, ER-CORE-03): no choice that cannot be undone is one press from Carry on. The first press
+// only asks; the second, on the same button, does it.
+function sure(b, what) {
+  if (!b || !b.dataset || b.dataset.sure) return true;
+  b.dataset.sure = '1';
+  b.textContent = 'Sure? Press again to ' + what;
+  return false;
 }
 // Tom comes to believe something new: one short line, low at the left
 function believed(E, P, b) {
@@ -397,42 +428,117 @@ function showAsk() {
   el.classList.toggle('low', !!G.settings.eyes);
   el.innerHTML = `<b>PLAYTEST ASK</b>${a.question}<br>Open the Ledger [L] and mark the entry.`;
 }
-// A pad drives the Ledger only: View opens and closes it, B closes, LB and RB change part, the D-pad moves, A marks.
-const padWas = {};
+// Round 6 (the gate, ER-INPUT-03): a pad reaches the same verbs as the keys. The sticks and triggers are analogue
+// and go to player.js; every button comes through onKey, the road the keyboard takes, so a pad can never do what a
+// key cannot. In the Ledger it works as before: View opens and closes it, B closes, LB and RB change part, the
+// D-pad moves, A marks, X strikes out.
+//   on foot   left stick walk, right stick look, right trigger run, A use or talk (E), X the second thing (T),
+//             Y the cab (F), B the coat (C), LB front up (Q), RB pick up (G), D-pad up take the fare (Y),
+//             D-pad down held pass the time (Z)
+//   the cab   left stick steer, right trigger drive, left trigger brake and reverse, A handbrake, Y get out,
+//             D-pad up take the fare
+//   a fight   X light blow (J), Y heavy blow (U), B held block (K), A dodge (Space), RB grab (G), LB step it up (R),
+//             D-pad down back down (X), right stick pressed finish (V)
+//   a written line: A reads on; D-pad up and down move along the choices, A takes the one in hand
+//   a talk: Y suggested lines (Tab), D-pad up and down choose, A says it (Enter), B leaves (Esc)
+//   Menu pauses and carries on; B closes any other box
+const padWas = { block: false, wait: false };
+const PAD_FOOT = { 0: 'KeyE', 2: 'KeyT', 3: 'KeyF', 1: 'KeyC', 4: 'KeyQ', 5: 'KeyG', 12: 'KeyY' },
+  PAD_CAB = { 3: 'KeyF', 12: 'KeyY' },
+  PAD_FIGHT = { 2: 'KeyJ', 3: 'KeyU', 0: 'Space', 5: 'KeyG', 4: 'KeyR', 13: 'KeyX', 11: 'KeyV' },
+  PAD_FRONT = { 4: 'KeyR', 13: 'KeyX', 1: 'KeyX' },
+  PAD_TALK = { 3: 'Tab', 12: 'ArrowUp', 13: 'ArrowDown', 0: 'Enter', 1: 'Escape' };
 function padStep() {
   const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+  let seen = false;
   for (const gp of pads) {
     if (!gp || !gp.connected) continue;
-    const hit = (i) => {
-      const down = !!(gp.buttons[i] && gp.buttons[i].pressed),
-        k = gp.index + ':' + i,
-        edge = down && !padWas[k];
-      padWas[k] = down;
-      return edge;
-    };
-    const view = hit(8),
-      b = hit(1),
-      a = hit(0),
-      lb = hit(4),
-      rb = hit(5),
-      up = hit(12),
-      dn = hit(13),
-      lf = hit(14),
-      rt = hit(15),
-      x = hit(2);
-    if (ui.modal !== 'ledger') {
-      if (view) openLedger('pad');
+    const held = (i) => !!(gp.buttons[i] && gp.buttons[i].pressed),
+      value = (i) => (gp.buttons[i] ? gp.buttons[i].value || (gp.buttons[i].pressed ? 1 : 0) : 0),
+      hit = (i) => {
+        const down = held(i),
+          k = gp.index + ':' + i,
+          edge = down && !padWas[k];
+        padWas[k] = down;
+        return edge;
+      };
+    if (!seen) {
+      // the sticks and triggers of the first pad, with a dead zone so a resting stick is still
+      seen = true;
+      const dz = (v, z) => (Math.abs(v || 0) < z ? 0 : (Math.sign(v) * (Math.abs(v) - z)) / (1 - z)),
+        Z = RULES.pad;
+      pad.x = dz(gp.axes[0], Z.stickDeadZone);
+      pad.y = -dz(gp.axes[1], Z.stickDeadZone);
+      pad.cx = dz(gp.axes[2], Z.stickDeadZone);
+      pad.cy = dz(gp.axes[3], Z.stickDeadZone);
+      pad.gas = dz(value(7), Z.triggerDeadZone);
+      pad.brake = dz(value(6), Z.triggerDeadZone);
+      pad.hb = G.tom.inCar && held(0);
+      const any = pad.x || pad.y || pad.cx || pad.cy || pad.gas || pad.brake || gp.buttons.some((b) => b && b.pressed);
+      if (any && !ui.pad) {
+        ui.pad = true; // the prompts are drawn again with the pad's own button names (a key press turns them back)
+        ui.pk = null;
+      }
+      // held things: B blocks in a fight, D-pad down passes the time on foot
+      const fightOn = F.on && F.rung >= RULES.ladder.strikeRung;
+      if (padWas.block !== (fightOn && held(1))) fightBlock((padWas.block = fightOn && held(1)));
+      const waits = !ui.modal && !F.on && !G.tom.inCar && held(13);
+      if (padWas.wait !== waits) keys.KeyZ = padWas.wait = waits;
+    }
+    const press = {};
+    for (let i = 0; i < 16; i++) press[i] = hit(i);
+    if (G.story.phase !== 'play') continue;
+    if (ui.modal === 'ledger') {
+      if (press[8] || press[1]) ledgerKey('KeyL', 'pad');
+      else if (press[4]) ledgerKey('KeyQ', 'pad');
+      else if (press[5]) ledgerKey('KeyE', 'pad');
+      else if (press[12]) ledgerKey('ArrowUp', 'pad');
+      else if (press[13]) ledgerKey('ArrowDown', 'pad');
+      else if (press[14]) ledgerKey('ArrowLeft', 'pad');
+      else if (press[15]) ledgerKey('ArrowRight', 'pad');
+      else if (press[0]) ledgerKey('Enter', 'pad');
+      else if (press[2]) ledgerKey('Backspace', 'pad');
       continue;
     }
-    if (view || b) ledgerKey('KeyL', 'pad');
-    else if (lb) ledgerKey('KeyQ', 'pad');
-    else if (rb) ledgerKey('KeyE', 'pad');
-    else if (up) ledgerKey('ArrowUp', 'pad');
-    else if (dn) ledgerKey('ArrowDown', 'pad');
-    else if (lf) ledgerKey('ArrowLeft', 'pad');
-    else if (rt) ledgerKey('ArrowRight', 'pad');
-    else if (a) ledgerKey('Enter', 'pad');
-    else if (x) ledgerKey('Backspace', 'pad');
+    if (press[8]) {
+      openLedger('pad');
+      continue;
+    }
+    if (ui.modal === 'dialog') {
+      // a written line: A reads on; with choices up, the D-pad moves along them and A takes the one in hand
+      const opts = [...document.querySelectorAll('#dopts .opt')];
+      let cur = opts.findIndex((o) => o.classList.contains('on'));
+      if (opts.length && (press[12] || press[13] || cur < 0)) {
+        cur = cur < 0 ? 0 : (cur + (press[13] ? 1 : opts.length - 1)) % opts.length;
+        opts.forEach((o, i) => o.classList.toggle('on', i === cur));
+      } else if (press[0]) onKey(opts.length ? 'Digit' + (cur + 1) : 'KeyE');
+      continue;
+    }
+    if (ui.modal === 'talk') {
+      for (const i in PAD_TALK) if (press[i]) onKey(PAD_TALK[i]);
+      continue;
+    }
+    if (ui.modal) {
+      if (press[1] || press[9]) onKey('Escape');
+      continue;
+    }
+    if (press[9]) {
+      onKey('Escape');
+      continue;
+    }
+    const map = G.tom.inCar
+      ? PAD_CAB
+      : F.on
+        ? F.rung >= RULES.ladder.strikeRung
+          ? PAD_FIGHT
+          : PAD_FRONT
+        : PAD_FOOT;
+    for (const i in map) if (press[i]) onKey(map[i]);
+  }
+  if (!seen && (pad.x || pad.y || pad.cx || pad.cy || pad.gas || pad.brake || pad.hb)) {
+    // the pad has gone: nothing is held
+    pad.x = pad.y = pad.cx = pad.cy = pad.gas = pad.brake = 0;
+    pad.hb = false;
   }
 }
 // ---------- the measures screen ----------
@@ -680,6 +786,14 @@ function loadWeek(json) {
     t.space = 'street';
     setInside(null);
     ui.roomName = null;
+    // Round 6 (ER-SAVE-02, ER-CORE-01): a week saved at the wheel comes back with Tom on his feet (a save holds no
+    // fare and no traffic). He is put at the cab's door, not inside its body where no step would get him out.
+    const c = G.car;
+    if (Math.hypot(t.x - c.x, t.z - c.z) < RULES.tom.cabBodyRadiusMetres) {
+      const [ex, ez] = exitPoint();
+      t.x = ex;
+      t.z = ez;
+    }
   }
   snapCam();
   if (rooms.lockDoor) rooms.lockDoor.visible = !G.story.ended;

@@ -92,7 +92,8 @@ put(BLD, '.prettierrc.json', '.prettierrc.json', 'source/prettierrc.json', 'Form
 put(BLD, '.eslintrc.json', '.eslintrc.json', 'source/eslintrc.json', 'Lint rules (kept as .eslintrc.json).');
 
 const TST = 'The tests (test/)';
-const TESTS = (process.env.TESTS || 'harness week_bot week same_week arrivals nights town ledger_rules layout files talk oldsave eyes').split(' ');
+// every test the project has, the lane's rounds included (fixes1 to gate6), so the page's list names each one
+const TESTS = (process.env.TESTS || 'harness fixes1 watch2 melee3 melee4 talk5 gate6 week_bot week same_week arrivals nights town ledger_rules layout files talk oldsave eyes').split(' ');
 for (const t of TESTS)
   if (fs.existsSync(`test/${t}.mjs`))
     put(TST, `test/${t}.mjs`, `test/${t}.mjs`, `source/test/${t}.mjs`, firstLine(`test/${t}.mjs`));

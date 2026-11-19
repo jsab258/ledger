@@ -473,6 +473,15 @@ export const RULES = {
     targetWithinMetres: 3.6,
     targetWithinFacingRadians: 0.52,
     namedPreferredByMetres: 0.3,
+    // round 6 (the gate): the prompt, E and Q take the person most nearly straight ahead; distance only settles
+    // a near tie, and a choice once made is held a moment so it does not flicker between two people
+    targetMetreCountsAsRadians: 0.05, // one metre further away weighs as much as this much off his facing
+    targetNamedPreferredByRadians: 0.03, // a named person wins over a stranger this much more off his facing
+    targetBackTurnedCountsAsRadians: 0.04, // a person with their back to him counts as this much further off
+    targetHeldRealSeconds: 0.2,
+    targetHeldUnlessBetterByRadians: 0.12,
+    targetHeldWithinMetres: 1, // moved or turned more than this between two looks: a new place, nothing held
+    targetHeldWithinRadians: 1,
     alliesWithinMetres: 9,
     moodShowsRealSeconds: 2.5,
     strikeRung: 5,
@@ -916,6 +925,31 @@ export const RULES = {
     puffLostPerSecondStill: 0.1,
     pushedApartWithinMetres: 0.55,
     pushedBodyRadiusMetres: 0.3,
+    // round 6 (the gate): never stuck on foot. Pressing a way for this long without moving, while standing inside
+    // something solid, puts him on the nearest clear ground.
+    reachesPaceInRealSeconds: 0.12, // movement on keys is eased (ER-INPUT-01)
+    stopsInRealSeconds: 0.1,
+    earlyPressCountsRealSeconds: 0.1, // a press this long before a thing comes into reach still counts
+    stuckAfterRealSeconds: 1,
+    stuckIfSlowerThanMetresPerSecond: 0.02,
+    clearGroundSearchMetres: 60,
+    clearGroundStepMetres: 0.5,
+    roomCameraKeepsOffWallsMetres: 0.35, // indoors the camera stays this far inside the side walls
+    cameraClearsBigThingsUnderMetres: 3, // on the street the camera comes in front of a big thing (a scrap heap, a stall) unless it looks over it
+    roomCameraYawStepRadians: 0.02,
+    roomWallHeightMetres: 3.1,
+    lookTargetHeightMetres: 1.5,
+  },
+
+  // round 6 (the gate): a pad reaches the same verbs as the keys. Sticks and triggers are analogue.
+  pad: {
+    stickDeadZone: 0.18,
+    triggerDeadZone: 0.08,
+    lookRadiansPerSecond: 2.6,
+    pitchRadiansPerSecond: 1.5,
+    pitchAtLeastRadians: -0.12,
+    pitchAtMostRadians: 1.15,
+    runsAboveTrigger: 0.5,
   },
 
   traffic: {
@@ -988,6 +1022,33 @@ export const RULES = {
     slowsToShareAfterHitting: 0.3,
     regardLostWhenRunDown: 0.6,
     nearTheCabWithinMetres: 3,
+    // round 6 (the gate). Steering on keys eases to full lock and centres itself (ER-DRIVE-02: lock in 0.2 to
+    // 0.35 s, centre in 0.4 to 0.9 s); a stick is used as it is.
+    keysTurnToFullLockRealSeconds: 0.28,
+    keysCentreRealSeconds: 0.5,
+    // lamp posts are solid, for the cab and on foot (the drawn base is 0.18 m)
+    lampPostRadiusMetres: 0.18,
+    // never stranded (ER-DRIVE-01): a cab with something in its own space may always move the way that leads out
+    // soonest, at a crawl; a cab with no room either way is worked clear after a moment of trying
+    wedgedLooksMetres: 8,
+    wedgedLooksEveryMetres: 0.25,
+    wedgedCrawlsMetresPerSecond: 2.5,
+    wedgedEitherWayWithinMetres: 1, // the other way is allowed too when it is no more than this much further
+    boxedInBelowMetresOfPlay: 1.5,
+    boxedInLooksMetres: 2,
+    workedClearAfterRealSeconds: 0.8,
+    workedClearThrottleAbove: 0.2,
+    workedClearSearchMetres: 60,
+    workedClearNeedsMetresOfPlay: 3,
+    // told at once (ER-CORE-02): a crash that does damage and a person knocked down are said in words
+    crashLineShowsRealSeconds: 3.8, // under crashCountedEveryRealSeconds, so one crash's line is gone before the next
+    runDownLineShowsRealSeconds: 5,
+    runDownIsAClipBelowMetresPerSecond: 5.5, // slower than this a hit bruises; faster, it hurts badly
+    // getting out (ER-DRIVE-07): if no door has clear ground, the nearest clear ground is looked for this far
+    looksRoundInDirections: 16, // clear ground is looked for in rings, this many ways round
+    exitSearchMetres: 60,
+    exitSearchStepMetres: 0.5,
+    exitBodyRadiusMetres: 0.35,
   },
 
   // Every kind of thing the town can know about Tom. newsworthy: 0 nobody cares, 1 the whole street talks.

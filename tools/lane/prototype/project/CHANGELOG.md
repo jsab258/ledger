@@ -1,5 +1,62 @@
 # LEDGER loop prototype: changelog
 
+## 19 November 2026, lane round 6. The gate: can a build be proved safe before the player touches it?
+
+Built by the cloud lane, from BUILD-ORDER's round 6 (DESIGN sections 19, 17 and 5). The publish gate played the
+round 5 build as a clumsy newcomer and found eight faults; this round fixes them in the game and adds a check
+for each (test/gate6.mjs). The rules it is judged against: ER-CORE-01 to 04, ER-CAM-01, ER-INPUT-01 to 03,
+ER-DRIVE-01, 02, 06, 07 and 08, ER-SCREEN-01 and 02, ER-SAVE-02, ER-TALK-05. Only verbs changed: nobody's
+numbers, and nothing in seeing, gossip, routines, police statements or custody. The seeded week matches round
+5's record part for part with no new record written. Every new number is in rules.js.
+
+1. Steering on keys is eased (his "jerky keyboard steering"). The wheel goes to full lock in 0.28 s and
+   centres itself in 0.5 s; a switch from A to D swings through the middle instead of jumping. A stick (pad,
+   touch) is used as it is. Before, the turn went from nothing to full in one frame, three ways.
+2. Lamp posts are solid, for the cab and on foot (30 columns; the brackets on walls hang clear). They are
+   solid for Tom and the cab only: the town's own walks and the fight's knock-backs are as they were.
+3. Parked cars, and cars in the road, are solid on foot. Tom walked through all seven before.
+4. A crash that does damage is said in words the same frame, naming what was hit and what it did to the car:
+   "The cab hits a lamp post. A dented wing: it still drives, a touch slower." Four stages, then "it can take
+   no worse". The slower top speed after each crash now has a cause he can read (ER-DRIVE-08). A touch under
+   about 11 mph is still forgiven: no damage, no word, nothing for the town to tell.
+5. A person knocked down is said in words the same frame, by the name Tom knows them by, and every person
+   who goes down gets a line: "Ron Kirby is knocked down by the cab: hurt badly, and alive." Under about
+   12 mph it is a clip: "bruised and shouting, no worse". A car hurts and never kills, as before. The choice
+   to stop and help or drive off is round 16's and is not built.
+6. Never stranded. The cab never swings itself into something solid, which is how a car gets wedged on a pole
+   or a wall. A cab with something already in its own body (a save from before the posts were solid, a car
+   that rolled into it) may always move the way that leads out soonest, at a crawl, and says so. A cab with no
+   room either way is worked clear onto the nearest open ground after 0.8 s of trying, and says so. The cab in
+   this prototype never stops driving, so "will not drive on, the firm fetches it" has nothing to do yet.
+7. Out of the cab onto clear ground: if every door is against something, Tom is put on the nearest clear
+   ground, never inside a wall (ER-DRIVE-07). On foot, a lamp post, a parked car or the cabs stop a step only
+   when it takes him deeper in, so he can always walk out of one; nobody shoulders him into a post; and a man
+   who pushes for a second while standing inside something solid is put on clear ground.
+8. Indoors the camera never goes behind a side wall or a partition: it swings back behind him until its line
+   to him is clear (the fault was at Regent House; Mickey's office has the same partition). On the street and
+   at the wheel it now also comes in front of the big things (scrap heaps, crane legs, stalls, the hut) the
+   way it already did for buildings; the gate's last run found the cab hidden behind a scrap heap.
+9. A pad plays the game, not only the Ledger: left stick walks and steers, right stick looks, right trigger
+   runs or drives, left trigger brakes and reverses; A is E, X is T, Y is the cab, B the coat, LB fronts up,
+   RB picks up, D-pad up takes a fare, Menu pauses. In a fight X and Y strike, B blocks, A dodges. In a written
+   choice the D-pad moves and A takes it; in a talk Y brings the suggested lines. Every button comes through
+   the keys' own road, and while a pad is in the hands the prompts name its buttons. Typing your own words
+   still needs the keyboard, and the pause screen's own buttons still need the mouse.
+10. The prompt names the person ahead and in view (ER-INPUT-02): of the people in reach and within 30 degrees
+    it is the one most nearly straight ahead, not the nearest. Distance settles only a near tie, a named
+    person is preferred only by a hair (0.03 radians), and of two people on one spot it is the one facing
+    him. A choice is held 0.2 s unless another is clearly better. This was the playtester's prompt fault since
+    round 4 (a lad straight ahead, "Talk to Darren Milner" on the prompt).
+11. Walking on keys is eased (full pace in 0.12 s, a stop over 0.1 s; in a fight the feet stay sharp), and a
+    press of E, T, G or F made up to 0.1 s before the thing comes into reach still counts (ER-INPUT-01).
+12. A week saved at the wheel and continued puts Tom at the cab's door, not inside its body where no step
+    got him out (ER-SAVE-02, ER-CORE-01). On the pause screen the three tester buttons that cannot be undone,
+    and New week on the title when a saved week exists, ask twice.
+13. Test: test/gate6.mjs, one check for each of the above with the rules' own numbers, plus a clumsy minute
+    at the wheel (the cab's body never in a wall, a post or a parked car; never 5 s without moving a metre)
+    and ER-TALK-05 (typing in a talk never moves Tom and the clock stands still). The test hook gains
+    LEDGER.isClearOnFoot, cabFeel, cabExitPoint, streetThings and padStep.
+
 ## 18 November 2026, lane round 5. Talk that does not repeat, and a debtor who stands
 
 Built by the cloud lane. Design question: when the street answers Tom without the live AI, does each person

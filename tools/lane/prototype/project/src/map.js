@@ -814,6 +814,80 @@ export function blocked(x, z, rad = 0.35) {
   }
   return water(x, z);
 }
+// Round 6 (the gate): the lamp columns that stand on the ground (wall brackets hang clear). They are solid for the
+// cab and for Tom on foot only (drive.js): the town's own walks and the fight's knock-backs are left as they were.
+export const POSTS = LAMPS.filter((l) => l.k === 1);
+// What a crash is told as: the plain name of whatever blocked() meets at this spot (null when nothing does).
+const PROP_WORDS = {
+  phonebox: 'the phone box',
+  pillarbox: 'the pillar box',
+  busshelter: 'the bus shelter',
+  ranksign: 'the rank sign',
+  belisha: 'a crossing beacon',
+  bin: 'a litter bin',
+  skip: 'a skip',
+  dustbin: 'a dustbin',
+  boxes: 'a stack of fish boxes',
+  nets: 'a heap of nets',
+  bollard: 'a bollard',
+  crane: 'a crane leg',
+  hut: 'the hut',
+  brazier: 'the brazier',
+  scrap: 'a heap of scrap',
+  scrapcar: 'a scrap car',
+  stall: 'a market stall',
+  clock: 'the clock',
+  ladder: 'a ladder',
+  bench: 'a bench',
+  cross: 'the cross',
+  busstop: 'the bus stop',
+  chair: 'a chair',
+};
+export function whatBlocks(x, z, rad = 0.35) {
+  if (x > 900) return 'a wall';
+  if (x < BOUNDS.x0 + 1 || x > BOUNDS.x1 - 1 || z < BOUNDS.z0 + 1 || z > BOUNDS.z1 - 1)
+    return 'the end of the road';
+  for (const p of PROPS) {
+    if (!p.r) continue;
+    if (p.w ? Math.abs(x - p.x) < p.r + rad && Math.abs(z - p.z) < p.w / 2 + rad : hyp(x, z, p.x, p.z) < p.r + rad)
+      return PROP_WORDS[p.t] || 'something';
+  }
+  for (const b of solid)
+    if (x > b.x0 - rad && x < b.x1 + rad && z > b.z0 - rad && z < b.z1 + rad) return 'a wall';
+  return water(x, z) ? 'the quay edge' : null;
+}
+// The big things on the street that can hide a man or the cab from the camera: scrap heaps, crane legs, stalls,
+// the hut (every prop at least 1.3 m across; the camera treats them as 3 m high).
+const BIG = PROPS.filter((p) => p.r >= 1.3);
+export function bigThingAt(x, z) {
+  for (const p of BIG) if (hyp(x, z, p.x, p.z) < p.r) return true;
+  return false;
+}
+// Tall walls inside rooms that can hide a man from the camera: room id -> rects in room coordinates, filled by
+// the interior builder beside FURN (the low furniture is in FURN only).
+export const TALL = {};
+// The walls of a room that can come between Tom and the camera, in room coordinates, each grown by `grow`: the
+// two side walls and any partition. The back wall is behind him and the fourth wall is away.
+const camWalls = {};
+export function cameraWalls(r, grow) {
+  const key = r.id + ':' + grow;
+  if (!camWalls[key]) {
+    const hw = r.w / 2,
+      hd = r.d / 2;
+    camWalls[key] = [
+      { x0: -hw - 0.15, x1: -hw, z0: -hd - 0.15, z1: hd + 0.85 },
+      { x0: hw, x1: hw + 0.15, z0: -hd - 0.15, z1: hd + 0.85 },
+    ]
+      .concat(TALL[r.id] || [])
+      .map((w) => ({ x0: w.x0 - grow, x1: w.x1 + grow, z0: w.z0 - grow, z1: w.z1 + grow }));
+  }
+  return camWalls[key];
+}
+// does the straight line between two spots in a room cross one of those walls?
+export function roomSightBlocked(r, ax, az, bx, bz, grow) {
+  for (const w of cameraWalls(r, grow)) if (segRect(ax - r.ox, az - r.oz, bx - r.ox, bz - r.oz, w)) return true;
+  return false;
+}
 export const FURN = {}; // room id -> solid rects in room coordinates, filled by the interior builder
 function roomBlocked(rm, lx, lz, rad) {
   if (lx < -rm.w / 2 + rad || lx > rm.w / 2 - rad || lz < -rm.d / 2 + rad || lz > rm.d / 2 + 0.2) return true;

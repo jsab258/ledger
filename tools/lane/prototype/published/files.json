@@ -1,11 +1,11 @@
 {
- "published": "2026-11-18",
+ "published": "2026-11-19",
  "buildCommand": "npm run build",
  "dependencies": {
   "three": "0.187.0",
   "esbuild": "0.28.2"
  },
- "ledgerJsSha256": "f9cbca0dc8fd5419161c52f4736d9b28a9503fe2a3aff7a8378cc5e17fe6acf1",
+ "ledgerJsSha256": "3a97363ab2b465d569c4831caecb3dcc070114dff26f82ea455f6aebb619f09c",
  "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
  "groups": [
   {
@@ -15,28 +15,28 @@
      "path": "README.md",
      "as": "README.md",
      "what": "What this is, and the source file by file.",
-     "bytes": 6350,
+     "bytes": 7561,
      "text": true
     },
     {
      "path": "CHANGELOG.md",
      "as": "CHANGELOG.md",
      "what": "What changed, item by item, with the date.",
-     "bytes": 26124,
+     "bytes": 34540,
      "text": true
     },
     {
      "path": "NOT_DONE.md",
      "as": "NOT_DONE.md",
      "what": "What could not be done, and why.",
-     "bytes": 4588,
+     "bytes": 6542,
      "text": true
     },
     {
      "path": "BUILD.md",
      "as": "BUILD.md",
      "what": "The build command, the pinned versions, the checksums.",
-     "bytes": 2817,
+     "bytes": 3033,
      "text": true
     },
     {
@@ -50,7 +50,7 @@
      "path": "measures.json",
      "as": "measures.json",
      "what": "The measures from one full week, played by a script through the test hook.",
-     "bytes": 5490,
+     "bytes": 6238,
      "text": true
     }
    ]
@@ -62,7 +62,7 @@
      "path": "RESULTS.md",
      "as": "RESULTS.md",
      "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
-     "bytes": 16359,
+     "bytes": 27975,
      "text": true
     }
    ]
@@ -81,7 +81,7 @@
      "path": "source/src/cast.js",
      "as": "src/cast.js",
      "what": "The people of the Hook. Canon names, ages and voices; routines, looks and the small facts each holds.",
-     "bytes": 40630,
+     "bytes": 40743,
      "text": true
     },
     {
@@ -102,7 +102,7 @@
      "path": "source/src/design_notes.js",
      "as": "src/design_notes.js",
      "what": "How the town watches, the Design notes and the opening letter.",
-     "bytes": 8084,
+     "bytes": 8442,
      "text": true
     },
     {
@@ -116,7 +116,7 @@
      "path": "source/src/drive.js",
      "as": "src/drive.js",
      "what": "Arcade driving and light traffic. Britain drives on the left.",
-     "bytes": 10505,
+     "bytes": 21238,
      "text": true
     },
     {
@@ -144,7 +144,7 @@
      "path": "source/src/fight.js",
      "as": "src/fight.js",
      "what": "The street's way: an escalation ladder Tom can stop on at any rung. Most of it ends before a blow.",
-     "bytes": 33707,
+     "bytes": 35780,
      "text": true
     },
     {
@@ -165,7 +165,7 @@
      "path": "source/src/hook.js",
      "as": "src/hook.js",
      "what": "The test hook: window.LEDGER.",
-     "bytes": 24128,
+     "bytes": 24885,
      "text": true
     },
     {
@@ -207,14 +207,14 @@
      "path": "source/src/main.js",
      "as": "src/main.js",
      "what": "a week on Quay Street. Boot, the frame loop, menus.",
-     "bytes": 23614,
+     "bytes": 29200,
      "text": true
     },
     {
      "path": "source/src/map.js",
      "as": "src/map.js",
      "what": "Meridian: the Hook around Quay Street, and a slice of Copper Row over the bridge.",
-     "bytes": 30943,
+     "bytes": 34055,
      "text": true
     },
     {
@@ -235,7 +235,7 @@
      "path": "source/src/player.js",
      "as": "src/player.js",
      "what": "Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.",
-     "bytes": 20551,
+     "bytes": 25972,
      "text": true
     },
     {
@@ -256,7 +256,7 @@
      "path": "source/src/rules.js",
      "as": "src/rules.js",
      "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
-     "bytes": 54665,
+     "bytes": 58668,
      "text": true
     },
     {
@@ -270,7 +270,7 @@
      "path": "source/src/scenes.js",
      "as": "src/scenes.js",
      "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
-     "bytes": 70650,
+     "bytes": 71085,
      "text": true
     },
     {
@@ -291,21 +291,21 @@
      "path": "source/src/talk.js",
      "as": "src/talk.js",
      "what": "Live talk. The model only voices the line and names the intent; the game's rules decide what happens.",
-     "bytes": 41438,
+     "bytes": 41444,
      "text": true
     },
     {
      "path": "source/src/talk_lines.js",
      "as": "src/talk_lines.js",
      "what": "Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.",
-     "bytes": 24143,
+     "bytes": 30531,
      "text": true
     },
     {
      "path": "source/src/ui.js",
      "as": "src/ui.js",
      "what": "The interface: carbon dockets, a street nameplate, typewritten slips. HUD, dialogue, talk panel, menus.",
-     "bytes": 20745,
+     "bytes": 20970,
      "text": true
     },
     {
@@ -387,7 +387,7 @@
      "path": "source/src/render/rooms.js",
      "as": "src/render/rooms.js",
      "what": "Interiors: small sets with the fourth wall away, furnished from a few shared pieces.",
-     "bytes": 18528,
+     "bytes": 18832,
      "text": true
     },
     {
@@ -420,7 +420,7 @@
      "path": "source/package.json",
      "as": "package.json",
      "what": "three pinned at 0.187.0; the build and test commands.",
-     "bytes": 1462,
+     "bytes": 1508,
      "text": true
     },
     {
@@ -441,7 +441,7 @@
      "path": "source/tools/publish_set.mjs",
      "as": "tools/publish_set.mjs",
      "what": "Gather what is published: the page, the art, the documents, the measures from the last full-week run,",
-     "bytes": 7298,
+     "bytes": 7449,
      "text": true
     },
     {
@@ -508,29 +508,43 @@
     {
      "path": "source/test/fixes1.mjs",
      "as": "test/fixes1.mjs",
-     "what": "The lane's round 1 checks: one for each of the eight playtest fixes.",
+     "what": "The lane's round 1 (18 Nov): one check for each of the eight fixes in production/lane/FABLE-PROTOTYPE-FIXES-1.md.",
      "bytes": 6218,
      "text": true
     },
     {
      "path": "source/test/watch2.mjs",
      "as": "test/watch2.mjs",
-     "what": "The lane's round 2 checks: the carry under watch (the beat, the search, the chase).",
+     "what": "The lane's round 2 (18 Nov): the carry under watch. A constable walks his beat between the pick-up and the",
      "bytes": 5386,
      "text": true
     },
     {
      "path": "source/test/melee3.mjs",
      "as": "test/melee3.mjs",
-     "what": "The lane's round 3: the melee feel sheet's drills (jab, heavy, a man against a wall, three men, stamina) at 1/60 s, with the drills' record.",
+     "what": "The lane's round 3 (18 Nov): the melee feel targets, part 1 (weight, readable wind-ups, walls, being",
      "bytes": 10407,
      "text": true
     },
     {
      "path": "source/test/melee4.mjs",
      "as": "test/melee4.mjs",
-     "what": "The lane's round 4: face and corners on the ladder, things to hand snatched up mid-fight, and drill M7 (how many blows a chair, a brick, a lid take before they break).",
+     "what": "The lane's round 4 (18 Nov): a debt that can come to blows (face and corners) and things to hand (melee part 2).",
      "bytes": 14034,
+     "text": true
+    },
+    {
+     "path": "source/test/talk5.mjs",
+     "as": "test/talk5.mjs",
+     "what": "The lane's round 5 (18 Nov): talk that does not repeat across talks and people, small talk that answers the question,",
+     "bytes": 8226,
+     "text": true
+    },
+    {
+     "path": "source/test/gate6.mjs",
+     "as": "test/gate6.mjs",
+     "what": "The lane's round 6 (19 Nov 2026), \"The gate\": can a build be proved safe before the player touches it?",
+     "bytes": 50355,
      "text": true
     },
     {
@@ -647,7 +661,7 @@
      "path": "ledger.js",
      "as": "dist/ledger.js",
      "what": "The game, built from src/ by npm run build.",
-     "bytes": 1327290,
+     "bytes": 1356797,
      "text": false
     }
    ]

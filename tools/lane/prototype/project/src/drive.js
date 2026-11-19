@@ -1,8 +1,10 @@
 // Arcade driving and light traffic. Britain drives on the left.
 import { G, hour } from './state.js';
 import { hyp, clamp, rnd, pick, chance, angDiff } from './util.js';
-import { blocked, ROUTES, BUS_STOPS } from './map.js';
+import { blocked, ROUTES, BUS_STOPS, POSTS, whatBlocks } from './map.js';
 import { act } from './events.js';
+import { sub, tomName } from './ui.js';
+import { AT_ONCE, atOnce } from './talk_lines.js';
 import { nightF } from './seeing.js';
 import { buildCar, carLights } from './render/cars.js';
 import { S } from './render/sync.js';
@@ -31,11 +33,16 @@ export function initTraffic(scene) {
   T.scene = scene;
   T.list = [];
 }
-function solidAt(x, z, r, self) {
-  if (blocked(x, z, r)) return true;
+// round 6: a lamp post (the column, not a wall bracket) stands in the way of the cab
+const postAt = (x, z, r) => {
+  for (const l of POSTS) if (hyp(x, z, l.x, l.z) < r + DRIVING.lampPostRadiusMetres) return true;
+  return false;
+};
+// the car, van or bus standing at this spot, if one is (round 6: split out of solidAt so a crash can name it)
+function trafficAt(x, z, r, self, parkedOnly) {
   for (const v of S.traffic) {
-    if (v === self || !v.car.g.visible) continue;
-    if (hyp(x, z, v.x, v.z) < r + v.r) return true;
+    if (v === self || !v.car.g.visible || (parkedOnly && !v.parked)) continue;
+    if (hyp(x, z, v.x, v.z) < r + v.r) return v;
     if (v.car.len > 5) {
       const a = v.car.g.rotation.y;
       for (const k of [-1, 1])
@@ -43,12 +50,124 @@ function solidAt(x, z, r, self) {
           hyp(x, z, v.x + Math.sin(a) * k * v.car.len * 0.3, v.z + Math.cos(a) * k * v.car.len * 0.3) <
           r + v.r
         )
-          return true;
+          return v;
     }
   }
-  return false;
+  return null;
+}
+function solidAt(x, z, r, self, parkedOnly) {
+  if (blocked(x, z, r)) return true;
+  if (postAt(x, z, r)) return true;
+  return !!trafficAt(x, z, r, self, parkedOnly);
 }
 // The cab Tom drives.
+// Round 6 (the gate): what the cab is doing that a save does not hold: the eased steering, a jam being timed.
+const CAB = { steer: 0, jam: 0, wedged: false, boxed: null };
+// for the test hook: the eased steering, whether the cab is wedged, and whether it stands clear of everything solid
+export const cabFeel = () => ({
+  steerMinusOneToOne: CAB.steer,
+  wedged: CAB.wedged,
+  standsClear: !poseHit(G.car.x, G.car.z, G.car.ang),
+  standsClearOfFixedThings: !poseHit(G.car.x, G.car.z, G.car.ang, true), // walls, posts, parked cars: not a car in the road
+});
+// for the test hook: what stands on the street besides the map's own things
+export const streetThings = () => ({
+  lampPosts: POSTS.map((l) => ({ xMetres: l.x, zMetres: l.z, radiusMetres: DRIVING.lampPostRadiusMetres })),
+  cars: S.traffic.map((v) => ({
+    xMetres: v.x,
+    zMetres: v.z,
+    facingRadians: v.car.g.rotation.y,
+    lengthMetres: v.car.len,
+    widthMetres: v.car.wid,
+    parked: !!v.parked,
+    bus: !!v.bus,
+  })),
+});
+const AXLES = [1.55, 0, -1.55];
+// would the cab, standing here at this heading, be in something solid?
+function poseHit(x, z, ang, fixedOnly) {
+  const fx = Math.sin(ang),
+    fz = Math.cos(ang);
+  for (const k of AXLES)
+    if (solidAt(x + fx * k, z + fz * k, DRIVING.cabHalfWidthMetres, null, fixedOnly)) return true;
+  // a post is thin enough to slip between two of the three circles: the two gaps are looked at as well
+  for (const k of AXLES)
+    if (k && postAt(x + (fx * k) / 2, z + (fz * k) / 2, DRIVING.cabHalfWidthMetres)) return true;
+  return false;
+}
+// how far the cab could roll along its own line, this way (dir 1 ahead, -1 back), before meeting something
+function playAlong(c, dir, most) {
+  const fx = Math.sin(c.ang) * dir,
+    fz = Math.cos(c.ang) * dir,
+    e = DRIVING.wedgedLooksEveryMetres;
+  let d = 0;
+  while (d + e <= most && !poseHit(c.x + fx * (d + e), c.z + fz * (d + e), c.ang)) d += e;
+  return d;
+}
+// How far along its own line, this way (1 ahead, -1 back), a wedged cab would first stand clear (Infinity: not in reach)
+function clearAlong(c, dir) {
+  const fx = Math.sin(c.ang) * dir,
+    fz = Math.cos(c.ang) * dir;
+  for (let d = DRIVING.wedgedLooksEveryMetres; d <= DRIVING.wedgedLooksMetres; d += DRIVING.wedgedLooksEveryMetres)
+    if (!poseHit(c.x + fx * d, c.z + fz * d, c.ang)) return d;
+  return Infinity;
+}
+// Which ways a wedged cab may move: the way that leads out soonest, and the other way too when it is about as
+// near (a post at its middle). Never the long way, which would be through to the far side of a wall.
+function wayOut(c) {
+  const back = clearAlong(c, -1),
+    ahead = clearAlong(c, 1),
+    near = Math.min(back, ahead) + DRIVING.wedgedEitherWayWithinMetres;
+  return {
+    back: back < Infinity && back <= near,
+    ahead: ahead < Infinity && ahead <= near,
+    any: back < Infinity || ahead < Infinity,
+  };
+}
+// A cab with no room either way is put on the nearest ground where it stands clear and has room to roll.
+function workClear(c) {
+  const room = (x, z, a) => {
+    if (poseHit(x, z, a)) return false;
+    const q = { x, z, ang: a };
+    return (
+      playAlong(q, 1, DRIVING.workedClearNeedsMetresOfPlay) + playAlong(q, -1, DRIVING.workedClearNeedsMetresOfPlay) >=
+      DRIVING.workedClearNeedsMetresOfPlay
+    );
+  };
+  for (let r = 1; r <= DRIVING.workedClearSearchMetres; r++)
+    for (let k = 0; k < DRIVING.looksRoundInDirections; k++) {
+      const a = (k * 2 * Math.PI) / DRIVING.looksRoundInDirections,
+        x = c.x - Math.sin(c.ang + a) * r,
+        z = c.z - Math.cos(c.ang + a) * r;
+      for (const turn of [0, Math.PI / 2, -Math.PI / 2, Math.PI])
+        if (room(x, z, c.ang + turn)) {
+          c.x = x;
+          c.z = z;
+          c.ang += turn;
+          c.v = 0;
+          return true;
+        }
+    }
+  return false;
+}
+// what the cab has just met, in plain words, for the line on screen
+function hitWhat(c, dt) {
+  const fx = Math.sin(c.ang),
+    fz = Math.cos(c.ang),
+    dir = Math.sign(c.v || 1),
+    r = DRIVING.cabHalfWidthMetres,
+    reach = dir * (Math.abs(c.v) * dt + DRIVING.wedgedLooksEveryMetres);
+  for (const k of [AXLES[0] * dir, 0, -AXLES[0] * dir, (AXLES[0] * dir) / 2, (-AXLES[0] * dir) / 2]) {
+    const x = c.x + fx * (k + reach),
+      z = c.z + fz * (k + reach),
+      v = trafficAt(x, z, r, null);
+    if (v) return v.parked ? 'a parked car' : v.bus ? 'the bus' : 'a car in the road';
+    if (postAt(x, z, r)) return 'a lamp post';
+    const w = whatBlocks(x, z, r);
+    if (w) return w;
+  }
+  return 'something';
+}
 export function stepCar(dt, inp) {
   const c = G.car,
     t = G.tom;
@@ -56,11 +175,23 @@ export function stepCar(dt, inp) {
   if (!t.inCar) {
     c.v *= Math.max(0, 1 - dt * DRIVING.rollsToAStopPerSecond);
     c.braking = false;
+    CAB.steer = 0;
+    CAB.jam = 0;
+    CAB.wedged = false;
+    CAB.boxed = null;
     return;
   }
   const thr = inp.y,
-    st = inp.x,
     hb = inp.hb;
+  // round 6: on keys the steering eases to full lock and centres itself; a stick (pad, touch) is used as it is
+  {
+    const want = inp.kx || 0,
+      per =
+        want === 0 ? DRIVING.keysCentreRealSeconds : DRIVING.keysTurnToFullLockRealSeconds,
+      step = dt / per;
+    CAB.steer += clamp(want - CAB.steer, -step, step);
+  }
+  const st = clamp(CAB.steer + (inp.x || 0), -1, 1);
   c.braking = (thr < 0 && c.v > DRIVING.brakeLightsAboveMetresPerSecond) || hb;
   if (thr > 0)
     c.v +=
@@ -83,6 +214,7 @@ export function stepCar(dt, inp) {
     DRIVING.topMetresPerSecond * (1 - c.dmg * DRIVING.damageSlowsByShare),
   );
   const grip = clamp(Math.abs(c.v) / DRIVING.fullSteeringFromMetresPerSecond, 0, 1) * Math.sign(c.v || 1);
+  const ang0 = c.ang;
   c.ang -=
     st *
     grip *
@@ -95,29 +227,77 @@ export function stepCar(dt, inp) {
         0,
         DRIVING.steeringEasesByAtMostShare,
       ));
+  // round 6: the cab never swings itself into something solid (that is how a car gets wedged on a pole or a wall)
+  if (c.ang !== ang0 && poseHit(c.x, c.z, c.ang) && !poseHit(c.x, c.z, ang0)) c.ang = ang0;
   const fx = Math.sin(c.ang),
     fz = Math.cos(c.ang),
     nx = c.x + fx * c.v * dt,
     nz = c.z + fz * c.v * dt;
-  let hit = false;
-  for (const k of [1.55, 0, -1.55])
-    if (solidAt(nx + fx * k, nz + fz * k, DRIVING.cabHalfWidthMetres, null)) {
-      hit = true;
-      break;
+  let hit = c.v !== 0 && poseHit(nx, nz, c.ang),
+    crawl = false;
+  // round 6: never stranded (ER-DRIVE-01).
+  if (hit && poseHit(c.x, c.z, c.ang)) {
+    // Something is already in the cab's own space (a car that rolled into it, a save from before the posts were
+    // solid). It may always move the way that leads out soonest, at a crawl, and never deeper in.
+    const out = wayOut(c);
+    if (!CAB.wedged && out.any) sub(AT_ONCE.jam.wedged, '', 'over', DRIVING.crashLineShowsRealSeconds);
+    CAB.wedged = true;
+    if (c.v > 0 ? out.ahead : out.back) {
+      hit = false;
+      crawl = true;
+      c.v = clamp(c.v, -DRIVING.wedgedCrawlsMetresPerSecond, DRIVING.wedgedCrawlsMetresPerSecond);
+    } else {
+      c.v = 0; // not a clear way: it does not move, and nothing is damaged
+      if (!out.any && !CAB.boxed) CAB.boxed = [c.x, c.z];
     }
+  } else if (hit) {
+    // Standing clear, but no room to roll either way: boxed in.
+    if (
+      !CAB.boxed &&
+      playAlong(c, 1, DRIVING.boxedInLooksMetres) + playAlong(c, -1, DRIVING.boxedInLooksMetres) <
+        DRIVING.boxedInBelowMetresOfPlay
+    )
+      CAB.boxed = [c.x, c.z];
+  } else if (c.v !== 0) CAB.wedged = false;
+  if (CAB.boxed) {
+    // He has tried for a moment and it has not got anywhere: the cab is worked clear onto the nearest open ground.
+    if (hyp(c.x, c.z, CAB.boxed[0], CAB.boxed[1]) > DRIVING.boxedInBelowMetresOfPlay) {
+      CAB.boxed = null;
+      CAB.jam = 0;
+    } else if (Math.abs(thr) > DRIVING.workedClearThrottleAbove) {
+      CAB.jam += dt;
+      if (CAB.jam > DRIVING.workedClearAfterRealSeconds && workClear(c)) {
+        CAB.boxed = null;
+        CAB.jam = 0;
+        CAB.wedged = false;
+        hit = false;
+        crawl = true; // it has just been put down: no step this frame
+        sub(AT_ONCE.jam.clear, '', 'over', DRIVING.crashLineShowsRealSeconds);
+      }
+    }
+  }
   if (hit) {
     const sp = Math.abs(c.v);
-    c.v = -c.v * DRIVING.bouncesBackShare;
     if (sp > DRIVING.crashAboveMetresPerSecond && T.crashCool <= 0) {
       T.crashCool = DRIVING.crashCountedEveryRealSeconds;
+      const what = hitWhat(c, dt),
+        worst = c.dmg >= DRIVING.damageAtMost;
       c.dmg = Math.min(DRIVING.damageAtMost, c.dmg + 1);
       act('crash', { noiseR: DRIVING.crashNoiseCarriesMetres });
       if (G.hooks.sfx) G.hooks.sfx('crash');
       if (G.hooks.shake) G.hooks.shake(0.5);
+      // round 6: said in words at once, with what it has done to the car (ER-CORE-02, ER-DRIVE-08)
+      sub(
+        atOnce(worst ? AT_ONCE.crash.again : AT_ONCE.crash['dent' + c.dmg] || AT_ONCE.crash.again, { what }),
+        '',
+        'over',
+        DRIVING.crashLineShowsRealSeconds,
+      );
     }
-  } else {
-    c.x = nx;
-    c.z = nz;
+    c.v = -c.v * DRIVING.bouncesBackShare;
+  } else if (!crawl || CAB.wedged) {
+    c.x = c.x + fx * c.v * dt;
+    c.z = c.z + fz * c.v * dt;
   }
   // people in the road
   for (const P of G.named.concat(G.crowd)) {
@@ -139,6 +319,16 @@ export function stepCar(dt, inp) {
         name: P.def.name,
         noiseR: DRIVING.runDownNoiseCarriesMetres,
       });
+      // round 6: said in words at once, by the name Tom knows them by. A car hurts and never kills.
+      sub(
+        atOnce(
+          Math.abs(c.v) < DRIVING.runDownIsAClipBelowMetresPerSecond ? AT_ONCE.knocked.clip : AT_ONCE.knocked.hard,
+          { t: tomName(P) },
+        ),
+        '',
+        'over',
+        DRIVING.runDownLineShowsRealSeconds,
+      );
       c.v *= DRIVING.slowsToShareAfterHitting;
       if (G.hooks.sfx) G.hooks.sfx('hit');
       if (!P.anon) {
@@ -163,8 +353,53 @@ export function stepCar(dt, inp) {
 export function nearCar(d = DRIVING.nearTheCabWithinMetres) {
   return hyp(G.tom.x, G.tom.z, G.car.x, G.car.z) < d;
 }
+// Round 6 (the gate): what stops a man on foot besides the map: lamp posts, parked cars, cars in the road. A step
+// is refused only when it takes him deeper into one of them, so he can always walk out of anything he finds
+// himself inside. (ox, oz): where he stands now.
+const carDepth = (v, x, z, rad) => {
+  const a = v.car.g.rotation.y,
+    sn = Math.sin(a),
+    cs = Math.cos(a),
+    dx = x - v.x,
+    dz = z - v.z;
+  return Math.min(
+    v.car.len / 2 + rad - Math.abs(dx * sn + dz * cs),
+    v.car.wid / 2 + rad - Math.abs(dx * cs - dz * sn),
+  );
+};
+export function footSolid(x, z, ox, oz, rad) {
+  for (const l of POSTS) {
+    const d = hyp(x, z, l.x, l.z);
+    if (d < rad + DRIVING.lampPostRadiusMetres && d < hyp(ox, oz, l.x, l.z)) return true;
+  }
+  for (const v of S.traffic) {
+    if (!v.car.g.visible) continue;
+    const pen = carDepth(v, x, z, rad);
+    if (pen > 0 && pen > carDepth(v, ox, oz, rad)) return true;
+  }
+  return false;
+}
+// is this spot clear ground for a man: not in the map's solids, a post or a car
+export function footClear(x, z, rad) {
+  if (blocked(x, z, rad)) return false;
+  for (const l of POSTS) if (hyp(x, z, l.x, l.z) < rad + DRIVING.lampPostRadiusMetres) return false;
+  for (const v of S.traffic) if (v.car.g.visible && carDepth(v, x, z, rad) > 0) return false;
+  return true;
+}
+// the nearest clear ground to a spot, looked for in widening rings (null when there is none in reach)
+export function clearGround(x, z, rad, most, step, ok = () => true) {
+  for (let r = step; r <= most; r += step)
+    for (let k = 0; k < DRIVING.looksRoundInDirections; k++) {
+      const a = (k * 2 * Math.PI) / DRIVING.looksRoundInDirections,
+        px = x + Math.sin(a) * r,
+        pz = z + Math.cos(a) * r;
+      if (footClear(px, pz, rad) && ok(px, pz)) return [px, pz];
+    }
+  return null;
+}
 export function exitPoint() {
-  const c = G.car;
+  const c = G.car,
+    R = DRIVING.exitBodyRadiusMetres;
   for (const [s, k] of [
     [1, 0],
     [-1, 0],
@@ -174,9 +409,19 @@ export function exitPoint() {
   ]) {
     const x = c.x + -Math.cos(c.ang) * s * 1.55 + Math.sin(c.ang) * (s ? k : -3.2),
       z = c.z + Math.sin(c.ang) * s * 1.55 + Math.cos(c.ang) * (s ? k : -3.2);
-    if (!blocked(x, z, 0.35)) return [x, z];
+    if (footClear(x, z, R)) return [x, z];
   }
-  return [c.x + 2, c.z];
+  // round 6 (ER-DRIVE-07): a blocked door never traps him. No door has clear ground: he climbs out to the nearest
+  // clear ground beside the cab instead of into whatever is against it.
+  const offCab = (px, pz) => {
+    for (const k of AXLES)
+      if (hyp(px, pz, c.x + Math.sin(c.ang) * k, c.z + Math.cos(c.ang) * k) < RULES.tom.cabBodyRadiusMetres + R)
+        return false;
+    return true;
+  };
+  return (
+    clearGround(c.x, c.z, R, DRIVING.exitSearchMetres, DRIVING.exitSearchStepMetres, offCab) || [c.x + 2, c.z]
+  );
 }
 
 // Other people's cars, and the corporation bus.

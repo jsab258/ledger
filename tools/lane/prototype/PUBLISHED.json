@@ -5,8 +5,8 @@
  "note": "Fable's second round of 18 Nov (every rule's number in LEDGER.rules, routines retimed, three fixes): the readable source is project/ (published under source/ on the page). The pictures and the people rig stay on the page; git holds none of them. The build must reproduce ledger.js and index.html byte for byte.",
  "built": {
   "ledger.js": {
-   "bytes": 1343646,
-   "sha256": "51fdbefa862a5f633a0bcd7fd6f241348acf555c909ae5376966a734ca373674"
+   "bytes": 1356797,
+   "sha256": "3a97363ab2b465d569c4831caecb3dcc070114dff26f82ea455f6aebb619f09c"
   },
   "index.html": {
    "bytes": 22687,
@@ -88,6 +88,18 @@
   }
  ],
  "previous": [
+  {
+   "version": "1795032844-05a0",
+   "round": "lane round 5 (talk that does not repeat; a debtor who stands)",
+   "ledger.js": {
+    "bytes": 1343646,
+    "sha256": "51fdbefa862a5f633a0bcd7fd6f241348acf555c909ae5376966a734ca373674"
+   },
+   "index.html": {
+    "bytes": 22687,
+    "sha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61"
+   }
+  },
   {
    "version": "1795028151-d079",
    "round": "lane round 4 (a debt that can come to blows: face, corners, things to hand)",
@@ -181,5 +193,5 @@
    }
   }
  ],
- "round": "lane round 5 (talk that does not repeat; a debtor who stands)"
+ "round": "lane round 6 (the gate)"
 }

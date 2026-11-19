@@ -651,3 +651,27 @@ export function describeMem(P, m) {
       ')';
   return `${k.truth(E)}, ${dayOf(E.t)}${who}. [${how}, ${m.sure > TALKING.soundsSureAboveSureness ? 'sure' : m.sure > TALKING.soundsFairlySureAboveSureness ? 'fairly sure' : 'not sure'}]`;
 }
+
+// Round 6 (the gate): what the screen says at once, in words, when the cab hits something or somebody, so that
+// nothing which changes the car or hurts a person goes by in silence (ER-CORE-02; ER-DRIVE-08: the handling
+// never changes without a cause he can see or hear). {what} is the thing hit, {t} the person as Tom knows them.
+// The publish gate reads these lines from here to know the game's own words for a crash and a run-down.
+export const AT_ONCE = {
+  crash: {
+    dent1: 'The cab hits {what}. A dented wing: it still drives, a touch slower.',
+    dent2: 'The cab hits {what}. The bumper hangs loose: it drives, slower again.',
+    dent3: 'The cab hits {what}. Steam from under the bonnet: slower still.',
+    dent4: 'The cab hits {what}. It rattles and pulls: this is as slow as it gets, and it still drives.',
+    again: 'The cab hits {what} again. It can take no worse than it has, and it still drives.',
+  },
+  knocked: {
+    clip: '{t} is clipped by the cab and goes down: bruised and shouting, no worse.',
+    hard: '{t} is knocked down by the cab: hurt badly, and alive.',
+  },
+  jam: {
+    wedged: 'The cab is wedged. It will only move the way that is clear.',
+    clear: 'The cab is jammed in. Tom works it clear.',
+    foot: 'Tom squeezes clear.',
+  },
+};
+export const atOnce = (line, o = {}) => line.replace(/\{(\w+)\}/g, (m, k) => (o[k] == null ? m : o[k]));

@@ -411,32 +411,41 @@ class Gate:
         self.notes.append("crash runs: damage set to 0 before each; top speed %s m/s (%.0f mph); each point of damage takes 5%% off" % (top, top * 2.237))
 
     # 4. keyboard steering: press, release, and a straight switch from A to D, at a steady speed
-    STEER_JS = """([secs, v]) => { const L = LEDGER, c = L.G.car, dt = 1 / 60, out = []; let t = 0;
-      while (t < secs - 1e-9) { if (L.G.paused || L.ui.modal) return null; c.v = v; const a0 = c.ang; L.tick(dt); t += dt; out.push(-(c.ang - a0) / dt); }
+    # The cab is kept on its spot (put back each frame) with the speed held, so the turn rate shows the steering
+    # and nothing else. (Fixed 19 Nov, round 6: the cab used to run 27 m along a line checked only down its middle,
+    # met a wall, and the A-to-D result ended at no turn at all; that passed only by luck.)
+    STEER_JS = """([secs, v, x, z]) => { const L = LEDGER, c = L.G.car, dt = 1 / 60, out = []; let t = 0;
+      while (t < secs - 1e-9) { if (L.G.paused || L.ui.modal) return null; c.v = v; c.x = x; c.z = z; const a0 = c.ang; L.tick(dt); t += dt; out.push(-(c.ang - a0) / dt); }
       return out; }"""
 
     def cab_steering(self):
         g = self.g
-        x, z, a = g.js("""() => { const L = LEDGER; const b = (x, z) => L.isBlocked(x, z);
-          for (let t = 0; t < 5000; t++) { const x = -30 + Math.random() * 60, z = -50 + Math.random() * 130, a = Math.random() * 6.28;
-            let ok = true; for (let d = 0; d < 60; d += 1) if (b(x + Math.sin(a) * d, z + Math.cos(a) * d)) { ok = false; break; }
-            if (ok) return [x, z, a]; } return [4.1, 37.4, 0]; }""")
+        # a spot of open ground: nothing solid, nothing drawn and nobody standing within 5 m of it
+        spot = g.js("""(props) => { const L = LEDGER, G = L.G; const b = (x, z) => L.isBlocked(x, z) || (L.isClearOnFoot ? !L.isClearOnFoot(x, z) : false);
+          for (let z = 40; z <= 60; z += 1) for (let x = -110; x <= 140; x += 2) { let ok = true;
+            for (let dx = -5; dx <= 5 && ok; dx += 0.5) for (let dz = -5; dz <= 5 && ok; dz += 0.5) if (b(x + dx, z + dz)) ok = false;
+            if (ok && props.every((p) => Math.hypot(p[0] - x, p[1] - z) > 5 + p[2]) && G.named.concat(G.crowd).every((p) => p.gone || p.space !== 'street' || Math.hypot(p.x - x, p.z - z) > 8)) return [x, z]; }
+          return null; }""", [[p["x"], p["z"], p["r"]] for p in inv.drawn_props()])
+        if not spot:
+            self.record("keyboard steering eased", False, "no spot of open ground found for the measurement", phase="all", note="not reached")
+            return
+        x, z = spot
         g.js("() => { LEDGER.goOutside(); LEDGER.G.car.keys = true; LEDGER.cab.getIn(); }")
-        g.js("([x, z, a]) => { const c = LEDGER.G.car; c.x = x; c.z = z; c.ang = a; c.v = 9; LEDGER.G.tom.inCar = true; }", [x, z, a])
+        g.js("([x, z]) => { const c = LEDGER.G.car; c.x = x; c.z = z; c.ang = 1.57; c.v = 9; LEDGER.G.tom.inCar = true; }", [x, z])
         V = 9.0
         self.cleared += g.clear()
-        base = g.js(self.STEER_JS, [0.2, V])
+        base = g.js(self.STEER_JS, [0.2, V, x, z])
         g.down("KeyD")
-        press = g.js(self.STEER_JS, [0.6, V])
+        press = g.js(self.STEER_JS, [0.6, V, x, z])
         g.up("KeyD")
-        release = g.js(self.STEER_JS, [0.6, V])
+        release = g.js(self.STEER_JS, [0.6, V, x, z])
         g.down("KeyA")
-        held_a = g.js(self.STEER_JS, [0.6, V])
+        held_a = g.js(self.STEER_JS, [0.6, V, x, z])
         g.up("KeyA")
         g.down("KeyD")  # A let go and D pressed between the same two frames
-        switch = g.js(self.STEER_JS, [0.6, V])
+        switch = g.js(self.STEER_JS, [0.6, V, x, z])
         g.up("KeyD")
-        setup = "test setup: cab on a clear straight line, speed held at %.0f m/s each frame" % V
+        setup = "test setup: cab on open ground at (%.0f, %.0f), kept on its spot and its speed held at %.0f m/s each frame" % (x, z, V)
         if any(x is None for x in (base, press, release, held_a, switch)):
             self.record("keyboard steering eased", False, setup, phase="all", note="a box opened during the measurement: not reached")
             return
@@ -445,6 +454,9 @@ class Gate:
                 ("release", press, release, "after D held 0.6 s, let go"),
                 ("A to D", held_a, switch, "hold A 0.6 s, then let go of A and press D in the same frame")):
             v = inv.steer_change([before[-1]] + series, DT, start=before[-1], end=series[-1])
+            if phase == "A to D" and v["ok"] and abs(v.get("to", 0)) < 0.5 * abs(press[-1]):
+                # the swing must end turning the other way at about full lock, or it measured something else
+                v = dict(v, ok=False, reason="after the switch the cab was not turning the other way")
             self.record("keyboard steering eased", v["ok"], setup + "; " + steps, phase=phase,
                         first_frames=[round(r, 2) for r in series[:8]], **v)
 
@@ -539,39 +551,51 @@ class Gate:
             g.run(0.3)
 
     # 8. the pad: can a controller move Tom or the cab?
+    # (Fixed 19 Nov, round 6: at the rank a written scene opens by itself within half a second and holds the game, so
+    # neither the control nor the pad could move anything and the check failed whatever the game did. Scenes are now
+    # finished first, each window is tried again if a box opened in it, and a window that never ran clear is
+    # "not reached", which fails.)
     def pad(self):
         g = self.g
-        def real(ms):
-            g.js("window.LEDGER_NORENDER = true; window.LEDGER_MANUAL = false")
-            g.pg.wait_for_timeout(ms)
-            g.manual()
+
+        def window(setup_js, ms=2500):
+            """Run the game in real time for ms with the pad as setup_js leaves it. Returns (before, after, box)."""
+            for _ in range(4):
+                self.cleared += g.clear()
+                g.js("() => { for (let i = 0; i < 4; i++) { window.__pad.axes[i] = 0; } for (const b of window.__pad.buttons) { b.pressed = false; b.value = 0; } }")
+                a = g.state()
+                g.js(setup_js)
+                g.js("window.LEDGER_NORENDER = true; window.LEDGER_MANUAL = false")
+                g.pg.wait_for_timeout(ms)
+                g.manual()
+                b = g.state()
+                g.js("() => { for (let i = 0; i < 4; i++) { window.__pad.axes[i] = 0; } for (const b of window.__pad.buttons) { b.pressed = false; b.value = 0; } }")
+                if not (b["boxOpen"] or b["paused"]):
+                    return a, b, None
+            return a, b, b["boxOpen"] or "paused"
+
+        def dist(a, b, who):
+            return math.hypot(b[who]["xMetres"] - a[who]["xMetres"], b[who]["zMetres"] - a[who]["zMetres"])
+
         g.js("() => { const G = LEDGER.G; if (G.tom.inCar) LEDGER.cab.getOut(); G.car.v = 0; LEDGER.goOutside(); LEDGER.goTo('the rank'); }")
-        c0 = g.state()["tom"]
-        real(2500)  # the control: the same time with no input
-        c1 = g.state()["tom"]
-        control = math.hypot(c1["xMetres"] - c0["xMetres"], c1["zMetres"] - c0["zMetres"])
-        g.js("() => LEDGER.goTo('the rank')")
-        s0 = g.state()["tom"]
-        g.js("() => { window.__pad.axes[1] = -1; window.__pad.timestamp++; }")
-        # the pad is read in the drawing loop, so let a few real frames run while stepping
-        g.js("window.LEDGER_NORENDER = true; window.LEDGER_MANUAL = false")
-        g.pg.wait_for_timeout(2500)
-        g.manual()
-        g.js("() => { window.__pad.axes[1] = 0; }")
-        s1 = g.state()["tom"]
-        moved = math.hypot(s1["xMetres"] - s0["xMetres"], s1["zMetres"] - s0["zMetres"])
-        self.record("a pad moves Tom", moved > control + 0.5, "left stick full forward for 2.5 s of real time (game running), against 2.5 s with no input",
-                    moved_m=round(moved, 2), control_m=round(control, 2))
-        g.js("() => { LEDGER.G.car.keys = true; LEDGER.cab.getIn(); LEDGER.G.car.v = 0; window.__pad.buttons[7].pressed = true; window.__pad.buttons[7].value = 1; }")
-        c0 = g.state()["cab"]
-        g.js("window.LEDGER_MANUAL = false")
-        g.pg.wait_for_timeout(2500)
-        g.manual()
-        g.js("() => { window.__pad.buttons[7].pressed = false; window.__pad.buttons[7].value = 0; }")
-        c1 = g.state()["cab"]
-        moved = math.hypot(c1["xMetres"] - c0["xMetres"], c1["zMetres"] - c0["zMetres"])
-        self.record("a pad drives the cab", moved > 0.5, "in the cab, right trigger held 2.5 s of real time", moved_m=round(moved, 2))
-        g.js("() => { if (LEDGER.G.tom.inCar) LEDGER.cab.getOut(); }")
+        g.run(1.0)
+        c0, c1, box = window("() => {}")  # the control: the same time with no input
+        control = dist(c0, c1, "tom")
+        s0, s1, box2 = window("() => { window.__pad.axes[1] = -1; window.__pad.timestamp++; }")
+        moved = dist(s0, s1, "tom")
+        if box or box2:
+            self.record("a pad moves Tom", False, "left stick full forward for 2.5 s of real time", note="not reached: a box kept opening (%s)" % (box or box2))
+        else:
+            self.record("a pad moves Tom", moved > control + 0.5, "scenes finished first; left stick full forward for 2.5 s of real time (game running), against 2.5 s with no input",
+                        moved_m=round(moved, 2), control_m=round(control, 2))
+        g.js("() => { LEDGER.G.car.keys = true; LEDGER.cab.getIn(); LEDGER.G.car.v = 0; }")
+        k0, k1, box3 = window("() => { window.__pad.buttons[7].pressed = true; window.__pad.buttons[7].value = 1; }")
+        moved = dist(k0, k1, "cab")
+        if box3:
+            self.record("a pad drives the cab", False, "in the cab, right trigger held 2.5 s of real time", note="not reached: a box kept opening (%s)" % box3)
+        else:
+            self.record("a pad drives the cab", moved > 0.5, "scenes finished first; in the cab, right trigger held 2.5 s of real time", moved_m=round(moved, 2))
+        g.js("() => { if (LEDGER.G.tom.inCar) { LEDGER.G.car.v = 0; LEDGER.cab.getOut(); } }")
 
     # 9. indoors: walk into each room's walls; the camera
     def indoors(self):
@@ -604,13 +628,18 @@ class Gate:
 
     # 10. a person hit by the cab (his ruling of 18 Nov: hurt badly, never killed; stop or drive off)
     HIT_JS = """async (id) => { const L = LEDGER, G = L.G, dt = 1 / 60, P = G.named.find((q) => q.id === id);
-      const downBefore = new Set(G.named.concat(G.crowd).filter((q) => q.down).map((q) => q));
+      const everyone = G.named.concat(G.crowd), downBefore = new Set(everyone.filter((q) => q.down));
+      const shownAs = (q) => { const r = L.people().find((x) => x.personId === q.id), d = q.def.desc || ''; return r ? r.shownAs : d ? d[0].toUpperCase() + d.slice(1) : null; };
       const before = __gate.msgs(), e0 = G.events.length; let t = 0, hit = null, closest = 1e9;
+      const fell = new Map(); let k = 0;
+      const falls = (now) => { for (const q of everyone) if (q.down && q !== P && !downBefore.has(q) && !fell.has(q)) fell.set(q, now); };
       while (t < 4) { if (G.paused || L.ui.modal) return { hit: null, interrupted: L.ui.modal || 'paused', closest }; P.route = null; P.moving = false; L.tick(dt); t += dt;
-        closest = Math.min(closest, Math.hypot(P.x - G.car.x, P.z - G.car.z)); if (P.down) { hit = t; break; } }
+        closest = Math.min(closest, Math.hypot(P.x - G.car.x, P.z - G.car.z)); falls(-1); if (P.down) { hit = t; break; } }
       if (hit === null) return { hit, closest };
-      const frames = await __gate.watch(3.0, dt);
-      const others = G.named.concat(G.crowd).filter((q) => q.down && q !== P && !downBefore.has(q)).map((q) => q.def.name || q.def.desc || 'someone');
+      // others who fall while the words are watched: when each fell, counted from the hit frame (-1: before it)
+      const frames = await __gate.watch(3.0, dt, () => { falls(k * dt); k++; });
+      falls(k * dt);
+      const others = [...fell].map(([q, at]) => ({ name: q.def.name || q.def.desc || 'someone', shown: shownAs(q), fell_at_s: at, dead: !!q.dead }));
       return { hit, closest, before, frames, kinds: G.events.slice(e0).map((e) => e.kind), down: !!P.down, dead: !!P.dead, hurt: P.hurt || 0,
                others, prompts: L.prompts() }; }"""
 
@@ -642,12 +671,28 @@ class Gate:
             self.record("a person hit is hurt, never killed", not h["dead"], steps, person=r["name"], hurt=round(h["hurt"], 2), dead=h["dead"])
             self.record("a person hit: told on screen", v["ok"], steps + "; the game's message lists read each frame from the hit",
                         person=r["name"], event_kinds=h["kinds"], **v)
-            if h["others"]:
-                self.record("only the person driven at is knocked down", False, steps, person=r["name"], also_down=h["others"],
-                            note="others knocked down in the same run, not aimed at")
+            # Others knocked down on the way (people standing together): each must be told in words too, by the name
+            # Tom knows them by, within the limit of their own fall, and none killed. (Changed 19 Nov, round 6: this
+            # used to fail whenever anybody else went down. A cab driven through three people standing together
+            # knocks down three; the fault the gate found was that nothing said so.)
+            for o in h["others"]:
+                at = max(o["fell_at_s"], 0.0)  # someone knocked down on the way in is judged from the hit frame
+                told = None
+                for t, d in frames:
+                    if told is not None or t < at - 1e-9:
+                        continue
+                    for place in inv.SCREEN_PLACES:
+                        v = d.get(place) or []
+                        for text in ([v] if isinstance(v, str) else v):
+                            if told is None and o["shown"] and o["shown"] in (text or "") and any(p.search(text) for p in knocked_rx):
+                                told = round(t - at, 2)
+                ok = told is not None and told <= inv.SILENT_LIMIT_S + 1e-9 and not o["dead"]
+                self.record("everyone knocked down is told on screen", ok, steps + "; others who went down in the same run",
+                            person=o["name"], shown_as=o["shown"], fell_at_s=o["fell_at_s"], told_after_s=told, dead=o["dead"])
+            # keyed by the rule alone (driven_at is not a signature key): the missing choice is not about who was hit
             self.record("a person hit: a choice is offered (stop and help, or drive off)",
                         any("help" in (c.get("text") or "").lower() for c in h["prompts"]), "the key prompts 3 s after the hit",
-                        person=r["name"], prompts=h["prompts"])
+                        driven_at=r["name"], prompts=h["prompts"])
             break
         else:
             self.record("a person hit is hurt, never killed", False, "no one was knocked down after trying %s" % tried, note="not reached")

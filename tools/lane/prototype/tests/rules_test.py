@@ -393,8 +393,10 @@ def test_static_rule_ids_unique():
 def test_static_rules_table_is_what_the_game_reads():
     # Every source file that reads a rule imports the one table; none keeps a copy of it.
     t = rules_table()
-    # 20 sections in Fable's first round of 18 Nov; 32 in his second (every rule's number moved in)
-    assert len(t) == 32, "rules.js has %d sections, 32 when re-pointed (second round)" % len(t)
+    # 20 sections in Fable's first round of 18 Nov; 32 in his second (every rule's number moved in);
+    # 33 since the lane's round 6 (19 Nov): "pad", the controller's dead zones and look speeds
+    assert len(t) == 33, "rules.js has %d sections, 33 since round 6 (pad)" % len(t)
+    assert "pad" in t
     readers = [f for f in os.listdir(SRC) if f.endswith(".js") and "from './rules.js'" in source(f)]
     assert {"seeing.js", "gossip.js", "police.js", "money.js", "fares.js", "jobs.js", "hook.js"} <= set(readers)
 
@@ -404,11 +406,13 @@ def _act_kinds():
     return re.findall(r"^  (\w+): K\($", source("kinds.js"), re.M)
 
 
-def test_static_act_table_has_52_kinds():
-    # 51 when read from the bundle; Fable's 18 Nov round added "word" (a private thing Tom is told).
+def test_static_act_table_has_53_kinds():
+    # 51 when read from the bundle; Fable's 18 Nov round added "word" (a private thing Tom is told); the lane's
+    # round 2 added "bag_taken" (the constable takes the bag). The count stood at 52 here until round 6 found
+    # this check failing since round 2 and put it right. Round 6 itself adds no kind.
     kinds = _act_kinds()
-    assert len(kinds) == 52, kinds
-    assert "word" in kinds and "choice_silent" in kinds
+    assert len(kinds) == 53, kinds
+    assert "word" in kinds and "choice_silent" in kinds and "bag_taken" in kinds
 
 
 # 30 schedule blocks: 28 named people (since the second round in the rules table, schedules.<person>,

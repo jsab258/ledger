@@ -18,6 +18,9 @@
 //   LEDGER.check                 arrivals() and nights(): see checks.js
 //   LEDGER.step(realSeconds)     run the game forward by hand (set window.LEDGER_MANUAL = true first)
 //   LEDGER.restore(text)         load a saved week exactly as Continue does;  LEDGER.saveText() gives one
+//   LEDGER.isClearOnFoot(x, z)   round 6: clear ground for a man (the map, lamp posts, parked cars)
+//   LEDGER.cabFeel()             round 6: the cab's eased steering (-1 to 1) and whether it is wedged
+//   LEDGER.padStep()             round 6: read the pad now, as each frame does
 import { G, day, hour, PAUSE, TALLY } from './state.js';
 import { RULES } from './rules.js';
 import { act } from './events.js';
@@ -553,6 +556,13 @@ export function installHook(x) {
     F: x.F,
     tick: (dt) => x.logic(dt), // one game step of dt real seconds (round 3: the drills step at 1/60 s)
     isBlocked: (px, pz) => mapBlocked(px, pz), // round 3: the wall drill looks for a wall
+    // round 6 (the gate): is this clear ground for a man on foot (the map, the lamp posts and the parked cars);
+    // the cab's eased steering and whether it is wedged; where F would put Tom down; read the pad now
+    isClearOnFoot: (px, pz) => x.footClear(px, pz, RULES.tom.bodyRadiusMetres),
+    cabFeel: x.cabFeel,
+    streetThings: x.streetThings, // the lamp posts and the cars standing or moving on the street
+    cabExitPoint: x.exitPoint,
+    padStep: x.padStep,
     fight: { frontUp: fightFrontUp, setOn: fightSetOn, input: fightInput, block: fightBlock, climb: fightClimb, end: fightEnd, grab: fightGrab, faceOf: fightFaceOf, handProps: fightHandProps, carried: fightCarried }, // round 3: the melee drills drive the fight directly
     startNew: x.startNew,
     simStep: x.simStep,

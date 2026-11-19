@@ -198,11 +198,15 @@ export function hud(dt) {
   show('waitbar', ui.wait);
   if (ui.wait) $('waitbar').textContent = 'Passing the time. ' + hhmm(h);
 }
+// Round 6 (the gate): while a pad is in the hands the prompts name its buttons, not the keys.
+const PAD_NAMES = { E: 'A', T: 'X', F: 'Y', C: 'B', Q: 'LB', G: 'RB', Y: 'D-pad up' };
 export function setPrompts(list) {
   const k = list.map((p) => p.k + p.t).join('|');
   if (k === ui.pk) return;
   ui.pk = k;
-  $('prompt').innerHTML = list.map((p) => `<div><kbd>${p.k}</kbd>${esc(p.t)}</div>`).join('');
+  $('prompt').innerHTML = list
+    .map((p) => `<div><kbd>${ui.pad ? PAD_NAMES[p.k] || p.k : p.k}</kbd>${esc(p.t)}</div>`)
+    .join('');
 }
 // A line heard on the street. cls: 'face' when it is said to him about him, 'over' when overheard.
 export function sub(text, who, cls = '', secs) {

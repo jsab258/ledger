@@ -2,7 +2,7 @@
 
 The one file a lane session starts from. Rewritten at each lane stop; cap 900 words. The lane is this week's second, machine-free session (his picks of 17 Nov about 16:05, advisor 202; RULINGS "7, 10 Nov", the 16 to 23 Nov part). It ends for good at Monday 23 November 07:00.
 
-**Cloud lane, last run:** started 11:17 on 19 Nov. 4r done: production/research/lane/DRIVING-REFERENCE-GAMES-2026-11-19.md and DRIVING-MEASUREMENT-METHOD-2026-11-19.md, reviewed and fixed; the list waits for his approval through the advisor. Vision approved (his "1 yes", 10:51, 19 Nov). Next: 4l prototype rounds in BUILD-ORDER.md's order (read the page XYNhFAFNxTtNQN9yYjYh3A first), one per run; 4d whenever the driving study's page shows round4/ or later. Check the newest main row for the budget first.
+**Cloud lane, last run:** started 12:16 on 19 Nov, stopped 13:46 at the budget ceiling (main row 12:38: 44% against 43.8%). Round 6 (the gate) is built and tested in tools/lane/prototype/project, pinned in PUBLISHED.json (ledger.js 3a97363a...), committed, NOT published: the page is still round 5 (1795032844-05a0). Next run, if under the ceiling: a second playtester sample, the gate's hands-on session, a fresh reviewer on the diff and the three gate changes, gate.py, then publish to XYNhFAFNxTtNQN9yYjYh3A and run the panel. 4d: the driving study page has no round4/ yet (checked 12:20). 4r waits for his approval of the games list.
 **Started:** (none yet)
 **Stopped:** (none yet)
 **Advisor read to:** (none yet; advisor rows carry +01:00 Swiss times) | **Last Lane row:** (none yet)

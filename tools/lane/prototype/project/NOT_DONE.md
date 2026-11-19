@@ -2,6 +2,29 @@
 
 18 November 2026, second round. Most important first.
 
+## Lane round 6 (19 Nov, the gate): what is still open
+
+- After a run-down nothing offers the choice to stop and help or drive off (ER-DRIVE-05, round 16). The person is
+  told on screen at once, is hurt and is never killed; the police, the gossip and the firm's name afterwards are
+  as the frozen town already has them.
+- The cab never stops driving: damage stops at four dents and 20% off the top speed, and the top speed is 32 mph.
+  So "a car that will not drive on says so, and the firm fetches it" (ER-DRIVE-01), and pole hits at 35 and 50
+  mph, cannot be tried in this cab. Nobody jumps clear of the cab either (ER-DRIVE-04 is not in this round).
+- A pad cannot type words in a talk (the suggested lines work), and the pause screen's own buttons still need
+  the mouse. ER-INPUT-03's check, the same scripted evening played through each device, is not written; the
+  check here walks, runs, looks, drives, brakes, uses a door, gets in and out of the cab and pauses by pad.
+- ER-DRIVE-02's lane change at 60 mph and its tail swing do not exist in this cab (it has no tail to swing and
+  tops out at 32 mph). The set course by keys and by pad was not timed against each other.
+- The camera: indoors it now stays inside the walls, and on the street it comes in front of buildings, walls
+  and the big things (scrap heaps, stalls, crane legs, the hut). It does not yet give way to a van or a bus
+  standing between it and Tom, to lamp posts or to people, and ER-DRIVE-06's 40 minute soak is not run. Sound
+  and screen shake are not counted as telling by any check.
+- ER-CORE-02 to 04 are checked only for the cases the gate found (a crash, a run-down, a wedged cab). The
+  other changes Tom could perceive (a job failed in front of him, a door shut in his face, money lost) were not
+  each triggered and timed this round.
+- Other street furniture drawn some other way than the props list (the quay railings, building details) was
+  not walked at.
+
 ## Lane round 1 (18 Nov, the eight fixes): what is still open
 
 - A person closes a talk in their own voice when their written lines run out, but the talk stays open with only
