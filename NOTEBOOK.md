@@ -2787,3 +2787,15 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.3 h of session, 7.5 min of helper plus two gate runs.
 - Failed and why: interleaving cuts the points pushed through during the passes (about 2,000 to 200) but a floor of about 100 stays through, and the end-of-drape clean-up adds more each call; the cost rose 60%. The remaining fault lies in the clean-up and the first drape, not in how often contact runs.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERED2-2026-11-19.md.
+
+### Pressed pleats, close look and crease shading (19 Nov 2026)
+- Made: a pleated skirt with pressed folds draped, looked at by a fresh reviewer (FAIL, two new faults), and the shading fault fixed in the exporter. Cost: 0.5 h machine, about 1 h session, 2 reviewer passes.
+- Method: flat four-view renders of the garment alone beside the last look; the reviewer measures from the mesh (normals against faces, cross-sections) rather than judging the picture alone. Fix: a crease is a hard edge, so each side of a fold line gets its own normal (one per fan of faces split at fold edges); geometry must stay byte-identical, which proves the change is shading only.
+- Failed: a measure of crease angle passed while the pleats stood open as fins; a crease measure cannot see the cloth bending back beside it. Next, a lying-flat measure (underlay angle to the surface, outer fold's gap) before any solver change.
+- Evidence: F:/LedgerTools/tool-dev/reports/KILN-SKIRT-LOOK-REVIEW-2026-11-19.md, runs/kiln-crease-normals-2026-11-19
+
+### Progress page from the parts tree (20 Nov 2026)
+- Made: a status page section showing quality (panel score against the stage goal), how much works (parts built and passing per stage), the latest iteration's fixes, health (the release gate's last result) and a whole-project parts view per group and track. Cost: about 0.3 h session.
+- Method: every number derived by one script from the work branch's own files (the parts tree, the checklist, the review files, the gate's findings), read with git show so the page is current between merges; anything absent shows "not measured"; the same script's check fails when the page's data disagrees with those files. Tools: Python, git, the page's own renderer.
+- Check: self-tests on fixture files; the renderer run against the real data with a stand-in DOM (the publishing browser was not signed in). Failed: none.
+- Evidence: production/progress-page/, tools/progress_page.py

@@ -115,7 +115,7 @@ def derived():
 
 
 LANE = os.path.join(ROOT, "production", "lane")
-NEEDED = ("prototype", "joins", "week", "date_move")  # advisor 253: the new layout's keys; a missing one fails the check
+NEEDED = ("prototype", "joins", "week", "date_move", "track1")  # advisor 253: the new layout's keys; a missing one fails the check
 STALE_H = 26  # advisor 253: progress.json, or its last publish, over 26 hours old fails the check
 PUBLISHED = os.path.join(ROOT, "production", "progress-page", "published.json")
 
@@ -157,6 +157,120 @@ def prototype_now(proto, lane=LANE):
     return p
 
 
+LANE_REF = "origin/lane-2026-11"   # advisor 261: read the lane's files from its branch, so the page is current between merges
+STAGE_GOAL = {"A": 4, "B": 5, "C": 6, "D": 6}   # BUILD-ORDER.md's M1 per stage (rounds 11, 20, 30, 33)
+GROUP_STATES = ("missing", "designed", "built shallow", "built", "passes", "unknown")
+
+
+def lane_reader(ref=LANE_REF):
+    """Read a lane file from the branch (git show), falling back to the working tree; None when absent."""
+    import subprocess
+
+    def read(rel):
+        try:
+            return subprocess.run(["git", "-C", ROOT, "show", "%s:%s" % (ref, rel)], capture_output=True, check=True,
+                                  timeout=60).stdout.decode("utf-8")
+        except Exception:
+            p = os.path.join(ROOT, rel)
+            return open(p, encoding="utf-8").read() if os.path.exists(p) else None
+
+    def listing(rel):
+        try:
+            out = subprocess.run(["git", "-C", ROOT, "ls-tree", "--name-only", "%s:%s" % (ref, rel)], capture_output=True,
+                                 check=True, timeout=60).stdout.decode("utf-8")
+            return out.split()
+        except Exception:
+            p = os.path.join(ROOT, rel)
+            return os.listdir(p) if os.path.isdir(p) else []
+    return read, listing
+
+
+def group_counts(tree):
+    """Check.py's by_group, computed from the same leaves: per level-1 group, leaves per status on each track."""
+    parts = tree["parts"]
+    out = []
+    for g in sorted((p for p in parts if p["level"] == 1), key=lambda p: int(p["id"])):
+        leaves = [p for p in parts if p.get("leaf") and (p["id"] + ".").startswith(g["id"] + ".")]
+        row = {"id": g["id"], "name": g["name"], "leaves": len(leaves)}
+        for track in ("prototype", "unreal"):
+            c = {}
+            for p in leaves:
+                st = (p.get("status") or {}).get(track)
+                if st:
+                    c[st["status"]] = c.get(st["status"], 0) + 1
+            row[track] = {k: c[k] for k in GROUP_STATES if k in c}
+        out.append(row)
+    return out
+
+
+def track1_now(read=None, listing=None, lit=()):
+    """ADVISOR 261 (his "Ok w recs", 20 Nov 00:21): Track 1's real measures, every one from the lane's files or marked not
+    measured: (1) the newest panel score against the current stage's goal; (2) the one-shot checklist's parts built and
+    passing per stage; (3) the latest loop's three fixes and 'try this' line; (4) health: the publish gate's last result;
+    (5) the Parts view: per group, leaves per status for the prototype and the Unreal tracks."""
+    if read is None:
+        read, listing = lane_reader()
+    NM = "not measured"
+    lane = listing("production/lane")
+    t = {"source": LANE_REF}
+    # (1) the panel: newest of loops, then the one-shot, then the rounds
+    loops = sorted(int(m.group(1)) for f in lane for m in [re.match(r"^REVIEWS-loop(\d+)\.md$", f)] if m)
+    rounds = sorted(int(m.group(1)) for f in lane for m in [re.match(r"^REVIEWS-round(\d+)\.md$", f)] if m)
+    newest = (("loop %d" % loops[-1], "REVIEWS-loop%d.md" % loops[-1]) if loops else
+              ("the one-shot", "REVIEWS-oneshot.md") if "REVIEWS-oneshot.md" in lane else
+              ("round %d" % rounds[-1], "REVIEWS-round%d.md" % rounds[-1]) if rounds else (None, None))
+    tree_txt = read("production/lane/parts-tree/PARTS-TREE.json")
+    tree = json.loads(tree_txt) if tree_txt else None
+    check = read("production/lane/parts-tree/ONESHOT-CHECKLIST.md") or ""
+    stages = []
+    for m in re.finditer(r"^## Stage ([A-D]): (.+?) \(\d+ parts\)\n(.*?)(?=^## |\Z)", check, re.M | re.S):
+        ids = re.findall(r"^- \[[ x]\] ([\d.]+) ", m.group(3), re.M)
+        stages.append({"key": m.group(1), "name": m.group(2), "ids": ids})
+    status = {p["id"]: ((p.get("status") or {}).get("prototype") or {}).get("status") for p in (tree or {}).get("parts", [])}
+    # a stage lights only when its panel goal is met and he agrees: lit = the prototype stages marked passed by hand
+    here = next((s["key"] for s in stages if s["key"] not in lit), "A")
+    goal = STAGE_GOAL.get(here)
+    score = None
+    if newest[1]:
+        m = re.search(r"Thumbs up:\s*(\d+)\s+of\s+(\d+)", read("production/lane/" + newest[1]) or "")
+        if m:
+            score = {"up": int(m.group(1)), "of": int(m.group(2)), "from": newest[0]}
+    t["good"] = {"stage": here, "goal": goal, "score": score,
+                 "line": ("%d of %d, goal %d (stage %s; %s)" % (score["up"], score["of"], goal, here, score["from"]) if score else NM)}
+    # (2) how much works
+    t["works"] = [{"key": s["key"], "name": s["name"], "parts": len(s["ids"]),
+                   "built": sum(1 for i in s["ids"] if status.get(i) in ("built", "passes")),
+                   "passing": sum(1 for i in s["ids"] if status.get(i) == "passes")} for s in stages] if tree else NM
+    # (3) the latest loop
+    if loops:
+        txt = read("production/lane/REVIEWS-loop%d.md" % loops[-1]) or ""
+        fx = re.search(r"(?ims)^#+ .*fix.*?\n(.*?)(?=^#|\Z)", txt)
+        fixes = re.findall(r"^\s*(?:\d+\.|-)\s+(.+)$", fx.group(1), re.M)[:3] if fx else []
+        tt = re.search(r"(?im)^.*try this[:\s]+(.+)$", txt)
+        link = re.search(r"https://claude\.ai/artifact/\S+", txt)
+        t["loop"] = {"n": loops[-1], "fixes": fixes or NM, "try_this": tt.group(1).strip() if tt else NM,
+                     "link": link.group(0).rstrip(").,") if link else NM}
+    else:
+        t["loop"] = {"n": None, "note": "no loop yet: the one-shot runs Friday night, loops after it"}
+    # (4) health: the publish gate's last result
+    g = read("production/lane/PROTOTYPE-GATE-FINDINGS.md")
+    if g:
+        head = re.search(r"^# .*?\(([^)]*)\)", g, re.M)
+        sec = re.search(r"(?ms)^## Real faults in the game.*?\n(.*?)(?=^## |\Z)", g)
+        n = len(re.findall(r"^\d+\. ", sec.group(1), re.M)) if sec else None
+        t["health"] = {"gate": ("fails: %d real faults in the game" % n) if n else ("passes" if sec is None else NM),
+                       "when": head.group(1) if head else NM, "playthroughs": "start next week"}
+    else:
+        t["health"] = {"gate": NM, "when": NM, "playthroughs": "start next week"}
+    # (5) the Parts view
+    t["parts"] = group_counts(tree) if tree else NM
+    return t
+
+
+def lit_stages(d):
+    return tuple(s["key"] for s in (d.get("prototype") or {}).get("stages", []) if s.get("state") == "passed")
+
+
 def age_hours(stamp, now=None):
     """Hours since a stamp written as 'Thursday 19 November 2026, 18:15 (...)' or ISO; None when unreadable."""
     now = now or datetime.datetime.now()
@@ -195,6 +309,25 @@ def selftest():
         open(os.path.join(tmp, "ROUND-HOURS.md"), "w").write("| one-shot | 9.5 h |\n| loop 2 | 3 h |\n")
         p = prototype_now({}, tmp)
         ok.append(p["round"] == "Loop 2" and [x["up"] for x in p["panel"]] == [3, 5] and "9.5 h" in p["hours"]["actual"])
+    files = {"production/lane/REVIEWS-round5.md": "- Thumbs up: 2 of 8 (x)\n",
+             "production/lane/REVIEWS-loop1.md": "- Thumbs up: 3 of 8\n## The three fixes\n1. a\n2. b\n3. c\n4. d\nTry this: the cab\n",
+             "production/lane/PROTOTYPE-GATE-FINDINGS.md": "# Gate (19 Nov)\n## Real faults in the game\n\n1. x\n2. y\n## What\n",
+             "production/lane/parts-tree/ONESHOT-CHECKLIST.md": "## Stage A: one (2 parts)\n\n- [ ] 1.1.1 W. Now\n- [ ] 1.1.2 C. Now\n## Stage B: two (1 parts)\n\n- [ ] 2.1.1 S. Now\n",
+             "production/lane/parts-tree/PARTS-TREE.json": json.dumps({"parts": [
+                 {"id": "1", "level": 1, "name": "Hands", "leaf": False},
+                 {"id": "1.1.1", "level": 3, "leaf": True, "status": {"prototype": {"status": "passes"}, "unreal": {"status": "designed"}}},
+                 {"id": "1.1.2", "level": 3, "leaf": True, "status": {"prototype": {"status": "built"}}},
+                 {"id": "2", "level": 1, "name": "Town", "leaf": False},
+                 {"id": "2.1.1", "level": 3, "leaf": True, "status": {"prototype": {"status": "designed"}}}]})}
+    rd = lambda r: files.get(r)
+    ls = lambda r: [k.rsplit("/", 1)[1] for k in files if k.rsplit("/", 1)[0] == r]
+    t = track1_now(rd, ls)
+    ok.append(t["good"]["line"].startswith("3 of 8, goal 4 (stage A; loop 1)") and t["loop"]["fixes"] == ["a", "b", "c"]
+              and t["loop"]["try_this"] == "the cab" and t["health"]["gate"] == "fails: 2 real faults in the game"
+              and t["works"][0] == {"key": "A", "name": "one", "parts": 2, "built": 2, "passing": 1}
+              and t["parts"][0]["prototype"] == {"built": 1, "passes": 1} and t["parts"][1]["unreal"] == {})
+    t = track1_now(rd, ls, lit=("A",))
+    ok.append(t["good"]["stage"] == "B" and t["good"]["goal"] == 5)
     now = datetime.datetime(2026, 11, 19, 21, 0)
     good = {k: 1 for k in NEEDED}
     good.update(bosses=[{"name": "T", "blocks": "x"}], updated="Thursday 19 November 2026, 18:15 (note)")
@@ -265,6 +398,9 @@ def main(argv):
         for f in fresh_faults(d, published):
             print("progress-page FAIL " + f)
             bad.append("fresh")
+        if d.get("track1") != track1_now(lit=lit_stages(d)):
+            print("progress-page FAIL Track 1's measures disagree with the lane's files (%s): run tools/progress_page.py" % LANE_REF)
+            bad.append("track1")
         if d.get("prototype") and d["prototype"] != prototype_now(d["prototype"]):
             print("progress-page FAIL the prototype block disagrees with production/lane's files: run tools/progress_page.py")
             bad.append("prototype")
@@ -278,6 +414,7 @@ def main(argv):
         return 1 if bad or missing else 0
     d.update(want)
     d["prototype"] = prototype_now(d.get("prototype"))
+    d["track1"] = track1_now(lit=lit_stages(d))
     d.setdefault("date_move", None)
     d["stations"], behind = line_2027(d["stations"])
     d["line2027"]["behind_w"] = behind
