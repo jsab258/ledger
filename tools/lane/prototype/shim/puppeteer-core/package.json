@@ -1,0 +1,9 @@
+{
+  "name": "puppeteer-core",
+  "version": "0.0.0-lane-playwright-shim",
+  "description": "The lane's stand-in for puppeteer-core in the prototype's tests: the few calls they use, carried out by Playwright's installed Chromium. Not the real package; the game and its tests are unchanged.",
+  "type": "module",
+  "main": "index.mjs",
+  "exports": "./index.mjs",
+  "private": true
+}

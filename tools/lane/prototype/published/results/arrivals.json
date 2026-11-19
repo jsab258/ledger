@@ -1,0 +1,112 @@
+{
+ "away": {
+  "tom": "away: indoors at Regent House",
+  "pass": true,
+  "from": "Mon 15 Oct, 3.42pm",
+  "until": "Tue 16 Oct, 5.43pm",
+  "tomAt": "Regent House",
+  "tomPutBackThereTimes": 0,
+  "walksSetOff": 153,
+  "walksArrived": 150,
+  "walksGivenUpForAnotherPlace": 0,
+  "ofThoseToOrFromTheMapEdge": 0,
+  "stillWalkingAtTheEnd": [
+   {
+    "person": "Lee Drewery",
+    "goingTo": "away from the Hook",
+    "setOffAt": "Tue 16 Oct, 5.30pm"
+   },
+   {
+    "person": "Nora Cronin",
+    "goingTo": "the chapel",
+    "setOffAt": "Tue 16 Oct, 5.36pm"
+   },
+   {
+    "person": "Shaun Hewson",
+    "goingTo": "away from the Hook",
+    "setOffAt": "Tue 16 Oct, 5.30pm"
+   }
+  ],
+  "longestWalkGameMinutes": 88,
+  "stoodStill": [],
+  "gaveUp": [],
+  "pauseNeverEnded": null,
+  "everyoneArrived": true,
+  "ok": true
+ },
+ "rank": {
+  "tom": "standing at the rank",
+  "pass": true,
+  "from": "Mon 15 Oct, 3.42pm",
+  "until": "Tue 16 Oct, 5.42pm",
+  "tomAt": "Quay Street, the quay end",
+  "tomPutBackThereTimes": 1,
+  "walksSetOff": 153,
+  "walksArrived": 142,
+  "walksGivenUpForAnotherPlace": 0,
+  "ofThoseToOrFromTheMapEdge": 0,
+  "stillWalkingAtTheEnd": [
+   {
+    "person": "Ron Kirby",
+    "goingTo": "the Golden River",
+    "setOffAt": "Tue 16 Oct, 5.24pm"
+   },
+   {
+    "person": "Darren Milner",
+    "goingTo": "Quay Street, the quay end (6, 29)",
+    "setOffAt": "Tue 16 Oct, 3.36pm"
+   },
+   {
+    "person": "June Suddaby",
+    "goingTo": "the ferry landing (-42, 57)",
+    "setOffAt": "Tue 16 Oct, 4.00pm"
+   },
+   {
+    "person": "Terry Hodgson",
+    "goingTo": "the Golden River",
+    "setOffAt": "Tue 16 Oct, 4.30pm"
+   },
+   {
+    "person": "Lee Drewery",
+    "goingTo": "away from the Hook",
+    "setOffAt": "Tue 16 Oct, 5.30pm"
+   },
+   {
+    "person": "Susan Coverdale",
+    "goingTo": "the ferry landing (-55, 61)",
+    "setOffAt": "Tue 16 Oct, 5.12pm"
+   },
+   {
+    "person": "Nora Cronin",
+    "goingTo": "the chapel",
+    "setOffAt": "Tue 16 Oct, 5.36pm"
+   },
+   {
+    "person": "Albert Suggitt",
+    "goingTo": "Quay Street (-6, -63)",
+    "setOffAt": "Tue 16 Oct, 2.24pm"
+   },
+   {
+    "person": "Dennis Iveson",
+    "goingTo": "Iveson's yard (-98, 30)",
+    "setOffAt": "Tue 16 Oct, 3.06pm"
+   },
+   {
+    "person": "Norman Dent",
+    "goingTo": "the Golden River",
+    "setOffAt": "Tue 16 Oct, 3.54pm"
+   },
+   {
+    "person": "Shaun Hewson",
+    "goingTo": "away from the Hook",
+    "setOffAt": "Tue 16 Oct, 5.30pm"
+   }
+  ],
+  "longestWalkGameMinutes": 192,
+  "stoodStill": [],
+  "gaveUp": [],
+  "pauseNeverEnded": null,
+  "everyoneArrived": true,
+  "ok": true
+ }
+}

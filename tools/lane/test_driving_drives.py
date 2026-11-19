@@ -211,7 +211,9 @@ class ReferenceDrivesTest(unittest.TestCase):
             self.assertLess(self.runs[name][-1]["t"], make_cap(name))
 
     def test_reference_meets_first_targets(self):
-        rep = dd.compare_targets(self.result, dd.default_targets())
+        # the reference car is tuned to the ordinary set, not the game set
+        self.assertEqual(dd.REFERENCE_SET, "ordinary")
+        rep = dd.compare_targets(self.result, dd.default_targets(dd.REFERENCE_SET))
         fails = [r for r in rep["rows"] if r["status"] in ("fail", "missing")]
         self.assertEqual(fails, [], fails)
         self.assertTrue(rep["pass"])
@@ -318,7 +320,7 @@ class CompareTest(unittest.TestCase):
         self.assertAlmostEqual(m["M3.wet_ratio_30"], 21.0 / 13.0, places=3)
 
     def test_default_targets_shape(self):
-        t = dd.default_targets()["targets"]
+        t = dd.default_targets("ordinary")["targets"]
         self.assertEqual((t["M1.0_60_s"]["min"], t["M1.0_60_s"]["max"]), (13.0, 17.0))
         self.assertEqual((t["M4.turning_circle_m"]["min"], t["M4.turning_circle_m"]["max"]), (9.0, 10.5))
         self.assertEqual((t["M9.handbrake_yaw_deg"]["min"], t["M9.handbrake_yaw_deg"]["max"]), (90.0, 150.0))
@@ -329,6 +331,95 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(dd.abs_tol_for("M7.front_load_brake_pct_at_0_8g"), 1.0)
         self.assertEqual(dd.abs_tol_for("M8.max_steady_lat_g"), 0.02)
         self.assertEqual(dd.abs_tol_for("M1.0_60_s"), 0.05)
+
+
+# The game set of 18 Nov 2026 (his rulings 12:32 and 12:36), exactly as given.
+GAME_BANDS = {
+    "M1.0_30_s": (3.0, 4.5),
+    "M1.0_60_s": (10.0, 14.0),
+    "M2.top_speed_mph": (95.0, 110.0),
+    "M2.speed_at_100m_mph": (44.0, 52.0),
+    "M3.brake_30_m": (8.0, 11.0),
+    "M3.brake_50_m": (22.0, 30.0),
+    "M3.brake_70_m": (44.0, 58.0),
+    "M3.wet_ratio_30": (1.3, 1.6),
+    "M3.wet_ratio_50": (1.3, 1.6),
+    "M3.wet_ratio_70": (1.3, 1.6),
+    "M4.turning_circle_m": (8.5, 9.8),
+    "M5.yaw_63_s": (0.15, 0.25),
+    "M5.self_centre_s": (0.4, 0.9),
+    "M6.roll_deg_at_0_5g": (3.5, 6.0),
+    "M6.pitch_brake_deg_at_0_8g": (2.5, 5.0),
+    "M6.pitch_throttle_deg": (1.0, 2.5),
+    "M7.front_load_brake_pct_at_0_8g": (72.0, 82.0),
+    "M8.max_steady_lat_g": (0.82, 0.92),
+    "M8.recovery_s": (0.3, 0.8),
+    "M9.handbrake_yaw_deg": (120.0, 180.0),
+    "M9.handbrake_settle_s": (1.0, 1.6),
+    "M10.cam_dist_m": (5.0, 6.5),
+    "M10.cam_height_m": (1.6, 2.0),
+    "M10.cam_lag_s": (0.1, 0.25),
+    "M10.fov_0_deg": (60.0, 65.0),
+    "M10.fov_30_deg": (64.0, 70.0),
+    "M10.fov_60_deg": (70.0, 78.0),
+    "M10.fov_90_deg": (76.0, 86.0),
+}
+
+
+class GameSetTest(unittest.TestCase):
+    def test_game_is_the_default(self):
+        self.assertEqual(dd.DEFAULT_SET, "game")
+        t = dd.default_targets()
+        self.assertEqual(t["set"], "game")
+        self.assertIn("game band", t["note"])  # what tools/driving_feel_check.py looks for
+        self.assertIn("PROVISIONAL", t["note"])
+        self.assertEqual(dd.default_targets()["targets"], dd.default_targets("game")["targets"])
+
+    def test_every_game_band_exact(self):
+        t = dd.default_targets()["targets"]
+        for key, (lo, hi) in GAME_BANDS.items():
+            self.assertIn(key, t)
+            self.assertEqual((t[key]["min"], t[key]["max"]), (lo, hi), key)
+            self.assertEqual(t[key]["status"], "provisional", key)
+        self.assertEqual(dict(dd.TARGET_SETS["game"]), GAME_BANDS)
+
+    def test_game_set_covers_m1_to_m10(self):
+        keys = dd.default_targets()["targets"]
+        checked = {k.split(".")[0] for k, v in keys.items() if v["status"] != "placeholder"}
+        self.assertEqual(checked, {"M%d" % i for i in range(1, 11)})
+        # M11 and M12 are not measured by the drives, in any set
+        self.assertFalse(any(k.startswith(("M11.", "M12.")) for k in keys))
+
+    def test_game_set_placeholders_kept(self):
+        t = dd.default_targets()["targets"]
+        for k in dd.PLACEHOLDERS:
+            self.assertEqual(t[k]["status"], "placeholder", k)
+
+    def test_old_sets_still_selectable(self):
+        o = dd.default_targets("ordinary")
+        self.assertEqual(o["set"], "ordinary")
+        self.assertEqual((o["targets"]["M1.0_60_s"]["min"], o["targets"]["M1.0_60_s"]["max"]), (13.0, 17.0))
+        self.assertEqual(o["targets"]["M1.0_60_s"]["status"], "first")
+        f = dd.default_targets("fast")
+        self.assertEqual((f["targets"]["M1.0_60_s"]["min"], f["targets"]["M1.0_60_s"]["max"]), (8.0, 9.0))
+
+    def test_game_set_judges_a_car(self):
+        mid = {k: (lo + hi) / 2 for k, (lo, hi) in GAME_BANDS.items()}
+        self.assertTrue(dd.compare_targets({"metrics": mid}, dd.default_targets())["pass"])
+        slow = dict(mid, **{"M1.0_60_s": 15.0})  # a real 1990 hatch time, slower than the game band
+        rep = dd.compare_targets({"metrics": slow}, dd.default_targets())
+        self.assertFalse(rep["pass"])
+        self.assertEqual({r["metric"]: r["status"] for r in rep["rows"]}["M1.0_60_s"], "fail")
+
+    def test_command_line_default_set(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "t.json")
+            self.assertEqual(dd.main(["targets", "--out", p]), 0)
+            with open(p) as f:
+                self.assertEqual(json.load(f)["set"], "game")
+            self.assertEqual(dd.main(["targets", "--set", "ordinary", "--out", p]), 0)
+            with open(p) as f:
+                self.assertEqual(json.load(f)["set"], "ordinary")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,766 @@
+{
+ "published": "2026-11-19",
+ "buildCommand": "npm run build",
+ "dependencies": {
+  "three": "0.187.0",
+  "esbuild": "0.28.2"
+ },
+ "ledgerJsSha256": "3a97363ab2b465d569c4831caecb3dcc070114dff26f82ea455f6aebb619f09c",
+ "indexHtmlSha256": "f0e85bbbf5ec67ac9cdbba338428cdfcb8b1505afc03585dfe2a33887b328f61",
+ "groups": [
+  {
+   "name": "Read first",
+   "files": [
+    {
+     "path": "README.md",
+     "as": "README.md",
+     "what": "What this is, and the source file by file.",
+     "bytes": 7561,
+     "text": true
+    },
+    {
+     "path": "CHANGELOG.md",
+     "as": "CHANGELOG.md",
+     "what": "What changed, item by item, with the date.",
+     "bytes": 34540,
+     "text": true
+    },
+    {
+     "path": "NOT_DONE.md",
+     "as": "NOT_DONE.md",
+     "what": "What could not be done, and why.",
+     "bytes": 6542,
+     "text": true
+    },
+    {
+     "path": "BUILD.md",
+     "as": "BUILD.md",
+     "what": "The build command, the pinned versions, the checksums.",
+     "bytes": 3033,
+     "text": true
+    },
+    {
+     "path": "DESIGN_NOTES.md",
+     "as": "DESIGN_NOTES.md",
+     "what": "Every choice made without asking.",
+     "bytes": 34225,
+     "text": true
+    },
+    {
+     "path": "measures.json",
+     "as": "measures.json",
+     "what": "The measures from one full week, played by a script through the test hook.",
+     "bytes": 6238,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "Results of the checks",
+   "files": [
+    {
+     "path": "RESULTS.md",
+     "as": "RESULTS.md",
+     "what": "Both arrivals checks, the nights check, the same-week proof, the gossip table.",
+     "bytes": 27975,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "The source, one file per part (src/)",
+   "files": [
+    {
+     "path": "source/src/audio.js",
+     "as": "src/audio.js",
+     "what": "Sound made in the page: rain, the river, gulls, a ship's horn far off, the office radio, footsteps that carry at night, a sparse score.",
+     "bytes": 11002,
+     "text": true
+    },
+    {
+     "path": "source/src/cast.js",
+     "as": "src/cast.js",
+     "what": "The people of the Hook. Canon names, ages and voices; routines, looks and the small facts each holds.",
+     "bytes": 40743,
+     "text": true
+    },
+    {
+     "path": "source/src/checks.js",
+     "as": "src/checks.js",
+     "what": "Checks the test hook can run: LEDGER.check.arrivals() and LEDGER.check.nights().",
+     "bytes": 11065,
+     "text": true
+    },
+    {
+     "path": "source/src/clock.js",
+     "as": "src/clock.js",
+     "what": "Advances the simulation: clock, weather, people, witnesses, gossip, fading.",
+     "bytes": 2513,
+     "text": true
+    },
+    {
+     "path": "source/src/design_notes.js",
+     "as": "src/design_notes.js",
+     "what": "How the town watches, the Design notes and the opening letter.",
+     "bytes": 8442,
+     "text": true
+    },
+    {
+     "path": "source/src/design_notes_text.js",
+     "as": "src/design_notes_text.js",
+     "what": "The Design notes as text: every choice made without asking, newest round first after Scope.",
+     "bytes": 34928,
+     "text": true
+    },
+    {
+     "path": "source/src/drive.js",
+     "as": "src/drive.js",
+     "what": "Arcade driving and light traffic. Britain drives on the left.",
+     "bytes": 21238,
+     "text": true
+    },
+    {
+     "path": "source/src/end_screen.js",
+     "as": "src/end_screen.js",
+     "what": "The end of the week: the truth beside the Ledger (a playtest view) and the run report.",
+     "bytes": 13940,
+     "text": true
+    },
+    {
+     "path": "source/src/events.js",
+     "as": "src/events.js",
+     "what": "Events and memories: what Tom does becomes an event; each witness keeps a memory of it.",
+     "bytes": 5846,
+     "text": true
+    },
+    {
+     "path": "source/src/fares.js",
+     "as": "src/fares.js",
+     "what": "The cab: the radio offer, the pick-up, the drop-off and the fare.",
+     "bytes": 8329,
+     "text": true
+    },
+    {
+     "path": "source/src/fight.js",
+     "as": "src/fight.js",
+     "what": "The street's way: an escalation ladder Tom can stop on at any rung. Most of it ends before a blow.",
+     "bytes": 35780,
+     "text": true
+    },
+    {
+     "path": "source/src/files_panel.js",
+     "as": "src/files_panel.js",
+     "what": "The files published beside the game's page: the source this page is built from, the build command,",
+     "bytes": 7445,
+     "text": true
+    },
+    {
+     "path": "source/src/gossip.js",
+     "as": "src/gossip.js",
+     "what": "Gossip: how a memory passes from one person to the next, fades, comes back to Tom, and what the street calls him.",
+     "bytes": 6942,
+     "text": true
+    },
+    {
+     "path": "source/src/hook.js",
+     "as": "src/hook.js",
+     "what": "The test hook: window.LEDGER.",
+     "bytes": 24885,
+     "text": true
+    },
+    {
+     "path": "source/src/jobs.js",
+     "as": "src/jobs.js",
+     "what": "The night jobs: the bag, the parcel, the scrapyard. Where the drop doors are and what they pay.",
+     "bytes": 10599,
+     "text": true
+    },
+    {
+     "path": "source/src/kinds.js",
+     "as": "src/kinds.js",
+     "what": "Every kind of thing the town can know about Tom.",
+     "bytes": 9299,
+     "text": true
+    },
+    {
+     "path": "source/src/ledger.js",
+     "as": "src/ledger.js",
+     "what": "The Ledger's records: only what Tom himself believes, from what he saw and heard.",
+     "bytes": 20583,
+     "text": true
+    },
+    {
+     "path": "source/src/ledger_screen.js",
+     "as": "src/ledger_screen.js",
+     "what": "The Ledger screen, the slip beside a talk, and the Noted line. It shows only what Tom believes.",
+     "bytes": 24118,
+     "text": true
+    },
+    {
+     "path": "source/src/light.js",
+     "as": "src/light.js",
+     "what": "One light field for both the picture and the rules. The same numbers draw the lamp pools on the ground",
+     "bytes": 4201,
+     "text": true
+    },
+    {
+     "path": "source/src/main.js",
+     "as": "src/main.js",
+     "what": "a week on Quay Street. Boot, the frame loop, menus.",
+     "bytes": 29200,
+     "text": true
+    },
+    {
+     "path": "source/src/map.js",
+     "as": "src/map.js",
+     "what": "Meridian: the Hook around Quay Street, and a slice of Copper Row over the bridge.",
+     "bytes": 34055,
+     "text": true
+    },
+    {
+     "path": "source/src/measures.js",
+     "as": "src/measures.js",
+     "what": "The Ledger screen test: what is measured, and the scripted \"find the fact\" asks.",
+     "bytes": 8892,
+     "text": true
+    },
+    {
+     "path": "source/src/money.js",
+     "as": "src/money.js",
+     "what": "Money and debts: the pocket, the tin, earning, paying and putting the tin through the fare book.",
+     "bytes": 2423,
+     "text": true
+    },
+    {
+     "path": "source/src/player.js",
+     "as": "src/player.js",
+     "what": "Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.",
+     "bytes": 25972,
+     "text": true
+    },
+    {
+     "path": "source/src/police.js",
+     "as": "src/police.js",
+     "what": "Police: what reaches the station, the constable, custody, and DS Ellis asking the street.",
+     "bytes": 11848,
+     "text": true
+    },
+    {
+     "path": "source/src/routines.js",
+     "as": "src/routines.js",
+     "what": "People as agents: routines, walking, windows, the anonymous crowd. No rendering here.",
+     "bytes": 21561,
+     "text": true
+    },
+    {
+     "path": "source/src/rules.js",
+     "as": "src/rules.js",
+     "what": "Every rule's number, in one table. The game reads its numbers from here and nowhere else, and the",
+     "bytes": 58668,
+     "text": true
+    },
+    {
+     "path": "source/src/saving.js",
+     "as": "src/saving.js",
+     "what": "Saving the week. To the viewer's Claude account when the page can (so it follows them between devices), and to this browser as well.",
+     "bytes": 4197,
+     "text": true
+    },
+    {
+     "path": "source/src/scenes.js",
+     "as": "src/scenes.js",
+     "what": "The week. Beats fire on states, not on the clock, and no single beat can fail the run.",
+     "bytes": 71085,
+     "text": true
+    },
+    {
+     "path": "source/src/seeing.js",
+     "as": "src/seeing.js",
+     "what": "Seeing: who can see Tom, how well, and what they make of him. Light, facing, distance and noise.",
+     "bytes": 11229,
+     "text": true
+    },
+    {
+     "path": "source/src/state.js",
+     "as": "src/state.js",
+     "what": "The state of one week: everything the save file holds, the settings, and the pause book.",
+     "bytes": 5583,
+     "text": true
+    },
+    {
+     "path": "source/src/talk.js",
+     "as": "src/talk.js",
+     "what": "Live talk. The model only voices the line and names the intent; the game's rules decide what happens.",
+     "bytes": 41444,
+     "text": true
+    },
+    {
+     "path": "source/src/talk_lines.js",
+     "as": "src/talk_lines.js",
+     "what": "Written lines. What people say to Tom's face when a story reaches them, and what they fall back on when the live talk is unavailable.",
+     "bytes": 30531,
+     "text": true
+    },
+    {
+     "path": "source/src/ui.js",
+     "as": "src/ui.js",
+     "what": "The interface: carbon dockets, a street nameplate, typewritten slips. HUD, dialogue, talk panel, menus.",
+     "bytes": 20970,
+     "text": true
+    },
+    {
+     "path": "source/src/util.js",
+     "as": "src/util.js",
+     "what": "Small shared helpers. No rendering imports here so the simulation can run in Node tests.",
+     "bytes": 5560,
+     "text": true
+    },
+    {
+     "path": "source/src/work.js",
+     "as": "src/work.js",
+     "what": "The working day: passing time, sleep, being beaten, and the one step that runs fares, jobs and police.",
+     "bytes": 5124,
+     "text": true
+    },
+    {
+     "path": "source/src/index.html",
+     "as": "src/index.html",
+     "what": "The page and its styles.",
+     "bytes": 22687,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "The source: rendering (src/render/)",
+   "files": [
+    {
+     "path": "source/src/render/actors.js",
+     "as": "src/render/actors.js",
+     "what": "One door for the figures: the rigged Quaternius people when their files have loaded, the drawn-in-code ones if not.",
+     "bytes": 780,
+     "text": true
+    },
+    {
+     "path": "source/src/render/cars.js",
+     "as": "src/render/cars.js",
+     "what": "Vehicles drawn in code, as fictional 1990 shapes: a Kestrel saloon (Mickey's cabs), a Wren hatchback, a Carrier van,",
+     "bytes": 17984,
+     "text": true
+    },
+    {
+     "path": "source/src/render/core.js",
+     "as": "src/render/core.js",
+     "what": "Renderer plumbing: shared uniforms, the lamp-light patch every material gets, wet-ground reflections,",
+     "bytes": 24238,
+     "text": true
+    },
+    {
+     "path": "source/src/render/effects.js",
+     "as": "src/render/effects.js",
+     "what": "Renderer, weather and time of day: overcast sky, real dusk, sodium lamps striking, rain, mist, gulls, the Humber.",
+     "bytes": 23028,
+     "text": true
+    },
+    {
+     "path": "source/src/render/extras.js",
+     "as": "src/render/extras.js",
+     "what": "The art pass that is not people or cars: Poly Haven surfaces (CC0), the quay edge and what the street looks onto,",
+     "bytes": 24351,
+     "text": true
+    },
+    {
+     "path": "source/src/render/figures.js",
+     "as": "src/render/figures.js",
+     "what": "People drawn in code: one skinned mesh each, built from a description of body and 1990 clothes,",
+     "bytes": 19678,
+     "text": true
+    },
+    {
+     "path": "source/src/render/rig.js",
+     "as": "src/render/rig.js",
+     "what": "People: Quaternius' Universal Base Characters driven by the Universal Animation Library (both CC0),",
+     "bytes": 25420,
+     "text": true
+    },
+    {
+     "path": "source/src/render/rooms.js",
+     "as": "src/render/rooms.js",
+     "what": "Interiors: small sets with the fourth wall away, furnished from a few shared pieces.",
+     "bytes": 18832,
+     "text": true
+    },
+    {
+     "path": "source/src/render/sync.js",
+     "as": "src/render/sync.js",
+     "what": "Puts the simulation on screen: one figure per person, Tom's two coats, the cabs, ground markers, speech bubbles.",
+     "bytes": 12526,
+     "text": true
+    },
+    {
+     "path": "source/src/render/tailor.js",
+     "as": "src/render/tailor.js",
+     "what": "The tailor. 1990 clothes cut from the body they are worn on: each garment is a shell lifted off the skin",
+     "bytes": 37002,
+     "text": true
+    },
+    {
+     "path": "source/src/render/town.js",
+     "as": "src/render/town.js",
+     "what": "The static town: ground, buildings with painted fascias, street furniture, the quay.",
+     "bytes": 42651,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "The build",
+   "files": [
+    {
+     "path": "source/package.json",
+     "as": "package.json",
+     "what": "three pinned at 0.187.0; the build and test commands.",
+     "bytes": 1508,
+     "text": true
+    },
+    {
+     "path": "source/package-lock.json",
+     "as": "package-lock.json",
+     "what": "Every package at its exact version.",
+     "bytes": 71477,
+     "text": true
+    },
+    {
+     "path": "source/tools/build.mjs",
+     "as": "tools/build.mjs",
+     "what": "Build the game: bundle src/main.js into dist/ledger.js, and copy the page and the art beside it.",
+     "bytes": 1001,
+     "text": true
+    },
+    {
+     "path": "source/tools/publish_set.mjs",
+     "as": "tools/publish_set.mjs",
+     "what": "Gather what is published: the page, the art, the documents, the measures from the last full-week run,",
+     "bytes": 7449,
+     "text": true
+    },
+    {
+     "path": "source/tools/pack_people.mjs",
+     "as": "tools/pack_people.mjs",
+     "what": "Packs Quaternius' Universal Base Characters (CC0) and Universal Animation Library (CC0) into one compact file for LEDGER.",
+     "bytes": 11156,
+     "text": true
+    },
+    {
+     "path": "source/tools/numbers.mjs",
+     "as": "tools/numbers.mjs",
+     "what": "Numbers and the rules table.",
+     "bytes": 6919,
+     "text": true
+    },
+    {
+     "path": "source/tools/walk_times.mjs",
+     "as": "tools/walk_times.mjs",
+     "what": "How long every walk in every schedule takes, against the time its row has.",
+     "bytes": 5379,
+     "text": true
+    },
+    {
+     "path": "source/tools/gossip_table.mjs",
+     "as": "tools/gossip_table.mjs",
+     "what": "The gossip before and after a change, as a table. Reads two files written by test/same_week.mjs",
+     "bytes": 1805,
+     "text": true
+    },
+    {
+     "path": "source/tools/numbers_kept.json",
+     "as": "tools/numbers_kept.json",
+     "what": "How many numbers may stay outside rules.js in each file, and why.",
+     "bytes": 967,
+     "text": true
+    },
+    {
+     "path": "source/prettierrc.json",
+     "as": ".prettierrc.json",
+     "what": "Formatting rules (kept as .prettierrc.json).",
+     "bytes": 92,
+     "text": true
+    },
+    {
+     "path": "source/eslintrc.json",
+     "as": ".eslintrc.json",
+     "what": "Lint rules (kept as .eslintrc.json).",
+     "bytes": 209,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "The tests (test/)",
+   "files": [
+    {
+     "path": "source/test/harness.mjs",
+     "as": "test/harness.mjs",
+     "what": "Shared test harness: serves dist/, opens the game in headless Chrome, and returns helpers.",
+     "bytes": 7607,
+     "text": true
+    },
+    {
+     "path": "source/test/fixes1.mjs",
+     "as": "test/fixes1.mjs",
+     "what": "The lane's round 1 (18 Nov): one check for each of the eight fixes in production/lane/FABLE-PROTOTYPE-FIXES-1.md.",
+     "bytes": 6218,
+     "text": true
+    },
+    {
+     "path": "source/test/watch2.mjs",
+     "as": "test/watch2.mjs",
+     "what": "The lane's round 2 (18 Nov): the carry under watch. A constable walks his beat between the pick-up and the",
+     "bytes": 5386,
+     "text": true
+    },
+    {
+     "path": "source/test/melee3.mjs",
+     "as": "test/melee3.mjs",
+     "what": "The lane's round 3 (18 Nov): the melee feel targets, part 1 (weight, readable wind-ups, walls, being",
+     "bytes": 10407,
+     "text": true
+    },
+    {
+     "path": "source/test/melee4.mjs",
+     "as": "test/melee4.mjs",
+     "what": "The lane's round 4 (18 Nov): a debt that can come to blows (face and corners) and things to hand (melee part 2).",
+     "bytes": 14034,
+     "text": true
+    },
+    {
+     "path": "source/test/talk5.mjs",
+     "as": "test/talk5.mjs",
+     "what": "The lane's round 5 (18 Nov): talk that does not repeat across talks and people, small talk that answers the question,",
+     "bytes": 8226,
+     "text": true
+    },
+    {
+     "path": "source/test/gate6.mjs",
+     "as": "test/gate6.mjs",
+     "what": "The lane's round 6 (19 Nov 2026), \"The gate\": can a build be proved safe before the player touches it?",
+     "bytes": 50355,
+     "text": true
+    },
+    {
+     "path": "source/test/week_bot.mjs",
+     "as": "test/week_bot.mjs",
+     "what": "The full-week script, shared by test/week.mjs (measures) and test/same_week.mjs (the seeded, repeatable week).",
+     "bytes": 17020,
+     "text": true
+    },
+    {
+     "path": "source/test/week.mjs",
+     "as": "test/week.mjs",
+     "what": "One full week played by script through the test hook (see week_bot.mjs). Writes out/measures.json and",
+     "bytes": 1807,
+     "text": true
+    },
+    {
+     "path": "source/test/same_week.mjs",
+     "as": "test/same_week.mjs",
+     "what": "The same week, exactly. One full scripted week (week_bot.mjs) is played with a fixed seed on a clock the",
+     "bytes": 3642,
+     "text": true
+    },
+    {
+     "path": "source/test/arrivals.mjs",
+     "as": "test/arrivals.mjs",
+     "what": "Everyone who sets off for a place gets there. LEDGER.check.arrivals() is passed over 26 game hours twice,",
+     "bytes": 2495,
+     "text": true
+    },
+    {
+     "path": "source/test/nights.mjs",
+     "as": "test/nights.mjs",
+     "what": "The hook's two checks, run as tests:",
+     "bytes": 4037,
+     "text": true
+    },
+    {
+     "path": "source/test/town.mjs",
+     "as": "test/town.mjs",
+     "what": "The town's harder turns, through the test hook, pass or fail. It checks what the first round's logic script",
+     "bytes": 10469,
+     "text": true
+    },
+    {
+     "path": "source/test/ledger_rules.mjs",
+     "as": "test/ledger_rules.mjs",
+     "what": "Two rules of the Ledger, pass or fail.",
+     "bytes": 6534,
+     "text": true
+    },
+    {
+     "path": "source/test/layout.mjs",
+     "as": "test/layout.mjs",
+     "what": "The talk slip, the subtitles and the Noted line must never cover one another. Checked at four window sizes,",
+     "bytes": 4194,
+     "text": true
+    },
+    {
+     "path": "source/test/files.mjs",
+     "as": "test/files.mjs",
+     "what": "The files published beside the page: the game lists them, shows any of them as text, gathers them as one",
+     "bytes": 7571,
+     "text": true
+    },
+    {
+     "path": "source/test/talk.mjs",
+     "as": "test/talk.mjs",
+     "what": "Live talk with a stand-in for the page's Claude: the Settings check, the on/off switch, and a real street conversation with streaming.",
+     "bytes": 9889,
+     "text": true
+    },
+    {
+     "path": "source/test/oldsave.mjs",
+     "as": "test/oldsave.mjs",
+     "what": "A save written by an older build must load in this one, with its Ledger rebuilt into the new book.",
+     "bytes": 6637,
+     "text": true
+    },
+    {
+     "path": "source/test/eyes.mjs",
+     "as": "test/eyes.mjs",
+     "what": "The town's eyes setting (testing only): off by default, and what switching it on shows.",
+     "bytes": 2736,
+     "text": true
+    },
+    {
+     "path": "source/test/golden/week.json",
+     "as": "test/golden/week.json",
+     "what": "The record of the seeded week: what test/same_week.mjs compares with.",
+     "bytes": 967,
+     "text": true
+    },
+    {
+     "path": "source/test/golden/week_published_18nov.json",
+     "as": "test/golden/week_published_18nov.json",
+     "what": "The same record for the page as published on 18 Nov, before the numbers were moved.",
+     "bytes": 967,
+     "text": true
+    }
+   ]
+  },
+  {
+   "name": "The built page (dist/)",
+   "files": [
+    {
+     "path": "index.html",
+     "as": "dist/index.html",
+     "what": "The page, copied from src/index.html.",
+     "bytes": 22687,
+     "text": true
+    },
+    {
+     "path": "ledger.js",
+     "as": "dist/ledger.js",
+     "what": "The game, built from src/ by npm run build.",
+     "bytes": 1356797,
+     "text": false
+    }
+   ]
+  },
+  {
+   "name": "The art (assets/), copied unchanged by the build",
+   "files": [
+    {
+     "path": "people.jpg",
+     "as": "assets/people.jpg",
+     "what": "Picture.",
+     "bytes": 280770,
+     "text": false
+    },
+    {
+     "path": "people.txt",
+     "as": "assets/people.txt",
+     "what": "The rigged figures and their animations, packed.",
+     "bytes": 1499448,
+     "text": false
+    },
+    {
+     "path": "people_lo.jpg",
+     "as": "assets/people_lo.jpg",
+     "what": "Picture.",
+     "bytes": 92156,
+     "text": false
+    },
+    {
+     "path": "tx_plaster_d.jpg",
+     "as": "assets/tx_plaster_d.jpg",
+     "what": "Picture.",
+     "bytes": 255803,
+     "text": false
+    },
+    {
+     "path": "tx_plaster_n.jpg",
+     "as": "assets/tx_plaster_n.jpg",
+     "what": "Picture.",
+     "bytes": 154697,
+     "text": false
+    },
+    {
+     "path": "tx_plaza_d.jpg",
+     "as": "assets/tx_plaza_d.jpg",
+     "what": "Picture.",
+     "bytes": 393477,
+     "text": false
+    },
+    {
+     "path": "tx_plaza_n.jpg",
+     "as": "assets/tx_plaza_n.jpg",
+     "what": "Picture.",
+     "bytes": 273658,
+     "text": false
+    },
+    {
+     "path": "tx_road_d.jpg",
+     "as": "assets/tx_road_d.jpg",
+     "what": "Picture.",
+     "bytes": 160145,
+     "text": false
+    },
+    {
+     "path": "tx_road_n.jpg",
+     "as": "assets/tx_road_n.jpg",
+     "what": "Picture.",
+     "bytes": 295949,
+     "text": false
+    },
+    {
+     "path": "tx_stone_d.jpg",
+     "as": "assets/tx_stone_d.jpg",
+     "what": "Picture.",
+     "bytes": 286688,
+     "text": false
+    },
+    {
+     "path": "tx_stone_n.jpg",
+     "as": "assets/tx_stone_n.jpg",
+     "what": "Picture.",
+     "bytes": 379424,
+     "text": false
+    },
+    {
+     "path": "tx_wood_d.jpg",
+     "as": "assets/tx_wood_d.jpg",
+     "what": "Picture.",
+     "bytes": 219629,
+     "text": false
+    },
+    {
+     "path": "tx_wood_n.jpg",
+     "as": "assets/tx_wood_n.jpg",
+     "what": "Picture.",
+     "bytes": 204107,
+     "text": false
+    }
+   ]
+  }
+ ]
+}

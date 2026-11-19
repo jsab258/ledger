@@ -113,3 +113,37 @@ def test_read_answers_one_tap_per_id(tmp_path):
         (tmp_path / sub / "x.json").write_text("{}" if at is None else '{"at": "%s"}' % at)
     (tmp_path / "verdicts" / "list.json").write_text("[1, 2]")
     assert om.read_answers(str(tmp_path)) == [{"id": "x", "at": dt.datetime(2026, 11, 10, 11, 0)}]
+
+
+def _adv(tmp_path, rid, answer, wrap=False):
+    import json
+    d = {"at": "x", "from": "advisor", "his_answer": answer, "text": "a b c"}
+    (tmp_path / (rid + ".json")).write_text(json.dumps({"data": d} if wrap else d), encoding="utf-8")
+
+
+def test_count_advisor_rows_numbered_in_week_only(tmp_path):
+    _adv(tmp_path, "2026-11-09-0725-41", "yes")
+    _adv(tmp_path, "2026-11-15-2305-169", "")
+    _adv(tmp_path, "2026-11-12-1940-eff", "yes")      # unnumbered: the advisor's own check
+    _adv(tmp_path, "2026-11-16-0755-170", "yes")      # next week
+    _adv(tmp_path, "2026-11-08-2300-40", "yes")       # last week
+    _adv(tmp_path, "2026-11-10-1000-75", "  ", wrap=True)
+    (tmp_path / "2026-11-11-1000-80.json").write_text("{bad", encoding="utf-8")
+    assert om.count_advisor_rows(str(tmp_path), dt.date(2026, 11, 9)) == (1, 3)
+
+
+def test_line_shows_advisor_row_counts():
+    r = om.owner_minutes(dt.date(2026, 11, 9), [], [], advisor_rows=30, advisor_total=129)
+    assert r["chosen"] == 60.0
+    line = om.audit_line(dt.datetime(2026, 11, 9), r)
+    assert "chosen 60 (30 advisor rows with his words of 129)" in line
+    r2 = om.owner_minutes(dt.date(2026, 11, 9), [], [])
+    assert "chosen n.m. (advisor)" in om.audit_line(dt.datetime(2026, 11, 9), r2)
+
+
+def test_cli_advisor_dir(tmp_path, capsys):
+    _adv(tmp_path, "2026-11-09-0725-41", "yes")
+    _adv(tmp_path, "2026-11-09-0730-42", "")
+    om.main(["2026-11-11", "--advisor-dir", str(tmp_path)])
+    out = capsys.readouterr().out
+    assert "chosen 2 (1 advisor rows with his words of 2)" in out

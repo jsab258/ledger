@@ -1,0 +1,226 @@
+[
+ {
+  "id": "D-C-013",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md line 15 ('5 and 6 Nov: Full scope stays the target; no path chosen on extrapolated numbers'). Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-D-130",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order text restated in RULINGS.md line 15 (scope, no path on extrapolated numbers, 1 Feb rule) and the 2026-11-09 order is spent; docks and length in RULINGS 28 Oct lines. Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-C-003",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 28 Oct list: 'Length: 15 to 20 hours.' Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this. driving_feel_check.py does not touch game length."
+ },
+ {
+  "id": "D-F-035",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order of 9 Nov section 4 and production/orders/archive/2026-11-09.md: 'K1 to K7 kept for their phase, K8 and K9 dropped'; kept items carried in the archive list."
+ },
+ {
+  "id": "D-E-081",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "M6 (Ron walks packaged game in a Kiln outfit) not reached: NOW.md state 18 Nov 23:32 'Kiln v1 0 of 6'; RULINGS 13/18 Nov names it as one of Kiln's three proofs."
+ },
+ {
+  "id": "D-B-025",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Due Mon 23 Nov 13:00: NOW.md 'Kiln v1 0 of 6; coat blocked at the collar stand'; handover 'Kiln v1 by Mon 23 Nov 13:00 ... 0 of 6 lines done'."
+ },
+ {
+  "id": "D-B-034",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Synthesis under way: production/lane/LANE-HANDOVER.md (19 Nov 00:15) steps 1 and 2 done (VISION, DESIGN, TRACE, BUILD-ORDER, QUESTIONS); step 3 review, fix and the two Claude Docs wait; 'No prototype rounds until Vision approved'."
+ },
+ {
+  "id": "D-B-019",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Part carried out: source project exists (tools/lane/prototype with build.py, PUBLISHED.json). Still waiting: order 16 Nov waiting items 16, 17 and 21 (source project/one simulation switch/cloud share, order of 23 Nov). 'Nothing built here this week' was overtaken by D-B-030 (cloud lane builds the prototype, 18 Nov 15:23)."
+ },
+ {
+  "id": "D-E-114",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Stated as current in production/orders/2026-11-16.md waiting item 16 ('the loop prototype ... the spec of record'); not in RULINGS.md or canon.md, nothing checks it; stop rule and synthesis (D-B-034) now shape it."
+ },
+ {
+  "id": "D-C-004",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 28 Oct list: 'Map: the Hook plus the docks ... the docks are cut first.' Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this. (driving_feel_check names only gearbox default, unrelated)."
+ },
+ {
+  "id": "D-C-019",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md line 16 carries the Meridian Test build. names-gate.py only checks retired names; nightly_walk.py checks 'does the town visibly know Tom' (one part). Bar itself is judgement."
+ },
+ {
+  "id": "D-G-152",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No hardware floor written in any current text (PLAN.md performance exit uses 6 GB; RULINGS 24 Oct 6 GB line). Research note production/research/hardware-floor/SUMMARY.md still states 12 GB but carries a 'PARTLY OVERTURNED' banner. Nothing checks it."
+ },
+ {
+  "id": "D-A-038",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-069 / D-E-120, 2026-11-18",
+  "evidence": "Replaced by D-C-069 (RULINGS.md line 39, 18 Nov): three proofs before any props, vehicles or buildings module; advisor 218 (D-E-120, 2026-11-18)."
+ },
+ {
+  "id": "D-G-169",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-week hold from Sept 2026 has expired; the plan was replaced by CHARTER/PLAN (5 Oct); RULINGS.md D56 line still owes the eight verbs; no crime-verb build in NOW.md or the 16 Nov order."
+ },
+ {
+  "id": "D-C-002",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 28 Oct list; PLAN.md '4. Friends' candidate'. Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-D-139",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Parked cars still unbuilt: order 16 Nov n16-9 'carried over' to waiting list (his pick A 16 Nov 21:16); PLAN.md line 29 'Parked cars once one sample car passes'. Fictional makes held by canon.md line 185 (canon-gate real-brand check)."
+ },
+ {
+  "id": "D-D-123",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Hatchback not made: n16-9 moved to the waiting list 16 Nov 21:16 (production/orders/2026-11-16.md line 89); other three wait on his look."
+ },
+ {
+  "id": "D-F-040",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/orders/2026-11-09.md n09-1: 'his yes at 07:17 on phase1-exit-2026-11-09: phase 1 closed with its four open faults carried'; NOW.md 'Phase 0 done ... Phase 1's open exits closed into this order'."
+ },
+ {
+  "id": "D-F-037",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Ruling stands in RULINGS.md line 18 ('8 Nov: the fishmonger and the empty unit to let are built in phase 2'), but neither is built: 2026-11-16 order waiting item 2 (targets written 17 Nov)."
+ },
+ {
+  "id": "D-D-003",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Phase 1 passed on his yes 9 Nov (D-F-040), phase 2 now running (NOW.md '## Phase 2'); the two extra shops handled by his 8 Nov yes."
+ },
+ {
+  "id": "D-B-024",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md line 38 ('each round names its real-game decision ... town simulation frozen until C#'s replaces it'); enforcer entry names monday-audit with a changelog check owed. Waiting item 21 (one-simulation switch) still waits for the order of 23 Nov. Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-E-121",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same line, RULINGS.md line 38; production/rulings-enforcers.json says a changelog check is 'to be added'. Currently monday-audit only. Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-G-042",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md line 66: 'The bar is the Meridian Test (D8, D9)'; no 'AA' or 'premium indie' label found in canon, CHARTER, PLAN or RULINGS. Nothing checks it."
+ },
+ {
+  "id": "D-C-014",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md line 15: 'If cost per piece has not clearly fallen by 1 February, scope moves first, never quality.' No tracker for the 1 Feb check found. Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ },
+ {
+  "id": "D-E-134",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Synthesis still running: LANE-HANDOVER.md 19 Nov, next run is step 3 review then step 4 docs; alongside Kiln (HANDOVER.md)."
+ },
+ {
+  "id": "D-E-131",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Synthesis not finished: production/lane/synthesis/ has VISION, DESIGN, TRACE, BUILD-ORDER, QUESTIONS drafts; review, fix and docs wait; 'Vision approved:' not yet given."
+ },
+ {
+  "id": "D-D-121",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same as D-F-037: in RULINGS.md line 18 and the 2026-11-09 order, but the fishmonger and empty unit are unbuilt, waiting item 2 of 2026-11-16 order."
+ },
+ {
+  "id": "D-D-098",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/orders/archive/2026-11-02.md n02-7-1-unit-costs marked done (drafted from time log and token audit, fresh review pass with fixes); friends' evening after the street stays in RULINGS line 16 (D-C-018)."
+ },
+ {
+  "id": "D-F-023",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Mixed: hair colour failed 2 of 2 tries (production/handover/TRIED-ARCHIVE.md line 57); worn paint failed 2 of 2 and is waiting item 10 of the 16 Nov order; Ron dressing is n16-2/Kiln (open); Sheila's white layer carried in Kiln breadth set. Passed nothing by Sunday night as picked."
+ },
+ {
+  "id": "D-C-213",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md lines 173-177 ('NOT an open-world sandbox, NOT a shooter, NOT a driving game ... smallest budget'); canon-gate.py checks only brands and era, nothing tests this."
+ },
+ {
+  "id": "D-G-071",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same text in canon.md lines 173-177 and the 18 Nov pillar 'verbs first' (line 155); nothing tests it."
+ },
+ {
+  "id": "D-C-026",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md line 18: 'When all waits: phase 3's simulation port, phase 5's research.' The 16 Nov waiting list does not name them (K2 kept for its phase). Only named enforcer is monday-audit, which is judgement; rulings_check.py accepts it without testing, and token-audit/MONDAY-AUDIT-2026-11-09.md does not test this."
+ }
+]

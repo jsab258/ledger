@@ -1,0 +1,224 @@
+{
+  "about": "LEDGER loop prototype: Ledger screen test measures. Times are real seconds; money is pence; game time is minutes since Monday 00:00.",
+  "weekEnded": true,
+  "realSecondsPlayed": 1786,
+  "gameMinute": 7935,
+  "ledgerOpens": 7,
+  "ledgerOpensPerHourOfPlay": 14.1,
+  "medianRealSecondsOpenPerVisit": 0.9,
+  "findTheFact": {
+    "keyboard": {
+      "asked": 4,
+      "found": 4,
+      "medianRealSecondsFromOpenToEntry": 0.8
+    },
+    "pad": {
+      "asked": 0,
+      "found": 0,
+      "medianRealSecondsFromOpenToEntry": null
+    },
+    "hook": {
+      "asked": 0,
+      "found": 0,
+      "medianRealSecondsFromOpenToEntry": null
+    },
+    "asks": [
+      {
+        "id": "bus",
+        "question": "Who saw Tom get off the bus on Monday?",
+        "askedAtGameMinute": 2010,
+        "askedAtRealSecondsPlayed": 407,
+        "state": "answered",
+        "wrongMarks": 0,
+        "realSecondsFromAskToOpen": 0.1,
+        "found": true,
+        "device": "keyboard",
+        "realSecondsFromOpenToEntry": 0.6
+      },
+      {
+        "id": "rent",
+        "question": "What rent is due, and on what day?",
+        "askedAtGameMinute": 3600,
+        "askedAtRealSecondsPlayed": 954,
+        "state": "answered",
+        "wrongMarks": 0,
+        "realSecondsFromAskToOpen": 0.1,
+        "found": true,
+        "device": "keyboard",
+        "realSecondsFromOpenToEntry": 1
+      },
+      {
+        "id": "call",
+        "question": "What does Ron Kirby call Tom now?",
+        "askedAtGameMinute": 4921,
+        "askedAtRealSecondsPlayed": 1377,
+        "state": "answered",
+        "wrongMarks": 0,
+        "realSecondsFromAskToOpen": 0.1,
+        "found": true,
+        "device": "keyboard",
+        "realSecondsFromOpenToEntry": 2.7
+      },
+      {
+        "id": "tin",
+        "question": "How much is in the tin?",
+        "askedAtGameMinute": 6300,
+        "askedAtRealSecondsPlayed": 1460,
+        "state": "answered",
+        "wrongMarks": 0,
+        "realSecondsFromAskToOpen": 0.1,
+        "found": true,
+        "device": "keyboard",
+        "realSecondsFromOpenToEntry": 0.6
+      }
+    ]
+  },
+  "talks": 13,
+  "shareOfTalksWithTheSlipUnfolded": 0.46,
+  "notedLinesShown": 12,
+  "shareOfNotedLinesFollowedByAnOpenWithin60Seconds": 0.27,
+  "tabPressedInTheFirstHour": true,
+  "firstTabAtRealSecondsPlayed": 8,
+  "tabOpens": 49,
+  "linesSaidFromSuggestions": 42,
+  "linesSaidPerTabOpen": 0.86,
+  "turnsTyped": 1,
+  "shareOfTurnsFromSuggestions": 0.98,
+  "entries": 187,
+  "entriesStruckThroughThisWeek": 17,
+  "entriesRuledOffAsClosed": 4,
+  "entriesWithNoSourceEvent": 0,
+  "entriesOverTheWordLimit": 0,
+  "visits": [
+    {
+      "atRealSecondsPlayed": 11,
+      "atGameMinute": 983,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "people",
+      "realSecondsOpen": 0.9
+    },
+    {
+      "atRealSecondsPlayed": 316,
+      "atGameMinute": 1390,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "daybook",
+      "realSecondsOpen": 1.2
+    },
+    {
+      "atRealSecondsPlayed": 414,
+      "atGameMinute": 2019,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "daybook",
+      "realSecondsOpen": 0.8
+    },
+    {
+      "atRealSecondsPlayed": 964,
+      "atGameMinute": 3614,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "daybook",
+      "realSecondsOpen": 1.1
+    },
+    {
+      "atRealSecondsPlayed": 1389,
+      "atGameMinute": 4937,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "open",
+      "realSecondsOpen": 2.8
+    },
+    {
+      "atRealSecondsPlayed": 1391,
+      "atGameMinute": 4943,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "open",
+      "realSecondsOpen": 0.7
+    },
+    {
+      "atRealSecondsPlayed": 1469,
+      "atGameMinute": 6313,
+      "device": "keyboard",
+      "openedFrom": "play",
+      "openedOnPart": "open",
+      "realSecondsOpen": 0.8
+    }
+  ],
+  "noted": [
+    {
+      "atRealSecondsPlayed": 5,
+      "atGameMinute": 942,
+      "things": 3,
+      "followedByOpen": true
+    },
+    {
+      "atRealSecondsPlayed": 370,
+      "atGameMinute": 1960,
+      "things": 9,
+      "followedByOpen": true
+    },
+    {
+      "atRealSecondsPlayed": 436,
+      "atGameMinute": 2055,
+      "things": 9,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 536,
+      "atGameMinute": 2188,
+      "things": 10,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 656,
+      "atGameMinute": 2348,
+      "things": 10,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 848,
+      "atGameMinute": 3458,
+      "things": 3,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 965,
+      "atGameMinute": 3617,
+      "things": 1,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 1110,
+      "atGameMinute": 3811,
+      "things": 6,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 1222,
+      "atGameMinute": 3961,
+      "things": 6,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 1263,
+      "atGameMinute": 4090,
+      "things": 6,
+      "followedByOpen": false
+    },
+    {
+      "atRealSecondsPlayed": 1449,
+      "atGameMinute": 6285,
+      "things": 4,
+      "followedByOpen": true
+    },
+    {
+      "atRealSecondsPlayed": 1737,
+      "atGameMinute": 6670,
+      "things": 1,
+      "followedByOpen": null
+    }
+  ]
+}

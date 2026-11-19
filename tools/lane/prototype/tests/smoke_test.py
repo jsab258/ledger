@@ -1,7 +1,7 @@
 """Plays the built prototype in headless Chromium through its own test hook (window.LEDGER).
 
 Needs the pictures: set LEDGER_PROTO_ASSETS to a folder holding them (the files in
-src/MANIFEST.json "assets"; read them from the page with the Artifact tool, or keep a
+PUBLISHED.json "assets"; read them from the page with the Artifact tool, or keep a
 copy outside git). Without it the test is skipped, never passed.
 """
 import functools, http.server, os, sys, tempfile, threading, unittest

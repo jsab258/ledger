@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-G-134",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "RULINGS.md \"3 Oct, trades: bay 1 fishmonger\"; production/specs/terrace-fronts.md:313-314 (bay0 Mickey's 6 m, bay1 fish shop landed); cab-office.json itself says the fish market would have to move to bay 3",
+  "evidence": "Two bays (Mickey's over bay 0 and bay 1, 12.0 m) is not what is built or ruled since: Mickey's is bay 0 only, x 3 to 9, and bay 1 is the fish shop. Free-house part is void (canon D19)."
+ },
+ {
+  "id": "D-G-044",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"D33, D34, D11 ... no stats, difficulty only as assists\" and \"30 Oct: Tom rises in position\"; production/lane/synthesis/DESIGN.md:360 \"He never gets better at fighting or driving\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-166",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/lane/synthesis/DESIGN.md:308 \"The press works only through a person (D56): Alison Sedman\"; RULINGS carries D56 (eight verbs). monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-065",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md 18 Nov prototype line carries it word for word. The changelog check refusing a round with no real-game item is still owed (rulings-enforcers.json note)."
+ },
+ {
+  "id": "D-G-004",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-041 (2026-08-31)",
+  "evidence": "The Meridian Test replaced the old bar; canon.md Tone: \"The bar is the Meridian Test (D8, D9)\"."
+ },
+ {
+  "id": "D-B-028",
+  "status": "enforced",
+  "enforcer": "tools/driving_feel_check.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "Cars line in RULINGS (28 Oct, 17 and 18 Nov) matches; shortcut part was a one-off. Check fails if default targets are not the game band or a study copy starts manual."
+ },
+ {
+  "id": "D-C-168",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/lane/synthesis/DESIGN.md:460 \"No redemption path is added (D58). Reloading is never stopped, and the game says what is permanent\"; RULINGS \"D35, D58\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-081",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DESIGN.md:460 \"Reloading is never stopped, and the game says what is permanent before it happens\"; RULINGS D35, D58. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-135",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 5 and 6 Nov: \"From phase 3, short rough feel checks for him, judged only on fun\". Phase 3 not reached; monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-079",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"D33 ... he sees his own position, never other minds\"; story-outline-2026-09-28.md:91 \"Tom's own reading with its reasons (D33)\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-073",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md \"One production session ... never unattended lanes\"; production/orders/2026-11-16.md:47 \"12. The street's sound (needs his ear)\"; RULINGS still says \"D26: sound is a lane, CC0 only\"",
+  "evidence": "Sound as a lane with a standing daily deliverable is not how work runs: one production session, no lanes, and the street's sound sits on the order's waiting list needing his ear."
+ },
+ {
+  "id": "D-C-149",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Port.cs \"The hard rule on names\"; tools/ci-checks.sh talk-tests",
+  "by": "",
+  "evidence": "RULINGS \"Speech (7 to 28 Oct)\" carries every clause. Hard rule on names is tested in the port tests and the talk tests run in ci."
+ },
+ {
+  "id": "D-C-097",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"28 Oct, the camera\" carries 3.1 m, 86 degrees and situation cameras. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-046",
+  "status": "enforced",
+  "enforcer": "production/art/atlas-01/scripts/check.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS \"D13: Meridian's map is drawn from canon as data, with testable layout rules\"; atlas-01 is the town map. Option A reopening at Phase B not reached."
+ },
+ {
+  "id": "D-D-100",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Study 17 imported: production/orders/2026-11-16.md \"study-17 done ... six details cut under canon's content rule\"; fists-knock-out rule is in RULINGS Combat 30 Oct."
+ },
+ {
+  "id": "D-C-127",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"23 Sep: a subtitle appears only with its audio\"; DESIGN.md:475 repeats it. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-154",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"1 Oct: Suggested lines Mixed ... Tab on a keyboard\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-148",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"23 Sep: the talk runs beside the game as the tested C# helper\"; ledger/TalkHelper exists and n16-6 builds on it. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-A-034",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Tap 13 Nov, router account and key file in place, item closed (its later note). The bake-off itself is order item n16-6, tracked there."
+ },
+ {
+  "id": "D-C-073",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov models line: \"re-checked monthly from 7 Dec on the talk bench, three candidates at most\". Starts 7 Dec; nothing checks it yet."
+ },
+ {
+  "id": "D-G-045",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"D12, D20, D37: the Ledger is a notebook of people and events\"; DESIGN.md Ledger rows. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-126",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"28 Sep: Before an answer, a short thinking sound ... no loading sign\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-072",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs \"witness holds a first-hand rumor at full confidence\"; tools/port-golden-check.sh",
+  "by": "",
+  "evidence": "RULINGS \"D25: Everyone perceives, remembers and gossips\"; the tier-by-authoring wording is not restated but the census (14 principals, about 30 regulars) follows it."
+ },
+ {
+  "id": "D-C-165",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"30 Oct: Tom rises in position ... never in numbers; a hard opening\"; DESIGN.md:360. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-071",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same rule, RULINGS \"What the game is\" 30 Oct; DESIGN.md:360 and VISION.md:36. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-080",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"no reputation numbers\" (D11); rulings-sweep TABLE found no stored global or group number. Prototype heat is a separate copy (PROTOTYPE-VS-DESIGN row 6). monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-085",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05, CHARTER and PLAN replace every list)",
+  "evidence": "Plan lists replaced; the old twenty-recommendation batches are not carried anywhere current. PLAN.md: \"replaces every earlier list\"."
+ },
+ {
+  "id": "D-C-144",
+  "status": "enforced",
+  "enforcer": "tools/dialogue-verify.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS 24 Sep line \"written ahead, generated and checked once\"."
+ },
+ {
+  "id": "D-C-211",
+  "status": "enforced",
+  "enforcer": "prototype AI playtester (canon.md; production/lane/PROTOTYPE-PLAYTEST-1-2026-11-18.md)",
+  "by": "",
+  "evidence": "canon.md pillar: \"Enforced by the prototype's AI playtester ... every round, and by P4 in the real game\". production/lane/PROTOTYPE-PLAYTEST-1-2026-11-18.md measures activities and empty minutes."
+ },
+ {
+  "id": "D-C-212",
+  "status": "enforced",
+  "enforcer": "prototype AI playtester (canon.md; production/lane/PROTOTYPE-PLAYTEST-1-2026-11-18.md)",
+  "by": "",
+  "evidence": "canon.md pillar targets; PROTOTYPE-PLAYTEST-1 table row \"Distinct activities about 10 ... 5 kinds\" measures against them."
+ },
+ {
+  "id": "D-G-002",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-174 (2026-10-12, combat final state)",
+  "evidence": "Weapons design rebuilt: RULINGS Combat 12 Oct and 30 Oct (fists never kill alone), 18 Nov end state A (guns rare, after melee)."
+ },
+ {
+  "id": "D-G-003",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "game-design/weapons-spec.md exists and RULINGS enforcer note says the spec lists no silenced .22 and names the escalation dial (18 Nov)."
+ },
+ {
+  "id": "D-G-155",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-139 (2026-10-13, walk on Game Animation Sample)",
+  "evidence": "The animation route was settled by Epic's Game Animation Sample and Mixamo, and RULINGS 9 Nov: people in motion won by research, no mocap; no assembly-line commission found."
+ },
+ {
+  "id": "D-G-173",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Lamp columns exist and RULINGS 22 Oct says they stay concrete (staining still to finish); concrete columns match the period wording."
+ },
+ {
+  "id": "D-C-103",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"23 Sep: Blender for shapes and layout; all look development in Unreal\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-E-028",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Its later note: builder closed the boots item; Tom's boots now stand in RULINGS 30 Oct and CLOTHES.md \"Kept in the game: Ron's boots\"."
+ },
+ {
+  "id": "D-E-002",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Week of 4 Nov carried out (its later note); dress-the-cast went on the waiting list and is now n16-1 and n16-2."
+ },
+ {
+  "id": "D-G-146",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No current text commissions character concept sheets for docker, market trader, clerk, copper, cab controller, young man about town. Searched RULINGS, PLAN, CHARTER, CATALOGUE, NOW, CLOTHES, orders and handover; only district concepts (copper-row, fairview) appear in CATALOGUE.md:45. Casting sheets (25 Sep) cover the named cast only."
+ },
+ {
+  "id": "D-G-172",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Terrace fronts authored in Blender (production/specs/terrace-fronts.md); PLAN-PARKED-CARS notes City Sample rejected 8 Nov. City Sample licence question was never closed in a ruling."
+ },
+ {
+  "id": "D-F-022",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Closed 12:22 7 Nov; NOW.md says phase 0 done and phase 1 exits closed into the 16 Nov order."
+ },
+ {
+  "id": "D-D-114",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "His keep on the corner end page 7 Nov; answered and absorbed into the 9 and 16 Nov orders."
+ },
+ {
+  "id": "D-F-012",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Still waiting: white base layer (Sheila in Kiln breadth set, n16-2), hill crowns (waiting item 6), night readability and too-dark fault (waiting item 5), quay end and wear (items 9 and 10), all in production/orders/2026-11-16.md section 3."
+ },
+ {
+  "id": "D-D-109",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same list as D-F-012: orders 2026-11-16 section 3 items 5, 6 and n16-1/n16-2 (white layer) not yet passed."
+ },
+ {
+  "id": "D-C-100",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"7 Oct: day and night now; four or five states with transitions later, no moving sun\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-064",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"29 Oct, the day's exposure: one stop darker, kept, never brightened again\". The stop itself is judgement."
+ },
+ {
+  "id": "D-G-065",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "District sheets finished with labels: production/art/concept-copper-row-2026-09-10 and concept-fairview-2026-09-10 with check-copper-row-sheet.py; listed in CATALOGUE.md:45."
+ },
+ {
+  "id": "D-C-098",
+  "status": "enforced",
+  "enforcer": "tools/surface_values.py; tools/chart_read.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS 29 Oct line; surfaces checked against real values in the game buffers. The stop is judgement."
+ },
+ {
+  "id": "D-F-057",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Reported done 10 Nov; the Megascans five downloaded (his report)."
+ },
+ {
+  "id": "D-G-141",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-171 (2026-09-21)",
+  "evidence": "Facade-first plan replaced the same afternoon by kit-first, then terrace fronts authored (its later note). Geometry deferral itself no longer applies."
+ },
+ {
+  "id": "D-C-025",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Fishmonger and empty unit not built: waiting item 2 of production/orders/2026-11-16.md, targets written 17 Nov (TARGET-FISHMONGER, TARGET-EMPTY-UNIT)."
+ },
+ {
+  "id": "D-G-140",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sept batch fix; exposure since governed by 29 Oct ruling and tools/frame-drift.py plus surface_values.py. No open mention in FINDINGS."
+ },
+ {
+  "id": "D-G-095",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-098 (2026-10-29, exposure one stop darker)",
+  "evidence": "0.85 grade was provisional; the day exposure is now ruled one stop darker and checked against real values."
+ },
+ {
+  "id": "D-C-099",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"5 Oct, weather: a grey range ... never sunshine in the friends' build\"; PLAN weather proof. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-153",
+  "status": "enforced",
+  "enforcer": "tools/stain_check.py; tools/street_wear.py selftest",
+  "by": "",
+  "evidence": "RULINGS \"grime is the strategy (D53), a seeded wear layer\"; wear placed by rule and measured: a stain differs by at least 0.1 roughness and darkens at most 40%."
+ },
+ {
+  "id": "D-C-104",
+  "status": "enforced",
+  "enforcer": "tools/stain_check.py; tools/street_wear.py selftest",
+  "by": "",
+  "evidence": "Same RULINGS line (D53, D14); the wear layer is checked by the stain check. Interiors by designed kits is judgement."
+ },
+ {
+  "id": "D-C-118",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"3 Nov, hair (9 Nov: strands stay): no hair skill until one character's hair passes the full gate\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-F-041",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Strands stay is in RULINGS 3 Nov line \"(9 Nov: strands stay)\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-E-024",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Its later note: builder closed the hair yes and started crown research; now n16-8 (hair)."
+ },
+ {
+  "id": "D-C-140",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"9 Nov, motion: he never films or performs anything, nor is it proposed. Pexels and Pixabay clips allowed\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-E-003",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Third try done 5 Nov; hill crowns now waiting item 6 with a different researched method (TARGET-HILL-CROWNS-2026-11-17)."
+ },
+ {
+  "id": "D-F-013",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Third try carried out; review found new fault, so the hill went to waiting item 6 (production/orders/2026-11-16.md)."
+ },
+ {
+  "id": "D-C-094",
+  "status": "enforced",
+  "enforcer": "tools/push_guard.py (picture outside production/previews refused)",
+  "by": "",
+  "evidence": "RULINGS 21 Sep and 1 Oct line. Check keeps screenshots out of git; the bar itself is judgement."
+ },
+ {
+  "id": "D-G-070",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Hook sheet as floor: RULINGS \"Every visual but clothes is judged against the Hook sheet and KCD2 frames, yes only for 2026-grade work\". Phase A wording is gone. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-105",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"22 Sep: image-to-3D waits until hand-made props are the bottleneck\"; TARGET-IMAGE-TO-3D-PROPS cites it as the bound. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-171",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-172 (2026-09-21)",
+  "evidence": "Terrace fronts ruled authored the same evening (its later note); RULINGS 3 Oct sources order keeps free assets first."
+ },
+ {
+  "id": "D-C-106",
+  "status": "enforced",
+  "enforcer": "tools/facade-pair.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS \"8 Oct: Kit pieces period books draw ... a fresh helper writes the target\"."
+ },
+ {
+  "id": "D-G-175",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-114 (2026-10-22, lamp columns concrete)",
+  "evidence": "Question moved on: terrace fronts went ahead and lamp columns were then ruled concrete."
+ },
+ {
+  "id": "D-C-114",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 22 Oct still says \"their staining is to be finished\"; lamps and street furniture sit on the waiting list (orders 2026-11-16 item 4). monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-054",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Calibration scene and surface checks exist: tools/office_look.py --calibrate, tools/chart_read.py, tools/surface_values.py."
+ },
+ {
+  "id": "D-C-113",
+  "status": "enforced",
+  "enforcer": "tools/office_look.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS \"4 Oct: Mickey's office is the front room Tom walks into\"."
+ },
+ {
+  "id": "D-C-101",
+  "status": "enforced",
+  "enforcer": "tools/measure_night_pools.py",
+  "by": "",
+  "evidence": "RULINGS \"1 Oct, night: pools of lamp light with darkness between\". Check measures four stops between lamps."
+ },
+ {
+  "id": "D-D-067",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-F-012 (2026-11-04)",
+  "evidence": "Night-fill stop was overtaken: 4 Nov he asked for night buildings readable with a dull orange glow while keeping pools. The pools rule itself lives on as D-C-101."
+ },
+ {
+  "id": "D-C-109",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"2 Oct: no skip or pallets until real; the KX100 phone box stays\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-028",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off yes for the office camera; office look tooling (tools/office_look.py) runs with it. Nothing else pending."
+ },
+ {
+  "id": "D-F-002",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Closed 07:57 2 Nov (its later note): one more try in the ground's material."
+ },
+ {
+  "id": "D-F-036",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Hatchback not yet built: n16-9 carried over to the next order (orders 2026-11-16); plan in production/research/phase2-plan/PLAN-PARKED-CARS-2026-11-17.md."
+ },
+ {
+  "id": "D-C-027",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"25 Oct: Phase 5: kits plus Unreal's procedural tools\"; PLAN phase 5. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-075",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05)",
+  "evidence": "Ten-step list not carried as a list; PLAN.md replaced every earlier list and the steps live as phase 2 items."
+ },
+ {
+  "id": "D-C-095",
+  "status": "enforced",
+  "enforcer": "tools/wet_ground_check.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS \"3 Oct: The proof view is built to the Hook sheet\" with its bars."
+ },
+ {
+  "id": "D-C-024",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"22 Oct: Rita's front is the shops' sample\"; Rita's fixes are waiting item 10. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-111",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"1 Oct: shop rooms of Poly Haven CC0 models; the pawnbroker's window lit at night\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-110",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"3 Oct, trades\" lists the same bays; fishmonger and empty unit are waiting items. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-069",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Set aside 6 Nov at a new fault in the drop (its later note); sit reopened 28 Oct per RULINGS people's moves."
+ },
+ {
+  "id": "D-G-092",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Applied: production/specs/vignette-scene.json overcast_day sky_intensity 0.70, fog_max_opacity 0.100."
+ },
+ {
+  "id": "D-G-096",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"15 Sep: the sky is a photograph (D40)\"; vignette-scene.json uses a polyhaven HDRI for overcast_day. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-102",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 15 Sep line still says presentation built early with \"grain, grade and depth of field owed\"; no item for them in NOW.md or the 16 Nov order."
+ },
+ {
+  "id": "D-D-065",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Calibration carried out: tools/surface_values.py, tools/road-brightness.py, WET-OVERCAST-VALUES-2026-10-29.md; a too-dark night fault remains as waiting item 5."
+ },
+ {
+  "id": "D-E-014",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 6 to 8 Nov: \"clothing is not solved by an interim pass\"; NOW.md/CLOTHES.md still treat clothing as open. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-F-055",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Texture pipeline test run; jeans chain and painted joinery decided 11 Nov (see D-A-013 later note)."
+ },
+ {
+  "id": "D-A-013",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Test carried out; results decided 11 Nov (jeans chain keeps today's method, painted joinery keeps today's wear)."
+ },
+ {
+  "id": "D-D-091",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Corner passed his keep at its end page 7 Nov (D-D-114); the copy along the street is n16-5, held by the Kiln pick."
+ },
+ {
+  "id": "D-F-009",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One third try carried out 3 Nov; hair continues as n16-8 with Loomwright."
+ },
+ {
+  "id": "D-C-141",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"30 Sep: Townspeople: measure 0, 5, 10 and 20 packaged\"; PLAN phase 5 repeats it. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-028",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-041 (2026-08-31)",
+  "evidence": "GTA V PS3 retired as a bar; canon.md Tone says so."
+ },
+ {
+  "id": "D-G-041",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Tone: \"Visual target: photoreal, wet, overcast, grimy Britain ... The bar is the Meridian Test (D8, D9)\". Judgement, no tool."
+ },
+ {
+  "id": "D-G-031",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05)",
+  "evidence": "Studio director and cadence rules are gone; one production session works from CHARTER and PLAN."
+ },
+ {
+  "id": "D-G-086",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-022 (2026-10-05)",
+  "evidence": "The light, surfaces, wetness, clutter, geometry order is not restated; phases and orders in PLAN.md now set the order."
+ },
+ {
+  "id": "D-D-019",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Walk passed his eye 26 Oct and is default; sit set aside (its later note); RULINGS people's moves records both."
+ },
+ {
+  "id": "D-C-139",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"People's moves: the walk on Epic's Game Animation Sample with motion matching\"; sitting still reopened. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-014",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Two tries set aside, third try passed 26 Oct and became default (its later note)."
+ },
+ {
+  "id": "D-A-049",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Followed: DECISIONS 16 Nov 12:39 records it, Kiln pattern work imports FreeSewing SVGs and GarmentCode DXFs (DECISIONS 18 Nov), Marvelous used for reference drapes (HANDOVER.md:37). Bridge start script exists but only a heartbeat check, not \"recover by itself\"."
+ },
+ {
+  "id": "D-C-130",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"3 Oct: Clothes are the one exception to the visual bar\" with the floor; CLOTHES.md repeats it. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-C-131",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS \"29 Sep: clothes on people are his to approve, in the game's camera\". monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-138",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 6 to 8 Nov clothes line carries it, but says \"unless he decides by 25 November\" where the decision says about 20 November. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-G-154",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Carried skinned garments are the route (his keep, D-A-021, 11 Nov; RULINGS \"Game clothes are skinned meshes\"); nothing bought. monday-audit only (rulings-enforcers.json), no tool tests it."
+ },
+ {
+  "id": "D-D-122",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-F-063 (2026-11-11, keep on the resizing backbone)",
+  "evidence": "Epic resizable outfits as backbone dropped: 11 Nov he picked keep carried garments; Epic resizing only a baseline in Kiln and phase 5 crowd. Scan rule survives in RULINGS 8 Nov."
+ },
+ {
+  "id": "D-F-034",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-F-063 (2026-11-11)",
+  "evidence": "Backbone half replaced by his 11 Nov keep; scan rule lives on in RULINGS \"8 Nov, scans\"."
+ },
+ {
+  "id": "D-E-018",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-F-063 (2026-11-11)",
+  "evidence": "Same backbone idea; replaced by keeping carried garments, Epic resizing kept only as Kiln baseline (D-E-068)."
+ },
+ {
+  "id": "D-D-072",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Collar third try set aside 4 Nov and listed (its later note)."
+ },
+ {
+  "id": "D-D-045",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Cuffs built and passed packaged 30 Oct (its later note)."
+ },
+ {
+  "id": "D-D-031",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Four drapes failed, set aside, another direction put that day (its later note)."
+ },
+ {
+  "id": "D-F-026",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Closed 20:11 7 Nov (its later note); next session made it first."
+ },
+ {
+  "id": "D-D-074",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "He downloaded Epic's footwear 2 Nov 07:54 (its later note)."
+ },
+ {
+  "id": "D-F-001",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Reported done 2 Nov; files taken from Downloads and looked at before use."
+ },
+ {
+  "id": "D-D-050",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Project skill exists: .claude/skills/game-garment."
+ },
+ {
+  "id": "D-D-076",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Skill text carried out in .claude/skills/game-garment (his attached text, draping, UV-order check)."
+ },
+ {
+  "id": "D-C-132",
+  "status": "enforced",
+  "enforcer": "tools/garments_shipped_check.py; tools/attribution-check.py (rulings-enforcers.json)",
+  "by": "",
+  "evidence": "RULINGS \"3 Oct: People wear only gated garments from CC0, unmarked CC-BY, Blender or Marvelous Designer; none bought\"."
+ },
+ {
+  "id": "D-D-043",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sleeve ends and cuffs followed; cuffs passed packaged 30 Oct (D-D-045 later note)."
+ },
+ {
+  "id": "D-D-052",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Jacket put on Tom, cuffs rebuilt and passed 30 Oct; jumpers passed his look 8 Nov (D-D-116); jeans and boots carried on in CLOTHES.md and RULINGS 30 Oct."
+ },
+ {
+  "id": "D-D-116",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "His yes on the jumpers' floor given 8 Nov; shortfalls listed and the tailor boss stands (RULINGS, D-E-014)."
+ }
+]

@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-C-197",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "Canon.md content rule keeps it; content-gate.py --enforceable lists alcohol and gambling as mechanical."
+ },
+ {
+  "id": "D-G-139",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Clips removed 21 Sep; the animation library is walked by clip and slot name as site 6 (content-gate.py ~line 981; canon.md line 137)."
+ },
+ {
+  "id": "D-E-071",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "First bullet of RULINGS.md 'Authored breadth (13 Nov 2026)' carries it; rulings-enforcers.json has an entry for it."
+ },
+ {
+  "id": "D-G-052",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: 'THE BUILT STREET IS QUAY STREET, IN THE HOOK'; graffiti crew is QUAY FIRM (the Hook). Tide Rats rename was never minted, not needed."
+ },
+ {
+  "id": "D-C-184",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Game section states it (option C, east_parade_* kept as asset names). No check reads it."
+ },
+ {
+  "id": "D-G-110",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md header: 'A ruling that changes canon edits canon in the same batch (Jafar, 2026-09-16)'. Nothing checks it."
+ },
+ {
+  "id": "D-E-126",
+  "status": "enforced",
+  "enforcer": "prototype AI playtester (tools/lane/prototype reviewers/packet.py)",
+  "by": "",
+  "evidence": "canon.md pillar section says the prototype's AI playtester measures the activity mix and empty minutes each round (tools/lane/prototype, reviewers packet)."
+ },
+ {
+  "id": "D-E-136",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md content rule (18 Nov 22:07) and RULINGS Cars line. rulings-enforcers.json says the no-death Core test is still owed; no car contact code exists."
+ },
+ {
+  "id": "D-B-037",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same as D-E-136: canon.md content rule and RULINGS Cars line; the Core test and clumsy-player gate are owed, only monday-audit watches it."
+ },
+ {
+  "id": "D-C-007",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md and RULINGS 28 Oct line carry it. Only monday-audit; rulings-enforcers.json note says a Core test of 'no car contact kills' is owed (no car code yet)."
+ },
+ {
+  "id": "D-C-195",
+  "status": "enforced",
+  "enforcer": "tools/names-gate.py",
+  "by": "",
+  "evidence": "canon.md NAMES paragraph; names-gate.py RETIRED list refuses Lena, Rocco, Sam, Mara, Aldous, Sera, Noor, Elias, Danny Ro, Novak, Toma in player-facing text."
+ },
+ {
+  "id": "D-G-056",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md content rule; content-gate.py checks 8 of 20 clauses mechanically, the other 12 are judgement (its own --enforceable output)."
+ },
+ {
+  "id": "D-E-112",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md 'What LEDGER is not' (17 Nov: AAA driving the end state) and RULINGS Cars line. No check."
+ },
+ {
+  "id": "D-C-202",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md; content-gate.py drug-use is mechanical for verbs and paraphernalia only; 'never a player verb' is judgement."
+ },
+ {
+  "id": "D-C-188",
+  "status": "enforced",
+  "enforcer": "tools/canon-gate.py",
+  "by": "",
+  "evidence": "canon.md Era; canon-gate.py bans mobile phone, internet, website etc. in content, scripts and specs."
+ },
+ {
+  "id": "D-E-130",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 51; tools/order_ledger.py line 23",
+  "evidence": "CLAUDE.md line 51: 'look up how Mafia or Kingdom Come II does it (the studies, then their files on demand) and copy its method'; order_ledger.py line 23 accepts Mafia as an equal reference, against RULINGS 17/18 Nov 'Mafia only a period Unreal study, never the yardstick'."
+ },
+ {
+  "id": "D-C-200",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md content rule. content-gate.py says it is not mechanical (a Core homicide and memory table property); CoreTests touch it."
+ },
+ {
+  "id": "D-C-152",
+  "status": "enforced",
+  "enforcer": "tools/canon-gate.py::real brand besides; tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md/RULINGS 29 Sep; canon-gate.py real-brand check and content-gate.py on live speech."
+ },
+ {
+  "id": "D-C-182",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Game section lists the seven districts. No check."
+ },
+ {
+  "id": "D-G-066",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md D19 paragraph (minicab office, information room, pubs boarded or serving food). Same decision as D-C-186."
+ },
+ {
+  "id": "D-C-186",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md D19 paragraph. No check."
+ },
+ {
+  "id": "D-G-049",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Studio names entered canon.md (QUAY FIRM, PARADE RATS and the rest, 2 Sep); the strike-on-sight line stands in canon.md."
+ },
+ {
+  "id": "D-G-055",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md content rule; content-gate.py alcohol and gambling rules."
+ },
+ {
+  "id": "D-C-204",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md; content-gate.py children by noun and stated age; crowd generation is the code site."
+ },
+ {
+  "id": "D-C-203",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md; content-gate.py prostitution and sexual-content rules."
+ },
+ {
+  "id": "D-C-187",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md Era (off-licence struck); content-gate.py line 268 flags 'off-licence'; brand-bible lists it as banned."
+ },
+ {
+  "id": "D-C-207",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md content rule; content-gate.py calls it not mechanical."
+ },
+ {
+  "id": "D-C-185",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Quay Street three sides (reworded 23 Sep). No check."
+ },
+ {
+  "id": "D-C-205",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md; the slur list covers 'never voiced', the rest is judgement (content-gate.py --enforceable)."
+ },
+ {
+  "id": "D-C-206",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md; content-gate.py lists it as not mechanical."
+ },
+ {
+  "id": "D-C-183",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: Quay Street, Weighhouse Lane, Tannery Row. No check."
+ },
+ {
+  "id": "D-C-201",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py",
+  "by": "",
+  "evidence": "canon.md; content-gate.py slurs list (content/rules/slurs-v1.json); swearing is an accepting fixture."
+ },
+ {
+  "id": "D-D-124",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Item story-texts-canon-points-2026-11-08 closed 8 Nov 20:26, state done; texts stay drafts."
+ },
+ {
+  "id": "D-F-038",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py::three batches of open items in one day are refused",
+  "by": "",
+  "evidence": "RULINGS 2 Nov line carries 'story drafts and small canon details judged built; items in at most two batches a day'. The ten points were closed done 8 Nov."
+ },
+ {
+  "id": "D-G-019",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Era and setting: British port town, 1988 to 1992; accents english/scottish/irish in the voice casting. Pub as a place only, per D18."
+ },
+ {
+  "id": "D-C-181",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md and CLAUDE.md project facts: third-person, PC only. No check."
+ },
+ {
+  "id": "D-C-198",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: 'Tobacco stays'; content-gate.py keeps it as an accepting fixture, nothing enforces presence."
+ },
+ {
+  "id": "D-C-189",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Tone; RULINGS look section (Hook sheet, KCD2 as the bar). Tone is a judge's call, not a gate."
+ },
+ {
+  "id": "D-B-029",
+  "status": "enforced",
+  "enforcer": "prototype AI playtester (tools/lane/prototype)",
+  "by": "",
+  "evidence": "canon.md pillar 'verbs first, talk as the consequence' present; prototype playtester measures the mix each round."
+ },
+ {
+  "id": "D-C-199",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md content rule; content-gate.py lists violence as permitted, cruelty-as-spectacle not mechanical."
+ },
+ {
+  "id": "D-C-196",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md NAMES paragraph (Walsh, Garbutt, Suddaby). names-gate.py retired list does not include Emil."
+ },
+ {
+  "id": "D-G-005",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "game-design/story-outline-2026-09-28.md line 63 'Act III: The Ledger Comes Due (ruled in July: an audit)'."
+ },
+ {
+  "id": "D-C-193",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: 'Ada was never a teacher (Jafar, 2026-09-28)'. No check."
+ },
+ {
+  "id": "D-G-024",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "story-outline-2026-09-28.md line 84: Both 'by the July ruling not meant to be reached on a first playthrough'."
+ },
+ {
+  "id": "D-G-036",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Tone: dry British wit, seaside-postcard smut, never GTA-style satire. Judge's call, no gate."
+ },
+ {
+  "id": "D-G-170",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Part2.cs::a hunted player who kept the business, with books that hold, reaches the Kingdom",
+  "by": "",
+  "evidence": "RULINGS 'D35, D58: no redemption, hunted-state endings reachable'; queue 399 traced 28 Sep and tested in CoreTests."
+ },
+ {
+  "id": "D-C-159",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Sep/29 Sep story line: nine designs stand. Only monday-audit."
+ },
+ {
+  "id": "D-C-161",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 30 Sep story line carries it. Only monday-audit."
+ },
+ {
+  "id": "D-C-162",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Oct story line carries it. Only monday-audit."
+ },
+ {
+  "id": "D-C-216",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md OPEN 2: DECIDED 2026-09-28, baseline Tom Nowak and the three acts."
+ },
+ {
+  "id": "D-G-077",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Narrative baseline decided 28 Sep (canon.md OPEN 2, story-outline-2026-09-28.md approved); no standing writing lane exists now, CLAUDE.md says bounded tasks only."
+ },
+ {
+  "id": "D-C-009",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Oct: 'Story: one main story with two or three endings'. Only monday-audit; story outline has five endings."
+ },
+ {
+  "id": "D-C-156",
+  "status": "enforced",
+  "enforcer": "tools/ci-checks.sh::own-lines-port; tools/port_own_lines.py",
+  "by": "",
+  "evidence": "RULINGS street-lines line; own-lines check covers regulars' own lines port."
+ },
+ {
+  "id": "D-C-112",
+  "status": "enforced",
+  "enforcer": "tools/needs_you_page.py::a placeholder on his page; tools/canon-gate.py; tools/names-gate.py",
+  "by": "",
+  "evidence": "RULINGS 3 Oct poll-tax line; needs_you_page.py refuses placeholders on his page, canon-gate and names-gate run."
+ },
+ {
+  "id": "D-C-190",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md Premise and cast carries all of it. No check."
+ },
+ {
+  "id": "D-G-012",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-195 (2026-09-24, Novak to Nowak)",
+  "evidence": "Tom Novak became Tom Nowak on 24 Sep (canon.md NAMES; D-C-195); names-gate retires Novak."
+ },
+ {
+  "id": "D-G-025",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "story-outline-2026-09-28.md line 81: Quiet ending 'three watch-only days'."
+ },
+ {
+  "id": "D-G-026",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "story-outline line 82 to 85: Both needs Ellis's case answerable and one friendship holding; CoreTests have EllisCaseAnswerable cases. Not mechanically held to the exact route."
+ },
+ {
+  "id": "D-C-194",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: Sheila withholds his name until she trusts him; town's name reads out standing."
+ },
+ {
+  "id": "D-D-117",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "game-design/side-stories-2026-11-08.md stands as the phase 3 list; the 8 Nov 19:35 rule (judged built) adds, does not replace."
+ },
+ {
+  "id": "D-C-158",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Sep story line; outline file present. Only monday-audit."
+ },
+ {
+  "id": "D-C-155",
+  "status": "enforced",
+  "enforcer": "tools/ci-checks.sh::own-lines-port; tools/port_own_lines.py",
+  "by": "",
+  "evidence": "RULINGS street-lines line; own-lines port check."
+ },
+ {
+  "id": "D-C-160",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 30 Sep: thirty regulars stand. Only monday-audit."
+ },
+ {
+  "id": "D-F-032",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same as D-D-117: the 32 side stories stand as the list; game-design/side-stories-2026-11-08.md."
+ },
+ {
+  "id": "D-C-191",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: Tom has never been to the Hook (Jafar 2026-09-23)."
+ },
+ {
+  "id": "D-C-192",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md: life before the Hook left unsaid (2026-09-28)."
+ },
+ {
+  "id": "D-C-164",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs::a witness who saw only a shape has no reason to suspect this man",
+  "by": "",
+  "evidence": "RULINGS 28 Sep line; CoreTests case on witness who saw only a shape."
+ },
+ {
+  "id": "D-C-157",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS street-lines line: 'one sample stands; ten more wait'. The own-lines check does not cover news."
+ },
+ {
+  "id": "D-C-108",
+  "status": "enforced",
+  "enforcer": "tools/slice-perf.py; tools/perf-hook.py",
+  "by": "",
+  "evidence": "RULINGS 23 Sep/24 Oct line; slice-perf and perf-hook check the 60 fps target."
+ },
+ {
+  "id": "D-G-023",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Walk runs on Epic's Game Animation Sample in the packaged game (RULINGS people's moves); fight lab test is in PLAN.md phase 3 on real bodies."
+ },
+ {
+  "id": "D-A-040",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS.md first bullet 'Authored breadth (13 Nov 2026)' as ruled."
+ },
+ {
+  "id": "D-E-124",
+  "status": "enforced",
+  "enforcer": "tools/driving_feel_check.py::gearbox automatic by default",
+  "by": "",
+  "evidence": "RULINGS Cars line 'automatic gearbox'; driving_feel_check.py tests the study's default. Controller: DECISIONS 18 Nov 12:53 says gamepad allowed, 'unverified with his pad'."
+ },
+ {
+  "id": "D-C-151",
+  "status": "enforced",
+  "enforcer": "tools/content-gate.py; tools/canon-gate.py",
+  "by": "",
+  "evidence": "RULINGS 24 Sep line; content-gate.py on live speech and canon-gate.py."
+ },
+ {
+  "id": "D-G-076",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'D29' (posture shows recognition) and studies/07-animation.md gesture families carry the idea; the owed list of every movement is in no current text."
+ },
+ {
+  "id": "D-D-063",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Oct camera: 3.1 m; production/specs/camera.json cites his pick '3.1' of 29 Oct 08:12. Only monday-audit."
+ },
+ {
+  "id": "D-D-062",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-063 / his pick of 29 Oct 08:12 (3.1 m)",
+  "evidence": "Its 2.4 m street camera was replaced by his answer of 20:06 and his 29 Oct pick '3.1' (RULINGS camera line); the by-situation modes still stand there."
+ },
+ {
+  "id": "D-C-006",
+  "status": "enforced",
+  "enforcer": "tools/driving_feel_check.py",
+  "by": "",
+  "evidence": "RULINGS Cars line; driving_feel_check.py checks game-band targets and automatic default."
+ },
+ {
+  "id": "D-G-013",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Kept by canon.md content rule (18 Nov) and RULINGS Cars; no car contact code exists in ledger/ so nothing tests 'cannot produce a death' now."
+ },
+ {
+  "id": "D-C-005",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Cars line 17 Nov; PLAN.md phase 4 'Traffic from the car kit'; NOW n16-9 parked cars. Only monday-audit."
+ },
+ {
+  "id": "D-E-125",
+  "status": "enforced",
+  "enforcer": "tools/driving_feel_check.py",
+  "by": "",
+  "evidence": "RULINGS Cars line; driving_feel_check.py fails if default targets are not the game band."
+ },
+ {
+  "id": "D-G-037",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-005 (2026-11-17, cars staged plan)",
+  "evidence": "Parked cars come in phase 2 (NOW n16-9), traffic in phase 4 and a driving study runs now, so driving no longer waits behind combat."
+ },
+ {
+  "id": "D-C-008",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS combat line; weapons-spec.md header voids the suppressed .22 and names the dial. Only monday-audit (rulings-enforcers note)."
+ },
+ {
+  "id": "D-B-031",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md pillar quote 'not a gossip simulator'; weapons-spec.md header 18 Nov. Only monday-audit."
+ },
+ {
+  "id": "D-D-149",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Recorded in RULINGS combat line (18 Nov) and weapons-spec.md header."
+ },
+ {
+  "id": "D-E-128",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "weapons-spec.md header (18 Nov, advisor 226): dial, suppressed .22 void; RULINGS combat line. Only monday-audit. Line 1100 of that spec still says 'suppressed pistol' in a phase list."
+ },
+ {
+  "id": "D-C-174",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS combat (12 Oct) line; game-design/combat-design.md exists. Only monday-audit."
+ },
+ {
+  "id": "D-G-168",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "game-design/combat-design.md lines 18, 142 keep the three gaps in order. The old stage-6 contradiction is not visible in current texts."
+ },
+ {
+  "id": "D-G-147",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "SMALL-MODEL-TEST.md and PAID-ROUTER-TEST.md in production/research/conversation-model-capability/ print the test; model never adjudicates stays in canon moat."
+ },
+ {
+  "id": "D-G-006",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md names Copper Row 'market quarter'; atlas and qa-matrix treat it so. Answer itself not quoted in source."
+ },
+ {
+  "id": "D-G-157",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-165 (D56, 2026-09-21)",
+  "evidence": "Superseded the same day by D56 and the eight verbs (its own later note)."
+ },
+ {
+  "id": "D-C-171",
+  "status": "enforced",
+  "enforcer": "tools/crime-verdict-check.py",
+  "by": "",
+  "evidence": "RULINGS D56 line; crime verdict check."
+ },
+ {
+  "id": "D-G-165",
+  "status": "enforced",
+  "enforcer": "tools/crime-verdict-check.py",
+  "by": "",
+  "evidence": "RULINGS 'D56: the crime layer owes eight verbs, in order'; crime-verdict-check.py."
+ },
+ {
+  "id": "D-C-166",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'D27, D30: the end state is the ambition; the narrative is owed'. Only monday-audit."
+ },
+ {
+  "id": "D-C-215",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "canon.md OPEN 1: Unreal decided; project is in Unreal, C# Core with port goldens (port-golden-check.sh)."
+ },
+ {
+  "id": "D-C-175",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS combat line carries the 30 Oct fists ruling. Only monday-audit."
+ },
+ {
+  "id": "D-C-170",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS genre line (23 Sep) word for word. Only monday-audit."
+ },
+ {
+  "id": "D-G-167",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Grassing and turning in kept in combat/crime designs (failure-after-arrest research); nothing checks it."
+ },
+ {
+  "id": "D-G-050",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'D14: every interior in scope is designed, assembled by script from designed kits'. No check."
+ },
+ {
+  "id": "D-G-038",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-050 (D14, 2026-09-14)",
+  "evidence": "The three-tier plan was replaced by D14 on 2026-09-14 (its own note; RULINGS look section)."
+ },
+ {
+  "id": "D-B-033",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md lines 51 and 53; tools/order_ledger.py line 23",
+  "evidence": "Same as D-E-130: CLAUDE.md line 51 and order_ledger.py line 23 still treat Mafia as an equal reference ('Reference: Mafia's 1.65 m' in its selftest); CLAUDE.md game extracts line fetches 'Mafia's missing numbers'."
+ },
+ {
+  "id": "D-C-092",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "CLAUDE.md line 51 (files on demand); tools/order_ledger.py line 23",
+  "evidence": "outside_only_check enforces the files half, but CLAUDE.md line 51 says copy Mafia's or KCD2's method and read 'their files on demand'; RULINGS 17 Nov says files never opened, Mafia never the yardstick."
+ },
+ {
+  "id": "D-G-083",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'D12, D20, D37: the Ledger is a notebook of people and events'. No check."
+ },
+ {
+  "id": "D-C-169",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS D12, D20, D37 line. Only monday-audit."
+ },
+ {
+  "id": "D-G-149",
+  "status": "enforced",
+  "enforcer": "tools/ci-checks.sh::talk-tests",
+  "by": "",
+  "evidence": "RULINGS speech line (reply check) and 24 Sep line; TalkTests run in ci."
+ },
+ {
+  "id": "D-C-010",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Oct release line. Only monday-audit."
+ },
+ {
+  "id": "D-C-012",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 28 Oct release line: local model re-tested about every three months. Only monday-audit."
+ },
+ {
+  "id": "D-G-082",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'no minimap; paper map and street signs'; map is data (atlas). No check."
+ },
+ {
+  "id": "D-C-173",
+  "status": "enforced",
+  "enforcer": "production/art/atlas-01/scripts/check.py",
+  "by": "",
+  "evidence": "RULINGS D13 line; atlas-01 check script."
+ },
+ {
+  "id": "D-G-051",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-184 (2026-09-08, option C); D-C-186 (D19)",
+  "evidence": "Amended the same day by option C (Quay Street, the Hook) and its pub replaced by D19; the siting itself stands in canon.md."
+ },
+ {
+  "id": "D-C-146",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Oct (D48) line. Only monday-audit."
+ },
+ {
+  "id": "D-A-033",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov models line: 'the game's talk and voice models re-checked monthly from 7 Dec'. Nothing checks it yet (first due 7 Dec)."
+ },
+ {
+  "id": "D-G-114",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Project is the Unreal wire; the textured street exists (SM_QuayStreet in attribution-check)."
+ },
+ {
+  "id": "D-G-067",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS D20 line: no minimap, paper map, street signs. No check."
+ },
+ {
+  "id": "D-G-148",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS D48 line (model by kind of moment, never by character). Only monday-audit."
+ },
+ {
+  "id": "D-C-167",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS D33, D34, D11 line. Only monday-audit."
+ },
+ {
+  "id": "D-C-150",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 23 Sep line (offline or slow, 8 s). Only monday-audit."
+ },
+ {
+  "id": "D-G-128",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Street, crime with a spatial witness and the overheard consequence were built first (CoreTests, packaged street); PLAN.md now carries the order."
+ },
+ {
+  "id": "D-C-147",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 24 Sep router line. Only monday-audit."
+ },
+ {
+  "id": "D-C-107",
+  "status": "enforced",
+  "enforcer": "tools/slice-perf.py::target=60fps-at-3440x1440/never-below-30",
+  "by": "",
+  "evidence": "RULINGS 23 Sep line; slice-perf checks the target."
+ },
+ {
+  "id": "D-D-010",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 25 Oct says phase 5 design is written during phase 2; phase 2 is running and no phase 5 design file was found in production/research, orders or NOW.md."
+ }
+]

@@ -98,18 +98,20 @@ THE REFERENCE CAR IS NOT THE GAME'S HANDLING. ReferenceCar is a plain bicycle
 model (one front, one rear tyre), linear tyres cut off at a grip limit, weight
 transfer front to back, and simple roll and pitch springs. It exists only to
 make synthetic telemetry for the tests and as a worked example of a car that
-runs the drives and exports the format. Its numbers are tuned near the first
-targets so the tests mean something; they say nothing about how LEDGER's car
-should be built.
+runs the drives and exports the format. Its numbers are tuned to the ordinary
+set (17 Nov), not to the game set, so the "reference" command checks it
+against the ordinary set; they say nothing about how LEDGER's car should be
+built.
 
 Usage (from the repository root):
   python tools/lane/driving_drives.py reference --out DIR
       runs every drive on the reference car, writes telemetry and result.json
   python tools/lane/driving_drives.py metrics DIR [--out result.json] [--car NAME]
       reads every telemetry file in DIR, writes the metric result
-  python tools/lane/driving_drives.py targets [--set ordinary|fast] [--out targets.json]
-      writes a named first target set (ordinary is the default car)
-  python tools/lane/driving_drives.py compare result.json [--set fast | --targets targets.json]
+  python tools/lane/driving_drives.py targets [--set game|ordinary|fast] [--out targets.json]
+      writes a named target set (game, the provisional fun-first set, is the
+      default; ordinary and fast are the 17 Nov real-car-based alternatives)
+  python tools/lane/driving_drives.py compare result.json [--set ordinary | --targets targets.json]
   python tools/lane/driving_drives.py compare unreal.json --against browser.json
       [--rel 0.05]
 """
@@ -753,12 +755,54 @@ def metrics_from_dir(folder, car=None):
 # Targets and compare
 # ---------------------------------------------------------------------------
 
-# FIRST TARGETS from the researched feel-targets sheet (17 Nov 2026): the
-# "game band", the real range widened by the sheet's allowed game departures.
-# "first" = a number to tune to now; "placeholder" = no number yet, reported
-# but never failed. Two sets, chosen by name: "ordinary" (the default car, an
-# ordinary 1990 small hatch) and "fast" (a 1990 fast hatch).
+# TARGET SETS from the feel-targets sheet. Status words: "provisional" and
+# "first" = a number to tune to now (both are checked); "placeholder" = no
+# number yet, reported but never failed.
+#
+# "game" is the DEFAULT (his rulings of 18 Nov 2026, 12:32 and 12:36): LEDGER
+# is not a driving sim; its cars are fun and easy first, like open-world games
+# that are not sims; 1990 is carried by sound, body sway, the look and relative
+# speed; real 1990 figures are flavour and a plausibility floor only; the
+# gearbox is automatic by default. Every game number is PROVISIONAL until the
+# footage measurements of the reference games replace it (method:
+# production/lane/FOOTAGE-TO-GAME-SET-2026-11-18.md).
+#
+# "ordinary" (an ordinary 1990 small hatch: the real range widened by the
+# sheet's allowed departures, 17 Nov) and "fast" (a 1990 fast hatch) stay
+# selectable by name as named alternatives.
+GAME_SET = {
+    "M1.0_30_s": (3.0, 4.5),
+    "M1.0_60_s": (10.0, 14.0),
+    "M2.top_speed_mph": (95.0, 110.0),
+    "M2.speed_at_100m_mph": (44.0, 52.0),
+    "M3.brake_30_m": (8.0, 11.0),
+    "M3.brake_50_m": (22.0, 30.0),
+    "M3.brake_70_m": (44.0, 58.0),
+    "M3.wet_ratio_30": (1.3, 1.6),
+    "M3.wet_ratio_50": (1.3, 1.6),
+    "M3.wet_ratio_70": (1.3, 1.6),
+    "M4.turning_circle_m": (8.5, 9.8),
+    "M5.yaw_63_s": (0.15, 0.25),
+    "M5.self_centre_s": (0.4, 0.9),
+    "M6.roll_deg_at_0_5g": (3.5, 6.0),
+    "M6.pitch_brake_deg_at_0_8g": (2.5, 5.0),
+    "M6.pitch_throttle_deg": (1.0, 2.5),
+    "M7.front_load_brake_pct_at_0_8g": (72.0, 82.0),
+    "M8.max_steady_lat_g": (0.82, 0.92),
+    "M8.recovery_s": (0.3, 0.8),
+    "M9.handbrake_yaw_deg": (120.0, 180.0),
+    "M9.handbrake_settle_s": (1.0, 1.6),
+    "M10.cam_dist_m": (5.0, 6.5),
+    "M10.cam_height_m": (1.6, 2.0),
+    "M10.cam_lag_s": (0.1, 0.25),
+    "M10.fov_0_deg": (60.0, 65.0),
+    "M10.fov_30_deg": (64.0, 70.0),
+    "M10.fov_60_deg": (70.0, 78.0),
+    "M10.fov_90_deg": (76.0, 86.0),
+}
+DEFAULT_SET = "game"
 TARGET_SETS = {
+    "game": GAME_SET,
     "ordinary": {
         "M1.0_30_s": (3.6, 6.0),
         "M1.0_60_s": (13.0, 17.0),
@@ -810,19 +854,33 @@ PLACEHOLDERS = [
 ]
 
 
-def default_targets(name="ordinary"):
+SET_NOTES = {
+    "game": "PROVISIONAL TARGETS (game set, the default) from the feel-targets "
+            "sheet's game band of 18 Nov 2026: fun and easy first, as open-world "
+            "games that are not sims; real 1990 figures are a floor only; "
+            "automatic gearbox by default. Provisional until the footage "
+            "measurements replace them.",
+    "ordinary": "FIRST TARGETS (ordinary set, a named alternative) from the "
+                "17 Nov sheet: the real 1990 small hatch range widened by the "
+                "allowed game departures.",
+    "fast": "FIRST TARGETS (fast set, a named alternative) from the 17 Nov "
+            "sheet: a 1990 fast hatch.",
+}
+
+
+def default_targets(name=DEFAULT_SET):
     if name not in TARGET_SETS:
         raise ValueError("unknown target set %r (have: %s)" % (name, ", ".join(TARGET_SETS)))
+    status = "provisional" if name == "game" else "first"
     t = {"set": name,
-         "note": "FIRST TARGETS (%s set) from the feel-targets sheet's game band. "
-                 "Braking is braking distance only, no thinking distance; wet "
-                 "ratio is wet distance over dry distance." % name,
+         "note": SET_NOTES[name] + " Braking is braking distance only, no "
+                 "thinking distance; wet ratio is wet distance over dry distance.",
          "targets": {}}
     for k, rng in TARGET_SETS[name].items():
         if rng is None:
             t["targets"][k] = {"min": None, "max": None, "status": "placeholder"}
         else:
-            t["targets"][k] = {"min": rng[0], "max": rng[1], "status": "first"}
+            t["targets"][k] = {"min": rng[0], "max": rng[1], "status": status}
     for k in PLACEHOLDERS:
         t["targets"][k] = {"min": None, "max": None, "status": "placeholder"}
     return t
@@ -1197,6 +1255,9 @@ def make_drive(run_name, car_info):
 # synthetic telemetry for the tests only.
 # ---------------------------------------------------------------------------
 
+REFERENCE_SET = "ordinary"  # the set the reference car is tuned to
+
+
 class ReferenceCar:
     """Bicycle model, front-wheel drive, est. numbers near a 1990 small hatch.
     Body axes: u forward, v to the right, r yaw rate positive turning right."""
@@ -1415,23 +1476,25 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("reference")
     p.add_argument("--out", required=True)
+    p.add_argument("--set", default=REFERENCE_SET,
+                   help="target set to check the reference car against (ordinary, the set it is tuned to)")
     p = sub.add_parser("metrics")
     p.add_argument("folder")
     p.add_argument("--out")
     p.add_argument("--car")
     p = sub.add_parser("targets")
     p.add_argument("--out")
-    p.add_argument("--set", default="ordinary", help="ordinary (default) or fast")
+    p.add_argument("--set", default=DEFAULT_SET, help="game (default), ordinary or fast")
     p = sub.add_parser("compare")
     p.add_argument("result")
     p.add_argument("--targets")
     p.add_argument("--against")
     p.add_argument("--rel", type=float, default=0.05)
-    p.add_argument("--set", default="ordinary", help="named target set: ordinary or fast")
+    p.add_argument("--set", default=DEFAULT_SET, help="named target set: game (default), ordinary or fast")
     a = ap.parse_args(argv)
     if a.cmd == "reference":
         res, _ = run_all_reference(a.out)
-        rep = compare_targets(res, default_targets())
+        rep = compare_targets(res, default_targets(a.set))
         _print_rows(rep)
         return 0
     if a.cmd == "metrics":

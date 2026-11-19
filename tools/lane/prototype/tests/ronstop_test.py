@@ -1,4 +1,7 @@
-"""Why Ron stops about 3 m from the rank after 23:36 (systems2_test.py, test_3b2), checked by running it.
+"""Why Ron stopped about 3 m from the rank after 23:36 (systems2_test.py, test_3bb, formerly test_3b2), and that he no longer does.
+
+Fixed in Fable's 18 Nov round (CHANGELOG 2b): a witness pauses in their walk once for one act, and not
+again for 20 real seconds. Below, the reading that explained the fault, kept for the record.
 
 The hand reading (production/lane/PROTOTYPE-RULES-READ-2026-11-18.md, round two, section 11) says:
 from 23:30 Tom being out on the street counts as an act ("night out", severity 0.35); a moving person
@@ -8,9 +11,9 @@ and in sight.
 
 Two runs, each in its own fresh page, same set-up as systems2_test.py (headless Chromium, the hook
 only, the clock stopped between steps; LEDGER_PROTO_ASSETS needed, skipped otherwise):
-  near  Tom left where the new week puts him (about 16 m from the rank, in the open): Ron sets off at
-        23:36, his pause (LEDGER.G.people.ron.pauseT) keeps being set back up to 1.46 s, he moves
-        under a metre and is still on the street at 02:00.
+  near  Tom left where the new week puts him (about 16 m from the rank, in the open): before the fix
+        Ron's pause (LEDGER.G.people.ron.pauseT) kept being set back up to 1.46 s and he was still on
+        the street at 02:00; now the pause is set at most once in 20 real seconds and he gets home.
   far   Tom moved 60 m down Quay Street at 23:30, before Ron sets off: Ron's pause is never set and
         he gets home.
 Run with: python -m pytest tests/ronstop_test.py
@@ -33,6 +36,14 @@ pytestmark = pytest.mark.skipif(not (ASSETS and os.path.isdir(ASSETS)),
 RON = """(() => { const r = LEDGER.G.people.ron, t = LEDGER.G.tom;
   return {t: LEDGER.G.t, x: r.x, z: r.z, space: r.space, moving: r.moving, pause: r.pauseT || 0,
           goal: r.goalKey, d: Math.hypot(r.x - t.x, r.z - t.z)}; })()"""
+
+# A written scene (Ron's first meeting, since he now walks home past Tom at night) pauses the game
+# until it is read through: go on with LEDGER.written.next(), as the E key does; where it asks,
+# take the first choice (LEDGER.written.choose(0)). Returns the line read, or None if none was open.
+ADVANCE_JS = """(async () => { const w = LEDGER.written.read(); if (!w.open) return null;
+  if (w.waitsForAChoice) await LEDGER.written.choose(0); else await LEDGER.written.next();
+  return (w.speakerPersonId || '') + ': ' + w.text; })()"""
+READY_JS = "(!LEDGER.G.paused && !LEDGER.talk.state().open) || LEDGER.written.read().open"
 
 
 @pytest.fixture(scope="module")
@@ -71,7 +82,9 @@ def page_factory():
 def step_to(pg, minute):
     """Step the clock to game minute `minute` of Monday's night (a bit at a time, as systems2_test)."""
     for _ in range(400):
-        pg.wait_for_function("!LEDGER.G.paused && !LEDGER.talk.state().on", timeout=60000)
+        pg.wait_for_function(READY_JS, timeout=60000)
+        if pg.evaluate(ADVANCE_JS) is not None:
+            continue
         now = pg.evaluate("LEDGER.G.t")
         if now >= minute - 0.5:
             return
@@ -93,8 +106,15 @@ def refreshes(rows):
     return sum(1 for a, b in zip(rows, rows[1:]) if b["pause"] > a["pause"] + 1e-6)
 
 
-def test_near_ron_is_held_by_an_endless_witness_pause(page_factory):
+def test_near_ron_gets_home_the_pause_is_not_renewed(page_factory):
+    # The fault this file was written for (Ron held about 3 m from the rank all night) was fixed in
+    # Fable's 18 Nov round (CHANGELOG 2b): a witness pauses once for one act, and not again for
+    # watching.pauseAgainAfterRealSeconds (20 real s). This was a check that the stop reproduced;
+    # it is now an ordinary check that it does not.
     pg, errors = page_factory()
+    W = pg.evaluate("LEDGER.rules.watching")
+    assert (W["pauseInWalkRealSeconds"], W["pauseAddedPerSeverityRealSeconds"], W["pauseAgainAfterRealSeconds"]) \
+        == (0.9, 1.6, 20), "the pause rule numbers moved: %s" % W
     step_to(pg, 23 * 60 + 30)
     r0 = pg.evaluate(RON)
     assert r0["goal"] != "home|sleep" and r0["d"] < 26, "set-up: Ron still on the rank, Tom within 26 m"
@@ -105,16 +125,14 @@ def test_near_ron_is_held_by_an_endless_witness_pause(page_factory):
     held = [r for r in walking if r["pause"] > 0]
     print("near: Tom %.1f m away; slices walking %d, paused %d; pause max %.2f; refreshes %d; moved %.2f m"
           % (r0["d"], len(walking), len(held), max(r["pause"] for r in walking), refreshes(walking), moved))
-    assert max(r["pause"] for r in walking) == pytest.approx(SEV_PAUSE, abs=0.01), "the pause is the night-out one"
-    assert len(held) >= len(walking) - 3, "after the first second Ron is paused in every slice"
-    assert refreshes(walking) >= 5, "the pause keeps being topped up before it runs out"
-    assert all(r["moving"] for r in walking), "still marked as walking"
-    assert moved < 3.5
+    assert max(r["pause"] for r in walking) <= SEV_PAUSE + 0.01, "no pause longer than the night-out one"
+    assert refreshes(walking) <= 1, "within 15 real seconds the pause is set at most once (not again for 20 s)"
+    assert len(held) <= SEV_PAUSE / 0.1 + 2, "paused at most one pause's worth of slices"
+    assert moved > 3.5, "Ron walks on from the rank"
     step_to(pg, 24 * 60 + 120)  # Tuesday 02:00
     end = pg.evaluate(RON)
-    print("near: at 02:00 Ron space %s, pause %.2f, moved %.2f m" % (
-        end["space"], end["pause"], ((end["x"] - r0["x"]) ** 2 + (end["z"] - r0["z"]) ** 2) ** 0.5))
-    assert end["space"] == "street" and end["moving"], "the stop reproduced: still walking on the street at 02:00"
+    print("near: at 02:00 Ron space %s, moving %s" % (end["space"], end["moving"]))
+    assert end["space"] != "street", "Ron gets home with Tom near"
     assert errors == []
 
 

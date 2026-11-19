@@ -1,0 +1,8 @@
+# LEDGER scheduled tasks as read on 19 Nov 2026 01:40 (list_triggers, read only, first page; LEDGER entries only)
+
+1. "LEDGER daily backstop": one-shot chain, next 19 Nov 21:30 Swiss, bound to his desktop, persistent advisor session. Checks every promise, plan and ruling said in the advisor chat is in the running list doc (https://claude.ai/artifact/Y7jntG2ufSERmAu7TQpcfH) and every standing rule has its enforcement named in its advisor row and "Enforced by" in RULINGS.md; reschedules itself daily with send_later "until he says stop".
+2. "LEDGER lane: the second session in the cloud (to 23 Nov)": hourly at :15 Swiss, cloud, auto approval, model claude-opus-5-5; this lane (prompt revised 18 Nov 23:24).
+3. "Weekly Monday audit": one-shot chain, next Mon 23 Nov 13:30 Swiss, bound to his desktop, persistent advisor session. Reads the builder's MONDAY-AUDIT-<date>.md, five pass/fail tests (no fault unnoticed over an hour; 95% allowance used; hours per piece down; 80% of planned hours delivered; only his taps), at most three changes, one message to him; reschedules itself weekly. Note: this is the "monday-audit" that rulings-enforcers.json names as an enforcer; its first run is 23 Nov.
+4. "Build the LEDGER order of 23 November": one-shot, Sun 22 Nov 16:00 Swiss: builds the next order from the running list doc (about 1,200 words at most), checks HOURLY-TASK.md and the handover, resets week-shape.json; chains to next Sunday.
+5. "Reconcile promises before the order of 23 November": one-shot, Sun 22 Nov 15:45 Swiss.
+More entries exist on later pages (not LEDGER on this page: two tasks of another project).

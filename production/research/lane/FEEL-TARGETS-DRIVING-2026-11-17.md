@@ -2,15 +2,19 @@
 
 For his driving plan of 17 Nov (advisor 214): simple driving in his browser test now; this study from the outside; browser driving tests in rounds of measure, tune and his short playtest; AAA driving in the real game once the map is bigger. Written by the cloud lane from three research helpers and one code helper; a fresh review follows. Reviewed 17 Nov 2026: PASS WITH FIXES (production/lane/reviews/REVIEW-FEEL-TARGETS-DRIVING-2026-11-17.md), applied. Marks: [READ] read at the source today; [SS] search result only; [I] judgement with its reason; est. an estimate from arithmetic. All sources read or searched 17 Nov 2026.
 
+Revised 18 Nov 2026 by the cloud lane for his rulings of that day (RULINGS, Cars line): LEDGER is not a driving sim; its cars feel fun and easy first, like open-world games that are not sims; the 1990 character is carried by sound, body sway, the look and relative speed (12:36); cars are automatic by default (12:32). A provisional game set is now the default target (section c2); the real 1990 figures stay as flavour and a plausibility floor. The 17 Nov review covers the sheet as it was; the 18 Nov changes (In short, c2, f) are owed a fresh review.
+
 His rule, which binds every helper and the main session: other games are studied from the outside only (gameplay footage, developer talks, published analysis). Never decompile, never open or extract their files, never get around copy protection, never download their videos.
 
 Canon: no real car models or brands appear in the game; real cars below are ground truth for numbers only.
 
 ## In short
 
-- The ordinary car is a 1990 small hatch of about 800 kg and 55 bhp: 0 to 60 in 13 to 17 s, 90 to 100 mph flat out, 40 to 46 mph after 100 m, a turning circle of about 9 to 10.5 m, gentle understeer, no ABS. A fast hatch (205 GTi class) and a big saloon (police, bosses) bracket it.
-- Metrics M1 to M12 each have a target band: the real figure, widened only where games bend reality on purpose (braking up to about 15% shorter, more grip up to 0.85 g, roll shown up to 1.5 times real). Braking, turning circle, roll and all camera values rest partly on judgement until period road tests are read from the PC.
-- Eight scripted drives (D1 to D8, D9 read from two of them) turn any car into those numbers. The same drives run unchanged on the browser car now and the Unreal car later; the Unreal car must land within 5% of the browser's results. Behaviour carries over, never physics settings. The tool is tools/lane/driving_drives.py (26 tests pass); the Fable prompt for his next round is production/lane/FABLE-DRIVING-NEXT-ROUND.md.
+- The target is now the game set (section c2), the default since his rulings of 18 Nov: fun and easy first, like open-world games that are not sims. The ordinary car does 0 to 30 in 3 to 4.5 s and 0 to 60 in 10 to 14 s, tops out at 95 to 110 mph, brakes from 30 mph in 8 to 11 m, turns in 8.5 to 9.8 m, holds 0.82 to 0.92 g, and swings round 120 to 180 degrees on the handbrake. The gearbox is automatic by default. Every game number is provisional until next week's footage measurements replace it (method: production/lane/FOOTAGE-TO-GAME-SET-2026-11-18.md).
+- 1990 shows in sound, body sway (roll and pitch at or above the real car's), the look and relative speed (police and bosses' saloons and the fast hatch stay quicker than the ordinary car; the view widens with speed).
+- The real 1990 car (section b) is flavour and a floor, never the target: a 1990 small hatch of about 800 kg and 55 bhp did 0 to 60 in 13 to 17 s, 90 to 100 mph, turned in about 9.4 to 10.5 m, with gentle understeer and no ABS. The game may be quicker, grippier and sharper than that car, but not slower, wider-turning, longer-braking or stiffer, where that would feel wrong (per metric in c2).
+- The 17 Nov "ordinary" and "fast" sets (the real band widened by allowed game departures, sections c and f) stay as named alternatives in the tool.
+- Eight scripted drives (D1 to D8, D9 read from two of them) turn any car into those numbers. The same drives run unchanged on the browser car now and the Unreal car later; the Unreal car must land within 5% of the browser's results. Behaviour carries over, never physics settings. The tool is tools/lane/driving_drives.py (33 tests pass, game set the default); the Fable prompt for his next round is production/lane/FABLE-DRIVING-NEXT-ROUND.md.
 - Best frames to measure: Forza Horizon 4 in Britain (it shows speed on screen); The Getaway for London street scale and camera; GTA IV for body roll as the upper limit. No YouTube page opened from the cloud, so the video list is from search titles only.
 
 ## (a) The reference set
@@ -62,7 +66,7 @@ Highway Code stopping distances (checked, [READ] on two current sites; the same 
 The brief's figures (23, 53 and 96 m) are correct. The braking parts work out at about 0.65 g, which is a gentle stop by modern standards (est., from v squared over twice the distance). The Code assumes 0.67 s of thinking time; TRL research found about 1.5 s on average [READ, Classics World]. In the wet the Code says stopping distances are at least double [I: widely quoted, not read at source today; check rule 126 and 227 wording from the PC].
 
 
-Note: the ranges in (c) are the real band; the game band the tool and the Fable prompt use is the real band widened by the 'Where games depart' column (for example 30 mph braking 9.5 to 14 m, grip 0.70 to 0.85 g, roll 3 to 6 deg, front load 75 to 82%). Three game bands are rounded inward on purpose, so the tightest stated loosening is not used in full: 30 mph braking starts at 9.5 m (not 9.35), roll tops out at 6 deg (not 6.75), braking pitch at 5 deg (not 5.25). The fast hatch's grip limit is 0.90 g and the ordinary handbrake turn tops out at 150 deg, the real ends of their (c) ranges.
+Note (17 Nov, now the "ordinary" alternative, not the default): the ranges in (c) are the real band; the ordinary set the tool keeps by name is the real band widened by the 'Where games depart' column (for example 30 mph braking 9.5 to 14 m, grip 0.70 to 0.85 g, roll 3 to 6 deg, front load 75 to 82%). Three game bands are rounded inward on purpose, so the tightest stated loosening is not used in full: 30 mph braking starts at 9.5 m (not 9.35), roll tops out at 6 deg (not 6.75), braking pitch at 5 deg (not 5.25). The fast hatch's grip limit is 0.90 g and the ordinary handbrake turn tops out at 150 deg, the real ends of their (c) ranges.
 
 ## (c) Behaviour targets, M1 to M12
 
@@ -82,8 +86,35 @@ Note: the ranges in (c) are the real band; the game band the tool and the Fable 
 | M9 handbrake turn from 30 mph | 90 to 150 deg of turn in 1.2 to 2.0 s | 120 to 180 deg in 1.0 to 1.6 s | [I]: a cable handbrake on rear drums locks the light rear of a front-drive car easily, but it is a crude tool | Games make handbrake turns far easier and wider than real [I]; harder in GTA IV than V [READ]. Allow it, but it should cost speed. |
 | M10 camera | Behind: 5 to 7 m from car centre. Height: 1.6 to 2.2 m. Position lag: 0.1 to 0.3 s. Field of view: 60 to 65 deg at 0, 62 to 68 at 30, 66 to 74 at 60, 70 to 80 at 90 mph | same, slightly more widening at speed | All [I]: no published values found today. The Game Developer camera article (Pignole, 2015) lists the parameters but no numbers [READ] | Camera behaviour changes how weighty a car feels (The Drive on GTA IV) [READ]. Widening the view with speed is the cheapest way to make a slow car feel quick. |
 | M11 collisions and damage | Under 5 mph: no damage, little speed lost. 5 to 15 mph: dents, lights may break, lose 30 to 60% of speed. 15 to 30 mph: panels crumple, steering pulls, smoke possible. Over 30 mph: car may not drive on | same; a little tougher at big saloons | [I], from the stages of how 1980s cars crumple; The Getaway's fragile, smoking cars [READ] | Games make cars much tougher than real so chases last [I]. Choose fragile like The Getaway, since LEDGER is not a driving game. |
-| M12 sound cues | Idle about 800 to 900 rpm, limit about 6,000 to 6,500 rpm for a four-cylinder; engine note (two firings per turn) about 28 Hz at idle to about 210 Hz at the limit. Gear change: a dip of 0.4 to 0.8 s on a manual. Tyre squeal from about 80% of the M8 grip limit. Impact sounds keyed to the M11 bands | Limit near 6,500 to 7,000 rpm | Firing frequency is plain arithmetic; rpm ranges [I] from period engines; squeal onset [I] | Games start squeal early to warn the player [I]. Keep that: it is a useful cue. |
+| M12 sound cues | Idle about 800 to 900 rpm, limit about 6,000 to 6,500 rpm for a four-cylinder; engine note (two firings per turn) about 28 Hz at idle to about 210 Hz at the limit. Gear change: a dip of 0.4 to 0.8 s on a manual (the gearbox is automatic by default since 18 Nov: an automatic's change is a shorter, softer dip, length not yet set [I]). Tyre squeal from about 80% of the M8 grip limit. Impact sounds keyed to the M11 bands | Limit near 6,500 to 7,000 rpm | Firing frequency is plain arithmetic; rpm ranges [I] from period engines; squeal onset [I] | Games start squeal early to warn the player [I]. Keep that: it is a useful cue. |
 
+## (c2) The game set: the default target (18 Nov 2026, provisional)
+
+His rulings of 18 Nov: LEDGER is not a driving sim; cars feel fun and easy first, like open-world games that are not sims; 1990 is carried by sound, body sway, the look and relative speed (12:36); automatic gearbox by default (12:32). So the default target is no longer the real car widened a little: it is a game band, set where non-sim open-world games sit [I, from the reference set in (a) and the lane's judgement; no footage measured yet].
+
+PROVISIONAL: every number in this table is a first judgement, to be replaced next week by measurements from the reference games' footage (the frame plan in (e), turned into numbers by production/lane/FOOTAGE-TO-GAME-SET-2026-11-18.md). Until then the tool checks them as written.
+
+Automatic gearbox: the default car changes gear by itself; the drives assume it (no clutch or gear input in any script). A manual, if ever offered, is an option, not the default.
+
+What "floor" means: the real 1990 figure is a plausibility limit on the side where a game car would feel wrong, usually slow, sluggish or clumsy. The game may go past the real car on the fun side (quicker, grippier, sharper, easier); it should not fall short of the real car on the other. For body sway the floor runs the other way, because sway is one of the things that carries 1990: the game car should move at least as much as the real one.
+
+| Metric | Game band (provisional, default) | Real 1990 ordinary hatch (flavour) | The floor for this metric |
+|---|---|---|---|
+| M1 acceleration | 0 to 30 mph 3.0 to 4.5 s; 0 to 60 mph 10 to 14 s | 4.5 to 6 s; 13 to 17 s | May be quicker than real; never slower than the real car (0 to 60 over 17 s, 0 to 30 over 6 s). Relative speed must hold: the fast hatch and the big saloons stay clearly quicker than the ordinary car. |
+| M2 top speed; speed after 100 m | 95 to 110 mph; 44 to 52 mph | 90 to 100 mph; 40 to 46 mph | May be faster; not below the real 90 mph top speed or 40 mph after 100 m. Stays well under the fast hatch's 118 to 122 mph so relative speed shows. |
+| M3 dry braking from 30, 50, 70 mph | 8 to 11 m; 22 to 30 m; 44 to 58 m | 11 to 14; 30 to 38; 60 to 75 m (long end: the Highway Code's braking part) | May stop shorter than real (the player feels in control); never longer than the Highway Code's braking distances (14, 38, 75 m). The short end (about 1.1 g at 30 mph, est.) is beyond any 1990 car on period tyres: game licence, kept because control comes first. |
+| M3 wet, as a multiple of dry | 1.3 to 1.6 | about 1.5 to 2 | Games soften the wet; the floor is that the difference stays clearly felt: never under 1.3 times dry. |
+| M4 turning circle | 8.5 to 9.8 m | 9.4 to 10.5 m | May turn tighter (parking, alleys); never wider than the real 10.5 m. Still no one-go U-turn kerb to kerb on a 7.3 m street. |
+| M5 steering response; self-centring | yaw to 63% after a 30 mph step 0.15 to 0.25 s; self-centring 0.4 to 0.9 s | 0.20 to 0.35 s; 0.6 to 1.2 s | May answer quicker than real; never slower than the real 0.35 s or 1.2 s. Input to response under 100 ms stays a hard rule (d, item 11). |
+| M6 roll and pitch (sizes) | roll at 0.5 g 3.5 to 6 deg; pitch at 0.8 g braking 2.5 to 5 deg; pitch under full throttle 1.0 to 2.5 deg | 3 to 4.5; 2 to 3.5; 0.5 to 1.5 deg | Reversed floor: sway carries 1990, so at least the real car's movement (never stiffer than 3 deg roll, 2 deg brake pitch, 0.5 deg throttle pitch); the top stays under GTA IV's float (a). |
+| M7 front load at 0.8 g braking | 72 to 82% | 75 to 82% | Not felt directly; never above the real 82%, which would mean more nose dive and rear twitch than the real car; the lower end lets the rear stay planted, which is easier. |
+| M8 grip; recovery | highest steady lateral grip 0.82 to 0.92 g; recovery after counter-steer 0.3 to 0.8 s | 0.70 to 0.78 g; 0.5 to 1.0 s | May grip and recover better than real; never under the real 0.70 g or slower than 1.0 s. Understeer stays the ordinary car's habit. |
+| M9 handbrake turn from 30 mph | 120 to 180 deg, settling in 1.0 to 1.6 s | 90 to 150 deg in 1.2 to 2.0 s | May swing further and settle sooner than real; never less turn than the real 90 deg or slower than 2.0 s. It should still cost speed. |
+| M10 camera | distance 5 to 6.5 m; height 1.6 to 2.0 m; lag 0.1 to 0.25 s; field of view 60 to 65 deg at 0, 64 to 70 at 30, 70 to 78 at 60, 76 to 86 at 90 mph | no real figure (a camera is not a car part); the 17 Nov judgement was 5 to 7 m, 1.6 to 2.2 m, 0.1 to 0.3 s, 60 to 65, 62 to 68, 66 to 74, 70 to 80 deg | No floor from the real car. The stronger widening with speed is how relative speed reads on screen. |
+| M11 collisions | unchanged from (c): fragile, like The Getaway | (c) | (c) |
+| M12 sound | unchanged from (c), but automatic changes by default | (c) | Sound is one of the four carriers of 1990: period engine notes stay the target, not a game band. |
+
+The fast set and the big saloon have no game set yet. The 17 Nov fast set overlaps the game set on braking and grip (fast grip 0.82 to 0.90 g against the game set's 0.82 to 0.92 g), so relative feel between the ordinary and fast car is not yet guaranteed; a game fast set should follow the footage numbers.
 
 ## (d) Published professional methods for car feel and car cameras
 
@@ -218,7 +249,28 @@ M11 (collisions) and M12 (sound) are not measured by scripted drives yet.
 
 Each run writes one telemetry file, one row per physics step, in the format the README sets out: time, position, heading, speed, turn rate, sideways and forward g, roll, pitch, front load share, the applied steering, throttle, brake and handbrake, the drive's stage, and the camera's distance, height, field of view and lag. The browser game and the Unreal car both export this same format, so one tool measures both.
 
-### The game bands the drives check (ordinary set, the default car)
+### The game bands the drives check (game set, the default)
+
+Provisional until next week's footage measurements (section c2). Automatic gearbox by default.
+
+| ID | Number | Band |
+|---|---|---|
+| M1 | 0 to 30 mph; 0 to 60 mph | 3.0 to 4.5 s; 10 to 14 s |
+| M2 | top speed; speed after 100 m | 95 to 110 mph; 44 to 52 mph |
+| M3 | dry braking from 30, 50, 70 mph; wet | 8 to 11, 22 to 30, 44 to 58 m; wet 1.3 to 1.6 times dry |
+| M4 | turning circle | 8.5 to 9.8 m |
+| M5 | response (63%); self-centring | 0.15 to 0.25 s; 0.4 to 0.9 s |
+| M6 | roll at 0.5 g; pitch at 0.8 g braking; pitch at full throttle | 3.5 to 6; 2.5 to 5; 1.0 to 2.5 deg |
+| M7 | front load at 0.8 g braking | 72 to 82 % |
+| M8 | highest steady lateral grip; recovery | 0.82 to 0.92 g; 0.3 to 0.8 s |
+| M9 | handbrake from 30 mph | 120 to 180 deg turned, settled in 1.0 to 1.6 s |
+| M10 | camera behind, up, lag; field of view at 0, 30, 60, 90 mph | 5 to 6.5 m, 1.6 to 2.0 m, 0.1 to 0.25 s; 60 to 65, 64 to 70, 70 to 78, 76 to 86 deg |
+
+The numbers the drives give with no band in any set (wet distances in metres, slalom speed and lag, slide onset speed, field of view widening) are shown but never fail. M11 and M12 are not measured by the drives.
+
+Named alternatives, kept from 17 Nov and chosen by name in the tool:
+
+Ordinary set (the real 1990 small hatch widened by the allowed game departures):
 
 | ID | Number | Band |
 |---|---|---|
@@ -237,7 +289,7 @@ Fast set (a 1990 fast hatch): 0 to 60 in 8 to 9 s; top speed 118 to 122 mph; bra
 
 ### Pass rules
 
-- Against this sheet: each number must sit inside its game band (the real range widened by the allowed game departures), edges included. Two sets can be chosen by name: "ordinary" (the default car) and "fast" (a fast hatch). Numbers with no band yet are shown but do not fail.
+- Against this sheet: each number must sit inside its band, edges included. Three sets can be chosen by name: "game" (the default, provisional), "ordinary" and "fast" (the 17 Nov real-car-based alternatives). Numbers with no band yet are shown but do not fail.
 - Unreal against the browser: each number must be within 5% of the browser's number, or within a fixed allowance by unit if that is larger: 0.05 s, 0.3 m, 1 mph, 0.3 degrees, 1 percentage point of load share, 0.02 g. A number one car gives and the other does not is a fail.
 - Both rules are checked by the tool's compare step, which writes a pass or fail for every number.
 
@@ -245,7 +297,7 @@ Fast set (a 1990 fast hatch): 0 to 60 in 8 to 9 s; top speed 118 to 122 mph; bra
 
 - D1 runs until the top speed settles rather than for 30 s, because a 1990 hatch takes over a minute to get near its top speed.
 - Readings at 0.5 g and 0.8 g come from a straight line through the run's samples, because a hatch brakes at about 0.65 to 0.7 g and may never reach 0.8 g on its own.
-- The tool's small Python reference car exists only to test the tool. It meets every band in the ordinary set, which proves the measuring works, not how LEDGER's car should be built.
+- The tool's small Python reference car exists only to test the tool. It meets every band in the ordinary set, which proves the measuring works, not how LEDGER's car should be built. It is not retuned for the game set (against it, the reference car is about 0.7 s slow to 30 mph, short of top speed, grip and handbrake swing, brakes long and turns too wide), so the tool checks it against the ordinary set.
 
 ## (g) What the browser cannot prove
 

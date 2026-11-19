@@ -1,65 +1,139 @@
-"""Build checks for the prototype source project (no browser, no pictures needed)."""
-import hashlib, json, os, sys, tempfile, unittest
+"""Build checks for the prototype, built from Fable's readable source (project/) since 18 Nov 2026.
+
+No browser and no pictures needed. The builds need node and npm (skipped without them, never
+passed); the first build installs the pinned packages once into the work folder outside the
+repository (build.py), later builds take under a second.
+"""
+import json, os, shutil, subprocess, sys, tempfile, unittest
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 import build  # noqa: E402
 
-M = build.load_manifest()
+PUB = build.load_published()
+HAVE_NODE = bool(shutil.which("node") and shutil.which("npm"))
+ASSET_EXT = (".jpg", ".jpeg", ".png", ".webp", ".gif", ".ktx2", ".glb", ".gltf", ".bin", ".hdr", ".exr",
+             ".mp3", ".ogg", ".wav", ".zip")
+
+
+def quiet(*a):
+    pass
 
 
 class BuildTests(unittest.TestCase):
-    def test_rebuild_is_byte_identical_to_published(self):
+    # (i) building reproduces the published ledger.js and index.html, byte for byte
+    @unittest.skipUnless(HAVE_NODE, "node or npm not found: the build cannot run here")
+    def test_build_reproduces_published_checksums(self):
         with tempfile.TemporaryDirectory() as d:
-            r = build.build(dist=d)
-            self.assertEqual(r["changed"], [])
-            with open(os.path.join(d, "ledger.js"), "rb") as f:
-                data = f.read()
-            self.assertEqual(hashlib.sha256(data).hexdigest(), M["code"]["ledger.js"]["sha256"])
-            self.assertEqual(len(data), M["code"]["ledger.js"]["bytes"])
+            self.assertEqual(build.build(dist=d, log=quiet), [])
+            for name, want in PUB["built"].items():
+                p = os.path.join(d, name)
+                self.assertEqual(build.sha_file(p), want["sha256"], name)
+                self.assertEqual(os.path.getsize(p), want["bytes"], name)
 
-    def test_every_source_file_under_git_limit(self):
-        for base, _, files in os.walk(os.path.join(ROOT, "src")):
+    # (ii) every file of the readable source is under the size guard's 1,000,000 bytes
+    def test_every_project_file_under_git_limit(self):
+        n = 0
+        for base, dirs, files in os.walk(os.path.join(ROOT, "project")):
+            dirs[:] = [x for x in dirs if x not in ("node_modules", "dist")]
             for f in files:
-                self.assertLess(os.path.getsize(os.path.join(base, f)), 1_000_000, f)
+                n += 1
+                self.assertLess(os.path.getsize(os.path.join(base, f)), 1_000_000, os.path.join(base, f))
+        self.assertGreater(n, 40, "project/ looks empty")
 
-    def test_publish_map_names_only_code_and_pins_version(self):
+    # (iii) no picture or rig file in git (tracked, or untracked and not ignored, so ready to be added)
+    def test_no_asset_files_in_git(self):
+        if not shutil.which("git"):
+            self.skipTest("git not found")
+        try:
+            out = subprocess.run(["git", "ls-files", "--cached", "--others", "--exclude-standard", "."],
+                                 cwd=ROOT, check=True, capture_output=True, text=True).stdout.split("\n")
+        except subprocess.CalledProcessError:
+            self.skipTest("not a git checkout")
+        names = {a["path"] for a in PUB["assets"]}
+        bad = [p for p in out if p and (os.path.basename(p) in names or p.lower().endswith(ASSET_EXT))]
+        self.assertEqual(bad, [], "asset files in git under tools/lane/prototype")
+
+    # (iv) check_assets names a missing file and a changed one
+    def test_check_assets_reports_missing_and_changed(self):
         with tempfile.TemporaryDirectory() as d:
-            build.build(dist=d)
-            with open(os.path.join(d, "publish-files.json")) as f:
+            first, second = PUB["assets"][0]["path"], PUB["assets"][1]["path"]
+            with open(os.path.join(d, first), "wb") as f:
+                f.write(b"not the published picture")
+            probs = build.check_assets(d, PUB)
+            self.assertIn("asset differs from the page: " + first, probs)
+            self.assertIn("missing asset: " + second, probs)
+            self.assertEqual(len(probs), len(PUB["assets"]))
+
+    # (v) dist/publish-files.json names ledger.js and the page, built on PUBLISHED.json's version
+    @unittest.skipUnless(HAVE_NODE, "node or npm not found: the build cannot run here")
+    def test_publish_map_names_script_and_page_and_pins_version(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(build.build(dist=d, log=quiet), [])
+            with open(os.path.join(d, "publish-files.json"), encoding="utf-8") as f:
                 pub = json.load(f)
-            self.assertEqual(pub["page"], M["page"])
-            for a in M["assets"]:
-                self.assertNotIn(a["path"], pub["files"])  # an update keeps them
-                self.assertEqual(pub["files_for_a_new_page"][a["path"]], {"artifact": M["page"], "path": a["path"]})
-            self.assertTrue(pub["files"]["ledger.js"].endswith("/ledger.js"))
-            self.assertEqual(pub["built_on_version"], M["version"])
+        self.assertEqual(pub["page"], PUB["page"])
+        self.assertEqual(pub["built_on_version"], PUB["version"])
+        self.assertEqual(list(pub["files"]), ["ledger.js"], "only the script beside the page")
+        self.assertTrue(pub["files"]["ledger.js"].endswith("/ledger.js"))
+        self.assertTrue(pub["file_path"].endswith("/index.html"))
+        for a in PUB["assets"]:
+            self.assertNotIn(a["path"], pub["files"])  # an update keeps them on the page
 
-    def test_page_names_its_script_and_rig(self):
-        with open(os.path.join(ROOT, "src", "index.html"), encoding="utf-8") as f:
-            page = f.read()
-        self.assertIn('src="ledger.js"', page)
-        script = build.join_parts(M).decode("utf-8", "replace")
-        for name in ("people.txt", "people.jpg", "people_lo.jpg"):
-            self.assertIn(name, script)
-            self.assertIn(name, [a["path"] for a in M["assets"]])
+    # (vi) the readable source still defines the test hook
+    def test_hook_js_defines_the_test_hook(self):
+        with open(os.path.join(ROOT, "project", "src", "hook.js"), encoding="utf-8") as f:
+            hook = f.read()
+        self.assertIn("window.LEDGER = hook;", hook)
+        for key in ("startNew:", "step: stepBy,", "saveNow:", "reportText:", "simStep:", "restore:",
+                    "rules: RULES,", "talk,", "fare,", "ledger,"):
+            self.assertIn(key, hook)
 
+    # An edited source no longer matches the page: refused unless allowed.
+    @unittest.skipUnless(HAVE_NODE, "node or npm not found: the build cannot run here")
     def test_edited_source_is_refused_unless_allowed(self):
-        with tempfile.TemporaryDirectory() as d:
-            orig = build.join_parts
-            build.join_parts = lambda m: orig(m) + b"\n//edit"
+        with tempfile.TemporaryDirectory() as tmp:
+            proj = os.path.join(tmp, "project")
+            shutil.copytree(os.path.join(ROOT, "project"), proj,
+                            ignore=shutil.ignore_patterns("node_modules", "dist"))
+            with open(os.path.join(proj, "src", "main.js"), "a", encoding="utf-8") as f:
+                f.write("\nconsole.log('edited');\n")
+            orig = build.PROJECT
+            build.PROJECT = proj
             try:
-                with self.assertRaises(SystemExit):
-                    build.build(dist=d)
-                r = build.build(dist=d, allow_changed=True)
-                self.assertTrue(r["changed"])
+                d = os.path.join(tmp, "dist")
+                probs = build.build(dist=d, log=quiet)
+                self.assertTrue(any(p.startswith("ledger.js differs") for p in probs), probs)
+                self.assertFalse(os.path.exists(os.path.join(d, "ledger.js")), "a refused build writes nothing")
+                self.assertTrue(build.build(dist=d, allow_changed=True, log=quiet))
+                self.assertTrue(os.path.exists(os.path.join(d, "ledger.js")))
             finally:
-                build.join_parts = orig
+                build.PROJECT = orig
 
-    def test_test_hook_present(self):
-        script = build.join_parts(M).decode("utf-8", "replace")
-        for key in ("window.LEDGER=", "startNew:", "step:", "saveNow:", "reportText:", "simStep:"):
-            self.assertIn(key, script)
+    def test_work_folder_lock_keeps_a_second_run_out(self):
+        # two builds (or a build and a test run) never share the work folder (lost log, 18 Nov)
+        with tempfile.TemporaryDirectory() as tmp:
+            work = os.path.join(tmp, "work")
+            with build.work_lock(work):
+                code = ("import sys; sys.path.insert(0, %r); import build\n"
+                        "with build.work_lock(%r, wait=False): pass") % (ROOT, work)
+                p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+                self.assertNotEqual(p.returncode, 0)
+                self.assertIn("another build or test run holds the work folder", p.stderr + p.stdout)
+            # once released, the next run gets in
+            with build.work_lock(work, wait=False):
+                pass
+
+    def test_lane_test_runner_lists_fables_npm_test_order(self):
+        import run_proto_tests
+        with open(os.path.join(build.PROJECT, "package.json"), encoding="utf-8") as f:
+            npm = json.load(f)["scripts"]["test"]
+        names = []
+        for part in npm.split("&&"):
+            script = part.split()[1]
+            base = os.path.basename(script).replace(".mjs", "")
+            names.append({"walk_times": "walks"}.get(base, base))
+        self.assertEqual(run_proto_tests.ORDER[:-1], names)
 
 
 if __name__ == "__main__":

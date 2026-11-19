@@ -38,6 +38,7 @@ A test only: the real game will judge it. Build it to measure, not to finish.
 - Day book: a page per day ("Tue 16 Oct"), the week so far in five lines at most, then entries with time and place.
 - Open: things waiting, a day only if someone said it, closed lines ruled off, never removed. Money: pounds and pence, only sums Tom knows.
 - Each entry: when, what (22 words at most), how Tom knows ("Saw it", "Darren says"), sureness in words only when unsure, and its source event. Never percentages, bars, colours or icons. A wrong belief is struck through with the day and reason, never deleted.
+- Debts heard (added 18 Nov from production/lane/JULIE-DEBT-LEDGER-RULE-2026-11-18.md; the main session decides before sending): when a debtor or anyone else tells Tom what is owed (written, or live on the game's debt directive, never an invented sum), note it once per person as a heard claim, the speaker named only once learned, else as Tom knows her ("the young woman with the carrier bag"), the sum and the "since" only as said; the book's entry stays separate, names only as Sheila said them ("the Kettlewell girl, £9") until learned.
 - Wording: clipped notebook entries without "I" or "me" ("Calls Tom 'the new owner'", not "Calls me"). Money "£18.00", "80p". Times "6.30pm". Dates "Fri 19 Oct".
 - The Noted line: never over the subtitles and never while one shows, about 4 seconds, one per 10 seconds at most, extras queued as "Noted in the Ledger: 3 things".
 - The slip in talk starts folded to its heading; F2 unfolds it; it remembers the last choice.

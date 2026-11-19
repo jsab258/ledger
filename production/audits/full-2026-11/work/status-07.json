@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-F-017",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-day Sonnet trial ran under Monday's order; later pick start-model-opus (14 Nov) settled the session model (RULINGS 8 Nov models line)."
+ },
+ {
+  "id": "D-B-018",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "DECISIONS 17 Nov 21:24: first leg now climbs to 99, near 98 at night the session slows; pace_line.py FIRST_LEG_TOP = 99.0 with selftest. The 16 Nov order text still says 93 but his ruling replaced it."
+ },
+ {
+  "id": "D-E-113",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "Same ruling as D-B-018; pace_line.py line runs to 99 and its selftest checks it; spare reset was pressed 18 Nov about 15:20."
+ },
+ {
+  "id": "D-D-032",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off extra speech-test allowance of 26-27 Oct; the monthly API credit ruling of 1 Nov (RULINGS Sources, licences and money) now governs all API spend."
+ },
+ {
+  "id": "D-G-039",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-C-077 (16 Sep, purchases his alone) and D-C-078 (1 Nov, no new hardware)",
+  "evidence": "Aug spend plan (50-150 a month) is in no current text; purchases and accounts are his alone, no new hardware, API credit capped."
+ },
+ {
+  "id": "D-F-081",
+  "status": "enforced",
+  "enforcer": "tools/fresh_gate.py::MODEL WRONG",
+  "by": "",
+  "evidence": "Start check names the model: fresh_gate.py SESSION_MODEL claude-opus-5-5 prints MODEL WRONG on any other model (RULINGS 8 Nov)."
+ },
+ {
+  "id": "D-D-018",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Specific stop times of 25-26 Oct were one-offs; the standing form (he reads the meter and stops the session) is CLAUDE.md Each week line and the start gate."
+ },
+ {
+  "id": "D-E-064",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Priority window ended Monday 16 Nov 07:00; the 16 Nov order is now the week's order."
+ },
+ {
+  "id": "D-G-088",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "CLAUDE.md weekly 70/10/20 split; D-D-087 (1 Nov week shares)",
+  "evidence": "Two-thirds game share of 14 Sep: studio and channel are legacy; CLAUDE.md now sets 70% production, 10% review, 20% kept, and each order costs its shares."
+ },
+ {
+  "id": "D-E-101",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-036 (advisor 236, 18 Nov 22:30)",
+  "evidence": "Auto 8 helpers rule of 17 Nov 11:58 gave way: eight helpers a session for the week (D-B-013), then on 18 Nov 22:30 the guard tripped and Kiln runs with up to two helpers (HANDOVER line 42)."
+ },
+ {
+  "id": "D-E-023",
+  "status": "enforced",
+  "enforcer": "tools/token_measures.py::HELPERS OVER CAP; tools/pace_line.py",
+  "by": "",
+  "evidence": "RULINGS 6 Nov line: four helpers, six when behind (9 Nov). Helper cap checked by token_measures.py HELPERS OVER CAP and pace_line.py."
+ },
+ {
+  "id": "D-E-006",
+  "status": "enforced",
+  "enforcer": "tools/pace_line.py",
+  "by": "",
+  "evidence": "RULINGS 11 Nov 'the allowance fully used' and the 7 Nov pace line (Monday 07:00 to 13:00 full pace); pace_line.py gives the verdict each hour."
+ },
+ {
+  "id": "D-F-018",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Week-bound permission (four helpers, waiting-list items) ended with that order on Monday 13:00 per its note; the standing helper rule is RULINGS 6 Nov."
+ },
+ {
+  "id": "D-G-117",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Wake test queue 092 closed 2026-09-10 (legacy/studio-v2/production/queue/092-the-cost-of-one-wake.md)."
+ },
+ {
+  "id": "D-D-087",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Shares were for the week of 1 Nov; that week and order are over, later orders carry their own shares."
+ },
+ {
+  "id": "D-C-088",
+  "status": "enforced",
+  "enforcer": "tools/ci-checks.sh::package-sources; tools/attribution-check.py",
+  "by": "",
+  "evidence": "RULINGS 24 Sep line and license-allowlist.md carry the allowed list (OFL item 7, CMU item 11, Mixamo item 3, VCTK, CLO patterns); package and attribution checks gate shipping."
+ },
+ {
+  "id": "D-C-087",
+  "status": "enforced",
+  "enforcer": "tools/ci-checks.sh::package-sources; tools/attribution-check.py",
+  "by": "",
+  "evidence": "RULINGS 24 Sep line; allowlist PROCESS 2 needs a record naming weights licence."
+ },
+ {
+  "id": "D-C-214",
+  "status": "enforced",
+  "enforcer": "tools/canon-gate.py::real brand; tools/brand-verify.py",
+  "by": "",
+  "evidence": "canon.md line 186 'The license allowlist is law' and fictional brands; canon-gate fails on a real brand."
+ },
+ {
+  "id": "D-C-084",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py",
+  "by": "",
+  "evidence": "RULINGS Sources line 3 Oct (30 Oct addition) and allowlist item 2 carry CC BY 4.0 for clothes; attribution check needs credits."
+ },
+ {
+  "id": "D-A-025",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "CMU motion capture is allowlist item 11 (12 Nov 2026)."
+ },
+ {
+  "id": "D-F-071",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Answered yes to the CMU question; carried out as allowlist item 11 and RULINGS 24 Sep line 'CMU motion capture inside the game, never resold (12 Nov)'."
+ },
+ {
+  "id": "D-F-054",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "No current text states it, but practice follows it: Kiln's job interface decided as his own tool, not a licence question (DECISIONS 18 Nov 12:16, advisor 221); his tool folders snapshotted 13 Nov without licence asks."
+ },
+ {
+  "id": "D-A-048",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "FoldCraft and ast-grep are in license-allowlist.md SHIP-SAFE item 10 (his turn of 16 Nov)."
+ },
+ {
+  "id": "D-C-086",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Sources line (7 Oct): he deletes the NoAI folders himself; nothing checks it."
+ },
+ {
+  "id": "D-E-026",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "The AI-video route was dropped and its folder deleted 13 Nov (his yes, D-A-035); HY-Motion cannot run on his card and no use of it exists, so the licence permission is moot."
+ },
+ {
+  "id": "D-B-027",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Kiln interface part is settled, but Ron's trousers are adopted only once start values and leg and torso fits are on own measurements: legs failed 2 of 2 on Fable, M5 steps 6-10 still on the list (HANDOVER 18 Nov)."
+ },
+ {
+  "id": "D-D-008",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-021 / D-E-116 (17 Nov 22:33, advisor 214)",
+  "evidence": "His 11 Oct study ruling as amended 25 Oct was replaced by the outside-only rule; RULINGS 17 Nov: files never opened."
+ },
+ {
+  "id": "D-D-152",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Licence closure is done (allowlist item 13) but the Special Elite font pick is still on his page (orders/2026-11-16.md item 22, font-pick-2026-11-19) and unanswered."
+ },
+ {
+  "id": "D-A-012",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off for the materials-and-texturing pipeline test tools (advisors 85, 87, 10 Nov); the test is over."
+ },
+ {
+  "id": "D-D-007",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-021 (17 Nov 22:33, advisor 214)",
+  "evidence": "Reading Mafia from its own files with the published key is barred now; no extractor or archive in repo, tools or named F: folders."
+ },
+ {
+  "id": "D-D-022",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-068 (30 Oct 10:20, bridge self-start)",
+  "evidence": "One click per session replaced: the bridge starts itself by UI Automation, now in RULINGS 29 and 30 Oct computer-use line."
+ },
+ {
+  "id": "D-G-106",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "license-allowlist.md item 3 says Mixamo characters and animations alike (D46, 16 Sep)."
+ },
+ {
+  "id": "D-C-085",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py::NEVER_SHIP",
+  "by": "",
+  "evidence": "RULINGS 3 Oct narrowed 13 Oct line; NEVER_SHIP list and attribution check."
+ },
+ {
+  "id": "D-C-089",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py; tools/ci-checks.sh::package-sources",
+  "by": "",
+  "evidence": "RULINGS 24 Sep line, 2 Oct not allowed CGTrader and Gent jacket; allowlist gate stops unlisted sources."
+ },
+ {
+  "id": "D-B-021",
+  "status": "enforced",
+  "enforcer": "tools/outside_only_check.py",
+  "by": "",
+  "evidence": "RULINGS 17 Nov line; tools/outside_only_check.py fails the build on decompiler, extractor, archives or extracts."
+ },
+ {
+  "id": "D-B-016",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "PresentMon is license-allowlist.md item 12 (tap 17 Nov 19:36)."
+ },
+ {
+  "id": "D-F-086",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Yes carried out as allowlist item 12 (PresentMon)."
+ },
+ {
+  "id": "D-B-035",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "three.js, esbuild, acorn, puppeteer-core are allowlist item 13 (18 Nov 21:10)."
+ },
+ {
+  "id": "D-E-132",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same pick; allowlist item 13 in license-allowlist.md."
+ },
+ {
+  "id": "D-A-006",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RIFE allowed for the motion experiment only (DECISIONS line 17, 9 Nov); that route was dropped 13 Nov and RIFE appears in no shipped list."
+ },
+ {
+  "id": "D-C-172",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'What the game is': D26 sound is a lane, CC0 only; no check found."
+ },
+ {
+  "id": "D-C-083",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py; tools/catalogue.py",
+  "by": "",
+  "evidence": "RULINGS 3 Oct Sources in order line; catalogue and attribution checks."
+ },
+ {
+  "id": "D-G-150",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Faces, hair and voices: D50 the voice watermark is kept on generated speech; voice tools still carry watermark code (tools/voice-live). Reapply-after-decode question not found answered."
+ },
+ {
+  "id": "D-B-009",
+  "status": "enforced",
+  "enforcer": "tools/backup-to-dropbox.py",
+  "by": "",
+  "evidence": "tools/backup-to-dropbox.py: FLOOR_GB 40, STALE_HOURS 26, restore_check; storage map and Kiln lists present."
+ },
+ {
+  "id": "D-E-103",
+  "status": "enforced",
+  "enforcer": "tools/backup-to-dropbox.py",
+  "by": "",
+  "evidence": "Backup concept built: backup-to-dropbox.py stale and restore checks, start made automatic by the gate (advisor 203)."
+ },
+ {
+  "id": "D-C-177",
+  "status": "enforced",
+  "enforcer": "tools/retention.py",
+  "by": "",
+  "evidence": "RULINGS Disk line 2 Nov (17 GB cache); build-cache shelf capped by retention.json."
+ },
+ {
+  "id": "D-F-007",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "17 GB build cache allowed and written into RULINGS Disk line and retention caps."
+ },
+ {
+  "id": "D-F-077",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "C: room made 13 Nov: ai-video, MetaTailor copy, cascadeur-portable deleted (D-A-035)."
+ },
+ {
+  "id": "D-F-082",
+  "status": "done",
+  "enforcer": "tools/c_root_guard.py",
+  "by": "",
+  "evidence": "C: root cleaned and guarded 14 Nov (DECISIONS 14 Nov 22:04); tools/c_root_guard.py flags new items."
+ },
+ {
+  "id": "D-A-035",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Deletions carried out 13 Nov; Cascadeur itself waits for the 25 Nov decision as his own item."
+ },
+ {
+  "id": "D-D-048",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-021 (17 Nov 22:33)",
+  "evidence": "Capped extracts are barred altogether by the outside-only rule."
+ },
+ {
+  "id": "D-E-097",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Delete ran 17 Nov 14:41 after he typed it (D-B-007)."
+ },
+ {
+  "id": "D-A-009",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-A-035 (13 Nov 07:24)",
+  "evidence": "ComfyUI route dropped and folder deleted 13 Nov on his yes (DECISIONS line 127)."
+ },
+ {
+  "id": "D-D-066",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Yes to a one-off delete of three jacket material instances (29 Oct); jacket line later rebuilt through Kiln."
+ },
+ {
+  "id": "D-C-178",
+  "status": "enforced",
+  "enforcer": "tools/retention.py::a path outside the places is refused; tools/needs_you_page.py",
+  "by": "",
+  "evidence": "RULINGS Disk 29 Oct line; retention.py refuses paths outside places, needs_you_page blocks delete asks."
+ },
+ {
+  "id": "D-D-044",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "24.2 GB deleted 28 Oct 12:37 per its note."
+ },
+ {
+  "id": "D-F-046",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Space made for experiments 9 Nov (ComfyUI move); later route dropped."
+ },
+ {
+  "id": "D-F-059",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "F: room made 11 Nov; session deletes its own old review folders since (D-A-017)."
+ },
+ {
+  "id": "D-B-002",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Clear-out delete ran 17 Nov, F: 20.8 to 34.9 GB free (D-B-007)."
+ },
+ {
+  "id": "D-E-096",
+  "status": "enforced",
+  "enforcer": "tools/retention.py; tools/settings_check.py::F: under its floor is wrong",
+  "by": "",
+  "evidence": "Scheduled clean by retention.py nightly and drive floors read in settings_check; D-B-001 rules no idle from a full drive."
+ },
+ {
+  "id": "D-C-179",
+  "status": "enforced",
+  "enforcer": "tools/git-size-guard.py; tools/backup-to-dropbox.py",
+  "by": "",
+  "evidence": "RULINGS Disk 3 Oct line; git-size-guard blocks .uasset; backup never deletes or overwrites."
+ },
+ {
+  "id": "D-B-007",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Part 1 (41 gate items) and Game Animation Sample copy deleted 17 Nov, 20.8 to 34.9 GB free."
+ },
+ {
+  "id": "D-A-017",
+  "status": "enforced",
+  "enforcer": "tools/retention.py",
+  "by": "",
+  "evidence": "Own leftovers older than 14 days expire by retention limits and page-tool guard (RULINGS 29 Oct line, 16 Nov)."
+ },
+ {
+  "id": "D-B-008",
+  "status": "enforced",
+  "enforcer": "tools/retention.py::every mapped folder has a shelf",
+  "by": "",
+  "evidence": "storage-map.json is read by retention.py with floors C 40, F 20; RULINGS 17 Nov storage line."
+ },
+ {
+  "id": "D-E-102",
+  "status": "enforced",
+  "enforcer": "tools/retention.py::every mapped folder has a shelf",
+  "by": "",
+  "evidence": "Storage concept built: production/storage-map.json and retention.py."
+ },
+ {
+  "id": "D-C-176",
+  "status": "enforced",
+  "enforcer": "tools/retention.py::the real map's floors are C: 40, F: 20",
+  "by": "",
+  "evidence": "RULINGS 17 Nov storage line; retention.py enforces map and floors."
+ },
+ {
+  "id": "D-F-085",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Remove list approved and run (D-B-010, 14.6 GB)."
+ },
+ {
+  "id": "D-B-010",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Deleted 14.6 GB 17 Nov per its record; protection narrowed to what he keeps."
+ },
+ {
+  "id": "D-D-046",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Stray folder files deleted 28 Oct; empty top folder protected."
+ },
+ {
+  "id": "D-G-143",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "The 21 Sep route test is not found as done; image-to-3D lab test is still order item 11 (TRELLIS.2 on Vulkan) waiting on the DINOv3 licence pick dinov3-pick-2026-11-19 (orders/2026-11-16.md line 46)."
+ },
+ {
+  "id": "D-D-005",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "All sixteen studies done by 28 Oct (production/research/aaa-reference/studies)."
+ },
+ {
+  "id": "D-E-077",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Answered 07:59 on 15 Nov (advisor 166)."
+ },
+ {
+  "id": "D-E-027",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Local AI-video experiment run; route dropped 13 Nov (D-A-035), no outside service used."
+ },
+ {
+  "id": "D-A-044",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Read saved unchanged; his answers on ideas 1, 2, 5 came 15 Nov 07:59 for the order of 16 Nov."
+ },
+ {
+  "id": "D-A-042",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS computer-use line: ArtCraft, Civitai and Reddit read only by the builder in his Chrome, own words, no usernames; nothing checks it."
+ },
+ {
+  "id": "D-A-008",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Civitai and Reddit read-only in his Chrome stays in RULINGS 9, 14 Nov line; ComfyUI route dropped 13 Nov."
+ },
+ {
+  "id": "D-E-038",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Scan done 19:50 to 20:05 10 Nov per its note."
+ },
+ {
+  "id": "D-C-051",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 3 Oct and 8 Oct line: engine questions go to the 5.8.2 source first; no check names it."
+ },
+ {
+  "id": "D-C-032",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov scans line; scans exist (production/research/field-scans, lane/BOSSES-SCAN-SINCE-8-NOV-2026-11-18.md); only the Monday audit checks."
+ },
+ {
+  "id": "D-D-153",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Stage 2 footage study is order item 24 for the 23 Nov order after Kiln; not started."
+ },
+ {
+  "id": "D-B-038",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Stage 1 text from 19 Nov, footage stage waits for the 23 Nov order (item 24), reception study about 19 Dec; none done yet."
+ },
+ {
+  "id": "D-C-093",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 17 Nov line: GTA VI no story, fates, mission plots or endings; systems only."
+ },
+ {
+  "id": "D-E-007",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "STUDY DONE rows written; production/research/study-a-inzoi and study-b-silent-hill-2 exist."
+ },
+ {
+  "id": "D-D-103",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-021 (17 Nov 22:33)",
+  "evidence": "Reading inZOI and SH2 files done 6 Nov, but files-opening is barred since."
+ },
+ {
+  "id": "D-E-019",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov scans line carries it (every four weeks); check is only the Monday audit."
+ },
+ {
+  "id": "D-D-055",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Research and bench test done; bench B failed on speed and invention 30 Oct (its note)."
+ },
+ {
+  "id": "D-A-003",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Route dropped and folder deleted 13 Nov; Pexels and Pixabay permission lives in RULINGS 9 Nov motion line."
+ },
+ {
+  "id": "D-D-051",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Jacket study exists in production/research/aaa-reference/studies/06-characters-wardrobe.md."
+ },
+ {
+  "id": "D-C-034",
+  "status": "enforced",
+  "enforcer": "tools/method_line_check.py",
+  "by": "",
+  "evidence": "RULINGS 7 Nov tries line; method_line_check.py checks 'Method researched:'."
+ },
+ {
+  "id": "D-A-030",
+  "status": "enforced",
+  "enforcer": "tools/method_line_check.py; tools/ci-checks.sh::method-line",
+  "by": "",
+  "evidence": "Same rule, RULINGS 7 Nov and 12 Nov; method-line check in ci-checks."
+ },
+ {
+  "id": "D-E-031",
+  "status": "lost",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Second helper must search for the opposite of a negative finding: not in RULINGS, CLAUDE.md, .claude/agents or skills; builder applied it once on 9 Nov, no check."
+ },
+ {
+  "id": "D-D-006",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-B-021 (17 Nov 22:33)",
+  "evidence": "Reading KCD2 from its own unpacked files was replaced; no recordings or KCD2 tools part is moot (items dropped 25 Oct)."
+ },
+ {
+  "id": "D-C-035",
+  "status": "enforced",
+  "enforcer": "tools/method_line_check.py",
+  "by": "",
+  "evidence": "RULINGS 7 Nov tries line 'no time box overrides it (12 Nov)'."
+ },
+ {
+  "id": "D-E-010",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Testing research covered manual QA: production/research/qa-practice/QA-READING-2026-11-07.md."
+ },
+ {
+  "id": "D-E-075",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Done 20:24 to 20:28 on 14 Nov per its note."
+ },
+ {
+  "id": "D-E-033",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 9, 14 Nov: only the builder reads Civitai and Reddit in his Chrome, no posting or unchecked downloads."
+ },
+ {
+  "id": "D-G-137",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sept week order took five of the six measurements; later principle only in CLAUDE.md 'Measure rather than trust' (weak evidence)."
+ },
+ {
+  "id": "D-D-053",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "production/research/sit-and-turn and seats_check.py exist; Tom sits on the bench."
+ },
+ {
+  "id": "D-C-091",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 17 Nov line: six footage frames kept for one blind line-up; footage stage not yet run."
+ },
+ {
+  "id": "D-G-142",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Small-model test done: production/research/local-models and hardware-floor."
+ },
+ {
+  "id": "D-A-001",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 9 Nov motion line: stock clips, never filmed; no check."
+ },
+ {
+  "id": "D-D-092",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Study A written: production/research/study-a-inzoi."
+ },
+ {
+  "id": "D-C-090",
+  "status": "enforced",
+  "enforcer": "tools/outside_only_check.py",
+  "by": "",
+  "evidence": "RULINGS 17 Nov line; outside_only_check.py."
+ },
+ {
+  "id": "D-E-137",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Stages 2 and 3 not run; footage in the 23 Nov order, reception about 19 Dec."
+ },
+ {
+  "id": "D-E-116",
+  "status": "enforced",
+  "enforcer": "tools/outside_only_check.py",
+  "by": "",
+  "evidence": "RULINGS 17 Nov line replaced the 11 Oct study line; outside_only_check.py enforces."
+ },
+ {
+  "id": "D-D-057",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Mafia kit study exists: production/research/aaa-reference/KIT.md."
+ },
+ {
+  "id": "D-E-017",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Order saved as production/orders/2026-11-09.md (n09-1 to n09-14)."
+ },
+ {
+  "id": "D-G-074",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 'What the game is': D27, D30 the end state is the ambition; canon.md; only Monday audit checks."
+ },
+ {
+  "id": "D-C-001",
+  "status": "enforced",
+  "enforcer": "tools/catalogue.py::EVERY FOLDER OF ART AND RESEARCH HAS A LINE IN THE CATALOGUE",
+  "by": "",
+  "evidence": "RULINGS Authored breadth line; catalogue check fails art with no line."
+ },
+ {
+  "id": "D-D-147",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Traffic waits behind parked cars: order 16 Nov item 15 (about 29 h) not started."
+ },
+ {
+  "id": "D-B-017",
+  "status": "enforced",
+  "enforcer": "tools/driving_feel_check.py",
+  "by": "",
+  "evidence": "RULINGS Cars line and canon.md D24 carry his driving words; driving_feel_check.py fails on wrong targets."
+ },
+ {
+  "id": "D-E-111",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Cars (17 Nov): parked, then traffic, then arcade car; scope line, Monday audit only."
+ },
+ {
+  "id": "D-B-030",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 18 Nov prototype line; cloud lane builds the prototype; licences later settled by D-B-035."
+ },
+ {
+  "id": "D-E-127",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same pick; prototype order was later changed by advisor 230 as noted; RULINGS 18 Nov prototype line."
+ },
+ {
+  "id": "D-C-015",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 5 and 6 Nov: deep before wide; Monday audit only."
+ },
+ {
+  "id": "D-D-131",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same as D-C-015."
+ },
+ {
+  "id": "D-F-053",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov models line: Fable only after two failed tries (10 Nov), widened for Kiln on 18 Nov; item_tags checks no new Fable helper above cap."
+ },
+ {
+  "id": "D-D-004",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Nov line: 25 Oct cast voice on the card fine for friends' evening; CHARTER.md exists."
+ },
+ {
+  "id": "D-C-020",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Nov line carries the setup; the twenty basics, no debug text only in the Monday audit."
+ },
+ {
+  "id": "D-C-018",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Nov: friends' evening after the whole street."
+ }
+]

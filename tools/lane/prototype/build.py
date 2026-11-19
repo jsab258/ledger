@@ -1,111 +1,199 @@
 #!/usr/bin/env python3
-"""Build the LEDGER loop prototype from its source folder into dist/.
+"""Build the LEDGER loop prototype from Fable's readable source (stage 1, 18 Nov 2026).
 
-Stage 0 (18 Nov 2026): the source is the published page as it stands
-(version in src/MANIFEST.json), its game script kept in parts under 1 MB
-so git's size guard passes. The build joins the parts, checks every byte
-against the published checksums, and writes:
+The source is project/ (Fable's round of 18 Nov, published beside the page under source/).
+The build runs Fable's own build (npm ci --ignore-scripts, then node tools/build.mjs: esbuild
+0.28.2 bundling src/main.js with three.js 0.187.0) in a work folder OUTSIDE the repository, so
+node_modules and dist never land in git, and checks the result against PUBLISHED.json: the
+published ledger.js and index.html, byte for byte.
 
   dist/index.html, dist/ledger.js        the page and its script
-  dist/publish-files.json                the `files` map for one Artifact
-                                         publish: code from dist/, pictures
-                                         and the people rig copied server
-                                         side from the live page itself
-  dist/<asset>                           only with --assets DIR (a local
-                                         folder holding the pictures), for
-                                         playing or testing offline
+  dist/publish-files.json                the `files` map for one Artifact publish to the same
+                                         page by its owner (the lane never publishes)
+  dist/<asset>                           only with --assets DIR (the pictures and the people
+                                         rig, checked against PUBLISHED.json)
+
+The pictures and the people rig (13 files, 4.8 MB; people.txt is 1.5 MB, over the size guard's
+1 MB) are not in git. Fetch them from the page (Artifact tool: action read, url in
+PUBLISHED.json, paths = the asset names, out_dir = a folder outside the repository), or on the
+PC from the page's "Source and files" zip, then check them with --check-assets DIR.
 
 Usage:
-  python build.py                 build and check
-  python build.py --assets DIR    also copy the pictures in, checked
-  python build.py --allow-changed build even when the code no longer
-                                  matches the published checksums (for
-                                  stage 1 on, once the source is edited)
+  python build.py                     build and check against the published checksums
+  python build.py --assets DIR        also copy the pictures in, checked
+  python build.py --check-assets DIR  only check a folder of pictures
+  python build.py --allow-changed     build even when the code no longer matches the published
+                                      page (once the source is edited on purpose)
+  python build.py --work DIR          the work folder (default: ~/.cache/ledger-proto-work)
 """
 import argparse
+import contextlib
+import fcntl
 import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "src")
+PROJECT = os.path.join(HERE, "project")
 DIST = os.path.join(HERE, "dist")
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+DEFAULT_WORK = os.path.join(os.path.expanduser("~"), ".cache", "ledger-proto-work")
+SKIP = {"node_modules", "dist", "site", "out", "assets"}
 
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def load_manifest():
-    with open(os.path.join(SRC, "MANIFEST.json"), encoding="utf-8") as f:
+def sha_file(path):
+    with open(path, "rb") as f:
+        return sha(f.read())
+
+
+def load_published():
+    with open(os.path.join(HERE, "PUBLISHED.json"), encoding="utf-8") as f:
         return json.load(f)
 
 
-def join_parts(manifest):
-    parts = manifest["code"]["ledger.js"]["parts"]
-    out = b""
-    for name in parts:
-        with open(os.path.join(SRC, "bundle", name), "rb") as f:
-            out += f.read()
-    return out
-
-
-def build(assets_dir=None, allow_changed=False, dist=DIST):
-    m = load_manifest()
+def check_assets(folder, published=None):
+    """Problems with a folder of pictures, against PUBLISHED.json; [] when all are right."""
+    published = published or load_published()
     problems = []
-    script = join_parts(m)
-    with open(os.path.join(SRC, "index.html"), "rb") as f:
-        page = f.read()
-    for name, data in (("ledger.js", script), ("index.html", page)):
-        want = m["code"][name]["sha256"]
-        if sha(data) != want:
-            problems.append("%s differs from the published version %s" % (name, m["version"]))
+    for a in published["assets"]:
+        p = os.path.join(folder, a["path"])
+        if not os.path.isfile(p):
+            problems.append("missing asset: " + a["path"])
+        elif sha_file(p) != a["sha256"]:
+            problems.append("asset differs from the page: " + a["path"])
+    return problems
+
+
+@contextlib.contextmanager
+def work_lock(work=None, wait=True):
+    """Hold the work folder alone: two builds (or a build and a test run) never share it.
+
+    The lock is a file beside the work folder (<work>.lock), so clearing the folder never drops
+    it. A second caller waits (or, with wait=False, stops with a message) until the first ends.
+    """
+    work = os.path.abspath(work or DEFAULT_WORK)
+    if _inside_repo(work) or _inside_repo(work + ".lock"):
+        raise SystemExit("the work folder must be outside the repository: " + work)
+    os.makedirs(os.path.dirname(work), exist_ok=True)
+    fh = open(work + ".lock", "w")
+    try:
+        flags = fcntl.LOCK_EX | (0 if wait else fcntl.LOCK_NB)
+        try:
+            fcntl.flock(fh, flags)
+        except BlockingIOError:
+            raise SystemExit("another build or test run holds the work folder: " + work)
+        fh.write(str(os.getpid()))
+        fh.flush()
+        yield work
+    finally:
+        fh.close()
+
+
+def _inside_repo(path):
+    path = os.path.realpath(path)
+    return path == REPO or path.startswith(REPO + os.sep)
+
+
+def prepare_work(work=None, log=print):
+    """Copy project/ into the work folder and install its packages there (once per lock file)."""
+    work = os.path.abspath(work or DEFAULT_WORK)
+    if _inside_repo(work):
+        raise SystemExit("the work folder must be outside the repository: " + work)
+    os.makedirs(work, exist_ok=True)
+    # fresh copy of the source, keeping node_modules if the lock file is unchanged
+    for name in os.listdir(work):
+        if name in ("node_modules", ".lock-sha"):
+            continue
+        p = os.path.join(work, name)
+        shutil.rmtree(p) if os.path.isdir(p) and not os.path.islink(p) else os.remove(p)
+    for name in os.listdir(PROJECT):
+        if name in SKIP:
+            continue
+        s, d = os.path.join(PROJECT, name), os.path.join(work, name)
+        shutil.copytree(s, d) if os.path.isdir(s) else shutil.copy2(s, d)
+    lock = sha_file(os.path.join(PROJECT, "package-lock.json"))
+    stamp = os.path.join(work, ".lock-sha")
+    have = open(stamp).read().strip() if os.path.exists(stamp) else ""
+    if have != lock or not os.path.isdir(os.path.join(work, "node_modules", "esbuild")):
+        log("npm ci --ignore-scripts (once per lock file) ...")
+        subprocess.run(["npm", "ci", "--ignore-scripts", "--no-audit", "--no-fund"], cwd=work,
+                       check=True, stdout=subprocess.DEVNULL)
+        # esbuild's install script is skipped by --ignore-scripts; its platform binary still
+        # arrives as an optional package, so the build works without running any package script
+        with open(stamp, "w") as f:
+            f.write(lock)
+    return work
+
+
+def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print, locked=False):
+    """Build into dist. Returns the list of problems (empty when the build matches the page).
+
+    Takes the work folder's lock unless the caller already holds it (locked=True)."""
+    if not locked:
+        with work_lock(work):
+            return build(assets_dir, allow_changed, dist, work, log, locked=True)
+    pub = load_published()
+    problems = []
+    if assets_dir:
+        problems += check_assets(assets_dir, pub)
+        if problems:
+            return problems
+    work = prepare_work(work, log=log)
+    wa = os.path.join(work, "assets")
+    os.makedirs(wa, exist_ok=True)
+    if assets_dir:
+        for a in pub["assets"]:
+            shutil.copy2(os.path.join(assets_dir, a["path"]), os.path.join(wa, a["path"]))
+    subprocess.run(["node", "tools/build.mjs"], cwd=work, check=True, stdout=subprocess.DEVNULL)
+    for name, want in pub["built"].items():
+        got = sha_file(os.path.join(work, "dist", name))
+        if got != want["sha256"]:
+            problems.append("%s differs from the published page (%s, published %s)"
+                            % (name, got[:12], want["sha256"][:12]))
     if problems and not allow_changed:
-        raise SystemExit("Build stopped: " + "; ".join(problems))
+        return problems
     os.makedirs(dist, exist_ok=True)
-    with open(os.path.join(dist, "ledger.js"), "wb") as f:
-        f.write(script)
-    with open(os.path.join(dist, "index.html"), "wb") as f:
-        f.write(page)
+    for name in os.listdir(os.path.join(work, "dist")):
+        shutil.copy2(os.path.join(work, "dist", name), os.path.join(dist, name))
     rel = os.path.relpath(dist, REPO).replace(os.sep, "/")
-    files = {"ledger.js": rel + "/ledger.js"}
-    new_page_files = dict(files)
-    for a in m["assets"]:
-        new_page_files[a["path"]] = {"artifact": m["page"], "path": a["path"]}
-        if assets_dir:
-            src = os.path.join(assets_dir, a["path"])
-            with open(src, "rb") as f:
-                data = f.read()
-            if sha(data) != a["sha256"]:
-                raise SystemExit("Picture %s does not match the manifest" % a["path"])
-            shutil.copyfile(src, os.path.join(dist, a["path"]))
-    pub = {
-        "page": m["page"],
-        "built_on_version": m["version"],
+    publish = {
+        "page": pub["page"],
+        "built_on_version": pub["version"],
+        "note": "For the page's owner only (the lane never publishes). Read the live page "
+                "first and merge any newer change; files not named are kept on the page.",
+        "files": {"ledger.js": rel + "/ledger.js"},
         "file_path": rel + "/index.html",
-        "files": files,
-        "files_for_a_new_page": new_page_files,
-        "paths_relative_to": "the repository root (the publish tool reads paths from the working directory)",
-        "before_publishing": "Read the live page first: if its version is not built_on_version, someone changed it since; merge that first. An update keeps the pictures it does not name, so 'files' names only the script.",
-        "after_publishing": "Read index.html and ledger.js back and compare their checksums with dist/.",
     }
     with open(os.path.join(dist, "publish-files.json"), "w", encoding="utf-8") as f:
-        json.dump(pub, f, indent=1)
-    return {"script_bytes": len(script), "page_bytes": len(page), "changed": problems, "assets": len(m["assets"])}
+        json.dump(publish, f, indent=1)
+    return problems if allow_changed else []
 
 
-def main():
-    ap = argparse.ArgumentParser()
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--assets")
+    ap.add_argument("--check-assets")
     ap.add_argument("--allow-changed", action="store_true")
-    a = ap.parse_args()
-    r = build(a.assets, a.allow_changed)
-    print("Built: script %d bytes, page %d bytes, %d pictures listed%s" % (
-        r["script_bytes"], r["page_bytes"], r["assets"],
-        "; CHANGED from the published version" if r["changed"] else "; identical to the published version"))
+    ap.add_argument("--work")
+    ap.add_argument("--dist", default=DIST)
+    a = ap.parse_args(argv)
+    if a.check_assets:
+        probs = check_assets(a.check_assets)
+        print("\n".join(probs) or "all 13 assets match the page")
+        return 1 if probs else 0
+    probs = build(a.assets, a.allow_changed, a.dist, a.work)
+    if probs:
+        print("\n".join(probs))
+        return 1
+    print("built", a.dist, "- ledger.js and index.html match the published page byte for byte")
+    return 0
 
 
 if __name__ == "__main__":

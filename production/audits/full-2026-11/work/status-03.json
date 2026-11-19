@@ -1,0 +1,842 @@
+[
+ {
+  "id": "D-A-056",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Body standard kept 16 Nov 22:17 (DECISIONS). The Thursday 19 Nov checkpoint (held-back jobs, M5 counts, else the hybrid) has not run yet: HANDOVER next step 7, NOW.md 'Kiln v1 0 of 6'."
+ },
+ {
+  "id": "D-A-041",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 13 and 14 Nov line: 'M7 (the Hook's whole garment list through Kiln) clothing's finish line'; HANDOVER asks for the M7 count in every round report. Only a reporting habit, no check."
+ },
+ {
+  "id": "D-F-031",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off look verdict of 8 Nov; Ron's and Darren's jumpers passed the clothes' floor with shortfalls listed; finished the interim pass of D-F-030."
+ },
+ {
+  "id": "D-D-077",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Collar left after the fourth try, 2 Nov 12:27 (archive DECISIONS line 923: 'COLLAR LEFT AFTER ITS FOURTH TRY, AS HE SAID')."
+ },
+ {
+  "id": "D-E-074",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same M7 line in RULINGS 14 Nov and order of 16 Nov section 1 item 2; HANDOVER 'M7 count in every report (0)'. Nothing tests it."
+ },
+ {
+  "id": "D-F-008",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Note: done by Claude at the next 10 idle minutes; one-off DNA import of Tom's head and body."
+ },
+ {
+  "id": "D-C-135",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Clothes section: 'No second Marvelous month unless he decides by 25 November'; DECISIONS 18 Nov 22:41 says the money DECISION item is due Tue 24 Nov. No check."
+ },
+ {
+  "id": "D-F-042",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Windows task 'LEDGER Marvelous open' registered and proven (archive DECISIONS 9 Nov 09:05); the question text is not stored but the yes was acted on."
+ },
+ {
+  "id": "D-F-076",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Needs-you item metatailor-access-2026-11-12 is state done."
+ },
+ {
+  "id": "D-F-072",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Needs-you item metatailor-clicks-2026-11-12 is state done; a one-off permission for the MetaTailor test."
+ },
+ {
+  "id": "D-C-133",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py (NEVER_SHIP ron_md_jacket, in ci-checks package-sources)",
+  "by": "",
+  "evidence": "RULINGS Clothes: 'no trial-made work goes in'. NEVER_SHIP bars Ron's Marvelous 14-day trial jacket from the package."
+ },
+ {
+  "id": "D-E-084",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "production/orders/2026-11-16.md n16-1: 'The breadth set's six patterns made in Marvelous before 26 Nov'",
+  "evidence": "His A of 16 Nov 12:24 (own pattern tools, Marvelous only for comparison) is recorded in DECISIONS 16 Nov 12:39 and followed (FreeSewing/GarmentCode patterns, auto-start rewritten, live test still waiting), but the adopted order still says the patterns are made in Marvelous."
+ },
+ {
+  "id": "D-F-063",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Pick keep: Kiln and the game use carried skinned garments (RULINGS Clothes: 'skinned meshes'); duplicate of D-A-021. No check."
+ },
+ {
+  "id": "D-A-018",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-A-021, his keep on the resizing backbone, 2026-11-11",
+  "evidence": "Test was never run on Tom's garment; replaced by his 'keep' of 11 Nov 12:51."
+ },
+ {
+  "id": "D-A-021",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "DECISIONS 11 Nov 12:51 'resizing keep closed, phase 5 crowd test cheapest first'; RULINGS Clothes 'Game clothes are skinned meshes'; Kiln outputs are carried garments. No check."
+ },
+ {
+  "id": "D-F-030",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-F-031, knit-jumpers-look, 2026-11-08 14:12",
+  "evidence": "Interim pass replaced the same day by the knit-jumpers look he passed (D-F-031)."
+ },
+ {
+  "id": "D-C-136",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Clothes 30 Sep line and CLOTHES.md ('skinned meshes, only hems, skirts and coat tails simulated'). Monday audit only."
+ },
+ {
+  "id": "D-D-037",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Cuffs set aside after two tries; he picked the bake route 28 Oct 12:35 (later note). One-off round."
+ },
+ {
+  "id": "D-C-134",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Clothes 6 to 8 Nov: tailor boss falls only on the 2026 bar; Kiln M5/M6/M7 and the order of 16 Nov are built around it. Monday audit only."
+ },
+ {
+  "id": "D-C-137",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "production/orders/2026-11-16.md n16-1 and CLOTHES.md ('Tailoring waits')",
+  "evidence": "RULINGS and CLOTHES.md still say tailoring is stopped and waits for RUBRIC.md, yet Kiln (patterns drafted from FreeSewing, jackets, coat and trousers draped by solver) and Marvelous drapes are the week's main item, with RUBRIC as its bar."
+ },
+ {
+  "id": "D-D-073",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Tried 1 Nov, failed, set aside (later note)."
+ },
+ {
+  "id": "D-F-047",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Pick remove acted on as the lowest lace bar and eyelets coming out (DECISIONS 9 Nov 10:00)."
+ },
+ {
+  "id": "D-F-006",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Sole fourth try started and closed 2 Nov 15:03; whole-person look of 11 Nov then judged the boots."
+ },
+ {
+  "id": "D-F-005",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Fourth collar try made, collar left 2 Nov 12:27 as he said (archive DECISIONS line 923)."
+ },
+ {
+  "id": "D-F-058",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "He said no 11 Nov; clothes brought to floor then shown again. Tom's surfaces set aside after 3 tries (DECISIONS 11 Nov 10:20); order of 16 Nov section 4 batches 'Tom's and Ron's looks together'. Not yet shown again."
+ },
+ {
+  "id": "D-C-138",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS Clothes last line: Tom wears lace-up boots like Ron's, not the scanned shoe. Monday audit only; the 11 Nov look says the boots still read as rubber slippers."
+ },
+ {
+  "id": "D-A-005",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Fifth try: lowest lace bar and two eyelets removed, DECISIONS 9 Nov 10:00."
+ },
+ {
+  "id": "D-D-089",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "One-off order of 2 Nov; counted by pieces (jacket, jumper, jeans, boots) in the archive DECISIONS and asset-checks files tom-*.json."
+ },
+ {
+  "id": "D-D-128",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same no as D-F-058: Tom is to be shown again once clothes reach the floor; carried into n16-1 and n16-2 (order of 16 Nov section 4). Not yet shown."
+ },
+ {
+  "id": "D-D-015",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Marvelous month taken (renews 26 Nov, DECISIONS 18 Nov 22:41); Tom's outfit went through it; game-use licence call became the kiln-front-end-licence item (done)."
+ },
+ {
+  "id": "D-A-031",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Third Vellum try made and failed, no fourth, Marvelous stays (DECISIONS 12 Nov, line 112)."
+ },
+ {
+  "id": "D-E-047",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same third Vellum try, started from a dated note and failed."
+ },
+ {
+  "id": "D-G-017",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "the British decision of 2026-07-31 (later note)",
+  "evidence": "American base replaced 31 Jul by the British decision; canon is Britain 1990."
+ },
+ {
+  "id": "D-C-123",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "production/research/voice-latency/POCKET-DELIVERY-2026-10-26.md ('Pocket copies the clip, a read one') against RULINGS line 77",
+  "evidence": "Prepared lines were moved to Pocket TTS, whose references are read VCTK clips; delivery research says only a new reference voice changes it and an acted actor reference is an unmade identity decision."
+ },
+ {
+  "id": "D-D-105",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Filmed card against strands comparison done; outcome his 9 Nov yes 'strands stay, cards fail at Tom's camera' (D-D-127)."
+ },
+ {
+  "id": "D-C-021",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Nov, 4 Oct and 25 Oct lines: the cast voice on the card is fine for their evening. Names gate and Monday audit only."
+ },
+ {
+  "id": "D-C-121",
+  "status": "enforced",
+  "enforcer": "tools/voice-cast-check.py; tools/attribution-check.py (p286)",
+  "by": "",
+  "evidence": "RULINGS 'voices in the game' line; voice-cast-check ran clean (0 problems) and attribution-check names p286. Neither tests which exact speaker is cast."
+ },
+ {
+  "id": "D-G-151",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Chatterbox Nano was evaluated and then used (THIRD-PARTY.md 'The live voice, Chatterbox Nano'); the evaluation order is carried out."
+ },
+ {
+  "id": "D-D-041",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Port.cs (hard rule on names), tools/ci-checks.sh talk-tests",
+  "by": "",
+  "evidence": "RULINGS speech line: small local checker first at the open cut-off, wider hard rule; the checker is on by default."
+ },
+ {
+  "id": "D-G-021",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "license-allowlist.md reasons VCTK cloning is inside the consent rule; RULINGS 'VCTK voices, consent a stated risk'. No test of consent."
+ },
+ {
+  "id": "D-D-025",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Rewrite in real turns left off 27 Oct, later work folded into n02-3-1-speech (later note); speech bar missed and reported 4 Nov."
+ },
+ {
+  "id": "D-D-038",
+  "status": "in-force",
+  "enforcer": "tools/attribution-check.py (p286)",
+  "by": "",
+  "evidence": "Darren's present voice is p286 on Pocket (RULINGS line 76; attribution-check names p286)."
+ },
+ {
+  "id": "D-D-027",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py (p286)",
+  "by": "",
+  "evidence": "Pick A p286 is in RULINGS line 76 and in attribution-check; his later 'keep present voice' left it in place."
+ },
+ {
+  "id": "D-D-026",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Recast carried out 26 Oct (his pick A p286); he kept the present voice 27 Oct night."
+ },
+ {
+  "id": "D-F-020",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "p280's 16 files fetched, 4.0 MB, closed 19:28 (later note)."
+ },
+ {
+  "id": "D-D-112",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Dispatcher speaks with p280; RULINGS line 76 lists 'the dispatcher p280'."
+ },
+ {
+  "id": "D-C-117",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 25 Sep: other eleven casting sheets approved as text, faces cast in MetaHuman. Monday audit only."
+ },
+ {
+  "id": "D-C-115",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 30 Sep faces frozen. Enforcers file names approvals.py and monday-audit, but neither tests a face change."
+ },
+ {
+  "id": "D-G-035",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "his 1 Oct ruling (D-C-128), RULINGS line 78",
+  "evidence": "Audio2Face-3D plan replaced by Epic's audio-driven mouths for prepared lines and loudness-driven mouths for live lines."
+ },
+ {
+  "id": "D-D-039",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Port.cs, tools/ci-checks.sh talk-tests",
+  "by": "",
+  "evidence": "RULINGS speech line: 'replies cite their facts'."
+ },
+ {
+  "id": "D-D-036",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Fast checker went in behind a switch and is on by default since 28 Oct morning (later note)."
+ },
+ {
+  "id": "D-D-033",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "He picked the open cut-off on 27 Oct night; on by default 28 Oct."
+ },
+ {
+  "id": "D-G-022",
+  "status": "enforced",
+  "enforcer": "tools/voice-cast-check.py",
+  "by": "",
+  "evidence": "A named character without a cast voice would draw a crowd voice; the check catches exactly that and ran with 0 problems."
+ },
+ {
+  "id": "D-C-124",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS line 77 'the flat voices' experiment is owed'; no experiment found; order of 16 Nov carries 'flat delivery' in K6, kept for its phase by his tap 8 Nov."
+ },
+ {
+  "id": "D-D-030",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Gemini tries set aside after two; third and fourth ran on his 27 Oct yes; the Gemini line has left RULINGS."
+ },
+ {
+  "id": "D-D-104",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 3 Nov hair: no hair skill until one character's hair passes the full gate. Monday audit only."
+ },
+ {
+  "id": "D-D-035",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Port.cs ('The hard rule on names')",
+  "by": "",
+  "evidence": "Hard rule's wider form on from his 28 Oct yes; in RULINGS speech line."
+ },
+ {
+  "id": "D-G-016",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-D-020, his 26 Oct picks 'both' and 'move', THIRD-PARTY.md Pocket section",
+  "evidence": "One-engine Chatterbox plan changed: Sheila, Ron and Darren now speak on Pocket TTS."
+ },
+ {
+  "id": "D-C-122",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS line 76 asks for a listening page for Danny p243, June p277 and Father Walsh; no such page found in orders or the page items; K6 lists only dispatcher, flat delivery, crowd accents."
+ },
+ {
+  "id": "D-D-020",
+  "status": "enforced",
+  "enforcer": "tools/voice-cast-check.py",
+  "by": "",
+  "evidence": "Pocket for Sheila and Ron live and prepared lines, in RULINGS line 76 and THIRD-PARTY.md."
+ },
+ {
+  "id": "D-E-049",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Nov models line: talk and voice models re-checked monthly from 7 Dec. First check not yet due."
+ },
+ {
+  "id": "D-C-128",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Oct: live mouths follow loudness, prepared lines use Epic's audio-driven mouths. Monday audit only."
+ },
+ {
+  "id": "D-G-015",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Voices come only from donated corpora (VCTK, Pocket references); RULINGS 'no hiring, ever' and 9 Nov 'he never films or performs'. No check."
+ },
+ {
+  "id": "D-C-119",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 24 Sep: no voice cast without his yes, no hiring. voice-cast-check does not test his yes."
+ },
+ {
+  "id": "D-G-020",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS D26 'sound is a lane, CC0 only'; attribution-check lists Sounds sources. No test that non-verbal sounds are CC0."
+ },
+ {
+  "id": "D-D-088",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Missed after three tries (2.02 s median) and reported at the exit 4 Nov."
+ },
+ {
+  "id": "D-F-011",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Third try made, failed, speech reported as missing its bar 4 Nov."
+ },
+ {
+  "id": "D-D-016",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "The 2 s bar still stands (RULINGS speech line: 'The 2 s bar is a newcomer's real questions'); missed by 0.02 s and set aside 4 Nov; n16-6 talk loop continues. No check on it."
+ },
+ {
+  "id": "D-D-127",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS hair line '(9 Nov: strands stay)'; Tom's crown a listed known fault, now in n16-8."
+ },
+ {
+  "id": "D-C-116",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 8 Oct: Tom L1. Not tested."
+ },
+ {
+  "id": "D-A-016",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same no of 11 Nov as D-F-058; Tom is to be shown again after the clothes come up to the floor (order 16 Nov section 4). Not yet shown."
+ },
+ {
+  "id": "D-D-023",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.FastFirst.cs, tools/ci-checks.sh talk-tests",
+  "by": "",
+  "evidence": "Two-speed check live: RULINGS speech line, fast checker on by default."
+ },
+ {
+  "id": "D-G-018",
+  "status": "enforced",
+  "enforcer": "tools/attribution-check.py (Sounds and pocket-voices map to VCTK)",
+  "by": "",
+  "evidence": "RULINGS 'VCTK voices'; every sound folder must trace to an allowlist row."
+ },
+ {
+  "id": "D-C-129",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 1 Oct last line. Voice is in the game on measured delay evidence; no check."
+ },
+ {
+  "id": "D-C-125",
+  "status": "contradicted",
+  "enforcer": "",
+  "by": "tools/voice-live/pocket-server.py (no watermark) and THIRD-PARTY.md Pocket section, against RULINGS line 77 'D50: the voice watermark is kept'",
+  "evidence": "Watermark belongs to Chatterbox; the Pocket server that now voices Sheila, Ron and Darren has no watermark code and THIRD-PARTY.md's Pocket obligations omit it."
+ },
+ {
+  "id": "D-C-120",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 30 Sep: voices judged by ear, accent checker a screen. Monday audit only."
+ },
+ {
+  "id": "D-G-109",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Part2.cs ('A caught claim is not what they know')",
+  "by": "",
+  "evidence": "A caught claim is not what the listener knows."
+ },
+ {
+  "id": "D-C-145",
+  "status": "enforced",
+  "enforcer": "tools/dialogue-verify.py; ledger/CoreTests (prompt block guards hard facts)",
+  "by": "",
+  "evidence": "RULINGS 25 Sep claim-check line."
+ },
+ {
+  "id": "D-G-010",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Part2.cs ('a street you have starved cannot pay a full one')",
+  "by": "",
+  "evidence": "Racket round coupled to prosperity (decision 9)."
+ },
+ {
+  "id": "D-C-143",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs (witness holds first-hand rumor); tools/port-golden-check.sh",
+  "by": "",
+  "evidence": "RULINGS D25 and D29 line."
+ },
+ {
+  "id": "D-G-011",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Part2.cs ('one cooperation buys exactly its 0.045')",
+  "by": "",
+  "evidence": "Relief 0.045 in ActThree.cs (halved from 0.09)."
+ },
+ {
+  "id": "D-G-120",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "his 5 Oct 2026 ruling, 'CHARTER.md and PLAN.md replace every list' (RULINGS)",
+  "evidence": "The old Unity-era roadmap gates are gone: his 5 Oct ruling made CHARTER.md and PLAN.md replace every list. PLAN.md and CHARTER.md say nothing of arrest or a resolved blow, so the repairs were not carried over."
+ },
+ {
+  "id": "D-G-093",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs (old-prune detector, lines 331-410)",
+  "by": "",
+  "evidence": "Memory prune removed from MemoryStore; canon says nothing is ever wiped."
+ },
+ {
+  "id": "D-C-210",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests; tools/port-golden-check.sh",
+  "by": "",
+  "evidence": "canon.md moat: Core decides, LLMs classify."
+ },
+ {
+  "id": "D-C-209",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests (prune detector), ledger/PerceptionGolden GossipFuzz via tools/port-golden-check.sh",
+  "by": "",
+  "evidence": "canon.md moat: permanent memory, gossip through schedule intersections."
+ },
+ {
+  "id": "D-C-208",
+  "status": "enforced",
+  "enforcer": "ledger/PerceptionGolden via tools/port-golden-check.sh; ledger/CoreTests",
+  "by": "",
+  "evidence": "canon.md moat: seven slots, five-rung ladder."
+ },
+ {
+  "id": "D-G-009",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.Part2.cs line 4138 ('a bribe goes into their pocket')",
+  "by": "",
+  "evidence": "A bribe goes into the person's purse (Purses.Credit)."
+ },
+ {
+  "id": "D-C-142",
+  "status": "enforced",
+  "enforcer": "tools/encounter-verdict-check.py",
+  "by": "",
+  "evidence": "RULINGS 23 Sep after-a-deed line."
+ },
+ {
+  "id": "D-G-144",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Soak runs `--residents 7,50,200` with a ScaleReport (ledger/Soak/Program.cs); later landed in the 21 Sep ruling and is part of ci soak."
+ },
+ {
+  "id": "D-G-008",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Code does it: SimDirector.cs sets WearingCoat from day 2 night ('careful from the second'). No test of the choice itself."
+ },
+ {
+  "id": "D-E-050",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Talk made provider-neutral and bake-off: NOW.md n16-6 is unchecked; second provider's client built 16 Nov, Sonnet 5.5 leg next."
+ },
+ {
+  "id": "D-C-153",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs ('an intimidated source stays quiet'); the live-only threat read is judgement",
+  "by": "",
+  "evidence": "RULINGS 3 Oct threat line."
+ },
+ {
+  "id": "D-C-163",
+  "status": "enforced",
+  "enforcer": "ledger/CoreTests/Program.cs ('a witness who saw only a shape has no reason to suspect this man')",
+  "by": "",
+  "evidence": "RULINGS 30 Sep witness line."
+ },
+ {
+  "id": "D-D-099",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "progress_page.py has line_2027 and --check runs in ci; live talk cost per hour measured in production/research/llm-inference-economics/TALK-LEVERS-2026-11-06.md."
+ },
+ {
+  "id": "D-F-004",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "his 12 Nov 08:20 tap on pause-nightly-answers-task (DECISIONS 12 Nov 08:26)",
+  "evidence": "Both sessions were still waiting when checked; the nightly read-back task was switched off by him 12 Nov 08:20."
+ },
+ {
+  "id": "D-F-074",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Needs-you item approved-programs-install-2026-11-12 is state done."
+ },
+ {
+  "id": "D-C-079",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 12 Nov: programs he approves on his page the builder installs into LedgerTools. Monday audit only."
+ },
+ {
+  "id": "D-A-028",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Same ruling, RULINGS 'Sources, licences and money' first line. Monday audit only."
+ },
+ {
+  "id": "D-D-056",
+  "status": "enforced",
+  "enforcer": "tools/ue/asset_checks.py (ci-checks asset-budgets)",
+  "by": "",
+  "evidence": "Asset budgets and checks ran before reviewers; the spec check is in ci."
+ },
+ {
+  "id": "D-F-051",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "RULINGS 9 and 14 Nov: only the builder reads Civitai, Reddit and ArtCraft's Discord in his Chrome. Start_bridge and Monday audit do not test it."
+ },
+ {
+  "id": "D-E-060",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Combined clothing tool is Kiln; Kiln v1 is 0 of 6 lines (NOW.md state, HANDOVER)."
+ },
+ {
+  "id": "D-F-052",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Needs-you item comfyui-install-2026-11-09 is done; the video route was later dropped (order 16 Nov section 4)."
+ },
+ {
+  "id": "D-A-002",
+  "status": "in-force",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Connectors still in place: Drive, Docs and GitHub tools are in use this session."
+ },
+ {
+  "id": "D-G-057",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Condition not met for the four named files, nothing deleted (later note); map, gallery and cards page remain."
+ },
+ {
+  "id": "D-A-011",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Tested 10 Nov and again 11 and 13 Nov; Marvelous stays."
+ },
+ {
+  "id": "D-E-034",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Test report: does not work instead of Marvelous yet."
+ },
+ {
+  "id": "D-E-052",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Re-test 13 Nov 09:05: folder unchanged, 11 Nov numbers stand (DECISIONS line 131)."
+ },
+ {
+  "id": "D-G-047",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-054 (D16, Unreal, 2026-09-10)",
+  "evidence": "Probe deadline moot once the engine was chosen."
+ },
+ {
+  "id": "D-G-054",
+  "status": "enforced",
+  "enforcer": "tools/port-golden-check.sh (ci perception-golden)",
+  "by": "",
+  "evidence": "canon.md OPEN 1: Unreal decided; the C++ port is checked against C# goldens."
+ },
+ {
+  "id": "D-G-034",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-054 (D16, 2026-09-10)",
+  "evidence": "Probe closed by D16."
+ },
+ {
+  "id": "D-G-048",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "D-G-054 (D16, 2026-09-10)",
+  "evidence": "Unreal chosen outright by D16."
+ },
+ {
+  "id": "D-D-095",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Try 1 made 3 Nov (cache on C: raised to 10 GiB) with measured before and after; RULINGS storage line keeps the 17 GB allowance."
+ },
+ {
+  "id": "D-F-024",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Box gone, checked 15:37 the same day."
+ },
+ {
+  "id": "D-E-078",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "FoldCraft on the allowlist and read, parity list written (KILN-PARITY-LIST-2026-11-16.md), ast-grep installed, but the code-search comparison rounds and parity count sit in n16-1, which is unchecked."
+ },
+ {
+  "id": "D-G-145",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Frame cost is in every night's packaged perf line (tools/perf-hook.py selftest in ci)."
+ },
+ {
+  "id": "D-D-094",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Tested 2 Nov (history 53% of cost); that handover task was retired by his 4 Nov ruling."
+ },
+ {
+  "id": "D-A-046",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Installed 16 Nov 07:55 on his own turn (DECISIONS line 175); tools/gate_prompt_hook.py in place."
+ },
+ {
+  "id": "D-E-122",
+  "status": "open",
+  "enforcer": "",
+  "by": "",
+  "evidence": "His goal until Mon 23 Nov 13:00; HANDOVER 'Kiln v1 by Mon 23 Nov', NOW.md 0 of 6."
+ },
+ {
+  "id": "D-G-156",
+  "status": "done",
+  "enforcer": "",
+  "by": "",
+  "evidence": "Declined; no graphify tool in tools/ (only the research note production/research/graphify-evaluation)."
+ },
+ {
+  "id": "D-F-010",
+  "status": "superseded",
+  "enforcer": "",
+  "by": "his ruling of 4 Nov (later note)",
+  "evidence": "Handover task retired; the hourly task replaced it."
+ }
+]

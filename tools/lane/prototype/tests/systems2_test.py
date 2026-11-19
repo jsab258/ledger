@@ -11,7 +11,7 @@ What the hook exposes, listed from the browser on 18 Nov 2026 (bundle version 17
   LEDGER functions   step, simStep, startNew, passTime, enterRoom, leaveRoom, endWeek, reportText,
                      saveNow, restore, benchmark; objects G, talk, ui, rig, scene, camera, THREE, cam, F
   LEDGER.talk        start(id) opens talk with a person; lines() the suggested lines [{job, text, model}];
-                     state() {on, who, busy, open, sel, dec, q, slip}. Choosing a line or a yes/no is a
+                     state() {on, who, busy, open, sel, dec, q, slip} (since 18 Nov: {open, personId, ...}). Choosing a line or a yes/no is a
                      key press in the page: not in the hook.
   G keys             v t played weather tom car minds events ev sightIdx transfers nextE ledger log money
                      debts story stats people named crowd env watch paused fast hooks settings keepers ledgerNew
@@ -54,6 +54,14 @@ EXPECTED_JS = """(() => { const G = LEDGER.G, h = (G.t / 60) % 24, d = Math.floo
     const o = s && (!n || s[0] >= n[0]) ? s : n;
     out[p.id] = [o ? o[1] + '|' + (o[2] || 'idle') : 'off|idle', p.goalKey]; }
   return out; })()"""
+
+# A written scene (Ron's first meeting, since he now walks home past Tom at night) pauses the game
+# until it is read through: go on with LEDGER.written.next(), as the E key does; where it asks,
+# take the first choice (LEDGER.written.choose(0)). Returns the line read, or None if none was open.
+ADVANCE_JS = """(async () => { const w = LEDGER.written.read(); if (!w.open) return null;
+  if (w.waitsForAChoice) await LEDGER.written.choose(0); else await LEDGER.written.next();
+  return (w.speakerPersonId || '') + ': ' + w.text; })()"""
+READY_JS = "(!LEDGER.G.paused && !LEDGER.talk.state().open) || LEDGER.written.read().open"
 
 
 @unittest.skipUnless(ASSETS and os.path.isdir(ASSETS), "LEDGER_PROTO_ASSETS not set: pictures missing, system checks skipped")
@@ -102,8 +110,10 @@ class Systems2(unittest.TestCase):
         a fade that runs in real time; wait for it, then go on."""
         target = day * 1440 + hour * 60
         self.assertLess(self.js("LEDGER.G.t"), target, "the clock is already past day %d %.2f" % (day, hour))
-        for _ in range(200):
-            self.pg.wait_for_function("!LEDGER.G.paused && !LEDGER.talk.state().on", timeout=60000)
+        for _ in range(400):
+            self.pg.wait_for_function(READY_JS, timeout=60000)
+            if self.js(ADVANCE_JS) is not None:
+                continue
             now = self.js("LEDGER.G.t")
             if now >= target - 0.5:
                 break
@@ -149,12 +159,13 @@ class Systems2(unittest.TestCase):
     # 2. Talk --------------------------------------------------------------------------
     def talk_lines(self, pid):
         # The clock stops while talk is open, so each talk is closed again with its own Leave button.
+        # Since 18 Nov talk.state() is {open, personId, ...} (it was {on, who, ...}); leave() closes it.
         self.js("LEDGER.talk.start(%r)" % pid)
         st = self.js("LEDGER.talk.state()")
-        self.assertEqual(st["who"], pid, "talk.start must open talk with %s" % pid)
+        self.assertEqual(st["personId"], pid, "talk.start must open talk with %s" % pid)
         lines = [l["text"] for l in self.js("LEDGER.talk.lines()")]
-        self.js("document.getElementById('tbye').click()")
-        self.pg.wait_for_function("!LEDGER.talk.state().on && !LEDGER.G.paused", timeout=15000)
+        self.js("LEDGER.talk.leave()")
+        self.pg.wait_for_function("!LEDGER.talk.state().open && !LEDGER.G.paused", timeout=15000)
         return lines
 
     def test_2a_suggested_lines_name_nobody_he_has_not_learned(self):
@@ -229,10 +240,11 @@ class Systems2(unittest.TestCase):
         self.routine_check()
         self.assertEqual(self.js("LEDGER.G.people.ron.goalKey"), "home|sleep")
 
-    @unittest.expectedFailure
-    def test_3b2_ron_gets_home_at_night(self):
-        # Finding (18 Nov): Ron leaves the rank at 23:36 for home, walks about 3 metres and stops at
-        # x 6.4, z 35.2, still marked as walking with a route, and is still standing there on the
+    def test_3bb_ron_gets_home_at_night(self):
+        # Named 3bb so it runs after test_3b_ has stepped the clock to 02:00 (3b2 ran before it).
+        # Fixed in Fable's 18 Nov round (CHANGELOG 2b); was an expected failure. The finding, for the
+        # record (18 Nov, bundle): Ron left the rank at 23:36 for home, walks about 3 metres and stops at
+        # x 6.4, z 35.2, still marked as walking with a route, and was still standing there on the
         # street at 03:00 (traced hour by hour). By day his walks (rank to the fish queue) arrive.
         # Seen with the clock stepped through the hook and drawing off; unverified in normal play.
         self.assertNotEqual(self.js("LEDGER.G.people.ron.space"), "street", "at two in the morning Ron is not on the street")

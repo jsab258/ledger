@@ -1,0 +1,338 @@
+# LEDGER loop prototype: design notes
+
+Choices made without asking, as instructed. Anything marked invented is mine and not canon.
+Written from `src/design_notes_text.js`, the same text the game shows under Design notes.
+
+## Scope
+
+One artifact, built in three.js. The Hook around Quay Street is the play area; the second district is a slice of Copper Row's market quarter over the bridge (bank, video shop, market hall, station forecourt). The Parade was left out because a nightlife strip without drink read thin.
+
+## Rules table and retiming, 18 Nov 2026 (second round): what changed
+
+No new systems. (1) Every rule's number is now in one table, LEDGER.rules: the confrontation ladder, the weekly schedules and each person's numbers, the kinds of thing the town can know, the story's hours and distances, talk, Tom's own pace, driving and traffic, shop hours. The move changed nothing: one scripted week played with a fixed seed gives exactly the same save, part for part, on the page as it was published before the move and after it, and that is now a test. (2) The routines are retimed so every walk arrives, with Tom away and with Tom standing at the rank. Walking pace and the rules of seeing and pausing are as they were. (3) Three fixes: Nobody saw is written only once an act has gone two game minutes unseen and is never taken out; in the People index / and then a letter jumps to any letter; the two first-round test scripts are replaced by tests through the hook that pass or fail. The dated list, with the gossip before and after, is CHANGELOG.md under Source and files; the results of the checks are RESULTS.md.
+
+## Second round: choices I made
+
+What counts as a rule's number: a number that decides what happens in the town (who sees, who tells, what it costs, when, how far, how long, how likely). Left where they are, and counted by a tool so that none can be added unnoticed: unit conversions (60 minutes in an hour), indexes and plain arithmetic, text and layout, places on the map, how the camera and the controls feel, how people and things look. The numbers 0, 1 and 2 were left in place everywhere without being looked at one by one. Rung numbers of the ladder have names (the threat rung, the strike rung). The retiming went much further than the walks to the map's edge and the watchman's rounds, because the check with Tom at the rank demands it: within 90 metres of Tom people walk at their real pace, a game minute to the metre, and the rank is where the quay end's routines cross. Twenty-two people have longer rows. The rule used: every row leaves room for its walk and a quarter again, in both cases. Where a day could not hold its stops, a stop went: Albert no longer takes breakfast at the caff, Kevin makes one run away a day and Terry two a night, the watchman makes three rounds a night and not five, June stays in on Monday evening. The arrivals check now keeps Tom at the rank for the whole 26 hours: when the game puts him to bed in the small hours the check puts him back as soon as he wakes, and says how often. Nobody saw: an act waits in a list for two game minutes; if a watcher is known by then nothing is written, otherwise the line is written and from then on can only be struck through. The / jump goes to the first page under the letter, A to Z, and says so when nobody is under it; Esc lets it go. Found on the way and fixed, because the new town test could not pass without it: a constable coming for Tom could walk back and forth in the lane east of Quay Street and never arrive, because he planned his way afresh every second and a half; he now keeps to his way while Tom stays where he was.
+
+## Second round: what I could not do
+
+The whole list is NOT_DONE.md under Source and files. The main points: every walk arrives in the two cases asked for, Tom away and Tom at the rank; if Tom stands somewhere else, people walking near him there are slow too, and a long walk through his sight can still outlast its row. The gossip table compares one seeded week before with the same seeded week after: one week each, not an average. The measures file is again played by a script, not a person. The same-week proof covers what a scripted week does; the blows of a fight and the cab's handling are exercised by the town test and by play, not by that week, though their numbers were moved by copying their own text. The Tuesday night pause from the round before is still not reproduced.
+
+## Readable source and Ledger screen test, 18 Nov 2026: what changed
+
+No new systems. (1) The source is now readable and split by part: seeing, gossip, the Ledger, money and debts, police, routines, talk, saving, scenes, and the rendering in its own folder, with three.js pinned at 0.187.0 and one build command, npm run build. All of it is published beside this page and can be read under Source and files, on the title and in the pause menu. (2) Five faults fixed: the test hook's restore now rebuilds the people as Continue does; a person no longer pauses again and again at the same ongoing act, so Ron walks home; every pause and resume is logged with the game time and its reason, and a hook check steps through Tuesday and Wednesday nights; the slip in talk sits beside the typing box, never over the subtitles; the rent is late from Friday 6pm, as Mrs Rennison says. (3) The test hook can now choose a suggested line, answer a decision, read and advance a written scene, use the drop door, wash money through Sheila and run a fare by place name, and every rule's number is in one table, LEDGER.rules, with units in the names. (4) The Ledger screen test: L only, four parts, entries with a source event, the Noted line rules, the folded slip, and the playtest measures with their screen and export. The dated list, item by item, is CHANGELOG.md under Source and files.
+
+## This round: choices I made
+
+Things the brief left to me. The witness pause: a person's body reacts only to the first sight of an act, and then not again for 20 real seconds, whatever Tom does next. The rent: paying after 6pm on Friday now counts as late, because that is what the line says. The Ledger in a talk: L opens it only when the typing box does not have the keys (after Tab, or with nothing being typed in), because otherwise L is a letter in his sentence. A typed letter in People jumps to that letter, except E, L and Q, which change part or close. The map of the Hook moved under the Open part. The asks: four find-the-fact questions at set moments (Tuesday 9.30am the bus, Wednesday noon the rent, Thursday 10am what one person calls Tom, Friday 9am the tin); a slip at the top right asks, the player opens the Ledger, puts the cursor on the entry and presses Enter (pad: A), Backspace or X gives up; a setting switches them off. Wrong marks are counted. An entry that says nobody saw an act is withdrawn if a watcher is written down within two game minutes of it, as one piece of writing; after that it is struck through with the day and the reason like any other wrong belief. This is the one place an entry can disappear, and it is there to be judged. Every entry has a source event: things told or noticed get an event of their own kind (word), so nothing in the book is without one. Old saves load, and their Ledger is rebuilt into the new book on first open. Measures are kept per week, saved with it, and cleared by a new week. Flow timers (fades, goodbyes, subtitle time, the Noted line) now run on the game's own steps instead of the browser's clock, so a hidden or held-back tab cannot leave a pause hanging.
+
+## This round: what I could not do, and what the checks found
+
+The whole list is NOT_DONE.md under Source and files; the main points are here. The Tuesday night pause that did not resume could not be reproduced: the nights check finds every pause on Tuesday and Wednesday nights paired with its resume, and the likely cause, browser timers held back while a fade was waiting on them, is removed. The new arrivals check found walks that are given up before they arrive: with Tom away, in 26 game hours 157 walks set off, 139 arrived and 14 were dropped for the next place in the routine, 8 of them walks to or from the map's edge. Near Tom people walk at their real pace, so the night watchman's rounds to the warehouse row are not completed while Tom stands near. Nobody stands still any more. I did not retime the routines, because that changes who meets whom and so the gossip numbers, and the brief says to change nothing else. Not every number is in LEDGER.rules yet: the confrontation ladder, the inner numbers of the routines and some coefficients in scenes and talk are still in their own files. A pad drives the Ledger only, not the rest of the game. The measures file from one full week was played by a script through the test hook, not by a person: it shows that every measure counts, and says nothing about how a player behaves. I still have not heard a real AI follow-up line.
+
+## Talk, screen and Ledger pass: what changed
+
+Three changes and one test switch, nothing else: rules, story, numbers and saves are as they were, and old saves load. (1) Tom's suggested lines replace the old chips. They are his exact words, three at most, always in the same order: a line about what was just said, something personal, a line that leaves. Before anything has been said a written greeting takes the first place. A job with no line is left out. Tab opens them above the text box, Up and Down choose, Enter says the one in hand, Tab goes back to his own words; there are no number keys and no timers, and on touch they are there from the start. A chosen line is sent exactly as a typed one. No line is offered twice in one conversation. (2) Nothing on screen that he could not know: the "Who can see you" slip, the LIGHT and NOISE bars, the watcher list, every mark and eye over a head and the line under the street sign are gone by default. The corners of the picture now follow the same light value the seeing rule uses. Watchers show it with their bodies: the head turns to him, a longer look when he is doing something worth remarking, a pause in a walk, two people glancing his way while they talk, a step back from him at night, and a head and shoulders at the glass for anyone watching from a window. Noise is told by sound alone: footsteps, a door, a car door, a shout and a blow all go through one mix that is driven by the noise rule, so they carry at night and go under in rain and at noon. What the town calls him is only in what people say and in the Ledger. People are shown under the street's description until he hears their name. The fight ladder stays. (3) The Ledger has three parts: By person, By event, What's open. A slip from it sits beside the talk box (F2 folds it), and a line low at the left says when he comes to believe something new. (4) Settings has "Show the town's eyes (testing only)", off by default, which brings the slip, bars and marks back. The run report says whether it was on and for how long, and how often the Ledger, the slip and the suggested lines were used.
+
+## Talk pass: who writes which line
+
+The game writes every hello, every goodbye and every line that decides something. The follow-up line, and the personal line when there is one, are written by the AI in a call of their own, never in the same call as the other person's reply. That call is given three things only: his Ledger about this person as plain sentences, how he knows them (a name or the street's description), and the last eight lines of the talk. It never sees their card, memories or secrets. Each line that comes back is thrown away, and a written one used where there is one, if it is over twelve words, gives his name, names anybody he has not heard of (any capital in the middle of a sentence that is not a name he has, or one of a short list of places and days), breaks the content rule, or reads as agreeing, refusing, offering or paying. With live voices off, after six seconds, or if the call fails, there is no follow-up line and the others are the written ones.
+
+## Talk pass: decisions
+
+Where his answer decides something, the yes and the no are both the game's lines, written from the state of the game, with a third that keeps talking. Only a yes is taken: a no and a keep-talking line decide nothing, and typed words that are not a plain yes or no are answered and decide nothing. Ron's ask and plain question and Sheila's question with its three follow-ups are word for word as given. Written by me in the same pattern: the door in the back room, the Tuesday parcel, the scrapyard collection, Ada's tea against the yard, the reporter, DS Ellis, Iveson at the yard, Julie's fare and slate, the tin through the book, Ron's five pounds for the door, Darren's three and five pounds, every debt on the book (collect or strike out), Grace's tea, the rent, Wayne's wares, Pauline's fare and June's lift to the station. Walking away leaves a thing open where the story can wait (Ron's ask becomes "think quick"); where a scene cannot stay open, walking away is the quiet answer (the door stays shut, Julie is charged her fare, Ellis is told nothing, Sheila gives him an hour). A full week was played by the test with these lines and Tab and Enter alone.
+
+## Screen pass: choices I made
+
+Things the brief left to me. The story marks (the ! over Ron or Sheila) went with the eyes, so a person who wants a word now turns, lifts a hand and says so once in a while, and the To do slip still says what is waiting. The line under the street sign now only says "the coat is on" or "in the cab". A name is learned when the person says it, which most do the first time he speaks to them (Wayne, Lee, Iveson and Rita keep theirs until the second time); in a written scene, a name he has already been given for that place or job (Mrs Rennison at Regent House, Iveson at the yard, young Harrison at the side door) goes on the face once they have spoken; Ada is named with her window when the tea is passed along; Grace when he comes round in her kitchen. Once he has any part of a name the whole name is shown. Debts in "What's open" are listed by the names in Mickey's book, and go on a person's own page only once he can put that name to the face. Sureness in the Ledger comes from how he came to believe it: said to his face or done in front of them is sure; saw them looking, a window, told when he asked or paid for is thinks so; two heads together is guesses. The pause in a walk is the one new thing that touches where people are: about one to two seconds, only when they have just seen something worth remarking. Window watchers are drawn in the nearest real window to where the rule puts their eyes. Money in his own lines is said in words (twenty-two pounds).
+
+## Talk, screen and Ledger pass: what I could not do
+
+I could not hear a real AI follow-up line. The sandbox I test in has no live voices, and in the published page the first call asks for a permission that is yours to give, so the follow-up and the model's personal line were exercised only with a stand-in that returns lines I chose (a good pair, one too long, one with his name, one with a name he has not heard, one that breaks the content rule, one that makes a deal, one seven seconds late). All were kept or dropped as the rules say. The lines listed below are therefore the written ones only: please look at a few follow-ups yourself with live voices on. A synthesised shout stands in for a voice. The step back is a step away from him, not a walk to the nearest doorway. I could not check the sound mix by ear; it is driven by the same number as the noise radius.
+
+## Suggested lines offered in the test talks
+
+Eleven talks at three points of one test week, played with Tab and Enter only. Each numbered row is one set of lines as offered, in order. No [follow] line appears because live voices were not available to me, so every line here is a written one.
+
+
+
+Monday afternoon, day 1. The woman at the fish shop, who gives the name Brenda Laverack.
+
+1. Before anything is said: [greet] Hello. Is now a good time? / [personal] What do you make of the street these days? / [leave] I'll let you get on.
+
+2. After the answer: [personal] I'm still finding my feet here. / [leave] I won't keep you.
+
+3. After the answer: [personal] It's all new to me, this. / [leave] Right. I'd best be off.
+
+4. After the answer: [personal] What do people do round here of a Sunday? / [leave] I'll leave you to it.
+
+5. After the answer: [personal] Who should I get to know round here? / [leave] Another time, then.
+
+   He leaves with: "Another time, then."
+
+
+
+Monday afternoon, day 1. The woman who keeps the caff, who gives the name Grace Rinaldi.
+
+1. Before anything is said: [greet] Sorry to bother you. / [personal] Who should I get to know round here? / [leave] I'll not hold you up.
+
+2. Something to decide: [yes] Yes. Tea, and I'll sit a while. / [no] No. Not just now. / [keep] What's the talk in here today?
+
+3. The question still stands: [yes] Yes. Tea, and I'll sit a while. / [no] No. Not just now. / [keep] Who comes in of a morning?
+
+   He says: "No. Not just now." (decides nothing)
+
+4. After the answer: [personal] Have you always lived round here? / [leave] Right. I'd best be off.
+
+5. After the answer: [personal] What was Mickey like? / [leave] I'll leave you to it.
+
+6. After the answer: [personal] Where's good for a cup of tea round here? / [leave] Another time, then.
+
+   He leaves with: "Another time, then."
+
+
+
+Monday afternoon, day 1. An old man mending nets, who gives the name Albert Suggitt.
+
+1. Before anything is said: [greet] Sorry to bother you. / [personal] Who should I get to know round here? / [leave] I'll let you get on.
+
+2. After the answer: [personal] Do you get many strangers down here? / [leave] I won't keep you.
+
+3. After the answer: [personal] What's the best thing about this street? / [leave] Right. I'd best be off.
+
+4. After the answer: [personal] Have you always lived round here? / [leave] I'll leave you to it.
+
+5. After the answer: [personal] What was Mickey like? / [leave] Another time, then.
+
+   He leaves with: "Another time, then."
+
+
+
+Tuesday morning, after the night job. Kevin Needham.
+
+1. They spoke first: [personal] I'm still finding my feet here. / [leave] I won't stop, then.
+
+2. After the answer: [personal] It's all new to me, this. / [leave] I'll not hold you up.
+
+3. After the answer: [personal] What do people do round here of a Sunday? / [leave] I'll let you get on.
+
+4. After the answer: [personal] Who should I get to know round here? / [leave] I won't keep you.
+
+5. After the answer: [personal] Do you get many strangers down here? / [leave] Right. I'd best be off.
+
+   He leaves with: "Right. I'd best be off."
+
+
+
+Tuesday morning, after the night job. Ron Kirby.
+
+1. Before anything is said: [greet] Hello. Is now a good time? / [personal] What was Mickey like? / [leave] I won't stop, then.
+
+2. Something to decide: [yes] Yes. Five pounds. / [no] No. Not today. / [keep] What have you seen so far?
+
+3. The question still stands: [yes] Yes. Five pounds. / [no] No. Not today. / [keep] Who looks at this office?
+
+   He says: "No. Not today." (decides nothing)
+
+4. After the answer: [personal] I'm still finding my feet here. / [leave] I won't keep you.
+
+5. After the answer: [personal] It's all new to me, this. / [leave] Right. I'd best be off.
+
+6. After the answer: [personal] What do people do round here of a Sunday? / [leave] I'll leave you to it.
+
+   He leaves with: "I'll leave you to it."
+
+
+
+Tuesday morning, after the night job. Darren Milner.
+
+1. They spoke first, with something to decide: [yes] Yes. Three pounds. / [no] No. Not today. / [keep] Heard from who?
+
+2. The question still stands: [yes] Yes. Three pounds. / [no] No. Not today. / [keep] Is it worth three pounds?
+
+   He says: "No. Not today." (decides nothing)
+
+3. After the answer: [personal] What was Mickey like? / [leave] Another time, then.
+
+4. Something to decide: [prop] I've come for the twenty-two pounds on the book. / [prop] I'm striking it out of the book. / [keep] How long has it stood?
+
+5. Still offered: [prop] I've come for the twenty-two pounds on the book. / [prop] I'm striking it out of the book. / [keep] What was it for?
+
+   He walks away.
+
+
+
+Tuesday morning, after the night job. Sheila Dunn.
+
+1. Before anything is said: [greet] Hello. Have you got a minute? / [personal] What do people do round here of a Sunday? / [leave] I'll not hold you up.
+
+2. Something to decide: [yes] Yes. Put it through. / [no] No. Leave it in the tin. / [keep] What does the book say this week?
+
+3. The question still stands: [yes] Yes. Put it through. / [no] No. Leave it in the tin. / [keep] How much will it hide?
+
+   He says: "No. Leave it in the tin." (decides nothing)
+
+4. After the answer: [personal] What's the best thing about this street? / [leave] Right. I'd best be off.
+
+5. After the answer: [personal] Have you always lived round here? / [leave] I'll leave you to it.
+
+6. After the answer: [personal] What was Mickey like? / [leave] Another time, then.
+
+   He leaves with: "Another time, then."
+
+
+
+Thursday, while Ellis is about. A woman in a mac who looks at doors, who gives the name DS Carol Ellis.
+
+1. Before anything is said: [greet] Hello. Have you got a minute? / [personal] Have you always lived round here? / [leave] I won't keep you.
+
+2. After the answer: [personal] What was Mickey like? / [leave] Right. I'd best be off.
+
+3. After the answer: [personal] Where's good for a cup of tea round here? / [leave] I'll leave you to it.
+
+4. After the answer: [personal] What do you make of the street these days? / [leave] Another time, then.
+
+5. After the answer: [personal] I'm still finding my feet here. / [leave] I won't stop, then.
+
+   He leaves with: "I won't stop, then."
+
+
+
+Thursday, while Ellis is about. Father Walsh.
+
+1. They spoke first: [personal] What do people do round here of a Sunday? / [leave] I'll let you get on.
+
+2. After the answer: [personal] Who should I get to know round here? / [leave] I won't keep you.
+
+3. After the answer: [personal] Do you get many strangers down here? / [leave] Right. I'd best be off.
+
+4. After the answer: [personal] What's the best thing about this street? / [leave] I'll leave you to it.
+
+5. After the answer: [personal] Have you always lived round here? / [leave] Another time, then.
+
+   He leaves with: "Another time, then."
+
+
+
+Thursday, while Ellis is about. June Suddaby.
+
+1. Before anything is said: [greet] Hello. Is now a good time? / [personal] Who should I get to know round here? / [leave] I'll leave you to it.
+
+2. After the answer: [personal] Do you get many strangers down here? / [leave] Another time, then.
+
+3. After the answer: [personal] What's the best thing about this street? / [leave] I won't stop, then.
+
+4. After the answer: [personal] Have you always lived round here? / [leave] I'll not hold you up.
+
+5. After the answer: [personal] What was Mickey like? / [leave] I'll let you get on.
+
+   He leaves with: "I'll let you get on."
+
+
+
+Thursday, while Ellis is about. The old woman at the window opposite, who gives the name Ada.
+
+1. Before anything is said: [greet] Hello there. / [personal] Who should I get to know round here? / [leave] I'll leave you to it.
+
+2. After the answer: [personal] Do you get many strangers down here? / [leave] Another time, then.
+
+3. After the answer: [personal] What's the best thing about this street? / [leave] I won't stop, then.
+
+4. After the answer: [personal] Have you always lived round here? / [leave] I'll not hold you up.
+
+5. After the answer: [personal] What was Mickey like? / [leave] I'll let you get on.
+
+   He leaves with: "I'll let you get on."
+
+## Art pass: what changed
+
+People are now Quaternius bodies (CC0) with faces, driven by the Quaternius animation library and mixed by the game states: idle, walk, formal walk, jog, sprint, talk, sit, drive, the fight rungs (guard, wind-up, cross, shove), hit, down, crouch and work. Clothes are shells cut from each body at load and skinned to the same 23 bones: donkey jacket, car coat, anorak, shell suit, cardigan, V-neck, blouse, denim, leather, bomber, overcoat, mac, duffel, cassock, tunic, overalls, apron, trousers, jeans, tracksuit bottoms, skirt, flat cap, headscarf, rain hood, woolly hat, a constable helmet, perms, sets, bobs, buns, mullets, glasses, moustaches, earrings and bags. Every named person keeps the clothes and colours the cast gives them. The posture layer (stoop, breath, guarding arm, limp, a head that turns to look) is applied as bone offsets after the clips. Far figures switch to a mesh of a few thousand triangles and move at half rate. The quay has a granite coping, iron railings, more bollards, fish boxes, net piles, loading doors and numbers on the warehouse ends, riding lights on the trawlers, mist on the water, a far bank with its lamps at night, and rooflines, chimneys, cranes, a spire and gasholders cut out against the sky beyond every edge of the map. The sky has two cloud decks and a dusk that glows up-river. Poly Haven setts, planks, plaster and stone are on the ground and walls; brick has a normal map for mortar depth, soot under sills and eaves, damp at the foot, ridge tiles, gutters, downpipes, lead flashing, aerials, net curtains, door numbers, and fly-posters on the empty unit; the Ship is boarded in weathered planks. Cars are bevelled 1990 shapes with arches, bumpers, plates, glass, drivers, working lamps that throw a pool on the road, and a lit roof sign on the cabs; the bus is a double-decker lit inside after dark. Litter drifts in gusts, gulls sit on the quay roofs and call, the horn sounds now and then, and the takeaway vent steams in the evening. Tom is seen at the wheel when he drives.
+
+## Art pass: one deviation
+
+You told me to copy people.txt from your other artifact. It is 8 MB and the tools let me bring at most 4 MB of a file into the workspace, so I could not open it to cut clothes against it or test them. I took the same Quaternius Universal Base Characters pack (CC0, licence file included) from a public GitHub copy, reduced it to what LEDGER needs and packed it with the clips from your anims.txt into one 1.5 MB file. The Poly Haven textures are your files, unchanged. tx_roof and tx_marble are not used.
+
+## Art pass: what I could not do
+
+Faces cannot age: an old man has grey hair, a stoop and a slower walk, but the same smooth face. Fingers are baked into one relaxed pose. Roughness maps are not used (the wet-ground shader owns that). Lead flashing is a plain band and slates are still the painted texture. The cranes are the earlier simple ones. There are no shadow maps, as before: figures and cars have blob shadows. Night light spilled from windows, the phone box and the shelters is drawn only; it does not change who can see Tom. Rules, story, numbers and saves are untouched and old saves load.
+
+## Art pass: frame time
+
+Use Settings, Measure the frame time: it draws forty frames back to back, waits for the card each time, and reports milliseconds, draw calls and triangles for the view you are in. Measured on your AMD Radeon RX 6700, on High, in Chrome: the opening view at the bus stop on Monday afternoon in drizzle took 11.5 ms a frame (87 a second) at 2298 by 1252 pixels, which is more pixels than 1080p, with 541 draw calls and 361 thousand triangles (reflection pass included). The title view took 7.3 ms (136 a second) at 1884 by 1026. The automatic resolution scale is still on and still steps in if a scene runs slow. Not measured: a crowded market hour in Copper Row or a fight at night. The whole artifact is 5.5 MB.
+
+## Calendar and clock
+
+Monday 15 to Friday 19 October 1990, so dusk falls about six. One game hour is 45 seconds. Hold Z to pass time on the spot; beds and the office cot skip to evening, the last ferry or morning. The clock stops while you talk or read.
+
+## Interiors
+
+Shops, the office, the caff, the chapel, the boarding house and Ada's front room are small sets with the fourth wall away, entered through doors. The yard behind Mickey's is real street space with its two exits.
+
+## Witness numbers
+
+Sight range is 4 m plus 44 m scaled by light, cut by rain and night mist. Field of view about 120 degrees. Lamp pools are baked once into a light field that both draws the ground and feeds the rule. Noise radius: still 0.5 m, walking 5, running 12, the cab up to 30, a fight 26; times 0.5 at noon, 1.3 late evening, 2 in the small hours; rain cuts it by up to 60 percent.
+
+## Naming
+
+Each person has a familiarity with Tom's face. Face score is familiarity times closeness; the coat at night multiplies it by 0.4, being in the cab by 0.1 to 0.6. Above 0.36 they name him, above 0.2 they think it was the new owner, below that he is a man, a coat or a cab. A stranger who later learns who he is can go back and join the dots.
+
+## What they call him
+
+Knowing score is 0.25 for knowing he inherited, 0.09 per distinct kind of thing known (up to six), 0.4 times familiarity. The new owner at 0.2, Nowak at 0.5, Tom at 0.8, Tommy at 1.05. The street's name is the highest one 40 percent of locals have reached. Liking is tracked apart and never gates the name. Sheila says "new management" until the end.
+
+## Gossip
+
+People within talking distance on their routines pass their hottest story the other lacks, weighted by closeness and how much each talks; Sheila almost never does. Certainty drops 20 percent a telling. Heat halves in about 20 hours unless fed. Passers-by carry what they saw to the first named person they stand near. On Tuesday morning, if nothing has yet reached anyone outside Monday's people, one telling is forced through the same system so that day 2 always has a line coming back.
+
+## The Ledger
+
+It gains an entry only when Tom noticed a watcher (in front of the camera, lit, in line of sight), when someone says a thing to his face, when he asks and is told, when he pays Ron or Darren, when he sees two people talk with their eyes on him, or at Ada's tea. Ada sits in the dark, so he does not notice her from the street at night.
+
+## Night work, invented for this prototype
+
+Monday: a holdall left in the ferry shelter goes to Metcalfe's back door, 60 pounds. Customs goes off at eleven and the landing lamp with her, so the choice is her eyes or the dark and the later hour. Tuesday, optional: a parcel from the smoke house to Rita's side door, 40 pounds, past Rita's lit window. Wednesday: collect Iveson's 80 pounds at seven, 100 for doing it, the same hour as Ada's tea.
+
+## The fire, invented for this prototype and not canon
+
+No. 4 burned five weeks ago at about two in the morning. One of Mickey's cars was on the row; the real book has it in his hand, no charge, with the next page cut out. Each character holds one small true thing about that night. None of this should be read back into canon without your ruling.
+
+## People I added
+
+PC Ibbotson (the constable), Iveson's yard lad, three of Cammack's lads, and the keepers of the newsagent, grocer, Washeteria, ironmonger, tea room and chandlery are anonymous or minor. Garbutt, Agar, the Widow and Cammack are names only, overheard and on signs. Agar's firm pays for a brief when Tom is taken in and sends the bill, which puts him in the week without showing him.
+
+## Fighting
+
+The ladder is stare, square up, threaten, shove, strike, weapon out. Whether someone gives way is their nerve against the rung, plus what they have heard of Tom, a drawn weapon, less their mates nearby and his injuries. Reputation does more than fists. Tom will not lay hands on a woman, on anyone of sixty or over, or on the priest: for them the ladder stops at a threat, and if they have a minder (Iveson's yard lad) it is the minder he fights. A killing needs a weapon in hand, a man already down, and a separate key.
+
+## Getting hurt
+
+No health bar unless you switch it on. Hurt shows as stoop, a guarding arm, breath and a limp. Beaten down, Tom wakes in Grace Rinaldi's kitchen: it costs 8 pounds, half the tin if he was carrying it, and the breakfast tables see him come out.
+
+## Police
+
+Each night, anyone who saw a crime plainly, knew it was him, is not afraid of him, has not been paid and has cooled on him makes a statement. A constable comes at nine, or Ellis for violence. Four to seven hours and 25 to 40 pounds, and the coat is kept if it was part of it. Running is a new offence. On Thursday and Friday, if loudness is above 2.2, Ellis walks Quay Street asking people, and they remember being asked.
+
+## Money
+
+Tom starts with 23.50. Fares are 80p plus distance. The fare book hides 10 pounds plus 80 percent of the fares driven since the last wash; anything over, Sheila notices and says so. Rent is 18 pounds on Friday. Ron sells what the door saw for a fiver; Darren sells what he has heard for three, and a good word for five.
+
+## Live talk
+
+Two quick calls per line: one names the intent (ask, small talk, threaten, bribe, flatter, lie, refuse, agree) and topic, then the game applies its rule, then a second call voices the decided outcome from the character card and only the facts that person holds. If a call fails or takes too long the written line for that character is used. A word filter drops any reply that breaks a content rule. Tom's own suggested follow-up is a third call, described under "Talk pass: who writes which line". Settings has a switch to turn the live voices off, so written lines and live lines can be compared, and a button that asks Sheila one real question and says plainly whether the live voices work in this session.
+
+## Content rules
+
+No alcohol or gambling anywhere, no children, no shown drugs, no slurs. The Ship is boarded up. The school is shut and empty. All brands, makes and businesses are invented. Traffic keeps left.
+
+## House style
+
+No long dashes and no italics anywhere in the interface, following your standing preference.
+
+## Saving
+
+The week saves to your Claude account through this page when it can, and to this browser as well. It saves on sleeping, after each beat and from the pause menu.
+
+## Not built
+
+Voices aloud, guns, a minimap (the Ledger carries a paper map instead), a drivable second car, pub or house interiors beyond Ada's, the Parade, and anything of Tom's life before.

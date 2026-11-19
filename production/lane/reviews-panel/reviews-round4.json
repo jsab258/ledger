@@ -1,0 +1,74 @@
+[
+ {
+  "reviewer": "The immersion fan (came from KCD2)",
+  "thumb": "down",
+  "hours_before_stopping": 0.38,
+  "quit_moment": "Minute 22.9: back on the street fronting up to Julie a minute after the arrest, and half the town answering in the same stock lines",
+  "most_exciting_moment": "Minutes 12.9 to 13.7: the holdall past a constable 28 m away, then Hal: 'Somebody'll have seen your face.'",
+  "top_praise": "The written scenes are excellent period drama.",
+  "top_complaint": "Once the script stops, people talk in stock lines: Ron's dock line three times, four people say 'It's been wet since August'."
+ },
+ {
+  "reviewer": "The sandbox player (came from GTA)",
+  "thumb": "down",
+  "hours_before_stopping": 0.74,
+  "quit_moment": "Minute 44: nothing new from 39.2 to 46.5, no chase, no fight",
+  "most_exciting_moment": "Minute 21.4: PC Ibbotson over the threat to Lee offers 'Go with him. | Run.'",
+  "top_praise": "The town does react to you: Grace knows about the shove on Darren the next morning.",
+  "top_complaint": "In an hour there were no chases, no fights and no escapes, and close to 40% of the time was waiting."
+ },
+ {
+  "reviewer": "The story-first player (came from Mafia)",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "Minute 13.6: Hal sees there's no coat",
+  "top_praise": "The scripted introductions are sharp.",
+  "top_complaint": "Free talk falls back on a few stock lines, so conversations go nowhere."
+ },
+ {
+  "reviewer": "The systems player",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "21.2 min: the constable arrives with a statement about the holdall",
+  "top_praise": "The witness system bites: earlier acts come back as named statements.",
+  "top_complaint": "Debt collecting is one script run five times, the ladder is never explained, and every debtor gives way."
+ },
+ {
+  "reviewer": "The impatient player",
+  "thumb": "down",
+  "hours_before_stopping": 0.3,
+  "quit_moment": "Minute 17.7: four minutes with nothing new, then two minutes in the cab with no fare",
+  "most_exciting_moment": "Minute 12.9: the holdall past the constable",
+  "top_praise": "It gives you a real job fast.",
+  "top_complaint": "Far too much waiting and walking; talk mostly brushes you off."
+ },
+ {
+  "reviewer": "The British crime drama fan",
+  "thumb": "down",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "Minutes 12.9 to 13.7: the holdall past the constable, then Hal",
+  "top_praise": "The scripted scenes sound right.",
+  "top_complaint": "Once the scripted scenes stop, people barely talk, and after minute 30 the story dries up."
+ },
+ {
+  "reviewer": "The period-detail stickler",
+  "thumb": "up",
+  "hours_before_stopping": 1.0,
+  "quit_moment": "did not quit in the hour",
+  "most_exciting_moment": "Minutes 12.9 to 13.7: the holdall past the constable, then Hal",
+  "top_praise": "The 1990 detail holds up.",
+  "top_complaint": "Past the first line or two the town goes hollow: the same stock lines from different mouths."
+ },
+ {
+  "reviewer": "The sceptic of AI in games",
+  "thumb": "down",
+  "hours_before_stopping": 0.06,
+  "quit_moment": "Minute 3.5: Ron repeats his dock line to a different question",
+  "most_exciting_moment": "Minute 1.8: Sheila reads out the debt book",
+  "top_praise": "The scripted scenes are properly written.",
+  "top_complaint": "Free talk repeats itself almost straight away."
+ }
+]
