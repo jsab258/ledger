@@ -26,9 +26,10 @@
 // T9  the same with the talk run by the minute, the packaged game's way: the same town whatever
 //     the size of the clock's steps, and a count of the hours that differ from the C# rows;
 // T10 a save in the middle of each week, loaded into a fresh module, played on: the same town;
-// T11 rough handling of the bridge.
+// T11 rough handling of the bridge (run 3: the fresh review's holes closed, each tried here);
+// T12 a save from before the swap: a fresh town at its clock, told what its people saw.
 import { loadOneSim, NightAnswer, WeekAnswer, Offence } from './one-sim.mjs';
-import { openTown, PROTOTYPE_TO_CAST, BRIDGE_SAVE_VERSION } from './one-sim-bridge.mjs';
+import { openTown, openTownFromOldSave, PROTOTYPE_ACTS, PROTOTYPE_TO_CAST, BRIDGE_SAVE_VERSION } from './one-sim-bridge.mjs';
 
 async function sha256(text) {
   const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -404,7 +405,9 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
 
     // T11: rough handling of the bridge.
     const problems = [];
+    let refusedCount = 0;
     const refuses = async (what, fn, word) => {
+      refusedCount++;
       try { await fn(); problems.push(`${what}: accepted`); }
       catch (e) { if (!String(e.message).includes(word)) problems.push(`${what}: refused with other words, ${String(e.message).slice(0, 100)}`); }
     };
@@ -445,10 +448,152 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
     if (JSON.stringify(again.save()) !== JSON.stringify(good)) problems.push('a town saved, loaded and saved again does not give the same save');
     await refuses('no cast file', () => openTown({ wasm: brainBytes, castJson: '' }), 'no cast file');
     await refuses('a broken cast file', () => openTown({ wasm: brainBytes, castJson: '{not json' }), 'cast not read');
-    report.T11 = { problems, jumpThirtyDaysMs: Math.round(jumpMs) };
+
+    // RUN 3: THE FRESH REVIEW'S HOLES (production/lane/REVIEW-ONE-SIM-RUN2.md, findings 2 and 4 to 7), each closed and tried.
+    const refusedBefore = refusedCount;
+    const D = 1440 + 12 * 60 + 30;                                   // Tuesday 12:30
+    const t2 = await fresh();
+    t2.tick(D);
+    const knewT2 = t2.knows().length;
+    // Finding 5: the tea and the week's end are in turn like every act.
+    await refuses('a minute at the tea three days ahead of the clock', () => t2.teaMinute(D + 3 * 1440), 'tick the clock');
+    await refuses('a minute at the tea in the past', () => t2.teaMinute(10), 'before the town');
+    await refuses("Sheila's question six days ahead of the clock", () => t2.weekAsk(D + 6 * 1440), 'tick the clock');
+    await refuses('"does she ask now" of a day the clock has not reached', () => t2.weekAsksNow(D + 6 * 1440), 'tick the clock');
+    // Finding 4: areas the cast does not have are refused; witnesses it does not have are reported.
+    await refuses('a deed in an area the cast does not have', () => t2.deed({ ...window_(D, 'window_d1'), area: 'no_such_area' }), 'no area');
+    await refuses('a clock ticked with an area the cast does not have', () => t2.tick(D, 'Quay Street'), 'no area');
+    await refuses('a sighting in an area the cast does not have', () => t2.saw({ minute: D, who: 'ron', rung: 3, fact: 'x_d1', area: 'nowhere', words: 'x' }), 'no area');
+    await refuses("a story under a name the town's own rules use", () => t2.saw({ minute: D, who: 'ron', rung: 3, fact: 'outfit_d0', area: 'mickeys', words: 'x' }), 'own rules');
+    await refuses('a witness with no rung', () => t2.deed({ ...window_(D, 'window_d1'), witnesses: [{ id: 'darren' }] }), '0 to 4');
+    if (t2.deedHeld() !== null || t2.knows().length !== knewT2 || t2.now() !== D) problems.push('a refused deed, sighting or tick left something behind');
+    const told = t2.deed({ ...window_(D, 'window_d1'), witnesses: [{ id: 'darren', rung: 4 }, { id: 'pauline', rung: 3 }, { id: 'sam', rung: 2 }] });
+    const toldWant = { taken: [{ id: 'sam', rung: 4 }], dropped: [{ id: 'pauline', why: 'not in the cast' }, { id: 'sam', why: 'named twice' }] };
+    if (JSON.stringify(told) !== JSON.stringify(toldWant)) problems.push(`a deed seen by Darren, by Pauline (nobody of the cast) and by Darren again answered ${JSON.stringify(told).slice(0, 200)}`);
+    // Finding 2: the town follows one deed. A second is refused, and the first one's witness still goes to the police.
+    const firstDeed = JSON.stringify(t2.deedHeld());
+    if (firstDeed !== JSON.stringify({ topic: 'player.window_d1', day: 1, minute: D, witnesses: [{ id: 'sam', rung: 4 }] })) problems.push(`the deed the town holds reads ${firstDeed.slice(0, 160)}`);
+    t2.tick(1440 + 19 * 60);
+    await refuses('a second deed', () => t2.deed({ minute: 1440 + 19 * 60, area: 'quay', thing: 'crate', said: 'a crate was smashed on the quay', witnesses: [], fact: 'crate_d1', words: 'he smashed a crate' }), 'one deed');
+    if (JSON.stringify(t2.deedHeld()) !== firstDeed) problems.push('a refused second deed changed the first');
+    const days = t2.tick(3 * 1440 + 11 * 60);                         // on to Thursday 11:00
+    const wentAt = days.filter((e) => e.went.includes('sam')).map((e) => `${e.day}|${e.hour}`).join(), takenAt = days.filter((e) => e.taken).map((e) => `${e.day}|${e.hour}`).join();
+    if (wentAt !== '2|9' || takenAt !== '3|10') problems.push(`after a refused second deed the first deed's witness went to the police at ${wentAt || 'no hour'} (want Wednesday at nine, 2|9) and he was taken at ${takenAt || 'no hour'} (want Thursday at ten, 3|10)`);
+    // Finding 6: a save whose pieces do not fit each other, or the town's own record, is refused.
+    const g2 = t2.save(), with_ = (change) => () => openTown({ wasm: brainBytes, castJson: cast, saved: { ...JSON.parse(JSON.stringify(g2)), ...change }, print: quiet.print });
+    await refuses('a save whose next hour is 0', with_({ nextHour: 0 }), 'does not fit itself');
+    await refuses('a save whose next hour is 100 hours on', with_({ nextHour: g2.nextHour + 100 }), 'does not fit itself');
+    await refuses('a save whose minute has a fraction', with_({ at: g2.at + 0.5 }), 'no whole minute');
+    await refuses('a save at minute 10 to the 12th', with_({ at: 1e12, nextHour: Math.floor(1e12 / 60) + 1 }), 'no whole minute');
+    await refuses('a save with every memory gone', with_({ texts: { ...g2.texts, memories: {} } }), 'no memory for');
+    await refuses('a save with one memory that is no text', with_({ texts: { ...g2.texts, memories: { ...g2.texts.memories, sam: 7 } } }), 'is no text');
+    await refuses('a save whose clock is moved back, its next hour in step', with_({ at: g2.at - 600, nextHour: g2.nextHour - 10 }), 'does not fit the town');
+    await refuses('a save whose clock is moved on, its next hour in step', with_({ at: g2.at + 6000, nextHour: g2.nextHour + 100 }), 'does not fit the town');
+    await refuses('a saved town asked for and not there', () => openTown({ wasm: brainBytes, castJson: cast, saved: undefined }), 'no saved town');
+    await refuses('a saved town and a start minute together', () => openTown({ wasm: brainBytes, castJson: cast, saved: g2, startMinute: 0 }), 'not both');
+    // Finding 7: the cast file as Windows writes it, and with its spacing changed, still loads the save; other people do not.
+    const asWindows = '\uFEFF' + cast.replace(/\r?\n/g, '\r\n'), respaced = JSON.stringify(JSON.parse(cast));
+    for (const [what, text] of [['with a byte-order mark and CRLF line endings', asWindows], ['with every space and line break taken out', respaced]]) {
+      try {
+        const same = await openTown({ wasm: brainBytes, castJson: text, saved: JSON.parse(JSON.stringify(g2)), print: quiet.print });
+        if (JSON.stringify(same.save()) !== JSON.stringify(g2)) problems.push(`the save loaded with the cast file ${what} does not come out the same`);
+      } catch (e) { problems.push(`the save does not load with the cast file ${what}: ${String(e.message).slice(0, 120)}`); }
+    }
+    if (asWindows === cast || respaced === cast) problems.push('the changed cast files are not changed');
+    await refuses('a save made when the cast had other people', () => openTown({ wasm: brainBytes, castJson: cast.split('"zlata"').join('"zlata2"'), saved: g2, print: quiet.print }), 'in the save and not in the cast: zlata;');
+    const newRefusals = refusedCount - refusedBefore;
+
+    report.T11 = { problems, jumpThirtyDaysMs: Math.round(jumpMs), refusals: refusedCount };
     result('T11 the bridge takes rough handling', problems.length === 0, problems.length ? problems.join('; ')
       : `a week starting at 15:36, a jump over two hours, a sighting by nobody, the prototype's own ids, a thirty-day jump (720 hours, ${Math.round(jumpMs)} ms), ` +
-        `a save loaded and saved again, and sixteen things that must be refused (four clocks, two acts out of turn, eight saves, two cast files): all as they should be`);
+        `a save loaded and saved again, a deed's witnesses taken and dropped by name, the first deed's witness still at the police after a second deed was refused, the cast file as Windows writes it, ` +
+        `and ${refusedCount} things that must be refused (${refusedCount - newRefusals} from run 2; ${newRefusals} new: the tea and the week's end out of turn, unknown areas, a story name of the town's own, a second deed, ` +
+        `saves whose pieces do not fit, a saved town that is not there, a cast with other people): all as they should be`);
+  }
+
+  // ---- T12: a save from before the swap --------------------------------------------------------
+  // The prototype's own save holds its own town (each person's mind, every event) and no town of the
+  // game's. It must keep loading: a fresh town at the save's clock, told what the old save's people saw
+  // with their own eyes. The save below is written by hand in the prototype's own shape (saving.js,
+  // events.js): the swap's round runs the prototype's real old-save test (its test/oldsave.mjs).
+  {
+    const problems = [];
+    const cast = castText['hook-cast.json'];
+    const W14 = 2 * 1440 + 14 * 60;                                   // Wednesday 14:00, on the stroke of the hour
+    const mem = (e, src, who, sure, face, extra = {}) => ({ e, src, from: null, who, sure, heat: 0.6, t: 1440 + 750, said: false, hop: 0, face, ...extra });
+    const old = {
+      v: 7, t: W14, played: 3000,
+      events: [
+        { id: 7, kind: 'strike', t: 1440 + 750, zone: 'Quay Street', x: 6, z: 30, coat: false, car: false, wit: ['darren', 'hal', 'rita', 'pauline'], target: 'kevin', name: 'Kevin Needham' },
+        { id: 8, kind: 'tea', t: 2 * 1440 + 600, zone: 'Quay Street', wit: [] },
+        { id: 9, kind: 'fare', t: 1440 + 800, zone: 'Quay Street', wit: ['ada'] },
+        { id: 11, kind: 'crash', t: 1440 + 900, zone: 'Harbour Road', car: true, wit: ['darren'] },
+        { id: 12, kind: 'noise', t: 1440 + 100, zone: 'Quay Street', wit: [] },
+        { id: 13, kind: 'a_kind_made_up', t: 5, zone: 'Quay Street', wit: [] },
+      ],
+      minds: {
+        darren: { fam: 0.7, regard: -0.2, fear: 0.1, mem: [mem(7, 'saw', 'tom', 0.9, 0.5), mem(11, 'saw', 'cab', 0.6, 0.05)] },
+        hal: { fam: 0.5, regard: 0, fear: 0, mem: [mem(7, 'saw', 'man', 0.7, 0.3)] },
+        rita: { fam: 0.1, regard: 0, fear: 0.2, mem: [mem(7, 'saw', 'man', 0.5, 0.03)] },
+        june: { fam: 0.2, regard: 0, fear: 0, mem: [mem(7, 'heard', 'man', 0.25, 0)] },
+        pauline: { fam: 0.6, regard: 0, fear: 0, mem: [mem(7, 'saw', 'tom', 0.9, 0.6)] },
+        ron: { fam: 0.8, regard: 0.1, fear: 0, mem: [mem(7, 'told', 'tom', 0.7, 0, { from: 'darren', hop: 1 }), mem(12, 'heard', 'man', 0.25, 0), mem(13, 'saw', 'tom', 1, 0.9), mem(99, 'saw', 'tom', 1, 0.9)] },
+        sheila: { fam: 0.9, regard: 0.2, fear: 0, mem: [mem(8, 'self', 'tom', 1, 0.9)] },
+        ada: { fam: 0.6, regard: 0.3, fear: 0, mem: [mem(9, 'saw', 'tom', 0.8, 0.6)] },
+      },
+    };
+    const oldText = JSON.stringify(old);
+    try {
+      const r = await openTownFromOldSave({ wasm: brainBytes, castJson: cast, old, print: quiet.print });
+      const { town } = r;
+      if (JSON.stringify(old) !== oldText) problems.push('reading the old save changed it');
+      if (town.now() !== W14 || r.hours.map((e) => `${e.day}|${e.hour}`).join() !== '2|14') problems.push(`the town is at minute ${town.now()} and its first tick ran ${r.hours.map((e) => `${e.day}|${e.hour}`).join() || 'no hour'} (want ${W14} and Wednesday's two o'clock, 2|14)`);
+      const fedGot = r.fed.map((f) => `${f.who}:${f.kind}:${f.rung}:${f.as}`).join(' ');
+      if (fedGot !== 'sam:strike:4:saw hal:strike:3:saw rita:strike:1:saw sam:crash:2:saw') problems.push(`told to the town: ${fedGot}`);
+      const droppedGot = r.dropped.map((d) => `${d.who}:${d.kind}:${d.why.split(':')[0].split(',')[0]}`).sort().join(' | ');
+      const droppedWant = ['ada:fare:an open act', 'june:strike:only heard', 'pauline:strike:not in the cast', 'ron:a_kind_made_up:a kind of act the table does not know', 'ron:noise:never passed on',
+        'ron:null:its event is not in the save', 'ron:strike:only told', 'sheila:tea:the town makes this story itself'].sort().join(' | ');
+      if (droppedGot !== droppedWant) problems.push(`left out: ${droppedGot}`);
+      const facts = town.knows().map((f) => `${f.who}:${f.topic}:${f.saw}:${f.rung}:${f.names}`).sort().join(' ');
+      if (facts !== 'hal:player.strike_e7:true:3:false rita:player.strike_e7:true:1:false sam:player.crash_e11:true:2:false sam:player.strike_e7:true:4:true') problems.push(`the Ledger's facts after the old save: ${facts}`);
+      if (!r.lost.some((l) => l.startsWith("Ada's tea")) || !r.lost.some((l) => l.startsWith("Ron's asks")) || !r.lost.some((l) => l.includes('pauline'))) problems.push(`what is lost does not name the tea, the envelope and Pauline: ${r.lost.join(' / ')}`);
+      // Finding 1, held by a test: a blow seen by three people becomes talk, and never a statement or an arrest.
+      const on = town.tick(4 * 1440 + 11 * 60);                        // on to Friday 11:00
+      const police = on.filter((e) => e.went.length || e.taken).length, ellis = on.filter((e) => e.ellis).map((e) => `${e.day}|${e.hour}|${e.ellis}`).join();
+      if (police !== 0) problems.push(`a blow that was only seen brought a statement or an arrest at ${police} hour(s)`);
+      const heard = new Set(town.knows().filter((f) => f.topic === 'player.strike_e7').map((f) => f.who)).size;
+      if (heard <= 3) problems.push(`two days on, the blow is still held by ${heard} people only: the town's talk did not carry it`);
+      report.T12 = { fed: r.fed.length, dropped: r.dropped.length, lost: r.lost, ellis, heldBy: heard, askNights: on.length ? on[on.length - 1].asks.nights : null, tea: on.length ? on[on.length - 1].tea : null };
+      const again = await openTown({ wasm: brainBytes, castJson: cast, saved: JSON.parse(JSON.stringify(town.save())), print: quiet.print });
+      if (JSON.stringify(again.save()) !== JSON.stringify(town.save())) problems.push('the town made from the old save does not save and load like any other');
+      // A clock inside an hour runs no hour at the opening.
+      const inside = await openTownFromOldSave({ wasm: brainBytes, castJson: cast, old: { ...old, t: W14 + 17.6 }, print: quiet.print });
+      if (inside.town.now() !== W14 + 17 || inside.hours.length !== 0 || inside.fed.length !== 4) problems.push(`an old save at 14:17 and a bit opened at minute ${inside.town.now()}, ran ${inside.hours.length} hour(s) and told ${inside.fed.length}`);
+      // A table that calls a kind damage: the oldest such act becomes the town's one deed, with its witnesses.
+      const asDeed = await openTownFromOldSave({ wasm: brainBytes, castJson: cast, old, acts: { ...PROTOTYPE_ACTS, crash: { tell: 'deed', thing: 'lamp_post' } }, print: quiet.print });
+      const deed = JSON.stringify(asDeed.town.deedHeld());
+      if (deed !== JSON.stringify({ topic: 'player.crash_e11', day: 2, minute: W14, witnesses: [{ id: 'sam', rung: 2 }] })) problems.push(`with the crash called damage, the town's deed reads ${deed}`);
+      // An area the cast does not have is left out and said, never thrown.
+      const nowhere = await openTownFromOldSave({ wasm: brainBytes, castJson: cast, old, areaOf: (e) => e.zone, print: quiet.print });
+      if (nowhere.fed.length !== 0 || nowhere.dropped.filter((d) => d.why.startsWith('no area')).length !== 4) problems.push(`with the prototype's own street names for areas, ${nowhere.fed.length} were told and ${nowhere.dropped.filter((d) => d.why.startsWith('no area')).length} left out for the area`);
+    } catch (e) { problems.push(`fell over: ${String(e.stack || e).slice(0, 300)}`); }
+    const refuses = async (what, fn, word) => {
+      try { await fn(); problems.push(`${what}: accepted`); }
+      catch (e) { if (!String(e.message).includes(word)) problems.push(`${what}: refused with other words, ${String(e.message).slice(0, 100)}`); }
+    };
+    await refuses('something that is no prototype save', () => openTownFromOldSave({ wasm: brainBytes, castJson: cast, old: { hello: 1 } }), 'not a prototype save');
+    await refuses('a save that holds a town already', () => openTownFromOldSave({ wasm: brainBytes, castJson: cast, old: { ...old, town: { kind: 'one-sim town' } } }), 'holds a town already');
+    const tells = Object.values(PROTOTYPE_ACTS).map((a) => a.tell), kinds = Object.keys(PROTOTYPE_ACTS).length;
+    if (kinds !== 53 || tells.some((t) => !['saw', 'step', 'open', 'none', 'never'].includes(t))) problems.push(`the table of the prototype's kinds has ${kinds} rows, or a row with no home named`);
+    if (!report.T12) report.T12 = {};
+    report.T12.problems = problems;
+    const n = (t) => tells.filter((x) => x === t).length;
+    result('T12 a save from before the swap opens a fresh town at its clock, told what its people saw', problems.length === 0, problems.length ? problems.join('; ')
+      : `an old save at Wednesday 14:00 with eight minds: 4 first-hand memories told to the town at the rungs their old memories support (recognised, a face, a silhouette, a mark), ` +
+        `8 left out, each with its reason (told only, heard only, not in the cast, the town's own step, an open act, never passed on, a kind or an event not known); the old save untouched; ` +
+        `what is lost said in ${report.T12.lost.length} plain lines; two days on the blow is held by ${report.T12.heldBy} people and brought no statement and no arrest (DS Ellis: ${report.T12.ellis || 'did not come'}); ` +
+        `the town saves and loads like any other; a clock inside an hour, a table that calls a kind damage, and areas the cast does not have: as they should be. ` +
+        `The table of the prototype's ${kinds} kinds: ${n('saw')} a sighting, ${n('step')} the town's own step, ${n('open')} open acts with no call yet, ${n('none')} plain facts, ${n('never')} never passed on`);
   }
 
   if (printed.length) log(`info the modules printed ${printed.length} line(s); first: ${printed[0].slice(0, 120)}`);
