@@ -4,7 +4,7 @@ STATUS: APPROVED 2026-08-31 by Jafar, with rulings recorded in
 ledger-v2/respec/decision-register/D8 and D9. This outranks every document and
 agent; violating it in content is a gate failure (`tools/canon-gate.py
 --corpus`, era and brands, over content/, ledger/Assets/Scripts and
-production/specs). Tone is the judge's under D7, not a gate.
+production/specs).
 
 A ruling that changes canon edits canon in the same batch (Jafar,
 2026-09-16). A DECIDED record whose subject is a world fact names the
@@ -18,6 +18,8 @@ canon lines it changes, and canon cites the record at those lines.
   the Hook (old port, Mickey's, the player's minicab office), Copper Row (market quarter), the Exchange
   (offices, lawyers), the Parade (nightlife), Fairview (residential hills), Ironside
   (industrial), Gullwing (faded resort waterfront).
+- The docks are the Hook's working waterfront (Jafar, 19 November 2026,
+  his ruling on the audit, L1).
 - Streets minted: Quay Street, Weighhouse Lane, Tannery Row.
 - Street districts, minted 2026-09-02 by the director on delegated authority,
   struck on sight if Jafar disagrees: Quay Street is in the Hook, Weighhouse
@@ -169,17 +171,19 @@ which clauses the gate checks and which it does not claim to.
   feels is tension, risk and a rise to power, and every job is tense because
   the town is watching.
 
-## What LEDGER is not (D24, decided 2026-09-14)
-- NOT an open-world sandbox, NOT a shooter, NOT a driving game, NOT an
-  economy simulation, NOT a story-first narrative game. It is a small
-  dense town where what people know about you is the mechanic.
-- Anything that does not feed perception, memory, gossip or consequence
-  gets the smallest budget that keeps it from looking wrong. A spend
-  rule, not a ban: driving and trade may exist and must not
-  look broken; fighting must look and feel AAA (Jafar, 12 October 2026).
-  Driving, when it comes, must end at AAA quality: background traffic in
-  the friends' build, a simple car once the map is bigger, AAA driving
-  the end state (Jafar, 17 November 2026).
+## What LEDGER is not (D24 of 2026-09-14, rewritten to the pillar: Jafar, 19 November 2026)
+- NOT a gossip simulator, NOT a taxi simulator, NOT an economy simulation,
+  NOT a story-first narrative game. His words: "we don't want a gossip
+  simulator. We want an exciting, immersive, novel game" (18 November 2026);
+  "This is not a taxi sim game" (19 November 2026).
+- The verbs get the full budget: jobs done with the hands, break-ins,
+  fights, driving and working the street must look and feel AAA (fighting:
+  Jafar, 12 October 2026; driving at AAA quality as its end state: 17
+  November 2026). The town's memory and gossip are the engine under them,
+  not the show; anything feeding neither the verbs nor that engine gets the
+  smallest budget that keeps it from looking wrong.
+- The bar is KCD2 (Kingdom Come II): immersion and finish are judged against
+  it.
 
 ## Brands and law
 - Every brand, band, club, product, weapon and vehicle is fictional. No real people,
@@ -201,3 +205,9 @@ which clauses the gate checks and which it does not claim to.
    Kept as item 2 so that "OPEN 2" above keeps its meaning. What stays open of
    it is the cast-sketch-versus-built-cards mismatch (Sam and Ada, written at
    one-street scale), which the cards settle as they are written.
+3. Whole-game design: APPROVED 2026-11-19 by Jafar (his tap, relayed as
+   advisor 242): "LEDGER: the vision" (https://claude.ai/artifact/RpXGpHEG32nJwkZXF3Vtax)
+   and the whole game (https://claude.ai/artifact/1NJwscSew2VWCVo4BMVhkJ) are
+   the approved design; the prototype rounds build it in its build order, and
+   the order of 23 November re-plans against it. Cab fares: few and chosen,
+   each a person with something going on, feeding the crime; no taxi-sim parts.

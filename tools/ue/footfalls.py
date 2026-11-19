@@ -31,6 +31,11 @@ import numpy as np
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GLB = os.path.join(REPO, "production", "assets", "people", "tom-player.glb")
+# 19 Nov 2026 (advisor 239): the raw Mixamo bodies leave git; the game inputs' copy is the fallback.
+_GAME_GLB = os.path.join(os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs"),
+                         "production", "assets", "people", "tom-player.glb")
+if not os.path.isfile(GLB) and os.path.isfile(_GAME_GLB):
+    GLB = _GAME_GLB
 HEADER = os.path.join(REPO, "ue-probe", "Source", "LedgerProbe", "Public", "SliceCharacter.h")
 CLIPS = {"walk": "tom-player__walk", "run": "tom-player__run"}
 FEET = (("mixamorig7:LeftFoot", "mixamorig7:LeftToeBase"), ("mixamorig7:RightFoot", "mixamorig7:RightToeBase"))

@@ -31,7 +31,7 @@
    "serves": "the game itself (git and the night build)",
    "source": "imported again from F: game inputs (unverified)",
    "proposal": "keep, the game's content",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; NOT backed up: 49 of 5,453 files in git, the rest rebuildable only by re-import from F: game-inputs (backed up; unverified); no room on C: for a Dropbox copy (19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/cargo-target",
@@ -101,7 +101,7 @@
    "serves": "the game's people are assembled here; approved cast built",
    "source": "unknown",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; NOT backed up (no room on C: for a Dropbox copy; 19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/parler-tts",
@@ -121,7 +121,7 @@
    "serves": "git",
    "source": "the remote, not contacted",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; tracked files held by git and GitHub, untracked files not backed up (19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/chatterbox-nano",
@@ -141,7 +141,7 @@
    "serves": "tools, CI",
    "source": "git, partly",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; tracked files held by git and GitHub, untracked files not backed up (19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/mocap-solve",
@@ -201,7 +201,7 @@
    "serves": "simulation tests",
    "source": "git",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; tracked files held by git and GitHub, untracked files not backed up (19 Nov, audit H14)"
   },
   {
    "path": "C:/Users/Jafar/ledger-exec",
@@ -271,7 +271,7 @@
    "serves": "the build",
    "source": "git",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; tracked files held by git and GitHub, untracked files not backed up (19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/mh-assemble-before-dressing-2026-09-24",
@@ -311,7 +311,7 @@
    "serves": "everything",
    "source": "git",
    "proposal": "keep",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; tracked files held by git and GitHub, untracked files not backed up (19 Nov, audit H14)"
   },
   {
    "path": "C:/LedgerTools/kiln-runs",
@@ -382,7 +382,7 @@
    "source": "Content: approved cast, not refetchable; Intermediate/Saved/DerivedDataCache rebuilt by Unreal",
    "proposal": "keep (rebuildable parts shrink, see below)",
    "backup": "yes (Cast uassets, Ledger/MetaHumans/MH_LenaS4, RoccoP2, SamS6, uproject, init_unreal.py)",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; NOT backed up (no room on C: for a Dropbox copy; 19 Nov, audit H14)"
   },
   {
    "path": "F:/LedgerTools/garments",
@@ -481,7 +481,7 @@
    "source": "game extracts re-made from C:/Games with FModel and the key in F: keys (kcd2, mafia 1.75 GB); study notes small",
    "proposal": "kcd2 and mafia extracts removed 17 Nov 14:41 by his yes; notes and other studies kept",
    "backup": "no",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never backed up: other games' study extracts (audit H6); deletion held for his own confirmation (advisor 239)"
   },
   {
    "path": "F:/LedgerTools/tool-dev",
@@ -503,7 +503,7 @@
    "source": "Epic/Fab content: needs his sign-in",
    "proposal": "keep",
    "backup": "no",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; NOT backed up (no room on C: for a Dropbox copy; 19 Nov, audit H14)"
   },
   {
    "path": "F:/LedgerTools/bodies",
@@ -635,7 +635,7 @@
    "source": "public CC0 Poly Haven downloads",
    "proposal": "keep",
    "backup": "no",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; NOT backed up (no room on C: for a Dropbox copy; 19 Nov, audit H14)"
   },
   {
    "path": "F:/LedgerTools/garmentcode-lab",
@@ -935,7 +935,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: atlas plans (svg/png), small, made work",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/backup-staging",
@@ -965,7 +965,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: casting candidate pictures, small",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/casting-work",
@@ -975,7 +975,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: casting plan, refs and results, small",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/cleanup-2026-09-26",
@@ -1025,7 +1025,7 @@
    "serves": "tools/friends/evening.ps1",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: friends evening records and saves",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/game-voice",
@@ -1055,7 +1055,7 @@
    "serves": "tools/backup-to-dropbox.py (refuses it), tools/checkers/gemini_training_data.py, production/retention.json",
    "source": "unknown (keys; contents never opened)",
    "proposal": "keep: protected, 4 entries, size only read",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; refused by the backup by design (keys are never copied)"
   },
   {
    "path": "F:/LedgerTools/latency",
@@ -1095,7 +1095,7 @@
    "serves": "tools/art-recipes/mickeys-props/bench.py, chair.py, ashtray.py",
    "source": "blends made by tools/art-recipes/mickeys-props; previews made work",
    "proposal": "keep: prop blends and previews, 0.03 GB",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/n16-6-parked",
@@ -1105,7 +1105,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: parked n16-6 patch and client sources, 3 files",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/nightly",
@@ -1155,7 +1155,7 @@
    "serves": "production/retention.json (protected)",
    "source": "unknown",
    "proposal": "keep: protected, 63 preset pictures",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/proof-2.1-setaside",
@@ -1165,7 +1165,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: set-aside proof 2.1 patch and glb, small",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/proof-2.2-paused",
@@ -1175,7 +1175,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: paused proof 2.2 patches, small",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/pso-record",
@@ -1255,7 +1255,7 @@
    "serves": "no reader found",
    "source": "unknown (VCTK speaker clips by name; nearest.py shows how chosen)",
    "proposal": "keep: Ron voice choice work, 0.01 GB",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/sash-window",
@@ -1295,7 +1295,7 @@
    "serves": "tools/art-recipes/shopfront-kit/check-glbs.py, bay-contact-sheet.py, pilaster.py",
    "source": "blends made by tools/art-recipes/shopfront-kit",
    "proposal": "keep: shopfront blends and previews, 0.02 GB",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/shops-wip-2026-10-03",
@@ -1305,7 +1305,7 @@
    "serves": "no reader found",
    "source": "made by LEDGER runs, not refetchable",
    "proposal": "keep: unmerged shop patch and glb, 3 files",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/south-quay-work",
@@ -1325,7 +1325,7 @@
    "serves": "tools/ue/make_steps.py",
    "source": "unknown (flac, mp3 and html saved; origin not recorded in the folder)",
    "proposal": "keep: footstep sources, 3 files",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/terms-2026-10-03",
@@ -1335,7 +1335,7 @@
    "serves": "no reader found",
    "source": "unknown (saved licence pages)",
    "proposal": "keep: Epic content licence and Unreal EULA copies, evidence",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/trellis",
@@ -1345,7 +1345,7 @@
    "serves": "no reader found",
    "source": "unknown (hf-tree.json, releases.json and licences saved)",
    "proposal": "keep: trellis research notes and licences, 11 files",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/vctk-young-men",
@@ -1355,7 +1355,7 @@
    "serves": "no reader found",
    "source": "its own HOW-FETCHED.py (public VCTK corpus)",
    "proposal": "keep: young-men clips for casting, 0.05 GB",
-   "expiry": "never; backed up nightly to Dropbox"
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov (audit H14)"
   },
   {
    "path": "F:/LedgerTools/zen",
@@ -1418,6 +1418,16 @@
    "source": "copied again from the study artifact UdoyuRSba3tseVmA5daeFq whenever it is republished",
    "proposal": "keep while the driving study runs",
    "expiry": "when the driving study ends"
+  },
+  {
+   "path": "F:/LedgerTools/mixamo-raw-2026-11-19",
+   "shelf": "lasting",
+   "gb": 0.74,
+   "last_write": "19 Nov",
+   "serves": "the street figures and the old animation set, out of the public repository",
+   "source": "copied from the repository 19 Nov (95 files, byte-checked)",
+   "proposal": "keep, lasting input",
+   "expiry": "never; backed up nightly to Dropbox from 19 Nov"
   }
  ],
  "shelves_note": "17 Nov 13:3x: sized from the inventory so the lasting shelf (the approved cast alone is 21 GB) and working runs have room; tools at 20 assumes the remove list on his page (14.4 GB, 9.3 of it on F:); spare 4 rather than 10 because F: holds 85.7 GB today above nothing but its floor."

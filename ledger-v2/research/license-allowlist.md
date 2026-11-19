@@ -16,6 +16,7 @@ SHIP-SAFE
 13. The browser prototype and its tests only, never shipped in the game: three.js, esbuild and acorn (MIT) and puppeteer-core (Apache 2.0). His yes of 18 November 2026, 21:10, to the advisor's question (advisor 231): "1 but why didn't this come to my needs you page".
 14. The browser prototype only, never shipped in the game: the Special Elite font (Astigmatic, Apache 2.0; licence read at source, google/fonts apache/specialelite/METADATA.pb, 18 Nov). His tap of 19 November 2026, 07:43 (his page, font-pick-2026-11-19).
 15. The image-to-3D lab test only (order of 16 Nov, waiting item 11), nothing adopted or shipped on its result: Meta's DINOv3 image model under the DINOv3 License (github.com/facebookresearch/dinov3 LICENSE.md: royalty-free, commercial use allowed, no weapons, military or trade-control uses; the licence copy goes with anything shared). His tap of 19 November 2026, 07:43 (his page, dinov3-pick-2026-11-19).
+16. Voices: Kyutai's Pocket TTS, code and weights (huggingface.co/kyutai/pocket-tts, CC BY 4.0, credited in THIRD-PARTY.md), speaking the cast from VCTK reference recordings. Its access terms forbid cloning a voice without explicit consent; the VCTK volunteers consented to speech research, not to game characters. Jafar accepts that consent risk in writing: his pick 'a' of 19 November 2026, 10:31, on the audit's rulings (H13, relayed as advisor 241: keep Pocket). Generated speech keeps a watermark (D50); an open watermark is to be researched.
 
 NEVER SHIP
 1. XTTS-v2 or F5-TTS official weights output (non-commercial).

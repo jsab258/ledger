@@ -77,8 +77,28 @@ def verdict(path, size):
     return None
 
 
+RAW_MESH = (".fbx", ".bvh")
+RAW_PEOPLE = ("ledger/assets/characters/", "production/assets/people/", "tools/mixamo-pick/")
+
+
+def raw_verdict(path):
+    """Why a file is a raw character or motion download that may not be shared, or None (advisor 239, 19 Nov
+    2026: Mixamo's terms forbid sharing its files as files; the repository is public). Refuses any .bvh, and
+    any .fbx or .glb in the folders that held Mixamo's raw files. Removals are never refused."""
+    p = path.replace("\\", "/").lower()
+    ext = os.path.splitext(p)[1]
+    if ext == ".bvh":
+        return "a raw motion-capture file: motion data stays on F:, never in the public repository"
+    if ext in RAW_MESH + (".glb",) and p.startswith(RAW_PEOPLE):
+        return "a raw character or animation download (Mixamo's folders): it stays on F:, never in the public repository"
+    return None
+
+
 def study_verdict(path, added=""):
     """Why a file breaks the AAA study's rule (RULINGS 11 Oct), or None: a study export folder, or a key's shape."""
+    raw = raw_verdict(path)
+    if raw:
+        return raw
     p = path.replace("\\", "/").lower()
     if any(d in STUDY_DIRS for d in p.split("/")[:-1]) or "output/exports/" in p:
         return "a file from a study export folder: nothing from the studied games enters git"
@@ -200,6 +220,13 @@ def selftest():
     t(study_verdict("production/aaa-study/mafia/a.txt") is not None, "a file under an aaa-study folder is refused")
     t(study_verdict("production/research/aaa-reference/KIT.md", "FModel exports to F:/LedgerTools/aaa-study\n") is None,
       "words about the study pass; only its files and its key are refused")
+    t(study_verdict("ledger/Assets/Characters/A/walk__Walking.fbx") is not None, "a raw Mixamo FBX is refused")
+    t(study_verdict("production/assets/people/body.glb") is not None, "a raw body in the people folder is refused")
+    t(study_verdict("tools/mixamo-pick/known-bad/jog.fbx") is not None, "the picker's raw samples are refused")
+    t(study_verdict("game-inputs/cmu/143_18.bvh") is not None, "a motion-capture BVH is refused anywhere")
+    t(study_verdict("production/assets/street/clutter/crate.glb") is None, "the project's own street meshes pass")
+    t(study_verdict("ledger/Assets/Props/car-kit/van.fbx") is None, "the CC0 prop kits pass")
+    t(study_verdict("tools/mixamo-pick/known-bad/README.md") is None, "the picker's notes pass")
     diff = "commit " + "c" * 40 + "\ndiff --git a/k.txt b/k.txt\n+++ b/k.txt\n@@ -0,0 +1 @@\n+" + key + "\n-old\n"
     t(added_lines(diff) == {("c" * 40, "k.txt"): key + "\n"}, "a log's added lines are read per commit and file")
     # A TINY REPOSITORY, as the real one stands since 5 October: an old commit the archive (another

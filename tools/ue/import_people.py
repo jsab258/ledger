@@ -36,8 +36,10 @@ def repo_root():
 
 
 def stems(root):
-    return sorted(os.path.splitext(os.path.basename(p))[0]
-                  for p in glob.glob(os.path.join(root, PEOPLE_REL, "*.glb")))
+    """Every body in the checkout or the game inputs (19 Nov 2026, advisor 239: the raw Mixamo bodies
+    leave git and its history; their copies live in the game inputs)."""
+    found = glob.glob(os.path.join(root, PEOPLE_REL, "*.glb")) + glob.glob(os.path.join(GAME_INPUTS, PEOPLE_REL, "*.glb"))
+    return sorted({os.path.splitext(os.path.basename(p))[0] for p in found})
 
 
 def glb_path(root, stem):

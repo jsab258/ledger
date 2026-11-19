@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-19 05:46 (the hourly run; the 05:06 run set its Stopped line at 05:41)
+**Started:** 2026-11-19 11:04 (the hourly run; the last session set its Stopped line at 10:47)
 
-**Row due:** by 07:07 (last row 06:07; page and advisor read 06:06: nothing new; last ack 00:54, advisor 237)
-**Stopped:** 2026-11-19 05:41 (history at its point after the trousers' chain re-run; nothing of mine running, lock free; work committed with this file)
+**Row due:** by 11:46 (last row 10:46; page and advisor read 10:45: advisor 241 new, acked 10:46)
+**Stopped:** 2026-11-19 10:47 (at an item's end; history 228k, under its point, but the next item, recording advisor 241 in RULINGS and canon at a full cap, needs fresh room; nothing of mine running, lock free)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace: 37% at 05:07 against 12.2% (+24.8), under the ceiling; Fable 45%, at its cap. This week (RULINGS, his picks 17-18 Nov): eight helpers a session, Fable up to 40% on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -34,35 +34,30 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (05:46 on; details in DECISIONS 05:51 on)
-- Ron's trousers' seat, try 1 of 2 PASSED: --crotch-fade 0.04 (was 0.07; the centre seam runs crotch to waistband, so the fade held the seat's middle to the pelvis). Sitting body through 304 to 244 (bar 299), cloth inside 71 to 56 (listed; Tom's passed jeans 106); other poses clean. Kiln's own skin not taken (jeans sitting 159 inside). chain-boots/seat-try1/SEAT-TRY1-2026-11-19.md.
-- Held row on wip (839c5dbff, from branch ron-kiln-trousers-import f867027fc): boots drape, seat-try1 skin, chain-boots wear maps, the twill tile; hold now "-WearHeld films only; released once the legs' start values are our own" (18 Nov 12:16).
-- Imported into mh-assemble (first try raised: no budget kind for the folder; kind and parts line added, re-imported clean: 4 levels, MI_RonWorkTrousers); shipped PASS, assetBudgets OK; ci 108/108; pushed 49af3f1c5. The ue-probe junction shows the files at 05:56.
-- Step 9: the passed jumper measured over the new trousers (clear_layers --measure): nearest 7.7 mm, none under 3: no re-clear, jumper untouched.
-- Packaged build asked about 06:05 (nightly_package ASKED b279668f). Row 06:07 posted.
-- Thursday's checkpoint drafted: F:/LedgerTools/tool-dev/reports/KILN-THURSDAY-CHECKPOINT-2026-11-19.md (tests 1 and 4 missed, 2 met with a listed count, 3 and 5 open).
+## Done this run (10:06 to 10:48; DECISIONS 19 Nov 10:1x-10:4x)
+- Cloud core run GREEN on 02fff7a55 (first since 29 Oct): install fixed; scipy added.
+- Push guard refuses raw character and motion files (.bvh; .fbx/.glb in Mixamo's folders); whole branch re-read clean. RULINGS line "3 Oct: never MetaHuman files..." now ends "19 Nov: nor raw Mixamo files, history included" (NoAI line tightened to stay at 4,900); enforcer added.
+- Layered stage trace (diagnoser, no try): F:/LedgerTools/tool-dev/reports/KILN-LANE-LAYERTRACE-2026-11-19.md, lane-layertrace 0505311. Points go through in the FIRST drape; each substep's passes push 1,000-2,500 through, the layer round leaves ~100 over 3 mm; finish_layers ADDS points each call and the export follows it. Engine measure reads ~2.5x under the judge's. Backs try 2's interleave.
+- History clean-up staged in F:/LedgerTools/history-clean-2026-11 (INVENTORY.md; staged/INDEX.md: 31 whole files, 60 passages, unstaged rows named there). 4 more raw Mixamo FBX (tools/mixamo-pick/known-bad) copied to F:; only Mixamo needs removing. import_people.py and footfalls.py fall back to the game inputs' bodies.
+- Advisor 241 (his 12 picks on the audit, 10:31): ACTION item marvelous-cancel-2026-11-19 on his page (Marvelous renews by itself 26 Nov); acked 10:46. Rows 10:13, 10:46.
 
 ## In flight at the stop
-- The runner's packaged build (Runner.Worker) for the held film; no local Unreal or Kiln gate until it is gone. Nothing else of mine running; the heavy lock free.
-- Ceiling: 38% at 06:07 against 38.1%; Fable 45% at cap.
+- Nothing running; heavy lock free. Layered try 1's patch still uncommitted in C:/LedgerTools/kiln-lanes/finepass.
 
 ## Next, in order
-0. Verdicts after 2026-11-19T05:05 UTC; advisor after 2026-11-19T00:54:00+01:00 (last ack 237). Allowance, pace_line, a row (last 06:07).
-1. Step 10, the held films: DONE standing on build b279668 (game log: Rocco wears RonWorkTrousers, RonJeans replaced): F:/LedgerTools/game-inputs/films/ron-work-trousers-2026-11-19/deg0, deg135, deg180 (through the office window: seat not seen), deg225, and the passed jeans on the same camera (jeans-deg0, jeans-deg135) as the before. Command: packaged LedgerProbe.exe -FaceAB -MouthFilm -MouthFilmWide -PreparedAck -WearHeld=RonWorkTrousers -FilmSize=2560x1440 -LedgerSlice -LedgerCrime -Encounter=live -LiveFresh -TalkFake -NoTitle -MouthFilmDeg=N -log (closes itself in about 3 min; frames in LedgerProbe/Saved/MouthFilm/BP_MH_RoccoP2_*). One fresh final reviewer ran on them: read REVIEW-1.md in that folder (round 1 of 2). By eye: the crotch hangs a little low and baggy. Still owed: a seated film and a back view of the seat (the film camera cannot see his back on the street), then his whole-person page with the films; release only once the legs' start values are our own.
-2. Held-back run 1 on Thursday's main (quiet machine, heavy lock, the session runs it, no fixer told which); B2 and the speed table; then finish the checkpoint this evening.
-3. Marvelous before 25 Nov: Darren's nylon jacket needs a body with a head; a look by eye at the three drapes; the money DECISION item by Tue 24 Nov.
-4. Fable pieces (coat collar try 2, legs, blouse, R4) wait for Fable's reset Mon 13:00.
-5. The DAILY token file by 19:00; the P4 table.
-- tools/timelog.py start "<item> ..." at every task.
+0. Verdicts and advisor reads (advisor after 10:40 +01:00; ack 241 written 10:46). Allowance, pace_line, a row by 11:46.
+1. Advisor 241, record in RULINGS/canon within caps, each with its enforcer (production/rulings-enforcers.json; key = the line's start), one DECISIONS entry: (4) Kiln is his own tool, its lineage/licence never raised again (on the 13 Nov Kiln line; also its share stays 70% after 23 Nov); (5) Pocket kept, consent risk accepted by him in writing 19 Nov 10:31, allowlist note in ledger-v2/research/license-allowlist.md, open watermark researched (D50); (6) a new pick waits for Monday's order unless he writes 'now', then starts only with 'displaces N hours of item X', binds relays (on the 4 Nov advisor line); (7) principals at talking distance on the 2026 bar close up against KCD2 frames (3 Oct clothes line); (8) the 28 Oct endings line stands; (3) Marvelous line: lapses 26 Nov, exported first; canon.md: (1) rewrite 'What LEDGER is not' and the 14 Sep spend line to his 18 Nov pillar, D7 dropped; (11) the docks are the Hook's working waterfront. RULINGS is at 4,900/4,900: about 55 words must leave (done or replaced lines first; the replaced Marvelous sentence saves 9).
+2. Advisor 241 point 3: export every Marvelous garment and project to open formats on F: and the backup before 26 Nov (audit H21), finish the reference drapes (game-garment skill).
+3. Kiln layered try 2 (1 of 2 used): build the interleave per the method note in a lane, cargo tests, full gate alone under the heavy lock; weigh the finish_layers rise the trace found. If it fails: Fable after Mon 13:00.
+4. 241 points 2, 9, 10, 12 into the 23 Nov order draft (biggest impact first). History rewrite: before it, decide the 4 unstaged files and the n09-12 line's two other homes; HELD for his word at the PC.
+5. Then: wardrobe list overnight (not 01:15-04:30); Fable pieces Mon 13:00; DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 19 Nov 05:54: the trousers' first import raised TypeError (int of None): a new garment folder needs its line in asset-budgets.json (folders and a parts entry), as Sheila's on 11 Nov.
-- 19 Nov 05:52: the import worktree held a stale STAGED copy reversing its own last commit; git checkout -- restored the stale index, not HEAD: run git restore --staged first.
-- 19 Nov 05:21: the trousers' boots job on Kiln main stopped at once on SetSeamlineZipper (renamed kiln_api.kiln_set_seam_zipper on 18 Nov); KILN_LEGACY_NAMES=1 runs the job unchanged.
-- 19 Nov 05:20: coat on the joined lane: collar assembly inside the neck.
+- 19 Nov 09:05: ci-checks.sh from the Bash tool in an unattended run: refused by Claude Code's removal safety check (the script runs rm; nobody to answer the prompt). Do not re-issue in the same run; the next run tries once.
+- 19 Nov 09:10: aaa-study joined the backup list by a size-only sweep; it holds game extracts. Read a folder before adding it.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
-- Tries used: trousers seat 1/2 (passed); coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
+- Tries used: cloud core install 2/2 (passed), its scipy fault 1/2 (passed); layered stage trace (no try); layered fix 1/2 (failed 19 Nov, pass weighting); trousers seat 1/2 (passed); trousers seated hem gap 0/2; coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 1/2; blouse set aside (Fable).
 - API spend: US$3.77 this month (8 and 16 Nov); none 17-18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).

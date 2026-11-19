@@ -778,6 +778,11 @@ CHECKS = [0]     # self-test checks run (both check functions count)
 
 def selftest():
     import tempfile
+    if os.name != "nt":
+        # WINDOWS ONLY (19 Nov, audit H10): its cases are this PC's drives and paths (C:, F:, the build
+        # machine's folder); on the cloud's Linux machine they cannot hold. Said plainly, never a pass.
+        print("retention selftest SKIPPED: Windows only (this PC's drives); runs in every local ci-checks")
+        return 0
     failures = []
 
     def check(cond, what):
