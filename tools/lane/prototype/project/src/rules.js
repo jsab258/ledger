@@ -847,7 +847,7 @@ export const RULES = {
     denialCutsHeatTimes: 0.7,
     familiarityAddedPerDayOfTalk: 0.1,
     regardAddedPerDayOfTalk: 0.03,
-    suggestedLinesAtMost: 3,
+    suggestedLinesAtMost: 4,
     goodbyeAfterRealSeconds: 1.3,
     closesAfterRealSeconds: 1.6,
     turnTakesGameMinutes: 0, // the clock stops in talk (ONE-SHOT-PROMPT 34): a turn of talk takes no game time

@@ -19,13 +19,21 @@ export const TUNE = {
   roundWordsToPence: 50,
   // the five debts of Mickey's book (DESIGN 4): what is owed and what the purse really holds
   debts: {
-    darren: { owedPence: 2200, pursePence: 400, paysIn: 'words' },
+    darren: { owedPence: 2200, pursePence: 1000, paysIn: 'words' },
     wayne: { owedPence: 3000, pursePence: 600, paysIn: 'goods', goodsWorthPence: 3400 },
     lee: { owedPence: 1500, pursePence: 1500, paysIn: 'stands' },
     julie: { owedPence: 900, pursePence: 60, paysIn: 'cannot' },
     dennis: { owedPence: 8000, pursePence: 9500, paysIn: 'money', hasYardHand: true },
   },
   squeezedRegardLost: 0.2,
+  squeezedFearGained: 0.15,
+  sheilaFinishesWithoutAFareAfterGameMinutes: 300,
+  darrenStaysAfterGameMinutes: 20,
+  firstNightStagingEndsAtGameMinute: 240, // four in the morning of the Tuesday: nobody is kept standing past it
+  afterADeedLookWithinMetres: 14,
+  afterADeedLookRealSeconds: 3,
+  gathersNoNearerThanMetres: 3.2,
+  gathersForRealSeconds: 7,
   forgivenRegardGained: 0.25,
   // prices of the shops' lists (A21), in pence
   prices: { cigarettes: 150, paper: 20, meal: 180, tea: 20, crowbar: 650, torch: 420, keyCut: 150, scrap: 30, decentJacket: 3200, goodOvercoat: 7800, secondHandCoat: 900, scarf: 250, hat: 400, barber: 300, stitches: 1500, usedCar: 65000, solicitorRetainer: 12000, respray: 9000 },

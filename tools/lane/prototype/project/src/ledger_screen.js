@@ -349,7 +349,7 @@ export function ledgerHTML() {
     main =
       '<h2>Waiting on Tom</h2><div class="was">A day is written only where somebody said one. Closed lines are ruled off and stay.</div>';
   } else {
-    main = '<h2>Money</h2><div class="was">Pounds and pence. Only sums Tom knows.</div>';
+    main = '<h2>Money</h2><div class="was words">' + esc(G.hooks.moneyWords ? G.hooks.moneyWords() : '') + '</div>';
   }
   main += rows.map(rowHTML).join('') || '<div class="lh">Nothing written here yet.</div>';
   if (LS.part === 'open')

@@ -51,7 +51,7 @@ export const setTorch = (on_) => (X('foot').torch = !!on_);
 async function manners() {
   const P = aimedAt();
   if (!P) return tell('Nobody near enough.', '');
-  const list = ['A nod.', 'Good day.', 'A hard look.', '"Oi!"', 'Ask the way.', 'Never mind.'];
+  const list = ['A nod.', 'Good day.', 'A hard look.', '"Oi!"', 'A shove.', 'Ask the way.', 'Never mind.'];
   const i = await scene(() => choose('', 'To ' + (P.anon ? P.def.desc : P.def.name) + ':', list));
   const kinds = ['nod', 'greet', 'hard_look', 'called_out'];
   if (i < 4) {
@@ -65,6 +65,14 @@ async function manners() {
     }
     bubble(P, ['A nod back.', P.mind.regard < -0.2 ? 'Is it.' : hourNow() < 12 ? 'Morning.' : hourNow() < 18 ? 'Afternoon.' : 'Evening.', P.def.nerve > 0.6 ? 'Help you?' : '...', 'What?'][i], RULES.game.feel.hintAfterStandingStillRealSeconds);
   } else if (i === 4) {
+    // rung 4 of the ladder: hands on him (Tom's own line: never a woman, anyone of sixty or over, or the priest)
+    if (P.def.sex === 'f' || (P.def.age || 0) >= 60 || P.id === 'walsh') return tell('Not her. Not him. That is his own line.', '');
+    const Ev = act('shove', P.anon ? { name: P.def.desc } : { target: P.id, noiseR: T.reachMetres.shout / 2 });
+    X('foot').manners.push({ kind: 'shove', to: P.id, e: Ev.id, t: Math.round(G.t) });
+    P.ang = Math.atan2(G.tom.x - P.x, G.tom.z - P.z);
+    P.pauseT = 1.5;
+    if (G.hooks.sfx) G.hooks.sfx('thud');
+  } else if (i === 5) {
     const g = G.x.way.goal;
     if (!g) return tell('He has nowhere he is looking for.', '');
     emit('way.ask', { P, place: g.id });

@@ -1076,7 +1076,7 @@ function mattersFor(P) {
       });
   }
   if (id === 'darren') {
-    if (today('heard') && darrenHeard(0, true)) // offered only when he has heard something
+    if (!(d && d.st === 'open') && today('heard') && darrenHeard(0, true)) // offered only when he has heard something, and his own debt is settled
       a.push({
         key: 'heard',
         direct: true,
@@ -1101,7 +1101,7 @@ function mattersFor(P) {
           },
         ],
       });
-    else if (today('word'))
+    else if (false && today('word'))
       a.push({
         key: 'word',
         direct: true,
@@ -1160,7 +1160,7 @@ function mattersFor(P) {
               const amt = collect(P);
               return `Here. ${money(amt)}. That's us square. Tell Sheila to cross it through.`;
             }
-            talkSay('sys', 'You could leave it, strike it out, or front up to them on the street [Q].');
+            talkSay('sys', 'He could leave it, strike it out, or front up to them on the street: a hard look, then a shove [M].');
             // round 3: each debtor refuses in his own words, with his own reason (the panel's second complaint)
             const REFUSE = {
               dennis: "Eighty quid? Your uncle's dead, son. Dead men don't send bills.",
@@ -1175,12 +1175,14 @@ function mattersFor(P) {
         {
           say: ["I'm striking it out of the book.", 'Forget it. It dies with Mickey.'],
           q: 'Struck out? For good?',
+          q2: 'Once it is struck through it cannot be put back in the book. You are sure?',
           yes: ['Yes. For good.', 'Yes. Struck out.'],
           no: ['No. Leave it stand for now.', 'No. Let me think.'],
           keep: ASK,
           keepSay: asked + ' Struck out, you said. For good?',
           take: () => {
             forgive(P);
+            if (G.hooks.debtStruck) G.hooks.debtStruck(P.id);
             if (id === 'dennis' && fl().ask2 === 'yes') fl().job3 = 'forgave';
             return [
               "You what? Struck out? Well. I'll not forget that.",
@@ -1190,6 +1192,7 @@ function mattersFor(P) {
         },
       ],
     });
+    if (G.hooks.debtMatter) G.hooks.debtMatter(P, a[a.length - 1]); // each debtor's own way with it (game/book.js)
   }
   if (id === 'grace')
     a.push({

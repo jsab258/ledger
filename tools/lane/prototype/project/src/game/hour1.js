@@ -29,7 +29,7 @@ const STAGED = { darren: 'pave', ron: 'rank', june: 'junepass' };
 const posOf = (P) => (P.space === 'home' && P.win ? [P.win.x, P.win.z] : [P.x, P.z]);
 function passing(x) {
   const t = G.tom;
-  for (const id of ['darren', 'ron', 'june']) {
+  for (const id of ['ron', 'june']) { // (Darren is held on the pavement by the debt book's own rule: game/book.js)
     const P = P_(id);
     if (P && P.override && P.override.where === STAGED[id] && (x.round > 6 || G.t > RULES.time.weekStartsGameMinute + T.stagingEndsAfterGameMinutes)) release(P);
   }
@@ -81,6 +81,32 @@ const ROUND = [
 ];
 const DOORWAY = [0.5, 1.5]; // the gap in the partition between the front office and the back room, in the office's own metres
 const PAULINE_FARE = "I've Father Walsh wanting the priest's house, by the chapel, and no car in. Car two's on the rank, love. Keys are on the hook.";
+// Walk somebody across the office to a place in its own metres, by the doorway in the partition. True when there.
+export function walkInOffice(S, at, dt) {
+  const r = ROOMS.mickeys;
+  const sideNow = S.x - r.ox < DOORWAY[0] ? -1 : 1,
+    sideGoal = at[0] < DOORWAY[0] ? -1 : 1,
+    via = sideNow !== sideGoal ? [DOORWAY[0] + sideGoal * 0.5, DOORWAY[1]] : at;
+  if (sideNow !== sideGoal && Math.abs(S.z - r.oz - DOORWAY[1]) > 0.5) via[0] = DOORWAY[0] + sideNow * 0.7; // first to the doorway on her own side
+  const [gx, gz] = roomPos('mickeys', via[0], via[1]),
+    d = hyp(S.x, S.z, gx, gz);
+  if (via !== at && d <= 0.15) {
+    S.x += sideGoal * 0.2; // through the doorway
+    return false;
+  }
+  if (d > 0.15) {
+    const step = Math.min(d, T.sheilaWalksMetresPerSecond * dt);
+    S.ang = Math.atan2(gx - S.x, gz - S.z);
+    S.x += ((gx - S.x) / d) * step;
+    S.z += ((gz - S.z) / d) * step;
+    S.moving = true;
+    S.act = 'walk';
+    return false;
+  }
+  S.moving = false;
+  S.act = 'idle';
+  return true;
+}
 function walkRound(x, dt) {
   const t = G.tom,
     S = P_('sheila');
@@ -96,31 +122,8 @@ function walkRound(x, dt) {
   if (x.round > ROUND.length) return;
   if (t.space !== 'mickeys') return; // she waits where she is while he is out
   S.busy = true; // hers to walk while the round lasts (her routine takes her back after)
-  const stop = ROUND[x.round - 1],
-    r = ROOMS.mickeys;
-  // the office is two rooms with a doorway between: she goes by the doorway, never through the partition
-  const sideNow = S.x - r.ox < DOORWAY[0] ? -1 : 1,
-    sideGoal = stop.at[0] < DOORWAY[0] ? -1 : 1,
-    via = sideNow !== sideGoal ? [DOORWAY[0] + sideGoal * 0.5, DOORWAY[1]] : stop.at;
-  if (sideNow !== sideGoal && Math.abs(S.z - r.oz - DOORWAY[1]) > 0.5) via[0] = DOORWAY[0] + sideNow * 0.7; // first to the doorway on her own side
-  const [gx, gz] = roomPos('mickeys', via[0], via[1]),
-    d = hyp(S.x, S.z, gx, gz),
-    there = via === stop.at;
-  if (!there && d <= 0.15) {
-    S.x += sideGoal * 0.2; // through the doorway
-    return;
-  }
-  if (d > 0.15) {
-    const step = Math.min(d, T.sheilaWalksMetresPerSecond * dt);
-    S.ang = Math.atan2(gx - S.x, gz - S.z);
-    S.x += ((gx - S.x) / d) * step;
-    S.z += ((gz - S.z) / d) * step;
-    S.moving = true;
-    S.act = 'walk';
-    return;
-  }
-  S.moving = false;
-  S.act = 'idle';
+  const stop = ROUND[x.round - 1];
+  if (!walkInOffice(S, stop.at, dt)) return;
   S.ang += angDiff(S.ang, Math.atan2(t.x - S.x, t.z - S.z)) * Math.min(1, dt * 6);
   if (x.said < x.round && hyp(S.x, S.z, t.x, t.z) <= T.sheilaSpeaksWhenHeIsWithinMetres && !ui.modal && !ui.subs.some((s) => s.t > s.secs - 1.2)) {
     x.said = x.round;
@@ -135,6 +138,7 @@ function walkRound(x, dt) {
 function endOfRound(x, S) {
   S.busy = false;
   S.goalKey = null;
+  send(S, 'mickeys:sheila', 'work'); // she sits on at her desk on the first night until she has shown him the debt book (game/book.js)
   fl().tour = 1;
   fl().unpacked = 1;
   fl().metPauline = 1;

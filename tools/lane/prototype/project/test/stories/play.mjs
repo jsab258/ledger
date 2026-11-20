@@ -36,7 +36,7 @@ function CLOCK(seed) {
   let yieldRes = null;
   ch.port1.onmessage = () => { const r = yieldRes; yieldRes = null; if (r) r(); };
   const S = (window.__S = {
-    now: 10000000, seq: 0, timers: [], frames: [], frameNo: 0, on: false, sounds: [], heard: [], log: [], keys: {}, mouseDown: false, pad: null, subsSeen: {}, subsLog: [], headsSeen: {}, eachs: {},
+    now: 10000000, seq: 0, timers: [], frames: [], frameNo: 0, on: false, sounds: [], heard: [], log: [], keys: {}, mouseDown: false, pad: null, subsSeen: {}, subsLog: [], headsSeen: {}, notedSeen: {}, notedLog: [], eachs: {},
     yield: () => new Promise((r) => { yieldRes = r; ch.port2.postMessage(0); }),
     reseed: (n) => { st.s = n >>> 0; },
     nativeTimeout,
@@ -72,6 +72,7 @@ function CLOCK(seed) {
       if (window.LEDGER && LEDGER.G && LEDGER.G.story.phase === 'play' && S.frameNo % 3 === 0) {
         for (const e of document.querySelectorAll('#subs .s')) { const s = e.innerText.trim(); if (s && !S.subsSeen[s]) { S.subsSeen[s] = 1; S.subsLog.push({ s, at: Math.round(LEDGER.G.played * 100) / 100, t: Math.round(LEDGER.G.t * 10) / 10 }); } }
         if (S.frameNo % 15 === 0) for (const Q of LEDGER.G.named.concat(LEDGER.G.crowd)) if (!Q.gone && Q.mind && Q.mind.look > 0 && (Q.space === 'street' || Q.win)) S.headsSeen[Q.id] = 1;
+        { const nd = document.getElementById('noted'); if (nd && nd.classList.contains('on')) { const s = nd.innerText.trim(); if (s && !S.notedSeen[s]) { S.notedSeen[s] = 1; S.notedLog.push({ s, at: Math.round(LEDGER.G.played * 100) / 100 }); } } }
       }
       for (const k in S.eachs) { try { S.eachs[k](); } catch (e) { console.error('story watcher threw: ' + ((e && e.stack) || e)); } }
       await S.yield();
@@ -232,6 +233,40 @@ export async function open(o = {}) {
       }
       return true;
     },
+    // pick one of a written choice's lines by its words (the digit keys)
+    async pick(rx) {
+      const s = await P.screen();
+      if (!s.dialog || !s.dialog.opts.length) return false;
+      const i = s.dialog.opts.findIndex((o) => rx.test(o));
+      if (i < 0) return false;
+      await P.tap('Digit' + (i + 1));
+      await P.frames(12);
+      return true;
+    },
+    // in a talk: say one of his suggested lines, chosen by its words (Tab shows them; Up, Down and Enter choose)
+    async talkSay(rx) {
+      let s = await P.screen();
+      if (!s.talk) return false;
+      if (!s.talk.lines.length) { await P.tap('Tab'); await P.frames(12); s = await P.screen(); }
+      const lines = s.talk.lines, i = lines.findIndex((l) => rx.test(l));
+      if (i < 0) return false;
+      const sel = await page.evaluate(() => [...document.querySelectorAll('#tlines > *')].findIndex((e) => e.classList.contains('on')));
+      for (let k = 0; k < (i - Math.max(0, sel) + lines.length) % lines.length; k++) await P.tap('ArrowDown');
+      const n0 = await page.evaluate(() => document.querySelectorAll('#tlog > *').length);
+      await P.tap('Enter');
+      await P.until((n0) => document.querySelectorAll('#tlog > *').length >= n0 + 2, 6, n0);
+      await P.frames(20);
+      return true;
+    },
+    // in a talk: type his own words and say them
+    async talkType(text) {
+      await page.evaluate(() => document.getElementById('tin').focus());
+      await P.type(text);
+      const n0 = await page.evaluate(() => document.querySelectorAll('#tlog > *').length);
+      await P.tap('Enter');
+      await P.until((n0) => document.querySelectorAll('#tlog > *').length >= n0 + 2, 9, n0);
+      await P.frames(20);
+    },
     // read a written line on (E) until none is up; returns the lines read
     async readOn(max = 12) {
       const out = [];
@@ -253,6 +288,14 @@ export async function open(o = {}) {
     // every subtitle met so far, in order, each with the real seconds of play when it first showed
     subsLog: () => page.evaluate(() => window.__S.subsLog.slice()),
     heads: () => page.evaluate(() => Object.keys(window.__S.headsSeen)),
+    headsReset: () => page.evaluate(() => { window.__S.headsSeen = {}; }),
+    // the low belief line: every text it has shown
+    beliefs: () => page.evaluate(() => window.__S.notedLog.slice()),
+    // save from the pause menu and keep the browser's store under a name
+    async save(name) { await P.tap('Escape'); await P.frames(18); await P.click('[data-act="save"]'); await P.frames(30); const ok = /Saved/.test((await P.screen()).book); await P.tap('Escape'); await P.frames(18); if ((await P.screen()).book) { await P.tap('Escape'); await P.frames(18); } if (name) await P.keep(name); return ok; },
+    // open the Ledger on one of its pages (L, then E to turn the pages); returns the page's words
+    async ledger(part) { await P.tap('KeyL'); await P.frames(20); for (let k = 0; k < 5; k++) { const on = await page.evaluate(() => { const b = document.querySelector('#lbook button.on'); return b ? b.innerText.trim().toLowerCase() : ''; }); if (on === part.toLowerCase()) break; await P.tap('KeyE'); await P.frames(15); } return (await P.screen()).ledger; },
+    ledgerClose: async () => { await P.tap('KeyL'); await P.frames(20); },
     world: (fn, ...a) => page.evaluate(fn, ...a),
     tom: () => page.evaluate(() => { const t = LEDGER.G.tom; return { x: t.x, z: t.z, ang: t.ang, space: t.space, inCar: !!t.inCar, room: LEDGER.ui.roomName || null, run: !!t.run }; }),
     clock: () => page.evaluate(() => LEDGER.G.t), // game minutes (the watch's own value), for timing a story's steps
@@ -421,7 +464,7 @@ export async function run(id, o, play, variants = ['']) {
   for (const variant of variants) {
     const digests = [];
     for (let n = 1; n <= (twice ? 2 : 1); n++) {
-      const P = await open(Object.assign({}, o, { port: ++port }));
+      const P = await open(Object.assign({}, o, { port: ++port, from: typeof o.from === 'function' ? o.from(variant) : o.from }));
       const tag = (variant ? variant + ', ' : '') + 'run ' + n;
       if (process.env.LEDGER_STORY_TRACE) await P.traceOn();
       const t = {

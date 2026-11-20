@@ -977,7 +977,16 @@ async function decStep(P, text, line) {
     } else await take(P, D, idx);
     return;
   }
-  if (job === 'yes') return take(P, D, D.q);
+  if (job === 'yes') {
+    // what cannot be undone asks twice (3.6.5): the first plain yes is answered by asking again
+    const o = D.opts[D.q];
+    if (o && o.q2 && !D.asked2) {
+      D.asked2 = true;
+      npc(P, o.q2);
+      return;
+    }
+    return take(P, D, D.q);
+  }
   if (job === 'keep') {
     const o = D.q != null ? D.opts[D.q] : null;
     npc(P, (o && o.keepSay) || D.keepSay || "That's as much as I can tell you.");

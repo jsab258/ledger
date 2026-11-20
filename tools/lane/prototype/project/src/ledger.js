@@ -410,10 +410,10 @@ export function openNow() {
   if (f.tour && !f.rent)
     o.push({
       key: 'rent',
-      who: f.metSylvia ? 'sylvia' : null,
-      what: `Rent, ${quid(RULES.money.rentPence)}, to ${f.metSylvia || kn.sylvia ? 'Mrs Rennison' : 'Regent House'}`,
+      who: 'sheila',
+      what: `Rent, ${quid(RULES.money.rentPence)}, on the office and the flat over it`,
       day: f.rentBySix ? 'Fri, by 6pm' : 'Fri',
-      how: f.metSylvia ? 'Mrs Rennison says' : 'Sheila says',
+      how: 'Sheila says',
     });
   if (f.tour && !f.choice)
     o.push({
@@ -430,6 +430,7 @@ export function openNow() {
       what: `Money in the tin that never came off a meter. ${nm('sheila')} can put it through the fare book`,
       how: 'Counted it',
     });
+  if (G.hooks.openRows) G.hooks.openRows(o); // the whole game's systems add what is open with them (debts: game/book.js)
   if (f.oweAgar > 0)
     o.push({
       key: 'agar',
@@ -541,7 +542,7 @@ export function moneyNow() {
     });
   if (m.booksOff > 0)
     o.push({ sum: 'off', what: 'More than the book can hide', amountPence: m.booksOff, how: 'Sheila says' });
-  if (f.tour) {
+  if (f.tour && (!G.x || !G.x.book || G.x.book.shown)) {
     let owed = 0;
     for (const id in G.debts) if (G.debts[id].st === 'open') owed += G.debts[id].owed;
     o.push({ sum: 'owed', what: "Owed to Mickey's book, all told", amountPence: owed, how: "Mickey's book" });
