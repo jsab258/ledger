@@ -1,5 +1,5 @@
 {
-  "updated": "Thursday 19 November 2026, 21:21",
+  "updated": "Friday 20 November 2026, 0:42",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -178,7 +178,7 @@
         7.7
       ],
       "began": "2026-11-09",
-      "actual_w": 1.4
+      "actual_w": 1.6
     },
     {
       "n": 3,
@@ -539,8 +539,8 @@
   },
   "carried": [],
   "line2027": {
-    "as_of": "Thursday 19 November",
-    "behind_w": -0.2,
+    "as_of": "Friday 20 November",
+    "behind_w": 0.0,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   },
   "forecast": {
@@ -845,7 +845,7 @@
       {
         "label": "The design deck",
         "url": "https://claude.ai/artifact/VoDvh3gqj1q5CGiAhBLSqK",
-        "note": "the whole game in 28 slides"
+        "note": "the whole game in 15 slides"
       },
       {
         "label": "The driving study",
@@ -865,5 +865,216 @@
       }
     ]
   },
-  "date_move": null
+  "date_move": null,
+  "track1": {
+    "source": "origin/lane-2026-11",
+    "good": {
+      "stage": "A",
+      "goal": 4,
+      "score": {
+        "up": 2,
+        "of": 8,
+        "from": "round 5"
+      },
+      "line": "2 of 8, goal 4 (stage A; round 5)"
+    },
+    "works": [
+      {
+        "key": "A",
+        "name": "one evening that holds",
+        "parts": 121,
+        "built": 55,
+        "passing": 1
+      },
+      {
+        "key": "B",
+        "name": "a week that holds",
+        "parts": 38,
+        "built": 3,
+        "passing": 0
+      },
+      {
+        "key": "C",
+        "name": "the rise",
+        "parts": 27,
+        "built": 0,
+        "passing": 0
+      },
+      {
+        "key": "D",
+        "name": "the end",
+        "parts": 5,
+        "built": 0,
+        "passing": 0
+      }
+    ],
+    "loop": {
+      "n": null,
+      "note": "no loop yet: the one-shot runs Friday night, loops after it"
+    },
+    "health": {
+      "gate": "fails: 8 real faults in the game",
+      "when": "19 Nov 2026, second run after the review's fixes",
+      "playthroughs": "start next week"
+    },
+    "parts": [
+      {
+        "id": "1",
+        "name": "What the player does with his hands",
+        "leaves": 57,
+        "prototype": {
+          "designed": 27,
+          "built shallow": 12,
+          "built": 18
+        },
+        "unreal": {
+          "designed": 51,
+          "built shallow": 4,
+          "built": 2
+        }
+      },
+      {
+        "id": "2",
+        "name": "The town under the hood",
+        "leaves": 64,
+        "prototype": {
+          "designed": 25,
+          "built shallow": 19,
+          "built": 19,
+          "unknown": 1
+        },
+        "unreal": {
+          "designed": 38,
+          "built shallow": 9,
+          "built": 16,
+          "unknown": 1
+        }
+      },
+      {
+        "id": "3",
+        "name": "Story and people",
+        "leaves": 32,
+        "prototype": {
+          "designed": 13,
+          "built shallow": 10,
+          "built": 8
+        },
+        "unreal": {
+          "missing": 1,
+          "designed": 21,
+          "built shallow": 6,
+          "built": 4
+        }
+      },
+      {
+        "id": "4",
+        "name": "The place",
+        "leaves": 27,
+        "prototype": {
+          "designed": 8,
+          "built shallow": 7,
+          "built": 7
+        },
+        "unreal": {
+          "designed": 18,
+          "built shallow": 7,
+          "built": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "id": "5",
+        "name": "How it looks and sounds",
+        "leaves": 37,
+        "prototype": {
+          "designed": 5,
+          "built shallow": 7
+        },
+        "unreal": {
+          "missing": 2,
+          "designed": 12,
+          "built shallow": 14,
+          "built": 7,
+          "unknown": 2
+        }
+      },
+      {
+        "id": "6",
+        "name": "The interface and the Ledger",
+        "leaves": 18,
+        "prototype": {
+          "designed": 5,
+          "built shallow": 4,
+          "built": 8
+        },
+        "unreal": {
+          "designed": 11,
+          "built shallow": 2,
+          "built": 4,
+          "unknown": 1
+        }
+      },
+      {
+        "id": "7",
+        "name": "The game's shape",
+        "leaves": 16,
+        "prototype": {
+          "missing": 1,
+          "designed": 3,
+          "built shallow": 8,
+          "built": 3,
+          "passes": 1
+        },
+        "unreal": {
+          "designed": 10,
+          "built shallow": 3,
+          "built": 3
+        }
+      },
+      {
+        "id": "8",
+        "name": "Technical",
+        "leaves": 12,
+        "prototype": {
+          "designed": 3,
+          "unknown": 1
+        },
+        "unreal": {
+          "designed": 3,
+          "built shallow": 2,
+          "built": 2,
+          "unknown": 5
+        }
+      },
+      {
+        "id": "9",
+        "name": "The machinery",
+        "leaves": 20,
+        "prototype": {
+          "missing": 1,
+          "designed": 6,
+          "built shallow": 1,
+          "built": 2
+        },
+        "unreal": {
+          "missing": 1,
+          "designed": 14,
+          "built shallow": 4,
+          "built": 1
+        }
+      },
+      {
+        "id": "10",
+        "name": "Shipping",
+        "leaves": 12,
+        "prototype": {},
+        "unreal": {
+          "missing": 1,
+          "designed": 3,
+          "built shallow": 2,
+          "unknown": 6
+        }
+      }
+    ]
+  }
 }

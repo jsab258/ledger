@@ -243,6 +243,23 @@ figcaption{font-size:14px;color:var(--muted)}
 .p-tgt{stroke:var(--brick);stroke-width:2;stroke-dasharray:5 3}
 .panel svg text.p-tt{fill:var(--brick);font-weight:700}
 .panel svg text.p-val{fill:var(--ink);font-weight:700}
+/* Track 1's measures and the Parts view (advisor 261) */
+.t1-rows{display:grid;gap:10px;margin:0}
+.t1-rows dt{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.t1-rows dd{margin:3px 0 0;font-size:14.5px;line-height:1.4}
+.t1-rows dd b{font-size:17px}
+.nm{color:var(--muted);font-style:italic}
+.stg{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 8px;align-items:center;font-size:13px}
+.stg .bar,.pv .bar{height:10px;background:var(--track);position:relative;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.s-pass{background:var(--ok)} .s-built{background:var(--line)} .s-shallow{background:var(--line);opacity:.45}
+.s-designed{background:var(--muted);opacity:.45} .s-missing{background:var(--brick)} .s-unknown{background:repeating-linear-gradient(135deg,var(--muted) 0 3px,transparent 3px 6px)}
+.pv{display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,1.2fr) minmax(70px,1.2fr);gap:6px 10px;align-items:center;font-size:13px}
+.pv .h{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pv .gn small{display:block;color:var(--muted);font-size:11.5px}
+.plegend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted)}
+.plegend span{display:inline-flex;align-items:center;gap:5px}
+.plegend i{display:inline-block;width:12px;height:10px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
 .err{color:var(--brick);font-weight:600}
 </style>
@@ -271,7 +288,9 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       <p class="sub">The prototype in the browser: the whole design, round by round, played and judged before Unreal takes each part over.</p>
       <div class="ticket mini" id="protoTicket"></div>
       <ol class="route" id="protoRoute"></ol>
+      <div class="panel" id="t1"></div>
       <div class="panel" id="panel"></div>
+      <div class="panel" id="partsView"></div>
       <ul class="pieces" id="beside"></ul>
     </section>
 
@@ -463,6 +482,68 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     card("Blocked", W.blocked, x => { const li = el("li"); if (x.boss) li.append(el("span", "bk", x.boss)); li.append(document.createTextNode(x.item)); return li; });
     card("Try it", W.try, x => { const li = el("li"); const a = el("a", null, x.label); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; li.append(a); if (x.note) li.append(document.createTextNode(": " + x.note)); return li; });
     card("Decisions", W.decisions, x => { const li = el("li"); if (x.url){ const a = el("a", null, x.label); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; li.append(a); } else li.append(document.createTextNode(x.label)); if (x.note) li.append(document.createTextNode(": " + x.note)); return li; });
+  }
+
+  // TRACK 1'S MEASURES AND THE PARTS VIEW (advisor 261, his "Ok w recs" 20 Nov): every number from the lane's files
+  const NM = "not measured";
+  const STATES = [["passes", "s-pass", "passing"], ["built", "s-built", "built"], ["built shallow", "s-shallow", "built shallow"],
+                  ["designed", "s-designed", "designed"], ["missing", "s-missing", "missing"], ["unknown", "s-unknown", "unknown"]];
+  function stackBar(counts, total){
+    const b = el("div", "bar"); b.setAttribute("role", "img");
+    b.setAttribute("aria-label", STATES.filter(s => counts[s[0]]).map(s => counts[s[0]] + " " + s[2]).join(", ") || "none");
+    for (const [k, cls] of STATES){ if (counts[k]){ const i = el("i", cls); i.style.width = (100 * counts[k] / total) + "%"; b.append(i); } }
+    return b;
+  }
+  function renderTrack1(d){
+    const T = d.track1, box = $("t1"), pv = $("partsView"); box.replaceChildren(); pv.replaceChildren();
+    if (!T){ box.remove(); pv.remove(); return; }
+    box.append(el("h3", null, "Where it stands"));
+    const dl = el("dl", "t1-rows");
+    const row = (label, node) => { dl.append(el("dt", null, label)); const dd = el("dd"); if (typeof node === "string") dd.textContent = node; else dd.append(node); dl.append(dd); };
+    // (1) how good
+    const g = T.good || {};
+    if (g.score){ const f = document.createDocumentFragment(); f.append(el("b", null, g.score.up + " of " + g.score.of), document.createTextNode(" would recommend it, goal " + g.goal + " for stage " + g.stage + " (newest panel: " + g.score.from + ")")); row("How good it is", f); }
+    else row("How good it is", el("span", "nm", NM));
+    // (2) how much works
+    if (Array.isArray(T.works)){
+      const w = el("div", "stg");
+      for (const s of T.works){
+        w.append(el("span", null, "Stage " + s.key));
+        w.append(stackBar({"passes": s.passing, "built": s.built - s.passing, "designed": s.parts - s.built}, s.parts || 1));
+        w.append(el("span", null, s.built + " built, " + s.passing + " passing, of " + s.parts));
+      }
+      row("How much works (the one-shot's parts)", w);
+    } else row("How much works", el("span", "nm", NM));
+    // (3) the latest loop
+    const L = T.loop || {};
+    if (L.n){
+      const f = el("div");
+      f.append(el("b", null, "Loop " + L.n));
+      if (Array.isArray(L.fixes)){ const ul = el("ul"); for (const x of L.fixes) ul.append(el("li", null, x)); f.append(ul); } else f.append(el("p", "nm", "fixes " + NM));
+      f.append(el("p", null, "Try this: " + L.try_this));
+      if (L.link && L.link !== NM){ const a = el("a", null, "Play the prototype"); a.href = L.link; a.target = "_blank"; a.rel = "noopener"; f.append(a); }
+      row("The latest loop", f);
+    } else row("The latest loop", el("span", "nm", L.note || NM));
+    // (4) health
+    const H = T.health || {};
+    row("Health", (H.gate || NM) + (H.when && H.when !== NM ? " (publish gate, " + H.when + ")" : "") + ". Overnight playthroughs: " + (H.playthroughs || NM) + ".");
+    box.append(dl);
+    box.append(el("p", "small", "A stage lights up only when its panel goal is met and you agree. Read from the lane's branch."));
+    // (5) the Parts view
+    if (!Array.isArray(T.parts)){ pv.append(el("h3", null, "Parts"), el("p", "nm", NM)); return; }
+    pv.append(el("h3", null, "Parts of the whole game"));
+    pv.append(el("p", "small", "Each group's smallest parts, by state, for the prototype and for Unreal."));
+    const lg = el("div", "plegend"); for (const [, cls, name] of STATES){ const s = el("span"); s.append(el("i", cls), document.createTextNode(name)); lg.append(s); } pv.append(lg);
+    const grid = el("div", "pv");
+    grid.append(el("span", "h", "Group"), el("span", "h", "Prototype"), el("span", "h", "Unreal"));
+    for (const r of T.parts){
+      const n = el("span", "gn", r.name); n.append(el("small", null, r.leaves + " parts")); grid.append(n);
+      for (const tr of ["prototype", "unreal"]){
+        const c = r[tr] || {}, tot = Object.values(c).reduce((a, b) => a + b, 0);
+        grid.append(tot ? stackBar(c, tot) : el("span", "nm", "not on this track"));
+      }
+    }
+    pv.append(grid);
   }
 
   // TRACK 1, THE PROTOTYPE (19 Nov): stages, the panel's verdict per round, what runs beside it
@@ -943,7 +1024,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   }
 
   fetch("progress.json", {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-    renderTicket(d); renderWeek(d); renderProto(d); renderRoute(d); renderBosses(d); renderStreet(d); if (d.forecast) renderRoad(d);
+    renderTicket(d); renderWeek(d); renderProto(d); renderTrack1(d); renderRoute(d); renderBosses(d); renderStreet(d); if (d.forecast) renderRoad(d);
     $("updated").textContent = "Updated " + d.updated + ".";
   }).catch(() => {
     const t = $("ticket"); t.replaceChildren();
