@@ -153,6 +153,7 @@ async function custody(P, a, ran) {
     const paid = Math.min(m.clean, bill);
     m.clean -= paid;
     m.spent += paid;
+    if (paid > 0 && G.hooks.flow) G.hooks.flow('pocket', 'world', paid, "the solicitor's bill");
     if (paid < bill) {
       fl().oweAgar = (fl().oweAgar || 0) + bill - paid;
     }

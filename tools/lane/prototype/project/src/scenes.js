@@ -172,7 +172,7 @@ const darrenIntro = () =>
     );
     await say(
       'darren',
-      "Darren. I did bits for Mickey. Messages. Watching a door. I owe the book a few quid an' all, I'm not hiding it.",
+      "Darren. I did bits for Mickey. Messages. Watching a door. I owed your uncle a few quid an' all, it's down in his debt book, I'm not hiding it.",
     );
     await say(
       'darren',

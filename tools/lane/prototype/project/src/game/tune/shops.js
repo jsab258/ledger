@@ -3,8 +3,8 @@ export const TUNE = {
   // each shop sells only its list, by its hours, from its purse
   shops: {
     news: { name: "Peart's", fromHour: 6, untilHour: 18, sells: ['cigarettes', 'paper'], pursePence: 4000 },
-    caff: { name: "Rinaldi's", fromHour: 6.5, untilHour: 17, sells: ['meal', 'tea'], pursePence: 5000 },
-    iron: { name: "the ironmonger's", fromHour: 8.5, untilHour: 17.5, sells: ['crowbar', 'torch', 'keyCut', 'scrap'], pursePence: 6000 },
+    caff: { name: "Rinaldi's", fromHour: 6.5, untilHour: 17, sells: ['meal', 'tea', 'scrap'], pursePence: 5000 },
+    iron: { name: "the ironmonger's", fromHour: 8.5, untilHour: 17.5, sells: ['crowbar', 'torch', 'keyCut'], pursePence: 6000 },
     chandler: { name: 'the chandlery', fromHour: 8, untilHour: 17, sells: ['decentJacket', 'goodOvercoat', 'scarf', 'hat'], pursePence: 9000 },
     rita: { name: "Rita's", fromHour: 9, untilHour: 17.5, sells: ['secondHandCoat'], buys: true, fence: true, pursePence: 12000 },
     barber: { name: 'the barber on Chapel Lane', fromHour: 9, untilHour: 17, sells: ['barber'], pursePence: 2000 },

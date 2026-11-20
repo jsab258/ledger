@@ -479,6 +479,13 @@ export function stepPlayer(dt) {
         Math.min(1, l) *
         (F.st === 'block' ? TOMS.blockingSlowsToShare : 1);
       t.run = run;
+      // the one-shot: he no longer reverses his way in one frame while his body takes its time to turn
+      if (!fighting) {
+        const off = Math.abs(angDiff(t.ang, Math.atan2(wx, wz)));
+        if (off > FEELT.turnSlowsAboveRadians) sp *= clamp(1 - (off - FEELT.turnSlowsAboveRadians) / (Math.PI - FEELT.turnSlowsAboveRadians), FEELT.turnSlowestShare, 1);
+        if (keys.KeyZ) sp = Math.min(sp, TOMS.walkingMetresPerSecond * RULES.game.foot.slowWalkShareOfWalk); // Z held while moving: walking slowly (A1)
+        t.slow = !!keys.KeyZ;
+      }
       if (!fighting)
         t.ang += clamp(
           angDiff(t.ang, Math.atan2(wx, wz)),
@@ -576,6 +583,7 @@ const solidCam = (x, z) => {
 export function snapCam() {
   cam.snap = true;
 }
+const FEELT = RULES.game.feel; // the camera and turn faults measured on 20 Nov, mended (game/tune/feel.js)
 export function stepCamera(dt) {
   const t = G.tom,
     room = t.space !== 'street' ? ROOMS[t.space] : null;
@@ -596,8 +604,21 @@ export function stepCamera(dt) {
   const tx = t.x,
     tz = t.z,
     ty = (t.inCar ? 1.35 : 1.5) + (t.y || 0);
-  const dist = t.inCar ? cam.dist + 3.4 : room ? Math.max(cam.dist, 5.2) : cam.dist,
-    pitch = t.inCar ? Math.max(cam.pitch, 0.2) : cam.pitch;
+  // the one-shot: the cab's camera sits in its band (5 to 6.5 m back, 1.6 to 2.0 m up) and the fight's in its own (3.5 to 5.0 m)
+  const cabPitch = Math.asin(clamp((FEELT.cabCameraUpMetres - FEELT.cabCameraTargetHeightMetres) / FEELT.cabCameraBackMetres, 0, 1));
+  const fightCam = F.on && F.rung >= LAD.strikeRung && !room;
+  const dist = t.inCar ? FEELT.cabCameraBackMetres / Math.cos(cabPitch) : room ? Math.max(cam.dist, 5.2) : fightCam ? Math.min(cam.dist, FEELT.fightCameraMetres) : cam.dist,
+    pitch = t.inCar ? cabPitch : cam.pitch;
+  // the view at the wheel: 60 to 65 degrees across at rest, widening to 64 to 70 at 30 mph; on foot the street lens
+  {
+    const across = FEELT.cabViewAcrossAtRestDegrees + (FEELT.cabViewAcrossAt30MphDegrees - FEELT.cabViewAcrossAtRestDegrees) * clamp(Math.abs(G.car.v) / FEELT.cabViewWidensUpToMetresPerSecond, 0, 1);
+    const want = t.inCar ? (Math.atan(Math.tan((across * Math.PI) / 360) / (camera.aspect || 1)) * 360) / Math.PI : FEELT.onFootViewUpDownDegrees;
+    const now = camera.fov + (want - camera.fov) * (cam.snap ? 1 : clamp(dt * FEELT.viewEasesPerSecond, 0, 1));
+    if (Math.abs(now - camera.fov) > 1e-3 && !window.LEDGER_CAM) {
+      camera.fov = now;
+      camera.updateProjectionMatrix();
+    }
+  }
   if (room) {
     // Round 6 (ER-CAM-01): indoors the camera never goes behind a side wall or a partition. Only the part of its
     // arm that is lower than the walls can be hidden by one; if that part crosses a wall, the camera swings back

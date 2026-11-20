@@ -9,12 +9,17 @@ import { RULES } from './rules.js';
 const MONEY = RULES.money;
 
 // ---------- money ----------
-export function pay(pence, cleanOnly) {
+// Every movement of money is also told to the whole game's flows ledger (game/econ.js): no money from nowhere.
+export const flow = (from, to, pence, why) => {
+  if (pence > 0 && G.hooks.flow) G.hooks.flow(from, to, pence, why);
+};
+export function pay(pence, cleanOnly, why = 'spent') {
   const m = G.money;
   if (cleanOnly) {
     if (m.clean < pence) return false;
     m.clean -= pence;
     m.spent += pence;
+    flow('pocket', 'world', pence, why);
     return true;
   }
   if (m.clean + m.dirty < pence) return false;
@@ -22,10 +27,12 @@ export function pay(pence, cleanOnly) {
   m.dirty -= d;
   m.clean -= pence - d;
   m.spent += pence;
+  flow('tin', 'world', d, why);
+  flow('pocket', 'world', pence - d, why);
   return true;
 }
 
-export function earn(pence, dirty) {
+export function earn(pence, dirty, why = 'earned') {
   const m = G.money;
   if (dirty) {
     m.dirty += pence;
@@ -34,6 +41,7 @@ export function earn(pence, dirty) {
     m.clean += pence;
     m.earnedClean += pence;
   }
+  flow('world', dirty ? 'tin' : 'pocket', pence, why);
   if (G.hooks.sfx) G.hooks.sfx('coin');
 }
 
@@ -49,6 +57,7 @@ export async function wash() {
   if (amt <= 0) return say('sheila', "There's nothing in the tin to put through. Good.");
   m.dirty = 0;
   m.clean += amt;
+  flow('tin', 'pocket', amt, 'put through the fare book');
   m.washed += amt;
   m.sinceWash = 0;
   if (amt <= cap) {

@@ -517,6 +517,26 @@ export function key(code) {
     return true;
   }
   if (ui.modal) {
+    // the one-shot (the smoke run's fault): every panel, the pause menu first, can be worked by keys alone.
+    // Up and down (or W and S, or Tab) move between its buttons; Enter, Space or E presses the one in hand.
+    const book = $('book');
+    const items = book ? [...book.querySelectorAll('button, [data-act], input, select')].filter((e) => !e.disabled && e.offsetParent !== null) : [];
+    if (items.length && ui.modal !== 'file') {
+      const at = items.indexOf(document.activeElement);
+      const typing = document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName) && document.activeElement.type !== 'checkbox';
+      if (code === 'ArrowDown' || code === 'Tab' || (code === 'KeyS' && !typing)) {
+        items[(at + 1) % items.length].focus();
+        return true;
+      }
+      if (code === 'ArrowUp' || (code === 'KeyW' && !typing)) {
+        items[(at - 1 + items.length) % items.length].focus();
+        return true;
+      }
+      if ((code === 'Enter' || ((code === 'Space' || code === 'KeyE') && !typing)) && at >= 0) {
+        items[at].click();
+        return true;
+      }
+    }
     if (code === 'Escape') {
       if (ui.modal !== 'end') {
         if ((G.story.phase === 'title' || ui.modal === 'file') && ui.hooks.back) ui.hooks.back();

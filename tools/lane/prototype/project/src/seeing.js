@@ -64,7 +64,7 @@ export function tomTarget() {
   base = Math.max(base, t.noiseP);
   t.light = L;
   t.noiseR = noiseRadius(base);
-  return {
+  const T = {
     x: sx,
     z: sz,
     space: t.space,
@@ -74,6 +74,9 @@ export function tomTarget() {
     inCar: t.inCar,
     lights: t.inCar && G.car.lights,
   };
+  if (G.hooks.target) G.hooks.target(T); // the whole game: a torch lights him, a slow walk quietens him (game/foot.js)
+  t.noiseR = T.noiseR;
+  return T;
 }
 
 // Where a person's eyes are. Someone at home sees only from their window, if they have one on the street.
@@ -117,6 +120,12 @@ export function sense(P, T) {
       see = true;
       c = clamp(1 - d / range, SEE.leastClarity, 1);
     }
+  }
+  if (see && G.hooks.seen) {
+    // the whole game: standing still in shadow, a turned back, a crowd about him (game/foot.js; A1)
+    const r = G.hooks.seen(P, T, c, d, e);
+    see = r.see;
+    c = r.c;
   }
   return { see, hear, c, d };
 }

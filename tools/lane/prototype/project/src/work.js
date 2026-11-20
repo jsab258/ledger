@@ -105,6 +105,7 @@ export async function beaten(foes) {
     }
     const took = Math.round(m.dirty * BEAT.shareOfTheTinTaken);
     m.dirty -= took;
+    if (took > 0 && G.hooks.flow) G.hooks.flow('tin', 'world', took, 'robbed while he was down');
     await fade(true, 'The pavement comes up to meet you.\n\nSomebody gets an arm under yours.');
     const h = hour(),
       early = h < BEAT.nightBeforeHour,
@@ -124,6 +125,7 @@ export async function beaten(foes) {
     placeAll();
     const cost = Math.min(m.clean, BEAT.plastersPence);
     m.clean -= cost;
+    if (cost > 0 && G.hooks.flow) G.hooks.flow('pocket', 'world', cost, 'plasters');
     m.spent += cost;
     const patched = seed('patched', ['grace']);
     meet(G.people.grace);
@@ -145,6 +147,7 @@ export async function beaten(foes) {
       null,
       { who: 'grace', ev: patched.id },
     );
+    if (G.hooks.emit) G.hooks.emit('fight.beaten', {});
     if (G.hooks.save) G.hooks.save();
   });
 }

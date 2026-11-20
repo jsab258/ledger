@@ -20,6 +20,7 @@ export const TUNE = {
   reachMetres: { footstep: 0, run: 14, slowWalk: 0, forcedDoor: 40, brokenGlass: 45, drawer: 2, forcedCupboard: 10, stone: 12, bin: 20, bark: 30, horn: 60, shout: 35, cab: 44, shot: 177, knock: 8, search: 2 },
   nightFootstepMetres: 3.6, // a footstep at three in the morning
   slowWalkHalvesFootsteps: 0.5,
+  slowWalkShareOfWalk: 0.55,
   nightFromHour: 22,
   nightUntilHour: 5,
   nightReachTimes: 2,
@@ -71,6 +72,22 @@ export const TUNE = {
   trespassActsAfterRealSeconds: 20,
   trespassWorstRealSeconds: 30,
   hintAfterStandingStillRealSeconds: 4,
+  // each kind: [how newsworthy 0..1, how it reads -1 menace..+1 decent, crime level 0..3]
+  kinds: { nod: [0.02, 0.1, 0], greet: [0.03, 0.15, 0], hard_look: [0.15, -0.2, 0], called_out: [0.2, -0.1, 0], trespass: [0.4, -0.4, 1], noise_made: [0.1, -0.1, 0], followed: [0.35, -0.4, 0], collared: [0.45, -0.5, 1] },
+  // how the prototype's clarity (0..1) is cut by what a man in a street can really do (A1)
+  stillInDoorwayLightAtMost: 0.2,
+  stillAfterRealSeconds: 1,
+  stillShapeClarityAtMost: 0.12,
+  stillUnseenBeyondShareOfRange: 0.35,
+  backTurnedAboveRadians: 2,
+  backTurnedClarityAtMost: 0.3,
+  amongPeopleClarityTimes: 0.7,
+  scarfClarityAtMost: 0.3,
+  torchLight: 0.7,
+  vaultWithinMetres: 1.3,
+  runnerCaughtLineRealSeconds: 2,
+  belongsNoSecondLook: true,
+  sitWithinMetres: 2.5,
 };
 export const SCHEDULES = {};
 export const PEOPLE = {};

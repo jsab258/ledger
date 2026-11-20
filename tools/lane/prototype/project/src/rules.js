@@ -904,7 +904,7 @@ export const RULES = {
     landladyHearsFromHour: 23,
     landladyHearsUntilHour: 5.5,
     talksWithinMetres: 2.7,
-    doorWithinMetres: 1.7,
+    doorWithinMetres: 2.2, // the one-shot: a door gives its prompt from anywhere in reach (the smoke run's fault at Mickey's)
     yardDoorWithinMetres: 1.6,
     reachesAThingWithinMetres: 1.3,
     doorMatWithinMetres: 1.5,

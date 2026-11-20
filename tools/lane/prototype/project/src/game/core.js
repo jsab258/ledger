@@ -18,6 +18,9 @@
 import { G } from '../state.js';
 import { advanceTo } from '../work.js';
 import { act } from '../events.js';
+import { note } from '../ledger.js';
+import { sub } from '../ui.js';
+import { hyp } from '../util.js';
 
 export const SYSTEMS = [];
 export const FAULTS = []; // a fault inside one system never stops the game; every one is kept here, and tests assert none
@@ -60,6 +63,7 @@ const each = (name, ...a) => {
 export function gameLoaded() {
   ensureX();
   lastMin = Math.floor(G.t);
+  G.hooks.emit = emit; // the older files tell the systems of a thing through this (a beating, a fare's steps)
   for (const s of SYSTEMS) if (s.loaded) guard(s.id + '.loaded', () => s.loaded(G.x[s.id]));
   emit('loaded');
 }
@@ -144,3 +148,16 @@ export function addPlace(p) {
   PLACES[p.id] = p;
   return p;
 }
+
+// ---------- small things every system uses ----------
+export const hourNow = () => (G.t % 1440) / 60;
+export const dayNow = () => Math.floor(G.t / 1440);
+export const P_ = (id) => G.people[id];
+// A line in Tom's Ledger: only what he saw, heard or was told. o: { kind, key (written once), who, how, ev }
+export const write = (text, o = {}) => note(text, o.kind || 'note', o.key, { who: o.who, how: o.how, ev: o.ev });
+// Words on screen, low: what somebody says, or what he notices.
+export const tell = (text, who = '', secs) => sub(text, who, who ? '' : 'over', secs);
+export const tomXZ = () => (G.tom.inCar ? [G.car.x, G.car.z] : [G.tom.x, G.tom.z]);
+export const tomNear = (x, z, r) => G.tom.space === 'street' && hyp(tomXZ()[0], tomXZ()[1], x, z) <= r;
+// Is this person here with him, awake and able to answer?
+export const here = (P, r) => !!P && !P.dead && !P.gone && P.awake !== false && P.space === G.tom.space && hyp(P.x, P.z, G.tom.x, G.tom.z) <= r;

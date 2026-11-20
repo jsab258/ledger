@@ -376,6 +376,10 @@ function spend(pence) {
   m.dirty -= d;
   m.clean -= pence - d;
   m.spent += pence;
+  if (G.hooks.flow) {
+    if (d > 0) G.hooks.flow('tin', 'world', d, 'paid in a talk');
+    if (pence - d > 0) G.hooks.flow('pocket', 'world', pence - d, 'paid in a talk');
+  }
   return true;
 }
 function bestMem(P, pred) {
