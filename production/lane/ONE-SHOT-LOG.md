@@ -31,3 +31,22 @@ The one-shot of Friday 20 November 2026 (his decisions of 19 Nov 20:05 and 20:52
 - 11:10 Checkpoint 2 (second run). Every system has content and an in-game test that passes: town, foot, crime, work, rise. The whole arc runs in a test from Act I's answer through the rise, the inspection and an ending to control again. Faults of 20 Nov mended: both cameras and the cab's view in their bands, the instant reverse, panels by keyboard, door prompts, Darren's line, stuck subtitles, prompts over subtitles. Next: the older tests re-run against the new town and their records re-made, the first hour's restaging (arrival by ferry is not done: he still gets off the bus), the gate. Broken or thin: see ONE-SHOT-REPORT.md when written. Weekly 82% at 10:08 (no newer main row).
 - 12:33 Checkpoint 3 (second run). No new parts; the ground made firm. Ferry arrival in (main.js, tune/feel.js). The choice after a knock covers everybody down and clears nobody before it is put (game/cars.js). Casing is a 4 s stand. Tests mended: gate6 (people stood out by day with `toAfternoon`), layout, game/foot (lib.mjs starts the game tests at the old spot by the office stair; pass `atLanding` to start where he arrives), same_week (record re-made; the save's wall clock `at` left out because the test's clock can differ by one waiting timer between runs since the real town opens off the clock; every other part is the same three times running). files and oldsave need the published set first (run_proto_tests.py order). Weekly 38% at 11:40 after his reset.
 - 13:37 Checkpoint 4 (second run). The gate's parts run early to find faults: the clumsy run, the machine checks, the consequence checker and one hands-on helper (Opus, 16 minutes, stopped at stop 3). Mended from them: Tom never left 'away' after unseen time (clock.js HIDING); the camera comes in front of lamp posts, shelters and vehicles (map.js thinThingAt, drive.js vehicleAt); spoken lines of five words or more said once a week (core.js freshLine); bubbles age with game steps; Sheila sits on at her desk on the first day until the keys are handed over, and the to-do line says where she is (scenes.js); two prompts on one key become one that asks which (core.js sameKeyAsOne; E keeps nearest-first); a person with something to say is offered before a door; E rests 0.6 s after a scene; the locked cab says so; the firm's takings are said when they come in; the first key hints come on a timer; casing is offered only once the firm is his and he stands still; Comma and Full stop close their own pages. New test game/late. The frame baseline (tools/lane/gate/machine_baseline.json) re-taken on the accepted build with its pictures, like for like. Hands-on findings not mended yet: the Settings page's Back button under the panel edge (Escape works); a wall inside Mickey's that held Tom about 20 s with the camera showing black; Mickey's front shows no door; the paper map is a list; walking slows with the frame rate while the clock does not.
+
+## The fourth run (20 Nov, from 14:24): the giant prompt, one builder
+
+The brief is now production/lane/ONE-SHOT-PROMPT.md and nothing else. The finish line is its 41 play stories, each played by key presses on the game clock and judged by what a player sees or hears. The old checklist is not the goal.
+
+- How the stories are played: test/stories/ in the prototype's project (being written). One file a story, a shared player (keys as browser events, every frame simulated at 60 a second, saves made by the game), run with `python oneshot_dev.py --work DIR test stories/S01`.
+- Set-up on a fresh machine, as this run did it: the pictures from the prototype's page into /home/claude/proto-assets (Artifact read, the 13 names in PUBLISHED.json); tools/lane/one-sim/one-sim.sh setup, then wasm; then oneshot_dev.py build.
+
+### Stories passing (by id)
+
+None yet (14:40). The earlier runs' tests used test calls to place Tom and pass time, so none of them counts as a story.
+
+### In hand
+
+The story player and S01 (off the ferry).
+
+### Checkpoints of this run
+
+- 14:40 Start. Brief read in full; branch up to date with wip; the build and the town code built here; the earlier game tests running as a baseline.
