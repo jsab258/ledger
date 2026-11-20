@@ -1,14 +1,44 @@
 # One-shot status: cars and fares (builder "cars")
 
-Kept current at each checkpoint. Systems: cars, fares. Tests: `node test/pieces.mjs car_rules fare_rules` (90 cases), test/game/fares.mjs, test/game/cars.mjs.
+Systems: cars, fares. Stopped early at the 09:40 checkpoint: the main row of 09:31 read the weekly allowance at 72%, which is the one-shot's ceiling at that hour (22 + 0.83 x 18 h + 35 = 72.0), so by the brief this builder finished the piece in hand, committed, pushed and stopped. Everything below is one first pass: every part has a connected version, the rules are tested as pure pieces, and the two in-game tests are written but have not yet run to their end here (see Known faults).
+
+Tests: `node test/pieces.mjs car_rules fare_rules` 90 of 90 cases pass. test/game/fares.mjs (about 40 checks) and test/game/cars.mjs (about 45 checks) are written against the test calls LEDGER.game.fares and LEDGER.game.cars; on this machine the browser was killed for want of memory on every try (nine builders share 8 GB), the best run passing its first 11 checks (the first fare: the call, the slip with no countdown, one press to take or give away, the way by landmark) before the kill. They are the first thing to run once the machine is quiet.
 
 ## Parts
 
-(first shallow pass committed 09:40; statuses below are filled in as the tests run)
+- 3.4.1 Fare people: built, 27 written fares (game/fares_data.js), each a named or described person with a reason, what it gives the night (cover, eyes, alibi, risk) and its Ledger line. Rule cases pass (fare_rules next); in-game test fares.mjs not yet run through.
+- 3.4.2 Wrinkles: built, all seven (talker, parcel, tail and the car in the mirror, runner, wait, hurry, face), each one decision on Y and G while he drives; never the same wrinkle twice running, never a fare twice in a week (cases pass). Thin: the runner's capture is a two-line choice; the face fares change regard and flags only.
+- 3.4.3 Pauline and the radio: built. The way is made from the road legs alone (pieces/fare_rules.js legs, words), said at the pick-up and after the fare gets in, and again on R; no marker in the world, no countdown, no meter. Cases pass; the scripted-driver check (every door from five starts) is in fares.mjs.
+- 1.2.7 Driving with passengers: built shallow. The fare talks on the way, asks once, and says "Left here." a junction before a turn. No full back-seat live talk.
+- 7.14 Variety (fares' side): built: the fare log (G.x.fares.log) records every fare, its wrinkle, the choice and the outcome.
+- 1.2.1 Car handling: unchanged but for the top speed, raised from 32 to 37 mph so one hit at 35 mph can happen in play (said in tune/cars.js). Not retested against gate6 here.
+- 1.2.3 Getting in and out: unchanged (round 6).
+- 1.2.4 Crashes, damage and unsticking: built. Damage by closing speed (forgiven under 10, dented, crumpled from 20, will not drive on from 35 mph); a dead cab says so, does not answer the pedals, can be left, is fetched to the rank and is off the road a day; dents mended overnight at the yard. Cases pass (ER-DRIVE-01, 08).
+- 1.2.5 Cars and people: built. The hurt goes by speed and aim and is capped below death (cases at 5 to 80 mph, aimed and not, kerb, wall, step: nobody dies); the choice is put in the same frame, Y stop and help or G drive off; a drive-off is a hit-and-run (the car described, a patrol car that sees it starts a stop, the firm's name costs fares for five days, fading). Emits 'carhit'. Not built: ER-DRIVE-04 (nobody steps out inside the stopping distance), which is the walkers' rule, not the car's.
+- 2.18 Ambulance: built. Rung from the phone box, the office or by a neighbour; arrives ten game minutes after the call every time (snapped to its minute); the person goes to hospital for the days the hurt sets. Case passes (ER-AMB-01).
+- 1.2.11 The horn: built, on H. Reach by hour and rain (golden rows pass), heads turn inside it, a toot within 15 m brings the waiting fare to the car, walkers in the road step aside, a long blast at night is remembered. No horn sound exists yet (the sound file is another builder's).
+- 1.5.3 Car chases and 2.6.7 Traffic police: built. One patrol car on a round of the Hook; a stop only on a reckless act it saw (a hit, the pavement, far over the limit) or a described or reported car; pull over for a caution and the plate noted, or refuse and it is a chase along the way the cab went, lost after 7 s unseen or 110 m, always over by 85 s; caught costs six hours and never the game. Cases pass (ER-TRAFFIC-01, 02, ER-POL-04). Thin: no red lights exist in the town, so that reckless act never fires; one patrol car at every dial state.
+- 1.2.6 Tailing and being tailed by car: built shallow. The van looks in its mirror on a rhythm and at corners and only then can catch the cab; the roof sign widens its reach; a doubt always shows before he is made; what is learned goes in the Ledger at once. Being tailed: a grey saloon that keeps to the cab's own way and is lost by breaking sight. Cases pass (ER-TAIL-01, 02).
+- 1.2.8 Riding as a passenger: built shallow. Kevin and Terry offer a run in talk; ride along (the cab is driven by the lanes, braking for people) or skip, which passes exactly the drive time (case passes, ER-RIDE-01). Look back on held B turns the camera to the rear window. Ramming a car at speed is its own deed (car_rammed). Thin: the ride uses Tom's own car body repainted as car one.
+- 1.2.9 Repairs, plates and paint: built. Shaun Hewson repaints for £25, ten hours in his shed: new colour, other plates, sign off; every deed done from the car is kept with how the car looked, and a sighting of the old paint does not name the car (cases pass, ER-PAINT-01). The sign goes back on for nothing.
+- 1.2.10 Taking a parked car: built. G beside a parked car: loud at 40 m, six seconds, no game; never a car with somebody in it; no roof sign, so not the firm's; the owner reports it three game hours on, and a patrol car that sees it then stops it; the firm's cab stays where he left it. Cases pass (ER-TAKE-01). Thin: a save made while driving a taken car comes back with the firm's cab.
+- 4.1.4 The soft edge: built for fares (two written fares leave by the west and north roads and come back as forty minutes passed and money paid). Driving off the map with no fare is still stopped by the map's own edge.
+- 4.5.1 Traffic drivers: built. A driver with somebody inside his stopping distance now stands on the brakes at once; the game's own cars (patrol, ambulance, van) brake for people too. Cases for the braking rule pass; the 1,000 seeded crossings are not run (cars.mjs runs about a dozen in the street).
+- 2.15.3 Other firms on the ranks: built shallow. Neville Stather's firm (a new minor person, in the cast and in one fare) takes a share of the radio's calls after a hit, fading to nothing as the days pass. His cars are not drawn.
 
 ## Known faults
 
-- The shared test harness (project/test/harness.mjs, not this builder's file) had its port line broken by the port-shift edit: the comment swallowed the window size, so no browser test could start. Mended in this branch by moving the comment; every builder needs the same one-line fix.
-- The machine is shared by nine builders: a browser test that takes 20 s alone takes many minutes here, and browsers are killed for want of memory.
+- Not proved in the browser: see the top. Treat every in-game claim above as built, not as passing its test.
+- The shared test harness (project/test/harness.mjs, not this builder's file) had its port line broken by the port-shift edit (the comment swallowed the window size, so no browser test could start). Mended in this branch by moving the comment; every branch needs the same one line.
+- The round 5 record of the seeded week will differ: fares are no longer random, the drivers fill the book, and a patrol car is on the street. test same_week and week need a new record once the build settles.
+- tests/systems_test.py's fare check places the cab at the drop by the hook; the hook's fare calls still work (every fare place is a map destination), but its expectations of a random fare were not rerun.
+- gate6's driving checks were not rerun after the top speed and the crash stages changed.
 
 ## Needs from others
+
+- Law (police.js): a constable's search should find G.x.fares.carrying (a fare's parcel in the cab). A drive-off emits 'police:reported' { why: 'a hit-and-run' } and a taken car's report { why: 'a car taken' }; the car system keeps its own "described" state and its own six-hour custody, and emits 'arrest'. If the law system takes these over, it should clear G.x.cars.wanted.
+- The bridge (seeing, events): G.hooks.carNamed(eventId) says whether a sighting from the car still names the car as it stands, and whether it is the firm's; the witness rules should ask it before a memory says "a Mickey's cab".
+- Foot (player.js, audio.js): a horn sound named 'horn'; the cab camera's bands; the prompt key shown as "!" while a patrol car wants him to pull over could be a plain line instead.
+- Spine (scenes.js): the first hour should have Pauline offer the first fare at the radio after the walk-round: `G.hooks`-free call is fares.js fareOffer(), which now calls the priest's house first. The Ledger could show G.x.fares.log.
+- Rise: G.x.rise.rung of 2 or more makes Pauline offer only fares with a wrinkle or a face, three a day; 'rival:move' is emitted when a tail is made or a saloon follows a fare home. The cold-store contract can read G.x.fares.flags.coldstoreKnown, a first recruit G.x.fares.flags.julieDrives, the paint G.x.fares.flags.shaunPaintKnown.
+- Life (routines): ER-DRIVE-04, nobody steps out inside the stopping distance of a car at 30 mph or less.
