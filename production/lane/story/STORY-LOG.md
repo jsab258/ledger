@@ -200,3 +200,20 @@ What the three said, in common:
 6. Twelve logic and period faults (two tallies; how the street explained the Bishop's burns; the Jobcentre; a Catholic priest's church; a refused licence).
 
 Two rounds running have not raised the lowest reader's score (7, 7), so the order's rule applies and round 3 changes the method. Not another polish: Act III is rebuilt from its premise. The ledger comes due as a drive, not a desk: the warehouse was a bonded store, so the night is Customs and Excise's own; the inspector asks to be shown the eleven miles, and the climax is that route driven with him in the back seat. The second half's two turns are rebuilt to be found with the wheel and the mileometer (seven miles by the straight way; the other four are a bollard and back) and by a job, with the speeches cut. One thread is cut: the Widow holds nothing over anybody, in fact or by implication; Ron asked her for the coat.
+
+## Phase 2, round 3 (20 November): Act III rebuilt
+
+Table line: | 3 | P2 v3 | 7 | 7 | 7 | 6 (surprise, the critic and the editor; antagonists, the player; the middle, the editor) | no, no, no |
+
+What P2 v3 changed (a change of method, not a polish): the warehouse made a bonded store, so the night is Customs and Excise's own and the inspector owns it; the last act rebuilt as a drive (he asks to be shown the eleven miles, and the climax is that route driven with him in the back seat and the handbrake under the player's hand); the two turns found with a wheel and a dial (seven miles the straight way, four more to a bollard and back) and by a job (Shiner on the night gate since the day Ron had the coat); the Widow holds nothing over anybody, and Ron asked her for the coat; Danny hurts somebody (Julie's arm) and wants a day's work at the gate for his father; Agar's watchman saw the cab and Agar saved it for a year.
+
+Scores by category (critic, player, editor): Tom 8 7 8; cast 8 8 8; antagonists 7 6 7; mystery 7 7 7; opening 8 8 8; structure 7 7 7; middle 7 7 6; surprise 6 7 6; endings 8 8 8; side stories 7 7 7; tone 7 8 7; story and play 9 8 8. Story and play reached 9 from the critic ("the best pairing of story and driving I have seen planned"); structure rose to 7 from all three. No overall score moved.
+
+What the three said, in common:
+1. Who drove is plain by the end of week one: a doorman who cannot drive, a wing, a bollard, a coat with no sleeves. One suspect from minute seven.
+2. The best ending lets a crime disappear: an officer waves away a burglary, a fire and a burned man, and the sergeant is absent. The truth is small and its price is kind.
+3. Ron's reason for the coat does not hold: Shiner had already said it in a queue.
+4. Nobody is frightening. The middle is a table.
+5. Fourteen small faults (the glove surviving an earlier repair; a learner in a hire car; why Agar rings Customs and not the police; the header's dates).
+
+Three rounds running at 7, 7, 7. Round 4 changes the method again, and this time at the story's centre. Since every reader names the driver in week one, the bible will let them: the guess is made the trap. Taken from the two losing versions, which both put their turn on Sheila, and from phase 1's most praised surprise (the line in her hand): Ron truly cannot drive; he was in the fire, not at the wheel; the one who took the keys when Mickey went down, drove off at the first flame and came back was the bookkeeper, and the line in the fare book is her own night, written down because every fare goes in the book. The best ending is given a price.
