@@ -9,7 +9,7 @@ const TYPES = { '.js': 'text/javascript', '.html': 'text/html', '.jpg': 'image/j
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export async function launch(o = {}) {
-  const root = path.resolve(o.dist || 'dist'), port = o.port || 8790, W = o.width || 640, H = o.height || 400;
+  const root = path.resolve(o.dist || 'dist'), port = (o.port || 8790) + (+process.env.LEDGER_PORT_SHIFT || 0), // the shift lets two authors test at once W = o.width || 640, H = o.height || 400;
   const srv = http.createServer((q, r) => {
     const f = path.join(root, decodeURIComponent(q.url.split('?')[0]));
     fs.readFile(f, (e, d) => {

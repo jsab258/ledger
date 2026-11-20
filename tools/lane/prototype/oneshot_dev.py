@@ -40,7 +40,10 @@ def main():
             t0 = time.time()
             script = R.SCRIPTS.get(n, ["test/%s.mjs" % n])
             try:
-                p = subprocess.run(["node"] + script, cwd=a.work, capture_output=True, text=True, timeout=a.timeout)
+                env = dict(os.environ)
+                # two authors testing at once never share a port: each work folder gets its own thousand
+                env.setdefault("LEDGER_PORT_SHIFT", str(1000 * (1 + sum(map(ord, os.path.basename(a.work.rstrip("/")))) % 20)))
+                p = subprocess.run(["nice", "-n", "5", "node"] + script, cwd=a.work, env=env, capture_output=True, text=True, timeout=a.timeout)
                 out, code = p.stdout + p.stderr, p.returncode
             except subprocess.TimeoutExpired:
                 out, code = "TIMEOUT", 124

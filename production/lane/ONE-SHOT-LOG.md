@@ -14,4 +14,4 @@ The one-shot of Friday 20 November 2026 (his decisions of 19 Nov 20:05 and 20:52
 
 ## Checkpoints
 
-- 09:10 Checkpoint 0. Read in; one-sim rebuilt here from nothing and passes everything (58 lines ok); the prototype builds; the core and the empty systems are wired in and the seeded week is unchanged except for the new saved part. Done: nothing on the checklist yet. Next: the bridge (4a) and all four stages in parallel. Broken: test same_week reports the new saved part "x" as different from round 5's record (expected; a new record is written when the build settles).
+- 08:56 Checkpoint 0. Read in; one-sim rebuilt here from nothing and passes everything (58 lines ok); the prototype builds; the core and the empty systems are wired in and the seeded week is unchanged except for the new saved part. Done: nothing on the checklist yet. Next: the bridge (4a) and all four stages in parallel. Broken: test same_week reports the new saved part "x" as different from round 5's record (expected; a new record is written when the build settles).
