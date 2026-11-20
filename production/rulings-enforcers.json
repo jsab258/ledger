@@ -192,7 +192,7 @@
     "tools/token_measures.py::a helper on an old Fable is named in the row",
     "monday-audit"
    ],
-   "note": "20 Nov (advisor 265): newest model of each kind, now claude-fable-5-2; --spend prints each helper's exact model and FABLE VERSION WRONG for an older Fable; the advisor checks Anthropic's models page daily, the Monday audit checks the release list."
+   "note": "20 Nov (advisor 265): newest model of each kind, now claude-fable-5-2; --spend prints each helper's exact model and FABLE VERSION WRONG for an older Fable; the advisor checks Anthropic's models page daily, the Monday audit checks the release list. 20 Nov (advisor 266, his words 09:54): Fable work runs one builder at a time at max effort, never several in parallel; the hourly row names each running helper's exact model, so two Fable builders at once show there, and the Monday audit checks it; a hard check is owed."
   },
   {
    "line": "3, 4, 11 Nov: one session at a time",
