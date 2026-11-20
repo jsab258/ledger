@@ -2,6 +2,7 @@
 // sched rows: [fromHour, where, act, days?]. where: 'home', 'off', a street spot id, or 'room:spot'.
 // look: h height, b build 0..1, skin, hair [style, colour], top [type, colour, accent], bot [type, colour], x extras.
 import { RULES } from './rules.js';
+import { CAST_ADD } from './game/cast_all.js';
 const SK = ['#e8c4a8', '#dfb597', '#f0cfb8', '#c99a78', '#a8724f', '#e2c29a', '#d8a98a'];
 export const SKINS = SK;
 const C = (o) => o;
@@ -972,6 +973,8 @@ export const CAST = [
     },
   }),
 ];
+// The whole game's people (the one-shot, 20 Nov): one file a system under game/cast/.
+CAST.push(...CAST_ADD);
 export const NAME_ONLY = {
   garbutt: 'Keith Garbutt, "the Fixer", 48, who brokers between the rivals',
   agar: 'Geoffrey Agar, old-money solicitor and alderman',

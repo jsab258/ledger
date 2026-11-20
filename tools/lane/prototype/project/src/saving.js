@@ -20,6 +20,7 @@ const KEYS = [
   'story',
   'stats',
   'measures', // the Ledger screen test's measures (a save from before them has none)
+  'x', // the whole game's state (game/core.js); a save from before the one-shot has none and gets a fresh one
 ];
 const LS = 'ledger.save.v' + VERSION,
   CH = 150000;
@@ -64,6 +65,7 @@ export function restore(json) {
   if (o.v !== VERSION) return false;
   for (const k of KEYS) if (o[k] !== undefined) G[k] = o[k];
   TALLY.days = []; // the gossip table counts are not saved: a loaded week starts them again
+  if (o.x === undefined) G.x = null; // a save from before the whole game: its systems start fresh (gameLoaded)
   if (o.measures === undefined) G.measures = null; // an older save: the measures start from here
   G.ev = {};
   for (const E of G.events) G.ev[E.id] = E;

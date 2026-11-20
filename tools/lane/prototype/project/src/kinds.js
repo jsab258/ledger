@@ -1,6 +1,7 @@
 // Every kind of thing the town can know about Tom.
 // sev: how newsworthy (0..1). val: how it reads, -1 menace .. +1 decent. crime: 0 none, 1 minor, 2 violence, 3 killing.
 import { DAYS, hourWords } from './util.js';
+import { KINDS_ADD } from './game/kinds_all.js';
 import { RULES } from './rules.js';
 const TIME = RULES.time;
 const KN = RULES.kinds;
@@ -327,4 +328,6 @@ export const KINDS = {
     { noself: true, priv: true, word: true },
   ),
 };
+// The whole game's kinds (the one-shot, 20 Nov): one file a system under game/kinds/.
+Object.assign(KINDS, KINDS_ADD);
 export const NAMES = ['', 'the new owner', 'Nowak', 'Tom', 'Tommy'];

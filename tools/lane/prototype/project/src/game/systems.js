@@ -1,0 +1,22 @@
+// One import a system, in step order. Fixed list: add sub-modules from inside your own system file.
+import './town.js';
+import './feel.js';
+import './foot.js';
+import './fightx.js';
+import './cars.js';
+import './fares.js';
+import './jobsx.js';
+import './crime.js';
+import './life.js';
+import './shops.js';
+import './way.js';
+import './law.js';
+import './acts.js';
+import './endings.js';
+import './ledgerx.js';
+import './crew.js';
+import './rivals.js';
+import './rise.js';
+import './firm.js';
+import './dial.js';
+import './econ.js';

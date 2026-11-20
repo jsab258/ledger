@@ -1,0 +1,124 @@
+// LEDGER, the whole game (the one-shot of 20 Nov 2026). The core every system plugs into.
+//
+// A system is one file under src/game/ that calls register({ id, ... }) once, when it is imported from
+// game/index.js. Its saved state lives under G.x[id] and nowhere else. A system may give any of:
+//   fresh()            the system's saved state for a new game (plain data only: it goes into the save)
+//   loaded(x)          after a new game or a loaded save, with its own state (bring an older shape up to date here)
+//   step(dt)           every simulation step, dt in real seconds at normal speed (already multiplied when time is passed)
+//   minute(t)          once each new game minute (t: whole game minutes since Monday 00:00)
+//   hourly(h, d)       once each new game hour (h 0..23, d the day index, Monday of week one is 0)
+//   daily(d)           once at each midnight
+//   hotspots(out)      on foot: push prompts { k: 'E', t: 'Words', run } for what is in reach
+//   carPrompts(out)    at the wheel: the same
+//   beatFor(P)         a written scene waiting with this person, or null (the first system to answer wins)
+//   matters(P, a)      push what is open between Tom and this person onto a (the talk's decisions, as scenes.js mattersFor)
+//   key(code)          a key press nobody else took: return true if it was this system's
+//   hook               an object of test calls, shown as LEDGER.game.<id>
+// Systems speak to each other only through on() and emit(), or through each other's exported functions.
+import { G } from '../state.js';
+
+export const SYSTEMS = [];
+export const FAULTS = []; // a fault inside one system never stops the game; every one is kept here, and tests assert none
+const LISTEN = {};
+let lastMin = -1;
+
+export function register(sys) {
+  if (SYSTEMS.some((s) => s.id === sys.id)) throw new Error('two systems called ' + sys.id);
+  SYSTEMS.push(sys);
+  return sys;
+}
+export function on(name, fn) {
+  (LISTEN[name] || (LISTEN[name] = [])).push(fn);
+}
+export function emit(name, payload) {
+  for (const fn of LISTEN[name] || []) guard('on ' + name, () => fn(payload));
+}
+function guard(what, fn) {
+  try {
+    return fn();
+  } catch (e) {
+    const line = what + ': ' + ((e && e.stack) || e);
+    if (FAULTS.length < 200) FAULTS.push(line);
+    console.error('GAME FAULT ' + line);
+    return undefined;
+  }
+}
+// The saved state of the whole game. An older save (before the one-shot) has none: it gets a fresh one and loads.
+export function ensureX() {
+  if (!G.x) G.x = { v: 1 };
+  for (const s of SYSTEMS) if (s.fresh && G.x[s.id] === undefined) G.x[s.id] = s.fresh();
+  return G.x;
+}
+export const X = (id) => ensureX()[id];
+const each = (name, ...a) => {
+  for (const s of SYSTEMS) if (s[name]) guard(s.id + '.' + name, () => s[name](...a));
+};
+// After a new game starts or a save is loaded.
+export function gameLoaded() {
+  ensureX();
+  lastMin = Math.floor(G.t);
+  for (const s of SYSTEMS) if (s.loaded) guard(s.id + '.loaded', () => s.loaded(G.x[s.id]));
+  emit('loaded');
+}
+export function gameStep(dt) {
+  ensureX();
+  each('step', dt);
+  const m = Math.floor(G.t);
+  if (lastMin < 0 || m < lastMin) lastMin = m;
+  let n = 0;
+  // every minute is given once, also across a skip of time (capped: a skip of days gives its hours and days, and the
+  // minutes of its last two hours)
+  if (m - lastMin > 180) {
+    for (let t = lastMin + 1; t <= m - 120; t++) {
+      if (t % 60 === 0) each('hourly', Math.floor((t % 1440) / 60), Math.floor(t / 1440));
+      if (t % 1440 === 0) each('daily', Math.floor(t / 1440));
+    }
+    lastMin = m - 120;
+  }
+  while (lastMin < m && n++ < 400) {
+    lastMin++;
+    each('minute', lastMin);
+    if (lastMin % 60 === 0) each('hourly', Math.floor((lastMin % 1440) / 60), Math.floor(lastMin / 1440));
+    if (lastMin % 1440 === 0) each('daily', Math.floor(lastMin / 1440));
+  }
+}
+export function gameHotspots(out) {
+  each('hotspots', out);
+  return out;
+}
+export function gameCarPrompts(out) {
+  each('carPrompts', out);
+  return out;
+}
+export function gameBeatFor(P) {
+  for (const s of SYSTEMS)
+    if (s.beatFor) {
+      const b = guard(s.id + '.beatFor', () => s.beatFor(P));
+      if (b) return b;
+    }
+  return null;
+}
+export function gameMatters(P, a) {
+  each('matters', P, a);
+  return a;
+}
+export function gameKey(code) {
+  for (const s of SYSTEMS) if (s.key && guard(s.id + '.key', () => s.key(code))) return true;
+  return false;
+}
+export function gameHook() {
+  const o = { faults: FAULTS, systems: () => SYSTEMS.map((s) => s.id), x: () => ensureX(), emit };
+  for (const s of SYSTEMS) if (s.hook) o[s.id] = s.hook;
+  return o;
+}
+
+// ---------- places ----------
+// Every place a job, a fare, a letter or a person names (DESIGN-ADDENDUM A9, A10): an address, a landmark and a
+// ground label. label: 'public' | 'hours' (open by hours, private out of them) | 'private' | 'forbidden'.
+export const PLACES = {};
+export function addPlace(p) {
+  // { id, name, x, z, address, landmark, label, openFromHour?, openUntilHour?, owner?, room? }
+  if (!p.id || !p.name || !p.address || !p.landmark || !p.label) throw new Error('a place needs id, name, address, landmark and label: ' + JSON.stringify(p));
+  PLACES[p.id] = p;
+  return p;
+}

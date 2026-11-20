@@ -1,5 +1,6 @@
 // LEDGER: a week on Quay Street. Boot, the frame loop, menus.
 import { installHook } from './hook.js';
+import { gameStep, gameLoaded, gameHook } from './game/index.js';
 import { syncOpen } from './ledger.js';
 import { visitStart, visitEnd, notedShown, activeAsk, askTick, measures } from './measures.js';
 import { THREE } from './render/core.js';
@@ -316,6 +317,7 @@ async function boot() {
     footClear,
     exitPoint,
     streetThings,
+    game: gameHook(),
   });
 }
 // Round 6 (ER-SAVE-02, ER-CORE-03): no choice that cannot be undone is one press from Carry on. The first press
@@ -745,6 +747,7 @@ async function startNew() {
   await waitClick(15000);
   clearTraffic();
   newWeek();
+  gameLoaded();
   if (rooms.lockDoor) rooms.lockDoor.visible = true;
   bloods.forEach((b) => {
     b.visible = false;
@@ -773,6 +776,7 @@ function loadWeek(json) {
   clearTraffic();
   if (!restore(json)) return false;
   initPeople();
+  gameLoaded();
   G.story.phase = 'play';
   const t = G.tom,
     r = ROOMS[t.space];
@@ -849,6 +853,7 @@ function logic(dt) {
     for (let i = 0; i < n; i++) {
       simStep(sdt);
       storyStep(sdt);
+      gameStep(sdt); // the whole game's systems (game/core.js)
       if (G.paused) break;
     }
     fightStep(dt);

@@ -560,6 +560,7 @@ export function installHook(x) {
     // the cab's eased steering and whether it is wedged; where F would put Tom down; read the pad now
     isClearOnFoot: (px, pz) => x.footClear(px, pz, RULES.tom.bodyRadiusMetres),
     cabFeel: x.cabFeel,
+    game: x.game, // the whole game's systems: LEDGER.game.<system id>, and LEDGER.game.faults (game/core.js)
     streetThings: x.streetThings, // the lamp posts and the cars standing or moving on the street
     cabExitPoint: x.exitPoint,
     padStep: x.padStep,

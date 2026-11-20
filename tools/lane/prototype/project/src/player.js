@@ -15,6 +15,7 @@ import { startTalk } from './talk.js';
 import { setInside } from './render/effects.js';
 import { AT_ONCE } from './talk_lines.js';
 import { RULES } from './rules.js';
+import { gameKey, gameCarPrompts } from './game/index.js';
 const SHOPS = RULES.shops;
 const PADS = RULES.pad;
 const LAD = RULES.ladder;
@@ -174,6 +175,7 @@ export function onKey(code) {
     return;
   }
   if (G.paused) return;
+  if (gameKey(code)) return; // the whole game's systems may take a key first (game/core.js)
   if (code === 'KeyE') useKey('E');
   else if (code === 'KeyT') useKey('T');
   else if (code === 'KeyF') carKey();
@@ -289,6 +291,7 @@ export function buildPrompts() {
     if (Math.abs(G.car.v) < TOMS.cabLeftBelowMetresPerSecond) out.push({ k: 'F', t: 'Get out' });
     if (G.story.fare && G.story.fare.st === 'offer')
       out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
+    gameCarPrompts(out);
     return out;
   }
   if (F.on) return out;

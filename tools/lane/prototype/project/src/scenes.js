@@ -20,6 +20,7 @@ import { startJob, jobHotspots, jobClock, watchStep } from './jobs.js';
 import { nightly } from './police.js';
 import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
+import { gameHotspots, gameBeatFor, gameMatters } from './game/index.js';
 const STORY = RULES.story;
 const LAD = RULES.ladder;
 
@@ -719,7 +720,7 @@ export function beatFor(P) {
         return adaInvite;
       break;
   }
-  return null;
+  return gameBeatFor(P); // then the whole game's systems (game/core.js)
 }
 function ronEyes(dry) {
   // what the door saw that Tom did not; dry: only whether there is anything, changing nothing
@@ -1317,7 +1318,7 @@ function mattersFor(P) {
         },
       ],
     });
-  return a;
+  return gameMatters(P, a); // and what the whole game's systems have open with this person (game/core.js)
 }
 function pending(P, it) {
   const f = fl();
@@ -1420,6 +1421,7 @@ export function hotspots() {
     f = fl(),
     sp = t.space;
   if (t.inCar) return out;
+  gameHotspots(out); // the whole game's systems first (game/core.js)
   const at = (h) => {
     const [x, z] = roomPos(h.room, h.x, h.z);
     return tomAt(x, z, h.within);

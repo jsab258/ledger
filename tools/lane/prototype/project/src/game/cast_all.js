@@ -1,0 +1,23 @@
+// New people, one file a system under cast/.
+import { CAST_ADD as town } from './cast/town.js';
+import { CAST_ADD as feel } from './cast/feel.js';
+import { CAST_ADD as foot } from './cast/foot.js';
+import { CAST_ADD as fightx } from './cast/fightx.js';
+import { CAST_ADD as cars } from './cast/cars.js';
+import { CAST_ADD as fares } from './cast/fares.js';
+import { CAST_ADD as jobsx } from './cast/jobsx.js';
+import { CAST_ADD as crime } from './cast/crime.js';
+import { CAST_ADD as life } from './cast/life.js';
+import { CAST_ADD as shops } from './cast/shops.js';
+import { CAST_ADD as way } from './cast/way.js';
+import { CAST_ADD as law } from './cast/law.js';
+import { CAST_ADD as acts } from './cast/acts.js';
+import { CAST_ADD as endings } from './cast/endings.js';
+import { CAST_ADD as ledgerx } from './cast/ledgerx.js';
+import { CAST_ADD as crew } from './cast/crew.js';
+import { CAST_ADD as rivals } from './cast/rivals.js';
+import { CAST_ADD as rise } from './cast/rise.js';
+import { CAST_ADD as firm } from './cast/firm.js';
+import { CAST_ADD as dial } from './cast/dial.js';
+import { CAST_ADD as econ } from './cast/econ.js';
+export const CAST_ADD = [].concat(town, feel, foot, fightx, cars, fares, jobsx, crime, life, shops, way, law, acts, endings, ledgerx, crew, rivals, rise, firm, dial, econ);

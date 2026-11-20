@@ -4,6 +4,7 @@
 // Units are in the names: Metres, Radians, Pence, GameMinutes (minutes of the game's clock), RealSeconds
 // (seconds of play at normal speed), Hour (hour of the game's day, 17.25 is quarter past five), Share (0 to 1).
 // Light is 0 (black) to 1 (full daylight). Clarity is how well a watcher has him, 0 to 1.
+import { TUNE, TUNE_SCHEDULES, TUNE_PEOPLE } from './game/tune_all.js';
 export const RULES = {
   time: {
     weekStartsGameMinute: 936, // Monday 3.36pm, off the bus
@@ -1550,3 +1551,7 @@ export const RULES = {
     pc: [{ fromHour: 0, place: 'off' }],
   },
 };
+// The whole game's numbers (the one-shot, 20 Nov): each system's table under RULES.game.<id>; its people and their weeks join the lists above.
+RULES.game = TUNE;
+Object.assign(RULES.people, TUNE_PEOPLE);
+Object.assign(RULES.schedules, TUNE_SCHEDULES);

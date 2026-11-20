@@ -83,6 +83,7 @@ export function freshState() {
     },
     stats: { talks: 0, live: 0, fallback: 0, comebacks: 0, fights: 0, seenTicks: 0 },
     measures: null, // the Ledger screen test: see measures.js
+    x: null, // the whole game's saved state, one part a system (game/core.js); a save from before it gets a fresh one
   };
 }
 

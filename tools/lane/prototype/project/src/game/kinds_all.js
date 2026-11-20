@@ -1,0 +1,23 @@
+// New kinds of act, one file a system under kinds/.
+import { KINDS_ADD as town } from './kinds/town.js';
+import { KINDS_ADD as feel } from './kinds/feel.js';
+import { KINDS_ADD as foot } from './kinds/foot.js';
+import { KINDS_ADD as fightx } from './kinds/fightx.js';
+import { KINDS_ADD as cars } from './kinds/cars.js';
+import { KINDS_ADD as fares } from './kinds/fares.js';
+import { KINDS_ADD as jobsx } from './kinds/jobsx.js';
+import { KINDS_ADD as crime } from './kinds/crime.js';
+import { KINDS_ADD as life } from './kinds/life.js';
+import { KINDS_ADD as shops } from './kinds/shops.js';
+import { KINDS_ADD as way } from './kinds/way.js';
+import { KINDS_ADD as law } from './kinds/law.js';
+import { KINDS_ADD as acts } from './kinds/acts.js';
+import { KINDS_ADD as endings } from './kinds/endings.js';
+import { KINDS_ADD as ledgerx } from './kinds/ledgerx.js';
+import { KINDS_ADD as crew } from './kinds/crew.js';
+import { KINDS_ADD as rivals } from './kinds/rivals.js';
+import { KINDS_ADD as rise } from './kinds/rise.js';
+import { KINDS_ADD as firm } from './kinds/firm.js';
+import { KINDS_ADD as dial } from './kinds/dial.js';
+import { KINDS_ADD as econ } from './kinds/econ.js';
+export const KINDS_ADD = Object.assign({}, town, feel, foot, fightx, cars, fares, jobsx, crime, life, shops, way, law, acts, endings, ledgerx, crew, rivals, rise, firm, dial, econ);
