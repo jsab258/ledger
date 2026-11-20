@@ -1,56 +1,66 @@
 # The story ruler
 
-Version 1, 20 November 2026. For readers who score story summaries. Every story you are given has been written down in one format and at one length (see "What you are reading"). You score each one against the same checklist, item by item, and then give each one overall mark.
+Version 3, 20 November 2026 (the checklist fixed once after calibration; see CALIBRATION.md). For readers who score story summaries. Every story you are given has been written down in one format and at one length (see "What you are reading"). You score each one against the same checklist, item by item, and then give each one overall mark.
 
 ## Where the checklist comes from
 
-Each item is something players themselves name when they review story-led open-world games. The source is a coded study of about 26,000 English Steam reviews of three such games (5,701, 10,334 and 10,154 reviews), in which each theme has a share: the part of the reviews that name it. An item is on this list only if players name it in all three games. Its points are its theme's mean share across the three, rounded. Things players name that a written story cannot show (how the game looks, how it runs, its controls, its music, its price) are left out. One theme, "a living world", is mostly praise for the simulation and only partly for the story; it is carried at half its share. One theme, "freedom to play", was counted in two of the three games only and is marked.
+Each core item is something players themselves name when they write about the story of a story-led open-world or mission game. The source is a study of the Steam reviews of eight such games, in which reviews that speak about the story were read by hand and coded by what they praise and what they fault. A pattern is a core item here only if players name it in at least five of the eight games. Its points are its share of the coded reviews, pooled across the eight (for example: characters worth caring about, named in all eight games, 46 in every 100). The largest pattern is split into four tests so that a reader can pass or fail it on a page.
 
-Version 1 rests on three games. It will be re-checked against a study of eight when that lands.
+One pattern, "the writing and dialogue", cannot be judged fairly from a summary, which is not the script. It is carried at half its share and tested by the one part of writing a summary does show: what is planted and paid off.
+
+After the core items come five watch items. Players name these in a larger study of three of the eight games, but in fewer than five of the eight, so they carry no points. They are marked the same way and reported beside the score.
 
 ## What you are reading
 
-Summaries of about 2,000 words under eight headings: what it is about; the lead; the people who matter; the opening and the scene players retell; the middle; the turn; the last act; the endings. Names are replaced by roles. A summary strips performance, music, pictures and the feel of play. Judge every story from the page alone, and all of them alike: do not add what you know or guess about any story from outside the page, and do not mark a story up or down because you think you recognise it. If the page does not show a thing, the story does not have it, for this purpose.
+Summaries of about 2,100 words under eight headings: what it is about; the lead; the people who matter; the opening and the scene players retell; the middle; the turn; the last act; the endings. Names are replaced by roles. A summary strips performance, music, pictures and the feel of play. Judge every story from the page alone, and all of them alike:
+
+- Do not add what you know or guess about any story from outside the page, and do not mark a story up or down because you think you recognise it. If the page does not show a thing, the story does not have it, for this purpose.
+- The pages come from different kinds of source. Some quote spoken lines and some do not; some say "the sources say"; some are tighter than others. These are accidents of how the pages were made. Do not count them for or against a story.
+- A summary compresses. An event told in one line is not thereby rushed in the story. Mark "rushed" or "dropped" only where the page shows that the story itself hurries or drops a thing.
 
 ## How to score an item
 
-For each item, for each story: write PASS or FAIL, and quote the line from the summary that shows it (a short quote, under 25 words). No quote, no pass. For a punishment item, PASS means the story avoids the fault; FAIL means the story has the fault, and you quote the line that shows the fault. No half marks. When in doubt on a praise item, FAIL; when in doubt on a punishment item, PASS: the page must show the thing.
+For each item, for each story: write PASS or FAIL, and quote the line from the summary that shows it (a short quote, under 25 words). No quote, no pass. For a fault item (X and the watch items marked "fault"), PASS means the story avoids the fault; FAIL means the story has it, and you quote the line that shows the fault. No half marks. When in doubt on a praise item, FAIL; when in doubt on a fault item, PASS: the page must show the thing.
 
-## Praise items (74 points)
+## Core praise items (80 points)
 
 What players praise. A story earns the points of each item it passes.
 
 | Item | Points | The test |
 |---|---|---|
-| A1. A lead who is somebody | 9 | The page gives the lead a specific want, a flaw or a line he will not cross, and shows him different at the end from the start, or shows what staying the same cost him. All three must be on the page. |
-| A2. A relationship a player would miss | 9 | One bond between the lead and another person is shown in at least three separate concrete scenes across the story, and it changes (it is tested, broken, mended or ended). |
-| A3. People with wants of their own | 9 | At least four people other than the lead each want something the page names, and at least two of those wants cross the lead's. |
-| A4. A scene a friend would retell | 9 | In the opening stretch there is one scene specific enough to retell in two sentences, in which the player does something (not only watches) and it has a cost or a result that lasts. |
-| B1. A place that could be nowhere else | 6 | The page gives at least three details of time and place that the story uses (they cause or shape an event), not only names as backdrop. |
-| B2. A world that goes on without him | 6 | At least two things happen because of what other people want, not because of the lead, and they change his situation. |
-| C1. More than one way through (two games) | 8 | For at least two of the story's main events the page says the player can do them in different ways, and the way chosen changes something later. |
-| D1. Side stories that are stories | 7 | At least two optional stories are told on the page with a turn or a choice of their own. A list of activities does not count. |
-| E1. Choices that come back | 5 | At least two things the player chose earlier are shown changing a later scene, and somebody in the story reacts to what the lead did. |
-| F1. A real mix of tones | 3 | The page shows at least one scene that is plainly comic and one that is plainly grave, each described concretely. A statement that the tone is mixed does not count. |
-| G1. An ending that is the sum of the play | 3 | The ending the player gets is decided by what he did across the story (not by one last pick alone), and its last scene or image is given. |
+| C1. A lead who is somebody | 12 | Characters worth caring about, first test. The page gives the lead a specific want, and shows him different at the end from the start, or shows what staying the same cost him. Where there are several leads, at least two of them must pass. The page need not name a flaw. |
+| C2. A relationship a player would miss | 12 | Second test. One bond between the lead and another person is shown in at least three separate concrete scenes across the story, and it changes (it is tested, broken, mended or ended). |
+| C3. People with wants of their own | 11 | Third test. At least four people other than the lead each want something the page names, and at least two of those wants cross the lead's. |
+| C4. People you could tell apart | 11 | Fourth test. At least three people other than the lead are each shown doing or saying something only that person would (a habit, a way of acting, a deed in character), not only described by a label. |
+| W1. Planted and paid | 9 | The writing, as far as a summary shows it. At least two things set up in the first half (an object, a rule, a promise, a remark) are paid off in the second half, and the page shows both ends. |
+| H1. A moment that hits hard | 9 | At least one scene where a loss or a reckoning lands on the lead and on the story's central bond, prepared earlier, described concretely, and after which what he does is different. |
+| U1. Humour | 6 | At least one scene that is plainly comic, described concretely. A statement that the tone is mixed does not count. |
+| E1. An ending that lands | 5 | The ending follows from what the lead has become, settles the central bond one way or the other, and its last scene or image is given. |
+| T1. A turn that surprises | 5 | The story has a turn that changes what earlier scenes meant, and a reader who knows the genre could not name it from the first three sections of the page. Say what you guessed at that point, and from which line. |
 
-## Punishment items (37 points)
+## Core fault items (34 points)
 
 What players punish. A story loses the points of each item it fails.
 
 | Item | Points | The fault |
 |---|---|---|
-| N1. Predictable or familiar | 3 | From the first third of the page alone, a reader who knows the genre can name the story's main turn or its ending. Say what you would have guessed, and from which line. |
-| N2. Rushed or thin | 3 | A stretch (often the last act) where large events are disposed of in a line, or a thread the page set up is dropped, or people the page called important do nothing. |
-| N3. A lead who cannot be held on to | 3 | The lead, or one of several leads, has no stated want, or acts against his stated want without the story marking it, or the page gives no reason to care what happens to him. |
-| N4. Stretches where nothing matters | 8 | A named stretch in which what the player does has no bearing on the story (filler work, optional activity standing in for story, travel). |
-| N5. The story forces the way | 7 | The page says, for more than one stretch, that the player has no choice in what happens or how, or that main events are fixed whatever he does. |
-| N6. The same loop | 6 | The middle is built from one repeating cycle and the page does not show the cycle itself changing (new stakes, new people in it, a new rule) as it goes. |
-| N7. A slow start, or a story told in talk | 4 | The opening holds back play or stakes, or the story's main turns reach the lead by somebody telling him rather than by something he does or finds. |
-| N8. Choices that change nothing | 2 | The page offers choices but says or shows that they do not alter events; or people know what they could not know. |
-| N9. An ending that is forced or abrupt | 2 | The ending does not follow from the story before it, or it is decided for the player, or it stops without a last scene. |
+| X1. Nobody to hold on to | 7 | A weak or forgettable story, first test. The lead, or one of several leads, has no stated want, or the leads could be swapped for one another, or the page gives no reason to care what happens to him. |
+| X2. It falls apart | 7 | Second test. In its second half the story drops people or threads its first half set up as important, or its events stop following from what people want. Name the person or thread. |
+| X3. A string of jobs | 6 | Third test. The plot is mostly errands for others in which the lead has no stake of his own, so that the middle could be reordered without loss. |
+| X4. Missions on rails | 8 | The page says, of more than one named stretch, that the player has no choice in how to do it, or is failed or thrown out for doing it his own way. A story having one ending, or events the player cannot prevent, is not this fault. |
+| X5. A rushed or weak ending | 6 | The story's last stretch hurries: an opponent the story built up as the lead's own is disposed of without the lead facing him, or the story stops without a last scene. An ending chosen by the player at the end is not, by that alone, this fault. |
 
-A story's checklist score is its praise points earned, less the punishment points lost. The highest possible is 74; the lowest is minus 37. You do not need to add anything up: give the PASS and FAIL lines and the sums will be done from them.
+A story's score is its praise points earned, less its fault points lost. The highest possible is 80; the lowest is minus 34. You do not need to add anything up: give the PASS and FAIL lines and the sums will be done from them.
+
+## Watch items (no points)
+
+| Item | Kind | The test |
+|---|---|---|
+| S1. Side stories that are stories | praise | At least two optional stories are told on the page with a turn or a choice of their own. |
+| S2. Choices that come back | praise | At least two things the player chose earlier are shown changing a later scene. |
+| S3. A middle that sags | fault | The middle is one repeating cycle that does not change as it goes, or it holds a named stretch where what the player does has no bearing on the story. |
+| S4. Told in talk | fault | The opening holds back play or stakes, or the page names long stretches where the player watches, listens or waits rather than acts. |
+| S5. Seen coming | fault | From the first three sections alone, a reader who knows the genre can name how it ends. Say what you guessed. |
 
 ## The overall mark
 
@@ -66,6 +76,6 @@ For each story, under its label:
 
 Then, at the very end, one line per story in exactly this shape, so the marks can be counted:
 
-`MARKS <label>: A1=P A2=F A3=P A4=P B1=P B2=F C1=P D1=F E1=P F1=F G1=P N1=P N2=F N3=P N4=P N5=F N6=P N7=P N8=P N9=P OVERALL=7`
+`MARKS <label>: C1=P C2=P C3=P C4=F W1=P H1=P U1=F E1=P T1=F X1=P X2=F X3=P X4=F X5=P S1=F S2=P S3=P S4=P S5=F OVERALL=7`
 
 (P for PASS, F for FAIL.) Then the ranking line.
