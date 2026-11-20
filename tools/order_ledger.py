@@ -20,8 +20,9 @@ The statuses: open (the newest order's own work in progress), done (needs "Evide
   - an id leaves an order's file (against the version being replaced) without having been done or dropped;
   - the newest order lacks any of the sixteen studies (study-1 to study-16);
   - an item new against the version being replaced, still to be worked (open or carried over), names
-    no reference: neither "Reference:" (a number or method from Mafia or Kingdom Come II, or "Reference:
-    none found") nor the study it comes from (a path under studies/). Jafar, 28 October 2026, A1: "Before
+    no reference: neither "Reference:" (a number or method from KCD2, GTA V or RDR2, or "Reference:
+    none found") nor the study it comes from (a path under studies/); or names Mafia as its reference (his
+    ruling of 20 Nov 14:30, advisor 279: no Mafia game is a reference). Jafar, 28 October 2026, A1: "Before
     starting any new item, look up how Mafia or Kingdom Come II does it ... Add a check that fails the push
     when a new item's plan names neither a reference nor 'none found'."
 
@@ -42,6 +43,7 @@ ITEM = re.compile(r"^- `([A-Za-z0-9._-]+)` \*\*([a-z ]+)\*\*(.*)$")
 SECTION = re.compile(r"^## (Items|Studies|Carried)")
 STUDIES = {"study-%d" % i for i in range(1, 17)}
 REFERENCED = re.compile(r"Reference:|studies/")
+MAFIA_REF = re.compile(r"Reference:[^.\n]*\bMafia", re.I)
 ZERO = "0" * 40
 
 
@@ -105,8 +107,11 @@ def check(files, previous=None):
         for f in names:
             for iid, (status, rest) in parsed[f].items():
                 if iid not in before and status in ("open", "carried over") and not REFERENCED.search(rest):
-                    faults.append("%s: %s is new and names no reference: add 'Reference:' (Mafia's or Kingdom Come II's "
+                    faults.append("%s: %s is new and names no reference: add 'Reference:' (KCD2's, GTA V's or RDR2's "
                                   "number or method, or 'none found') or its study (studies/...)" % (f, iid))
+                elif iid not in before and status in ("open", "carried over") and MAFIA_REF.search(rest):
+                    faults.append("%s: %s names Mafia as its reference: no Mafia game is a reference (his ruling, "
+                                  "20 Nov); use KCD2, GTA V or RDR2, or 'none found'" % (f, iid))
     for f, text in (previous or {}).items():
         if f not in files:
             faults.append("%s: the order file was removed" % f)
@@ -186,8 +191,11 @@ def selftest():
          {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new\n")},
          {"2026-10-25.md": good}, 1),
         ("ACCEPT a new item naming its reference",
-         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: Mafia's 1.65 m\n")},
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: KCD2's 1.65 m\n")},
          {"2026-10-25.md": good}, 0),
+        ("REFUSE a new item naming Mafia as its reference",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: Mafia's 1.65 m\n")},
+         {"2026-10-25.md": good}, 1),
         ("ACCEPT a new item saying none found",
          {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: none found\n")},
          {"2026-10-25.md": good}, 0),
