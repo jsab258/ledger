@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-20 18:14 (the hourly run; the last session set its Stopped line at 18:07)
+**Started:** 2026-11-20 22:11 (the hourly run; the last session set its Stopped line at 22:09)
 
-**Row due:** by 21:35 (last row 20:35, doc 2026-11-20-2035-main; page read 20:30: verdicts none after 2026-11-20T17:00 UTC; advisor none after 20:15 +01:00, last acks 276 at 20:33, 275 at 19:58, efficiency at 20:03; no one-shot end row seen)
-**Stopped:** 2026-11-20 20:48 (history check past the point after L.A. Noire was checked; wip commit with the work. No helpers or background jobs.)
+**Row due:** by 23:09 (last row 22:09; page read 22:13: verdicts none after 2026-11-20T17:00 UTC; advisor 281 and 282 acked 22:17, so filter advisor after 22:17:30 +01:00)
+**Stopped:** 2026-11-20 22:17 (advisors 281-282 done; pace +22 over the line, nothing else of his open to act on. No helpers or background jobs; heavy lock free.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -32,27 +32,26 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 04:07 on: game menu fix built and pushed (b6e9687bc). Ron's seated film: FAIL. Fins tries 1-2 failed; Fable brief ready.
-- 16:51-18:07, advisor 271 CLOSED: GTA V and RDR2 Steam reviews study (lane a5e7a811b).
-- 18:14-20:50: advisor 273: Sleeping Dogs DE, GTA IV and L.A. Noire pulled, coded, hand-checked (F:/LedgerTools/steam-reviews/walkthrough/checks.md); mechanic coder frozen f84b50a1. Advisor 274: Mafia DE out. DAILY-2026-11-20.md. Advisor 276: story coder tuned once, frozen f9597545; story-coded GTA V, RDR2, SD, GTA IV, L.A. Noire; story hand checks not run. L.A. Noire mechanic check weak (chases 20/40, driving 31/42): mark it.
+- 22:11-22:17: advisors 281-282 closed (his answers 22:08, 22:10): RULINGS' study line (GTA VI measured first, higher bar wins) and genre line (no mods at release), Monday-audit notes in rulings-enforcers.json, cap held at 4,899; waiting-list item 32 (next week's PC block: Marvelous export, GTA VI ~24.5 h, then the reference games); DECISIONS line; ci 108/108. The design proof's mods part is the lane session's to mark OUT.
+- Morning: game menu fix pushed (b6e9687bc); Ron's seated film FAIL; fins tries 1-2 failed. Advisor 271 closed (GTA V, RDR2 reviews).
+- 21:57-22:09: advisor 276 closed: story patterns reviewed (PASS WITH FIXES), builder story_patterns.py and head fixed once, pushed on lane-2026-11 (6a475fbda; ranking pooled over 171 coded reviews). Advisor 273 closed: walkthrough study results written, reviewed (PASS WITH FIXES), fixed once, NOTEBOOK lines for both units, pushed wip a30366f8b (ci 108/108). Mafia placeholder stays (protected path); DECISIONS line.
+- 18:14-21:55: advisor 273: all six walkthrough games pulled; SD, GTA IV, L.A. Noire, Hitman, WDL, FH4 coded and hand-checked (F:/LedgerTools/steam-reviews/walkthrough/checks.md; L.A. Noire's mechanic check weak: mark it). Advisor 276: story coder frozen f9597545; story hand checks done for 7 of 8 (GTA V, RDR2, SD, GTA IV, L.A. Noire, Hitman, WDL); the script agrees weakly (precision 47, Hitman 22, WDL 24), so the patterns file rests on hand counts. Advisors 277, 278, 279 done (RULINGS, CLAUDE.md, order_ledger.py, progress page; acks on the page).
 
 ## In flight
-- Nothing runs: the pull queue was stopped at 20:48 after L.A. Noire finished. No helpers. Heavy lock free.
+- Nothing runs: all pulls finished (KCD2 3,939 reviews); no helpers; heavy lock free.
 
 ## Next, in order
-000. Advisors 273 then 276 (his asks tonight, ahead of the rest): restart the pulls, code and hand-check each game, then the story patterns file on lane-2026-11; the exact commands are in the study draft's 'Remaining steps' (production/research/lane/STEAM-WALKTHROUGH-GAMES-2026-11-20.md). Rows say games done of six.
-00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; above the ceiling start nothing new; advisor 258: keep main spend low, no Fable Kiln lane before the one-shot's end row (Sat 21 Nov).
-0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20 and his session applies advisor 259, close it (needs_you_page.py --close) and the four licence items with decisions.
-0a. The one-shot (cloud) builds from 07:58 to about 18:00; its end row lifts the Fable hold: then steps 1, 2 and 5 below start.
-0b. Tonight's packaged walk proves the tester guard and the menu fix (b6e9687bc, try 1 of 2; production/audits/night-walk-2026-11-20-diagnosis.md): read its report in the morning.
-0c. Advisor 267: until the one-shot's "One-shot stopped" row, no Fable work and nothing large; then fins try 3, legs' seated hem, blouse2, one Fable builder at a time, if the week allows.
-0d. Advisor 266 (his words 09:54): every Fable job runs ONE builder at a time at max effort, never several in parallel; the one-shot's second run follows it.
-1. Ron's seated film from the packaged copy DONE 04:52: FAIL, skin in the right hem-boot gap, larger than 19 Nov (DECISIONS 04:52 has the switches). Trousers stay held; seated hem cover try 2 of 2 goes into the legs' Fable lane after Saturday's end row, this film its acceptance view.
-2. Kiln v1 line 6, the fins: tries 1-2 failed; diagnosis tool-dev/reports/KILN-FINS-DIAGNOSIS-2026-11-20.md; try 3 (within-piece contact plus the fold angle as job data) brief READY at tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md: one Fable helper at max once the one-shot's end row is on the page.
-4. Advisors 252/259: the licence edits to CLAUDE.md, RULINGS and the page check only when he asks in a session he starts; meanwhile decide licences by the allowlist's principles, never ask him (four licence items still open on his page: presentmon, kiln-front-end, font-pick, dinov3; close them with decisions in that session).
-4. When he taps Done on marvelous-box: md_job.py --start (try 2 of 2), then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports'; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments. Then the reference drapes (Kiln v1 line 5).
-5. Blouse2's underarm (second fault) and the nylon wrist: Fable lanes only after Saturday's one-shot end row.
-6. History rewrite: HELD for his word at the PC. Then: progress page published daily; DAILY token file 19:00.
+000. Advisors 273, 276, 281, 282 are DONE (both reviewed and fixed once; the studies stand; no further tries owed). Read the advisor channel first: anything new from him comes before the rest.
+00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; 70% at 22:09 against the 72.4% ceiling (hard stop 75%), +22 over the line: only his asks, at most two Sonnet helpers; if nothing of his is open and everything below waits, write the handover and stop rather than idle.
+0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20, close it and the four licence items with decisions.
+0a. His rulings tonight (advisor 277): after the Marvelous export, Kiln, hair and the crowd pause until the browser evening holds; Kiln v1's Monday goal withdrawn. Next week: the export, the walkthrough measuring, browser-game work. Steps below that serve Kiln wait unless the order says otherwise.
+0b. Tonight's packaged walk proves the tester guard and the menu fix (try 1 of 2; production/audits/night-walk-2026-11-20-diagnosis.md): read its report in the morning.
+0c. Fable: one builder at a time, max effort (advisor 266); none before the one-shot's end row (advisor 267).
+1. Ron's seated hem cover try 2 of 2 (Fable legs lane), this morning's FAIL film its acceptance view: paused with Kiln unless the order says otherwise.
+2. Fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md): paused with Kiln.
+3. Advisors 252/259: the licence edits only in a session he starts; four licence items open (presentmon, kiln-front-end, font-pick, dinov3).
+4. When he taps Done on marvelous-box (deadline Thu 26 Nov, first in next week's order): md_job.py --start (try 2 of 2), one export job over the 52 .zprj (ImportZprj, ExportPatternJSON, ExportFBX beside each), check each reopens, list in production/art/clothing/LOG.md under Exports; copy kiln-md-compare-2026-11-18 into F:/LedgerTools/garments.
+5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 20 Nov 16:53: Steam's appreviews address is retired (redirects); use IUserReviewsService/GetAppReviews (NOTEBOOK.md).

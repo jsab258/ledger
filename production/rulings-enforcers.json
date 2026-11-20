@@ -269,7 +269,7 @@
     "monday-audit",
     "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present"
    ],
-   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar. GTA VI no-spoiler (advisor 235): anything about GTA VI passes a fresh reviewer spoiler screen before it reaches him; Monday audit checks."
+   "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar. GTA VI no-spoiler (advisor 235): anything about GTA VI passes a fresh reviewer spoiler screen before it reaches him; Monday audit checks. GTA VI first and the higher bar (advisors 281, 282, his 22:08 and 22:10, 20 Nov): the Monday audit checks GTA VI's footage pass ran before the reference games' measuring and that every target sheet where GTA VI measured higher records both numbers with the design on the higher."
   },
   {
    "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
@@ -478,7 +478,7 @@
    ]
   },
   {
-   "line": "1 Oct (D48): The model suits the moment",
+   "line": "1 Oct: The model suits the moment",
    "by": [
     "monday-audit"
    ]
@@ -570,7 +570,8 @@
    "line": "23 Sep, genre: no jump; crew act on orders",
    "by": [
     "monday-audit"
-   ]
+   ],
+   "note": "no mods at release (advisor 281, his 22:08, 20 Nov): the Monday audit checks no plan, order, part or design-proof item builds mod support, and the design proof marks the mods part OUT by this ruling"
   },
   {
    "line": "D56: The crime layer owes eight verbs, in order",
