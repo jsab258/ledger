@@ -1,0 +1,241 @@
+{
+ "piece": "law_custody",
+ "about": "Expected values come from DESIGN section 8 and the addendum, written by hand, never copied from the code's output.",
+ "cases": [
+  {
+   "id": "window-6h",
+   "rule": "ER-POL-03",
+   "fn": "custody",
+   "in": [
+    "window",
+    false,
+    false
+   ],
+   "out": {
+    "hours": 6,
+    "outcome": "released",
+    "bail": false,
+    "solicitorPence": 0,
+    "coatKept": true
+   }
+  },
+  {
+   "id": "window-owned-up-2h-caution",
+   "rule": "ER-POL-03",
+   "fn": "custody",
+   "in": [
+    "window",
+    true,
+    false
+   ],
+   "out": {
+    "hours": 2,
+    "outcome": "cautioned",
+    "bail": false,
+    "solicitorPence": 0,
+    "coatKept": true
+   }
+  },
+  {
+   "id": "wounding-8h",
+   "rule": "ER-POL-03",
+   "fn": "custody",
+   "in": [
+    "wounding",
+    false,
+    false
+   ],
+   "out": {
+    "hours": 8,
+    "outcome": "charged",
+    "bail": true,
+    "solicitorPence": 0,
+    "coatKept": true
+   }
+  },
+  {
+   "id": "robbery-12h",
+   "rule": "ER-POL-03",
+   "fn": "custody",
+   "in": [
+    "robbery",
+    false,
+    false
+   ],
+   "out": {
+    "hours": 12,
+    "outcome": "charged",
+    "bail": true,
+    "solicitorPence": 0,
+    "coatKept": true
+   }
+  },
+  {
+   "id": "killing-22h-then-bail",
+   "rule": "ER-POL-03",
+   "fn": "custody",
+   "in": [
+    "killing",
+    false,
+    false
+   ],
+   "out": {
+    "hours": 22,
+    "outcome": "charged",
+    "bail": true,
+    "solicitorPence": 0,
+    "coatKept": true
+   }
+  },
+  {
+   "id": "owning-up-to-a-wounding-changes-nothing",
+   "fn": "custody",
+   "in": [
+    "wounding",
+    true,
+    false
+   ],
+   "outHas": {
+    "hours": 8,
+    "outcome": "charged"
+   }
+  },
+  {
+   "id": "ran-first-adds-two",
+   "fn": "custody",
+   "in": [
+    "window",
+    false,
+    true
+   ],
+   "outHas": {
+    "hours": 8
+   }
+  },
+  {
+   "id": "class-damage",
+   "fn": "deedClass",
+   "in": [
+    {
+     "crime": 1
+    }
+   ],
+   "out": "window"
+  },
+  {
+   "id": "class-strike",
+   "fn": "deedClass",
+   "in": [
+    {
+     "crime": 2
+    }
+   ],
+   "out": "wounding"
+  },
+  {
+   "id": "class-holdup",
+   "fn": "deedClass",
+   "in": [
+    {
+     "crime": 3,
+     "lawClass": "robbery"
+    }
+   ],
+   "out": "robbery"
+  },
+  {
+   "id": "class-kill",
+   "fn": "deedClass",
+   "in": [
+    {
+     "crime": 3,
+     "kills": true
+    }
+   ],
+   "out": "killing"
+  },
+  {
+   "id": "talk-alone-no-arrest",
+   "rule": "ER-POL-01",
+   "fn": "mayArrest",
+   "in": [
+    {
+     "statements": [],
+     "officerSaw": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "statement-unsure-who-no-arrest",
+   "rule": "ER-POL-01",
+   "fn": "mayArrest",
+   "in": [
+    {
+     "statements": [
+      {
+       "by": "hal",
+       "knewItWasHim": false
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "named-statement-arrest",
+   "rule": "ER-POL-01",
+   "fn": "mayArrest",
+   "in": [
+    {
+     "statements": [
+      {
+       "by": "hal",
+       "knewItWasHim": true
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "officer-saw-arrest",
+   "rule": "ER-POL-01",
+   "fn": "mayArrest",
+   "in": [
+    {
+     "statements": [],
+     "officerSaw": true
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "never-twice",
+   "rule": "ER-POL-03",
+   "fn": "mayArrest",
+   "in": [
+    {
+     "statements": [
+      {
+       "by": "hal",
+       "knewItWasHim": true
+      }
+     ],
+     "takenAlready": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  }
+ ]
+}

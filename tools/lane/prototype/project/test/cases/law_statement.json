@@ -1,0 +1,652 @@
+{
+ "piece": "law_statement",
+ "about": "Expected values come from DESIGN section 8 and the addendum, written by hand, never copied from the code's output.",
+ "cases": [
+  {
+   "id": "saw-plainly-goes",
+   "rule": "ER-POL-01",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": true
+   }
+  },
+  {
+   "id": "heard-only-never",
+   "rule": "ER-EYES-06",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": false,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "unsure-never",
+   "rule": "ER-EYES-06",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.4,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "frightened-keeps-quiet",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0.6,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false,
+    "why": "frightened"
+   }
+  },
+  {
+   "id": "paid-keeps-quiet",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": true,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false,
+    "why": "paid"
+   }
+  },
+  {
+   "id": "on-his-side-keeps-quiet",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": 0.2,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "upright-neighbour-goes-unless-on-his-side",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": 0.0,
+     "upright": true,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": true
+   }
+  },
+  {
+   "id": "mickeys-people-never",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": true,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "trade-keeps-rita-away",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": true,
+     "dead": false,
+     "lost": false
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "statement-lost-at-the-station",
+   "rule": "ER-BOUGHT-01",
+   "fn": "willState",
+   "in": [
+    {
+     "sawPlainly": true,
+     "sure": 0.8,
+     "fear": 0,
+     "bought": false,
+     "regard": -0.3,
+     "upright": false,
+     "mickeys": false,
+     "tradeKeepsAway": false,
+     "dead": false,
+     "lost": true
+    },
+    {
+     "needsSure": 0.55,
+     "noStatementIfFear": 0.5,
+     "uprightQuietAboveRegard": 0.05,
+     "othersQuietAboveRegard": -0.15
+    }
+   ],
+   "outHas": {
+    "goes": false
+   }
+  },
+  {
+   "id": "let-go",
+   "fn": "stopWitness",
+   "in": [
+    "go",
+    {
+     "regard": 0,
+     "venal": 0.5,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    5000,
+    1
+   ],
+   "outHas": {
+    "police": true,
+    "street": true
+   }
+  },
+  {
+   "id": "talked-round",
+   "fn": "stopWitness",
+   "in": [
+    "round",
+    {
+     "regard": 0.2,
+     "venal": 0,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    1
+   ],
+   "outHas": {
+    "police": false,
+    "street": true
+   }
+  },
+  {
+   "id": "not-talked-round-if-she-thinks-badly",
+   "fn": "stopWitness",
+   "in": [
+    "round",
+    {
+     "regard": -0.4,
+     "venal": 0,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    1
+   ],
+   "outHas": {
+    "police": true
+   }
+  },
+  {
+   "id": "paid-off-costs-a-thousand-for-a-window",
+   "fn": "stopWitness",
+   "in": [
+    "pay",
+    {
+     "regard": -0.4,
+     "venal": 0.6,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    5000,
+    1
+   ],
+   "outHas": {
+    "police": false,
+    "street": true,
+    "cost": 1000
+   }
+  },
+  {
+   "id": "upright-will-not-be-bought",
+   "fn": "stopWitness",
+   "in": [
+    "pay",
+    {
+     "regard": -0.4,
+     "venal": 0,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    5000,
+    1
+   ],
+   "outHas": {
+    "police": true,
+    "cost": 0
+   }
+  },
+  {
+   "id": "cannot-pay-without-the-money",
+   "rule": "ER-MONEY-01",
+   "fn": "stopWitness",
+   "in": [
+    "pay",
+    {
+     "regard": -0.4,
+     "venal": 0.6,
+     "nerve": 0.5
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    300,
+    1
+   ],
+   "outHas": {
+    "police": true,
+    "cost": 0
+   }
+  },
+  {
+   "id": "threat-stops-the-police-never-the-street",
+   "rule": "ruling 3 Oct",
+   "fn": "stopWitness",
+   "in": [
+    "threat",
+    {
+     "regard": -0.4,
+     "venal": 0,
+     "nerve": 0.4
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    2
+   ],
+   "outHas": {
+    "police": false,
+    "street": true
+   }
+  },
+  {
+   "id": "threat-fails-on-a-hard-nerve",
+   "fn": "stopWitness",
+   "in": [
+    "threat",
+    {
+     "regard": -0.4,
+     "venal": 0,
+     "nerve": 0.9
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    2
+   ],
+   "outHas": {
+    "police": true,
+    "street": true
+   }
+  },
+  {
+   "id": "help-turns-a-neutral-witness",
+   "fn": "stopWitness",
+   "in": [
+    "help",
+    {
+     "regard": 0,
+     "venal": 0,
+     "nerve": 0.9
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    1
+   ],
+   "outHas": {
+    "police": false
+   }
+  },
+  {
+   "id": "help-does-not-turn-one-who-hates-him",
+   "fn": "stopWitness",
+   "in": [
+    "help",
+    {
+     "regard": -0.5,
+     "venal": 0,
+     "nerve": 0.9
+    },
+    {
+     "talkedRoundAboveRegard": 0,
+     "payBasePence": 500,
+     "payMorePencePerCrimeLevel": 500,
+     "paidOnlyIfVenalAtLeast": 0.3,
+     "threatWorksIfNerveBelow": 0.75,
+     "threatFearAdded": 0.6,
+     "threatRegardLost": 0.3,
+     "helpRegardAdded": 0.25,
+     "helpStopsIfRegardThenAbove": 0.1
+    },
+    0,
+    1
+   ],
+   "outHas": {
+    "police": true
+   }
+  },
+  {
+   "id": "to-a-friend-near",
+   "fn": "walkTo",
+   "in": [
+    {
+     "friendNearMetres": 20,
+     "friendWithinMetres": 45,
+     "crime": 1
+    }
+   ],
+   "out": "friend"
+  },
+  {
+   "id": "to-the-phone-box",
+   "fn": "walkTo",
+   "in": [
+    {
+     "friendNearMetres": null,
+     "friendWithinMetres": 45,
+     "crime": 2
+    }
+   ],
+   "out": "phone"
+  },
+  {
+   "id": "to-the-station-for-the-worst",
+   "fn": "walkTo",
+   "in": [
+    {
+     "friendNearMetres": null,
+     "friendWithinMetres": 45,
+     "crime": 3
+    }
+   ],
+   "out": "station"
+  },
+  {
+   "id": "walk-at-least-30s-in-his-sight",
+   "rule": "ER-EYES-04",
+   "fn": "walkLasts",
+   "in": [
+    12,
+    true,
+    {
+     "lastsAtLeastRealSeconds": 30,
+     "longerWalksAssistTimes": 1.5
+    },
+    false
+   ],
+   "out": 30
+  },
+  {
+   "id": "walk-assist-half-as-long-again",
+   "rule": "ER-ASSIST-01",
+   "fn": "walkLasts",
+   "in": [
+    12,
+    true,
+    {
+     "lastsAtLeastRealSeconds": 30,
+     "longerWalksAssistTimes": 1.5
+    },
+    true
+   ],
+   "out": 45
+  },
+  {
+   "id": "walk-unseen-takes-its-own-time",
+   "fn": "walkLasts",
+   "in": [
+    12,
+    false,
+    {
+     "lastsAtLeastRealSeconds": 30,
+     "longerWalksAssistTimes": 1.5
+    },
+    false
+   ],
+   "out": 12
+  }
+ ]
+}

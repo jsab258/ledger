@@ -1,0 +1,299 @@
+{
+ "piece": "law_stages",
+ "about": "Expected values come from DESIGN section 8 and the addendum, written by hand, never copied from the code's output.",
+ "cases": [
+  {
+   "id": "nothing",
+   "fn": "wanted",
+   "in": [
+    {}
+   ],
+   "out": 0
+  },
+  {
+   "id": "ellis-asking-is-stage-1",
+   "fn": "wanted",
+   "in": [
+    {
+     "ellisAsked": true
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a-statement-is-investigating",
+   "fn": "wanted",
+   "in": [
+    {
+     "statements": 1,
+     "worstClass": "window"
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "a-witnessed-killing-wants-a-manhunt",
+   "fn": "wanted",
+   "in": [
+    {
+     "statements": 1,
+     "worstClass": "killing"
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "running-after-a-wounding-wants-a-manhunt",
+   "fn": "wanted",
+   "in": [
+    {
+     "statements": 1,
+     "worstClass": "wounding",
+     "ranFromPolice": true
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "running-after-a-window-does-not",
+   "fn": "wanted",
+   "in": [
+    {
+     "statements": 1,
+     "worstClass": "window",
+     "ranFromPolice": true
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "no-skip-0-to-3-enters-1",
+   "rule": "ER-POL-05",
+   "fn": "advance",
+   "in": [
+    {
+     "stage": 0,
+     "signs": []
+    },
+    3,
+    1000
+   ],
+   "out": 1
+  },
+  {
+   "id": "no-advance-until-sign-shown",
+   "rule": "ER-POL-05",
+   "fn": "advance",
+   "in": [
+    {
+     "stage": 1,
+     "signs": [
+      {
+       "stage": 1,
+       "t": 1000,
+       "shown": false
+      }
+     ]
+    },
+    3,
+    1100
+   ],
+   "out": 1
+  },
+  {
+   "id": "no-advance-inside-30-minutes",
+   "rule": "ER-POL-05",
+   "fn": "advance",
+   "in": [
+    {
+     "stage": 1,
+     "signs": [
+      {
+       "stage": 1,
+       "t": 1000,
+       "shown": true
+      }
+     ]
+    },
+    3,
+    1020
+   ],
+   "out": 1
+  },
+  {
+   "id": "advance-one-step-after-the-sign",
+   "rule": "ER-POL-05",
+   "fn": "advance",
+   "in": [
+    {
+     "stage": 1,
+     "signs": [
+      {
+       "stage": 1,
+       "t": 1000,
+       "shown": true
+      }
+     ]
+    },
+    3,
+    1030
+   ],
+   "out": 2
+  },
+  {
+   "id": "never-falls-by-itself",
+   "fn": "advance",
+   "in": [
+    {
+     "stage": 2,
+     "signs": [
+      {
+       "stage": 2,
+       "t": 1000,
+       "shown": true
+      }
+     ]
+    },
+    0,
+    5000
+   ],
+   "out": 2
+  },
+  {
+   "id": "manhunt-arrest-not-inside-the-hour",
+   "rule": "ER-POL-05",
+   "fn": "manhuntMayArrest",
+   "in": [
+    {
+     "stage": 3,
+     "signs": [
+      {
+       "stage": 3,
+       "t": 2000,
+       "shown": true
+      }
+     ]
+    },
+    2059
+   ],
+   "out": false
+  },
+  {
+   "id": "manhunt-arrest-after-the-hour",
+   "rule": "ER-POL-05",
+   "fn": "manhuntMayArrest",
+   "in": [
+    {
+     "stage": 3,
+     "signs": [
+      {
+       "stage": 3,
+       "t": 2000,
+       "shown": true
+      }
+     ]
+    },
+    2060
+   ],
+   "out": true
+  },
+  {
+   "id": "manhunt-arrest-never-without-its-sign",
+   "rule": "ER-POL-05",
+   "fn": "manhuntMayArrest",
+   "in": [
+    {
+     "stage": 3,
+     "signs": [
+      {
+       "stage": 3,
+       "t": 2000,
+       "shown": false
+      }
+     ]
+    },
+    9000
+   ],
+   "out": false
+  },
+  {
+   "id": "ellis-for-a-body",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "body": true,
+     "dayIndex": 0
+    }
+   ],
+   "out": "a body"
+  },
+  {
+   "id": "ellis-for-a-wounding-reported",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "reportedClass": "wounding",
+     "dayIndex": 1
+    }
+   ],
+   "out": "a crime reported"
+  },
+  {
+   "id": "ellis-not-for-a-window",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "reportedClass": "window",
+     "dayIndex": 1,
+     "dayPeopleTalking": 1
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "ellis-for-talk-from-day-4-with-three",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "dayIndex": 3,
+     "dayPeopleTalking": 3
+    }
+   ],
+   "out": "the talk"
+  },
+  {
+   "id": "ellis-not-for-talk-before-day-4",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "dayIndex": 2,
+     "dayPeopleTalking": 5
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "ellis-not-for-two-talking",
+   "fn": "ellisComes",
+   "in": [
+    {
+     "dayIndex": 4,
+     "dayPeopleTalking": 2
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "case-strength",
+   "fn": "caseStrength",
+   "in": [
+    {
+     "statements": 2,
+     "charges": 1,
+     "officeFinds": 1
+    }
+   ],
+   "out": 6
+  }
+ ]
+}

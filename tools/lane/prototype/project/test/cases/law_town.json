@@ -1,0 +1,410 @@
+{
+ "piece": "law_town",
+ "about": "Expected values come from DESIGN section 8 and the addendum, written by hand, never copied from the code's output.",
+ "cases": [
+  {
+   "id": "one-deed-no-edge",
+   "rule": "A37",
+   "fn": "onEdge",
+   "in": [
+    [
+     1000
+    ],
+    1100
+   ],
+   "outHas": {
+    "edge": false,
+    "setsOffTimes": 1,
+    "constableTimes": 1
+   }
+  },
+  {
+   "id": "two-deeds-no-edge",
+   "rule": "A37",
+   "fn": "onEdge",
+   "in": [
+    [
+     1000,
+     1500
+    ],
+    1600
+   ],
+   "outHas": {
+    "edge": false
+   }
+  },
+  {
+   "id": "three-in-two-days-on-edge",
+   "rule": "A37",
+   "fn": "onEdge",
+   "in": [
+    [
+     1000,
+     1500,
+     3000
+    ],
+    3100
+   ],
+   "outHas": {
+    "edge": true,
+    "setsOffTimes": 0.5,
+    "constableTimes": 2
+   }
+  },
+  {
+   "id": "three-spread-over-a-week-no-edge",
+   "rule": "A37",
+   "fn": "onEdge",
+   "in": [
+    [
+     1000,
+     5000,
+     9000
+    ],
+    9100
+   ],
+   "outHas": {
+    "edge": false
+   }
+  },
+  {
+   "id": "eases-as-talk-cools",
+   "rule": "A37",
+   "fn": "onEdge",
+   "in": [
+    [
+     1000,
+     1500,
+     3000
+    ],
+    5881
+   ],
+   "outHas": {
+    "edge": false,
+    "setsOffTimes": 1,
+    "constableTimes": 1
+   }
+  },
+  {
+   "id": "first-routine-finds-it",
+   "rule": "A38",
+   "fn": "finder",
+   "in": [
+    {
+     "trace": true,
+     "hidden": false,
+     "sunk": false,
+     "t": 1380
+    },
+    [
+     {
+      "who": "cleaner",
+      "t": 1800
+     },
+     {
+      "who": "owner",
+      "t": 1740
+     },
+     {
+      "who": "earlier",
+      "t": 1300
+     }
+    ]
+   ],
+   "out": {
+    "who": "owner",
+    "t": 1740,
+    "holds": [
+     "aftermath"
+    ]
+   }
+  },
+  {
+   "id": "no-trace-nothing-found",
+   "rule": "A38",
+   "fn": "finder",
+   "in": [
+    {
+     "trace": false,
+     "hidden": false,
+     "sunk": false,
+     "t": 1380
+    },
+    [
+     {
+      "who": "owner",
+      "t": 1740
+     }
+    ]
+   ],
+   "out": null
+  },
+  {
+   "id": "hidden-body-never-found",
+   "rule": "A38",
+   "fn": "finder",
+   "in": [
+    {
+     "trace": true,
+     "hidden": true,
+     "sunk": false,
+     "t": 1380
+    },
+    [
+     {
+      "who": "owner",
+      "t": 1740
+     }
+    ]
+   ],
+   "out": null
+  },
+  {
+   "id": "sunk-body-never-found",
+   "rule": "A38",
+   "fn": "finder",
+   "in": [
+    {
+     "trace": true,
+     "hidden": false,
+     "sunk": true,
+     "t": 1380
+    },
+    [
+     {
+      "who": "owner",
+      "t": 1740
+     }
+    ]
+   ],
+   "out": null
+  },
+  {
+   "id": "nobody-passes-nobody-finds",
+   "rule": "A38",
+   "fn": "finder",
+   "in": [
+    {
+     "trace": true,
+     "hidden": false,
+     "sunk": false,
+     "t": 1380
+    },
+    []
+   ],
+   "out": null
+  },
+  {
+   "id": "missing-not-asked-inside-a-day",
+   "fn": "missingAsked",
+   "in": [
+    {
+     "goneSince": 1000
+    },
+    2380
+   ],
+   "outHas": {
+    "asked": false,
+    "cools": false
+   }
+  },
+  {
+   "id": "missing-asked-after-a-day",
+   "fn": "missingAsked",
+   "in": [
+    {
+     "goneSince": 1000
+    },
+    2500
+   ],
+   "outHas": {
+    "asked": true,
+    "cools": false,
+    "times": 1
+   }
+  },
+  {
+   "id": "missing-never-cools",
+   "fn": "missingAsked",
+   "in": [
+    {
+     "goneSince": 1000
+    },
+    44200
+   ],
+   "outHas": {
+    "asked": true,
+    "cools": false
+   }
+  },
+  {
+   "id": "fists-no-armed-police",
+   "rule": "ER-FIGHT-09",
+   "fn": "response",
+   "in": [
+    0,
+    "gun"
+   ],
+   "outHas": {
+    "armed": false,
+    "stopAndSearch": false
+   }
+  },
+  {
+   "id": "shown-no-armed-police",
+   "fn": "response",
+   "in": [
+    1,
+    "gun"
+   ],
+   "outHas": {
+    "armed": false
+   }
+  },
+  {
+   "id": "fired-armed-officers-slowly",
+   "fn": "response",
+   "in": [
+    2,
+    "gun"
+   ],
+   "outHas": {
+    "armed": true,
+    "armedCars": false,
+    "arrivesGameMinutes": 25,
+    "stopAndSearch": false
+   }
+  },
+  {
+   "id": "fired-ordinary-call-unarmed",
+   "fn": "response",
+   "in": [
+    2,
+    "other"
+   ],
+   "outHas": {
+    "armed": false
+   }
+  },
+  {
+   "id": "war-armed-cars-and-stop-and-search",
+   "fn": "response",
+   "in": [
+    3,
+    "gun"
+   ],
+   "outHas": {
+    "armed": true,
+    "armedCars": true,
+    "stopAndSearch": true,
+    "arrivesGameMinutes": 10,
+    "armedOfficersAtMost": 4
+   }
+  },
+  {
+   "id": "pashby-looks-away-from-a-car-once",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "pashby",
+    true,
+    "car",
+    0
+   ],
+   "out": {
+    "does": true,
+    "crime": false
+   }
+  },
+  {
+   "id": "pashby-not-twice-a-night",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "pashby",
+    true,
+    "car",
+    1
+   ],
+   "out": {
+    "does": false,
+    "crime": false
+   }
+  },
+  {
+   "id": "pashby-will-not-lose-a-statement",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "pashby",
+    true,
+    "statement",
+    0
+   ],
+   "out": {
+    "does": false,
+    "crime": false
+   }
+  },
+  {
+   "id": "thwaite-loses-one-statement",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "thwaite",
+    true,
+    "statement",
+    0
+   ],
+   "out": {
+    "does": true,
+    "crime": false
+   }
+  },
+  {
+   "id": "thwaite-only-once",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "thwaite",
+    true,
+    "statement",
+    1
+   ],
+   "out": {
+    "does": false,
+    "crime": false
+   }
+  },
+  {
+   "id": "unpaid-does-nothing",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "thwaite",
+    false,
+    "statement",
+    0
+   ],
+   "out": {
+    "does": false,
+    "crime": false
+   }
+  },
+  {
+   "id": "the-rest-of-the-station-is-honest",
+   "rule": "ER-BOUGHT-01",
+   "fn": "boughtDoes",
+   "in": [
+    "pc",
+    true,
+    "car",
+    0
+   ],
+   "out": {
+    "does": false,
+    "crime": true
+   }
+  }
+ ]
+}
