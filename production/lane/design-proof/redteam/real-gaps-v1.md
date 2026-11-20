@@ -1,0 +1,19 @@
+- Act III morning grading: what a "grade" is (pass/fail or degrees), per-item thresholds from the books (wash weeks over the 10 + 80% limit), and what each graded morning changes beyond the inspector's manner (A 2, B 3) parts: 3.1.3
+- Main-story beat content: scenes, lines and jobs for the eight Act II beats; what the old firm hands over, what Mickey's real book holds, what the envelopes carry on nights 5 and 7, and the scripting and choices of the guaranteed collision (A 7, A 54, A 55) parts: 3.1.1, 3.1.2, 3.1.6, 2.9.1
+- Job and mission catalogue after week one: list and count per act, givers, places, outcomes of main and side jobs, and what the dock gate, Harbour Board and customs offer as places of play (A 8, A 45, B 10) parts: 3.3, 3.5, 4.2.3
+- Act transitions and stall paths: Act II opening when Tom refused to say or wound down, the trigger for Act III if Act II never reaches a sit-down, conditions for rungs 3 and 4 (A 14, B 4, B 32) parts: 3.1.2, 3.1.3, 2.12.2
+- The two rivals not met at Act II's end: their fate, whether their ladders carry into Act III, absorption or defeat (A 12) parts: 2.10.1, 3.1.2
+- Rival threat rung and counters: content of "threat", whether rivals hurt crew, cars or the office and how that is repaired, how "counter with what he knows" works as leverage, what the Fixer's truce does (A 13, A 12, B 11, B 44) parts: 2.10.1, 2.10.3, 2.10.4, 3.5.5
+- Hooks and knowledge as leverage: what a hook is as data, how Tom gets one, how it is spent in recruiting, pressures and sit-downs (A 25, B 26) parts: 2.11.1, 2.10.3, 3.5.5
+- Sending verbs in play: how each of the eight is ordered and targeted, how outcome and timing are decided, what the player sees (A 27, B 25) parts: 1.7.2
+- Tom's line against women, over-sixties and the priest: what happens when one attacks him or a hostile fight includes them, and whether sent men may hurt them (A 63, B 27) parts: 1.3.4, 1.7.2
+- Firearms as a verb: aiming input, hit and damage model, non-fatal wound outcomes before War, reload and ammunition without a count, NPC gun behaviour without cover, how Tom is put down by a shot (A 23, B 12) parts: 1.3.10, 2.13
+- Hidden damage and injury states: damage per blow and weapon, when a man or Tom counts as down, knife/bat/gun wounds on Tom, stacking, fighting on hurt (A 24, B 22) parts: 1.3.7, 1.3.9, 1.3.11
+- Escalation dial War trigger: what takes Fired to War (A 61) parts: 2.13
+- Ellis's case model: how her interest falls or a manhunt ends, how charges accumulate, what an office-search find does to the case, who counts as Tom's "day world" (A 35, A 36, B 33) parts: 2.6.5, 2.6.9
+- Typed-talk interpretation: what act types the classifier returns, how a bribe amount or promise is captured, whether typed lies and promises are acts the town remembers (A 15, B 19) parts: 3.6.1, 3.6.5, 3.6.2, 1.4.5
+- Live-talk abuse and off-limits input: in-character refusal and deflection of abusive, off-topic, out-of-period, content-rule or manipulative player text, text claiming to do things (A 16, B 19) parts: 3.6.2, 8.8, 3.6.1
+- Missed rent: what the miss costs (arrears, eviction, landlord) (A 11, B 14) parts: 2.7.4
+- Money pots in practice: which pot pays for what at shops, bribes and rent, tin stolen or found, cash in a search (B 15) parts: 2.7.1, 2.7.2, 2.7.7
+- Pause and clock: whether the Ledger, letters and getting ready stop the clock (A 51, B 17) parts: 6.2, 6.3, 7.13
+- Content supply at night and late in Acts II-III: street-happening library size and frequency, what fills nights with no job (A 50, A 71, B 82) parts: 3.7, 7.12, 7.14

@@ -1,0 +1,4037 @@
+[
+ {
+  "id": "ST-001",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "story-characters",
+  "theme": "A story and characters worth caring about",
+  "valence": "praised",
+  "figure": "1,836 (32.2%) of 5,701 reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.2.1"
+  ],
+  "test": "P4 thirty-minute session with 5 friends: at least 4 of 5 retell one scene unprompted and name Tom plus one other person; panel of 8 rates the week run 5 of 8 or better (M1)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-002",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "story-characters",
+  "theme": "A story and characters worth caring about",
+  "valence": "praised",
+  "figure": "1,840 (28.2%) of 6,518 kept reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.2.1"
+  ],
+  "test": "P4 thirty-minute session with 5 friends: at least 4 of 5 retell one scene unprompted and name Tom plus one other person; panel of 8 rates the week run 5 of 8 or better (M1)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-003",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "story-characters",
+  "theme": "A story and characters worth caring about",
+  "valence": "praised",
+  "figure": "3,668 (47.3%) of 7,757 kept reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.2.1"
+  ],
+  "test": "P4 thirty-minute session with 5 friends: at least 4 of 5 retell one scene unprompted and name Tom plus one other person; panel of 8 rates the week run 5 of 8 or better (M1)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-004",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "story-characters",
+  "theme": "A story and characters worth caring about",
+  "valence": "praised",
+  "figure": "1,726 (47.5%) of 3,634 reviews; mean rank 1 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.2.1"
+  ],
+  "test": "P4 thirty-minute session with 5 friends: at least 4 of 5 retell one scene unprompted and name Tom plus one other person; panel of 8 rates the week run 5 of 8 or better (M1)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-005",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "living-world",
+  "theme": "A living, believable world that feels lived in",
+  "valence": "praised",
+  "figure": "1,398 (24.5%) of 5,701 reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "2.1.1",
+   "2.1.3",
+   "2.4.4"
+  ],
+  "test": "Meridian Test: in a 30-minute run the town visibly knows the tester (ER-EYES-08: a plainly seen deed said to his face within one game day); every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-006",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "living-world",
+  "theme": "A living, believable world that feels lived in",
+  "valence": "praised",
+  "figure": "1,154 (17.7%) of 6,518 kept reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "2.1.1",
+   "2.1.3",
+   "2.4.4"
+  ],
+  "test": "Meridian Test: in a 30-minute run the town visibly knows the tester (ER-EYES-08: a plainly seen deed said to his face within one game day); every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-007",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "living-world",
+  "theme": "A living, believable world that feels lived in",
+  "valence": "praised",
+  "figure": "2,356 (30.4%) of 7,757 kept reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "2.1.1",
+   "2.1.3",
+   "2.4.4"
+  ],
+  "test": "Meridian Test: in a 30-minute run the town visibly knows the tester (ER-EYES-08: a plainly seen deed said to his face within one game day); every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-008",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "living-world",
+  "theme": "A living, believable world that feels lived in",
+  "valence": "praised",
+  "figure": "533 (14.7%) of 3,634 reviews; mean rank 3 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "2.1.1",
+   "2.1.3",
+   "2.4.4"
+  ],
+  "test": "Meridian Test: in a 30-minute run the town visibly knows the tester (ER-EYES-08: a plainly seen deed said to his face within one game day); every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13)",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-009",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "looks",
+  "theme": "How it looks (light, towns, faces)",
+  "valence": "praised",
+  "figure": "1,015 (17.8%) of 5,701 reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "4.1.1",
+   "5.4.2"
+  ],
+  "test": "Each proof view judged by a fresh reviewer against the Hook sheet and KCD2 frames in the game's own camera: pass only with no visible fault or placeholder and a visible change since last look",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-010",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "looks",
+  "theme": "How it looks (light, towns, faces)",
+  "valence": "praised",
+  "figure": "1,071 (16.4%) of 6,518 kept reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "4.1.1",
+   "5.4.2"
+  ],
+  "test": "Each proof view judged by a fresh reviewer against the Hook sheet and KCD2 frames in the game's own camera: pass only with no visible fault or placeholder and a visible change since last look",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-011",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "looks",
+  "theme": "How it looks (light, towns, faces)",
+  "valence": "praised",
+  "figure": "2,395 (30.9%) of 7,757 kept reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "4.1.1",
+   "5.4.2"
+  ],
+  "test": "Each proof view judged by a fresh reviewer against the Hook sheet and KCD2 frames in the game's own camera: pass only with no visible fault or placeholder and a visible change since last look",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-012",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "looks",
+  "theme": "How it looks (light, towns, faces)",
+  "valence": "praised",
+  "figure": "1,043 (28.7%) of 3,634 reviews; mean rank 2 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "5.10",
+   "4.1.1",
+   "5.4.2"
+  ],
+  "test": "Each proof view judged by a fresh reviewer against the Hook sheet and KCD2 frames in the game's own camera: pass only with no visible fault or placeholder and a visible change since last look",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-013",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "price-length-fair",
+  "theme": "A fair price and plenty of game for it",
+  "valence": "praised",
+  "figure": "403 (7.1%) of 5,701 reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI tester timed main-story playthrough lands in 15 to 20 hours (ruling 28 Oct); a price is set and stated on the store page",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-014",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "price-length-fair",
+  "theme": "A fair price and plenty of game for it",
+  "valence": "praised",
+  "figure": "541 (8.3%) of 6,518 kept reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI tester timed main-story playthrough lands in 15 to 20 hours (ruling 28 Oct); a price is set and stated on the store page",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-015",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "price-length-fair",
+  "theme": "A fair price and plenty of game for it",
+  "valence": "praised",
+  "figure": "644 (8.3%) of 7,757 kept reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI tester timed main-story playthrough lands in 15 to 20 hours (ruling 28 Oct); a price is set and stated on the store page",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-016",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "price-length-fair",
+  "theme": "A fair price and plenty of game for it",
+  "valence": "praised",
+  "figure": "315 (8.7%) of 3,634 reviews; mean rank 7 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI tester timed main-story playthrough lands in 15 to 20 hours (ruling 28 Oct); a price is set and stated on the store page",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-017",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "side-stories",
+  "theme": "Side content that are whole stories, not errands",
+  "valence": "praised",
+  "figure": "781 (13.7%) of 5,701 reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.3",
+   "3.5.6"
+  ],
+  "test": "25 to 40 authored side stories, each 3 to 5 steps, each ending in something the town knows, each found on foot with no marker (count and walk-through check)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-018",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "side-stories",
+  "theme": "Side content that are whole stories, not errands",
+  "valence": "praised",
+  "figure": "140 (2.1%) of 6,518 kept reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.3",
+   "3.5.6"
+  ],
+  "test": "25 to 40 authored side stories, each 3 to 5 steps, each ending in something the town knows, each found on foot with no marker (count and walk-through check)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-019",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "side-stories",
+  "theme": "Side content that are whole stories, not errands",
+  "valence": "praised",
+  "figure": "316 (4.1%) of 7,757 kept reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.3",
+   "3.5.6"
+  ],
+  "test": "25 to 40 authored side stories, each 3 to 5 steps, each ending in something the town knows, each found on foot with no marker (count and walk-through check)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-020",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "side-stories",
+  "theme": "Side content that are whole stories, not errands",
+  "valence": "praised",
+  "figure": "91 (2.5%) of 3,634 reviews; mean rank 5 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.3",
+   "3.5.6"
+  ],
+  "test": "25 to 40 authored side stories, each 3 to 5 steps, each ending in something the town knows, each found on foot with no marker (count and walk-through check)",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-021",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "music-sound",
+  "theme": "Music and sound (and the radio)",
+  "valence": "praised",
+  "figure": "270 (4.7%) of 5,701 reviews; mean rank 6 of 20 (new file)",
+  "parts": [
+   "5.5.3",
+   "5.7.1",
+   "5.7.1"
+  ],
+  "test": "Blind listen: 5 testers identify the office radio and street bed as a 1990 British port without prompting; ER-SND-01 (noise heard at the strength the rule hears it) passes",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-022",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "music-sound",
+  "theme": "Music and sound (and the radio)",
+  "valence": "praised",
+  "figure": "313 (4.8%) of 6,518 kept reviews; mean rank 6 of 20 (new file)",
+  "parts": [
+   "5.5.3",
+   "5.7.1",
+   "5.7.1"
+  ],
+  "test": "Blind listen: 5 testers identify the office radio and street bed as a 1990 British port without prompting; ER-SND-01 (noise heard at the strength the rule hears it) passes",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-023",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "music-sound",
+  "theme": "Music and sound (and the radio)",
+  "valence": "praised",
+  "figure": "654 (8.4%) of 7,757 kept reviews; mean rank 6 of 20 (new file)",
+  "parts": [
+   "5.5.3",
+   "5.7.1",
+   "5.7.1"
+  ],
+  "test": "Blind listen: 5 testers identify the office radio and street bed as a 1990 British port without prompting; ER-SND-01 (noise heard at the strength the rule hears it) passes",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-024",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "music-sound",
+  "theme": "Music and sound (and the radio)",
+  "valence": "praised",
+  "figure": "210 (5.8%) of 3,634 reviews; mean rank 9 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "5.5.3",
+   "5.7.1",
+   "5.7.1"
+  ],
+  "test": "Blind listen: 5 testers identify the office radio and street bed as a 1990 British port without prompting; ER-SND-01 (noise heard at the strength the rule hears it) passes",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-025",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "melee-skill",
+  "theme": "Skill-based melee that rewards learning it",
+  "valence": "praised",
+  "figure": "1,009 (17.7%) of 5,701 reviews; mean rank 7 of 20 (new file)",
+  "parts": [
+   "1.3.1",
+   "1.3.2",
+   "1.3.3"
+  ],
+  "test": "ER-FIGHT-07: patient bot wins most 1-on-1 fights, masher wins under 3 in 10; every incoming blow readable 0.45 to 0.80 s before it lands (ER-FIGHT-02)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-026",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "melee-skill",
+  "theme": "Skill-based melee that rewards learning it",
+  "valence": "praised",
+  "figure": "182 (5.0%) of 3,634 reviews; mean rank 4 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.1",
+   "1.3.2",
+   "1.3.3"
+  ],
+  "test": "ER-FIGHT-07: patient bot wins most 1-on-1 fights, masher wins under 3 in 10; every incoming blow readable 0.45 to 0.80 s before it lands (ER-FIGHT-02)",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-027",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "good-pc-version",
+  "theme": "It ran well, a good PC version",
+  "valence": "praised",
+  "figure": "444 (7.8%) of 5,701 reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.3",
+   "8.5"
+  ],
+  "test": "60 fps at 3440x1440 on RX 6700 with voice running, median frame at most 16.7 ms and p99 at most 25 ms, in the packaged build",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-028",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "good-pc-version",
+  "theme": "It ran well, a good PC version",
+  "valence": "praised",
+  "figure": "320 (4.9%) of 6,518 kept reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.3",
+   "8.5"
+  ],
+  "test": "60 fps at 3440x1440 on RX 6700 with voice running, median frame at most 16.7 ms and p99 at most 25 ms, in the packaged build",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-029",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "good-pc-version",
+  "theme": "It ran well, a good PC version",
+  "valence": "praised",
+  "figure": "255 (3.3%) of 7,757 kept reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.3",
+   "8.5"
+  ],
+  "test": "60 fps at 3440x1440 on RX 6700 with voice running, median frame at most 16.7 ms and p99 at most 25 ms, in the packaged build",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-030",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "good-pc-version",
+  "theme": "It ran well, a good PC version",
+  "valence": "praised",
+  "figure": "301 (8.3%) of 3,634 reviews; mean rank 6 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.3",
+   "8.5"
+  ],
+  "test": "60 fps at 3440x1440 on RX 6700 with voice running, median frame at most 16.7 ms and p99 at most 25 ms, in the packaged build",
+  "status_of_parts": "OUTSIDE",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-031",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "driving-riding-feel",
+  "theme": "Driving and riding that feel good",
+  "valence": "praised",
+  "figure": "37 (0.6%) of 5,701 reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "1.2.1",
+   "1.2.2",
+   "5.5.5"
+  ],
+  "test": "Handling numbers inside sheet M1 to M9 (0 to 30 mph in 3.0 to 4.5 s; dry braking from 30 mph in 8 to 11 m); blind silhouette and engine-note test P9 passed by a fresh reviewer",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-032",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "driving-riding-feel",
+  "theme": "Driving and riding that feel good",
+  "valence": "praised",
+  "figure": "669 (10.3%) of 6,518 kept reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "1.2.1",
+   "1.2.2",
+   "5.5.5"
+  ],
+  "test": "Handling numbers inside sheet M1 to M9 (0 to 30 mph in 3.0 to 4.5 s; dry braking from 30 mph in 8 to 11 m); blind silhouette and engine-note test P9 passed by a fresh reviewer",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-033",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "driving-riding-feel",
+  "theme": "Driving and riding that feel good",
+  "valence": "praised",
+  "figure": "378 (4.9%) of 7,757 kept reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "1.2.1",
+   "1.2.2",
+   "5.5.5"
+  ],
+  "test": "Handling numbers inside sheet M1 to M9 (0 to 30 mph in 3.0 to 4.5 s; dry braking from 30 mph in 8 to 11 m); blind silhouette and engine-note test P9 passed by a fresh reviewer",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-034",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "driving-riding-feel",
+  "theme": "Driving and riding that feel good",
+  "valence": "praised",
+  "figure": "219 (6.0%) of 3,634 reviews; mean rank 17 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.2.1",
+   "1.2.2",
+   "5.5.5"
+  ],
+  "test": "Handling numbers inside sheet M1 to M9 (0 to 30 mph in 3.0 to 4.5 s; dry braking from 30 mph in 8 to 11 m); blind silhouette and engine-note test P9 passed by a fresh reviewer",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-035",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "crafting-skills-progress",
+  "theme": "Crafting, skills, getting better at things",
+  "valence": "praised",
+  "figure": "508 (8.9%) of 5,701 reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "2.12.2",
+   "2.12.5"
+  ],
+  "test": "ER-RISE-03: each rung of position changes three things a newcomer can point to; no number or stat on screen (D11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-036",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "crafting-skills-progress",
+  "theme": "Crafting, skills, getting better at things",
+  "valence": "praised",
+  "figure": "47 (0.7%) of 6,518 kept reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "2.12.2",
+   "2.12.5"
+  ],
+  "test": "ER-RISE-03: each rung of position changes three things a newcomer can point to; no number or stat on screen (D11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-037",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "crafting-skills-progress",
+  "theme": "Crafting, skills, getting better at things",
+  "valence": "praised",
+  "figure": "81 (1.0%) of 7,757 kept reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "2.12.2",
+   "2.12.5"
+  ],
+  "test": "ER-RISE-03: each rung of position changes three things a newcomer can point to; no number or stat on screen (D11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-038",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "crafting-skills-progress",
+  "theme": "Crafting, skills, getting better at things",
+  "valence": "praised",
+  "figure": "30 (0.8%) of 3,634 reviews; mean rank 11 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "2.12.2",
+   "2.12.5"
+  ],
+  "test": "ER-RISE-03: each rung of position changes three things a newcomer can point to; no number or stat on screen (D11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-039",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "voice-acting",
+  "theme": "Voice acting and performances",
+  "valence": "praised",
+  "figure": "219 (3.8%) of 5,701 reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "5.6.1",
+   "5.6.3"
+  ],
+  "test": "Panel of 8 judges by ear (accent checker only screens): at least 6 of 8 hear Sheila, Ron and Darren holding accent; median first meaningful speech 2 s or less",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-040",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "voice-acting",
+  "theme": "Voice acting and performances",
+  "valence": "praised",
+  "figure": "124 (1.9%) of 6,518 kept reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "5.6.1",
+   "5.6.3"
+  ],
+  "test": "Panel of 8 judges by ear (accent checker only screens): at least 6 of 8 hear Sheila, Ron and Darren holding accent; median first meaningful speech 2 s or less",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-041",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "voice-acting",
+  "theme": "Voice acting and performances",
+  "valence": "praised",
+  "figure": "352 (4.5%) of 7,757 kept reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "5.6.1",
+   "5.6.3"
+  ],
+  "test": "Panel of 8 judges by ear (accent checker only screens): at least 6 of 8 hear Sheila, Ron and Darren holding accent; median first meaningful speech 2 s or less",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-042",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "voice-acting",
+  "theme": "Voice acting and performances",
+  "valence": "praised",
+  "figure": "241 (6.6%) of 3,634 reviews; mean rank 10 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "5.6.1",
+   "5.6.3"
+  ],
+  "test": "Panel of 8 judges by ear (accent checker only screens): at least 6 of 8 hear Sheila, Ron and Darren holding accent; median first meaningful speech 2 s or less",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-043",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "choices-matter",
+  "theme": "Choices and roleplay that change what happens",
+  "valence": "praised",
+  "figure": "403 (7.1%) of 5,701 reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen by the tester and kept after save and restart; two or three endings each reachable by at least two routes",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-044",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "choices-matter",
+  "theme": "Choices and roleplay that change what happens",
+  "valence": "praised",
+  "figure": "81 (1.2%) of 6,518 kept reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen by the tester and kept after save and restart; two or three endings each reachable by at least two routes",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-045",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "choices-matter",
+  "theme": "Choices and roleplay that change what happens",
+  "valence": "praised",
+  "figure": "133 (1.7%) of 7,757 kept reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen by the tester and kept after save and restart; two or three endings each reachable by at least two routes",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-046",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "choices-matter",
+  "theme": "Choices and roleplay that change what happens",
+  "valence": "praised",
+  "figure": "79 (2.2%) of 3,634 reviews; mean rank 12 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen by the tester and kept after save and restart; two or three endings each reachable by at least two routes",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-047",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "period-detail",
+  "theme": "Period accuracy and detail",
+  "valence": "praised",
+  "figure": "568 (10.0%) of 5,701 reviews; mean rank 13 of 20 (new file)",
+  "parts": [
+   "4.9",
+   "5.10"
+  ],
+  "test": "tools/canon-gate.py: 0 era or brand violations (nothing after 1992); every sign, prop and poster traced to a dated photograph or period book",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-048",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "period-detail",
+  "theme": "Period accuracy and detail",
+  "valence": "praised",
+  "figure": "206 (5.7%) of 3,634 reviews; mean rank 8 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "4.9",
+   "5.10"
+  ],
+  "test": "tools/canon-gate.py: 0 era or brand violations (nothing after 1992); every sign, prop and poster traced to a dated photograph or period book",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-049",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "humour-tone",
+  "theme": "Humour, satire and a mix of tones",
+  "valence": "praised",
+  "figure": "269 (4.7%) of 5,701 reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.3",
+   "3.7"
+  ],
+  "test": "Panel of 8: at least 6 mark a sample of street lines and happenings as dry British wit in grounded noir (D7: tone is the judge's, not a gate)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-050",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "humour-tone",
+  "theme": "Humour, satire and a mix of tones",
+  "valence": "praised",
+  "figure": "192 (2.9%) of 6,518 kept reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.3",
+   "3.7"
+  ],
+  "test": "Panel of 8: at least 6 mark a sample of street lines and happenings as dry British wit in grounded noir (D7: tone is the judge's, not a gate)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-051",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "humour-tone",
+  "theme": "Humour, satire and a mix of tones",
+  "valence": "praised",
+  "figure": "70 (0.9%) of 7,757 kept reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.3",
+   "3.7"
+  ],
+  "test": "Panel of 8: at least 6 mark a sample of street lines and happenings as dry British wit in grounded noir (D7: tone is the judge's, not a gate)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-052",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "humour-tone",
+  "theme": "Humour, satire and a mix of tones",
+  "valence": "praised",
+  "figure": "79 (2.2%) of 3,634 reviews; mean rank 15 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.6.3",
+   "3.7"
+  ],
+  "test": "Panel of 8: at least 6 mark a sample of street lines and happenings as dry British wit in grounded noir (D7: tone is the judge's, not a gate)",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-053",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "ending-landed",
+  "theme": "An ending that landed",
+  "valence": "praised",
+  "figure": "71 (1.2%) of 5,701 reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "3.1.4",
+   "3.1.5",
+   "6.2.5"
+  ],
+  "test": "ER-END-02 and 03: for each ending the tester can name the sign they were shown before the cost decided it; Tom's reading at act end built only from signs he was given",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-054",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "ending-landed",
+  "theme": "An ending that landed",
+  "valence": "praised",
+  "figure": "102 (1.6%) of 6,518 kept reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "3.1.4",
+   "3.1.5",
+   "6.2.5"
+  ],
+  "test": "ER-END-02 and 03: for each ending the tester can name the sign they were shown before the cost decided it; Tom's reading at act end built only from signs he was given",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-055",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "ending-landed",
+  "theme": "An ending that landed",
+  "valence": "praised",
+  "figure": "401 (5.2%) of 7,757 kept reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "3.1.4",
+   "3.1.5",
+   "6.2.5"
+  ],
+  "test": "ER-END-02 and 03: for each ending the tester can name the sign they were shown before the cost decided it; Tom's reading at act end built only from signs he was given",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-056",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "ending-landed",
+  "theme": "An ending that landed",
+  "valence": "praised",
+  "figure": "138 (3.8%) of 3,634 reviews; not ranked",
+  "parts": [
+   "3.1.4",
+   "3.1.5",
+   "6.2.5"
+  ],
+  "test": "ER-END-02 and 03: for each ending the tester can name the sign they were shown before the cost decided it; Tom's reading at act end built only from signs he was given",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-057",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "world-reacts",
+  "theme": "The world reacts to you",
+  "valence": "praised",
+  "figure": "168 (2.9%) of 5,701 reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "2.4.4",
+   "2.2.2",
+   "2.4.3"
+  ],
+  "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-058",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "world-reacts",
+  "theme": "The world reacts to you",
+  "valence": "praised",
+  "figure": "79 (1.2%) of 6,518 kept reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "2.4.4",
+   "2.2.2",
+   "2.4.3"
+  ],
+  "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-059",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "world-reacts",
+  "theme": "The world reacts to you",
+  "valence": "praised",
+  "figure": "167 (2.2%) of 7,757 kept reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "2.4.4",
+   "2.2.2",
+   "2.4.3"
+  ],
+  "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-060",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "world-reacts",
+  "theme": "The world reacts to you",
+  "valence": "praised",
+  "figure": "68 (1.9%) of 3,634 reviews; not ranked",
+  "parts": [
+   "2.4.4",
+   "2.2.2",
+   "2.4.3"
+  ],
+  "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-061",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "polish-few-bugs",
+  "theme": "Polish: few bugs",
+  "valence": "praised",
+  "figure": "258 (4.5%) of 5,701 reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "Nightly AI-tester walk of the packaged build with 0 progress blockers; SaveChaos and Soak pass; FINDINGS.md at most 20 open faults",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-062",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "polish-few-bugs",
+  "theme": "Polish: few bugs",
+  "valence": "praised",
+  "figure": "38 (0.6%) of 6,518 kept reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "Nightly AI-tester walk of the packaged build with 0 progress blockers; SaveChaos and Soak pass; FINDINGS.md at most 20 open faults",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-063",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "polish-few-bugs",
+  "theme": "Polish: few bugs",
+  "valence": "praised",
+  "figure": "81 (1.0%) of 7,757 kept reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "Nightly AI-tester walk of the packaged build with 0 progress blockers; SaveChaos and Soak pass; FINDINGS.md at most 20 open faults",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-064",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "polish-few-bugs",
+  "theme": "Polish: few bugs",
+  "valence": "praised",
+  "figure": "75 (2.1%) of 3,634 reviews; mean rank 18 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "Nightly AI-tester walk of the packaged build with 0 progress blockers; SaveChaos and Soak pass; FINDINGS.md at most 20 open faults",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-065",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "slow-burn-cinematic",
+  "theme": "The slow burn and long cinematic scenes (liked)",
+  "valence": "praised",
+  "figure": "195 (3.4%) of 5,701 reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "5.8.3",
+   "7.1"
+  ],
+  "test": "Every cut scene skippable and at most 60 s (ER-FIRST-02); no talk scene runs 60 s without a choice or control (ER-TALK-06)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-066",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "slow-burn-cinematic",
+  "theme": "The slow burn and long cinematic scenes (liked)",
+  "valence": "praised",
+  "figure": "26 (0.4%) of 6,518 kept reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "5.8.3",
+   "7.1"
+  ],
+  "test": "Every cut scene skippable and at most 60 s (ER-FIRST-02); no talk scene runs 60 s without a choice or control (ER-TALK-06)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-067",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "slow-burn-cinematic",
+  "theme": "The slow burn and long cinematic scenes (liked)",
+  "valence": "praised",
+  "figure": "131 (1.7%) of 7,757 kept reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "5.8.3",
+   "7.1"
+  ],
+  "test": "Every cut scene skippable and at most 60 s (ER-FIRST-02); no talk scene runs 60 s without a choice or control (ER-TALK-06)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-068",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "slow-burn-cinematic",
+  "theme": "The slow burn and long cinematic scenes (liked)",
+  "valence": "praised",
+  "figure": "199 (5.5%) of 3,634 reviews; mean rank 13 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "5.8.2",
+   "5.8.3",
+   "7.1"
+  ],
+  "test": "Every cut scene skippable and at most 60 s (ER-FIRST-02); no talk scene runs 60 s without a choice or control (ER-TALK-06)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-069",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "weighty-gunfights",
+  "theme": "Gunfights that feel weighty",
+  "valence": "praised",
+  "figure": "22 (0.4%) of 5,701 reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10",
+   "5.5.6"
+  ],
+  "test": "When a gun is used: shot heard 177 m by day (rule), four sound layers within one frame of the blow; feel numbers measured from reference footage before build",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-070",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "weighty-gunfights",
+  "theme": "Gunfights that feel weighty",
+  "valence": "praised",
+  "figure": "124 (1.9%) of 6,518 kept reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10",
+   "5.5.6"
+  ],
+  "test": "When a gun is used: shot heard 177 m by day (rule), four sound layers within one frame of the blow; feel numbers measured from reference footage before build",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-071",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "weighty-gunfights",
+  "theme": "Gunfights that feel weighty",
+  "valence": "praised",
+  "figure": "238 (3.1%) of 7,757 kept reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10",
+   "5.5.6"
+  ],
+  "test": "When a gun is used: shot heard 177 m by day (rule), four sound layers within one frame of the blow; feel numbers measured from reference footage before build",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-072",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "weighty-gunfights",
+  "theme": "Gunfights that feel weighty",
+  "valence": "praised",
+  "figure": "236 (6.5%) of 3,634 reviews; mean rank 16 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.10",
+   "5.5.6"
+  ],
+  "test": "When a gun is used: shot heard 177 m by day (rule), four sound layers within one frame of the blow; feel numbers measured from reference footage before build",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-073",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "challenge-reward",
+  "theme": "Challenge as a reward",
+  "valence": "praised",
+  "figure": "235 (4.1%) of 5,701 reviews; mean rank 20 of 20 (new file)",
+  "parts": [
+   "7.10",
+   "1.3.8"
+  ],
+  "test": "No stats and no difficulty ladder (D11); ER-FIGHT-07 skill beats mashing; assists switchable",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-074",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "challenge-reward",
+  "theme": "Challenge as a reward",
+  "valence": "praised",
+  "figure": "57 (1.6%) of 3,634 reviews; mean rank 19 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "7.10",
+   "1.3.8"
+  ],
+  "test": "No stats and no difficulty ladder (D11); ER-FIGHT-07 skill beats mashing; assists switchable",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-075",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "freedom-to-play",
+  "theme": "Freedom to play, lots to do (sandbox, heists with a choice of approach)",
+  "valence": "praised",
+  "figure": "974 (14.9%) of 6,518 kept reviews; not ranked (new theme)",
+  "parts": [
+   "1.6.1",
+   "3.5.1",
+   "1.3.5"
+  ],
+  "test": "ER-JOB-03: three keys to every lock; every authored job finishable at least two ways (three routes on the first carry: lit quay, dark yard, cab)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-076",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "freedom-to-play",
+  "theme": "Freedom to play, lots to do (sandbox, heists with a choice of approach)",
+  "valence": "praised",
+  "figure": "691 (8.9%) of 7,757 kept reviews; not ranked (new theme)",
+  "parts": [
+   "1.6.1",
+   "3.5.1",
+   "1.3.5"
+  ],
+  "test": "ER-JOB-03: three keys to every lock; every authored job finishable at least two ways (three routes on the first carry: lit quay, dark yard, cab)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-077",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "stealth-works",
+  "theme": "Stealth, lockpicking and pickpocketing that work",
+  "valence": "praised",
+  "figure": "195 (3.4%) of 5,701 reviews; not ranked",
+  "parts": [
+   "1.1.5",
+   "2.2.3",
+   "1.6.13"
+  ],
+  "test": "ER-EYES-01: the three questions answered 8 times in 10 from picture and sound alone; in a doorway (light 0.12) Tom is seen by fewer watchers than on a lit street (ER-EYES-02 symmetry)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-078",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "stealth-works",
+  "theme": "Stealth, lockpicking and pickpocketing that work",
+  "valence": "praised",
+  "figure": "163 (4.5%) of 3,634 reviews; mean rank 14 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.1.5",
+   "2.2.3",
+   "1.6.13"
+  ],
+  "test": "ER-EYES-01: the three questions answered 8 times in 10 from picture and sound alone; in a doorway (light 0.12) Tom is seen by fewer watchers than on a lit street (ER-EYES-02 symmetry)",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-079",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "knife-duels-fresh",
+  "theme": "Knife duels as a fresh idea",
+  "valence": "praised",
+  "figure": "47 (0.8%) of 5,701 reviews; mean rank 20 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.12",
+   "1.3.6"
+  ],
+  "test": "ER-TYPES-01: no two fights in a row use the same fighter mix; weapon drawn cannot be undrawn unseen",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-080",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "knife-duels-fresh",
+  "theme": "Knife duels as a fresh idea",
+  "valence": "praised",
+  "figure": "162 (4.5%) of 3,634 reviews; mean rank 20 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.12",
+   "1.3.6"
+  ],
+  "test": "ER-TYPES-01: no two fights in a row use the same fighter mix; weapon drawn cannot be undrawn unseen",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-081",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "love-story",
+  "theme": "A love story at the centre",
+  "valence": "praised",
+  "figure": "76 (1.3%) of 5,701 reviews; not ranked",
+  "parts": [
+   "3.2.5"
+  ],
+  "test": "Act I thread check: the tester can describe the Alison Sedman or Philip Danby friendship and name one moment it could break; content rule: no sexual content",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-082",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "love-story",
+  "theme": "A love story at the centre",
+  "valence": "praised",
+  "figure": "114 (3.1%) of 3,634 reviews; not ranked",
+  "parts": [
+   "3.2.5"
+  ],
+  "test": "Act I thread check: the tester can describe the Alison Sedman or Philip Danby friendship and name one moment it could break; content rule: no sexual content",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-083",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "pc-version-stutter-crashes",
+  "theme": "Stutter, crashes, long loads, heavy hardware demands, a bad port",
+  "valence": "punished",
+  "figure": "260 (4.6%) of 5,701 reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.2",
+   "8.1.3",
+   "8.2.1"
+  ],
+  "test": "Frame budget in packaged build (median 16.7 ms, p99 25 ms); no hitch at the play-to-speech change; zero crashes in a long Soak; first-week crash and settings-reset check on a second PC before any public release",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-084",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "pc-version-stutter-crashes",
+  "theme": "Stutter, crashes, long loads, heavy hardware demands, a bad port",
+  "valence": "punished",
+  "figure": "736 (11.3%) of 6,518 kept reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.2",
+   "8.1.3",
+   "8.2.1"
+  ],
+  "test": "Frame budget in packaged build (median 16.7 ms, p99 25 ms); no hitch at the play-to-speech change; zero crashes in a long Soak; first-week crash and settings-reset check on a second PC before any public release",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-085",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "pc-version-stutter-crashes",
+  "theme": "Stutter, crashes, long loads, heavy hardware demands, a bad port",
+  "valence": "punished",
+  "figure": "1,139 (14.7%) of 7,757 kept reviews; mean rank 1 of 20 (new file)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.2",
+   "8.1.3",
+   "8.2.1"
+  ],
+  "test": "Frame budget in packaged build (median 16.7 ms, p99 25 ms); no hitch at the play-to-speech change; zero crashes in a long Soak; first-week crash and settings-reset check on a second PC before any public release",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-086",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "pc-version-stutter-crashes",
+  "theme": "Stutter, crashes, long loads, heavy hardware demands, a bad port",
+  "valence": "punished",
+  "figure": "533 (14.7%) of 3,634 reviews; mean rank 7 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "8.1.1",
+   "8.1.2",
+   "8.1.3",
+   "8.1.2",
+   "8.1.3",
+   "8.2.1"
+  ],
+  "test": "Frame budget in packaged build (median 16.7 ms, p99 25 ms); no hitch at the play-to-speech change; zero crashes in a long Soak; first-week crash and settings-reset check on a second PC before any public release",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-087",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "bugs-block-progress",
+  "theme": "Bugs that stop progress or break the illusion",
+  "valence": "punished",
+  "figure": "888 (15.6%) of 5,701 reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "8.2.1"
+  ],
+  "test": "SaveChaos and Soak pass; nightly AI-tester walk finds 0 progress blockers; ER-CORE-01: Tom never stuck over 5 s",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-088",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "bugs-block-progress",
+  "theme": "Bugs that stop progress or break the illusion",
+  "valence": "punished",
+  "figure": "347 (5.3%) of 6,518 kept reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "8.2.1"
+  ],
+  "test": "SaveChaos and Soak pass; nightly AI-tester walk finds 0 progress blockers; ER-CORE-01: Tom never stuck over 5 s",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-089",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "bugs-block-progress",
+  "theme": "Bugs that stop progress or break the illusion",
+  "valence": "punished",
+  "figure": "647 (8.3%) of 7,757 kept reviews; mean rank 2 of 20 (new file)",
+  "parts": [
+   "8.2.1"
+  ],
+  "test": "SaveChaos and Soak pass; nightly AI-tester walk finds 0 progress blockers; ER-CORE-01: Tom never stuck over 5 s",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-090",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "bugs-block-progress",
+  "theme": "Bugs that stop progress or break the illusion",
+  "valence": "punished",
+  "figure": "251 (6.9%) of 3,634 reviews; mean rank 6 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "8.2.1"
+  ],
+  "test": "SaveChaos and Soak pass; nightly AI-tester walk finds 0 progress blockers; ER-CORE-01: Tom never stuck over 5 s",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-091",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "thin-predictable-story",
+  "theme": "A story that felt predictable, cliched, rushed or thin",
+  "valence": "punished",
+  "figure": "476 (8.3%) of 5,701 reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.1.4",
+   "3.1.1"
+  ],
+  "test": "Fresh panel reads Act I: no tester predicts the Sunday outcome or the ending in the first hour; panel 5 of 8 or better on the week run",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-092",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "thin-predictable-story",
+  "theme": "A story that felt predictable, cliched, rushed or thin",
+  "valence": "punished",
+  "figure": "455 (7.0%) of 6,518 kept reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.1.4",
+   "3.1.1"
+  ],
+  "test": "Fresh panel reads Act I: no tester predicts the Sunday outcome or the ending in the first hour; panel 5 of 8 or better on the week run",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-093",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "thin-predictable-story",
+  "theme": "A story that felt predictable, cliched, rushed or thin",
+  "valence": "punished",
+  "figure": "928 (12.0%) of 7,757 kept reviews; mean rank 3 of 20 (new file)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.1.4",
+   "3.1.1"
+  ],
+  "test": "Fresh panel reads Act I: no tester predicts the Sunday outcome or the ending in the first hour; panel 5 of 8 or better on the week run",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-094",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "thin-predictable-story",
+  "theme": "A story that felt predictable, cliched, rushed or thin",
+  "valence": "punished",
+  "figure": "786 (21.6%) of 3,634 reviews; mean rank 1 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.3",
+   "3.1.4",
+   "3.1.5",
+   "3.1.6",
+   "3.1.4",
+   "3.1.1"
+  ],
+  "test": "Fresh panel reads Act I: no tester predicts the Sunday outcome or the ending in the first hour; panel 5 of 8 or better on the week run",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-095",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "boring-dead-minutes",
+  "theme": "Boring: nothing to do for minutes",
+  "valence": "punished",
+  "figure": "623 (10.9%) of 5,701 reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "7.12",
+   "7.14",
+   "3.5.1",
+   "3.5.2",
+   "3.5.3",
+   "3.5.4",
+   "3.5.5",
+   "3.5.6",
+   "3.5.7"
+  ],
+  "test": "ER-CORE-05: never more than 5 empty minutes in 30; ER-CORE-07: something to do within 30 real seconds by day; P4 run counts empty minutes (earlier run had 11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-096",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "boring-dead-minutes",
+  "theme": "Boring: nothing to do for minutes",
+  "valence": "punished",
+  "figure": "315 (4.8%) of 6,518 kept reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "7.12",
+   "7.14",
+   "3.5.1",
+   "3.5.2",
+   "3.5.3",
+   "3.5.4",
+   "3.5.5",
+   "3.5.6",
+   "3.5.7"
+  ],
+  "test": "ER-CORE-05: never more than 5 empty minutes in 30; ER-CORE-07: something to do within 30 real seconds by day; P4 run counts empty minutes (earlier run had 11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-097",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "boring-dead-minutes",
+  "theme": "Boring: nothing to do for minutes",
+  "valence": "punished",
+  "figure": "529 (6.8%) of 7,757 kept reviews; mean rank 4 of 20 (new file)",
+  "parts": [
+   "7.12",
+   "7.14",
+   "3.5.1",
+   "3.5.2",
+   "3.5.3",
+   "3.5.4",
+   "3.5.5",
+   "3.5.6",
+   "3.5.7"
+  ],
+  "test": "ER-CORE-05: never more than 5 empty minutes in 30; ER-CORE-07: something to do within 30 real seconds by day; P4 run counts empty minutes (earlier run had 11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-098",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "boring-dead-minutes",
+  "theme": "Boring: nothing to do for minutes",
+  "valence": "punished",
+  "figure": "420 (11.6%) of 3,634 reviews; mean rank 5 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "7.12",
+   "7.14",
+   "3.5.1",
+   "3.5.2",
+   "3.5.3",
+   "3.5.4",
+   "3.5.5",
+   "3.5.6",
+   "3.5.7"
+  ],
+  "test": "ER-CORE-05: never more than 5 empty minutes in 30; ER-CORE-07: something to do within 30 real seconds by day; P4 run counts empty minutes (earlier run had 11)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-099",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "missions-waste-time-fail-your-way",
+  "theme": "Missions that waste time, give no direction or fail you for doing it your way",
+  "valence": "punished",
+  "figure": "409 (7.2%) of 5,701 reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.5.6",
+   "1.6.1",
+   "3.5.7"
+  ],
+  "test": "ER-JOB-03 and ER-JOB-05: three keys to every lock and failure continues; every authored job accepts any way of reaching the named result and fails only on what the town would notice",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-100",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "missions-waste-time-fail-your-way",
+  "theme": "Missions that waste time, give no direction or fail you for doing it your way",
+  "valence": "punished",
+  "figure": "436 (6.7%) of 6,518 kept reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.5.6",
+   "1.6.1",
+   "3.5.7"
+  ],
+  "test": "ER-JOB-03 and ER-JOB-05: three keys to every lock and failure continues; every authored job accepts any way of reaching the named result and fails only on what the town would notice",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-101",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "missions-waste-time-fail-your-way",
+  "theme": "Missions that waste time, give no direction or fail you for doing it your way",
+  "valence": "punished",
+  "figure": "644 (8.3%) of 7,757 kept reviews; mean rank 5 of 20 (new file)",
+  "parts": [
+   "3.5.6",
+   "1.6.1",
+   "3.5.7"
+  ],
+  "test": "ER-JOB-03 and ER-JOB-05: three keys to every lock and failure continues; every authored job accepts any way of reaching the named result and fails only on what the town would notice",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-102",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "missions-waste-time-fail-your-way",
+  "theme": "Missions that waste time, give no direction or fail you for doing it your way",
+  "valence": "punished",
+  "figure": "56 (1.5%) of 3,634 reviews; mean rank 14 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.5.6",
+   "1.6.1",
+   "3.5.7"
+  ],
+  "test": "ER-JOB-03 and ER-JOB-05: three keys to every lock and failure continues; every authored job accepts any way of reaching the named result and fails only on what the town would notice",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-103",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "combat-clunky-unfair",
+  "theme": "Combat that felt clunky or unfair",
+  "valence": "punished",
+  "figure": "1,182 (20.7%) of 5,701 reviews; mean rank 6 of 20 (new file)",
+  "parts": [
+   "1.3.1",
+   "1.3.2",
+   "1.3.3",
+   "1.3.9"
+  ],
+  "test": "ER-FIGHT-01 to 04: timings inside sheet bands; blows readable 0.45 to 0.80 s ahead; a way out at every moment; Tom in control within 60 real seconds of a beating",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-104",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "combat-clunky-unfair",
+  "theme": "Combat that felt clunky or unfair",
+  "valence": "punished",
+  "figure": "231 (6.4%) of 3,634 reviews; mean rank 3 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.1",
+   "1.3.2",
+   "1.3.3",
+   "1.3.9"
+  ],
+  "test": "ER-FIGHT-01 to 04: timings inside sheet bands; blows readable 0.45 to 0.80 s ahead; a way out at every moment; Tom in control within 60 real seconds of a beating",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-105",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "same-loop",
+  "theme": "The same loop over and over",
+  "valence": "punished",
+  "figure": "385 (6.8%) of 5,701 reviews; mean rank 7 of 20 (new file)",
+  "parts": [
+   "7.14",
+   "1.3.12",
+   "3.4.2",
+   "3.7"
+  ],
+  "test": "ER-JOB-06: no set piece twice in 30 minutes and no fare wrinkle twice running; two different thirty-minute newcomer routes (PLAN phase 3 exit)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-106",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "same-loop",
+  "theme": "The same loop over and over",
+  "valence": "punished",
+  "figure": "395 (6.1%) of 6,518 kept reviews; mean rank 7 of 20 (new file)",
+  "parts": [
+   "7.14",
+   "1.3.12",
+   "3.4.2",
+   "3.7"
+  ],
+  "test": "ER-JOB-06: no set piece twice in 30 minutes and no fare wrinkle twice running; two different thirty-minute newcomer routes (PLAN phase 3 exit)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-107",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "same-loop",
+  "theme": "The same loop over and over",
+  "valence": "punished",
+  "figure": "398 (5.1%) of 7,757 kept reviews; mean rank 7 of 20 (new file)",
+  "parts": [
+   "7.14",
+   "1.3.12",
+   "3.4.2",
+   "3.7"
+  ],
+  "test": "ER-JOB-06: no set piece twice in 30 minutes and no fare wrinkle twice running; two different thirty-minute newcomer routes (PLAN phase 3 exit)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-108",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "same-loop",
+  "theme": "The same loop over and over",
+  "valence": "punished",
+  "figure": "281 (7.7%) of 3,634 reviews; mean rank 9 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "7.14",
+   "1.3.12",
+   "3.4.2",
+   "3.7"
+  ],
+  "test": "ER-JOB-06: no set piece twice in 30 minutes and no fare wrinkle twice running; two different thirty-minute newcomer routes (PLAN phase 3 exit)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-109",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "controls-menus-slow-animation",
+  "theme": "Menus, controls, camera and slow animations",
+  "valence": "punished",
+  "figure": "318 (5.6%) of 5,701 reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "1.1.1",
+   "1.6.8",
+   "6.4",
+   "6.6"
+  ],
+  "test": "ER-INPUT-01: every action answers within 100 ms; door in or out under 2 s; Esc pauses with Resume; feel sheet records time from key to Tom moving and the longest a common action holds control (owed)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-110",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "controls-menus-slow-animation",
+  "theme": "Menus, controls, camera and slow animations",
+  "valence": "punished",
+  "figure": "167 (2.6%) of 6,518 kept reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "1.1.1",
+   "1.6.8",
+   "6.4",
+   "6.6"
+  ],
+  "test": "ER-INPUT-01: every action answers within 100 ms; door in or out under 2 s; Esc pauses with Resume; feel sheet records time from key to Tom moving and the longest a common action holds control (owed)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-111",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "controls-menus-slow-animation",
+  "theme": "Menus, controls, camera and slow animations",
+  "valence": "punished",
+  "figure": "698 (9.0%) of 7,757 kept reviews; mean rank 8 of 20 (new file)",
+  "parts": [
+   "1.1.1",
+   "1.6.8",
+   "6.4",
+   "6.6"
+  ],
+  "test": "ER-INPUT-01: every action answers within 100 ms; door in or out under 2 s; Esc pauses with Resume; feel sheet records time from key to Tom moving and the longest a common action holds control (owed)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-112",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "controls-menus-slow-animation",
+  "theme": "Menus, controls, camera and slow animations",
+  "valence": "punished",
+  "figure": "93 (2.6%) of 3,634 reviews; mean rank 17 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.1.1",
+   "1.6.8",
+   "6.4",
+   "6.6"
+  ],
+  "test": "ER-INPUT-01: every action answers within 100 ms; door in or out under 2 s; Esc pauses with Resume; feel sheet records time from key to Tom moving and the longest a common action holds control (owed)",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-113",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "too-short-too-dear",
+  "theme": "Too short, too expensive, not worth the price",
+  "valence": "punished",
+  "figure": "464 (8.1%) of 5,701 reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI-timed main story 15 to 20 hours; price set and judged by a friends' build question 'would you pay this?'",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-114",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "too-short-too-dear",
+  "theme": "Too short, too expensive, not worth the price",
+  "valence": "punished",
+  "figure": "272 (4.2%) of 6,518 kept reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI-timed main story 15 to 20 hours; price set and judged by a friends' build question 'would you pay this?'",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-115",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "too-short-too-dear",
+  "theme": "Too short, too expensive, not worth the price",
+  "valence": "punished",
+  "figure": "241 (3.1%) of 7,757 kept reviews; mean rank 9 of 20 (new file)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI-timed main story 15 to 20 hours; price set and judged by a friends' build question 'would you pay this?'",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-116",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "too-short-too-dear",
+  "theme": "Too short, too expensive, not worth the price",
+  "valence": "punished",
+  "figure": "713 (19.6%) of 3,634 reviews; mean rank 2 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "10.2",
+   "10.12"
+  ],
+  "test": "AI-timed main story 15 to 20 hours; price set and judged by a friends' build question 'would you pay this?'",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-117",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "long-cutscenes-slow-opening",
+  "theme": "Too many or too long cutscenes, a slow opening, too much talk",
+  "valence": "punished",
+  "figure": "612 (10.7%) of 5,701 reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "7.1",
+   "5.8.3"
+  ],
+  "test": "ER-FIRST-01: control within 1.5 min and a verb within 3; every scene skippable and at most 60 s; median first speech 2 s or less",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-118",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "long-cutscenes-slow-opening",
+  "theme": "Too many or too long cutscenes, a slow opening, too much talk",
+  "valence": "punished",
+  "figure": "13 (0.2%) of 6,518 kept reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "7.1",
+   "5.8.3"
+  ],
+  "test": "ER-FIRST-01: control within 1.5 min and a verb within 3; every scene skippable and at most 60 s; median first speech 2 s or less",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-119",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "long-cutscenes-slow-opening",
+  "theme": "Too many or too long cutscenes, a slow opening, too much talk",
+  "valence": "punished",
+  "figure": "63 (0.8%) of 7,757 kept reviews; mean rank 10 of 20 (new file)",
+  "parts": [
+   "5.8.2",
+   "7.1",
+   "5.8.3"
+  ],
+  "test": "ER-FIRST-01: control within 1.5 min and a verb within 3; every scene skippable and at most 60 s; median first speech 2 s or less",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-120",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "long-cutscenes-slow-opening",
+  "theme": "Too many or too long cutscenes, a slow opening, too much talk",
+  "valence": "punished",
+  "figure": "510 (14.0%) of 3,634 reviews; mean rank 4 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "5.8.2",
+   "7.1",
+   "5.8.3"
+  ],
+  "test": "ER-FIRST-01: control within 1.5 min and a verb within 3; every scene skippable and at most 60 s; median first speech 2 s or less",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-121",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "difficulty-wrong",
+  "theme": "Difficulty that is wrong",
+  "valence": "punished",
+  "figure": "338 (5.9%) of 5,701 reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "7.10",
+   "7.9"
+  ],
+  "test": "ER-CORE-04: no game-over screen, control back within 2 real minutes; assists (seeing assist, hints) each switchable",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-122",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "difficulty-wrong",
+  "theme": "Difficulty that is wrong",
+  "valence": "punished",
+  "figure": "126 (1.9%) of 6,518 kept reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "7.10",
+   "7.9"
+  ],
+  "test": "ER-CORE-04: no game-over screen, control back within 2 real minutes; assists (seeing assist, hints) each switchable",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-123",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "difficulty-wrong",
+  "theme": "Difficulty that is wrong",
+  "valence": "punished",
+  "figure": "292 (3.8%) of 7,757 kept reviews; mean rank 11 of 20 (new file)",
+  "parts": [
+   "7.10",
+   "7.9"
+  ],
+  "test": "ER-CORE-04: no game-over screen, control back within 2 real minutes; assists (seeing assist, hints) each switchable",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-124",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "difficulty-wrong",
+  "theme": "Difficulty that is wrong",
+  "valence": "punished",
+  "figure": "109 (3.0%) of 3,634 reviews; mean rank 12 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "7.10",
+   "7.9"
+  ],
+  "test": "ER-CORE-04: no game-over screen, control back within 2 real minutes; assists (seeing assist, hints) each switchable",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-125",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "save-costs-time",
+  "theme": "A save system that costs time",
+  "valence": "punished",
+  "figure": "327 (5.7%) of 5,701 reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "7.8",
+   "6.4"
+  ],
+  "test": "ER-SAVE-01: autosave after every deed and job step, a reload gives the same next hour; ER-SAVE-02: no destructive choice one press from Resume; Continue brings him back",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-126",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "save-costs-time",
+  "theme": "A save system that costs time",
+  "valence": "punished",
+  "figure": "21 (0.3%) of 6,518 kept reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "7.8",
+   "6.4"
+  ],
+  "test": "ER-SAVE-01: autosave after every deed and job step, a reload gives the same next hour; ER-SAVE-02: no destructive choice one press from Resume; Continue brings him back",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-127",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "save-costs-time",
+  "theme": "A save system that costs time",
+  "valence": "punished",
+  "figure": "111 (1.4%) of 7,757 kept reviews; mean rank 12 of 20 (new file)",
+  "parts": [
+   "7.8",
+   "6.4"
+  ],
+  "test": "ER-SAVE-01: autosave after every deed and job step, a reload gives the same next hour; ER-SAVE-02: no destructive choice one press from Resume; Continue brings him back",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-128",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "save-costs-time",
+  "theme": "A save system that costs time",
+  "valence": "punished",
+  "figure": "29 (0.8%) of 3,634 reviews; mean rank 19 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "7.8",
+   "6.4"
+  ],
+  "test": "ER-SAVE-01: autosave after every deed and job step, a reload gives the same next hour; ER-SAVE-02: no destructive choice one press from Resume; Continue brings him back",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-129",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "systems-unexplained",
+  "theme": "Systems nobody explains",
+  "valence": "punished",
+  "figure": "286 (5.0%) of 5,701 reviews; mean rank 13 of 20 (new file)",
+  "parts": [
+   "6.5",
+   "6.1.1",
+   "7.1"
+  ],
+  "test": "ER-FIRST-03: never two hints within 12 s; P4: 5 newcomers reach the first purpose unaided; every usable thing has a prompt (ER-INPUT-02)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-130",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "systems-unexplained",
+  "theme": "Systems nobody explains",
+  "valence": "punished",
+  "figure": "12 (0.2%) of 6,518 kept reviews; mean rank 13 of 20 (new file)",
+  "parts": [
+   "6.5",
+   "6.1.1",
+   "7.1"
+  ],
+  "test": "ER-FIRST-03: never two hints within 12 s; P4: 5 newcomers reach the first purpose unaided; every usable thing has a prompt (ER-INPUT-02)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-131",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "systems-unexplained",
+  "theme": "Systems nobody explains",
+  "valence": "punished",
+  "figure": "25 (0.3%) of 7,757 kept reviews; mean rank 13 of 20 (new file)",
+  "parts": [
+   "6.5",
+   "6.1.1",
+   "7.1"
+  ],
+  "test": "ER-FIRST-03: never two hints within 12 s; P4: 5 newcomers reach the first purpose unaided; every usable thing has a prompt (ER-INPUT-02)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-132",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "systems-unexplained",
+  "theme": "Systems nobody explains",
+  "valence": "punished",
+  "figure": "54 (1.5%) of 3,634 reviews; mean rank 20 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "6.5",
+   "6.1.1",
+   "7.1"
+  ],
+  "test": "ER-FIRST-03: never two hints within 12 s; P4: 5 newcomers reach the first purpose unaided; every usable thing has a prompt (ER-INPUT-02)",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-133",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "hollow-world-arbitrary-rules",
+  "theme": "A world that is hollow, or whose rules change on a whim",
+  "valence": "punished",
+  "figure": "227 (4.0%) of 5,701 reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.2",
+   "2.4.3",
+   "2.1.1"
+  ],
+  "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-134",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "hollow-world-arbitrary-rules",
+  "theme": "A world that is hollow, or whose rules change on a whim",
+  "valence": "punished",
+  "figure": "18 (0.3%) of 6,518 kept reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.2",
+   "2.4.3",
+   "2.1.1"
+  ],
+  "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-135",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "hollow-world-arbitrary-rules",
+  "theme": "A world that is hollow, or whose rules change on a whim",
+  "valence": "punished",
+  "figure": "56 (0.7%) of 7,757 kept reviews; mean rank 14 of 20 (new file)",
+  "parts": [
+   "3.6.2",
+   "2.4.3",
+   "2.1.1"
+  ],
+  "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-136",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "hollow-world-arbitrary-rules",
+  "theme": "A world that is hollow, or whose rules change on a whim",
+  "valence": "punished",
+  "figure": "167 (4.6%) of 3,634 reviews; mean rank 15 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.6.2",
+   "2.4.3",
+   "2.1.1"
+  ],
+  "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-137",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "survival-chores",
+  "theme": "Survival chores as friction (hunger, sleep, wear, washing)",
+  "valence": "punished",
+  "figure": "217 (3.8%) of 5,701 reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "1.6.6",
+   "1.6.9"
+  ],
+  "test": "No hunger, sleep or wear meters in the build (search and play check); getting ready takes a minute at most",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-138",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "survival-chores",
+  "theme": "Survival chores as friction (hunger, sleep, wear, washing)",
+  "valence": "punished",
+  "figure": "16 (0.2%) of 6,518 kept reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "1.6.6",
+   "1.6.9"
+  ],
+  "test": "No hunger, sleep or wear meters in the build (search and play check); getting ready takes a minute at most",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-139",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "survival-chores",
+  "theme": "Survival chores as friction (hunger, sleep, wear, washing)",
+  "valence": "punished",
+  "figure": "47 (0.6%) of 7,757 kept reviews; mean rank 15 of 20 (new file)",
+  "parts": [
+   "1.6.6",
+   "1.6.9"
+  ],
+  "test": "No hunger, sleep or wear meters in the build (search and play check); getting ready takes a minute at most",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-140",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "survival-chores",
+  "theme": "Survival chores as friction (hunger, sleep, wear, washing)",
+  "valence": "punished",
+  "figure": "58 (1.6%) of 3,634 reviews; not ranked",
+  "parts": [
+   "1.6.6",
+   "1.6.9"
+  ],
+  "test": "No hunger, sleep or wear meters in the build (search and play check); getting ready takes a minute at most",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-141",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "paid-extras",
+  "theme": "Paid extras, microtransactions, no story add-ons",
+  "valence": "punished",
+  "figure": "123 (2.2%) of 5,701 reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "10.6",
+   "10.2"
+  ],
+  "test": "No content announced and unshipped at release; store page lists only what ships; no microtransactions in build",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-142",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "paid-extras",
+  "theme": "Paid extras, microtransactions, no story add-ons",
+  "valence": "punished",
+  "figure": "80 (1.2%) of 6,518 kept reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "10.6",
+   "10.2"
+  ],
+  "test": "No content announced and unshipped at release; store page lists only what ships; no microtransactions in build",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-143",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "paid-extras",
+  "theme": "Paid extras, microtransactions, no story add-ons",
+  "valence": "punished",
+  "figure": "43 (0.6%) of 7,757 kept reviews; mean rank 16 of 20 (new file)",
+  "parts": [
+   "10.6",
+   "10.2"
+  ],
+  "test": "No content announced and unshipped at release; store page lists only what ships; no microtransactions in build",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-144",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "paid-extras",
+  "theme": "Paid extras, microtransactions, no story add-ons",
+  "valence": "punished",
+  "figure": "85 (2.3%) of 3,634 reviews; not ranked",
+  "parts": [
+   "10.6",
+   "10.2"
+  ],
+  "test": "No content announced and unshipped at release; store page lists only what ships; no microtransactions in build",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-145",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "stealth-thin-stupid",
+  "theme": "Stealth that is thin or stupid",
+  "valence": "punished",
+  "figure": "197 (3.5%) of 5,701 reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "2.2.2",
+   "1.4.1",
+   "2.3.2"
+  ],
+  "test": "ER-EYES-06: a noise is suspicion never 'he did it'; ER-EYES-03: cue at least 0.8 s before identification; a witness catches only what the seven slots exposed (golden rows)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-146",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "stealth-thin-stupid",
+  "theme": "Stealth that is thin or stupid",
+  "valence": "punished",
+  "figure": "7 (0.1%) of 6,518 kept reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "2.2.2",
+   "1.4.1",
+   "2.3.2"
+  ],
+  "test": "ER-EYES-06: a noise is suspicion never 'he did it'; ER-EYES-03: cue at least 0.8 s before identification; a witness catches only what the seven slots exposed (golden rows)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-147",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "stealth-thin-stupid",
+  "theme": "Stealth that is thin or stupid",
+  "valence": "punished",
+  "figure": "7 (0.1%) of 7,757 kept reviews; mean rank 17 of 20 (new file)",
+  "parts": [
+   "2.2.2",
+   "1.4.1",
+   "2.3.2"
+  ],
+  "test": "ER-EYES-06: a noise is suspicion never 'he did it'; ER-EYES-03: cue at least 0.8 s before identification; a witness catches only what the seven slots exposed (golden rows)",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-148",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "stealth-thin-stupid",
+  "theme": "Stealth that is thin or stupid",
+  "valence": "punished",
+  "figure": "268 (7.4%) of 3,634 reviews; mean rank 11 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "2.2.2",
+   "1.4.1",
+   "2.3.2"
+  ],
+  "test": "ER-EYES-06: a noise is suspicion never 'he did it'; ER-EYES-03: cue at least 0.8 s before identification; a witness catches only what the seven slots exposed (golden rows)",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-149",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "linear-empty-map",
+  "theme": "Linear, an empty map, an interactive movie",
+  "valence": "punished",
+  "figure": "115 (2.0%) of 5,701 reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "2.1.3",
+   "3.2.4",
+   "4.1.2"
+  ],
+  "test": "Every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13); in a 5-minute walk the tester meets named residents on routines",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-150",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "linear-empty-map",
+  "theme": "Linear, an empty map, an interactive movie",
+  "valence": "punished",
+  "figure": "0 (0.0%) of 6,518 kept reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "2.1.3",
+   "3.2.4",
+   "4.1.2"
+  ],
+  "test": "Every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13); in a 5-minute walk the tester meets named residents on routines",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-151",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "linear-empty-map",
+  "theme": "Linear, an empty map, an interactive movie",
+  "valence": "punished",
+  "figure": "24 (0.3%) of 7,757 kept reviews; mean rank 18 of 20 (new file)",
+  "parts": [
+   "2.1.3",
+   "3.2.4",
+   "4.1.2"
+  ],
+  "test": "Every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13); in a 5-minute walk the tester meets named residents on routines",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-152",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "linear-empty-map",
+  "theme": "Linear, an empty map, an interactive movie",
+  "valence": "punished",
+  "figure": "625 (17.2%) of 3,634 reviews; mean rank 8 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "2.1.3",
+   "3.2.4",
+   "4.1.2"
+  ],
+  "test": "Every visible person has a simulation identity (target 13 of 13 street figures, was 6 of 13); in a 5-minute walk the tester meets named residents on routines",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-153",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "weak-gunplay",
+  "theme": "Gunplay that feels weak or auto-aim",
+  "valence": "punished",
+  "figure": "28 (0.5%) of 5,701 reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Feel numbers for firearms measured from reference footage before build (none yet); shot heard 177 m by day",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-154",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "weak-gunplay",
+  "theme": "Gunplay that feels weak or auto-aim",
+  "valence": "punished",
+  "figure": "33 (0.5%) of 6,518 kept reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Feel numbers for firearms measured from reference footage before build (none yet); shot heard 177 m by day",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-155",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "weak-gunplay",
+  "theme": "Gunplay that feels weak or auto-aim",
+  "valence": "punished",
+  "figure": "100 (1.3%) of 7,757 kept reviews; mean rank 19 of 20 (new file)",
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Feel numbers for firearms measured from reference footage before build (none yet); shot heard 177 m by day",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-156",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "weak-gunplay",
+  "theme": "Gunplay that feels weak or auto-aim",
+  "valence": "punished",
+  "figure": "290 (8.0%) of 3,634 reviews; mean rank 16 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Feel numbers for firearms measured from reference footage before build (none yet); shot heard 177 m by day",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-157",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "looks-poor-dated",
+  "theme": "Looks poor or dated",
+  "valence": "punished",
+  "figure": "89 (1.6%) of 5,701 reviews; mean rank 20 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "5.1.1",
+   "5.2.4"
+  ],
+  "test": "Gate: fresh reviewer finds no visible fault or placeholder in the game's own camera against the Hook sheet",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-158",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "looks-poor-dated",
+  "theme": "Looks poor or dated",
+  "valence": "punished",
+  "figure": "11 (0.2%) of 6,518 kept reviews; mean rank 20 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "5.1.1",
+   "5.2.4"
+  ],
+  "test": "Gate: fresh reviewer finds no visible fault or placeholder in the game's own camera against the Hook sheet",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-159",
+  "source": "Steam players",
+  "game": "RDR2",
+  "theme_key": "looks-poor-dated",
+  "theme": "Looks poor or dated",
+  "valence": "punished",
+  "figure": "30 (0.4%) of 7,757 kept reviews; mean rank 20 of 20 (new file)",
+  "parts": [
+   "5.10",
+   "5.1.1",
+   "5.2.4"
+  ],
+  "test": "Gate: fresh reviewer finds no visible fault or placeholder in the game's own camera against the Hook sheet",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-160",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "looks-poor-dated",
+  "theme": "Looks poor or dated",
+  "valence": "punished",
+  "figure": "116 (3.2%) of 3,634 reviews; not ranked",
+  "parts": [
+   "5.10",
+   "5.1.1",
+   "5.2.4"
+  ],
+  "test": "Gate: fresh reviewer finds no visible fault or placeholder in the game's own camera against the Hook sheet",
+  "status_of_parts": "OUTSIDE",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-161",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "repeating-boss-set-piece",
+  "theme": "Boss knife fights that repeat",
+  "valence": "punished",
+  "figure": "28 (0.5%) of 5,701 reviews; mean rank 13 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.12",
+   "7.14"
+  ],
+  "test": "ER-JOB-06: no scripted set piece twice in 30 minutes; ER-TYPES-01 no two fights in a row use the same mix",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-162",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "repeating-boss-set-piece",
+  "theme": "Boss knife fights that repeat",
+  "valence": "punished",
+  "figure": "301 (8.3%) of 3,634 reviews; mean rank 13 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.3.12",
+   "7.14"
+  ],
+  "test": "ER-JOB-06: no scripted set piece twice in 30 minutes; ER-TYPES-01 no two fights in a row use the same mix",
+  "status_of_parts": "UNMEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-163",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "forced-racing-handling",
+  "theme": "Racing missions and slippery handling",
+  "valence": "punished",
+  "figure": "53 (0.9%) of 5,701 reviews; mean rank 18 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.2.1"
+  ],
+  "test": "No forced or timed race in any authored job (list check); handling numbers inside sheet M1 to M9",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "ST-164",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "forced-racing-handling",
+  "theme": "Racing missions and slippery handling",
+  "valence": "punished",
+  "figure": "220 (6.1%) of 3,634 reviews; mean rank 18 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "1.2.1"
+  ],
+  "test": "No forced or timed race in any authored job (list check); handling numbers inside sheet M1 to M9",
+  "status_of_parts": "PENDING",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-165",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "ending-forced-abrupt",
+  "theme": "An ending that felt forced, sad for no reason, or abrupt",
+  "valence": "punished",
+  "figure": "95 (1.7%) of 5,701 reviews; mean rank 10 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.1.5",
+   "3.1.4"
+  ],
+  "test": "ER-END-02 and 03: every cost that decides the ending shows its sign first; tester can predict the ending state from their own play",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-166",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "ending-forced-abrupt",
+  "theme": "An ending that felt forced, sad for no reason, or abrupt",
+  "valence": "punished",
+  "figure": "370 (10.2%) of 3,634 reviews; mean rank 10 of 20 (wip, KCD2 and Mafia)",
+  "parts": [
+   "3.1.5",
+   "3.1.4"
+  ],
+  "test": "ER-END-02 and 03: every cost that decides the ending shows its sign first; tester can predict the ending state from their own play",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-167",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "stiff-faces-repeated-models",
+  "theme": "Stiff faces and animation, repeated models and voices",
+  "valence": "punished",
+  "figure": "134 (2.4%) of 5,701 reviews; not ranked",
+  "parts": [
+   "5.2.4",
+   "5.1.5",
+   "5.2.5"
+  ],
+  "test": "P8: Tom and one more principal judged blind by a fresh reviewer; no stiff idle; a repeat-distance rule for crowd faces (none yet)",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "ST-168",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "stiff-faces-repeated-models",
+  "theme": "Stiff faces and animation, repeated models and voices",
+  "valence": "punished",
+  "figure": "94 (2.6%) of 3,634 reviews; not ranked",
+  "parts": [
+   "5.2.4",
+   "5.1.5",
+   "5.2.5"
+  ],
+  "test": "P8: Tom and one more principal judged blind by a fresh reviewer; no stiff idle; a repeat-distance rule for crowd faces (none yet)",
+  "status_of_parts": "OUTSIDE",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-169",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "choices-change-nothing",
+  "theme": "Choices that change nothing",
+  "valence": "punished",
+  "figure": "122 (2.1%) of 5,701 reviews; not ranked",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen and kept after restart; the Meridian Test",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-170",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "choices-change-nothing",
+  "theme": "Choices that change nothing",
+  "valence": "punished",
+  "figure": "79 (2.2%) of 3,634 reviews; not ranked",
+  "parts": [
+   "2.3.1",
+   "3.1.4"
+  ],
+  "test": "PLAN phase 3 exit: a consequence seen and kept after restart; the Meridian Test",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-171",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "ai-use-backlash",
+  "theme": "The studio replaced a translator with AI",
+  "valence": "punished",
+  "figure": "81 (1.4%) of 5,701 reviews; not ranked",
+  "parts": [
+   "3.6.7",
+   "10.2"
+  ],
+  "test": "AI notice shown once before the first talk; any live line reportable from pause or a key; Steam AI disclosure drafted and matches the build",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-172",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "ai-use-backlash",
+  "theme": "The studio replaced a translator with AI",
+  "valence": "punished",
+  "figure": "2 (0.1%) of 3,634 reviews; not ranked",
+  "parts": [
+   "3.6.7",
+   "10.2"
+  ],
+  "test": "AI notice shown once before the first talk; any live line reportable from pause or a key; Steam AI disclosure drafted and matches the build",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-173",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "studio-culture-war",
+  "theme": "Culture-war complaints about the studio or casting",
+  "valence": "punished",
+  "figure": "94 (1.6%) of 5,701 reviews; not ranked",
+  "parts": [],
+  "test": "None: off-topic for design",
+  "status_of_parts": "NOT A DESIGN THEME",
+  "excluded": ""
+ },
+ {
+  "id": "ST-174",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "studio-culture-war",
+  "theme": "Culture-war complaints about the studio or casting",
+  "valence": "punished",
+  "figure": "4 (0.1%) of 3,634 reviews; not ranked",
+  "parts": [],
+  "test": "None: off-topic for design",
+  "status_of_parts": "NOT A DESIGN THEME",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-175",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "slow-or-missing-fixes",
+  "theme": "Slow or missing fixes",
+  "valence": "punished",
+  "figure": "89 (1.6%) of 5,701 reviews; not ranked",
+  "parts": [
+   "10.6",
+   "10.9"
+  ],
+  "test": "FINDINGS.md at most 20 and every progress blocker fixed before scope is added (PLAN phase 4 exit); a named place for players to report problems exists",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-176",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "slow-or-missing-fixes",
+  "theme": "Slow or missing fixes",
+  "valence": "punished",
+  "figure": "23 (0.6%) of 3,634 reviews; not ranked",
+  "parts": [
+   "10.6",
+   "10.9"
+  ],
+  "test": "FINDINGS.md at most 20 and every progress blocker fixed before scope is added (PLAN phase 4 exit); a named place for players to report problems exists",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-177",
+  "source": "Steam players",
+  "game": "GTA V",
+  "theme_key": "post-release-updates-end",
+  "theme": "Story updates and add-ons stop after release",
+  "valence": "punished",
+  "figure": "3.3% (17 of 98 unhappy reviews, first pass); not ranked",
+  "parts": [
+   "10.6"
+  ],
+  "test": "Any update announced is shipped, or cut before anyone is told (list check of announcements against builds)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-178",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "direction-vs-waypoints",
+  "theme": "No direction, or too many markers",
+  "valence": "punished",
+  "figure": "11 (0.2%) no direction; 12 (0.2%) too many markers; not ranked",
+  "parts": [
+   "6.9",
+   "4.1.3",
+   "3.5.6"
+  ],
+  "test": "ER-JOB-01: a newcomer reaches a named place unaided within 3 minutes with no markers; 5 newcomers in P4",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-179",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "original-language-audio",
+  "theme": "Original-language audio and subtitles",
+  "valence": "praised",
+  "figure": "10 (0.2%) praise Czech voices; not ranked",
+  "parts": [
+   "OUT-10"
+  ],
+  "test": "None: English only is ruled",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "ST-180",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "original-language-audio",
+  "theme": "Original-language audio and subtitles",
+  "valence": "praised",
+  "figure": "54 (1.5%) mention original or Sicilian audio; not ranked",
+  "parts": [
+   "OUT-10"
+  ],
+  "test": "None: English only is ruled",
+  "status_of_parts": "OUT",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-181",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "photo-mode",
+  "theme": "A photo mode",
+  "valence": "praised",
+  "figure": "4 (0.1%) of 5,701 reviews; not ranked",
+  "parts": [
+   "6.8"
+  ],
+  "test": "Optional photo mode off the play path: free camera works in packaged build and never changes play state",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-182",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "photo-mode",
+  "theme": "A photo mode",
+  "valence": "praised",
+  "figure": "3 (0.1%) of 3,634 reviews; not ranked",
+  "parts": [
+   "6.8"
+  ],
+  "test": "Optional photo mode off the play path: free camera works in packaged build and never changes play state",
+  "status_of_parts": "UNDEFINED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-183",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "save-at-will",
+  "theme": "Saving whenever you like",
+  "valence": "praised",
+  "figure": "19 (0.3%) of 5,701 reviews; not ranked",
+  "parts": [
+   "7.8"
+  ],
+  "test": "ER-SAVE-01 autosave plus a ruling on free manual save (open: D35 and D58 never stop reloading)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-184",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "mods",
+  "theme": "Mods",
+  "valence": "praised",
+  "figure": "215 (3.8%) mention mods; not ranked",
+  "parts": [
+   "GD-06"
+  ],
+  "test": "None: no ruling on mods",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-185",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "more-content-after-end",
+  "theme": "More content, add-ons or a sequel after the end",
+  "valence": "praised",
+  "figure": "47 (0.8%) of 5,701 reviews; not ranked",
+  "parts": [
+   "10.6",
+   "7.15"
+  ],
+  "test": "A stated post-release plan exists and matches RULINGS 28 Oct (more districts in updates)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-186",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "more-content-after-end",
+  "theme": "More content, add-ons or a sequel after the end",
+  "valence": "praised",
+  "figure": "19 (0.5%) of 3,634 reviews; not ranked",
+  "parts": [
+   "10.6",
+   "7.15"
+  ],
+  "test": "A stated post-release plan exists and matches RULINGS 28 Oct (more districts in updates)",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-187",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "free-roam-bigger-map",
+  "theme": "Free roam, open exploration, a bigger map",
+  "valence": "praised",
+  "figure": "625 (17.2%) punish linear play (script count); not ranked",
+  "parts": [
+   "OUT-05"
+  ],
+  "test": "None: scope is one continuous playable street",
+  "status_of_parts": "OUT",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-188",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "children-absent",
+  "theme": "No children, towns feel empty or eerie without them",
+  "valence": "punished",
+  "figure": "5 (0.1%) of 5,701 reviews; not ranked",
+  "parts": [
+   "4.10",
+   "3.2.4"
+  ],
+  "test": "canon-gate: 0 children anywhere; the street's life carried by resident routines instead (13 of 13 street figures with a resident)",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "ST-189",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "children-absent",
+  "theme": "No children, towns feel empty or eerie without them",
+  "valence": "punished",
+  "figure": "0 (0.0%) of 3,634 reviews; not ranked",
+  "parts": [
+   "4.10",
+   "3.2.4"
+  ],
+  "test": "canon-gate: 0 children anywhere; the street's life carried by resident routines instead (13 of 13 street figures with a resident)",
+  "status_of_parts": "MEASURED",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-190",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "alcohol-in-play",
+  "theme": "Drink as a mechanic or setting (alcohol)",
+  "valence": "praised",
+  "figure": "197 (3.5%) mention drink; not ranked",
+  "parts": [
+   "OUT-04"
+  ],
+  "test": "None: canon bans alcohol shown or spoken of",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "ST-191",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "alcohol-in-play",
+  "theme": "Drink as a mechanic or setting (alcohol)",
+  "valence": "praised",
+  "figure": "16 (0.4%) mention drink; not ranked",
+  "parts": [
+   "OUT-04"
+  ],
+  "test": "None: canon bans alcohol shown or spoken of",
+  "status_of_parts": "OUT",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "ST-192",
+  "source": "Steam players",
+  "game": "KCD2",
+  "theme_key": "gambling-dice",
+  "theme": "Dice and gambling",
+  "valence": "praised",
+  "figure": "116 (2.0%) mention dice or gambling; not ranked",
+  "parts": [
+   "OUT-04"
+  ],
+  "test": "None: canon bans gambling shown or spoken of",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "ST-193",
+  "source": "Steam players",
+  "game": "Mafia",
+  "theme_key": "gambling-dice",
+  "theme": "Dice and gambling",
+  "valence": "praised",
+  "figure": "7 (0.2%) mention dice or gambling; not ranked",
+  "parts": [
+   "OUT-04"
+  ],
+  "test": "None: canon bans gambling shown or spoken of",
+  "status_of_parts": "OUT",
+  "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
+ },
+ {
+  "id": "CR-001",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "world-reacts-to-reputation-and-looks",
+  "theme": "World reacts to the player: NPCs report crimes, judge appearance and reputation",
+  "valence": "praised",
+  "figure": "5 of 6+roundup: PC Gamer; GamesRadar; Tom's Guide; TechRadar; Windows Central",
+  "parts": [
+   "2.12.4",
+   "2.5.1",
+   "2.12.5"
+  ],
+  "test": "Wear a worker's coat in one scene and a smart suit in the next; the same named person greets him differently by regard, and a witnessed theft is reported by that witness to a third person who then acts on it.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-002",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "multiple-solutions-to-jobs",
+  "theme": "Quests and jobs solvable several ways",
+  "valence": "praised",
+  "figure": "6 of 6+roundup: PC Gamer; GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central",
+  "parts": [
+   "3.5.6",
+   "3.5.3",
+   "1.6.1"
+  ],
+  "test": "Take one break-in job three times (sneak in, talk in, pay a key-holder); all three complete the job with different later consequences and none is flagged as the wrong route.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-003",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "directional-melee-praised",
+  "theme": "Melee combat reads and rewards learning (directional, counters)",
+  "valence": "praised",
+  "figure": "6 of 6+roundup: PC Gamer; Game Informer; Tom's Guide; TechRadar; Windows Central; Windows Central roundup (IGN, Dexerto, VideoGamer, GamesHub)",
+  "parts": [
+   "1.3.2",
+   "1.3.8"
+  ],
+  "test": "In a scripted fight against a known fighter type, a tester who learns his tell and answers it wins hurt; one who ignores it loses; two fresh testers report the tell was readable.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-004",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "combat-clunky-group-fights",
+  "theme": "Combat stiff, imprecise targeting, messy group fights",
+  "valence": "criticised",
+  "figure": "2 of 6+roundup: GamesRadar; TechRadar",
+  "parts": [
+   "1.3.3",
+   "1.3.1",
+   "1.3.8"
+  ],
+  "test": "In a three-against-one fight, Tom can pick and change who he is facing without lock-on and without the camera or targeting fighting him; blows land or miss visibly in under 100 ms of input.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-005",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "slow-punishing-early-hours",
+  "theme": "Slow, punishing early hours; patience required; steep learning curve",
+  "valence": "criticised",
+  "figure": "5 of 6+roundup: GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central roundup (IGN, Dexerto, VideoGamer, GamesHub)",
+  "parts": [
+   "7.1",
+   "6.5"
+  ],
+  "test": "A new tester with no briefing reaches a first earned payment and a first witnessed consequence inside the first hour without asking for help.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-006",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "manual-save-restriction",
+  "theme": "Saving restricted (potion needed) - major annoyance",
+  "valence": "criticised",
+  "figure": "1 of 6+roundup: TechRadar",
+  "parts": [
+   "7.8",
+   "7.9"
+  ],
+  "test": "Quit the game at any moment mid-street and mid-job; the next launch resumes at that moment with nothing lost and no item or cost needed to save.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-007",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "stealth-weakest-part",
+  "theme": "Stealth is the weakest part of play",
+  "valence": "criticised",
+  "figure": "1 of 6+roundup: Game Informer",
+  "parts": [
+   "1.4.2",
+   "1.1.5",
+   "1.4.1"
+  ],
+  "test": "A tester told only 'get past the watcher unseen' can do it using a doorway or unlit stretch and standing still, and the watcher's reaction matches the light on Tom.",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "CR-008",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "launch-stability-good",
+  "theme": "Stable, near bug-free on PC at launch",
+  "valence": "praised",
+  "figure": "3 of 6+roundup: PC Gamer; TechRadar; Windows Central",
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "The AI tester walks the packaged release build for an evening of play with no crash, no stuck state and no blocked job.",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-009",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "minor-glitches-break-quests",
+  "theme": "Occasional glitches, a quest blocked then auto-failed",
+  "valence": "criticised",
+  "figure": "3 of 6+roundup: GamesRadar; TechRadar; Windows Central",
+  "parts": [
+   "3.5.6",
+   "8.2.1"
+  ],
+  "test": "Force a job step to become impossible (target moved, door locked); the job moves to a named soft-fail state, tells Tom in plain words, and never fails silently.",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-010",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "ui-clutter-typos-hard-options",
+  "theme": "Menus/subtitles with typos, map crowded with icons, hard-to-read dialogue options",
+  "valence": "criticised",
+  "figure": "3 of 6+roundup: PC Gamer; TechRadar; Windows Central",
+  "parts": [
+   "6.4",
+   "6.9",
+   "6.1.2"
+  ],
+  "test": "Read every menu, subtitle and talk option in a full pass: zero typos, the paper map shows no quest icons, and each spoken option's tone matches what Tom then says.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-011",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "voice-acting-uneven",
+  "theme": "Voice acting uneven; secondary characters flat",
+  "valence": "criticised",
+  "figure": "3 of 6+roundup: PC Gamer; Tom's Guide; Windows Central",
+  "parts": [
+   "5.6.1",
+   "3.2.3"
+  ],
+  "test": "Play lines from all thirty regulars and crowd voices to a fresh listener; no voice is marked flat, odd-stressed or off-accent for its casting sheet.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-012",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "survival-meters-add-little",
+  "theme": "Hunger, sleep and spoiling food: another meter to tend",
+  "valence": "criticised",
+  "figure": "1 of 6+roundup: TechRadar",
+  "parts": [
+   "1.3.7",
+   "7.11"
+  ],
+  "test": "Play a week with no bars on screen; Tom's tiredness or hunger shows in his body and talk only, and no tester reports a chore to keep him fed.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-013",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "outcomes-softened",
+  "theme": "Consequences softened, choices lack weight",
+  "valence": "criticised",
+  "figure": "1 of 6+roundup: PC Gamer",
+  "parts": [
+   "2.19",
+   "2.6.9",
+   "2.6.4"
+  ],
+  "test": "After a witnessed serious deed, a mark stays on the town (a person who will not serve him, a notice, a charge) a week of game time later.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-014",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "period-authenticity-world",
+  "theme": "Historical authenticity and a believable, beautiful world",
+  "valence": "praised",
+  "figure": "5 of 6+roundup: GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central",
+  "parts": [
+   "4.9",
+   "5.10",
+   "4.1.1"
+  ],
+  "test": "A reviewer with Hook sheet and period photographs finds no anachronism in a walked 1990 street and can name the era from the street alone.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-015",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "story-and-characters",
+  "theme": "Strong story, characters and writing",
+  "valence": "praised",
+  "figure": "5 of 6+roundup: PC Gamer; GamesRadar; Game Informer; Tom's Guide; Windows Central",
+  "parts": [
+   "3.2.6",
+   "3.1.1",
+   "3.2.5"
+  ],
+  "test": "A tester can describe one named person's wants and why Tom should be honest with him after a single evening, without being told.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-016",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "side-activities-emergent",
+  "theme": "Side activities and emergent small moments",
+  "valence": "praised",
+  "figure": "3 of 6+roundup: PC Gamer; Game Informer; Tom's Guide",
+  "parts": [
+   "3.7",
+   "7.6",
+   "7.16"
+  ],
+  "test": "In one evening of free play, a tester names two unprompted moments they would retell, and neither was a main job.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-017",
+  "source": "critics",
+  "game": "KCD2",
+  "theme_key": "pacing-climax-and-linear-sections",
+  "theme": "Climax rushed; some main sections force a playstyle",
+  "valence": "criticised",
+  "figure": "2 of 6+roundup: Game Informer; Tom's Guide",
+  "parts": [
+   "7.4",
+   "3.1.3"
+  ],
+  "test": "Act III keeps the same number of open routes per job as Act II, and the final stretch is timed within the hour budget with no step marked forced.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-018",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "heists-highlight",
+  "theme": "Heist planning and execution is the highlight",
+  "valence": "praised",
+  "figure": "4 of 5+roundup: GameSpot; PCGamesN; The Guardian (via inkl); WeGotThisCovered",
+  "parts": [
+   "3.5.3",
+   "1.6.11",
+   "1.7.1"
+  ],
+  "test": "A break-in is cased in advance, a plan chosen, then carried out; the case changes at least one thing the job needs, and the outcome differs with the plan.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-019",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "missions-restrictive-fail",
+  "theme": "Missions restart or fail for small deviations; stalemates",
+  "valence": "criticised",
+  "figure": "2 of 5+roundup: GameSpot; PCGamesN",
+  "parts": [
+   "3.5.6",
+   "7.9"
+  ],
+  "test": "Tom kills a target early, arrives late or leaves the route; the job continues in a changed state rather than a fail-and-reload screen.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-020",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "three-protagonists",
+  "theme": "Three playable leads, Trevor and Michael praised",
+  "valence": "praised",
+  "figure": "2 of 5+roundup: GameSpot; The Guardian (via inkl)",
+  "parts": [
+   "OUT-01"
+  ],
+  "test": "",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "CR-021",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "character-thin-or-contradict",
+  "theme": "Characters overshadowed by the world, contradict motives to suit missions, story aimless",
+  "valence": "criticised",
+  "figure": "3 of 5+roundup: GameSpot; The Guardian (via inkl); CGMagazine",
+  "parts": [
+   "2.14",
+   "3.2.1",
+   "3.1.2"
+  ],
+  "test": "Take each principal through three jobs; in every scene what he does follows his stated temper and want, and a tester can state what Act II is about in one sentence.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-022",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "world-detail-praised",
+  "theme": "Dense, detailed, physical world",
+  "valence": "praised",
+  "figure": "5 of 5+roundup: GameSpot; PCGamesN; The Guardian (via inkl); CGMagazine; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "parts": [
+   "4.1.1",
+   "4.7",
+   "5.4.1"
+  ],
+  "test": "A tester walking Quay Street at dawn and at dusk lists small details unprompted that were not on the Hook sheet.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-023",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "satire-humour",
+  "theme": "Satire and humour (wears thin, heavy-handed, silly puns)",
+  "valence": "criticised",
+  "figure": "3 of 5+roundup: PCGamesN; CGMagazine; GameSpot",
+  "parts": [
+   "GD-05"
+  ],
+  "test": "",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-024",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "shooting-cover-weak",
+  "theme": "Shooting and cover system weak",
+  "valence": "criticised",
+  "figure": "2 of 5+roundup: GameSpot; PCGamesN",
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Firearms appear only at the dial's top; in those scenes Tom cannot trade shots from cover at will, and no mission requires a firefight to proceed.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-025",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "driving-first-person-twitchy",
+  "theme": "Driving too sensitive, hard in chases; vehicles distinct",
+  "valence": "criticised",
+  "figure": "1 of 5+roundup: GameSpot",
+  "parts": [
+   "1.2.1",
+   "1.5.3"
+  ],
+  "test": "A tester drives a chase with keyboard and pad; the car stays controllable at speed and a first-time driver stays on the road for a full lap.",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "CR-026",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "wanted-system-intense",
+  "theme": "Police chase and wanted levels intense",
+  "valence": "praised",
+  "figure": "1 of 5+roundup: GameSpot",
+  "parts": [
+   "2.13",
+   "2.6.10",
+   "1.5.4"
+  ],
+  "test": "After a witnessed deed, police response climbs in named steps and falls again with time and distance, and a tester can say what step it is at from what he sees.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-027",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "radio-and-soundtrack",
+  "theme": "Radio, soundtrack, custom music",
+  "valence": "praised",
+  "figure": "3 of 5+roundup: PCGamesN; CGMagazine; WeGotThisCovered",
+  "parts": [
+   "5.7.1",
+   "3.4.3"
+  ],
+  "test": "Tune the car radio through a full day; each station's programme is period-correct and Pauline's radio is not repeated within an hour.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-028",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "menus-loading-cumbersome",
+  "theme": "Menus cumbersome, long loading",
+  "valence": "criticised",
+  "figure": "2 of 5+roundup: PCGamesN; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "parts": [
+   "6.4",
+   "8.1.2"
+  ],
+  "test": "From main menu to Tom on the street in under the stated loading budget; any menu item is reached in three presses or fewer.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-029",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "pc-performance-visuals",
+  "theme": "Smooth 60 fps, strong graphics options, but heavy at max settings",
+  "valence": "praised",
+  "figure": "5 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; CGMagazine; GameSpot",
+  "parts": [
+   "8.1.3",
+   "8.3.1"
+  ],
+  "test": "Packaged build on a mid-range reference PC holds the frame target for a walk and a drive with no shader hitch; display options change visibly.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-030",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "first-person-mode",
+  "theme": "First-person mode",
+  "valence": "praised",
+  "figure": "3 of 5+roundup: GameSpot; PCGamesN; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "parts": [
+   "OUT-02"
+  ],
+  "test": "",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "CR-031",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "editor-director-mode",
+  "theme": "Rockstar Editor and Director Mode",
+  "valence": "praised",
+  "figure": "4 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; CGMagazine",
+  "parts": [
+   "6.8"
+  ],
+  "test": "Photo mode opens at any calm moment, hides the HUD, and saves a full-size image the tester can open outside the game.",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-032",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "online-multiplayer",
+  "theme": "GTA Online (lag, variety, heists)",
+  "valence": "praised",
+  "figure": "4 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "parts": [
+   "OUT-03"
+  ],
+  "test": "",
+  "status_of_parts": "OUT",
+  "excluded": ""
+ },
+ {
+  "id": "CR-033",
+  "source": "critics",
+  "game": "GTA V",
+  "theme_key": "little-new-value",
+  "theme": "Little new for returning players; high price",
+  "valence": "criticised",
+  "figure": "3 of 5+roundup: PCGamesN; CGMagazine; WeGotThisCovered",
+  "parts": [
+   "10.12"
+  ],
+  "test": "A free demo covers the first hour so a buyer can judge value before paying.",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-034",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "missions-scripted-punish-deviation",
+  "theme": "Story missions scripted, punish deviation, force violence",
+  "valence": "criticised",
+  "figure": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "parts": [
+   "3.5.6",
+   "7.9"
+  ],
+  "test": "Repeat one job leaving the 'intended' route; it continues with a changed state in 4 of 5 deviations tried, never an instant fail screen.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-035",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "mid-game-repetitive",
+  "theme": "Mission structure predictable and drags mid-game",
+  "valence": "criticised",
+  "figure": "2 of 5+roundup: GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "parts": [
+   "7.14",
+   "7.4"
+  ],
+  "test": "Across a week, no two consecutive jobs share the same step template and a tester names three different verbs used.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-036",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "story-characters-gang",
+  "theme": "Story and characters, Arthur and gang",
+  "valence": "praised",
+  "figure": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "parts": [
+   "3.2.2",
+   "3.2.6",
+   "3.1.1"
+  ],
+  "test": "A tester names every member of the firm and says what each wants after a week.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-037",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "world-reactive-detail",
+  "theme": "World detail and reactive towns and NPCs",
+  "valence": "praised",
+  "figure": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameZone",
+  "parts": [
+   "2.12.5",
+   "2.5.3",
+   "4.9"
+  ],
+  "test": "Spill, break or leave something in a street; within the hour bystanders react and the thing is still there or visibly dealt with.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-038",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "honor-system",
+  "theme": "Honor system and reactive greetings",
+  "valence": "praised",
+  "figure": "1 of 5+roundup: GameSpot",
+  "parts": [
+   "2.12.1",
+   "2.12.4"
+  ],
+  "test": "Raise and lower Tom's name by deeds; the same named person's greeting changes in words and manner, and no number is shown.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-039",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "survival-eating-weight",
+  "theme": "Eating and weight system intrusive",
+  "valence": "criticised",
+  "figure": "1 of 5+roundup: GameSpot",
+  "parts": [
+   "1.3.7"
+  ],
+  "test": "A week of play requires no eating chore; Tom's state shows only in body and talk.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-040",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "heavy-movement-many-controls",
+  "theme": "Heavy movement, many bindings, context inputs, steep learning curve",
+  "valence": "criticised",
+  "figure": "2 of 5+roundup: Windows Central; GameZone",
+  "parts": [
+   "1.1.1",
+   "6.6",
+   "6.5"
+  ],
+  "test": "A tester uses only walk, run, one action key and talk for the first hour; any extra control is taught in play with no manual.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-041",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "launch-bugs-launcher",
+  "theme": "Crashes at launch, launcher problems",
+  "valence": "criticised",
+  "figure": "5 of 5+roundup: PC Gamer; bit-tech; GameSpot; Windows Central; GameZone",
+  "parts": [
+   "8.5",
+   "10.1",
+   "10.5"
+  ],
+  "test": "Fresh PC, install, launch and play without any account or captcha step beyond the store, no crash in a one-hour walk.",
+  "status_of_parts": "OUTSIDE",
+  "excluded": ""
+ },
+ {
+  "id": "CR-042",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "graphics-settings-overwhelming",
+  "theme": "Settings list overwhelming, many with little effect",
+  "valence": "criticised",
+  "figure": "3 of 5+roundup: PC Gamer; GameZone; Windows Central",
+  "parts": [
+   "8.3.1"
+  ],
+  "test": "The options screen has no more than a stated short list, each with a visible preview, and a default preset fits a mid-range PC.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-043",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "photo-mode",
+  "theme": "Photo mode",
+  "valence": "praised",
+  "figure": "3 of 5+roundup: PC Gamer; Windows Central; GameZone",
+  "parts": [
+   "6.8"
+  ],
+  "test": "Photo mode opens at one key, hides the HUD, offers depth of field and saves a local image.",
+  "status_of_parts": "UNDEFINED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-044",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "visual-showcase",
+  "theme": "Best-looking game, lighting and detail",
+  "valence": "praised",
+  "figure": "5 of 5+roundup: PC Gamer; bit-tech; GameSpot; Windows Central; GameZone",
+  "parts": [
+   "5.4.1",
+   "5.4.2",
+   "5.10"
+  ],
+  "test": "Hook sheet and period photograph comparison of dawn, dusk and night frames shows no visible fault or placeholder.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-045",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "random-encounters-exploration",
+  "theme": "Random encounters and optional stories reward exploration",
+  "valence": "praised",
+  "figure": "3 of 5+roundup: PC Gamer; bit-tech; GameSpot",
+  "parts": [
+   "3.7",
+   "7.12"
+  ],
+  "test": "A tester walking without a job meets a street happening within ten minutes at three of four times of day.",
+  "status_of_parts": "UNMEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-046",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "auto-aim-stealth-limited",
+  "theme": "Auto-lock aim makes stealth unappealing; limited choice",
+  "valence": "criticised",
+  "figure": "1 of 5+roundup: GameSpot",
+  "parts": [
+   "1.3.3",
+   "1.4.2"
+  ],
+  "test": "Tom can avoid a fight by using light or leaving, and no job forces violence to continue.",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "CR-047",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "shallow-core-combat",
+  "theme": "Core combat shallow over long campaign",
+  "valence": "criticised",
+  "figure": "1 of 5+roundup: bit-tech",
+  "parts": [
+   "1.3.4",
+   "1.3.9"
+  ],
+  "test": "A tester lists at least four distinct ways a street fight can start or end (talk down, run, hurt one, police arrive).",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ },
+ {
+  "id": "CR-048",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "limited-fast-travel-slow-pace",
+  "theme": "Limited fast travel, slow methodical pace, 40-60 hours",
+  "valence": "criticised",
+  "figure": "3 of 5+roundup: PC Gamer; bit-tech; GameSpot",
+  "parts": [
+   "7.11",
+   "7.5"
+  ],
+  "test": "Time can be skipped by waiting or taking a ride, and no walk between two regular places exceeds the stated minutes.",
+  "status_of_parts": "PENDING",
+  "excluded": ""
+ },
+ {
+  "id": "CR-049",
+  "source": "critics",
+  "game": "RDR2",
+  "theme_key": "prequel-tension-emotional",
+  "theme": "Emotional tension, known outcome",
+  "valence": "praised",
+  "figure": "2 of 5+roundup: bit-tech; GameSpot",
+  "parts": [
+   "3.1.4",
+   "3.1.5"
+  ],
+  "test": "A tester at the start of Act III can predict some ending signs, and rates them as dread not spoiler.",
+  "status_of_parts": "MEASURED",
+  "excluded": ""
+ }
+]

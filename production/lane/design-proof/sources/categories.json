@@ -1,0 +1,2038 @@
+[
+ {
+  "id": "GD-001",
+  "category": "Concept and vision",
+  "sub": "High concept / pitch",
+  "covers": "One-paragraph game promise, genre, platform, audience",
+  "typical_standard": "One sentence a stranger can repeat; pillars (3-5) used to veto features",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "3.1",
+   "7.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-002",
+  "category": "Concept and vision",
+  "sub": "Design pillars",
+  "covers": "Few rules every feature is tested against",
+  "typical_standard": "3-5 pillars; each feature traced to one",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "7.6",
+   "9.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-003",
+  "category": "Concept and vision",
+  "sub": "Target audience and comparables",
+  "covers": "Who plays, what it is compared to",
+  "typical_standard": "Named comparables and audience profile",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document",
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "9.11",
+   "10.2"
+  ],
+  "covered": "partly",
+  "note": "Reference games named (GTA, KCD2); audience profile not clearly a part"
+ },
+ {
+  "id": "GD-004",
+  "category": "Concept and vision",
+  "sub": "Unique selling points / key features",
+  "covers": "What differs from competitors",
+  "typical_standard": "List of 3-7 features with a prototype for each",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.4",
+   "2.4",
+   "3.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-005",
+  "category": "Concept and vision",
+  "sub": "Scope, platform, budget",
+  "covers": "Team, timeline, platforms, cost",
+  "typical_standard": "Timeline and budget with risk buffer (convention)",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document",
+   "https://gamedesignskills.com/game-design/gdd-structure-formatting-guidelines/"
+  ],
+  "parts": [
+   "9.10",
+   "10.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-006",
+  "category": "Concept and vision",
+  "sub": "Risk register",
+  "covers": "Known unknowns and mitigation",
+  "typical_standard": "Reviewed on a fixed cadence; top risks have a prototype",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "9.10",
+   "9.5"
+  ],
+  "covered": "yes",
+  "note": "Overview carries Monday risk register"
+ },
+ {
+  "id": "GD-007",
+  "category": "Concept and vision",
+  "sub": "Revision history / document governance",
+  "covers": "Versioning, ownership, single source of truth",
+  "typical_standard": "Dated revisions; one home per fact",
+  "urls": [
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "9.12",
+   "9.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-008",
+  "category": "Core gameplay",
+  "sub": "Core loop",
+  "covers": "Moment-to-moment, session and long loops",
+  "typical_standard": "Loop playable in a prototype before content is made",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document",
+   "https://gamedeveloper.com/design/how-to-write-a-game-design-document"
+  ],
+  "parts": [
+   "7.2",
+   "7.3",
+   "7.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-009",
+  "category": "Core gameplay",
+  "sub": "Player verbs / controls",
+  "covers": "List of actions and input mapping",
+  "typical_standard": "Every action answers within 100 ms (LEDGER's own ER-INPUT-01); sources give no general number",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.1.1",
+   "6.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-010",
+  "category": "Core gameplay",
+  "sub": "Camera",
+  "covers": "Follow, collision, framing per state",
+  "typical_standard": "No clipping; lag tuned by measurement",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.1.2",
+   "1.2.2",
+   "5.8.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-011",
+  "category": "Core gameplay",
+  "sub": "Player character movement feel",
+  "covers": "Acceleration, turn rate, stops",
+  "typical_standard": "Measured against reference games (convention)",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "1.1.1",
+   "9.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-012",
+  "category": "Core gameplay",
+  "sub": "Traversal (climb, vault, swim, jump)",
+  "covers": "Movement extras",
+  "typical_standard": "Vault/step heights fixed in data",
+  "urls": [
+   "https://gamedeveloper.com/design/5-design-lessons-learned-from-i-the-legend-of-zelda-breath-of-the-wild-i-"
+  ],
+  "parts": [
+   "1.1.8",
+   "1.1.3"
+  ],
+  "covered": "partly",
+  "note": "No jump by ruling; swim/climb ruled out?"
+ },
+ {
+  "id": "GD-013",
+  "category": "Core gameplay",
+  "sub": "Melee combat",
+  "covers": "Blows, blocks, reactions, hit feedback",
+  "typical_standard": "Telegraph, hit-stop and reaction readable; KCD2-grade",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.3.1",
+   "1.3.2",
+   "5.2.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-014",
+  "category": "Core gameplay",
+  "sub": "Ranged combat / firearms",
+  "covers": "Aiming, recoil, ammo",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "1.3.10"
+  ],
+  "covered": "partly",
+  "note": "Guns rare by design; ruled out as a heavy system?"
+ },
+ {
+  "id": "GD-015",
+  "category": "Core gameplay",
+  "sub": "Enemy AI archetypes",
+  "covers": "Fighter types, behaviours, group tactics",
+  "typical_standard": "Distinct readable types; group roles",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "1.3.12",
+   "1.5.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-016",
+  "category": "Core gameplay",
+  "sub": "Stealth and detection",
+  "covers": "Sight cones, noise, light, awareness feedback",
+  "typical_standard": "Awareness shown to player before alert; Hitman uses visible cues",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding",
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds",
+   "https://gamedeveloper.com/design/mapping-out-the-subtle-social-cues-throughout-i-hitman-i-s-level-design"
+  ],
+  "parts": [
+   "1.4",
+   "2.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-017",
+  "category": "Core gameplay",
+  "sub": "Social stealth / disguise",
+  "covers": "Clothes and behaviour as cover",
+  "typical_standard": "Disguise rules clear and signposted",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding",
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds",
+   "https://gamedeveloper.com/design/mapping-out-the-subtle-social-cues-throughout-i-hitman-i-s-level-design"
+  ],
+  "parts": [
+   "1.4.4",
+   "2.2.5",
+   "5.1.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-018",
+  "category": "Core gameplay",
+  "sub": "Vehicles and driving",
+  "covers": "Handling, damage, camera, traffic interplay",
+  "typical_standard": "Handling measured from references",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.2.1",
+   "1.2.4",
+   "4.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-019",
+  "category": "Core gameplay",
+  "sub": "Chases",
+  "covers": "Flee, pursue, lose pursuers",
+  "typical_standard": "Always escapable; clear lose condition",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document",
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System"
+  ],
+  "parts": [
+   "1.5.1",
+   "1.5.3",
+   "2.6.10"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-020",
+  "category": "Core gameplay",
+  "sub": "Interaction system",
+  "covers": "Prompts, doors, pickups, contextual verbs",
+  "typical_standard": "Prompt shown only when usable; fades after learning",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "6.1.1",
+   "1.6.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-021",
+  "category": "Core gameplay",
+  "sub": "Inventory and carrying",
+  "covers": "What is held, weight, UI",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.1.4",
+   "1.6.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-022",
+  "category": "Core gameplay",
+  "sub": "Stats, skills and character progression",
+  "covers": "XP, trees, perks",
+  "typical_standard": "Convention; pacing curve",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "7.7",
+   "2.12"
+  ],
+  "covered": "partly",
+  "note": "No stats/skill trees; progression by position in the town. Ruled out by design?"
+ },
+ {
+  "id": "GD-023",
+  "category": "Core gameplay",
+  "sub": "Equipment and crafting",
+  "covers": "Gear, upgrades, crafting",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "1.6.10"
+  ],
+  "covered": "partly",
+  "note": "Crafting ruled out by design?"
+ },
+ {
+  "id": "GD-024",
+  "category": "Core gameplay",
+  "sub": "Companions / crew management",
+  "covers": "Orders, AI allies",
+  "typical_standard": "Orders readable; allies never block",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "1.7",
+   "2.11"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-025",
+  "category": "Core gameplay",
+  "sub": "Minigames and pastimes",
+  "covers": "Optional small activities",
+  "typical_standard": "Each a few minutes, own reward",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "7.16"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-026",
+  "category": "Open-world structure",
+  "sub": "World layout and districts",
+  "covers": "Zones, edges, nodes, landmarks, paths",
+  "typical_standard": "Lynch five elements; landmark visible from nodes",
+  "urls": [
+   "https://gamedeveloper.com/design/realism-and-legibility-in-open-world-level-design",
+   "https://gmtk.substack.com/p/how-nintendo-solved-zeldas-open-world"
+  ],
+  "parts": [
+   "4.1",
+   "4.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-027",
+  "category": "Open-world structure",
+  "sub": "Legibility and landmarks",
+  "covers": "Player can orient from silhouettes",
+  "typical_standard": "Sightline test from key spots",
+  "urls": [
+   "https://gamedeveloper.com/design/realism-and-legibility-in-open-world-level-design",
+   "https://gamedeveloper.com/design/5-design-lessons-learned-from-i-the-legend-of-zelda-breath-of-the-wild-i-"
+  ],
+  "parts": [
+   "4.1.3",
+   "6.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-028",
+  "category": "Open-world structure",
+  "sub": "World density / points of interest",
+  "covers": "Things to find per area",
+  "typical_standard": "POI diversity rule: neighbouring POIs differ; BotW something in view always (no hard number)",
+  "urls": [
+   "https://medium.com/my-games-company/how-to-make-an-exciting-open-world-the-pois-diversity-rule-90de6d748eac",
+   "https://gamedeveloper.com/design/5-design-lessons-learned-from-i-the-legend-of-zelda-breath-of-the-wild-i-",
+   "https://gmtk.substack.com/p/how-nintendo-solved-zeldas-open-world"
+  ],
+  "parts": [
+   "7.12",
+   "3.7"
+  ],
+  "covered": "partly",
+  "note": "No stated density target per street"
+ },
+ {
+  "id": "GD-029",
+  "category": "Open-world structure",
+  "sub": "Navigation without minimap",
+  "covers": "Paper map, signs, route hints",
+  "typical_standard": "Player can reach a stated place with no marker",
+  "urls": [
+   "https://gamedeveloper.com/design/realism-and-legibility-in-open-world-level-design",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "6.3",
+   "6.9",
+   "4.1.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-030",
+  "category": "Open-world structure",
+  "sub": "Fast travel / travel time",
+  "covers": "Time to cross the map",
+  "typical_standard": "Crossing time budgets (convention)",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "7.11",
+   "6.9"
+  ],
+  "covered": "partly",
+  "note": ""
+ },
+ {
+  "id": "GD-031",
+  "category": "Open-world structure",
+  "sub": "Unlock gating and soft keys",
+  "covers": "Access by rung rather than level",
+  "typical_standard": "Gate readable to player",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "2.12.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-032",
+  "category": "Open-world structure",
+  "sub": "Interiors and enterable ratio",
+  "covers": "How many buildings open",
+  "typical_standard": "Budget by cost per interior",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "4.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-033",
+  "category": "Open-world structure",
+  "sub": "Streaming and world partition",
+  "covers": "Loading, LOD, hitching",
+  "typical_standard": "No load screens in play; frame budget",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation",
+   "https://gdcvault.com/play/1035718/Supporting-Thousands-of-NPCs-in"
+  ],
+  "parts": [
+   "8.1.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-034",
+  "category": "Open-world structure",
+  "sub": "Time of day and weather systems",
+  "covers": "Cycle and gameplay effect",
+  "typical_standard": "Weather changes who is out",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "4.7",
+   "4.8",
+   "2.1.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-035",
+  "category": "Open-world structure",
+  "sub": "Environmental storytelling",
+  "covers": "Props and spaces telling story",
+  "typical_standard": "Per-space story beat in level brief",
+  "urls": [
+   "https://www.gdcvault.com/play/1023550/Level-Design-Workshop-360-Approach",
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design"
+  ],
+  "parts": [
+   "4.4",
+   "4.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-036",
+  "category": "Missions and quests",
+  "sub": "Mission design pillars and freedom",
+  "covers": "How objectives allow player choice",
+  "typical_standard": "Open objectives with several approaches",
+  "urls": [
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design",
+   "https://www.gdcvault.com/play/1023550/Level-Design-Workshop-360-Approach"
+  ],
+  "parts": [
+   "3.5",
+   "1.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-037",
+  "category": "Missions and quests",
+  "sub": "Mission template and states",
+  "covers": "Objectives, steps, failure states",
+  "typical_standard": "One template; each step has states",
+  "urls": [
+   "https://www.gdcvault.com/play/1023550/Level-Design-Workshop-360-Approach",
+   "https://www.gdcvault.com/play/1025145/contactUs"
+  ],
+  "parts": [
+   "3.5.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-038",
+  "category": "Missions and quests",
+  "sub": "Mission delivery / how jobs reach player",
+  "covers": "Hubs, phone calls, discovery",
+  "typical_standard": "Player never lost on what to do next",
+  "urls": [
+   "https://www.gdcvault.com/play/1023550/Level-Design-Workshop-360-Approach",
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design"
+  ],
+  "parts": [
+   "3.5.7",
+   "6.2.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-039",
+  "category": "Missions and quests",
+  "sub": "Main story structure",
+  "covers": "Acts, beats, endings",
+  "typical_standard": "Beat sheet with pacing",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html",
+   "https://gamedeveloper.com/design/how-to-write-a-game-design-document"
+  ],
+  "parts": [
+   "3.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-040",
+  "category": "Missions and quests",
+  "sub": "Side quests and side content",
+  "covers": "Optional stories and repeatables",
+  "typical_standard": "Side content with own beginning, middle, end",
+  "urls": [
+   "https://www.gdcvault.com/play/1025145/contactUs",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "3.3",
+   "3.4",
+   "3.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-041",
+  "category": "Missions and quests",
+  "sub": "Repeatable content quality",
+  "covers": "Fares, deliveries, repeated tasks",
+  "typical_standard": "Variation before repetition shows (convention)",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "3.4.2",
+   "7.14"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-042",
+  "category": "Missions and quests",
+  "sub": "Dynamic / emergent events",
+  "covers": "Street happenings",
+  "typical_standard": "Happens without player trigger",
+  "urls": [
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds",
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "3.7",
+   "2.1.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-043",
+  "category": "Missions and quests",
+  "sub": "Dependency and sequence break handling",
+  "covers": "Doing things out of order",
+  "typical_standard": "No soft-lock",
+  "urls": [
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design",
+   "https://www.gdcvault.com/play/1025145/contactUs"
+  ],
+  "parts": [
+   "3.5.6",
+   "2.19"
+  ],
+  "covered": "partly",
+  "note": ""
+ },
+ {
+  "id": "GD-044",
+  "category": "Missions and quests",
+  "sub": "Mission failure and retry",
+  "covers": "Fail states, retry points",
+  "typical_standard": "Retry within about a minute (convention)",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding"
+  ],
+  "parts": [
+   "7.9"
+  ],
+  "covered": "yes",
+  "note": "No reload; failure carried into world"
+ },
+ {
+  "id": "GD-045",
+  "category": "Missions and quests",
+  "sub": "Checkpoints / save design",
+  "covers": "Where progress is stored",
+  "typical_standard": "Never lose more than a few minutes",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding"
+  ],
+  "parts": [
+   "7.8",
+   "8.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-046",
+  "category": "Systemic design and simulation",
+  "sub": "NPC schedules",
+  "covers": "Routines of named and crowd people",
+  "typical_standard": "Own paths whether or not player is near",
+  "urls": [
+   "https://gdcvault.com/play/1035718/Supporting-Thousands-of-NPCs-in",
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "2.1.1",
+   "2.1.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-047",
+  "category": "Systemic design and simulation",
+  "sub": "Simulation levels of detail",
+  "covers": "Near full, far abstract off-screen",
+  "typical_standard": "Spread work over frames; off-screen life",
+  "urls": [
+   "https://gdcvault.com/play/1035718/Supporting-Thousands-of-NPCs-in"
+  ],
+  "parts": [
+   "2.1.3",
+   "8.1.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-048",
+  "category": "Systemic design and simulation",
+  "sub": "Perception and knowledge model",
+  "covers": "What each NPC saw and heard",
+  "typical_standard": "Per-NPC memory, not global flag",
+  "urls": [
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds",
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "2.2",
+   "2.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-049",
+  "category": "Systemic design and simulation",
+  "sub": "Gossip and information spread",
+  "covers": "Rumours and reputation",
+  "typical_standard": "Spreads with delay and cooling",
+  "urls": [
+   "https://gdcvault.com/play/1035718/Supporting-Thousands-of-NPCs-in",
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "2.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-050",
+  "category": "Systemic design and simulation",
+  "sub": "Crowd behaviour",
+  "covers": "Flows, reactions, panic",
+  "typical_standard": "Crowd reacts within 1 s of event (convention)",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "2.1.5",
+   "2.5.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-051",
+  "category": "Systemic design and simulation",
+  "sub": "Faction and rival systems",
+  "covers": "Gangs, rivals, territory",
+  "typical_standard": "Rivals act without player",
+  "urls": [
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "2.10",
+   "2.17"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-052",
+  "category": "Systemic design and simulation",
+  "sub": "World reactivity and persistent consequence",
+  "covers": "World changes remembered",
+  "typical_standard": "Consequences visible in 2 visits",
+  "urls": [
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "2.19",
+   "2.12.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-053",
+  "category": "Systemic design and simulation",
+  "sub": "Emergent behaviour testing",
+  "covers": "Soak and chaos runs",
+  "typical_standard": "Soak with no softlock",
+  "urls": [
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "9.5",
+   "9.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-054",
+  "category": "Systemic design and simulation",
+  "sub": "AI debuggability",
+  "covers": "Tools to see why NPCs act",
+  "typical_standard": "In-game visualisation",
+  "urls": [
+   "https://gdcvault.com/play/1020110/Free-Range-AI-Creating-Compelling"
+  ],
+  "parts": [
+   "9.5"
+  ],
+  "covered": "partly",
+  "note": "Not clearly a part"
+ },
+ {
+  "id": "GD-055",
+  "category": "Law, crime and consequences",
+  "sub": "Wanted / notoriety system",
+  "covers": "Heat levels, decay, escalation",
+  "typical_standard": "Escalates by stages, decays with time",
+  "urls": [
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System"
+  ],
+  "parts": [
+   "2.6",
+   "2.13"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-056",
+  "category": "Law, crime and consequences",
+  "sub": "Police detection and response",
+  "covers": "Witness to report to response",
+  "typical_standard": "Response time and distance bands",
+  "urls": [
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System",
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds"
+  ],
+  "parts": [
+   "2.6.1",
+   "2.5.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-057",
+  "category": "Law, crime and consequences",
+  "sub": "Arrest, custody and punishment",
+  "covers": "Busted outcome",
+  "typical_standard": "Never a game over",
+  "urls": [
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System"
+  ],
+  "parts": [
+   "2.6.3",
+   "2.6.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-058",
+  "category": "Law, crime and consequences",
+  "sub": "Evading and cooling off",
+  "covers": "Loss of pursuit",
+  "typical_standard": "Clear lose-the-police rule",
+  "urls": [
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System"
+  ],
+  "parts": [
+   "2.6.10",
+   "1.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-059",
+  "category": "Law, crime and consequences",
+  "sub": "Corruption, bribes, squaring",
+  "covers": "Paying authority",
+  "typical_standard": "Cost visible",
+  "urls": [
+   "https://giantbomb.com/wiki/Concepts/Notoriety_System"
+  ],
+  "parts": [
+   "2.6.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-060",
+  "category": "Law, crime and consequences",
+  "sub": "Witness handling",
+  "covers": "Silence, intimidate, flee",
+  "typical_standard": "Witness visible",
+  "urls": [
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds"
+  ],
+  "parts": [
+   "2.5.2",
+   "1.4.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-061",
+  "category": "Economy",
+  "sub": "Income sources and sinks",
+  "covers": "Money in and out",
+  "typical_standard": "Balanced over a 10-hour curve (convention)",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "2.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-062",
+  "category": "Economy",
+  "sub": "Economy over time",
+  "covers": "Inflation, scarcity, late-game money",
+  "typical_standard": "Late game still has sinks",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "2.7.7",
+   "2.7.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-063",
+  "category": "Economy",
+  "sub": "Shops and prices",
+  "covers": "Vendors, price sets",
+  "typical_standard": "Period price table",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "2.7.5",
+   "4.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-064",
+  "category": "Economy",
+  "sub": "Debt and obligation",
+  "covers": "Owing and collecting",
+  "typical_standard": "Clear total owed",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "2.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-065",
+  "category": "Economy",
+  "sub": "Property and passive income",
+  "covers": "Owned businesses",
+  "typical_standard": "Income reported",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "2.15",
+   "2.17"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-066",
+  "category": "Progression and pacing",
+  "sub": "First hour / onboarding",
+  "covers": "Teaching in the opening",
+  "typical_standard": "Hitman needed a guided tutorial after testing found a steep curve; first hour reviewed with first-time players",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding",
+   "https://gdcvault.com/play/1022342/Transitioning-from-Linear-to-Open"
+  ],
+  "parts": [
+   "7.1",
+   "6.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-067",
+  "category": "Progression and pacing",
+  "sub": "Tutorial and teaching verbs",
+  "covers": "Prompts, practice, fade",
+  "typical_standard": "Teach by doing; prompts retire",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding",
+   "https://gdcvault.com/play/1022342/Transitioning-from-Linear-to-Open"
+  ],
+  "parts": [
+   "6.5",
+   "6.1.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-068",
+  "category": "Progression and pacing",
+  "sub": "Pacing curve and content cadence",
+  "covers": "Highs and lows across hours",
+  "typical_standard": "Beat every few minutes; quiet allowed",
+  "urls": [
+   "https://gdcvault.com/play/1022342/Transitioning-from-Linear-to-Open",
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "7.4",
+   "7.5",
+   "7.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-069",
+  "category": "Progression and pacing",
+  "sub": "Length and hour budget",
+  "covers": "Total play time by path",
+  "typical_standard": "Hours per act budget",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "7.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-070",
+  "category": "Progression and pacing",
+  "sub": "Difficulty and assists",
+  "covers": "Options, adaptive aid",
+  "typical_standard": "Assist toggles",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "7.10",
+   "8.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-071",
+  "category": "Progression and pacing",
+  "sub": "Always something to do",
+  "covers": "Idle time limits",
+  "typical_standard": "Gap over 20 s of empty time noted (brief's own rule)",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "7.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-072",
+  "category": "Progression and pacing",
+  "sub": "Endings and post-game",
+  "covers": "Resolution and after",
+  "typical_standard": "Endings reachable and signposted",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html"
+  ],
+  "parts": [
+   "3.1.4",
+   "7.15"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-073",
+  "category": "Progression and pacing",
+  "sub": "Replayability",
+  "covers": "Reasons to replay",
+  "typical_standard": "Hitman: replay by changed people and opportunities",
+  "urls": [
+   "https://www.pcgamer.com/how-the-creators-of-hitman-use-social-science-to-design-perfect-murder-playgrounds"
+  ],
+  "parts": [
+   "7.15",
+   "3.1.4"
+  ],
+  "covered": "partly",
+  "note": "No explicit replay design part"
+ },
+ {
+  "id": "GD-074",
+  "category": "Progression and pacing",
+  "sub": "Rewards and feedback loops",
+  "covers": "Reward timing",
+  "typical_standard": "Acknowledgement of each success",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "7.6",
+   "7.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-075",
+  "category": "Failure and recovery",
+  "sub": "Death / failure without reload",
+  "covers": "Consequence instead of reload",
+  "typical_standard": "Player returns to play in under a minute",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding"
+  ],
+  "parts": [
+   "7.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-076",
+  "category": "Failure and recovery",
+  "sub": "Soft-lock prevention",
+  "covers": "Never stuck",
+  "typical_standard": "Moves on within 5 s (ER-CORE-01)",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "1.1.3",
+   "8.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-077",
+  "category": "Failure and recovery",
+  "sub": "Save corruption resistance",
+  "covers": "Saves survive crash",
+  "typical_standard": "Save chaos tests",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "8.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-078",
+  "category": "Narrative and characters",
+  "sub": "Cast and character bibles",
+  "covers": "Role, voice, history",
+  "typical_standard": "Bible per principal",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html",
+   "https://pickfu.com/blog/wp-content/uploads/2024/06/Detailed-Game-Design-Documentation-Template.pdf"
+  ],
+  "parts": [
+   "3.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-079",
+  "category": "Narrative and characters",
+  "sub": "Dialogue and writing system",
+  "covers": "Lines by situation",
+  "typical_standard": "Style guide",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "3.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-080",
+  "category": "Narrative and characters",
+  "sub": "Branching and choice design",
+  "covers": "Choices with weight",
+  "typical_standard": "Choices tracked and reflected",
+  "urls": [
+   "https://www.gamedeveloper.com/design/embracing-the-chaos-freedom-as-the-cornerstone-for-open-world-mission-design"
+  ],
+  "parts": [
+   "3.6.5",
+   "3.1.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-081",
+  "category": "Narrative and characters",
+  "sub": "Relationships and romance",
+  "covers": "Bonds over time",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "3.2.5",
+   "3.2.7"
+  ],
+  "covered": "partly",
+  "note": ""
+ },
+ {
+  "id": "GD-082",
+  "category": "Narrative and characters",
+  "sub": "Cut scenes and staging",
+  "covers": "Scenes in and out of play",
+  "typical_standard": "Skippable; seamless return",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "5.8.2",
+   "5.8.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-083",
+  "category": "Narrative and characters",
+  "sub": "Lore and world bible",
+  "covers": "Setting history",
+  "typical_standard": "Canon file",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://www.oreilly.com/library/view/level-up-the/9780470688670/ch20.html"
+  ],
+  "parts": [
+   "9.12",
+   "4.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-084",
+  "category": "Narrative and characters",
+  "sub": "Content rating and sensitive content rules",
+  "covers": "Violence, themes",
+  "typical_standard": "Rating target recorded",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "10.2",
+   "8.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-085",
+  "category": "Art direction",
+  "sub": "Visual style guide",
+  "covers": "Look, palette, references",
+  "typical_standard": "Reference sheet gate",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://gamedesignskills.com/game-design/gdd-structure-formatting-guidelines/"
+  ],
+  "parts": [
+   "5.10",
+   "5.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-086",
+  "category": "Art direction",
+  "sub": "Character art",
+  "covers": "Faces, bodies, clothes",
+  "typical_standard": "Reference gate",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-087",
+  "category": "Art direction",
+  "sub": "Environment art",
+  "covers": "Kits, materials",
+  "typical_standard": "Budgets per kit",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.3",
+   "4.1.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-088",
+  "category": "Art direction",
+  "sub": "Animation",
+  "covers": "Locomotion, combat, facial",
+  "typical_standard": "Clips from real capture",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "5.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-089",
+  "category": "Art direction",
+  "sub": "VFX",
+  "covers": "Effects",
+  "typical_standard": "Budget",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-090",
+  "category": "Art direction",
+  "sub": "Lighting",
+  "covers": "Day, night",
+  "typical_standard": "Calibration chart",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-091",
+  "category": "Art direction",
+  "sub": "Asset breakdown list",
+  "covers": "Counts of assets",
+  "typical_standard": "Listed with owner",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "9.2",
+   "4.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-092",
+  "category": "Audio",
+  "sub": "Sound design",
+  "covers": "Foley, ambience, mix",
+  "typical_standard": "Audible state changes",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-093",
+  "category": "Audio",
+  "sub": "Music",
+  "covers": "Score, licensed songs",
+  "typical_standard": "Licensed or original with rights",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-094",
+  "category": "Audio",
+  "sub": "Voice-over and casting",
+  "covers": "Recording, generation",
+  "typical_standard": "Voice per cast sheet",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "5.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-095",
+  "category": "Audio",
+  "sub": "Audio cues for gameplay",
+  "covers": "Warning sounds",
+  "typical_standard": "Sound to visual stand-in",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "6.1.4",
+   "8.4.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-096",
+  "category": "Interface",
+  "sub": "HUD and UI design",
+  "covers": "Screens, flow",
+  "typical_standard": "Minimal HUD; flow diagram",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "6.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-097",
+  "category": "Interface",
+  "sub": "Menus and flow",
+  "covers": "Frontend",
+  "typical_standard": "Reachable in 3 clicks",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "6.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-098",
+  "category": "Interface",
+  "sub": "Map and journal",
+  "covers": "Information screens",
+  "typical_standard": "Readable",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "6.2",
+   "6.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-099",
+  "category": "Interface",
+  "sub": "Notifications and prompts",
+  "covers": "Timing, fade",
+  "typical_standard": "Prompt shows ~3 uses then fades",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "6.1.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-100",
+  "category": "Interface",
+  "sub": "Photo mode",
+  "covers": "Optional",
+  "typical_standard": "Optional",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "6.8"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-101",
+  "category": "Technical",
+  "sub": "Performance targets",
+  "covers": "Frame rate, memory",
+  "typical_standard": "60 fps target on min spec (convention)",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation",
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "8.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-102",
+  "category": "Technical",
+  "sub": "Platform requirements",
+  "covers": "Min and recommended spec",
+  "typical_standard": "Published spec",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "8.1.3",
+   "10.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-103",
+  "category": "Technical",
+  "sub": "Engine and tools",
+  "covers": "Pipeline",
+  "typical_standard": "Documented",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "9.2",
+   "9.4"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-104",
+  "category": "Technical",
+  "sub": "Level of detail and optimisation",
+  "covers": "LOD, culling",
+  "typical_standard": "Budgets by distance",
+  "urls": [
+   "https://www.gameinformer.com/2021/05/20/more-than-just-dots-on-a-map-the-challenges-behind-open-world-game-creation"
+  ],
+  "parts": [
+   "8.1.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-105",
+  "category": "Technical",
+  "sub": "Network / multiplayer",
+  "covers": "Online play",
+  "typical_standard": "N/A",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [],
+  "covered": "no",
+  "note": "Ruled out by design?"
+ },
+ {
+  "id": "GD-106",
+  "category": "Technical",
+  "sub": "Server and online services",
+  "covers": "Live service",
+  "typical_standard": "Offline fallback",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "8.6",
+   "8.6.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-107",
+  "category": "Technical",
+  "sub": "Localisation",
+  "covers": "Languages",
+  "typical_standard": "Strings externalised",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "8.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-108",
+  "category": "Technical",
+  "sub": "Accessibility",
+  "covers": "Subtitles, remap, colour",
+  "typical_standard": "Convention list",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "8.4",
+   "6.1.2"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-109",
+  "category": "Technical",
+  "sub": "Settings and options",
+  "covers": "Graphics, audio",
+  "typical_standard": "Options list",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "8.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-110",
+  "category": "Technical",
+  "sub": "Analytics and telemetry",
+  "covers": "Play data",
+  "typical_standard": "Opt-in",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "10.11"
+  ],
+  "covered": "partly",
+  "note": "Privacy covered; telemetry design not a part"
+ },
+ {
+  "id": "GD-111",
+  "category": "Technical",
+  "sub": "Anti-cheat / security",
+  "covers": "Protection",
+  "typical_standard": "N/A single player",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [],
+  "covered": "no",
+  "note": "Ruled out by design? single-player"
+ },
+ {
+  "id": "GD-112",
+  "category": "Production and QA",
+  "sub": "Testing plan",
+  "covers": "QA, automated play",
+  "typical_standard": "Packaged walk",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "9.5",
+   "10.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-113",
+  "category": "Production and QA",
+  "sub": "Bug tracking and triage",
+  "covers": "Findings list",
+  "typical_standard": "Open faults capped",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "8.2.1",
+   "9.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-114",
+  "category": "Production and QA",
+  "sub": "Playtesting with real players",
+  "covers": "External playtest",
+  "typical_standard": "Fresh players, not developers; Hitman learned from user research",
+  "urls": [
+   "https://gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding"
+  ],
+  "parts": [
+   "10.3",
+   "10.5"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-115",
+  "category": "Production and QA",
+  "sub": "Milestones and schedule",
+  "covers": "Phases",
+  "typical_standard": "Exit criteria per phase",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://gamedesignskills.com/game-design/gdd-structure-formatting-guidelines/"
+  ],
+  "parts": [
+   "9.10"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-116",
+  "category": "Production and QA",
+  "sub": "Budget and forecast",
+  "covers": "Cost",
+  "typical_standard": "Spend logged",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer"
+  ],
+  "parts": [
+   "9.10"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-117",
+  "category": "Release and live",
+  "sub": "Store, rating, legal",
+  "covers": "Page, rating, licences",
+  "typical_standard": "Rating checked",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "10.2",
+   "10.10",
+   "9.7.1"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-118",
+  "category": "Release and live",
+  "sub": "Marketing assets",
+  "covers": "Trailer, key art",
+  "typical_standard": "Ready",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "10.8",
+   "10.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-119",
+  "category": "Release and live",
+  "sub": "Post-launch support and patches",
+  "covers": "Fixes",
+  "typical_standard": "Cadence",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "10.6",
+   "10.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-120",
+  "category": "Release and live",
+  "sub": "Monetisation",
+  "covers": "Price, DLC, microtransactions",
+  "typical_standard": "Single price",
+  "urls": [
+   "https://gamedeveloper.com/design/a-gdd-template-for-the-indie-developer",
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "10.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-121",
+  "category": "Release and live",
+  "sub": "Achievements and platform features",
+  "covers": "Trophies, cloud saves",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://en.wikipedia.org/wiki/Game_design_document"
+  ],
+  "parts": [
+   "10.7"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-122",
+  "category": "Release and live",
+  "sub": "Demo",
+  "covers": "Demo and wishlist",
+  "typical_standard": "Convention",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "10.12"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-123",
+  "category": "Design process",
+  "sub": "Reference studies / teardown",
+  "covers": "Learn from existing games",
+  "typical_standard": "Teardown rows matched to mechanics",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "9.11"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-124",
+  "category": "Design process",
+  "sub": "Prototyping and playtest of core",
+  "covers": "Prove before content",
+  "typical_standard": "Sample approved before multiplying",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "9.4",
+   "9.3"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-125",
+  "category": "Design process",
+  "sub": "Tuning tables and data-driven design",
+  "covers": "Numbers in data",
+  "typical_standard": "Single table",
+  "urls": [
+   "https://connect-prd-cdn.unity.com/20191004/4be5cf7a-c2b2-48f8-bbdb-6c0233df7a0e/Game Design Document Checklist.pdf"
+  ],
+  "parts": [
+   "9.6"
+  ],
+  "covered": "yes",
+  "note": ""
+ },
+ {
+  "id": "GD-126",
+  "category": "Design process",
+  "sub": "Feel measurement",
+  "covers": "Measure input response",
+  "typical_standard": "Five samples two measurers (LEDGER)",
+  "urls": [
+   "/home/claude/ledger/production/research/lane/TEARDOWN-BRIEF-2026-11-20.md"
+  ],
+  "parts": [
+   "9.9"
+  ],
+  "covered": "yes",
+  "note": ""
+ }
+]

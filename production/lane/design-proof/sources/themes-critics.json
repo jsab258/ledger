@@ -1,0 +1,981 @@
+[
+ {
+  "id": "CR-001",
+  "game": "KCD2",
+  "theme_key": "world-reacts-to-reputation-and-looks",
+  "theme": "World reacts to the player: NPCs report crimes, judge appearance and reputation",
+  "valence": "praised",
+  "reviews": "5 of 6+roundup: PC Gamer; GamesRadar; Tom's Guide; TechRadar; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "2.12.4",
+   "2.5.1",
+   "2.12.5"
+  ],
+  "test": "Wear a worker's coat in one scene and a smart suit in the next; the same named person greets him differently by regard, and a witnessed theft is reported by that witness to a third person who then acts on it.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-002",
+  "game": "KCD2",
+  "theme_key": "multiple-solutions-to-jobs",
+  "theme": "Quests and jobs solvable several ways",
+  "valence": "praised",
+  "reviews": "6 of 6+roundup: PC Gamer; GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "3.5.6",
+   "3.5.3",
+   "1.6.1"
+  ],
+  "test": "Take one break-in job three times (sneak in, talk in, pay a key-holder); all three complete the job with different later consequences and none is flagged as the wrong route.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-003",
+  "game": "KCD2",
+  "theme_key": "directional-melee-praised",
+  "theme": "Melee combat reads and rewards learning (directional, counters)",
+  "valence": "praised",
+  "reviews": "6 of 6+roundup: PC Gamer; Game Informer; Tom's Guide; TechRadar; Windows Central; Windows Central roundup (IGN, Dexerto, VideoGamer, GamesHub)",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-reviews-and-metacritic-scores-are-in-heres-what-everyones-saying-about-the-medieval-rpg"
+  ],
+  "parts": [
+   "1.3.2",
+   "1.3.8"
+  ],
+  "test": "In a scripted fight against a known fighter type, a tester who learns his tell and answers it wins hurt; one who ignores it loses; two fresh testers report the tell was readable.",
+  "gap": false,
+  "note": "LEDGER is street fists, not swords; same principle of readable blows."
+ },
+ {
+  "id": "CR-004",
+  "game": "KCD2",
+  "theme_key": "combat-clunky-group-fights",
+  "theme": "Combat stiff, imprecise targeting, messy group fights",
+  "valence": "criticised",
+  "reviews": "2 of 6+roundup: GamesRadar; TechRadar",
+  "urls": [
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "1.3.3",
+   "1.3.1",
+   "1.3.8"
+  ],
+  "test": "In a three-against-one fight, Tom can pick and change who he is facing without lock-on and without the camera or targeting fighting him; blows land or miss visibly in under 100 ms of input.",
+  "gap": false,
+  "note": "Game Informer also found some fights unfair (3 of 6 in all)."
+ },
+ {
+  "id": "CR-005",
+  "game": "KCD2",
+  "theme_key": "slow-punishing-early-hours",
+  "theme": "Slow, punishing early hours; patience required; steep learning curve",
+  "valence": "criticised",
+  "reviews": "5 of 6+roundup: GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central roundup (IGN, Dexerto, VideoGamer, GamesHub)",
+  "urls": [
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-reviews-and-metacritic-scores-are-in-heres-what-everyones-saying-about-the-medieval-rpg"
+  ],
+  "parts": [
+   "7.1",
+   "6.5"
+  ],
+  "test": "A new tester with no briefing reaches a first earned payment and a first witnessed consequence inside the first hour without asking for help.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-006",
+  "game": "KCD2",
+  "theme_key": "manual-save-restriction",
+  "theme": "Saving restricted (potion needed) - major annoyance",
+  "valence": "criticised",
+  "reviews": "1 of 6+roundup: TechRadar",
+  "urls": [
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "7.8",
+   "7.9"
+  ],
+  "test": "Quit the game at any moment mid-street and mid-job; the next launch resumes at that moment with nothing lost and no item or cost needed to save.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-007",
+  "game": "KCD2",
+  "theme_key": "stealth-weakest-part",
+  "theme": "Stealth is the weakest part of play",
+  "valence": "criticised",
+  "reviews": "1 of 6+roundup: Game Informer",
+  "urls": [
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic"
+  ],
+  "parts": [
+   "1.4.2",
+   "1.1.5",
+   "1.4.1"
+  ],
+  "test": "A tester told only 'get past the watcher unseen' can do it using a doorway or unlit stretch and standing still, and the watcher's reaction matches the light on Tom.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-008",
+  "game": "KCD2",
+  "theme_key": "launch-stability-good",
+  "theme": "Stable, near bug-free on PC at launch",
+  "valence": "praised",
+  "reviews": "3 of 6+roundup: PC Gamer; TechRadar; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "8.2.1",
+   "10.5"
+  ],
+  "test": "The AI tester walks the packaged release build for an evening of play with no crash, no stuck state and no blocked job.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-009",
+  "game": "KCD2",
+  "theme_key": "minor-glitches-break-quests",
+  "theme": "Occasional glitches, a quest blocked then auto-failed",
+  "valence": "criticised",
+  "reviews": "3 of 6+roundup: GamesRadar; TechRadar; Windows Central",
+  "urls": [
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "3.5.6",
+   "8.2.1"
+  ],
+  "test": "Force a job step to become impossible (target moved, door locked); the job moves to a named soft-fail state, tells Tom in plain words, and never fails silently.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-010",
+  "game": "KCD2",
+  "theme_key": "ui-clutter-typos-hard-options",
+  "theme": "Menus/subtitles with typos, map crowded with icons, hard-to-read dialogue options",
+  "valence": "criticised",
+  "reviews": "3 of 6+roundup: PC Gamer; TechRadar; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "6.4",
+   "6.9",
+   "6.1.2"
+  ],
+  "test": "Read every menu, subtitle and talk option in a full pass: zero typos, the paper map shows no quest icons, and each spoken option's tone matches what Tom then says.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-011",
+  "game": "KCD2",
+  "theme_key": "voice-acting-uneven",
+  "theme": "Voice acting uneven; secondary characters flat",
+  "valence": "criticised",
+  "reviews": "3 of 6+roundup: PC Gamer; Tom's Guide; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "5.6.1",
+   "3.2.3"
+  ],
+  "test": "Play lines from all thirty regulars and crowd voices to a fresh listener; no voice is marked flat, odd-stressed or off-accent for its casting sheet.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-012",
+  "game": "KCD2",
+  "theme_key": "survival-meters-add-little",
+  "theme": "Hunger, sleep and spoiling food: another meter to tend",
+  "valence": "criticised",
+  "reviews": "1 of 6+roundup: TechRadar",
+  "urls": [
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "1.3.7",
+   "7.11"
+  ],
+  "test": "Play a week with no bars on screen; Tom's tiredness or hunger shows in his body and talk only, and no tester reports a chore to keep him fed.",
+  "gap": false,
+  "note": "Tom's Guide praised the same systems for roleplay (mixed)."
+ },
+ {
+  "id": "CR-013",
+  "game": "KCD2",
+  "theme_key": "outcomes-softened",
+  "theme": "Consequences softened, choices lack weight",
+  "valence": "criticised",
+  "reviews": "1 of 6+roundup: PC Gamer",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "2.19",
+   "2.6.9",
+   "2.6.4"
+  ],
+  "test": "After a witnessed serious deed, a mark stays on the town (a person who will not serve him, a notice, a charge) a week of game time later.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-014",
+  "game": "KCD2",
+  "theme_key": "period-authenticity-world",
+  "theme": "Historical authenticity and a believable, beautiful world",
+  "valence": "praised",
+  "reviews": "5 of 6+roundup: GamesRadar; Game Informer; Tom's Guide; TechRadar; Windows Central",
+  "urls": [
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.techradar.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "4.9",
+   "5.10",
+   "4.1.1"
+  ],
+  "test": "A reviewer with Hook sheet and period photographs finds no anachronism in a walked 1990 street and can name the era from the street alone.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-015",
+  "game": "KCD2",
+  "theme_key": "story-and-characters",
+  "theme": "Strong story, characters and writing",
+  "valence": "praised",
+  "reviews": "5 of 6+roundup: PC Gamer; GamesRadar; Game Informer; Tom's Guide; Windows Central",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://www.gamesradar.com/games/rpg/kingdom-come-deliverance-2-review-even-if-some-friction-can-lead-to-frustration-its-realization-of-medieval-life-remains-utterly-absorbing",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review",
+   "https://www.windowscentral.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "3.2.6",
+   "3.1.1",
+   "3.2.5"
+  ],
+  "test": "A tester can describe one named person's wants and why Tom should be honest with him after a single evening, without being told.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-016",
+  "game": "KCD2",
+  "theme_key": "side-activities-emergent",
+  "theme": "Side activities and emergent small moments",
+  "valence": "praised",
+  "reviews": "3 of 6+roundup: PC Gamer; Game Informer; Tom's Guide",
+  "urls": [
+   "https://pcgamer.com/games/rpg/kingdom-come-deliverance-2-review",
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "3.7",
+   "7.6",
+   "7.16"
+  ],
+  "test": "In one evening of free play, a tester names two unprompted moments they would retell, and neither was a main job.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-017",
+  "game": "KCD2",
+  "theme_key": "pacing-climax-and-linear-sections",
+  "theme": "Climax rushed; some main sections force a playstyle",
+  "valence": "criticised",
+  "reviews": "2 of 6+roundup: Game Informer; Tom's Guide",
+  "urls": [
+   "https://gameinformer.com/review/kingdom-come-deliverance-ii/a-medieval-day-epic",
+   "https://www.tomsguide.com/gaming/kingdom-come-deliverance-2-review"
+  ],
+  "parts": [
+   "7.4",
+   "3.1.3"
+  ],
+  "test": "Act III keeps the same number of open routes per job as Act II, and the final stretch is timed within the hour budget with no step marked forced.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-018",
+  "game": "GTA V",
+  "theme_key": "heists-highlight",
+  "theme": "Heist planning and execution is the highlight",
+  "valence": "praised",
+  "reviews": "4 of 5+roundup: GameSpot; PCGamesN; The Guardian (via inkl); WeGotThisCovered",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/"
+  ],
+  "parts": [
+   "3.5.3",
+   "1.6.11",
+   "1.7.1"
+  ],
+  "test": "A break-in is cased in advance, a plan chosen, then carried out; the case changes at least one thing the job needs, and the outcome differs with the plan.",
+  "gap": false,
+  "note": "Two of four praised the online co-op heists; LEDGER has no online."
+ },
+ {
+  "id": "CR-019",
+  "game": "GTA V",
+  "theme_key": "missions-restrictive-fail",
+  "theme": "Missions restart or fail for small deviations; stalemates",
+  "valence": "criticised",
+  "reviews": "2 of 5+roundup: GameSpot; PCGamesN",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review"
+  ],
+  "parts": [
+   "3.5.6",
+   "7.9"
+  ],
+  "test": "Tom kills a target early, arrives late or leaves the route; the job continues in a changed state rather than a fail-and-reload screen.",
+  "gap": false,
+  "note": "Also criticised in RDR2 reviews (see rdr2 rigid missions)."
+ },
+ {
+  "id": "CR-020",
+  "game": "GTA V",
+  "theme_key": "three-protagonists",
+  "theme": "Three playable leads, Trevor and Michael praised",
+  "valence": "praised",
+  "reviews": "2 of 5+roundup: GameSpot; The Guardian (via inkl)",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building"
+  ],
+  "parts": [],
+  "test": "",
+  "gap": true,
+  "note": "LEDGER has one protagonist, Tom; the closest answer is the crew and the thirty regulars (2.11, 3.2.3), not alternate leads. Design choice, not fault."
+ },
+ {
+  "id": "CR-021",
+  "game": "GTA V",
+  "theme_key": "character-thin-or-contradict",
+  "theme": "Characters overshadowed by the world, contradict motives to suit missions, story aimless",
+  "valence": "criticised",
+  "reviews": "3 of 5+roundup: GameSpot; The Guardian (via inkl); CGMagazine",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/"
+  ],
+  "parts": [
+   "2.14",
+   "3.2.1",
+   "3.1.2"
+  ],
+  "test": "Take each principal through three jobs; in every scene what he does follows his stated temper and want, and a tester can state what Act II is about in one sentence.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-022",
+  "game": "GTA V",
+  "theme_key": "world-detail-praised",
+  "theme": "Dense, detailed, physical world",
+  "valence": "praised",
+  "reviews": "5 of 5+roundup: GameSpot; PCGamesN; The Guardian (via inkl); CGMagazine; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/",
+   "https://www.gamespot.com/articles/gta-5-review-roundup-rockstar-s-epic-remains-most-/1100-6423637/"
+  ],
+  "parts": [
+   "4.1.1",
+   "4.7",
+   "5.4.1"
+  ],
+  "test": "A tester walking Quay Street at dawn and at dusk lists small details unprompted that were not on the Hook sheet.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-023",
+  "game": "GTA V",
+  "theme_key": "satire-humour",
+  "theme": "Satire and humour (wears thin, heavy-handed, silly puns)",
+  "valence": "criticised",
+  "reviews": "3 of 5+roundup: PCGamesN; CGMagazine; GameSpot",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/",
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/"
+  ],
+  "parts": [],
+  "test": "",
+  "gap": true,
+  "note": "No LEDGER part is about satire; it is a period crime drama. Closest is street lines (3.6.4) but tone is not specified as satire."
+ },
+ {
+  "id": "CR-024",
+  "game": "GTA V",
+  "theme_key": "shooting-cover-weak",
+  "theme": "Shooting and cover system weak",
+  "valence": "criticised",
+  "reviews": "2 of 5+roundup: GameSpot; PCGamesN",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review"
+  ],
+  "parts": [
+   "1.3.10"
+  ],
+  "test": "Firearms appear only at the dial's top; in those scenes Tom cannot trade shots from cover at will, and no mission requires a firefight to proceed.",
+  "gap": false,
+  "note": "LEDGER is not gun-heavy by design."
+ },
+ {
+  "id": "CR-025",
+  "game": "GTA V",
+  "theme_key": "driving-first-person-twitchy",
+  "theme": "Driving too sensitive, hard in chases; vehicles distinct",
+  "valence": "criticised",
+  "reviews": "1 of 5+roundup: GameSpot",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/"
+  ],
+  "parts": [
+   "1.2.1",
+   "1.5.3"
+  ],
+  "test": "A tester drives a chase with keyboard and pad; the car stays controllable at speed and a first-time driver stays on the road for a full lap.",
+  "gap": false,
+  "note": "CGMagazine praised the vehicle variety (mixed)."
+ },
+ {
+  "id": "CR-026",
+  "game": "GTA V",
+  "theme_key": "wanted-system-intense",
+  "theme": "Police chase and wanted levels intense",
+  "valence": "praised",
+  "reviews": "1 of 5+roundup: GameSpot",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/"
+  ],
+  "parts": [
+   "2.13",
+   "2.6.10",
+   "1.5.4"
+  ],
+  "test": "After a witnessed deed, police response climbs in named steps and falls again with time and distance, and a tester can say what step it is at from what he sees.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-027",
+  "game": "GTA V",
+  "theme_key": "radio-and-soundtrack",
+  "theme": "Radio, soundtrack, custom music",
+  "valence": "praised",
+  "reviews": "3 of 5+roundup: PCGamesN; CGMagazine; WeGotThisCovered",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/"
+  ],
+  "parts": [
+   "5.7.1",
+   "3.4.3"
+  ],
+  "test": "Tune the car radio through a full day; each station's programme is period-correct and Pauline's radio is not repeated within an hour.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-028",
+  "game": "GTA V",
+  "theme_key": "menus-loading-cumbersome",
+  "theme": "Menus cumbersome, long loading",
+  "valence": "criticised",
+  "reviews": "2 of 5+roundup: PCGamesN; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.gamespot.com/articles/gta-5-review-roundup-rockstar-s-epic-remains-most-/1100-6423637/"
+  ],
+  "parts": [
+   "6.4",
+   "8.1.2"
+  ],
+  "test": "From main menu to Tom on the street in under the stated loading budget; any menu item is reached in three presses or fewer.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-029",
+  "game": "GTA V",
+  "theme_key": "pc-performance-visuals",
+  "theme": "Smooth 60 fps, strong graphics options, but heavy at max settings",
+  "valence": "praised",
+  "reviews": "5 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; CGMagazine; GameSpot",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/",
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/"
+  ],
+  "parts": [
+   "8.1.3",
+   "8.3.1"
+  ],
+  "test": "Packaged build on a mid-range reference PC holds the frame target for a walk and a drive with no shader hitch; display options change visibly.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-030",
+  "game": "GTA V",
+  "theme_key": "first-person-mode",
+  "theme": "First-person mode",
+  "valence": "praised",
+  "reviews": "3 of 5+roundup: GameSpot; PCGamesN; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "urls": [
+   "https://www.gamespot.com/reviews/grand-theft-auto-5-review/1900-6415959/",
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.gamespot.com/articles/gta-5-review-roundup-rockstar-s-epic-remains-most-/1100-6423637/"
+  ],
+  "parts": [],
+  "test": "",
+  "gap": true,
+  "note": "LEDGER's camera is third person, on-foot follow at fixed range (1.1.2); no first-person mode is planned."
+ },
+ {
+  "id": "CR-031",
+  "game": "GTA V",
+  "theme_key": "editor-director-mode",
+  "theme": "Rockstar Editor and Director Mode",
+  "valence": "praised",
+  "reviews": "4 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; CGMagazine",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/"
+  ],
+  "parts": [
+   "6.8"
+  ],
+  "test": "Photo mode opens at any calm moment, hides the HUD, and saves a full-size image the tester can open outside the game.",
+  "gap": false,
+  "note": "Video editing is not in LEDGER; photo mode only."
+ },
+ {
+  "id": "CR-032",
+  "game": "GTA V",
+  "theme_key": "online-multiplayer",
+  "theme": "GTA Online (lag, variety, heists)",
+  "valence": "praised",
+  "reviews": "4 of 5+roundup: PCGamesN; The Guardian (via inkl); WeGotThisCovered; GameSpot roundup (Metro, USgamer, Kotaku, VideoGamer)",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.inkl.com/news/grand-theft-auto-v-on-pc-review-rockstar-outdoes-itself-in-world-building",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/",
+   "https://www.gamespot.com/articles/gta-5-review-roundup-rockstar-s-epic-remains-most-/1100-6423637/"
+  ],
+  "parts": [],
+  "test": "",
+  "gap": true,
+  "note": "LEDGER is single-player only; out of scope."
+ },
+ {
+  "id": "CR-033",
+  "game": "GTA V",
+  "theme_key": "little-new-value",
+  "theme": "Little new for returning players; high price",
+  "valence": "criticised",
+  "reviews": "3 of 5+roundup: PCGamesN; CGMagazine; WeGotThisCovered",
+  "urls": [
+   "https://www.pcgamesn.com/grand-theft-auto-v/grand-theft-auto-v-pc-review",
+   "https://www.cgmagonline.com/review/game/grand-theft-auto-v-pc-review/",
+   "https://wegotthiscovered.com/gaming/grand-theft-auto-review-pc/"
+  ],
+  "parts": [
+   "10.12"
+  ],
+  "test": "A free demo covers the first hour so a buyer can judge value before paying.",
+  "gap": false,
+  "note": "Weak mapping; value is a store matter."
+ },
+ {
+  "id": "CR-034",
+  "game": "RDR2",
+  "theme_key": "missions-scripted-punish-deviation",
+  "theme": "Story missions scripted, punish deviation, force violence",
+  "valence": "criticised",
+  "reviews": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://www.gamespot.com/articles/red-dead-redemption-2-reviews-roundup/1100-6462782/"
+  ],
+  "parts": [
+   "3.5.6",
+   "7.9"
+  ],
+  "test": "Repeat one job leaving the 'intended' route; it continues with a changed state in 4 of 5 deviations tried, never an instant fail screen.",
+  "gap": false,
+  "note": "GameSpot roundup also names predictable mission structure."
+ },
+ {
+  "id": "CR-035",
+  "game": "RDR2",
+  "theme_key": "mid-game-repetitive",
+  "theme": "Mission structure predictable and drags mid-game",
+  "valence": "criticised",
+  "reviews": "2 of 5+roundup: GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "urls": [
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://www.gamespot.com/articles/red-dead-redemption-2-reviews-roundup/1100-6462782/"
+  ],
+  "parts": [
+   "7.14",
+   "7.4"
+  ],
+  "test": "Across a week, no two consecutive jobs share the same step template and a tester names three different verbs used.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-036",
+  "game": "RDR2",
+  "theme_key": "story-characters-gang",
+  "theme": "Story and characters, Arthur and gang",
+  "valence": "praised",
+  "reviews": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameSpot roundup (Eurogamer, IGN, Guardian, GamesRadar, Game Informer, USgamer)",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://www.gamespot.com/articles/red-dead-redemption-2-reviews-roundup/1100-6462782/"
+  ],
+  "parts": [
+   "3.2.2",
+   "3.2.6",
+   "3.1.1"
+  ],
+  "test": "A tester names every member of the firm and says what each wants after a week.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-037",
+  "game": "RDR2",
+  "theme_key": "world-reactive-detail",
+  "theme": "World detail and reactive towns and NPCs",
+  "valence": "praised",
+  "reviews": "4 of 5+roundup: PC Gamer; bit-tech; GameSpot; GameZone",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc"
+  ],
+  "parts": [
+   "2.12.5",
+   "2.5.3",
+   "4.9"
+  ],
+  "test": "Spill, break or leave something in a street; within the hour bystanders react and the thing is still there or visibly dealt with.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-038",
+  "game": "RDR2",
+  "theme_key": "honor-system",
+  "theme": "Honor system and reactive greetings",
+  "valence": "praised",
+  "reviews": "1 of 5+roundup: GameSpot",
+  "urls": [
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "2.12.1",
+   "2.12.4"
+  ],
+  "test": "Raise and lower Tom's name by deeds; the same named person's greeting changes in words and manner, and no number is shown.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-039",
+  "game": "RDR2",
+  "theme_key": "survival-eating-weight",
+  "theme": "Eating and weight system intrusive",
+  "valence": "criticised",
+  "reviews": "1 of 5+roundup: GameSpot",
+  "urls": [
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "1.3.7"
+  ],
+  "test": "A week of play requires no eating chore; Tom's state shows only in body and talk.",
+  "gap": false,
+  "note": "GameZone praised the survival systems as adding depth (mixed)."
+ },
+ {
+  "id": "CR-040",
+  "game": "RDR2",
+  "theme_key": "heavy-movement-many-controls",
+  "theme": "Heavy movement, many bindings, context inputs, steep learning curve",
+  "valence": "criticised",
+  "reviews": "2 of 5+roundup: Windows Central; GameZone",
+  "urls": [
+   "https://www.windowscentral.com/red-dead-redemption-2-pc-review",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc"
+  ],
+  "parts": [
+   "1.1.1",
+   "6.6",
+   "6.5"
+  ],
+  "test": "A tester uses only walk, run, one action key and talk for the first hour; any extra control is taught in play with no manual.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-041",
+  "game": "RDR2",
+  "theme_key": "launch-bugs-launcher",
+  "theme": "Crashes at launch, launcher problems",
+  "valence": "criticised",
+  "reviews": "5 of 5+roundup: PC Gamer; bit-tech; GameSpot; Windows Central; GameZone",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://www.windowscentral.com/red-dead-redemption-2-pc-review",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc"
+  ],
+  "parts": [
+   "8.5",
+   "10.1",
+   "10.5"
+  ],
+  "test": "Fresh PC, install, launch and play without any account or captcha step beyond the store, no crash in a one-hour walk.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-042",
+  "game": "RDR2",
+  "theme_key": "graphics-settings-overwhelming",
+  "theme": "Settings list overwhelming, many with little effect",
+  "valence": "criticised",
+  "reviews": "3 of 5+roundup: PC Gamer; GameZone; Windows Central",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc",
+   "https://www.windowscentral.com/red-dead-redemption-2-pc-review"
+  ],
+  "parts": [
+   "8.3.1"
+  ],
+  "test": "The options screen has no more than a stated short list, each with a visible preview, and a default preset fits a mid-range PC.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-043",
+  "game": "RDR2",
+  "theme_key": "photo-mode",
+  "theme": "Photo mode",
+  "valence": "praised",
+  "reviews": "3 of 5+roundup: PC Gamer; Windows Central; GameZone",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://www.windowscentral.com/red-dead-redemption-2-pc-review",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc"
+  ],
+  "parts": [
+   "6.8"
+  ],
+  "test": "Photo mode opens at one key, hides the HUD, offers depth of field and saves a local image.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-044",
+  "game": "RDR2",
+  "theme_key": "visual-showcase",
+  "theme": "Best-looking game, lighting and detail",
+  "valence": "praised",
+  "reviews": "5 of 5+roundup: PC Gamer; bit-tech; GameSpot; Windows Central; GameZone",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/",
+   "https://www.windowscentral.com/red-dead-redemption-2-pc-review",
+   "https://gamezone.com/reviews/review-red-dead-redemption-2-on-pc"
+  ],
+  "parts": [
+   "5.4.1",
+   "5.4.2",
+   "5.10"
+  ],
+  "test": "Hook sheet and period photograph comparison of dawn, dusk and night frames shows no visible fault or placeholder.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-045",
+  "game": "RDR2",
+  "theme_key": "random-encounters-exploration",
+  "theme": "Random encounters and optional stories reward exploration",
+  "valence": "praised",
+  "reviews": "3 of 5+roundup: PC Gamer; bit-tech; GameSpot",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "3.7",
+   "7.12"
+  ],
+  "test": "A tester walking without a job meets a street happening within ten minutes at three of four times of day.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-046",
+  "game": "RDR2",
+  "theme_key": "auto-aim-stealth-limited",
+  "theme": "Auto-lock aim makes stealth unappealing; limited choice",
+  "valence": "criticised",
+  "reviews": "1 of 5+roundup: GameSpot",
+  "urls": [
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "1.3.3",
+   "1.4.2"
+  ],
+  "test": "Tom can avoid a fight by using light or leaving, and no job forces violence to continue.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-047",
+  "game": "RDR2",
+  "theme_key": "shallow-core-combat",
+  "theme": "Core combat shallow over long campaign",
+  "valence": "criticised",
+  "reviews": "1 of 5+roundup: bit-tech",
+  "urls": [
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/"
+  ],
+  "parts": [
+   "1.3.4",
+   "1.3.9"
+  ],
+  "test": "A tester lists at least four distinct ways a street fight can start or end (talk down, run, hurt one, police arrive).",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-048",
+  "game": "RDR2",
+  "theme_key": "limited-fast-travel-slow-pace",
+  "theme": "Limited fast travel, slow methodical pace, 40-60 hours",
+  "valence": "criticised",
+  "reviews": "3 of 5+roundup: PC Gamer; bit-tech; GameSpot",
+  "urls": [
+   "https://pcgamer.com/red-dead-redemption-2-review",
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "7.11",
+   "7.5"
+  ],
+  "test": "Time can be skipped by waiting or taking a ride, and no walk between two regular places exceeds the stated minutes.",
+  "gap": false,
+  "note": ""
+ },
+ {
+  "id": "CR-049",
+  "game": "RDR2",
+  "theme_key": "prequel-tension-emotional",
+  "theme": "Emotional tension, known outcome",
+  "valence": "praised",
+  "reviews": "2 of 5+roundup: bit-tech; GameSpot",
+  "urls": [
+   "https://bit-tech.net/reviews/gaming/pc/red-dead-redemption-2-review-pc/1/",
+   "https://www.gamespot.com/reviews/red-dead-redemption-2-review-ramble-on/1900-6417019/"
+  ],
+  "parts": [
+   "3.1.4",
+   "3.1.5"
+  ],
+  "test": "A tester at the start of Act III can predict some ending signs, and rates them as dread not spoiler.",
+  "gap": false,
+  "note": "Weak mapping: LEDGER is not a prequel."
+ }
+]

@@ -1,0 +1,1910 @@
+[
+ {
+  "list": "A",
+  "n": 1,
+  "gap": "The endings",
+  "class": "PLANTED",
+  "parts": [
+   "3.1.4",
+   "3.1.5"
+  ],
+  "evidence": "Planted theme: endings and their signs (defined anyway at OSP s39, S34-S36, DESIGN s16).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 2,
+  "gap": "Act III grading and outcome",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.3"
+  ],
+  "evidence": "OSP s38, S33, DESIGN s16: one item each morning, graded by what the books hold (wash rule 10 pounds + 80% of real fares, OSP s26), inspector manner is the sign, asking in writing delays one day only, Ellis trade, successor offer withdrawn if books fall. OPEN: what a grade is (pass/fail/degrees), per-item thresholds, what each graded morning changes. (Combination into the ending is planted.)",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 3,
+  "gap": "Chases, on foot and by car",
+  "class": "PLANTED",
+  "parts": [
+   "1.5.1",
+   "1.5.3",
+   "1.5.4"
+  ],
+  "evidence": "Planted theme: chases (defined anyway at OSP s22, ADD A3).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 4,
+  "gap": "Section 22",
+  "class": "PLANTED",
+  "parts": [
+   "1.5.1"
+  ],
+  "evidence": "Planted theme: chases. Section 22 exists: OSP s22 \"Chases on foot and by car\"; the gap is an artefact of the shortened copy.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 5,
+  "gap": "Arrest, custody and release flow",
+  "class": "PLANTED",
+  "parts": [
+   "2.6.4",
+   "2.6.9"
+  ],
+  "evidence": "Planted theme: arrest and custody (hours table at OSP s20, DESIGN s8).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 6,
+  "gap": "Saving and loading",
+  "class": "PLANTED",
+  "parts": [
+   "7.8",
+   "8.2"
+  ],
+  "evidence": "Planted theme: saving. (No contradiction in the design: OSP s3 says the town is part of the save, a reload gives the same next hour, memory is never lost to save/load.)",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 7,
+  "gap": "The main story's content",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.1",
+   "3.1.2",
+   "3.1.6"
+  ],
+  "evidence": "OSP s36-s37, DESIGN s16, RULINGS 30 Sep: five Act I threads and eight Act II beats as states with effects (S31); fire truth is \"never the street's\" (ruled). OPEN: scenes, lines and job lists for Act II beats, what the old firm hands over, what Mickey's real book contains, what each sit-down is about; story outline of 28 Sep is outside the five files.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 8,
+  "gap": "A catalogue of jobs and side stories",
+  "class": "PARTLY",
+  "parts": [
+   "3.3",
+   "3.5",
+   "3.5.1"
+  ],
+  "evidence": "OSP s14, DESIGN s4: families named, 25 to 40 side stories each 3 to 5 steps (the 32 drafts of 8 Nov are the list, not in the five files), first-week jobs written in S01-S30. OPEN: list/count per act, givers, places and outcomes of main and side jobs after week one.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 9,
+  "gap": "Killing and its consequences in play",
+  "class": "PLANTED",
+  "parts": [
+   "2.16"
+  ],
+  "evidence": "Planted theme: death and bodies (OSP s10 Death, bodies and the missing; RULINGS 30 Oct fall rule).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 10,
+  "gap": "The tuning table",
+  "class": "DEFINED",
+  "parts": [
+   "9.6"
+  ],
+  "evidence": "OSP \"How every story is played\" rule 7: where the design gives no figure the builder writes a first value in the tuning table; PT 9.6 tuning table built in the prototype (rules.js); DESIGN s19.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 11,
+  "gap": "Money over weeks",
+  "class": "PARTLY",
+  "parts": [
+   "2.7.4",
+   "2.7.8",
+   "2.7.1"
+  ],
+  "evidence": "OSP s24, s26, s16: start 23.50, rent 18 every Friday, fare 80p plus distance, wash 10 + 80%, debts, till/purse take; price tables ruled out (DESIGN s18, canon \"not an economy simulation\"). OPEN: what a missed rent does (S23 says only \"the cost said\"), wages/prices/bribes as first values (builder, tuning table).",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 12,
+  "gap": "What happens after the sit-down and after Act II for the other two rivals",
+  "class": "PARTLY",
+  "parts": [
+   "2.10.1",
+   "3.1.2",
+   "3.5.5"
+  ],
+  "evidence": "S32 gives accept/defy/counter outcomes for the head met only; OSP s37 \"Act II ends at a sit-down with one head\". OPEN: fate of the other two heads and their ladders into Act III, rival absorption or defeat, what the Fixer truce does.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 13,
+  "gap": "Rival actions at the threat and attack rungs",
+  "class": "PARTLY",
+  "parts": [
+   "2.10.1",
+   "2.10.3"
+  ],
+  "evidence": "OSP s29, S27: per-rival pressures (dock-gate tax, poaching, licence letter, car inspection, trouble outside the office) and three answers. OPEN: content of the \"threat\" rung, whether rivals hurt crew, cars or the office, how damage is repaired.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 14,
+  "gap": "Act transitions and failure paths",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.2",
+   "3.1.3",
+   "3.1.1"
+  ],
+  "evidence": "S31: Act II opens on state (rung 2) and ends at the sit-down or after seven game weeks; S32: Act III opens with the letter after each answer; S23: \"refuse to say\" is a state the town talks of; OSP s36: both kept/ended arrangement reach Act II. OPEN: Act II opening when Tom refused to say, Act III if Act II never reaches a sit-down, conditions for rungs 3 and 4.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 15,
+  "gap": "How typed talk is interpreted",
+  "class": "PARTLY",
+  "parts": [
+   "3.6.1",
+   "3.6.5",
+   "3.6.2",
+   "1.4.5"
+  ],
+  "evidence": "OSP s34, canon moat (\"LLMs classify, never adjudicate\"), RULINGS 3 Oct (checking model reads lines about a deed for a threat): decision lines are the game's own yes/no/keeps-talking; threat is rung 3 \"said in talk\". OPEN: the classifier output (act types), how a bribe or amount is captured, whether typed promises or lies are acts the town remembers.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 16,
+  "gap": "Handling of abusive, off-topic, out-of-period or manipulative player input to live talk",
+  "class": "PARTLY",
+  "parts": [
+   "3.6.2",
+   "8.8",
+   "3.6.1"
+  ],
+  "evidence": "OSP s34 claim check, RULINGS 24 Sep/29 Sep (content rule on live speech, no real brands, nothing after 1992, report a line), ADD A25 (typing is for talk only). OPEN: in-character refusal and deflection of abusive, off-topic, out-of-period or manipulative player text; text claiming to perform acts.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 17,
+  "gap": "Online requirement and live talk service",
+  "class": "PARTLY",
+  "parts": [
+   "8.6",
+   "8.6.1",
+   "10.11"
+  ],
+  "evidence": "RULINGS 28 Oct/24 Sep/23 Sep: server relay, key never shipped, per-copy allowance, spending stop, offline the written street carries on; OSP s34 AI notice once. OPEN: privacy-notice content, player account (PT 10.11 not designed).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 18,
+  "gap": "Default control layout",
+  "class": "PARTLY",
+  "parts": [
+   "6.6"
+  ],
+  "evidence": "OSP s3 Controls gives Z, M, B, N, O, I, semicolon, digits, Comma, Full stop, Tab, H, R and panel keys; rebinding, toggles, 100 ms input rules. OPEN: pad layout, movement/use keys (prototype binds them).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 19,
+  "gap": "Menus",
+  "class": "PLANTED",
+  "parts": [
+   "6.4"
+  ],
+  "evidence": "Planted theme: menus (OSP s3 Menus and saving).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 20,
+  "gap": "Settings list",
+  "class": "PARTLY",
+  "parts": [
+   "8.3",
+   "8.3.1",
+   "8.4"
+  ],
+  "evidence": "OSP s3: presets, brightness and scale, rebinding, switches for prompts/hints/street subtitles, Reduce motion, subtitles no smaller than 24 units. OPEN: audio sliders, subtitle on/off for main speech, mouse sensitivity, FOV (PT 8.3.1 \"not designed\"). Standard PC items.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 21,
+  "gap": "Music",
+  "class": "DEFINED",
+  "parts": [
+   "5.7",
+   "5.7.1"
+  ],
+  "evidence": "ADD A8: music from places (cab radio, caff, shop, office, window), invented/allowlist only, score only under cut scenes, act ends and the ending close, never combat music. Radio programme content is PT 5.7.1.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 22,
+  "gap": "Voices",
+  "class": "DEFINED",
+  "parts": [
+   "5.6",
+   "5.6.1",
+   "5.6.2"
+  ],
+  "evidence": "RULINGS \"Faces, hair and voices\": cast voices by name (Sheila p267, Ron p227, Darren p286, Agar p226, dispatcher p280), others on his yes, watermark kept, written street lines generated and checked once; ADD A25 Tom unvoiced.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 23,
+  "gap": "Gun handling",
+  "class": "PARTLY",
+  "parts": [
+   "1.3.10",
+   "2.13"
+  ],
+  "evidence": "OSP s33, DESIGN s7: guns only through people, rare, late, \"AAA when used\", aim row on the camera, gun as club, warning shot is a shot, no ammo count/crosshair/cover, War lets a shot kill. OPEN: aiming input, hit and damage model, non-fatal wound outcomes before War, reload/ammunition without a count, NPC gun behaviour, how Tom is put down. Feel numbers \"to be measured\" (PT 1.3.10).",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 24,
+  "gap": "Fight damage model",
+  "class": "PARTLY",
+  "parts": [
+   "1.3.7",
+   "1.3.1",
+   "1.3.6"
+  ],
+  "evidence": "OSP s10/DESIGN s7: timings, mash limit 6-10 jabs, two against one deadly, skill beats mashing (masher under 3 in 10), knockout 10-30 s, no health bar. OPEN: hidden damage per blow/weapon, when a man or Tom counts as down, knife and bat wounds, bleeding.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 25,
+  "gap": "Hooks and leverage",
+  "class": "PARTLY",
+  "parts": [
+   "2.11.1",
+   "2.10.3",
+   "3.5.5"
+  ],
+  "evidence": "OSP s27: recruiting by \"meet a need\" (slow, holds) or \"spend a hook\" (quick, brittle); S25: a hook is \"what Darren sold him\"; S32: counter \"only offered if he knows something\". OPEN: what a hook is as data, how Tom acquires one, how knowledge becomes leverage in pressures and sit-downs.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 26,
+  "gap": "Crew limits and management",
+  "class": "PARTLY",
+  "parts": [
+   "2.11.1",
+   "2.11.2",
+   "1.7.2"
+  ],
+  "evidence": "OSP s27, A40: need, nerve, loyalty with a ceiling, wage and cut rules, crew fates incl. dock/expel. OPEN: maximum crew size and per-recruit needs (numbers/authoring, tuning table).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 27,
+  "gap": "Sending verbs in play",
+  "class": "PARTLY",
+  "parts": [
+   "1.7.2"
+  ],
+  "evidence": "OSP s27, DESIGN s12: eight verbs from Act II, each through a named man, \"an order is given and a line is written\", leaves a chain, the man sent knows, nerve/sign before breaking, crew never do the irreversible unless told. OPEN: how each verb is ordered and targeted, how success/failure/timing is decided, what the player sees.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 28,
+  "gap": "The map layout",
+  "class": "PARTLY",
+  "parts": [
+   "4.1.1",
+   "4.1.2"
+  ],
+  "evidence": "Canon (three sides of Quay Street), RULINGS 3 Oct (trades by bay), OSP s1; the map is atlas-01 data (RULINGS D13, 5 Oct), outside the five files. Not a design gap.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 29,
+  "gap": "Ambient traffic",
+  "class": "PLANTED",
+  "parts": [
+   "4.5.1"
+  ],
+  "evidence": "Planted theme: traffic drivers.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 30,
+  "gap": "Car damage and loss",
+  "class": "PLANTED",
+  "parts": [
+   "1.2.4"
+  ],
+  "evidence": "Planted theme: car crash damage stages (OSP s11 stages; ADD A24 repairs).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 31,
+  "gap": "Time skipping and waiting",
+  "class": "PLANTED",
+  "parts": [
+   "7.11"
+  ],
+  "evidence": "Planted theme: waiting and time skips.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 32,
+  "gap": "Telephones and pagers",
+  "class": "PARTLY",
+  "parts": [
+   "3.5.7",
+   "1.6.8"
+  ],
+  "evidence": "ADD A17, OSP s12/s14/s19: office phone and phone box calls as job channel and ambulance call. OPEN: whom Tom can ring, cost, answering machine, pagers (era dressing in canon only).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 33,
+  "gap": "Hints",
+  "class": "PARTLY",
+  "parts": [
+   "6.5"
+  ],
+  "evidence": "OSP s4/DESIGN s15: hints once each, on need or hesitation, never within 12 s, hints-again assist, interface appears piece by piece. OPEN: the hint list and wording (authoring).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 34,
+  "gap": "Love interest",
+  "class": "DEFINED",
+  "parts": [
+   "3.2.5",
+   "3.2.7"
+  ],
+  "evidence": "Canon: Alison Sedman (journalist love interest), Philip Danby (teacher love interest); OSP s35, ADD A39, S22: friendship built from visits and honesty, no sexual content (canon content rule).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 35,
+  "gap": "Ellis's manhunt and her case",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.5",
+   "2.6.9"
+  ],
+  "evidence": "OSP s21, S24, S31: four stages each with a sign, never skipped, manhunt sign a game hour before arrest, \"one case\" beat. OPEN: how interest falls or a manhunt ends or cools, how charges accumulate, what \"one case\" changes beyond a one-deed discount.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 36,
+  "gap": "The office search",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.9",
+   "2.6.5"
+  ],
+  "evidence": "ADD A13, S24: once Ellis investigates, a single search with notice the evening before; what is stored counts for the case. OPEN: what each find does to the case (stage, charges, ending read).",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 37,
+  "gap": "The bought officers",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.8"
+  ],
+  "evidence": "OSP s21, S27: two named officers, one looks away from a car, one loses a statement once, colleague who sees keeps it. OPEN: names, prices, limits in numbers (authoring/tuning).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 38,
+  "gap": "Fronts and rounds",
+  "class": "PARTLY",
+  "parts": [
+   "2.17"
+  ],
+  "evidence": "OSP s31, ADD A15: front = share of a real business (launderette, caff, empty unit), by money, favour or pressure; raises wash by a set weekly amount; round by a named man; night desk is a rung-3 property. OPEN: step lists to win each front, weekly amounts (tuning).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 39,
+  "gap": "Ranks",
+  "class": "PARTLY",
+  "parts": [
+   "2.15.2"
+  ],
+  "evidence": "OSP s28, S26: ferry and second rank won by a car on the board \"enough days\" or a word. OPEN: number of days, who holds them, second rank location (atlas).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 40,
+  "gap": "The other minicab firm",
+  "class": "PARTLY",
+  "parts": [
+   "2.15.3"
+  ],
+  "evidence": "ADD A14, OSP s12: one other firm, two cars, new minor owner, takes fares after a hit-and-run, never a rival. OPEN: whether Tom can buy or ruin it.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 41,
+  "gap": "Dirt and appearance",
+  "class": "PARTLY",
+  "parts": [
+   "1.4.4",
+   "2.2.5"
+  ],
+  "evidence": "OSP s7: dirt is a give-away; blood washed with water in private. OPEN: how dirt is acquired and cleared, where \"private water\" is.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 42,
+  "gap": "Tom's flat",
+  "class": "PARTLY",
+  "parts": [
+   "4.3.2",
+   "2.12.5"
+  ],
+  "evidence": "OSP s32: the flat stops being Mickey's at rung 2-3; S09 sleeps at the flat. OPEN: other uses (wash, change, store).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 43,
+  "gap": "Tom's starting items",
+  "class": "NOT-MATERIAL",
+  "parts": [
+   "1.1.4"
+  ],
+  "evidence": "A nicety: suitcase and letter at arrival (OSP s1, s4).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 44,
+  "gap": "Pawn, fence and stolen-goods economy",
+  "class": "PLANTED",
+  "parts": [
+   "2.7.6"
+  ],
+  "evidence": "Planted theme: fencing (OSP s16 Fencing: Rita at about 0.4 of honest price).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 45,
+  "gap": "Customs, the Harbour Board and the dock gate as places of play",
+  "class": "PARTLY",
+  "parts": [
+   "4.2.3",
+   "2.15.2",
+   "3.5"
+  ],
+  "evidence": "OSP s32: rung 3 opens dock gate, Harbour Board counter, solicitor; S12 customs shed is forbidden; accounts (OSP s28). OPEN: jobs, people and interactions at those places.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 46,
+  "gap": "Named minor characters",
+  "class": "NOT-MATERIAL",
+  "parts": [
+   "3.2.3"
+  ],
+  "evidence": "OSP s5: minor people \"named within canon\" by the builder; names are authoring.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 47,
+  "gap": "The thirty regulars' routines and lines",
+  "class": "DEFINED",
+  "parts": [
+   "3.2.3"
+  ],
+  "evidence": "RULINGS 30 Sep: thirty regulars stand as written; OSP s5 gives routine, temper and about 30 lines each; cards outside the five files.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 48,
+  "gap": "Death of townspeople",
+  "class": "PLANTED",
+  "parts": [
+   "2.16"
+  ],
+  "evidence": "Planted theme: death and bodies.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 49,
+  "gap": "NPC injuries and hospital stays",
+  "class": "PARTLY",
+  "parts": [
+   "2.18"
+  ],
+  "evidence": "OSP s12, ADD A22: hurt scales with speed, ambulance about ten game minutes, stay \"for the days their hurt sets\". OPEN: days per injury (tuning).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 50,
+  "gap": "What the player does at night without a job and in late Acts",
+  "class": "PARTLY",
+  "parts": [
+   "7.12",
+   "3.7"
+  ],
+  "evidence": "OSP s40 and S09: \"always something within 30 s\" by day; S41: no 5 min with nothing new across the chain; DESIGN s6: night offers at most one ask plus jobs and late fares. OPEN: what supplies content at night and late in Acts II-III.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 51,
+  "gap": "The Ledger's look and navigation",
+  "class": "PARTLY",
+  "parts": [
+   "6.2",
+   "6.3",
+   "7.13"
+  ],
+  "evidence": "OSP s24: Ledger opens in 120 ms, three-input person search, drawn paper map (opening it stops Tom, pauses nothing). OPEN: whether the Ledger and letters stop the clock, map legend. Look and layout are art.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 52,
+  "gap": "Navigation on foot to new places",
+  "class": "PLANTED",
+  "parts": [
+   "6.9"
+  ],
+  "evidence": "Planted theme: finding the way (ADD A9).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 53,
+  "gap": "Interiors list and their contents",
+  "class": "PARTLY",
+  "parts": [
+   "4.3",
+   "4.3.3"
+  ],
+  "evidence": "OSP s15: enterable rooms listed (Mickey's and flat, caff, Rita's back room, Hal's shop, Ada's front room, Iveson's hut, chapel hall, job sites with 3 ways in). OPEN: the rest (authoring).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 54,
+  "gap": "The outfit's asks on nights three, five and seven",
+  "class": "PARTLY",
+  "parts": [
+   "2.9.1",
+   "3.5.1"
+  ],
+  "evidence": "OSP s36, DESIGN s6: asks on nights 1, 3, 5, 7, at most one a night, each an envelope or carry; second envelope at eight (S21). OPEN: the content of nights 5 and 7 and later asks.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 55,
+  "gap": "The collision scene",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.2"
+  ],
+  "evidence": "OSP s37, S31: guaranteed once, day-life appointment meets night life at Ada's door or outside the caff; what Ada saw stays with her. OPEN: scripting, choices, outcomes.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 56,
+  "gap": "Sheila's trust",
+  "class": "PARTLY",
+  "parts": [
+   "2.12.1"
+  ],
+  "evidence": "OSP s32: Sheila gives his name after \"time and a clean week\", a week he never asked her to put the books off (over-limit wash). OPEN: weeks needed, whether it can be lost.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 57,
+  "gap": "What Tom's reading says",
+  "class": "PLANTED",
+  "parts": [
+   "6.2.5"
+  ],
+  "evidence": "Planted theme: endings and their signs (Tom's reading).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 58,
+  "gap": "The post-ending free play",
+  "class": "PLANTED",
+  "parts": [
+   "7.15"
+  ],
+  "evidence": "Planted theme: endings (ADD A7 defines post-ending play).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 59,
+  "gap": "Weather schedule",
+  "class": "PARTLY",
+  "parts": [
+   "4.8",
+   "4.7"
+  ],
+  "evidence": "OSP s5: weighted profiles dry overcast/drizzle/rain, never sun, seeded and repeatable. OPEN: weights, durations (tuning table).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 60,
+  "gap": "Police patrol and constable routes",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.1",
+   "2.6.7"
+  ],
+  "evidence": "OSP s21, ADD A12: beat constable on Quay Street at night, one patrol car on a route. OPEN: routes and hours (data).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 61,
+  "gap": "The escalation dial's thresholds",
+  "class": "PARTLY",
+  "parts": [
+   "2.13"
+  ],
+  "evidence": "OSP s33: dial moves with what the town learns and who pushed (arming crew, buying from docks); falls one step after about two quiet game weeks. OPEN: what takes Fired to War.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 62,
+  "gap": "Hold-ups by the player's crew and rivals",
+  "class": "NOT-MATERIAL",
+  "parts": [],
+  "evidence": "Hold-ups are Tom's verb (OSP s17); no NPC hold-ups needed.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 63,
+  "gap": "Sent men and Tom's line",
+  "class": "GAP",
+  "parts": [
+   "1.7.2",
+   "1.3.4"
+  ],
+  "evidence": "OSP s10 Tom's own line (never lays hands on a woman, anyone 60+, the priest; holds for the boxing club and hold-ups) is silent on men he sends.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 64,
+  "gap": "Language and localisation",
+  "class": "RULED-OUT",
+  "parts": [
+   "8.9"
+  ],
+  "evidence": "RULINGS \"What the game is\" 23 Sep: English only, text out of code.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 65,
+  "gap": "Further accessibility",
+  "class": "PARTLY",
+  "parts": [
+   "8.4"
+  ],
+  "evidence": "OSP s3, ADD A6: assists, sound shown, Reduce motion, large subtitles. OPEN: colour-blind, dyslexia font, screen reader (PT 8.4 designed, checklist 43-46).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 66,
+  "gap": "Photosensitivity line and other first-run notices",
+  "class": "PARTLY",
+  "parts": [
+   "8.4",
+   "10.11"
+  ],
+  "evidence": "OSP s3: photosensitivity line shows once guns flash; AI notice before first talk. OPEN: content-warning and first-run notice text.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 67,
+  "gap": "The boxing club",
+  "class": "PARTLY",
+  "parts": [
+   "7.16"
+  ],
+  "evidence": "OSP s35, ADD A28: club behind the chandler's, gloves, no blood, no fall rule, trainer, recruits, no stakes. OPEN: hours, partners.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 68,
+  "gap": "The paper's issues",
+  "class": "PARTLY",
+  "parts": [
+   "2.4.5",
+   "6.10"
+  ],
+  "evidence": "OSP s5, ADD A19: twice a week, Alison's page only at her certainty. OPEN: filler content, look, adverts.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 69,
+  "gap": "The poll-tax campaign",
+  "class": "NOT-MATERIAL",
+  "parts": [
+   "4.9"
+  ],
+  "evidence": "Canon/RULINGS 3 Oct, ADD A20: invented campaign on posters, may be talked about.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 70,
+  "gap": "Calendar events in play",
+  "class": "PARTLY",
+  "parts": [
+   "2.1.6"
+  ],
+  "evidence": "OSP s5: market Thursday, match Saturday 3 and 5, Sunday, Bonfire Night, Remembrance Sunday change routines. OPEN: jobs tied to those days (authoring).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 71,
+  "gap": "Street happenings beyond six examples",
+  "class": "PARTLY",
+  "parts": [
+   "3.7"
+  ],
+  "evidence": "OSP s14, ADD A18: six examples, placed by state and hour, never twice in 30 minutes or a week on one street; ER-HAPPEN-02. OPEN: library size and frequency.",
+  "material": true
+ },
+ {
+  "list": "A",
+  "n": 72,
+  "gap": "Fare wrinkles' outcomes",
+  "class": "DEFINED",
+  "parts": [
+   "3.4.2"
+  ],
+  "evidence": "OSP s13 and S07: each wrinkle with its outcome (talker to Ledger, parcel found in search, runner chase, wait, hurry tip or ferry leaving, face = Alison).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 73,
+  "gap": "Getting rid of a body",
+  "class": "PLANTED",
+  "parts": [
+   "2.16"
+  ],
+  "evidence": "Planted theme: death and bodies (OSP s27 moved or hidden; s18 sunk never found).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 74,
+  "gap": "Pickpocket targets and limits",
+  "class": "DEFINED",
+  "parts": [
+   "1.6.13"
+  ],
+  "evidence": "ADD A34, S14: authored item per person (key, letter, wallet), felt/not felt by fixed limits.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 75,
+  "gap": "The chalkboard",
+  "class": "PARTLY",
+  "parts": [
+   "1.7.3"
+  ],
+  "evidence": "OSP s28: chalkboard line per car and driver, put on rank or shift, Pauline runs it if untouched. OPEN: placement input, two cars in one place.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 76,
+  "gap": "Achievements and platform features",
+  "class": "GAP",
+  "parts": [
+   "10.7"
+  ],
+  "evidence": "Not in the design; PT 10.7 exists as \"not designed\". Platform feature.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 77,
+  "gap": "Photo mode",
+  "class": "PARTLY",
+  "parts": [
+   "6.8"
+  ],
+  "evidence": "RULINGS 23 Sep floor: \"optional presentation (photo mode, credits, after the ending)\"; PT 6.8 not designed.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 78,
+  "gap": "Credits and close",
+  "class": "PLANTED",
+  "parts": [
+   "10.4",
+   "7.15"
+  ],
+  "evidence": "Planted theme: endings (close and credits, ADD A7).",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 79,
+  "gap": "External references",
+  "class": "NOT-MATERIAL",
+  "parts": [],
+  "evidence": "References exist in the repository (RULINGS, atlas, casting sheets); not a build gap.",
+  "material": false
+ },
+ {
+  "list": "A",
+  "n": 80,
+  "gap": "How \"measured in play\" is measured",
+  "class": "DEFINED",
+  "parts": [
+   "9.9",
+   "9.5"
+  ],
+  "evidence": "DESIGN s19: testers B, S, H, a panel of eight; every ER rule has a check; OSP s40 feel targets measured in play; canon: playtester measures activity mix every round.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 1,
+  "gap": "The endings",
+  "class": "PLANTED",
+  "parts": [
+   "3.1.4"
+  ],
+  "evidence": "Planted theme: endings and their signs (defined anyway at OSP s39, S34-S36, DESIGN s16).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 2,
+  "gap": "\"The Kingdom\" and \"The Straight Life\"",
+  "class": "PLANTED",
+  "parts": [
+   "3.1.4"
+  ],
+  "evidence": "Planted theme: endings and their signs (defined anyway at OSP s39, S34-S36, DESIGN s16). Both described at OSP s39.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 3,
+  "gap": "Act III resolution",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.3"
+  ],
+  "evidence": "As A2. Last day: \"only a few people can be reached\" (S33). OPEN: grading and what graded mornings change.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 4,
+  "gap": "Act and rise triggers",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.2",
+   "3.1.3",
+   "2.12.2"
+  ],
+  "evidence": "As A14: Act II ends at sit-down or after seven game weeks (S31); inspection ends on its last day whatever he chose (S33); rung \"what he holds\" columns (OSP s32). OPEN: exact rung 3/4 triggers and Act III trigger when no sit-down.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 5,
+  "gap": "Saves and loading",
+  "class": "PLANTED",
+  "parts": [
+   "7.8",
+   "8.2"
+  ],
+  "evidence": "Planted theme: saving.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 6,
+  "gap": "Killing named and story-critical people",
+  "class": "PLANTED",
+  "parts": [
+   "2.16"
+  ],
+  "evidence": "Planted theme: death and bodies.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 7,
+  "gap": "The chase system",
+  "class": "PLANTED",
+  "parts": [
+   "1.5.1",
+   "1.5.3",
+   "1.5.4"
+  ],
+  "evidence": "Planted theme: chases (OSP s22).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 8,
+  "gap": "Arrest, custody and charges",
+  "class": "PLANTED",
+  "parts": [
+   "2.6.4",
+   "2.6.9"
+  ],
+  "evidence": "Planted theme: arrest and custody.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 9,
+  "gap": "The force reach",
+  "class": "PARTLY",
+  "parts": [
+   "2.2.4"
+  ],
+  "evidence": "OSP s8: footstep 3.6 m at 3 am, car 44 m, horn 60 m, shot 177 m, drawer 2 m, forced cupboard 10 m, twice as far in the small hours. OPEN: the force-reach figure itself (first value in tuning table).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 10,
+  "gap": "Main job and mission catalogue",
+  "class": "PARTLY",
+  "parts": [
+   "3.5",
+   "3.3"
+  ],
+  "evidence": "As A8, A54.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 11,
+  "gap": "Rival behaviour and counters",
+  "class": "PARTLY",
+  "parts": [
+   "2.10.1",
+   "2.10.3",
+   "3.5.5"
+  ],
+  "evidence": "As A12, A13, A25: S32 outcomes for the head met. OPEN: threat rung, counter mechanic, rivals not met.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 12,
+  "gap": "Guns as a verb",
+  "class": "PARTLY",
+  "parts": [
+   "1.3.10",
+   "2.13"
+  ],
+  "evidence": "As A23.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 13,
+  "gap": "Economy amounts",
+  "class": "PARTLY",
+  "parts": [
+   "2.7.4",
+   "2.7.8",
+   "2.11.4"
+  ],
+  "evidence": "As A11: figures delegated to the tuning table; price tables ruled out (DESIGN s18).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 14,
+  "gap": "Missing the rent",
+  "class": "PARTLY",
+  "parts": [
+   "2.7.4"
+  ],
+  "evidence": "OSP s24: \"Doing nothing misses Friday's rent\", S23 \"missed, with Sheila saying so and the cost said\". OPEN: the cost (arrears, eviction, who the landlord is).",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 15,
+  "gap": "The two pots in practice",
+  "class": "PARTLY",
+  "parts": [
+   "2.7.1",
+   "2.7.2",
+   "2.7.7"
+  ],
+  "evidence": "OSP s24, s26, S05, S14: clean in fare book (spend anywhere), night money in the tin; wages from book, cuts from tin, flows ledger balances; robbery when beaten \"maybe, said\". OPEN: which pot pays what at shops, tin stolen/found, cash in a search.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 16,
+  "gap": "Front end and menus",
+  "class": "PLANTED",
+  "parts": [
+   "6.4",
+   "8.3"
+  ],
+  "evidence": "Planted theme: menus (OSP s3).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 17,
+  "gap": "Pausing and the clock",
+  "class": "PARTLY",
+  "parts": [
+   "6.2",
+   "6.3",
+   "7.13"
+  ],
+  "evidence": "As A51: Esc pauses everywhere, talk stops the clock, map pauses nothing, getting ready takes a game minute. OPEN: Ledger, letters.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 18,
+  "gap": "Passing time and sleep",
+  "class": "PLANTED",
+  "parts": [
+   "7.11"
+  ],
+  "evidence": "Planted theme: waiting and time skips.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 19,
+  "gap": "Player-typed talk and the content rule",
+  "class": "PARTLY",
+  "parts": [
+   "3.6.1",
+   "8.8",
+   "3.6.5"
+  ],
+  "evidence": "As A15, A16: content rule on live speech and the claim check apply to replies; threats read by the checking model. OPEN: in-character deflection of player text on alcohol, betting, children, slurs, real people, modern things; typed promises as acts.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 20,
+  "gap": "The full control map",
+  "class": "PARTLY",
+  "parts": [
+   "6.6"
+  ],
+  "evidence": "As A18.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 21,
+  "gap": "Hospital and lost time",
+  "class": "PARTLY",
+  "parts": [
+   "2.18",
+   "1.3.9"
+  ],
+  "evidence": "OSP s10: beaten Tom wakes on pavement, in Grace Rinaldi's kitchen or hospital, in control within 60 s; hospital costs days; town runs without him. OPEN: days per injury, which place.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 22,
+  "gap": "Tom's injuries beyond bruises",
+  "class": "PARTLY",
+  "parts": [
+   "1.3.7",
+   "1.3.9",
+   "1.3.11",
+   "1.3.10"
+  ],
+  "evidence": "OSP s10: beaten states, marks (bruises 3 days, limp 1), hospital; weapon swung breaks guard. OPEN: what a knife, bat or shot does to Tom, stacking, fighting on hurt.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 23,
+  "gap": "Ordinary traffic",
+  "class": "PLANTED",
+  "parts": [
+   "4.5.1"
+  ],
+  "evidence": "Planted theme: traffic drivers.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 24,
+  "gap": "Car damage and losing a car",
+  "class": "PLANTED",
+  "parts": [
+   "1.2.4"
+  ],
+  "evidence": "Planted theme: car damage.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 25,
+  "gap": "Crew orders and sent jobs off screen",
+  "class": "PARTLY",
+  "parts": [
+   "1.7.2"
+  ],
+  "evidence": "As A27.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 26,
+  "gap": "Crew limits and nerve numbers",
+  "class": "PARTLY",
+  "parts": [
+   "2.11.1",
+   "2.11.2"
+  ],
+  "evidence": "As A25, A26: a hook = knowledge (S25). OPEN: hook data, crew cap.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 27,
+  "gap": "Tom's line versus hostile women and older men",
+  "class": "PARTLY",
+  "parts": [
+   "1.3.4",
+   "1.3.9"
+  ],
+  "evidence": "OSP s10: Tom never lays hands on women, 60+, the priest (\"the input does nothing and he says so\"). OPEN: what Tom does when such a person attacks him; scripted hostile fights.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 28,
+  "gap": "Civilian reaction to unprovoked violence",
+  "class": "PARTLY",
+  "parts": [
+   "2.5.3",
+   "1.3.9"
+  ],
+  "evidence": "OSP s10, s19, s5: watchers at 3 m, scatter at a weapon, people step in, each person's nerve. OPEN: knocked-out men on waking, crowd turning on Tom.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 29,
+  "gap": "Carrying and moving a body",
+  "class": "PLANTED",
+  "parts": [
+   "2.16"
+  ],
+  "evidence": "Planted theme: death and bodies.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 30,
+  "gap": "The outfit's envelope as an object",
+  "class": "PARTLY",
+  "parts": [
+   "2.9.1",
+   "3.5.1"
+  ],
+  "evidence": "S04/S05: ask names giver and landmark; refused or staying away: Ron leaves the envelope with Sheila, ask ends unanswered; searched: constable keeps it; hand-over cut goes in the tin. OPEN: opening the envelope, contents.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 31,
+  "gap": "Refusing or staying away from the outfit",
+  "class": "PARTLY",
+  "parts": [
+   "2.9.1",
+   "2.9.2"
+  ],
+  "evidence": "S04: no asks twice, staying away ends the ask unanswered with a Ledger line; failure continues (DESIGN s4 law 4). OPEN: effect of refusing nights 3, 5, 7.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 32,
+  "gap": "Sheila's Sunday answer \"refuse to say\"",
+  "class": "PARTLY",
+  "parts": [
+   "3.1.1",
+   "3.1.2"
+  ],
+  "evidence": "S23: \"refuse to say\" is a state the town talks of. OPEN: effect on Act II (as A14).",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 33,
+  "gap": "Ellis's progression",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.5"
+  ],
+  "evidence": "OSP s21: from the second day, once three people of Tom's day world pass on talk of his nights. OPEN: who counts as day world, how stages fall, manhunt if never caught.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 34,
+  "gap": "The street \"on edge\" and the escalation dial falling",
+  "class": "PARTLY",
+  "parts": [
+   "2.5.4",
+   "2.13"
+  ],
+  "evidence": "OSP s19: three seen deeds in two game days; eases as talk cools; dial falls after about two quiet game weeks. OPEN: measure of \"quiet\".",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 35,
+  "gap": "Inventory and item list",
+  "class": "PARTLY",
+  "parts": [
+   "1.6.9",
+   "6.2.3"
+  ],
+  "evidence": "OSP s27, ADD A5: two things under the coat, one in hand or holdall, drawer and shed, Open page says what he carries. OPEN: full item list.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 36,
+  "gap": "Phones",
+  "class": "PARTLY",
+  "parts": [
+   "3.5.7"
+  ],
+  "evidence": "As A32.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 37,
+  "gap": "Weapon disposal and evidence",
+  "class": "DEFINED",
+  "parts": [
+   "1.6.7",
+   "4.2.4"
+  ],
+  "evidence": "OSP s27, s6, ADD A11, A38: drain/dock disposal is gone but kept by any witness; scene traces excluded (OSP s3).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 38,
+  "gap": "The soft edge on foot",
+  "class": "PARTLY",
+  "parts": [
+   "4.1.4"
+  ],
+  "evidence": "OSP s11: soft edge for fares (west/north road, no loading). OPEN: walking or driving to the edge with no fare.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 39,
+  "gap": "Speed band and traffic offences",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.7"
+  ],
+  "evidence": "ADD A12: speed \"far over the limit (to measure against the game's band)\". OPEN: number.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 40,
+  "gap": "Music",
+  "class": "DEFINED",
+  "parts": [
+   "5.7"
+  ],
+  "evidence": "ADD A8.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 41,
+  "gap": "Voices for the cast",
+  "class": "DEFINED",
+  "parts": [
+   "5.6.1",
+   "5.6.3",
+   "3.6.1"
+  ],
+  "evidence": "RULINGS voices; OSP s34: reply in 2 s or written line, line over 8 s dropped with brush-off; subtitles only with audio.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 42,
+  "gap": "Hint list and onboarding beyond the first hour",
+  "class": "PARTLY",
+  "parts": [
+   "6.5"
+  ],
+  "evidence": "As A33.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 43,
+  "gap": "Tom's reading text",
+  "class": "PLANTED",
+  "parts": [
+   "6.2.5"
+  ],
+  "evidence": "Planted theme: endings and their signs.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 44,
+  "gap": "The Fixer's truce",
+  "class": "PARTLY",
+  "parts": [
+   "2.10.4"
+  ],
+  "evidence": "OSP s29: the Fixer sells true reads, a meeting and one truce. OPEN: what a truce does, how long, with whom.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 45,
+  "gap": "The sit-down rules",
+  "class": "DEFINED",
+  "parts": [
+   "3.5.5"
+  ],
+  "evidence": "OSP s30, s34 Decision lines, S32: three answers, game's own yes/no lines, effects per answer; counter only offered if he knows something.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 46,
+  "gap": "The love interest",
+  "class": "DEFINED",
+  "parts": [
+   "3.2.5"
+  ],
+  "evidence": "Canon (love interest: Alison, Danby; no sexual content), OSP s35.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 47,
+  "gap": "The friendship's hold",
+  "class": "DEFINED",
+  "parts": [
+   "3.2.5",
+   "3.2.7"
+  ],
+  "evidence": "S22: truth told about a real night moves the friendship towards holding, a lie found out ends it, too-frequent calls cool the door, a friend's unasked act is the sign.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 48,
+  "gap": "Sheila's trust and the clean week",
+  "class": "PARTLY",
+  "parts": [
+   "2.12.1"
+  ],
+  "evidence": "As A56.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 49,
+  "gap": "Access by dress and standing",
+  "class": "PARTLY",
+  "parts": [
+   "2.12.3"
+  ],
+  "evidence": "OSP s32 rung table \"what opens\", filthy refused, decent jacket past Harbour Board counter. OPEN: the full door list.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 50,
+  "gap": "Ranks and accounts",
+  "class": "PARTLY",
+  "parts": [
+   "2.15.2"
+  ],
+  "evidence": "As A39.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 51,
+  "gap": "Fronts",
+  "class": "PARTLY",
+  "parts": [
+   "2.17"
+  ],
+  "evidence": "As A38.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 52,
+  "gap": "Weather schedule",
+  "class": "PARTLY",
+  "parts": [
+   "4.8"
+  ],
+  "evidence": "As A59. OPEN: whether any job depends on rain.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 53,
+  "gap": "Calendar events in play",
+  "class": "PARTLY",
+  "parts": [
+   "2.1.6"
+  ],
+  "evidence": "As A70.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 54,
+  "gap": "Shops' stock and hours",
+  "class": "PARTLY",
+  "parts": [
+   "2.7.8",
+   "4.3.3"
+  ],
+  "evidence": "OSP s16 Spending lists each shop's goods; hours from their people and doors. OPEN: exact hours.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 55,
+  "gap": "Shop robbery after-effects",
+  "class": "PARTLY",
+  "parts": [
+   "new"
+  ],
+  "evidence": "OSP s17 and ADD A41: \"a front or an account on that street is lost if its man hears it was Tom\". OPEN: which, and whether it can be won back. Hold-ups (1.6.15) are not yet a part in the tree.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 56,
+  "gap": "Hit-and-run police pursuit outcome",
+  "class": "PLANTED",
+  "parts": [
+   "1.5.3"
+  ],
+  "evidence": "Planted theme: chases and police pursuit.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 57,
+  "gap": "The other minicab firm",
+  "class": "PARTLY",
+  "parts": [
+   "2.15.3"
+  ],
+  "evidence": "As A40.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 58,
+  "gap": "The board",
+  "class": "PARTLY",
+  "parts": [
+   "1.7.3"
+  ],
+  "evidence": "As A75.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 59,
+  "gap": "Tails and casing outcomes",
+  "class": "PARTLY",
+  "parts": [
+   "1.6.11",
+   "1.1.6",
+   "3.5.4"
+  ],
+  "evidence": "ADD A23, S12: casing writes hours, key holder, open way in the Ledger; S12 stands still 4 s and longer. OPEN: duration per session, count of authored tails.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 60,
+  "gap": "Lifting rules for shop goods and vans",
+  "class": "PARTLY",
+  "parts": [
+   "1.6.3",
+   "1.6.2"
+  ],
+  "evidence": "OSP s16: goods off a van or lorry are a lift; searching and taking rules (OSP s15). OPEN: van-specific verb detail.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 61,
+  "gap": "Damage and repair times",
+  "class": "PARTLY",
+  "parts": [
+   "2.19"
+  ],
+  "evidence": "OSP s15: forced door shows a day, glass until mended, blood until rain or bucket. OPEN: owner repair times.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 62,
+  "gap": "Yard dogs",
+  "class": "PARTLY",
+  "parts": [
+   "4.11.1"
+  ],
+  "evidence": "OSP s8, S12: bark draws the owner within the tuning table's time; food quiets it for a while. OPEN: which yards, food source.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 63,
+  "gap": "The boxing club",
+  "class": "PARTLY",
+  "parts": [
+   "7.16"
+  ],
+  "evidence": "As A67.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 64,
+  "gap": "Accessibility beyond the listed assists",
+  "class": "PARTLY",
+  "parts": [
+   "8.4"
+  ],
+  "evidence": "As A65. \"24 units\" is the style sheet's unit (DESIGN ER-LEDG-02).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 65,
+  "gap": "Localisation and language",
+  "class": "RULED-OUT",
+  "parts": [
+   "8.9"
+  ],
+  "evidence": "RULINGS 23 Sep: English only, text out of code.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 66,
+  "gap": "Live talk failures and cost",
+  "class": "PARTLY",
+  "parts": [
+   "8.6.1",
+   "10.11"
+  ],
+  "evidence": "As A17: offline written street with brush-off and small sign (OSP s34).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 67,
+  "gap": "Calls back to the player's own report",
+  "class": "PARTLY",
+  "parts": [
+   "3.6.7"
+  ],
+  "evidence": "OSP S02: \"a line reported\" note shows; PT 3.6.7 report filed. OPEN: where reports go.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 68,
+  "gap": "Achievements, stats and platform services",
+  "class": "GAP",
+  "parts": [
+   "10.7"
+  ],
+  "evidence": "Not designed; PT 10.7.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 69,
+  "gap": "Photo mode",
+  "class": "PARTLY",
+  "parts": [
+   "6.8"
+  ],
+  "evidence": "As A77.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 70,
+  "gap": "Replay value",
+  "class": "NOT-MATERIAL",
+  "parts": [
+   "7.15"
+  ],
+  "evidence": "No new game plus (OSP s39); branches and three endings supply variation.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 71,
+  "gap": "After the credits",
+  "class": "PLANTED",
+  "parts": [
+   "7.15"
+  ],
+  "evidence": "Planted theme: endings (ADD A7).",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 72,
+  "gap": "The paper's contents",
+  "class": "PARTLY",
+  "parts": [
+   "2.4.5"
+  ],
+  "evidence": "As A68.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 73,
+  "gap": "Interiors count",
+  "class": "PARTLY",
+  "parts": [
+   "4.3"
+  ],
+  "evidence": "As A53.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 74,
+  "gap": "Crowd and named people's routines",
+  "class": "DEFINED",
+  "parts": [
+   "3.2.3"
+  ],
+  "evidence": "As A47.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 75,
+  "gap": "External references a builder does not have",
+  "class": "NOT-MATERIAL",
+  "parts": [],
+  "evidence": "References exist in the repository.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 76,
+  "gap": "Section 22",
+  "class": "PLANTED",
+  "parts": [
+   "1.5.1"
+  ],
+  "evidence": "Planted theme: chases. Section 22 exists (OSP s22); artefact of shortened copy.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 77,
+  "gap": "Getting ready and clothing changes",
+  "class": "PARTLY",
+  "parts": [
+   "1.6.10",
+   "1.6.9"
+  ],
+  "evidence": "OSP s27: dark coat on with one key; s32 wardrobe of three outfits, second coat, scarf and hat. OPEN: switching UI, where scarf/hat sit.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 78,
+  "gap": "Blood and dirt sources and cleaning places",
+  "class": "PARTLY",
+  "parts": [
+   "1.4.4"
+  ],
+  "evidence": "As A41.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 79,
+  "gap": "Tom's flat",
+  "class": "PARTLY",
+  "parts": [
+   "4.3.2"
+  ],
+  "evidence": "As A42.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 80,
+  "gap": "Bought officers",
+  "class": "PARTLY",
+  "parts": [
+   "2.6.8"
+  ],
+  "evidence": "As A37.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 81,
+  "gap": "Pauline's directions on foot",
+  "class": "PLANTED",
+  "parts": [
+   "6.9"
+  ],
+  "evidence": "Planted theme: finding the way.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 82,
+  "gap": "Running out of things to do late",
+  "class": "PARTLY",
+  "parts": [
+   "7.12",
+   "3.7"
+  ],
+  "evidence": "As A50.",
+  "material": true
+ },
+ {
+  "list": "B",
+  "n": 83,
+  "gap": "Difficulty for the fights at their hardest",
+  "class": "DEFINED",
+  "parts": [
+   "1.3.9",
+   "7.10"
+  ],
+  "evidence": "OSP s10 How a fight ends, DESIGN ER-FIGHT-04, ER-CORE-04: Tom cannot die, beaten state, control in 60 s, assists the only difficulty.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 84,
+  "gap": "Escort and minding failure",
+  "class": "PARTLY",
+  "parts": [
+   "1.6.5"
+  ],
+  "evidence": "OSP s14 law 4: failure continues, each outcome a state the town talks about; escorting is minding. OPEN: specifics for a minded man hurt.",
+  "material": false
+ },
+ {
+  "list": "B",
+  "n": 85,
+  "gap": "The successor's offer",
+  "class": "PLANTED",
+  "parts": [
+   "3.1.4"
+  ],
+  "evidence": "Planted theme: endings (successor's offer, OSP s38, S35).",
+  "material": false
+ }
+]

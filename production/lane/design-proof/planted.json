@@ -1,0 +1,163 @@
+{
+ "made": "2026-11-20",
+ "source": "production/lane/ONE-SHOT-PROMPT.md from '# LEDGER, as the player plays it' to the end, part-id tags stripped, 'Ids not placed' dropped",
+ "planted": [
+  {
+   "n": 1,
+   "parts": [
+    "1.2.4"
+   ],
+   "name": "Car crashes, damage and unsticking",
+   "group": "1 verbs",
+   "paras": [
+    117
+   ],
+   "removed_text_start": [
+    "Crashes and damage come in stages by closing speed: a light touch does nothing (a touch under 10 mph is forgiven); then "
+   ]
+  },
+  {
+   "n": 2,
+   "parts": [
+    "1.5.1",
+    "1.5.2",
+    "1.5.3",
+    "1.5.4"
+   ],
+   "name": "Chases on foot and by car (fleeing, pursuing, car chases, pursuers' rules)",
+   "group": "1 verbs",
+   "paras": [
+    182,
+    183,
+    184,
+    185,
+    186
+   ],
+   "removed_text_start": [
+    "## 22. Chases on foot and by car",
+    "Fleeing on foot. Run from a constable and it is a chase through the Hook's back ways: ginnels, yards, bollarded lanes a ",
+    "Pursuers give up at the rule and never cheat: no pursuer sees through a wall, knows where Tom went without seeing, or ca",
+    "Pursuing on foot. Somebody runs from Tom: a runner fare, a man from a fight, a witness heading for the phone. He runs at",
+    "Car chases. A hit-and-run seen by an officer, a refused stop, or a car that saw the deed: the patrol car gives chase wit"
+   ]
+  },
+  {
+   "n": 3,
+   "parts": [
+    "2.6.4"
+   ],
+   "name": "Arrest and custody as hours (what an arrest costs)",
+   "group": "2 town (police)",
+   "paras": [
+    171
+   ],
+   "removed_text_start": [
+    "An arrest costs hours, never the game, and under 2 real minutes of play: a constable walks up (go with him, or run), the"
+   ]
+  },
+  {
+   "n": 4,
+   "parts": [
+    "2.7.6"
+   ],
+   "name": "Fencing stolen goods",
+   "group": "2 town (money)",
+   "paras": [
+    155
+   ],
+   "removed_text_start": [
+    "Fencing. Rita's back room fences at about 0.4 of an honest price, and opens at rung 2. Rita refuses or lowballs goods wh"
+   ]
+  },
+  {
+   "n": 5,
+   "parts": [
+    "2.16"
+   ],
+   "name": "Death, bodies and the missing",
+   "group": "2 town",
+   "paras": [
+    111
+   ],
+   "removed_text_start": [
+    "Death, bodies and the missing. A killing is rare, permanent and remembered forever. A body never cools in talk and is ne"
+   ]
+  },
+  {
+   "n": 6,
+   "parts": [
+    "3.1.4",
+    "3.1.5"
+   ],
+   "name": "The endings and their signs",
+   "group": "3 story",
+   "paras": [
+    268,
+    269,
+    270
+   ],
+   "removed_text_start": [
+    "The endings are states, never picked from a list, and no single beat fails the run. Five built states are kept underneat",
+    "No redemption path. Every ending is reachable by a route, including from a hunted state. [3.1.4]",
+    "Every cost that decides the ending shows its sign before it decides: the inspector's manner when the books stop standing"
+   ]
+  },
+  {
+   "n": 7,
+   "parts": [
+    "4.5.1"
+   ],
+   "name": "Traffic drivers' behaviour",
+   "group": "4 place",
+   "paras": [
+    119
+   ],
+   "removed_text_start": [
+    "Traffic drivers obey lights and lanes, flash a car on the wrong side, and always brake for people. Only the player's car"
+   ]
+  },
+  {
+   "n": 8,
+   "parts": [
+    "6.9"
+   ],
+   "name": "Finding the way without markers (navigation)",
+   "group": "6 interface",
+   "paras": [
+    143
+   ],
+   "removed_text_start": [
+    "Finding the way without markers. Every door that matters has a number and every street a name plate at its ends. A job, "
+   ]
+  },
+  {
+   "n": 9,
+   "parts": [
+    "6.4",
+    "7.8"
+   ],
+   "name": "Menus and saving (autosave, slots, pause, continue)",
+   "group": "6 interface / 7 shape",
+   "paras": [
+    20
+   ],
+   "removed_text_start": [
+    "Menus and saving. It starts from its shortcut, shows progress while it prepares, opens at a sensible size, offers qualit"
+   ]
+  },
+  {
+   "n": 10,
+   "parts": [
+    "7.11"
+   ],
+   "name": "Waiting and time skips (sleep, wait until)",
+   "group": "7 shape",
+   "paras": [
+    278
+   ],
+   "removed_text_start": [
+    "Waiting and time skips. Nothing forces Tom out and sleeping is a skip, never a need. Waiting is a key that offers \"wait "
+   ]
+  }
+ ]
+}
