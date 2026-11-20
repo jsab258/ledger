@@ -23,3 +23,4 @@ Build notes: the map is made by scripts/classify.py, build.py, themes.py and cov
 
 - Step 0: start row 2026-11-20-2253-design. Allowance 71% at 22:38 (newest row with a reading); stop line 95%.
 - Step (a) done: DEFINITIONS-2026-11-21.md defines all 44 UNDEFINED rows; scripts/apply_definitions.py wrote them into coverage.json (field run2 = "defined"). Result: UNDEFINED 0; of the 44, 27 MEASURED (17 design decisions he may overturn, 10 on guidelines or guards), 13 PENDING, 2 UNMEASURED (GD-04, RT-14), 1 OUT (GD-06 mods, his ruling 22:08), 1 OUTSIDE (10.12 price and demo).
+- Fresh Opus reviewer checked the definitions against canon, RULINGS and the description: 22 points, all fixed in place (list at the top of the file); AX-03's field-of-view setting moved to a point for his ruling (it would change the 86 degree ruling).

@@ -11,7 +11,11 @@ How each row's new status was set:
 
 Where GTA VI sets a higher bar than the row had (production/research/lane/gtavi/YARDSTICK.md, keys Y), the definition says "raised by Y..." No GTA VI story content is used anywhere. Mafia is never a reference. Mods are out by his ruling of 22:08, 20 November.
 
-Design decisions taken here (within canon and his rulings; recorded so he can overturn any): no achievements at release (10.7); photo mode from the pause menu only (6.8); a fail-safe that brings Act III after eight game weeks of Act II (RT-04); Tom will not give an order that hurts anyone his line covers (RT-09); rung 3 and 4 thresholds (RT-04); the War trigger (RT-12); the missed-rent ladder (RT-16); the three pots (RT-17); the Ledger and map do not stop the clock (RT-18).
+Point for his ruling (canon, rulings): a field-of-view setting (AX-03) would change the 86 degree ruling of 28 Oct; recommended yes, 75 to 100 with 86 the default; meanwhile not built.
+
+Reviewed 21 Nov by a fresh Opus reviewer against canon, RULINGS and the description; its 22 points were fixed in this version (GD-08, RT-04, RT-09, RT-17, RT-16, RT-12, RT-03, GD-07, AX-02, 10.9, RT-19, RT-18, RT-02, AX-05, AX-07, GD-02, AX-10, AX-03).
+
+Design decisions taken here (within canon and his rulings; recorded so he can overturn any): no achievements at release (10.7); photo mode from the pause menu only (6.8); a fail-safe that brings the sit-down after eight game weeks of Act II and the state-based roads to rung 2 (RT-04); Tom will not give an order that hurts anyone his line covers (RT-09); the War trigger (RT-12); the missed-rent ladder (RT-16); the three pots (RT-17); the Ledger and map do not stop the clock (RT-18).
 
 ---
 
@@ -40,14 +44,14 @@ Status: MEASURED.
 
 ### AX-02 Subtitle options
 Definition. Subtitles are on by default and offered before the first sound of the game (the first menu). Options: size (three steps), background box (off, half, full), speaker's name (on by default for named people), and street chatter subtitles (on or off, already in the description). A subtitle appears only with its audio and stays at least as long as the line plus 0.3 s.
-Standard. GAG basic and XAG 104: all five options present; first screen offers them; no subtitle without its audio; no subtitle shown under 1 s.
+Standard. GAG basic and XAG 104: the four options (size, background box, speaker's name, street chatter) present; the first screen offers them; no subtitle without its audio; every subtitle stays for its line plus 0.3 s.
 Test. B: every line played in a 2-hour soak logged with its subtitle on and off times.
 Source. GAG (subtitles), XAG 104; the description, section 3; ruling 23 Sep (subtitle only with its audio).
 Status: MEASURED.
 
 ### AX-03 Motion and comfort settings
-Definition. Each motion effect has its own switch: camera shake (the hit shake and the car's), head bob, motion blur, the brief camera close-in on a landed blow, and depth of field. The field of view can be set from 75 to 100 degrees; the default stays the ruled 86 degrees, and the car camera follows the same offset. A "reduce flashing" switch dims muzzle flashes and lightning, beside the photosensitivity line the description already shows.
-Standard. XAG 117 and GAG: every listed effect can be turned off alone; field of view range present with 86 as default; flashing reduced below three flashes a second when switched.
+Definition. Each motion effect has its own switch: camera shake (the hit shake and the car's), head bob, motion blur, the brief camera close-in on a landed blow, and depth of field. The field of view stays at the ruled 86 degrees (ruling 28 Oct); a field-of-view setting, which the guidelines recommend, would change that ruling and is listed in DESIGN-COMPLETE.md as a point for his ruling, not built meanwhile. A "reduce flashing" switch dims muzzle flashes and lightning, beside the photosensitivity line the description already shows.
+Standard. XAG 117 and GAG: every listed effect can be turned off alone; flashing reduced below three flashes a second when switched.
 Test. S: each switch toggled and the frames checked; a flash-rate script on a gunshot clip with the switch on.
 Source. XAG 117, GAG (motion); ruling 28 Oct (86 degree lens); GTA VI's settings list (Y1.9).
 Status: MEASURED.
@@ -61,9 +65,9 @@ Status: MEASURED.
 
 ### AX-05 Input options beyond rebinding
 Definition. Every action rebindable on keys and on the pad, with "reset to defaults" per device; mouse and stick sensitivity separately for X and Y; invert per axis per device; every hold has a toggle (the description has this); no action needs repeated pressing (mashing in fights is a choice the breath rule punishes, never a requirement); raised by Y1.9: an aim-assist strength in three steps once guns exist (off, light, strong; the dot stays optional and off by default), and a "hold becomes tap" switch for every hold.
-Standard. XAG 107 (input), 110: all items present; the game completes the first hour with every hold set to tap and on pad alone.
+Standard. XAG 107 (input): all items present; the game completes the first hour with every hold set to tap and on pad alone.
 Test. B: the first-hour bot run with all toggles on, pad only; a rebind of every key with no conflict left unflagged.
-Source. XAG 107, 110; GAG; the description, section 3 (controls); Y1.9.
+Source. XAG 107; GAG; the description, section 3 (controls); Y1.9.
 Status: MEASURED.
 
 ### AX-06 Menu usability
@@ -77,7 +81,7 @@ Status: MEASURED.
 Definition. At least eight manual slots, each with a picture, the game day and hour, the place and Tom's rung in words. Autosaves rotate through three; a save is written to a new file and swapped in only once complete, so a crash during a save never loses the last good one. Quitting saves. A crash loses at most the last deed.
 Standard. (1) Eight manual slots with picture, day, hour, place; (2) three rotating autosaves; (3) power cut during save x 100: a good save always loads.
 Test. SaveChaos style: kill the process at random points during 100 saves; every time a save loads and equals one of the last two good states.
-Source. The description, section 3 (saving); ER-SAVE-01; XAG 112 (save clarity); PC players' expectation from the players study (bugs and broken saves punished).
+Source. The description, section 3 (saving); ER-SAVE-01; PC players' expectation from the players study (bugs and broken saves punished).
 Status: MEASURED.
 
 ### AX-08 Accessibility listed in game and on the store
@@ -99,7 +103,7 @@ Definition. When the window loses focus, the game pauses (Esc menu shown) unless
 Standard. 100 alt-tabs and 50 window resizes in a soak: no crash, no stuck key, no town state change while paused (save hash).
 Test. B: scripted focus loss and resize during walking, driving, a fight and talk.
 Source. PC players' expectations (sources/a11y-pc.json, PC section); the description, section 3 (Esc pauses everywhere).
-Status: MEASURED.
+Status: MEASURED (design decision, pass or fail).
 
 ### AX-11 Never by colour alone
 Definition. No information is carried by colour alone: the light cue is darkness at the frame's corners, the belief line has words, the seeing outline is a shape. Key objects (doors usable, the cab of the firm, a constable) are told apart by shape and light, never only hue. Raised by Y1.9: three colour-blind filters (red-green two ways, blue-yellow) are offered, though the design does not rely on them.
@@ -120,7 +124,7 @@ Source. The description, section 3 (no meters); VISION (no stats or counts); Ste
 Status: MEASURED (design decision).
 
 ### 10.9 Player support and community
-Definition. "Report a problem" in the pause menu (with 8.2.1's consent), one support address in the menus and on the store page, the Steam forum as the community place, and a known-issues page kept current by the release team. Any live line can already be reported (section 34). A report gets an automatic reply naming what was received.
+Definition. "Report a problem" in the pause menu (with 8.2.1's consent), one support address in the menus and on the store page, and the Steam forum as the community place. Any live line can already be reported (section 34).
 Standard. Every route present; a test report reaches the support inbox with its build and the player's words within 5 minutes.
 Test. Ten test reports from the pause menu.
 Source. The description, section 34 (line report); sources/a11y-pc.json (PC expectations).
@@ -152,7 +156,7 @@ Status: PENDING (PC measuring, 23 to 28 Nov).
 
 ### GD-02 Density
 Definition. Something to do or notice every so many seconds of street walking: a person with a word, a fare, a debt, a happening, a lit window with a life, a thing to touch. Raised by Y2.5 and Y4.1: distinct people in one busy view, and no street line repeated within an hour of play.
-Standard. Things per street minute within the band the teardown's town pieces show (to come); at least 25 distinct people in the busiest view of the Hook at its busiest hour (judgement until the footage pass counts GTA VI's and KCD2's); no shared street line heard twice in one real hour (raised from the description's "a shared line once a week per street", which allowed repeats across streets).
+Standard. Things per street minute within the band the teardown's town pieces show (to come); at least 25 distinct people in the busiest view of the Hook at its busiest hour (a judgement figure, replaced by the footage pass's count of GTA VI's and KCD2's busiest views); no shared street line heard twice in one real hour (raised from the description's "a shared line once a week per street", which allowed repeats across streets).
 Test. B: a one-hour walk logging every line and every meetable thing per minute.
 Source. MEASUREMENTS-NEEDED A (density); Y2.5, Y4.1.
 Status: PENDING (PC measuring, 23 to 28 Nov).
@@ -184,14 +188,14 @@ Status: OUT (his ruling, 22:08, 20 Nov).
 
 ### GD-07 Economy over weeks
 Definition. Money buys position, never numbers (the description, section 24). The curve: Act I, £23.50 and rent at £18 a week, a week of fares pays it, the debts at £156; Act II, what money buys rises with the rung (a third car, a driver's wage, men's cuts, a front's share, a bribe to a bought man, the decent jacket, the good overcoat, the doctor); Act III, money cannot buy the books clean. Sinks never run dry before Act III: at every act's end there is a named thing the player wants and cannot yet afford.
-Standard. The players study punishes money with nothing to buy (GTA V and RDR2 late game). Pass: in a bot playthrough at a fast pace, the spare money at the end of each Act II week never exceeds the price of the next named purchase on the rung ladder; numbers from the reference games' money over a playthrough.
+Standard. The players study punishes money with nothing to buy (GTA V and RDR2 late game). Pass: at each act's end, in both a greedy and a lazy bot playthrough, at least one named thing on the rung ladder he does not yet hold is still out of reach of his money; the curve's shape is set from the reference games' money over a playthrough.
 Test. B: an economy bot playing greedy and lazy; the curve plotted against the rung ladder.
 Source. The description, sections 24, 28, 31, 32; MEASUREMENTS-NEEDED A (money over a playthrough); PLAYERS-KCD2-GTAV-RDR2 complaints.
 Status: PENDING (PC measuring, 23 to 28 Nov).
 
 ### GD-08 The catalogue of jobs and stories per act
-Definition. Every job has a named giver, a place by landmark, an hour, at least two ways to do it, and a return (somebody tells it back). Kinds: carries, collections, break-ins, lifts, tails, minding, fares with a wrinkle, sit-downs, and from Act II the eight sent verbs. Act II has no dead weeks (a rival rung, a firm change and a return every week).
-Standard. Jobs per real hour and kinds per act inside the band the teardown and the reference games' mission counts show; no kind twice in a row (ER-JOB-06).
+Definition. Every job has a named giver, a place by landmark, an hour, three keys to every lock (the description, section 14: no job needs talk, a fight or a car to finish), and a return (somebody tells it back). Kinds: carries, collections, break-ins, lifts, tails, minding, fares with a wrinkle, sit-downs, and from Act II the eight sent verbs. Act II has no dead weeks (a rival rung, a firm change and a return every week).
+Standard. Jobs per real hour and kinds per act inside the band the teardown and the reference games' mission counts show; no set piece twice in thirty minutes (section 14).
 Test. A count of the authored catalogue per act against the band; the bot's job log for kind repeats.
 Source. The description, sections 14, 37; MEASUREMENTS-NEEDED A (jobs per hour).
 Status: PENDING (PC measuring, 23 to 28 Nov; the story measure for the story jobs).
@@ -208,25 +212,25 @@ Source. The description, sections 26, 38, 39; DESIGN §16.
 Status: PENDING (story measure, by Sat 28 Nov: Act III's shape; the rule above stands if Act III keeps the mornings).
 
 ### RT-02 Main-story beat content
-Definition. Each of Act II's eight beats (the description, section 37) has a written scene: who, where, what is at stake, what the player can choose, what comes back. The old firm's hand-over names three things handed over (the landing, its men, its night custom); Mickey's real book holds the arrangements and debts Tom can take up (at least five new names); the envelopes of nights five and seven carry what the measured story says; the collision is written for each pairing of a day appointment and a night job the state allows.
+Definition. Each of Act II's eight beats (the description, section 37) has a written scene: who, where, what is at stake, what the player can choose, what comes back. The old firm's hand-over names three things handed over (the landing, its men, its night custom); Mickey's real book holds the arrangements and debts Tom can take up (at least five new names); the envelopes of Act I's nights five and seven (section 36) carry what the measured story says; the collision is written for each pairing of a day appointment and a night job the state allows.
 Standard. Every beat has its scene; every scene names at least one choice and one return; none needs a system the game lacks.
 Test. Trace check: beat to scene to system (TRACE style), by a fresh reviewer.
-Source. The description, section 37; the story measure's bible (current version STORY-BIBLE-M1).
+Source. The description, sections 36 and 37; the story measure's bible (current version STORY-BIBLE-M1).
 Status: PENDING (story measure, by Sat 28 Nov).
 
 ### RT-03 Job and mission catalogue after week one
-Definition. As GD-08 for kinds and counts, plus places: the dock gate (Act II from rung 3: tax collected on his drivers, a man posted, smuggled loads seen), the Harbour Board's counter (an account, a clerk who sells times of shipments), customs (an officer who never reports, by trade; the bonded store as a place of risk).
+Definition. As GD-08 for kinds and counts, plus places: the dock gate (Act II from rung 3: tax collected on his drivers, a man posted, smuggled loads seen), the Harbour Board's counter (an account, a clerk who sells times of shipments), customs (an officer who never reports, by trade; the bonded store, holding tobacco and boxed goods and never drink, as a place of risk).
 Standard. Each place has at least two jobs and one person with a word; counts as GD-08.
 Test. Catalogue count; bot visits each place and finds something to do within 30 s (section 40).
 Source. The description, sections 14, 28, 29, 40; the story measure.
 Status: PENDING (story measure and PC measuring, by Sat 28 Nov).
 
 ### RT-04 Act transitions and stall paths
-Definition. Act II opens on the Monday of the second week whatever Sunday's answer was: "wind it down" opens it with the arrangement ended, "take it over" with it kept, and "refuse to say" lets the street decide by his deeds (more night jobs done than refused in week one counts as kept). Rung 2 comes with Sheila's answer, or, if he refused, with the third car or the first recruit, whichever first. Rung 3 when he holds four of the five things in the rung table (five cars, a night desk, a first front, a first round, the cold-store contract); rung 4 when he holds at least two fronts and two rounds and has men at two of the three places (the dock gate, the cold store, the landing). If Act II never reaches a sit-down, the inspection letter comes at the end of the eighth game week of Act II all the same (the description puts Act II at about seven), so no player is stuck in Act II.
-Standard. Every Sunday answer reaches Act II; every Act II reaches Act III by week eight; rung changes fire exactly on these conditions.
-Test. B: three week-one bots (each answer) and a do-nothing Act II bot; the act and rung log checked.
-Source. The description, sections 32, 36, 37, 38 (Act II about seven weeks); ER-CORE-04 (no dead end).
-Status: MEASURED (design decision, pass or fail).
+Definition. Act II opens on its state, as the description has it: Sheila has her answer and the firm is his (rung 2). Every road reaches that state. "Take it over" gives it on Sunday; "wind it down" gives it on Sunday with the arrangement ended; "refuse to say" leaves Sheila to read his deeds, and the firm becomes his on the first of these states: a third car, a first recruit, or the outfit's ask taken twice in the second week. Rung 3 is the rung table as written: five cars, a night desk, a first front, a first round and the cold-store contract, all held. Rung 4 likewise: fronts and rounds across the Hook (at least two of each) and men at the dock gate, the cold store and the landing. If no rival's ladder has reached its top rung by the end of the eighth game week of Act II (the description puts Act II at about seven), the rival highest on its ladder climbs its remaining rungs one a game day, each said to his face as the ladder requires, so Act II still ends at a sit-down and no player is stuck in Act II.
+Standard. Every Sunday answer reaches rung 2 by a state; every Act II reaches a sit-down by about week eight without a rung skipped unseen; rung changes fire exactly on the table's conditions.
+Test. B: three week-one bots (each answer) and a do-nothing Act II bot; the act, rung and ladder log checked.
+Source. The description, sections 29 (ladder never skips a rung), 30 (Act II ends at a sit-down), 32 (the rung table), 36, 37 (opens on rung 2; beats on states); ER-CORE-04 (no dead end).
+Status: MEASURED (design decision, pass or fail, built on the description's states).
 
 ### RT-05 The two rivals not met at Act II's end
 Definition. The two rivals whose ladders did not reach the sit-down keep their rung into Act III and keep pressing (their pressure at that rung stays part of every week); neither is absorbed or defeated by the story alone. Act III's close names each: what they hold and what they call him.
@@ -257,11 +261,11 @@ Source. The description, section 27.
 Status: MEASURED (design decision).
 
 ### RT-09 Tom's line against women, the over-sixties and the priest
-Definition. If someone his line covers attacks him, Tom guards, slips and backs off; the strike input does nothing and he says so. In a fight that includes them, he can strike only the others; a grab of their weapon is allowed. Tom will not give a send that hurts a person his line covers: the order is refused in his own words. A rival's men are not bound by his line.
-Standard. Zero strikes by Tom or his sent men on anyone covered, in any fight, hold-up or send.
+Definition. If someone his line covers attacks him, Tom guards, slips and backs off; the strike input does nothing and he says so. In a fight that includes them, he can strike, shove or grab only the others; he does not grab a covered person even to take a weapon, and steps away instead. Tom will not give a send that hurts a person his line covers: the order is refused in his own words. A rival's men are not bound by his line.
+Standard. Zero strikes, shoves or grabs by Tom on anyone covered, and zero sends that hurt one, in any fight, hold-up or send.
 Test. B: seeded fights and sends including covered people; any such strike fails.
-Source. The description, section 10 (Tom's own line); RULINGS (the line); the conflicts note on hold-ups.
-Status: MEASURED (design decision within his ruling).
+Source. The description, section 10 (Tom's own line) and its conflicts note on hold-ups.
+Status: MEASURED (design decision within the description).
 
 ### RT-10 Firearms as a verb
 Definition. Late and rare (the dial). Held semicolon draws the gun from under the coat; the camera moves to the aim row; the mouse or stick aims with no crosshair (an optional dot, off by default; AX-05's aim assist steps). A shot's hit depends on aim, distance and whether Tom moved. Before War a hit wounds (arm, leg or body) and never kills; at War a body hit can kill, a named and permanent event. Raised by Y1.5: an aimed shot to the arm disarms, and a shot to the leg stops a man running. A revolver holds six and reloads in a shown action after the sixth; no count on screen. Men with guns shoot from where they stand, never use cover, and run when outmatched. A shot Tom goes down, comes round in hospital (days, never money) and never dies. Nobody shoots from a moving car.
@@ -278,7 +282,7 @@ Source. The description, section 10; MEASUREMENTS-NEEDED A (damage model).
 Status: PENDING (PC measuring, 23 to 28 Nov).
 
 ### RT-12 Escalation dial: what takes Fired to War
-Definition. Fired moves to War when the town learns of either: a second shooting by a different side from the first (two firms have now fired), or a named man of one firm wounded or killed by a shot from another. Tom arming more than two of his own men also moves it, because the town learns who carries. Nothing moves it that nobody saw or heard. It falls one step after about two quiet game weeks, never back to 0.
+Definition. Fired moves to War when the town learns of either: a second shooting by a different side from the first (two firms have now fired), or a named man of one firm wounded by a shot from another. Tom's men seen carrying (more than two of them, each seen by someone) also moves it, because the town then knows who carries. Nothing moves it that nobody saw or heard. It falls one step after about two quiet game weeks, never back to 0.
 Standard. War only on these learned events; never on an unseen one; the fall rule as the description.
 Test. B: seeded sequences of shootings seen and unseen; the dial's state checked.
 Source. The description, section 33.
@@ -306,29 +310,29 @@ Source. canon.md content rule; the description, section 34 (claim check); 8.8 ru
 Status: MEASURED (guard, zero tolerance).
 
 ### RT-16 Missed rent
-Definition. Rent is owed to the landlord's agent, a named man who calls at the counter. A missed Friday becomes arrears said in words in the Ledger and by the agent on Monday. Two missed: a letter, notice to quit the flat above in a fortnight. Three: the flat is let to someone else and Tom sleeps in the office. The office itself is never lost in Act I, and arrears can be paid at any time, which ends the ladder. No game over, no dead end.
-Standard. Each step on its Friday; paying clears it; the office never lost before Act III.
+Definition. Rent is owed to the landlord's agent, a named man who calls at the counter. A missed Friday becomes arrears said in words in the Ledger and by the agent on Monday. Two missed: a letter, notice to quit the flat above in a fortnight. Three: the flat is let to someone else and Tom sleeps in the office. The office itself is never lost, and arrears can be paid at any time, which ends the ladder. No game over, no dead end.
+Standard. Each step on its Friday; paying clears it; the office itself is never lost at any point in the game (only the flat above).
 Test. B: the do-nothing run through three Fridays; a pay-late run.
 Source. The description, sections 24 (rent), 3 (no game over); the doing-nothing run of S23.
 Status: MEASURED (design decision).
 
 ### RT-17 Money pots in practice
-Definition. Three places money is: the pocket (cash on Tom), the tin (night money at the office) and the book (clean money). Rent, drivers' wages, buying a car and a front's share come from the book. Bribes, men's cuts, the fence, the doctor and the shops come from cash, from the pocket or the tin. Cash moves between pocket and tin by hand at the office; the book becomes cash only through the count. The tin can be stolen in an office break-in (a rival's threat, or a thief) and is then gone, said in words. A constable's search finds the pocket; over about £50 on him at night is asked about and, without an answer, kept.
-Standard. Every payment draws from the right place; the flows ledger balances (ER-MONEY-01).
-Test. B: every kind of payment from each place; a break-in; a night search with cash.
-Source. The description, sections 21, 24, 26, 27.
+Definition. Three places money is: the pocket (cash on Tom), the tin (night money at the office, which cannot be explained) and the book (clean money, which can be spent anywhere, as the description says). Rent and drivers' wages come out of the book weekly; a car, a front's share, shops and the doctor can be paid from the book or from cash. Night money paid where it can be seen to be explained (a car bought, a front's share) is a lie someone may one day have to hold up, as any fare written for an hour he was elsewhere. Bribes and men's night cuts come from cash, as the description has the cut paid from the tin. The count turns tin money into book money within the wash limit; nothing turns the book back into tin. The tin can be stolen in an office break-in (a rival's threat, or a thief) and is then gone, said in words. A constable's search finds what is under the coat and in the hand, cash included, and what he finds he keeps.
+Standard. Every payment draws from a place the rules allow; the flows ledger balances (ER-MONEY-01); a search keeps exactly what was found.
+Test. B: every kind of payment from each place; a break-in; a night search with cash on Tom.
+Source. The description, sections 21 (what he finds he keeps), 24 (two pots; clean money spent anywhere), 26 (the count), 27 (cut from the tin).
 Status: MEASURED (design decision).
 
 ### RT-18 Pause and clock
-Definition. The clock stops in talk (section 34) and in the pause menu, and nowhere else. Opening the Ledger, the paper map or a letter stops Tom but not the town, as the description already says of the map: KCD2's immersion. Getting ready takes a game minute, never a screen. An assist "the Ledger pauses the town" is offered, off by default.
+Definition. The clock stops in talk (section 34) and in the pause menu, and nowhere else. Opening the Ledger, the paper map or a letter stops Tom but not the town, as the description already says of the map (section 24). Getting ready takes a game minute, never a screen. An assist "the Ledger pauses the town" is offered, off by default.
 Standard. Clock frozen only in talk and pause (and with the assist on, in the Ledger); time passes at the clock rate otherwise.
 Test. B: clock read before and after each screen.
-Source. The description, sections 24, 27, 34; KCD2's open journal does not stop the world [I].
+Source. The description, sections 24 (the map stops Tom but pauses nothing), 27, 34.
 Status: MEASURED (design decision).
 
 ### RT-19 Content supply at night and late in Acts II and III
-Definition. Street happenings are authored (ruling 13 Nov), each with a spec and a check, never rolled at random. Nights without a job hold: a fare with a wrinkle on the radio, a rival's man seen, a crewman with a problem, a happening on the street, a call on someone whose routine allows it. Never five minutes with nothing new (S41); by day something within 30 real seconds (section 40).
+Definition. Street happenings are authored (ruling 13 Nov), each with a spec and a check, never rolled at random. Nights without a job hold: a fare with a wrinkle on the radio, a rival's man seen, a crewman with a problem, a happening on the street, a call on someone whose routine allows it. Never five minutes with nothing new (section 40, and the guard S41); by day something within 30 real seconds (section 40).
 Standard. The library holds enough happenings that none repeats on one street within a game week; the count per hour inside the teardown's band (GD-02).
 Test. B: a do-nothing-but-walk night in Act II and in Act III: the five-minute rule and the repeat rule logged.
-Source. The description, sections 40, S41; ruling 13 Nov; MEASUREMENTS-NEEDED A (density).
+Source. The description, sections 14 (happenings) and 40; ruling 13 Nov; MEASUREMENTS-NEEDED A (density).
 Status: PENDING (PC measuring for the band, 23 to 28 Nov; the story measure for Act III's nights, by Sat 28 Nov).
