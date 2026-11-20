@@ -85,6 +85,8 @@ CAMERA_JS = """() => { const L = LEDGER, T = L.THREE, cam = L.camera, c = L.cam;
 
 
 class Proto:
+    EXTRA_INIT = None  # a test tool's own script put in before the page loads (feel_numbers.py catches the frame loop)
+
     def __init__(self, dist, seed=7):
         from playwright.sync_api import sync_playwright
 
@@ -97,6 +99,8 @@ class Proto:
         self.b = self.pw.chromium.launch(args=GL)
         self.ctx = self.b.new_context(viewport=VIEW)
         self.ctx.add_init_script(PAD_INIT % seed)
+        if self.EXTRA_INIT:
+            self.ctx.add_init_script(self.EXTRA_INIT)
         self.ctx.route("**/fonts.googleapis.com/**", lambda r: r.abort())
         self.ctx.route("**/fonts.gstatic.com/**", lambda r: r.abort())
         self.pg = self.ctx.new_page()
