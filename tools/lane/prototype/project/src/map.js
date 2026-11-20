@@ -863,6 +863,20 @@ export function bigThingAt(x, z) {
   for (const p of BIG) if (hyp(x, z, p.x, p.z) < p.r) return true;
   return false;
 }
+// The one-shot (the machine checks' fault at the ferry landing and on Quay Street): the thin and the roofed things
+// that can stand between the camera and Tom: a lamp post, the ferry shelter, the bus shelter. The camera comes in
+// front of them as it does for a big thing. Heights in metres, as the town draws them (render/town.js).
+const CAM_POST_WITHIN = 0.32,
+  CAM_POST_HIGH = 6.5,
+  CAM_SHELTER_HIGH = 2.5;
+const SHELTERS = PROPS.filter((p) => p.t === 'shelter' || p.t === 'busshelter').map((p) =>
+  p.t === 'shelter' ? { x0: p.x - 3.2, x1: p.x + 3.2, z0: p.z - 1.45, z1: p.z + 0.95 } : { x0: p.x - 0.2, x1: p.x + 1.4, z0: p.z - (p.w || 3.6) / 2 - 0.1, z1: p.z + (p.w || 3.6) / 2 + 0.1 },
+);
+export function thinThingAt(x, z, y) {
+  if (y < CAM_POST_HIGH) for (const l of POSTS) if (Math.abs(x - l.x) < CAM_POST_WITHIN && Math.abs(z - l.z) < CAM_POST_WITHIN && hyp(x, z, l.x, l.z) < CAM_POST_WITHIN) return true;
+  if (y < CAM_SHELTER_HIGH) for (const r of SHELTERS) if (x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1) return true;
+  return false;
+}
 // Tall walls inside rooms that can hide a man from the camera: room id -> rects in room coordinates, filled by
 // the interior builder beside FURN (the low furniture is in FURN only).
 export const TALL = {};

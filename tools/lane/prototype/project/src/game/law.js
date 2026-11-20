@@ -5,7 +5,7 @@
 // around them: the nightly beat and its challenge with three answers, the hours each offence costs, DS Ellis's
 // four stages each with its sign, the office searched with notice, traffic stops, bought men, an officer at the
 // spot after a reported deed, and a street on edge. The rules are pieces/law.js.
-import { register, X, write, tell, hourNow, dayNow, here, P_, emit, on, tomXZ } from './core.js';
+import { register, X, write, tell, hourNow, dayNow, here, P_, emit, on, tomXZ, freshLine } from './core.js';
 import { G } from '../state.js';
 import { hyp, quid } from '../util.js';
 import { act, logLine } from '../events.js';
@@ -81,6 +81,25 @@ function ellisSigns() {
   }
 }
 // ---- the nightly beat (2.6.1) and the challenge with three answers (2.6.2, A13) ----
+// what is heard and said on the beat: a line of five words or more is used once a week (core.js freshLine)
+const BEAT_HEARD = [
+  'Measured footsteps on the wet. The constable is on his beat.',
+  'A torch swings at the far end of the street. The beat constable.',
+  'Boots, slow and even, a street away. The constable is about.',
+  'A cough, and the scrape of a boot on the kerb. The constable, on his round.',
+];
+const BEAT_STOPS = [
+  '"You there. Stand still a minute. What have you got on you?"',
+  '"Hold on, sir. A moment of your time. Turn your pockets out for me."',
+  '"Stop there, please. I will have a look at what you are carrying."',
+  '"Late to be out, sir. Stand where you are and show me your hands."',
+];
+const BEAT_LETS_GO = [
+  'Right. On your way, then. It is late to be about.',
+  'Nothing on you. Get yourself home, sir.',
+  'That will do. Mind how you go tonight.',
+  'Very good, sir. I will know you again.',
+];
 function beatStep(dt) {
   const P = P_('pc'),
     t = G.tom,
@@ -113,7 +132,7 @@ function beatStep(dt) {
   if (d < T.beatHeardWithinMetres && !S.beat.warned) {
     S.beat.warned = true;
     S.heard = G.played;
-    tell('Measured footsteps on the wet. The constable is on his beat.', '');
+    tell(freshLine(BEAT_HEARD, 'The constable. His beat.'), '');
   }
   if (d > T.beatHeardWithinMetres * 1.5) S.beat.warned = false;
   if (G.t - x.challengedT < T.challengeAgainAfterGameMinutes || G.played - S.heard < T.announcesBeforeChallengeRealSeconds) return;
@@ -134,7 +153,7 @@ async function challenge(P, cause, items) {
   P.ang = Math.atan2(t.x - P.x, t.z - P.z);
   const weak = !cause.weaponShown && !cause.bloodied && !items.some((i) => i.unlawful) && !t.carry;
   const bought = x.bought.harker && x.bought.harker.paid;
-  const i = await scene(() => choose('pc', '"You there. Stand still a minute. What have you got on you?"', ['Stand and be searched.', 'Run.', 'A word.']));
+  const i = await scene(() => choose('pc', freshLine(BEAT_STOPS, '"You again. Pockets, please."'), ['Stand and be searched.', 'Run.', 'A word.']));
   const r = L.answerChallenge(['stand and be searched', 'run', 'a word'][i], { carried: items, weakCause: weak, noteOffered: false, officerBought: bought });
   x.challenges.push({ answer: i, result: r.result, t: Math.round(G.t) });
   if (r.result === 'searched') {
@@ -145,7 +164,7 @@ async function challenge(P, cause, items) {
       G.story.job.carrying = false;
     }
     act('searched_by', { told: ['pc'] });
-    await scene(() => say('pc', r.keeps.length ? `I will keep ${r.finds.filter((f) => r.keeps.includes(f.id)).map((f) => f.name).join(' and ')}. And your name, sir. I am writing it down.` : 'Right. On your way, then. It is late to be about.'));
+    await scene(() => say('pc', r.keeps.length ? `I will keep ${r.finds.filter((f) => r.keeps.includes(f.id)).map((f) => f.name).join(' and ')}. And your name, sir. I am writing it down.` : freshLine(BEAT_LETS_GO, 'Go on, then.')));
     write(r.keeps.length ? `Searched by the constable on Quay Street. He kept ${r.finds.filter((f) => r.keeps.includes(f.id)).map((f) => f.name).join(' and ')}, and wrote the name down.` : 'Searched by the constable on Quay Street. He found nothing to keep.', { how: 'Did it', kind: 'note' });
     if (r.keeps.length) ellisEvent('talk');
   } else if (r.result === 'talked round') {

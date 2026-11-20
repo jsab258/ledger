@@ -61,11 +61,6 @@ export function hud(dt) {
   const cam = ui.camera,
     box = $('bubbles');
   let html = '';
-  for (let i = ui.bubs.length - 1; i >= 0; i--) {
-    const b = ui.bubs[i];
-    b.t -= dt;
-    if (b.t <= 0) ui.bubs.splice(i, 1);
-  }
   if (!ui.modal || ui.modal === 'dialog') {
     const list = ui.bubs.slice();
     const eyes = !!G.settings.eyes;
@@ -298,6 +293,13 @@ function fire(t) {
   t.fn();
 }
 export function tickTimers(dt) {
+  // the one-shot (the consequence checker's finding): a speech bubble's time runs with the game's own steps, as the
+  // other timers here do, so it ends in a stepped test and in a hidden tab too, and never hangs over a head for hours
+  for (let i = ui.bubs.length - 1; i >= 0; i--) {
+    const b = ui.bubs[i];
+    b.t -= dt;
+    if (b.t <= 0) ui.bubs.splice(i, 1);
+  }
   for (const s of ui.subs) s.t -= dt;
   for (const t of timers.slice()) {
     t.left -= dt;

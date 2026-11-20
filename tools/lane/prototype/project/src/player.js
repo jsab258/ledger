@@ -1,7 +1,7 @@
 // Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.
 import { G, hour } from './state.js';
 import { hyp, clamp, angDiff, pick } from './util.js';
-import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY, roomSightBlocked, bigThingAt } from './map.js';
+import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY, roomSightBlocked, bigThingAt, thinThingAt } from './map.js';
 import { inRect } from './util.js';
 import { nightF } from './seeing.js';
 
@@ -15,7 +15,7 @@ import { startTalk } from './talk.js';
 import { setInside } from './render/effects.js';
 import { AT_ONCE } from './talk_lines.js';
 import { RULES } from './rules.js';
-import { gameKey, gameCarPrompts } from './game/index.js';
+import { gameKey, gameCarPrompts, freshLine } from './game/index.js';
 const SHOPS = RULES.shops;
 const PADS = RULES.pad;
 const LAD = RULES.ladder;
@@ -371,9 +371,7 @@ export function talkTo(P) {
   if (P.anon) {
     bubble(
       P,
-      pick(
-        P.def.bark || (P.lad ? BARKS.lads : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day),
-      ),
+      freshLine(P.def.bark || (P.lad ? BARKS.lads : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day), 'Aye.'),
       3.5,
     );
     P.mind.look = STORY.looksAfterBarkingRealSeconds;
@@ -654,7 +652,8 @@ export function stepCamera(dt) {
       if (
         (solidCam(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < 9) ||
         // round 6 (ER-CAM-01, ER-DRIVE-06): nor behind a scrap heap, a stall or a crane leg, unless it looks over it
-        (bigThingAt(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < TOMS.cameraClearsBigThingsUnderMetres)
+        (bigThingAt(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < TOMS.cameraClearsBigThingsUnderMetres) ||
+        thinThingAt(tx - fx * cp * s, tz - fz * cp * s, ty + spn * s)
       ) {
         d = Math.max(0.9, s - 0.45);
         break;

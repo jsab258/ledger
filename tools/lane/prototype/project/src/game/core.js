@@ -61,6 +61,24 @@ export const X = (id) => ensureX()[id];
 const each = (name, ...a) => {
   for (const s of SYSTEMS) if (s[name]) guard(s.id + '.' + name, () => s[name](...a));
 };
+// ---- a spoken line is not said twice (the consequence checker's rule: five words or more, never again) ----
+// A line of five words or more is said once in a week. When every long line of a list has been said, a short one
+// of the list is used (a short greeting may come again, as it does in a street). The said lines are saved.
+const wordsIn = (l) => (String(l).match(/[A-Za-z']+/g) || []).length;
+export function freshLine(list, fallback) {
+  const x = ensureX();
+  const said = (x.feel.said = x.feel.said || {});
+  const lines = Array.isArray(list) ? list : [list];
+  const unused = lines.filter((l) => wordsIn(l) < SAID_ONCE_FROM_WORDS || !said[l]);
+  const long = unused.filter((l) => wordsIn(l) >= SAID_ONCE_FROM_WORDS);
+  // a fresh long line first, most of the time; else any line still allowed; else the fallback (a short one)
+  const from = long.length && Math.random() < SAID_LONG_SHARE ? long : unused;
+  const l = from.length ? from[Math.floor(Math.random() * from.length)] : fallback || '';
+  if (l && wordsIn(l) >= SAID_ONCE_FROM_WORDS) said[l] = 1;
+  return l;
+}
+const SAID_ONCE_FROM_WORDS = 5,
+  SAID_LONG_SHARE = 0.6;
 // After a new game starts or a save is loaded.
 export function gameLoaded() {
   ensureX();

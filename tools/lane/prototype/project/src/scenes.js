@@ -20,7 +20,7 @@ import { startJob, jobHotspots, jobClock, watchStep } from './jobs.js';
 import { nightly } from './police.js';
 import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
-import { gameHotspots, gameBeatFor, gameMatters } from './game/index.js';
+import { gameHotspots, gameBeatFor, gameMatters, freshLine } from './game/index.js';
 const STORY = RULES.story;
 const LAD = RULES.ladder;
 
@@ -1697,7 +1697,7 @@ function ambient(dt) {
       if (hyp(P.x, P.z, t.x, t.z) < STORY.barksWithinMetres && P.mind.look > 0) {
         bubble(
           P,
-          pick(P.keeper ? P.def.bark : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day),
+          freshLine(P.keeper ? P.def.bark : nightF() > STORY.nightVoicesAboveNight ? BARKS.night : BARKS.day, 'Aye.'),
           3,
         );
         barkCool = rnd(STORY.barksEveryRealSecondsAtLeast, STORY.barksEveryRealSecondsAtMost);
@@ -1733,7 +1733,7 @@ function lads(dt) {
       fl().ask1 === 'no' ||
       fl().ask2 === 'no';
   if (ladT === 0) {
-    bubble(near[0], pick(BARKS.lads), 4);
+    bubble(near[0], freshLine(BARKS.lads, 'Oi.'), 4);
     near.forEach((p) => {
       p.alert = { x: t.x, z: t.z, t: STORY.ladsAlertRealSeconds };
     });
