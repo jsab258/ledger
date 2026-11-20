@@ -16,6 +16,7 @@ A later run continues from the last line of the table: read the newest STORY-BIB
 | 5 | v5 | 8 | 7 | 8 | 6 (the middle, the critic; structure, the player) | yes (with a caveat), no, no |
 | 6 | v6 | 7 | 8 | 7 | 6 (structure and pace, all three; surprise, the critic and the editor) | no, yes, no |
 | 7 | v7 | 8 | 8 | 7 | 6 (surprise, the player and the editor; structure, the editor) | no, yes (with a caveat), no |
+| 8 | v8 | 8 | 7 | 7 | 6 (mystery, structure, the middle and surprise, the player; mystery, structure and surprise, the editor) | no, no, no |
 
 ## Round 1 (20 November, started 15:41)
 
@@ -124,3 +125,21 @@ What the three said, in common:
 5. In a game about books, the sums must balance (the carry and the rent gap, the Wednesday envelope, the miles). Several turning points want one line of motive.
 
 Next: v8, the last round.
+
+## Round 8 (20 November), the last allowed
+
+What v8 changed: the fire's answer made one lie (Agar paid Mickey to see a plot came free; Mickey told Ada the importer had refused; the money filled the envelopes); Danny takes the credit for a car he did not burn; the lie in the real book is in the tallyman's hand; Mickey's account of what he owed is found among his unposted letters to June in week one; the middle's dates spread; the rival who rang Customs given three nights in the last week; sums made to balance.
+
+Scores by category (critic, player, editor): Tom 7 7 7; cast 9 8 8; antagonists 8 7 7; mystery 8 6 6; opening 8 8 8; structure 7 6 6; middle 7 6 7; surprise 7 6 6; endings 9 7 7; side stories 8 7 7; tone 8 7 8; story and play 8 8 7.
+
+What the three said, in common: the truth is still told to Tom more than found (Agar's own admission now gives the climax away before Sheila's kitchen); Ada's hand in the burned car shows; there is too much story and too small a world; the last Friday is a checklist; £4,000 cannot fill a year of envelopes.
+
+## Where the loop stopped
+
+Eight rounds were run, the most the order allows. The story did not reach the loop's test for exceptional (three readers at 9 or more, no category under 8, all three singling it out), so the fourth reader was never called. From 4, 5 and 4 it rose to 7, 7, 7 in one round and has sat between 7 and 8 since; three of the last twelve readers would single it out. Version 7 read best (8, 8, 7, lowest category 6).
+
+What every round's fresh readers praise, and a later run should not lose: Ron and Tom (the passenger seat, the driving lessons, which seat Ron is in at each ending); Sheila, her withheld name and the line she wrote in the fare book; the fare book as alibi and noose, read by Mr Reese; the opening week and the failed carry that writes "Nowak, T." into the debt book; the offers that are gifts or hooks, paid off at the hearing and the phone box; Bonfire Night.
+
+What still holds it at 7 to 8, in every round whatever was changed: (1) surprise: any hidden hand behind the fire or the burned car is guessed by a genre-wise reader, and each extra layer added to hide it costs structure; (2) structure and pace: the bible carries more story than fifteen to twenty hours of a hands-first game want; (3) the truth reaches Tom by people telling him. A later run should cut, not add: fewer secrets, each found by a deed; a middle of fewer, longer scenes; and it should consider judging the story played in the prototype rather than on paper, since "told, not found" is partly a fault of a bible.
+
+STORY-FINAL.md is the story for him, from v8 with two small corrections the last readers all asked for (named there, not re-reviewed).
