@@ -77,9 +77,12 @@ export function initPlayer(cv, cameraObj) {
   camera = cameraObj;
   canvasEl = cv;
   addEventListener('keydown', (e) => {
+    // typing is for talk and for the settings: a typing box swallows the keys only while its own page is open (a box
+    // left in focus behind a shut page took the move keys with it)
     if (
       e.target &&
       e.target.tagName === 'INPUT' &&
+      ui.modal &&
       !['Enter', 'Escape', 'Tab', 'ArrowUp', 'ArrowDown', 'F2'].includes(e.code)
     )
       return;
@@ -452,6 +455,12 @@ function solidFor(x, z) {
 }
 // Could he stand here? (the same test his own steps use; the story player plans its walks by it)
 export const standable = (x, z) => !solidFor(x, z);
+// A wait always stops for what the town has for him (a man at the door, a message, a constable): the wait key must be
+// let go and pressed again to go on waiting.
+let waitBroken = false;
+export function stopWaiting() {
+  waitBroken = true;
+}
 export function stepPlayer(dt) {
   const t = G.tom;
   // keys are on or off; a stick (touch, pad) is analogue
@@ -459,7 +468,8 @@ export function stepPlayer(dt) {
     ax = touch.x + pad.x;
   let mx = kx + ax,
     my = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + touch.y;
-  const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my + pad.y) < 0.1;
+  if (!keys.KeyZ) waitBroken = false;
+  const waiting = !!keys.KeyZ && !waitBroken && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my + pad.y) < 0.1;
   ui.wait = waiting;
   G.fast = waiting ? TOMS.waitingTimeRunsTimes : 1;
   // round 6: the pad's right stick looks about, as the mouse does
@@ -585,13 +595,30 @@ export function stepPlayer(dt) {
         const px = t.x + ((t.x - P.x) / d) * (TOMS.pushedApartWithinMetres - d),
           pz = t.z + ((t.z - P.z) / d) * (TOMS.pushedApartWithinMetres - d);
         // round 6: nobody shoulders him into a lamp post or a parked car
-        if (
-          !blocked(px, pz, TOMS.pushedBodyRadiusMetres) &&
-          !(t.space === 'street' && footSolid(px, pz, t.x, t.z, TOMS.bodyRadiusMetres))
-        ) {
+        // the one-shot: nor into the band beside a wall or a door jamb where he could not then take a step (the wall
+        // that held him in Mickey's): he is moved only onto ground he can stand on
+        if (!solidFor(px, pz)) {
           t.x = px;
           t.z = pz;
         }
+      }
+    }
+    // never stuck: found standing inside something solid (put there by a talk, a load or a shove), he is eased at once
+    // onto the nearest ground he can stand on
+    if (solidFor(t.x, t.z)) {
+      let best = null;
+      for (let r = 0.1; r <= 1.5 && !best; r += 0.1)
+        for (let k = 0; k < 12 && !best; k++) {
+          const a = (k * Math.PI) / 6,
+            x = t.x + Math.sin(a) * r,
+            z = t.z + Math.cos(a) * r;
+          if (!blocked(x, z, TOMS.bodyRadiusMetres) && !(t.space === 'street' && !footClear(x, z, TOMS.bodyRadiusMetres))) best = [x, z];
+        }
+      if (best) {
+        const d = hyp(best[0], best[1], t.x, t.z),
+          step = Math.min(d, 3 * dt);
+        t.x += ((best[0] - t.x) / d) * step;
+        t.z += ((best[1] - t.z) / d) * step;
       }
     }
   }

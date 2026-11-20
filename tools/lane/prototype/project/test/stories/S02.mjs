@@ -123,12 +123,10 @@ await run('S02', { from: 'S01' }, async (P, t, n) => {
   t.ok(dr.steppedOut === 0, 'nobody steps out inside the stopping distance of the cab', dr.steppedOut);
   t.ok(dr.hitPeople === 0 && dr.trafficHits === 0, 'nobody is struck: the other cars brake for people and for him', [dr.hitPeople, dr.trafficHits]);
   // the Money page, in words, and the fare book
-  await P.tap('KeyL'); await P.secs(0.4);
-  for (let k = 0; k < 4 && !/money/i.test((await P.screen()).ledger.split('\n').slice(0, 1).join()) && !/In his pocket|pocket/i.test((await P.screen()).ledger); k++) { await P.tap('KeyE'); await P.secs(0.3); }
-  s = await P.screen();
+  s = { ledger: await P.ledger('money') };
   t.ok(/fare book/i.test(s.ledger) && /two pounds thirty|£2\.30/i.test(s.ledger), 'the Money page shows the fare in the fare book, in words', [s.ledger.slice(60, 400), await P.world(() => [LEDGER.G.money.clean, LEDGER.G.money.fares, LEDGER.G.money.fareCount])]);
   t.note('the Money page after the first fare', s.ledger.replace(/\s+/g, ' ').slice(0, 400));
-  await P.tap('KeyL'); await P.secs(0.4);
+  await P.ledgerClose();
   // 4. out at the chapel by the kerb side
   let c = await P.car();
   t0 = await P.played();

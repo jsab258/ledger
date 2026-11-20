@@ -99,8 +99,10 @@ function CLOCK(seed) {
   });
   // The way a player picks through a room or round a parked car: the shortest clear way on a fine grid of the ground
   // he can stand on. Returns corner points, or null when there is no way.
-  S.plan = (ax, az, bx, bz) => {
-    const ok = (x, z) => LEDGER.standable(x, z), C = 0.3;
+  S.plan = (ax, az, bx, bz, tight) => {
+    // a little clear of everything, as a walking man keeps (and, when there is no such way, as tight as it takes)
+    const m = tight ? 0 : 0.2, C = 0.3;
+    const ok = (x, z) => LEDGER.standable(x, z) && (!m || (LEDGER.standable(x + m, z) && LEDGER.standable(x - m, z) && LEDGER.standable(x, z + m) && LEDGER.standable(x, z - m)));
     const clear = (x0, z0, x1, z1) => { const n = Math.ceil(Math.hypot(x1 - x0, z1 - z0) / 0.15); for (let i = 1; i <= n; i++) if (!ok(x0 + ((x1 - x0) * i) / n, z0 + ((z1 - z0) * i) / n)) return false; return true; };
     if (clear(ax, az, bx, bz)) return [[bx, bz]];
     const pad = 9, x0 = Math.min(ax, bx) - pad, z0 = Math.min(az, bz) - pad, W = Math.ceil((Math.abs(ax - bx) + 2 * pad) / C), H = Math.ceil((Math.abs(az - bz) + 2 * pad) / C);
@@ -135,6 +137,9 @@ function CLOCK(seed) {
     if (clear(out[out.length - 1][0], out[out.length - 1][1], bx, bz)) out.push([bx, bz]);
     return out;
   };
+  { const plan0 = S.plan; S.plan = (ax, az, bx, bz) => plan0(ax, az, bx, bz, false) || plan0(ax, az, bx, bz, true); }
+  // can he walk straight from here to there, a little clear of everything?
+  S.clearWay = (ax, az, bx, bz) => { const m = 0.2, ok = (x, z) => LEDGER.standable(x, z) && LEDGER.standable(x + m, z) && LEDGER.standable(x - m, z) && LEDGER.standable(x, z + m) && LEDGER.standable(x, z - m); const n = Math.ceil(Math.hypot(bx - ax, bz - az) / 0.15); for (let i = 1; i <= n; i++) if (!ok(ax + ((bx - ax) * i) / n, az + ((bz - az) * i) / n)) return false; return true; };
   window.requestAnimationFrame = (fn) => { const id = ++S.seq; S.frames.push({ id, fn }); return id; };
   window.cancelAnimationFrame = (id) => { S.frames = S.frames.filter((f) => f.id !== id); };
   // a pad the test owns (the game reads navigator.getGamepads each frame)
@@ -224,6 +229,7 @@ export async function open(o = {}) {
     async use(rx, code = 'KeyE') {
       await P.tap(code);
       await P.frames(20);
+      if ((await P.screen()).dialog) await P.choice();
       const s = await P.screen();
       if (s.dialog && s.dialog.opts.length) {
         const i = s.dialog.opts.findIndex((o) => rx.test(o));
@@ -234,7 +240,13 @@ export async function open(o = {}) {
       return true;
     },
     // pick one of a written choice's lines by its words (the digit keys)
+    // a written choice once its words are all out and its lines are offered (the words come a letter at a time)
+    async choice() {
+      await P.until(() => !document.querySelector('#dialog:not(.hidden)') || document.querySelectorAll('#dopts .opt').length > 0, 4);
+      return (await P.screen()).dialog;
+    },
     async pick(rx) {
+      await P.choice();
       const s = await P.screen();
       if (!s.dialog || !s.dialog.opts.length) return false;
       const i = s.dialog.opts.findIndex((o) => rx.test(o));
@@ -318,12 +330,13 @@ export async function open(o = {}) {
         }
         // each leg is walked by the clear way round what stands in it
         const legs = pts; pts = [];
-        const replan = () => { const leg = legs[0]; const way = S.plan(t.x, t.z, leg[0], leg[1]); pts = way || [leg]; };
+        const replan = () => { const leg = legs[0]; const way = S.plan(t.x, t.z, leg[0], leg[1]); pts = way || [leg]; S.lastPlan = { from: [Math.round(t.x * 10) / 10, Math.round(t.z * 10) / 10], way: way ? way.map((p) => [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10]) : 'no way found' }; };
         replan();
         let stuck = 0, lx = t.x, lz = t.z, side = 0, sideT = 0, tries = 0;
         const angd = (a, b) => { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
         const done = await S.run(max, () => hyp(t.x, t.z, x, z) <= near || (opt.until && (0, eval)('(' + opt.until + ')')()), () => {
-          while (pts.length > 1 && hyp(t.x, t.z, pts[0][0], pts[0][1]) < 0.45) pts.shift();
+          // a corner is done with when he stands on it, or can already walk straight to the one after it
+          while (pts.length > 1 && (hyp(t.x, t.z, pts[0][0], pts[0][1]) < 0.2 || (S.frameNo % 4 === 0 && hyp(t.x, t.z, pts[0][0], pts[0][1]) < 1.5 && S.clearWay(t.x, t.z, pts[1][0], pts[1][1])))) pts.shift();
           if (legs.length > 1 && hyp(t.x, t.z, legs[0][0], legs[0][1]) < 2.2) { legs.shift(); replan(); }
           const p = pts[0], want = Math.atan2(p[0] - t.x, p[1] - t.z);
           if (t.space !== 'street') {

@@ -2,6 +2,7 @@
 import * as town from './tune/town.js';
 import * as feel from './tune/feel.js';
 import * as hour1 from './tune/hour1.js';
+import * as outfit from './tune/outfit.js';
 import * as foot from './tune/foot.js';
 import * as fightx from './tune/fightx.js';
 import * as cars from './tune/cars.js';
@@ -21,7 +22,7 @@ import * as rise from './tune/rise.js';
 import * as firm from './tune/firm.js';
 import * as dial from './tune/dial.js';
 import * as econ from './tune/econ.js';
-const ALL = { town, feel, hour1, foot, fightx, cars, fares, jobsx, crime, life, shops, way, law, acts, endings, ledgerx, crew, rivals, rise, firm, dial, econ };
+const ALL = { town, feel, hour1, outfit, foot, fightx, cars, fares, jobsx, crime, life, shops, way, law, acts, endings, ledgerx, crew, rivals, rise, firm, dial, econ };
 export const TUNE = {};
 export const TUNE_SCHEDULES = {};
 export const TUNE_PEOPLE = {};

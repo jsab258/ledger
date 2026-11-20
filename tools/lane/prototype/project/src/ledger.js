@@ -438,7 +438,8 @@ export function openNow() {
       what: `Agar & Co want ${quid(f.oweAgar)} for a brief nobody asked for`,
       how: "Agar's clerk says",
     });
-  if (f.tour)
+  if (f.tour && !(G.x && G.x.book)) // the one-shot: the debts are the debt book's own rows now (game/book.js), written when Sheila has shown it
+
     for (const id in G.debts) {
       const x = G.debts[id];
       if (x.st === 'open')

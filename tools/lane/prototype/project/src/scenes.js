@@ -68,7 +68,7 @@ export function newWeek() {
 }
 const askVia = () =>
   P_('ron').dead ? 'darren' : fl().ask1 === 'yes' ? 'ron' : P_('darren').dead ? 'ron' : 'darren';
-const ask1Due = () => fl().tour && !fl().ask1 && day() === 0 && hour() >= STORY.ronAsksFromHour;
+const ask1Due = () => false; // the one-shot: the first ask is the outfit's own, brought by Ron in person (game/outfit.js)
 const ask15Due = () =>
   day() === 1 && hour() >= STORY.secondNightOfferedFromHour && fl().job1 === 'done' && !fl().ask15;
 const ask2Due = () =>
@@ -1443,10 +1443,10 @@ export function hotspots() {
     if (at(INSIDE.coatHook) && f.ask1 === 'yes' && !t.hasCoat && !f.coatGone)
       out.push({
         k: 'E',
-        t: "Take the runner's coat",
+        t: 'Take the dark coat from its hook',
         run: () => {
           t.hasCoat = true;
-          sub('Heavier than it looks. Something is sewn in the hem. [C] puts it on.', '', 'over', 5);
+          sub("Mickey's dark coat, off its hook. C puts it on.", '', 'over', 4);
         },
       });
     if (at(INSIDE.photograph))

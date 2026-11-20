@@ -19,6 +19,7 @@ await run('S03', { from: (v) => (v === 'book' ? 'S02' : 'S03 book') }, async (P,
       const me = await P.tom();
       if (sh[2] === 'mickeys' && Math.hypot(me.x - sh[0], me.z - sh[1]) > 2.0) await P.walkTo(sh[0], sh[1], { maxSecs: 1.5, near: 1.7 }); else await P.secs(0.3);
     }
+    await P.until(() => !!document.querySelector('#panel:not(.hidden)') && /debt book/i.test(document.getElementById('book').innerText), 12);
     const told = await P.world(() => window.__S.sheila);
     const want = await P.world(() => LEDGER.game.book.finish);
     t.ok(told.length === 4, 'Sheila finishes with four lines: ' + want.map((w) => w.thing).join(', '), told.map((x) => x.line.slice(0, 50)));
@@ -147,7 +148,7 @@ await run('S03', { from: (v) => (v === 'book' ? 'S02' : 'S03 book') }, async (P,
     t.ok(words(tip) >= 14 && words(tip) <= 30, 'of about 22 words', words(tip));
     await P.ledgerClose();
     const open = await P.ledger('open');
-    t.ok(!open.split('\n').some((l) => /Darren Milner owes/.test(l) && !/Closed|closed/.test(l)) || /Darren/.test(open), 'the debt is no longer open', open.split('\n').filter((l) => /Darren/.test(l)));
+    t.ok(/Darren Milner's £22 is settled, in what he hears/.test(open) && (await P.world(() => [...document.querySelectorAll('#lbook s')].some((e) => /Darren Milner owes £22/.test(e.innerText)))), 'the debt is no longer open: the old line struck through, settled in what he hears written under it', open.split('\n').filter((l) => /Darren/.test(l)));
     await P.ledgerClose();
     const money = await P.ledger('money');
     t.ok(!/Darren (still )?owes/.test(money) && /Wayne owes £30/.test(money), 'Money no longer counts Darren among what is owed', money.slice(0, 400));
@@ -169,7 +170,7 @@ await run('S03', { from: (v) => (v === 'book' ? 'S02' : 'S03 book') }, async (P,
     await P.click('#tbye'); await P.secs(0.6);
     const open = await P.ledger('open');
     const struck = await P.world(() => [...document.querySelectorAll('#lbook s')].map((e) => e.innerText));
-    t.ok(struck.some((x) => /Darren Milner owes £22/.test(x)), 'the Ledger shows it struck through, never removed', [struck, open.split('\n').filter((l) => /Darren/.test(l))]);
+    t.ok(struck.some((x) => /Darren Milner owes £22/.test(x)) && /Darren Milner's £22 is struck out of Mickey's book/.test(open), 'the Ledger shows it struck through, never removed', [struck, open.split('\n').filter((l) => /Darren/.test(l))]);
     await P.ledgerClose();
     const day = await P.ledger('day book');
     const line = day.split('\n').find((l) => /Struck Darren Milner's £22 out/.test(l)) || '';
@@ -178,6 +179,9 @@ await run('S03', { from: (v) => (v === 'book' ? 'S02' : 'S03 book') }, async (P,
     // the book itself, at Sheila's desk: struck through in Mickey's own pages
     await go(6.2, 36, { near: 0.6 }); await P.face(7.2, 36); await P.secs(0.3);
     await P.use(/Go into Mickey/); await P.until(() => LEDGER.G.tom.space === 'mickeys', 5);
+    // (Ron comes in with the outfit's ask now that Darren's debt is dealt with: that is S04's; here he is heard out and
+    // left unanswered for the moment)
+    if ((await P.until(() => !!document.querySelector('#dialog:not(.hidden)'), 8)) >= 0) { await P.readOn(); await P.secs(0.5); if ((await P.screen()).talk) await P.click('#tbye'); await P.readOn(); await P.secs(0.5); }
     const desk = await P.world(() => { const r = LEDGER.roomOf('mickeys'); return [r.ox + 3.4, r.oz - 0.3]; });
     await go(desk[0], desk[1], { near: 0.5 }); await P.secs(0.3);
     await P.tap('KeyG'); await P.frames(20);

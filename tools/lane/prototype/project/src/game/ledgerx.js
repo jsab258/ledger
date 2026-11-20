@@ -43,7 +43,7 @@ export function openLetter(id) {
 export function carriedWords() {
   const t = G.tom,
     c = (G.x.crime && G.x.crime.pockets) || [];
-  const hand = t.carry === 'bag' ? 'a holdall in his hand' : t.carry === 'suitcase' ? 'his suitcase in his hand' : t.carry ? t.carry + ' in his hand' : null;
+  const hand = t.carry === 'bag' ? 'a holdall in his hand' : t.carry === 'suitcase' ? 'his suitcase in his hand' : t.carry ? (t.carry === 'envelope' ? 'the envelope' : t.carry) + ' in his hand' : null;
   const under = c.map((i) => i.name);
   return [hand, under.length ? under.join(' and ') + ' under his coat' : null].filter(Boolean).join('; ') || 'nothing but his keys';
 }

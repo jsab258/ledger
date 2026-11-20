@@ -132,7 +132,7 @@ function afterDeed(E) {
     const d = hyp(P.x, P.z, t.x, t.z);
     if (d > T.afterADeedLookWithinMetres || (G.env && G.env.los && !G.env.los(t.x, t.z, P.x, P.z))) continue;
     P.mind.look = Math.max(P.mind.look || 0, T.afterADeedLookRealSeconds);
-    if (d > T.gathersNoNearerThanMetres && d < nd && !P.override && !P.keeper) {
+    if (d > T.gathersNoNearerThanMetres && d < nd && !P.busy && !P.keeper) {
       nd = d;
       nearest = P;
     }
@@ -165,13 +165,20 @@ function staging(x) {
     after = X('hour1').round > 6;
   let sent = false;
   if (dayNow() !== 0 && G.t > 1440 + T.firstNightStagingEndsAtGameMinute) {
-    for (const P of [S, D]) if (P && P.override && (P.override.where === 'pave' || P.override.where === 'mickeys:sheila') && P.override.until === undefined) release(P);
+    for (const P of [S, D, P_('ron')]) if (P && P.override && (P.override.where === 'pave' || P.override.where === 'rank' || P.override.where === 'mickeys:sheila') && P.override.until === undefined) release(P);
     return false;
   }
   if (S && after && x.fin <= FINISH.length && !S.busy && !(S.override && S.override.where === 'mickeys:sheila')) {
     send(S, 'mickeys:sheila', 'work');
     sent = true;
   }
+  const R = P_('ron'),
+    o = G.x.outfit;
+  if (R && after && o && (o.ask1 === null || o.ask1 === 'put') && !R.busy && !(R.override && R.override.where === 'rank')) {
+    send(R, 'rank', 'idle');
+    sent = true;
+  }
+  if (R && o && o.ask1 && o.ask1 !== 'put' && R.override && R.override.where === 'rank' && R.override.until === undefined) release(R);
   if (D && G.debts.darren) {
     const settled = x.darren || G.debts.darren.st !== 'open';
     if (settled && !x.darren) x.darren = G.debts.darren.st === 'forgiven' ? 'struck' : 'settled';
@@ -225,12 +232,16 @@ register({
     };
     G.hooks.openRows = (o) => {
       const b = X('book');
+      if (G.hooks.openRows2) G.hooks.openRows2(o); // the outfit's asks and what he carries (game/outfit.js)
       if (!b.shown) return;
       for (const id in NAMES) {
         const d = G.debts[id];
         if (!d) continue;
         const sum = quid(d.owed).replace(/\.00$/, '');
         if (d.st === 'open') o.push({ key: 'debt:' + id, who: id, what: `${NAMES[id]} owes ${sum} on Mickey's book. Find ${id === 'julie' ? 'her' : 'him'} ${WHERE[id]}`, how: "Mickey's book" });
+        // a debt struck out or settled stays written: the old line struck through, what became of it under it
+        else if (d.st === 'forgiven') o.push({ key: 'debt:' + id, who: id, what: `${NAMES[id]}'s ${quid(T.debts[id].owedPence).replace(/\.00$/, '')} is struck out of Mickey's book`, how: 'His own hand' });
+        else if (d.st === 'paid') o.push({ key: 'debt:' + id, who: id, what: `${NAMES[id]}'s ${quid(T.debts[id].owedPence).replace(/\.00$/, '')} is settled${b.paidIn[id] ? ', in ' + b.paidIn[id] : ''}`, how: "Mickey's book" });
       }
     };
     G.hooks.moneyWords = () => {

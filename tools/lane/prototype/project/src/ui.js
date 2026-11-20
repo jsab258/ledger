@@ -515,6 +515,13 @@ export function talkBusy(on) {
     }
 }
 export function closeTalk() {
+  // the typing box gives the keys back the moment the talk shuts (a hidden box still in focus swallowed the move keys)
+  try {
+    $('tin').blur();
+    if (document.activeElement && document.activeElement !== document.body && document.activeElement.blur) document.activeElement.blur();
+  } catch (e) {
+    /* nothing in focus */
+  }
   show('talk', false);
   if (ui.talkP) ui.talkP.talking = false;
   ui.talkP = null;
