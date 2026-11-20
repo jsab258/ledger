@@ -45,6 +45,7 @@ TIMELOG = os.path.join(ROOT, "production", "time-log.jsonl")
 # US$ per million tokens: input, output, cache write (5 min), cache write (1 h), cache read. The claude-api skill's table
 # (cached 2026-10-06); cache writes at Anthropic's usual 1.25x and 2x of input; Haiku 5.5's cache read at 0.1x (unverified)
 PRICES = {
+    "claude-fable-5-2": (10.0, 50.0, 12.5, 20.0, 0.25),  # 5.2 at 5.1's price (unverified, 20 Nov)
     "claude-fable-5-1": (10.0, 50.0, 12.5, 20.0, 0.25),
     "claude-fable-5": (10.0, 50.0, 12.5, 20.0, 0.25),
     "claude-opus-5-5": (4.0, 20.0, 5.0, 8.0, 0.20),
