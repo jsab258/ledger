@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 20 November 2026, 0:42",
+  "updated": "Friday 20 November 2026, 2:19",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -883,7 +883,7 @@
         "key": "A",
         "name": "one evening that holds",
         "parts": 121,
-        "built": 55,
+        "built": 56,
         "passing": 1
       },
       {
@@ -923,8 +923,9 @@
         "name": "What the player does with his hands",
         "leaves": 57,
         "prototype": {
-          "designed": 27,
-          "built shallow": 12,
+          "missing": 1,
+          "designed": 23,
+          "built shallow": 15,
           "built": 18
         },
         "unreal": {
@@ -938,10 +939,9 @@
         "name": "The town under the hood",
         "leaves": 64,
         "prototype": {
-          "designed": 25,
-          "built shallow": 19,
-          "built": 19,
-          "unknown": 1
+          "designed": 20,
+          "built shallow": 25,
+          "built": 19
         },
         "unreal": {
           "designed": 38,
@@ -955,9 +955,9 @@
         "name": "Story and people",
         "leaves": 32,
         "prototype": {
-          "designed": 13,
-          "built shallow": 10,
-          "built": 8
+          "designed": 9,
+          "built shallow": 13,
+          "built": 9
         },
         "unreal": {
           "missing": 1,
@@ -971,8 +971,8 @@
         "name": "The place",
         "leaves": 27,
         "prototype": {
-          "designed": 8,
-          "built shallow": 7,
+          "designed": 4,
+          "built shallow": 11,
           "built": 7
         },
         "unreal": {
@@ -987,8 +987,9 @@
         "name": "How it looks and sounds",
         "leaves": 37,
         "prototype": {
-          "designed": 5,
-          "built shallow": 7
+          "designed": 3,
+          "built shallow": 8,
+          "built": 1
         },
         "unreal": {
           "missing": 2,
@@ -1003,8 +1004,8 @@
         "name": "The interface and the Ledger",
         "leaves": 18,
         "prototype": {
-          "designed": 5,
-          "built shallow": 4,
+          "designed": 2,
+          "built shallow": 7,
           "built": 8
         },
         "unreal": {
@@ -1020,8 +1021,8 @@
         "leaves": 16,
         "prototype": {
           "missing": 1,
-          "designed": 3,
-          "built shallow": 8,
+          "designed": 2,
+          "built shallow": 9,
           "built": 3,
           "passes": 1
         },
@@ -1036,8 +1037,8 @@
         "name": "Technical",
         "leaves": 12,
         "prototype": {
-          "designed": 3,
-          "unknown": 1
+          "built shallow": 3,
+          "built": 1
         },
         "unreal": {
           "designed": 3,
@@ -1052,9 +1053,8 @@
         "leaves": 20,
         "prototype": {
           "missing": 1,
-          "designed": 6,
-          "built shallow": 1,
-          "built": 2
+          "built shallow": 4,
+          "built": 5
         },
         "unreal": {
           "missing": 1,

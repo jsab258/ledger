@@ -232,6 +232,20 @@ def mouse_move(dx):
         time.sleep(0.01)
 
 
+def park_pointer(hwnd):
+    """THE POINTER OFF THE MENU (20 November): the title's choices take the keys
+    whenever the pointer rests over one, moved or not (LedgerPaper.cpp,
+    SPaperChoice::OnMouseEnter), so a pointer left over Quit made the night
+    walk's Enter close the game. The pointer is set (no input event, so it reads
+    as nobody at the PC) to the window's top-left corner, where no choice sits,
+    and where it was is printed for the record."""
+    was = wt.POINT(0, 0)
+    user32.GetCursorPos(ctypes.byref(was))
+    x0, y0, _, _ = client_box(hwnd)
+    user32.SetCursorPos(x0 + 4, y0 + 4)
+    print("aiTester pointer was=%d,%d parked=%d,%d" % (was.x, was.y, x0 + 4, y0 + 4))
+
+
 def find_window(title_part):
     """The game's own window: an Unreal window (class UnrealWindow) whose title
     names the game, never a folder or an editor that happens to share the word."""
@@ -613,6 +627,7 @@ def start(args):
         print("aiTester status=NO-WINDOW")
         game.terminate()
         return 1
+    park_pointer(hwnd)                               # before the title is built, so no choice is ever under it
     time.sleep(25)                                   # the street builds and the encounter places its people
     for attempt in range(2):
         for _ in range(10):                          # the first time the window may not take the front at once
@@ -682,6 +697,8 @@ def act(verb, rest):
         label = "turned %+.0f degrees" % degrees
     elif verb == "press":
         k = (rest[0] if rest else "E").upper()
+        if k in ("ENTER", "UP", "DOWN"):
+            park_pointer(hwnd)                       # the title's keys: never a choice under a resting pointer
         # ESC AND Q, 29 September: the pause (Esc) and quitting from it (Q);
         # ENTER, UP AND DOWN, 30 September: the title.
         tap({"E": "e", "T": "t", "Z": "z", "ESC": "esc", "Q": "q", "ENTER": "enter", "UP": "up", "DOWN": "down"}.get(k, "t"))

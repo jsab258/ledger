@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-20 01:22 (the hourly run; the last session set its Stopped line at 01:07)
+**Started:** 2026-11-20 02:06 (the hourly run; the last session set its Stopped line at 01:38)
 
-**Row due:** by 01:51 (last row 00:51; page read 01:22: verdicts none after 2026-11-19T23:37 UTC, advisor 262 acted on and acked 01:28)
-**Stopped:** 2026-11-20 01:29 (advisor 262 recorded and committed; allowance 54% against the ceiling 55.3% (Fable 47%); the next steps need the night build's packaged copy or drapes, which pause for it; nothing running, the heavy lock free)
+**Row due:** by 03:08 (last row 02:08; page read 02:07: verdicts none after 2026-11-20T00:37 UTC, advisor none after 262 (ack 01:28))
+**Stopped:** 2026-11-20 01:38 (nothing new on his page or from the advisor; row written 01:37; allowance 55% against the ceiling 55.5% (Fable 47%); the night build runs on the build machine, so the next steps wait for its packaged copy; nothing of mine running, no helpers, the heavy lock free)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -14,7 +14,6 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **The night (advisor 42 and 44, 9 Nov):** round the clock; during the night's build and walk only work touching Unreal and heavy local jobs pause; never stop for the night. Space checked before the night build by 23:30.
 - The hourly start round the clock, nothing touching Unreal 01:15 to 04:30, stopping before 01:40.
 - A short row to 'reports' at least once an hour while working, leading 'v1: N of 6', ending 'Allowance: N% at HH:MM, pace X; my spend US$Y since HH:MM' and the model (get_usage Weekly all models; `python tools/pace_line.py <percent>`; `python tools/token_measures.py --spend HH:MM`). "at" is +01:00. Each row: helper count and rate, F:'s free room and the next 12 h's need, what fills each helper place.
-- **Every time stamp from Get-Date at the moment of writing**.
 - Never end a turn while work remains (the stop hook enforces it); the Stopped line is the last thing written.
 - **The lean start's page reads, filtered (advisor 97):** advisor-acks ordered by "at" desc, limit 1, then advisor where "at" after it (Swiss +01:00); verdicts where "at" after the last read, in UTC; open items by filter on items.json state "open". Never list collections whole.
 - Publishing to his page: read the live page first, diff, then publish index.html with items.json.
@@ -31,23 +30,23 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (01:22 on)
+## Done the run before (01:22 on)
 - Advisor 262 (his "Ok w rec" 01:11): RULINGS' prototype line amended within the cap (feel on measured numbers and one colour grade shared with Unreal are not polish; models and voices await the evening; nothing browser-only); enforcer note added (a feel-in-numbers check in the publish gate at the prototype's next round, Monday audit until then); the seven picks on the order of 23 Nov's waiting list; DECISIONS 01:27; acked 01:28. Checks 108/108.
 
-## Done the run before (00:37 on)
-- Page read 00:37 (no verdicts after 2026-11-19T22:33 UTC). Advisor 261 (his "Ok w recs" 00:21) acked 00:38 and done: the progress page's Track 1 has four real measures and a Parts view from origin/lane-2026-11 (tools/progress_page.py track1_now, checked by --check), the deck line fixed to 15 slides; published v48-49. DECISIONS 00:43; notebook lines (tonight's two RECIPE entries moved to NOTEBOOK.md: RECIPE is capped at 6,000).
+## Done this run (02:06 on)
+- Night walk diagnosed (quit at the title, see 0b); tester guard in play.py; progress page v50 (lane counts); daily page read-back; checks 108/108.
 
-## Done the two runs before (22:52 to 00:23)
+## Done earlier tonight (22:52 to 00:23)
 - Kiln merge candidate 2 passed alone (Kiln main 1849883); crease-normals fault fixed at try 1 (Kiln main f9b4287). The skirt's close look FAILED on fins: pleats stand 30-83 degrees off the surface (targets 15 degrees, 2 mm); pleat_flat.py measures it (worst tenth, top 20 mm; baseline 0 of 16). Research: tool-dev/reports/RESEARCH-PLEATS-LIE-FLAT-2026-11-20.md. The parts tree's DECISIONS-PENDING appended to DECISIONS.
 
 ## In flight
-- Nothing of mine runs; no helpers; the heavy lock is free. Allowance 54% against the ceiling 54.6% at 00:37: nothing heavy started. The fins lane needs drapes, which pause for the night build.
+- Nothing of mine runs; no helpers; the heavy lock is free. Three old wait loops (bash, 17 and 19 Nov) linger; ending them was refused by the safety check: harmless, leave them.
 
 ## Next, in order
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; above the ceiling start nothing new; advisor 258: keep main spend low, no Fable Kiln lane before the one-shot's end row (Sat 21 Nov).
-0. Verdicts (UTC, after 2026-11-20T00:22) and advisor (after 01:28 +01:00; last ack 262). Row hourly (one is due by 01:51).
-1. After the night build (about 04:30): Ron's seated film from the packaged copy with -WearHeld=RonWorkTrousers,RonJumperOverTrousers (packaged-walk skill; memory tester-film-past-the-title), a fresh reviewer; it tells whether the ankle patch is the boots' missing ankle joint.
-2. Kiln v1 line 6, the fins (fault 2, tries 0 of 2; measure and research done): one Opus lane from Kiln main f9b4287 with KILN_PRESS_FOLDS on, judged by pleat_flat.py against 15 degrees / 2 mm, Kiln's checks and switch-off byte-identity. Methods to weigh from the research: stiffer rest-0 bending on the hinges in a band beside each fold line (keep the panels flat, let only the crease turn), bend plasticity after the fold forms, a fold-first schedule. The measure is extended (00:30: rows from 2 mm below the top, pass_worst_tenth, top-20 mm maxima; baseline 0 of 16 pleats, front worst tenth 83 degrees, back 71); judge the lane on worst tenth. Fable only after Saturday's end row. Then a fresh look at the skirt.
+0. Verdicts (UTC, after 2026-11-20T00:37) and advisor (after 01:28 +01:00; last ack 262). Row hourly (one is due by 02:37).
+0b. The night walk of 20 Nov quit at the title (production/audits/night-walk-2026-11-20-diagnosis.md): a menu choice takes the keys when the pointer merely rests over it (ue-probe LedgerPaper.cpp SPaperChoice::OnMouseEnter; Slate synthesises enter events for a still pointer). Tester guard done 02:20 (play.py park_pointer, try 1). After 04:30, the game fix (try 1 of 2): focus on enter only when the pointer really moved (non-zero cursor delta, or moved since the title opened); build the game target first (memory), then the night's packaged walk proves both.1. After the night build (about 04:30): Ron's seated film from the packaged copy with -WearHeld=RonWorkTrousers,RonJumperOverTrousers (packaged-walk skill; memory tester-film-past-the-title), a fresh reviewer; it tells whether the ankle patch is the boots' missing ankle joint.
+2. Kiln v1 line 6, the fins (fault 2, tries 0 of 2; measure and research done; the helper's brief is written: tool-dev/reports/BRIEF-KILN-LANE-FINS-2026-11-20.md, start after 04:30): one Opus lane from Kiln main f9b4287 with KILN_PRESS_FOLDS on, judged by pleat_flat.py against 15 degrees / 2 mm, Kiln's checks and switch-off byte-identity. Methods to weigh from the research: stiffer rest-0 bending on the hinges in a band beside each fold line (keep the panels flat, let only the crease turn), bend plasticity after the fold forms, a fold-first schedule. The measure is extended (00:30: rows from 2 mm below the top, pass_worst_tenth, top-20 mm maxima; baseline 0 of 16 pleats, front worst tenth 83 degrees, back 71); judge the lane on worst tenth. Fable only after Saturday's end row. Then a fresh look at the skirt.
 4. Advisors 252/259: the licence edits to CLAUDE.md, RULINGS and the page check only when he asks in a session he starts; meanwhile decide licences by the allowlist's principles, never ask him (four licence items still open on his page: presentmon, kiln-front-end, font-pick, dinov3; close them with decisions in that session).
 4. When he taps Done on marvelous-box: md_job.py --start (try 2 of 2), then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports'; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments. Then the reference drapes (Kiln v1 line 5).
 5. Blouse2's underarm (second fault) and the nylon wrist: Fable lanes only after Saturday's one-shot end row.
