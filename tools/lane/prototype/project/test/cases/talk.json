@@ -1,0 +1,1656 @@
+{
+ "piece": "talk",
+ "cases": [
+  {
+   "id": "a-sum-in-a-demand-is-no-bribe",
+   "rule": "smoke run 20 Nov",
+   "fn": "intent",
+   "in": [
+    "It's the twenty-two pounds. I want it paid."
+   ],
+   "outHas": {
+    "amount": 0
+   }
+  },
+  {
+   "id": "typed-sum-demand",
+   "rule": "smoke run 20 Nov",
+   "fn": "intent",
+   "in": [
+    "I've come for the 22 pounds on the book"
+   ],
+   "outHas": {
+    "amount": 0,
+    "sumSpoken": 22,
+    "topic": "debt"
+   }
+  },
+  {
+   "id": "asking-a-price-is-no-bribe",
+   "rule": "smoke run 20 Nov",
+   "fn": "intent",
+   "in": [
+    "How much is the rent, 18 pounds?"
+   ],
+   "outHas": {
+    "intent": "ask",
+    "amount": 0
+   }
+  },
+  {
+   "id": "a-bare-sum-is-no-bribe",
+   "rule": "smoke run 20 Nov",
+   "fn": "intent",
+   "in": [
+    "£5"
+   ],
+   "outHas": {
+    "amount": 0
+   }
+  },
+  {
+   "id": "an-offer-is-a-bribe",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "Here's a fiver for your trouble"
+   ],
+   "outHas": {
+    "intent": "bribe",
+    "amount": 5
+   }
+  },
+  {
+   "id": "an-offer-with-a-sum",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "I'll give you 10 quid to forget it"
+   ],
+   "outHas": {
+    "intent": "bribe",
+    "amount": 10
+   }
+  },
+  {
+   "id": "something-for-you",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "There might be something for you in this"
+   ],
+   "outHas": {
+    "intent": "bribe"
+   }
+  },
+  {
+   "id": "threat",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "Keep your mouth shut or I'll be back"
+   ],
+   "outHas": {
+    "intent": "threaten"
+   }
+  },
+  {
+   "id": "denial",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "It wasn't me, I was at the office"
+   ],
+   "outHas": {
+    "intent": "lie",
+    "denies": true
+   }
+  },
+  {
+   "id": "agree",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "Yes. Tell them."
+   ],
+   "outHas": {
+    "intent": "agree"
+   }
+  },
+  {
+   "id": "refuse",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "No. Not today."
+   ],
+   "outHas": {
+    "intent": "refuse"
+   }
+  },
+  {
+   "id": "ask-about-me",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "What do they say about me?"
+   ],
+   "outHas": {
+    "intent": "ask",
+    "topic": "me"
+   }
+  },
+  {
+   "id": "ask-about-the-fire",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "Who burned the warehouse?"
+   ],
+   "outHas": {
+    "intent": "ask",
+    "topic": "fire"
+   }
+  },
+  {
+   "id": "small-talk",
+   "rule": "DESIGN 11",
+   "fn": "intent",
+   "in": [
+    "Wet again."
+   ],
+   "outHas": {
+    "intent": "smalltalk",
+    "topic": "other"
+   }
+  },
+  {
+   "id": "plain-yes-1",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-2",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes. Tell them."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-3",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Aye, I'll carry it."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-4",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "All right."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-5",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Go on then."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-6",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "I'll do it."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-7",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Agreed."
+   ],
+   "out": true
+  },
+  {
+   "id": "plain-yes-8",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes, I am sure."
+   ],
+   "out": true
+  },
+  {
+   "id": "not-a-plain-yes-1",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes, but not tonight."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-2",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-3",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes if the money is right."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-4",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Maybe."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-5",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "I suppose so."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-6",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes, unless Ron says otherwise."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-7",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes. No. I don't know."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-8",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "What happens if I do?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-9",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Who are they?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-10",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Tell me more."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-11",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Not yet."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-12",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "No."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-13",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Never."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-14",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "I'll think on it."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-15",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yeah right."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-16",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Hmm."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-17",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    ""
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-18",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Yes once I have seen the book."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-19",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Ok but what is in it?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-20",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "I can't say yes to that."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-21",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Is that a yes or a no?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-22",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Perhaps tomorrow."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-23",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "How much?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-24",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "yes when it rains upwards"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-25",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "I don't say yes to strangers"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-26",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Fine? Is it?"
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-27",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Depends who is asking."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-28",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Aye, though I might regret it."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-29",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "All right after Friday."
+   ],
+   "out": false
+  },
+  {
+   "id": "not-a-plain-yes-30",
+   "rule": "ER-TALK-03",
+   "fn": "plainYes",
+   "in": [
+    "Sixty quid?"
+   ],
+   "out": false
+  },
+  {
+   "id": "decision-starts-open",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStart",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    }
+   ],
+   "out": {
+    "q": null,
+    "asked": 0,
+    "done": false
+   }
+  },
+  {
+   "id": "picking-a-line-only-puts-the-question",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": null,
+     "asked": 0,
+     "done": false
+    },
+    {
+     "job": "prop",
+     "idx": 0
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "q": 0,
+     "done": false
+    },
+    "does": "puts the plain question",
+    "leaveOffered": true
+   }
+  },
+  {
+   "id": "the-yes-takes-it",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "yes"
+    }
+   ],
+   "outHas": {
+    "taken": 0,
+    "state": {
+     "done": true
+    }
+   }
+  },
+  {
+   "id": "a-no-decides-nothing",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "no"
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "q": null,
+     "done": false
+    }
+   }
+  },
+  {
+   "id": "the-line-that-keeps-talking",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "keep"
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "q": 0,
+     "done": false
+    },
+    "does": "answers, and puts the plain question again"
+   }
+  },
+  {
+   "id": "typed-yes-but-is-not-taken",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "typed",
+     "text": "Yes, but not tonight."
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "q": 0,
+     "done": false
+    }
+   }
+  },
+  {
+   "id": "typed-plain-yes-is-taken",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "typed",
+     "text": "Yes. Tell them."
+    }
+   ],
+   "outHas": {
+    "taken": 0
+   }
+  },
+  {
+   "id": "typed-yes-before-the-question-only-asks",
+   "rule": "ER-CORE-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": null,
+     "asked": 0,
+     "done": false
+    },
+    {
+     "job": "typed",
+     "text": "Yes."
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "q": 0
+    }
+   }
+  },
+  {
+   "id": "a-yes-with-no-question-takes-nothing",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": null,
+     "asked": 0,
+     "done": false
+    },
+    {
+     "job": "yes"
+    }
+   ],
+   "outHas": {
+    "taken": null
+   }
+  },
+  {
+   "id": "leave-is-always-there",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "leave"
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "leaveOffered": true,
+    "state": {
+     "done": false
+    }
+   }
+  },
+  {
+   "id": "decided-stays-decided",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    },
+    {
+     "q": null,
+     "asked": 0,
+     "done": true
+    },
+    {
+     "job": "yes"
+    }
+   ],
+   "outHas": {
+    "taken": null
+   }
+  },
+  {
+   "id": "what-can-be-undone-is-taken-at-once",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1
+      }
+     ]
+    },
+    {
+     "q": null,
+     "asked": 0,
+     "done": false
+    },
+    {
+     "job": "prop",
+     "idx": 0
+    }
+   ],
+   "outHas": {
+    "taken": 0
+   }
+  },
+  {
+   "id": "a-direct-question-dropped-by-a-no",
+   "rule": "ER-TALK-03",
+   "fn": "decisionStep",
+   "in": [
+    {
+     "direct": true,
+     "opts": [
+      {
+       "agree": 1
+      }
+     ]
+    },
+    {
+     "q": 0,
+     "asked": 1,
+     "done": false
+    },
+    {
+     "job": "no"
+    }
+   ],
+   "outHas": {
+    "taken": null,
+    "state": {
+     "done": true
+    }
+   }
+  },
+  {
+   "id": "sound-decision",
+   "rule": "ER-CORE-03",
+   "fn": "decisionSound",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "asksTwice": true,
+       "undoable": false
+      },
+      {
+       "refuse": 1,
+       "asksTwice": true,
+       "undoable": false
+      }
+     ]
+    }
+   ],
+   "out": {
+    "ok": true,
+    "faults": []
+   }
+  },
+  {
+   "id": "cannot-be-undone-must-ask-twice",
+   "rule": "ER-CORE-03",
+   "fn": "decisionSound",
+   "in": [
+    {
+     "opts": [
+      {
+       "agree": 1,
+       "undoable": false
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-ok",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "Ron said you carried something along the quay. That's all I know.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "claim-names-a-stranger",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "Ask Maureen Jensen, she runs the docks.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-names-by-surname",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "Garbutt would know.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-accuses-of-a-deed-not-held",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "I know you hit that lad on the quay.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-accuses-with-nothing-held",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "I saw you last night.",
+    {
+     "people": [],
+     "allNames": [],
+     "deeds": [],
+     "holdsAnything": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-drink",
+   "rule": "content rule",
+   "fn": "claimCheck",
+   "in": [
+    "He was in the pub with a pint all night.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-a-pub-as-a-place-is-fine",
+   "rule": "content rule",
+   "fn": "claimCheck",
+   "in": [
+    "He stood outside the pub on the corner.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "claim-gambling",
+   "rule": "content rule",
+   "fn": "claimCheck",
+   "in": [
+    "He owes the bookie, I heard.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-children",
+   "rule": "content rule",
+   "fn": "claimCheck",
+   "in": [
+    "The kids on the corner saw it.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-wrong-year",
+   "rule": "canon era",
+   "fn": "claimCheck",
+   "in": [
+    "Ring me on my mobile phone.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-plain-small-talk",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "It's been wet since August.",
+    {
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "own-line-not-twice-in-a-day",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "Boss.",
+    "ron",
+    "the Hook",
+    1,
+    false
+   ],
+   "out": false
+  },
+  {
+   "id": "own-line-next-day",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "Boss.",
+    "ron",
+    "the Hook",
+    2,
+    false
+   ],
+   "out": true
+  },
+  {
+   "id": "own-line-anothers-mouth",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "Boss.",
+    "darren",
+    "the Hook",
+    1,
+    false
+   ],
+   "out": true
+  },
+  {
+   "id": "shared-line-not-twice-in-a-week",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "It's been wet since August.",
+    "ada",
+    "the Hook",
+    6,
+    true
+   ],
+   "out": false
+  },
+  {
+   "id": "shared-line-after-a-week",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "It's been wet since August.",
+    "ada",
+    "the Hook",
+    7,
+    true
+   ],
+   "out": true
+  },
+  {
+   "id": "shared-line-on-the-other-street",
+   "rule": "ER-TALK-02",
+   "fn": "lineAllowed",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    "It's been wet since August.",
+    "ada",
+    "Copper Row",
+    1,
+    true
+   ],
+   "out": true
+  },
+  {
+   "id": "saying-is-remembered",
+   "rule": "ER-TALK-02",
+   "fn": "lineSaid",
+   "in": [
+    {
+     "own": {},
+     "st": {}
+    },
+    "Boss.",
+    "ron",
+    "the Hook",
+    3,
+    false
+   ],
+   "out": {
+    "own": {
+     "ron": {
+      "Boss.": 3
+     }
+    },
+    "st": {}
+   }
+  },
+  {
+   "id": "next-line-skips-the-said",
+   "rule": "ER-TALK-02",
+   "fn": "nextLine",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    [
+     "Boss.",
+     "Now then."
+    ],
+    "ron",
+    "the Hook",
+    1,
+    false
+   ],
+   "out": "Now then."
+  },
+  {
+   "id": "nothing-left-closes-the-talk",
+   "rule": "ER-TALK-02",
+   "fn": "nextLine",
+   "in": [
+    {
+     "own": {
+      "ron": {
+       "Boss.": 1
+      }
+     },
+     "st": {
+      "the Hook": {
+       "It's been wet since August.": 0
+      }
+     }
+    },
+    [
+     "Boss."
+    ],
+    "ron",
+    "the Hook",
+    1,
+    false
+   ],
+   "out": null
+  },
+  {
+   "id": "reply-in-time-is-live",
+   "rule": "ER-TALK-01",
+   "fn": "replyRule",
+   "in": [
+    1.2,
+    4
+   ],
+   "out": {
+    "plays": "live",
+    "sign": false
+   }
+  },
+  {
+   "id": "reply-late-plays-the-written-line",
+   "rule": "ER-TALK-01",
+   "fn": "replyRule",
+   "in": [
+    2.5,
+    4
+   ],
+   "out": {
+    "plays": "written",
+    "sign": true
+   }
+  },
+  {
+   "id": "reply-never-begins",
+   "rule": "ER-TALK-01",
+   "fn": "replyRule",
+   "in": [
+    null,
+    null
+   ],
+   "out": {
+    "plays": "written",
+    "sign": true
+   }
+  },
+  {
+   "id": "reply-slower-than-eight-is-dropped",
+   "rule": "ER-TALK-01",
+   "fn": "replyRule",
+   "in": [
+    1,
+    9
+   ],
+   "out": {
+    "plays": "brush-off",
+    "sign": true
+   }
+  },
+  {
+   "id": "scene-sixty-one-seconds",
+   "rule": "ER-TALK-06",
+   "fn": "sceneTooLong",
+   "in": [
+    61
+   ],
+   "out": true
+  },
+  {
+   "id": "scene-thirty-seconds",
+   "rule": "ER-TALK-06",
+   "fn": "sceneTooLong",
+   "in": [
+    30
+   ],
+   "out": false
+  },
+  {
+   "id": "report-filed",
+   "rule": "ER-TALK-07",
+   "fn": "report",
+   "in": [
+    [],
+    {
+     "line": "Something odd.",
+     "who": "ron",
+     "minute": 990.4,
+     "from": "talk",
+     "live": true
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "list": [
+     {
+      "line": "Something odd.",
+      "who": "ron",
+      "minute": 990,
+      "from": "talk",
+      "live": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "report-from-pause",
+   "rule": "ER-TALK-07",
+   "fn": "report",
+   "in": [
+    [],
+    {
+     "line": "x",
+     "from": "pause"
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "list": [
+     {
+      "from": "pause"
+     }
+    ]
+   }
+  },
+  {
+   "id": "report-needs-a-line",
+   "rule": "ER-TALK-07",
+   "fn": "report",
+   "in": [
+    [],
+    {
+     "line": " "
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "pad-can-always-leave",
+   "rule": "ER-SPEAK-01",
+   "fn": "padCanAct",
+   "in": [
+    [],
+    true
+   ],
+   "out": true
+  },
+  {
+   "id": "pad-with-lines",
+   "rule": "ER-SPEAK-01",
+   "fn": "padCanAct",
+   "in": [
+    [
+     "Yes."
+    ],
+    false
+   ],
+   "out": true
+  }
+ ]
+}

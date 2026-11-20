@@ -1,0 +1,750 @@
+{
+ "piece": "fights",
+ "cases": [
+  {
+   "id": "eight-rungs",
+   "rule": "DESIGN 7",
+   "fn": "rungs",
+   "in": [],
+   "outHas": {
+    "0": {
+     "name": "stare"
+    },
+    "3": {
+     "name": "shove or grab"
+    },
+    "4": {
+     "name": "strike"
+    },
+    "7": {
+     "name": "kill",
+     "crime": 4
+    },
+    "length": 8
+   }
+  },
+  {
+   "id": "stare-shows-the-actor",
+   "rule": "DESIGN 7",
+   "fn": "rung",
+   "in": [
+    1
+   ],
+   "outHas": {
+    "slots": [
+     0,
+     4
+    ],
+    "crime": 0
+   }
+  },
+  {
+   "id": "strike-is-a-crime",
+   "rule": "DESIGN 7",
+   "fn": "rung",
+   "in": [
+    5
+   ],
+   "outHas": {
+    "kind": "strike",
+    "crime": 2
+   }
+  },
+  {
+   "id": "weapon-used-shows-all-seven",
+   "rule": "DESIGN 7",
+   "fn": "rung",
+   "in": [
+    7
+   ],
+   "outHas": {
+    "slots": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   }
+  },
+  {
+   "id": "no-ninth-rung",
+   "rule": "DESIGN 7",
+   "fn": "rung",
+   "in": [
+    9
+   ],
+   "out": null
+  },
+  {
+   "id": "nerve-alone",
+   "rule": "round 4",
+   "fn": "nerve",
+   "in": [
+    0.5,
+    {}
+   ],
+   "out": 0.5
+  },
+  {
+   "id": "nerve-face-two-watchers",
+   "rule": "round 4",
+   "fn": "nerve",
+   "in": [
+    0.5,
+    {
+     "watchers": 2
+    }
+   ],
+   "out": 0.62
+  },
+  {
+   "id": "nerve-face-capped",
+   "rule": "round 4",
+   "fn": "nerve",
+   "in": [
+    0.5,
+    {
+     "watchers": 9
+    }
+   ],
+   "out": 0.74
+  },
+  {
+   "id": "nerve-cornered",
+   "rule": "round 4",
+   "fn": "nerve",
+   "in": [
+    0.5,
+    {
+     "cornered": true
+    }
+   ],
+   "out": 0.7
+  },
+  {
+   "id": "nerve-backed",
+   "rule": "round 5",
+   "fn": "nerve",
+   "in": [
+    0.3,
+    {
+     "backed": true
+    }
+   ],
+   "out": 0.6
+  },
+  {
+   "id": "quiet-yard-he-gives-way-at-the-threat",
+   "rule": "round 4",
+   "fn": "answer",
+   "in": [
+    3,
+    0.45,
+    {}
+   ],
+   "outHas": {
+    "gives": true
+   }
+  },
+  {
+   "id": "in-the-street-he-stands",
+   "rule": "round 4",
+   "fn": "answer",
+   "in": [
+    3,
+    0.45,
+    {
+     "watchers": 3
+    }
+   ],
+   "outHas": {
+    "gives": false
+   }
+  },
+  {
+   "id": "lee-backed-stands-and-swings-at-the-shove",
+   "rule": "round 5",
+   "fn": "answer",
+   "in": [
+    4,
+    0.3,
+    {
+     "backed": true,
+     "watchers": 2
+    }
+   ],
+   "outHas": {
+    "gives": false,
+    "fights": true
+   }
+  },
+  {
+   "id": "lee-without-backing-gives-way",
+   "rule": "round 5",
+   "fn": "answer",
+   "in": [
+    3,
+    0.3,
+    {}
+   ],
+   "outHas": {
+    "gives": true
+   }
+  },
+  {
+   "id": "armed-presses-harder",
+   "rule": "DESIGN 7",
+   "fn": "pressure",
+   "in": [
+    3,
+    {
+     "armed": true
+    }
+   ],
+   "out": 0.8
+  },
+  {
+   "id": "his-allies-ease-it",
+   "rule": "DESIGN 7",
+   "fn": "pressure",
+   "in": [
+    3,
+    {
+     "hisAllies": 2
+    }
+   ],
+   "out": 0.18
+  },
+  {
+   "id": "odds-fair",
+   "rule": "DESIGN 7",
+   "fn": "odds",
+   "in": [
+    1,
+    1
+   ],
+   "out": "a fair fight"
+  },
+  {
+   "id": "odds-two-on-one-deadly",
+   "rule": "DESIGN 7",
+   "fn": "odds",
+   "in": [
+    1,
+    2
+   ],
+   "out": "deadly"
+  },
+  {
+   "id": "odds-three-a-beating",
+   "rule": "DESIGN 7",
+   "fn": "odds",
+   "in": [
+    1,
+    3
+   ],
+   "out": "a beating"
+  },
+  {
+   "id": "odds-ron-at-his-side",
+   "rule": "A16",
+   "fn": "odds",
+   "in": [
+    2,
+    2
+   ],
+   "out": "a fair fight"
+  },
+  {
+   "id": "hands-off-a-woman",
+   "rule": "QUESTIONS 2",
+   "fn": "handsOff",
+   "in": [
+    {
+     "sex": "f",
+     "age": 30
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "hands-off-sixty",
+   "rule": "QUESTIONS 2",
+   "fn": "handsOff",
+   "in": [
+    {
+     "sex": "m",
+     "age": 60
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "hands-off-the-priest",
+   "rule": "QUESTIONS 2",
+   "fn": "handsOff",
+   "in": [
+    {
+     "sex": "m",
+     "age": 50,
+     "priest": true
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "a-man-of-forty-is-fair",
+   "rule": "QUESTIONS 2",
+   "fn": "handsOff",
+   "in": [
+    {
+     "sex": "m",
+     "age": 40
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "fists-tier-0",
+   "rule": "DESIGN 7",
+   "fn": "weapon",
+   "in": [
+    null
+   ],
+   "outHas": {
+    "tier": 0,
+    "damageTimes": 1
+   }
+  },
+  {
+   "id": "chair-breaks-after-two",
+   "rule": "C12",
+   "fn": "weapon",
+   "in": [
+    "chair"
+   ],
+   "outHas": {
+    "tier": 1,
+    "breaksAfterBlows": 2,
+    "leftBehind": true
+   }
+  },
+  {
+   "id": "brick-breaks-after-three",
+   "rule": "C12",
+   "fn": "weapon",
+   "in": [
+    "brick"
+   ],
+   "outHas": {
+    "tier": 1,
+    "breaksAfterBlows": 3
+   }
+  },
+  {
+   "id": "wheel-brace-never-breaks",
+   "rule": "C12",
+   "fn": "weapon",
+   "in": [
+    "wheel brace"
+   ],
+   "outHas": {
+    "tier": 1,
+    "breaksAfterBlows": 0
+   }
+  },
+  {
+   "id": "cosh-is-carried-and-found",
+   "rule": "DESIGN 7",
+   "fn": "weapon",
+   "in": [
+    "cosh"
+   ],
+   "outHas": {
+    "tier": 2,
+    "foundInASearch": true,
+    "leftBehind": false
+   }
+  },
+  {
+   "id": "a-gun-is-the-last-tier",
+   "rule": "DESIGN 7",
+   "fn": "weapon",
+   "in": [
+    "pistol"
+   ],
+   "outHas": {
+    "tier": 3,
+    "crime": 4
+   }
+  },
+  {
+   "id": "condition-fresh",
+   "rule": "DESIGN 7",
+   "fn": "condition",
+   "in": [
+    0
+   ],
+   "out": "fresh"
+  },
+  {
+   "id": "condition-down",
+   "rule": "DESIGN 7",
+   "fn": "condition",
+   "in": [
+    1
+   ],
+   "out": "down"
+  },
+  {
+   "id": "fall-on-kerb-after-a-blow-can-kill",
+   "rule": "ER-FIGHT-05",
+   "fn": "fall",
+   "in": [
+    {
+     "who": "foe",
+     "by": "fists",
+     "landedOn": "kerb",
+     "secondsSinceBlow": 1.2
+    }
+   ],
+   "outHas": {
+    "canKill": true
+   }
+  },
+  {
+   "id": "fall-on-grass-cannot",
+   "rule": "ER-FIGHT-05",
+   "fn": "fall",
+   "in": [
+    {
+     "who": "foe",
+     "by": "fists",
+     "landedOn": "grass",
+     "secondsSinceBlow": 1
+    }
+   ],
+   "outHas": {
+    "canKill": false
+   }
+  },
+  {
+   "id": "fall-four-seconds-after-cannot",
+   "rule": "ER-FIGHT-05",
+   "fn": "fall",
+   "in": [
+    {
+     "who": "foe",
+     "by": "fists",
+     "landedOn": "step",
+     "secondsSinceBlow": 4
+    }
+   ],
+   "outHas": {
+    "canKill": false
+   }
+  },
+  {
+   "id": "car-strike-never-counts",
+   "rule": "ER-DRIVE-03",
+   "fn": "fall",
+   "in": [
+    {
+     "who": "foe",
+     "by": "car",
+     "landedOn": "kerb",
+     "secondsSinceBlow": 0
+    }
+   ],
+   "outHas": {
+    "canKill": false
+   }
+  },
+  {
+   "id": "tom-cannot-die",
+   "rule": "ER-FIGHT-04",
+   "fn": "fall",
+   "in": [
+    {
+     "who": "tom",
+     "by": "fists",
+     "landedOn": "wall",
+     "secondsSinceBlow": 0
+    }
+   ],
+   "outHas": {
+    "canKill": false
+   }
+  },
+  {
+   "id": "a-fists-death-breaks-the-ruling",
+   "rule": "C7",
+   "fn": "deathBreaksRuling",
+   "in": [
+    {
+     "who": "foe",
+     "cause": "fists"
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "a-fall-death-does-not",
+   "rule": "C7",
+   "fn": "deathBreaksRuling",
+   "in": [
+    {
+     "who": "foe",
+     "cause": "fall",
+     "by": "fists",
+     "landedOn": "kerb",
+     "secondsSinceBlow": 0.5
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "a-late-fall-death-does",
+   "rule": "C7",
+   "fn": "deathBreaksRuling",
+   "in": [
+    {
+     "who": "foe",
+     "cause": "fall",
+     "by": "fists",
+     "landedOn": "kerb",
+     "secondsSinceBlow": 9
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "any-death-of-tom-does",
+   "rule": "C7",
+   "fn": "deathBreaksRuling",
+   "in": [
+    {
+     "who": "tom",
+     "cause": "fall",
+     "landedOn": "kerb",
+     "secondsSinceBlow": 0
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "ending-police",
+   "rule": "DESIGN 7",
+   "fn": "ending",
+   "in": [
+    {
+     "policeArrived": true,
+     "someoneDown": true
+    }
+   ],
+   "out": "the police arrive"
+  },
+  {
+   "id": "ending-backs-off",
+   "rule": "DESIGN 7",
+   "fn": "ending",
+   "in": [
+    {}
+   ],
+   "out": "someone backs off"
+  },
+  {
+   "id": "ending-runs",
+   "rule": "DESIGN 7",
+   "fn": "ending",
+   "in": [
+    {
+     "someoneRan": true
+    }
+   ],
+   "out": "someone runs"
+  },
+  {
+   "id": "ending-down",
+   "rule": "DESIGN 7",
+   "fn": "ending",
+   "in": [
+    {
+     "someoneDown": true,
+     "someoneRan": true
+    }
+   ],
+   "out": "someone goes down"
+  },
+  {
+   "id": "ending-step-in",
+   "rule": "DESIGN 7",
+   "fn": "ending",
+   "in": [
+    {
+     "peopleSteppedIn": true
+    }
+   ],
+   "out": "people step in"
+  },
+  {
+   "id": "a-third-man-waits",
+   "rule": "ER-FIGHT-02",
+   "fn": "maySwing",
+   "in": [
+    10,
+    [
+     9.6,
+     9.1
+    ]
+   ],
+   "out": false
+  },
+  {
+   "id": "second-swing-too-close",
+   "rule": "ER-FIGHT-02",
+   "fn": "maySwing",
+   "in": [
+    10,
+    [
+     9.8
+    ]
+   ],
+   "out": false
+  },
+  {
+   "id": "second-swing-staggered",
+   "rule": "ER-FIGHT-02",
+   "fn": "maySwing",
+   "in": [
+    10,
+    [
+     9.5
+    ]
+   ],
+   "out": true
+  },
+  {
+   "id": "first-swing",
+   "rule": "ER-FIGHT-02",
+   "fn": "maySwing",
+   "in": [
+    10,
+    []
+   ],
+   "out": true
+  },
+  {
+   "id": "the-melee-sheets-bands",
+   "rule": "ER-FIGHT-01",
+   "fn": "bands",
+   "in": [],
+   "outHas": {
+    "ok": true,
+    "failed": []
+   }
+  },
+  {
+   "id": "same-seed-same-fight",
+   "rule": "ER-SAVE-01",
+   "fn": "simulate",
+   "in": [
+    {
+     "seed": 7,
+     "style": "patient",
+     "foes": 1
+    }
+   ],
+   "out": {
+    "winner": "tom",
+    "ending": "someone runs",
+    "seconds": 6.4,
+    "tomBeaten": false,
+    "tomDied": false,
+    "tomCondition": "fresh",
+    "blowsLanded": 3,
+    "deaths": []
+   },
+   "recorded": true
+  },
+  {
+   "id": "ten-thousand-fights-no-death-breaks-his-ruling",
+   "rule": "ER-FIGHT-05",
+   "fn": "holds",
+   "in": [
+    "ER-FIGHT-05",
+    1990
+   ],
+   "outHas": {
+    "ok": true,
+    "fights": 10000,
+    "deathsBreakingTheRuling": 0,
+    "tomDeaths": 0
+   }
+  },
+  {
+   "id": "skill-beats-mashing",
+   "rule": "ER-FIGHT-07",
+   "fn": "holds",
+   "in": [
+    "ER-FIGHT-07",
+    1990
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "skill-beats-mashing-second-seed",
+   "rule": "ER-FIGHT-07",
+   "fn": "holds",
+   "in": [
+    "ER-FIGHT-07",
+    42
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "a-fair-one-on-one-is-roughly-even",
+   "rule": "DESIGN 7",
+   "fn": "holds",
+   "in": [
+    "fair",
+    1990
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "two-is-deadly-three-a-beating-a-man-at-his-side-helps",
+   "rule": "DESIGN 7",
+   "fn": "holds",
+   "in": [
+    "odds",
+    1990
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "beaten-never-dead",
+   "rule": "ER-FIGHT-04",
+   "fn": "holds",
+   "in": [
+    "ER-FIGHT-04",
+    1990
+   ],
+   "outHas": {
+    "ok": true,
+    "tomDeaths": 0
+   }
+  }
+ ]
+}

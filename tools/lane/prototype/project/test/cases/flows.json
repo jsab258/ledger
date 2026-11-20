@@ -1,0 +1,485 @@
+{
+ "piece": "flows",
+ "cases": [
+  {
+   "id": "sound-fare",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 210,
+     "dirty": false,
+     "why": "a fare"
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "no-reason-is-money-from-nowhere",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 500
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "blank-reason",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 500,
+     "why": "  "
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "no-pot",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "sheila",
+     "pence": 500,
+     "why": "x"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "same-sides",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "pocket",
+     "to": "pocket",
+     "pence": 5,
+     "why": "x"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "half-pence",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "tin",
+     "pence": 10.5,
+     "why": "x"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "zero",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "tin",
+     "pence": 0,
+     "why": "x"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "negative",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    {
+     "from": "world",
+     "to": "tin",
+     "pence": -4,
+     "why": "x"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "not-a-flow",
+   "rule": "ER-MONEY-01",
+   "fn": "sound",
+   "in": [
+    null
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "open",
+   "rule": "ER-MONEY-01",
+   "fn": "open",
+   "in": [
+    2350,
+    0
+   ],
+   "out": {
+    "start": {
+     "pocket": 2350,
+     "tin": 0
+    },
+    "sums": {},
+    "lines": [],
+    "count": 0
+   }
+  },
+  {
+   "id": "add-fare",
+   "rule": "ER-MONEY-01",
+   "fn": "add",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {},
+     "lines": [],
+     "count": 0
+    },
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 210,
+     "dirty": false,
+     "why": "a fare"
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "book": {
+     "sums": {
+      "world>pocket|a fare": 210
+     },
+     "count": 1
+    }
+   }
+  },
+  {
+   "id": "add-refused-leaves-book",
+   "rule": "ER-MONEY-01",
+   "fn": "add",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {},
+     "lines": [],
+     "count": 0
+    },
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 9
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "book": {
+     "sums": {},
+     "count": 0
+    }
+   }
+  },
+  {
+   "id": "balance",
+   "rule": "ER-MONEY-01",
+   "fn": "balance",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 420,
+      "world>tin|the Monday bag": 6000,
+      "tin>pocket|the wash": 1800,
+      "pocket>world|rent": 1800,
+      "tin>world|a cosh": 800
+     },
+     "lines": [],
+     "count": 6
+    }
+   ],
+   "out": {
+    "pocket": 2770,
+    "tin": 3400
+   }
+  },
+  {
+   "id": "check-agrees",
+   "rule": "ER-MONEY-01",
+   "fn": "check",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 420,
+      "world>tin|the Monday bag": 6000,
+      "tin>pocket|the wash": 1800,
+      "pocket>world|rent": 1800,
+      "tin>world|a cosh": 800
+     },
+     "lines": [],
+     "count": 6
+    },
+    {
+     "clean": 2770,
+     "dirty": 3400
+    }
+   ],
+   "out": {
+    "ok": true,
+    "pocketUnexplained": 0,
+    "tinUnexplained": 0
+   }
+  },
+  {
+   "id": "check-a-pound-from-nowhere",
+   "rule": "ER-MONEY-01",
+   "fn": "check",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 420,
+      "world>tin|the Monday bag": 6000,
+      "tin>pocket|the wash": 1800,
+      "pocket>world|rent": 1800,
+      "tin>world|a cosh": 800
+     },
+     "lines": [],
+     "count": 6
+    },
+    {
+     "clean": 2870,
+     "dirty": 3400
+    }
+   ],
+   "out": {
+    "ok": false,
+    "pocketUnexplained": 100,
+    "tinUnexplained": 0
+   }
+  },
+  {
+   "id": "check-tin-short",
+   "rule": "ER-MONEY-01",
+   "fn": "check",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 420,
+      "world>tin|the Monday bag": 6000,
+      "tin>pocket|the wash": 1800,
+      "pocket>world|rent": 1800,
+      "tin>world|a cosh": 800
+     },
+     "lines": [],
+     "count": 6
+    },
+    {
+     "clean": 2770,
+     "dirty": 3000
+    }
+   ],
+   "out": {
+    "ok": false,
+    "pocketUnexplained": 0,
+    "tinUnexplained": -400
+   }
+  },
+  {
+   "id": "check-empty-book",
+   "rule": "ER-MONEY-01",
+   "fn": "check",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {},
+     "lines": [],
+     "count": 0
+    },
+    {
+     "clean": 2350,
+     "dirty": 0
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "totals",
+   "rule": "2.7.7",
+   "fn": "totals",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 420,
+      "world>tin|the Monday bag": 6000,
+      "tin>pocket|the wash": 1800,
+      "pocket>world|rent": 1800,
+      "tin>world|a cosh": 800
+     },
+     "lines": [],
+     "count": 6
+    }
+   ],
+   "out": {
+    "in": [
+     {
+      "why": "the Monday bag",
+      "pence": 6000
+     },
+     {
+      "why": "a fare",
+      "pence": 420
+     }
+    ],
+    "out": [
+     {
+      "why": "rent",
+      "pence": 1800
+     },
+     {
+      "why": "a cosh",
+      "pence": 800
+     }
+    ],
+    "washed": 1800
+   }
+  },
+  {
+   "id": "totals-empty",
+   "rule": "2.7.7",
+   "fn": "totals",
+   "in": [
+    {
+     "start": {
+      "pocket": 2350,
+      "tin": 0
+     },
+     "sums": {},
+     "lines": [],
+     "count": 0
+    }
+   ],
+   "out": {
+    "in": [],
+    "out": [],
+    "washed": 0
+   }
+  },
+  {
+   "id": "add-same-reason-sums",
+   "rule": "ER-MONEY-01",
+   "fn": "add",
+   "in": [
+    {
+     "start": {
+      "pocket": 0,
+      "tin": 0
+     },
+     "sums": {
+      "world>pocket|a fare": 210
+     },
+     "lines": [],
+     "count": 1
+    },
+    {
+     "from": "world",
+     "to": "pocket",
+     "pence": 210,
+     "dirty": false,
+     "why": "a fare"
+    }
+   ],
+   "outHas": {
+    "book": {
+     "sums": {
+      "world>pocket|a fare": 420
+     },
+     "count": 2
+    }
+   }
+  },
+  {
+   "id": "wash-moves-between-pots",
+   "rule": "ER-MONEY-01",
+   "fn": "balance",
+   "in": [
+    {
+     "start": {
+      "pocket": 0,
+      "tin": 500
+     },
+     "sums": {
+      "tin>pocket|the wash": 500
+     },
+     "lines": [],
+     "count": 1
+    }
+   ],
+   "out": {
+    "pocket": 500,
+    "tin": 0
+   }
+  }
+ ]
+}

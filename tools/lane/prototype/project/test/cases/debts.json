@@ -1,0 +1,527 @@
+{
+ "piece": "debts",
+ "cases": [
+  {
+   "id": "the-book",
+   "rule": "DESIGN 4",
+   "fn": "book",
+   "in": [],
+   "outHas": {
+    "dennis": {
+     "owed": 8000,
+     "st": "open"
+    },
+    "wayne": {
+     "owed": 3000
+    },
+    "darren": {
+     "owed": 2200
+    },
+    "lee": {
+     "owed": 1500
+    },
+    "julie": {
+     "owed": 900
+    }
+   }
+  },
+  {
+   "id": "total-156",
+   "rule": "DESIGN 15",
+   "fn": "total",
+   "in": [
+    {
+     "dennis": {
+      "owed": 8000,
+      "st": "open",
+      "paid": 0
+     },
+     "wayne": {
+      "owed": 3000,
+      "st": "open",
+      "paid": 0
+     },
+     "darren": {
+      "owed": 2200,
+      "st": "open",
+      "paid": 0
+     },
+     "lee": {
+      "owed": 1500,
+      "st": "open",
+      "paid": 0
+     },
+     "julie": {
+      "owed": 900,
+      "st": "open",
+      "paid": 0
+     }
+    }
+   ],
+   "out": 15600
+  },
+  {
+   "id": "total-skips-paid",
+   "rule": "DESIGN 4",
+   "fn": "total",
+   "in": [
+    {
+     "a": {
+      "owed": 500,
+      "st": "open"
+     },
+     "b": {
+      "owed": 0,
+      "st": "paid"
+     },
+     "c": {
+      "owed": 0,
+      "st": "forgiven"
+     }
+    }
+   ],
+   "out": 500
+  },
+  {
+   "id": "lesson-darren",
+   "rule": "DESIGN 4",
+   "fn": "lesson",
+   "in": [
+    "darren"
+   ],
+   "out": "pays in what he hears"
+  },
+  {
+   "id": "lesson-wayne",
+   "rule": "DESIGN 4",
+   "fn": "lesson",
+   "in": [
+    "wayne"
+   ],
+   "out": "pays in goods"
+  },
+  {
+   "id": "lesson-lee",
+   "rule": "DESIGN 4",
+   "fn": "lesson",
+   "in": [
+    "lee"
+   ],
+   "out": "stands, and has a little"
+  },
+  {
+   "id": "lesson-julie",
+   "rule": "DESIGN 4",
+   "fn": "lesson",
+   "in": [
+    "julie"
+   ],
+   "out": "cannot pay: mercy or shame"
+  },
+  {
+   "id": "lesson-dennis",
+   "rule": "DESIGN 4",
+   "fn": "lesson",
+   "in": [
+    "dennis"
+   ],
+   "out": "has the money and will not hand it over"
+  },
+  {
+   "id": "dennis-squeezed-pays-all",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "dennis",
+    {
+     "owed": 8000,
+     "st": "open",
+     "paid": 0
+    },
+    "squeezed"
+   ],
+   "outHas": {
+    "pence": 8000,
+    "debt": {
+     "owed": 0,
+     "st": "paid"
+    },
+    "tells": {
+     "kind": "debt_paid",
+     "street": "he squeezed it out of them"
+    }
+   }
+  },
+  {
+   "id": "lee-squeezed-pays-his-purse",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "lee",
+    {
+     "owed": 1500,
+     "st": "open",
+     "paid": 0
+    },
+    "squeezed"
+   ],
+   "outHas": {
+    "pence": 400,
+    "debt": {
+     "owed": 1100,
+     "st": "open",
+     "paid": 400
+    },
+    "said": "Part paid. The rest stays on the book."
+   }
+  },
+  {
+   "id": "julie-squeezed-shame-no-money",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "julie",
+    {
+     "owed": 900,
+     "st": "open",
+     "paid": 0
+    },
+    "squeezed"
+   ],
+   "outHas": {
+    "pence": 0,
+    "debt": {
+     "owed": 900,
+     "st": "open"
+    },
+    "tells": {
+     "kind": "debt_shamed"
+    }
+   }
+  },
+  {
+   "id": "wayne-pays-in-goods",
+   "rule": "DESIGN 4",
+   "fn": "collect",
+   "in": [
+    "wayne",
+    {
+     "owed": 3000,
+     "st": "open",
+     "paid": 0
+    },
+    "goods"
+   ],
+   "outHas": {
+    "pence": 0,
+    "goods": 2500,
+    "debt": {
+     "owed": 500,
+     "st": "open"
+    }
+   }
+  },
+  {
+   "id": "darren-pays-in-word",
+   "rule": "DESIGN 4",
+   "fn": "collect",
+   "in": [
+    "darren",
+    {
+     "owed": 2200,
+     "st": "open",
+     "paid": 0
+    },
+    "word"
+   ],
+   "outHas": {
+    "pence": 0,
+    "word": true,
+    "debt": {
+     "owed": 1800,
+     "st": "open"
+    }
+   }
+  },
+  {
+   "id": "asked-and-pays-purse",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "darren",
+    {
+     "owed": 2200,
+     "st": "open",
+     "paid": 0
+    },
+    "asked"
+   ],
+   "outHas": {
+    "pence": 300,
+    "debt": {
+     "owed": 1900
+    },
+    "tells": {
+     "street": "the debt was paid"
+    }
+   }
+  },
+  {
+   "id": "purse-given",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "lee",
+    {
+     "owed": 1500,
+     "st": "open",
+     "paid": 0
+    },
+    "asked",
+    5000
+   ],
+   "outHas": {
+    "pence": 1500,
+    "debt": {
+     "owed": 0,
+     "st": "paid"
+    }
+   }
+  },
+  {
+   "id": "second-visit-pays-the-rest-of-the-purse",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "lee",
+    {
+     "owed": 1100,
+     "st": "open",
+     "paid": 400
+    },
+    "asked",
+    600
+   ],
+   "outHas": {
+    "pence": 600,
+    "debt": {
+     "owed": 500,
+     "st": "open",
+     "paid": 1000
+    }
+   }
+  },
+  {
+   "id": "nothing-owed",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "lee",
+    {
+     "owed": 0,
+     "st": "paid",
+     "paid": 1500
+    },
+    "squeezed"
+   ],
+   "outHas": {
+    "pence": 0,
+    "tells": null
+   }
+  },
+  {
+   "id": "forgiven-cannot-be-collected",
+   "rule": "2.8.2",
+   "fn": "collect",
+   "in": [
+    "julie",
+    {
+     "owed": 0,
+     "st": "forgiven"
+    },
+    "squeezed"
+   ],
+   "outHas": {
+    "pence": 0,
+    "tells": null
+   }
+  },
+  {
+   "id": "strike",
+   "rule": "DESIGN 4",
+   "fn": "strike",
+   "in": [
+    {
+     "owed": 900,
+     "st": "open",
+     "paid": 0
+    }
+   ],
+   "outHas": {
+    "debt": {
+     "owed": 0,
+     "st": "forgiven",
+     "struck": 900
+    },
+    "tells": {
+     "kind": "debt_forgive",
+     "street": "he let a debt go"
+    }
+   }
+  },
+  {
+   "id": "strike-twice",
+   "rule": "DESIGN 4",
+   "fn": "strike",
+   "in": [
+    {
+     "owed": 0,
+     "st": "forgiven"
+    }
+   ],
+   "outHas": {
+    "tells": null
+   }
+  },
+  {
+   "id": "tells-squeezed-is-menace",
+   "rule": "DESIGN 4",
+   "fn": "tells",
+   "in": [
+    "squeezed"
+   ],
+   "outHas": {
+    "reads": -0.5
+   }
+  },
+  {
+   "id": "tells-struck-is-decent",
+   "rule": "DESIGN 4",
+   "fn": "tells",
+   "in": [
+    "struck"
+   ],
+   "outHas": {
+    "reads": 0.6,
+    "regard": 0.35
+   }
+  },
+  {
+   "id": "tells-shamed-is-worst",
+   "rule": "DESIGN 4",
+   "fn": "tells",
+   "in": [
+    "shamed"
+   ],
+   "outHas": {
+    "reads": -0.8
+   }
+  },
+  {
+   "id": "pays-when-afraid",
+   "rule": "DESIGN 4",
+   "fn": "paysWhenAsked",
+   "in": [
+    {
+     "owed": 1500,
+     "st": "open",
+     "paid": 0
+    },
+    {
+     "fear": 0.6,
+     "regard": 0
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "will-not-pay-unafraid",
+   "rule": "DESIGN 4",
+   "fn": "paysWhenAsked",
+   "in": [
+    {
+     "owed": 1500,
+     "st": "open",
+     "paid": 0
+    },
+    {
+     "fear": 0.1,
+     "regard": 0
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "small-debt-on-goodwill",
+   "rule": "DESIGN 4",
+   "fn": "paysWhenAsked",
+   "in": [
+    {
+     "owed": 900,
+     "st": "open",
+     "paid": 0
+    },
+    {
+     "fear": 0,
+     "regard": 0.5
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "big-debt-not-on-goodwill",
+   "rule": "DESIGN 4",
+   "fn": "paysWhenAsked",
+   "in": [
+    {
+     "owed": 8000,
+     "st": "open",
+     "paid": 0
+    },
+    {
+     "fear": 0,
+     "regard": 0.9
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "paid-debt-never",
+   "rule": "DESIGN 4",
+   "fn": "paysWhenAsked",
+   "in": [
+    {
+     "owed": 0,
+     "st": "paid"
+    },
+    {
+     "fear": 1,
+     "regard": 1
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "lines",
+   "rule": "DESIGN 10",
+   "fn": "lines",
+   "in": [
+    {
+     "lee": {
+      "owed": 1100,
+      "st": "open",
+      "paid": 400
+     }
+    }
+   ],
+   "out": [
+    {
+     "id": "lee",
+     "st": "open",
+     "owed": 1100,
+     "paid": 400
+    }
+   ]
+  }
+ ]
+}

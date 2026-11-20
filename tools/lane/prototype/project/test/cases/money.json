@@ -1,0 +1,754 @@
+{
+ "piece": "money",
+ "cases": [
+  {
+   "id": "words-rent",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    1800
+   ],
+   "out": "eighteen pounds"
+  },
+  {
+   "id": "words-start",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    2350
+   ],
+   "out": "twenty-three pounds fifty"
+  },
+  {
+   "id": "words-pence",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    80
+   ],
+   "out": "eighty pence"
+  },
+  {
+   "id": "words-none",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    0
+   ],
+   "out": "nothing"
+  },
+  {
+   "id": "words-hundred",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    15600
+   ],
+   "out": "one hundred and fifty-six pounds"
+  },
+  {
+   "id": "words-one",
+   "rule": "ER-MONEY-02",
+   "fn": "sumInWords",
+   "in": [
+    100
+   ],
+   "out": "one pound"
+  },
+  {
+   "id": "pay-tin-first",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 1000,
+     "dirty": 300
+    },
+    500,
+    false,
+    "a cosh"
+   ],
+   "outHas": {
+    "ok": true,
+    "pots": {
+     "clean": 800,
+     "dirty": 0
+    },
+    "flows": [
+     {
+      "from": "tin",
+      "pence": 300
+     },
+     {
+      "from": "pocket",
+      "pence": 200
+     }
+    ]
+   }
+  },
+  {
+   "id": "pay-clean-only",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 1000,
+     "dirty": 5000
+    },
+    1800,
+    true,
+    "rent"
+   ],
+   "outHas": {
+    "ok": false,
+    "pots": {
+     "clean": 1000,
+     "dirty": 5000
+    },
+    "flows": []
+   }
+  },
+  {
+   "id": "pay-clean-only-ok",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 2000,
+     "dirty": 5000
+    },
+    1800,
+    true,
+    "rent"
+   ],
+   "outHas": {
+    "ok": true,
+    "pots": {
+     "clean": 200,
+     "dirty": 5000
+    }
+   }
+  },
+  {
+   "id": "pay-too-much",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 100,
+     "dirty": 100
+    },
+    500,
+    false,
+    "x"
+   ],
+   "outHas": {
+    "ok": false,
+    "pots": {
+     "clean": 100,
+     "dirty": 100
+    }
+   }
+  },
+  {
+   "id": "pay-nothing",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 100,
+     "dirty": 0
+    },
+    0,
+    false,
+    "x"
+   ],
+   "outHas": {
+    "ok": true,
+    "flows": []
+   }
+  },
+  {
+   "id": "pay-negative",
+   "rule": "ER-MONEY-01",
+   "fn": "pay",
+   "in": [
+    {
+     "clean": 100,
+     "dirty": 0
+    },
+    -50,
+    false,
+    "x"
+   ],
+   "outHas": {
+    "ok": false,
+    "pots": {
+     "clean": 100,
+     "dirty": 0
+    },
+    "flows": []
+   }
+  },
+  {
+   "id": "earn-fare",
+   "rule": "ER-MONEY-01",
+   "fn": "earn",
+   "in": [
+    {
+     "clean": 2350,
+     "dirty": 0
+    },
+    210,
+    false,
+    "a fare"
+   ],
+   "outHas": {
+    "pots": {
+     "clean": 2560,
+     "dirty": 0
+    },
+    "flows": [
+     {
+      "from": "world",
+      "to": "pocket",
+      "pence": 210,
+      "why": "a fare"
+     }
+    ]
+   }
+  },
+  {
+   "id": "earn-night",
+   "rule": "ER-MONEY-01",
+   "fn": "earn",
+   "in": [
+    {
+     "clean": 0,
+     "dirty": 0
+    },
+    6000,
+    true,
+    "the Monday bag"
+   ],
+   "outHas": {
+    "pots": {
+     "clean": 0,
+     "dirty": 6000
+    },
+    "flows": [
+     {
+      "to": "tin",
+      "dirty": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "earn-negative",
+   "rule": "ER-MONEY-01",
+   "fn": "earn",
+   "in": [
+    {
+     "clean": 5,
+     "dirty": 5
+    },
+    -100,
+    false,
+    "x"
+   ],
+   "outHas": {
+    "pots": {
+     "clean": 5,
+     "dirty": 5
+    },
+    "flows": []
+   }
+  },
+  {
+   "id": "cap-no-fares",
+   "rule": "DESIGN 9",
+   "fn": "washCap",
+   "in": [
+    0,
+    0,
+    0
+   ],
+   "out": 1000
+  },
+  {
+   "id": "cap-fares",
+   "rule": "DESIGN 9",
+   "fn": "washCap",
+   "in": [
+    1000,
+    0,
+    0
+   ],
+   "out": 1800
+  },
+  {
+   "id": "cap-firm-and-fronts",
+   "rule": "A15",
+   "fn": "washCap",
+   "in": [
+    1000,
+    7000,
+    2000
+   ],
+   "out": 5550
+  },
+  {
+   "id": "warn-over",
+   "rule": "ER-MONEY-04",
+   "fn": "washWarning",
+   "in": [
+    6000,
+    1800
+   ],
+   "outHas": {
+    "over": 4200,
+    "warns": true
+   }
+  },
+  {
+   "id": "warn-fits",
+   "rule": "ER-MONEY-04",
+   "fn": "washWarning",
+   "in": [
+    1500,
+    1800
+   ],
+   "outHas": {
+    "over": 0,
+    "warns": false
+   }
+  },
+  {
+   "id": "warn-empty",
+   "rule": "ER-MONEY-04",
+   "fn": "washWarning",
+   "in": [
+    0,
+    1800
+   ],
+   "outHas": {
+    "over": 0,
+    "warns": false,
+    "words": "There is nothing in the tin to put through."
+   }
+  },
+  {
+   "id": "wash-fits-only",
+   "rule": "DESIGN 9",
+   "fn": "wash",
+   "in": [
+    {
+     "clean": 100,
+     "dirty": 6000
+    },
+    1800,
+    false
+   ],
+   "outHas": {
+    "pots": {
+     "clean": 1900,
+     "dirty": 4200
+    },
+    "washed": 1800,
+    "booksOffAdded": 0,
+    "left": 4200
+   }
+  },
+  {
+   "id": "wash-all-over",
+   "rule": "DESIGN 9",
+   "fn": "wash",
+   "in": [
+    {
+     "clean": 100,
+     "dirty": 6000
+    },
+    1800,
+    true
+   ],
+   "outHas": {
+    "pots": {
+     "clean": 6100,
+     "dirty": 0
+    },
+    "washed": 6000,
+    "booksOffAdded": 4200
+   }
+  },
+  {
+   "id": "wash-all-fits",
+   "rule": "DESIGN 9",
+   "fn": "wash",
+   "in": [
+    {
+     "clean": 0,
+     "dirty": 900
+    },
+    1800,
+    true
+   ],
+   "outHas": {
+    "washed": 900,
+    "booksOffAdded": 0
+   }
+  },
+  {
+   "id": "wash-empty",
+   "rule": "DESIGN 9",
+   "fn": "wash",
+   "in": [
+    {
+     "clean": 50,
+     "dirty": 0
+    },
+    1800,
+    true
+   ],
+   "outHas": {
+    "washed": 0,
+    "flows": []
+   }
+  },
+  {
+   "id": "costs-two-drivers",
+   "rule": "2.7.4",
+   "fn": "weekCosts",
+   "in": [
+    2
+   ],
+   "outHas": [
+    {
+     "what": "running costs",
+     "pence": 950,
+     "dayIndex": 3
+    },
+    {
+     "what": "wages",
+     "pence": 6600,
+     "dayIndex": 4
+    },
+    {
+     "what": "rent",
+     "pence": 1800,
+     "dayIndex": 4,
+     "hour": 18
+    }
+   ]
+  },
+  {
+   "id": "firm-full-week",
+   "rule": "2.7.4",
+   "fn": "firmWeek",
+   "in": [
+    2,
+    5
+   ],
+   "out": {
+    "takings": 7000,
+    "wages": 6600,
+    "toPocket": 400,
+    "shortFromPocket": 0
+   }
+  },
+  {
+   "id": "firm-short-week",
+   "rule": "2.7.4",
+   "fn": "firmWeek",
+   "in": [
+    2,
+    3
+   ],
+   "out": {
+    "takings": 4200,
+    "wages": 6600,
+    "toPocket": 0,
+    "shortFromPocket": 2400
+   }
+  },
+  {
+   "id": "week-doing-nothing-misses-rent",
+   "rule": "ER-MONEY-03",
+   "fn": "scriptedWeek",
+   "in": [
+    {
+     "faresPerDay": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "outHas": {
+    "rentPaid": false,
+    "costsPaid": true
+   }
+  },
+  {
+   "id": "week-of-fares-alone-pays-rent",
+   "rule": "ER-MONEY-03",
+   "fn": "scriptedWeek",
+   "in": [
+    {
+     "faresPerDay": [
+      0,
+      3,
+      3,
+      3,
+      3,
+      0,
+      0
+     ],
+     "farePence": 210
+    }
+   ],
+   "outHas": {
+    "rentPaid": true,
+    "costsPaid": true
+   }
+  },
+  {
+   "id": "week-one-fare-a-day-is-not-enough",
+   "rule": "ER-MONEY-03",
+   "fn": "scriptedWeek",
+   "in": [
+    {
+     "faresPerDay": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "farePence": 210
+    }
+   ],
+   "outHas": {
+    "rentPaid": false
+   }
+  },
+  {
+   "id": "alibi-driven",
+   "rule": "DESIGN 9",
+   "fn": "alibiFare",
+   "in": [
+    1300,
+    true,
+    []
+   ],
+   "outHas": {
+    "lie": false,
+    "holds": true
+   }
+  },
+  {
+   "id": "alibi-written-unseen",
+   "rule": "DESIGN 9",
+   "fn": "alibiFare",
+   "in": [
+    1300,
+    false,
+    []
+   ],
+   "outHas": {
+    "lie": true,
+    "holds": true,
+    "needsSomeoneToHoldItUp": true
+   }
+  },
+  {
+   "id": "alibi-written-seen-elsewhere",
+   "rule": "DESIGN 9",
+   "fn": "alibiFare",
+   "in": [
+    1300,
+    false,
+    [
+     {
+      "minute": 1310,
+      "place": "the landing"
+     }
+    ]
+   ],
+   "outHas": {
+    "lie": true,
+    "holds": false
+   }
+  },
+  {
+   "id": "alibi-seen-an-hour-off",
+   "rule": "DESIGN 9",
+   "fn": "alibiFare",
+   "in": [
+    1300,
+    false,
+    [
+     {
+      "minute": 1400,
+      "place": "the landing"
+     }
+    ]
+   ],
+   "outHas": {
+    "lie": true,
+    "holds": true
+   }
+  },
+  {
+   "id": "book-holds",
+   "rule": "DESIGN 16",
+   "fn": "bookReads",
+   "in": [
+    [
+     {
+      "booksOffPence": 0
+     },
+     {
+      "booksOffPence": 0,
+      "lies": 1
+     }
+    ]
+   ],
+   "outHas": {
+    "state": "hold"
+   }
+  },
+  {
+   "id": "book-thin",
+   "rule": "DESIGN 16",
+   "fn": "bookReads",
+   "in": [
+    [
+     {
+      "booksOffPence": 4200
+     },
+     {
+      "booksOffPence": 0
+     }
+    ]
+   ],
+   "outHas": {
+    "state": "thin",
+    "weeksOff": 1
+   }
+  },
+  {
+   "id": "book-off",
+   "rule": "DESIGN 16",
+   "fn": "bookReads",
+   "in": [
+    [
+     {
+      "booksOffPence": 4200
+     },
+     {
+      "booksOffPence": 100
+     },
+     {
+      "booksOffPence": 900
+     }
+    ]
+   ],
+   "outHas": {
+    "state": "off",
+    "weeksOff": 3
+   }
+  },
+  {
+   "id": "book-off-by-a-broken-lie",
+   "rule": "DESIGN 16",
+   "fn": "bookReads",
+   "in": [
+    [
+     {
+      "booksOffPence": 0,
+      "lies": 1,
+      "liesBroken": 1
+     }
+    ]
+   ],
+   "outHas": {
+    "state": "off"
+   }
+  },
+  {
+   "id": "in-words-short",
+   "rule": "ER-MONEY-02",
+   "fn": "moneyInWords",
+   "in": [
+    {
+     "clean": 2350,
+     "dirty": 6000
+    },
+    [
+     {
+      "what": "the rent",
+      "pence": 1800
+     },
+     {
+      "what": "running costs",
+      "pence": 950
+     }
+    ]
+   ],
+   "outHas": {
+    "shortPence": 400,
+    "short": "He is four pounds short of it."
+   }
+  },
+  {
+   "id": "in-words-has-it",
+   "rule": "ER-MONEY-02",
+   "fn": "moneyInWords",
+   "in": [
+    {
+     "clean": 5000,
+     "dirty": 0
+    },
+    [
+     {
+      "what": "the rent",
+      "pence": 1800
+     }
+    ]
+   ],
+   "outHas": {
+    "shortPence": 0,
+    "short": "He has it.",
+    "has": "Fifty pounds in his pocket."
+   }
+  },
+  {
+   "id": "in-words-nothing-owed",
+   "rule": "ER-MONEY-02",
+   "fn": "moneyInWords",
+   "in": [
+    {
+     "clean": 5000,
+     "dirty": 0
+    },
+    [
+     {
+      "what": "the rent",
+      "pence": 1800,
+      "paid": true
+     }
+    ]
+   ],
+   "outHas": {
+    "owes": "Nothing owed this week."
+   }
+  }
+ ]
+}
