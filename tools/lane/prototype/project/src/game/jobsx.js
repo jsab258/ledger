@@ -88,6 +88,7 @@ async function offer(spec) {
 // A message taken at the office when the giver cannot find him (A17): written down, naming the giver and the place.
 function messages() {
   const x = X('jobsx');
+  if (!G.car.keys) return; // nobody leaves word for him before Sheila has handed him the firm
   for (const spec of JOBS) {
     if (x.jobs[spec.id] || x.messaged[spec.id] || !WHEN[spec.when]()) continue;
     x.due[spec.id] = x.due[spec.id] || Math.round(G.t);

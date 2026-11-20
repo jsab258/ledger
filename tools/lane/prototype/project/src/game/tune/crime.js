@@ -10,7 +10,8 @@ export const TUNE = {
   darkAboveUnlitBy: 0.1, // a room counts as dark for a search under the unlit street's light plus this
   doorWithinMetres: 2.4,
   containerWithinMetres: 2.2,
-  casingWithinMetres: 30,
+  casingWithinMetres: 18,
+  casingOfferedAfterStandingRealSeconds: 1.5,
   casingStandsRealSeconds: 4,
   liftWithinMetres: 1.2,
   liftFromBehindAboveRadians: 1.6,

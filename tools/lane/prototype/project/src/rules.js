@@ -686,6 +686,7 @@ export const RULES = {
     overheardFirstAfterRealSeconds: 8,
     barkFirstAfterRealSeconds: 10,
     ronAsksFromHour: 17.2,
+    sheilaWaitsOnTheFirstDayGameMinutes: 60, // she sits on, an hour at a time, until he has come (scenes.js)
     secondNightOfferedFromHour: 17,
     secondAskFromHour: 16.3,
     secondAskUntilHour: 22,

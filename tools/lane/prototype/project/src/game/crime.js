@@ -201,6 +201,9 @@ function casingHotspot(out) {
   const t = G.tom,
     x = X('crime');
   if (t.space !== 'street') return;
+  // the hands-on run's fault: it was the first thing a newcomer was offered, and it hung on the screen for a whole walk.
+  // It is offered once the firm is his, and only while he stands and looks, near the place.
+  if (!G.car.keys || (t.still || 0) < T.casingOfferedAfterStandingRealSeconds) return;
   for (const id in T.sites) {
     const s = T.sites[id],
       d = hyp(t.inCar ? G.car.x : t.x, t.inCar ? G.car.z : t.z, s.door[0], s.door[1]);

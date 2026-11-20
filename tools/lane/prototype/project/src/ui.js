@@ -396,6 +396,7 @@ export async function scene(fn) {
     r = await fn();
   } finally {
     ui.inScene = false;
+    ui.sceneEndedAt = G.played; // the use key rests a moment after a scene (player.js)
     if (ui.modal === 'dialog') {
       show('dialog', false);
       ui.modal = null;
@@ -552,6 +553,11 @@ export function key(code) {
         items[at].click();
         return true;
       }
+    }
+    // the hands-on run's fault: the key that opened the paper map or the standing page puts it away again
+    if ((ui.modal === 'map' && code === 'Comma') || (ui.modal === 'reading' && code === 'Period')) {
+      closePanel();
+      return true;
     }
     if (code === 'Escape') {
       if (ui.modal !== 'end') {

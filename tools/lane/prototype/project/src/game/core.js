@@ -20,7 +20,7 @@ import { advanceTo } from '../work.js';
 import { act } from '../events.js';
 import { note } from '../ledger.js';
 import { pay } from '../money.js';
-import { sub, ui } from '../ui.js';
+import { sub, ui, choose, scene } from '../ui.js';
 import { F } from '../fight.js';
 import { hyp } from '../util.js';
 
@@ -115,6 +115,29 @@ export function gameStep(dt) {
 export function gameHotspots(out) {
   each('hotspots', out);
   return out;
+}
+// The hands-on run's fault: two prompts on one key, and only the first could ever be used. Prompts that share a
+// key become one prompt; pressing it asks which, in a written choice, with a way to leave it.
+export function sameKeyAsOne(out) {
+  const by = {};
+  for (const h of out) (by[h.k] = by[h.k] || []).push(h);
+  const res = [];
+  for (const h of out) {
+    const g = by[h.k];
+    if (!g) continue;
+    by[h.k] = null;
+    if (g.length === 1 || h.k === 'E') res.push(...(h.k === 'E' ? g : [h])); // E keeps its old way: the nearest thing first
+    else
+      res.push({
+        k: h.k,
+        t: g.map((x) => x.t).join(' / '),
+        run: async () => {
+          const i = await scene(() => choose('', 'Which?', g.map((x) => x.t + '.').concat(['Neither.'])));
+          if (i < g.length) return g[i].run();
+        },
+      });
+  }
+  return res;
 }
 export function gameCarPrompts(out) {
   each('carPrompts', out);

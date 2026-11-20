@@ -72,6 +72,7 @@ register({
       const pence = M.firmDay(x.drivers, x.fareShare);
       if (pence > 0) {
         earn(pence, false, "the firm's own fares");
+        tell(`Eleven at night. The firm's other car pays in its day's fares: £${(pence / 100).toFixed(2)} into the pocket, and into the fare book.`, '');
         G.money.fares += pence;
         G.money.sinceWash += pence;
       }

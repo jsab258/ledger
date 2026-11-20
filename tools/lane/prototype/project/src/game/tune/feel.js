@@ -19,6 +19,9 @@ export const TUNE = {
   hintAfterStandingStillRealSeconds: 4,
   hintsNotTwoWithinRealSeconds: 12,
   nudgeAfterStandingAboutRealSeconds: 60,
+  useKeyRestsAfterASceneRealSeconds: 0.6,
+  firstHintAfterRealSeconds: 3,
+  secondHintAfterRealSeconds: 25,
   arrivesAtXMetres: -44,
   arrivesAtZMetres: 55,
   arrivesFacingRadians: 1.45, // looking east, up the quay

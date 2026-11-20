@@ -40,8 +40,11 @@ register({
       x = X('feel');
     // a hint only on hesitation: standing still four seconds, with nothing open, the first time
     S.idle = t.still > T.hintAfterStandingStillRealSeconds && !t.inCar ? S.idle + dt : 0;
-    if (S.idle > 0 && !x.hints.move) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
-    else if (S.idle > T.hintsNotTwoWithinRealSeconds && !x.hints.keys && x.hints.move) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
+    // the hands-on run's fault: a newcomer who never stood still was never told the keys. The first hint comes a few
+    // seconds after he has control, whatever he is doing; the rest still wait for a pause.
+    S.sinceStart = (S.sinceStart || 0) + dt;
+    if ((S.idle > 0 || S.sinceStart > T.firstHintAfterRealSeconds) && !x.hints.move) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
+    else if ((S.idle > T.hintsNotTwoWithinRealSeconds || S.sinceStart > T.secondHintAfterRealSeconds) && !x.hints.keys && x.hints.move) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
     // Ron or Pauline nudge after a minute of standing about (DESIGN 15, teaching)
     S.about = t.still > 1 && !t.inCar && G.story.objective ? S.about + dt : 0;
     if (S.about > T.nudgeAfterStandingAboutRealSeconds) {

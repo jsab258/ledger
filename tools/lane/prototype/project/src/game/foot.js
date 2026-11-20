@@ -75,7 +75,7 @@ function stop() {
     t = G.tom;
   if (t.inCar) return false;
   x.belongs = !x.belongs;
-  tell(x.belongs ? (t.light <= T.stillInDoorwayLightAtMost ? 'He leans in the doorway and lights a cigarette, like a man waiting for somebody.' : 'He sits on the step and lights a cigarette. A man with a reason to be there.') : 'He treads it out and moves on.', '');
+  tell(x.belongs ? (t.space !== 'street' ? 'He stands easy by the wall and lights a cigarette, like a man who is meant to be here.' : t.light <= T.stillInDoorwayLightAtMost ? 'He leans in the doorway and lights a cigarette, like a man waiting for somebody.' : 'He sits on the step and lights a cigarette. A man with a reason to be there.') : 'He treads it out and moves on.', '');
   return true;
 }
 // ---- a thrown stone or a rattled bin (A23): a watcher inside its reach turns to it and remembers a noise ----

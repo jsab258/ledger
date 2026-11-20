@@ -176,6 +176,9 @@ export function onKey(code) {
   }
   if (G.paused) return;
   if (gameKey(code)) return; // the whole game's systems may take a key first (game/core.js)
+  // the hands-on run's fault: E moves a talk on and E goes through a door, so the press that ended a talk at a
+  // doorway took him in and out. The use key rests for a moment after a written scene ends.
+  if (code === 'KeyE' && ui.sceneEndedAt != null && G.played - ui.sceneEndedAt >= 0 && G.played - ui.sceneEndedAt < RULES.game.feel.useKeyRestsAfterASceneRealSeconds) return;
   if (code === 'KeyE') useKey('E');
   else if (code === 'KeyT') useKey('T');
   else if (code === 'KeyF') carKey();
@@ -307,6 +310,13 @@ export function buildPrompts() {
       });
     if (!P.keeper) out.push({ k: 'Q', t: 'Front up' });
   }
+  // the hands-on run's fault: Ron wanted a word, stood beside Tom at the office door, and E only went through the
+  // door. Somebody who has something to say to him and stands within reach is offered before a door, whichever way
+  // Tom is facing.
+  if (!out.some((o) => o.k === 'E')) {
+    const W = G.named.find((Q) => !Q.gone && !Q.dead && !Q.down && Q.space === t.space && hyp(Q.x, Q.z, t.x, t.z) < TOMS.talksWithinMetres && beatFor(Q));
+    if (W) out.push({ k: 'E', t: 'Talk to ' + tomName(W).replace(/^A /, 'a ').replace(/^The /, 'the ') + ' (a word)', run: () => talkTo(W) });
+  }
   // doors
   if (t.space === 'street') {
     for (const id in ROOMS) {
@@ -335,7 +345,7 @@ export function buildPrompts() {
           t.ang = -1.57;
         },
       });
-    if (nearCar(TOMS.cabWithinMetres) && G.car.keys) out.push({ k: 'F', t: 'Get in the cab' });
+    if (nearCar(TOMS.cabWithinMetres)) out.push({ k: 'F', t: G.car.keys ? 'Get in the cab' : 'The cab (locked: the keys are in the office)' });
     for (const p of PROPS)
       if (p.hand && !p.broken && hyp(t.x, t.z, p.x, p.z) < p.r + TOMS.reachesAThingWithinMetres && t.weapon !== p.hand) {
         out.push({

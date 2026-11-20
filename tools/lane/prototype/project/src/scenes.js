@@ -20,7 +20,7 @@ import { startJob, jobHotspots, jobClock, watchStep } from './jobs.js';
 import { nightly } from './police.js';
 import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
-import { gameHotspots, gameBeatFor, gameMatters, freshLine } from './game/index.js';
+import { gameHotspots, gameBeatFor, gameMatters, freshLine, sameKeyAsOne } from './game/index.js';
 const STORY = RULES.story;
 const LAD = RULES.ladder;
 
@@ -1524,7 +1524,7 @@ export function hotspots() {
     }
     jobHotspots(out);
   }
-  return out;
+  return sameKeyAsOne(out); // the one-shot: two things on one key become one prompt that asks which (game/core.js)
 }
 
 // ---------- the running week ----------
@@ -1608,6 +1608,25 @@ function marks() {
     if (!S.override) send(S, 'mickeys:sheila', 'work');
     G.story.objective =
       'It is Sunday. Sheila has come in on her day off. The door in the back room is open, and she is waiting behind her desk.';
+  }
+  // The one-shot (the hands-on run's blocker): he walks up from the ferry now and may come late. Until she has
+  // looked him over and handed him the keys, Sheila sits on at her desk on the first day, however late, and the
+  // to-do line says where she is as soon as he is through the door. From the second day she is in at her hours,
+  // and the line says so while the office is empty.
+  if (!f.tour && !G.story.ended) {
+    const S = P_('sheila');
+    if (day() === 0 && !S.dead) {
+      if (!S.override) send(S, 'mickeys:sheila', 'work', G.t + STORY.sheilaWaitsOnTheFirstDayGameMinutes);
+    }
+    const inOffice = G.tom.space === 'mickeys',
+      here = S.space === 'mickeys' && !S.gone;
+    if (inOffice && !f.foundOffice) f.foundOffice = 1;
+    if (f.foundOffice) {
+      const want = here
+        ? "Mickey's Cars. The woman at the desk at the back is Sheila Dunn, who kept his books. Talk to her [E]."
+        : "Mickey's Cars is empty for the night. Sheila Dunn is in again in the morning. The cot at the back will do to sleep on [E].";
+      if (G.story.objective !== want) G.story.objective = want;
+    }
   }
   if (ask1Due() && !f.ask1obj && !P_('ron').dead) {
     // round 2: the first night's offer was easy to miss (the playtester's newcomer never heard it in an hour)
