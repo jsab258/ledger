@@ -132,6 +132,30 @@ def prepare_work(work=None, log=print):
     return work
 
 
+ONE_SIM = os.path.join(REPO, "tools", "lane", "one-sim", "wasm")
+SIM_WASM = os.environ.get("LEDGER_ONE_SIM_WASM") or os.path.join(
+    os.environ.get("ONE_SIM_WORK", "/home/claude/one-sim-work"), "wasm", "one-sim.wasm")
+
+
+def copy_sim(work):
+    """The game's real town code (the one-shot, 20 Nov): the loader and the bridge from tools/lane/one-sim, the
+    cast file from production/specs, and the built one-sim.wasm from the one-sim work folder, copied into
+    the work folder's src/game/sim/ so the bundle holds them. Never copied into the repository: one home each."""
+    d = os.path.join(work, "src", "game", "sim")
+    os.makedirs(d, exist_ok=True)
+    if not os.path.isfile(SIM_WASM):
+        return ["NOTHING BUILT: the town code for the browser is missing (%s). Run tools/lane/one-sim/one-sim.sh "
+                "setup, then wasm (about 5 minutes), or set LEDGER_ONE_SIM_WASM." % SIM_WASM]
+    shutil.copy2(SIM_WASM, os.path.join(d, "one-sim.wasm"))
+    for n in ("one-sim.mjs", "one-sim-bridge.mjs"):
+        shutil.copy2(os.path.join(ONE_SIM, n), os.path.join(d, n))
+    with open(os.path.join(REPO, "production", "specs", "hook-cast.json"), encoding="utf-8-sig") as f:
+        cast = f.read()
+    with open(os.path.join(d, "hook-cast.txt"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(cast)
+    return []
+
+
 def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print, locked=False):
     """Build into dist. Returns the list of problems (empty when the build matches the page).
 
@@ -146,6 +170,9 @@ def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print,
         if problems:
             return problems
     work = prepare_work(work, log=log)
+    problems += copy_sim(work)
+    if problems:
+        return problems
     wa = os.path.join(work, "assets")
     os.makedirs(wa, exist_ok=True)
     if assets_dir:

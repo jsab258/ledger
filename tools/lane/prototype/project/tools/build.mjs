@@ -15,6 +15,8 @@ await build({
   sourcemap: dev,
   outfile: 'dist/ledger.js',
   logLevel: 'warning',
+  // the game's real town code, compiled for the browser, travels inside ledger.js (game/town.js)
+  loader: { '.wasm': 'binary', '.txt': 'text' },
 });
 fs.copyFileSync('src/index.html', 'dist/index.html');
 for (const f of fs.readdirSync('assets')) {

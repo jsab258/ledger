@@ -80,6 +80,7 @@ export function gossipTick() {
       const reach = A.space === 'street' ? GOS.withinMetresOnStreet : GOS.withinMetresIndoors;
       if (A.space !== B.space || hyp(A.x, A.z, B.x, B.z) > reach) continue;
       if (A.moving && B.moving) continue;
+      if (G.hooks.townPair && G.hooks.townPair(A, B)) continue; // two people of the real cast: the game's real town passes their talk (game/town.js)
       tally('met', A.id < B.id ? A.id + ' + ' + B.id : B.id + ' + ' + A.id); // counted for the gossip table only
       if (!chance(GOS.chanceTimesAffinity * aff(A, B))) continue;
       const m = pickStory(A, B) || null;

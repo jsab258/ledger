@@ -154,6 +154,7 @@ export function act(kind, x = {}) {
   }
   if (!k.noself) ledgerSelf(E);
   logLine(k.truth(E) + (E.wit.length ? '. Seen by ' + E.wit.length : ''), 'act');
+  if (G.hooks.acted) G.hooks.acted(E); // the whole game's systems hear of every act (game/town.js and others)
   return E;
 }
 

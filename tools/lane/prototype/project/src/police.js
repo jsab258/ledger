@@ -205,7 +205,10 @@ export function ellisClock() {
   const L = loudness();
   st.loudAt = st.loudAt || {};
   st.loudAt[d] = L;
-  if (L < POL.ellisComesAtLoudness && !fl().dead && !fl().forceEllis) return;
+  // the one-shot: with the real town running, DS Ellis comes on the mornings the town's own rules send her (game/town.js)
+  const townSays = G.hooks.townEllis ? G.hooks.townEllis() : null;
+  if ((townSays === null ? L < POL.ellisComesAtLoudness : !townSays) && !fl().dead && !fl().forceEllis) return;
+  if (G.hooks.townEllisShown) G.hooks.townEllisShown();
   const E = G.people.ellis,
     list = G.named
       .filter(

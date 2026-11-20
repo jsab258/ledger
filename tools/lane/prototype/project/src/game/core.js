@@ -16,10 +16,13 @@
 //   hook               an object of test calls, shown as LEDGER.game.<id>
 // Systems speak to each other only through on() and emit(), or through each other's exported functions.
 import { G } from '../state.js';
+import { advanceTo } from '../work.js';
+import { act } from '../events.js';
 
 export const SYSTEMS = [];
 export const FAULTS = []; // a fault inside one system never stops the game; every one is kept here, and tests assert none
 const LISTEN = {};
+const MINUTES_A_TEST_STEP = 20; // a test's skip of time gives the systems their minutes as it goes
 let lastMin = -1;
 
 export function register(sys) {
@@ -107,7 +110,26 @@ export function gameKey(code) {
   return false;
 }
 export function gameHook() {
-  const o = { faults: FAULTS, systems: () => SYSTEMS.map((s) => s.id), x: () => ensureX(), emit };
+  const o = {
+    faults: FAULTS,
+    systems: () => SYSTEMS.map((s) => s.id),
+    x: () => ensureX(),
+    emit,
+    places: PLACES,
+    // test calls every system's tests share
+    test: {
+      act: (kind, o = {}) => act(kind, o), // he does a thing now, where he stands, seen by whoever can see it
+      // game minutes pass: with Tom out of the way (as a sleep or the cells), or where he stands
+      pass(minutes, hidden = true) {
+        const end = G.t + minutes;
+        while (G.t < end) {
+          advanceTo(Math.min(end, G.t + MINUTES_A_TEST_STEP), hidden);
+          gameStep(0);
+        }
+        return G.t;
+      },
+    },
+  };
   for (const s of SYSTEMS) if (s.hook) o[s.id] = s.hook;
   return o;
 }

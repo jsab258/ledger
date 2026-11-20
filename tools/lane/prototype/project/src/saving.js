@@ -43,6 +43,7 @@ export async function initSave() {
   S.ready = true;
 }
 export function serialize() {
+  if (G.hooks.beforeSave) G.hooks.beforeSave(); // the real town goes into the save as it stands now (game/town.js)
   const o = {};
   for (const k of KEYS) o[k] = G[k];
   o.minds = {};

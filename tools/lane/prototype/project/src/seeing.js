@@ -207,6 +207,7 @@ export function witness(P, E, s, T, fixedWho) {
     }
   }
   if (tomNotices(P)) ledgerSeen(E, P, 'saw');
+  if (G.hooks.sighted) G.hooks.sighted(P, E, r); // the game's real town is told (game/town.js)
   return r;
 }
 
