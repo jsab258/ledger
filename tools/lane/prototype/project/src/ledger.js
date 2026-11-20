@@ -516,7 +516,11 @@ export function syncOpen() {
     }
   }
   for (const e of B.entries)
-    if (e.kind === 'open' && !e.closed && !e.struck && !keys.has(e.key)) closeEntry(e, closedWhy(e.key));
+    if (e.kind === 'open' && !e.closed && !e.struck && !keys.has(e.key)) {
+      const debtor = /^debt:/.test(e.key) ? G.debts[e.key.slice(5)] : null;
+      if (debtor && debtor.st === 'open') continue; // a debt still owing is never ruled off (the one-shot: it read "Closed: Paid")
+      closeEntry(e, closedWhy(e.key));
+    }
 }
 
 // ---------- Money: pounds and pence, only sums Tom knows ----------
@@ -530,7 +534,7 @@ export function moneyNow() {
   if (m.fareCount > 0)
     o.push({
       sum: 'fares',
-      what: `Fares taken this week (${m.fareCount})`,
+      what: 'In the fare book this week, his own fares and the other car\'s',
       amountPence: m.fares,
       how: 'The fare book',
     });

@@ -50,8 +50,8 @@ register({
     // the hands-on run's fault: a newcomer who never stood still was never told the keys. The first hint comes a few
     // seconds after he has control, whatever he is doing; the rest still wait for a pause.
     S.sinceStart = (S.sinceStart || 0) + dt;
-    if (S.idle > 0 && !x.hints.move) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
-    else if (S.idle > 0 && !x.hints.keys && x.hints.move && x.hints.way) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
+    if (S.idle > 0 && !x.hints.move && (x.hints.way || dayNow() > 0 || G.tom.space !== 'street' || G.tom.z <= 44)) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
+    else if (S.idle > 0 && !x.hints.keys && x.hints.move) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
     // Ron or Pauline nudge after a minute of standing about (DESIGN 15, teaching)
     S.about = t.still > 1 && !t.inCar && G.story.objective ? S.about + dt : 0;
     if (S.about > T.nudgeAfterStandingAboutRealSeconds) {
@@ -71,7 +71,7 @@ register({
       x.firstFareSaid = true;
       sub('"I have Father Walsh wanting the priest\'s house and no car in. Car two is on the rank, love, if you can drive."', 'Pauline, at the radio', '', 8);
       G.story.fareCool = 0;
-      if (!/Darren|Ron|bag|landing/.test(G.story.objective || '')) G.story.objective = 'Car two is on the rank outside. Father Walsh wants the priest\'s house, by the chapel. [F] gets in.';
+      if (!/Darren|Ron|bag|landing/.test(G.story.objective || '')) G.story.objective = 'Car two is on the rank outside. Father Walsh wants the priest\'s house, by the chapel.';
     }
   },
   hook: {

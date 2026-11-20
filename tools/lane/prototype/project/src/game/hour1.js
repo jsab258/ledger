@@ -25,10 +25,14 @@ const PASSING = {
   ada: { who: 'A woman at a window', line: "So you're what he left it to. Well. You've his walk.", flag: 'metAda', window: true },
   june: { who: 'June Suddaby', line: "You're the nephew. June Suddaby, his daughter. I want nothing out of that office, so don't look worried.", flag: 'metJune' },
 };
-const STAGED = { darren: 'pave', ron: 'rank', june: 'junepass' };
+const STAGED = { darren: 'pave', ron: 'rank', june: 'junepass', walsh: 'infirmary' }; // (Father Walsh is visiting at the Infirmary until his fare is driven)
 const posOf = (P) => (P.space === 'home' && P.win ? [P.win.x, P.win.z] : [P.x, P.z]);
 function passing(x) {
   const t = G.tom;
+  {
+    const W = P_('walsh');
+    if (W && W.override && W.override.where === 'infirmary' && (G.money.fareCount > 0 || dayNow() > 0)) release(W);
+  }
   for (const id of ['ron', 'june']) { // (Darren is held on the pavement by the debt book's own rule: game/book.js)
     const P = P_(id);
     if (P && P.override && P.override.where === STAGED[id] && (x.round > 6 || G.t > RULES.time.weekStartsGameMinute + T.stagingEndsAfterGameMinutes)) release(P);
@@ -125,7 +129,9 @@ function walkRound(x, dt) {
   const stop = ROUND[x.round - 1];
   if (!walkInOffice(S, stop.at, dt)) return;
   S.ang += angDiff(S.ang, Math.atan2(t.x - S.x, t.z - S.z)) * Math.min(1, dt * 6);
-  if (x.said < x.round && hyp(S.x, S.z, t.x, t.z) <= T.sheilaSpeaksWhenHeIsWithinMetres && !ui.modal && !ui.subs.some((s) => s.t > s.secs - 1.2)) {
+  x.waitT = x.said < x.round ? (x.waitT || 0) + dt : 0;
+  if (x.said < x.round && (x.round === 1 || x.waitT > T.sheilaCallsHimOnAfterRealSeconds || hyp(S.x, S.z, t.x, t.z) <= T.sheilaSpeaksWhenHeIsWithinMetres) && !ui.modal && !ui.subs.some((s) => s.t > s.secs - 1.2)) {
+    x.waitT = 0;
     x.said = x.round;
     x.saidAt = G.played;
     sub(stop.line, 'Sheila Dunn', 'face', 6.5);

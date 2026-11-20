@@ -98,9 +98,12 @@ export function fareAccept() {
   P.route = null;
   P.moving = false;
   P.gone = false;
-  P.space = 'street';
-  P.x = f.sx;
-  P.z = f.sz;
+  if (!(P.space === 'street' && !P.gone && hyp(P.x, P.z, f.sx, f.sz) < 12)) {
+    // (a fare not already waiting there is put there: the crowd's fares, and named ones away from their pick-up)
+    P.space = 'street';
+    P.x = f.sx;
+    P.z = f.sz;
+  }
   P.awake = true;
   P.state = 'idle';
   P.inCar = false;

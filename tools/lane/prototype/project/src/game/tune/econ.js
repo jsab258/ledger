@@ -27,6 +27,7 @@ export const TUNE = {
   },
   squeezedRegardLost: 0.2,
   squeezedFearGained: 0.15,
+  hardLookHoldsGameMinutes: 30, // a shove pays only on top of a hard look given this lately
   sheilaFinishesWithoutAFareAfterGameMinutes: 300,
   darrenStaysAfterGameMinutes: 20,
   firstNightStagingEndsAtGameMinute: 240, // four in the morning of the Tuesday: nobody is kept standing past it

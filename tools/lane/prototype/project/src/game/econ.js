@@ -3,6 +3,7 @@
 // book without him. The rules are the piece pieces/money.js; the pocket and the tin stay the prototype's G.money.
 import { register, X, write, tell, dayNow, hourNow, emit, FAULTS } from './core.js';
 import { G } from '../state.js';
+import { sub } from '../ui.js';
 import { pay, earn } from '../money.js';
 import { RULES } from '../rules.js';
 import { PIECE as MONEY } from './pieces/money.js';
@@ -52,6 +53,20 @@ register({
     G.hooks.flow = flow;
   },
   minute() {
+    // the other car's takings are on the counter: he has them when he is in the office, and somebody says so
+    {
+      const y = X('econ');
+      if (y.firmDue > 0 && G.tom.space === 'mickeys' && !G.paused) {
+        const pence = y.firmDue;
+        y.firmDue = 0;
+        earn(pence, false, "the firm's own fares");
+        G.money.fares += pence;
+        G.money.sinceWash += pence;
+        const who = ['pauline', 'sheila', 'terry', 'kevin'].map((id) => G.people[id]).find((P) => P && P.space === 'mickeys' && !P.gone);
+        sub(`The other car has paid in: ${M.words(pence)}, for the fare book.`, who ? who.def.name : 'A slip on the counter', 'face', 6);
+        write(`The firm's other car paid in ${M.words(pence)}. It is in the fare book and his pocket.`, { key: 'firm-' + dayNow(), how: who ? who.def.name + ' says' : 'A slip on the counter' });
+      }
+    }
     const b = balances();
     if (!b.holds && !X('econ').faulted) {
       X('econ').faulted = true;
@@ -70,12 +85,7 @@ register({
     if (h === 23 && !x.firmDays[d]) {
       x.firmDays[d] = 1;
       const pence = M.firmDay(x.drivers, x.fareShare);
-      if (pence > 0) {
-        earn(pence, false, "the firm's own fares");
-        tell(`Eleven at night. The firm's other car pays in its day's fares: £${(pence / 100).toFixed(2)} into the pocket, and into the fare book.`, '');
-        G.money.fares += pence;
-        G.money.sinceWash += pence;
-      }
+      if (pence > 0) x.firmDue = (x.firmDue || 0) + pence; // paid in at the office: he has it when he is next there
     }
     // Monday morning from the second week: the drivers' wages and the cars' upkeep come out of the fare book
     const week = Math.floor(d / 7);

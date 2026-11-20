@@ -52,7 +52,9 @@ function finishing(x, dt) {
   const stop = FINISH[x.fin - 1];
   if (!walkInOffice(S, stop.at, dt)) return;
   S.ang += angDiff(S.ang, Math.atan2(t.x - S.x, t.z - S.z)) * Math.min(1, dt * 6);
-  if (x.said < x.fin && hyp(S.x, S.z, t.x, t.z) <= H.sheilaSpeaksWhenHeIsWithinMetres && !ui.modal && !ui.subs.some((s) => s.t > s.secs - 1.2)) {
+  x.waitT = x.said < x.fin ? (x.waitT || 0) + dt : 0;
+  if (x.said < x.fin && (x.waitT > H.sheilaCallsHimOnAfterRealSeconds || hyp(S.x, S.z, t.x, t.z) <= H.sheilaSpeaksWhenHeIsWithinMetres) && !ui.modal && !ui.subs.some((s) => s.t > s.secs - 1.2)) {
+    x.waitT = 0;
     x.said = x.fin;
     x.saidAt = G.played;
     const line = stop.line();
@@ -93,7 +95,12 @@ function openBook() {
 // ---- 5:30 fronting up on the street: a hard look, then a shove; he pays what his purse holds ----
 function frontedUp(E) {
   const x = X('book');
-  if (!x.shown || !E || !E.target || !NAMES[E.target]) return;
+  if (!E || !E.target || !NAMES[E.target]) return;
+  if (!x.shown) {
+    // he has not seen the book yet, so he does not know what is owed: the man says so himself, and nothing is taken
+    if ((E.kind === 'hard_look' || E.kind === 'shove') && G.debts[E.target] && G.debts[E.target].st === 'open') sub(E.kind === 'shove' ? "Oi! What's that for? If it's Mickey's book, go and ask Sheila what I owe before you start." : "What? If it's about Mickey's book, Sheila's got it. Ask her.", NAMES[E.target], 'face', 5);
+    return;
+  }
   const id = E.target,
     d = G.debts[id],
     P = P_(id);
@@ -104,6 +111,11 @@ function frontedUp(E) {
     return;
   }
   if (E.kind !== 'shove') return;
+  if (!x.looked[id] || G.t - x.looked[id] > T.hardLookHoldsGameMinutes) {
+    // hands on him out of nowhere: he steps back and does not pay. The ladder is climbed a rung at a time.
+    sub("Oi! Hands off. What's that for?", NAMES[id], 'face', 4);
+    return;
+  }
   const purse = x.purse[id] == null ? T.debts[id].pursePence : x.purse[id],
     amt = Math.min(purse, d.owed);
   x.purse[id] = purse - amt;
