@@ -81,8 +81,10 @@ on('act', (E) => E.kind === 'kill' && leaveTrace('body', 'a man lying on ' + E.z
 // the real town names who found the week's damage: that person holds the aftermath
 on('town.found', (f) => {
   const x = X('traces'),
-    tr = x.list.find((q) => q.e === f.e && !q.found);
-  if (tr && G.people[f.who]) find(tr, f.who, G.t);
+    E = G.ev[f.e];
+  if (!E || !G.people[f.who]) return;
+  const tr = x.list.find((q) => q.e === f.e) || leaveTrace('glass', (E.thing || 'a window') + ', broken', E, {});
+  if (tr && !tr.found) find(tr, f.who, G.t);
 });
 // a finder he stopped never rang: the trace is still there for the next one
 on('walks.stopped', (s) => {

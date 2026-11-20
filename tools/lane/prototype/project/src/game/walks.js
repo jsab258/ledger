@@ -179,12 +179,12 @@ register({
       const d = hyp(P.x, P.z, ph[0], ph[1]);
       const far = G.tom.space !== 'street' || hyp(P.x, P.z, G.tom.x, G.tom.z) > 45;
       if (w.st === 'going') {
-        if (G.played >= w.standsUntil && (!w.moving || (!P.route && d > W.arrivesWithinMetres))) {
+        if (G.played >= w.standsUntil && (!w.moving || (!P.route && d > W.arrivesWithinMetres * 2.5))) {
           w.moving = true;
           goToPoint(P, ph[0], ph[1], W.metresPerSecond * (P.hurry > 1 ? 1.4 : 1));
         }
-        if (d <= W.arrivesWithinMetres || (far && G.t >= w.dueT)) {
-          if (far) Object.assign(P, { x: ph[0], z: ph[1] });
+        if (d <= W.arrivesWithinMetres || (G.t >= w.dueT + W.overdueGameMinutes && (d <= W.arrivesWithinMetres * 2.5 || !inView(P, 45))) || (far && G.t >= w.dueT)) {
+          if (d > W.arrivesWithinMetres * 2.5) Object.assign(P, { x: ph[0], z: ph[1] });
           w.st = 'calling';
           w.callUntilT = Math.max(G.t, w.dueT - W.phoneCallRealSeconds * gameMinPerSec()) + W.phoneCallRealSeconds * gameMinPerSec();
           P.route = null;

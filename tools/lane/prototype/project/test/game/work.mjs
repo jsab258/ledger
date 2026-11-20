@@ -30,6 +30,7 @@ t.ok(h2.hit.choice === 'drove off' && h2.share < 1 && h2.kinds.includes('hit_and
 const fb = await C(() => { const G = LEDGER.G; const x = LEDGER.game.econ.x(); const until = x.fareShareUntilT; LEDGER.game.test.pass(until - G.t + 5); return LEDGER.game.econ.fareShare(); });
 t.ok(fb === 1, 'the fares come back as the talk fades (2.15.3)', fb);
 
+await clear(); await t.h.sleep(3000); await clear(); // somebody saw the hit-and-run and rang: the morning's officer is answered (he goes with him)
 // crashes (ER-DRIVE-01): from about 35 mph it will not drive on, says so, and comes back next day
 const cr = await C(() => { const c = LEDGER.game.cars; c.crash(4); const a = !!c.x().wrecked; c.crash(16); const b = c.x().wrecked; const stages = c.x().crashes.map((q) => q.stage); LEDGER.game.test.pass(26 * 60); return { a, b: !!b, stages, back: !c.x().wrecked }; });
 t.ok(!cr.a && cr.b && cr.stages[1] === 'will not drive on' && cr.back, 'a hard hit takes the car off the road for a day; a touch is forgiven', cr);

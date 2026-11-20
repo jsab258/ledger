@@ -3,6 +3,8 @@
 import { start } from './lib.mjs';
 const t = await start({ port: 8874 });
 const C = (fn, ...a) => t.ev(fn, ...a);
+// any written scene still open is answered with its first choice, so the game is never left paused
+const clear = async () => { for (let i = 0; i < 8 && (await t.ev(() => LEDGER.read().boxOpen)) === 'dialog'; i++) { await t.h.sleep(1600); await t.h.key('KeyE'); await t.h.key('Digit1'); await t.h.sleep(500); } };
 
 // the pockets (ER-POCKET-01): two things under the coat, no more; a search finds exactly what he carries
 const p = await C(() => { const c = LEDGER.game.crime; const a = c.take('torch'), b = c.take('crowbar'), d = c.take('cosh'); return { a, b, d, carried: c.carried().map((x) => x.id) }; });
@@ -52,10 +54,12 @@ t.ok(bm.ok && bm.a.does && !bm.b.does && bm.bal, 'a bought officer does only wha
 const os = await C(() => { const l = LEDGER.game.law, c = LEDGER.game.crime; c.x().stored.push({ id: 'cosh', name: 'a cosh', unlawful: true }); const x = l.x(); x.ellis = { stage: 2, signShown: true, signShownT: LEDGER.G.t, owed: null }; x.search.noticeT = null; LEDGER.game.test.pass(26 * 60); const noNotice = x.search.done; x.search.noticeT = LEDGER.G.t; LEDGER.game.test.pass(30 * 60); return { noNotice, done: x.search.done, found: x.search.found, stored: c.x().stored.length, charges: x.charges.length }; });
 t.ok(!os.noNotice && os.done && os.found.includes('cosh') && os.stored === 0, 'the office is searched only after notice, and finds what is stored there', os);
 
+await clear(); await t.h.sleep(3000); await clear(); // the window was seen and rung in: the morning's officer is answered
 // a street on edge (A37): three seen deeds in two days
 const ed = await C(() => { const l = LEDGER.game.law, G = LEDGER.G; l.x().deeds = [1, 2, 3].map((i) => ({ street: 'Quay Street', seen: true, t: G.t - i * 300 })); LEDGER.game.test.pass(2); const on = l.x().edge; l.x().deeds = []; LEDGER.game.test.pass(2); return { on, off: l.x().edge }; });
 t.ok(ed.on && !ed.off, 'three seen deeds set Quay Street on edge, and it eases', ed);
 
+await clear();
 // the yard dog (ER-DOG-01): barks at a stranger out of hours; a scrap quiets it; no verb harms a dog
 const dg = await C(() => { const G = LEDGER.G, c = LEDGER.game.crime; G.t = Math.floor(G.t / 1440) * 1440 + 23 * 60; G.tom.space = 'street'; G.tom.x = -98; G.tom.z = 34; c.x().pockets.length = 0; LEDGER.step(0.1); const barks = c.x().barks.length; c.take('scrap'); G.t += 10; LEDGER.step(0.1); return { barks, after: c.x().barks.length, quiet: c.x().dogQuietUntilT > G.t, verbs: LEDGER.prompts().map((q) => q.text).filter((q) => /dog/i.test(q)) }; });
 t.ok(dg.barks === 1 && dg.after === 1 && dg.quiet && !dg.verbs.length, 'the dog barks, a scrap quiets it, and no verb touches the dog', dg);

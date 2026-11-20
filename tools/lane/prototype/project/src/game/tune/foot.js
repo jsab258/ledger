@@ -97,6 +97,7 @@ export const TUNE = {
     reachWithinMetres: 3,
     arrivesWithinMetres: 2.2,
     phoneCallRealSeconds: 8,
+    overdueGameMinutes: 15, // a walker held up on the way is taken to have got there, once out of his sight
     nextWitnessAfterGameMinutes: 12, // if the first is stopped and another saw it plainly
     walkersAtMostADeed: 2,
     morningWalkAtHour: 8, // somebody who places him only later goes in the morning

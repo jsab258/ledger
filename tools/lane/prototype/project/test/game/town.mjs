@@ -36,9 +36,9 @@ t.ok(d.deeds[0] && d.deeds[0].taken.includes('ada'), 'Ada is its witness in the 
 const save1 = await t.ev(() => { LEDGER.saveNow(false); return LEDGER.saveText().length; });
 t.ok(save1 > 1000, 'the save holds the town', save1);
 await t.pass(22 * 60);
-const w = await t.ev(() => ({ went: LEDGER.game.town.x().went, found: LEDGER.game.town.x().found.length, day: LEDGER.G.t / 1440 }));
+const w = await t.ev(() => ({ went: LEDGER.game.town.x().went, found: LEDGER.game.traces.x().list.filter((q) => q.found && LEDGER.G.people[q.found.by]).length, day: LEDGER.G.t / 1440 }));
 t.ok(w.went.some((x) => x.who === 'ada'), 'Ada went to the police at nine the morning after', w);
-t.ok(w.found >= 1, 'people whose routines pass it found the damage (A38)', w.found);
+t.ok(w.found >= 1, 'the broken window was found by a named person of the town (A38; its own unseen-deed test is game/reach)', w.found);
 
 // the save: load it, and the town plays on from where it was
 const back = await t.ev(async () => {
