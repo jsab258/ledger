@@ -379,7 +379,7 @@ export async function open(o = {}) {
         const hyp = (ax, az, bx, bz) => Math.hypot(ax - bx, az - bz);
         const angd = (a, b) => { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
         const set = (code, on) => (on ? S.kd(code) : S.ku(code));
-        let i = 0, stuck = 0, lx = c.x, lz = c.z, back = 0, stopped = 0, waited = 0, edge = 0, prev = [c.x, c.z];
+        let i = 0, stuck = 0, lx = c.x, lz = c.z, back = 0, stopped = 0, waited = 0, edge = 0, prev = [c.x, c.z]; let lastAng = c.ang;
         const top = opt.speed || 8.5, max = Math.round((opt.maxSecs || 120) * 60);
         const blocker = () => {
           const fx = Math.sin(c.ang), fz = Math.cos(c.ang), reach = 4 + (c.v * c.v) / 12;
@@ -415,7 +415,8 @@ export async function open(o = {}) {
           if (edge > 0) edge--;
           if (b && Math.abs(c.v) < 0.5) { if (++waited > 240) { waited = 0; edge = 240; } } else if (!b) waited = Math.max(0, waited - 1);
           const want = b ? 0 : Math.min(edge > 0 ? 3 : top, last ? Math.max(2.2, d * 0.7) : 99, Math.abs(err) > 1.0 ? 3 : Math.abs(err) > 0.35 ? 5 : 99, !last && d < 12 && pts[i + 1] && Math.abs(angd(Math.atan2(p[0] - c.x, p[1] - c.z), Math.atan2(pts[i + 1][0] - p[0], pts[i + 1][1] - p[1]))) > 0.6 ? 5 : 99);
-          set('KeyA', err > 0.06); set('KeyD', err < -0.06);
+          // he steers to where the car will be pointing in a third of a second, not where it points now (no weaving)
+          { const yr = angd(lastAng, c.ang) * 60; lastAng = c.ang; const e2 = err - yr * 0.3; set('KeyA', e2 > 0.05); set('KeyD', e2 < -0.05); }
           set('KeyW', want > 0 && c.v < want - 0.3); set('KeyS', c.v > want + 1.2 || (want === 0 && c.v > 0.3));
           set('Space', want === 0 && Math.abs(c.v) <= 0.3); // waiting: on the handbrake, never on a held brake
           if (S.frameNo % 60 === 0) { const moved = hyp(c.x, c.z, lx, lz); lx = c.x; lz = c.z; stuck = moved < 0.3 && want > 0 ? stuck + 1 : 0; if (stuck >= 2) { stuck = 0; back = 80; } S.driveDbg = { leg: i, blocker: b, want: Math.round(want * 10) / 10, err: Math.round(err * 100) / 100, edge, waited }; }

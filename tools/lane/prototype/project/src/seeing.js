@@ -198,10 +198,12 @@ export function witness(P, E, s, T, fixedWho) {
   if (!E.wit.includes(P.id)) E.wit.push(P.id);
   const gain = attached(r) ? SEE.familiarityPerWitnessedActIfKnown : SEE.familiarityPerWitnessedAct;
   P.mind.fam = clamp(P.mind.fam + gain * s.c, 0, 1);
-  P.mind.look = Math.max(
-    P.mind.look || 0,
-    WATCH.lookAfterWitnessRealSeconds + WATCH.lookAddedPerSeverityRealSeconds * k.sev,
-  );
+  // the cab is cover: a minicab out late is seen and remembered, but nobody looks twice at it (the one-shot, part 1)
+  if (E.kind !== 'cab_night' && E.kind !== 'cab')
+    P.mind.look = Math.max(
+      P.mind.look || 0,
+      WATCH.lookAfterWitnessRealSeconds + WATCH.lookAddedPerSeverityRealSeconds * k.sev,
+    );
   // Said with the body: a pause in the walk, or a step back. Once for one act: an act that goes on (being out
   // at night) is seen again and again, and must not hold a walker on the spot. G.played is real seconds.
   const rested = !(P.bodyAt > G.played - WATCH.pauseAgainAfterRealSeconds);

@@ -121,6 +121,7 @@ await run('S02', { from: 'S01' }, async (P, t, n) => {
   t.ok(dr.fovFast > dr.fovRest + 1, 'and widens with speed', [dr.fovRest, dr.fovFast, dr.maxV]);
   t.ok(dr.camInside === 0, 'no frame at the wheel shows the inside of a wall, a car or a post', [dr.camInside, dr.n, dr.where]);
   t.ok(dr.steppedOut === 0, 'nobody steps out inside the stopping distance of the cab', dr.steppedOut);
+  t.ok((await P.car()).dmg === 0 && !(await P.subsLog()).some((x) => /^The cab hits/.test(x.s)), 'driven with care, the cab takes no knock', [(await P.car()).dmg, (await P.subsLog()).filter((x) => /cab hits/.test(x.s))]);
   t.ok(dr.hitPeople === 0 && dr.trafficHits === 0, 'nobody is struck: the other cars brake for people and for him', [dr.hitPeople, dr.trafficHits]);
   // the Money page, in words, and the fare book
   s = { ledger: await P.ledger('money') };

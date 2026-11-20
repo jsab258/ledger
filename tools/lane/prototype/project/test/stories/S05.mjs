@@ -10,6 +10,8 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
   const pc = () => P.world(() => { const Q = LEDGER.G.people.pc; return { x: Q.x, z: Q.z, gone: !!Q.gone, d: Math.hypot(Q.x - LEDGER.G.tom.x, Q.z - LEDGER.G.tom.z) }; });
   const man = () => P.world(() => LEDGER.game.carry.at());
   const callsSoFar = async () => (await P.subsLog()).filter((x) => /^THE CONSTABLE/.test(x.s));
+  // to the driver's door of the cab (the right-hand side, wherever the car is pointing)
+  const toDoor = async (c) => { await go(c.x + Math.cos(c.ang) * 1.5 - Math.sin(c.ang) * 0.3, c.z - Math.sin(c.ang) * 1.5 - Math.cos(c.ang) * 0.3, { near: 0.5 }); await P.secs(0.3); };
   let s;
   await P.cont();
   const start = await P.world(() => ({ hour: (LEDGER.G.t % 1440) / 60, coat: LEDGER.G.tom.coat, pockets: LEDGER.game.x().crime.pockets.map((p) => p.id), open: LEDGER.game.carry.landingOpen() }));
@@ -21,7 +23,21 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
   const outYard = async () => { const m = await local('mickeys', 6.3, 1.5); await go(m[0], m[1], { near: 0.7 }); await P.use(/yard/); await P.until(() => LEDGER.G.tom.space === 'street', 5); };
   // home by the yard, up the stair, to bed; the night is skipped and the game saves
   const homeAndSleep = async (name) => {
-    await go(22.8, 42.6); await go(22.8, 38.5); await go(21.8, 36.1, { near: 0.45 }); await P.face(20.9, 36); await P.secs(0.3);
+    // out past four in the morning he is dead on his feet: the game itself takes him to his bed, and saves
+    const inBed = () => LEDGER.G.tom.space === 'flat' || LEDGER.G.paused;
+    const collapsed = async () => {
+      await P.until(() => !LEDGER.G.paused && !document.getElementById('fade').classList.contains('on'), 30);
+      if ((await P.tom()).space !== 'flat') return false;
+      await P.secs(0.6);
+      const now = await P.clock();
+      t.ok(Math.floor(now / 1440) === 1 && (await P.subsLog()).some((x) => /^Saved\./.test(x.s)), 'out past four he was dead on his feet: he wakes in his bed on Tuesday morning, and the game has saved', now);
+      if (t.first) await P.keep(name);
+      return true;
+    };
+    if (await collapsed()) return;
+    await go(22.8, 42.6, { until: inBed }); if (!(await P.world(inBed))) await go(22.8, 38.5, { until: inBed }); if (!(await P.world(inBed))) await go(21.8, 36.1, { near: 0.45, until: inBed });
+    if ((await P.world(inBed)) && (await collapsed())) return;
+    await P.face(20.9, 36); await P.secs(0.3);
     s = await P.screen();
     t.ok(s.prompts.some((p) => /Back door of Mickey/.test(p)), 'he comes home by the yard: the back door has its prompt', s.prompts);
     await P.use(/Back door/); await P.until(() => LEDGER.G.tom.space === 'mickeys', 5);
@@ -112,7 +128,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
   if (variant === 'cab') {
     await outFront();
     const c0 = await P.car();
-    await go(c0.x + 1.5, c0.z - 0.8, { near: 0.5 }); await P.secs(0.3);
+    await toDoor(c0);
     await P.use(/car two/); await P.until(() => LEDGER.G.tom.inCar, 4);
     const at = await man();
     const d0 = await P.played();
@@ -132,7 +148,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     t.ok(/Took the cab to the landing: quick, but whoever saw it there saw Mickey's name on its roof/.test(day), 'and the Ledger has it', day.split('\n').filter((l) => /cab/i.test(l)).slice(0, 2));
     await P.ledgerClose();
     const c1 = await P.car();
-    await go(c1.x - 1.6, c1.z + 0.6, { near: 0.9 }); await P.secs(0.3);
+    await toDoor(c1);
     await P.use(/car two/); await P.until(() => LEDGER.G.tom.inCar, 4);
     await P.drive([[-60, 50], [-66, 48], [-58, 46.6], [-12, 46.6], [-3.2, 42], [-3.2, 30], [0, 22], [3.4, 26], [4.1, 36.5]], { maxSecs: 90, stopWithin: 2, speed: 8 });
     await P.use(/Get out/); await P.until(() => !LEDGER.G.tom.inCar, 4);
@@ -207,7 +223,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     const over2 = () => window.__S.ch.n > window.__S.ch.n0;
     const c2 = await pc(), m2 = await P.tom();
     // away from him, whichever side he stands: down the lane and out along the quay, or up it and round into Chapel Lane
-    const away = c2.z < m2.z ? [[29, 30], [28.6, 39], [29, 42.6], [45, 43], [70, 43], [100, 43]] : [[29, 18], [28.6, 12], [29.5, -8], [29.5, -16], [14, -18], [4, -18], [3.4, 12], [3.4, 41.5]];
+    const away = c2.z < m2.z ? [[29, 30], [28.6, 39], [29, 42.6], [45, 43], [70, 43], [100, 43]].filter((p, k) => k > 1 || p[1] > m2.z + 1) : [[29, 18], [28.6, 12], [29.5, -8], [29.5, -16], [14, -18], [4, -18], [3.4, 12], [3.4, 41.5]].filter((p, k) => k > 1 || p[1] < m2.z - 1);
     for (const [x, z] of away) { await P.walkTo(x, z, { run: true, maxSecs: 40, until: over2 }); if (await P.world(over2)) break; }
     if (!(await P.world(over2))) await P.until(over2, 60);
     const chase2 = await P.world(() => window.__S.ch.last);

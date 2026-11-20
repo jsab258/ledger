@@ -9,7 +9,7 @@ await run('S06', { from: (v) => 'S05 home ' + v }, async (P, t, n, variant) => {
   let s;
   await P.cont();
   const start = await P.world(() => ({ day: Math.floor(LEDGER.G.t / 1440), hour: (LEDGER.G.t % 1440) / 60, space: LEDGER.G.tom.space, things: LEDGER.game.back.x().things.map((q) => q.what) }));
-  t.ok(start.day === 1 && start.hour >= 6.9 && start.hour < 8 && start.space === 'flat', 'Tuesday morning, in the flat over the office', start);
+  t.ok(start.day === 1 && start.hour >= 6.9 && start.hour < 9.6 && start.space === 'flat', 'Tuesday morning, in the flat over the office', start);
   const made = variant !== 'quay';
   t.ok(made ? start.things.includes('made') : start.things.includes('missed'), 'what happened last night is the branch that was played', start.things);
   const T0 = await P.clock();
