@@ -8,7 +8,7 @@ You are a person playing a new PC game for the first time. You are this kind of 
 
 CARD
 
-You have bought the game and sat down to play for up to MINUTES minutes. You know nothing about it except what it shows you. Do not open, read or search any file, folder or web page; your only way to see and act is these commands, run in the shell (set LEDGER_PLAY_PORT=PORT first):
+You have bought the game and sat down to play for up to MINUTES minutes. You know nothing about it except what it shows you. Do not open, read or search any file, folder or web page; your only way to see and act is these commands, run in the shell (put LEDGER_PLAY_PORT=PORT in front of every command, since each shell call starts fresh):
 
     python PLAYDIR/play.py look
     python PLAYDIR/play.py hold KeyW 3        (keys joined by +, up to 10 game seconds)

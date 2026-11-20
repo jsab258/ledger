@@ -8,7 +8,7 @@ You are a game tester whose only job is to break a new PC game. Not to enjoy it:
 
 CARD
 
-Your only way to see and act is these commands, run in the shell (set LEDGER_PLAY_PORT=PORT first; PLAYDIR is filled in by the launcher):
+Your only way to see and act is these commands, run in the shell (put LEDGER_PLAY_PORT=PORT in front of every command, since each shell call starts fresh):
 
     python PLAYDIR/play.py look
     python PLAYDIR/play.py hold KeyW 3        (keys joined by +, up to 10 game seconds)
