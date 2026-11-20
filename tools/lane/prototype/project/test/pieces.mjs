@@ -3,6 +3,7 @@
 // no random numbers but a seed handed in). Its cases are test/cases/<name>.json:
 //   { "piece": "<name>", "cases": [ { "id": "...", "rule": "ER-...", "fn": "fnName", "in": [args], "out": expected } ] }
 // "out" is compared deeply; a number within 1e-9. A case may give "outHas" instead: every key of it must match.
+// A case may give "outBand" as well or instead: { key: [least, most] }, for a result that is a measure.
 // Unreal ports the piece and passes the same cases. Usage: node test/pieces.mjs [name ...]
 import fs from 'fs';
 import path from 'path';
@@ -32,7 +33,8 @@ for (const f of fs.readdirSync(path.join(here, 'cases')).filter((f) => f.endsWit
     const fn = mod.PIECE.fns[c.fn];
     let got, err = null;
     try { got = fn(...JSON.parse(JSON.stringify(c.in))); } catch (e) { err = e; }
-    const ok = !err && fn && ('outHas' in c ? has(got, c.outHas) : same(got === undefined ? null : JSON.parse(JSON.stringify(got)), c.out));
+    const band = (g, b) => Object.keys(b).every((k) => typeof g[k] === 'number' && g[k] >= b[k][0] && g[k] <= b[k][1]);
+    const ok = !err && fn && ('outBand' in c ? band(got, c.outBand) && (!('outHas' in c) || has(got, c.outHas)) : 'outHas' in c ? has(got, c.outHas) : same(got === undefined ? null : JSON.parse(JSON.stringify(got)), c.out));
     if (ok) p++;
     else { bad++; console.log(`FAIL ${set.piece} ${c.id}${c.rule ? ' (' + c.rule + ')' : ''}: ${err ? err.message : 'got ' + JSON.stringify(got)}`); }
   }

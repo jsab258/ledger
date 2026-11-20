@@ -1,0 +1,19 @@
+{ "piece": "debts", "cases": [
+ { "id": "five-names-156", "rule": "DESIGN 15 minute 4:30", "fn": "totalOwed", "in": [{ "a": { "owed": 2200, "st": "open" }, "b": { "owed": 3000, "st": "open" }, "c": { "owed": 1500, "st": "open" }, "d": { "owed": 900, "st": "open" }, "e": { "owed": 8000, "st": "open" } }], "out": 15600 },
+ { "id": "pays-what-the-purse-holds", "rule": "DESIGN 4", "fn": "collect", "in": [{ "owed": 2200, "purse": 400, "st": "open", "paid": 0 }, "ask"], "outHas": { "got": 400, "debt": { "owed": 1800, "st": "part", "purse": 0, "paid": 400 } } },
+ { "id": "rest-stays-on-the-book", "rule": "2.8.2", "fn": "collect", "in": [{ "owed": 1800, "purse": 0, "st": "part", "paid": 400 }, "squeeze"], "outHas": { "got": 0, "told": "squeezed", "debt": { "owed": 1800, "st": "part" } } },
+ { "id": "paid-in-full", "rule": "DESIGN 4", "fn": "collect", "in": [{ "owed": 1500, "purse": 1500, "st": "open", "paid": 0 }, "squeeze"], "outHas": { "got": 1500, "told": "squeezed", "debt": { "owed": 0, "st": "paid" } } },
+ { "id": "struck-out-is-told-too", "rule": "DESIGN 4", "fn": "collect", "in": [{ "owed": 900, "purse": 60, "st": "open", "paid": 0 }, "forgive"], "outHas": { "got": 0, "told": "let it go", "debt": { "st": "forgiven" } } },
+ { "id": "no-second-collection-of-a-paid-debt", "rule": "DESIGN 4", "fn": "collect", "in": [{ "owed": 0, "purse": 50, "st": "paid", "paid": 1500 }, "ask"], "outHas": { "got": 0, "why": "nothing open on this line" } },
+ { "id": "darren-pays-in-what-he-hears", "rule": "2.8.1", "fn": "answer", "in": ["darren", "ask"], "outHas": { "how": "words" } },
+ { "id": "wayne-pays-in-goods", "rule": "2.8.1", "fn": "answer", "in": ["wayne", "ask"], "outHas": { "how": "goods" } },
+ { "id": "lee-stands", "rule": "2.8.1", "fn": "answer", "in": ["lee", "front"], "outHas": { "does": "stands", "how": "fight" } },
+ { "id": "lee-gives-way-with-ron-there", "rule": "A16", "fn": "answer", "in": ["lee", "front", { "crewBeside": true }], "outHas": { "does": "pays" } },
+ { "id": "julie-cannot-pay-mercy", "rule": "2.8.1", "fn": "answer", "in": ["julie", "ask"], "outHas": { "mercy": true } },
+ { "id": "julie-squeezed-is-shame", "rule": "2.8.1", "fn": "answer", "in": ["julie", "front"], "outHas": { "shame": true } },
+ { "id": "dennis-key-one-the-yard-hand", "rule": "ER-JOB-03", "fn": "answer", "in": ["dennis", "front"], "outHas": { "how": "fight" } },
+ { "id": "dennis-key-two-the-hut", "rule": "ER-JOB-03", "fn": "answer", "in": ["dennis", "night"], "outHas": { "how": "break-in" } },
+ { "id": "dennis-key-three-what-he-bought", "rule": "ER-JOB-03", "fn": "answer", "in": ["dennis", "lean", { "knowsWarehouse": true }], "outHas": { "does": "pays" } },
+ { "id": "squeezing-costs-regard", "rule": "DESIGN 4", "fn": "regardAfter", "in": [0.1, "squeezed"], "out": -0.1 },
+ { "id": "letting-go-is-liked", "rule": "DESIGN 4", "fn": "regardAfter", "in": [0.1, "let it go"], "out": 0.35 }
+] }

@@ -1,0 +1,23 @@
+{ "piece": "money", "cases": [
+ { "id": "starts-hard", "rule": "DESIGN 9", "fn": "fresh", "in": [], "outHas": { "pocket": 2350, "tin": 0 } },
+ { "id": "fare-in", "rule": "ER-MONEY-01", "fn": "post", "in": [{ "pocket": 2350, "tin": 0, "sinceWash": 0, "booksOff": 0, "flows": [] }, { "from": "world", "to": "pocket", "pence": 190, "why": "a fare" }], "outHas": { "ok": true, "book": { "pocket": 2540 } } },
+ { "id": "no-overdraw", "rule": "ER-MONEY-01", "fn": "post", "in": [{ "pocket": 100, "tin": 0, "sinceWash": 0, "booksOff": 0, "flows": [] }, { "from": "pocket", "to": "world", "pence": 1800, "why": "the rent" }], "outHas": { "ok": false, "book": { "pocket": 100 } } },
+ { "id": "no-reason-no-flow", "rule": "ER-MONEY-01", "fn": "post", "in": [{ "pocket": 100, "tin": 0, "sinceWash": 0, "booksOff": 0, "flows": [] }, { "from": "world", "to": "tin", "pence": 500, "why": "" }], "outHas": { "ok": false } },
+ { "id": "balances-hold", "rule": "ER-MONEY-01", "fn": "balances", "in": [{ "pocket": 2540, "tin": 6000, "flows": [{ "from": "world", "to": "pocket", "pence": 2350, "why": "a" }, { "from": "world", "to": "pocket", "pence": 190, "why": "b" }, { "from": "world", "to": "tin", "pence": 6000, "why": "c" }] }], "out": { "pocket": 2540, "tin": 6000, "holds": true } },
+ { "id": "balances-catch-money-from-nowhere", "rule": "ER-MONEY-01", "fn": "balances", "in": [{ "pocket": 9999, "tin": 0, "flows": [{ "from": "world", "to": "pocket", "pence": 2350, "why": "a" }] }], "outHas": { "holds": false } },
+ { "id": "cap-no-fares", "rule": "DESIGN 9 the wash", "fn": "washCap", "in": [0], "out": 1000 },
+ { "id": "cap-with-fares", "rule": "DESIGN 9 the wash", "fn": "washCap", "in": [1000], "out": 1800 },
+ { "id": "cap-with-a-front", "rule": "A15", "fn": "washCap", "in": [1000, 1], "out": 5800 },
+ { "id": "wash-fits", "rule": "DESIGN 9", "fn": "wash", "in": [{ "pocket": 0, "tin": 1500, "sinceWash": 1000, "booksOff": 0, "flows": [] }, 1500], "outHas": { "done": true, "warn": false, "over": 0, "book": { "pocket": 1500, "tin": 0, "sinceWash": 0 } } },
+ { "id": "sheila-warns-first", "rule": "ER-MONEY-04", "fn": "wash", "in": [{ "pocket": 0, "tin": 6000, "sinceWash": 0, "booksOff": 0, "flows": [] }, 6000], "outHas": { "done": false, "warn": true, "over": 5000, "book": { "tin": 6000, "booksOff": 0 } } },
+ { "id": "books-off-when-told-to", "rule": "ER-MONEY-04", "fn": "wash", "in": [{ "pocket": 0, "tin": 6000, "sinceWash": 0, "booksOff": 0, "flows": [] }, 6000, 0, true], "outHas": { "done": true, "over": 5000, "book": { "tin": 0, "pocket": 6000, "booksOff": 5000 } } },
+ { "id": "fare-800m", "rule": "DESIGN 5", "fn": "fare", "in": [100], "out": 170 },
+ { "id": "week-costs", "rule": "DESIGN 9", "fn": "weekCosts", "in": [2, 2], "out": 17200 },
+ { "id": "lazy-path-fills-slowly", "rule": "DESIGN 5", "fn": "firmDay", "in": [2], "out": 798 },
+ { "id": "rent-due-friday", "rule": "DESIGN 9", "fn": "rentState", "in": [4, 12, false], "out": "due today" },
+ { "id": "rent-late-from-six", "rule": "DESIGN 9", "fn": "rentState", "in": [4, 18, false], "out": "late" },
+ { "id": "rent-paid", "rule": "DESIGN 9", "fn": "rentState", "in": [5, 9, true], "out": "paid" },
+ { "id": "words-exact", "rule": "ER-MONEY-02", "fn": "words", "in": [2350], "out": "twenty-three pounds fifty" },
+ { "id": "words-about", "rule": "ER-MONEY-02", "fn": "words", "in": [15620], "out": "about one hundred and fifty-six pounds" },
+ { "id": "words-nothing", "rule": "ER-MONEY-02", "fn": "words", "in": [0], "out": "nothing" }
+] }
