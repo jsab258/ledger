@@ -187,6 +187,7 @@
    "line": "8 Nov, models: helpers are the project's agents",
    "by": [
     "tools/settings_check.py::a helper moved to a dearer model is named",
+    "tools/settings_check.py::a catch-all helper is named with its share",
     "tools/fresh_gate.py::MODEL WRONG",
     "tools/token_measures.py::the row's model words fire on Fable",
     "tools/token_measures.py::a helper on an old Fable is named in the row",

@@ -57,6 +57,22 @@ def judge_agents(found, expect):
             for k, v in expect.items() if found.get(k) != v]
 
 
+CATCH_ALL = ("claude", "general-purpose")
+USE_INSTEAD = "reading and extraction: research-reader or extractor (Sonnet); diagnosis: diagnoser; judgement: final-reviewer"
+
+
+def judge_catch_all(who_models, usd):
+    """Advisor's efficiency review, 20 Nov: helpers run as project types, never the catch-all ('claude',
+    'general-purpose'; 8 Nov ruling). who_models: token_audit's {"<type> on <model>": (usd, steps)}.
+    Returns (state, value): WRONG naming steps, dollars and share when any catch-all helper ran."""
+    hit = {k: v for k, v in who_models.items() if k.split(" on ")[0] in CATCH_ALL}
+    if not hit:
+        return "OK", "none"
+    u = sum(v[0] for v in hit.values()); n = sum(v[1] for v in hit.values())
+    return "WRONG", "%d steps US$%.2f (%.1f%% of the day) as %s; use instead: %s" % (
+        n, u, 100 * u / (usd or 1), ", ".join(sorted(hit)), USE_INSTEAD)
+
+
 def judge_drive(letter, free_gb):
     if free_gb < EXPECT["floors_gb"][letter]:
         return "WRONG"
@@ -118,6 +134,15 @@ def checks():
     row("build machine listener", "OK" if v not in ("", "0") else "WRONG", "running" if v not in ("", "0") else "not running")
     bad = judge_agents(agent_lines(os.path.join(REPO, ".claude", "agents")), EXPECT["agents"])
     row("helpers' models and effort", "OK" if not bad else "WRONG", "; ".join(bad) or "as set")
+    try:
+        import datetime
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import token_audit
+        d = datetime.datetime.combine(datetime.date.today(), datetime.time())
+        out = token_audit.audit(d, d + datetime.timedelta(days=1))
+        row("catch-all helpers today", *judge_catch_all(out["whoModels"], out["usd"]))
+    except Exception as e:
+        row("catch-all helpers today", "WARN", "not read: %s" % e)
     for name in ("ANTHROPIC_MODEL", "LEDGER_TALK_CORE_MODEL"):
         row("env " + name, "OK" if not os.environ.get(name) else "WRONG", "set" if os.environ.get(name) else "not set")
     base = os.environ.get("ANTHROPIC_BASE_URL", "")
@@ -156,6 +181,10 @@ def selftest():
     check("its ceiling is the credit left over the days left", abs(over[0][2] - 195.0 / 29) < 1e-9 if over else False)
     check("a day within its ceiling passes", api_days_over(spend, d(2026, 11, 12)) == [])
     check("a day of last month is not judged", api_days_over([{"day": "2026-11-05", "usd": 100.0}], d(2026, 11, 13)) == [])
+    check("no catch-all helper passes", judge_catch_all({"research-reader on claude-sonnet-5-5": (2.0, 60)}, 80.0)[0] == "OK")
+    st, val = judge_catch_all({"claude on claude-opus-5-5": (10.0, 137), "general-purpose on claude-opus-5-5": (1.0, 9),
+                               "research-reader on claude-sonnet-5-5": (2.0, 60)}, 100.0)
+    check("a catch-all helper is named with its share", st == "WRONG" and "146 steps US$11.00 (11.0%" in val and "research-reader" in val)
     print("settings_check selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
