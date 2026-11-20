@@ -12,6 +12,7 @@ A later run continues from the last line of the table: read the newest STORY-BIB
 | 1 | v1 | 7 | 7 | 7 | 5 (mystery; surprise) | no, no, no |
 | 2 | v2 | 8 | 7 | 7 | 5 (the middle, the player) | no, no, no |
 | 3 | v3 | 8 | 8 | 7 | 6 (surprise, all three; structure, the editor) | no, no, no |
+| 4 | v4 | 8 | 7 | 8 | 6 (structure and the middle, the critic; the middle and surprise, the player; surprise, the editor) | no, no, no |
 
 ## Round 1 (20 November, started 15:41)
 
@@ -59,3 +60,19 @@ What the three said, in common:
 6. Sheila must have seen the fare book's free Saturdays. Ten further logic and period faults.
 
 Next: v4 answers each.
+
+## Round 4 (20 November)
+
+What v4 changed: a new turn at the centre (Ada, not Cammack, has the firm's own car burned on Bonfire Night, by Darren, to give Tom a reason; found on Hal's tape); the lie about the importer has three possible authors until two books clear two of them; the offers have hooks (rivals' gifts are called in on the last day); the last Friday is a timed run for papers with a rival's hands in the way; the straight road sells the mooring for capital and defends each rung physically; Alison has a choice and an ending beat; the act closes with all three rivals at one table; fewer names.
+
+Scores by category (critic, player, editor): Tom 8 7 8; cast 8 8 8; antagonists 7 7 7; mystery 7 7 7; opening 8 8 8; structure 6 7 7; middle 6 6 8; surprise 7 6 6; endings 8 8 8; side stories 8 8 8; tone 8 7 8; story and play 8 8 8.
+
+What the three said, in common:
+1. After the midpoint the truth still arrives as people sitting Tom down and telling him. Find it, do not be told it.
+2. The climax: the truth lands on the Monday of the last week and the Friday is errands. The discovery and the chance to alter the book should land together, late, in the hands.
+3. The hours between the middle's scenes are unwritten; the keeper's road needs a ladder as clear as the society's.
+4. The old widow who runs it, the framed loud rival and the guilty dead benefactor are each seen coming; nobody alive can be confronted for the fire.
+5. Ron collected the importer's rent and said nothing for a year: a hole, or his guilt. Agar's ruin and what he wants with the book are unclear. Mickey's motive is small.
+6. Loose threads (June's letter and why she stays; whose packet was dropped; Julie; Garbutt's reason) and eleven logic and period faults.
+
+Next: v5. The last turn moves to a living person the player loves: the line in the fare book for the night of the fire is in Sheila's hand.
