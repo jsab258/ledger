@@ -233,7 +233,7 @@ export function sfx(name, loud) {
       radio();
       break;
     case 'step':
-      burst(G.weather.wet > 0.6 ? 1500 : 900, 1.1, 0.05, 0.05, { bus: world, type: 'bandpass' });
+      burst(G.weather.wet > 0.6 ? 1500 : 900, 1.1, 0.05, Math.max(0.01, (loud == null ? 0.5 : loud) * 0.12), { bus: world, type: 'bandpass' });
       break;
   }
 }
@@ -244,6 +244,17 @@ function radio() {
   burst(2200, 2, 0.06, 0.1, { at: 1.1 });
 }
 const SCALE = [146.83, 174.61, 196, 220, 261.63, 293.66, 349.23, 392, 440]; // D minor, mostly
+// Footsteps: his own are as loud as their reach (listen at three in the morning and you will hear the rule). Stepped
+// with the game, not with the picture, so the mix is the same with the screen off.
+export function footsteps(dt) {
+  const t = G.tom;
+  if (t.inCar || !(t.v > 0.4) || G.story.phase !== 'play' || t.space === 'away') return;
+  stepT -= dt * (t.run ? 3.4 : t.slow ? 1.3 : 2.0);
+  if (stepT <= 0) {
+    stepT = 1;
+    sfx('step', Math.min(1, (t.noiseR || 0) / 10)); // loudness is the reach in metres over ten
+  }
+}
 export function audioStep(dt) {
   const c = A.ctx;
   if (!c) return;
@@ -325,14 +336,6 @@ export function audioStep(dt) {
     if (radioT <= 0) {
       radioT = rnd(9, 22);
       radio();
-    }
-  }
-  // footsteps: listen at three in the morning and you will hear the rule
-  if (!t.inCar && t.v > 0.4 && !title && t.space !== 'away') {
-    stepT -= dt * (t.run ? 3.4 : 2.0);
-    if (stepT <= 0) {
-      stepT = 1;
-      sfx('step');
     }
   }
   // the score: slow pads and a few low notes, more of it at night

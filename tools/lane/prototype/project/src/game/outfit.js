@@ -133,10 +133,11 @@ register({
     }
     const R = P_('ron');
     if (R && x.asking) x.asking = false;
+    G.hooks.closedWhy = (key) => (key === 'carry1' ? { done: 'Handed over at the landing', police: 'Taken by the constable', late: 'The landing shut' }[X('outfit').envelope] || 'Over' : key === 'carrying' ? 'Put down' : null);
     G.hooks.openRows2 = (o) => {
       const t = G.tom,
         y = X('outfit');
-      if (y.ask1 === 'yes' && y.envelope !== 'done') o.push({ key: 'carry1', who: 'ron', what: 'The envelope, to ' + LANDING_WORDS, day: 'Tonight, ten till one', how: 'Ron says' });
+      if (y.ask1 === 'yes' && !y.envelope) o.push({ key: 'carry1', who: 'ron', what: 'The envelope, to ' + LANDING_WORDS, day: 'Tonight, ten till one', how: 'Ron says' });
       if (y.ask1 === 'put') o.push({ key: 'ask1', who: 'ron', what: 'Ron Kirby wants an answer: the envelope for the ferry landing. He is on the rank', day: 'Tonight', how: 'Ron says' });
       if (t.carry || (G.x.crime && G.x.crime.pockets.length)) o.push({ key: 'carrying', who: null, what: 'He carries ' + carriedWords(), how: 'His own pockets' });
     };

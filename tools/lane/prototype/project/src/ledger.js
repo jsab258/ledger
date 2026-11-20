@@ -454,6 +454,10 @@ export function openNow() {
 }
 
 function closedWhy(key) {
+  if (G.hooks.closedWhy) {
+    const w = G.hooks.closedWhy(key); // the whole game's systems say what became of their own lines
+    if (w) return w;
+  }
   const f = G.story.flags,
     j = G.story.job;
   if (key === 'ask1') return f.ask1 === 'yes' ? 'Said yes' : f.ask1 === 'no' ? 'Said no' : 'The time passed';

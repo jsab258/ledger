@@ -78,7 +78,7 @@ import { RULES } from './rules.js';
 import { initStory, newWeek, storyStep, endWeek } from './scenes.js';
 import { passTime } from './work.js';
 import { initTalk, checkTalk, talkLines, talkState, startTalk , talkSay } from './talk.js';
-import { initAudio, audioStep, sfx, voice, MIX } from './audio.js';
+import { initAudio, audioStep, sfx, voice, MIX, footsteps, heard } from './audio.js';
 import { initSave, saveNow, findSave, restore, saveWhere } from './saving.js';
 
 let scene,
@@ -163,6 +163,7 @@ async function boot() {
   }
   Object.assign(G.hooks, {
     sfx,
+    heard,
     shake: (v) => {
       cam.shake = Math.max(cam.shake, v);
     },
@@ -966,6 +967,7 @@ function logic(dt) {
       if (askTick(!ui.modal && !F.on && !G.tom.inCar && !G.story.fare)) showAsk();
     }
     stepPlayer(dt);
+    footsteps(dt);
     const n = G.fast > 1 ? 4 : 1,
       sdt = (dt * G.fast) / n;
     for (let i = 0; i < n; i++) {

@@ -10,7 +10,7 @@ import { G } from '../state.js';
 import { hyp, quid } from '../util.js';
 import { act, logLine } from '../events.js';
 import { pay } from '../money.js';
-import { choose, scene, say } from '../ui.js';
+import { choose, scene, say, sub, after } from '../ui.js';
 import { goToPoint, gameMinPerSec } from '../routines.js';
 import { freeSpot } from '../map.js';
 import { KINDS } from '../kinds.js';
@@ -109,7 +109,8 @@ function beatStep(dt) {
     st = G.story;
   const busy = (st.job && st.job.watch && st.job.watch.st !== 'over') || (st.arrest && st.arrest.st) || S.chase || x.spot;
   const visits = L.onEdge(x.deeds, 'Quay Street', G.t).beatVisitsTimes;
-  const on_ = night() && !busy && !P.dead && (visits > 1 || Math.floor(G.t / 60) % 2 === 0); // every other hour; every hour on a street on edge
+  const on_ = night() && !busy && !P.dead; // the one-shot: he walks Quay Street and the quay all night (on a street on edge he turns sooner: beatVisitsTimes)
+  void visits;
   if (!on_) {
     if (S.beat && !busy) {
       P.override = { where: 'off', act: 'idle' };
@@ -139,6 +140,12 @@ function beatStep(dt) {
     tell(freshLine(BEAT_HEARD, 'The constable. His beat.'), '');
   }
   if (d > T.beatHeardWithinMetres * 1.5) S.beat.warned = false;
+  // his boots on the setts: in the mix at their distance, before he is near enough to challenge (2.6.1)
+  S.stepT = (S.stepT || 0) - dt;
+  if (d < T.beatHeardWithinMetres && P.moving && S.stepT <= 0) {
+    S.stepT = 0.55;
+    if (G.hooks.heard) G.hooks.heard('steps', Math.max(0.05, 0.6 * (1 - d / T.beatHeardWithinMetres)), 'the constable');
+  }
   if (G.t - x.challengedT < T.challengeAgainAfterGameMinutes || G.played - S.heard < T.announcesBeforeChallengeRealSeconds) return;
   const s = sense(P, tomTarget());
   if (!s.see || d > T.challengeWithinMetres) return;
@@ -155,6 +162,11 @@ async function challenge(P, cause, items) {
   P.route = null;
   P.hold = true;
   P.ang = Math.atan2(t.x - P.x, t.z - P.z);
+  // he calls out first, always: heard and shown before anything is put to him
+  sub(cause.backAtTheSpot ? '"You. Stop there."' : '"You, there. Hold on a minute."', 'The constable', 'face', 3);
+  if (G.hooks.sfx) G.hooks.sfx('shout', 0.6);
+  x.calledOutPlayed = G.played;
+  await new Promise((res) => after(T.callsOutBeforeHeActsRealSeconds, res));
   const weak = !cause.weaponShown && !cause.bloodied && !items.some((i) => i.unlawful) && !t.carry;
   const bought = x.bought.harker && x.bought.harker.paid;
   const i = await scene(() => choose('pc', cause.backAtTheSpot ? '"Back for another look, are we? Stand there. What have you got on you?"' : freshLine(BEAT_STOPS, '"You again. Pockets, please."'), ['Stand and be searched.', 'Run.', 'A word.']));
@@ -288,7 +300,7 @@ function watchedStep() {
     write('Police tape where it happened. A detective comes for that, in the morning.', { key: 'tape' + w.e, how: 'Saw it himself', ev: w.e });
   }
   const P = P_('pc');
-  if (t.inCar || !P || P.gone || P.space !== 'street' || G.t - x.challengedT < T.challengeAgainAfterGameMinutes) return;
+  if (t.inCar || !P || P.gone || P.space !== 'street' || G.t - x.challengedT < T.backAtTheSpotCallAfterGameMinutes) return;
   const s = sense(P, tomTarget());
   if (!(s.see || inView(P, T.challengeWithinMetres)) || hyp(P.x, P.z, t.x, t.z) > T.challengeWithinMetres) return;
   const c = L.challenge({ trespassing: true }); // back at the spot is cause enough

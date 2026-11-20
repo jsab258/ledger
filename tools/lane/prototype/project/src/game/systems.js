@@ -4,6 +4,7 @@ import './feel.js';
 import './hour1.js';
 import './book.js';
 import './outfit.js';
+import './carry.js';
 import './foot.js';
 import './fightx.js';
 import './cars.js';
