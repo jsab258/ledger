@@ -386,7 +386,7 @@ Small faults the summariser found, to mend in M2: where a late arrival with her 
 
 Next: M2 answers each.
 
-## Round M2 (20 November, 22:50 to 23:20)
+## Round M2 (20 November, 22:47 to 22:58)
 
 Table line: | M2 | STORY-BIBLE-M2.md | 80, 80, 80; 8, 8, 9 | RDR2: 75, 75, 75; 7, 7, 7 | 7 against 8; NO, about 65% sure |
 
@@ -405,7 +405,7 @@ Also his note on method: the bible is written directly to the ruler, so the page
 
 Two rounds have not moved the fourth reader (NO at 70%, 65%, 65%), so by the order's rule the method changes for M3. Not another answer to a list: the centre is moved onto the lead. In the fifth week Tom himself drives men to a job that goes wrong and has to choose, with the wheel in his hands, whether to go or go back: Sheila's night, lived by the player a year and six days on. The next night he writes his own line in the fare book, and the miles on the dial say how far he went before he turned. The inspector then reads two nights, and Sheila will put her name to hers only when Tom has put his to his own. The car theft, the crash, Agar's fare and one of Thursday's doors are cut to make the room.
 
-## Round M3 (20 November, 22:58 to 23:15): the centre moved onto the lead
+## Round M3 (20 November, 22:58 to 23:12): the centre moved onto the lead
 
 Table line: | M3 | STORY-BIBLE-M3.md | 80, 80, 80; 8, 9, 9 | RDR2: 75, 75, 75; 7, 7, 8 | 7 against 8; NO, about 65% sure ("a mendable no") |
 
@@ -425,7 +425,7 @@ The fourth reader (REVIEW-M3-fourth-games-writer.md): the page 7 against 8, and 
 9. Danny is always waiting; Shiner is always on hand.
 His six changes: every road gets its own night, and the plan changes who is caught and where the gap opens; a third real suspect, and Ron's reason found by the hands; Tom in the room when the Bishop dies, and the one who brings Ron and Sheila face to face; signing costs him the wheel (charged, he loses his licence, and in the best ending Ron drives and Tom rides); one authority and one last drive; a crime with his own hands every week from the second.
 
-## Where the measure stopped (20 November, 23:20)
+## Where the measure stopped (20 November, 23:15)
 
 Not exceptional by the measured bar. In every round the three readers put The Passenger at or above the best reference on the checklist and overall with no fault item failed; in every round the fourth reader, shown the whole bible and told it was a plan, said no, at about 70%, 65%, 65% and 65%. Three changes of shape (the second friendship and the seen turn; the default flaw, the death and the smaller cast; the lead's own night) raised the three readers' marks a little (M3's 8, 9, 9 is the best of the measured rounds) and did not move the fourth reader.
 

@@ -1,6 +1,6 @@
 # The story measure: report
 
-For Jafar. 20 November 2026, 23:20.
+For Jafar. 20 November 2026, 23:15.
 
 What the ruler is. Fourteen pass-or-fail tests worth 80 points, each a thing players themselves name when they write about story in Steam reviews, and each named in at least five of eight games (KCD2, GTA V, RDR2, Sleeping Dogs, GTA IV, L.A. Noire, Hitman, Watch Dogs: Legion). The largest: characters worth caring about. A reader must quote the line that shows each pass.
 
