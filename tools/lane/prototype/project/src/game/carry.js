@@ -71,7 +71,7 @@ function handOver() {
     x.cabSeenBy = saw.map((P) => P.id);
     for (const P of saw) P.mind.look = Math.max(P.mind.look || 0, 2.5);
     noted(saw.length > 1 ? "Mickey's cab was seen at the landing, he thinks: the sign on its roof says whose it is." : "The man at the landing has seen Mickey's cab there: the sign on its roof says whose it is.");
-    write("Took the cab to the landing. Quick, and nobody looks twice at a cab; but whoever saw it there saw Mickey's name on its roof.", { key: 'carry1-cab', how: 'His own reading' });
+    write("Took the cab to the landing: quick, but whoever saw it there saw Mickey's name on its roof.", { key: 'carry1-cab', how: 'His own reading' });
   }
 }
 // The envelope is gone and not to the landing: the ask has failed, and goes on as a state the outfit's man hears of.

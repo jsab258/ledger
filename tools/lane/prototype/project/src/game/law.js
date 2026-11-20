@@ -120,7 +120,9 @@ function beatStep(dt) {
   }
   if (!S.beat) {
     S.beat = { leg: 0, warned: false };
-    Object.assign(P, { override: null, gone: false, space: 'street', awake: true, x: T.beatEnds[0][0], z: T.beatEnds[0][1], route: null, hold: false });
+    // he comes on at the top of his beat; a constable already out on the street walks from where he stands
+    if (P.gone || P.space !== 'street') Object.assign(P, { x: T.beatEnds[0][0], z: T.beatEnds[0][1] });
+    Object.assign(P, { override: null, gone: false, space: 'street', awake: true, route: null, hold: false });
     goToPoint(P, T.beatEnds[1][0], T.beatEnds[1][1], T.beatWalkMetresPerSecond);
   }
   const wg = x.watched.find((w) => w.untilT > G.t),
@@ -203,8 +205,18 @@ function chaseStep(dt) {
   const seeable = t.space === 'street' && !t.inCar,
     d = hyp(P.x, P.z, t.x, t.z),
     los = seeable && G.env.los(P.x, P.z, t.x, t.z);
+  // where sight broke he does not know which way the man went: at that place he checks, a breath, before he runs on
+  if (los && c.unseen > 0.6) c.pause = T.constableLooksAboutRealSeconds;
   c.unseen = los ? 0 : c.unseen + dt;
-  if (los && (!P.route || c.seconds % 1 < dt)) goToPoint(P, t.x, t.z, T.constableRunsMetresPerSecond);
+  if (los || c.lx === undefined) (c.lx = t.x), (c.lz = t.z); // the last place the constable saw him: all he knows
+  if (c.pause > 0) {
+    c.pause -= dt;
+    P.route = null;
+    P.moving = false;
+    P.ang = Math.atan2(t.x - P.x, t.z - P.z);
+  } else if (los && (!P.route || c.seconds % 1 < dt))
+    // a big man in a greatcoat: he runs hard for a short while, and then he is blown and it shows in his pace
+    goToPoint(P, t.x, t.z, c.seconds < T.constableBlownAfterRealSeconds ? T.constableRunsMetresPerSecond : T.constableBlownMetresPerSecond);
   const r = EYES.fns.chase({ metres: seeable ? d : 99, unseenSeconds: c.unseen, seconds: c.seconds });
   if (r.st === 'on') return;
   S.chase = null;
@@ -216,8 +228,11 @@ function chaseStep(dt) {
     tell('A hand on his shoulder. "Nobody runs from me for nothing."', 'PC Ibbotson');
   } else {
     // he walks to the last place he saw him and looks round for about a game hour: the law stays near (A3)
-    x.watched.push({ x: Math.round(t.x), z: Math.round(t.z), untilT: G.t + RULES.game.foot.constableLooksRoundGameMinutes, why: 'the constable lost him here' });
-    tell('He has lost him. The constable will stand about that corner for an hour.', '');
+    x.watched.push({ x: Math.round(c.lx), z: Math.round(c.lz), untilT: G.t + RULES.game.foot.constableLooksRoundGameMinutes, why: 'the constable lost him here' });
+    tell('No boots behind him now. He has lost him.', '');
+    // and he does walk there: to the last place he saw him, to stand and look about for the hour
+    if (!x.spot) x.spot = { x: Math.round(c.lx), z: Math.round(c.lz), e: null, st: 'going', arriveByT: G.t + 30, staysUntilT: null, tape: false, torch: true, seen: true, speed: T.officerToTheSpotMetresPerSecond };
+    P.route = null;
     write('Ran from the constable on Quay Street and lost him. He saw a man; whether he saw a face is another thing.', { how: 'Did it' });
     ellisEvent('talk');
   }
@@ -290,7 +305,7 @@ function spotStep() {
 function watchedStep() {
   const x = X('law'),
     t = G.tom;
-  if (t.space !== 'street' || G.paused) return;
+  if (t.space !== 'street' || G.paused || S.chase) return; // a man he is already running after is not called to again
   const [tx, tz] = tomXZ();
   const w = watchedNear(tx, tz);
   if (!w) return;
@@ -359,6 +374,7 @@ function carChaseStep(dt) {
   if (c.trail.length > 4000) c.trail.splice(0, 2000);
   const los = G.env.los(back[0], back[1], tx, tz);
   c.unseen = los ? 0 : c.unseen + dt;
+  if (los || c.lx === undefined) (c.lx = t.x), (c.lz = t.z); // the last place the constable saw him: all he knows
   c.slow = G.tom.inCar && Math.abs(G.car.v) < T.carChaseCaughtBelowMetresPerSecond ? c.slow + dt : 0;
   let st = EYES.fns.chase({ metres: los ? T.carChaseFollowsMetresBehind : 40, unseenSeconds: c.unseen, seconds: c.seconds, fromBehind: false }).st;
   if (c.slow >= T.carChaseCaughtAfterRealSeconds && los) st = 'caught';

@@ -60,7 +60,10 @@ export const TUNE = {
   challengeWithinMetres: 12,
   challengeAgainAfterGameMinutes: 45,
   searchWithinMetres: 2.5,
-  constableRunsMetresPerSecond: 5.2,
+  constableBlownAfterRealSeconds: 12,
+  constableBlownMetresPerSecond: 3.2,
+  constableLooksAboutRealSeconds: 1.5,
+  constableRunsMetresPerSecond: 4.2, // a man in a greatcoat and boots: never faster than Tom can run on a straight (1.5.4)
   patrolSeesWithinMetres: 45,
   patrolLoopRealSeconds: 240,
   patrolLoop: [[3.2, 30], [3.2, -80], [3.2, -190], [3.2, -80], [3.2, 30], [80, 46.6], [-40, 46.6]],

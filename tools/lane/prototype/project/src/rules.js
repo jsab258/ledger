@@ -74,7 +74,7 @@ export const RULES = {
   noise: {
     // how far a sound carries: its base radius, times the hour, less rain
     standingMetres: 0.5,
-    walkingMetres: 5,
+    walkingMetres: 1.8, // the one-shot: a footstep at three in the morning carries about 3.6 m (twice the base in the small hours)
     runningMetres: 12,
     cabIdlingMetres: 8,
     cabAddedAtSpeedMetres: 22,

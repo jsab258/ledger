@@ -334,7 +334,10 @@ export async function open(o = {}) {
         replan();
         let stuck = 0, lx = t.x, lz = t.z, side = 0, sideT = 0, tries = 0;
         const angd = (a, b) => { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
-        const done = await S.run(max, () => hyp(t.x, t.z, x, z) <= near || (opt.until && (0, eval)('(' + opt.until + ')')()), () => {
+        let held = 0; // the game stopped under him (a box has opened): after a second and a half the walk is given up
+        const done = await S.run(max, () => held > 90 || hyp(t.x, t.z, x, z) <= near || (opt.until && (0, eval)('(' + opt.until + ')')()), () => {
+          if (G.paused) { held++; return; }
+          held = 0;
           // a corner is done with when he stands on it, or can already walk straight to the one after it
           while (pts.length > 1 && (hyp(t.x, t.z, pts[0][0], pts[0][1]) < 0.2 || (S.frameNo % 4 === 0 && hyp(t.x, t.z, pts[0][0], pts[0][1]) < 1.5 && S.clearWay(t.x, t.z, pts[1][0], pts[1][1])))) pts.shift();
           if (legs.length > 1 && hyp(t.x, t.z, legs[0][0], legs[0][1]) < 2.2) { legs.shift(); replan(); }
@@ -362,7 +365,7 @@ export async function open(o = {}) {
           if (sideT > 0) { sideT--; S.kd(side > 0 ? 'KeyD' : 'KeyA'); S.ku('KeyW'); if (!sideT) { S.ku('KeyD'); S.ku('KeyA'); } }
         });
         S.ku('KeyW'); S.ku('KeyS'); S.ku('ShiftLeft'); S.ku('KeyZ'); S.ku('KeyA'); S.ku('KeyD'); S.lookEnd();
-        return done;
+        return held > 90 ? -1 : done;
       }, { x, z, opt: Object.assign({}, opt, { until: opt.until ? opt.until.toString() : null }) });
       await P.frames(2);
       return r < 0 ? -1 : r / FPS;
@@ -475,6 +478,7 @@ export async function run(id, o, play, variants = ['']) {
   const twice = !process.env.LEDGER_STORY_ONCE;
   let port = (o.port || 8950);
   for (const variant of variants) {
+    if (process.env.LEDGER_STORY_ONLY && variant !== process.env.LEDGER_STORY_ONLY) continue; // one way alone, when mending it
     const digests = [];
     for (let n = 1; n <= (twice ? 2 : 1); n++) {
       const P = await open(Object.assign({}, o, { port: ++port, from: typeof o.from === 'function' ? o.from(variant) : o.from }));

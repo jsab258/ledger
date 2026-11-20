@@ -219,6 +219,6 @@ await run('S02', { from: 'S01' }, async (P, t, n) => {
   await drive([[-118, 48.4], [-106, 46.6], [-60, 46.6], [-9, 46.6], [-3.2, 40], [-3.2, 14], [-3.2, -40], [-3.2, -66]], "to the priest's house");
   await P.until(() => !LEDGER.G.story.fare, 8);
   const lamps1 = await P.world(() => LEDGER.lampsOn());
-  t.ok(lamps0 < 0.5 && lamps1 > lamps0 + 0.4, 'dusk falls and the lamps come on while he drives', [lamps0, lamps1, await P.clock()]);
+  t.ok(lamps0 < 0.8 && lamps1 >= 0.99, 'dusk falls and the lamps come on while he drives', [lamps0, lamps1, await P.clock()]);
   t.note('lamps', [lamps0 < 0.5, lamps1 > 0.5]);
 });

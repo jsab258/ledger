@@ -21,7 +21,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
   const outYard = async () => { const m = await local('mickeys', 6.3, 1.5); await go(m[0], m[1], { near: 0.7 }); await P.use(/yard/); await P.until(() => LEDGER.G.tom.space === 'street', 5); };
   // home by the yard, up the stair, to bed; the night is skipped and the game saves
   const homeAndSleep = async (name) => {
-    await go(25, 42.5); await go(22.4, 36.6, { near: 0.8 }); await P.face(20.9, 36); await P.secs(0.3);
+    await go(22.8, 42.6); await go(22.8, 38.5); await go(21.8, 36.1, { near: 0.45 }); await P.face(20.9, 36); await P.secs(0.3);
     s = await P.screen();
     t.ok(s.prompts.some((p) => /Back door of Mickey/.test(p)), 'he comes home by the yard: the back door has its prompt', s.prompts);
     await P.use(/Back door/); await P.until(() => LEDGER.G.tom.space === 'mickeys', 5);
@@ -33,8 +33,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     s = await P.screen();
     t.ok(s.prompts.some((p) => /bed/i.test(p)), 'the bed in the flat has its prompt', s.prompts);
     const before = await P.clock();
-    await P.use(/bed/);
-    await P.pick(/Sleep till morning/);
+    await P.use(/Sleep till morning/);
     const woke = await P.until(() => !LEDGER.G.paused && (LEDGER.G.t % 1440) / 60 >= 6.9 && (LEDGER.G.t % 1440) / 60 < 8 && !document.getElementById('fade').classList.contains('on'), 30);
     const after = await P.clock();
     t.ok(woke >= 0 && Math.floor(after / 1440) === 1 && after - before > 180, 'sleeping skips the night: it is Tuesday morning', [before, after, woke]);
@@ -52,12 +51,13 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     t.ok(said >= 0, 'at the landing a man in the dark says "Mickey\'s?"', (await P.screen()).subs);
     s = await P.screen();
     t.ok(s.prompts.some((p) => /Hand the envelope/.test(p)), 'the hand-over has its prompt', s.prompts);
+    const tin0 = await P.world(() => LEDGER.G.money.dirty);
     await P.use(/Hand the envelope/);
     await P.secs(0.8);
     const lines = (await P.subsLog()).map((x) => x.s);
     t.ok(lines.some((x) => /fifteen|15 pounds/.test(x) && /that's yours/.test(x)) && (await P.world(() => LEDGER.game.x().crime.pockets.length)) === 0, 'the hand-over plays and his cut comes back', lines.slice(-2));
     const money = await P.ledger('money');
-    t.ok(/The tin has about £15 in it/.test(money), 'the cut is in the Money page in words, under the tin', money.split('\n').slice(8, 10));
+    t.ok(new RegExp('The tin has about £' + (tin0 + 1500) / 100 + ' in it').test(money), 'the cut is in the Money page in words, under the tin', money.split('\n').slice(8, 10));
     await P.ledgerClose();
     const day = await P.ledger('day book');
     t.ok(/Handed the envelope to the man at the ferry landing/.test(day) && /His cut of the first envelope: £15/.test(day), 'the hand-over and the cut each have their Ledger line', day.split('\n').filter((l) => /envelope/i.test(l)).slice(0, 3));
@@ -125,10 +125,11 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     t.ok((await P.heads()).length === 0 && (await callsSoFar()).length === calls0 && !(await P.screen()).dialog, 'waiting with its sign lit, the cab draws no look and no challenge', [await P.heads(), await pc()]);
     await P.use(/Get out/); await P.until(() => !LEDGER.G.tom.inCar, 4);
     await handOver('cab');
+    await P.until(() => window.__S.notedLog.some((b) => /Mickey's cab/.test(b.s)), 25);
     const beliefs = await P.beliefs();
     t.ok(beliefs.some((b) => /Mickey's cab/.test(b.s) && /landing/.test(b.s)), "whoever sees it at the landing has seen the firm's car: the low line says so", beliefs.slice(-2));
     const day = await P.ledger('day book');
-    t.ok(/Took the cab to the landing/.test(day) && /Mickey's name on its roof/.test(day), 'and the Ledger has it', day.split('\n').filter((l) => /cab/i.test(l)).slice(0, 2));
+    t.ok(/Took the cab to the landing: quick, but whoever saw it there saw Mickey's name on its roof/.test(day), 'and the Ledger has it', day.split('\n').filter((l) => /cab/i.test(l)).slice(0, 2));
     await P.ledgerClose();
     const c1 = await P.car();
     await go(c1.x - 1.6, c1.z + 0.6, { near: 0.9 }); await P.secs(0.3);
@@ -144,18 +145,19 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     await outYard();
     // out of the yard at a walk (his ordinary footsteps), then slowly along the dark side of the quay by the water
     await P.world(() => { const S = window.__S; S.minPc = 99; S.lit = 0; S.eachs.dk = () => { const Q = LEDGER.G.people.pc, t = LEDGER.G.tom; if (!Q.gone && Q.space === 'street') S.minPc = Math.min(S.minPc, Math.hypot(Q.x - t.x, Q.z - t.z)); if (t.space === 'street' && t.light > 0.5) S.lit++; }; });
-    const m0 = await P.world(() => LEDGER.mix.length);
-    await go(24.5, 39); await go(26, 44);
-    const normal = await P.world((m0) => LEDGER.mix.slice(m0).filter((m) => m.n === 'step').map((m) => m.loud), m0);
-    const m1 = await P.world(() => LEDGER.mix.length);
+    // his footsteps as the sound record has them, each over the hour's own factor (so two stretches can be compared)
+    const stepsOf = async (walk) => { const m = await P.world(() => LEDGER.mix.length), f0 = await P.world(() => LEDGER.noiseTimes()); await walk(); const f1 = await P.world(() => LEDGER.noiseTimes()); const a = await P.world((m) => LEDGER.mix.slice(m).filter((q) => q.n === 'step').map((q) => q.loud), m); return { a, f: Math.abs(f0 - f1) < 0.04 * f0 ? (f0 + f1) / 2 : 0 }; };
+    const med = (a) => a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)];
+    await go(24.5, 39);
+    const normal = await stepsOf(() => go(26, 44));
     const w0 = await P.played();
+    const slow = await stepsOf(() => go(26, 50, { slow: true }));
     await go(26, 56.5, { slow: true });
     const at = await man();
     await go(at[0] + 14, 56.8, { slow: true, maxSecs: 150 });
-    const slow = await P.world((m1) => LEDGER.mix.slice(m1).filter((m) => m.n === 'step').map((m) => m.loud), m1);
-    const med = (a) => a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)];
-    t.ok(normal.length > 3 && slow.length > 5 && Math.abs(med(slow) / med(normal) - 0.5) < 0.08, 'walking slowly (Z held) his footsteps carry half as far, and are heard half as loud', [med(normal), med(slow), normal.length, slow.length]);
-    t.ok(Math.abs(med(normal) * 10 - 3.6) < 0.5, 'in the small hours a normal footstep carries about 3.6 m', med(normal) * 10);
+    const small = await P.world(() => LEDGER.rules.noise.deadOfNightTimes);
+    t.ok(normal.f && slow.f && normal.a.length > 2 && slow.a.length > 3 && Math.abs(med(slow.a) / slow.f / (med(normal.a) / normal.f) - 0.5) < 0.06, 'walking slowly (Z held) his footsteps carry half as far, and are heard half as loud', [med(normal.a), normal.f, med(slow.a), slow.f, normal.a.length, slow.a.length]);
+    t.ok(normal.f && Math.abs((med(normal.a) * 10 / normal.f) * small - 3.6) < 0.3, 'in the small hours (and dry) a normal footstep carries about 3.6 m', [(med(normal.a) * 10 / normal.f) * small, normal.f, small]);
     await handOver('dark');
     const took = (await P.played()) - w0;
     const seen = await P.world(() => [window.__S.minPc, window.__S.lit]);
@@ -170,11 +172,11 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     const where = await P.tom();
     await P.pick(/Run/);
     await P.secs(0.2);
-    // he runs: back along the quay, into Mickey's yard and up the lane behind it
+    // he runs: back along the quay, through Mickey's yard, up the back lane and round the corner into Chapel Lane
     const c0 = await P.played();
     await P.world(() => { const S = window.__S; S.ch = { last: null, n: 0 }; S.eachs.ch = () => { const x = LEDGER.game.law.x ? LEDGER.game.law.x() : LEDGER.game.x().law; S.ch.n = x.chases.length; S.ch.last = x.chases[x.chases.length - 1] || null; }; });
     const over = () => window.__S.ch && window.__S.ch.n > 0;
-    for (const [x, z] of [[24, 43], [25, 36], [29, 27], [29, 20]]) { await P.walkTo(x, z, { run: true, maxSecs: 40, until: over }); if (await P.world(over)) break; }
+    for (const [x, z] of [[22.8, 42.6], [24.5, 37], [28.8, 34], [29, 18], [28.6, 12], [29.5, -8], [29.5, -16], [14, -18], [4, -18]]) { await P.walkTo(x, z, { run: true, maxSecs: 40, until: over }); if (await P.world(over)) break; }
     if (!(await P.world(over))) await P.until(over, 60);
     const chase = await P.world(() => window.__S.ch.last);
     const secs = (await P.played()) - c0;
@@ -193,19 +195,24 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     t.ok(spot && Math.hypot(still.x - spot[0], still.z - spot[1]) < 12, 'and looks round there', [spot, still]);
     // walking back past that spot within the hour brings a fresh call
     const n0 = (await callsSoFar()).length;
-    await P.walkTo(spot[0], spot[1], { maxSecs: 60, near: 4, until: called });
-    await P.until(() => !!document.querySelector('#dialog:not(.hidden)'), 6);
+    // he comes back in sight of the man standing there, and stops well short of him
+    const nearPc = () => { const Q = LEDGER.G.people.pc, m = LEDGER.G.tom; return !!document.querySelector('#dialog:not(.hidden)') || [...document.querySelectorAll('#subs .s')].some((e) => /^THE CONSTABLE/.test(e.innerText)) || (Math.hypot(Q.x - m.x, Q.z - m.z) < 10 && LEDGER.map.clear(m.x, m.z, Q.x, Q.z)); };
+    await P.walkTo(spot[0], spot[1], { maxSecs: 60, near: 4, until: nearPc });
+    await P.until(() => !!document.querySelector('#dialog:not(.hidden)'), 14);
     const again = await callsSoFar();
     t.ok(again.length > n0 && /Stop there/.test(again[again.length - 1].s), 'walking back past that spot brings a fresh call', again.slice(-2));
     await P.pick(/Run/);
     await P.world(() => { window.__S.ch.n0 = window.__S.ch.n; });
     const over2 = () => window.__S.ch.n > window.__S.ch.n0;
-    for (const [x, z] of [[25, 36], [29, 27], [29, 12]]) { await P.walkTo(x, z, { run: true, maxSecs: 40, until: over2 }); if (await P.world(over2)) break; }
+    const c2 = await pc(), m2 = await P.tom();
+    // away from him, whichever side he stands: down the lane and out along the quay, or up it and round into Chapel Lane
+    const away = c2.z < m2.z ? [[29, 30], [28.6, 39], [29, 42.6], [45, 43], [70, 43], [100, 43]] : [[29, 18], [28.6, 12], [29.5, -8], [29.5, -16], [14, -18], [4, -18], [3.4, 12], [3.4, 41.5]];
+    for (const [x, z] of away) { await P.walkTo(x, z, { run: true, maxSecs: 40, until: over2 }); if (await P.world(over2)) break; }
     if (!(await P.world(over2))) await P.until(over2, 60);
     const chase2 = await P.world(() => window.__S.ch.last);
     t.ok(chase2 && chase2.st === 'lost' && chase2.seconds <= 90, 'run from again, he is lost again inside 90 seconds', chase2);
-    // then round by the dark side of the quay to the landing, while the constable stands about the yard
-    await go(29, 30); await go(27, 44); await go(27, 56.5, { slow: true });
+    // then along the dark side of the quay to the landing, the constable left behind up the town
+    await go(-10, 56.5, { maxSecs: 120 });
     const at2 = await man();
     await go(at2[0] + 14, 56.8, { maxSecs: 150 });
     await handOver('runs');

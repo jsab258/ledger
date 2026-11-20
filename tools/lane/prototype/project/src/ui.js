@@ -155,10 +155,11 @@ export function hud(dt) {
   // at most; when more than one thing is waiting they are said as a count.
   if (ui.notes.length && !ui.modal && !ui.subs.length && G.played >= (ui.noteHold || 0)) {
     const n = ui.notes.length,
-      text = n > 1 ? `Noted in the Ledger: ${n} things` : ui.notes[0],
+      text = ui.notes[0], // the one-shot: each belief is said in its own words, one at a time, never as a count
       el = $('noted'),
       ob = $('obj');
-    ui.notes.length = 0;
+    ui.notes.shift();
+    if (ui.notes.length > 5) ui.notes.splice(0, ui.notes.length - 5); // a long queue keeps its newest
     el.textContent = text;
     el.style.bottom = (ob && !ob.classList.contains('hidden') ? ob.offsetHeight : 0) + 34 + 'px';
     el.classList.add('on');
@@ -167,7 +168,7 @@ export function hud(dt) {
       if (ui.noteN === shown) el.classList.remove('on');
     });
     ui.noteHold = G.played + NOTED.notedLineAtMostEveryRealSeconds; // seconds of play: the game is stopped while a box is open
-    if (ui.hooks.notedShown) ui.hooks.notedShown(n, text);
+    if (ui.hooks.notedShown) ui.hooks.notedShown(1, text);
   }
   if (ui.subs.length && $('noted').classList.contains('on')) $('noted').classList.remove('on'); // a subtitle has come up: the line gives way
   // subtitles ride above the talk box and the written line, so nothing in them is ever covered
