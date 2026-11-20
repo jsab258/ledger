@@ -133,7 +133,11 @@ export function fareStep(dt) {
       st.fareCool = (st.fareCool ?? FARE.firstOfferAfterRealSeconds) - dt;
       if (st.fareCool <= 0) {
         st.fareCool = rnd(FARE.nextOfferAfterRealSecondsAtLeast, FARE.nextOfferAfterRealSecondsAtMost);
-        fareOffer();
+        // the one-shot: fares are few and chosen, each a person with something going on (game/fares.js)
+        if (G.hooks.fareNext) {
+          const next = G.hooks.fareNext();
+          if (next) fareOffer(next);
+        } else fareOffer();
       }
     }
     return;
@@ -174,6 +178,7 @@ export function fareStep(dt) {
       );
       if (!P.anon) meet(P);
       fareUI();
+      if (G.hooks.emit) G.hooks.emit('fare.pickup', { f, P });
     }
   } else if (f.st === 'carry') {
     P.x = c.x;
@@ -200,6 +205,9 @@ async function fareDone(f, P, D) {
   }
   let paid = f.pay;
   G.money.fareCount++;
+  // the one-shot: a fare with a wrinkle settles its own ending (a runner, a wait, a hurry): game/fares.js
+  const wr = G.hooks.fareDrop ? await G.hooks.fareDrop(f, P, D) : null;
+  if (wr && wr.paid !== undefined) paid = wr.paid;
   if (!P.anon) {
     let free = false;
     if (P.id === 'julie' && G.debts.julie.st === 'open') {
@@ -246,12 +254,13 @@ async function fareDone(f, P, D) {
     if (free) {
       paid = 0;
       act('free_ride', { target: P.id, dest: 'to ' + D.n });
-    } else act('fare', { target: P.id, dest: 'to ' + D.n });
+    } else if (!(wr && wr.noFareAct)) act('fare', { target: P.id, dest: 'to ' + D.n });
     P.mind.fam = clamp(P.mind.fam + FARE.passengerFamiliarityGain, 0, 1);
     P.mind.regard = clamp(P.mind.regard + FARE.passengerRegardGain, -1, 1);
   }
+  if (G.hooks.emit) G.hooks.emit('fare.done', { f, P, paid });
   if (paid) {
-    earn(paid);
+    earn(paid, false, 'a fare');
     G.money.fares += paid;
     G.money.sinceWash += paid;
     sub(`${money(paid)} in the book.`, '', 'over', 2.5);

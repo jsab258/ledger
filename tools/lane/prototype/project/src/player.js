@@ -588,7 +588,10 @@ export function stepCamera(dt) {
   const t = G.tom,
     room = t.space !== 'street' ? ROOMS[t.space] : null;
   cam.idle += dt;
-  if (t.inCar) {
+  if (t.inCar && keys.KeyB) {
+    cam.yaw = G.car.ang + Math.PI; // the one-shot: B held at the wheel looks back through the rear window (A24)
+    cam.idle = 0;
+  } else if (t.inCar) {
     if (cam.idle > 1.2) cam.yaw += clamp(angDiff(cam.yaw, G.car.ang), -2.2 * dt, 2.2 * dt);
   } else if (!room && cam.idle > 1.6 && t.v > 0.5 && !F.on)
     cam.yaw +=

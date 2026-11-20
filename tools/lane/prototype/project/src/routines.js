@@ -574,6 +574,11 @@ function walkRoute(P, dt, near) {
 
 // ---------- the anonymous crowd ----------
 function crowdTarget() {
+  const base = crowdByHour();
+  // the one-shot: the weather and the town's calendar change who is out, the same way every time (game/life.js)
+  return G.hooks.crowd ? G.hooks.crowd(base) : base;
+}
+function crowdByHour() {
   const h = hour();
   return h < CROWD.smallHoursUntilHour
     ? 1

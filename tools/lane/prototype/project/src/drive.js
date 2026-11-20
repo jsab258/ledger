@@ -284,6 +284,7 @@ export function stepCar(dt, inp) {
         worst = c.dmg >= DRIVING.damageAtMost;
       c.dmg = Math.min(DRIVING.damageAtMost, c.dmg + 1);
       act('crash', { noiseR: DRIVING.crashNoiseCarriesMetres });
+      if (G.hooks.emit) G.hooks.emit('cars.crash', { speed: sp, what }); // the whole game: from about 35 mph it will not drive on (game/cars.js)
       if (G.hooks.sfx) G.hooks.sfx('crash');
       if (G.hooks.shake) G.hooks.shake(0.5);
       // round 6: said in words at once, with what it has done to the car (ER-CORE-02, ER-DRIVE-08)
@@ -329,6 +330,7 @@ export function stepCar(dt, inp) {
         'over',
         DRIVING.runDownLineShowsRealSeconds,
       );
+      if (G.hooks.emit) G.hooks.emit('cars.hit', { P, speed: Math.abs(c.v) }); // the whole game: the choice is put at once (game/cars.js)
       c.v *= DRIVING.slowsToShareAfterHitting;
       if (G.hooks.sfx) G.hooks.sfx('hit');
       if (!P.anon) {

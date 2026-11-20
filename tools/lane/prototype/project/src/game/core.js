@@ -19,7 +19,8 @@ import { G } from '../state.js';
 import { advanceTo } from '../work.js';
 import { act } from '../events.js';
 import { note } from '../ledger.js';
-import { sub } from '../ui.js';
+import { sub, ui } from '../ui.js';
+import { F } from '../fight.js';
 import { hyp } from '../util.js';
 
 export const SYSTEMS = [];
@@ -63,7 +64,9 @@ const each = (name, ...a) => {
 export function gameLoaded() {
   ensureX();
   lastMin = Math.floor(G.t);
-  G.hooks.emit = emit; // the older files tell the systems of a thing through this (a beating, a fare's steps)
+  G.hooks.emit = emit;
+  G.hooks.modal = () => ui.modal;
+  G.hooks.fighting = () => F.on; // the older files tell the systems of a thing through this (a beating, a fare's steps)
   for (const s of SYSTEMS) if (s.loaded) guard(s.id + '.loaded', () => s.loaded(G.x[s.id]));
   emit('loaded');
 }

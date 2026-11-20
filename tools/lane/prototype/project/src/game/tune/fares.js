@@ -1,4 +1,66 @@
-// The numbers of the system "fares": plain data, imports nothing. Units in the names, as rules.js.
-export const TUNE = {};
-export const SCHEDULES = {}; // { personId: rows } in the shape of RULES.schedules
-export const PEOPLE = {}; // { personId: numbers } in the shape of RULES.people
+// The numbers and the fares of the system "fares" (DESIGN 5 and his direction on cab fares): few and chosen, two or
+// three an evening; every fare a person with something going on; fares feed the crime (cover, eyes, alibi, risk);
+// no meter, no ratings, no long empty drives; no two fares in a week alike. Plain data, imports nothing.
+export const TUNE = {
+  eveningFromHour: 17,
+  eveningFaresAtMost: 3,
+  dayFaresAtMost: 4,
+  hurryRealSeconds: 75,
+  hurryTipPence: 150,
+  waitRealSeconds: 18,
+  waitWithinMetres: 12,
+  waitPaysPence: 600,
+  parcelPaysPence: 800,
+  talkerSpeaksAfterRealSeconds: 5,
+  talkerSecondLineAfterRealSeconds: 14,
+  runnerBoltsMetres: 3,
+  kinds: { waited_for: [0.4, -0.4, 1], took_parcel: [0.3, -0.3, 1], runner_let_go: [0.1, 0.2, 0], runner_paid: [0.3, -0.2, 0], drove_quiet: [0.05, 0.1, 0] },
+};
+// from: a spot of the map; to: a destination; hours: [from, until) of the day; days: day indexes of the week, or all.
+// wrinkle: talker | parcel | tail | runner | wait | hurry | face | none. Each is written once and never rolled.
+export const FARES = [
+  { id: 'priest', who: 'walsh', from: 'the rank', spot: 'rank2', to: 'chapel', hours: [15, 19], first: true, wrinkle: 'none',
+    way: "Father Walsh for the priest's house. Up Quay Street, over the crossing, past the caff; the chapel with the green door is on your left, his house by the gate with the slippers on the step.",
+    lines: ["Your uncle drove me this road a hundred times. He never once let me pay.", "Sit up straight in that seat, Thomas. The street is looking at who is in it."] },
+  { id: 'brenda_dawn', who: 'brenda', from: 'the corner by her shop', spot: 'pave', to: 'fishdock', hours: [5, 8], wrinkle: 'talker',
+    way: 'Brenda Laverack for the fish dock. Down to the quay, turn left, along past the yard; the stacked boxes and the ice hut.',
+    lines: ["Iveson's lad chains the crane gap at five sharp, every night since the fire. Before that anybody could walk in.", "Not that I'd know what anybody wanted in a scrap yard."], learn: { fact: 'hut_gap', text: "Brenda says Iveson's lad chains the gap by the crane at five every evening. Before five the yard is open at the back." } },
+  { id: 'shift', who: null, from: 'the fish dock', spot: 'boxes2', to: 'boarding', hours: [17, 18.5], wrinkle: 'talker',
+    way: 'Three off the packing shift at the fish dock, for Regent House. Back along the quay and up Quay Street; the VACANCIES card.',
+    lines: ['The cold store wants a firm that turns up. The one they have is late every other morning.', 'Ask at the Harbour Office. It is their contract to give.'], learn: { fact: 'contract_lead', text: 'The packing shift say the cold store wants a cab firm that turns up, and the Harbour Office gives the contract.' } },
+  { id: 'lodger_ferry', who: null, from: 'Regent House', spot: 'corner', to: 'ferry', hours: [20.5, 22.2], wrinkle: 'hurry',
+    way: 'A lodger at Regent House for the last ferry. Straight down Quay Street to the quay and right; the shelter under the last lamp.',
+    lines: ['The last boat. If I miss it I am in this town another night.', 'That is the hooter. He will not wait.'] },
+  { id: 'alison_fire', who: 'alison', from: 'the bus stop on Quay Street', spot: 'busstop', to: 'row', hours: [9, 17], days: [2, 3, 4], wrinkle: 'face',
+    way: 'Alison Sedman, the Mail, for the warehouse row. Down to the quay, left, past the yard; the black shell with the boarded doors.',
+    lines: ["You are Mickey Suddaby's nephew. Did he ever say what he saw, the night of the fire?", 'He was on the rank that night. Everybody says so, and nobody says what he saw.'], ask: 'fire' },
+  { id: 'parcel', who: null, from: 'the station', spot: 'station', to: 'quayst', hours: [18, 23], wrinkle: 'parcel',
+    way: 'A gentleman at the station for Quay Street. Down Copper Row, over the bridge, and he will say when.',
+    lines: ['You are from Mickey\'s. Good. Mickey used to take a thing round for me.'] },
+  { id: 'runner', who: null, from: 'the market, Copper Row', spot: 'market3', to: 'school', hours: [21, 24], wrinkle: 'runner',
+    way: 'One at the market end for Chapel Lane. Over the bridge, down Quay Street, right at the caff.',
+    lines: ['Just along here. Anywhere here.'] },
+  { id: 'wait', who: null, from: 'the corner by Rita\'s', spot: 'corner2', to: 'harbour', hours: [19, 23], wrinkle: 'wait',
+    way: 'A man at the corner by Rita\'s for the Harbour Office. Down Quay Street, right on the quay; the stone office with the clock.',
+    lines: ['Pull in past the door. Keep the engine running. Two minutes.'] },
+  { id: 'tail_hal', who: 'wayne', from: "Rita's side door", spot: 'ritaside', to: 'ferry', hours: [18, 22], wrinkle: 'tail',
+    way: "Wayne Harrison at Rita's side door, the back lane. He will tell you where.",
+    lines: ["See Metcalfe's van? Stay behind it. Not close. I want to know where he goes of a night.", 'There. The smoke house door. Every Tuesday, I knew it.'], learn: { fact: 'hal_smokehouse', text: 'Followed Hal Metcalfe for Wayne: Hal goes to the smoke house door by the landing after dark.' } },
+  { id: 'norman_night', who: 'norman', from: 'Chapel Lane', spot: 'cl', to: 'row', hours: [20, 22], wrinkle: 'talker',
+    way: 'Norman Dent, the watchman, from Chapel Lane for the warehouse row. Down to the quay and left.',
+    lines: ['Nights on the row, you see who comes. A van at number nine, two in the morning, Tuesdays and Fridays.', 'I write nothing down. I am paid to watch warehouses, not people.'], learn: { fact: 'row_van', text: 'Norman Dent says a van comes to number nine on the warehouse row at two in the morning, Tuesdays and Fridays.' } },
+  { id: 'doctor_night', who: null, from: 'the quay end', spot: 'quaycorner', to: 'infirmary', hours: [22, 26], wrinkle: 'talker',
+    way: 'The old doctor at the quay end for the Infirmary. Along the quay to the west road; the lit porch.',
+    lines: ['I stitch what comes to my door and I ask nothing. Fifteen pounds, and I remember every face.'], learn: { fact: 'doctor', text: 'The retired doctor on the quay stitches without asking, for fifteen pounds. He remembers every face.', place: 'doctor' } },
+  { id: 'julie_work', who: 'julie', from: 'Chapel Lane', spot: 'clhome', to: 'market', hours: [8, 12], days: [1, 2, 3], wrinkle: 'talker',
+    way: 'Julie Kettlewell from Chapel Lane for the market. Up Quay Street and over the bridge.',
+    lines: ['I drove a van for the bakery four years, till they laid us off. I can drive anything.', 'If you ever want a driver who turns up.'], learn: { fact: 'julie_drives', text: 'Julie Kettlewell drove a bakery van four years and wants work. She would drive for the firm.' } },
+  { id: 'susan_face', who: 'susan', from: 'the Harbour Office', spot: 'harbourdoor', to: 'market', hours: [12, 17], fromRung: 2, wrinkle: 'face',
+    way: 'Miss Coverdale at the Harbour Office for Copper Row. Up Quay Street and over the bridge; she will want the bank.',
+    lines: ['Mr Agar asks after the firm. He takes an interest in who holds a private-hire licence on the Hook.', 'It was only a remark, Mr Nowak.'] },
+  { id: 'kevin_gate', who: null, from: 'the bus stop on Quay Street', spot: 'bus2', to: 'dockroad', hours: [6, 9], fromRung: 2, wrinkle: 'talker',
+    way: 'A docker for the dock gate. Down to the quay, left, right along to Dock Road; the hut and the striped pole.',
+    lines: ['Your day driver pays at the gate now, same as the rest. Mrs Jensen\'s man takes it off them in the hut.', 'You did not hear that from me.'], learn: { fact: 'gate_tax', text: "A docker says the Widow's man takes money off every cab driver at the dock gate, Kevin among them." } },
+];
+export const SCHEDULES = {};
+export const PEOPLE = {};

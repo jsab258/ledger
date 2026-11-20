@@ -48,6 +48,16 @@ export const TUNE = {
   sim: { patientReadsShare: 0.52, hisBlowHeavyShare: 0.45, hisSwingBase: 0.35, mashingTakesTimes: 0.62, emptyTakesTimes: 1.2, emptyRestsShare: 0.25, exchangesAtMost: 400 },
   streetPlaces: ['wall', 'doorway', 'railings', 'car bonnet', 'steps', 'kerb', 'quay edge'],
   beatenBackInControlRealSecondsAtMost: 60,
+  kinds: { sparred: [0.1, 0.2, 0], searched_man: [0.5, -0.5, 1], quiet_blow: [0.7, -0.7, 2] },
+  quietBlowWithinMetres: 1.4,
+  quietBlowFromBehindAboveRadians: 2,
+  quietBlowDownGameMinutes: 25, // 10 to 30 real seconds at the game's clock
+  searchManWithinMetres: 1.6,
+  sparRounds: 3,
+  sparFromHour: 17,
+  sparUntilHour: 22,
+  // who is what kind of fighter in the written fights (A29): no two fights running use the same mix
+  typeOf: { lee: 'brawler', dennis: 'big man', wayne: 'knife', ron: 'boxer', kevin: 'brawler', terry: 'boxer', darren: 'brawler', norman: 'big man', shaun: 'brawler' },
   slowerFightsAssistTellTimes: 1.25, // A6
   fightCameraMetres: 4.4, // band 3.5 to 5.0 (the feel measure of 20 Nov found 5.2)
   refusesToLayHandsOnAge: 60, // QUESTIONS 2: the prototype's standing rule
