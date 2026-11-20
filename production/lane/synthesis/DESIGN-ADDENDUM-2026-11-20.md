@@ -457,3 +457,33 @@ Found by mapping the reference mechanics onto the parts tree (M7.8, 20 Nov). Dec
 - No split screen: every payment is a person and a flow in the flows ledger.
 
 Check: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.
+
+## A41. Hold-ups of shops and people (1.6.15): his yes of 20 November, 07:39
+
+His answer to question 3 of 20 November was yes, against the recommendation, so this is designed to his ruling and inside the others: rare and late, loud, always witnessed and remembered, never a game over. Written by the one-shot's second run before building it.
+
+When it can happen:
+- Never in Act I. A hold-up is possible only once the rise has begun (rung 2, "the firm is his", DESIGN section 14) and only through the escalation dial (DESIGN section 7): with a carried weapon shown from dial state 0 (a bat, a knife), with a gun only once a gun has reached Tom through a person.
+- Rare by its cost, not by a counter: at most one place can be held up in a game week before every shop on that street shuts early and keeps a man by the till (A37, a street on edge), and the same place is never held up twice: its owner never forgets.
+- Only places with a till and people with a purse: the six shops of Quay Street, the pawn, the chandlery, the Harbour Office's pay window on a Friday, and a named adult carrying a week's takings to the bank. Nobody under the content rule: no children anywhere, and never Ada, the priest or anyone of sixty or over (the prototype's standing rule on laying hands, QUESTIONS 2).
+
+How it plays:
+- It starts on the held weapon key, in reach of the till or the person, with the weapon out: rung 6 of the ladder (weapon out), so everything the ladder says holds. There is no stealth hold-up: a weapon drawn cannot be undrawn unseen.
+- The keeper answers by his temper (QUESTIONS 3): gives the till, stalls, shouts, or stands. Tom has three inputs: wait (the till is given in about 8 s, to measure), threaten again (quicker, and worse in every memory), or go (nothing taken, and it is still a hold-up in the town's memory).
+- The take is what the till or purse really holds that hour (DESIGN section 9: everybody's money is somebody's circumstance), all of it night money for the tin, and notes from a till are hot for a week (the hot mark, DESIGN section 4).
+- It is loud: the shout carries at the force reach, and everyone in the shop is a witness at face distance. The coat buys doubt about the face and none about the weapon or the car.
+
+What it costs, always:
+- Always witnessed: the keeper is a witness of the act slot by definition, and so is everyone inside. There is no unseen hold-up, so A38 never applies.
+- Always reported: the keeper walks to the phone or the station at once unless he is one of the trades that never go (Rita, Wayne, Hal) and those tell their own people instead: a rival hears of it.
+- The police: a hold-up is a robbery (twelve hours if taken for it, DESIGN section 8) and a detective's crime, so DS Ellis comes for it and her interest rises one stage (never skipping a sign, ER-POL-05). With a gun shown the dial moves to Shown; fired, to Fired.
+- The street: it is said to his face within a game day (ER-EYES-08); "he robbed the grocer" is a telling that never becomes decent; greetings by regard change; that shop refuses him for good and the street's shops serve him cold for a week. A front or an account on that street is lost if its man hears it was Tom.
+- The endings: a hold-up the street holds as fact counts against the Kingdom's best turn and the Straight Life's (DESIGN section 16), and each shows its sign first (the keeper's shutter down as he passes, Sheila's words).
+- Never a game over: caught in the act by an officer, it is an arrest (hours); a keeper who stands turns it into a fight on the ladder; Tom cannot die.
+
+Experience rules:
+- ER-HOLDUP-01 No hold-up is possible before rung 2, and none with a gun before a gun has reached Tom through a person. Check S.
+- ER-HOLDUP-02 Every hold-up has at least one witness of the act at face distance, is reported or told within one game hour, and is said to his face within one game day. Check S: seeded hold-ups, the chain printed (ER-EYES-05).
+- ER-HOLDUP-03 The take never exceeds what the till or purse holds, and every pound balances in the flows ledger. Check S.
+- ER-HOLDUP-04 No hold-up ends the game: every outcome (given, stalled, stood, caught, walked away) leaves Tom in control within 2 real minutes and a line in the Ledger. Check S.
+- ER-HOLDUP-05 Nobody under the content rule can be held up, and no place twice. Check S: the target list.
