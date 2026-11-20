@@ -1,0 +1,147 @@
+{
+ "piece": "foot_chase",
+ "cases": [
+  {
+   "id": "collar-within-1m",
+   "rule": "A3",
+   "fn": "chaseStep",
+   "in": [
+    {
+     "t": 3,
+     "gap": 1.2,
+     "unseen": 0
+    },
+    {
+     "dt": 0.5,
+     "runnerSpeed": 4.94,
+     "pursuerSpeed": 5.6,
+     "seen": true,
+     "behind": true
+    }
+   ],
+   "outHas": {
+    "end": "caught"
+   }
+  },
+  {
+   "id": "lost-unseen-7s",
+   "rule": "ER-POL-04",
+   "fn": "chaseStep",
+   "in": [
+    {
+     "t": 20,
+     "gap": 20,
+     "unseen": 6.9
+    },
+    {
+     "dt": 0.2,
+     "runnerSpeed": 5,
+     "pursuerSpeed": 5,
+     "seen": false
+    }
+   ],
+   "outHas": {
+    "end": "lost"
+   }
+  },
+  {
+   "id": "lost-70m",
+   "rule": "ER-POL-04",
+   "fn": "chaseStep",
+   "in": [
+    {
+     "t": 20,
+     "gap": 69.9,
+     "unseen": 0
+    },
+    {
+     "dt": 0.5,
+     "runnerSpeed": 5.2,
+     "pursuerSpeed": 4,
+     "seen": true
+    }
+   ],
+   "outHas": {
+    "end": "lost"
+   }
+  },
+  {
+   "id": "still-running",
+   "rule": "A3",
+   "fn": "chaseStep",
+   "in": [
+    {
+     "t": 5,
+     "gap": 10,
+     "unseen": 0
+    },
+    {
+     "dt": 0.1,
+     "runnerSpeed": 5,
+     "pursuerSpeed": 5,
+     "seen": true
+    }
+   ],
+   "outHas": {
+    "end": null
+   }
+  },
+  {
+   "id": "always-ends-by-90s",
+   "rule": "ER-PURSUE-01",
+   "fn": "chaseStep",
+   "in": [
+    {
+     "t": 89.95,
+     "gap": 10,
+     "unseen": 0
+    },
+    {
+     "dt": 0.1,
+     "runnerSpeed": 5,
+     "pursuerSpeed": 5,
+     "seen": true
+    }
+   ],
+   "outHas": {
+    "end": "lost"
+   }
+  },
+  {
+   "id": "fifty-direct-chases-all-caught-within-90s",
+   "rule": "ER-PURSUE-02",
+   "fn": "chases",
+   "in": [
+    {
+     "n": 50,
+     "seed": 1990,
+     "startGap": 8,
+     "line": "direct"
+    }
+   ],
+   "out": {
+    "caught": 50,
+    "lost": 0,
+    "longestSeconds": 19.6
+   }
+  },
+  {
+   "id": "fifty-lagging-chases-all-lost-within-90s",
+   "rule": "ER-PURSUE-01",
+   "fn": "chases",
+   "in": [
+    {
+     "n": 50,
+     "seed": 1990,
+     "startGap": 8,
+     "line": "slow"
+    }
+   ],
+   "out": {
+    "caught": 0,
+    "lost": 50,
+    "longestSeconds": 46.4
+   }
+  }
+ ]
+}

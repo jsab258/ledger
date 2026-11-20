@@ -1,0 +1,224 @@
+{
+ "piece": "foot_ground",
+ "cases": [
+  {
+   "id": "public-free",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "public"
+    },
+    3
+   ],
+   "out": "free"
+  },
+  {
+   "id": "hours-open",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "hours",
+     "openFromHour": 8,
+     "openUntilHour": 18
+    },
+    10
+   ],
+   "out": "free"
+  },
+  {
+   "id": "hours-shut",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "hours",
+     "openFromHour": 8,
+     "openUntilHour": 18
+    },
+    22
+   ],
+   "out": "private"
+  },
+  {
+   "id": "hours-over-midnight",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "hours",
+     "openFromHour": 7,
+     "openUntilHour": 2
+    },
+    1
+   ],
+   "out": "free"
+  },
+  {
+   "id": "private",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "private"
+    },
+    12
+   ],
+   "out": "private"
+  },
+  {
+   "id": "forbidden",
+   "rule": "ER-GROUND-01",
+   "fn": "standing",
+   "in": [
+    {
+     "label": "forbidden"
+    },
+    12
+   ],
+   "out": "forbidden"
+  },
+  {
+   "id": "warn-first",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    null,
+    {
+     "ground": "private",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "outHas": {
+    "say": "warn",
+    "s": {
+     "stage": 1
+    }
+   }
+  },
+  {
+   "id": "unwatched-no-warning",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    null,
+    {
+     "ground": "private",
+     "watched": false,
+     "dt": 0.1
+    }
+   ],
+   "out": {
+    "s": null,
+    "say": null
+   }
+  },
+  {
+   "id": "warn-again",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    {
+     "stage": 1,
+     "since": 7.95
+    },
+    {
+     "ground": "private",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "outHas": {
+    "say": "warnAgain",
+    "s": {
+     "stage": 2
+    }
+   }
+  },
+  {
+   "id": "no-act-before-warned-twice",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    {
+     "stage": 1,
+     "since": 3
+    },
+    {
+     "ground": "private",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "outHas": {
+    "say": null,
+    "s": {
+     "stage": 1
+    }
+   }
+  },
+  {
+   "id": "acts-within-half-a-minute",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    {
+     "stage": 2,
+     "since": 19.95
+    },
+    {
+     "ground": "private",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "outHas": {
+    "say": "act",
+    "s": {
+     "stage": 3
+    }
+   }
+  },
+  {
+   "id": "forbidden-skips-first-warning",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    null,
+    {
+     "ground": "forbidden",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "outHas": {
+    "say": "warnAgain",
+    "s": {
+     "stage": 2
+    }
+   }
+  },
+  {
+   "id": "leaving-resets",
+   "rule": "ER-GROUND-01",
+   "fn": "trespassStep",
+   "in": [
+    {
+     "stage": 2,
+     "since": 12
+    },
+    {
+     "ground": "free",
+     "watched": true,
+     "dt": 0.1
+    }
+   ],
+   "out": {
+    "s": null,
+    "say": null
+   }
+  }
+ ]
+}

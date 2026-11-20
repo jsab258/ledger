@@ -1,0 +1,151 @@
+{
+ "piece": "fight_types",
+ "cases": [
+  {
+   "id": "one-man-by-his-id",
+   "rule": "A29",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "lee",
+      "build": 0.5
+     }
+    ],
+    ""
+   ],
+   "out": [
+    "brawler"
+   ]
+  },
+  {
+   "id": "same-man-after-another-mix",
+   "rule": "A29",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "lee",
+      "build": 0.5
+     }
+    ],
+    "boxer"
+   ],
+   "out": [
+    "brawler"
+   ]
+  },
+  {
+   "id": "no-two-fights-running-the-same-mix",
+   "rule": "ER-TYPES-01",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "lee",
+      "build": 0.5
+     }
+    ],
+    "brawler"
+   ],
+   "out": [
+    "boxer"
+   ]
+  },
+  {
+   "id": "a-big-man-by-his-build",
+   "rule": "A29",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "dennis",
+      "build": 0.5
+     },
+     {
+      "id": "yardlad",
+      "build": 0.9
+     }
+    ],
+    ""
+   ],
+   "out": [
+    "boxer",
+    "big"
+   ]
+  },
+  {
+   "id": "two-men-mix-changes",
+   "rule": "ER-TYPES-01",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "dennis",
+      "build": 0.5
+     },
+     {
+      "id": "yardlad",
+      "build": 0.9
+     }
+    ],
+    "big+boxer"
+   ],
+   "out": [
+    "brawler",
+    "big"
+   ]
+  },
+  {
+   "id": "two-men-mix-kept-when-different",
+   "rule": "ER-TYPES-01",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "dennis",
+      "build": 0.5
+     },
+     {
+      "id": "yardlad",
+      "build": 0.9
+     }
+    ],
+    "big+brawler"
+   ],
+   "out": [
+    "boxer",
+    "big"
+   ]
+  },
+  {
+   "id": "an-authored-knife-stays",
+   "rule": "A29",
+   "fn": "pickTypes",
+   "in": [
+    [
+     {
+      "id": "k",
+      "authored": "knife"
+     }
+    ],
+    "knife"
+   ],
+   "out": [
+    "knife"
+   ]
+  },
+  {
+   "id": "mix-is-order-free",
+   "rule": "ER-TYPES-01",
+   "fn": "mixOf",
+   "in": [
+    [
+     "big",
+     "boxer"
+    ]
+   ],
+   "out": "big+boxer"
+  }
+ ]
+}

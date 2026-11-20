@@ -5,10 +5,12 @@ import { hyp, clamp, chance, rnd, angDiff, pick } from './util.js';
 import { act, logLine } from './events.js';
 import { menaceTo } from './gossip.js';
 import { meet } from './ledger.js';
-import { blocked, PROPS } from './map.js';
+import { blocked, PROPS, inWater } from './map.js';
+import { emit } from './game/core.js';
 import { sub, bubble, show, $, tomName } from './ui.js';
 import { S } from './render/sync.js';
 import { RULES } from './rules.js';
+const FX = RULES.game.fightx; // the whole game: guard, slip, counter, breath, the hold, fighter types (A29)
 const LAD = RULES.ladder;
 
 export const F = {
@@ -224,7 +226,8 @@ export function climb() {
     m = P.mind,
     d = P.def;
   if (F.rung >= LAD.strikeRung) {
-    if (F.rung === LAD.strikeRung && t.weapon && !t.armed) drawWeapon();
+    // the whole game (ER-FIGHT-08): a weapon comes out only on a held input, never on a tap
+    if (F.rung === LAD.strikeRung && t.weapon && !t.armed) sub('Hold [;] to bring the ' + t.weapon + ' out.', '', 'over', 2.5);
     return;
   }
   const next = F.rung + 1;
@@ -359,6 +362,12 @@ function drawWeapon() {
   }
   ladderUI();
 }
+// the held input (game/fightx.js): in a fight, at blows, with something on him
+export function drawHeld() {
+  if (!F.on || F.rung < LAD.strikeRung || !G.tom.weapon || G.tom.armed) return false;
+  drawWeapon();
+  return true;
+}
 function flee(P) {
   P.fight = null;
   P.hold = false;
@@ -391,6 +400,7 @@ function startFight(P, tomFirst) {
       t: rnd(LAD.foeFirstMoveAfterRealSecondsAtLeast, LAD.foeFirstMoveAfterRealSecondsAtMost),
       cd: rnd(LAD.foeFirstSwingAfterRealSecondsAtLeast, LAD.foeFirstSwingAfterRealSecondsAtMost),
     });
+    if (G.hooks.fighterTypes) G.hooks.fighterTypes(F.foes); // A29: each man is one of a few kinds
   };
   add(P);
   for (const Q of allies(P)) add(Q);
@@ -433,7 +443,7 @@ export function setOn(list) {
   }
   ladderUI();
 }
-export function input(kind) {
+export function input(kind, dir = 0) {
   if (!F.on || F.rung < LAD.strikeRung) return;
   const t = G.tom;
   if (kind === 'finish') return finish();
@@ -447,6 +457,16 @@ export function input(kind) {
     tl('input', { actor: 'player', action });
     F.st = kind === 'heavy' ? 'heavyUp' : 'windup';
     F.t = kind === 'heavy' ? LAD.heavyWindUpRealSeconds : LAD.lightWindUpRealSeconds;
+    // A29, breath, not a bar: thrown fast and many, his blows start slower; he is heard breathing hard
+    if (F.stam < FX.defend.breathSlowsFromStamina)
+      F.t *= 1 + (FX.defend.breathSlowsWindUpByShareAtEmpty * (FX.defend.breathSlowsFromStamina - F.stam)) / FX.defend.breathSlowsFromStamina;
+    // A29, the counter: a jab thrown inside the first part of the other man's recovery, after a slip or a block,
+    // lands as a heavy blow at a jab's speed
+    F.counter = kind === 'light' && F.clock < (F.counterUntil || 0);
+    if (F.counter) {
+      F.counterUntil = 0;
+      tl('counter', { actor: 'player' });
+    }
     F.heavy = kind === 'heavy';
     F.stam -= kind === 'heavy' ? LAD.heavyStaminaCost : LAD.lightStaminaCost;
     F.rest = LAD.staminaRestsAfterSpendRealSeconds;
@@ -455,14 +475,17 @@ export function input(kind) {
     if (F.stam < LAD.tooTiredBelowStamina) tl('stamina_empty', { actor: 'player' }); // too tired to swing counts as empty
   } else if (kind === 'dodge') {
     if (F.cool > 0) return;
-    const bx = t.x - Math.sin(t.ang) * LAD.dodgeBackMetres,
-      bz = t.z - Math.cos(t.ang) * LAD.dodgeBackMetres;
+    // A29, the slip: a tap with a direction is a step and a duck to that side; with none, the step back
+    const side = dir ? FX.defend.slipSideMetres * Math.sign(dir) : 0,
+      bx = dir ? t.x - Math.cos(t.ang) * side : t.x - Math.sin(t.ang) * LAD.dodgeBackMetres,
+      bz = dir ? t.z + Math.sin(t.ang) * side : t.z - Math.cos(t.ang) * LAD.dodgeBackMetres;
     if (!blocked(bx, bz)) {
       t.x = bx;
       t.z = bz;
     }
     F.st = 'dodge';
-    F.t = LAD.dodgeRealSeconds;
+    F.t = dir ? FX.defend.slipRealSeconds : LAD.dodgeRealSeconds;
+    F.slip = !!dir;
     tl('input', { actor: 'player', action: 'dodge' });
     tl('dodge_start', { actor: 'player' });
     tl('invuln_start', { actor: 'player' });
@@ -485,6 +508,7 @@ export function grab() {
     }
   }
   if (!best) {
+    if (G.hooks.holdMan && G.hooks.holdMan()) return true; // A29: nothing to snatch up, but a man within reach: the grab
     sub('Nothing to hand here.', '', 'over', LAD.grabLineRealSeconds);
     return false;
   }
@@ -528,6 +552,19 @@ function hurtFoe(f, dmg, heavy) {
     wall =
       blocked(P.x + (kx / kl) * LAD.blowKnocksBackMetres, P.z + (kz / kl) * LAD.blowKnocksBackMetres) ||
       blocked(P.x + (kx / kl) * LAD.wallBehindWithinMetres, P.z + (kz / kl) * LAD.wallBehindWithinMetres);
+  // A11: at the quay edge the water is behind him, not a wall: he goes in, and climbs out soaked. Water never kills.
+  const wx = P.x + (kx / kl) * LAD.wallBehindWithinMetres,
+    wz = P.z + (kz / kl) * LAD.wallBehindWithinMetres;
+  if (wall && inWater(wx, wz) && G.hooks.intoWater) {
+    P.hurt = clamp((P.hurt || 0) + dmg, 0, 0.95);
+    f.st = 'flee';
+    G.hooks.intoWater(P, wx, wz);
+    if (!F.struck) {
+      F.struck = true;
+      act('strike', { target: P.anon ? undefined : P.id, name: P.def.name, noiseR: LAD.strikeNoiseCarriesMetres });
+    }
+    return;
+  }
   if (wall) dmg += LAD.wallSlamHurts;
   P.hurt = clamp((P.hurt || 0) + dmg, 0, LAD.foeHurtAtMost);
   if (heavy || wall || f.st !== 'windup') {
@@ -686,16 +723,21 @@ export function step(dt) {
         near &&
         nd < LAD.tomReachMetres &&
         Math.abs(angDiff(t.ang, Math.atan2(near.P.x - t.x, near.P.z - t.z))) < LAD.tomHitsWithinFacingRadians;
+      const guardTimes = near && near.type === 'boxer' ? FX.types.boxerGuardChanceTimes : 1,
+        counter = !!F.counter;
+      F.counter = false;
       if (
         hit &&
-        !(near.st === 'guard' && chance(F.heavy ? LAD.guardStopsHeavyChance : LAD.guardStopsLightChance))
+        (counter || !(near.st === 'guard' && chance((F.heavy ? LAD.guardStopsHeavyChance : LAD.guardStopsLightChance) * guardTimes)))
       ) {
+        if (counter) F.heavy = true; // it lands as a heavy blow
         F.stop = t.armed ? LAD.hitStopWeaponRealSeconds : F.heavy ? LAD.hitStopHeavyRealSeconds : LAD.hitStopLightRealSeconds;
         tl('hit_contact', { actor: 'player', target: who(near.P), action: F.heavy ? 'heavy' : 'jab', weapon: t.armed ? t.weapon : 'fists' });
         tl('hitstop_start', { actor: 'player' });
         hurtFoe(
           near,
           (F.heavy ? LAD.heavyBlowHurts : LAD.lightBlowHurts) *
+            (near.type === 'big' ? FX.types.bigManHurtTimes : 1) *
             (t.armed ? WDMG[t.weapon] || LAD.unknownWeaponDamageTimes : 1) *
             (1 - t.hurt * LAD.hurtWeakensBlowsByShare),
           F.heavy,
@@ -757,6 +799,12 @@ export function step(dt) {
   for (const f of live) {
     const P = f.P;
     if (f.st === 'flee' || f.st === 'down' || !P.fight) continue;
+    if (f.st === 'held') {
+      // A29: held by the collar, he cannot swing; game/fightx.js lets him go
+      P.moving = false;
+      k++;
+      continue;
+    }
     const d = hyp(P.x, P.z, t.x, t.z),
       a = Math.atan2(t.x - P.x, t.z - P.z);
     P.ang += clamp(
@@ -817,15 +865,20 @@ export function step(dt) {
     P.moving = false;
     if (f.st === 'guard' && f.t <= 0) {
       // attack tickets: at most two men swinging at once, their swings started a beat apart
-      const swinging = live.filter((g) => g.st === 'windup' || g.st === 'strike').length;
-      if (swinging >= LAD.attackersAtOnceAtMost || F.clock - F.lastFoeStart < LAD.swingStartsApartRealSecondsAtLeast) {
+      const swinging = live.filter((g) => g.st === 'windup' || g.st === 'strike').length,
+        slow = !!G.settings.assistSlowFight; // A6: blows readable a quarter longer, one man swinging at a time
+      if (swinging >= (slow ? RULES.game.feel.assists.slowFightSwingersAtMost : LAD.attackersAtOnceAtMost) || F.clock - F.lastFoeStart < LAD.swingStartsApartRealSecondsAtLeast) {
         f.t = LAD.swingStartsApartRealSecondsAtLeast - Math.max(0, F.clock - F.lastFoeStart) + dt;
         continue;
       }
       F.lastFoeStart = F.clock;
       f.st = 'windup';
-      f.heavy = chance(LAD.foeHeavyChance);
-      f.t = f.heavy ? LAD.foeHeavyWindUpRealSeconds : LAD.foeLightWindUpRealSeconds;
+      f.heavy = chance(f.type === 'brawler' ? FX.types.brawlerHeavyChance : LAD.foeHeavyChance);
+      f.t =
+        (f.heavy ? LAD.foeHeavyWindUpRealSeconds : LAD.foeLightWindUpRealSeconds) *
+        (f.type === 'big' ? FX.types.bigManWindUpTimes : 1) *
+        (slow ? RULES.game.feel.assists.slowFightTellTimes : 1);
+      f.tell = f.t; // how long this blow could be read before it lands (ER-FIGHT-02)
       P.fight.mode = f.heavy ? 'heavy' : 'windup';
       tl('attack_start', { actor: who(P) });
       f.att = true;
@@ -841,19 +894,35 @@ export function step(dt) {
       f.st = 'strike';
       f.t = LAD.foeStrikeRealSeconds;
       P.fight.mode = 'strike';
+      // A29: a blow slipped, or met on the guard, opens the counter
+      if (d < LAD.foeReachMetres + (F.slip ? FX.defend.slipSideMetres : 0) && F.st === 'dodge') {
+        F.counterUntil = F.clock + FX.defend.counterWindowRealSeconds;
+        tl('slipped', { actor: 'player', against: who(P) });
+      }
       if (d < LAD.foeReachMetres && F.st !== 'dodge') {
         let dmg =
           (f.heavy ? LAD.foeHeavyBlowHurts : LAD.foeLightBlowHurts) *
           (P.weapon ? LAD.foeWeaponDamageTimes : 1) *
+          (f.type === 'knife' ? FX.types.knifeDamageTimes : 1) *
           (1 - (P.hurt || 0) * LAD.hurtWeakensBlowsByShare);
         const facing =
           Math.abs(angDiff(t.ang, Math.atan2(P.x - t.x, P.z - t.z))) < LAD.blockWorksWithinFacingRadians;
         tl(F.st === 'block' && facing ? 'block' : 'hit_contact', { actor: who(P), target: 'player', action: f.heavy ? 'heavy' : 'jab' });
         if (F.st === 'block' && facing) {
-          dmg *=
-            t.weapon === 'dustbin lid' && t.armed ? LAD.lidBlockLetsThroughShare : LAD.blockLetsThroughShare;
+          // A29: a blocked fist does little, a blocked heavy blow staggers him a little, a swung weapon breaks through
+          dmg *= P.weapon
+            ? FX.defend.weaponBreaksGuardShare
+            : t.weapon === 'dustbin lid' && t.armed
+              ? LAD.lidBlockLetsThroughShare
+              : LAD.blockLetsThroughShare;
           F.stam -= LAD.blockStaminaCostPerBlow;
           if (G.hooks.sfx) G.hooks.sfx('block');
+          if (!P.weapon) F.counterUntil = F.clock + FX.defend.counterWindowRealSeconds;
+          if (f.heavy || P.weapon) {
+            F.st = 'stagger';
+            F.t = FX.defend.guardLetsHeavyStaggerRealSeconds;
+            F.counterUntil = 0;
+          }
         } else {
           if (F.open > 0) dmg *= LAD.openToBlowDamageTimes;
           F.st = 'stagger';
@@ -867,7 +936,8 @@ export function step(dt) {
     } else if (f.st === 'strike' && f.t <= 0) {
       f.st = 'guard';
       f.t =
-        rnd(LAD.foeGuardAfterSwingRealSecondsAtLeast, LAD.foeGuardAfterSwingRealSecondsAtMost) +
+        rnd(LAD.foeGuardAfterSwingRealSecondsAtLeast, LAD.foeGuardAfterSwingRealSecondsAtMost) *
+          (f.type === 'brawler' ? FX.types.brawlerWaitsTimes : f.type === 'boxer' ? FX.types.boxerWaitsTimes : 1) +
         (live.length > 1 ? LAD.foeWaitsAddedWhenSeveralRealSeconds : 0);
       P.fight.mode = 'guard';
     }
@@ -898,7 +968,19 @@ export function step(dt) {
     }
   } else if (nd > LAD.walkedAwayBeyondMetres) end(true);
 }
-export function end(hostile) {
+export function end(hostile, why) {
+  // the whole game: how it ended, told to every system. Five ways: someone backs off, someone runs, someone goes
+  // down, the police arrive, people step in (DESIGN 7).
+  if (F.on && F.rung >= LAD.strikeRung && F.foes.length) {
+    const t = G.tom,
+      down = F.foes.filter((f) => f.st === 'down').length,
+      fled = F.foes.filter((f) => f.st === 'flee').length,
+      how = why || (t.hurt >= 1 ? 'beaten' : down ? 'down' : fled ? 'ran' : 'backed off'),
+      w = F.usedW || t.armed ? t.weapon : null,
+      tier = !w ? 0 : w === 'pistol' || w === 'gun' || w === 'shotgun' ? 3 : PROPS.some((p) => p.hand === w) ? 1 : 2;
+    F.lastEnd = { how, tier, seconds: F.clock, down, fled, foes: F.foes.map((f) => f.P.id || f.P.def.name), types: F.foes.map((f) => f.type || 'plain') };
+    emit('fight:end', { how, foes: F.foes.map((f) => f.P), tier, seconds: F.clock, weapon: w, types: F.lastEnd.types });
+  }
   for (const f of F.foes) {
     const P = f.P;
     P.fight = null;

@@ -83,6 +83,11 @@ export function hud(dt) {
             t: 1,
             low: 1,
           });
+    // DESIGN 2, A6: the seeing assist (off by default) outlines the people Tom can see who are facing him: one
+    // plain ring each, never a figure he could not see, never what they know
+    if (G.settings.assistSee && !eyes)
+      for (const w of G.watch)
+        if (w.noticed && !w.P.gone && w.P.space === G.tom.space) list.push({ P: w.P, text: '○', cls: 'eye', t: 1, low: 1 });
     for (const b of list) {
       const P = b.P;
       if (P && (P.gone || (P.space !== G.tom.space && P.space !== 'home'))) continue;
@@ -623,7 +628,9 @@ export function settingsHTML() {
     rng = (k, a, b) =>
       `<input type="range" data-set="${k}" min="${a}" max="${b}" step="0.05" value="${s[k]}">`;
   return `<h1>Settings</h1><h2>Picture</h2><label>Graphics quality ${sel('quality', ['low', 'medium', 'high'])}</label><label>Hold the frame rate by lowering resolution ${chk('autoRes')}</label><label>Bloom on lamps and windows ${chk('bloom')}</label><div class="row"><button class="btn alt" data-act="bench">Measure the frame time</button></div><p id="bench" style="font-size:13px;min-height:1.3em"></p>
-  <h2>Play</h2><label>Show a small health bar ${chk('healthBar')}</label><label>Mouse sensitivity ${rng('sens', 0.3, 2.5)}</label><label>Invert vertical look ${chk('invertY')}</label><label>Touch controls ${chk('touch')}</label><label>Show the town's eyes (testing only) ${chk('eyes')}</label><label>Playtest asks: find a fact in the Ledger at set moments ${chk('asks')}</label><label>End screen: show the truth beside the Ledger (playtest view) ${chk('truthView')}</label>
+  <h2>Play</h2><label>Show a small health bar ${chk('healthBar')}</label><label>Mouse sensitivity ${rng('sens', 0.3, 2.5)}</label><label>Invert vertical look ${chk('invertY')}</label><label>Touch controls ${chk('touch')}</label>
+  <h2>Assists (the game's only difficulty: each changes only its own thing)</h2><label>Seeing: a ring over people you can see who are facing you ${chk('assistSee')}</label><label>Slower fights: blows can be read a quarter longer, one man swings at a time ${chk('assistSlowFight')}</label><label>Driving help: gentler steering on keys, stronger brakes ${chk('assistDrive')}</label><label>Longer walks: a witness takes half as long again to reach the phone ${chk('assistLongWalk')}</label><label>Sound shown: a short word at the screen's edge for loud noises ${chk('soundShown')}</label><div class="row"><button class="btn alt" data-act="hintsagain">Show the first hints again</button></div><p id="hintsagain" style="font-size:13px;min-height:1.3em"></p>
+  <h2>Testing</h2><label>Show the town's eyes (testing only) ${chk('eyes')}</label><label>Playtest asks: find a fact in the Ledger at set moments ${chk('asks')}</label><label>End screen: show the truth beside the Ledger (playtest view) ${chk('truthView')}</label>
   <h2>Live talk</h2><label>Let Claude voice what people say when you talk freely ${chk('liveTalk')}</label><p style="font-size:13px;margin:6px 0">The game always decides what happens. With this off, people answer in their written lines.</p><div class="row"><button class="btn alt" data-act="talkcheck">Check the live voices</button></div><p id="talkcheck" style="font-size:13px;min-height:1.3em"></p>
   <h2>Sound</h2><label>Volume ${rng('vol', 0, 1)}</label><label>Score ${rng('music', 0, 1)}</label><div class="row"><button class="btn" data-act="back">Back</button></div>`;
 }

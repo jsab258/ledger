@@ -207,6 +207,30 @@ export function sfx(name) {
     case 'step':
       burst(G.weather.wet > 0.6 ? 1500 : 900, 1.1, 0.05, 0.05, { bus: world, type: 'bandpass' });
       break;
+    // the whole game (20 Nov): the chapel bell, a rattled bin, breaking glass, the cab's horn, a forced door
+    case 'bell':
+      tone('sine', 523, 0, 1.6, 0.12, { bus: world, wet: 0.7 });
+      tone('sine', 1046, 0, 0.9, 0.04, { bus: world, wet: 0.7 });
+      break;
+    case 'bin':
+      burst(1800, 3, 0.25, 0.35, { bus: world });
+      burst(700, 1.5, 0.3, 0.25, { bus: world, at: 0.08 });
+      break;
+    case 'glass':
+      burst(5200, 2, 0.35, 0.5, { bus: world, type: 'highpass' });
+      burst(3000, 4, 0.5, 0.25, { bus: world, at: 0.1 });
+      break;
+    case 'breath':
+      burst(1100, 0.8, 0.35, 0.09, { type: 'bandpass' });
+      break;
+    case 'horn':
+      tone('square', 392, 0, 0.5, 0.22, { bus: world });
+      tone('square', 494, 0, 0.5, 0.18, { bus: world });
+      break;
+    case 'force':
+      burst(300, 0.6, 0.3, 0.7, { bus: world });
+      tone('sawtooth', 120, 60, 0.25, 0.3, { bus: world });
+      break;
   }
 }
 function radio() {

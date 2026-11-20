@@ -1,0 +1,510 @@
+{
+ "piece": "hide_rules",
+ "cases": [
+  {
+   "id": "still-doorway-night",
+   "rule": "ER-HIDE-01",
+   "fn": "lightForTom",
+   "in": [
+    {
+     "light": 0.7,
+     "doorway": true,
+     "night": true
+    },
+    {
+     "stillSeconds": 2,
+     "torchOn": false
+    }
+   ],
+   "out": 0.12
+  },
+  {
+   "id": "moving-doorway-night",
+   "rule": "ER-HIDE-01",
+   "fn": "lightForTom",
+   "in": [
+    {
+     "light": 0.7,
+     "doorway": true,
+     "night": true
+    },
+    {
+     "stillSeconds": 0,
+     "torchOn": false
+    }
+   ],
+   "out": 0.7
+  },
+  {
+   "id": "torch-lights-him",
+   "rule": "A33",
+   "fn": "lightForTom",
+   "in": [
+    {
+     "light": 0.1,
+     "doorway": true,
+     "night": true
+    },
+    {
+     "stillSeconds": 5,
+     "torchOn": true
+    }
+   ],
+   "out": 0.7
+  },
+  {
+   "id": "torch-off-dark",
+   "rule": "A33",
+   "fn": "lightForTom",
+   "in": [
+    {
+     "light": 0.1,
+     "doorway": false,
+     "night": true
+    },
+    {
+     "stillSeconds": 5,
+     "torchOn": false
+    }
+   ],
+   "out": 0.1
+  },
+  {
+   "id": "still-in-doorway-4m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 0.12,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": true
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "walking-past-doorway-4m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "still-in-doorway-8m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 8,
+     "light": 0.12,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": true
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "walking-past-doorway-8m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 8,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "still-in-doorway-18m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 18,
+     "light": 0.12,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": true
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "walking-past-doorway-18m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 18,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "still-in-doorway-35m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 35,
+     "light": 0.12,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": true
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "walking-past-doorway-35m",
+   "rule": "ER-HIDE-01",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 35,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "daylight-shape-35m",
+   "rule": "ER-EYES-02",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 35,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": false,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "daylight-mark-18m",
+   "rule": "ER-EYES-02",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 18,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "daylight-face-8m",
+   "rule": "ER-EYES-02",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 8,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "known-at-25m",
+   "rule": "ER-EYES-02",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 25,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": true,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "stranger-never-recognises",
+   "rule": "moat",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 2,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "back-turned-no-face",
+   "rule": "A1",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": true,
+     "backTurned": true,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "back-turned-no-coat-a-shape",
+   "rule": "A1",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": true,
+     "markOnHim": false,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "behind-a-van",
+   "rule": "A1",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 1,
+     "lineOfSight": false,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "not-facing",
+   "rule": "ER-EYES-02",
+   "fn": "rungCaught",
+   "in": [
+    {
+     "metres": 4,
+     "light": 1,
+     "lineOfSight": true,
+     "facing": false,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "glance-alone",
+   "rule": "A1",
+   "fn": "glanceSeconds",
+   "in": [
+    1
+   ],
+   "out": 0.35
+  },
+  {
+   "id": "glance-among-three",
+   "rule": "A1",
+   "fn": "glanceSeconds",
+   "in": [
+    3
+   ],
+   "out": 0.7
+  },
+  {
+   "id": "slow-walk-halves-footstep",
+   "rule": "A1",
+   "fn": "footstepReach",
+   "in": [
+    3.6,
+    true
+   ],
+   "out": 1.8
+  },
+  {
+   "id": "walk-footstep",
+   "rule": "A1",
+   "fn": "footstepReach",
+   "in": [
+    3.6,
+    false
+   ],
+   "out": 3.6
+  },
+  {
+   "id": "seated-never-more-than-walking-8m",
+   "rule": "ER-STOP-01",
+   "fn": "rungCaughtStopped",
+   "in": [
+    {
+     "metres": 8,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    },
+    "sit"
+   ],
+   "out": 2
+  },
+  {
+   "id": "seated-never-more-than-walking-18m",
+   "rule": "ER-STOP-01",
+   "fn": "rungCaughtStopped",
+   "in": [
+    {
+     "metres": 18,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    },
+    "sit"
+   ],
+   "out": 1
+  },
+  {
+   "id": "seated-never-more-than-walking-35m",
+   "rule": "ER-STOP-01",
+   "fn": "rungCaughtStopped",
+   "in": [
+    {
+     "metres": 35,
+     "light": 0.7,
+     "lineOfSight": true,
+     "facing": true,
+     "knowsHim": false,
+     "backTurned": false,
+     "markOnHim": true,
+     "stillInDoorway": false
+    },
+    "sit"
+   ],
+   "out": 0
+  },
+  {
+   "id": "standing-about-at-night-draws-a-look",
+   "rule": "A10",
+   "fn": "drawsSecondLook",
+   "in": [
+    true,
+    null,
+    25,
+    20
+   ],
+   "out": true
+  },
+  {
+   "id": "smoking-at-night-draws-none",
+   "rule": "ER-STOP-01",
+   "fn": "drawsSecondLook",
+   "in": [
+    true,
+    "smoke",
+    25,
+    20
+   ],
+   "out": false
+  },
+  {
+   "id": "standing-about-by-day-draws-none",
+   "rule": "A10",
+   "fn": "drawsSecondLook",
+   "in": [
+    false,
+    null,
+    25,
+    20
+   ],
+   "out": false
+  }
+ ]
+}

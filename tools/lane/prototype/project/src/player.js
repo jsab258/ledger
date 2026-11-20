@@ -1,7 +1,7 @@
 // Tom: keyboard, mouse and touch; walking, doors, the cab, the coat; the third-person camera.
 import { G, hour } from './state.js';
 import { hyp, clamp, angDiff, pick } from './util.js';
-import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY, roomSightBlocked, bigThingAt } from './map.js';
+import { blocked, ROOMS, roomPos, PROPS, BLD, WALLS, groundY, roomSightBlocked, bigThingAt, blockedButVaults } from './map.js';
 import { inRect } from './util.js';
 import { nightF } from './seeing.js';
 
@@ -24,6 +24,7 @@ const TOMS = RULES.tom;
 const STORY = RULES.story;
 const TURN = RULES.game.feel.turn;
 const SCREENS = RULES.game.feel.screen;
+const FOOTS = RULES.game.foot.moving;
 
 export const keys = {},
   cam = {
@@ -203,7 +204,8 @@ export function onKey(code) {
   else if (code === 'KeyK') fightBlock(true);
   else if (code === 'KeyV') fightInput('finish');
   else if (code === 'Space') {
-    if (F.on && F.rung >= LAD.strikeRung) fightInput('dodge');
+    // the whole game (A29): with A or D held the tap is a slip to that side; with neither, the step back
+    if (F.on && F.rung >= LAD.strikeRung) fightInput('dodge', (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0));
   }
 }
 function coat() {
@@ -436,6 +438,31 @@ function solidFor(x, z) {
   }
   return false;
 }
+// The whole game (A26): a vault starts only when everything between him and clear ground on the far side is one of
+// the set low things (map.js vaultPlaces); nothing else can be vaulted.
+function tryVault(wx, wz) {
+  const t = G.tom,
+    rad = TOMS.bodyRadiusMetres;
+  let met = false;
+  for (let s = 0.3; s <= FOOTS.vaultReachMetres; s += 0.15) {
+    const x = t.x + wx * s,
+      z = t.z + wz * s;
+    if (blockedButVaults(x, z, rad) || footSolid(x, z, t.x, t.z, rad)) return false; // something that is no vault place is in the way
+    if (blocked(x, z, rad)) met = true;
+    else if (met) {
+      feel.vault = { t: 0, secs: FOOTS.vaultTakesRealSeconds, x0: t.x, z0: t.z, x1: x + wx * 0.25, z1: z + wz * 0.25, xm: t.x + wx * s * 0.5, zm: t.z + wz * s * 0.5 };
+      if (blocked(feel.vault.x1, feel.vault.z1, rad)) {
+        feel.vault.x1 = x;
+        feel.vault.z1 = z;
+      }
+      if (G.hooks.sfx) G.hooks.sfx('step');
+      if (G.hooks.vaulted) G.hooks.vaulted(feel.vault);
+      return true;
+    }
+  }
+  return false;
+}
+export const footFeel = () => ({ vaulting: !!feel.vault, swing: !!feel.swing, stride: feel.stride });
 export function stepPlayer(dt) {
   const t = G.tom;
   // keys are on or off; a stick (touch, pad) is analogue
@@ -444,6 +471,8 @@ export function stepPlayer(dt) {
   let mx = kx + ax,
     my = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0) + touch.y;
   const waiting = !!keys.KeyZ && !t.inCar && !F.on && Math.abs(mx) + Math.abs(my + pad.y) < 0.1;
+  // the whole game (A1): Z held while moving is walking slowly: half the pace, half the footstep's reach
+  t.slow = !!keys.KeyZ && !waiting && !t.inCar && !F.on;
   ui.wait = waiting;
   G.fast = waiting ? TOMS.waitingTimeRunsTimes : 1;
   // round 6: the pad's right stick looks about, as the mouse does
@@ -467,9 +496,26 @@ export function stepPlayer(dt) {
     t.run = false;
     feel.stride = 0;
     feel.stuck = 0;
+  } else if (feel.vault) {
+    // the whole game (A26): over a low wall, a fence or a bin at a set place, in about 0.8 s; no input meanwhile
+    stepCar(dt, { x: 0, y: 0 });
+    const v = feel.vault;
+    v.t += dt;
+    const k = Math.min(1, v.t / v.secs);
+    t.x = v.x0 + (v.x1 - v.x0) * k;
+    t.z = v.z0 + (v.z1 - v.z0) * k;
+    t.vaultY = Math.sin(k * Math.PI) * FOOTS.vaultRiseMetres;
+    t.v = TOMS.runningMetresPerSecond * 0.6;
+    if (k >= 1) {
+      feel.vault = null;
+      t.vaultY = 0;
+      t.lastVault = { x: v.xm, z: v.zm, t: G.t };
+      feel.stride = 0.7;
+    }
   } else {
     stepCar(dt, { x: 0, y: 0 });
     my += pad.y;
+    if (t.stop && Math.hypot(mx, my) > 0.1 && G.hooks.footStop) G.hooks.footStop(null); // moving ends sitting, leaning, smoking
     const l = Math.hypot(mx, my),
       pressing = l > 0.1,
       fighting = F.on && F.rung >= LAD.strikeRung;
@@ -489,6 +535,8 @@ export function stepPlayer(dt) {
         (keys.ShiftLeft || keys.ShiftRight || touch.run || pad.gas > PADS.runsAboveTrigger) &&
         !fighting &&
         t.hurt < TOMS.cannotRunAboveHurt &&
+        !t.limp && // the whole game (A21): a limp lasts a game day, and a limping man does not run
+        !t.slow &&
         !t.carry;
       sp =
         (fighting
@@ -498,7 +546,9 @@ export function stepPlayer(dt) {
             : TOMS.walkingMetresPerSecond) *
         (1 - t.hurt * TOMS.hurtSlowsByShare) *
         Math.min(1, l) *
-        (F.st === 'block' ? TOMS.blockingSlowsToShare : 1);
+        (F.st === 'block' ? TOMS.blockingSlowsToShare : 1) *
+        (t.slow ? FOOTS.slowWalkShare : 1) *
+        (t.limp ? FOOTS.limpWalkShare : 1);
       t.run = run;
       if (!fighting) {
         // the whole game: his way and his body turn together. On a reversal he swings round in about a quarter
@@ -540,6 +590,8 @@ export function stepPlayer(dt) {
         nz = t.z + wz * go * dt;
       if (!solidFor(nx, t.z)) t.x = nx;
       if (!solidFor(t.x, nz)) t.z = nz;
+      // the whole game (A26): running at a set place carries him over it
+      if (pressing && t.run && t.space === 'street' && hyp(t.x, t.z, x0, z0) < go * dt * 0.5) tryVault(wx, wz);
       // round 6 (ER-CORE-01): never stuck. Pushing a way for a second without moving, while standing inside
       // something solid, puts him on the nearest clear ground.
       if (pressing && hyp(t.x, t.z, x0, z0) < TOMS.stuckIfSlowerThanMetresPerSecond * dt) {
@@ -580,7 +632,7 @@ export function stepPlayer(dt) {
       }
     }
   }
-  t.y = groundY(t.x, t.z);
+  t.y = groundY(t.x, t.z) + (t.vaultY || 0);
   // round 6 (ER-INPUT-01): a press made a moment before the thing came into reach is taken when it does
   if (feel.early) {
     feel.early.t -= dt;

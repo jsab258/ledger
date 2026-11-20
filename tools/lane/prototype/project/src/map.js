@@ -329,6 +329,9 @@ export const WALLS = [
   R(-24, -57.4, -20, -57),
   R(-50, 58.9, -44, 59.3), // west alley end
 ];
+// The whole game (DESIGN-ADDENDUM A26): the set places Tom can vault when he runs at them: low yard walls, the
+// alley's end fence, bins and dustbins. Nothing else can be vaulted, and there is no jump key.
+for (const i of [0, 1, 2, 3, 8, 12, 13, 14]) WALLS[i].vault = 1;
 export const PROPS = []; // small solid things: {x,z,r}
 const P = (t, x, z, o = {}) => {
   const p = Object.assign({ t, x, z, r: 0.45 }, o);
@@ -814,6 +817,27 @@ export function blocked(x, z, rad = 0.35) {
   }
   return water(x, z);
 }
+// The whole game (A26): what stops a step when the low things at the set vault places are left out.
+const VAULT_PROPS = { bin: 1, dustbin: 1 };
+export function blockedButVaults(x, z, rad = 0.35) {
+  if (x > 900) return blocked(x, z, rad);
+  if (x < BOUNDS.x0 + 1 || x > BOUNDS.x1 - 1 || z < BOUNDS.z0 + 1 || z > BOUNDS.z1 - 1) return true;
+  for (const b of solid)
+    if (!b.vault && x > b.x0 - rad && x < b.x1 + rad && z > b.z0 - rad && z < b.z1 + rad) return true;
+  for (const p of PROPS) {
+    if (!p.r || VAULT_PROPS[p.t]) continue;
+    if (p.w) {
+      if (Math.abs(x - p.x) < p.r + rad && Math.abs(z - p.z) < p.w / 2 + rad) return true;
+    } else if (hyp(x, z, p.x, p.z) < p.r + rad) return true;
+  }
+  return water(x, z);
+}
+export const vaultPlaces = () =>
+  WALLS.filter((w) => w.vault)
+    .map((w) => ({ kind: 'wall', x: (w.x0 + w.x1) / 2, z: (w.z0 + w.z1) / 2, x0: w.x0, z0: w.z0, x1: w.x1, z1: w.z1 }))
+    .concat(PROPS.filter((p) => VAULT_PROPS[p.t]).map((p) => ({ kind: p.t, x: p.x, z: p.z, r: p.r })));
+// Is this spot water (the river or the cut, off the decks)? And the nearest dry ground to a spot in the water.
+export const inWater = (x, z) => water(x, z);
 // Round 6 (the gate): the lamp columns that stand on the ground (wall brackets hang clear). They are solid for the
 // cab and for Tom on foot only (drive.js): the town's own walks and the fight's knock-backs are left as they were.
 export const POSTS = LAMPS.filter((l) => l.k === 1);

@@ -98,6 +98,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 #tslip small{color:#555}
 #noted{position:absolute;left:14px;bottom:118px;max-width:min(330px,28vw);padding:6px 10px;background:rgba(10,10,12,.78);color:#efe7d0;font:13px/1.35 'Special Elite',monospace;border-left:3px solid #d8b84a;opacity:0;transition:opacity .5s;pointer-events:none}
 #noted.on{opacity:1}
+#cap{position:absolute;right:16px;top:42%;max-width:240px;display:flex;flex-direction:column;gap:4px;align-items:flex-end;pointer-events:none}
+#cap div{background:rgba(8,8,10,.8);color:#f4eedc;padding:4px 10px;font:14px/1.3 'Special Elite',monospace;border-right:3px solid #f4eedc}
 #talk .acts .opt{font-size:13px;padding:4px 8px}
 #talk .ai{font-size:11px;color:#666;margin-top:6px}
 /* big panels */
@@ -198,6 +200,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   <div id="waitbar" class="hidden"></div>
   <div id="bubbles"></div>
   <div id="subs"></div>
+  <div id="cap"></div>
   <div id="prompt"></div>
   <div id="obj" class="slip"></div>
   <div id="ask" class="slip hidden"></div>

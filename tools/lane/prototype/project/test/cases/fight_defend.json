@@ -1,0 +1,233 @@
+{
+ "piece": "fight_defend",
+ "cases": [
+  {
+   "id": "slip-takes-nothing-and-opens-the-counter",
+   "rule": "ER-DEFEND-01",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": true,
+     "weapon": false,
+     "hurts": 0.24
+    },
+    {
+     "doing": "slip"
+    }
+   ],
+   "out": {
+    "hurt": 0,
+    "staggered": false,
+    "counterOpens": true
+   }
+  },
+  {
+   "id": "guarded-jab-does-little-and-opens-the-counter",
+   "rule": "ER-DEFEND-01",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": false,
+     "weapon": false,
+     "hurts": 0.12
+    },
+    {
+     "doing": "guard",
+     "facing": true
+    }
+   ],
+   "out": {
+    "hurt": 0.03,
+    "staggered": false,
+    "counterOpens": true
+   }
+  },
+  {
+   "id": "guarded-heavy-staggers-a-little",
+   "rule": "A29",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": true,
+     "weapon": false,
+     "hurts": 0.24
+    },
+    {
+     "doing": "guard",
+     "facing": true
+    }
+   ],
+   "out": {
+    "hurt": 0.06,
+    "staggered": true,
+    "counterOpens": false
+   }
+  },
+  {
+   "id": "a-swung-weapon-breaks-the-guard",
+   "rule": "A29",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": false,
+     "weapon": true,
+     "hurts": 0.2
+    },
+    {
+     "doing": "guard",
+     "facing": true
+    }
+   ],
+   "outHas": {
+    "staggered": true,
+    "counterOpens": false
+   }
+  },
+  {
+   "id": "guard-the-wrong-way-is-no-guard",
+   "rule": "A29",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": false,
+     "weapon": false,
+     "hurts": 0.12
+    },
+    {
+     "doing": "guard",
+     "facing": false
+    }
+   ],
+   "out": {
+    "hurt": 0.12,
+    "staggered": true,
+    "counterOpens": false
+   }
+  },
+  {
+   "id": "a-miss-leaves-him-open",
+   "rule": "DESIGN 7",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": false,
+     "weapon": false,
+     "hurts": 0.12
+    },
+    {
+     "doing": "open"
+    }
+   ],
+   "outHas": {
+    "staggered": true,
+    "counterOpens": false
+   }
+  },
+  {
+   "id": "unanswered-blow-lands-whole",
+   "rule": "A29",
+   "fn": "blowLands",
+   "in": [
+    {
+     "heavy": true,
+     "weapon": false,
+     "hurts": 0.24
+    },
+    {
+     "doing": "idle"
+    }
+   ],
+   "out": {
+    "hurt": 0.24,
+    "staggered": true,
+    "counterOpens": false
+   }
+  },
+  {
+   "id": "jab-inside-the-window-is-a-counter",
+   "rule": "ER-DEFEND-01",
+   "fn": "jabIs",
+   "in": [
+    0.3
+   ],
+   "out": "counter"
+  },
+  {
+   "id": "jab-after-the-window-is-a-jab",
+   "rule": "ER-DEFEND-01",
+   "fn": "jabIs",
+   "in": [
+    0.8
+   ],
+   "out": "jab"
+  },
+  {
+   "id": "no-counter-without-a-slip-or-block",
+   "rule": "ER-DEFEND-01",
+   "fn": "jabIs",
+   "in": [
+    null
+   ],
+   "out": "jab"
+  },
+  {
+   "id": "fresh-he-swings-at-full-speed",
+   "rule": "A29",
+   "fn": "windUpTimes",
+   "in": [
+    1
+   ],
+   "out": 1
+  },
+  {
+   "id": "half-spent-he-is-slower",
+   "rule": "A29",
+   "fn": "windUpTimes",
+   "in": [
+    0.25
+   ],
+   "out": 1.25
+  },
+  {
+   "id": "empty-he-is-slowest",
+   "rule": "A29",
+   "fn": "windUpTimes",
+   "in": [
+    0
+   ],
+   "out": 1.5
+  },
+  {
+   "id": "a-fighter-who-reads-wins-most-fair-fights",
+   "rule": "ER-DEFEND-01",
+   "fn": "duels",
+   "in": [
+    {
+     "n": 200,
+     "seed": 7,
+     "policy": "reader"
+    }
+   ],
+   "out": {
+    "won": 200,
+    "of": 200
+   }
+  },
+  {
+   "id": "a-masher-wins-under-three-in-ten",
+   "rule": "ER-FIGHT-07",
+   "fn": "duels",
+   "in": [
+    {
+     "n": 200,
+     "seed": 7,
+     "policy": "masher"
+    }
+   ],
+   "out": {
+    "won": 48,
+    "of": 200
+   }
+  }
+ ]
+}

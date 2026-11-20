@@ -200,7 +200,7 @@ try {
       for (let fight = 0; fight < 2; fight++) {
         LEDGER.fight.setOn([P]); F.tele = []; F.stam = 1;
         for (const f of F.foes) f.st = 'still';
-        LEDGER.fight.climb(); // weapon out
+        LEDGER.game.fightx.drawHeld(); // weapon out: since the one-shot only the held input [;] brings it out (ER-FIGHT-08), never a tap of R
         for (let i = 0; i < 60 * 6 && n < 2 + fight * 2; i++) {
           for (const f of F.foes) { f.P.hurt = 0; f.P.down = false; if (f.st !== 'stagger') f.st = 'still'; }
           F.stam = 1;
