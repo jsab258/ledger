@@ -454,8 +454,22 @@ def spend_since(hhmm):
     since = since_time(hhmm, datetime.datetime.now())
     steps = [s for path, _ in logs_touched(since) for s in read_events(path)["steps"] if s["t"] >= since]
     print("spend since %s: US$%.2f" % (hhmm, sum(step_cost(s["u"], s["model"]) for s in steps)))
+    helper_models = sorted({s["model"] for path, meta in logs_touched(since) if meta is not None
+                            for s in read_events(path)["steps"] if s["t"] >= since and s["model"]})
+    print(helpers_model_line(helper_models))
     print(model_line(session_model_now()))
     return 0
+
+
+# EXACT VERSIONS IN EVERY ROW (advisor 265, RULINGS 8 Nov's 20 Nov line): every Fable job on the newest Fable; the row
+# names each helper's exact model so a wrong version shows within the hour.
+NEWEST_FABLE = "claude-fable-5-2"
+
+
+def helpers_model_line(models):
+    old = [m for m in models if m.startswith("claude-fable") and not m.startswith(NEWEST_FABLE)]
+    line = "Helpers' models: %s" % (", ".join(models) if models else "none")
+    return ("FABLE VERSION WRONG (%s, not %s); " % (", ".join(old), NEWEST_FABLE) + line) if old else line
 
 
 # THE SESSION'S MODEL IN EVERY ROW, AND DOLLARS PER STEP BY MODEL (advisor 162, 14 November: the session ran a whole
@@ -684,6 +698,8 @@ def selftest():
         ("a result at the last step costs nothing yet", carried_cost(1000, 3, steps) == 0.0),
         ("the row's model words on Opus", model_line("claude-opus-5-5") == "Model: Opus 5.5"),
         ("the row's model words fire on Fable", model_line("claude-fable-5-2").startswith("MODEL WRONG")),
+        ("a helper on an old Fable is named in the row", helpers_model_line(["claude-fable-5-1", "claude-sonnet-5-5"]).startswith("FABLE VERSION WRONG")),
+        ("the newest Fable passes", helpers_model_line(["claude-fable-5-2[1m]"]) == "Helpers' models: claude-fable-5-2[1m]"),
         ("the row's model words fire when unknown", model_line(None).startswith("MODEL WRONG")),
         ("dollars per step up by more than half: JUMP", jump_line(0.169, 0.071).startswith("JUMP")),
         ("dollars per step up by a third: no jump", jump_line(0.094, 0.071).startswith("no jump")),

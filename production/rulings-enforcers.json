@@ -188,8 +188,11 @@
    "by": [
     "tools/settings_check.py::a helper moved to a dearer model is named",
     "tools/fresh_gate.py::MODEL WRONG",
-    "tools/token_measures.py::the row's model words fire on Fable"
-   ]
+    "tools/token_measures.py::the row's model words fire on Fable",
+    "tools/token_measures.py::a helper on an old Fable is named in the row",
+    "monday-audit"
+   ],
+   "note": "20 Nov (advisor 265): newest model of each kind, now claude-fable-5-2; --spend prints each helper's exact model and FABLE VERSION WRONG for an older Fable; the advisor checks Anthropic's models page daily, the Monday audit checks the release list."
   },
   {
    "line": "3, 4, 11 Nov: one session at a time",
