@@ -42,6 +42,7 @@ function target(Tg) {
     x = X('foot');
   if (x.torch && !t.inCar) Tg.light = Math.max(Tg.light, T.torchLight); // a lit torch lights him like a lamp (A33)
   if (t.slow && !t.inCar && !t.run) Tg.noiseR *= T.slowWalkHalvesFootsteps; // walking slowly halves his footsteps
+  if (!t.inCar && marked().bruised) Tg.marked = true; // a face that has been hit is a face people place (A21, ER-MARK-01)
 }
 export const marked = () => E.marks(dayNow() - X('foot').beatenDay);
 export const setTorch = (on_) => (X('foot').torch = !!on_);
@@ -246,6 +247,7 @@ register({
   loaded() {
     G.hooks.seen = seen;
     G.hooks.target = target;
+    G.hooks.limp = () => (marked().limp ? T.limpRunsAtShare : 1); // a limp for a day: he cannot run as he did
     S.tail = S.chase = S.tres = null;
   },
   step(dt) {
@@ -282,4 +284,8 @@ register({
     x: () => X('foot'),
   },
 });
-on('fight.beaten', () => (X('foot').beatenDay = dayNow())); // bruises and a cut lip for three game days, a limp for one (A21)
+on('fight.beaten', () => {
+  X('foot').beatenDay = dayNow();
+  tell('A split lip, and one eye closing. It will show for three days, and the leg will not run properly before tomorrow.', '', 8);
+  write('Beaten. The face will show it for three days: people will place him by it. The leg is bad until tomorrow.', { key: 'marks' + dayNow(), how: 'Felt it' });
+}); // bruises and a cut lip for three game days, a limp for one (A21)

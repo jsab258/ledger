@@ -63,6 +63,9 @@ export const TUNE = {
   // wardrobe and marks (A21)
   bruisesLastGameDays: 3,
   limpLastsGameDays: 1,
+  limpRunsAtShare: 0.75,
+  markedFaceTimes: 1.6, // a marked face is placed more readily by anybody who knows him
+  markedSureTimes: 1.3, // and a stranger is surer of the man he saw
   barberLastsGameDays: 7,
   markedCaughtAtMetres: 18,
   // on-foot feel faults found on 20 Nov (the body takes this long to turn, so the way he moves eases with it)

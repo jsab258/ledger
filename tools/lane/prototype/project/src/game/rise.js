@@ -98,8 +98,9 @@ register({
     const g = greetingOf(P);
     x.greeted[P.id] = dayNow();
     x.lastGreetPlayed = G.played;
-    x.lastGreeting = { by: P.id, kind: g, rung: x.rung };
-    tell(GREET[g][(dayNow() + P.id.length) % 2], GREET[g][(dayNow() + P.id.length) % 2].startsWith('"') ? P.def.name : '');
+    // what is remarked on is what is there: the face if it is marked, else the coat
+    const line = g === 'his appearance' ? GREET[g][marked().bruised ? 0 : 1] : GREET[g][(dayNow() + P.id.length) % 2];
+    tell(line, line.startsWith('"') ? P.def.name : '');
   },
   hourly(h) {
     climb();

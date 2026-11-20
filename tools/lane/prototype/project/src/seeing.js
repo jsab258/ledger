@@ -144,6 +144,7 @@ export function faceScore(P, c, d, T) {
       d < SEE.inCabCloseMetres && T.light > SEE.inCabLitAboveLight
         ? SEE.inCabCloseAndLitFaceTimes
         : SEE.inCabOtherwiseFaceTimes;
+  if (T.marked) b *= RULES.game.foot.markedFaceTimes; // the one-shot: bruises and a cut lip (game/foot.js)
   return b;
 }
 
@@ -180,8 +181,11 @@ export function witness(P, E, s, T, fixedWho) {
   const face = faceScore(P, s.c, s.d, T);
   const who = fixedWho || identify(P, s.c, s.d, T);
   const k = KINDS[E.kind];
-  const sure =
-    clamp(SEE.sureBase + SEE.surePerClarity * s.c, 0, 1) * (who === 'tom' ? 1 : SEE.sureIfNotNamedTimes);
+  const sure = clamp(
+    clamp(SEE.sureBase + SEE.surePerClarity * s.c, 0, 1) * (who === 'tom' ? 1 : SEE.sureIfNotNamedTimes) * (T.marked ? RULES.game.foot.markedSureTimes : 1),
+    0,
+    1,
+  );
   const firstSight = !P.mind.by[E.id];
   tally('sightings');
   const r = remember(P, E, {

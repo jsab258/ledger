@@ -481,7 +481,7 @@ export function stepPlayer(dt) {
         (fighting
           ? TOMS.fightingMetresPerSecond
           : run
-            ? TOMS.runningMetresPerSecond
+            ? TOMS.runningMetresPerSecond * (G.hooks.limp ? G.hooks.limp() : 1)
             : TOMS.walkingMetresPerSecond) *
         (1 - t.hurt * TOMS.hurtSlowsByShare) *
         Math.min(1, l) *
