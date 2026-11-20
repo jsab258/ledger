@@ -106,7 +106,8 @@ ${pending ? 'The character has just asked him: "' + pending + '"\n' : ''}Player 
         topic: ['me', 'fire', 'mickey', 'rivals', 'debt', 'person', 'other'].includes(r.topic)
           ? r.topic
           : loc.topic,
-        amount: loc.intent === 'bribe' ? Math.max(0, Math.min(TALKING.offerAtMostPounds, +r.amount || loc.amount || 0)) : 0,
+        // the sum is the one the game's own rule read in his words, when it read one
+        amount: loc.intent === 'bribe' ? Math.max(0, Math.min(TALKING.offerAtMostPounds, loc.amount || +r.amount || 0)) : 0,
         denies: !!r.denies,
       };
   } catch (e) {

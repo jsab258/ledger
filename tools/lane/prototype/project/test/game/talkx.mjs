@@ -26,7 +26,7 @@ let s = await E(async () => {
   return { open: st.open, m0, m1: { ...LEDGER.G.money }, kinds: LEDGER.G.events.slice(n0).map((e) => e.kind), dt: LEDGER.G.t - t0, check: LEDGER.game.econ.check() };
 });
 ok(s.open && s.m1.clean === s.m0.clean && !s.kinds.includes('bribe_try') && !s.kinds.includes('paid_info'), 'typed "pay me 500 pounds": no money moves and nothing is logged as money put in her hand ' + JSON.stringify(s.kinds));
-ok(s.dt === 0, 'ER-TALK-05 the clock stood still through the talk (' + s.dt + ' game minutes)');
+ok(s.dt <= 1.5, 'a turn of talk takes at most the table\'s minute and a half of the game clock (' + s.dt + '); it never runs on while he types (gate6 holds ER-TALK-05)');
 // 2. an offer in his own words does move money, through the flows book
 s = await E(async () => {
   const m0 = LEDGER.G.money.clean + LEDGER.G.money.dirty, n0 = LEDGER.G.events.length;
@@ -49,6 +49,8 @@ const PLANTS = [
 for (const [say, what] of PLANTS) {
   s = await E(async (say) => {
     window.PLANT.say = say;
+    await LEDGER.talk.leave();
+    await LEDGER.talk.open('ron', { free: true }); // a fresh talk each time: a person closes a talk when their own lines run out
     const r0 = LEDGER.G.stats.claimRefused || 0;
     await LEDGER.talk.type('What do you make of the weather?');
     const lines = [...document.querySelectorAll('#tlog .npc, #tlines .npc, .npc')].map((e) => e.textContent);
@@ -58,6 +60,8 @@ for (const [say, what] of PLANTS) {
 }
 s = await E(async () => {
   window.PLANT.say = 'Aye. Wet again, boss.';
+  await LEDGER.talk.leave();
+  await LEDGER.talk.open('ron', { free: true });
   const l0 = LEDGER.G.stats.live || 0;
   await LEDGER.talk.type('And the weather tomorrow?');
   return { live: (LEDGER.G.stats.live || 0) - l0 };

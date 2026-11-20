@@ -7,7 +7,7 @@
     "build:dev": "node tools/build.mjs --dev",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint src",
-    "test": "node tools/numbers.mjs left && node tools/walk_times.mjs && node test/same_week.mjs && node test/week.mjs && node tools/publish_set.mjs && node test/arrivals.mjs && node test/nights.mjs && node test/town.mjs && node test/ledger_rules.mjs && node test/layout.mjs && node test/files.mjs && node test/talk.mjs && node test/eyes.mjs && node test/fixes1.mjs && node test/watch2.mjs && node test/melee3.mjs && node test/melee4.mjs && node test/talk5.mjs && node test/gate6.mjs",
+    "test": "node tools/numbers.mjs left && node tools/walk_times.mjs && node test/same_week.mjs && node test/week.mjs && node tools/publish_set.mjs && node test/arrivals.mjs && node test/nights.mjs && node test/town.mjs && node test/ledger_rules.mjs && node test/layout.mjs && node test/files.mjs && node test/talk.mjs && node test/eyes.mjs && node test/fixes1.mjs && node test/watch2.mjs && node test/melee3.mjs && node test/melee4.mjs && node test/talk5.mjs && node test/gate6.mjs && node test/pieces.mjs && node tools/numbers.mjs game && for f in test/game/*.mjs; do node \"$f\" || exit 1; done",
     "test:week": "node test/week.mjs",
     "test:nights": "node test/nights.mjs",
     "test:layout": "node test/layout.mjs",
@@ -17,7 +17,10 @@
     "test:same": "node test/same_week.mjs",
     "test:arrivals": "node test/arrivals.mjs",
     "test:town": "node test/town.mjs",
-    "test:ledger": "node test/ledger_rules.mjs"
+    "test:ledger": "node test/ledger_rules.mjs",
+    "test:pieces": "node test/pieces.mjs",
+    "cases": "node tools/pieces_cases.mjs",
+    "numbers:game": "node tools/numbers.mjs game --show"
   },
   "dependencies": {
     "three": "0.187.0"

@@ -36,7 +36,17 @@ import build  # noqa: E402
 ORDER = ["numbers", "walks", "same_week", "week", "publish_set", "arrivals", "nights", "town",
          "ledger_rules", "layout", "files", "talk", "eyes", "fixes1", "watch2", "melee3", "melee4", "talk5", "gate6", "oldsave"]
 SCRIPTS = {"numbers": ["tools/numbers.mjs", "left"], "walks": ["tools/walk_times.mjs"],
-           "publish_set": ["tools/publish_set.mjs"]}
+           "publish_set": ["tools/publish_set.mjs"],
+           # the one-shot (20 Nov): the rule pieces' own cases, and the list of numbers outside game/tune (SEE, not a verdict)
+           "pieces": ["test/pieces.mjs"], "numbers_game": ["tools/numbers.mjs", "game"]}
+
+
+def game_tests():
+    """The whole game's own tests: every project/test/game/*.mjs that exists, as "game/<name>", in name order."""
+    folder = os.path.join(HERE, "project", "test", "game")
+    if not os.path.isdir(folder):
+        return []
+    return ["game/" + f[:-4] for f in sorted(os.listdir(folder)) if f.endswith(".mjs")]
 
 
 def verdict(name, code, out):
@@ -108,7 +118,8 @@ def _run(assets, only, work, timeout):
     os.makedirs(logs, exist_ok=True)
     env = dict(os.environ)
     results = {}
-    for name in ORDER:
+    order = ORDER[:-1] + ["pieces", "numbers_game"] + game_tests() + ORDER[-1:]  # oldsave stays last
+    for name in order:
         if only and name not in only:
             continue
         if name == "oldsave" and not env.get("OLD"):
@@ -124,9 +135,10 @@ def _run(assets, only, work, timeout):
         except subprocess.TimeoutExpired as e:
             out, code = (e.stdout or "") if isinstance(e.stdout, str) else "", 124
             out += "\nTIMEOUT after %d s" % timeout
+        os.makedirs(os.path.dirname(os.path.join(logs, name + ".log")), exist_ok=True)
         with open(os.path.join(logs, name + ".log"), "w", encoding="utf-8") as f:
             f.write(out)
-        results[name] = verdict(name, code, out)
+        results[name] = verdict(name.split("/")[-1], code, out)
         print("%-12s %-5s %4.0f s" % (name, results[name], time.time() - t0), flush=True)
     return results
 
