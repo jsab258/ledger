@@ -3,6 +3,7 @@ import { G, day, hour, SECS_PER_HOUR, pausedWhile } from './state.js';
 import { hyp, money, quid } from './util.js';
 import { seed } from './events.js';
 import { RULES } from './rules.js';
+import { gameStep } from './game/core.js';
 
 const REST = RULES.rest,
   BEAT = RULES.beaten;
@@ -30,6 +31,10 @@ export function advanceTo(tEnd, hidden = true) {
   while (G.t < tEnd && guard++ < 30000) {
     simStep(Math.min(RULES.ticking.longestSleepStepRealSeconds, ((tEnd - G.t) * SECS_PER_HOUR) / 60 + 0.01));
     if (G.hooks.clock) G.hooks.clock();
+    // the whole game: its systems live through the skip as well, and a wait or a sleep always stops for what the
+    // town has for him (ER-JOB-04): any system may say so through G.hooks.stopsWait
+    gameStep(0);
+    if (G.hooks.stopsWait && G.hooks.stopsWait() && hidden) break;
   }
   t.space = sp;
 }
@@ -73,6 +78,7 @@ export async function passTime(tEnd, text = '') {
   await pausedWhile('passing time', async () => {
     await fade(true, text);
     const before = day();
+    if (G.hooks.stopsWait) G.hooks.stopsWait(); // only what turns up during this wait stops it
     advanceTo(tEnd);
     if (day() !== before || hour() < REST.wakesProperlyBeforeHour) wake();
     G.tom.still = 0;

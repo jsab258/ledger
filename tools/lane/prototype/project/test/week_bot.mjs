@@ -138,7 +138,10 @@ try {
   await L(() => { const G = LEDGER.G, P = G.people.sheila, t = G.tom; t.x = P.x; t.z = P.z + 1.9; t.ang = Math.PI; }); await h.step(0.5);
   log(' prompts by Sheila:', JSON.stringify(await L(() => LEDGER.prompts())));
   await L(() => LEDGER.press('E')); await h.step(0.3);
-  const tour = await clear();
+  let tour = await clear();
+  // the one-shot: her walk-round ends at the radio with the first fare; she finishes at the books when he comes back
+  await h.step(0.5); await L(() => LEDGER.press('E')); await h.step(0.3);
+  tour = tour.concat(await clear());
   log(' Sheila reads the book:', tour.length, 'lines;', tour.filter((x) => /decided/.test(x)).join('; '));
   log(' flags', JSON.stringify(await L(() => { const f = LEDGER.read().story.flags; return { tour: f.tour, metRon: f.metRon }; })), await money());
   await L(() => LEDGER.goOutside());
@@ -227,9 +230,12 @@ try {
   await runTo(4 * 1440 + 9.2 * 60);
   await ledgerVisit({ ms: 500 });
   await runTo(4 * 1440 + 16.2 * 60);
+  // the one-shot: Sheila's question is on Sunday, her day off (DESIGN 16); Saturday is slept through
+  await sleepTill('morning'); await sleepTill('morning');
+  await runTo(6 * 1440 + 10.3 * 60);
   await L(() => LEDGER.goInside("Mickey's Cars"));
   await L(() => { const G = LEDGER.G, P = G.people.sheila, t = G.tom; t.x = P.x; t.z = P.z + 1.9; }); await h.step(0.5);
-  log(' prompts by Sheila on Friday:', JSON.stringify(await L(() => LEDGER.prompts())));
+  log(' prompts by Sheila on Sunday:', JSON.stringify(await L(() => LEDGER.prompts())));
   await L(() => LEDGER.press('E')); await h.step(0.5);
   const end = await clear({ answer: 'yes', proposal: 0 });
   log(' the end:', end.filter((x) => /decided/.test(x)).join('; '));

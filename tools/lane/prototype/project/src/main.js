@@ -1,6 +1,8 @@
 // LEDGER: a week on Quay Street. Boot, the frame loop, menus.
 import { installHook } from './hook.js';
 import { gameStep, gameLoaded, gameHook } from './game/index.js';
+import { budgetTick } from './game/ledgerx.js';
+import { readingNow } from './game/endings.js';
 import { syncOpen } from './ledger.js';
 import { visitStart, visitEnd, notedShown, activeAsk, askTick, measures } from './measures.js';
 import { THREE } from './render/core.js';
@@ -11,7 +13,7 @@ import { G, resetState, day, hour, setPaused, PAUSE } from './state.js';
 import { initEnv, simStep } from './clock.js';
 import { initPeople, placeAll } from './routines.js';
 import { townLevel } from './gossip.js';
-import { ROOMS } from './map.js';
+import { ROOMS, SPOTS } from './map.js';
 import { buildActors, syncActors } from './render/sync.js';
 import { loadPeople, peopleInfo, buildCharR, poseCharR, poseClip } from './render/rig.js';
 import {
@@ -36,7 +38,7 @@ import {
 } from './ui.js';
 import { believedLine, ledgerHTML, drawMap, ledgerInput, ledgerClick, LS, PARTS } from './ledger_screen.js';
 import { endHTML, reportText, playtestHTML, measuresHTML } from './end_screen.js';
-import { pauseHTML, howHTML, creditsHTML, notesHTML, introLetter } from './design_notes.js';
+import { pauseHTML, howHTML, creditsHTML, notesHTML } from './design_notes.js';
 import {
   FILES,
   hostDownloads,
@@ -265,6 +267,7 @@ async function boot() {
       startNew();
     },
     cont: continueWeek,
+    carryon: carryOn,
     copy: copyReport,
     titlehow: () => {
       panel(howHTML(), 'how');
@@ -322,6 +325,8 @@ async function boot() {
 }
 // Round 6 (ER-SAVE-02, ER-CORE-03): no choice that cannot be undone is one press from Carry on. The first press
 // only asks; the second, on the same button, does it.
+const FERRY_SHOT =
+  "Monday 15 October 1990. Twenty to four.\n\nThe ferry comes in under a grey sky. One suitcase, and a letter: your uncle Michael Suddaby is dead, and Mickey's Cars on Quay Street is yours.\n\nYou have never been to the Hook. Nobody here knows your face.\n\n(any key)";
 function sure(b, what) {
   if (!b || !b.dataset || b.dataset.sure) return true;
   b.dataset.sure = '1';
@@ -681,13 +686,20 @@ async function copyReport() {
     if (msg) msg.textContent = 'Select all in the box above and copy it by hand.';
   }
 }
+const closeSeen = (si) => {
+  try {
+    return !!JSON.parse(si.json).story.flags.closeSeen;
+  } catch (e) {
+    return false;
+  }
+};
 function showTitle() {
   const items = [];
   if (saveInfo)
     items.push({
-      t: saveInfo.ended
+      t: saveInfo.ended && !closeSeen(saveInfo)
         ? 'See how the week ended'
-        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][Math.floor(saveInfo.t / 1440)] || 'the week'}`,
+        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][Math.floor(saveInfo.t / 1440) % 7]}${saveInfo.t >= 7 * 1440 ? ', week ' + (Math.floor(saveInfo.t / 10080) + 1) : ''}`,
       act: 'cont',
     });
   items.push(
@@ -743,8 +755,9 @@ async function startNew() {
   titleMenu([], false);
   closePanel();
   setPaused(true, 'starting a new week');
-  await fade(true, introLetter);
-  await waitClick(15000);
+  // The first hour (DESIGN 15): the ferry comes in under a grey sky. One shot, at most 20 s, skipped by any key.
+  await fade(true, FERRY_SHOT);
+  await waitClick(RULES.game.acts.ferryShotAtMostRealSeconds * 1000);
   clearTraffic();
   newWeek();
   gameLoaded();
@@ -753,22 +766,21 @@ async function startNew() {
     b.visible = false;
   });
   const t = G.tom;
-  t.x = -5.4;
-  t.z = 27.5;
-  t.ang = 0.6;
+  t.x = SPOTS.ferry[0] + 3;
+  t.z = SPOTS.ferry[1] - 2.5;
+  t.ang = Math.PI;
   t.space = 'street';
   setInside(null);
   ui.roomName = null;
-  cam.yaw = 0.6;
+  cam.yaw = Math.PI;
   cam.pitch = 0.24;
   cam.dist = 5.4;
   snapCam();
-  spawnBusLeaving();
   show('hud', true);
   show('touch', G.settings.touch);
   setPaused(false, 'the new week has started');
   await fade(false);
-  sub('Quay Street. One suitcase. The bus does not wait.', '', 'over', 5);
+  sub('The ferry landing, Meridian. One suitcase and a letter. The ferry does not wait.', '', 'over', 5);
 }
 // Put a saved week back: the state, then the people rebuilt around their restored memories (each mind gets its
 // index again), then the room and the camera. Continue and the test hook both come through here.
@@ -817,12 +829,27 @@ async function continueWeek() {
   }
   setPaused(false, 'the saved week is loaded');
   await fade(false);
-  if (G.story.ended) showEnd();
+  if (G.story.ended && !G.story.flags.closeSeen) showEnd();
+}
+// The week's end is the close of Act I (DESIGN 16): Tom's reading, the week on Quay Street, and play goes on.
+function actCloseHTML() {
+  const r = readingNow();
+  return `<h1>The end of Act I: The Inheritance</h1><p>${r.text.map((l) => l.replace(/</g, '&lt;')).join(' ')}</p><p>Nothing ends here. The firm is his to run, and the town goes on.</p><div class="row"><button class="btn" data-act="carryon">Carry on</button></div><hr>`;
+}
+function carryOn() {
+  G.story.flags.closeSeen = 1;
+  closePanel();
+  G.story.phase = 'play';
+  setPaused(false, 'Act I is closed: play goes on');
+  fade(false);
+  if (rooms.lockDoor) rooms.lockDoor.visible = false;
+  G.story.objective = "Mickey's is his to run. Fares, the debt book, the night's work: the firm grows by what he does with it.";
+  saveNow(true);
 }
 function showEnd() {
   unlock();
   G.story.phase = 'end';
-  panel(endHTML(), 'end');
+  panel(actCloseHTML() + endHTML(), 'end');
   bindPlaytest();
   fade(false);
 }
@@ -838,6 +865,7 @@ function logic(dt) {
     return;
   }
   dialogTick(dt);
+  budgetTick(dt); // the hour budget: play time booked by activity, also while a talk holds the game (game/ledgerx.js)
   if (!G.paused && ph === 'play') {
     G.played += dt;
     slowT += dt;

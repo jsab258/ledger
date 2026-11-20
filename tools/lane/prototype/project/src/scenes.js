@@ -14,7 +14,7 @@ import { sub, say, scene, bubble, news, fade, tomName, ui, after } from './ui.js
 import { startTalk, talkSay, endTalk, decision } from './talk.js';
 import { F, frontUp, setOn, recover } from './fight.js';
 import { pay, earn, wash, washCap } from './money.js';
-import { rest, advanceTo, workStep, beaten, tomAt } from './work.js';
+import { rest, advanceTo, workStep, beaten, tomAt, passTime } from './work.js';
 import { fareOffer } from './fares.js';
 import { startJob, jobHotspots, jobClock, watchStep } from './jobs.js';
 import { nightly } from './police.js';
@@ -22,6 +22,7 @@ import { ellisClock, arrestNow } from './police.js';
 import { RULES } from './rules.js';
 import { gameHotspots, gameBeatFor, gameMatters } from './game/index.js';
 const STORY = RULES.story;
+const ACTS = RULES.game.acts;
 const LAD = RULES.ladder;
 
 const REST = RULES.rest,
@@ -68,7 +69,7 @@ export function newWeek() {
 }
 const askVia = () =>
   P_('ron').dead ? 'darren' : fl().ask1 === 'yes' ? 'ron' : P_('darren').dead ? 'ron' : 'darren';
-const ask1Due = () => fl().tour && !fl().ask1 && day() === 0 && hour() >= STORY.ronAsksFromHour;
+const ask1Due = () => fl().tour1 && !fl().ask1 && day() === 0 && hour() >= STORY.ronAsksFromHour;
 const ask15Due = () =>
   day() === 1 && hour() >= STORY.secondNightOfferedFromHour && fl().job1 === 'done' && !fl().ask15;
 const ask2Due = () =>
@@ -77,7 +78,7 @@ const alisonDue = () =>
   day() >= 2 && !fl().alison && hour() >= STORY.alisonAsksFromHour && hour() < STORY.alisonAsksUntilHour;
 const endReady = () =>
   !G.story.ended &&
-  (day() > STORY.lastDayIndex || (day() === STORY.lastDayIndex && hour() >= STORY.weekEndsFromHour));
+  (day() > ACTS.sheilaAsksOnDayIndex || (day() === ACTS.sheilaAsksOnDayIndex && hour() >= ACTS.sheilaAsksFromHour)); // Sunday, her day off (DESIGN 16)
 const job3On = () =>
   fl().ask2 === 'yes' &&
   !fl().job3 &&
@@ -88,60 +89,46 @@ const teaOn = () =>
   fl().teaInvited && !fl().tea && day() === 2 && hour() >= STORY.teaFromHour && hour() < STORY.teaUntilHour;
 
 // ---------- scenes ----------
+// Sheila's walk-round, restaged for the first hour (DESIGN 15): six lines on her feet, ending at the radio where
+// Pauline has a fare and no car. She finishes later, at the things themselves (tourEnd), once he has driven it or
+// simply comes back to her: nothing needs the car.
 const tour = () =>
   scene(async () => {
     const t = G.tom;
     meet(P_('sheila'));
     P_('sheila').mind.fam = STORY.sheilaFamiliarityOnMeeting;
-    await say('sheila', "New management. Sit down, you're making the place look untidy.");
-    await say(
-      'sheila',
-      "Sheila Dunn. I kept your uncle's books. Thirty-one years. I know what a quiet week costs, and this is a quiet year.",
-    );
-    await say(
-      'sheila',
-      "The fare book. Every fare Pauline calls goes in it. That's the clean money, such as it is.",
-    );
-    await say(
-      'sheila',
-      'The radio. Nobody in this building can help overhearing it. Remember that before you say anything near it.',
-    );
+    await say('sheila', "New management. Don't sit down. Walk round with me, it's quicker.");
+    await say('sheila', "Sheila Dunn. I kept your uncle's books. Thirty-one years of them.");
+    await say('sheila', "The counter. People come in wet and angry. Ron stands at the door so they stay only wet.");
     await say('sheila', 'The yard, through there. Two ways out. Your uncle liked a choice.');
-    await say(
-      'sheila',
-      'And his other book. The debts. Iveson eighty pounds, Harrison thirty, young Milner twenty-two, Drewery fifteen, the Kettlewell girl nine. Nobody on it can pay, and they all know I know.',
-    );
-    const i = await decision('sheila', 'That door stays shut.', DEC.door);
-    if (i === 0)
-      await say(
-        'sheila',
-        "The real book. You'll see it when I've decided what you are. I told Mickey I'd look you over first, and I keep what I tell people.",
-      );
-    else await say('sheila', "Good. First sensible thing anyone's said in here since the funeral.");
-    await say(
-      'sheila',
-      "Keys to car two. Kevin has car one. Drive it yourself if you want the book to look honest. Pauline will call you fares when you're sat in it.",
-    );
-    await say(
-      'sheila',
-      "Mrs Rennison at Regent House has your room, top of the street on this side. Mickey paid the week. After that, rent's Friday.",
-    );
-    fl().tour = 1;
+    await say('sheila', 'The radio. Nobody in this building can help overhearing it. Remember that before you say anything near it.');
+    await say('pauline', "Sheila, I've the priest's housekeeper wanting the chapel house and Kevin's out at the station. I've a fare and no car.");
+    await say('sheila', "Then here's your start. Keys to car two, on the rank. Drive it yourself: the book looks honest when the owner drives. Come back and I'll show you the rest.");
+    fl().tour1 = 1;
     G.car.keys = true;
     if (t.carry === 'suitcase') t.carry = null;
     fl().unpacked = 1;
-    note(
-      "Mickey's book of debts: Iveson £80.00, Harrison £30.00, Milner £22.00, Drewery £15.00, Kettlewell £9.00. Nobody can pay.",
-      'debts',
-      'debts',
-      { who: 'sheila', how: 'Sheila says' },
-    );
-    note('A door in the back room Sheila will not open. The real book is behind it.', 'note', 'door', {
-      who: 'sheila',
-      how: 'Sheila says',
-    });
-    G.story.objective =
-      'Learn the street. Drive a fare if you like: sit in car two at the rank [F]. Ron Kirby will want a word before dark.';
+    note("Pauline has a fare for the chapel house and no car. Car two is on the rank outside Mickey's: the keys are Tom's now.", 'note', 'firstfare', { who: 'pauline', how: 'Pauline says' });
+    G.story.objective = "Car two is on the rank outside Mickey's [F]. Pauline's fare wants the chapel house, on Chapel Lane. Or go back to Sheila: she has more to show.";
+    if (!G.story.fare) {
+      const c = G.car;
+      (G.hooks.fareOffer || fareOffer)({ from: "the rank outside Mickey's", sx: c.x, sz: c.z, dest: 'chapel', who: null, first: 1 });
+    }
+  });
+const tourEnd = () =>
+  scene(async () => {
+    const drove = G.money.fareCount > 0;
+    await say('sheila', drove ? "That's your first fare. It goes in here. The fare book: every fare Pauline calls. That's the clean money, such as it is." : "Not driving? Suit yourself. The fare book: every fare Pauline calls goes in it. That's the clean money, such as it is.");
+    await say('sheila', "And this is Mickey's debt book. Not the fares. Money he lent. Iveson eighty pounds, Harrison thirty, young Milner twenty-two, Drewery fifteen, the Kettlewell girl nine. A hundred and fifty-six, and nobody on it can pay.");
+    const i = await decision('sheila', 'That door stays shut.', DEC.door);
+    if (i === 0)
+      await say('sheila', "The real book. You'll see it when I've decided what you are. I told Mickey I'd look you over first, and I keep what I tell people.");
+    else await say('sheila', "Good. First sensible thing anyone's said in here since the funeral.");
+    await say('sheila', "The flat's upstairs and it's still his. Mrs Rennison at Regent House has your room, top of the street on this side. Mickey paid the week. After that, rent's Friday.");
+    fl().tour = 1;
+    note("Mickey's debt book, money he lent: Iveson £80.00, Harrison £30.00, Milner £22.00, Drewery £15.00, Kettlewell £9.00. £156.00 in all. Nobody can pay.", 'debts', 'debts', { who: 'sheila', how: 'Sheila says' });
+    note('A door in the back room Sheila will not open. The real book is behind it.', 'note', 'door', { who: 'sheila', how: 'Sheila says' });
+    G.story.objective = "Darren Milner owes Mickey's debt book £22 and he is out on the street. Front him up [Q], take what he offers, or strike it out. Ron Kirby will want a word after dark.";
   });
 const ronIntro = () =>
   scene(async () => {
@@ -172,7 +159,7 @@ const darrenIntro = () =>
     );
     await say(
       'darren',
-      "Darren. I did bits for Mickey. Messages. Watching a door. I owe the book a few quid an' all, I'm not hiding it.",
+      "Darren. I did bits for Mickey. Messages. Watching a door. I'm in Mickey's debt book for a few quid an' all, money he lent me, I'm not hiding it.",
     );
     await say(
       'darren',
@@ -471,7 +458,7 @@ const teaScene = (late) =>
     A.goalKey = 'home|window';
     advanceTo(G.t + STORY.teaTakesGameMinutes, false);
     if (G.hooks.leaveRoom) G.hooks.leaveRoom();
-    G.story.objective = 'Thursday and Friday are yours. Sheila will want an answer by Friday evening.';
+    G.story.objective = 'The rest of the week is yours. Rent is due on Friday. Sheila will want an answer on Sunday.';
   });
 const alisonAsk = () =>
   scene(async () => {
@@ -590,7 +577,7 @@ const endScene = () =>
     if (G.hooks.doorOpen) G.hooks.doorOpen();
     await say(
       'sheila',
-      "Sit down. It's Friday. I said I'd decide what you are, and I haven't. So you can tell me.",
+      "Sit down. It's Sunday and it's my day off, so I'll be quick. I said I'd decide what you are, and I haven't. So you can tell me.",
     );
     f.sheilaAsked = 1; // the Open part may now say "Today": she has asked
     await say(
@@ -651,8 +638,9 @@ const endScene = () =>
 export async function endWeek(choice) {
   const st = G.story;
   if (st.ended) return;
-  st.ended = true;
+  st.ended = true; // week one is answered: Act I closes here and play goes on (game/acts.js)
   fl().choice = choice;
+  if (G.hooks.actOneClosed) G.hooks.actOneClosed(choice);
   act('choice_' + choice, { silent: true, told: ['sheila', 'pauline'] });
   setPaused(true, 'the end of the week');
   await fade(
@@ -673,7 +661,8 @@ export function beatFor(P) {
   const f = fl();
   switch (P.id) {
     case 'sheila':
-      if (!f.tour) return tour;
+      if (!f.tour1) return tour;
+      if (!f.tour) return tourEnd;
       if (endReady()) return endScene;
       break;
     case 'ron':
@@ -1359,7 +1348,7 @@ function yielded(P, demand, rung) {
     earn(PRICE.scrapyardCollectionPayPence, true);
     note("Iveson paid. £100.00 from Garbutt's people is in the tin.", 'money', null, { how: 'Counted it' });
     G.story.objective =
-      'It is done. Thursday and Friday are yours. Sheila will want an answer by Friday evening.';
+      'It is done. The rest of the week is yours. Rent is due on Friday. Sheila will want an answer on Sunday.';
   }
 }
 function fightOver() {
@@ -1564,13 +1553,16 @@ function marks() {
   const f = fl(),
     d = day(),
     h = hour();
-  P_('sheila').mark = !f.tour || endReady() ? '!' : null;
+  P_('sheila').mark = !f.tour || endReady() ? '!' : null; // until she has shown him everything, and again on Sunday
   P_('ron').mark =
     ask1Due() || ask15Due() || (ask2Due() && askVia() === 'ron') ? '!' : f.ask1 === 'think' ? '?' : null;
   P_('darren').mark = ask2Due() && askVia() === 'darren' ? '!' : null;
   P_('alison').mark = alisonDue() ? '?' : null;
   P_('sylvia').mark = d === MONEY.rentDueDayIndex && !f.rent ? '£' : null;
   P_('dennis').mark = job3On() && G.debts.dennis.st === 'open' ? '!' : null;
+  // the whole game: whoever brings the next beat of Act II has a word for him (game/acts.js)
+  const pend = G.hooks.actPending && G.hooks.actPending();
+  if (pend && pend.giver && P_(pend.giver) && !P_(pend.giver).mark) P_(pend.giver).mark = '!';
   // nobody carries a mark over their head now: someone who wants a word turns, lifts a hand and says so
   if (!ui.modal && !G.paused && !F.on)
     for (const id of ['sheila', 'ron', 'darren', 'alison', 'sylvia']) {
@@ -1599,7 +1591,7 @@ function marks() {
     const S = P_('sheila');
     if (!S.override) send(S, 'mickeys:sheila', 'work');
     G.story.objective =
-      'It is Friday. The door in the back room is open, and Sheila is waiting behind her desk.';
+      'It is Sunday. The door in the back room is open, and Sheila has come in on her day off. She is waiting behind her desk.';
   }
   if (ask1Due() && !f.ask1obj && !P_('ron').dead) {
     // round 2: the first night's offer was easy to miss (the playtester's newcomer never heard it in an hour)
@@ -1616,7 +1608,7 @@ function marks() {
     f.d4obj = 1;
     if (!G.story.objective.includes('Friday'))
       G.story.objective =
-        'Thursday. Fares, the book of debts, the street. Rent is due at Regent House tomorrow. Sheila will want an answer by Friday evening.';
+        'Thursday. Fares, the debt book, the street. Rent is due at Regent House tomorrow. Sheila will want an answer on Sunday.';
   }
   if (d === 1 && h >= STORY.morningToDoFromHour && !f.d2obj) {
     f.d2obj = 1;
@@ -1832,6 +1824,7 @@ export function storyStep(dt) {
     f.arrived = 1;
     act('arrive');
   }
+  firstHour(dt);
   clock();
   workStep(dt);
   watchStep(dt);
@@ -1852,14 +1845,36 @@ export function storyStep(dt) {
     collapse();
   }
   if (
-    day() >= REST.weekEndsUnansweredOnDayIndex &&
-    h >= REST.weekEndsUnansweredAtHour &&
+    (day() > ACTS.unansweredOnDayIndex || (day() === ACTS.unansweredOnDayIndex && h >= ACTS.unansweredAtHour)) &&
     !G.story.ended &&
     !G.paused
   ) {
     sub('You never went in. Sheila locked the door and went home. That is an answer as well.', '', 'over', 6);
     endWeek('silent');
   }
+}
+// The first hour (DESIGN 15): the to-do moves with every beat, and a hint comes only when he stands still.
+let hintCool = 0;
+function firstHour(dt) {
+  const f = fl(),
+    t = G.tom;
+  if (f.tour || day() > 0) return;
+  hintCool = Math.max(0, hintCool - dt);
+  const obj = (k, text) => {
+    if (f.fh === k) return;
+    f.fh = k;
+    G.story.objective = text;
+  };
+  if (!f.tour1) {
+    if (t.space === 'mickeys') obj('in', "Mickey's. The woman at the books in the back is Sheila Dunn: speak to her [E].");
+    else if (t.zone === 'Quay Street' || t.z < 40) obj('street', "Quay Street. Mickey's is at the quay end, under the blue sign: go in [E at the door].");
+    else obj('quay', "Up the quay to Quay Street. Mickey's is at the quay end of it, under the blue sign.");
+    if ((t.still || 0) > ACTS.hintAfterStandingStillRealSeconds && !hintCool && !f.hintWalk && G.settings.hints !== false && t.space === 'street' && !ui.modal) {
+      f.hintWalk = 1;
+      hintCool = ACTS.hintsAtLeastApartRealSeconds;
+      sub('W, A, S, D walk. The mouse looks. Shift runs.', '', 'over', 5);
+    }
+  } else if (G.money.fareCount > 0 && !G.story.fare) obj('back', "The first fare is in the book. Sheila has the rest to show: go back in to her at Mickey's.");
 }
 async function collapse() {
   const t = G.tom;
@@ -1889,6 +1904,7 @@ export function initStory() {
         : P.id === 'darren' && (darrenHeard(0, true) || p >= STORY.goodWordFromPence)
           ? darrenHeard(p)
           : null, // nothing invented: with nothing to tell they only take it
+    passTime, // the wait key of game/acts.js passes time by the same road as a bed
     demandFor: (P) => (G.debts[P.id] && G.debts[P.id].st === 'open' ? { type: 'debt' } : null),
     killed: (P) => {
       news('MAN FOUND DEAD ON THE HOOK', 'Police appeal for witnesses');

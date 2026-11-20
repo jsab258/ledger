@@ -1,0 +1,306 @@
+{
+ "piece": "act_beats",
+ "cases": [
+  {
+   "id": "act1-until-sheila-is-answered",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "rung": 3,
+     "faresDriven": 50
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "act2-opens-when-the-firm-has-a-recruit",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "choice": "take",
+     "crewRecruits": 1
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "act2-not-yet-with-nothing-grown",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "choice": "take"
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "act2-opens-on-ten-fares",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "choice": "silent",
+     "faresDriven": 10
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "act2-opens-at-once-when-wound-down",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "choice": "wind"
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "act2-opens-after-quiet-days",
+   "rule": "7.4 no dead weeks",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "choice": "take",
+     "quietDays": 3
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "act2-never-goes-back",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "act": 2
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "act3-when-the-sit-down-is-answered",
+   "rule": "DESIGN 16",
+   "fn": "actOf",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "sitDown": {
+      "head": "agar",
+      "answer": "defy"
+     }
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "first-beat-is-the-opening",
+   "rule": "DESIGN 16",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2
+    }
+   ],
+   "outHas": {
+    "id": "opens",
+    "why": "state"
+   }
+  },
+  {
+   "id": "no-beat-on-a-day-alone",
+   "rule": "beats fire on states, never on days",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens"
+     ],
+     "quietDays": 1
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "a-rival-noticing-fires-its-beat",
+   "rule": "ER-RIV-02",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens"
+     ],
+     "rivalRungs": {
+      "agar": 1
+     }
+    }
+   ],
+   "outHas": {
+    "id": "rival_first",
+    "why": "state"
+   }
+  },
+  {
+   "id": "ellis-joins-on-talk-and-two-seen-crimes",
+   "rule": "DESIGN 8, 16",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens",
+      "rival_first"
+     ],
+     "lawStage": 1,
+     "seenCrimes": 2
+    }
+   ],
+   "outHas": {
+    "id": "ellis_joins"
+   }
+  },
+  {
+   "id": "the-collision-is-guaranteed-after-three-beats",
+   "rule": "DESIGN 16",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens",
+      "rival_first",
+      "ellis_joins"
+     ]
+    }
+   ],
+   "outHas": {
+    "id": "collision",
+    "why": "state"
+   }
+  },
+  {
+   "id": "quiet-days-bring-the-next-beat",
+   "rule": "7.4 no dead weeks",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens"
+     ],
+     "quietDays": 3
+    }
+   ],
+   "outHas": {
+    "id": "rival_first",
+    "why": "quiet"
+   }
+  },
+  {
+   "id": "no-beat-after-the-sit-down",
+   "rule": "DESIGN 16",
+   "fn": "nextBeat",
+   "in": [
+    {
+     "answered": true,
+     "act": 2,
+     "fired": [
+      "opens"
+     ],
+     "sitDown": {
+      "head": "widow",
+      "answer": null
+     },
+     "quietDays": 9
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "head-is-the-rival-furthest-up",
+   "rule": "DESIGN 13",
+   "fn": "sitDownHead",
+   "in": [
+    {
+     "rivalRungs": {
+      "widow": 2,
+      "agar": 4,
+      "cammack": 3
+     }
+    }
+   ],
+   "out": "agar"
+  },
+  {
+   "id": "head-ties-go-to-the-widow",
+   "rule": "DESIGN 13",
+   "fn": "sitDownHead",
+   "in": [
+    {}
+   ],
+   "out": "widow"
+  },
+  {
+   "id": "every-beat-reachable-from-nothing",
+   "rule": "3.1.2 every beat reachable",
+   "fn": "reachable",
+   "in": [
+    {}
+   ],
+   "out": [
+    "opens:state",
+    "rival_first:quiet",
+    "ellis_joins:quiet",
+    "collision:state",
+    "squeeze:quiet",
+    "sitdown_called:state"
+   ]
+  },
+  {
+   "id": "every-beat-reachable-by-states-alone",
+   "rule": "3.1.2 every beat reachable",
+   "fn": "reachable",
+   "in": [
+    {
+     "rung": 4,
+     "rivalRungs": {
+      "widow": 4,
+      "agar": 3,
+      "cammack": 3
+     },
+     "lawStage": 2,
+     "seenCrimes": 5,
+     "friendHolds": true,
+     "arrangement": "kept"
+    }
+   ],
+   "out": [
+    "opens:state",
+    "rival_first:state",
+    "ellis_joins:state",
+    "collision:state",
+    "squeeze:state",
+    "sitdown_called:state"
+   ]
+  }
+ ]
+}

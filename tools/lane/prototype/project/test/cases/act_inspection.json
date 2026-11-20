@@ -1,0 +1,271 @@
+{
+ "piece": "act_inspection",
+ "cases": [
+  {
+   "id": "clean-books-hold-every-item",
+   "rule": "DESIGN 16",
+   "fn": "whereItHolds",
+   "in": [
+    {
+     "faresDriven": 40
+    }
+   ],
+   "out": [
+    {
+     "id": "farebook",
+     "grade": "holds"
+    },
+    {
+     "id": "takings",
+     "grade": "holds"
+    },
+    {
+     "id": "carlog",
+     "grade": "holds"
+    },
+    {
+     "id": "wages",
+     "grade": "holds"
+    },
+    {
+     "id": "paidin",
+     "grade": "holds"
+    }
+   ]
+  },
+  {
+   "id": "an-owner-who-never-drove-has-a-bare-book",
+   "rule": "DESIGN 9",
+   "fn": "gradeItem",
+   "in": [
+    "farebook",
+    {}
+   ],
+   "out": "thin"
+  },
+  {
+   "id": "a-little-over-the-wash-is-thin",
+   "rule": "DESIGN 9 the wash",
+   "fn": "gradeItem",
+   "in": [
+    "takings",
+    {
+     "booksOffPence": 2500
+    }
+   ],
+   "out": "thin"
+  },
+  {
+   "id": "well-over-the-wash-fails",
+   "rule": "DESIGN 9 the wash",
+   "fn": "gradeItem",
+   "in": [
+    "takings",
+    {
+     "booksOffPence": 4001
+    }
+   ],
+   "out": "fails"
+  },
+  {
+   "id": "one-alibi-fare-is-thin",
+   "rule": "DESIGN 9 the alibi",
+   "fn": "gradeItem",
+   "in": [
+    "carlog",
+    {
+     "alibiFares": 1
+    }
+   ],
+   "out": "thin"
+  },
+  {
+   "id": "three-alibi-fares-fail",
+   "rule": "DESIGN 9 the alibi",
+   "fn": "gradeItem",
+   "in": [
+    "carlog",
+    {
+     "alibiFares": 3
+    }
+   ],
+   "out": "fails"
+  },
+  {
+   "id": "wages-owed-fail",
+   "rule": "A40",
+   "fn": "gradeItem",
+   "in": [
+    "wages",
+    {
+     "wagesOwedPence": 500
+    }
+   ],
+   "out": "fails"
+  },
+  {
+   "id": "two-over-washes-fail-the-paying-in-book",
+   "rule": "DESIGN 16 reads every such week",
+   "fn": "gradeItem",
+   "in": [
+    "paidin",
+    {
+     "overWashes": 2
+    }
+   ],
+   "out": "fails"
+  },
+  {
+   "id": "produced-and-sound-is-courteous",
+   "rule": "3.1.5 the sign first",
+   "fn": "morning",
+   "in": [
+    "takings",
+    "produce",
+    {
+     "faresDriven": 40
+    },
+    0
+   ],
+   "out": {
+    "grade": "holds",
+    "putOff": false,
+    "manner": "courteous"
+   }
+  },
+  {
+   "id": "produced-and-rotten-goes-cold",
+   "rule": "3.1.5 the sign first",
+   "fn": "morning",
+   "in": [
+    "takings",
+    "produce",
+    {
+     "booksOffPence": 9000
+    },
+    0
+   ],
+   "out": {
+    "grade": "fails",
+    "putOff": false,
+    "manner": "cold"
+   }
+  },
+  {
+   "id": "in-writing-buys-a-day",
+   "rule": "DESIGN 16",
+   "fn": "morning",
+   "in": [
+    "takings",
+    "writing",
+    {
+     "booksOffPence": 9000
+    },
+    0
+   ],
+   "out": {
+    "grade": null,
+    "putOff": true,
+    "manner": "patient"
+   }
+  },
+  {
+   "id": "in-writing-a-third-time-is-one-step-worse",
+   "rule": "DESIGN 16",
+   "fn": "morning",
+   "in": [
+    "farebook",
+    "writing",
+    {
+     "faresDriven": 40
+    },
+    2
+   ],
+   "out": {
+    "grade": "thin",
+    "putOff": false,
+    "manner": "careful"
+   }
+  },
+  {
+   "id": "five-sound-mornings-hold",
+   "rule": "DESIGN 16",
+   "fn": "result",
+   "in": [
+    [
+     "holds",
+     "holds",
+     "holds",
+     "holds",
+     "holds"
+    ]
+   ],
+   "out": {
+    "booksHold": true,
+    "fails": 0,
+    "thins": 0,
+    "manner": "courteous"
+   }
+  },
+  {
+   "id": "one-fail-is-survived",
+   "rule": "no single beat can fail the run",
+   "fn": "result",
+   "in": [
+    [
+     "holds",
+     "fails",
+     "holds",
+     "holds",
+     "holds"
+    ]
+   ],
+   "out": {
+    "booksHold": true,
+    "fails": 1,
+    "thins": 0,
+    "manner": "careful"
+   }
+  },
+  {
+   "id": "two-fails-sink-the-books",
+   "rule": "DESIGN 16",
+   "fn": "result",
+   "in": [
+    [
+     "fails",
+     "fails",
+     "holds",
+     "holds",
+     "holds"
+    ]
+   ],
+   "out": {
+    "booksHold": false,
+    "fails": 2,
+    "thins": 0,
+    "manner": "cold"
+   }
+  },
+  {
+   "id": "a-fail-and-three-thins-sink-them",
+   "rule": "DESIGN 16",
+   "fn": "result",
+   "in": [
+    [
+     "fails",
+     "thin",
+     "thin",
+     "thin",
+     "holds"
+    ]
+   ],
+   "out": {
+    "booksHold": false,
+    "fails": 1,
+    "thins": 3,
+    "manner": "cold"
+   }
+  }
+ ]
+}

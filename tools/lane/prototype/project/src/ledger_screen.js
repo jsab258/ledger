@@ -6,6 +6,7 @@ import { G, day, hour } from './state.js';
 import { money, hhmm, DAYS3, esc, cap, listAnd, quid, clockText, dateText } from './util.js';
 import { KINDS, whenTxt } from './kinds.js';
 import { BLD, ROADS, SETTS, WATER, LAMPS } from './map.js';
+import { PLACES } from './game/core.js';
 import { tomName } from './ui.js';
 
 const LED = RULES.ledger;
@@ -354,7 +355,8 @@ export function ledgerHTML() {
   main += rows.map(rowHTML).join('') || '<div class="lh">Nothing written here yet.</div>';
   if (LS.part === 'open')
     main +=
-      '<h2 style="margin-top:14px">The Hook</h2><canvas id="lmap" width="980" height="620" style="max-width:100%;border:1.5px solid #111"></canvas>';
+      (G.hooks.readingHTML ? G.hooks.readingHTML() : '') +
+      '<h2 style="margin-top:14px">The Hook</h2><div class="was">Only places Tom has been, or been told of, are named.</div><canvas id="lmap" width="980" height="620" style="max-width:100%;border:1.5px solid #111"></canvas>';
   const askLine = ask
     ? `<div class="lask"><b>Playtest ask:</b> ${esc(ask.question)} Put the cursor on the entry and press Enter (pad: A). Backspace gives up.${LS.said ? ' <b>' + esc(LS.said) + '</b>' : ''}</div>`
     : LS.said
@@ -534,30 +536,29 @@ export function drawMap(cv) {
   };
   x.fillStyle = '#28357a';
   x.font = '14px ' + HAND;
-  for (const [t, wx, wz] of [
-    ["Iveson's yard", -104, 31],
-    ['ferry', -55, 72],
-    ['fish dock', 89, 74],
-    ['warehouse row', 71, 14],
-    ['school', -95, -21],
-    ['market', -27, -160],
-    ['bank', 15, -139],
-    ['video', 15, -157],
-    ['market hall', -28, -206],
-  ])
-    lab(t, wx, wz);
-  lab('station', 27, -216, -Math.PI / 2);
+  // The whole game (part 6.3): the map marks only places he has been or been told of (game/ledgerx.js keeps which).
+  const knows = (k) => !G.hooks.knowsPlace || G.hooks.knowsPlace(k);
+  const L = (G.hooks.mapLabels && G.hooks.mapLabels()) || {};
+  const labk = (k, rot) => {
+    if (L[k] && knows(k)) lab(L[k][0], L[k][1], L[k][2], rot);
+  };
+  for (const k of ['iveson', 'ferry', 'fishdock', 'warehouserow', 'school', 'market', 'bank', 'video', 'markethall']) labk(k);
+  labk('station', -Math.PI / 2);
   x.fillStyle = '#efe7d0';
-  lab('No 4', 119, 31.5);
+  labk('no4');
   x.font = '15px ' + HAND;
   x.fillStyle = '#111';
-  lab('Q U A Y   S T R E E T', 0, -12);
-  lab('the quay', -70, 48, -Math.PI / 2);
-  lab('Chapel Lane', -45, -18.5, -Math.PI / 2);
-  lab('back lane', 29.5, 6);
-  lab('C O P P E R   R O W', 0, -168);
-  lab('the Cut', 60, -107, -Math.PI / 2);
-  lab('T H E   H U M B E R', 20, 84, -Math.PI / 2);
+  labk('quaystreet');
+  labk('quay', -Math.PI / 2);
+  labk('chapellane', -Math.PI / 2);
+  labk('backlane');
+  labk('copperrow');
+  labk('cut', -Math.PI / 2);
+  labk('humber', -Math.PI / 2);
+  // the other systems' places (core's PLACES), once known
+  x.font = '13px ' + HAND;
+  x.fillStyle = '#28357a';
+  for (const id in PLACES) if (knows(id) && !L[id]) lab(PLACES[id].name, PLACES[id].x, PLACES[id].z + 3);
   x.font = 'bold 13px ' + HAND;
   x.fillStyle = '#14204f';
   MAPKEY.forEach(([, wx, wz], i) => lab(String(i + 1), wx, wz));

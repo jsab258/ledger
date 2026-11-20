@@ -1,0 +1,257 @@
+{
+ "piece": "ending_state",
+ "cases": [
+  {
+   "id": "the-kingdom-at-its-best",
+   "rule": "ER-END-01 (the built Both)",
+   "fn": "ending",
+   "in": [
+    {
+     "booksHold": true,
+     "friendHolds": true
+    }
+   ],
+   "out": {
+    "state": "both",
+    "shown": "The Kingdom",
+    "turn": "better"
+   }
+  },
+  {
+   "id": "the-kingdom-at-its-plainest",
+   "rule": "ER-END-01",
+   "fn": "ending",
+   "in": [
+    {
+     "booksHold": true,
+     "friendHolds": false
+    }
+   ],
+   "out": {
+    "state": "kingdom",
+    "shown": "The Kingdom",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "the-kingdom-plain-when-the-street-holds-it-as-fact",
+   "rule": "DESIGN 16",
+   "fn": "ending",
+   "in": [
+    {
+     "booksHold": true,
+     "friendHolds": true,
+     "streetFact": true
+    }
+   ],
+   "out": {
+    "state": "kingdom",
+    "shown": "The Kingdom",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "the-straight-life-at-its-best-handed-over",
+   "rule": "ER-END-01 (the built Quiet)",
+   "fn": "ending",
+   "in": [
+    {
+     "handedOver": true,
+     "friendHolds": true
+    }
+   ],
+   "out": {
+    "state": "quiet",
+    "shown": "The Straight Life",
+    "turn": "better"
+   }
+  },
+  {
+   "id": "the-straight-life-at-its-best-wound-down",
+   "rule": "ER-END-01",
+   "fn": "ending",
+   "in": [
+    {
+     "woundDown": true,
+     "friendHolds": true
+    }
+   ],
+   "out": {
+    "state": "quiet",
+    "shown": "The Straight Life",
+    "turn": "better"
+   }
+  },
+  {
+   "id": "the-straight-life-plain-when-the-books-sank-it",
+   "rule": "ER-END-01",
+   "fn": "ending",
+   "in": [
+    {
+     "booksHold": false,
+     "friendHolds": true
+    }
+   ],
+   "out": {
+    "state": "straight",
+    "shown": "The Straight Life",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "quiet-never-while-hunted",
+   "rule": "DESIGN 16 never while hunted for a killing",
+   "fn": "ending",
+   "in": [
+    {
+     "handedOver": true,
+     "friendHolds": true,
+     "hunted": true
+    }
+   ],
+   "out": {
+    "state": "straight",
+    "shown": "The Straight Life",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "a-man-hunted-for-a-killing-burns-both",
+   "rule": "ER-END-01 from a hunted state",
+   "fn": "ending",
+   "in": [
+    {
+     "handedOver": true,
+     "friendHolds": true,
+     "huntedForKilling": true
+    }
+   ],
+   "out": {
+    "state": "burn",
+    "shown": "Burn Both",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "doing-nothing-burns-both",
+   "rule": "DESIGN 16 what doing nothing produces",
+   "fn": "ending",
+   "in": [
+    {
+     "booksHold": false,
+     "friendHolds": false
+    }
+   ],
+   "out": {
+    "state": "burn",
+    "shown": "Burn Both",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "a-strong-case-takes-the-firm",
+   "rule": "A13 the case is the consequence",
+   "fn": "ending",
+   "in": [
+    {
+     "caseSinksFirm": true,
+     "friendHolds": false
+    }
+   ],
+   "out": {
+    "state": "burn",
+    "shown": "Burn Both",
+    "turn": "plainer"
+   }
+  },
+  {
+   "id": "signs-for-sunk-books",
+   "rule": "3.1.5",
+   "fn": "signsFor",
+   "in": [
+    {
+     "booksHold": false,
+     "friendHolds": true
+    }
+   ],
+   "out": [
+    "inspector_cold",
+    "sheila_line",
+    "friend_act"
+   ]
+  },
+  {
+   "id": "signs-for-a-hunted-killer",
+   "rule": "3.1.5 ER-POL-05",
+   "fn": "signsFor",
+   "in": [
+    {
+     "huntedForKilling": true
+    }
+   ],
+   "out": [
+    "manhunt",
+    "manhunt_killing",
+    "friend_gone"
+   ]
+  },
+  {
+   "id": "reading-with-no-sign-is-quiet-and-predicts-nothing-lost",
+   "rule": "ER-END-02",
+   "fn": "reading",
+   "in": [
+    [
+     "friend_act"
+    ]
+   ],
+   "outHas": {
+    "predicts": "both",
+    "quiet": true
+   }
+  },
+  {
+   "id": "reading-predicts-the-straight-life-from-its-signs",
+   "rule": "ER-END-03",
+   "fn": "reading",
+   "in": [
+    [
+     "inspector_cold",
+     "sheila_line",
+     "friend_act"
+    ]
+   ],
+   "outHas": {
+    "predicts": "straight",
+    "shown": "The Straight Life",
+    "quiet": false
+   }
+  },
+  {
+   "id": "reading-predicts-burn-both-for-the-hunted",
+   "rule": "ER-END-03",
+   "fn": "reading",
+   "in": [
+    [
+     "manhunt",
+     "manhunt_killing",
+     "friend_act"
+    ]
+   ],
+   "outHas": {
+    "predicts": "burn"
+   }
+  },
+  {
+   "id": "the-balance-sweep",
+   "rule": "ER-END-02",
+   "fn": "sweep",
+   "in": [],
+   "out": {
+    "cases": 256,
+    "wrong": 0,
+    "quietLoss": 0,
+    "statesReached": 5
+   }
+  }
+ ]
+}
