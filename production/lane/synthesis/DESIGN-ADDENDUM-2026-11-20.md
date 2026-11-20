@@ -457,3 +457,25 @@ Found by mapping the reference mechanics onto the parts tree (M7.8, 20 Nov). Dec
 - No split screen: every payment is a person and a flow in the flows ledger.
 
 Check: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.
+
+## A41. Hold-ups of shops and people (1.6.15): his yes of 20 November, 07:39
+
+Asked as a scope question on 20 November; the recommendation was to leave hold-ups out, and his answer was yes. So they are in, designed inside canon and his rulings: rare and late, loud, always witnessed, never a game over.
+- When. Never in Act I. A hold-up opens only once the rise has begun (rung 2, the firm is his) and only with a weapon to show: a blade or a gun, never bare hands (that is fronting up, DESIGN section 4). Guns stay rare and late and come only through people (DESIGN section 7), so the first hold-ups are done with a knife or a bat.
+- What. Two kinds. A shop: the counter of a shop that is open, with its keeper behind it. A person: somebody alone on foot, at night or in a lane. Never a house, never a car with somebody in it (A27), and never anyone Tom's own line spares (QUESTIONS 2: a woman, anyone of sixty or over, the priest).
+- How it plays. The weapon comes out on the held input (ER-FIGHT-08) within 3 m of the mark, then one press demands. The mark gives way, runs, shouts or stands, by his own nerve (QUESTIONS 3) and by who is watching; a keeper with the street at his window stands longer. It takes 10 to 20 real seconds and no minigame. Nothing is shown at length (canon: no cruelty as spectacle).
+- The take is only what the purse or the till holds (DESIGN section 9): a shop's till late on a Saturday is most of a week's rent; a man's pocket is a few pounds. The money is night money, for the tin.
+- It is always witnessed. The mark is a witness by definition, at the face rung unless Tom's face is covered. A scarf up and a hat down (A21) break the face rung and are themselves a mark, as is the coat; the car names the firm (DESIGN section 5). A hold-up cannot be done unseen: with nobody else in sight there is still the mark's own statement.
+- It is loud. The demand and any shout carry at the force reach (DESIGN section 4); a shop's bell, a scream or a dropped till carry further at night.
+- The dial. A blade or a gun shown to rob is a weapon seen: it moves the escalation dial like any weapon seen (state 1 at a gun), and only because somebody saw it (ER-FIGHT-08).
+- What follows, carried by people, never by a meter. The mark walks to the phone box or the station (DESIGN section 2, the walk) and can be reached first; a threat stops a report, never the street's talk. A robbery is a detective's crime: once reported DS Ellis comes to that street next morning, and an arrest for it costs twelve hours (DESIGN section 8). The street it was done on goes on edge at once (A37: one hold-up counts as three seen deeds): shops shut early, doors are locked, the constable walks it more. The firm pays: people who had come to call him Tom cross the road or say "Mr Nowak" for a week, night fares on that street fall, a keeper he robbed never serves him again, and a front on that street is harder to get (A15). The mark never forgets; the town's talk cools as a robbery's does (about seven game days, DESIGN section 2).
+- Never the end. Tom cannot die and nothing here is a game over: a mark who stands makes it a fight (DESIGN section 7), a shout brings people, the police make it a chase or an arrest of hours.
+- Sent. From Act II a hold-up can be sent through a named man (DESIGN section 12); the accomplice then knows, and his cut is agreed first (A40).
+
+Experience rules:
+- ER-HOLDUP-01 Never before the rise has begun, never without a weapon shown, never on anyone Tom's own line spares, never in a house or on a car with somebody in it. Check S: each refused, with its reason said.
+- ER-HOLDUP-02 Never unwitnessed. Every hold-up leaves at least the mark holding it first-hand, at the face rung unless his face was covered, and then at the mark rung. Check S: golden rows, alone and in company, covered and not.
+- ER-HOLDUP-03 The take never exceeds what the purse or the till holds, and all of it is night money in the flows ledger. Check S.
+- ER-HOLDUP-04 The dial moves only because the weapon was seen, and never past the state the weapon gives (a blade never sets Shown, which is a gun's). Check S.
+- ER-HOLDUP-05 It comes back within a game day: the walk, the report, DS Ellis on that street next morning, the street on edge and a cooler name from at least one person, each traceable to the mark or a witness (ER-EYES-05). Check S: a seeded hold-up, the chain printed.
+- ER-HOLDUP-06 Never the end: every outcome (gives way, runs, shouts, stands, the police come) leaves Tom in control within 2 real minutes. Check S: every outcome scripted.

@@ -26,11 +26,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 242 leaves: missing 3, designed 72, built shallow 95, built 71, passes 1"
+     "evidence": "rollup of 243 leaves: missing 3, designed 73, built shallow 95, built 71, passes 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 304 leaves: missing 5, designed 190, built shallow 53, built 40, unknown 16"
+     "evidence": "rollup of 305 leaves: missing 5, designed 191, built shallow 53, built 40, unknown 16"
     }
    },
    "needs": [],
@@ -78,11 +78,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 61 leaves: missing 1, designed 27, built shallow 15, built 18"
+     "evidence": "rollup of 62 leaves: missing 1, designed 28, built shallow 15, built 18"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 61 leaves: designed 55, built shallow 4, built 2"
+     "evidence": "rollup of 62 leaves: designed 56, built shallow 4, built 2"
     }
    },
    "needs": [],
@@ -1553,7 +1553,9 @@
     "1.3.1",
     "1.6.6"
    ],
-   "blocks": [],
+   "blocks": [
+    "1.6.15"
+   ],
    "hours": {
     "prototype": "1.5",
     "unreal": "30",
@@ -2629,11 +2631,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 14 leaves: designed 10, built shallow 3, built 1"
+     "evidence": "rollup of 15 leaves: designed 11, built shallow 3, built 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 14 leaves: designed 13, built shallow 1"
+     "evidence": "rollup of 15 leaves: designed 14, built shallow 1"
     }
    },
    "needs": [],
@@ -2666,7 +2668,8 @@
     "1.6.11",
     "1.6.12",
     "1.6.13",
-    "1.6.14"
+    "1.6.14",
+    "1.6.15"
    ],
    "leaf": false
   },
@@ -3369,6 +3372,53 @@
    "review_themes": [],
    "notes": [
     "Added 20 Nov by the lane from the reference-mechanics map (1c): M3.13"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.15",
+   "level": 3,
+   "parent": "1.6",
+   "name": "Hold-ups of shops and people",
+   "what": "Robbing a shop's counter or a person on foot with a weapon shown: rare and late, loud, always witnessed, never a game over.",
+   "felt": true,
+   "standard": "rule: never before the rise has begun or without a weapon shown; never unwitnessed; the take never exceeds the purse or till; it comes back within a game day through the walk, the report, DS Ellis and the street's talk; never the end (ER-HOLDUP-01 to 06)",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A41 (his yes of 20 Nov 07:39 to question 3 of QUESTIONS-FOR-JAFAR's hold-ups ask)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A41",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A41, 20 Nov; the one-shot builds it in stage C"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A41, 20 Nov; nothing built"
+    }
+   },
+   "needs": [
+    "2.13",
+    "2.12.2",
+    "1.3.6"
+   ],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "30",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "medium",
+    "why": "scope he added against the recommendation; easy to make the game's tone harsher than canon"
+   },
+   "test": "S: each refusal said with its reason; golden rows for the mark as witness, covered and not; the take against the purse; the dial moved only by a seen weapon; a seeded hold-up's chain printed within a game day; every outcome scripted; addendum rules ER-HOLDUP-01 to 06",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the one-shot from his answer of 07:39 (hold-ups: yes, not the recommendation)."
    ],
    "children": [],
    "leaf": true
@@ -6948,7 +6998,8 @@
     "2.12.5",
     "2.17",
     "3.1.2",
-    "7.7"
+    "7.7",
+    "1.6.15"
    ],
    "hours": {
     "prototype": "1",
@@ -7139,7 +7190,8 @@
    "needs": [],
    "blocks": [
     "1.3.10",
-    "2.6.6"
+    "2.6.6",
+    "1.6.15"
    ],
    "hours": {
     "prototype": "1",

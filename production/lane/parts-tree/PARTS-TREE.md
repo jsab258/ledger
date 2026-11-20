@@ -72,6 +72,7 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.6.12 A torch on a night job*. P:designed U:designed
   - 1.6.13 Lifting from a pocket*. P:designed U:designed
   - 1.6.14 Damage by hand*. P:designed U:designed
+  - 1.6.15 Hold-ups of shops and people*. P:designed U:designed
 - 1.7 Running the crew*. P:designed U:designed
   - 1.7.1 Orders in the field*. P:designed U:designed
   - 1.7.2 Sending (the eight verbs)*. P:designed U:designed

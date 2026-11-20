@@ -4,7 +4,7 @@ Every gameplay part the one-shot (Friday 20 Nov, 22:10) builds into the browser 
 
 Rules for the one-shot: never change tools/lane/one-sim/; the town simulation stays the real one where the switch has landed; no polish (art, animation detail, voices, clothes and faces are never the browser's work); the content rule; a play build reaches him only through the publish gate. 'Now' is the prototype's status before the one-shot, from evidence (round 5 published, round 6 built and not published).
 
-Parts: 200. Already passing their standard: 1 (keep them passing).
+Parts: 201. Already passing their standard: 1 (keep them passing).
 
 ## Stage A: one evening that holds (124 parts)
 
@@ -179,9 +179,10 @@ Parts: 200. Already passing their standard: 1 (keep them passing).
 - [ ] 7.10 Difficulty as assists. Now: built shallow. Design: DESIGN-ADDENDUM §A6. Test: S: each assist changes only its own thing; H: an impatient player finishes the first hour with assists on; addendum rules ER-ASSIST-01 to 02.
 - [ ] 7.16 Pastimes. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer). Test: H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01.
 
-## Stage C: the rise (28 parts)
+## Stage C: the rise (29 parts)
 
 - [ ] 1.3.10 Firearms. Now: designed. Design: DESIGN §7 Weapons, dial. Test: S: dial rules; feel numbers inside measured bands once researched.
+- [ ] 1.6.15 Hold-ups of shops and people. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A41. Test: S: each refusal said with its reason; golden rows for the mark as witness, covered and not; the take against the purse; the dial moved only by a seen weapon; a seeded hold-up's chain printed within a game day; every outcome scripted; addendum rules ER-HOLDUP-01 to 06.
 - [ ] 1.7.1 Orders in the field. Now: designed. Design: DESIGN §12 Orders. Test: S: each order; B: crew never block a lane.
 - [ ] 1.7.2 Sending (the eight verbs). Now: designed. Design: DESIGN §12. Test: S: each verb leaves a chain the town can trace; accomplice knows.
 - [ ] 1.7.3 The board. Now: designed. Design: DESIGN §12. Test: S: placements change sightings; H: minutes spent at the board.
