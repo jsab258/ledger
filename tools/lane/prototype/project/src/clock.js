@@ -65,10 +65,29 @@ export function simStep(dt) {
 // Skip a stretch of time with nobody watching Tom (sleeping, custody): routines and gossip still run.
 export function skipTo(tEnd, hidden = true) {
   const t = G.tom,
-    sp = t.space;
+    sp = spaceBeforeHiding();
   if (hidden) t.space = 'away';
+  HIDING.depth++;
   let guard = 0;
-  while (G.t < tEnd && guard++ < 20000)
-    simStep(Math.min(TICK.longestSkipStepRealSeconds, ((tEnd - G.t) * SECS_PER_HOUR) / 60 + 0.01));
-  t.space = sp;
+  try {
+    while (G.t < tEnd && guard++ < 20000)
+      simStep(Math.min(TICK.longestSkipStepRealSeconds, ((tEnd - G.t) * SECS_PER_HOUR) / 60 + 0.01));
+  } finally {
+    HIDING.depth--;
+    t.space = sp;
+  }
+}
+// The one-shot (the clumsy run's fault): time passed unseen puts Tom 'away' for its length. One such stretch begun
+// inside another, or a scene that read where he stood in the middle of one, could leave him 'away' for good: on
+// the street, unseen, unable to walk. Where he really stood is kept here, and play never goes on with him 'away'.
+export const HIDING = { depth: 0, was: 'street' };
+export function spaceBeforeHiding() {
+  const t = G.tom;
+  if (t.space !== 'away') HIDING.was = t.space;
+  return HIDING.was;
+}
+export function neverLeftAway() {
+  const t = G.tom;
+  if (t.space === 'away' && HIDING.depth === 0) t.space = HIDING.was || 'street';
+  else if (t.space !== 'away') HIDING.was = t.space;
 }

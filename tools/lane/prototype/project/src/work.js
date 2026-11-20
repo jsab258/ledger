@@ -9,7 +9,7 @@ const REST = RULES.rest,
 
 import { note, meet, learnName } from './ledger.js';
 
-import { simStep } from './clock.js';
+import { simStep, HIDING, spaceBeforeHiding } from './clock.js';
 import { placeAll } from './routines.js';
 import { ROOMS, roomPos } from './map.js';
 import { say, choose, scene, fade, $ } from './ui.js';
@@ -24,14 +24,19 @@ export const tomAt = (x, z, r = 2) => hyp(G.tom.x, G.tom.z, x, z) < r;
 // ---------- passing the time ----------
 export function advanceTo(tEnd, hidden = true) {
   const t = G.tom,
-    sp = t.space;
+    sp = spaceBeforeHiding();
   if (hidden) t.space = 'away';
+  HIDING.depth++;
   let guard = 0;
-  while (G.t < tEnd && guard++ < 30000) {
-    simStep(Math.min(RULES.ticking.longestSleepStepRealSeconds, ((tEnd - G.t) * SECS_PER_HOUR) / 60 + 0.01));
-    if (G.hooks.clock) G.hooks.clock();
+  try {
+    while (G.t < tEnd && guard++ < 30000) {
+      simStep(Math.min(RULES.ticking.longestSleepStepRealSeconds, ((tEnd - G.t) * SECS_PER_HOUR) / 60 + 0.01));
+      if (G.hooks.clock) G.hooks.clock();
+    }
+  } finally {
+    HIDING.depth--;
+    t.space = sp;
   }
-  t.space = sp;
 }
 
 export async function rest(where) {

@@ -511,8 +511,15 @@ class Gate:
             g.tap("Escape")
             g.run(0.3)
             tries += 1
+        # the one-shot: with the menus worked by the keyboard, random keys can save and leave for the title screen
+        # (Escape, down, Enter). That loses nothing; a player presses Continue, and so does this run, and says so.
+        if g.js("() => LEDGER.G.story.phase === 'title'"):
+            went = g.js("() => { const b = document.querySelector('[data-act=\"cont\"]'); if (!b) return false; b.click(); return true; }")
+            g.run(1.5)
+            self.cleared += g.clear()
+            self.notes.append("button spam: the keys saved and left for the title screen; Continue %s" % ("pressed" if went else "was not offered"))
         s = g.state()
-        free = not s["boxOpen"] and not s["paused"]
+        free = not s["boxOpen"] and not s["paused"] and g.js("() => LEDGER.G.story.phase === 'play'")
         self.record("back to play after button spam", free, "%d random keys 0.1 s apart (seed 11), then Escape up to 5 times" % n,
                     escapes=tries, box=s["boxOpen"], paused=s["paused"], scene=s["inAWrittenScene"], last_keys=seq[-12:])
         if free:
@@ -520,7 +527,9 @@ class Gate:
                 g.tap("KeyF")
                 g.run(0.3)
             track = self.escape_track(["KeyW", "KeyS", "KeyA", "KeyD"])
-            self.record("never stuck (after button spam)", inv.moved_again(track)["ok"], "after the spam, walk", **inv.moved_again(track))
+            self.record("never stuck (after button spam)", inv.moved_again(track)["ok"], "after the spam, walk",
+                        state=g.js("() => { const G = LEDGER.G, t = G.tom, x = G.x || {}; return { modal: LEDGER.ui.modal, paused: G.paused, why: G.pauseWhy || null, inCar: t.inCar, space: t.space, at: [t.x, t.z], down: !!t.down, fighting: !!(G.fight || t.fight), foot: x.foot ? { sit: x.foot.sit || x.foot.blend || null, chase: x.foot.chase || null } : null, custody: (x.law && x.law.custody) || null, hour: (G.t / 60) % 24 }; }"),
+                        **inv.moved_again(track))
         faults = g.js("() => LEDGER.pauseFaults()")
         self.record("no pause nothing holds", faults == 0, "count of pauses nothing was holding over the whole run", pause_faults=faults)
 
@@ -648,7 +657,7 @@ class Gate:
       falls(k * dt);
       const others = [...fell].map(([q, at]) => ({ name: q.def.name || q.def.desc || 'someone', shown: shownAs(q), fell_at_s: at, dead: !!q.dead }));
       return { hit, closest, before, frames, kinds: G.events.slice(e0).map((e) => e.kind), down: !!P.down, dead: !!P.dead, hurt: P.hurt || 0,
-               others, prompts: L.prompts() }; }"""
+               others, prompts: L.prompts().concat(((L.written.read().open && L.written.read().choices) || []).map((c, i) => ({ key: String(i + 1), text: c }))) }; }"""
 
     def person_hit(self):
         g = self.g
@@ -698,7 +707,7 @@ class Gate:
                             person=o["name"], shown_as=o["shown"], fell_at_s=o["fell_at_s"], told_after_s=told, dead=o["dead"])
             # keyed by the rule alone (driven_at is not a signature key): the missing choice is not about who was hit
             self.record("a person hit: a choice is offered (stop and help, or drive off)",
-                        any("help" in (c.get("text") or "").lower() for c in h["prompts"]), "the key prompts 3 s after the hit",
+                        any("help" in (c.get("text") or "").lower() for c in h["prompts"]), "the key prompts and the written choice 3 s after the hit",
                         driven_at=r["name"], prompts=h["prompts"])
             break
         else:

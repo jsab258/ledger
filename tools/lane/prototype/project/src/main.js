@@ -8,7 +8,7 @@ import { initRenderer, frame, resize, setQuality, setInside, fx, benchmark } fro
 import { buildTown } from './render/town.js';
 import { buildRooms, rooms } from './render/rooms.js';
 import { G, resetState, day, hour, setPaused, PAUSE } from './state.js';
-import { initEnv, simStep } from './clock.js';
+import { initEnv, simStep, neverLeftAway } from './clock.js';
 import { initPeople, placeAll } from './routines.js';
 import { townLevel } from './gossip.js';
 import { ROOMS } from './map.js';
@@ -687,7 +687,7 @@ function showTitle() {
     items.push({
       t: saveInfo.ended
         ? 'See how the week ended'
-        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][Math.floor(saveInfo.t / 1440)] || 'the week'}`,
+        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][Math.floor(saveInfo.t / 1440)] || 'the week'}`,
       act: 'cont',
     });
   items.push(
@@ -840,6 +840,7 @@ function logic(dt) {
   }
   dialogTick(dt);
   if (!G.paused && ph === 'play') {
+    neverLeftAway(); // the one-shot: he is never left 'away' once play goes on (clock.js)
     G.played += dt;
     slowT += dt;
     if (slowT > 1) {
