@@ -1,0 +1,128 @@
+{
+ "note": "Faults planted on purpose to test the testers (4t piece 8). Each is a small change to a copy of the game's source, in an area where our testing or he met a real fault before (the change itself is made up), so the testers are tested where the game has really gone wrong (after muPRL: faults drawn from real fault histories). 'old' must occur exactly once in 'file'. 'testers' names the machine testers that should catch it, each with the narrow run that is enough. Never applied to the game's own folder: plant.py works on a copy outside the repository. 'watch' names the checks (rule names, or feel number ids) the fault aims at: only a new failure there counts as caught, and only an unreached check there makes the fault not tested.",
+ "faults": [
+  {
+   "id": "telling-leaves-no-memory",
+   "from": "consequence checker's rule (4t piece 5): every telling leaves its memory",
+   "file": "gossip.js",
+   "old": "  remember(B, E, {\n    src: 'told',",
+   "new": "  if (0) remember(B, E, {\n    src: 'told',",
+   "plain": "a person is told something but does not remember it",
+   "testers": {
+    "consequences": [
+     "--hours",
+     "6"
+    ]
+   },
+   "watch": [
+    "a telling leaves a memory"
+   ]
+  },
+  {
+   "id": "loaded-week-loses-its-hour",
+   "from": "save and reload (round 2 found saves that came back changed)",
+   "file": "saving.js",
+   "old": "for (const k of KEYS) if (o[k] !== undefined) G[k] = o[k];",
+   "new": "for (const k of KEYS) if (o[k] !== undefined && k !== 't') G[k] = o[k];",
+   "plain": "loading a saved week puts the clock back to the start",
+   "testers": {
+    "machine": [
+     "--only",
+     "long_run,save_reload",
+     "--hours",
+     "2"
+    ]
+   },
+   "watch": [
+    "save and reload give back the same week",
+    "plays on after reload"
+   ]
+  },
+  {
+   "id": "run-down-not-told",
+   "from": "his complaint of 18 Nov: a person run down and nothing said (round 6 fix)",
+   "file": "drive.js",
+   "old": "      sub(\n        atOnce(\n          Math.abs(c.v) < DRIVING.runDownIsAClipBelowMetresPerSecond",
+   "new": "      [].push(\n        atOnce(\n          Math.abs(c.v) < DRIVING.runDownIsAClipBelowMetresPerSecond",
+   "plain": "a person run down by the cab and no words on screen",
+   "testers": {
+    "clumsy": [
+     "--only",
+     "person_hit"
+    ]
+   },
+   "watch": [
+    "a person hit: told on screen"
+   ]
+  },
+  {
+   "id": "steering-snaps",
+   "from": "his complaint of 18 Nov: keyboard steering jerks (round 6 fix)",
+   "file": "drive.js",
+   "old": "CAB.steer += clamp(want - CAB.steer, -step, step);",
+   "new": "CAB.steer = want;",
+   "plain": "the cab's steering jumps to full lock at a key press",
+   "testers": {
+    "clumsy": [
+     "--only",
+     "cab_steering"
+    ],
+    "feel": []
+   },
+   "watch": [
+    "keyboard steering eased",
+    "M5_yaw63_s"
+   ]
+  },
+  {
+   "id": "jab-too-slow",
+   "from": "the melee timing bands (round 3 put the jab inside 0.25 to 0.40 s)",
+   "file": "rules.js",
+   "old": "lightWindUpRealSeconds: 0.28,",
+   "new": "lightWindUpRealSeconds: 0.6,",
+   "plain": "a jab takes twice as long to land",
+   "testers": {
+    "feel": []
+   },
+   "watch": [
+    "C2_jab_contact_s"
+   ]
+  },
+  {
+   "id": "camera-through-walls",
+   "from": "ER-CAM-01 and the machine checks' camera finds of 20 Nov (the camera blocked at three named places)",
+   "file": "player.js",
+   "old": "        d = Math.max(0.9, s - 0.45);\n        break;",
+   "new": "        break;",
+   "plain": "the camera stays behind walls instead of coming in front of them",
+   "testers": {
+    "machine": [
+     "--only",
+     "long_run",
+     "--hours",
+     "2"
+    ]
+   },
+   "watch": [
+    "camera never inside a wall (every named place)"
+   ]
+  },
+  {
+   "id": "drink-in-a-line",
+   "from": "his content rule: no alcohol shown or spoken of",
+   "file": "talk_lines.js",
+   "old": "'Bit much for daylight, that coat.'",
+   "new": "'Bit much for daylight, that coat. Smells of whisky.'",
+   "plain": "a line that speaks of drink",
+   "testers": {
+    "machine": [
+     "--only",
+     "content"
+    ]
+   },
+   "watch": [
+    "content rule in the game's words"
+   ]
+  }
+ ]
+}
