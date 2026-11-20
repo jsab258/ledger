@@ -1,191 +1,232 @@
 # LEDGER: the story
 
-For Jafar. 20 November 2026. About twenty-five minutes to read.
+For Jafar. 20 November 2026. About twenty-five minutes to read. This replaces the morning loop's story.
 
-What this is. Your order at 15:26 was a writing and review loop until the story is exceptional. The loop ran its eight rounds today. Each round, three fresh readers who had seen nothing else (a critic, a player, a script editor) scored the story against one written bar. It began at 4, 5 and 4 out of ten. After one round it was 7, 7, 7, and it has stayed between 7 and 8 since. It did not reach the test set for exceptional: all three at 9 or more. Three of the last twelve readers said they would single the story out as a reason to play. So this is a good story, much better than the morning's, and not yet an exceptional one. What the readers love and what still holds it back are at the end, with the score table.
+What this is. At 17:13 you picked "break the plateau with competing versions". Three leaner versions were written, each with a different middle and a different turn. Three fresh readers, who saw them under shuffled labels, picked one: The Passenger, the version where the story is Tom's friendship with Ron. It was then written out in full and went through seven rounds, each with three new readers who had seen nothing else. It began at 7, 7, 7. Two real changes of shape lifted it: the last act became a drive in place of a desk, and the secret at the centre moved from Ron to Sheila. That gave 8, 8, 8, the first time in either loop that all three readers gave 8, and one reader in the next round said plainly that he would tell a friend to play it for the story. It did not reach the test for exceptional (all three at 9). The honest position is at the end, with the tables.
 
-Canon and your rulings are untouched. Where this story needs a change to either, the change is listed after the story, for your ruling.
-
-Two small corrections were made after the last review, because all three of its readers asked for them: Geoffrey Agar no longer admits what he paid before the last week, and Mickey's money tops up the envelopes instead of filling them. No reader has seen those two changes.
+Canon and your rulings are untouched. The changes this story needs are listed after it, for your ruling. One of them matters more than the rest: it gives Sheila one night you have not approved.
 
 ## The story
 
 ### What it is about
 
-Every fare goes in the book. LEDGER is the story of a stranger who inherits a debt, and of who gets to keep a town's accounts once the official ones have written it off. The docks died in 1989. Nobody in the game says why. Everybody lives after it.
+Two proud people who never ask anyone for anything, sitting a yard apart. Tom Nowak takes nothing from anybody: he pays for tea that was on the house. Ron Kirby, the old docker on his door, is the same. The story is their friendship, what Ron is carrying, and what it costs that nobody in the Hook will open their mouth and ask.
 
-There are four books in the story: the fare book on the counter, Mickey's real book behind a locked door, the debt book with five names in it, and Tom's own notebook. At the end a mild man from Customs and Excise asks which of them is true. The answer is the plainest one.
+The town says it to Tom on his first Thursday, in Ron's voice: "You never ask for owt, do you. Mickey was the same. Dead at a desk with the kettle on."
 
-### Tom
+### The people
 
-Tom Nowak is 32. He steps off the ferry on Monday 15 October 1990 with one suitcase, £23.50 and a letter from an uncle he never met:
+Fewer than before: twenty-one who matter, where the morning's story had thirty-five. Nobody is secretly the boss of anything.
 
-"Tom. You don't know me. I was your mother's brother. I have a cab office on Quay Street in Meridian, two cars, and a good woman who keeps the books. It is yours when I am gone, and the doctor says that is sooner than I would like. There is more to it than cabs. There is a book. People are owed. Come and look before you say yes. Ask Sheila for the book when she is ready to give it. If you cannot stomach it, shut the door, and nobody will blame you, least of all me. Every fare goes in the book. M. Suddaby. P.S. Don't let them call you Mickey's nephew for ever."
+- Ron, 58, thirty years a docker. He cannot drive, so he rides in the passenger seat. He names every building by what it used to be, says rain by four, and starts stories about his old gang (Tapper, Shiner, the Bishop) that he never finishes.
+- Sheila, exactly as you have her: "New management", the fare book, the name she will not use. She has never been heard to say a thing that was not so.
+- Maureen Jensen, the Widow, is the main opponent. She runs the dock gate, lawfully: sixty men at six in the morning, and she picks twenty. She never threatens. She finds out what each of your people wants, offers exactly that, once, and keeps every deal. She is right about a good deal.
+- Danny Cammack and Geoffrey Agar are smaller here. Danny takes whatever the street leaves undefended. Agar is the landlord, wants the yard behind the office, and has a bank loan that falls due on the thirty-first of December.
+- Ada is what canon says: a widow at her window, and the best witness on the street. Her tea is tea. (The morning's story made her the hidden head of the outfit. Every reader guessed it. That is gone.)
+- Pauline on the radio, Terry with his four words a shift, Kevin who wants his own plate, Darren who wants to be somebody's man, June on the night ward, Father Walsh, DS Ellis, Alison from the paper, and Mr Reese of Customs and Excise with his flask and his pencil.
 
-Nobody asks where he came from and he never says. He does not speak aloud except in what the player types or picks. Who he is lives in his notebook, the Ledger: an old hard-backed one with its first thirty pages cut out close to the spine. Page one is that Monday. He is dry, and funnier on paper than he lets anyone see. "Ron says rain by four. Ron has said rain by four every day. It has rained by four every day."
+### Week one: the Inheritance (about two hours)
 
-He wants a place that is his, and his own name said by people who mean it. His fault is that he lets nobody give him anything: he pays for tea that was on the house and counts his money twice in front of people. It looks like pride and it is fear. The game plays it. All through, people offer him things for nothing, and each time the player takes it or pays. Some are gifts: Grace's tea at the caff, Ron's supper on the quay wall, the night driver's flask. Some have a hook in them and look just the same: a rival's fifty-pound note, a lift, a week's rent forgotten, a pot of tea. A man who takes nothing is known by nobody. A man who takes everything belongs to everybody. Both bills come due.
+Your approved first week, almost untouched. The ferry and the letter. Sheila's walk-round. Father Walsh in the back of the cab: "Forty-one envelopes on the plate, and every one of them empty. They wanted him to know they'd come." The debt book. The envelope carried down the quay past the constable. Ada asking next morning what he was doing in her alley, and her one invitation to tea.
 
-He has one line: he lays hands on no woman, nobody of sixty or over, and not the priest. The game never offers him the blow. It offers him other people's hands, and whether he lets them is his.
+What the envelope is, Ada tells him plainly over that tea: an old dockers' sick club, started by her husband in 1953, that still pays forty-one families four pounds a week. For thirty years it was fed by what Ron's gang lifted at the dock gate. Since the docks died, Mickey kept it going out of his own pocket. Then she says a thing about his doorman, as a recommendation: "He's a good man, Ron Kirby. He came home at two one morning last November with no sleeves to his coat, and I never asked."
 
-### The first week
+Four small things are planted that week, and each looks like nothing.
 
-Nobody meets him off the boat. On Quay Street Darren, who sells nothing anyone can name, is friendly and owes money. Ron Kirby, thirty years a docker, now the man on the door, calls him "boss". A widow called Ada watches from her window. Mickey's daughter June says she wants nothing out of that office, and that she would check what he is getting.
+- Sheila, on the forecourt: "Car two was Mickey's own. The seat sticks. Kevin's given up." Kevin, who is six foot, drives it all game with his knees round the wheel and complains on the radio.
+- On Friday, after the round, Ron buys three portions at the takeaway, not two, and puts one inside his coat. "Feller I know."
+- One door on the round Ron goes up alone. "Not that one. That's Mickey's own."
+- Alison, the reporter, in the back of the cab: "It was a bonded store, did you know? Nobody was on that row for the best part of an hour. I'd like to know where an hour went."
 
-Sheila Dunn, the bookkeeper, thirty-one years at that counter, shows him round exactly as you approved it. "New management." She will not use his name until she trusts him. At the fare book: "Every fare goes in the book. That was Mickey's rule, and it's mine now." At one door: "Not today."
+On Sunday morning comes the scene a player will retell. On the empty dock road Tom teaches a docker of fifty-eight to drive. Ron has the wheel, folded up behind it because the seat sticks. The player has his voice and the handbrake. Ron sets the terms himself: "That's yours, boss. I go, you stop. That's the arrangement." If the player is quick, Ron stops a yard short of a bollard. If not, the bollard. It already has a stripe of the firm's paint on it.
 
-His first fare is Father Walsh, from the infirmary to his house by the chapel. Sheila hands Tom a driver's badge from the drawer: "Mickey's. Wear it till the council sits." If he asks whether that is allowed: "No. Mickey wouldn't have asked." It is her first test of him. At his door the priest says: "You missed a good funeral. Forty-one envelopes on the plate, and every one of them empty. They wanted him to know they'd come."
+Then Sheila on her day off: "So which is it going to be?"
 
-The sum bites. Friday is the rent, £38, and five wage packets. Mickey's bank account is frozen. An honest week just covers the wages. The rent is the gap.
+### The middle, first part: two men and a car (about four and a half hours)
 
-After dark Ron brings a plain coat and an envelope. "Mickey took this down the ferry landing, regular. After ten, to the man who asks for Mickey's." This is the scene a player retells: three ways down to the water, each with an honest cost, and a constable on his beat who may turn round. At the landing an exact old man counts the envelope with his thumb, eyes on the water. "Mickey's?" "Right. Wednesday, same again." Ron counts £19 out of what comes back. Two nights of that is the rent.
+The happiest stretch of the game, on purpose. Ron brings his old gang to help the firm, one job at a time. The Widow books a cab, gets into the front seat ("Save you turning round") and Ron has to climb into the back without a word. She offers a deal: fifty pence on every fare through her gate. And she is the first person in the Hook to ask the new owner a question: "And what do you want, Mr Nowak? I'd guess nobody's asked."
 
-If the constable takes the envelope instead, nobody comes for Tom with a hammer. The constable sees small packets with a name pencilled on each, and takes them to the station. Next morning Sheila says twenty people over the water are short this week, and writes a sixth name in Mickey's debt book in her own hand: "Nowak, T. £80."
+From that morning Tom's notebook has a page headed "Asked", and the player can put the same question to anyone, once. The game never suggests it. Kevin is caught carrying parcels for the gate in Mickey's car, and says the line the story turns on: "Twelve years I've driven his car. She asked me what I wanted. Nobody here ever did."
 
-The week goes on as you approved it. Darren says the night to his face. Lee Drewery stands on the quay over £15 and people stop to watch. On Wednesday Ada asks him to tea, once: "I don't ask twice, mind." The tea falls on the night of the second envelope, and her window sees which way he goes. On Thursday a detective, Carol Ellis, is on the street, and Ada tells her from the step that the new owner sat in her front room till half past ten, whether he did or not. That night Ron rides in the passenger seat for the first time, and says: "You never ask for owt, do you. Mickey was the same. Dead at a desk with the kettle on."
+At the licence hearing on 30 October, only people Tom has let do him a favour have written for him. Then the door opens and the public bench fills with twenty old dockers in funeral suits. Nobody asked them. Ron is by the door: "I can't write you one, boss. I can fetch them as'll sit."
 
-Friday is new. He pays the wages by hand, and Sheila will not take hers until the others have theirs. Then Ron shows him where the envelope goes. Half of it is walked round the Hook by hand on Fridays, twenty doors: old dockers, their widows. £4 a week each. "Mickey always walked it." At one door on Tannery Row: "Knock soft. Her girl's police." At another Ron takes the packet himself: "Not that one. That's Mickey's own." The name on it is Cammack. Ada takes hers on her step like the rest. Afterwards Ron buys two suppers from the takeaway and they eat them on the quay wall. If Tom lets him pay, it is the first thing in the game he has let anyone give him.
+The second lesson: Ron drives the whole dock at eleven miles an hour, talking all the way, and asks to go round again. At the far end is the warehouse row. He will not drive onto it. "Not down there, boss. Surface is bad." It is not. Then he asks for the next night off. He has never asked for anything.
 
-On Sunday morning Tom starts teaching Ron to drive, on the empty dock road. Ron is fifty-eight and never needed to: the work was at the end of the street. The first lesson ends on a bollard.
+By now every player has worked something out, and the story means them to. A doorman who "cannot drive". A coat with no sleeves. A bollard with the firm's paint on it. A road he will not go down. They decide Ron drove a car to last year's fire, and is hiding it.
 
-At ten Sheila comes in on her day off. If she trusts him she says "Mr Nowak", for the first time, and Mickey's real book is on the counter, shut. "You've had your week. So which is it going to be?" Wind it down, take it over, or refuse to say.
+### Bonfire Night: the seat is empty
 
-That night the old man from the landing gets into the cab. His name is Cyril Blenkin, and for forty years he tallied cargo on the quay. He has Tom drive to a burnt plot at the end of the warehouse row. "Your uncle stood here with me the morning after. He said, that's the last one, Cyril." Then to Quay Street, to the back gate of the terrace with the lamp out. On Ada's table are forty-one small envelopes, and she is filling them with pound coins from a tin.
+Monday 5 November. The busiest night of the year for cabs. In Pauline's ordinary voice: "Car one, the dock gate, on the Widow's account, and she says bring a coat, there's a fire."
 
-Her husband started a sick club on the docks in 1953. It grew a crooked side: cargo that fell off, rent from the warehouses so that nothing of theirs went missing. Most of the money went back out in envelopes. Mickey's cabs moved it and Mickey kept its book. When the docks went, forty-one names were left, and she and Mickey kept paying them. "You've had my tea. Now you know what it was for. Last year a man on the row stopped paying, and I said the row wanted a lesson or forty-one would go without. Mickey found the men. I found the reason. He never forgave me, and he never stopped carrying."
+At the gate the dockers have their own bonfire. The Widow is on a pallet reading the winter's hire list. Beside her, in a foreman's jacket with THE GATE across the back, is Ron. He sees the cab. He does not come over.
 
-So by the end of the first week the player knows what the envelope is, has stood on the doorsteps, and has answered Sheila knowing what the answer costs. If he said no, the passenger that Sunday night is June instead: "You've stopped Winifred Duggleby's coal money. Did anybody tell you that was what you were saying no to? He never could. I'm not saying you were wrong."
+On top of the fire, where the guy goes, Danny's lads have sat a figure in a car coat with a cab's roof sign round its neck. The sign says MICKEY'S. Ron watches it burn with his hands in the pockets of her coat.
 
-### The middle: two things to chase
+On the dock road, driving back alone, Pauline says it to every cab at once, kindly, which is worse: "Car one. You on your own?"
 
-The middle is about seven weeks and most of the game. Two things are always open in the Ledger.
+With nobody on the door, the office window has been put in. Ada is on her step. "You'd better come in, Tom." It is the first time anyone in the street has used his first name. Then the thing she has been turning over: "He'll not have gone for money. I've known Ron Kirby forty years. He'd not cross the road for money."
 
-The first is the debt. Forty-one people are owed. If Tom took the business on, he has to find £164 a week, and the firm rises one step at a time, each step a named person's work: a third car and Julie Kettlewell to drive it; the shops on the parade paying "rent" again, which is the day Lily Tang at the takeaway stops saying "Same as last week? I remember"; a share in the launderette to pass money through; a contract kept against the dock gate; and a man of his own to carry the envelope, where the only one who wants the job is Darren. Each step keeps the list paid this month and makes the club less of a club.
+(A player who asked Ron what he wanted before that night keeps him. Then the seat is full, Ron stops telling stories, and it is harder in a different way.)
 
-If he wound it down, the road is harder and no thinner. June gives it its shape on the first Monday: "It doesn't have to be shut. It has to be lawful." A friendly society needs a room, money in a bank and the names. He gets the room by holding the closed school's hall through a night against men sent to clear it, beside Philip Danby, the last master, who has never hit anybody and is surprisingly willing. He gets the money by selling a right of way that two rivals want, and then carrying the deposit to the bank with the loser's men behind him. The names are Ada's, and she will not give them. She comes to his first meeting on Cyril's arm and speaks in public for the only time: "A club is a thing you're in. A charity is a thing done to you. I'll not be means-tested by Mickey's nephew." Half the room walks out behind her.
+### The middle, second part: finding out (about three hours)
 
-The second thing is the fire. The warehouse burned on Saturday 18 November 1989. The street says the owner did it for the insurance. Alison Sedman, the port reporter who lodges above Ada's, will not let it go, and Tom is the only man who can stand on that row without being stared at. She is quick, funny, and slightly ashamed of her notebook; he has one too. She never burns a source: true things told to her are kept, and lies she finds out become the story. They walk the burnt plot at low tide. She has the fire brigade's times: for an hour that night nobody was on the row. She has a line from the Harbour Board's minutes: the plot was sold in the spring, cheap, to a company of Geoffrey Agar's. They sit in a parked cab on a Saturday night and watch the watchman walk home on his break. He is not a bad man; his wife is ill. And to somebody who has kept him company on his rounds he says the rest: all that autumn one of Mickey's cabs ran him home on Saturdays, there and back, never a penny. Somebody wanted the watchman off the row.
+Tom drives alone, and nobody names the buildings. This stretch holds the two funniest scenes in the game, so that it aches and does not drag.
 
-One evening a stranger in a wet car coat asks for Mickey at the counter. "He's dead, love," says Pauline at the radio. "There's a nephew." "Then the nephew owes me." Sheila puts her pen down. It is the man Ron threw out of the yard two nights before Mickey died.
+Pauline's Saturday: asked what she wants, Pauline wants one Saturday off in nine years. Tom takes the radio. Sheila corrects every call he makes without looking up, and Terry, asked his position four times, uses a fifth word for the first time in his life: "Tell Pauline it don't count."
 
-### The three rivals
+The two strangers: the street is waiting to see whether a firm with nobody on its door can answer the window and the bonfire. The men from over the water that Mickey's was always supposed to have do not exist. So Tom sends Tapper and Shiner over on the morning boat in borrowed car coats, and they come back on the last ferry as two strangers with a holdall, are driven slowly past the takeaway queue to Danny's lock-up, stand and look at it for five minutes, and are driven away. Nothing is touched. Danny empties his lock-up that night. The one rule was that Shiner must not speak, because half the Hook knows his voice. In the car he cannot stop, and what comes out is what he has not been allowed to say: since the day Ron got the foreman's coat, Shiner has been on the night gate on his own, "nowt down there but gulls", because he had bragged in the queue that he could say who drove a Mickey's cab to the fire, if he had a mind.
 
-Each wants something of his own and comes a different way.
+And the player finds things, with his hands. Nobody tells him.
 
-Danny Cammack is 26 and was born three streets from the office. "You've got the keys. I've got the accent. One of us is in the wrong house." He does not come with a brick. He buys the Hook's other cab firm, paints its cars yellow, cuts the fare, and starts a hardship fund that pays old dockers' families a pound a week more than the club does, to put their names on his list. He is beating Tom fairly, in daylight, with dirty money, and the street likes him for it.
+- He has car two's seat taken out at last. Jammed in the runner, holding the seat as far forward as it goes, is a docker's brass tally, and behind it a glove burnt through at the palm.
+- In last year's fare book, on the shelf where it has stood since the first morning, are two lines for the night of the fire, in Sheila's small upright hand. One says car one took Mickey to the infirmary at ten to eleven, no charge. Mickey's heart had its first turn that night; he was on his daughter's ward. The dead uncle did not do it, and his own fare book proves it. The other line says: "Night. Car two. Out and back. Eleven miles. No sheet. No charge."
+- He follows the third portion of supper to a house across the Hook. A man of sixty in a chair, hands in grey cotton gloves, who breathes as if he has to think about it. The Bishop. He looks at the tally. "That's mine. He came back in for me. Had me on his back the length of the row before the car come back."
+- And he drives it. The car has a mileometer. From the yard to the landing to the warehouse to the Bishop's door and home is seven miles. He can drive it twice. It is seven. Four miles of that night are somewhere else. Two miles up the dock road is the bollard with the firm's paint on it. There and back is four. Whoever was driving left the fire behind them, and then turned round.
 
-Maureen Jensen, the Widow, runs the labour at the dock gate: sixty men stand there at six each morning and she picks twenty. She is Ada's daughter-in-law, and they have not spoken since 1986. She never threatens. She makes offers, each fair by her arithmetic and each worse than the last. When Tom leaves one unanswered, her men stop his cabs at the cold store, and she stands in front of them herself, hands in her pockets, a yard from his bonnet. A woman, in front of his car. There is nothing there for his hands to do.
+Two widows ride in the back of the cab with the meter running: Ada, who has come to tell the Widow what she thinks of her, and Maureen. Ada asks what it cost to get Ron Kirby into that coat. "Nothing. I offered it him in October and he said no. Then one Friday he came down and asked me for it. Ron Kirby, asking." Both of them look at the back of Tom's head.
 
-Geoffrey Agar is 61, old money with none left. He means to put a marina where the docks were, his bank wants its loan back on the last day of December, and the only right of way to the water runs through the yard behind Mickey's. He is also Tom's landlord. He comes by letters, each with a date in it, and apologises before every one. The first objects to Tom's licence, since Tom has been driving on a dead man's badge from his first afternoon. At the hearing the clerk reads out the references Tom has handed in. Only people he has let do him a turn have felt able to write one. If he has paid his way with everybody, the clerk says "No references," and the silence is the scene.
+So Ron was not bought. He asked for the coat on the day Shiner bragged, to be the man who decides where Shiner works. He is protecting a name.
 
-### Bonfire Night
+### The row: it was never Ron
 
-Monday 5 November. The quay is full after dark for the only night of the year. Alison comes up to the flat for supper for the first time. If the suitcase is still packed under the bed, she sees it.
+Sunday 18 November, a year to the day. Tom goes to the gate at six and holds out the car keys. He means Ron to drive the route.
 
-Then Ron is on the stairs with blood on his sleeve that is not his. Car two has been burned at the kerb under the fireworks. Terry Hodgson, the night driver, four words a shift, was asleep across the back seat. Ron pulled him out. Terry's hands are burned and he will not drive again. Alison is standing behind Tom and sees all of it.
+Ron drives, knees at his ears, at eleven miles an hour, and he is good now, as good as the player has made him. At the mouth of the warehouse row he brakes, by himself, for the first time in three lessons.
 
-By morning the whole Hook knows who did it, because Danny Cammack is telling them. "That's what's coming to the old lot." He says it before he hears there was a man in the car.
+"I've never been down here in a car, boss. I went down it on my feet and I come up it with a man on my back, and there was no car. It had gone." A long time. "Then it come back. I'll say that. It come back."
 
-Ada sends for Tom. Danny is buying her people at five pounds a head and now he has burned a man of Tom's. He has a lock-up on the warehouse row. "I want it answered before Sunday's names are read. Mickey wouldn't, after last year. You'll want to decide what you are."
+He reaches down and tries the seat, which does not move.
 
-The lock-up is the one job in the game planned like a job, with five days to plan it: who cuts the key, who stands at the door, which hour the row is empty. Inside are crates of car radios and a new can of paraffin.
+"Still where she left it."
 
-In those same five days Hal Metcalfe, a lonely man with a coin shop that sells no coins and a camcorder he points at everything, asks Tom in to see his film of the fireworks. The tape swings across Quay Street. Ada and the tallyman are at her window, looking down at a car that is not yet on fire. Then somebody's back at car two, in a coat too big for him.
+He has said one word too many, and he knows it, and he does not take it back.
 
-It was Darren. He was told an empty car, and that afterwards the landing would be his for good. He did not look in the back. He has not slept since. Ada does not lie about it: "A car. I said a car. Nobody said a man. You'd not have gone after Cammack for my sake. You'd go for a burned car. Everybody needs a reason."
+The seat has been set for a short driver for a year. Mickey taught half the street to drive on that dock road, and one of them passed first go in 1961 and has not sat behind a wheel since.
 
-So the player who goes to the lock-up without seeing the tape burns an innocent rival's stock for the woman who maimed his own driver, and learns it afterwards. The player who has seen it can take back what was taken and leave the paraffin, or carry the can across the Hook and set it on her table. Danny, asked later why he claimed it: it was the biggest thing anybody had ever said he had done.
+Ron was not pretending in the lessons. He truly cannot drive. He wants to learn for one reason: so that there is never again a night when the only person in the firm who can is a bookkeeper.
 
-And what Tom now knows about the head of his own club is how she works. She never does a thing. She finds somebody a reason.
+### What happened that night
 
-### After it
+By November 1989 the sick club could not last the winter. The importer's warehouse on the row was a bonded store, full of cigarettes due to ship on the Monday. Mickey planned one last lift: three men in, twenty minutes, himself at the wheel.
 
-On the Wednesday Ron drives Tom to the infirmary, L-plates on. Terry, hands bound, uses five words for the first time: "Tell Pauline it don't count." Pauline has kept a tally for nine years of trying to get a fifth word out of him on the radio. June is the night sister, and under the lamp at her desk she is filling three small envelopes of a kind the player knows. Since the summer the daughter who left because of the book has been paying into it out of her wage. "Don't tell me what that makes me."
+At ten to eleven his heart turned at his desk, and Terry took him up to the infirmary. The men were already waiting at the landing. There would not be another Saturday. There were forty-one names in a book that Sheila had kept for thirty years. She hauled the seat of car two as far forward as it would go, and she took them.
 
-On the way back Ron stops the car properly, handbrake on, and for once finishes one of his stories. It is about the night in 1986 that Alan Jensen went into the dock: Ada's son, Maureen's husband, the club's man at the gate, who robbed it. Cyril had tallied what he took. Ada showed the tally to his own gang. "Seven of us stood there. I was nearest the ring. I've stood there every night since." Then: "She's offered me the gate, boss. His gate."
+A lamp went over among the cartons. Nothing was taken. Tapper and Shiner ran for the car, shouting, and she drove. She was at the bollard, two miles off, with the wing stove in, before she could hear what they were shouting. Then she turned round. Ron had gone back in for the Bishop and had him on his back at the mouth of the row, with no sleeves to his coat.
 
-On Remembrance Sunday everybody in the story is in one place for the only time, at the dockside memorial, and for two minutes the player chooses only where Tom looks. Afterwards the priest tells him the one thing he may: "Your uncle asked me whether a man can repent of a thing and go on paying for it out of the profits. I told him no. He kept paying. I've not decided which of us was right."
+On the Monday she wrote down what the car did, because every fare goes in the book. She could not write who. She has waited a year for somebody to read it. She and Ron have said good morning every day of that year and neither has once spoken of it. And when Shiner started bragging, Ron left the only friend he had made in ten years to keep a name out of a queue: the name of the woman who drove off and left him.
 
-The Widow's last offer is for Ron: foreman at the gate, his old gang under him. Ron asks Tom what he thinks, and the kindest answer may be to let him go. That night Ada asks to be driven, for the first time since 1986. "The dock gate." Maureen gets in. Two widows in the back of a minicab on the dock road in the dark, the meter running, Ron in the front because he is always in the front. Maureen asks what she has had four years to ask. Ada: "I didn't put him in. I showed the men what he'd had off them. Then the water did what the water does." Maureen: "Ask the man in your front seat what the water did." Ron does not turn round. "We stood there, missus. You and all." Tom may speak once. Maureen pays what is on the meter, to the penny.
+That is the whole secret. One night. Nobody paid for a fire, nobody is anybody's boss, and the Widow is holding nothing over anyone.
 
-On the anniversary of the fire a man in a good coat is standing where his warehouse was. He shows Tom a rent card stamped PAID for every Monday up to the week it burned. "I paid. To the big fellow with the docker's hook." That is Ron. And Ron, asked, says what he has not said for a year: the man paid, Ron put the money on Mickey's desk, and then the word came round that he had refused and the row was to have a lesson. "And I never said owt. Twenty year you don't ask Mickey." In Mickey's real book, in the tallyman's hand, it says: "Importer refused." Somebody lied, and the player has to decide whether to believe his friend before he can prove it.
+### The last act: the ledger comes due as a drive (about two and a half hours)
 
-Danny's story ends on a page of that book. His father Frank was struck off the club years ago, wrongly, and Danny has spent his twenties hating the office for it. The page says Mickey paid Frank out of his own pocket ever after, and Frank hid it. Danny reads it twice and goes to his father's door. After that he has no grudge and no father. He may still call Tom out, gloves on, nothing staked, the whole Hook on benches; and in the third round one voice calls "Go on, Tommy." It is Frank. It is the first time anyone has used that name.
+The inspector's letter comes because the firm changed hands, and because Agar, with the bank at his back, has at last used something he kept for a year: his watchman saw a cab leave the row that night.
 
-The act ends at one table, all three rivals in a room, Tom holding the page each of them wants about the other two. Whoever leaves it hurt and standing picks up a telephone. Late that night Agar walks down Quay Street for the first time in his life, in the rain, without a hat, and asks for the pages with his name on. He admits he bought the plot. He admits nothing else.
+The week before the inspector, Agar rides in a minicab for the first time in his life, to the dock gate, with his hat on his knee, to ask the Widow what her labour would cost to build his marina. It is fair, and it is more than he has, and he cannot have the basin without the yard behind Mickey's. Both of them look at the driver. Then his agents padlock the yard for a "survey" with every car inside, and Ron's old gang lift the ten-foot gate off its hinges and lean it against the wall with the padlock still locked. "We never touched his lock."
 
-### The last week
+Then Mr Reese. "A fare at no charge is either a kindness or a hole, Mr Nowak. I'm paid to ask which." He rides a route in the front seat, where Ron sat, with a box of crabs loose in the back ("Are those declared, Mrs Laverack?" "They're crabs, love. They don't fill forms in"). On the Wednesday he reads both lines aloud. "Somebody drove a long way for nothing, Mr Nowak." Then he takes off his glasses. "I know that date. Every officer in this collection knows it." The warehouse was a bonded store. The stock was the Crown's. The mild man who came about the takings belongs to the department that was robbed.
 
-The letter is courteous and signed T. A. Reese, Officer of Customs and Excise. Sheila said in week one that they would send a man once the name on the form changed. He has a flask of tea, a bad knee and a propelling pencil. His father drove a cab. He is sorry, truly, when a book does not add up, and he is the first person in the story who only wants to know what happened.
+What he needs by Friday: the driver's name, in the driver's own hand, and the eleven miles shown to him on the road. With those he can close it on his own report. Without them it goes to the investigators, and the firm is assessed for six years as if every unrecorded night were a working one, which would close it.
 
-By day he reads. One morning he rides in the cab, "because mileage is a truthful thing", and it is the funniest hour in the game: a fishmonger's live crabs loose in the back, Darren trying to sell a Customs officer a radio. By night whichever rival made the telephone call is at work.
+That night Tom finds Sheila's house for the first time. The book is on her kitchen table, with a driving licence that has lain in a drawer since 1961. She says four sentences with her back to him. "He went down at ten to eleven and the men were at the landing. There were forty-one in that book, so I took them. I wrote it down on the Monday, because every fare goes in the book. Nobody reads a fare book."
 
-On Thursday he turns to Saturday 18 November 1989 and reads one line aloud. Twenty to midnight, car two, landing to warehouse row and return, two fares, wait, no charge. "Somebody drove a long way for nothing, Mr Nowak." Sheila is looking at the counter. The old books have always gone home with her, and this one does tonight.
+There is a pen and a fire in the grate. He can leave the lines. He can strike the true one, Mickey's alibi, so that a dead man drove. He can burn the book. Or he can do the one thing nobody has done for her since she was twenty-two, and ask her what she wants. The game does not offer it. The player has to have learned it.
 
-Tom has never been to her house. In her kitchen the 1989 fare book is on the table, and the player turns its pages himself. The importer's account, written "Paid" every Monday to the week of the fire, in Mickey's hand. The watchman's Saturday lifts, "No charge. Per M.", in Sheila's small upright hand, as she was told. One afternoon in September, a run to the Harbour Board and a forty-minute wait. And the line Reese read. It is not in Mickey's hand. It is small and upright.
+"To have it read. And to write my own name to it, and not have it written for me."
 
-Mickey never wrote his own run down. Sheila, at the sink with her back turned, tells it in a few sentences. Car two had eleven miles on it that nobody had written. She asked him, and he told her. He would not write it, so she did, because every fare goes in the book and that was his rule. She had booked the watchman's lifts herself and never asked why. Going to the police would have stopped forty-one envelopes by Christmas. "So I wrote it down and I waited for somebody to read it. Nobody reads a fare book." When Mickey died with a sealed letter by his hand, she posted it. "New management" was never only a promise to a dead man. She wanted somebody in that chair who would look.
+Ron is on the pavement outside. "She's not to sign it, boss. I was there. And I can drive now, near enough. You've seen to that."
 
-There is a pen on the table and a fire in the grate. The player decides what happens to the line. She does not ask him for anything and does not turn round.
+On the Thursday Tom has two doors to knock on, and somebody in the way at each. Danny's cars block the Bishop's lane, and Danny, asked what he wants, takes a long time to say it, and it is not the rank: a morning's work at the dock gate for his father, whom the Widow has never picked. And the Widow, at the six o'clock pick in front of sixty men, must agree to let Tapper and Shiner put their names to a paper that will cost her a contract. She has never given anything for nothing. In the kindest version her price is one Tom can pay and will feel.
 
-On Friday the last piece arrives. Among Mickey's unposted letters to his daughter, in a drawer since the first week, is a page cut from his book: a stranger's name, a town inland, a sum. £11,400, owed, not paid. And under it: "Had of G.A. £4,000. Paid out to the forty-one, every penny." Agar paid for a plot to come free. Mickey took the money to make up what the club could no longer find, told Ada one lie, that the man had refused, and let her find the reason. He did to her what she did to Tom. Then he could not live with it, reckoned what he owed the man he had ruined, and sent for a stranger. The importer is the forty-second name, and the first.
+Friday: the eleven miles. Whose hand the name is in decides who drives, with the inspector in the back seat.
 
-Reese wants three things in writing by five o'clock, and each is in somebody else's hands. Tom has the phone box on the corner, five coins and the afternoon. He can ring only people he once let give him something, because only they will hear him out, and each call is an errand across the Hook. Every hook he ever took is called in the same afternoon. A man who took nothing from anybody stands in the box and rings nobody.
+- If it is Sheila's own name, she gets in and does not touch the seat. It is where she left it. Tom is beside her with the handbrake. In the back are Mr Reese, with his flask, and Ron, who will not be left behind and has to be folded in. She drives the night: the landing, the row, and then the four miles to the bollard. The handbrake prompt is under the player's hand, as it was on the dock road in October. If he leaves it alone, she stops a yard short and puts it on herself, and says the rest at last, to the windscreen: "I had two in the car, shouting. I was here before I could hear what they were shouting. Then I turned round." Ron, to the side window: "You come back, though." It is the first thing either has said to the other about it in a year. "Eleven and a tenth," says Mr Reese. "I'll allow the tenth."
+- If it is Ron's name, it is a lie told for her by the man she left, and he can only tell it if the player taught him all three lessons. He drives the eleven miles on L-plates at eleven miles an hour. "You were in no hurry that night, Mr Kirby." Reese looks at the seat, and at Ron's legs, and at the small woman in the office doorway. "I am paid to ask which. I am not paid to measure."
+- If it is Mickey's name, Tom drives eleven miles of a lie and the true line is struck out. Sheila will not sit behind it.
+- Or Tom writes no driver at all and answers for the night himself as the owner. It is not a lie. It costs him the firm.
 
-The last door is Ada's. Here he tells her what Mickey did to her, or does not. Told, she sits a long time. "Thirty-seven years I've known when a man was lying to me from that window. He sat in that chair. He found me a reason."
+The handbrake has meant one thing all game: somebody else goes, and Tom stops them. At the bollard it is the last thing the player can touch, and the right thing to do with it is nothing.
 
-Then the rival who rang Customs is on the pavement between him and the office door, in person, and it is settled there. Then Reese closes his notebook and says one of two things. "That all seems to be in order, Mr Nowak." Or: "I'll want the other book, Mr Nowak."
+Nobody gets off. DS Ellis has waited a year too. A bonded store was broken into and a man was burned, and everyone named is charged. What the player's weeks decide is whether they are bailed from the counter, together, to the magistrates' on 14 January, with the sergeant's own note that the driver went back.
 
-### How it ends
+### The endings
 
-The endings are states the town is in, never a menu. Each closes on two lines: one Sheila writes in the fare book and one Tom writes in his own.
+Still states, never a menu, each closed by a line in the fare book and a line in Tom's notebook. In each the verdict is which seat Ron is in.
 
-The Kingdom. The business stands and the books hold. After ten at the landing a carrier in a coat that does not fit him walks the envelope past the constable, and the tallyman asks, for the first time: "Nowak's?" Ada's window is dark; she gave him the tin, and the watch with it. There is a figure at the window above the office. He has learned to find people reasons. Sheila locks up: "Goodnight, Mr Nowak." Or, if he scratched the line she wrote, she is gone and her keys are on the counter. On the better turn, which a careful first player can reach, she stops at the door: "Night, Tom." The fare book: "22.10. Landing. Account." The Ledger, in a hand that has begun to look like Mickey's: "41 out. T.N."
+The Kingdom, at its best. Sheila signed her own name because Tom asked her what she wanted. Reese recommended that the Crown do nothing. Ellis charged her and Ron and the other two and bailed them together: the two who said good morning for a year will stand in one dock. And Sheila set her own price, which nobody could talk down: "I'll not keep a book I'm in." After thirty-one years Pauline keeps the fare book, badly, with Sheila reading it over her shoulder from the customer's side. Last scene: Ron in the passenger seat by choice, naming buildings. In the back, a fare for the first time in her life, Sheila, going home. She pays, and counts it twice. "Mind how you go, Tom." Ron, pulling away: "Fourteenth of January. I can't write her a reference, boss. I can fetch them as'll sit." The fare book, in Pauline's round hand: "Dunn, S. Office to home. £2. Paid." Tom's notebook: "Ron takes his test in March. He says rain by four."
 
-The Straight Life. In the school hall the Quay Street Friendly Society pays out for the first time, in the open, forty-one signatures in a book anybody may read. Julie has the firm. Terry has the radio at night. On the last evening Tom rides in the back of car one as a fare, Julie driving, Ron in the front seat out of habit. Pauline, on air: "Car one's got the old gaffer and Ron. Be nice." Sheila writes the fare herself. "Mind how you go, Tom." The fare book: "Nowak, T. Round the Hook. £2. Paid." The Ledger: "Ron takes his test in March. He says rain by four."
+The Kingdom, plainly. Somebody else's name is on the paper. If it is Mickey's, Sheila's keys are on the counter on top of the fare book. If it is Ron's, she is still at her desk and has not looked up since, and Ron will answer in January for a thing he did not do. The carrier walks the envelope down the quay and the tallyman asks, for the first time, "Nowak's?" The notebook, in a hand that has started to look like Mickey's: "41 out. T.N."
 
-Burn Both has two closes. For the man who went for both and lost them, the last scene is the first night again: the quay, the lamp, no envelope. The constable turns round and does not call "You there." He calls "Nowak!" Everybody knows his name now. The player has the same two choices as on night one, stand or run, and it ends on the press. For the man who let it drift there is no judgement, because nobody thinks enough of him to hold one. He walks down the gangway he walked up. Ron passes in the gate's van and does not look across. Ada watches him the whole way. The fare book: "Ferry landing. One. No charge."
+The Straight Life, at its best. Tom named nobody and answered for the night himself. The firm goes to Julie Kettlewell, and he drives for her. Car two is at the kerb with L-plates on and Ron at the wheel, and Ron looks across. He drives Tom round the Hook at eleven miles an hour, and says the truest line of the ending: "You never ask for owt. You've just done it again. She'd have signed it. So would I. You never asked." It is a gift, and it is his old fault, and it is both. Sheila finds out for herself what he gave up, and it is the thing she says "Tom" for. The notebook: "Ron drove."
+
+The Straight Life, plainly. He sold to the Widow, kindly, on her terms. Sheila gives him the last fare book: "It's a full one. I'd not throw it out." Nobody has read it. The gate's van passes with Ron in the passenger seat, and Ron lifts one hand. Fare book: "Closed." Notebook: "Stayed."
+
+Burn Both. The Reckoning, as before: his own books did not hold, and on the quay that night the constable does not call "You there". He calls "Nowak!" And the Suitcase, for the man who never asked anybody anything: the gangway he came up, and the gate's van going past with Ron in the passenger seat, not looking across. The fare book's last line: "Ferry landing. One. No charge."
+
+### What is kept from before
+
+Everything the morning's readers praised every round: Ron and the passenger seat, the three lessons, the suppers on the quay wall; Sheila, her name for him and a line of her own in the fare book; the fare book as alibi and noose, read by Mr Reese; the first week; taking a gift or paying for it, paid off at the hearing; Bonfire Night; Pauline's radio and Terry's fifth word; two widows in the back of the cab; the last lines.
+
+### What is gone
+
+Ada as the hidden head. The developer who pays for a fire. The lie about who paid. The camcorder tape, the cut page, the men from over the water, the Fixer's table, six layers of truth. Fourteen named people.
 
 ## Changes to canon or rulings, for your ruling
 
-The few that matter. Each has a recommendation and the plain alternative.
+Fewer than this morning, because the story hides less. Each has a recommendation and the plain alternative.
 
-1. Ada is the head of what is left of the outfit. Canon has her as the widow at her window. Here the envelope is made up on her table, and on Bonfire Night it is on her word that the firm's own car is burned. She never goes to the police (a change to your ruling of 1 October). Recommended: yes. Every round's readers found the outfit needed a face the player already knows. Alternative: Ada stays a neighbour, the tallyman is the last of the old firm, and Cammack's crew burn the car.
+1. Sheila drove the car on the night of the fire. Canon and the first readers' bar say "Sheila Dunn as written", and two of the last readers said, fairly, that this is yours to rule on. It adds one night to her and changes nothing else: she still never says a false thing, and her rule about the fare book is the reason the line exists. It is also the change that took all three readers to 8. Recommended: yes. Plain alternative: Ron drove, as in versions 1 to 3 (7, 7, 7; every reader guessed it in week one).
+2. What the fire was. Your ruling of 30 September stands as what the street says. Underneath: a lift from a bonded store that went wrong, a lamp, one man burned; nobody paid for it and nobody meant it. Because the stock was under bond, the VAT inspector of the last act belongs to the department that was robbed. Recommended: yes. Alternative: the morning's version (a landlord paid for it), which readers called the most familiar plot in the genre.
+3. Ada is only what canon says, a widow at her window. This withdraws the morning's biggest proposed change. Recommended: yes.
+4. The outfit is an old dockers' sick club with nobody at its head, kept alive by Mickey's own pocket. Canon says "a half-dead criminal outfit". Recommended: yes; it fits canon's words.
+5. The Widow is the main opponent, and Danny and Agar are smaller. Canon lists the three as equals. Keith Garbutt, the Fixer, and Philip Danby, the second love interest, are barely used; Alison is the one someone, and small. Recommended: yes, for the hours. Alternative: three equal rivals and a longer game.
+6. Ron's old gang is new: Tapper, Shiner and the Bishop. Recommended: yes.
+7. Sheila's name for him has two steps, "Mr Nowak" and then "Tom". Tom lays hands on no woman, nobody over sixty and not the priest (your open question 2, as recommended). His letter has words and his notebook a voice. Recommended: yes to all three, as this morning.
+8. Nobody asks about Tom's past, as you ruled. Once, in one ending, DS Ellis says he is the one man in the street she knows nothing about, and that she is not going to ask. Recommended: yes. Alternative: she says nothing.
+9. Three endings shown, five states beneath (your open question 1), with Burn Both as two closes. Recommended: yes, as this morning.
 
-2. Whose outfit. Canon says Mickey left Tom "a half-dead criminal outfit"; the first-ask note left the reading to you. Here it is an old dockers' club in which Mickey held one seat, the office and the book, and Tom inherits the seat and its debts: forty-one families. Recommended: yes; it is what gives Tom something to want. Alternative: the outfit is somebody else's and Mickey was its courier.
+## The scores
 
-3. The warehouse fire. Your ruling of 30 September stands as what the outfit believes. Added underneath: the importer never stopped paying; Agar paid Mickey to see the plot came free; Mickey told Ada one lie; and the fare-book line for that night is in Sheila's hand. Recommended: yes; the fare book as the only honest book is what every reader says must not be lost. Alternative: the fire exactly as ruled, and Sheila knew nothing.
+Each number is one fresh reader's overall score out of ten. In order: the critic, the player, the script editor.
 
-4. Sheila's name for him has two steps: "Mr Nowak" when she trusts him with the real book, and "Tom" once, late, for something she finds out for herself. Recommended: yes. Alternative: one step, as built, which a careful player hears on day three.
+Phase 1, this afternoon (one story, polished eight times):
 
-5. One love interest. Alison is the someone worth being honest for; Philip Danby, canon's second, is a friend. Recommended: yes. Alternative: Philip can stand in her place.
+| Round | Scores | Would single it out |
+|---|---|---|
+| The first treatment | 4, 5, 4 | none |
+| 1 | 7, 7, 7 | none |
+| 2 | 8, 7, 7 | none |
+| 3 | 8, 8, 7 | none |
+| 4 | 8, 7, 8 | none |
+| 5 | 8, 7, 8 | one, with a caveat |
+| 6 | 7, 8, 7 | one |
+| 7 | 8, 8, 7 | one, with a caveat |
+| 8 | 8, 7, 7 | none |
 
-6. Tom's own line (your open question 2): no hands on a woman, anyone of sixty or over, or the priest, with other people offering to do it for him. Recommended: yes; the readers named it among the strongest things.
+Phase 2, this evening (three versions, then the winner polished):
 
-Smaller additions, listed in full at the top of STORY-BIBLE-v8.md: the tallyman's name; Maureen Jensen as Ada's daughter-in-law; the words of Tom's letter and his notebook; more people speaking of Mickey than the two approved lines; the inspection's causes; Burn Both shown as two closes; Ellis not for sale; a few dates and sums.
+| Round | What it was | Scores | Would single it out |
+|---|---|---|---|
+| Contest | A, Twice | 7, 6, 6 | none |
+| Contest | B, No Charge | 7, 7, 8 | none |
+| Contest | C, The Passenger (the winner) | 8, 8, 7 | none; two said nearest |
+| 1 | The winner in full | 7, 7, 7 | none |
+| 2 | Polished | 7, 7, 7 | none |
+| 3 | The last act rebuilt as a drive | 7, 7, 7 | none |
+| 4 | The secret moved to Sheila | 8, 8, 8 | none; two said close |
+| 5 | Polished | 8, 8, 7 | one, plainly |
+| 6 | Polished | 8, 8, 7 | none; two said close |
+| 7 | Cut and hardened | 7, 7, 7 | none |
 
-## The scores, round by round
+What every round of phase 2 praised: Ron and the driving lessons; the eleven miles found on the car's own dial; the handbrake left alone; the Widow, who prices and never threatens; the fare book and Mr Reese. One critic called the mileometer "the best pairing of story and driving I have seen planned", and story and play scored 9 from the critic in four of the last five rounds.
 
-| Round | Version | Critic | Player | Editor | Lowest category | Would single it out |
-|---|---|---|---|---|---|---|
-| 0 | this morning's treatment | 4 | 5 | 4 | 2 | none |
-| 1 | v1 | 7 | 7 | 7 | 5 | none |
-| 2 | v2 | 8 | 7 | 7 | 5 | none |
-| 3 | v3 | 8 | 8 | 7 | 6 | none |
-| 4 | v4 | 8 | 7 | 8 | 6 | none |
-| 5 | v5 | 8 | 7 | 8 | 6 | the critic |
-| 6 | v6 | 7 | 8 | 7 | 6 | the player |
-| 7 | v7 | 8 | 8 | 7 | 6 | the player |
-| 8 | v8 | 8 | 7 | 7 | 6 | none |
+What still holds it at 8, whatever was changed:
 
-Every round used three new readers who had seen nothing before, so the numbers are a spread, not a climb by the same judges.
+1. Pace. No reader in either loop has scored structure above 7. Each round's new readers ask for the two side roads (the player who asks Ron early; the player who winds the firm down) to be written out in full, and each round's new readers say there is too much story for the hours. Both cannot be met on paper.
+2. A turn that is planted fairly is found by a reader who is reading for it. They guessed Ron in week one; when the story used that guess as its trap, they began to find Sheila at the seat. The readers also disagree with each other from one round to the next about how much to plant.
+3. Things are still said to a silent driver that a player would sooner find.
 
-What they praised in every round: Ron and Tom; Sheila, her withheld name, and the line she wrote; the fare book and Mr Reese; the first week and the failed carry; the offers that are gifts or hooks; Bonfire Night.
+Not exceptional by the test you set, and not likely to become so by more rounds of this kind: only changes of shape moved the scores, and polishing never did. It is a better story than this morning's, by about a point, and its centre is now the thing readers want to quote.
 
-What kept it from 9, in every round, whatever was changed:
+What I would do next, in your place: stop scoring it on paper. The three faults left are faults of play. Build three things in the prototype and judge those: the first driving lesson, with the handbrake; the evening at the counter with last year's fare book; and the eleven miles on the dial. If those three are as good in the hands as they read, the story is there.
 
-- Surprise. Any hidden hand behind the fire or the burned car is guessed by a reader who knows crime stories, and each layer added to hide it made the story harder to hold.
-- Too much story. The bible carries more plot than fifteen to twenty hours of a game played with the hands want. The readers' advice was the same each time: cut, do not add.
-- Told, not found. On paper the truth reaches Tom mostly by people telling him. Some of that is the page's fault: a job reads as a sentence. It will only be settled by playing it.
-
-Something to act on: rule on the six changes above, the first three before anything else, since the rest hangs on them. If you want the loop run again, the log (STORY-LOG.md) says where to start: fewer secrets, each found by a deed, and a judgement made on the story as played in the prototype, not only as read.
+The full bibles are in the same folder. The one to build from is STORY-BIBLE-P2-v5.md, with the shorter kitchen scene of v6. The loop stopped after round 7 because one session had reached the limit of what it could hold and the scores had stopped moving; it did not stop because of the clock or the week's allowance. A later run can go on from STORY-LOG.md.

@@ -270,3 +270,36 @@ What the three said, in common:
 5. Fourteen small faults (Pauline on the radio that night; a 1961 licence; Ron's burns; whose warehouse).
 
 Rounds 5 and 6 did not raise the lowest reader's score (7, 7), so round 7 changes the method again: it cuts. The asked-first branch goes back to one scene; the typed answers go; small names are folded together; and the Widow is rebuilt to stay hard to the end: she never gives anything for nothing.
+
+## Phase 2, round 7 (20 November): the cut
+
+Table line: | 7 | P2 v7 | 7 | 7 | 7 | 6 (structure, all three; the middle and tone, the player; antagonists, the editor) | no, no, no |
+
+What P2 v7 changed: cut and hardened. The asked-first branch back to one scene; picked answers in place of typed ones; the Fixer and the signwriter folded away; the Widow never gives anything for nothing (her price on the last Thursday is Ron, back in her coat till Easter); Agar seen through a glass door before the hearing, and his part found in a file left under his hat; Danny's blockade a fight after dark; the bookkeeper's initials taken off the struck repair and June's line moved after the row.
+
+Scores by category (critic, player, editor): Tom 8 7 7; cast 8 8 8; antagonists 7 7 6; mystery 7 8 8; opening 8 8 7; structure 6 6 6; middle 7 6 7; surprise 7 7 7; endings 7 7 8; side stories 7 7 7; tone 7 6 7; story and play 9 8 8.
+
+What the three said, in common: the seat still rules out the tall men at scene 10; the last act holds too many beats for its hours; the wind-down road is a table; too much is said to a silent driver; the asked-first branch is thin. Two readers flag, fairly, that making Sheila the driver changes a character the frame says to keep as written: it is the owner's ruling.
+
+## Where phase 2 stopped
+
+Seven polish rounds after the contest, twenty-four fresh readers in all (three for the contest, twenty-one for the rounds). No fourth reader was called, because no round met the test.
+
+| Round | Version | Critic | Player | Editor | Lowest category | Single it out |
+|---|---|---|---|---|---|---|
+| contest | C, The Passenger | 8 | 8 | 7 | 6 | no, nearly, no |
+| 1 | P2 v1 | 7 | 7 | 7 | 5 | no, no, no |
+| 2 | P2 v2 | 7 | 7 | 7 | 6 | no, no, no |
+| 3 | P2 v3 (Act III rebuilt as a drive) | 7 | 7 | 7 | 6 | no, no, no |
+| 4 | P2 v4 (the turn moved onto Sheila) | 8 | 8 | 8 | 6 | no, close, close |
+| 5 | P2 v5 | 8 | 8 | 7 | 6 | close, yes, no |
+| 6 | P2 v6 | 8 | 8 | 7 | 6 | no, close, no |
+| 7 | P2 v7 (cut and hardened) | 7 | 7 | 7 | 6 | no, no, no |
+
+What moved. Two changes of method moved scores; polishing never did. Rebuilding the last act as a drive took story and play to 9, 8, 8, where it stayed. Moving the turn from Ron to Sheila took all three readers to 8 for the only time in either phase and the mystery from 7 to 8. Round 5 drew the one plain yes.
+
+What did not move. Structure and pace never passed 7 from any reader in fourteen rounds across both phases. Each round's fresh readers ask for the two side roads (Ron asked first; the wind-down road) to be written out as scenes, and each round's fresh readers say the bible is too full for its hours: the two cannot both be met inside 14,000 words. Surprise sat at 7: each turn, once written fairly, is found by a reader who is reading for it. And the readers contradict each other from round to round on how much to plant (round 4 asked for the clue that round 6 called a leak).
+
+The honest reading: on paper, with hard readers, this story sits at 8, one point above phase 1, with a centre that is now the thing readers single out (Ron and the lessons, the eleven miles on a dial, the handbrake left alone, Sheila's own line). The last point is not on paper. The faults that remain (pace, how much is said to a silent driver, whether a turn is seen coming) are faults of play, and the cheapest next test is to build the first lesson, the count and the eleven miles in the prototype and judge those.
+
+Why it stopped here and not at the order's own stops (exceptional, Sunday 18:00, or 80% of the week): this one session has written seven bibles and read twenty-four reviews and is near the limit of what it can hold; the scores have sat at 7 to 8 for four rounds whatever was changed; and the weekly reading was 58% at 17:51 with the one-shot still building. A later run can go on from this table. The version to build from is P2 v5 (8, 8, 7 and the one yes), with v6's shorter kitchen scene; v4 scored 8, 8, 8 and differs little.
