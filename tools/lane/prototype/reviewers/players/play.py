@@ -6,6 +6,7 @@ model plays at a person's pace in game time. Reading is charged too: every new w
 person takes to read it (250 words a minute), so long talk moves the minute as it would for a person. The session
 stops itself at --minutes. Every action is logged with the game's own state beside it in the --hidden folder, kept
 apart from the screenshots (the player is never given that folder; the consequence checker and the panel read it).
+The game's own saved week goes there too: at the start, every 10 actions and at the stop (consequences.py reads them).
 
     python play.py serve --dist DIR --out DIR --hidden DIR [--minutes 60] [--port 8765] [--seed 7]   (leave it running)
     python play.py look                                                   (the screen now)
@@ -38,6 +39,13 @@ MAX_WAIT_S = 60
 READ_WORDS_PER_S = 250 / 60
 
 STATE_JS = "() => LEDGER.read()"
+# what other people say on screen now, in full (for the consequence checker; never shown to the player): their lines
+# in a talk (not Tom's own, not the hints), the written scene's line, subtitles and speech bubbles within earshot
+SPOKEN_JS = """() => { const out = [], vis = (e) => e && e.offsetParent !== null;
+  if (vis(document.getElementById('talk'))) for (const p of document.querySelectorAll('#tlog p.npc')) out.push(p.textContent.trim());
+  const d = document.getElementById('dtxt'); if (vis(d)) out.push(d.textContent.trim());
+  if (window.__gate) { const m = window.__gate.msgs(); out.push(...m.subs, ...m.bubbles); }
+  return out.filter(Boolean); }"""
 
 
 class Session:
@@ -57,7 +65,18 @@ class Session:
             raise SystemExit("--hidden already holds a session: give each session its own folder (replays need one log each)")
         self.log = open(os.path.join(hidden, "actions.jsonl"), "w")
         self.log.write(json.dumps({"n": 0, "seed": seed}) + "\n")
+        self.hidden = hidden
         self.started = time.time()
+
+    def save_to(self, name):
+        """The game's own saved week, for the consequence checker (kept in the hidden folder only)."""
+        try:
+            with open(os.path.join(self.hidden, name), "w") as f:
+                f.write(self.g.js("() => LEDGER.saveText()"))
+        except Exception as e:  # noqa: BLE001 - a save that cannot be taken is named, never fatal to the session
+            self.g.errors.append("save for the consequence checker failed: %s" % str(e)[:200])
+            with open(os.path.join(self.hidden, "save_errors.txt"), "a") as f:
+                f.write("%s: %s\n" % (name, str(e)[:300]))
 
     def step(self, secs, keys=()):
         g = self.g
@@ -85,7 +104,9 @@ class Session:
         rec = {"n": self.n, "minute": round(self.played_s / 60, 2), "action": action, "words": words, "shot": shot}
         if self.played_s >= self.cap_s:
             rec["stopped"] = "the session's time is up: run play.py stop"
-        hidden = {"state": self.g.state(), "errors": self.g.errors[-5:]}
+        hidden = {"state": self.g.state(), "errors": self.g.errors[-5:], "spoken": self.g.js(SPOKEN_JS)}
+        if self.n % 10 == 0:
+            self.save_to("save_%04d.json" % self.n)
         self.log.write(json.dumps(dict(rec, hidden=hidden)) + "\n")
         self.log.flush()
         return rec
@@ -119,6 +140,7 @@ class Session:
         s = {"minutes_played": round(self.played_s / 60, 2), "minutes_of_keys": round(self.keys_s / 60, 2),
              "minutes_reading": round(self.read_s / 60, 2), "actions": self.n, "wall_minutes": round((time.time() - self.started) / 60, 1),
              "errors": self.g.errors[:20]}
+        self.save_to("final_save.json")
         json.dump(s, open(os.path.join(os.path.dirname(self.log.name), "session.json"), "w"), indent=1)
         self.log.close()
         self.g.close()
@@ -130,6 +152,7 @@ def serve(a):
         raise SystemExit("--hidden must not be inside --out (the player may open files under --out)")
     sess = Session(a.dist, a.out, a.seed, a.hidden, a.minutes)
     sess.g.clear(tries=0)  # leave the opening as a newcomer meets it
+    sess.save_to("start_save.json")
 
     class H(BaseHTTPRequestHandler):
         def log_message(self, *x):

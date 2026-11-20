@@ -9,6 +9,8 @@ Nothing is published to him unless this passes. Four parts:
   4. the note for him (NOTE-TEMPLATE.md), filled from the numbers: what to try, the known issues, honestly
   5. the machine checks (machine_checks.py, lane task 4t piece 1): rules every game hour, save and reload, never
      stuck, camera never inside a wall, frame rate against the accepted build, the content words; code, no model
+  6. the consequence checker (consequences.py, piece 5): every memory traced back through its tellings to the act,
+     every reaction to a memory, no line repeated, nothing wrong for 1990, the content words in what is shown
 
     python gate.py --assets DIR [--out DIR] [--known KNOWN.json] [--hands-on FILE] [--skip-scripted]
                    [--skip-machine] [--machine-hours 24]
@@ -37,7 +39,7 @@ def scripted(assets, out):
     for name, cmd in [
         ("prototype tests", [sys.executable, os.path.join(PROTO, "run_proto_tests.py"), "--assets", assets, "--no-playtest"]),
         ("lane checks", [sys.executable, "-m", "pytest", "-q", os.path.join(PROTO, "tests")]),
-        ("gate's own checks", [sys.executable, "-m", "pytest", "-q", os.path.join(HERE, "test_invariants.py"), os.path.join(HERE, "test_gate.py")]),
+        ("gate's own checks", [sys.executable, "-m", "pytest", "-q", os.path.join(HERE, "test_invariants.py"), os.path.join(HERE, "test_gate.py"), os.path.join(HERE, "test_consequences.py")]),
     ]:
         env = dict(os.environ, LEDGER_PROTO_ASSETS=assets)
         p = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=3600)
@@ -79,11 +81,11 @@ def judge(clumsy_report, known, hands_on_text=None, scripted_runs=None, machine_
     new, old = [], []
     machine = []
     if machine_report is not None:
-        machine = [dict(r, source="machine") for r in machine_report.get("results", [])]
-        if not machine:
-            machine = [{"rule": "machine checks ran", "ok": False, "source": "machine", "steps": "not reached: no report"}]
+        machine = [dict(r, source=r.get("source", "machine")) for r in machine_report.get("results", [])]
+        if not any(r["source"] == "machine" for r in machine):
+            machine += [{"rule": "machine checks ran", "ok": False, "source": "machine", "steps": "not reached: no report"}]
     for r in clumsy_report.get("results", []) + machine:
-        if r["ok"]:
+        if r["ok"] or r["ok"] is None:  # None: a rule with nothing to check this time; listed in the note, never a pass
             continue
         (old if signature(r) in known else new).append(r)
     blockers = hands_on_faults(hands_on_text)
@@ -98,13 +100,16 @@ def note(clumsy_report, known, new, try_lines, machine_report=None):
     lines = ["What to try:"] + ["- " + t for t in try_lines] + ["", "Known issues:"]
     seen = set()
     for r in clumsy_report.get("results", []) + (machine_report or {}).get("results", []):
-        if r["ok"] or signature(r) in seen:
+        if r["ok"] or r["ok"] is None or signature(r) in seen:
             continue
         seen.add(signature(r))
         why = known.get(signature(r), "new, not yet fixed")
         lines.append("- %s (%s)" % (signature(r), why))
     if not seen:
         lines.append("- none found by the gate")
+    unreached = sorted(set(r["rule"] for r in (machine_report or {}).get("results", []) if r.get("ok") is None))
+    if unreached:
+        lines += ["", "Not reached this time (nothing to check, so not passed): " + "; ".join(unreached)]
     lines.append("Live AI talk only runs inside claude.ai: untested here.")
     return "\n".join(lines)
 
@@ -139,6 +144,19 @@ def main(argv=None):
         except Exception as e:  # noqa: BLE001 - a check that breaks is itself a finding
             print("machine checks broke:", str(e)[:300])
         mrep = json.load(open(mpath)) if os.path.exists(mpath) else {}
+        # piece 5, the consequence checker's own run (code, no model): its faults count like the machine checks'
+        cpath = os.path.join(a.out, "consequences", "consequences.json")
+        if os.path.exists(cpath):
+            os.remove(cpath)
+        import consequences
+        try:
+            consequences.main(["--assets", a.assets, "--out", os.path.dirname(cpath), "--hours", str(a.machine_hours)])
+        except Exception as e:  # noqa: BLE001
+            print("consequence checker broke:", str(e)[:300])
+        crep = json.load(open(cpath)) if os.path.exists(cpath) else {}
+        cres = [dict(r, source="consequences") for r in crep.get("results", [])] or [
+            {"rule": "consequence checker ran", "ok": False, "source": "consequences", "steps": "not reached: no report"}]
+        mrep["results"] = mrep.get("results", []) + cres  # kept even when the machine checks gave no report
     ho = open(a.hands_on).read() if a.hands_on else None
     ok, new, old, blockers = judge(rep, known, ho, runs, mrep)
     ok = ok and mrep is not None  # a gate run with the machine checks skipped never passes
