@@ -39,11 +39,11 @@ async function hit({ P, speed, others = [] }) {
   const x = X('cars');
   const h = LAW.fns.carHit(speed, false);
   if (!h.choiceWithinSeconds) return;
-  for (const Q of others) hospital(Q, LAW.fns.carHit(speed, false));
   P.hurtKind = h.hurt;
   const name = P.anon ? P.def.desc : P.def.name;
   const i = await scene(() => choose('', `${name[0].toUpperCase() + name.slice(1)} is down in the road, and not getting up. The engine is still running.`, ['Stop and help.', 'Drive off.']));
   const r = LAW.fns.afterHit(i === 0 ? 'stop and help' : 'drive off');
+  for (const Q of others) hospital(Q, LAW.fns.carHit(speed, false));
   x.hits.push({ who: P.id, hurt: h.hurt, choice: i === 0 ? 'stopped' : 'drove off', speed: Math.round(speed * 10) / 10, t: Math.round(G.t) });
   if (i === 0) {
     G.car.v = 0;

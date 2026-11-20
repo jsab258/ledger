@@ -120,15 +120,23 @@ const freePlay = async () => {
   for (let i = 0; i < 40; i++) {
     const s = await L(async () => {
       const w = LEDGER.written.read();
-      if (w.open) { if (w.choices && w.choices.length) await LEDGER.written.choose(0); else await LEDGER.written.next(); return 'scene'; }
+      if (w.open) { const said = 'scene: ' + JSON.stringify(w).slice(0, 160); if (w.choices && w.choices.length) await LEDGER.written.choose(0); else await LEDGER.written.next(); return said; }
       if (LEDGER.ui.modal === 'talk') { await LEDGER.talk.leave(); return 'talk'; }
       if (LEDGER.ui.modal) { LEDGER.press('Escape'); return 'box'; }
       if (LEDGER.G.paused) { LEDGER.tick(0.2); return LEDGER.G.paused ? 'paused' : null; }
       return null;
     });
     if (!s) return;
+    if (process.env.LANE_SAY_SCENES && s !== 'paused') console.log('   (closed: ' + s + ')');
     await L(() => { for (let k = 0; k < 12; k++) LEDGER.tick(1 / 60); });
   }
+};
+// the one-shot: the checks cost game hours now (each stop-and-help, each crash), and by night nobody stands in the street;
+// the checks that need people about are run in the afternoon
+const toAfternoon = async () => {
+  await freePlay();
+  await L(() => { const G = LEDGER.G, h = (G.t / 60) % 24; if (h < 10 || h > 16) LEDGER.game.test.pass(((14 - h + 24) % 24) * 60, true); });
+  await freePlay();
 };
 // run a check; if a scene opened in the middle of it, finish the scene and try again
 const tryIt = async (fn, ...a) => {
@@ -389,7 +397,37 @@ try {
 
   // ---------- 5. a person knocked down: told at once, by the name Tom knows, hurt and never killed ----------
   {
+    await toAfternoon();
+    // three people standing together, driven through: every one of them is told
+    const g = await tryIt(() => {
+      const H = __h, G = LEDGER.G, c = G.car;
+      // the one-shot: the checks before this one now take the game past the hour people go home (each stop-and-help costs minutes), so three people are stood out for it
+      const three = G.named.filter((p) => !p.dead && !p.down && !p.inCar && !p.def.police && !p.keeper && !p.lad && !p.walker).slice(0, 3);
+      three.forEach((P) => { P.override = { where: 'pave', act: 'idle', until: G.t + 60 }; P.gone = false; P.space = 'street'; P.awake = true; });
+      if (three.length < 3) return { none: true };
+      const at = H.open(20, 1.5);
+      if (!at) return { none: true };
+      const spot = [at[0] + 12, at[1]];
+      three.forEach((P, i) => { P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; P.route = null; P.moving = false; P.space = 'street'; });
+      H.cabAt(spot[0] - 12, spot[1], Math.PI / 2, 9);
+      let t = 0; H.down('KeyW');
+      while (t < 4 && !three.every((P) => P.down)) { if (H.busy()) { if (three.every((P) => P.down)) break; H.up('KeyW'); return { interrupted: 1, why: LEDGER.G.pauseWhy, modal: LEDGER.ui.modal, down: three.map((P) => !!P.down), t, hour: (G.t / 60) % 24, st: three.map((P) => [P.id, P.gone, P.space, P.x.toFixed(1), P.z.toFixed(1), P.state, JSON.stringify(P.override)].join(' ')), car: [c.x.toFixed(1), c.z.toFixed(1), c.v.toFixed(1)], spot }; } c.v = Math.max(c.v, 9); three.forEach((P, i) => { P.route = null; P.moving = false; if (!P.down) { P.override = { where: 'pave', act: 'idle', until: G.t + 60 }; P.gone = false; P.space = 'street'; P.awake = true; P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; } }); LEDGER.tick(H.dt); t += H.dt; }
+      H.up('KeyW');
+      const lines = LEDGER.ui.subs.map((s) => s.el.textContent);
+      const shown = three.map((P) => LEDGER.people().find((q) => q.personId === P.id).shownAs);
+      const r = { down: three.map((P) => !!P.down), dead: three.map((P) => !!P.dead), shown, lines };
+      for (let i = 0; i < 90 && !LEDGER.written.read().open; i++) LEDGER.tick(H.dt);
+      r.choice = LEDGER.written.read().choices || null;
+      if (LEDGER.written.read().open) LEDGER.written.choose(0);
+      for (let i = 0; i < 30; i++) LEDGER.tick(H.dt);
+      for (const P of three) { P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; P.gone = false; P.override = null; delete G.x.cars.inHospital[P.id]; }
+      G.x.econ.fareShare = 1; G.x.econ.fareShareUntilT = null; G.story.arrest = null;
+      return r;
+    });
+    if (!g || g.none || g.interrupted) ok(false, 'three people driven through: not reached ' + JSON.stringify(g));
+    else ok(g.down.every(Boolean) && !g.dead.some(Boolean) && g.shown.every((n) => g.lines.some((l) => l.startsWith(n) && KNOCKED.some((p) => p.test(l)))), `three people standing together, driven through: all three go down, none is killed, and each is named on screen (${g.lines.join(' | ')})`);
     for (const v of [4, 6.7, 13.4]) {
+      if (v > 13) await toAfternoon();
       const r = await tryIt(([v]) => {
         const H = __h, G = LEDGER.G, c = G.car;
         const P = G.named.find((p) => !p.gone && !p.dead && !p.down && p.space === 'street' && !p.inCar);
@@ -422,38 +460,11 @@ try {
       ok(!!r.shown && !!line && line.startsWith(r.shown), `... named as Tom knows them ("${r.shown}"; the name is ${r.name})`);
       if (r.expectChoice) ok(Array.isArray(r.choice) && r.choice.length === 2 && /help/i.test(r.choice[0]) && /drive off/i.test(r.choice[1]) && !r.dead, `... and the choice is put inside two seconds: ${JSON.stringify(r.choice)}; neither ends the game`);
     }
-    // three people standing together, driven through: every one of them is told
-    const g = await tryIt(() => {
-      const H = __h, G = LEDGER.G, c = G.car;
-      // the one-shot: the checks before this one now take the game past the hour people go home (each stop-and-help costs minutes), so three people are stood out for it
-      const three = G.named.filter((p) => !p.dead && !p.down && !p.inCar && !p.def.police).slice(0, 3);
-      three.forEach((P) => { P.override = { where: 'rank', act: 'idle', until: G.t + 120 }; P.gone = false; P.space = 'street'; P.awake = true; P.hold = true; });
-      if (three.length < 3) return { none: true };
-      const at = H.open(20, 1.5);
-      if (!at) return { none: true };
-      const spot = [at[0] + 12, at[1]];
-      three.forEach((P, i) => { P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; P.route = null; P.moving = false; P.space = 'street'; });
-      H.cabAt(spot[0] - 12, spot[1], Math.PI / 2, 9);
-      let t = 0; H.down('KeyW');
-      while (t < 4) { if (H.busy()) { if (three.every((P) => P.down)) break; H.up('KeyW'); return { interrupted: 1, why: LEDGER.G.pauseWhy, modal: LEDGER.ui.modal, down: three.map((P) => !!P.down), t }; } c.v = Math.max(c.v, 9); three.forEach((P, i) => { P.route = null; P.moving = false; if (!P.down) { P.gone = false; P.space = 'street'; P.awake = true; P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; } }); LEDGER.tick(H.dt); t += H.dt; }
-      H.up('KeyW');
-      const lines = LEDGER.ui.subs.map((s) => s.el.textContent);
-      const shown = three.map((P) => LEDGER.people().find((q) => q.personId === P.id).shownAs);
-      const r = { down: three.map((P) => !!P.down), dead: three.map((P) => !!P.dead), shown, lines };
-      for (let i = 0; i < 90 && !LEDGER.written.read().open; i++) LEDGER.tick(H.dt);
-      r.choice = LEDGER.written.read().choices || null;
-      if (LEDGER.written.read().open) LEDGER.written.choose(0);
-      for (let i = 0; i < 30; i++) LEDGER.tick(H.dt);
-      for (const P of three) { P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; P.gone = false; P.override = null; P.hold = false; delete G.x.cars.inHospital[P.id]; }
-      G.x.econ.fareShare = 1; G.x.econ.fareShareUntilT = null; G.story.arrest = null;
-      return r;
-    });
-    if (!g || g.none || g.interrupted) ok(false, 'three people driven through: not reached ' + JSON.stringify(g));
-    else ok(g.down.every(Boolean) && !g.dead.some(Boolean) && g.shown.every((n) => g.lines.some((l) => l.startsWith(n) && KNOCKED.some((p) => p.test(l)))), `three people standing together, driven through: all three go down, none is killed, and each is named on screen (${g.lines.join(' | ')})`);
   }
 
   // ---------- 6. the prompt names the person ahead and in view (ER-INPUT-02) ----------
   {
+    await toAfternoon();
     const r = await tryIt(([held]) => {
       const H = __h, G = LEDGER.G, t = G.tom;
       LEDGER.goOutside(); if (t.inCar) { G.car.v = 0; LEDGER.cab.getOut(); }
