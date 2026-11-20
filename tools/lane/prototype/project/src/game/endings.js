@@ -105,8 +105,6 @@ export async function runEnding(over = {}) {
   setPaused(true, 'the ending');
   await fade(true, `${e.shown.toUpperCase()}\n\n${CLOSE[e.state].join('\n\n')}\n\nThe street calls him ${NAMES[townLevel()] || 'nothing at all'}.`);
   await new Promise((res) => {
-    s.closeDone = res;
-    ui.hooks.endclose = res;
     setTimeoutSafe(res, T().closeLineRealSeconds * CLOSE[e.state].length * 1000);
     addEventListener('keydown', res, { once: true });
     addEventListener('pointerdown', res, { once: true });
@@ -155,7 +153,7 @@ register({
     showSign: (id) => showSign(id, true),
     // a scripted route to each ending (ER-END-01): the inputs are set as the world would set them, the signs are
     // shown, and the close runs. name: one of the five states, or 'hunted' (a hunted man's end).
-    async route(name) {
+    route(name) {
       const R = {
         both: { booksHold: true, friendHolds: true, streetFact: false },
         kingdom: { booksHold: true, friendHolds: false },
@@ -166,11 +164,8 @@ register({
       }[name];
       if (!R) return null;
       const base = { woundDown: false, caseSinksFirm: false, handedOver: false, streetFact: false, hunted: false, huntedForKilling: false };
-      const p = runEnding(Object.assign(base, R));
-      const s = st();
-      for (let i = 0; i < 200 && !s.closeDone; i++) await new Promise((r) => setTimeout(r, 10));
-      if (s.closeDone) s.closeDone();
-      return p;
+      runEnding(Object.assign(base, R)); // the close waits for a key; the test presses one
+      return true;
     },
     after: () => afterEnding(),
     shown: () => SHOWN,

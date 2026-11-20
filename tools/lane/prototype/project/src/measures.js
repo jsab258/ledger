@@ -228,6 +228,10 @@ export function measures() {
     about:
       'LEDGER loop prototype: Ledger screen test measures. Times are real seconds; money is pence; game time is minutes since Monday 00:00.',
     weekEnded: !!G.story.ended,
+    // the whole game (parts 7.5, 7.6): play time booked by activity, and the count of tense and retellable moments
+    hourBudget: G.hooks.budget ? G.hooks.budget() : null,
+    tension: G.hooks.tension ? G.hooks.tension() : null,
+    act: (G.x && G.x.acts && G.x.acts.act) || 1,
     realSecondsPlayed: Math.round(G.played),
     gameMinute: Math.round(G.t),
     ledgerOpens: m.visits.length,

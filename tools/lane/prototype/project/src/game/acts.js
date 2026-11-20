@@ -389,6 +389,64 @@ async function waitMenu() {
   await G.hooks.passTime(ap[i].t, '');
 }
 
+// ---------- Mickey's past and the fire (part 3.1.6; ruling 30 Sep) ----------
+// The fire has a street version, and it is a street fact: said as what is said, by people who were not there, and
+// written in the Ledger as a guess. The truth is never the street's. Mickey is described only by regulars who knew
+// him, in the two approved lines.
+const STREET_FIRE = "They say it was the insurance. They say one of your uncle's cars sat on the warehouse row that night with its lights off. They say a lot. Nobody who says it was there.";
+const MICKEY = { ada: 'Good to his crew, hard on himself. He sat in that office because the sea was done with him.', walsh: 'He sat at the back and left before the end. I always took that as a kind of prayer.' };
+export function streetFire(P) {
+  const s = st();
+  (s.fire || (s.fire = {}))[P.id] = 1;
+  note("What the street says of the fire at No. 4: the insurance, and one of Mickey's cars on the warehouse row that night. Nobody who says it was there.", 'fire', 'firestreet', { who: P.id, how: 'The street says', sure: 'a guess' });
+  return STREET_FIRE;
+}
+function pastMatters(P, a) {
+  const s = st();
+  if (['ada', 'ron', 'darren', 'grace', 'brenda', 'albert', 'rita'].includes(P.id) && day() >= 1 && !(s.fire && s.fire[P.id]))
+    a.push({
+      key: 'firestreet',
+      direct: true,
+      ask: 'what the street says about the fire at No. 4',
+      raise: "You'll have seen No. 4 on the warehouse row. Burned out. Do you want what the street says about it?",
+      opts: [
+        {
+          agree: 1,
+          q: 'Do you want it?',
+          yes: ['Yes. Tell me.', 'Yes. What does the street say?'],
+          no: ['No. Not now.', 'No. Leave it.'],
+          keep: ['Were you there?', 'Who told you?'],
+          keepSay: "I wasn't there. Nobody you'll meet was there. It's only what's said. Do you want it?",
+          noSay: 'Please yourself.',
+          take: () => streetFire(P),
+        },
+      ],
+    });
+  if (MICKEY[P.id] && !(s.mick && s.mick[P.id]))
+    a.push({
+      key: 'mickey',
+      direct: true,
+      ask: 'what Mickey was like',
+      raise: 'You never knew him, did you. Your uncle. Do you want to know what he was like?',
+      opts: [
+        {
+          agree: 1,
+          q: 'Do you?',
+          yes: ['Yes. What was he like?', 'Yes. Tell me about him.'],
+          no: ['No. Not today.', 'No. Another time.'],
+          keep: ['How long did you know him?', 'Did you like him?'],
+          keepSay: 'Long enough to have an opinion. Do you want it?',
+          noSay: 'Another time, then.',
+          take: () => {
+            (s.mick || (s.mick = {}))[P.id] = 1;
+            note(`Mickey, as ${P.def.name} knew him: ${MICKEY[P.id]}`, 'note', 'mickey_' + P.id, { who: P.id, how: P.def.name.split(' ')[0] + ' says' });
+            return MICKEY[P.id];
+          },
+        },
+      ],
+    });
+}
+
 register({
   id: 'acts',
   fresh: () => ({ act: 1, answered: false, choice: null, fired: [], pending: null, lastBeatT: 0, called: null, sitDown: null, collision: null, letterDay: 0, a3: null, overWashes: 0, lastOff: 0, stopWait: 0 }),
@@ -424,6 +482,9 @@ register({
       p = s.pending;
     if (p && p.giver === P.id && p.id !== 'collision') return () => fireBeat(p.id, P.id, false);
     return null;
+  },
+  matters(P, a) {
+    pastMatters(P, a);
   },
   hotspots(out) {
     const s = st(),
@@ -476,6 +537,7 @@ register({
       return JSON.parse(JSON.stringify(s));
     },
     fire: (id, who) => fireBeat(id, who || 'pauline', true),
+    streetFire: (id) => streetFire(G.people[id]),
     sitDown: () => sitDown(),
     morning: (absent) => inspectorMorning(!!absent),
     books: () => books(),

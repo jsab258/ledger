@@ -308,6 +308,12 @@ function bookAct(E) {
 }
 
 // What somebody knows of an act: one line on their page, brought up to date when he learns more.
+// On a person's own page a deed done to them does not name them a second time (the smoke run of 20 Nov read
+// "Pauline Kitching knows that he tried to put money in Pauline Kitching's hand"): it says "their own" and "them".
+function own(text, E, P) {
+  if (P.anon || E.target !== P.id || !E.name) return text;
+  return text.split(E.name + "'s").join('their own').split(E.name).join('them');
+}
 function bookBelief(E, P, basis, from) {
   const id = P.anon ? 'anon' : P.id,
     g = grounds(P, basis, from);
@@ -316,7 +322,7 @@ function bookBelief(E, P, basis, from) {
     kind: 'belief',
     who: id,
     key: 'belief:' + E.id + ':' + id,
-    what: 'Knows: ' + lowerFirst(mineOf(E)),
+    what: 'Knows: ' + own(lowerFirst(mineOf(E)), E, P),
     how: g.how,
     sure: g.sure,
     ev: E.id,
