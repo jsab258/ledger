@@ -13,13 +13,14 @@ async function watch(P, secs, each = 0.25) {
 }
 const HINT = /W A S D|Quay Street is up the quay|E uses what/;
 
-await run('S01', {}, async (P, t, n) => {
+await run('S01', {}, async (P, t, run, variant) => {
+  const n = variant === 'waits' ? 1 : 2; // the two ways of the first step: nothing pressed for 25 s, or Escape in the ferry shot
   // walk by keys to a point; a walk that does not arrive is a failed step, said with where he got to
   const go = async (x, z, o = {}) => { const r = await P.walkTo(x, z, Object.assign({ maxSecs: 60 }, o)); if (r < 0) { const m = await P.tom(); t.ok(false, 'he can walk to ' + x + ', ' + z, [Math.round(m.x * 10) / 10, Math.round(m.z * 10) / 10, m.space]); } return r; };
   // ---- 1. New game; nothing pressed for 25 s (run 1), or Escape during the ferry shot (run 2) ----
   let s = await P.screen();
   t.ok(s.title && s.title.some((b) => /new game/i.test(b)) && s.title.some((b) => /quit/i.test(b)), 'the title offers New game and Quit', s.title);
-  await P.click('[data-act="new"]');
+  await P.newGame();
   const ctl = () => { const G = LEDGER.G; return G.story.phase === 'play' && !G.paused && G.tom.space === 'street' && !document.getElementById('hud').classList.contains('hidden'); };
   let shot;
   if (n === 1) {
@@ -337,6 +338,6 @@ await run('S01', {}, async (P, t, n) => {
   s = await P.screen();
   t.ok(/Saved/.test(s.book), 'Save on the pause menu saves, and says so', s.book.slice(-80));
   await P.tap('Escape'); await P.secs(0.3);
-  await P.keep(n === 1 ? 'S01' : 'S01-run2');
+  if (n === 1 && t.first) await P.keep('S01');
   t.note('the Ledger after the first minutes', await P.world(() => LEDGER.G.ledger.notes.map((x) => x.text || x.t || x)));
-});
+}, ['waits', 'skips']);

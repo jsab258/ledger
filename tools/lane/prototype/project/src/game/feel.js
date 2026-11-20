@@ -34,6 +34,13 @@ export const assistOn = (name) => !!G.settings[ASSISTS[name]];
 register({
   id: 'feel',
   fresh: () => ({ hints: {}, captions: [], nudges: 0, firstFareSaid: false }),
+  loaded(x) {
+    // a new game or a loaded one starts its own count: nothing of the game before it holds a hint back
+    S.idle = 0;
+    S.about = 0;
+    S.sinceStart = 0;
+    S.lastHintPlayed = Math.max(-99, ...Object.values(x.hints || {}).map((v) => +v || 0));
+  },
   step(dt) {
     if (G.paused || G.story.phase !== 'play') return;
     const t = G.tom,

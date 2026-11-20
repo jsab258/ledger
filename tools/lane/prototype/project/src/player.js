@@ -743,6 +743,13 @@ export function stepCamera(dt) {
       cam.pz = tz - fz * cp * 0.9;
       cam.py = ty + 2.6;
       camera.position.set(cam.px, cam.py, cam.pz);
+      if (cameraInside()) {
+        // his back is to a wall: straight over his head, looking down, until he steps away from it
+        cam.px = tx - fx * 0.12;
+        cam.pz = tz - fz * 0.12;
+        cam.py = ty + 3.4;
+        camera.position.set(cam.px, cam.py, cam.pz);
+      }
     }
   }
   camera.lookAt(cam.tx, cam.ty + 0.15, cam.tz);

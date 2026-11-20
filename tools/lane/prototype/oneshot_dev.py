@@ -54,7 +54,8 @@ def main():
             print("%-22s %-5s %4.0f s" % (n, v, time.time() - t0), flush=True)
             if v == "FAIL":
                 bad += 1
-                print("\n".join(out.strip().splitlines()[-25:]))
+                fails = [l for l in out.strip().splitlines() if "TEST FAIL" in l or "FAIL (" in l or "Error" in l]
+                print("\n".join((fails or out.strip().splitlines())[:60]))  # the one-shot: every failing line, not the tail
         return 1 if bad else 0
 
 

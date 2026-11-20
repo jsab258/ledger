@@ -38,6 +38,7 @@ function CLOCK(seed) {
   const S = (window.__S = {
     now: 10000000, seq: 0, timers: [], frames: [], frameNo: 0, on: false, sounds: [], heard: [], log: [], keys: {}, mouseDown: false, pad: null, subsSeen: {}, subsLog: [], headsSeen: {}, eachs: {},
     yield: () => new Promise((r) => { yieldRes = r; ch.port2.postMessage(0); }),
+    reseed: (n) => { st.s = n >>> 0; },
     nativeTimeout,
     install() {
       if (S.on) return;
@@ -201,6 +202,7 @@ export async function open(o = {}) {
     if (i === 2999) throw new Error('the page never finished loading');
   }
   await page.evaluate(() => window.__S.install());
+  const SEED = o.seed == null ? 20261120 : o.seed;
   const rec = []; // the record of what was met, in order: the digest of a run
   const P = {
     page, browser, errors, rec, W, H,
@@ -364,9 +366,20 @@ export async function open(o = {}) {
       return r < 0 ? -1 : r / FPS;
     },
     car: () => page.evaluate(() => { const c = LEDGER.G.car; return { x: Math.round(c.x * 10) / 10, z: Math.round(c.z * 10) / 10, ang: Math.round(c.ang * 100) / 100, v: Math.round(c.v * 10) / 10, dmg: c.dmg, dbg: window.__S.driveDbg }; }),
+    // New game from the title. The page's loading ran on the machine's time, so chance is set to its seed here: the same
+    // keys from here on give the same game. The town's own code is waited for before a frame is played against it.
+    async newGame() {
+      await page.evaluate((n) => { window.__S.reseed(n); window.__S.frameNo = 0; }, SEED); // (the count of frames too: the loading took its own number)
+      await P.click('[data-act="new"]');
+      if ((await P.screen()).title) await P.click('[data-act="new"]'); // it asks twice when it would replace a saved game
+      await page.evaluate(() => (LEDGER.game.town.ready ? LEDGER.game.town.ready() : null));
+      await P.frames(2);
+    },
     // Continue from the title (the save the store was started with)
     async cont() {
+      await page.evaluate((n) => { window.__S.reseed(n); window.__S.frameNo = 0; }, SEED); // (the count of frames too: the loading took its own number)
       await P.click('[data-act="cont"]');
+      await page.evaluate(() => (LEDGER.game.town.ready ? LEDGER.game.town.ready() : null));
       const ok = await P.until(() => LEDGER.G.story.phase === 'play' && !LEDGER.G.paused && !document.getElementById('hud').classList.contains('hidden'), 20);
       await page.evaluate(() => LEDGER.game.town.ready && LEDGER.game.town.ready());
       await P.frames(10);
@@ -391,6 +404,9 @@ export async function open(o = {}) {
       fs.writeFileSync(path.join(SAVES, name + '.json'), JSON.stringify(store));
     },
     digest: () => crypto.createHash('sha256').update(JSON.stringify(rec)).digest('hex').slice(0, 16),
+    // a trace of the world once a second (for finding where two runs part ways): LEDGER_STORY_TRACE=1
+    traceOn: () => page.evaluate(() => { const S = window.__S; S.h = []; S.eachs.h = () => { if (S.frameNo % 60 || !window.LEDGER || LEDGER.G.story.phase !== 'play') return; const G = LEDGER.G; const h = (a) => { let x = 0; for (const v of a) x = (x * 31 + Math.round(v * 100)) | 0; return x; }; S.h.push([S.frameNo, Math.round(G.t * 1000), h([G.tom.x, G.tom.z, G.car.x, G.car.z]), h(G.named.flatMap((Q) => [Q.x, Q.z])), h(G.crowd.flatMap((Q) => [Q.x, Q.z])), h(LEDGER.streetThings().cars.flatMap((c) => [c.xMetres, c.zMetres])), Math.round(G.played * 100)]); }; }),
+    trace: () => page.evaluate(() => window.__S.h || []),
     close: async () => { await browser.close(); srv.close(); },
   };
   return P;
@@ -398,34 +414,42 @@ export async function open(o = {}) {
 
 // A story: play(P, t) is run twice from the same start; both runs must meet the same things (rule 6).
 // t.ok(cond, what, got) marks one "must happen"; t.note(what, value) adds to the record that both runs must share.
-export async function run(id, o, play) {
-  const digests = [], fails = [];
-  const runs = process.env.LEDGER_STORY_ONCE ? 1 : 2;
-  for (let n = 1; n <= runs; n++) {
-    const P = await open(Object.assign({}, o, { port: (o.port || 8950) + n }));
-    const t = {
-      ok(cond, what, got) {
-        if (cond) { if (n === 1) console.log('ok   ' + what); } else { fails.push(what); console.log('TEST FAIL run ' + n + ': ' + what + (got !== undefined ? ' | got ' + JSON.stringify(got).slice(0, 600) : '')); }
-        return !!cond;
-      },
-      note: (what, v) => P.note(what, v),
-    };
-    try {
-      await play(P, t, n);
-    } catch (e) {
-      fails.push('threw');
-      console.log('TEST FAIL run ' + n + ': the story stopped: ' + String((e && e.stack) || e).slice(0, 900));
+export async function run(id, o, play, variants = ['']) {
+  const fails = [];
+  const twice = !process.env.LEDGER_STORY_ONCE;
+  let port = (o.port || 8950);
+  for (const variant of variants) {
+    const digests = [];
+    for (let n = 1; n <= (twice ? 2 : 1); n++) {
+      const P = await open(Object.assign({}, o, { port: ++port }));
+      const tag = (variant ? variant + ', ' : '') + 'run ' + n;
+      if (process.env.LEDGER_STORY_TRACE) await P.traceOn();
+      const t = {
+        variant, first: n === 1,
+        ok(cond, what, got) {
+          if (cond) { if (n === 1) console.log('ok   ' + (variant ? '[' + variant + '] ' : '') + what); } else { fails.push(what); console.log('TEST FAIL ' + tag + ': ' + what + (got !== undefined ? ' | got ' + JSON.stringify(got).slice(0, 600) : '')); }
+          return !!cond;
+        },
+        note: (what, v) => P.note(what, v),
+      };
+      try {
+        await play(P, t, n, variant);
+      } catch (e) {
+        fails.push('threw');
+        console.log('TEST FAIL ' + tag + ': the story stopped: ' + String((e && e.stack) || e).slice(0, 900));
+      }
+      const faults = await P.page.evaluate(() => (window.LEDGER && LEDGER.game ? LEDGER.game.faults.slice(0, 5) : ['no game'])).catch(() => ['page gone']);
+      t.ok(!faults.length, 'no fault inside any system', faults);
+      t.ok(!P.errors.length, 'no page error', P.errors.slice(0, 3));
+      digests.push(P.digest());
+      if (process.env.LEDGER_STORY_TRACE) { fs.mkdirSync(SAVES, { recursive: true }); fs.writeFileSync(path.join(SAVES, id + (variant ? '.' + variant : '') + '.run' + n + '.trace.json'), JSON.stringify(await P.trace().catch(() => []))); }
+      if (process.env.LEDGER_STORY_REC) { fs.mkdirSync(SAVES, { recursive: true }); fs.writeFileSync(path.join(SAVES, id + (variant ? '.' + variant : '') + '.run' + n + '.rec.json'), JSON.stringify(P.rec, null, 1)); }
+      await P.close();
     }
-    const faults = await P.page.evaluate(() => (window.LEDGER && LEDGER.game ? LEDGER.game.faults.slice(0, 5) : ['no game'])).catch(() => ['page gone']);
-    t.ok(!faults.length, 'no fault inside any system', faults);
-    t.ok(!P.errors.length, 'no page error', P.errors.slice(0, 3));
-    digests.push(P.digest());
-    if (process.env.LEDGER_STORY_REC) fs.writeFileSync(path.join(SAVES, id + '.run' + n + '.rec.json'), JSON.stringify(P.rec, null, 1));
-    await P.close();
-  }
-  if (runs === 2) {
-    if (digests[0] === digests[1]) console.log('ok   the same keys gave the same result twice (' + digests[0] + ')');
-    else { fails.push('twice'); console.log('TEST FAIL the two runs differ: ' + digests.join(' and ')); }
+    if (twice) {
+      if (digests[0] === digests[1]) console.log('ok   ' + (variant ? '[' + variant + '] ' : '') + 'the same keys gave the same result twice (' + digests[0] + ')');
+      else { fails.push('twice'); console.log('TEST FAIL ' + (variant ? '[' + variant + '] ' : '') + 'the two runs differ: ' + digests.join(' and ')); }
+    }
   }
   console.log(fails.length ? id + ' FAIL (' + fails.length + ')' : id + ' PASS');
   process.exit(fails.length ? 1 : 0);
