@@ -7,6 +7,7 @@ export const TUNE = {
     threw_in: [0.3, -0.3, 0], washed: [0.1, 0, 0], dog_barked: [0.2, -0.1, 0], holdup: [0.95, -1, 2], torch_seen: [0.35, -0.3, 0],
   },
   underTheCoatAtMost: 2,
+  darkAboveUnlitBy: 0.1, // a room counts as dark for a search under the unlit street's light plus this
   doorWithinMetres: 2.4,
   containerWithinMetres: 2.2,
   casingWithinMetres: 30,

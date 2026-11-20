@@ -121,17 +121,24 @@ async function custody(P, a, ran) {
   const t = G.tom,
     m = G.money,
     E = a.e ? G.ev[a.e] : null;
-  const hours =
+  const hours0 =
       (a.violent ? POL.heldGameHoursIfViolent : POL.heldGameHours) +
       (ran ? POL.heldGameHoursAddedIfHeRan : 0),
-    bill = ran ? POL.briefBillPenceIfHeRan : POL.briefBillPence,
+    bill0 = ran ? POL.briefBillPenceIfHeRan : POL.briefBillPence,
     coat = t.hasCoat && (t.coat || (E && E.coat));
+  // the one-shot: the hours are the offence's own (six for a window, eight for a wounding, twelve for a robbery,
+  // twenty-two for a killing), the duty solicitor is free, and it ends in a caution or a charge (game/law.js)
+  const law = G.hooks.custody ? G.hooks.custody(a, ran, E) : null;
+  const hours = law ? law.hours : hours0,
+    bill = law ? 0 : bill0;
   await pausedWhile('custody at the town station', async () => {
     const taken = act('arrested', {});
     P.mark = null;
     await fade(
       true,
-      `${hours} hours at the town station.\nA brief you never sent for arrives from Agar & Co.\nThe clerk settles it and leaves a bill for ${money(bill)}.` +
+      (law
+        ? `${hours} hours at the town station.\nThe duty solicitor sits in and says little.\n${law.ends}`
+        : `${hours} hours at the town station.\nA brief you never sent for arrives from Agar & Co.\nThe clerk settles it and leaves a bill for ${money(bill)}.`) +
         (coat ? '\nThey keep the coat as evidence.' : ''),
     );
     if (t.inCar) {
@@ -158,7 +165,7 @@ async function custody(P, a, ran) {
       fl().oweAgar = (fl().oweAgar || 0) + bill - paid;
     }
     note(
-      `Taken in${E ? ' over: ' + KINDS[E.kind].mine(E).toLowerCase() : ''}. Agar's clerk paid for a brief nobody asked for.`,
+      law ? `Taken in${E ? ' over: ' + KINDS[E.kind].mine(E).toLowerCase() : ''}. ${hours} hours. ${law.ends}` : `Taken in${E ? ' over: ' + KINDS[E.kind].mine(E).toLowerCase() : ''}. Agar's clerk paid for a brief nobody asked for.`,
       'police',
       'arrest' + day(),
       { ev: taken.id },

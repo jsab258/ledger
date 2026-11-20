@@ -90,7 +90,7 @@ function siteHotspots(out) {
 function searchStart(site, c) {
   const x = X('crime');
   if (c.needsKey && !x.pockets.some((i) => i.key === c.needsKey)) return tell('It wants its key. Somebody carries it.', '');
-  const dark = night() && G.tom.light < F.light.unlit + 0.1;
+  const dark = night() && G.env.lightAt(G.tom.x, G.tom.z, G.tom.space) < F.light.unlit + T.darkAboveUnlitBy;
   const r = E.search(c.kind, { dark, torch: x.torchOn, window: !!site.room, night: night() });
   if (r.beamSeenFromStreet) {
     // a beam moving behind a window is seen from the street, as a precursor only (A33)
