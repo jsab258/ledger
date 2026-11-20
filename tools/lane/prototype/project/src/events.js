@@ -6,7 +6,7 @@ import { tomTarget, sense, attached, knowsWho, perceivers, witness } from './see
 import { ledgerSelf, ledgerSeen } from './ledger.js';
 import { RULES } from './rules.js';
 import { emit } from './game/core.js';
-import { townSaw, townAct, townLive } from './game/town.js';
+import { townSaw, townAct, townOwn, townLive } from './game/town.js';
 
 export const NONE = { see: false, hear: false, c: 0, d: 999 };
 
@@ -193,6 +193,7 @@ export function seed(kind, ids, x = {}) {
         heat: clamp(KINDS[kind].sev + MEM.heatAddedToSeverity, 0, 1),
       });
   }
+  townOwn(E);
   return E;
 }
 

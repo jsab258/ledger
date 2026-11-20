@@ -126,20 +126,21 @@ export function readHour(row, day, hour) {
 /// the default) or 'by the hour' (the reference week's way: the town's talk runs only as each
 /// hour ends and before something he does; the tests use it to hold the bridge to the C# rows).
 export async function openTown(options = {}) {
-  if (!plain(options)) throw new Error('one-sim bridge: openTown takes { wasm, castJson, startMinute } or { wasm, castJson, saved }');
+  refuseBeforeLoading(options);
   const sim = await loadOneSim(options.wasm, options.print ? { print: options.print } : undefined);
   return openTownWith(sim, options);
 }
 /// The same without waiting (the one-shot of 20 November 2026): `module` is one-sim.wasm already
 /// compiled (WebAssembly.compile, once, when the page starts).
 export function openTownNow(options = {}) {
-  if (!plain(options)) throw new Error('one-sim bridge: openTownNow takes { module, castJson, startMinute } or { module, castJson, saved }');
+  refuseBeforeLoading(options);
   return openTownWith(loadOneSimNow(options.module, options.print ? { print: options.print } : undefined), options);
 }
-function openTownWith(sim, options) {
+// What can be refused before the simulation is loaded at all, each with its reason.
+function refuseBeforeLoading(options) {
   if (!plain(options)) throw new Error('one-sim bridge: openTown takes { wasm, castJson, startMinute } or { wasm, castJson, saved }');
-  const { wasm, castJson, startMinute = 0, saved, print } = options;
-  let talk = options.talk ?? 'by the minute';
+  const { castJson, saved } = options;
+  const talk = options.talk ?? 'by the minute';
   if (typeof castJson !== 'string' || !castJson) throw new Error('one-sim bridge: no cast file text was given');
   if (talk !== 'by the minute' && talk !== 'by the hour') throw new Error(`one-sim bridge: talk is 'by the minute' or 'by the hour', not ${quote(talk)}`);
   // A saved week that is asked for and is not there must never turn into a new week at minute zero without a
@@ -147,6 +148,12 @@ function openTownWith(sim, options) {
   const wantsSaved = 'saved' in options;
   if (wantsSaved && (saved === null || saved === undefined)) throw new Error('one-sim bridge: no saved town was given. A save from before the swap has none: open it with openTownFromOldSave');
   if (wantsSaved && 'startMinute' in options) throw new Error('one-sim bridge: a saved town keeps its own clock; give saved or startMinute, not both');
+}
+function openTownWith(sim, options) {
+  refuseBeforeLoading(options);
+  const { castJson, startMinute = 0, saved } = options;
+  let talk = options.talk ?? 'by the minute';
+  const wantsSaved = 'saved' in options;
   // Each town has a module of its own, so a town that is refused below is simply dropped: nothing of it is left behind.
   sim.newTown(castJson);                          // throws "cast not read: ..." with the town's own reason
   const people = sim.people(), inCast = new Set(people);
@@ -581,11 +588,18 @@ export function oldMemoryRung(memory) {
 /// handled like any tick's); each memory told to the town; each one left out, with why; and in
 /// plain lines what the player loses.
 export async function openTownFromOldSave(options = {}) {
+  refuseOldBeforeLoading(options);
   const sim = await loadOneSim(options.wasm, options.print ? { print: options.print } : undefined);
   return openTownFromOldSaveWith(sim, options);
 }
+function refuseOldBeforeLoading(options) {
+  const old = plain(options) ? options.old : null;
+  if (!plain(old) || !Number.isFinite(old.t) || old.t < 0 || !plain(old.minds) || !Array.isArray(old.events)) throw new Error('one-sim bridge: this is not a prototype save (no clock, minds or events)');
+  if (plain(old.town)) throw new Error('one-sim bridge: this save holds a town already; open it with openTown({ saved })');
+}
 /// The same without waiting: `module` is one-sim.wasm already compiled.
 export function openTownFromOldSaveNow(options = {}) {
+  refuseOldBeforeLoading(options);
   return openTownFromOldSaveWith(loadOneSimNow(options.module, options.print ? { print: options.print } : undefined), options);
 }
 function openTownFromOldSaveWith(sim, { castJson, old, acts = PROTOTYPE_ACTS, rungOf = oldMemoryRung,

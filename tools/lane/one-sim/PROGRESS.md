@@ -202,3 +202,7 @@ What is likely bigger than it looks, said now: the prototype's tests. Several re
 
 What stays the prototype's own throughout: money, debts, jobs, fares, fights and talk; the street, walking, light, lines of sight, weather, the cab and the screens.
 
+## Run 4, the one-shot of 20 November 2026 (step 4, the swap)
+
+Done by the one-shot's bridge builder, in the cloud, 08:56 to about 13:45 Swiss time. The swap is built: the prototype runs the town through the bridge (tools/lane/prototype/project/src/game/town.js, test/game/town.mjs). What it needed here, all doors and no rule: six calls on the front door (os_witness_open, os_id_rung, os_in_sight, os_audible_radius, os_would_report, os_would_report_as, os_temper), their loader calls, the bridge's rung, sawOpen, crime, quiet and the calls that do not wait for a promise; the save is version 2. New checks T13 (952 golden rows through the new doors) and T14 (a crime told, reported at nine, a constable at ten; a save in the middle; refusals; an open act; a version 1 save). The decisions of DIFFERENCES.md were taken by their recommended answers, as the one-shot's brief ordered: production/lane/ONE-SHOT-SIM-DIFFERENCES.md. The simulation file is now 434,437 bytes. Results of `one-sim.sh all` on these files: see production/lane/oneshot/bridge.md.
+

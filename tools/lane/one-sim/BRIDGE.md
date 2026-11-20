@@ -175,3 +175,25 @@ The bridge can do both. "By the hour" is the table's way, and is how T8 holds th
 Measured, the same six weeks both ways: 129 of 225 hours come out identical. The other 96 are all in the two weeks that hold a deed, from five in the afternoon of the deed's day on. What differs is the count of stories the town holds at 96 hours, and at one hour who finds the damage (in the tea-day week, one person more finds it at eight the next morning by the minute). Who went to the police, DS Ellis's first visit and the first arrest come out the same in all six weeks. Moving his acts a minute later leaves both counts as they are, 0 and 96 (tried once by hand in this run, not part of the script).
 
 So the game's own order is held to the C# Core only indirectly: the same code, proved by the hour. A set of golden rows played the game's way would close that. It is a finding for the Core's owner, not a fault of the bridge.
+
+## Added by the one-shot of 20 November 2026 (step 4, the swap, is built)
+
+The prototype now runs on the town through this bridge (tools/lane/prototype/project/src/game/town.js; what changed for the player: production/lane/ONE-SHOT-SIM-DIFFERENCES.md). For it the front door, the loader and the bridge gained doors. None holds a rule.
+
+| Call | What it is | Held by |
+|---|---|---|
+| `town.rung(metres, light, familiarity, mark, faceToward)` | How well a witness sees him: the port's own Perception::IdRung | T13: 528 golden rows through the door |
+| `sim.inSight(...)`, `sim.audibleRadius(...)` | The port's own InSight and AudibleRadius | T13: 324 and 100 golden rows |
+| `town.sawOpen({ minute, who, rung, fact, area, words })` | An open, decent act seen: as `saw`, but not kept as about his hidden life (decision 7) | T14 |
+| `town.crime({ minute, area, offence, fact, words, witnesses })` | A crime that is not the week's one deed: a blow, a wounding, a robbery, a killing, a further piece of damage (decisions 5 and 6). Witnesses of the cast hold the story at once. From nine on the morning after, each witness goes to the police if the port's own WouldReport says so, and the report is filed in the town's own police file. At ten on a later day a constable comes if somebody recognised him and the offence is one a man is taken for (the port's TakeIn). A witness the cast lacks may be given with a nerve and a goodwill: the same rule is asked for them. | T14 |
+| `town.quiet(fact, who)` | A witness of such a crime will not go (talked round, paid, frightened): the game's decision | T14 |
+| `town.crimes()`, `town.covers(id)`, `town.temper(id)`, `town.castId(id)` | Reading | T14 |
+| `openTownNow`, `openTownFromOldSaveNow`, `loadOneSimNow` | The same as their namesakes, from a module compiled once when the page starts, without waiting for a promise: a game opens a town in the middle of a frame | the prototype's test/game/town.mjs |
+
+Each hour's answer gained three fields: `crimeWent` (who went to the police over a crime, with whether it is a statement), `takenFor` (the topic he was taken for) and `takenOffence`. When the constable comes for a crime, `taken` and `held` are set as for the deed.
+
+The save is version 2: it carries the crimes and who has gone. A version 1 save loads (T14).
+
+The timetable for crimes is the deed's own (TownWeek.h NineReports and TenConstable), followed in the bridge because the town's week follows one deed. It is the one piece of sequencing the bridge does itself. Golden rows for a wounding reported and a man taken for it would move it under the Core's eye.
+
+Still not behind the door: each telling as it happens; a silenced witness of the deed (Silence.h); what the street calls him and how each person regards him.

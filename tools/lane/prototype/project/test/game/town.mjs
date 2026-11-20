@@ -66,10 +66,19 @@ await until(6 * 1440 + 12 * 60);
 t = await T();
 check('it plays on after the load', t.live && !t.refusals.length && !t.faults.length, JSON.stringify(t));
 
+// ---- a reload gives the same next hour for the town (ER-SAVE-01), at three moments ----
+let sameHour = 0;
+for (const at of [6 * 1440 + 13 * 60 + 17, 6 * 1440 + 20 * 60 + 2, 7 * 1440 + 3 * 60 + 41]) {
+  await until(at);
+  const r1 = await h.ev(() => { LEDGER.G.tom.space = 'away'; LEDGER.saveNow(false); const json = localStorage.getItem('ledger.save.v4'); const t0 = LEDGER.G.t; while (LEDGER.G.t < t0 + 60) LEDGER.simStep(1.5); const a = JSON.stringify(LEDGER.game.town.save().texts); LEDGER.restore(json); LEDGER.G.tom.space = 'away'; while (LEDGER.G.t < t0 + 60) LEDGER.simStep(1.5); const b = JSON.stringify(LEDGER.game.town.save().texts); return { same: a === b, n: a.length }; });
+  if (r1.same) sameHour++;
+}
+check('saved at three odd moments and loaded, the town plays the same next hour each time (ER-SAVE-01)', sameHour === 3, String(sameHour));
+
 // ---- a save from before the swap ----
 const o1 = await h.ev((json) => { const o = JSON.parse(json); delete o.x; const ok = LEDGER.restore(JSON.stringify(o)); return { ok, live: LEDGER.game.town.live(), why: LEDGER.game.town.why(), old: LEDGER.G.x.town.old }; }, s1.json);
 check('a save from before the real town loads: a fresh town at its clock, told what its people saw', o1.ok && o1.live && /before the real town/.test(o1.why) && o1.old && o1.old.fed >= 1, JSON.stringify(o1));
-await until(6 * 1440 + 14 * 60);
+await until(7 * 1440 + 6 * 60);
 
 // ---- without the simulation file the game still runs ----
 const n1 = await h.ev(() => { LEDGER.game.town.drop(); for (let i = 0; i < 80; i++) LEDGER.simStep(1.5); return { live: LEDGER.game.town.live(), faults: LEDGER.game.faults.slice(), t: LEDGER.G.t }; });

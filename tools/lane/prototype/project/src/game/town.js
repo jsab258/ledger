@@ -469,7 +469,8 @@ export function townAct(E) {
   if (!T.town) return;
   const tell = tellOf(E.kind),
     k = KINDS[E.kind];
-  if (!tell) return answerOwn(E);
+  if (OWN_KINDS.includes(E.kind) || E.kind.startsWith('choice_')) answerOwn(E);
+  if (!tell) return;
   const ids = [...new Set([...(E.wit || []), ...(E.party || [])])];
   const wits = [];
   for (const id of ids) {
@@ -484,7 +485,7 @@ export function townAct(E) {
     fact = factOf(E),
     s = x();
   if (tell === 'saw' || tell === 'open') {
-    for (const w of wits) townSaw(w.P, Object.assign({}, E, { _acting: false }), w.r);
+    for (const w of wits) townSaw(w.P, E, w.r);
     return;
   }
   const off = tell === 'deed' ? 1 : offenceOf(E.kind, k, TUNE);
@@ -527,6 +528,11 @@ export function townAct(E) {
   });
 }
 // The acts the town makes its own story of: his answer to a night's ask, the tea, the week's end.
+const OWN_KINDS = ['job_yes', 'job_no', 'no_show', 'drop', 'tea', 'tea_late'];
+// A story that starts with other people (events.js seed): only the town's own kinds are passed on from here.
+export function townOwn(E) {
+  if (T.town && (OWN_KINDS.includes(E.kind) || E.kind.startsWith('choice_'))) answerOwn(E);
+}
 function answerOwn(E) {
   const s = x();
   const a = T.lastAsks;
