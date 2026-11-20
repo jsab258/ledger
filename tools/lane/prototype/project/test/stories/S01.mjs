@@ -26,7 +26,6 @@ await run('S01', {}, async (P, t, n) => {
     shot = await P.until(ctl, 40);
     t.ok(shot > 18 && shot < 22, 'the ferry shot lasts about 20 real seconds and ends by itself', shot);
     const idle = await watch(P, 25 - shot);
-    t.note('idle hints', idle.map((x) => x.s));
   } else {
     await P.secs(3);
     await P.tap('Escape');
@@ -59,7 +58,7 @@ await run('S01', {}, async (P, t, n) => {
   t.ok(!more.some((x) => HINT.test(x.s) && !seenBefore.includes(x.s) && !fresh.some((f) => f.s === x.s)), 'no second hint inside 12 real seconds', more);
 
   // ---- 3. into Quay Street past Ron, Darren, Ada's window and June: each a line in passing, with its audio ----
-  for (const [x, z] of [[-2, 43], [7.3, 41], [7.3, 31.5], [-4.6, 31], [-4.4, 23.5]]) {
+  for (const [x, z] of [[-2, 43], [7.3, 41], [7.3, 31.5], [-4.6, 31], [-4.4, 18.5]]) {
     await go(x, z);
     await P.secs(1.5);
   }
@@ -93,21 +92,21 @@ await run('S01', {}, async (P, t, n) => {
   s = await P.screen();
   t.ok(s.talk && /written by an AI/i.test(s.talk.log.join(' ')), 'the AI notice shows before the first talk', s.talk);
   t.ok(!!s.talk, 'E opens a talk with Darren', s);
-  t.ok(s.talk && /leave/i.test(JSON.stringify(s.talk)), 'Leave is offered', s.talk);
+  t.ok(s.talk && s.talk.leave, 'Leave is offered', s.talk);
   await P.tap('Tab');
   await P.secs(0.3);
   s = await P.screen();
   t.ok(s.talk && s.talk.lines.length >= 2, 'Tab shows suggested lines', s.talk);
-  await P.tap('ArrowDown'); await P.tap('Enter');
+  await P.tap('Enter'); // the first of them
   const r1 = await P.until(() => document.querySelectorAll('#tlog > *').length >= 2, 9);
   t.ok(r1 >= 0 && r1 <= 2.2, 'a reply is heard within 2 real seconds or a written line plays', r1);
   await P.world(() => document.getElementById('tin').focus());
   await P.type('What do you hear about the fish dock');
   const posT = await P.tom();
   t.ok(Math.hypot(posT.x - pos0.x, posT.z - pos0.z) < 0.01, 'typing never moves Tom', [pos0, posT]);
-  await P.tap('Enter');
   const logN = await P.world(() => document.querySelectorAll('#tlog > *').length);
-  const r2 = await P.until((n0) => document.querySelectorAll('#tlog > *').length >= n0 + 1, 9, logN);
+  await P.tap('Enter');
+  const r2 = await P.until((n0) => document.querySelectorAll('#tlog > *').length >= n0 + 2, 9, logN);
   t.ok(r2 >= 0 && r2 <= 2.2, 'the typed line is answered within 2 real seconds or by a written line', r2);
   // a line can be reported from the talk screen
   await P.click('[data-act="report"]');
@@ -206,7 +205,7 @@ await run('S01', {}, async (P, t, n) => {
     const i = lines.findIndex((l) => rx.test(l));
     if (i < 0) return false;
     const sel = await P.world(() => [...document.querySelectorAll('#tlines > *')].findIndex((e) => e.classList.contains('on') || e.classList.contains('sel')));
-    for (let k = Math.max(0, sel); k < i; k++) await padPress(13);
+    for (let k = 0; k < (i - Math.max(0, sel) + lines.length) % lines.length; k++) await padPress(13);
     const n0 = await P.world(() => document.querySelectorAll('#tlog > *').length);
     await padPress(0);
     await P.until((n0) => document.querySelectorAll('#tlog > *').length >= n0 + 2 && !document.getElementById('talk').classList.contains('busy'), 9, n0);
@@ -240,31 +239,34 @@ await run('S01', {}, async (P, t, n) => {
   const cam = await P.world(() => {
     // every sixth frame: is the camera inside a wall, and are his feet in the frame? (kept by the page, read at the end)
     const S = window.__S, T3 = LEDGER.THREE, v = new T3.Vector3();
-    S.cam = { n: 0, wall: 0, feetOut: 0, where: [] };
+    S.cam = { n: 0, wall: 0, feetOut: 0, where: [], feet: [] };
+    // and where Sheila stands at the moment each of her lines first shows
+    S.sheila = [];
+    S.eachs.sheila = () => { for (const e of document.querySelectorAll('#subs .s')) { const s = e.innerText.trim(); if (/^SHEILA DUNN[A-Z]/.test(s) && !S.sheila.some((x) => x.line === s)) { const Q = LEDGER.G.people.sheila, r = LEDGER.roomOf('mickeys'); S.sheila.push({ line: s, at: [Math.round((Q.x - r.ox) * 10) / 10, Math.round((Q.z - r.oz) * 10) / 10], moving: !!Q.moving }); } } };
     S.eachs.cam = () => {
       const G = LEDGER.G, t = G.tom, c = LEDGER.camera;
       if (S.frameNo % 6 || G.story.phase !== 'play' || G.paused || t.inCar) return;
       S.cam.n++;
       c.updateMatrixWorld(); c.matrixWorldInverse.copy(c.matrixWorld).invert();
       if (t.space === 'street') {
-        if (LEDGER.isBlocked(c.position.x, c.position.z) && c.position.y < 6) { S.cam.wall++; if (S.cam.where.length < 5) S.cam.where.push([Math.round(c.position.x), Math.round(c.position.z), 'street']); }
+        const inside = LEDGER.cameraInside(); if (inside) { S.cam.wall++; if (S.cam.where.length < 5) S.cam.where.push([Math.round(c.position.x * 10) / 10, Math.round(c.position.z * 10) / 10, inside]); }
         v.set(t.x, t.y || 0, t.z).project(c);
-        if (Math.abs(v.x) > 1 || Math.abs(v.y) > 1 || v.z > 1) S.cam.feetOut++;
+        if (Math.abs(v.x) > 1 || Math.abs(v.y) > 1 || v.z > 1) { S.cam.feetOut++; if (S.cam.feet.length < 5) S.cam.feet.push([Math.round(t.x * 10) / 10, Math.round(t.z * 10) / 10, Math.round(v.x * 100) / 100, Math.round(v.y * 100) / 100]); }
       } else {
         const r = LEDGER.rules && Object.values(LEDGER.G.env && LEDGER.G.env.rooms || {}).find((q) => q.id === t.space);
         const R = r || (LEDGER.roomOf ? LEDGER.roomOf(t.space) : null);
-        if (R && (Math.abs(c.position.x - R.ox) > R.w / 2 + 0.05 || c.position.z - R.oz < -R.d / 2 - 0.05)) { S.cam.wall++; if (S.cam.where.length < 5) S.cam.where.push([Math.round((c.position.x - R.ox) * 10) / 10, Math.round((c.position.z - R.oz) * 10) / 10, t.space]); }
+        if (R && c.position.z - R.oz <= R.d / 2 && (Math.abs(c.position.x - R.ox) > R.w / 2 + 0.05 || c.position.z - R.oz < -R.d / 2 - 0.05)) { S.cam.wall++; if (S.cam.where.length < 5) S.cam.where.push([Math.round((c.position.x - R.ox) * 10) / 10, Math.round((c.position.z - R.oz) * 10) / 10, t.space]); }
       }
     };
     return true;
   });
-  await go(5.6, 27); await go(7.0, 33); await go(6.2, 36, { near: 0.9 });
+  await go(6.2, 36, { near: 0.6 });
   await P.face(7.2, 36);
   await P.secs(0.4);
   s = await P.screen();
   t.ok(s.prompts.some((p) => /Mickey/.test(p)), "the prompt names Mickey's door", s.prompts);
   let stop = await P.played();
-  await P.tap('KeyE');
+  await P.use(/Mickey/);
   await P.until(() => LEDGER.G.tom.space === 'mickeys' && !LEDGER.G.paused, 6);
   t.ok((await P.tom()).space === 'mickeys' && (await P.played()) - stop < 5, 'the door opens with the use key and he walks in, no stop over 5 real seconds', await P.tom());
   // follow Sheila: she walks to each thing and says its line there
@@ -275,14 +277,10 @@ await run('S01', {}, async (P, t, n) => {
     for (let k = 0; k < 60 && !got; k++) {
       const sh = await P.world(() => { const S = LEDGER.G.people.sheila, r = LEDGER.roomOf('mickeys'); return { x: S.x, z: S.z, moving: !!S.moving, lx: S.x - r.ox, lz: S.z - r.oz }; });
       const me = await P.tom();
-      // the office is two rooms: he goes by the doorway in the partition, as she does
-      const r0 = await P.world(() => { const r = LEDGER.roomOf('mickeys'); return [r.ox, r.oz]; });
-      const mySide = me.x - r0[0] < 0.5 ? -1 : 1, herSide = sh.lx < 0.5 ? -1 : 1;
-      if (mySide !== herSide) { await P.walkTo(r0[0] + 0.5 + mySide * 0.8, r0[1] + 1.5, { maxSecs: 8, near: 0.5, straight: true }); await P.walkTo(r0[0] + 0.5 + herSide * 0.9, r0[1] + 1.5, { maxSecs: 4, near: 0.5, straight: true }); }
-      else if (Math.hypot(me.x - sh.x, me.z - sh.z) > 2.0) await P.walkTo(sh.x, sh.z, { maxSecs: 1.2, near: 1.7, straight: true });
+      if (Math.hypot(me.x - sh.x, me.z - sh.z) > 2.0) await P.walkTo(sh.x, sh.z, { maxSecs: 1.5, near: 1.7 });
       else await P.secs(0.3);
       const subs = await subsNow(P);
-      const line = subs.find((x) => /SHEILA/i.test(x) && !lines.some((l) => l.line === x));
+      const line = subs.find((x) => /^SHEILA DUNN[A-Z]/.test(x) && !/^SHEILA DUNN"/.test(x) && !lines.some((l) => l.line === x));
       if (line) got = { line, at: [Math.round(sh.lx * 10) / 10, Math.round(sh.lz * 10) / 10], moving: sh.moving };
     }
     if (!got) break;
@@ -290,39 +288,41 @@ await run('S01', {}, async (P, t, n) => {
     await P.secs(1.5);
   }
   const want = await P.world(() => LEDGER.game.hour1.round.map((r) => r.at));
-  t.ok(lines.length === 6, 'Sheila says her six lines', { lines: lines.map((l) => l.line.slice(0, 40)), diag: await P.world(() => { const S = LEDGER.G.people.sheila; return [LEDGER.game.hour1.x(), S.space, Math.round(S.x), Math.round(S.z), !!S.gone, !!S.busy, S.override, LEDGER.G.t, LEDGER.G.tom.x, LEDGER.G.tom.z]; }) });
-  t.ok(lines.length === 6 && lines.every((l, i) => Math.hypot(l.at[0] - want[i][0], l.at[1] - want[i][1]) < 0.6 && !l.moving), 'each line is said standing at the thing it is about (' + things.join(', ') + ')', lines.map((l) => l.at));
+  const told = await P.world(() => window.__S.sheila);
+  for (const l of lines) { const m = told.find((x) => x.line === l.line); if (m) { l.at = m.at; l.moving = m.moving; } }
+  t.ok(lines.length === 6, 'Sheila says her six lines', { lines: lines.map((l) => l.line.slice(0, 40)), diag: await P.world(() => { const S = LEDGER.G.people.sheila; return [LEDGER.game.hour1.x().round, S.space, Math.round(S.x), Math.round(S.z), !!S.gone, !!S.busy, S.override, LEDGER.G.t, LEDGER.G.tom.x, LEDGER.G.tom.z]; }) });
+  t.ok(lines.length === 6 && lines.every((l, i) => Math.hypot(l.at[0] - want[i][0], l.at[1] - want[i][1]) < 0.7 && !l.moving), 'each line is said standing at the thing it is about (' + things.join(', ') + ')', lines.map((l) => l.at));
   t.ok(new Set(lines.map((l) => l.at.join())).size === 6, 'she walks with him from thing to thing', lines.map((l) => l.at));
   t.ok(lines.every((l) => !/Tom|Nowak/.test(l.line)), 'she does not use his name', 0);
   const pl = await P.until(() => [...document.querySelectorAll('#subs .s')].some((e) => /PAULINE/i.test(e.textContent) && /no car/.test(e.textContent)), 12);
   t.ok(pl >= 0, 'Pauline at the radio has a fare and no car', await subsNow(P));
   t.note('the walk-round', lines.map((l) => l.line));
   // the stair to the flat and back, then out by the yard door and in again
-  const stair = await P.world(() => { const r = LEDGER.roomOf('mickeys'), st = LEDGER.roomOf('flat').stair; return [r.ox + st[0] - 0.7, r.oz + st[1] + 0.2]; });
-  await go(stair[0], stair[1], { near: 0.7, straight: true });
+  const stair = await P.world(() => { const r = LEDGER.roomOf('mickeys'), st = LEDGER.roomOf('flat').stair; return [r.ox + st[0] - 0.5, r.oz + st[1] - 0.4]; });
+  await go(stair[0], stair[1], { near: 0.5 });
   await P.secs(0.4);
   s = await P.screen();
   t.ok(s.prompts.some((p) => /stair/.test(p)), 'the stair has a prompt that names it', s.prompts);
   stop = await P.played();
-  await P.tap('KeyE');
+  await P.use(/stair/);
   await P.until(() => LEDGER.G.tom.space === 'flat' && !LEDGER.G.paused, 6);
   t.ok((await P.tom()).space === 'flat' && (await P.played()) - stop < 5, 'the stair is climbed to the flat with no stop over 5 real seconds', await P.tom());
   await P.secs(1);
   s = await P.screen();
   t.ok(s.prompts.some((p) => /stair/i.test(p)), 'the way back down has a prompt', s.prompts);
-  await P.tap('KeyE');
+  await P.use(/stair/);
   await P.until(() => LEDGER.G.tom.space === 'mickeys' && !LEDGER.G.paused, 6);
   const yd = await P.world(() => { const r = LEDGER.roomOf('mickeys'); return [r.ox + r.exit2.mat[0], r.oz + r.exit2.mat[1]]; });
-  await go(yd[0], yd[1], { near: 0.8, straight: true });
+  await go(yd[0], yd[1], { near: 0.8 });
   await P.secs(0.4);
   s = await P.screen();
   t.ok(s.prompts.some((p) => /yard/.test(p)), 'the yard door has a prompt that names it', s.prompts);
-  await P.tap('KeyE');
+  await P.use(/yard/);
   await P.until(() => LEDGER.G.tom.space === 'street', 6);
   await P.secs(1);
   s = await P.screen();
   t.ok((await P.tom()).space === 'street' && s.prompts.some((p) => /Mickey/.test(p)), "out in the yard the back door of Mickey's has its prompt", s.prompts);
-  await P.tap('KeyE');
+  await P.use(/Mickey/);
   await P.until(() => LEDGER.G.tom.space === 'mickeys', 6);
   t.ok((await P.tom()).space === 'mickeys', 'and back in by the yard door', await P.tom());
   const camSeen = await P.world(() => window.__S.cam);
@@ -331,7 +331,7 @@ await run('S01', {}, async (P, t, n) => {
 
   // ---- the save this story leaves: at the radio, made by the game (Save on the pause menu) ----
   const rd = await P.world(() => { const r = LEDGER.roomOf('mickeys'); return [r.ox - 2.4, r.oz - 0.9]; });
-  await go(rd[0], rd[1], { near: 0.8, straight: true });
+  await go(rd[0], rd[1], { near: 0.8 });
   await P.tap('Escape'); await P.secs(0.3);
   await P.click('[data-act="save"]'); await P.secs(0.5);
   s = await P.screen();

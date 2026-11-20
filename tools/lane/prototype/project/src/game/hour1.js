@@ -18,12 +18,12 @@ const fl = () => G.story.flags;
 
 // ---- 1:30 Quay Street: each a line in passing, said once, the first time he comes near in sight ----
 const PASSING = {
-  darren: { who: 'Darren Milner', line: "You'll be the nephew. One suitcase. I said to Ron, that'll be him.", flag: 'metDarren' },
+  darren: { who: 'Darren Milner', line: "You'll be the nephew. Darren Milner. One suitcase, I said to Ron, that'll be him.", flag: 'metDarren' },
   ron: { who: 'Ron Kirby', line: "Afternoon, boss. Ron Kirby. I do the door and the rank, same as I did for Mickey.", flag: 'metRon' },
   ada: { who: 'A woman at a window', line: "So you're what he left it to. Well. You've his walk.", flag: 'metAda', window: true },
   june: { who: 'June Suddaby', line: "You're the nephew. June Suddaby, his daughter. I want nothing out of that office, so don't look worried.", flag: 'metJune' },
 };
-const STAGED = { darren: 'pave', ron: 'rank', june: 'busstop' };
+const STAGED = { darren: 'pave', ron: 'rank', june: 'junepass' };
 const posOf = (P) => (P.space === 'home' && P.win ? [P.win.x, P.win.z] : [P.x, P.z]);
 function passing(x) {
   const t = G.tom;
@@ -73,8 +73,8 @@ const ROUND = [
   { at: [1.6, 0.6], thing: 'the counter', line: "You'll be the nephew. Sheila Dunn. I kept your uncle's books thirty-one years. Come round, I'll show you what he left." },
   { at: [3.4, -0.8], thing: 'the fare book', line: "The fare book. Every fare Pauline calls goes in it. That's the clean money, such as it is." },
   { at: [5.7, -2.3], thing: "the locked door of Mickey's inner office", line: "That door stays shut. His own office. You'll see inside when I've decided what you are." },
-  { at: [5.3, -0.2], thing: 'the stair to the flat', line: "The flat's up there, his things still in it. Yours now. The rent on all of it is eighteen pounds, Friday." },
-  { at: [5.4, 1.4], thing: 'the yard door', line: "The yard, through there. Two ways out of this building. Your uncle liked a choice." },
+  { at: [4.4, 2.5], thing: 'the stair to the flat', line: "The flat's up there, his things still in it. Yours now. The rent on all of it is eighteen pounds, Friday." },
+  { at: [5.3, 0.9], thing: 'the yard door', line: "The yard, through there. Two ways out of this building. Your uncle liked a choice." },
   { at: [-1.7, -1.2], thing: 'the radio', line: "The radio. Nobody in this building can help overhearing it. Remember that before you say anything near it." },
 ];
 const DOORWAY = [0.5, 1.5]; // the gap in the partition between the front office and the back room, in the office's own metres
@@ -89,6 +89,7 @@ function walkRound(x, dt) {
     x.round = 1;
     x.said = 0;
     meet(S);
+    release(S); // nothing else places her while she shows him round
   }
   if (x.round > ROUND.length) return;
   if (t.space !== 'mickeys') return; // she waits where she is while he is out

@@ -6,7 +6,7 @@ import { inRect } from './util.js';
 import { nightF } from './seeing.js';
 
 import { BARKS } from './cast.js';
-import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
+import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show , choose, scene } from './ui.js';
 import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target, grab as fightGrab, carried as fightCarried } from './fight.js';
 import { stepCar, nearCar, exitPoint, footSolid, footClear, clearGround, vehicleAt } from './drive.js';
 import { hotspots, beatFor } from './scenes.js';
@@ -275,7 +275,7 @@ export function leaveRoom(exit2) {
   if (r.upFrom) {
     // the one-shot: a room up a stair is left down the stair, into the room below
     enterRoom(r.upFrom, true);
-    const [sx, sz] = roomPos(r.upFrom, r.stair[0] - 0.9, r.stair[1] + 0.3);
+    const [sx, sz] = roomPos(r.upFrom, r.stair[0] - 0.9, r.stair[1] - 0.5);
     t.x = sx;
     t.z = sz;
     t.ang = -1.57;
@@ -319,6 +319,7 @@ export function buildPrompts() {
         k: 'E',
         t: (P.anon ? 'Speak to ' : 'Talk to ') + tomName(P).replace(/^A /, 'a ').replace(/^The /, 'the '),
         run: () => talkTo(P),
+        person: true,
       });
     if (!P.keeper) out.push({ k: 'Q', t: 'Front up' });
   }
@@ -327,14 +328,14 @@ export function buildPrompts() {
   // Tom is facing.
   if (!out.some((o) => o.k === 'E')) {
     const W = G.named.find((Q) => !Q.gone && !Q.dead && !Q.down && Q.space === t.space && hyp(Q.x, Q.z, t.x, t.z) < TOMS.talksWithinMetres && beatFor(Q));
-    if (W) out.push({ k: 'E', t: 'Talk to ' + tomName(W).replace(/^A /, 'a ').replace(/^The /, 'the ') + ' (a word)', run: () => talkTo(W) });
+    if (W) out.push({ k: 'E', t: 'Talk to ' + tomName(W).replace(/^A /, 'a ').replace(/^The /, 'the ') + ' (a word)', run: () => talkTo(W), person: true });
   }
   // doors
   if (t.space === 'street') {
     for (const id in ROOMS) {
       const r = ROOMS[id];
       if (r.locked) continue;
-      if (hyp(t.x, t.z, r.street[0], r.street[1]) < TOMS.doorWithinMetres && !out.some((o) => o.k === 'E'))
+      if (hyp(t.x, t.z, r.street[0], r.street[1]) < TOMS.doorWithinMetres && !out.some((o) => o.k === 'E' && !o.person))
         out.push({
           k: 'E',
           t: isOpen(id) ? 'Go into ' + r.name : r.name + ': shut',
@@ -345,7 +346,7 @@ export function buildPrompts() {
         });
     }
     const y = ROOMS.mickeys.exit2.street;
-    if (hyp(t.x, t.z, y[0], y[1]) < TOMS.yardDoorWithinMetres && !out.some((o) => o.k === 'E'))
+    if (hyp(t.x, t.z, y[0], y[1]) < TOMS.yardDoorWithinMetres && !out.some((o) => o.k === 'E' && !o.person))
       out.push({
         k: 'E',
         t: "Back door of Mickey's",
@@ -375,17 +376,31 @@ export function buildPrompts() {
     const r = ROOMS[t.space];
     if (r) {
       const [mx, mz] = roomPos(r.id, r.mat[0], r.mat[1]);
-      if (hyp(t.x, t.z, mx, mz) < TOMS.doorMatWithinMetres && !out.some((o) => o.k === 'E'))
+      if (hyp(t.x, t.z, mx, mz) < TOMS.doorMatWithinMetres && !out.some((o) => o.k === 'E' && !o.person))
         out.push({ k: 'E', t: r.upFrom ? 'Down the stair to the office' : 'Leave ' + r.name + ' by the street door', run: () => leaveRoom(false) });
       if (r.exit2) {
         const [ex, ez] = roomPos(r.id, r.exit2.mat[0], r.exit2.mat[1]);
-        if (hyp(t.x, t.z, ex, ez) < TOMS.wayOutWithinMetres && !out.some((o) => o.k === 'E'))
+        if (hyp(t.x, t.z, ex, ez) < TOMS.wayOutWithinMetres && !out.some((o) => o.k === 'E' && !o.person))
           out.push({ k: 'E', t: 'Out to ' + r.exit2.label, run: () => leaveRoom(true) });
       }
     }
   }
   if (t.hasCoat) out.push({ k: 'C', t: t.coat ? 'Coat off' : 'Coat on' });
   if (G.story.fare && G.story.fare.st === 'offer') out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
+  // a person and a door on the one use key: one prompt, and pressing it asks which (the person is offered first)
+  const es = out.filter((o) => o.k === 'E');
+  if (es.length > 1) {
+    const at = out.indexOf(es[0]);
+    for (const e of es) out.splice(out.indexOf(e), 1);
+    out.splice(at, 0, {
+      k: 'E',
+      t: es.map((e) => e.t).join(' / '),
+      run: async () => {
+        const i = await scene(() => choose('', 'Which?', es.map((e) => e.t + '.').concat(['Neither.'])));
+        if (i < es.length) return es[i].run();
+      },
+    });
+  }
   return out;
 }
 // What the E prompt does beside a person: the written scene that is waiting with them, or else a talk.
@@ -435,6 +450,8 @@ function solidFor(x, z) {
   }
   return false;
 }
+// Could he stand here? (the same test his own steps use; the story player plans its walks by it)
+export const standable = (x, z) => !solidFor(x, z);
 export function stepPlayer(dt) {
   const t = G.tom;
   // keys are on or off; a stick (touch, pad) is analogue
@@ -600,6 +617,17 @@ const solidCam = (x, z) => {
   for (const w of WALLS) if (inRect(x, z, w, 0.3)) return true;
   return false;
 };
+// Is the camera, where it stands now, inside something solid (a building, a wall, a post, a shelter's side, a vehicle)?
+// The picture would show the inside of it. Read by the tests on every sampled frame.
+export function cameraInside() {
+  const p = camera.position;
+  if (G.tom.space !== 'street') return false;
+  for (const b of BLD) if (b.st > 1 && inRect(p.x, p.z, b, 0) && p.y < 9) return 'building';
+  for (const w of WALLS) if (inRect(p.x, p.z, w, 0)) return 'wall';
+  if (thinThingAt(p.x, p.z, p.y)) return 'post or shelter';
+  if (vehicleAt(p.x, p.z, p.y)) return 'vehicle';
+  return false;
+}
 export function snapCam() {
   cam.snap = true;
 }
@@ -685,14 +713,16 @@ export function stepCamera(dt) {
   }
   const px = tx - fx * cp * d,
     pz = tz - fz * cp * d,
-    py = Math.max(0.5, ty + spn * d + (d < 2 ? 0.25 : 0));
+    // the one-shot: pulled in close by a wall, a post or a shelter, the camera rises and looks down, so his feet stay in frame
+    squeeze = !room && !t.inCar ? clamp((dist - d) / Math.max(1, dist), 0, 1) : 0,
+    py = Math.max(0.5, ty + spn * d + (d < 2 ? 0.25 : 0)) + squeeze * FEELT.squeezedCameraRisesMetres;
   const k = cam.snap ? 1 : 1 - Math.exp(-dt * 9);
   cam.snap = false;
   cam.px += (px - cam.px) * k;
   cam.py += (py - cam.py) * k;
   cam.pz += (pz - cam.pz) * k;
   cam.tx += (tx - cam.tx) * k;
-  cam.ty += (ty - cam.ty) * k;
+  cam.ty += (ty - squeeze * FEELT.squeezedCameraLooksDownMetres - cam.ty) * k;
   cam.tz += (tz - cam.tz) * k;
   cam.shake = Math.max(0, cam.shake - dt * 2);
   camera.position.set(

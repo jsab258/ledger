@@ -689,7 +689,7 @@ export const ROOMS = {
     mat: [-3.6, 3.0],
     locked: 1,
     upFrom: 'mickeys',
-    stair: [6.2, -0.4], // where the stair stands in the office, in the office's own metres
+    stair: [5.2, 3.5], // where the stair stands in the office, in the office's own metres
     spots: { sylvia: [-3.4, -2.4, 0], june: [-1.6, -0.6, 1.0], bed: [3.6, -2.0, 1.57], chair: [-0.6, 0.4, 2.2], bag: [2.2, -2.8, 0] },
   },
 };
@@ -709,7 +709,7 @@ export const INSIDE = {
   cot: { name: "the cot at Mickey's", room: 'mickeys', x: 5.6, z: -2.0, within: 1.4 },
   bed: { name: 'the bed at Regent House', room: 'boarding', x: 3.6, z: -2.0, within: 1.6 },
   flatBed: { name: "the bed in the flat over Mickey's", room: 'flat', x: 3.6, z: -2.0, within: 1.6 },
-  stair: { name: "the stair to the flat at Mickey's", room: 'mickeys', x: 6.2, z: -0.4, within: 1.5 },
+  stair: { name: "the stair to the flat at Mickey's", room: 'mickeys', x: 5.2, z: 3.5, within: 1.0 },
   caffCounter: { name: "the counter at Rinaldi's", room: 'caff', x: 1.0, z: -1.2, within: 1.5 },
   paperCounter: { name: "the counter at Peart's", room: 'news', x: 1.2, z: 0, within: 2 },
   chipCounter: { name: 'the counter at the Golden River', room: 'tangs', x: 0, z: -0.4, within: 2 },
@@ -734,6 +734,7 @@ export const SPOTS = {
   adawin: [-8, 32, 1.57],
   adadoor: [-7.2, 30.6, 1.57],
   busstop: [-5.9, 20.6, 1.57],
+  junepass: [-6.0, 14.6, 1.57], // where June Suddaby is met on the first afternoon, clear of the bus shelter
   bus2: [-5.9, 19.2, 1.57],
   bus3: [-5.8, 22.6, 1.4],
   phone: [6.0, -11.2, 2.6],

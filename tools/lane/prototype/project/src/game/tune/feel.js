@@ -9,6 +9,8 @@ export const TUNE = {
   cabViewAcrossAt30MphDegrees: 67, // band 64 to 70
   cabViewWidensUpToMetresPerSecond: 13.4, // 30 mph
   viewEasesPerSecond: 3,
+  squeezedCameraRisesMetres: 2.4, // pulled in close on the street, the camera rises and looks down: his feet stay in frame
+  squeezedCameraLooksDownMetres: 0.7,
   onFootViewUpDownDegrees: 56, // the street lens as built (his 86 degrees across at 16:9)
   // Tom no longer reverses his way in one frame while his body takes 0.28 s to turn: his pace falls while he turns
   turnSlowsAboveRadians: 1.2,

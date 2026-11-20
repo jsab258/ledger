@@ -850,7 +850,7 @@ export const RULES = {
     suggestedLinesAtMost: 3,
     goodbyeAfterRealSeconds: 1.3,
     closesAfterRealSeconds: 1.6,
-    turnTakesGameMinutes: 1.5,
+    turnTakesGameMinutes: 0, // the clock stops in talk (ONE-SHOT-PROMPT 34): a turn of talk takes no game time
     liveVoiceWaitsRealMilliseconds: 6000,
     followUpWordsAtMost: 12,
     followUpCharactersAtMost: 96,

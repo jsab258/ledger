@@ -220,7 +220,8 @@ function trespassStep(dt) {
   const t = G.tom;
   if (t.inCar) return void (S.tres = null);
   const p = PLACE_LIST.find((q) => (q.room ? q.room === t.space : t.space === 'street' && hyp(t.x, t.z, q.x, q.z) < RULES.game.way.reachedWithinMetres) && q.label !== 'public');
-  if (!p || (G.x.crime && G.x.crime.allowed && G.x.crime.allowed[p.id])) return void (S.tres = null);
+  // his own office and the flat over it are his at every hour
+  if (!p || p.room === 'mickeys' || p.room === 'flat' || (G.x.crime && G.x.crime.allowed && G.x.crime.allowed[p.id])) return void (S.tres = null);
   const owner = P_(p.owner),
     ownerHere = owner && here(owner, T.shapeAtMetres);
   const r0 = E.trespass(p, hourNow(), 0);

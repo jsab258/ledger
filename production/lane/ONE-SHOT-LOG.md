@@ -41,12 +41,13 @@ The brief is now production/lane/ONE-SHOT-PROMPT.md and nothing else. The finish
 
 ### Stories passing (by id)
 
-None yet (14:40). The earlier runs' tests used test calls to place Tom and pass time, so none of them counts as a story.
+S01 (15:40: both runs pass and match). The earlier runs' tests used test calls to place Tom and pass time, so none of them counts as a story.
 
 ### In hand
 
-The story player and S01 (off the ferry).
+S02 (the first fare). Notes for whoever continues: test/stories/play.mjs is the player (walkTo plans a clear way on a grid and steers by mouse look on the street, by the four move keys in rooms; use() answers "which?" when a person and a door share the use key). The first hour's staging is src/game/hour1.js with its numbers in game/tune/hour1.js. The screen is bare by CSS at the end of index.html's style (docket, meters, to-do slip hidden); speech bubbles are subtitles now. Talk takes no game time. The flat is a room up the stair from the office (map.js ROOMS.flat).
 
 ### Checkpoints of this run
 
 - 14:40 Start. Brief read in full; branch up to date with wip; the build and the town code built here; the earlier game tests running as a baseline.
+- 15:40 S01 passes twice with the same record. Made for it: the ferry shot (20 s, Escape skips), control at the gangway, hints only on standing still, lines in passing from Ron, Darren, Ada and June with their voices in the mix, the AI notice, reporting a line (talk and pause menu), a pad-only talk with June and her promise, one prompt for a person and a door that asks which, Sheila's six lines at the things, the stair and flat, the yard door, the camera rising when squeezed, window sizes in the settings with nothing under 24 units. Story changes against the prompt's wording: the window sizes are played while Darren is still on the pavement (a talk is needed to measure the talk screen), not last.

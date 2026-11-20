@@ -654,6 +654,7 @@ const unused = (arr, off = 0) => {
 function buildLines() {
   const P = T.P;
   if (!P) return;
+  if (ui.pad) T.open = true; // on a pad the suggested lines are always shown (3.6.6)
   const L = [],
     D = T.dec,
     n = (P.sugN || 0) * 3 + [...P.id].reduce((x, c) => x + c.charCodeAt(0), 0); // each person, and each visit, starts the written lines at a different place
@@ -840,6 +841,7 @@ export function startTalk(P, opening) {
   G.stats.talks++;
   st('slipShown');
   slip();
+  if (ui.pad) T.open = true; // on a pad the suggested lines show at once (3.6.6)
   buildLines();
 }
 function intro(P) {

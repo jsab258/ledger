@@ -9,7 +9,7 @@ export const TUNE = {
   headTurnLastsRealSeconds: 2.5,
   sheilaWalksMetresPerSecond: 1.5,
   sheilaSpeaksWhenHeIsWithinMetres: 2.6,
-  thingWithinMetres: 1.5,
+  thingWithinMetres: 1.2,
   stairClimbRealSeconds: 1.2,
   staysAfterHisLineGameMinutes: 120, // the people of the first afternoon stay put a while after their line
   stagingEndsAfterGameMinutes: 440, // or when Sheila's walk-round is done, whichever is first

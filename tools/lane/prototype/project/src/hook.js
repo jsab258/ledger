@@ -28,7 +28,7 @@ import { clockText, dateText, DAYS, hyp } from './util.js';
 import { KINDS } from './kinds.js';
 import { SPOTS, DESTS, ROOMS, INSIDE, roomPos, zoneAt, blocked as mapBlocked, NODES, path as mapPath, nearNode, los as mapLos } from './map.js';
 import { ui, tomName, dialogNow, advance, pickOpt } from './ui.js';
-import { buildPrompts, onKey, enterRoom, leaveRoom, talkTo } from './player.js';
+import { buildPrompts, onKey, enterRoom, leaveRoom, talkTo, cameraInside, standable } from './player.js';
 import { startTalk, endTalk, talkLines, talkState, talkPick, talkType, talkKeyPress } from './talk.js';
 import { fareOffer, fareAccept, farePlaces } from './fares.js';
 import { JOBS } from './jobs.js';
@@ -555,6 +555,8 @@ export function installHook(x) {
     ui,
     cam: x.cam,
     mix: x.mix,
+    cameraInside,
+    standable,
     roomOf: (id) => ROOMS[id],
     F: x.F,
     tick: (dt) => x.logic(dt), // one game step of dt real seconds (round 3: the drills step at 1/60 s)
