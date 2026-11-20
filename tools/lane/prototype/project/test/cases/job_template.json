@@ -1,0 +1,2659 @@
+{
+ "piece": "job_template",
+ "cases": [
+  {
+   "id": "four-job-states-five-step-states",
+   "rule": "3.5.6",
+   "fn": "newRun",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    100
+   ],
+   "out": {
+    "id": "demo",
+    "st": "offered",
+    "offeredAt": 100,
+    "takenAt": null,
+    "endedAt": null,
+    "outcome": null,
+    "cur": null,
+    "steps": {
+     "pick": {
+      "st": "asleep",
+      "outcome": null,
+      "at": null
+     },
+     "drop": {
+      "st": "asleep",
+      "outcome": null,
+      "at": null
+     }
+    },
+    "lines": []
+   }
+  },
+  {
+   "id": "take-opens-the-first-step",
+   "rule": "3.5.6",
+   "fn": "take",
+   "in": [
+    {
+     "id": "demo",
+     "st": "offered",
+     "offeredAt": 100,
+     "takenAt": null,
+     "endedAt": null,
+     "outcome": null,
+     "cur": null,
+     "steps": {
+      "pick": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    1140
+   ],
+   "out": {
+    "run": {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    "ok": true,
+    "events": [
+     {
+      "name": "job:step",
+      "job": "demo",
+      "step": "pick",
+      "state": "open"
+     }
+    ]
+   }
+  },
+  {
+   "id": "take-twice-refused",
+   "rule": "3.5.6",
+   "fn": "take",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    1150
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "not on offer"
+   }
+  },
+  {
+   "id": "refuse-is-an-ending-not-a-restart",
+   "rule": "law 4",
+   "fn": "refuse",
+   "in": [
+    {
+     "id": "demo",
+     "st": "offered",
+     "offeredAt": 100,
+     "takenAt": null,
+     "endedAt": null,
+     "outcome": null,
+     "cur": null,
+     "steps": {
+      "pick": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    1140
+   ],
+   "outHas": {
+    "ok": true,
+    "run": {
+     "st": "failed",
+     "outcome": "refused",
+     "endedAt": 1140
+    },
+    "events": [
+     {
+      "name": "job:end",
+      "job": "demo",
+      "outcome": "refused"
+     }
+    ]
+   }
+  },
+  {
+   "id": "step-done-opens-the-next",
+   "rule": "3.5.6",
+   "fn": "resolve",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "pick",
+    "took",
+    1380
+   ],
+   "outHas": {
+    "ok": true,
+    "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+    "run": {
+     "st": "taken",
+     "cur": "drop",
+     "steps": {
+      "pick": {
+       "st": "done",
+       "outcome": "took",
+       "at": 1380
+      },
+      "drop": {
+       "st": "open",
+       "outcome": null,
+       "at": 1380
+      }
+     },
+     "lines": [
+      {
+       "t": 1380,
+       "step": "pick",
+       "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger."
+      }
+     ]
+    },
+    "events": [
+     {
+      "name": "job:step",
+      "step": "pick",
+      "state": "done"
+     },
+     {
+      "name": "job:step",
+      "step": "drop",
+      "state": "open"
+     }
+    ]
+   }
+  },
+  {
+   "id": "last-step-ends-the-job-done",
+   "rule": "ER-JOB-05",
+   "fn": "resolve",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "drop",
+     "steps": {
+      "pick": {
+       "st": "done",
+       "outcome": "took",
+       "at": 1380
+      },
+      "drop": {
+       "st": "open",
+       "outcome": null,
+       "at": 1380
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "drop",
+    "handed",
+    1400
+   ],
+   "outHas": {
+    "ok": true,
+    "run": {
+     "st": "done",
+     "outcome": "handed",
+     "endedAt": 1400,
+     "cur": null
+    },
+    "events": [
+     {
+      "name": "job:step"
+     },
+     {
+      "name": "job:end",
+      "job": "demo",
+      "outcome": "handed"
+     }
+    ]
+   }
+  },
+  {
+   "id": "a-failure-ends-in-a-state-with-a-line",
+   "rule": "law 4 ER-JOB-05",
+   "fn": "resolve",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "drop",
+     "steps": {
+      "pick": {
+       "st": "done",
+       "outcome": "took",
+       "at": 1380
+      },
+      "drop": {
+       "st": "open",
+       "outcome": null,
+       "at": 1380
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "drop",
+    "taken",
+    1400
+   ],
+   "outHas": {
+    "ok": true,
+    "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+    "run": {
+     "st": "failed",
+     "outcome": "taken",
+     "steps": {
+      "drop": {
+       "st": "failed"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "a-step-not-open-cannot-end",
+   "rule": "3.5.6",
+   "fn": "resolve",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "drop",
+    "handed",
+    1400
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "that step is not open"
+   }
+  },
+  {
+   "id": "no-such-outcome",
+   "rule": "3.5.6",
+   "fn": "resolve",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "pick",
+    "flew",
+    1400
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "no such outcome"
+   }
+  },
+  {
+   "id": "the-testers-skip",
+   "rule": "ER-JOB-07",
+   "fn": "skip",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    "pick",
+    1200
+   ],
+   "outHas": {
+    "ok": true,
+    "run": {
+     "cur": "drop",
+     "steps": {
+      "pick": {
+       "st": "skipped",
+       "outcome": "took"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "window-early-gives-wait-until",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {
+     "id": "pick",
+     "place": "landing",
+     "act": "took_up",
+     "window": {
+      "fromHour": 22.5,
+      "untilHour": 4
+     },
+     "lastDayOffset": 0,
+     "directions": [
+      "Ron",
+      "the Ledger"
+     ],
+     "outcomes": {
+      "took": {
+       "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "drop"
+      },
+      "late": {
+       "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "failed",
+       "fail": true
+      }
+     }
+    },
+    1200
+   ],
+   "out": {
+    "state": "early",
+    "waitUntil": 1350
+   }
+  },
+  {
+   "id": "window-open-before-midnight",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {
+     "id": "pick",
+     "place": "landing",
+     "act": "took_up",
+     "window": {
+      "fromHour": 22.5,
+      "untilHour": 4
+     },
+     "lastDayOffset": 0,
+     "directions": [
+      "Ron",
+      "the Ledger"
+     ],
+     "outcomes": {
+      "took": {
+       "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "drop"
+      },
+      "late": {
+       "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "failed",
+       "fail": true
+      }
+     }
+    },
+    1380
+   ],
+   "out": {
+    "state": "open",
+    "waitUntil": 1380
+   }
+  },
+  {
+   "id": "window-open-after-midnight",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {
+     "id": "pick",
+     "place": "landing",
+     "act": "took_up",
+     "window": {
+      "fromHour": 22.5,
+      "untilHour": 4
+     },
+     "lastDayOffset": 0,
+     "directions": [
+      "Ron",
+      "the Ledger"
+     ],
+     "outcomes": {
+      "took": {
+       "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "drop"
+      },
+      "late": {
+       "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "failed",
+       "fail": true
+      }
+     }
+    },
+    1620
+   ],
+   "out": {
+    "state": "open",
+    "waitUntil": 1620
+   }
+  },
+  {
+   "id": "window-shut-next-morning-waits-for-tonight",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {
+     "id": "pick",
+     "place": "landing",
+     "act": "took_up",
+     "window": {
+      "fromHour": 22.5,
+      "untilHour": 4
+     },
+     "lastDayOffset": 0,
+     "directions": [
+      "Ron",
+      "the Ledger"
+     ],
+     "outcomes": {
+      "took": {
+       "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "drop"
+      },
+      "late": {
+       "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+       "next": "failed",
+       "fail": true
+      }
+     }
+    },
+    1980
+   ],
+   "out": {
+    "state": "early",
+    "waitUntil": 2790
+   }
+  },
+  {
+   "id": "window-daytime-late",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {
+     "window": {
+      "fromHour": 10,
+      "untilHour": 15
+     }
+    },
+    960
+   ],
+   "out": {
+    "state": "late",
+    "waitUntil": 2040
+   }
+  },
+  {
+   "id": "no-window-always-open",
+   "rule": "ER-JOB-04",
+   "fn": "windowAt",
+   "in": [
+    {},
+    777
+   ],
+   "out": {
+    "state": "open",
+    "waitUntil": 777
+   }
+  },
+  {
+   "id": "settle-not-yet",
+   "rule": "ER-JOB-07",
+   "fn": "settle",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    1620
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "still inside its window"
+   }
+  },
+  {
+   "id": "settle-by-the-clock-while-away",
+   "rule": "ER-JOB-07",
+   "fn": "settle",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "pick",
+     "steps": {
+      "pick": {
+       "st": "open",
+       "outcome": null,
+       "at": 1140
+      },
+      "drop": {
+       "st": "asleep",
+       "outcome": null,
+       "at": null
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    1680
+   ],
+   "outHas": {
+    "ok": true,
+    "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+    "run": {
+     "st": "failed",
+     "outcome": "late"
+    },
+    "events": [
+     {
+      "name": "job:step",
+      "step": "pick",
+      "state": "failed",
+      "outcome": "late"
+     },
+     {
+      "name": "job:end",
+      "outcome": "late"
+     }
+    ]
+   }
+  },
+  {
+   "id": "settle-no-late-outcome-is-a-no-show",
+   "rule": "ER-JOB-07",
+   "fn": "settle",
+   "in": [
+    {
+     "id": "demo",
+     "st": "taken",
+     "offeredAt": 100,
+     "takenAt": 1140,
+     "endedAt": null,
+     "outcome": null,
+     "cur": "drop",
+     "steps": {
+      "pick": {
+       "st": "done",
+       "outcome": "took",
+       "at": 1380
+      },
+      "drop": {
+       "st": "open",
+       "outcome": null,
+       "at": 1380
+      }
+     },
+     "lines": []
+    },
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    4320
+   ],
+   "outHas": {
+    "ok": true,
+    "run": {
+     "st": "failed",
+     "outcome": "no show"
+    }
+   }
+  },
+  {
+   "id": "the-laws-hold",
+   "rule": "ER-JOB-02 03 05 ER-REACH-01",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": []
+  },
+  {
+   "id": "one-source-of-direction-is-a-fault",
+   "rule": "ER-JOB-02",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "ER-JOB-02: demo: pick has fewer than two sources of direction"
+   ]
+  },
+  {
+   "id": "every-way-needs-a-car-is-a-fault",
+   "rule": "ER-JOB-03",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "cab",
+       "needsCar": true
+      },
+      {
+       "id": "cab2",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "ER-JOB-03: demo: every approach needsCar"
+   ]
+  },
+  {
+   "id": "a-marker-is-no-channel",
+   "rule": "ER-REACH-01 law 1",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "nobody",
+     "channel": {
+      "kind": "marker",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "ER-REACH-01: demo: no giver the game knows",
+    "ER-REACH-01: demo: no channel"
+   ]
+  },
+  {
+   "id": "a-window-under-two-hours-is-a-fault",
+   "rule": "ER-JOB-04",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22,
+        "untilHour": 23
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "ER-JOB-04: demo: pick: a window under two game hours"
+   ]
+  },
+  {
+   "id": "no-landmark-and-a-thin-line-are-faults",
+   "rule": "ER-JOB-01 ER-JOB-05",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "nowhere",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Done.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "ER-JOB-01: demo: drop names no known place",
+    "ER-JOB-05: demo: drop/handed: a Ledger line of 1 words (about 22 wanted)"
+   ]
+  },
+  {
+   "id": "a-deciding-step-needs-two-outcomes",
+   "rule": "law 4",
+   "fn": "check",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        }
+       }
+      }
+     ]
+    },
+    {
+     "rank": {
+      "landmark": "outside the office",
+      "address": "Quay Street"
+     },
+     "landing": {
+      "landmark": "the bench in the shelter",
+      "address": "West Quay"
+     },
+     "coinback": {
+      "landmark": "the door with no number",
+      "address": "the alley"
+     }
+    },
+    [
+     "ron"
+    ]
+   ],
+   "out": [
+    "LAW-4: demo: drop decides with fewer than two outcomes"
+   ]
+  },
+  {
+   "id": "every-route-listed",
+   "rule": "ER-JOB-05",
+   "fn": "routes",
+   "in": [
+    {
+     "id": "demo",
+     "name": "the demo carry",
+     "family": "carry",
+     "setPiece": "carry under watch",
+     "giver": "ron",
+     "channel": {
+      "kind": "street",
+      "place": "rank"
+     },
+     "offer": "Do I tell them?",
+     "pay": {
+      "pence": 6000,
+      "dirty": true
+     },
+     "approaches": [
+      {
+       "id": "quay"
+      },
+      {
+       "id": "lane"
+      },
+      {
+       "id": "cab",
+       "needsCar": true
+      }
+     ],
+     "steps": [
+      {
+       "id": "pick",
+       "place": "landing",
+       "act": "took_up",
+       "window": {
+        "fromHour": 22.5,
+        "untilHour": 4
+       },
+       "lastDayOffset": 0,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "took": {
+         "line": "Took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "drop"
+        },
+        "late": {
+         "line": "Never went and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      },
+      {
+       "id": "drop",
+       "place": "coinback",
+       "act": "hand_over",
+       "decides": true,
+       "directions": [
+        "Ron",
+        "the Ledger"
+       ],
+       "outcomes": {
+        "handed": {
+         "line": "Handed it over and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "done"
+        },
+        "taken": {
+         "line": "A constable took it and it is written here in a line long enough to pass for a line in the Ledger.",
+         "next": "failed",
+         "fail": true
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "out": [
+    {
+     "path": [
+      [
+       "pick",
+       "took"
+      ],
+      [
+       "drop",
+       "handed"
+      ]
+     ],
+     "ends": "done",
+     "outcome": "handed"
+    },
+    {
+     "path": [
+      [
+       "pick",
+       "took"
+      ],
+      [
+       "drop",
+       "taken"
+      ]
+     ],
+     "ends": "failed",
+     "outcome": "taken"
+    },
+    {
+     "path": [
+      [
+       "pick",
+       "late"
+      ]
+     ],
+     "ends": "failed",
+     "outcome": "late"
+    }
+   ]
+  },
+  {
+   "id": "no-set-piece-twice-in-thirty-minutes",
+   "rule": "ER-JOB-06",
+   "fn": "varietyOk",
+   "in": [
+    [
+     {
+      "piece": "carry under watch",
+      "atRealSeconds": 100
+     }
+    ],
+    "carry under watch",
+    1500,
+    1800
+   ],
+   "out": false
+  },
+  {
+   "id": "another-set-piece-is-free",
+   "rule": "ER-JOB-06",
+   "fn": "varietyOk",
+   "in": [
+    [
+     {
+      "piece": "carry under watch",
+      "atRealSeconds": 100
+     }
+    ],
+    "break-in at the cabin",
+    1500,
+    1800
+   ],
+   "out": true
+  },
+  {
+   "id": "the-same-after-thirty-minutes",
+   "rule": "ER-JOB-06",
+   "fn": "varietyOk",
+   "in": [
+    [
+     {
+      "piece": "carry under watch",
+      "atRealSeconds": 100
+     }
+    ],
+    "carry under watch",
+    1900,
+    1800
+   ],
+   "out": true
+  },
+  {
+   "id": "the-log-check",
+   "rule": "ER-JOB-06",
+   "fn": "varietyFaults",
+   "in": [
+    [
+     {
+      "piece": "a",
+      "atRealSeconds": 0
+     },
+     {
+      "piece": "b",
+      "atRealSeconds": 600
+     },
+     {
+      "piece": "a",
+      "atRealSeconds": 1200
+     }
+    ],
+    1800
+   ],
+   "out": [
+    "a twice within 1200 s"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1741 @@
+{
+ "piece": "crime_rules",
+ "cases": [
+  {
+   "id": "search-drawer-lit",
+   "rule": "ER-SEARCH-01",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "drawer",
+     "light": 1,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 2,
+    "noiseMetres": 2,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-desk-lit",
+   "rule": "ER-SEARCH-01",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "desk",
+     "light": 0.7,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 4,
+    "noiseMetres": 3,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-wardrobe-lit",
+   "rule": "ER-SEARCH-01",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "wardrobe",
+     "light": 1,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 5,
+    "noiseMetres": 4,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-drawer-dark-no-torch",
+   "rule": "ER-SEARCH-01 A33",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "drawer",
+     "light": 0.12,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 4,
+    "noiseMetres": 2,
+    "dark": true
+   }
+  },
+  {
+   "id": "search-drawer-dark-torch",
+   "rule": "ER-SEARCH-01 A33",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "drawer",
+     "light": 0.12,
+     "torch": true
+    }
+   ],
+   "out": {
+    "seconds": 2,
+    "noiseMetres": 2,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-desk-dark-no-torch",
+   "rule": "A33",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "desk",
+     "light": 0.1,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 8,
+    "noiseMetres": 3,
+    "dark": true
+   }
+  },
+  {
+   "id": "search-wardrobe-dark-torch",
+   "rule": "A33",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "wardrobe",
+     "light": 0.1,
+     "torch": true
+    }
+   ],
+   "out": {
+    "seconds": 5,
+    "noiseMetres": 4,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-forced-cupboard",
+   "rule": "ER-SEARCH-01",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "cupboard",
+     "forced": true,
+     "light": 1,
+     "torch": false
+    }
+   ],
+   "out": {
+    "seconds": 3,
+    "noiseMetres": 10,
+    "dark": false
+   }
+  },
+  {
+   "id": "search-safe-has-no-search",
+   "rule": "A4 (a safe needs its key from a person)",
+   "fn": "searchTime",
+   "in": [
+    {
+     "container": "safe",
+     "light": 1
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "ways-night-no-key",
+   "rule": "1.6.1",
+   "fn": "waysIn",
+   "in": [
+    {
+     "key": {
+      "holder": "dennis"
+     },
+     "backWay": {
+      "fromHour": 11,
+      "untilHour": 15.1
+     }
+    },
+    {
+     "hasKey": false,
+     "hour": 23,
+     "dayIndex": 1
+    }
+   ],
+   "out": [
+    {
+     "way": "force",
+     "seconds": 3,
+     "noiseMetres": 42,
+     "crime": true,
+     "mark": true,
+     "markLastsGameMinutes": 1440
+    }
+   ]
+  },
+  {
+   "id": "ways-night-key",
+   "rule": "1.6.1",
+   "fn": "waysIn",
+   "in": [
+    {
+     "key": {
+      "holder": "dennis"
+     },
+     "backWay": {
+      "fromHour": 11,
+      "untilHour": 15.1
+     }
+    },
+    {
+     "hasKey": true,
+     "hour": 23,
+     "dayIndex": 1
+    }
+   ],
+   "out": [
+    {
+     "way": "key",
+     "seconds": 0,
+     "noiseMetres": 0,
+     "crime": false,
+     "mark": false
+    },
+    {
+     "way": "force",
+     "seconds": 3,
+     "noiseMetres": 42,
+     "crime": true,
+     "mark": true,
+     "markLastsGameMinutes": 1440
+    }
+   ]
+  },
+  {
+   "id": "ways-dinner-back-way",
+   "rule": "1.6.1",
+   "fn": "waysIn",
+   "in": [
+    {
+     "key": {
+      "holder": "dennis"
+     },
+     "backWay": {
+      "fromHour": 11,
+      "untilHour": 15.1
+     }
+    },
+    {
+     "hasKey": false,
+     "hour": 12,
+     "dayIndex": 1
+    }
+   ],
+   "out": [
+    {
+     "way": "back",
+     "seconds": 0,
+     "noiseMetres": 0,
+     "crime": false,
+     "mark": false
+    },
+    {
+     "way": "force",
+     "seconds": 3,
+     "noiseMetres": 42,
+     "crime": true,
+     "mark": true,
+     "markLastsGameMinutes": 1440
+    }
+   ]
+  },
+  {
+   "id": "ways-all-three",
+   "rule": "ER-JOB-03",
+   "fn": "waysIn",
+   "in": [
+    {
+     "key": {
+      "holder": "dennis"
+     },
+     "backWay": {
+      "fromHour": 11,
+      "untilHour": 15.1
+     }
+    },
+    {
+     "hasKey": true,
+     "hour": 14,
+     "dayIndex": 3
+    }
+   ],
+   "outHas": [
+    {
+     "way": "key"
+    },
+    {
+     "way": "back"
+    },
+    {
+     "way": "force"
+    }
+   ]
+  },
+  {
+   "id": "ways-back-wraps-midnight",
+   "rule": "1.6.1",
+   "fn": "waysIn",
+   "in": [
+    {
+     "backWay": {
+      "fromHour": 23,
+      "untilHour": 2
+     },
+     "forceable": false
+    },
+    {
+     "hasKey": false,
+     "hour": 1,
+     "dayIndex": 0
+    }
+   ],
+   "out": [
+    {
+     "way": "back",
+     "seconds": 0,
+     "noiseMetres": 0,
+     "crime": false,
+     "mark": false
+    }
+   ]
+  },
+  {
+   "id": "door-shows-forced-same-day",
+   "rule": "DESIGN 4",
+   "fn": "doorShowsForced",
+   "in": [
+    1000,
+    2000
+   ],
+   "out": true
+  },
+  {
+   "id": "door-mended-after-a-day",
+   "rule": "DESIGN 4",
+   "fn": "doorShowsForced",
+   "in": [
+    1000,
+    2440
+   ],
+   "out": false
+  },
+  {
+   "id": "door-never-forced",
+   "rule": "DESIGN 4",
+   "fn": "doorShowsForced",
+   "in": [
+    null,
+    2440
+   ],
+   "out": false
+  },
+  {
+   "id": "pocket-first",
+   "rule": "ER-POCKET-01",
+   "fn": "take",
+   "in": [
+    {
+     "coat": [],
+     "hand": null
+    },
+    "a key"
+   ],
+   "out": {
+    "carried": {
+     "coat": [
+      "a key"
+     ],
+     "hand": null
+    },
+    "ok": true,
+    "where": "coat"
+   }
+  },
+  {
+   "id": "pocket-third-goes-to-hand",
+   "rule": "ER-POCKET-01",
+   "fn": "take",
+   "in": [
+    {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": null
+    },
+    "the envelope"
+   ],
+   "out": {
+    "carried": {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": "the envelope"
+    },
+    "ok": true,
+    "where": "hand"
+   }
+  },
+  {
+   "id": "pocket-fourth-refused",
+   "rule": "ER-POCKET-01",
+   "fn": "take",
+   "in": [
+    {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": "the holdall"
+    },
+    "the envelope"
+   ],
+   "out": {
+    "carried": {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": "the holdall"
+    },
+    "ok": false,
+    "why": "His pockets are full and his hand is taken."
+   }
+  },
+  {
+   "id": "pocket-coat-full-asked-for-coat",
+   "rule": "ER-POCKET-01",
+   "fn": "take",
+   "in": [
+    {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": null
+    },
+    "a torch",
+    "coat"
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "search-finds-exactly",
+   "rule": "ER-POCKET-01",
+   "fn": "searchFinds",
+   "in": [
+    {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": "the holdall"
+    }
+   ],
+   "out": [
+    "a key",
+    "a cosh",
+    "the holdall"
+   ]
+  },
+  {
+   "id": "search-finds-nothing",
+   "rule": "ER-POCKET-01",
+   "fn": "searchFinds",
+   "in": [
+    {
+     "coat": [],
+     "hand": null
+    }
+   ],
+   "out": []
+  },
+  {
+   "id": "carried-in-words",
+   "rule": "A5",
+   "fn": "carriedWords",
+   "in": [
+    {
+     "coat": [
+      "a cosh"
+     ],
+     "hand": "the holdall"
+    }
+   ],
+   "out": "Under the coat: a cosh; in his hand: the holdall."
+  },
+  {
+   "id": "carried-nothing",
+   "rule": "A5",
+   "fn": "carriedWords",
+   "in": [
+    {
+     "coat": [],
+     "hand": null
+    }
+   ],
+   "out": "Nothing on him."
+  },
+  {
+   "id": "drop-from-coat",
+   "rule": "A5",
+   "fn": "drop",
+   "in": [
+    {
+     "coat": [
+      "a key",
+      "a cosh"
+     ],
+     "hand": null
+    },
+    "a key"
+   ],
+   "out": {
+    "carried": {
+     "coat": [
+      "a cosh"
+     ],
+     "hand": null
+    },
+    "ok": true
+   }
+  },
+  {
+   "id": "hot-just-taken",
+   "rule": "1.6.3",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 2600,
+     "gameDaysSince": 0,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "hot-cheap-two-days",
+   "rule": "1.6.3",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 800,
+     "gameDaysSince": 2,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "hot-middling-two-days",
+   "rule": "1.6.3",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 2600,
+     "gameDaysSince": 2,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": 0.5
+  },
+  {
+   "id": "hot-dear-two-days",
+   "rule": "1.6.3",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 8000,
+     "gameDaysSince": 2,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": 0.8
+  },
+  {
+   "id": "hot-dear-seven-days",
+   "rule": "1.6.3 (about 1 to 7 game days)",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 8000,
+     "gameDaysSince": 7,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": 0.3
+  },
+  {
+   "id": "hot-off-the-street-halves",
+   "rule": "1.6.3",
+   "fn": "hotMark",
+   "in": [
+    {
+     "honestPence": 2600,
+     "gameDaysSince": 0,
+     "onTheOwnersStreet": false
+    }
+   ],
+   "out": 0.5
+  },
+  {
+   "id": "owner-knows-it-cold",
+   "rule": "1.6.3 (the owner never forgets)",
+   "fn": "ownerRecognises",
+   "in": [
+    {
+     "isOwner": true,
+     "honestPence": 800,
+     "gameDaysSince": 60,
+     "onTheOwnersStreet": false
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "stranger-cold-goods",
+   "rule": "1.6.3",
+   "fn": "ownerRecognises",
+   "in": [
+    {
+     "isOwner": false,
+     "heardOfTheTheft": true,
+     "honestPence": 800,
+     "gameDaysSince": 3,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "stranger-hot-goods-heard",
+   "rule": "1.6.3",
+   "fn": "ownerRecognises",
+   "in": [
+    {
+     "isOwner": false,
+     "heardOfTheTheft": true,
+     "honestPence": 2600,
+     "gameDaysSince": 1,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "stranger-hot-goods-never-heard",
+   "rule": "ER-EYES-05",
+   "fn": "ownerRecognises",
+   "in": [
+    {
+     "isOwner": false,
+     "heardOfTheTheft": false,
+     "honestPence": 2600,
+     "gameDaysSince": 0,
+     "onTheOwnersStreet": true
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "fence-first-offer-cold",
+   "rule": "2.7.6 (0.4 of an honest price)",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    0
+   ],
+   "outHas": {
+    "offerPence": 800,
+    "last": false,
+    "walks": false
+   }
+  },
+  {
+   "id": "fence-second-offer",
+   "rule": "ER-HAGGLE-01",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    1
+   ],
+   "outHas": {
+    "offerPence": 900,
+    "last": false,
+    "walks": false
+   }
+  },
+  {
+   "id": "fence-third-is-last",
+   "rule": "ER-HAGGLE-01",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    2
+   ],
+   "outHas": {
+    "offerPence": 950,
+    "last": true,
+    "walks": false
+   }
+  },
+  {
+   "id": "fence-fourth-she-walks",
+   "rule": "ER-HAGGLE-01",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    3
+   ],
+   "outHas": {
+    "offerPence": 0,
+    "last": true,
+    "walks": true
+   }
+  },
+  {
+   "id": "fence-hot-goods-less",
+   "rule": "2.7.6",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 1,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    0
+   ],
+   "outHas": {
+    "offerPence": 560
+   }
+  },
+  {
+   "id": "fence-purse-caps",
+   "rule": "DESIGN 9 (pays only what is in the drawer)",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 20000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": 0
+    },
+    0
+   ],
+   "outHas": {
+    "offerPence": 6000
+   }
+  },
+  {
+   "id": "fence-dislikes-him-holds",
+   "rule": "A30",
+   "fn": "fenceOffer",
+   "in": [
+    {
+     "honestPence": 2000,
+     "hot": 0,
+     "pursePence": 6000,
+     "regard": -0.5
+    },
+    2
+   ],
+   "outHas": {
+    "offerPence": 800,
+    "last": true
+   }
+  },
+  {
+   "id": "lift-attentive-felt",
+   "rule": "A34",
+   "fn": "pocketLift",
+   "in": [
+    {
+     "attentive": true,
+     "light": 0.2,
+     "peopleNear": 5
+    }
+   ],
+   "out": {
+    "felt": true,
+    "headTurnsAtSeconds": 0.8,
+    "takesSeconds": 2
+   }
+  },
+  {
+   "id": "lift-good-light-felt",
+   "rule": "A34",
+   "fn": "pocketLift",
+   "in": [
+    {
+     "attentive": false,
+     "light": 0.9,
+     "peopleNear": 5
+    }
+   ],
+   "out": {
+    "felt": true,
+    "headTurnsAtSeconds": 0.8,
+    "takesSeconds": 2
+   }
+  },
+  {
+   "id": "lift-two-people-felt",
+   "rule": "A34",
+   "fn": "pocketLift",
+   "in": [
+    {
+     "attentive": false,
+     "light": 0.2,
+     "peopleNear": 2
+    }
+   ],
+   "out": {
+    "felt": true,
+    "headTurnsAtSeconds": 0.8,
+    "takesSeconds": 2
+   }
+  },
+  {
+   "id": "lift-crowd-poor-light-distracted",
+   "rule": "A34",
+   "fn": "pocketLift",
+   "in": [
+    {
+     "attentive": false,
+     "light": 0.2,
+     "peopleNear": 3
+    }
+   ],
+   "out": {
+    "felt": false,
+    "headTurnsAtSeconds": null,
+    "takesSeconds": 2
+   }
+  },
+  {
+   "id": "lift-head-turns-before-felt",
+   "rule": "ER-EYES-03",
+   "fn": "pocketLift",
+   "in": [
+    {
+     "attentive": true,
+     "light": 1,
+     "peopleNear": 0
+    }
+   ],
+   "outHas": {
+    "felt": true,
+    "headTurnsAtSeconds": 0.8
+   }
+  },
+  {
+   "id": "key-missed-next-morning",
+   "rule": "A34",
+   "fn": "keyMissed",
+   "in": [
+    {
+     "liftedAtMinute": 2220,
+     "noticedNear": [
+      "tom"
+     ]
+    }
+   ],
+   "out": {
+    "missedAtMinute": 3300,
+    "suspects": [
+     "tom"
+    ]
+   }
+  },
+  {
+   "id": "key-missed-nobody-noticed",
+   "rule": "A34 ER-EYES-05",
+   "fn": "keyMissed",
+   "in": [
+    {
+     "liftedAtMinute": 5640,
+     "noticedNear": []
+    }
+   ],
+   "out": {
+    "missedAtMinute": 6180,
+    "suspects": []
+   }
+  },
+  {
+   "id": "damage-at-night",
+   "rule": "A35",
+   "fn": "damage",
+   "in": [
+    {
+     "atMinute": 4260
+    }
+   ],
+   "out": {
+    "noiseMetres": 42,
+    "markUntilMinute": 7140,
+    "ownerKnowsByMinute": 4740,
+    "town": "deed"
+   }
+  },
+  {
+   "id": "damage-small-hours",
+   "rule": "A35",
+   "fn": "damage",
+   "in": [
+    {
+     "atMinute": 4440
+    }
+   ],
+   "outHas": {
+    "ownerKnowsByMinute": 4740,
+    "town": "deed"
+   }
+  },
+  {
+   "id": "damage-by-day",
+   "rule": "A35",
+   "fn": "damage",
+   "in": [
+    {
+     "atMinute": 5160
+    }
+   ],
+   "outHas": {
+    "ownerKnowsByMinute": 6180
+   }
+  },
+  {
+   "id": "mark-shows-until-mended",
+   "rule": "2.19",
+   "fn": "markShows",
+   "in": [
+    {
+     "mended": false,
+     "untilMinute": 5000
+    },
+    4999
+   ],
+   "out": true
+  },
+  {
+   "id": "mark-gone-when-mended",
+   "rule": "2.19",
+   "fn": "markShows",
+   "in": [
+    {
+     "mended": false,
+     "untilMinute": 5000
+    },
+    5000
+   ],
+   "out": false
+  },
+  {
+   "id": "tail-shape-is-nothing",
+   "rule": "ER-TAIL-01",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "shape",
+     "knowsHim": true,
+     "doubts": 0
+    }
+   ],
+   "out": {
+    "state": "clear",
+    "doubts": 0,
+    "sign": null
+   }
+  },
+  {
+   "id": "tail-unseen-is-nothing",
+   "rule": "ER-TAIL-01",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "nothing",
+     "knowsHim": true,
+     "doubts": 2
+    }
+   ],
+   "out": {
+    "state": "clear",
+    "doubts": 2,
+    "sign": null
+   }
+  },
+  {
+   "id": "tail-mark-is-a-doubt",
+   "rule": "ER-TAIL-02",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "mark",
+     "knowsHim": true,
+     "doubts": 0
+    }
+   ],
+   "outHas": {
+    "state": "doubt",
+    "doubts": 1
+   }
+  },
+  {
+   "id": "tail-face-first-look-is-a-doubt",
+   "rule": "ER-TAIL-02",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "face",
+     "knowsHim": true,
+     "doubts": 0
+    }
+   ],
+   "outHas": {
+    "state": "doubt",
+    "doubts": 1
+   }
+  },
+  {
+   "id": "tail-face-after-doubt-made",
+   "rule": "ER-TAIL-02",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "face",
+     "knowsHim": true,
+     "doubts": 1
+    }
+   ],
+   "outHas": {
+    "state": "made",
+    "doubts": 2
+   }
+  },
+  {
+   "id": "tail-face-of-a-stranger-never-made",
+   "rule": "A2 (a face he knows)",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "face",
+     "knowsHim": false,
+     "doubts": 3
+    }
+   ],
+   "outHas": {
+    "state": "doubt",
+    "doubts": 4
+   }
+  },
+  {
+   "id": "tail-mark-many-times-never-made",
+   "rule": "A2",
+   "fn": "tailLook",
+   "in": [
+    {
+     "caught": "mark",
+     "knowsHim": true,
+     "doubts": 5
+    }
+   ],
+   "outHas": {
+    "state": "doubt"
+   }
+  },
+  {
+   "id": "tail-daylight-5m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 5,
+     "light": 1
+    }
+   ],
+   "out": "face"
+  },
+  {
+   "id": "tail-daylight-10m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 10,
+     "light": 1
+    }
+   ],
+   "out": "mark"
+  },
+  {
+   "id": "tail-daylight-20m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 20,
+     "light": 1
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-daylight-30m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 30,
+     "light": 1
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-daylight-40m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 40,
+     "light": 1
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-daylight-50m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 50,
+     "light": 1
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-daylight-60m",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 60,
+     "light": 1
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-out-of-sight",
+   "rule": "ER-TAIL-01",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": false,
+     "metres": 5,
+     "light": 1
+    }
+   ],
+   "out": "nothing"
+  },
+  {
+   "id": "tail-dark-ten-metres",
+   "rule": "A2",
+   "fn": "tailCaught",
+   "in": [
+    {
+     "inSight": true,
+     "metres": 10,
+     "light": 0.25
+    }
+   ],
+   "out": "shape"
+  },
+  {
+   "id": "tail-calm-man-looks",
+   "rule": "A2 (20 to 40 s)",
+   "fn": "tailLooksEvery",
+   "in": [
+    0.75
+   ],
+   "out": 32
+  },
+  {
+   "id": "tail-wary-man-looks",
+   "rule": "A2 (20 to 40 s)",
+   "fn": "tailLooksEvery",
+   "in": [
+    0.4
+   ],
+   "out": 20
+  },
+  {
+   "id": "tail-never-ends-on-distance",
+   "rule": "ER-TAIL-01",
+   "fn": "tailEnds",
+   "in": [
+    {
+     "made": false,
+     "targetArrived": false,
+     "playerStopped": false,
+     "metres": 500
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "tail-ends-made",
+   "rule": "ER-TAIL-01",
+   "fn": "tailEnds",
+   "in": [
+    {
+     "made": true
+    }
+   ],
+   "out": "made"
+  },
+  {
+   "id": "tail-ends-arrived",
+   "rule": "ER-TAIL-01",
+   "fn": "tailEnds",
+   "in": [
+    {
+     "targetArrived": true,
+     "sawHimArrive": true
+    }
+   ],
+   "out": "arrived"
+  },
+  {
+   "id": "tail-arrived-unseen-goes-on",
+   "rule": "A2 (losing sight is not failing)",
+   "fn": "tailEnds",
+   "in": [
+    {
+     "targetArrived": true,
+     "sawHimArrive": false
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "tail-ends-stopped",
+   "rule": "ER-TAIL-01",
+   "fn": "tailEnds",
+   "in": [
+    {
+     "playerStopped": true
+    }
+   ],
+   "out": "stopped"
+  },
+  {
+   "id": "case-nothing-yet",
+   "rule": "A23",
+   "fn": "caseLearns",
+   "in": [
+    5
+   ],
+   "out": []
+  },
+  {
+   "id": "case-hours",
+   "rule": "A23",
+   "fn": "caseLearns",
+   "in": [
+    8
+   ],
+   "out": [
+    "hours"
+   ]
+  },
+  {
+   "id": "case-key",
+   "rule": "A23",
+   "fn": "caseLearns",
+   "in": [
+    16
+   ],
+   "out": [
+    "hours",
+    "key"
+   ]
+  },
+  {
+   "id": "case-way",
+   "rule": "A23",
+   "fn": "caseLearns",
+   "in": [
+    24
+   ],
+   "out": [
+    "hours",
+    "key",
+    "way"
+   ]
+  },
+  {
+   "id": "case-hours-match-the-routine",
+   "rule": "ER-CASE-01",
+   "fn": "hoursAt",
+   "in": [
+    [
+     {
+      "fromHour": 0,
+      "place": "off"
+     },
+     {
+      "fromHour": 7.5,
+      "place": "scrap",
+      "doing": "work"
+     },
+     {
+      "fromHour": 11,
+      "place": "caff:s5",
+      "doing": "sit"
+     },
+     {
+      "fromHour": 15.1,
+      "place": "scrap",
+      "doing": "work"
+     },
+     {
+      "fromHour": 21.6,
+      "place": "off"
+     }
+    ],
+    "scrap",
+    2
+   ],
+   "out": [
+    {
+     "fromHour": 7.5,
+     "untilHour": 11
+    },
+    {
+     "fromHour": 15.1,
+     "untilHour": 21.6
+    }
+   ]
+  },
+  {
+   "id": "case-hours-never-there",
+   "rule": "ER-CASE-01",
+   "fn": "hoursAt",
+   "in": [
+    [
+     {
+      "fromHour": 0,
+      "place": "off"
+     },
+     {
+      "fromHour": 7.5,
+      "place": "scrap",
+      "doing": "work"
+     },
+     {
+      "fromHour": 11,
+      "place": "caff:s5",
+      "doing": "sit"
+     },
+     {
+      "fromHour": 15.1,
+      "place": "scrap",
+      "doing": "work"
+     },
+     {
+      "fromHour": 21.6,
+      "place": "off"
+     }
+    ],
+    "row1",
+    2
+   ],
+   "out": []
+  },
+  {
+   "id": "case-hours-day-row",
+   "rule": "ER-CASE-01",
+   "fn": "hoursAt",
+   "in": [
+    [
+     {
+      "fromHour": 0,
+      "place": "home"
+     },
+     {
+      "fromHour": 8.5,
+      "place": "busstop"
+     },
+     {
+      "fromHour": 9.6,
+      "place": "home"
+     },
+     {
+      "fromHour": 8.5,
+      "place": "laund:b2",
+      "onDayIndexes": [
+       0,
+       2
+      ]
+     }
+    ],
+    "laund:b2",
+    2
+   ],
+   "out": [
+    {
+     "fromHour": 8.5,
+     "untilHour": 9.6
+    }
+   ]
+  },
+  {
+   "id": "wash-water-and-privacy",
+   "rule": "1.6.7",
+   "fn": "washBlood",
+   "in": [
+    {
+     "water": true,
+     "private": true
+    }
+   ],
+   "out": {
+    "clean": true,
+    "rememberedBy": null
+   }
+  },
+  {
+   "id": "wash-seen",
+   "rule": "1.6.7",
+   "fn": "washBlood",
+   "in": [
+    {
+     "water": true,
+     "private": false
+    }
+   ],
+   "out": {
+    "clean": false,
+    "rememberedBy": null,
+    "why": "Somebody would see."
+   }
+  },
+  {
+   "id": "wash-no-water",
+   "rule": "1.6.7",
+   "fn": "washBlood",
+   "in": [
+    {
+     "water": false,
+     "private": true
+    }
+   ],
+   "out": {
+    "clean": false,
+    "rememberedBy": null,
+    "why": "No water here."
+   }
+  },
+  {
+   "id": "wash-launderette-remembers",
+   "rule": "1.6.7 (plants a witness)",
+   "fn": "washBlood",
+   "in": [
+    {
+     "at": "launderette"
+    }
+   ],
+   "out": {
+    "clean": true,
+    "rememberedBy": "the attendant"
+   }
+  },
+  {
+   "id": "thrown-in-is-gone",
+   "rule": "A11",
+   "fn": "throwIn",
+   "in": [
+    {
+     "coat": [
+      "a flick knife"
+     ],
+     "hand": null
+    },
+    "a flick knife"
+   ],
+   "out": {
+    "carried": {
+     "coat": [],
+     "hand": null
+    },
+    "gone": true
+   }
+  },
+  {
+   "id": "dog-barks-at-a-stranger",
+   "rule": "A23",
+   "fn": "dogBarks",
+   "in": [
+    {
+     "stranger": true,
+     "metres": 6,
+     "fedMinutesAgo": null
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "dog-quiet-beyond-reach",
+   "rule": "A23",
+   "fn": "dogBarks",
+   "in": [
+    {
+     "stranger": true,
+     "metres": 12,
+     "fedMinutesAgo": null
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "dog-quiet-after-a-scrap",
+   "rule": "A23",
+   "fn": "dogBarks",
+   "in": [
+    {
+     "stranger": true,
+     "metres": 3,
+     "fedMinutesAgo": 10
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "dog-barks-again-later",
+   "rule": "A23",
+   "fn": "dogBarks",
+   "in": [
+    {
+     "stranger": true,
+     "metres": 3,
+     "fedMinutesAgo": 50
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "dog-knows-its-owner",
+   "rule": "A23",
+   "fn": "dogBarks",
+   "in": [
+    {
+     "stranger": false,
+     "metres": 1,
+     "fedMinutesAgo": null
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "no-verb-harms-a-dog",
+   "rule": "ER-DOG-01",
+   "fn": "dogVerbs",
+   "in": [],
+   "out": [
+    "give it a scrap",
+    "walk away"
+   ]
+  },
+  {
+   "id": "debt-purse-short-threatened",
+   "rule": "2.8.2",
+   "fn": "debtPays",
+   "in": [
+    {
+     "owedPence": 3000,
+     "pursePence": 900,
+     "rung": 4
+    }
+   ],
+   "out": {
+    "paidPence": 900,
+    "leftPence": 2100,
+    "purseLeftPence": 0,
+    "st": "open"
+   }
+  },
+  {
+   "id": "debt-purse-covers-threatened",
+   "rule": "2.8.2",
+   "fn": "debtPays",
+   "in": [
+    {
+     "owedPence": 1500,
+     "pursePence": 1500,
+     "rung": 3
+    }
+   ],
+   "out": {
+    "paidPence": 1500,
+    "leftPence": 0,
+    "purseLeftPence": 0,
+    "st": "paid"
+   }
+  },
+  {
+   "id": "debt-below-a-threat-half-the-purse",
+   "rule": "2.8.2",
+   "fn": "debtPays",
+   "in": [
+    {
+     "owedPence": 1500,
+     "pursePence": 1500,
+     "rung": 1
+    }
+   ],
+   "out": {
+    "paidPence": 750,
+    "leftPence": 750,
+    "purseLeftPence": 750,
+    "st": "open"
+   }
+  },
+  {
+   "id": "debt-empty-purse",
+   "rule": "2.8.2 (Julie cannot pay)",
+   "fn": "debtPays",
+   "in": [
+    {
+     "owedPence": 900,
+     "pursePence": 0,
+     "rung": 6
+    }
+   ],
+   "out": {
+    "paidPence": 0,
+    "leftPence": 900,
+    "purseLeftPence": 0,
+    "st": "open"
+   }
+  },
+  {
+   "id": "debt-purse-over-the-debt",
+   "rule": "2.8.2",
+   "fn": "debtPays",
+   "in": [
+    {
+     "owedPence": 8000,
+     "pursePence": 12000,
+     "rung": 3
+    }
+   ],
+   "out": {
+    "paidPence": 8000,
+    "leftPence": 0,
+    "purseLeftPence": 4000,
+    "st": "paid"
+   }
+  },
+  {
+   "id": "debt-in-kind-part",
+   "rule": "2.8.1 (Darren pays in what he hears)",
+   "fn": "debtInKind",
+   "in": [
+    {
+     "owedPence": 2200,
+     "worthPence": 700
+    }
+   ],
+   "out": {
+    "offPence": 700,
+    "leftPence": 1500,
+    "st": "open"
+   }
+  },
+  {
+   "id": "debt-in-kind-clears",
+   "rule": "2.8.1 (Wayne pays in goods)",
+   "fn": "debtInKind",
+   "in": [
+    {
+     "owedPence": 3000,
+     "worthPence": 2600
+    }
+   ],
+   "out": {
+    "offPence": 2600,
+    "leftPence": 400,
+    "st": "open"
+   }
+  },
+  {
+   "id": "debt-in-kind-over",
+   "rule": "2.8.1",
+   "fn": "debtInKind",
+   "in": [
+    {
+     "owedPence": 300,
+     "worthPence": 700
+    }
+   ],
+   "out": {
+    "offPence": 300,
+    "leftPence": 0,
+    "st": "paid"
+   }
+  }
+ ]
+}
