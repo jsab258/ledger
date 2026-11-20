@@ -132,6 +132,47 @@ def prepare_work(work=None, log=print):
     return work
 
 
+ONE_SIM = os.path.join(REPO, "tools", "lane", "one-sim", "wasm")
+CAST_FILE = os.path.join(REPO, "production", "specs", "hook-cast.json")
+ONE_SIM_CREDITS = os.path.join(HERE, "ONE-SIM-CREDITS.md")
+
+
+def one_sim_wasm():
+    """Where the built town is: ONE_SIM_WASM, or one-sim.wasm in ONE_SIM_WORK's wasm folder (one-sim.sh wasm makes it)."""
+    p = os.environ.get("ONE_SIM_WASM")
+    if p:
+        return p
+    for work in (os.environ.get("ONE_SIM_WORK"), "/home/claude/one-sim-work"):
+        if work and os.path.isfile(os.path.join(work, "wasm", "one-sim.wasm")):
+            return os.path.join(work, "wasm", "one-sim.wasm")
+    return None
+
+
+def place_one_sim(work, log=print):
+    """The real town for the page (the one-shot, 20 Nov 2026): the loader and the bridge beside the source (onesim/,
+    bundled into ledger.js), the cast file as a module, and one-sim.wasm among the files the build copies to dist.
+    The simulation file is not in git: it is made from the game's own town code by tools/lane/one-sim/one-sim.sh wasm.
+    Without it the page still builds and starts, and says in its log that the old town rules are running."""
+    d = os.path.join(work, "onesim")
+    os.makedirs(d, exist_ok=True)
+    for name in ("one-sim.mjs", "one-sim-bridge.mjs"):
+        shutil.copy2(os.path.join(ONE_SIM, name), os.path.join(d, name))
+    with open(CAST_FILE, encoding="utf-8-sig") as f:
+        cast = f.read()
+    with open(os.path.join(d, "cast.mjs"), "w", encoding="utf-8") as f:
+        f.write("// production/specs/hook-cast.json as text, written by build.py: the town reads it itself.\n"
+                "export const CAST_JSON = " + json.dumps(cast) + ";\n")
+    wasm = one_sim_wasm()
+    if not wasm or not os.path.isfile(wasm):
+        log("no one-sim.wasm found (run tools/lane/one-sim/one-sim.sh wasm, or set ONE_SIM_WASM): the page is built without the real town")
+        return ["one-sim.wasm is missing: built without the real town"]
+    os.makedirs(os.path.join(work, "assets"), exist_ok=True)
+    shutil.copy2(wasm, os.path.join(work, "assets", "one-sim.wasm"))
+    if os.path.isfile(ONE_SIM_CREDITS):
+        shutil.copy2(ONE_SIM_CREDITS, os.path.join(work, "assets", "ONE-SIM-CREDITS.md"))
+    return []
+
+
 def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print, locked=False):
     """Build into dist. Returns the list of problems (empty when the build matches the page).
 
@@ -151,6 +192,7 @@ def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print,
     if assets_dir:
         for a in pub["assets"]:
             shutil.copy2(os.path.join(assets_dir, a["path"]), os.path.join(wa, a["path"]))
+    probs_town = place_one_sim(work, log)
     subprocess.run(["node", "tools/build.mjs"], cwd=work, check=True, stdout=subprocess.DEVNULL)
     for name, want in pub["built"].items():
         got = sha_file(os.path.join(work, "dist", name))
@@ -168,12 +210,13 @@ def build(assets_dir=None, allow_changed=False, dist=DIST, work=None, log=print,
         "built_on_version": pub["version"],
         "note": "For the page's owner only (the lane never publishes). Read the live page "
                 "first and merge any newer change; files not named are kept on the page.",
-        "files": {"ledger.js": rel + "/ledger.js"},
+        "files": dict({"ledger.js": rel + "/ledger.js"},
+                      **{n: rel + "/" + n for n in ("one-sim.wasm", "ONE-SIM-CREDITS.md") if os.path.isfile(os.path.join(dist, n))}),
         "file_path": rel + "/index.html",
     }
     with open(os.path.join(dist, "publish-files.json"), "w", encoding="utf-8") as f:
         json.dump(publish, f, indent=1)
-    return problems if allow_changed else []
+    return (problems + probs_town) if allow_changed else probs_town
 
 
 def main(argv=None):

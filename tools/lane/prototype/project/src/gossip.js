@@ -6,6 +6,8 @@ import { attached, tomNotices } from './seeing.js';
 import { logLine, remember } from './events.js';
 import { ledgerSeen, ledgerTalking } from './ledger.js';
 import { RULES } from './rules.js';
+import { townCovers } from './game/town.js';
+import { heatAfter } from './game/pieces/cooling.js';
 
 const GOS = RULES.gossip,
   NAME = RULES.naming;
@@ -80,6 +82,8 @@ export function gossipTick() {
       const reach = A.space === 'street' ? GOS.withinMetresOnStreet : GOS.withinMetresIndoors;
       if (A.space !== B.space || hyp(A.x, A.z, B.x, B.z) > reach) continue;
       if (A.moving && B.moving) continue;
+      // Two people the real town has: their talk is the town's own (game/town.js reads it back into their minds).
+      if (townCovers(A.id) && townCovers(B.id)) continue;
       tally('met', A.id < B.id ? A.id + ' + ' + B.id : B.id + ' + ' + A.id); // counted for the gossip table only
       if (!chance(GOS.chanceTimesAffinity * aff(A, B))) continue;
       const m = pickStory(A, B) || null;
@@ -106,11 +110,13 @@ export function gossipTick() {
 }
 
 export function decay(dtMin) {
-  const f = Math.exp(-dtMin / GOS.heatFadeGameMinutes);
+  // Talk cools by kind, memory does not (DESIGN 2, part 2.4.2; game/pieces/cooling.js): a remark cools in a day, a
+  // wounding in a week, a killing never. Nothing is removed from anybody's memory.
+  const C = RULES.game.town;
   for (const P of G.named)
     for (const m of P.mind.mem) {
-      const fl = KINDS[G.ev[m.e].kind].forever ? GOS.neverForgottenHeat : 0;
-      m.heat = Math.max(fl, m.heat * f);
+      const k = KINDS[G.ev[m.e].kind];
+      m.heat = heatAfter(m.heat, k, dtMin, C, k.forever ? GOS.neverForgottenHeat : 0);
     }
 }
 

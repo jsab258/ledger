@@ -5,6 +5,8 @@ import { KINDS } from './kinds.js';
 import { tomTarget, sense, attached, knowsWho, perceivers, witness } from './seeing.js';
 import { ledgerSelf, ledgerSeen } from './ledger.js';
 import { RULES } from './rules.js';
+import { emit } from './game/core.js';
+import { townSaw, townAct, townLive } from './game/town.js';
 
 export const NONE = { see: false, hear: false, c: 0, d: 999 };
 
@@ -34,6 +36,9 @@ export function mkEvent(kind, x = {}) {
   delete E.silent;
   delete E.told;
   delete E.noiseR;
+  // With the real town running, who goes to the police is the town's own rule (game/town.js): the prototype's old
+  // statement rule finds this crime already settled, and the list fills as people really go.
+  if (townLive() && KINDS[kind] && (KINDS[kind].crime >= 1 || KINDS[kind].town === 'deed')) E.stmt = [];
   G.events.push(E);
   G.ev[id] = E;
   return E;
@@ -62,6 +67,7 @@ export function link(P) {
       r.who === 'man' &&
       r.src !== 'told' &&
       r.src !== 'heard' &&
+      r.src !== 'found' && // somebody who found the damage holds the aftermath only, never him (A38)
       knowsWho(P) &&
       (r.face > MEM.strangerLinkedAboveFace ||
         (r.sure > MEM.strangerLinkedAboveSure && m.fam > MEM.strangerLinkedAboveFamiliarity))
@@ -109,6 +115,8 @@ export function remember(P, E, m) {
     hop: m.hop || 0,
     face: m.face || 0,
   };
+  if (m.rung !== undefined) r.rung = m.rung; // how well they saw him, by the real rule (0 someone to 4 recognised)
+  if (m.town) r.town = 1; // read back from the real town's own talk
   mind.mem.push(r);
   mind.by[E.id] = r;
   if (E.kind === 'inherit') mind.inh = 1;
@@ -118,6 +126,7 @@ export function remember(P, E, m) {
     if (E.kind === 'cab_drive' || E.kind === 'fare' || E.kind === 'free_ride') mind.knowsCab = 1;
   }
   link(P);
+  if (r.src === 'saw' || r.src === 'self') townSaw(P, E, r); // the real town is told what this person saw
   return r;
 }
 
@@ -128,6 +137,7 @@ export function act(kind, x = {}) {
   const told = x.told || [],
     silent = x.silent;
   const E = mkEvent(kind, x);
+  E._acting = true; // its witnesses are told to the real town together, once all are known
   const T = tomTarget();
   if (E.target) {
     const P = G.people[E.target];
@@ -154,6 +164,9 @@ export function act(kind, x = {}) {
   }
   if (!k.noself) ledgerSelf(E);
   logLine(k.truth(E) + (E.wit.length ? '. Seen by ' + E.wit.length : ''), 'act');
+  delete E._acting;
+  townAct(E);
+  emit('deed', { E });
   return E;
 }
 

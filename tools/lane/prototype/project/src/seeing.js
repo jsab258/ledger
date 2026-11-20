@@ -5,6 +5,7 @@ import { KINDS } from './kinds.js';
 import { NONE, mkEvent, logLine, link, remember } from './events.js';
 import { ledgerSelf, ledgerSeen } from './ledger.js';
 import { RULES } from './rules.js';
+import { townIdentify } from './game/town.js';
 const LAD = RULES.ladder;
 
 const TIME = RULES.time,
@@ -139,6 +140,8 @@ export function faceScore(P, c, d, T) {
 }
 
 export function identify(P, c, d, T) {
+  const tw = townIdentify(P, d, T); // with the real town running, how well he is seen is the real rule's
+  if (tw) return tw.who;
   const b = faceScore(P, c, d, T),
     k = knowsWho(P);
   if (b > SEE.namesHimAboveFace && k) return 'tom';
@@ -168,11 +171,15 @@ export function tomNotices(P) {
 }
 
 export function witness(P, E, s, T, fixedWho) {
-  const face = faceScore(P, s.c, s.d, T);
-  const who = fixedWho || identify(P, s.c, s.d, T);
+  // With the real town running, the rung is the real rule's (Perception::IdRung) and the mind keeps it; otherwise
+  // the prototype's own face score and certainty, as before the swap.
+  const tw = townIdentify(P, s.d, T);
+  const face = tw ? tw.face : faceScore(P, s.c, s.d, T);
+  const who = fixedWho || (tw ? tw.who : identify(P, s.c, s.d, T));
   const k = KINDS[E.kind];
-  const sure =
-    clamp(SEE.sureBase + SEE.surePerClarity * s.c, 0, 1) * (who === 'tom' ? 1 : SEE.sureIfNotNamedTimes);
+  const sure = tw
+    ? tw.sure
+    : clamp(SEE.sureBase + SEE.surePerClarity * s.c, 0, 1) * (who === 'tom' ? 1 : SEE.sureIfNotNamedTimes);
   const firstSight = !P.mind.by[E.id];
   tally('sightings');
   const r = remember(P, E, {
@@ -181,6 +188,7 @@ export function witness(P, E, s, T, fixedWho) {
     sure,
     heat: clamp(k.sev + SEE.heatAddedToSeverity, 0, 1),
     face,
+    rung: tw ? tw.rung : undefined,
   });
   if (!E.wit.includes(P.id)) E.wit.push(P.id);
   const gain = attached(r) ? SEE.familiarityPerWitnessedActIfKnown : SEE.familiarityPerWitnessedAct;

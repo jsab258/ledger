@@ -17,8 +17,15 @@
 
 const ENOSYS = 52, EBADF = 8, ESPIPE = 70;
 
-export async function loadOneSim(wasm, { print = (text) => console.log(text) } = {}) {
+export async function loadOneSim(wasm, options = {}) {
   const mod = wasm instanceof WebAssembly.Module ? wasm : await WebAssembly.compile(wasm);
+  return loadOneSimNow(mod, options);
+}
+/// The same without waiting (the one-shot of 20 November 2026): from a module already compiled
+/// (WebAssembly.compile, once, when the page starts). A game that opens a town in the middle of a
+/// frame, for a new week or a loaded save, cannot wait for a promise.
+export function loadOneSimNow(mod, { print = (text) => console.log(text) } = {}) {
+  if (!(mod instanceof WebAssembly.Module)) throw new Error('one-sim: loadOneSimNow takes a compiled WebAssembly.Module');
   let memory;
   const dec = new TextDecoder(), enc = new TextEncoder();
   const u8 = () => new Uint8Array(memory.buffer);
@@ -58,7 +65,7 @@ export async function loadOneSim(wasm, { print = (text) => console.log(text) } =
     (imports[imp.module] ??= {})[imp.name] = system[imp.name] ?? (() => ENOSYS);
   }
 
-  const { exports: x } = await WebAssembly.instantiate(mod, imports);
+  const x = new WebAssembly.Instance(mod, imports).exports;
   memory = x.memory;
   if (x._initialize) x._initialize();
 
@@ -116,6 +123,21 @@ export async function loadOneSim(wasm, { print = (text) => console.log(text) } =
     // A sighting that is no damage: this person saw it themselves, at this rung (0 someone to 4 recognised, -1 not given).
     witness: (person, storyFact, area, said, day, hour, minute, certainty = 1.0, rung = -1) =>
       call('os_witness', person, storyFact, area, said, day, hour, minute, certainty, rung) === 1,
+
+    // Added by the one-shot of 20 November 2026 (doors only; the rules are the port's own).
+    // An open act seen (not about his hidden life): a fare driven, a debt struck out, the rent paid.
+    witnessOpen: (person, storyFact, area, said, day, hour, minute, certainty = 1.0, rung = -1) =>
+      call('os_witness_open', person, storyFact, area, said, day, hour, minute, certainty, rung) === 1,
+    // How well a witness sees him (Perception::IdRung): 0 someone, 1 a silhouette, 2 a mark, 3 a face, 4 recognised.
+    idRung: (metres, light, familiarity, mark, faceToward = true) => call('os_id_rung', metres, light, familiarity, mark ? 1 : 0, faceToward ? 1 : 0),
+    inSight: (metres, degreesOffAxis, light, occluded = false, subjectSpeed = -1) => call('os_in_sight', metres, degreesOffAxis, light, occluded ? 1 : 0, subjectSpeed) === 1,
+    audibleRadius: (loudness, ambientFloor, occluded = false) => call('os_audible_radius', loudness, ambientFloor, occluded ? 1 : 0),
+    // Would this person of the cast go to the police over an offence they saw (victim: suffered)? PoliceFile::WouldReport.
+    wouldReport: (who, offence, victim, topic) => call('os_would_report', who, offence, victim ? 1 : 0, topic) === 1,
+    // The same rule for a host's own person (not of the cast), from the nerve and goodwill the host keeps for them.
+    wouldReportAs: (nerve, loyalty, offence, victim) => call('os_would_report_as', nerve, loyalty, offence, victim ? 1 : 0) === 1,
+    // One person's temper as the town holds it: { nerve, loyalty }, or null for nobody of that id.
+    temper(who) { const t = text('os_temper', who); if (!t) return null; const [nerve, loyalty] = t.split('|').map(Number); return { nerve, loyalty }; },
 
     // Reading the town back.
     state: () => text('os_state'),          // the week's pieces as the game's own save writes them (JSON text)

@@ -23,12 +23,12 @@
 // What the bridge does add is refusals. A call the town would take in silence and that would
 // leave it wrong (an act out of turn, a second deed, an area or a story name it does not know, a
 // save whose pieces do not fit) is refused here with its reason, and nothing is changed.
-import { loadOneSim, NightAnswer, WeekAnswer, Offence } from './one-sim.mjs';
+import { loadOneSim, loadOneSimNow, NightAnswer, WeekAnswer, Offence } from './one-sim.mjs';
 
 export { NightAnswer, WeekAnswer, Offence };
 
 /// The version of the saved object below. A save from a later version is refused.
-export const BRIDGE_SAVE_VERSION = 1;
+export const BRIDGE_SAVE_VERSION = 2;   // 2 (the one-shot, 20 Nov 2026): the crimes told to the town and the reports still to make travel with it
 
 /// The prototype's ids for the people who are in both casts, and the real cast's ids for them
 /// (production/specs/hook-cast.json). Six carry the same full name on both sides; June, Rita and
@@ -127,6 +127,17 @@ export function readHour(row, day, hour) {
 /// hour ends and before something he does; the tests use it to hold the bridge to the C# rows).
 export async function openTown(options = {}) {
   if (!plain(options)) throw new Error('one-sim bridge: openTown takes { wasm, castJson, startMinute } or { wasm, castJson, saved }');
+  const sim = await loadOneSim(options.wasm, options.print ? { print: options.print } : undefined);
+  return openTownWith(sim, options);
+}
+/// The same without waiting (the one-shot of 20 November 2026): `module` is one-sim.wasm already
+/// compiled (WebAssembly.compile, once, when the page starts).
+export function openTownNow(options = {}) {
+  if (!plain(options)) throw new Error('one-sim bridge: openTownNow takes { module, castJson, startMinute } or { module, castJson, saved }');
+  return openTownWith(loadOneSimNow(options.module, options.print ? { print: options.print } : undefined), options);
+}
+function openTownWith(sim, options) {
+  if (!plain(options)) throw new Error('one-sim bridge: openTown takes { wasm, castJson, startMinute } or { wasm, castJson, saved }');
   const { wasm, castJson, startMinute = 0, saved, print } = options;
   let talk = options.talk ?? 'by the minute';
   if (typeof castJson !== 'string' || !castJson) throw new Error('one-sim bridge: no cast file text was given');
@@ -137,12 +148,15 @@ export async function openTown(options = {}) {
   if (wantsSaved && (saved === null || saved === undefined)) throw new Error('one-sim bridge: no saved town was given. A save from before the swap has none: open it with openTownFromOldSave');
   if (wantsSaved && 'startMinute' in options) throw new Error('one-sim bridge: a saved town keeps its own clock; give saved or startMinute, not both');
   // Each town has a module of its own, so a town that is refused below is simply dropped: nothing of it is left behind.
-  const sim = await loadOneSim(wasm, print ? { print } : undefined);
   sim.newTown(castJson);                          // throws "cast not read: ..." with the town's own reason
   const people = sim.people(), inCast = new Set(people);
   const areas = areasOf(castJson);
   const mark = castMark(people, areas);
   let at, nextHour, held = null;
+  // CRIMES THAT ARE NO DAMAGE TO THE WEEK'S ONE THING (the one-shot, 20 Nov 2026): each with the witnesses who may yet go
+  // to the police over it, and whether he has been taken for it. The rules asked are the port's own (WouldReport, Report,
+  // TakeIn); the timetable below is the deed's own (TownWeek.h NineReports and TenConstable), followed here for these.
+  let crimes = [];
 
   // The town's own record of how far its talk has run: the first round not yet run, in minutes, or -1 before any.
   const townRound = () => { const m = /"hours":\{"next":-?\d+,"round":(-?\d+)\}/.exec(sim.state()); return m ? Number(m[1]) : null; };
@@ -198,6 +212,11 @@ export async function openTown(options = {}) {
     const last = Math.floor(saved.at / ROUND_MINUTES) * ROUND_MINUTES + ROUND_MINUTES;
     if (round === null || round > last || (round >= 0 && (unrun || round < (saved.nextHour - 1) * 60 + ROUND_MINUTES)) || round < -1)
       throw new Error(`one-sim bridge: the saved town's clock does not fit the town (minute ${saved.at}, next hour ${saved.nextHour}; the town's own talk has run to ${round === null ? 'no minute it can name' : 'minute ' + (round - ROUND_MINUTES)})`);
+    if (saved.crimes !== undefined) {
+      if (!Array.isArray(saved.crimes) || saved.crimes.some((c) => !plain(c) || typeof c.topic !== 'string' || !Number.isInteger(c.offence) || !Number.isFinite(c.minute) || !Array.isArray(c.witnesses)))
+        throw new Error('one-sim bridge: the saved town is not whole: its list of crimes does not read');
+      crimes = JSON.parse(JSON.stringify(saved.crimes));
+    }
     talk = saved.talk;
     at = saved.at;
     nextHour = saved.nextHour;
@@ -252,6 +271,40 @@ export async function openTown(options = {}) {
     held = { until: until >= 0 ? until : event.minute + 60 };
   };
 
+  // The morning a crime is first reported: nine on the day after its night (a crime before six is the night before's),
+  // as TownWeek's Aftermath::FirstReportMorning has it for the deed.
+  const firstReportDay = (minute) => { const d = Math.floor(minute / MIN_PER_DAY); return minute - d * MIN_PER_DAY < 6 * 60 ? d : d + 1; };
+  const nineReportsForCrimes = (day) => {
+    const went = [];
+    for (const c of crimes) {
+      if (day < firstReportDay(c.minute)) continue;
+      for (const w of c.witnesses) {
+        if (w.went || w.never) continue;
+        const would = w.host ? sim.wouldReportAs(w.nerve, w.loyalty, c.offence, !!w.victim) : sim.wouldReport(w.id, c.offence, !!w.victim, c.topic);
+        if (!would) continue;
+        if (sim.policeReport(w.host ? 'host:' + w.id : w.id, c.topic, c.offence, w.rung, day)) {
+          w.went = day;
+          went.push({ who: w.id, host: !!w.host, topic: c.topic, offence: c.offence, statement: w.rung >= 4 });
+        }
+      }
+    }
+    return went;
+  };
+  // Ten o'clock, nobody come for the damage and he is not held: a constable for the oldest crime with a statement
+  // (a witness who recognised him) of a kind a man is taken for (PoliceFile Arrestable: damage, and from wounding up).
+  const ARRESTABLE = (o) => o === Offence.Damage || o >= Offence.Wounding;
+  const END = { [Offence.Damage]: 'Charged', [Offence.Wounding]: 'Charged', [Offence.Robbery]: 'Charged', [Offence.Killing]: 'BailedToReturn' };
+  const tenConstableForCrimes = (day) => {
+    for (const c of crimes) {
+      if (c.taken || !ARRESTABLE(c.offence)) continue;
+      if (!c.witnesses.some((w) => Number.isInteger(w.went) && w.went < day && w.rung >= 4)) continue;   // a statement of an earlier day, as the deed's
+      if (!sim.takeIn(c.topic, day, 10, 0)) continue;
+      c.taken = day;
+      return { topic: c.topic, offence: c.offence, end: END[c.offence] ?? 'Charged' };
+    }
+    return null;
+  };
+
   const town = {
     sim,                                           // the loader's own object: for reading and for the tests. Acts go through the calls below.
     talk: () => talk,
@@ -277,7 +330,14 @@ export async function openTown(options = {}) {
       for (; nextHour * 60 <= now; nextHour++) {
         const day = Math.floor(nextHour / 24), hod = nextHour - day * 24;
         if (talk === 'by the minute' && nextHour * 60 >= 1) sim.roundsTo(...clockOf(nextHour * 60 - 1));   // the hour before's talk first
+        const wentForCrimes = hod === 9 ? nineReportsForCrimes(day) : [];   // before nine's own steps, so DS Ellis hears of a wounding the same morning
         const event = readHour(sim.hour(day, hod, area), day, hod);
+        event.crimeWent = wentForCrimes;          // [{ who, topic, offence, statement }]: who went to the police over a crime that is no damage to the week's thing
+        event.takenFor = null;                    // the crime's topic, when the constable came for one of those
+        if (hod === 10 && !event.taken && !event.held) {
+          const c = tenConstableForCrimes(day);
+          if (c) { event.taken = c.end; event.takenFor = c.topic; event.takenOffence = c.offence; event.held = true; }
+        } else if (hod === 10 && event.taken) event.takenFor = deedHeld()?.topic ?? null;
         noteHeld(event);
         event.heldUntil = held ? held.until : null;
         hours.push(event);
@@ -347,6 +407,80 @@ export async function openTown(options = {}) {
       const [day, hour, min] = before(minute);
       return sim.witness(id, fact, area, words, day, hour, min, certainty, rung);
     },
+    // ---- added by the one-shot of 20 November 2026 (step 4, the swap) ----
+    /// Whether the town has this person (the prototype's id or the cast's), and the cast's id for them.
+    covers: (id) => inCast.has(castId(id)),
+    castId,
+    /// How well a witness sees him, by the port's own rule (Perception::IdRung): the distance in metres, the light on
+    /// him (0 to 1), how well the witness knows him (0 to 1), whether he carries a mark (the coat, the cab) and whether
+    /// his face is toward the witness. 0 someone, 1 a silhouette, 2 a mark, 3 a face, 4 recognised.
+    rung: (metres, light, familiarity, mark, faceToward = true) => sim.idRung(metres, light, familiarity, !!mark, !!faceToward),
+    /// One person's temper as the town holds it: { nerve, loyalty }, or null.
+    temper: (id) => sim.temper(castId(id) ?? ''),
+    /// An OPEN act seen (a fare driven, a debt struck out, the rent paid): as saw(), but not kept as about his hidden life.
+    sawOpen(what = {}) {
+      if (!plain(what)) throw new Error(`one-sim bridge: a sighting is { minute, who, rung, fact, area, words }, not ${quote(what)}`);
+      const { minute, who, rung = -1, fact, area, words, certainty = 1 } = what;
+      inTurn(minute);
+      needArea(area, 'the sighting\'s place');
+      needFact(fact); needText(words, 'the story\'s words'); needSure(certainty); needRung(rung);
+      const id = castId(who);
+      if (id === null) throw new Error(`one-sim bridge: who saw it is an id, not ${quote(who)}`);
+      if (!inCast.has(id)) return false;
+      const [day, hour, min] = before(minute);
+      return sim.witnessOpen(id, fact, area, words, day, hour, min, certainty, rung);
+    },
+    /// A CRIME SEEN THAT IS NOT THE WEEK'S ONE DEED: a blow, a wounding, a robbery, a killing, or a further piece of
+    /// damage. offence is an Offence. witnesses is [{ id, rung, victim?, sure?, nerve?, loyalty? }]. Somebody of the cast
+    /// holds the story first-hand at once (the mill's own Witness) and passes it on as any story. Somebody the cast does
+    /// not have (a host's own person: give their nerve and their goodwill toward him, 0 to 1) holds nothing in the town,
+    /// but may still go to the police. From nine on the morning after, each witness goes if the port's own rule says
+    /// they would (WouldReport), and the report is filed in the town's own police file (Report). At ten on a later day a
+    /// constable comes for a crime with a statement, if it is of a kind a man is taken for (TakeIn). Each hour's answer
+    /// then says so (crimeWent, taken, takenFor). Returns { told, queued, dropped }.
+    crime(what = {}) {
+      if (!plain(what)) throw new Error(`one-sim bridge: a crime is { minute, area, offence, fact, words, witnesses }, not ${quote(what)}`);
+      const { minute, area, offence, fact, words, witnesses = [] } = what;
+      inTurn(minute);
+      needArea(area, 'the crime\'s place');
+      needFact(fact); needText(words, 'the story\'s words');
+      if (!Number.isInteger(offence) || offence < Offence.Suspicious || offence > Offence.Killing) throw new Error(`one-sim bridge: an offence is 0 to 5 (Offence), not ${quote(offence)}`);
+      if (!Array.isArray(witnesses)) throw new Error('one-sim bridge: witnesses is a list of { id, rung }');
+      const topic = 'player.' + fact;
+      if (crimes.some((c) => c.topic === topic)) throw new Error(`one-sim bridge: the town already holds a crime under the name ${quote(fact)}`);
+      const list = [], told = [], dropped = [], seen = new Set();
+      for (const w of witnesses) {
+        if (!plain(w) || typeof w.id !== 'string' || !w.id) throw new Error(`one-sim bridge: a witness is { id, rung }, not ${quote(w)}`);
+        needRung(w.rung);
+        const id = castId(w.id), host = !inCast.has(id);
+        if (seen.has(id)) { dropped.push({ id: w.id, why: 'named twice' }); continue; }
+        seen.add(id);
+        if (host && !(typeof w.nerve === 'number' && w.nerve >= 0 && w.nerve <= 1 && typeof w.loyalty === 'number' && w.loyalty >= 0 && w.loyalty <= 1)) {
+          dropped.push({ id: w.id, why: 'not in the cast, and no nerve and goodwill given for them' });
+          continue;
+        }
+        const sure = w.sure === undefined ? 1 : w.sure;
+        needSure(sure);
+        list.push(host ? { id, host: true, rung: w.rung, victim: !!w.victim, nerve: w.nerve, loyalty: w.loyalty, never: !!w.never }
+                       : { id, rung: w.rung, victim: !!w.victim, sure, never: !!w.never });
+      }
+      const [day, hour, min] = before(minute);
+      for (const w of list) if (!w.host && w.rung >= 0 && sim.witness(w.id, fact, area, words, day, hour, min, w.sure, w.rung)) told.push(w.id);
+      crimes.push({ topic, offence, minute: at, area, witnesses: list });
+      return { told, queued: list.map((w) => w.id), dropped };
+    },
+    /// The crimes told so far, each with who has gone to the police over it and whether he was taken for it (a copy).
+    crimes: () => JSON.parse(JSON.stringify(crimes)),
+    /// A witness of a crime talked round, paid or frightened before going: they will not go (the game's own decision;
+    /// the town's rule for a silenced witness of the deed is Silence.h, not behind the door). True if it changed anything.
+    quiet(fact, who) {
+      const c = crimes.find((x) => x.topic === 'player.' + fact), id = castId(who);
+      const w = c && c.witnesses.find((x) => x.id === id && !Number.isInteger(x.went));
+      if (!w || w.never) return false;
+      w.never = true;
+      return true;
+    },
+
     /// His answer to a night's ask (NightAnswer). True if it was taken.
     answerAsk(askDay, what, minute) { const [day, hour, min] = before(minute); return sim.answerAsk(askDay, what, day, hour, min); },
     asksOn: (day) => sim.asksOn(day),
@@ -369,7 +503,7 @@ export async function openTown(options = {}) {
       const memories = {};
       for (const person of people) memories[person] = sim.saveMemory(person);
       return {
-        kind: 'one-sim town', v: BRIDGE_SAVE_VERSION, cast: mark, at, nextHour, talk,
+        kind: 'one-sim town', v: BRIDGE_SAVE_VERSION, cast: mark, at, nextHour, talk, crimes: JSON.parse(JSON.stringify(crimes)),
         texts: { agents: sim.saveAgents(), town: sim.saveTown(), week: sim.saveWeek(), memories },
       };
     },
@@ -446,11 +580,19 @@ export function oldMemoryRung(memory) {
 /// Returns { town, hours, fed, dropped, lost }: the town; the hours its first tick ran (to be
 /// handled like any tick's); each memory told to the town; each one left out, with why; and in
 /// plain lines what the player loses.
-export async function openTownFromOldSave({ wasm, castJson, old, acts = PROTOTYPE_ACTS, rungOf = oldMemoryRung,
-    areaOf = () => 'mickeys', wordsOf = (event) => `he was seen (${event.kind})`, talk, print } = {}) {
+export async function openTownFromOldSave(options = {}) {
+  const sim = await loadOneSim(options.wasm, options.print ? { print: options.print } : undefined);
+  return openTownFromOldSaveWith(sim, options);
+}
+/// The same without waiting: `module` is one-sim.wasm already compiled.
+export function openTownFromOldSaveNow(options = {}) {
+  return openTownFromOldSaveWith(loadOneSimNow(options.module, options.print ? { print: options.print } : undefined), options);
+}
+function openTownFromOldSaveWith(sim, { castJson, old, acts = PROTOTYPE_ACTS, rungOf = oldMemoryRung,
+    areaOf = () => 'mickeys', wordsOf = (event) => `he was seen (${event.kind})`, talk } = {}) {
   if (!plain(old) || !Number.isFinite(old.t) || old.t < 0 || !plain(old.minds) || !Array.isArray(old.events)) throw new Error('one-sim bridge: this is not a prototype save (no clock, minds or events)');
   if (plain(old.town)) throw new Error('one-sim bridge: this save holds a town already; open it with openTown({ saved })');
-  const town = await openTown({ wasm, castJson, startMinute: old.t, ...(talk ? { talk } : {}), print });
+  const town = openTownWith(sim, { castJson, startMinute: old.t, ...(talk ? { talk } : {}) });
   const hours = town.tick(old.t, town.areas().length && !town.areas().includes('mickeys') ? town.areas()[0] : 'mickeys');
   const minute = town.now(), inCast = new Set(town.people()), known = town.areas();
   const events = new Map();

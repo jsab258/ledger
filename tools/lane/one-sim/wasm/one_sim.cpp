@@ -303,6 +303,70 @@ extern "C"
 		return gTown->Mill->WitnessesDropped() == Before ? 1 : 0;
 	}
 
+	// ---- added by the one-shot of 20 November 2026 (step 4, the swap): no rule here, only doors ----
+
+	/// AN OPEN ACT SEEN: the same first-hand story as os_witness, but not about
+	/// his hidden life (the mill's own bSensitive false): a fare driven, a debt
+	/// struck out, the rent paid. 1 if the mill took it.
+	OS_EXPORT(os_witness_open) int os_witness_open(const char* Person, const char* StoryFact, const char* Area, const char* Said,
+	                                               int Day, int Hour, int Minute, double Certainty, int Rung)
+	{
+		if (!gTown || !Time(Day, Hour, Minute)) return 0;
+		const int Before = gTown->Mill->WitnessesDropped();
+		gTown->Mill->Witness(Str(Person), Fact("player", Str(StoryFact), Str(Area)), Str(Said), false, At(Day, Hour, Minute), Certainty, false, Rung);
+		return gTown->Mill->WitnessesDropped() == Before ? 1 : 0;
+	}
+
+	/// HOW WELL A WITNESS SEES HIM: the port's own Perception::IdRung (0 someone,
+	/// 1 a silhouette, 2 a mark, 3 a face, 4 recognised) from what a host knows:
+	/// the distance, the light on him (0 to 1), how well the witness knows him
+	/// (0 to 1), whether he carries a mark (the coat, the cab) and whether his
+	/// face is toward the witness. And whether he is in sight at all, how far a
+	/// noise carries and whether it is heard: Perception's own, unchanged.
+	OS_EXPORT(os_id_rung) int os_id_rung(double Metres, double Light, double Familiarity, int Mark, int FaceToward)
+	{
+		return Perception::IdRung(Metres, Light, Familiarity, Mark != 0, FaceToward != 0);
+	}
+	OS_EXPORT(os_in_sight) int os_in_sight(double Metres, double DegreesOffAxis, double Light, int Occluded, double SubjectSpeed)
+	{
+		return Perception::InSight(Metres, DegreesOffAxis, Light, Occluded != 0, SubjectSpeed) ? 1 : 0;
+	}
+	OS_EXPORT(os_audible_radius) double os_audible_radius(double Loudness, double AmbientFloor, int Occluded)
+	{
+		return Perception::AudibleRadius(Loudness, AmbientFloor, Occluded != 0);
+	}
+
+	/// WOULD THIS PERSON GO TO THE POLICE over an offence they saw (or suffered):
+	/// PoliceFile's own WouldReport, with the person's nerve and loyalty as the
+	/// town holds them now. 0 for nobody of that id.
+	OS_EXPORT(os_would_report) int os_would_report(const char* Who, int Offence_, int Victim, const char* Topic)
+	{
+		if (!gTown || Offence_ < 0 || Offence_ > 5) return 0;
+		const GossiperPtr G = gTown->Mill->Get(Str(Who));
+		if (!G) return 0;
+		const std::string T = Str(Topic);
+		return PoliceFile::WouldReport(G.get(), (Offence)Offence_, Victim != 0, &T) ? 1 : 0;
+	}
+
+	/// The same rule for somebody the cast file does not have yet (a host's own person), from the
+	/// nerve and the goodwill toward him that the host keeps for them (0 to 1 each). Nobody is added
+	/// to the town: the rule is asked, and that is all.
+	OS_EXPORT(os_would_report_as) int os_would_report_as(double Nerve, double Loyalty, int Offence_, int Victim)
+	{
+		if (Offence_ < 0 || Offence_ > 5 || !std::isfinite(Nerve) || !std::isfinite(Loyalty)) return 0;
+		const Gossiper G("a_host_person", "a host's person", nullptr, nullptr, "day", 0.5, Nerve, Loyalty);
+		return PoliceFile::WouldReport(&G, (Offence)Offence_, Victim != 0, nullptr) ? 1 : 0;
+	}
+
+	/// One person's temper as the town holds it: "nerve|loyalty", or "" for nobody of that id.
+	OS_EXPORT(os_temper) const char* os_temper(const char* Who)
+	{
+		if (!gTown) return Out("");
+		const GossiperPtr G = gTown->Mill->Get(Str(Who));
+		if (!G) return Out("");
+		return Out(std::to_string(G->Nerve) + "|" + std::to_string(G->Loyalty));
+	}
+
 	// ---- reading the town back ----------------------------------------------
 	/// The week's state as the game's own save pieces write it (each piece's
 	/// own ToJson, the ones TownSave bundles), as one JSON text.

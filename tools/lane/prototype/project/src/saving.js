@@ -1,5 +1,6 @@
 // Saving the week. To the viewer's Claude account when the page can (so it follows them between devices), and to this browser as well.
 import { G, VERSION, setPaused, TALLY } from './state.js';
+import { townSave, townSaved } from './game/town.js';
 
 const KEYS = [
   'v',
@@ -43,6 +44,7 @@ export async function initSave() {
   S.ready = true;
 }
 export function serialize() {
+  townSave(); // the real town travels in the save as one plain object (G.x.town.saved)
   const o = {};
   for (const k of KEYS) o[k] = G[k];
   o.minds = {};
@@ -58,7 +60,9 @@ export function serialize() {
   if (o.story.arrest && o.story.arrest.st)
     o.story.arrest = Object.assign({}, o.story.arrest, { st: undefined });
   o.at = Date.now();
-  return JSON.stringify(o);
+  const json = JSON.stringify(o);
+  townSaved();
+  return json;
 }
 export function restore(json) {
   const o = JSON.parse(json);

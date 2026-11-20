@@ -7,6 +7,7 @@ import { gossipTick, decay } from './gossip.js';
 import { los, zoneAt } from './map.js';
 import { lightAt, bake } from './light.js';
 import { RULES } from './rules.js';
+import { townTick } from './game/town.js';
 
 const WX = RULES.weather,
   TICK = RULES.ticking;
@@ -46,6 +47,7 @@ function weatherStep(dm) {
 export function simStep(dt) {
   const dm = (dt * 60) / SECS_PER_HOUR;
   G.t += dm;
+  townTick(); // the real town's clock: its hours run here, in the game's own order (game/town.js)
   const t = G.tom;
   t.zone = zoneAt(t.inCar ? G.car.x : t.x, t.inCar ? G.car.z : t.z);
   weatherStep(dm);
