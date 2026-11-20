@@ -163,8 +163,11 @@ export function stepCab(dt, inp, power, traffic) {
     thrIn = Math.max(0, inp.y || 0),
     brkIn = Math.max(0, -(inp.y || 0)),
     analogPedals = inp.analogPedals;
-  while (CAB.acc >= STEP) {
-    CAB.acc -= STEP;
+  // whole steps only, and the same count whatever the last bits of the frame time are (a 60th is two steps, always)
+  let owed = Math.floor(CAB.acc / STEP + 1e-6);
+  CAB.acc -= owed * STEP;
+  if (Math.abs(CAB.acc) < 1e-7) CAB.acc = 0;
+  while (owed-- > 0) {
     // keys are not a wheel: they ease to full lock and centre themselves, at LEDGER's rates (the cab fix of 20 Nov);
     // a stick is used as it is. In the study's frame, steering is positive to the left.
     const want = -(inp.kx || 0);

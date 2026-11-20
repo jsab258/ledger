@@ -150,7 +150,9 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     const c1 = await P.car();
     await toDoor(c1);
     await P.use(/car two/); await P.until(() => LEDGER.G.tom.inCar, 4);
-    await P.drive([[-60, 50], [-66, 48], [-58, 46.6], [-12, 46.6], [-3.2, 42], [-3.2, 30], [0, 22], [3.4, 26], [4.1, 36.5]], { maxSecs: 90, stopWithin: 2, speed: 8 });
+    // home the way S02 proved: on to the Infirmary end to turn, back along the quay, up Quay Street, round at the top, down to the rank
+    await P.drive([[-60, 49.6], [-115.5, 49.6], [-118, 48.4], [-106, 46.6], [-60, 46.6], [-9, 46.6], [-3.2, 40], [-3.2, 14], [-3.2, -40], [-3.2, -84], [0, -92], [3.2, -84], [3.2, 18], [1.4, 24], [1.4, 29], [3.6, 34], [4.1, 37]], { maxSecs: 240, stopWithin: 2, speed: 8 });
+    t.ok((await P.car()).dmg === (c1.dmg || 0), 'and he brings the cab home without a knock', await P.car());
     await P.use(/Get out/); await P.until(() => !LEDGER.G.tom.inCar, 4);
     await go(7.3, 41.5);
     await homeAndSleep('S05 home cab');
@@ -236,5 +238,5 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     await homeAndSleep('S05 home runs');
     t.note('runs', await P.world(() => [LEDGER.game.carry.x().envelope, LEDGER.G.money.dirty, LEDGER.game.x().law.chases.map((c) => c.st)]));
   }
-  t.note('played seconds', Math.round((await P.played()) - T0));
+  console.log('     (' + variant + ': played ' + Math.round((await P.played()) - T0) + ' s)'); // not part of the record both runs share: a save lands a frame sooner or later on the machine's own time
 }, ['quay', 'cab', 'dark', 'runs']);

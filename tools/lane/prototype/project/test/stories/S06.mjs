@@ -132,5 +132,5 @@ await run('S06', { from: (v) => 'S05 home ' + v }, async (P, t, n, variant) => {
   t.ok(s1.space === s0.space && Math.abs(s1.x - s0.x) < 0.3 && Math.abs(s1.z - s0.z) < 0.3 && s1.t - s0.t >= 0 && s1.t - s0.t <= 1, 'after Continue he stands where he was, at the same game minute', [s0, s1]);
   t.ok(s1.notes === s0.notes && s1.ledger === s0.ledger && s1.minds === s0.minds && s1.back === s0.back && s1.money.join() === s0.money.join(), 'and every memory and Ledger line is as before', [s0, s1]);
   t.note(variant, [line, chain.map((c) => [c.what, c.saw, c.told.length]), heads.sort(), moved]);
-  t.note('played seconds', Math.round(await P.played()));
+  console.log('     (' + variant + ': played ' + Math.round(await P.played()) + ' s)'); // not part of the shared record (see S05)
 }, ['quay', 'cab', 'dark', 'runs']);

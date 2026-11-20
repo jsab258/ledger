@@ -38,7 +38,10 @@ function CLOCK(seed) {
   const S = (window.__S = {
     now: 10000000, seq: 0, timers: [], frames: [], frameNo: 0, on: false, sounds: [], heard: [], log: [], keys: {}, mouseDown: false, pad: null, subsSeen: {}, subsLog: [], headsSeen: {}, notedSeen: {}, notedLog: [], eachs: {},
     yield: () => new Promise((r) => { yieldRes = r; ch.port2.postMessage(0); }),
-    reseed: (n) => { st.s = n >>> 0; },
+    // The same start for every run: chance set to its seed, and the clock put on one fixed reading (the loading took
+    // its own number of frames on the machine's time; timers already waiting keep their distance). From here the clock
+    // is the fixed reading plus whole frames, so a timer falls due on the same frame in every run, to the last bit.
+    reseed: (n) => { st.s = n >>> 0; const d = 20000000 - S.now; for (const t of S.timers) t.due += d; S.now = 20000000; S.base = 20000000; S.since = 0; },
     nativeTimeout,
     install() {
       if (S.on) return;
@@ -62,7 +65,7 @@ function CLOCK(seed) {
     },
     // one frame of 1/60 s: timers that are due, then the game's frame, then the page's own promises
     async frame() {
-      S.now += 1000 / 60;
+      if (S.base) { S.since++; S.now = S.base + (S.since * 1000) / 60; } else S.now += 1000 / 60;
       S.frameNo++;
       S.fireDue();
       const fs = S.frames; S.frames = [];
@@ -482,7 +485,7 @@ export async function run(id, o, play, variants = ['']) {
   let port = (o.port || 8950);
   for (const variant of variants) {
     if (process.env.LEDGER_STORY_ONLY && variant !== process.env.LEDGER_STORY_ONLY) continue; // one way alone, when mending it
-    const digests = [];
+    const digests = [], recs = [];
     for (let n = 1; n <= (twice ? 2 : 1); n++) {
       const P = await open(Object.assign({}, o, { port: ++port, from: typeof o.from === 'function' ? o.from(variant) : o.from }));
       const tag = (variant ? variant + ', ' : '') + 'run ' + n;
@@ -504,14 +507,14 @@ export async function run(id, o, play, variants = ['']) {
       const faults = await P.page.evaluate(() => (window.LEDGER && LEDGER.game ? LEDGER.game.faults.slice(0, 5) : ['no game'])).catch(() => ['page gone']);
       t.ok(!faults.length, 'no fault inside any system', faults);
       t.ok(!P.errors.length, 'no page error', P.errors.slice(0, 3));
-      digests.push(P.digest());
+      digests.push(P.digest()); recs.push(JSON.stringify(P.rec));
       if (process.env.LEDGER_STORY_TRACE) { fs.mkdirSync(SAVES, { recursive: true }); fs.writeFileSync(path.join(SAVES, id + (variant ? '.' + variant : '') + '.run' + n + '.trace.json'), JSON.stringify(await P.trace().catch(() => []))); }
       if (process.env.LEDGER_STORY_REC) { fs.mkdirSync(SAVES, { recursive: true }); fs.writeFileSync(path.join(SAVES, id + (variant ? '.' + variant : '') + '.run' + n + '.rec.json'), JSON.stringify(P.rec, null, 1)); }
       await P.close();
     }
     if (twice) {
       if (digests[0] === digests[1]) console.log('ok   ' + (variant ? '[' + variant + '] ' : '') + 'the same keys gave the same result twice (' + digests[0] + ')');
-      else { fails.push('twice'); console.log('TEST FAIL ' + (variant ? '[' + variant + '] ' : '') + 'the two runs differ: ' + digests.join(' and ')); }
+      else { fails.push('twice'); console.log('TEST FAIL ' + (variant ? '[' + variant + '] ' : '') + 'the two runs differ: ' + digests.join(' and ') + ' | run 1 ' + recs[0].slice(0, 700) + ' | run 2 ' + recs[1].slice(0, 700)); }
     }
   }
   console.log(fails.length ? id + ' FAIL (' + fails.length + ')' : id + ' PASS');
