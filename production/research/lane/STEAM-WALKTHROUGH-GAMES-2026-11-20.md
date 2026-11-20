@@ -4,15 +4,15 @@ Advisor 273 (his words, 18:08, 20 Nov: "Run the other steam studies now so we do
 
 ## The games
 
-Twelve were named; GTA V is done, and GTA IV and Sleeping Dogs are on both lists, so nine different games.
+Twelve were named; GTA V is done, and GTA IV and Sleeping Dogs are on both lists, so nine different games. Mafia: Definitive Edition was left out by his ruling (14:30, 20 Nov, advisor 269 and 274: no Mafia game is a reference for LEDGER), so it is neither pulled nor coded nor compared. The Getaway and Driver: San Francisco could not be pulled from Steam. Six games remain.
 
 | Game | Studied for | Steam app | Steam release used | State |
 |---|---|---|---|---|
-| Sleeping Dogs: Definitive Edition | driving, fists, on foot, chases | 307690 | 8 Oct 2014 | pulling |
-| GTA IV (The Complete Edition) | driving, fists, on foot, chases | 12210 | 2 Dec 2008 | queued |
+| Sleeping Dogs: Definitive Edition | driving, fists, on foot, chases | 307690 | 8 Oct 2014 | coded, checked |
+| GTA IV (The Complete Edition) | driving, fists, on foot, chases | 12210 | 2 Dec 2008 | pulling |
 | L.A. Noire | chases, driving | 110800 | 8 Nov 2011 | queued |
 | Hitman: World of Assassination | being seen | 1659040 | 20 Jan 2022 | queued |
-| Mafia: Definitive Edition | driving, fists, on foot, chases | 1030840 | 24 Sep 2020 | queued |
+| Mafia: Definitive Edition | - | 1030840 | - | left out by his ruling |
 | Watch Dogs: Legion | driving, chases | 2239550 | 26 Jan 2023 | queued |
 | Forza Horizon 4 | driving | 1293830 | 9 Mar 2021 | queued |
 | The Getaway | driving | none | never on PC | not reached |

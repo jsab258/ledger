@@ -13,7 +13,6 @@ GAMES = [  # key, appid, title, mechanics studied
     ("gtaiv", 12210, "GTA IV", ["driving", "fists", "onfoot", "chases"]),
     ("lanoire", 110800, "L.A. Noire", ["chases", "driving"]),
     ("hitmanwoa", 1659040, "Hitman: World of Assassination", ["seen"]),
-    ("mafiade", 1030840, "Mafia: Definitive Edition", ["driving", "fists", "onfoot", "chases"]),
     ("wdlegion", 2239550, "Watch Dogs: Legion", ["driving", "chases"]),
     ("fh4", 1293830, "Forza Horizon 4", ["driving"]),
 ]
