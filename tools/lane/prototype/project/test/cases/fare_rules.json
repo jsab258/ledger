@@ -1,0 +1,3642 @@
+{
+ "piece": "fare_rules",
+ "cases": [
+  {
+   "id": "pay-flag-fall",
+   "rule": "DESIGN 5",
+   "fn": "pay",
+   "in": [
+    {
+     "flagFallPence": 80,
+     "penceAddedPerMetre": 0.9,
+     "roundedToPence": 10
+    },
+    0
+   ],
+   "out": 80
+  },
+  {
+   "id": "pay-200m",
+   "rule": "DESIGN 5",
+   "fn": "pay",
+   "in": [
+    {
+     "flagFallPence": 80,
+     "penceAddedPerMetre": 0.9,
+     "roundedToPence": 10
+    },
+    200
+   ],
+   "out": 260
+  },
+  {
+   "id": "pay-rounded-to-10p",
+   "rule": "DESIGN 5",
+   "fn": "pay",
+   "in": [
+    {
+     "flagFallPence": 80,
+     "penceAddedPerMetre": 0.9,
+     "roundedToPence": 10
+    },
+    107
+   ],
+   "out": 180
+  },
+  {
+   "id": "first-fare-is-the-priests-house",
+   "rule": "DESIGN 15",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 0,
+     "hour": 16,
+     "rung": 1,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 0,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true
+     }
+    }
+   ],
+   "out": "priest"
+  },
+  {
+   "id": "no-fare-before-the-walk-round",
+   "rule": "DESIGN 15",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 0,
+     "hour": 16,
+     "rung": 1,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 0,
+     "eveningOffered": 0,
+     "flags": {}
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "never-the-same-fare-twice-in-a-week",
+   "rule": "ER-JOB-06",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 10,
+     "rung": 1,
+     "doneThisWeek": [
+      "priest",
+      "talker_dock"
+     ],
+     "lastWrinkle": "talker",
+     "offeredToday": 1,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": "parcel_rita"
+  },
+  {
+   "id": "no-wrinkle-twice-running",
+   "rule": "ER-JOB-06",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 10,
+     "rung": 1,
+     "doneThisWeek": [
+      "priest",
+      "talker_dock"
+     ],
+     "lastWrinkle": "parcel",
+     "offeredToday": 1,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": "albert_inf"
+  },
+  {
+   "id": "a-day-holds-so-many-and-no-more",
+   "rule": "his words 19 Nov",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 10,
+     "rung": 1,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 6,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "an-evening-holds-three",
+   "rule": "his words 19 Nov",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 20,
+     "rung": 1,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 3,
+     "eveningOffered": 3,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "from-rung-two-only-fares-with-something-in-them",
+   "rule": "his words 19 Nov",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 20.5,
+     "rung": 2,
+     "doneThisWeek": [
+      "hurry_ferry",
+      "wait_board"
+     ],
+     "lastWrinkle": null,
+     "offeredToday": 0,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "rung-two-evening-gets-a-wrinkle",
+   "rule": "his words 19 Nov",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 20.5,
+     "rung": 2,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 0,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": "hurry_ferry"
+  },
+  {
+   "id": "rung-two-day-cap-three",
+   "rule": "his words 19 Nov",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 1,
+     "hour": 20.5,
+     "rung": 2,
+     "doneThisWeek": [],
+     "lastWrinkle": null,
+     "offeredToday": 3,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "a-night-fare-in-the-small-hours",
+   "rule": "DESIGN 15",
+   "fn": "next",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "id": "priest",
+      "wrinkle": null,
+      "fromHour": 15,
+      "untilHour": 21,
+      "needs": [
+       "tour"
+      ],
+      "not": [
+       "first"
+      ]
+     },
+     {
+      "id": "talker_dock",
+      "wrinkle": "talker",
+      "fromHour": 7,
+      "untilHour": 16,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "parcel_rita",
+      "wrinkle": "parcel",
+      "fromHour": 9,
+      "untilHour": 18,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "packing_pm",
+      "wrinkle": null,
+      "fromHour": 16.5,
+      "untilHour": 18.5,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "alison_row",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 17,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_night",
+      "wrinkle": "runner",
+      "fromHour": 21,
+      "untilHour": 3,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "brenda_dawn",
+      "wrinkle": null,
+      "fromHour": 5,
+      "untilHour": 8,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_ferry",
+      "wrinkle": "hurry",
+      "fromHour": 18,
+      "untilHour": 22.4,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_row",
+      "wrinkle": "wait",
+      "fromHour": 19,
+      "untilHour": 23.5,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "tail_van",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "mirror_car",
+      "wrinkle": "tail",
+      "fromHour": 10,
+      "untilHour": 16,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "walsh_sick",
+      "wrinkle": "face",
+      "fromHour": 8,
+      "untilHour": 20,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "susan_shift",
+      "wrinkle": "talker",
+      "fromHour": 22.5,
+      "untilHour": 24,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "norman_rounds",
+      "wrinkle": null,
+      "fromHour": 20,
+      "untilHour": 23,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "dennis_bank",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 15,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "albert_inf",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 16,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "rita_case",
+      "wrinkle": "parcel",
+      "fromHour": 7,
+      "untilHour": 12,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "ellis_face",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 3,
+      "needs": [
+       "first",
+       "ellisAbout"
+      ]
+     },
+     {
+      "id": "julie_work",
+      "wrinkle": null,
+      "fromHour": 8,
+      "untilHour": 15,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "peter_stock",
+      "wrinkle": "hurry",
+      "fromHour": 13,
+      "untilHour": 17,
+      "fromDay": 1,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_fairview",
+      "wrinkle": "talker",
+      "fromHour": 9,
+      "untilHour": 19,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "edge_exchange",
+      "wrinkle": "face",
+      "fromHour": 10,
+      "untilHour": 17,
+      "fromDay": 4,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "wait_board",
+      "wrinkle": "wait",
+      "fromHour": 18,
+      "untilHour": 23,
+      "rungFrom": 2
+     },
+     {
+      "id": "face_stather",
+      "wrinkle": "face",
+      "fromHour": 9,
+      "untilHour": 20,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "hurry_shaun",
+      "wrinkle": "hurry",
+      "fromHour": 7,
+      "untilHour": 11,
+      "fromDay": 2,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "runner_two",
+      "wrinkle": "runner",
+      "fromHour": 22,
+      "untilHour": 4,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     },
+     {
+      "id": "lee_dawn",
+      "wrinkle": "face",
+      "fromHour": 4.5,
+      "untilHour": 6.5,
+      "fromDay": 3,
+      "needs": [
+       "first"
+      ]
+     }
+    ],
+    {
+     "day": 2,
+     "hour": 1,
+     "rung": 1,
+     "doneThisWeek": [
+      "priest"
+     ],
+     "lastWrinkle": null,
+     "offeredToday": 0,
+     "eveningOffered": 0,
+     "flags": {
+      "tour": true,
+      "first": true
+     }
+    }
+   ],
+   "out": "runner_night"
+  },
+  {
+   "id": "way-same-road",
+   "rule": "ER-DRIVE-09",
+   "fn": "legs",
+   "in": [
+    {
+     "qs": {
+      "axis": "z",
+      "at": 0,
+      "from": -208,
+      "to": 44,
+      "name": "Quay Street"
+     },
+     "quay": {
+      "axis": "x",
+      "at": 48,
+      "from": -128,
+      "to": 160,
+      "name": "the quay"
+     },
+     "chapel": {
+      "axis": "x",
+      "at": -18.5,
+      "from": -78,
+      "to": 27,
+      "name": "Chapel Lane"
+     }
+    },
+    {
+     "x": 4,
+     "z": 37
+    },
+    {
+     "x": -3.2,
+     "z": -72
+    }
+   ],
+   "out": [
+    {
+     "road": "qs",
+     "name": "Quay Street",
+     "heads": "north",
+     "to": {
+      "x": 0,
+      "z": -72
+     },
+     "turn": null,
+     "metres": 109
+    }
+   ]
+  },
+  {
+   "id": "way-quay-to-chapel-lane-by-quay-street",
+   "rule": "ER-DRIVE-09",
+   "fn": "legs",
+   "in": [
+    {
+     "qs": {
+      "axis": "z",
+      "at": 0,
+      "from": -208,
+      "to": 44,
+      "name": "Quay Street"
+     },
+     "quay": {
+      "axis": "x",
+      "at": 48,
+      "from": -128,
+      "to": 160,
+      "name": "the quay"
+     },
+     "chapel": {
+      "axis": "x",
+      "at": -18.5,
+      "from": -78,
+      "to": 27,
+      "name": "Chapel Lane"
+     }
+    },
+    {
+     "x": 70,
+     "z": 46
+    },
+    {
+     "x": -50,
+     "z": -18.5
+    }
+   ],
+   "out": [
+    {
+     "road": "quay",
+     "name": "the quay",
+     "heads": "west",
+     "to": {
+      "x": 0,
+      "z": 48
+     },
+     "turn": "right",
+     "metres": 70
+    },
+    {
+     "road": "qs",
+     "name": "Quay Street",
+     "heads": "north",
+     "to": {
+      "x": 0,
+      "z": -18.5
+     },
+     "turn": "left",
+     "metres": 67
+    },
+    {
+     "road": "chapel",
+     "name": "Chapel Lane",
+     "heads": "west",
+     "to": {
+      "x": -50,
+      "z": -18.5
+     },
+     "turn": null,
+     "metres": 50
+    }
+   ]
+  },
+  {
+   "id": "way-station-to-the-row",
+   "rule": "ER-DRIVE-09",
+   "fn": "legs",
+   "in": [
+    {
+     "qs": {
+      "axis": "z",
+      "at": 0,
+      "from": -208,
+      "to": 44,
+      "name": "Quay Street"
+     },
+     "quay": {
+      "axis": "x",
+      "at": 48,
+      "from": -128,
+      "to": 160,
+      "name": "the quay"
+     },
+     "chapel": {
+      "axis": "x",
+      "at": -18.5,
+      "from": -78,
+      "to": 27,
+      "name": "Chapel Lane"
+     }
+    },
+    {
+     "x": 3.2,
+     "z": -200
+    },
+    {
+     "x": 120,
+     "z": 46.6
+    }
+   ],
+   "out": [
+    {
+     "road": "qs",
+     "name": "Quay Street",
+     "heads": "south",
+     "to": {
+      "x": 0,
+      "z": 48
+     },
+     "turn": "left",
+     "metres": 248
+    },
+    {
+     "road": "quay",
+     "name": "the quay",
+     "heads": "east",
+     "to": {
+      "x": 120,
+      "z": 48
+     },
+     "turn": null,
+     "metres": 120
+    }
+   ]
+  },
+  {
+   "id": "words-name-roads-and-landmarks-never-metres",
+   "rule": "ER-DRIVE-09",
+   "fn": "words",
+   "in": [
+    [
+     {
+      "road": "qs",
+      "name": "Quay Street",
+      "heads": "south",
+      "to": {
+       "x": 0,
+       "z": 48
+      },
+      "turn": "left",
+      "metres": 248
+     },
+     {
+      "road": "quay",
+      "name": "the quay",
+      "heads": "east",
+      "to": {
+       "x": 120,
+       "z": 48
+      },
+      "turn": null,
+      "metres": 120
+     }
+    ],
+    {
+     "quay>qs": "Mickey's corner",
+     "qs>quay": "the bottom of the street, by the rank",
+     "qs>chapel": "the phone box and Rita's corner",
+     "chapel>qs": "the phone box"
+    },
+    "The warehouse row: the burned one"
+   ],
+   "out": "Down Quay Street. Left at the bottom of the street, by the rank along the quay. The warehouse row: the burned one."
+  },
+  {
+   "id": "turns-seen-from-above",
+   "rule": "ER-DRIVE-09",
+   "fn": "turn",
+   "in": [
+    "north",
+    "east"
+   ],
+   "out": "right"
+  },
+  {
+   "id": "turns-west-to-north-is-right",
+   "rule": "ER-DRIVE-09",
+   "fn": "turn",
+   "in": [
+    "west",
+    "north"
+   ],
+   "out": "right"
+  },
+  {
+   "id": "turns-south-to-east-is-left",
+   "rule": "ER-DRIVE-09",
+   "fn": "turn",
+   "in": [
+    "south",
+    "east"
+   ],
+   "out": "left"
+  },
+  {
+   "id": "left-here-a-junction-before",
+   "rule": "A9",
+   "fn": "leftHere",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "road": "qs",
+      "heads": "south",
+      "to": {
+       "x": 0,
+       "z": 48
+      },
+      "turn": "left",
+      "metres": 248
+     },
+     {
+      "road": "quay",
+      "heads": "east",
+      "to": {
+       "x": 120,
+       "z": 48
+      },
+      "turn": null,
+      "metres": 120
+     }
+    ],
+    {
+     "x": 1.9,
+     "z": 20
+    }
+   ],
+   "out": {
+    "turn": "left",
+    "key": "qs>left"
+   }
+  },
+  {
+   "id": "no-word-far-from-the-junction",
+   "rule": "A9",
+   "fn": "leftHere",
+   "in": [
+    {
+     "offersADayAtRungOne": 6,
+     "offersADayFromRungTwo": 3,
+     "eveningFromHour": 17,
+     "eveningOffersAtMost": 3,
+     "firstOfferAfterRealSeconds": 6,
+     "nextOfferAfterRealSecondsAtLeast": 35,
+     "nextOfferAfterRealSecondsAtMost": 70,
+     "offerStandsRealSeconds": 26,
+     "longestFareRealSeconds": 150,
+     "somethingEveryRealSeconds": 40,
+     "leftHereBeforeJunctionMetres": 34,
+     "tipPence": 50,
+     "bigTipPence": 150,
+     "parcelPaysPence": 200,
+     "waitPaysPence": 300,
+     "edgeFarePence": 450,
+     "edgeTakesGameMinutes": 40,
+     "driverShareToThePocket": 0.1,
+     "driverFareEveryGameMinutes": 150,
+     "driverFarePence": 170,
+     "hurryRealSeconds": 75,
+     "waitRealSeconds": 22,
+     "runnerLostAfterUnseenRealSeconds": 7,
+     "runnerLostBeyondMetres": 70,
+     "runnerCaughtWithinMetres": 1.3,
+     "runnerRunsMetresPerSecond": 4.4,
+     "mirrorFollowsAtMetres": 16,
+     "mirrorLostAfterUnseenRealSeconds": 7,
+     "mirrorLostBeyondMetres": 70
+    },
+    [
+     {
+      "road": "qs",
+      "heads": "south",
+      "to": {
+       "x": 0,
+       "z": 48
+      },
+      "turn": "left",
+      "metres": 248
+     }
+    ],
+    {
+     "x": 1.9,
+     "z": -40
+    }
+   ],
+   "out": null
+  }
+ ]
+}

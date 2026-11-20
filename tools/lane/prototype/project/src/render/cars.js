@@ -221,7 +221,7 @@ export function buildCar(kind, color, o = {}) {
   mats();
   const g = new THREE.Group(),
     body = lit(new THREE.MeshStandardMaterial({ color, roughness: 0.36, metalness: 0.3 }));
-  const car = { g, kind, wheels: [], len: 4.3, wid: 1.7, halos: [], tails: [] };
+  const car = { g, kind, wheels: [], len: 4.3, wid: 1.7, halos: [], tails: [], body, signParts: [] };
   const headM = new THREE.MeshBasicMaterial({ color: '#3a3a36' }),
     tailM = new THREE.MeshBasicMaterial({ color: '#3a0a0a' }),
     amber = new THREE.MeshBasicMaterial({ color: '#7a4a10' });
@@ -452,14 +452,23 @@ export function buildCar(kind, color, o = {}) {
     plate(front + 0.06, false);
     plate(rear - 0.06, true);
     wheelsOf(car, g, K, [K.wb, -K.wb], K.W / 2 - 0.13);
+    if (o.police || o.ambulance) {
+      // the one-shot (20 Nov): a patrol car's or an ambulance's blue lamp, and a band along the side
+      const blue = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.2, 0.5, 2.4) });
+      car.lamp = blue;
+      mesh(g, boxG(0.3, 0.16, 0.2, 0, C.roof + 0.09, (C.r1 + C.f1) / 2 + 0.1), blue);
+      const band = new THREE.MeshBasicMaterial({ color: o.police ? '#c9461e' : '#b02a2a' });
+      for (const s of [-1, 1]) mesh(g, boxG(0.02, 0.1, K.L * 0.62, s * (K.W / 2 + 0.012), 0.72, 0), band);
+    }
     if (o.cab) {
       // the roof sign of a Mickey's cab
       const st = signTex("MICKEY'S", '', '#e8d24a', '#14182a', 'slab', 256, 64),
         sm = new THREE.MeshBasicMaterial({ map: st, color: new THREE.Color(0.5, 0.5, 0.5) });
       car.sign = sm;
-      mesh(g, boxG(0.62, 0.17, 0.2, 0, C.roof + 0.1, (C.r1 + C.f1) / 2 + 0.1), blackM);
+      car.signParts.push(mesh(g, boxG(0.62, 0.17, 0.2, 0, C.roof + 0.1, (C.r1 + C.f1) / 2 + 0.1), blackM));
       for (const s of [-1, 1]) {
         const p = mesh(g, new THREE.PlaneGeometry(0.58, 0.14), sm);
+        car.signParts.push(p);
         p.position.set(0, C.roof + 0.1, (C.r1 + C.f1) / 2 + 0.1 + s * 0.102);
         if (s < 0) p.rotation.y = Math.PI;
       }
@@ -544,4 +553,10 @@ export function carLights(car, on, brake) {
   if (car.beams) for (const b of car.beams) b.intensity = on ? 70 : 0;
   if (car.inside) car.inside.color.setRGB(...(on ? [1.9, 1.7, 1.1] : [0.2, 0.2, 0.16]));
   if (car.sign) car.sign.color.setScalar(on ? 2.6 : 0.5);
+}
+
+// The one-shot (20 Nov, A24): a car's paint and roof sign can change (Shaun Hewson's shed; a parked car he has taken).
+export function restyleCar(car, color, sign) {
+  if (color && car.body) car.body.color.set(color);
+  for (const p of car.signParts || []) p.visible = !!sign;
 }

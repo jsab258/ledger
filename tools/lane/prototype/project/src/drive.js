@@ -11,6 +11,14 @@ import { S } from './render/sync.js';
 import { RULES } from './rules.js';
 const TRAFFIC = RULES.traffic;
 const DRIVING = RULES.driving;
+// the one-shot (20 Nov): the car's rules are the pure piece game/pieces/car_rules.js, its numbers game/tune/cars.js
+import { PIECE as CAR_RULES } from './game/pieces/car_rules.js';
+const CR = CAR_RULES.fns;
+const CT = () => RULES.game.cars;
+const MPH = (v) => Math.abs(v) / CT().metresPerSecondPerMph;
+const carX = () => (G.x && G.x.cars) || {};
+// the scene the traffic is built into, for the cars the whole game adds (a patrol car, an ambulance, a van to follow)
+export const trafficScene = () => T.scene;
 
 const T = {
   list: [],
@@ -172,6 +180,7 @@ export function stepCar(dt, inp) {
   const c = G.car,
     t = G.tom;
   T.crashCool -= dt;
+  if (carX().auto && t.inCar) return; // he is being driven (game/cars.js moves the cab)
   if (!t.inCar) {
     c.v *= Math.max(0, 1 - dt * DRIVING.rollsToAStopPerSecond);
     c.braking = false;
@@ -181,8 +190,36 @@ export function stepCar(dt, inp) {
     CAB.boxed = null;
     return;
   }
+  // a cab that will not drive on (a hit at about 35 mph, DESIGN 5) does not answer the pedals: he gets out and walks
+  const dead = carX().offRoadUntil > G.t && carX().have !== 'taken';
+  if (dead) {
+    inp = { x: 0, kx: 0, y: 0, hb: true };
+    if (!CAB.deadSaid || G.t - CAB.deadSaid > 20) {
+      CAB.deadSaid = G.t;
+      sub('It will not start. The firm fetches it; it is off the road until tomorrow. [F] Get out.', '', 'over', 5);
+    }
+  }
   const thr = inp.y,
     hb = inp.hb;
+  // somebody dead ahead while he keeps his foot down: a car aimed at a man is an attack (DESIGN 5)
+  {
+    let ahead = false;
+    if (thr > 0.5 && c.v > 2) {
+      const ax = Math.sin(c.ang),
+        az = Math.cos(c.ang);
+      for (const P of G.named.concat(G.crowd)) {
+        if (P.gone || P.down || P.dead || P.space !== 'street' || P.inCar) continue;
+        const rx = P.x - c.x,
+          rz = P.z - c.z,
+          f = rx * ax + rz * az;
+        if (f > 1 && f < 14 && Math.abs(rx * az - rz * ax) < 1.2) {
+          ahead = true;
+          break;
+        }
+      }
+    }
+    CAB.aim = ahead ? (CAB.aim || 0) + dt : 0;
+  }
   // round 6: on keys the steering eases to full lock and centres itself; a stick (pad, touch) is used as it is
   {
     const want = inp.kx || 0,
@@ -211,7 +248,7 @@ export function stepCar(dt, inp) {
   c.v = clamp(
     c.v,
     -DRIVING.reverseTopMetresPerSecond,
-    DRIVING.topMetresPerSecond * (1 - c.dmg * DRIVING.damageSlowsByShare),
+    (carX().have === 'taken' ? DRIVING.topMetresPerSecond : CT().topMetresPerSecond) * (1 - c.dmg * DRIVING.damageSlowsByShare),
   );
   const grip = clamp(Math.abs(c.v) / DRIVING.fullSteeringFromMetresPerSecond, 0, 1) * Math.sign(c.v || 1);
   const ang0 = c.ang;
@@ -281,18 +318,31 @@ export function stepCar(dt, inp) {
     if (sp > DRIVING.crashAboveMetresPerSecond && T.crashCool <= 0) {
       T.crashCool = DRIVING.crashCountedEveryRealSeconds;
       const what = hitWhat(c, dt),
-        worst = c.dmg >= DRIVING.damageAtMost;
-      c.dmg = Math.min(DRIVING.damageAtMost, c.dmg + 1);
-      act('crash', { noiseR: DRIVING.crashNoiseCarriesMetres });
+        worst = c.dmg >= DRIVING.damageAtMost,
+        // the one-shot: what one hit does goes by its closing speed (dented, crumpled, will not drive on)
+        hitRule = CR.damage(CT(), MPH(sp), c.dmg);
+      c.dmg = hitRule.stage === 'none' ? Math.min(DRIVING.damageAtMost, c.dmg + 1) : hitRule.damage;
+      const car2 = /car|bus/.test(what);
+      act(car2 && hitRule.stage !== 'dented' ? 'car_rammed' : 'crash', { noiseR: DRIVING.crashNoiseCarriesMetres, name: car2 ? what : undefined });
       if (G.hooks.sfx) G.hooks.sfx('crash');
       if (G.hooks.shake) G.hooks.shake(0.5);
       // round 6: said in words at once, with what it has done to the car (ER-CORE-02, ER-DRIVE-08)
+      if (hitRule.stage === 'dead') {
+        sub(`The cab hits ${what} hard. The front is stove in and the engine has stopped: it will not drive on. [F] Get out.`, '', 'over', DRIVING.crashLineShowsRealSeconds + 2);
+        if (G.hooks.carDead) G.hooks.carDead(what, MPH(sp));
+      } else
       sub(
         atOnce(worst ? AT_ONCE.crash.again : AT_ONCE.crash['dent' + c.dmg] || AT_ONCE.crash.again, { what }),
         '',
         'over',
         DRIVING.crashLineShowsRealSeconds,
       );
+      if (hitRule.stage === 'dead') {
+        c.v = 0;
+        t.x = c.x;
+        t.z = c.z;
+        return;
+      }
     }
     c.v = -c.v * DRIVING.bouncesBackShare;
   } else if (!crawl || CAB.wedged) {
@@ -305,13 +355,14 @@ export function stepCar(dt, inp) {
     const d = hyp(P.x, P.z, c.x + fx * 1.7 * Math.sign(c.v || 1), c.z + fz * 1.7 * Math.sign(c.v || 1));
     if (d > DRIVING.hitsAPersonWithinMetres) continue;
     if (Math.abs(c.v) > DRIVING.knocksDownAboveMetresPerSecond) {
+      // the one-shot: the hurt goes by speed and aim, and a car never kills (canon; pieces/car_rules.js hurt)
+      const mph = MPH(c.v),
+        aimed = (CAB.aim || 0) > 0.7,
+        H = CR.hurt(CT(), mph, aimed, null);
       P.down = true;
-      P.hurt = clamp(
-        (P.hurt || 0) + Math.abs(c.v) * DRIVING.hurtPerMetrePerSecond,
-        0,
-        DRIVING.runDownHurtAtMost,
-      );
-      P.downT = G.t + DRIVING.runDownStaysDownGameMinutes;
+      P.hurt = clamp((P.hurt || 0) + H.hurt, 0, Math.max(P.hurt || 0, CT().hurtAtMost));
+      P.downT = G.t + Math.max(DRIVING.runDownStaysDownGameMinutes, H.downGameMinutes || 0);
+      P.carHurt = H.kind;
       P.route = null;
       P.moving = false;
       act('knocked', {
@@ -334,6 +385,8 @@ export function stepCar(dt, inp) {
       if (!P.anon) {
         P.mind.regard = clamp(P.mind.regard - DRIVING.regardLostWhenRunDown, -1, 1);
       }
+      // then the choice, put at once: stop and help, or drive off (ER-DRIVE-05; game/cars.js)
+      if (G.hooks.carHit) G.hooks.carHit(P, mph, aimed, H);
     } else {
       c.v = 0;
       const a = Math.atan2(P.x - c.x, P.z - c.z) + 1.2;
@@ -549,6 +602,9 @@ export function stepTraffic(dt) {
           ahead(P.x, P.z, TRAFFIC.stopsForAPersonWithinMetres)
         ) {
           block = true;
+          // the one-shot (canon: only the player's car can strike anybody): with somebody this near, he stands on it
+          const f = (P.x - v.x) * fx + (P.z - v.z) * fz;
+          if (f < 1.6 + (v.v * v.v) / (2 * TRAFFIC.brakingMetresPerSecondSquared)) v.v = 0;
           break;
         }
       }
@@ -587,4 +643,86 @@ export function clearTraffic() {
     if (i >= 0) S.traffic.splice(i, 1);
   }
   T.list = [];
+}
+
+// ---------- the one-shot (20 Nov): cars the whole game drives itself ----------
+// A patrol car, an ambulance, a van to follow, a car in the mirror, a car left standing. Each is solid like any car
+// in the road, is moved by game/cars.js, and its driver always brakes for people (canon).
+export function addActor(kind, color, o, x, z, ang, parked) {
+  if (!T.scene) return null;
+  const car = buildCar(kind, color, Object.assign({ driver: !parked }, o || {}));
+  T.scene.add(car.g);
+  const v = { car, x, z, ang, v: 0, r: 1.2, actor: true, parked: !!parked };
+  car.g.position.set(x, 0, z);
+  car.g.rotation.y = ang;
+  carLights(car, false, false);
+  S.traffic.push(v);
+  return v;
+}
+export function removeActor(v) {
+  if (!v) return;
+  if (T.scene) T.scene.remove(v.car.g);
+  const i = S.traffic.indexOf(v);
+  if (i >= 0) S.traffic.splice(i, 1);
+}
+// Drive an actor towards a point at up to `top`. Returns the metres still to go. brake: stand still.
+export function driveActor(v, tx, tz, top, dt, brake) {
+  const dx = tx - v.x,
+    dz = tz - v.z,
+    d = Math.hypot(dx, dz),
+    want = Math.atan2(dx, dz),
+    fx = Math.sin(v.ang),
+    fz = Math.cos(v.ang);
+  if (d > 0.5) v.ang += clamp(angDiff(v.ang, want), -2.4 * dt, 2.4 * dt);
+  let sp = brake ? 0 : Math.min(top, Math.max(1.5, d * 1.2)) * (Math.abs(angDiff(v.ang, want)) > 0.5 ? 0.5 : 1);
+  // always brakes for people, and for Tom on foot
+  const near = (x, z) => {
+    const rx = x - v.x,
+      rz = z - v.z,
+      f = rx * fx + rz * fz;
+    return f > 0 && f < 2.2 + v.v * 0.9 && Math.abs(rx * fz - rz * fx) < 1.5;
+  };
+  const t = G.tom;
+  if (!t.inCar && t.space === 'street' && near(t.x, t.z)) sp = 0;
+  if (sp > 0)
+    for (const P of G.named.concat(G.crowd)) {
+      if (P.gone || P.space !== 'street' || P.inCar) continue;
+      if (Math.abs(P.x - v.x) < 14 && Math.abs(P.z - v.z) < 14 && near(P.x, P.z)) {
+        sp = 0;
+        if ((P.x - v.x) * fx + (P.z - v.z) * fz < 1.6 + (v.v * v.v) / (2 * TRAFFIC.brakingMetresPerSecondSquared)) v.v = 0;
+        break;
+      }
+    }
+  v.v += clamp(sp - v.v, -TRAFFIC.brakingMetresPerSecondSquared * dt, 5 * dt);
+  v.x += Math.sin(v.ang) * v.v * dt;
+  v.z += Math.cos(v.ang) * v.v * dt;
+  v.car.g.position.set(v.x, 0, v.z);
+  v.car.g.rotation.y = v.ang;
+  for (const w of v.car.wheels) w.rotation.x += (v.v * dt) / 0.35;
+  carLights(v.car, nightF() > 0.25, sp < v.v - 0.5);
+  v.car.g.visible = t.space === 'street';
+  return d;
+}
+// The cab driven for him (riding with Kevin, Terry or a crewman; the scripted driver of the tests): along the points,
+// braking for people. Returns true when it has arrived.
+export function autoDrive(pts, st, top, dt) {
+  const c = G.car,
+    p = pts[st.i];
+  if (!p) return true;
+  const v = { x: c.x, z: c.z, ang: c.ang, v: c.v, car: S.cab };
+  const d = driveActor(v, p[0], p[1], top, dt, false);
+  c.x = v.x;
+  c.z = v.z;
+  c.ang = v.ang;
+  c.v = v.v;
+  const t = G.tom;
+  t.x = c.x;
+  t.z = c.z;
+  t.ang = c.ang;
+  if (d < (st.i === pts.length - 1 ? 1.2 : 3.5)) st.i++;
+  if (st.i >= pts.length) {
+    c.v = 0;
+    return true;
+  }
+  return false;
 }
