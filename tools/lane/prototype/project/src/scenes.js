@@ -77,6 +77,7 @@ const alisonDue = () =>
   day() >= 2 && !fl().alison && hour() >= STORY.alisonAsksFromHour && hour() < STORY.alisonAsksUntilHour;
 const endReady = () =>
   !G.story.ended &&
+  !fl().choice && // the one-shot: once he has answered her, the game goes on into Act II (game/acts.js)
   (day() > STORY.lastDayIndex || (day() === STORY.lastDayIndex && hour() >= STORY.weekEndsFromHour));
 const job3On = () =>
   fl().ask2 === 'yes' &&
@@ -471,7 +472,7 @@ const teaScene = (late) =>
     A.goalKey = 'home|window';
     advanceTo(G.t + STORY.teaTakesGameMinutes, false);
     if (G.hooks.leaveRoom) G.hooks.leaveRoom();
-    G.story.objective = 'Thursday and Friday are yours. Sheila will want an answer by Friday evening.';
+    G.story.objective = 'The rest of the week is yours. Rent is due Friday; Sheila will want an answer on Sunday.';
   });
 const alisonAsk = () =>
   scene(async () => {
@@ -590,7 +591,7 @@ const endScene = () =>
     if (G.hooks.doorOpen) G.hooks.doorOpen();
     await say(
       'sheila',
-      "Sit down. It's Friday. I said I'd decide what you are, and I haven't. So you can tell me.",
+      "Sit down. It's Sunday, and I'm here on my day off. I said I'd decide what you are, and I haven't. So you can tell me.",
     );
     f.sheilaAsked = 1; // the Open part may now say "Today": she has asked
     await say(
@@ -650,7 +651,13 @@ const endScene = () =>
   });
 export async function endWeek(choice) {
   const st = G.story;
-  if (st.ended) return;
+  if (st.ended || fl().choice) return;
+  if (G.hooks.act1End) {
+    // the one-shot: his answer ends Act I, not the game. The street learns it, and Act II opens (game/acts.js).
+    fl().choice = choice;
+    act('choice_' + choice, { silent: true, told: ['sheila', 'pauline'] });
+    return G.hooks.act1End(choice);
+  }
   st.ended = true;
   fl().choice = choice;
   act('choice_' + choice, { silent: true, told: ['sheila', 'pauline'] });
@@ -1599,7 +1606,7 @@ function marks() {
     const S = P_('sheila');
     if (!S.override) send(S, 'mickeys:sheila', 'work');
     G.story.objective =
-      'It is Friday. The door in the back room is open, and Sheila is waiting behind her desk.';
+      'It is Sunday. Sheila has come in on her day off. The door in the back room is open, and she is waiting behind her desk.';
   }
   if (ask1Due() && !f.ask1obj && !P_('ron').dead) {
     // round 2: the first night's offer was easy to miss (the playtester's newcomer never heard it in an hour)
@@ -1855,6 +1862,7 @@ export function storyStep(dt) {
     day() >= REST.weekEndsUnansweredOnDayIndex &&
     h >= REST.weekEndsUnansweredAtHour &&
     !G.story.ended &&
+    !fl().choice &&
     !G.paused
   ) {
     sub('You never went in. Sheila locked the door and went home. That is an answer as well.', '', 'over', 6);

@@ -380,7 +380,7 @@ export const RULES = {
     teaAtTheCaffGameMinutes: 25,
     chapelGameMinutes: 20,
     caffFamiliarityGain: 0.06,
-    weekEndsUnansweredOnDayIndex: 5, // Saturday
+    weekEndsUnansweredOnDayIndex: 7, // the Monday after (the one-shot: Sheila asks on Sunday, as the design and the real town have it)
     weekEndsUnansweredAtHour: 2,
     sleepThroughOfferedBeforeHour: 19,
     wakesProperlyBeforeHour: 9,
@@ -691,7 +691,7 @@ export const RULES = {
     secondAskUntilHour: 22,
     alisonAsksFromHour: 9.3,
     alisonAsksUntilHour: 17.2,
-    lastDayIndex: 4,
+    lastDayIndex: 6, // Sunday: Sheila comes in on her day off (the one-shot; it was Friday)
     weekEndsFromHour: 16,
     scrapyardJobFromHour: 18.6,
     scrapyardJobUntilHour: 22,

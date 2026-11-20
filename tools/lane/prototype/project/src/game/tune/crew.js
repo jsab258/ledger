@@ -33,6 +33,13 @@ export const TUNE = {
   loadEasedByLoyalty: 0.4,
   signAtShareOfNerve: 0.75,
   signs: ['he looks away', 'he asks for his cut early', 'he is not at his post'],
+  kinds: { sent: [0.5, -0.6, 1], leaned: [0.5, -0.6, 1], stood_with: [0.2, -0.1, 0] },
+  orderWithinMetres: 7,
+  followsFartherThanMetres: 3,
+  fearFromLeaning: 0.35,
+  hurtFromSending: 0.8,
+  rosterOrder: ['ron', 'darren', 'kevin', 'terry', 'julie', 'lee', 'norman', 'shaun', 'ian', 'karen'],
+  ianRentPence: 2000,
   fates: ['holds', 'poached', 'frightened off', 'arrested', 'talks to a rival', 'talks to the police', 'killed'],
 };
 export const SCHEDULES = {};
