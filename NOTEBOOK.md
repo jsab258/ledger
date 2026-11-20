@@ -2799,3 +2799,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Method: every number derived by one script from the work branch's own files (the parts tree, the checklist, the review files, the gate's findings), read with git show so the page is current between merges; anything absent shows "not measured"; the same script's check fails when the page's data disagrees with those files. Tools: Python, git, the page's own renderer.
 - Check: self-tests on fixture files; the renderer run against the real data with a stand-in DOM (the publishing browser was not signed in). Failed: none.
 - Evidence: production/progress-page/, tools/progress_page.py
+
+## 20 Nov 2026: the tester's Enter landed on a menu choice under a resting pointer
+- Made: a guard in the automated player: before any menu key, the pointer is placed where no menu choice sits, and its old position is logged.
+- Method: when an automated walk ends early, read the game's own log for the choice it records before blaming input delivery; menus that give focus on pointer hover must ignore hover events the engine synthesises for a still pointer.
+- Tools: the tester script (Win32 SetCursorPos), the game log, the engine's Slate source.
+- Target and check: the night walk passes the title; the tester's self-test 13 of 13. Cost: about 0.3 h with one diagnosis helper.
+- Failed: none yet; the game-side fix is owed.
+- Evidence: production/audits/night-walk-2026-11-20-diagnosis.md, tools/ai-tester/play.py
