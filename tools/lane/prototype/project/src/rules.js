@@ -9,8 +9,8 @@ export const RULES = {
   time: {
     weekStartsGameMinute: 936, // Monday 3.36pm, off the bus
     realSecondsPerGameHour: 45,
-    duskStartsHour: 17.25,
-    nightFullHour: 18.75,
+    duskStartsHour: 18.25, // the one-shot: dusk falls as the first fare is driven (first hour, 2:30), the lamps striking about seven
+    nightFullHour: 19.75,
     dawnStartsHour: 6.25,
     dayFullHour: 7.75,
     smallHoursFromHour: 23.5, // from here until smallHoursUntilHour, simply being out is worth remarking

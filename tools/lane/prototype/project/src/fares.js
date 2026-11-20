@@ -2,7 +2,7 @@
 import { G, hour } from './state.js';
 import { hyp, rnd, pick, money, clamp, pounds } from './util.js';
 import { act } from './events.js';
-import { meet } from './ledger.js';
+import { meet , note } from './ledger.js';
 import { SPOTS, DESTS } from './map.js';
 import { sub, say, scene, show, $, tomName } from './ui.js';
 import { decision } from './talk.js';
@@ -41,7 +41,7 @@ export function farePlaces() {
   };
 }
 
-export function fareOffer(special) {
+export function fareOffer(special, quiet) {
   const st = G.story;
   if (st.fare || !G.car.keys) return;
   let f;
@@ -62,13 +62,10 @@ export function fareOffer(special) {
   f.st = 'offer';
   f.t = FARE.offerStandsRealSeconds;
   st.fare = f;
-  sub(
-    `Car wanted, ${f.from} to ${D.n}. ${f.who ? 'Asked for you, love.' : 'Any car.'}`,
-    'Pauline, on the radio',
-    'over',
-    6,
-  );
-  if (G.hooks.sfx) G.hooks.sfx('radio');
+  if (!quiet) {
+    sub(`Car wanted, ${f.from} to ${D.n}. ${f.who ? 'Asked for you, love.' : 'Any car.'}`, 'Pauline, on the radio', 'face', 6);
+    if (G.hooks.sfx) G.hooks.sfx('radio');
+  }
   fareUI();
 }
 
@@ -87,9 +84,7 @@ function fareUI() {
       : f.st === 'pickup'
         ? 'Pick up: pull in beside them and stop.'
         : 'Drop off: pull in at the marker and stop.');
-  if (f.st === 'pickup') setMarker(f.sx, f.sz);
-  else if (f.st === 'carry') setMarker(D.p[0], D.p[1]);
-  else setMarker(null);
+  setMarker(null); // the one-shot: no marker in the world, ever; Pauline's words are the way
 }
 
 export function fareAccept() {
@@ -263,7 +258,10 @@ async function fareDone(f, P, D) {
     earn(paid, false, 'a fare');
     G.money.fares += paid;
     G.money.sinceWash += paid;
-    sub(`${money(paid)} in the book.`, '', 'over', 2.5);
+    // the fare is spoken by the one who pays it, in words; then it is in the fare book (the Ledger's Money page says so)
+    sub(`${cap1(pounds(paid))}. ${paid === f.pay ? 'There you are.' : 'That is what there is.'}`, tomName(P), 'face', 4);
+    if (G.hooks.sfx) G.hooks.sfx('coin');
+    note(`A fare: ${f.who && !P.anon ? P.def.name : 'a fare'}, from ${f.from} to ${D.n}. ${cap1(pounds(paid))}, in the fare book.`, 'fare', 'fare:' + G.money.fareCount, { who: P.anon ? undefined : P.id, how: 'Paid into his hand' });
   }
   st.fareCool = rnd(FARE.afterAFareRealSecondsAtLeast, FARE.afterAFareRealSecondsAtMost);
 }

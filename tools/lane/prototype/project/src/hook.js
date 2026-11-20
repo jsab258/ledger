@@ -26,6 +26,7 @@ import { RULES } from './rules.js';
 import { act } from './events.js';
 import { clockText, dateText, DAYS, hyp } from './util.js';
 import { KINDS } from './kinds.js';
+import { nightF } from './seeing.js';
 import { SPOTS, DESTS, ROOMS, INSIDE, roomPos, zoneAt, blocked as mapBlocked, NODES, path as mapPath, nearNode, los as mapLos } from './map.js';
 import { ui, tomName, dialogNow, advance, pickOpt } from './ui.js';
 import { buildPrompts, onKey, enterRoom, leaveRoom, talkTo, cameraInside, standable } from './player.js';
@@ -555,6 +556,9 @@ export function installHook(x) {
     ui,
     cam: x.cam,
     mix: x.mix,
+    clocks: x.clocks,
+    watch: () => ui.watchShown,
+    lampsOn: () => Math.max(0, Math.min(1, (nightF() - RULES.light.lampsStrikeWhenNightAbove) / (RULES.light.lampsFullWhenNightAbove - RULES.light.lampsStrikeWhenNightAbove))), // 0 dark lamps, 1 fully lit: the same value the picture uses
     cameraInside,
     standable,
     roomOf: (id) => ROOMS[id],

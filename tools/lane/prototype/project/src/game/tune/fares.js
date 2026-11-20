@@ -19,9 +19,10 @@ export const TUNE = {
 // from: a spot of the map; to: a destination; hours: [from, until) of the day; days: day indexes of the week, or all.
 // wrinkle: talker | parcel | tail | runner | wait | hurry | face | none. Each is written once and never rolled.
 export const FARES = [
-  { id: 'priest', who: 'walsh', from: 'the rank', spot: 'rank2', to: 'chapel', hours: [15, 19], first: true, wrinkle: 'none',
-    way: "Father Walsh for the priest's house. Up Quay Street, over the crossing, past the caff; the chapel with the green door is on your left, his house by the gate with the slippers on the step.",
-    lines: ["Your uncle drove me this road a hundred times. He never once let me pay.", "Sit up straight in that seat, Thomas. The street is looking at who is in it."] },
+  { id: 'priest', who: 'walsh', from: 'the Infirmary', spot: 'infirmary', to: 'chapel', hours: [15, 23], first: true, wrinkle: 'none',
+    toPickUp: "He's at the Infirmary, love. Down to the quay and turn right, along past the Harbour Office clock and the ferry landing; the Infirmary's the last building, with the lamp over its door.",
+    way: "Father Walsh for the priest's house. Back along the quay, left up Quay Street, over the crossing and past the caff; the chapel with the green door is on your left, his house by the gate with the slippers on the step.",
+    lines: ["Your uncle drove me this road a hundred times. He never once let me pay.", "Sit up straight in that seat. The street is looking at who is in it."] },
   { id: 'brenda_dawn', who: 'brenda', from: 'the corner by her shop', spot: 'pave', to: 'fishdock', hours: [5, 8], wrinkle: 'talker',
     way: 'Brenda Laverack for the fish dock. Down to the quay, turn left, along past the yard; the stacked boxes and the ice hut.',
     lines: ["Iveson's lad chains the crane gap at five sharp, every night since the fire. Before that anybody could walk in.", "Not that I'd know what anybody wanted in a scrap yard."], learn: { fact: 'hut_gap', text: "Brenda says Iveson's lad chains the gap by the crane at five every evening. Before five the yard is open at the back." } },

@@ -4,7 +4,7 @@
 import { register, X, write, tell, hourNow, dayNow, on } from './core.js';
 import { G } from '../state.js';
 import { esc, hourWords, DAYS } from '../util.js';
-import { panel, closePanel, ui } from '../ui.js';
+import { panel, closePanel, ui , showWatch } from '../ui.js';
 import { RULES } from '../rules.js';
 import { PIECE as STORY } from './pieces/story.js';
 import { PIECE as LIFE } from './pieces/life.js';
@@ -62,13 +62,16 @@ register({
   hourly(h) {
     // the chapel bell strikes the hours by day (A31); it is a sound, shown in words only with "sound shown" on
     if (LIFE.fns.time({ hour: h, minute: 0 }).bell && G.settings.soundShown && G.tom.space === 'street') tell(`[the chapel bell: ${hourWords(h)}]`, '');
+    // heard in the mix, by its strokes, wherever he is in the Hook (louder near the chapel)
+    if (LIFE.fns.time({ hour: h, minute: 0 }).bell && G.hooks.sfx) G.hooks.sfx('bell:' + (h % 12 || 12), G.tom.space === 'street' ? 0.5 : 0.2);
     X('ledgerx').bellHour = h;
   },
   key(code) {
     if (code === 'KeyN') {
       // the watch: a glance at his wrist, the hour for two seconds, no screen clock (ER-TIME-01)
       X('ledgerx').watchT = G.played;
-      tell(`His watch: ${hourWords(hourNow())}, ${DAYS[dayNow() % 7]}.`, '', T.watchShowsRealSeconds);
+      showWatch(hourNow(), `${hourWords(hourNow())}, ${DAYS[dayNow() % 7]}`, T.watchShowsRealSeconds);
+      if (G.hooks.sfx) G.hooks.sfx('cloth', 0.05);
       return true;
     }
     if (code === 'Period') {

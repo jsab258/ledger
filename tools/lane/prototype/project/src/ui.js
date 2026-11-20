@@ -254,6 +254,25 @@ function inEarshot(P) {
   if (Math.hypot(x - tx, z - tz) > TALK_RULES.bubbleHeardWithinMetres) return false;
   return G.tom.space !== 'street' || !G.env || !G.env.los || G.env.los(tx, tz, x, z);
 }
+export function showWatch(hourFloat, words, secs) {
+  const w = $('watch');
+  if (!w) return;
+  const h = ((hourFloat % 12) / 12) * 360,
+    m = ((hourFloat * 60) % 60) * 6;
+  w.querySelector('.h').style.transform = `rotate(${h}deg)`;
+  w.querySelector('.m').style.transform = `rotate(${m}deg)`;
+  $('watchwords').textContent = words;
+  w.classList.add('on');
+  ui.watchShown = { hourFloat, words };
+  ui.watchN = (ui.watchN || 0) + 1;
+  const n = ui.watchN;
+  after(secs, () => {
+    if (ui.watchN === n) {
+      w.classList.remove('on');
+      ui.watchShown = null;
+    }
+  });
+}
 export function news(headline, sb = '') {
   const el = $('news');
   el.innerHTML = `<div class="m">Meridian Evening Mail</div><div class="d">${DATE(day())} · Late Final · 20p</div><div class="hl">${esc(headline)}</div>${sb ? `<div class="sb">${esc(sb)}</div>` : ''}`;

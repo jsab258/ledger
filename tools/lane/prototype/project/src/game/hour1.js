@@ -12,6 +12,8 @@ import { hyp, angDiff } from '../util.js';
 import { enterRoom } from '../player.js';
 import { send, release, placeAll } from '../routines.js';
 import { hint } from './feel.js';
+import { fareOffer, fareAccept } from '../fares.js';
+import { FARES } from './tune/fares.js';
 
 const T = RULES.game.hour1;
 const fl = () => G.story.flags;
@@ -170,6 +172,23 @@ register({
       if (!x.round && G.tom.space === 'street' && G.tom.still > RULES.game.feel.hintAfterStandingStillRealSeconds && G.tom.z > 44) hint('way', 'Quay Street is up the quay to the east, past the Harbour Office clock. Mickey\'s is at the quay end, under the blue sign.');
     }
     walkRound(x, dt);
+    // 2:30 the first verb with the hands: he sits in car two and the fare Pauline gave at the radio is his
+    if (G.tom.inCar && x.round > ROUND.length && !x.fare1 && G.hooks.fareNext) {
+      if (!G.story.fare) {
+        const nx = G.hooks.fareNext();
+        if (nx) fareOffer(nx, true);
+      }
+      const f = G.story.fare;
+      if (f && f.st === 'offer') {
+        x.fare1 = Math.round(G.played * 10) / 10;
+        fl().firstFare = 1;
+        fareAccept();
+        const F_ = FARES.find((q) => q.id === f.id);
+        if (f.who) learnName(f.who); // Pauline has said who it is
+        sub((F_ && F_.toPickUp) || 'He is waiting, love.', 'Pauline, on the radio', 'face', 10);
+        if (G.hooks.sfx) G.hooks.sfx('radio');
+      }
+    }
   },
   hotspots(out) {
     const t = G.tom;

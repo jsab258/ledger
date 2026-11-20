@@ -734,6 +734,7 @@ export const SPOTS = {
   adawin: [-8, 32, 1.57],
   adadoor: [-7.2, 30.6, 1.57],
   busstop: [-5.9, 20.6, 1.57],
+  infirmary: [-116, 53.2, 3.14], // the pavement outside the Infirmary's door
   junepass: [-6.0, 14.6, 1.57], // where June Suddaby is met on the first afternoon, clear of the bus shelter
   bus2: [-5.9, 19.2, 1.57],
   bus3: [-5.8, 22.6, 1.4],

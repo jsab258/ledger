@@ -46,7 +46,7 @@ function pickup({ f, P }) {
   S.cur = { id: F_.id, t: 0, said: 0, pid: P.id, deadline: F_.wrinkle === 'hurry' ? G.played + T.hurryRealSeconds : null };
   logOf(F_.id).st = 'carrying';
   // the radio is the guide: Pauline gives the way by landmark (ER-DRIVE-09); R says it again
-  sub(F_.way, 'Pauline, on the radio', 'over', 9);
+  sub(F_.way, 'Pauline, on the radio', 'face', 10);
   know(DESTS[F_.to] ? Object.keys(PLACES).find((id) => hyp(PLACES[id].x, PLACES[id].z, DESTS[F_.to].p[0], DESTS[F_.to].p[1]) < 14) || 'mickeys' : 'mickeys', 'Pauline said');
 }
 // What the fare has to say, in the back, while he drives.
@@ -178,7 +178,9 @@ register({
     // Pauline says the way again on a key (ER-DRIVE-09)
     if (code !== 'KeyR' || !G.tom.inCar || !G.story.fare) return false;
     const F_ = spec(G.story.fare);
-    if (F_) sub(F_.way, 'Pauline, on the radio', 'over', 9);
+    // before the pick-up it is the way to the fare; after, the way to where the fare is going
+    if (F_) sub(G.story.fare.st === 'pickup' && F_.toPickUp ? F_.toPickUp : F_.way, 'Pauline, on the radio', 'face', 10);
+    if (F_ && G.hooks.sfx) G.hooks.sfx('radio');
     return !!F_;
   },
   hotspots(out) {

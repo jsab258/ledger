@@ -19,7 +19,7 @@ import path from 'path';
 import crypto from 'crypto';
 
 const TYPES = { '.js': 'text/javascript', '.html': 'text/html', '.jpg': 'image/jpeg', '.txt': 'text/plain', '.json': 'application/json', '.md': 'text/plain', '.wasm': 'application/wasm', '.mjs': 'text/javascript' };
-const SAVES = path.resolve(process.env.LEDGER_STORY_SAVES || 'story-saves');
+const SAVES = path.resolve(process.env.LEDGER_STORY_SAVES || '../story-saves') // beside the work folder: a rebuild leaves the saves alone;
 export const FPS = 60;
 
 // Runs in the page before its own code: a seeded Math.random and a strict clock.
@@ -308,6 +308,69 @@ export async function open(o = {}) {
       }, { x, z, opt: Object.assign({}, opt, { until: opt.until ? opt.until.toString() : null }) });
       await P.frames(2);
       return r < 0 ? -1 : r / FPS;
+    },
+    // ----- driving by the keys: W and S, A and D, as a careful player drives -----
+    // Drive through the points in order and stop at the last. He slows for bends, brakes for anybody or anything in his
+    // way, and backs off a kerb he has run onto. Returns seconds taken, or -1.
+    async drive(pts, opt = {}) {
+      const r = await page.evaluate(async ({ pts, opt }) => {
+        const S = window.__S, G = LEDGER.G, c = G.car;
+        const hyp = (ax, az, bx, bz) => Math.hypot(ax - bx, az - bz);
+        const angd = (a, b) => { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
+        const set = (code, on) => (on ? S.kd(code) : S.ku(code));
+        let i = 0, stuck = 0, lx = c.x, lz = c.z, back = 0, stopped = 0, waited = 0, edge = 0, prev = [c.x, c.z];
+        const top = opt.speed || 8.5, max = Math.round((opt.maxSecs || 120) * 60);
+        const blocker = () => {
+          const fx = Math.sin(c.ang), fz = Math.cos(c.ang), reach = 4 + (c.v * c.v) / 12;
+          const inWay = (x, z, half) => { const dx = x - c.x, dz = z - c.z, f = dx * fx + dz * fz, l = Math.abs(dx * fz - dz * fx); return f > 1.5 && f < reach + half && l < 1.25 + half * 0.4; };
+          for (const Q of G.named.concat(G.crowd)) if (!Q.gone && !Q.inCar && Q.space === 'street' && inWay(Q.x, Q.z, 0.3)) return 'person ' + Q.id;
+          for (const v of LEDGER.streetThings().cars) if (!(v.parked && opt.besideParked) && inWay(v.xMetres, v.zMetres, v.lengthMetres / 2)) return v.parked ? 'parked car' : 'car';
+          return null;
+        };
+        S.driveDbg = null;
+        const n = await S.run(max, () => i >= pts.length || (opt.until && (0, eval)('(' + opt.until + ')')()), () => {
+          if (!G.tom.inCar) { i = pts.length; return; }
+          const p = pts[i], last = i === pts.length - 1, d = hyp(c.x, c.z, p[0], p[1]);
+          if (last && d < (opt.stopWithin || 3)) {
+            set('KeyW', false); set('KeyA', false); set('KeyD', false);
+            set('KeyS', c.v > 0.25);
+            if (Math.abs(c.v) <= 0.25) { set('KeyS', false); if (++stopped > 20) i++; }
+            return;
+          }
+          if (!last && d < 4.5) { prev = p; i++; return; }
+          // he aims a few car lengths ahead along the lane, not at the far end of it: so he keeps his lane
+          let aim = p;
+          { const sx = p[0] - prev[0], sz = p[1] - prev[1], L = Math.hypot(sx, sz); if (L > 12) { const u = Math.max(0, Math.min(1, ((c.x - prev[0]) * sx + (c.z - prev[1]) * sz) / (L * L))), a = Math.min(1, u + 9 / L); aim = [prev[0] + sx * a, prev[1] + sz * a]; } }
+          const err = angd(c.ang, Math.atan2(aim[0] - c.x, aim[1] - c.z));
+          if (back > 0) { // backing off something: the wheel turned the other way
+            back--;
+            set('KeyW', false); set('KeyS', true); set('KeyA', err < -0.1); set('KeyD', err > 0.1);
+            if (!back) set('KeyS', false);
+            return;
+          }
+          // somebody or something in his way: he waits; if it does not move in a few seconds he edges round it
+          const b = edge > 0 ? null : blocker();
+          if (edge > 0) edge--;
+          if (b && Math.abs(c.v) < 0.5) { if (++waited > 240) { waited = 0; edge = 240; } } else if (!b) waited = Math.max(0, waited - 1);
+          const want = b ? 0 : Math.min(edge > 0 ? 3 : top, last ? Math.max(2.2, d * 0.7) : 99, Math.abs(err) > 1.0 ? 3 : Math.abs(err) > 0.35 ? 5 : 99, !last && d < 12 && pts[i + 1] && Math.abs(angd(Math.atan2(p[0] - c.x, p[1] - c.z), Math.atan2(pts[i + 1][0] - p[0], pts[i + 1][1] - p[1]))) > 0.6 ? 5 : 99);
+          set('KeyA', err > 0.06); set('KeyD', err < -0.06);
+          set('KeyW', c.v < want - 0.3); set('KeyS', c.v > want + 1.2 || (want === 0 && c.v > 0.2));
+          if (S.frameNo % 60 === 0) { const moved = hyp(c.x, c.z, lx, lz); lx = c.x; lz = c.z; stuck = moved < 0.3 && want > 0 ? stuck + 1 : 0; if (stuck >= 2) { stuck = 0; back = 80; } S.driveDbg = { leg: i, blocker: b, want: Math.round(want * 10) / 10, err: Math.round(err * 100) / 100, edge, waited }; }
+        });
+        for (const k of ['KeyW', 'KeyS', 'KeyA', 'KeyD']) S.ku(k);
+        return n;
+      }, { pts, opt: Object.assign({}, opt, { until: opt.until ? opt.until.toString() : null }) });
+      await P.frames(2);
+      return r < 0 ? -1 : r / FPS;
+    },
+    car: () => page.evaluate(() => { const c = LEDGER.G.car; return { x: Math.round(c.x * 10) / 10, z: Math.round(c.z * 10) / 10, ang: Math.round(c.ang * 100) / 100, v: Math.round(c.v * 10) / 10, dmg: c.dmg, dbg: window.__S.driveDbg }; }),
+    // Continue from the title (the save the store was started with)
+    async cont() {
+      await P.click('[data-act="cont"]');
+      const ok = await P.until(() => LEDGER.G.story.phase === 'play' && !LEDGER.G.paused && !document.getElementById('hud').classList.contains('hidden'), 20);
+      await page.evaluate(() => LEDGER.game.town.ready && LEDGER.game.town.ready());
+      await P.frames(10);
+      return ok;
     },
     // turn the view (mouse) to face a point
     async face(x, z) {

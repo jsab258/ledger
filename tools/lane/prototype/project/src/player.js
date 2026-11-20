@@ -303,7 +303,7 @@ export function buildPrompts() {
     out = [];
   if (ui.modal || G.paused) return out;
   if (t.inCar) {
-    if (Math.abs(G.car.v) < TOMS.cabLeftBelowMetresPerSecond) out.push({ k: 'F', t: 'Get out' });
+    if (Math.abs(G.car.v) < TOMS.cabLeftBelowMetresPerSecond) out.push({ k: 'E', t: 'Get out', run: () => carKey() });
     if (G.story.fare && G.story.fare.st === 'offer')
       out.push({ k: 'Y', t: 'Take the fare', run: fareAccept });
     gameCarPrompts(out);
@@ -358,7 +358,7 @@ export function buildPrompts() {
           t.ang = -1.57;
         },
       });
-    if (nearCar(TOMS.cabWithinMetres)) out.push({ k: 'F', t: G.car.keys ? 'Get in the cab' : 'The cab (locked: the keys are in the office)' });
+    if (nearCar(TOMS.cabWithinMetres)) out.push({ k: 'E', t: G.car.keys ? "Get in car two, by the driver's door" : 'Car two (locked: the keys are in the office)', run: () => carKey(), car: true });
     for (const p of PROPS)
       if (p.hand && !p.broken && hyp(t.x, t.z, p.x, p.z) < p.r + TOMS.reachesAThingWithinMetres && t.weapon !== p.hand) {
         out.push({
@@ -730,6 +730,21 @@ export function stepCamera(dt) {
     cam.py + (Math.random() - 0.5) * cam.shake * 0.3,
     cam.pz,
   );
+  // the one-shot: the easing never leaves it inside something that has come up behind (a following car, a post passed
+  // on a bend): it goes at once to the clear place the arm found
+  if (!room && cameraInside()) {
+    cam.px = px;
+    cam.py = py;
+    cam.pz = pz;
+    camera.position.set(px, py, pz);
+    if (cameraInside()) {
+      // still inside (the thing overlaps the cab's own tail): right up over the roof
+      cam.px = tx - fx * cp * 0.9;
+      cam.pz = tz - fz * cp * 0.9;
+      cam.py = ty + 2.6;
+      camera.position.set(cam.px, cam.py, cam.pz);
+    }
+  }
   camera.lookAt(cam.tx, cam.ty + 0.15, cam.tz);
 }
 export function titleCamera(t) {

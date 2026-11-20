@@ -116,6 +116,9 @@ async function boot() {
   loadMsg('laying the setts');
   await new Promise((r) => setTimeout(r, 30));
   buildTown(scene);
+  // the town's two public clocks (6.1.5): over the Harbour Office door and on Mickey's front. They show the game's one clock.
+  addClock('the Harbour Office clock', -28.5, 5.6, 42.08, 0, 0.7);
+  addClock("the office clock on Mickey's front", 7.93, 3.5, 34.2, -Math.PI / 2, 0.42);
   buildRooms(scene);
   initEnv(() => cam.yaw);
   resetState();
@@ -317,6 +320,7 @@ async function boot() {
   installHook({
     logic,
     mix: MIX,
+    clocks: () => CLOCKS.map((c) => ({ name: c.name, xMetres: c.x, zMetres: c.z, showsGameMinute: c.shows })),
     files: { list: loadFileList, read: readFile, zip: sourceZip, open: openFiles, state: FILES },
     benchmark,
     rig: { peopleInfo, buildCharR, poseCharR, poseClip },
@@ -807,6 +811,44 @@ async function startNew() {
   setPaused(false, 'the new game has started');
   saveNow(false);
 }
+const CLOCKS = [];
+function addClock(name, x, y, z, ry, r) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = 128;
+  const tex = new THREE.CanvasTexture(cv),
+    m = new THREE.Mesh(new THREE.CircleGeometry(r, 28), new THREE.MeshBasicMaterial({ map: tex }));
+  m.position.set(x, y, z);
+  m.rotation.y = ry;
+  scene.add(m);
+  CLOCKS.push({ name, x, z, cv, tex, shows: -1 });
+}
+function clocksStep() {
+  const now = Math.floor(G.t);
+  for (const c of CLOCKS) {
+    if (c.shows === now) continue;
+    c.shows = now;
+    const g = c.cv.getContext('2d'),
+      hand = (deg, len, w) => {
+        const a = (deg * Math.PI) / 180;
+        g.lineWidth = w;
+        g.beginPath();
+        g.moveTo(64, 64);
+        g.lineTo(64 + Math.sin(a) * len, 64 - Math.cos(a) * len);
+        g.stroke();
+      };
+    g.fillStyle = '#efe9d6';
+    g.fillRect(0, 0, 128, 128);
+    g.strokeStyle = '#1a1612';
+    g.lineWidth = 6;
+    g.beginPath();
+    g.arc(64, 64, 58, 0, Math.PI * 2);
+    g.stroke();
+    for (let i = 0; i < 12; i++) hand(i * 30, 0, 0) || g.fillRect(64 + Math.sin((i * Math.PI) / 6) * 50 - 2, 64 - Math.cos((i * Math.PI) / 6) * 50 - 2, 4, 4);
+    hand((((now / 60) % 12) / 12) * 360, 30, 7);
+    hand((now % 60) * 6, 46, 4);
+    c.tex.needsUpdate = true;
+  }
+}
 // The one watched thing in the game: the port coming nearer from the ferry's rail. It ends by itself, or at once on Escape.
 const SHOT = { on: false, t: 0, done: null };
 function ferryShot() {
@@ -904,6 +946,7 @@ let slowT = 0;
 function logic(dt) {
   const ph = G.story.phase;
   ferryShotStep(dt);
+  clocksStep();
   tickTimers(dt); // fades and goodbyes: timed by the game's steps, so they end in a hidden tab and in a stepped test
 
   if (ph === 'title') {

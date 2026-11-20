@@ -1,7 +1,7 @@
 // Arcade driving and light traffic. Britain drives on the left.
 import { G, hour } from './state.js';
 import { hyp, clamp, rnd, pick, chance, angDiff } from './util.js';
-import { blocked, ROUTES, BUS_STOPS, POSTS, whatBlocks } from './map.js';
+import { blocked, ROUTES, BUS_STOPS, POSTS, whatBlocks , ROADS } from './map.js';
 import { act } from './events.js';
 import { sub, tomName } from './ui.js';
 import { AT_ONCE, atOnce } from './talk_lines.js';
@@ -81,6 +81,7 @@ export const streetThings = () => ({
     widthMetres: v.car.wid,
     parked: !!v.parked,
     bus: !!v.bus,
+    speedMetresPerSecond: v.v || v.sp || 0,
   })),
 });
 // The one-shot (the clumsy run's fault): a vehicle standing or passing between the camera and Tom hides him. The
@@ -425,14 +426,31 @@ export function clearGround(x, z, rad, most, step, ok = () => true) {
     }
   return null;
 }
+// which side of the car is nearer a pavement: 1 its right, -1 its left
+function nearerKerb(c) {
+  const d = (s) => {
+    for (let k = 1.55; k < 9; k += 0.5) {
+      const x = c.x + -Math.cos(c.ang) * s * k,
+        z = c.z + Math.sin(c.ang) * s * k;
+      if (!ROADS.some((r) => x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1)) return k;
+    }
+    return 99;
+  };
+  return d(1) <= d(-1) ? 1 : -1;
+}
 export function exitPoint() {
   const c = G.car,
     R = DRIVING.exitBodyRadiusMetres;
+  // the one-shot: he gets out on the kerb side when that door is clear, by the road side when it is not
+  const sideX = (s) => c.x + -Math.cos(c.ang) * s * 1.55,
+    sideZ = (s) => c.z + Math.sin(c.ang) * s * 1.55,
+    onRoad = (x, z) => ROADS.some((r) => x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1),
+    kerb = onRoad(sideX(1), sideZ(1)) && !onRoad(sideX(-1), sideZ(-1)) ? -1 : !onRoad(sideX(1), sideZ(1)) && onRoad(sideX(-1), sideZ(-1)) ? 1 : nearerKerb(c);
   for (const [s, k] of [
-    [1, 0],
-    [-1, 0],
-    [1, 1.2],
-    [-1, 1.2],
+    [kerb, 0],
+    [-kerb, 0],
+    [kerb, 1.2],
+    [-kerb, 1.2],
     [0, -3.2],
   ]) {
     const x = c.x + -Math.cos(c.ang) * s * 1.55 + Math.sin(c.ang) * (s ? k : -3.2),
