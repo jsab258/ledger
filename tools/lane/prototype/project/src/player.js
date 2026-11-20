@@ -6,13 +6,14 @@ import { inRect } from './util.js';
 import { nightF } from './seeing.js';
 
 import { BARKS } from './cast.js';
-import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
+import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show, menuKey } from './ui.js';
 import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target, grab as fightGrab, carried as fightCarried } from './fight.js';
 import { stepCar, nearCar, exitPoint, footSolid, footClear, clearGround } from './drive.js';
 import { hotspots, beatFor } from './scenes.js';
 import { fareAccept } from './fares.js';
 import { startTalk } from './talk.js';
-import { setInside } from './render/effects.js';
+import { setInside, gfx } from './render/effects.js';
+import { THREE } from './render/core.js';
 import { AT_ONCE } from './talk_lines.js';
 import { RULES } from './rules.js';
 import { gameKey, gameCarPrompts } from './game/index.js';
@@ -21,6 +22,8 @@ const PADS = RULES.pad;
 const LAD = RULES.ladder;
 const TOMS = RULES.tom;
 const STORY = RULES.story;
+const TURN = RULES.game.feel.turn;
+const SCREENS = RULES.game.feel.screen;
 
 export const keys = {},
   cam = {
@@ -161,7 +164,10 @@ export const unlock = () => {
 };
 // One key, as the keyboard sends it. The test hook comes through here too, so it takes the same path.
 export function onKey(code) {
-  if (G.story.phase !== 'play') return;
+  if (G.story.phase !== 'play') {
+    menuKey(code); // the whole game: the title's buttons by keys
+    return;
+  }
   if (uiKey(code)) return;
   if (code === 'Escape' || code === 'KeyP') {
     unlock();
@@ -302,6 +308,7 @@ export function buildPrompts() {
     if (!out.some((o) => o.k === 'E'))
       out.push({
         k: 'E',
+        talk: 1,
         t: (P.anon ? 'Speak to ' : 'Talk to ') + tomName(P).replace(/^A /, 'a ').replace(/^The /, 'the '),
         run: () => talkTo(P),
       });
@@ -312,9 +319,23 @@ export function buildPrompts() {
     for (const id in ROOMS) {
       const r = ROOMS[id];
       if (r.locked) continue;
-      if (hyp(t.x, t.z, r.street[0], r.street[1]) < TOMS.doorWithinMetres && !out.some((o) => o.k === 'E'))
+      // the whole game: a door gives its prompt anywhere within reach of it, not on one spot; and when somebody
+      // stands by the door as well, the door has E if it is what he faces (the talk moves to T), else the door has T
+      const dd = hyp(t.x, t.z, r.street[0], r.street[1]);
+      if (dd >= SCREENS.doorPromptWithinMetres || out.some((o) => o.door)) continue;
+      if (Object.values(ROOMS).some((q) => q !== r && !q.locked && hyp(t.x, t.z, q.street[0], q.street[1]) < dd)) continue; // the nearest door
+      const taken = out.find((o) => o.k === 'E'),
+        ahead = Math.abs(angDiff(t.ang, Math.atan2(r.street[0] - t.x, r.street[1] - t.z))) < 1.0 || dd < 0.9;
+      let k = 'E';
+      if (taken) {
+        if (out.some((o) => o.k === 'T')) continue;
+        if (taken.talk && ahead) taken.k = 'T';
+        else k = 'T';
+      }
+      if (true)
         out.push({
-          k: 'E',
+          door: 1,
+          k,
           t: isOpen(id) ? 'Go into ' + r.name : r.name + ': shut',
           run: () => {
             if (isOpen(id)) enterRoom(id);
@@ -479,12 +500,20 @@ export function stepPlayer(dt) {
         Math.min(1, l) *
         (F.st === 'block' ? TOMS.blockingSlowsToShare : 1);
       t.run = run;
-      if (!fighting)
-        t.ang += clamp(
-          angDiff(t.ang, Math.atan2(wx, wz)),
-          -TOMS.turnsRadiansPerSecond * dt,
-          TOMS.turnsRadiansPerSecond * dt,
-        );
+      if (!fighting) {
+        // the whole game: his way and his body turn together. On a reversal he swings round in about a quarter
+        // of a second and steps off his new way only once his body is nearly on it (before, his way reversed in
+        // one frame while his body took 0.28 s).
+        const off = angDiff(t.ang, Math.atan2(wx, wz)),
+          rate = Math.abs(off) > TURN.reversalOverRadians || feel.swing ? TURN.turnsRadiansPerSecondOnReversal : TOMS.turnsRadiansPerSecond;
+        feel.swing = Math.abs(off) > TURN.stepsOffOnlyWithinRadians;
+        t.ang += clamp(off, -rate * dt, rate * dt);
+        if (feel.swing) {
+          wx = Math.sin(t.ang);
+          wz = Math.cos(t.ang);
+          sp *= TURN.reversalSlowsToShare;
+        }
+      } else feel.swing = false;
       t.puff = clamp(
         (t.puff || 0) + (run ? dt * TOMS.puffGainedPerSecondRunning : -dt * TOMS.puffLostPerSecondWalking),
         0,
@@ -576,6 +605,55 @@ const solidCam = (x, z) => {
 export function snapCam() {
   cam.snap = true;
 }
+// The whole game (20 Nov): the camera's arm is read from rows by Tom's state (game/tune/feel.js): street, run, room,
+// fight and car. The wheel scales every row alike. At the wheel the lens is set by its angle across and widens
+// with speed; on foot the upright angle is fixed.
+const CAMS = RULES.game.feel.camera;
+const line = { t: 0, lim: 99, objs: null, at: 0, ray: null, a: null, b: null, ms: 0 };
+// The line from the look point to where the camera wants to be, against the street's own solid shapes: the same
+// test the publish gate makes. Gives the distance of the first solid thing, or null.
+function lineHit(tx, ty, tz, px, py, pz, near) {
+  const g = gfx();
+  if (!g || !g.scene || typeof window === 'undefined' || window.LEDGER_NOCAMLINE) return null;
+  if (!line.ray) {
+    line.ray = new THREE.Raycaster();
+    line.a = new THREE.Vector3();
+    line.b = new THREE.Vector3();
+  }
+  const now = performance.now();
+  if (!line.objs || now - line.at > 2500 || now < line.at) {
+    line.objs = [];
+    line.at = now;
+    g.scene.traverse((o) => {
+      if ((o.isMesh || o.isInstancedMesh) && !o.isSkinnedMesh) line.objs.push(o);
+    });
+  }
+  line.a.set(tx, ty, tz);
+  line.b.set(px - tx, py - ty, pz - tz);
+  const d = line.b.length();
+  if (d < 0.05) return null;
+  line.ray.set(line.a, line.b.normalize());
+  line.ray.near = 0;
+  line.ray.far = d + CAMS.lineKeepsOffMetres;
+  let hits = [];
+  try {
+    hits = line.ray.intersectObjects(line.objs.filter((o) => o.visible), false);
+  } catch (e) {
+    return null;
+  }
+  for (const h of hits) {
+    const m = h.object.material;
+    if (!m || (m.transparent && m.opacity < 0.5)) continue;
+    let o = h.object,
+      shown = true;
+    for (; o; o = o.parent) if (!o.visible) shown = false;
+    if (!shown) continue;
+    if (h.distance < near) continue;
+    return h.distance;
+  }
+  return null;
+}
+export const camLine = () => ({ limit: line.lim, lastMs: line.ms });
 export function stepCamera(dt) {
   const t = G.tom,
     room = t.space !== 'street' ? ROOMS[t.space] : null;
@@ -593,11 +671,38 @@ export function stepCamera(dt) {
     cam.yaw = Math.PI + clamp(angDiff(Math.PI, cam.yaw), -0.7, 0.7);
     cam.pitch = clamp(cam.pitch, 0.42, 1.0);
   }
-  const tx = t.x,
-    tz = t.z,
-    ty = (t.inCar ? 1.35 : 1.5) + (t.y || 0);
-  const dist = t.inCar ? cam.dist + 3.4 : room ? Math.max(cam.dist, 5.2) : cam.dist,
-    pitch = t.inCar ? Math.max(cam.pitch, 0.2) : cam.pitch;
+  const tx = t.inCar ? G.car.x : t.x,
+    tz = t.inCar ? G.car.z : t.z,
+    ty = (t.inCar ? CAMS.carLookHeightMetres : 1.5) + (t.y || 0);
+  // the row
+  const zoom = cam.dist / CAMS.wheelNeutralMetres,
+    fighting = F.on && F.rung >= LAD.strikeRung;
+  let pitch = cam.pitch,
+    back;
+  if (t.inCar) {
+    // the car's row: about 5.8 m behind and 1.8 m up. Left alone, the camera settles to that height; the mouse
+    // or the stick may still look up and down.
+    const rest = Math.atan2(CAMS.carHeightMetres - CAMS.carLookHeightMetres, CAMS.carBackMetres);
+    if (cam.carIn !== true) {
+      cam.carIn = true;
+      cam.footPitch = cam.pitch;
+      cam.pitch = rest;
+    } else if (cam.idle > CAMS.carPitchSettlesAfterIdleRealSeconds)
+      cam.pitch += clamp(rest - cam.pitch, -CAMS.carPitchSettlesRadiansPerSecond * dt, CAMS.carPitchSettlesRadiansPerSecond * dt);
+    pitch = Math.max(cam.pitch, 0.03);
+    back = CAMS.carBackMetres * clamp(zoom, 0.87, 1.12);
+  } else {
+    if (cam.carIn) {
+      cam.carIn = false;
+      cam.pitch = Math.max(cam.footPitch || 0.24, 0.2);
+    }
+    if (room) back = Math.max(cam.dist, 5.2) * Math.cos(pitch);
+    else if (fighting) back = clamp(CAMS.fightBackMetres * zoom, CAMS.fightBackAtLeastMetres, CAMS.fightBackAtMostMetres);
+    else back = (t.run ? CAMS.runBackMetres : CAMS.streetBackMetres) * zoom;
+  }
+  if (cam.back === undefined || cam.snap) cam.back = back;
+  cam.back += (back - cam.back) * (1 - Math.exp(-dt * CAMS.armBlendsPerSecond));
+  const dist = cam.back / Math.max(0.2, Math.cos(pitch));
   if (room) {
     // Round 6 (ER-CAM-01): indoors the camera never goes behind a side wall or a partition. Only the part of its
     // arm that is lower than the walls can be hidden by one; if that part crosses a wall, the camera swings back
@@ -636,11 +741,42 @@ export function stepCamera(dt) {
         break;
       }
     }
-  }
+    // the whole game: and never behind anything else that is solid on the street (an awning, a bus shelter, the
+    // landing's roof): the line is tested against the street's own shapes a few times a second
+    line.t -= dt;
+    if (line.t <= 0 || cam.snap) {
+      line.t = CAMS.lineTestedEveryRealSeconds;
+      const t0 = performance.now(),
+        near = t.inCar ? CAMS.lineIgnoresNearerThanMetresAtTheWheel : CAMS.lineIgnoresNearerThanMetresOnFoot,
+        h = lineHit(tx, ty + 0.15, tz, tx - fx * cp * d, Math.max(0.5, ty + spn * d), tz - fz * cp * d, near);
+      line.ms = performance.now() - t0;
+      const want = h === null ? 99 : Math.max(CAMS.lineAtLeastMetres, h - CAMS.lineKeepsOffMetres);
+      // in at once, out again slowly
+      line.lim = want < line.lim || cam.snap ? want : Math.min(want, line.lim + CAMS.lineLetsOutMetresPerSecond * CAMS.lineTestedEveryRealSeconds);
+    }
+    d = Math.min(d, line.lim);
+  } else line.lim = 99;
   const px = tx - fx * cp * d,
     pz = tz - fz * cp * d,
     py = Math.max(0.5, ty + spn * d + (d < 2 ? 0.25 : 0));
   const k = cam.snap ? 1 : 1 - Math.exp(-dt * 9);
+  // the lens
+  let fov = CAMS.footUprightFovDegrees;
+  if (t.inCar) {
+    const v = Math.abs(G.car.v || 0),
+      across = Math.min(
+        CAMS.carAcrossFovAtMostDegrees,
+        CAMS.carAcrossFovAtRestDegrees +
+          ((CAMS.carAcrossFovAt30MphDegrees - CAMS.carAcrossFovAtRestDegrees) * v) / CAMS.thirtyMphMetresPerSecond,
+      );
+    fov = (2 * Math.atan(Math.tan((across * Math.PI) / 360) / (camera.aspect || 1.6)) * 180) / Math.PI;
+  }
+  const nf = cam.snap || cam.fov === undefined ? fov : cam.fov + (fov - cam.fov) * (1 - Math.exp(-dt * CAMS.fovBlendsPerSecond));
+  if (!cam.cut && Math.abs(nf - camera.fov) > 0.01) {
+    camera.fov = nf;
+    camera.updateProjectionMatrix();
+  }
+  cam.fov = nf;
   cam.snap = false;
   cam.px += (px - cam.px) * k;
   cam.py += (py - cam.py) * k;

@@ -57,6 +57,7 @@ export const show = (id, on) => $(id).classList.toggle('hidden', !on);
 
 // ---------- HUD ----------
 export function hud(dt) {
+  menuPad();
   // bubbles follow heads every frame
   const cam = ui.camera,
     box = $('bubbles');
@@ -102,7 +103,8 @@ export function hud(dt) {
   box.innerHTML = html;
   for (let i = ui.subs.length - 1; i >= 0; i--) {
     const s = ui.subs[i]; // a subtitle's time runs down with the game's steps: see tickTimers
-    if (s.t <= 0) {
+    // the whole game: and by the wall clock as well, so no line outstays its time whatever the steps did
+    if (s.t <= 0 || performance.now() - s.at > SCREEN.subtitleLastsAtMostRealSeconds * 1000 || performance.now() < s.at) {
       s.el.remove();
       ui.subs.splice(i, 1);
     }
@@ -114,7 +116,9 @@ export function hud(dt) {
     h = hour(),
     w = G.weather;
   $('dday').textContent = DATE(day());
-  $('dtime').textContent = hhmm(h);
+  // DESIGN-ADDENDUM A31: no screen clock. The hour shows while his watch is raised [N], beside a clock he can see,
+  // or while he passes the time.
+  $('dtime').textContent = !ui.hooks.timeKnown || ui.hooks.timeKnown() || ui.wait ? hhmm(h) : '';
   $('dwx').textContent =
     w.rain > 0.8
       ? 'heavy rain'
@@ -197,6 +201,71 @@ export function hud(dt) {
   show('obj', !!G.story.objective && ui.modal !== 'talk');
   show('waitbar', ui.wait);
   if (ui.wait) $('waitbar').textContent = 'Passing the time. ' + hhmm(h);
+  // the whole game: the prompts ride above the subtitles, never over them
+  {
+    const sb = $('subs'),
+      top = ui.subs.length ? innerHeight - sb.getBoundingClientRect().top + SCREEN.promptRidesAboveSubtitlesByPixels : 0,
+      b = Math.max(SCREEN.promptRestsAtPixels, Math.round(top)) + 'px';
+    if (ui.promptB !== b) $('prompt').style.bottom = ui.promptB = b;
+  }
+}
+// ---------- menus by keys and by pad (the whole game: ER-INPUT-03, the pause screen included) ----------
+// The buttons of the open panel, or of the title. Up, Down, Left and Right move along them; Enter, Space or E
+// takes the one in hand (the browser's own press for Enter and Space); a pad's D-pad moves and A takes.
+function menuBox() {
+  if (ui.modal && !['dialog', 'talk', 'ledger'].includes(ui.modal)) return $('book');
+  if (G.story.phase === 'title' && !$('title').classList.contains('hidden')) return $('tmenu');
+  return null;
+}
+const menuItems = (box) => [...box.querySelectorAll('button, select, input, textarea, [data-act]')].filter((e) => !e.disabled && e.offsetParent !== null);
+export function menuFocus() {
+  const box = menuBox();
+  if (!box) return;
+  const it = menuItems(box);
+  if (it.length && !it.includes(document.activeElement)) it[0].focus({ preventScroll: true });
+}
+export function menuKey(code) {
+  const box = menuBox();
+  if (!box) return false;
+  const it = menuItems(box);
+  if (!it.length) return false;
+  let i = it.indexOf(document.activeElement);
+  const typing = i >= 0 && /^(INPUT|TEXTAREA|SELECT)$/.test(it[i].tagName);
+  if (code === 'ArrowDown' || code === 'ArrowRight' || code === 'ArrowUp' || code === 'ArrowLeft') {
+    if (typing && (code === 'ArrowLeft' || code === 'ArrowRight' || it[i].tagName === 'SELECT')) return false;
+    const fwd = code === 'ArrowDown' || code === 'ArrowRight';
+    i = i < 0 ? 0 : (i + (fwd ? 1 : it.length - 1)) % it.length;
+    it[i].focus({ preventScroll: false });
+    return true;
+  }
+  if (code === 'KeyE' && !typing) {
+    (i < 0 ? it[0] : it[i]).click();
+    return true;
+  }
+  if (code === 'PadA') {
+    (i < 0 ? it[0] : it[i]).click();
+    return true;
+  }
+  return false;
+}
+const padWas = {};
+export function menuPad() {
+  if (!menuBox() || typeof navigator === 'undefined' || !navigator.getGamepads) return;
+  for (const gp of navigator.getGamepads() || []) {
+    if (!gp || !gp.buttons) continue;
+    const hit = (n) => {
+      const on = !!(gp.buttons[n] && gp.buttons[n].pressed),
+        k = gp.index + ':' + n,
+        was = padWas[k];
+      padWas[k] = on;
+      return on && !was;
+    };
+    if (hit(12)) menuKey('ArrowUp');
+    if (hit(13)) menuKey('ArrowDown');
+    if (hit(14)) menuKey('ArrowLeft');
+    if (hit(15)) menuKey('ArrowRight');
+    if (hit(0)) menuKey('PadA');
+  }
 }
 // Round 6 (the gate): while a pad is in the hands the prompts name its buttons, not the keys.
 const PAD_NAMES = { E: 'A', T: 'X', F: 'Y', C: 'B', Q: 'LB', G: 'RB', Y: 'D-pad up' };
@@ -214,7 +283,7 @@ export function sub(text, who, cls = '', secs) {
   el.className = 's ' + cls;
   el.innerHTML = (who ? `<b>${esc(who)}</b>` : '') + esc(text);
   $('subs').appendChild(el);
-  ui.subs.push({ el, t: secs || clamp(2.2 + text.length * 0.055, 3, 9) });
+  ui.subs.push({ el, t: secs || clamp(2.2 + text.length * 0.055, 3, 9), at: performance.now() });
   while (ui.subs.length > 3) {
     ui.subs[0].el.remove();
     ui.subs.shift();
@@ -262,6 +331,7 @@ export function fade(on, text = '') {
 }
 
 const NOTED = RULES.ledger;
+const SCREEN = RULES.game.feel.screen;
 
 // ---------- the game's own timers ----------
 // Anything the game's flow waits on (a fade, a goodbye before the talk box shuts) is timed by the game's own
@@ -490,6 +560,7 @@ export function panel(html, name = 'panel') {
   ui.modal = name;
   setPaused(true, 'a panel is open: ' + name);
   if (G.story.phase === 'title') show('title', false);
+  menuFocus(); // the whole game: a panel opens with its first button in hand, so the keys and a pad can use it
 }
 export function closePanel() {
   show('panel', false);
@@ -517,6 +588,7 @@ export function key(code) {
     return true;
   }
   if (ui.modal) {
+    if (menuKey(code)) return true;
     if (code === 'Escape') {
       if (ui.modal !== 'end') {
         if ((G.story.phase === 'title' || ui.modal === 'file') && ui.hooks.back) ui.hooks.back();
@@ -536,6 +608,7 @@ export function titleMenu(items, on) {
           `<button class="btn ${i.alt ? 'alt' : ''}" data-act="${i.act}" data-arg="${i.arg || ''}">${esc(i.t)}</button>`,
       )
       .join('');
+  if (on) menuFocus();
 }
 export const loaded = () => show('load', false);
 export const loadMsg = (t) => {
