@@ -1,0 +1,285 @@
+{
+ "piece": "life_coat",
+ "cases": [
+  {
+   "id": "old-coat-still-a-mark",
+   "rule": "ER-COAT-01",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 2,
+     "markCoat": "arrival"
+    },
+    {
+     "coat": "arrival"
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "a-new-coat-leaves-a-shape",
+   "rule": "ER-COAT-01",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 2,
+     "markCoat": "arrival"
+    },
+    {
+     "coat": "secondhand"
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "the-dark-coat-seen-swapped-for-the-jacket",
+   "rule": "ER-COAT-01",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 2,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "jacket"
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a-shape-stays-a-shape",
+   "rule": "ER-COAT-01",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 1,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "dark"
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a-face-is-not-broken-by-a-coat",
+   "rule": "ER-COAT-01",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 3,
+     "markCoat": "dark",
+     "sawFace": true
+    },
+    {
+     "coat": "jacket"
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "recognition-is-never-broken-by-clothes",
+   "rule": "moat",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 4,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "overcoat",
+     "hat": true,
+     "scarf": true,
+     "night": true,
+     "barberSince": 1
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "a-barber-breaks-the-face-for-a-week",
+   "rule": "A21",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 3,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "jacket",
+     "barberSince": 2
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "barber-but-the-same-coat-still-a-mark",
+   "rule": "A21",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 3,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "dark",
+     "barberSince": 2
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "the-barber-wears-off",
+   "rule": "A21",
+   "fn": "tieNow",
+   "in": [
+    {
+     "rung": 3,
+     "markCoat": "dark"
+    },
+    {
+     "coat": "jacket",
+     "barberSince": 8
+    },
+    {
+     "barberLastsDays": 7
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "scarf-and-hat-at-night-cap-at-a-mark",
+   "rule": "A21",
+   "fn": "catchCap",
+   "in": [
+    {
+     "hat": true,
+     "scarf": true,
+     "night": true
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "scarf-and-hat-by-day-hide-nothing",
+   "rule": "A21",
+   "fn": "catchCap",
+   "in": [
+    {
+     "hat": true,
+     "scarf": true,
+     "night": false
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "scarf-and-hat-by-day-draw-a-look",
+   "rule": "A21",
+   "fn": "drawsALook",
+   "in": [
+    {
+     "hat": true,
+     "scarf": true,
+     "night": false
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "the-dark-coat-at-noon-draws-a-look",
+   "rule": "DESIGN 6",
+   "fn": "drawsALook",
+   "in": [
+    {
+     "coat": "dark",
+     "night": false
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "a-jacket-by-day-draws-none",
+   "rule": "A21",
+   "fn": "drawsALook",
+   "in": [
+    {
+     "coat": "jacket",
+     "night": false
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "as-he-arrived",
+   "rule": "ER-RISE-03",
+   "fn": "standingOfDress",
+   "in": [
+    "arrival"
+   ],
+   "out": 0
+  },
+  {
+   "id": "a-decent-jacket",
+   "rule": "ER-RISE-03",
+   "fn": "standingOfDress",
+   "in": [
+    "jacket"
+   ],
+   "out": 1
+  },
+  {
+   "id": "a-good-overcoat",
+   "rule": "ER-RISE-03",
+   "fn": "standingOfDress",
+   "in": [
+    "overcoat"
+   ],
+   "out": 2
+  },
+  {
+   "id": "the-board-counter-wants-a-jacket",
+   "rule": "2.12.3",
+   "fn": "doorOpens",
+   "in": [
+    "arrival",
+    1
+   ],
+   "out": false
+  },
+  {
+   "id": "the-jacket-opens-it",
+   "rule": "2.12.3",
+   "fn": "doorOpens",
+   "in": [
+    "jacket",
+    1
+   ],
+   "out": true
+  }
+ ]
+}

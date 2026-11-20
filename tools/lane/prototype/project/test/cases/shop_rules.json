@@ -1,0 +1,832 @@
+{
+ "piece": "shop_rules",
+ "cases": [
+  {
+   "id": "fresh-state",
+   "rule": "ER-SPEND-01",
+   "fn": "freshState",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    }
+   ],
+   "out": {
+    "stock": {
+     "a crowbar": 1,
+     "a torch": 2
+    },
+    "pursePence": 9000,
+    "refused": {},
+    "walked": 0,
+    "week": 0
+   }
+  },
+  {
+   "id": "sells-its-list",
+   "rule": "ER-SPEND-01",
+   "fn": "cannotSell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a torch",
+    true,
+    1000
+   ],
+   "out": null
+  },
+  {
+   "id": "sells-only-its-list",
+   "rule": "ER-SPEND-01",
+   "fn": "cannotSell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a good overcoat",
+    true,
+    99999
+   ],
+   "out": "not sold here"
+  },
+  {
+   "id": "only-by-its-hours",
+   "rule": "ER-SPEND-01",
+   "fn": "cannotSell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a torch",
+    false,
+    1000
+   ],
+   "out": "shut"
+  },
+  {
+   "id": "needs-the-money",
+   "rule": "ER-SPEND-01",
+   "fn": "cannotSell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a crowbar",
+    true,
+    600
+   ],
+   "out": "not enough money"
+  },
+  {
+   "id": "only-from-its-stock",
+   "rule": "ER-SPEND-01",
+   "fn": "cannotSell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 0,
+      "a torch": 2
+     },
+     "pursePence": 9000
+    },
+    "a crowbar",
+    true,
+    1000
+   ],
+   "out": "none left this week"
+  },
+  {
+   "id": "a-sale-moves-stock-and-purse",
+   "rule": "ER-SPEND-01",
+   "fn": "sell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a crowbar",
+    true,
+    1000
+   ],
+   "outHas": {
+    "ok": true,
+    "pricePence": 650,
+    "st": {
+     "stock": {
+      "a crowbar": 0,
+      "a torch": 2
+     },
+     "pursePence": 9650
+    }
+   }
+  },
+  {
+   "id": "a-refused-sale-changes-nothing",
+   "rule": "ER-SPEND-01",
+   "fn": "sell",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    "a crowbar",
+    false,
+    1000
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "shut",
+    "pricePence": 0,
+    "st": {
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    }
+   }
+  },
+  {
+   "id": "weekly-restock",
+   "rule": "DESIGN 9",
+   "fn": "restock",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 0,
+      "a torch": 0
+     },
+     "pursePence": 12000,
+     "refused": {},
+     "walked": 0,
+     "week": 0
+    },
+    1
+   ],
+   "out": {
+    "stock": {
+     "a crowbar": 1,
+     "a torch": 2
+    },
+    "pursePence": 9000,
+    "refused": {},
+    "walked": 0,
+    "week": 1
+   }
+  },
+  {
+   "id": "no-restock-inside-the-week",
+   "rule": "DESIGN 9",
+   "fn": "restock",
+   "in": [
+    {
+     "id": "ironmonger",
+     "sells": {
+      "a crowbar": 650,
+      "a torch": 320
+     },
+     "stock": {
+      "a crowbar": 1,
+      "a torch": 2
+     },
+     "pursePence": 9000,
+     "buys": [],
+     "openFromHour": 8.5,
+     "openUntilHour": 17
+    },
+    {
+     "stock": {
+      "a crowbar": 0
+     },
+     "pursePence": 1,
+     "week": 1
+    },
+    1
+   ],
+   "out": {
+    "stock": {
+     "a crowbar": 0
+    },
+    "pursePence": 1,
+    "week": 1
+   }
+  },
+  {
+   "id": "fence-opens-at-about-0.4",
+   "rule": "DESIGN 4",
+   "fn": "offers",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 0
+    },
+    0,
+    50000,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": [
+    4000,
+    4600,
+    5200
+   ]
+  },
+  {
+   "id": "hot-goods-fetch-less",
+   "rule": "DESIGN 4",
+   "fn": "offers",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 1
+    },
+    0,
+    50000,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": [
+    2000,
+    2600,
+    3200
+   ]
+  },
+  {
+   "id": "regard-helps",
+   "rule": "A30",
+   "fn": "offers",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 0
+    },
+    1,
+    50000,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": [
+    5000,
+    5600,
+    6000
+   ]
+  },
+  {
+   "id": "never-over-the-purse",
+   "rule": "DESIGN 9",
+   "fn": "offers",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 0
+    },
+    0,
+    4300,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": [
+    4000,
+    4300,
+    4300
+   ]
+  },
+  {
+   "id": "haggle-starts",
+   "rule": "ER-HAGGLE-01",
+   "fn": "startHaggle",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 0
+    },
+    0,
+    50000,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": {
+    "round": 1,
+    "offers": [
+     4000,
+     4600,
+     5200
+    ],
+    "done": false,
+    "sold": false,
+    "pricePence": 0
+   }
+  },
+  {
+   "id": "empty-purse-refuses",
+   "rule": "DESIGN 9",
+   "fn": "startHaggle",
+   "in": [
+    {
+     "honestPence": 10000,
+     "hot": 0
+    },
+    0,
+    0,
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "done": true,
+    "sold": false,
+    "said": "refused"
+   }
+  },
+  {
+   "id": "take-the-first",
+   "rule": "ER-HAGGLE-01",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 1,
+     "offers": [
+      4000,
+      4600,
+      5200
+     ],
+     "done": false,
+     "sold": false,
+     "pricePence": 0
+    },
+    "take",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "done": true,
+    "sold": true,
+    "pricePence": 4000
+   }
+  },
+  {
+   "id": "ask-more-once",
+   "rule": "ER-HAGGLE-01",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 1,
+     "offers": [
+      4000,
+      4600,
+      5200
+     ],
+     "done": false,
+     "sold": false,
+     "pricePence": 0
+    },
+    "more",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "round": 2,
+    "done": false,
+    "moved": true
+   }
+  },
+  {
+   "id": "ask-more-at-three-ends-it",
+   "rule": "ER-HAGGLE-01",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 3,
+     "offers": [
+      4000,
+      4600,
+      5200
+     ],
+     "done": false,
+     "sold": false,
+     "pricePence": 0
+    },
+    "more",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "done": true,
+    "sold": false,
+    "said": "last"
+   }
+  },
+  {
+   "id": "walk-away-he-may-call-back",
+   "rule": "A30",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 1,
+     "offers": [
+      4000,
+      4600,
+      5200
+     ],
+     "done": false,
+     "sold": false,
+     "pricePence": 0
+    },
+    "walk",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "done": true,
+    "sold": false,
+    "calledBack": true
+   }
+  },
+  {
+   "id": "walk-at-the-last-offer-no-call",
+   "rule": "A30",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 3,
+     "offers": [
+      4000,
+      4600,
+      5200
+     ],
+     "done": false
+    },
+    "walk",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "done": true,
+    "calledBack": false
+   }
+  },
+  {
+   "id": "done-stays-done",
+   "rule": "ER-HAGGLE-01",
+   "fn": "haggle",
+   "in": [
+    {
+     "round": 2,
+     "offers": [
+      1,
+      2,
+      3
+     ],
+     "done": true,
+     "sold": true,
+     "pricePence": 2
+    },
+    "more",
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "outHas": {
+    "round": 2,
+    "sold": true,
+    "pricePence": 2
+   }
+  },
+  {
+   "id": "a-shop-refuses-what-is-not-its-line",
+   "rule": "A30",
+   "fn": "wontBuy",
+   "in": [
+    {
+     "buys": [
+      "coins"
+     ]
+    },
+    {
+     "kind": "tools",
+     "hot": 0
+    },
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": "not my line"
+  },
+  {
+   "id": "an-honest-counter-refuses-warm-goods",
+   "rule": "DESIGN 4",
+   "fn": "wontBuy",
+   "in": [
+    {
+     "buys": [
+      "jewellery"
+     ]
+    },
+    {
+     "kind": "jewellery",
+     "hot": 0.6
+    },
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": "too warm for me"
+  },
+  {
+   "id": "the-fence-takes-warm-goods",
+   "rule": "DESIGN 4",
+   "fn": "wontBuy",
+   "in": [
+    {
+     "buys": [
+      "jewellery"
+     ],
+     "fence": true
+    },
+    {
+     "kind": "jewellery",
+     "hot": 0.9
+    },
+    {
+     "openingShare": 0.4,
+     "hotCutsShare": 0.5,
+     "regardAddsShare": 0.25,
+     "risePerAskShare": 0.06,
+     "topShare": 0.6,
+     "callsBack": true,
+     "honestShopRefusesAboveHot": 0.35
+    }
+   ],
+   "out": null
+  }
+ ]
+}

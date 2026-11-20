@@ -1,0 +1,611 @@
+{
+ "piece": "life_crowd",
+ "cases": [
+  {
+   "id": "small-hours-empty",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    3,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 0
+  },
+  {
+   "id": "dawn",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    6,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 3
+  },
+  {
+   "id": "early",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    7.5,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 9
+  },
+  {
+   "id": "day",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    12,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 16
+  },
+  {
+   "id": "evening",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    19,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 10
+  },
+  {
+   "id": "late",
+   "rule": "2.1.2",
+   "fn": "windowCount",
+   "in": [
+    22,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ]
+   ],
+   "out": 5
+  },
+  {
+   "id": "dry-noon-weekday",
+   "rule": "ER-NIGHT-03",
+   "fn": "crowdCount",
+   "in": [
+    12,
+    0,
+    0.85,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 14
+  },
+  {
+   "id": "drizzle-noon-weekday",
+   "rule": "ER-NIGHT-03",
+   "fn": "crowdCount",
+   "in": [
+    12,
+    0.3,
+    0.85,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 10
+  },
+  {
+   "id": "rain-noon-weekday",
+   "rule": "ER-NIGHT-03",
+   "fn": "crowdCount",
+   "in": [
+    12,
+    0.8,
+    0.85,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 6
+  },
+  {
+   "id": "rain-evening",
+   "rule": "ER-NIGHT-03",
+   "fn": "crowdCount",
+   "in": [
+    19,
+    0.8,
+    0.85,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "match-day-dry-full",
+   "rule": "ER-CAL-01",
+   "fn": "crowdCount",
+   "in": [
+    14.5,
+    0,
+    1,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 16
+  },
+  {
+   "id": "market-day-noon",
+   "rule": "ER-CAL-01",
+   "fn": "crowdCount",
+   "in": [
+    11,
+    0,
+    0.55,
+    [
+     {
+      "untilHour": 5,
+      "walkers": 0
+     },
+     {
+      "untilHour": 6.5,
+      "walkers": 3
+     },
+     {
+      "untilHour": 8,
+      "walkers": 9
+     },
+     {
+      "untilHour": 18,
+      "walkers": 16
+     },
+     {
+      "untilHour": 21,
+      "walkers": 10
+     },
+     {
+      "untilHour": 23.5,
+      "walkers": 5
+     },
+     {
+      "untilHour": 24,
+      "walkers": 0
+     }
+    ],
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 9
+  },
+  {
+   "id": "rain-halves-the-voices",
+   "rule": "ER-NIGHT-03",
+   "fn": "chatterEverySeconds",
+   "in": [
+    0.8,
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 90
+  },
+  {
+   "id": "dry-voices",
+   "rule": "ER-NIGHT-03",
+   "fn": "chatterEverySeconds",
+   "in": [
+    0,
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": 45
+  },
+  {
+   "id": "no-child-in-a-crowd",
+   "rule": "canon D18",
+   "fn": "crowdAgeOk",
+   "in": [
+    12,
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "an-adult-in-a-crowd",
+   "rule": "canon D18",
+   "fn": "crowdAgeOk",
+   "in": [
+    22,
+    {
+     "walkersAtMost": 16,
+     "drizzleFromRain": 0.2,
+     "rainFromRain": 0.55,
+     "drizzleShare": 0.75,
+     "rainShare": 0.45,
+     "streetTalkEveryRealSeconds": 45,
+     "youngestCrowdAgeYears": 18
+    }
+   ],
+   "out": true
+  }
+ ]
+}

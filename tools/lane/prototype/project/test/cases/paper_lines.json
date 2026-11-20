@@ -1,0 +1,429 @@
+{
+ "piece": "paper_lines",
+ "cases": [
+  {
+   "id": "what-she-saw-is-printed-as-fact-and-named",
+   "rule": "ER-PAPER-01",
+   "fn": "edition",
+   "in": [
+    [
+     {
+      "e": 7,
+      "kind": "strike",
+      "src": "saw",
+      "sure": 0.95,
+      "named": true,
+      "crime": 2,
+      "sev": 0.8,
+      "words": "Tom struck a man on the quay on Tuesday evening"
+     },
+     {
+      "e": 9,
+      "kind": "window",
+      "src": "told",
+      "sure": 0.7,
+      "named": true,
+      "crime": 1,
+      "sev": 0.6,
+      "words": "Tom put a window in on Chapel Lane"
+     },
+     {
+      "e": 11,
+      "kind": "parcel",
+      "src": "told",
+      "sure": 0.4,
+      "named": false,
+      "crime": 1,
+      "sev": 0.5,
+      "words": "He carried a bag from the last ferry"
+     },
+     {
+      "e": 12,
+      "kind": "ran",
+      "src": "heard",
+      "sure": 0.9,
+      "named": false,
+      "crime": 0,
+      "sev": 0.9,
+      "words": "A man ran down Quay Street"
+     },
+     {
+      "e": 13,
+      "kind": "tea",
+      "src": "told",
+      "sure": 0.9,
+      "named": true,
+      "crime": 0,
+      "sev": 0.2,
+      "words": "Tom had his tea at Ada's"
+     }
+    ],
+    3,
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": [
+    {
+     "e": 7,
+     "text": "Mr T. Nowak, of Quay Street, struck a man on the quay on Tuesday evening.",
+     "strength": "fact",
+     "names": true
+    },
+    {
+     "e": 9,
+     "text": "It is said on the Hook that a Quay Street businessman put a window in on Chapel Lane.",
+     "strength": "said",
+     "names": false
+    },
+    {
+     "e": 11,
+     "text": "There is talk, which this paper cannot confirm, that a man carried a bag from the last ferry.",
+     "strength": "rumour",
+     "names": false
+    }
+   ]
+  },
+  {
+   "id": "nothing-she-only-overheard",
+   "rule": "ER-PAPER-01",
+   "fn": "edition",
+   "in": [
+    [
+     {
+      "e": 12,
+      "kind": "ran",
+      "src": "heard",
+      "sure": 0.9,
+      "named": false,
+      "crime": 0,
+      "sev": 0.9,
+      "words": "A man ran down Quay Street"
+     }
+    ],
+    3,
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": []
+  },
+  {
+   "id": "small-things-are-not-news",
+   "rule": "ER-PAPER-01",
+   "fn": "edition",
+   "in": [
+    [
+     {
+      "e": 13,
+      "kind": "tea",
+      "src": "told",
+      "sure": 0.9,
+      "named": true,
+      "crime": 0,
+      "sev": 0.2,
+      "words": "Tom had his tea at Ada's"
+     }
+    ],
+    3,
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": []
+  },
+  {
+   "id": "printed-once",
+   "rule": "A19",
+   "fn": "edition",
+   "in": [
+    [
+     {
+      "e": 7,
+      "kind": "strike",
+      "src": "saw",
+      "sure": 0.95,
+      "named": true,
+      "crime": 2,
+      "sev": 0.8,
+      "words": "Tom struck a man on the quay on Tuesday evening",
+      "printed": true
+     }
+    ],
+    3,
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": []
+  },
+  {
+   "id": "every-line-traces",
+   "rule": "ER-PAPER-01",
+   "fn": "traces",
+   "in": [
+    [
+     {
+      "e": 7
+     },
+     {
+      "e": 9
+     }
+    ],
+    [
+     {
+      "e": 7,
+      "kind": "strike",
+      "src": "saw",
+      "sure": 0.95,
+      "named": true,
+      "crime": 2,
+      "sev": 0.8,
+      "words": "Tom struck a man on the quay on Tuesday evening"
+     },
+     {
+      "e": 9,
+      "kind": "window",
+      "src": "told",
+      "sure": 0.7,
+      "named": true,
+      "crime": 1,
+      "sev": 0.6,
+      "words": "Tom put a window in on Chapel Lane"
+     },
+     {
+      "e": 11,
+      "kind": "parcel",
+      "src": "told",
+      "sure": 0.4,
+      "named": false,
+      "crime": 1,
+      "sev": 0.5,
+      "words": "He carried a bag from the last ferry"
+     },
+     {
+      "e": 12,
+      "kind": "ran",
+      "src": "heard",
+      "sure": 0.9,
+      "named": false,
+      "crime": 0,
+      "sev": 0.9,
+      "words": "A man ran down Quay Street"
+     },
+     {
+      "e": 13,
+      "kind": "tea",
+      "src": "told",
+      "sure": 0.9,
+      "named": true,
+      "crime": 0,
+      "sev": 0.2,
+      "words": "Tom had his tea at Ada's"
+     }
+    ]
+   ],
+   "out": true
+  },
+  {
+   "id": "an-invented-line-does-not",
+   "rule": "ER-PAPER-01",
+   "fn": "traces",
+   "in": [
+    [
+     {
+      "e": 99
+     }
+    ],
+    [
+     {
+      "e": 7,
+      "kind": "strike",
+      "src": "saw",
+      "sure": 0.95,
+      "named": true,
+      "crime": 2,
+      "sev": 0.8,
+      "words": "Tom struck a man on the quay on Tuesday evening"
+     },
+     {
+      "e": 9,
+      "kind": "window",
+      "src": "told",
+      "sure": 0.7,
+      "named": true,
+      "crime": 1,
+      "sev": 0.6,
+      "words": "Tom put a window in on Chapel Lane"
+     },
+     {
+      "e": 11,
+      "kind": "parcel",
+      "src": "told",
+      "sure": 0.4,
+      "named": false,
+      "crime": 1,
+      "sev": 0.5,
+      "words": "He carried a bag from the last ferry"
+     },
+     {
+      "e": 12,
+      "kind": "ran",
+      "src": "heard",
+      "sure": 0.9,
+      "named": false,
+      "crime": 0,
+      "sev": 0.9,
+      "words": "A man ran down Quay Street"
+     },
+     {
+      "e": 13,
+      "kind": "tea",
+      "src": "told",
+      "sure": 0.9,
+      "named": true,
+      "crime": 0,
+      "sev": 0.2,
+      "words": "Tom had his tea at Ada's"
+     }
+    ]
+   ],
+   "out": false
+  },
+  {
+   "id": "a-heard-thing-is-no-source",
+   "rule": "ER-PAPER-01",
+   "fn": "traces",
+   "in": [
+    [
+     {
+      "e": 12
+     }
+    ],
+    [
+     {
+      "e": 7,
+      "kind": "strike",
+      "src": "saw",
+      "sure": 0.95,
+      "named": true,
+      "crime": 2,
+      "sev": 0.8,
+      "words": "Tom struck a man on the quay on Tuesday evening"
+     },
+     {
+      "e": 9,
+      "kind": "window",
+      "src": "told",
+      "sure": 0.7,
+      "named": true,
+      "crime": 1,
+      "sev": 0.6,
+      "words": "Tom put a window in on Chapel Lane"
+     },
+     {
+      "e": 11,
+      "kind": "parcel",
+      "src": "told",
+      "sure": 0.4,
+      "named": false,
+      "crime": 1,
+      "sev": 0.5,
+      "words": "He carried a bag from the last ferry"
+     },
+     {
+      "e": 12,
+      "kind": "ran",
+      "src": "heard",
+      "sure": 0.9,
+      "named": false,
+      "crime": 0,
+      "sev": 0.9,
+      "words": "A man ran down Quay Street"
+     },
+     {
+      "e": 13,
+      "kind": "tea",
+      "src": "told",
+      "sure": 0.9,
+      "named": true,
+      "crime": 0,
+      "sev": 0.2,
+      "words": "Tom had his tea at Ada's"
+     }
+    ]
+   ],
+   "out": false
+  },
+  {
+   "id": "readers-take-a-fact-strongly",
+   "rule": "A19",
+   "fn": "readerSure",
+   "in": [
+    {
+     "strength": "fact"
+    },
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": 0.8
+  },
+  {
+   "id": "readers-take-a-rumour-weakly",
+   "rule": "A19",
+   "fn": "readerSure",
+   "in": [
+    {
+     "strength": "rumour"
+    },
+    {
+     "printsFromNewsworthy": 0.45,
+     "printsFromSure": 0.3,
+     "saidFromSure": 0.6,
+     "namesFromSure": 0.85,
+     "neverNamesFromCrime": 9,
+     "readerSureOfFact": 0.8,
+     "readerSureOfSaid": 0.5,
+     "readerSureOfRumour": 0.25
+    }
+   ],
+   "out": 0.25
+  }
+ ]
+}

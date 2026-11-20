@@ -1,0 +1,425 @@
+{
+ "piece": "life_happen",
+ "cases": [
+  {
+   "id": "placed-by-its-state",
+   "rule": "ER-HAPPEN-01",
+   "fn": "place",
+   "in": [
+    [
+     {
+      "id": "shoplifter",
+      "street": "Quay Street",
+      "fromHour": 9,
+      "untilHour": 17,
+      "needs": [
+       "grocerOpen",
+       "thiefOut"
+      ]
+     },
+     {
+      "id": "row",
+      "street": "Quay Street",
+      "fromHour": 18,
+      "untilHour": 22,
+      "needs": [
+       "twoWithReason"
+      ]
+     },
+     {
+      "id": "van",
+      "street": "the back lane",
+      "fromHour": 7,
+      "untilHour": 18,
+      "needs": [],
+      "weather": "wet"
+     }
+    ],
+    {
+     "hour": 10,
+     "day": 0,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": []
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": {
+    "id": "shoplifter",
+    "because": "grocerOpen, thiefOut, hour 10"
+   }
+  },
+  {
+   "id": "not-without-its-state",
+   "rule": "ER-HAPPEN-01",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 10,
+     "day": 0,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true
+     },
+     "log": []
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "needs thiefOut"
+  },
+  {
+   "id": "not-outside-its-hour",
+   "rule": "ER-HAPPEN-01",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 20,
+     "day": 0,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": []
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "the hour"
+  },
+  {
+   "id": "the-van-needs-rain",
+   "rule": "ER-HAPPEN-01",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "van",
+     "street": "the back lane",
+     "fromHour": 7,
+     "untilHour": 18,
+     "needs": [],
+     "weather": "wet"
+    },
+    {
+     "hour": 10,
+     "day": 0,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": []
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "the weather"
+  },
+  {
+   "id": "none-twice-in-thirty-minutes",
+   "rule": "A18",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 10,
+     "day": 8,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": [
+      {
+       "id": "shoplifter",
+       "street": "Quay Street",
+       "t": 0,
+       "day": 0
+      }
+     ]
+    },
+    1500,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "the same one inside thirty minutes"
+  },
+  {
+   "id": "none-twice-in-a-week-on-one-street",
+   "rule": "A18",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 10,
+     "day": 3,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": [
+      {
+       "id": "shoplifter",
+       "street": "Quay Street",
+       "t": 0,
+       "day": 0
+      }
+     ]
+    },
+    9000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "the same one on this street this week"
+  },
+  {
+   "id": "again-after-a-week",
+   "rule": "A18",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 10,
+     "day": 8,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": [
+      {
+       "id": "shoplifter",
+       "street": "Quay Street",
+       "t": 0,
+       "day": 0
+      }
+     ]
+    },
+    9000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "a-breath-between-two",
+   "rule": "A18",
+   "fn": "whyNot",
+   "in": [
+    {
+     "id": "shoplifter",
+     "street": "Quay Street",
+     "fromHour": 9,
+     "untilHour": 17,
+     "needs": [
+      "grocerOpen",
+      "thiefOut"
+     ]
+    },
+    {
+     "hour": 10,
+     "day": 0,
+     "wet": false,
+     "facts": {
+      "grocerOpen": true,
+      "thiefOut": true
+     },
+     "log": [
+      {
+       "id": "row",
+       "street": "Quay Street",
+       "t": 900,
+       "day": 0
+      }
+     ]
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": "one just happened"
+  },
+  {
+   "id": "nothing-fits-nothing-placed",
+   "rule": "ER-HAPPEN-01",
+   "fn": "place",
+   "in": [
+    [
+     {
+      "id": "shoplifter",
+      "street": "Quay Street",
+      "fromHour": 9,
+      "untilHour": 17,
+      "needs": [
+       "grocerOpen",
+       "thiefOut"
+      ]
+     },
+     {
+      "id": "row",
+      "street": "Quay Street",
+      "fromHour": 18,
+      "untilHour": 22,
+      "needs": [
+       "twoWithReason"
+      ]
+     },
+     {
+      "id": "van",
+      "street": "the back lane",
+      "fromHour": 7,
+      "untilHour": 18,
+      "needs": [],
+      "weather": "wet"
+     }
+    ],
+    {
+     "hour": 3,
+     "day": 0,
+     "wet": false,
+     "facts": {},
+     "log": []
+    },
+    1000,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "a-favour-comes-back-days-later",
+   "rule": "A18",
+   "fn": "favourDue",
+   "in": [
+    [
+     {
+      "id": "lostman",
+      "day": 1
+     },
+     {
+      "id": "lockedout",
+      "day": 4
+     },
+     {
+      "id": "old",
+      "day": 0,
+      "returned": true
+     }
+    ],
+    5,
+    {
+     "quietRealSeconds": 1800,
+     "sameStreetDays": 7,
+     "gapRealSeconds": 240,
+     "favourAfterDays": 2,
+     "favourWithinDays": 9
+    }
+   ],
+   "out": [
+    "lostman"
+   ]
+  }
+ ]
+}

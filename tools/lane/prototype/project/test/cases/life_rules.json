@@ -1,0 +1,663 @@
+{
+ "piece": "life_rules",
+ "cases": [
+  {
+   "id": "call-when-in",
+   "rule": "A39",
+   "fn": "canCall",
+   "in": [
+    "home",
+    [
+     "home",
+     "tearoom"
+    ],
+    15,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "ok": true,
+    "why": null
+   }
+  },
+  {
+   "id": "no-call-when-out",
+   "rule": "A39",
+   "fn": "canCall",
+   "in": [
+    "market",
+    [
+     "home",
+     "tearoom"
+    ],
+    15,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "ok": false,
+    "why": "not in"
+   }
+  },
+  {
+   "id": "no-call-at-night",
+   "rule": "A39",
+   "fn": "canCall",
+   "in": [
+    "home",
+    [
+     "home"
+    ],
+    23,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "ok": false,
+    "why": "not at this hour"
+   }
+  },
+  {
+   "id": "first-call-warm",
+   "rule": "A39",
+   "fn": "callWarmth",
+   "in": [
+    null,
+    5000,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": "warm"
+  },
+  {
+   "id": "too-soon-is-cooler",
+   "rule": "A39",
+   "fn": "callWarmth",
+   "in": [
+    5000,
+    5600,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": "cool"
+  },
+  {
+   "id": "next-day-warm",
+   "rule": "A39",
+   "fn": "callWarmth",
+   "in": [
+    5000,
+    6500,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": "warm"
+  },
+  {
+   "id": "three-honest-visits-hold",
+   "rule": "3.2.5",
+   "fn": "friendship",
+   "in": [
+    [
+     {
+      "honest": true
+     },
+     {
+      "honest": true
+     },
+     {
+      "honest": true
+     }
+    ],
+    false,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "holds": true,
+    "word": "holds"
+   }
+  },
+  {
+   "id": "two-lies-end-it",
+   "rule": "3.2.5",
+   "fn": "friendship",
+   "in": [
+    [
+     {
+      "honest": true
+     },
+     {
+      "honest": false
+     },
+     {
+      "honest": false
+     },
+     {
+      "honest": true
+     },
+     {
+      "honest": true
+     }
+    ],
+    false,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "holds": false,
+    "word": "over"
+   }
+  },
+  {
+   "id": "cool-calls-do-not-count",
+   "rule": "3.2.5",
+   "fn": "friendship",
+   "in": [
+    [
+     {
+      "honest": true,
+      "cool": true
+     },
+     {
+      "honest": true
+     },
+     {
+      "honest": true
+     }
+    ],
+    false,
+    {
+     "callsFromHour": 9,
+     "callsUntilHour": 21.5,
+     "coolerInsideGameMinutes": 1440,
+     "visitsToHold": 3,
+     "liesThatEndIt": 2
+    }
+   ],
+   "out": {
+    "holds": false,
+    "word": "warming"
+   }
+  },
+  {
+   "id": "a-forced-door-shows-a-day",
+   "rule": "2.19",
+   "fn": "marksAlive",
+   "in": [
+    [
+     {
+      "id": 1,
+      "kind": "forced_door",
+      "place": "hut",
+      "t": 1000
+     },
+     {
+      "id": 2,
+      "kind": "broken_window",
+      "place": "ritas",
+      "t": 1000
+     },
+     {
+      "id": 3,
+      "kind": "tape",
+      "place": "quay",
+      "t": 1000,
+      "mended": true
+     }
+    ],
+    2000,
+    {
+     "forced_door": 1440,
+     "broken_window": 2880,
+     "tape": 4320
+    }
+   ],
+   "out": [
+    {
+     "id": 1,
+     "kind": "forced_door",
+     "place": "hut",
+     "t": 1000
+    },
+    {
+     "id": 2,
+     "kind": "broken_window",
+     "place": "ritas",
+     "t": 1000
+    }
+   ]
+  },
+  {
+   "id": "then-only-the-window",
+   "rule": "2.19",
+   "fn": "marksAlive",
+   "in": [
+    [
+     {
+      "id": 1,
+      "kind": "forced_door",
+      "place": "hut",
+      "t": 1000
+     },
+     {
+      "id": 2,
+      "kind": "broken_window",
+      "place": "ritas",
+      "t": 1000
+     },
+     {
+      "id": 3,
+      "kind": "tape",
+      "place": "quay",
+      "t": 1000,
+      "mended": true
+     }
+    ],
+    2500,
+    {
+     "forced_door": 1440,
+     "broken_window": 2880,
+     "tape": 4320
+    }
+   ],
+   "out": [
+    {
+     "id": 2,
+     "kind": "broken_window",
+     "place": "ritas",
+     "t": 1000
+    }
+   ]
+  },
+  {
+   "id": "all-gone",
+   "rule": "2.19",
+   "fn": "marksAlive",
+   "in": [
+    [
+     {
+      "id": 1,
+      "kind": "forced_door",
+      "place": "hut",
+      "t": 1000
+     },
+     {
+      "id": 2,
+      "kind": "broken_window",
+      "place": "ritas",
+      "t": 1000
+     },
+     {
+      "id": 3,
+      "kind": "tape",
+      "place": "quay",
+      "t": 1000,
+      "mended": true
+     }
+    ],
+    9000,
+    {
+     "forced_door": 1440,
+     "broken_window": 2880,
+     "tape": 4320
+    }
+   ],
+   "out": []
+  },
+  {
+   "id": "a-hint-first-time",
+   "rule": "ER-FIRST-03",
+   "fn": "hint",
+   "in": [
+    {
+     "shown": {},
+     "lastAt": null
+    },
+    "coat",
+    100,
+    true,
+    {
+     "hintsApartRealSeconds": 12
+    }
+   ],
+   "out": {
+    "show": true,
+    "st": {
+     "shown": {
+      "coat": true
+     },
+     "lastAt": 100
+    }
+   }
+  },
+  {
+   "id": "each-hint-once",
+   "rule": "ER-FIRST-03",
+   "fn": "hint",
+   "in": [
+    {
+     "shown": {
+      "coat": true
+     },
+     "lastAt": 100
+    },
+    "coat",
+    500,
+    true,
+    {
+     "hintsApartRealSeconds": 12
+    }
+   ],
+   "outHas": {
+    "show": false
+   }
+  },
+  {
+   "id": "never-two-within-twelve-seconds",
+   "rule": "ER-FIRST-03",
+   "fn": "hint",
+   "in": [
+    {
+     "shown": {
+      "coat": true
+     },
+     "lastAt": 100
+    },
+    "watch",
+    108,
+    true,
+    {
+     "hintsApartRealSeconds": 12
+    }
+   ],
+   "outHas": {
+    "show": false
+   }
+  },
+  {
+   "id": "the-second-after-twelve",
+   "rule": "ER-FIRST-03",
+   "fn": "hint",
+   "in": [
+    {
+     "shown": {
+      "coat": true
+     },
+     "lastAt": 100
+    },
+    "watch",
+    113,
+    true,
+    {
+     "hintsApartRealSeconds": 12
+    }
+   ],
+   "outHas": {
+    "show": true
+   }
+  },
+  {
+   "id": "hints-off",
+   "rule": "ER-FIRST-03",
+   "fn": "hint",
+   "in": [
+    {
+     "shown": {},
+     "lastAt": null
+    },
+    "coat",
+    100,
+    false,
+    {
+     "hintsApartRealSeconds": 12
+    }
+   ],
+   "outHas": {
+    "show": false
+   }
+  },
+  {
+   "id": "something-within-thirty-seconds",
+   "rule": "ER-CORE-07",
+   "fn": "somethingToDo",
+   "in": [
+    [
+     {
+      "kind": "debt",
+      "id": "darren",
+      "metres": 40
+     },
+     {
+      "kind": "word",
+      "id": "ron",
+      "metres": 12
+     },
+     {
+      "kind": "fare",
+      "id": "radio",
+      "metres": 300
+     }
+    ],
+    false,
+    {
+     "withinRealSeconds": 30,
+     "walkMetresPerSecond": 3.2,
+     "cabMetresPerSecond": 9
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "first": {
+     "kind": "word",
+     "id": "ron"
+    }
+   }
+  },
+  {
+   "id": "nothing-in-reach",
+   "rule": "ER-CORE-07",
+   "fn": "somethingToDo",
+   "in": [
+    [
+     {
+      "kind": "debt",
+      "id": "dennis",
+      "metres": 140
+     }
+    ],
+    false,
+    {
+     "withinRealSeconds": 30,
+     "walkMetresPerSecond": 3.2,
+     "cabMetresPerSecond": 9
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "first": null
+   }
+  },
+  {
+   "id": "further-by-cab",
+   "rule": "ER-CORE-07",
+   "fn": "somethingToDo",
+   "in": [
+    [
+     {
+      "kind": "debt",
+      "id": "dennis",
+      "metres": 140
+     }
+    ],
+    true,
+    {
+     "withinRealSeconds": 30,
+     "walkMetresPerSecond": 3.2,
+     "cabMetresPerSecond": 9
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "afraid",
+   "rule": "2.12.4",
+   "fn": "greetingKind",
+   "in": [
+    {
+     "knowsHim": true,
+     "fear": 0.7,
+     "regard": 0.5
+    },
+    {
+     "afraidFromFear": 0.5,
+     "angryBelowRegard": -0.35,
+     "likesFromRegard": 0.3
+    }
+   ],
+   "out": "afraid"
+  },
+  {
+   "id": "angry",
+   "rule": "2.12.4",
+   "fn": "greetingKind",
+   "in": [
+    {
+     "knowsHim": true,
+     "fear": 0.1,
+     "regard": -0.5
+    },
+    {
+     "afraidFromFear": 0.5,
+     "angryBelowRegard": -0.35,
+     "likesFromRegard": 0.3
+    }
+   ],
+   "out": "angry"
+  },
+  {
+   "id": "likes",
+   "rule": "2.12.4",
+   "fn": "greetingKind",
+   "in": [
+    {
+     "knowsHim": true,
+     "fear": 0,
+     "regard": 0.5
+    },
+    {
+     "afraidFromFear": 0.5,
+     "angryBelowRegard": -0.35,
+     "likesFromRegard": 0.3
+    }
+   ],
+   "out": "likes"
+  },
+  {
+   "id": "his-appearance",
+   "rule": "2.12.4",
+   "fn": "greetingKind",
+   "in": [
+    {
+     "knowsHim": true,
+     "fear": 0,
+     "regard": 0.5,
+     "marked": true
+    },
+    {
+     "afraidFromFear": 0.5,
+     "angryBelowRegard": -0.35,
+     "likesFromRegard": 0.3
+    }
+   ],
+   "out": "appearance"
+  },
+  {
+   "id": "a-stranger-neutral",
+   "rule": "2.12.4",
+   "fn": "greetingKind",
+   "in": [
+    {
+     "knowsHim": false,
+     "fear": 0.9,
+     "regard": -1
+    },
+    {
+     "afraidFromFear": 0.5,
+     "angryBelowRegard": -0.35,
+     "likesFromRegard": 0.3
+    }
+   ],
+   "out": "neutral"
+  },
+  {
+   "id": "rung-one",
+   "rule": "ER-RISE-03",
+   "fn": "greetingRung",
+   "in": [
+    1
+   ],
+   "out": "nephew"
+  },
+  {
+   "id": "rung-three",
+   "rule": "ER-RISE-03",
+   "fn": "greetingRung",
+   "in": [
+    3
+   ],
+   "out": "firm"
+  },
+  {
+   "id": "rung-four",
+   "rule": "ER-RISE-03",
+   "fn": "greetingRung",
+   "in": [
+    4
+   ],
+   "out": "port"
+  }
+ ]
+}

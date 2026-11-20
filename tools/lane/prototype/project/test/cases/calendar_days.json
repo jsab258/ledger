@@ -1,0 +1,846 @@
+{
+ "piece": "calendar_days",
+ "cases": [
+  {
+   "id": "day0-is-monday-15-october",
+   "rule": "ER-CAL-01",
+   "fn": "dateOf",
+   "in": [
+    0
+   ],
+   "out": {
+    "weekday": "Monday",
+    "dayOfMonth": 15,
+    "month": "October",
+    "week": 1
+   }
+  },
+  {
+   "id": "day17-is-thursday-1-november",
+   "rule": "ER-CAL-01",
+   "fn": "dateOf",
+   "in": [
+    17
+   ],
+   "out": {
+    "weekday": "Thursday",
+    "dayOfMonth": 1,
+    "month": "November",
+    "week": 3
+   }
+  },
+  {
+   "id": "day62-is-sunday-16-december",
+   "rule": "ER-CAL-01",
+   "fn": "dateOf",
+   "in": [
+    62
+   ],
+   "out": {
+    "weekday": "Sunday",
+    "dayOfMonth": 16,
+    "month": "December",
+    "week": 9
+   }
+  },
+  {
+   "id": "thursday-is-market-day",
+   "rule": "ER-CAL-01",
+   "fn": "dayKind",
+   "in": [
+    3
+   ],
+   "outHas": {
+    "market": true,
+    "match": false,
+    "sunday": false
+   }
+  },
+  {
+   "id": "saturday-is-the-match",
+   "rule": "ER-CAL-01",
+   "fn": "dayKind",
+   "in": [
+    5
+   ],
+   "outHas": {
+    "match": true,
+    "market": false
+   }
+  },
+  {
+   "id": "bonfire-night-is-day-21",
+   "rule": "ER-CAL-01",
+   "fn": "dayKind",
+   "in": [
+    21
+   ],
+   "outHas": {
+    "bonfire": true,
+    "remembrance": false
+   }
+  },
+  {
+   "id": "remembrance-sunday-is-day-27",
+   "rule": "ER-CAL-01",
+   "fn": "dayKind",
+   "in": [
+    27
+   ],
+   "outHas": {
+    "remembrance": true,
+    "sunday": true
+   }
+  },
+  {
+   "id": "paper-tuesday-and-friday",
+   "rule": "A19",
+   "fn": "dayKind",
+   "in": [
+    1
+   ],
+   "outHas": {
+    "paper": true
+   }
+  },
+  {
+   "id": "no-paper-wednesday",
+   "rule": "A19",
+   "fn": "dayKind",
+   "in": [
+    2
+   ],
+   "outHas": {
+    "paper": false
+   }
+  },
+  {
+   "id": "sunday-shops-shut-chapel-busy",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    6,
+    10,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "shopsShut": true,
+    "chapelBusy": true
+   }
+  },
+  {
+   "id": "sunday-afternoon-chapel-quiet",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    6,
+    15,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "shopsShut": true,
+    "chapelBusy": false
+   }
+  },
+  {
+   "id": "market-day-empties-the-hooks-shops",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    3,
+    11,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "hookShopsQuiet": true,
+    "marketBusy": true
+   }
+  },
+  {
+   "id": "match-fills-the-street-towards-three",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    5,
+    14.5,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "streetFull": true
+   }
+  },
+  {
+   "id": "match-fills-the-street-at-five",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    5,
+    17,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "streetFull": true
+   }
+  },
+  {
+   "id": "match-street-ordinary-at-noon",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    5,
+    12,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "streetFull": false
+   }
+  },
+  {
+   "id": "bonfire-display-on-the-quay",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    21,
+    20,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "quayDisplay": true
+   }
+  },
+  {
+   "id": "no-display-on-an-ordinary-monday",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    14,
+    20,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "quayDisplay": false
+   }
+  },
+  {
+   "id": "remembrance-at-the-chapel",
+   "rule": "ER-CAL-01",
+   "fn": "changes",
+   "in": [
+    27,
+    11,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "outHas": {
+    "chapelBusy": true,
+    "wreath": true
+   }
+  },
+  {
+   "id": "shop-open-weekday",
+   "rule": "ER-SPEND-01",
+   "fn": "shopOpen",
+   "in": [
+    {
+     "openFromHour": 8,
+     "openUntilHour": 17
+    },
+    2,
+    10
+   ],
+   "out": true
+  },
+  {
+   "id": "shop-shut-after-hours",
+   "rule": "ER-SPEND-01",
+   "fn": "shopOpen",
+   "in": [
+    {
+     "openFromHour": 8,
+     "openUntilHour": 17
+    },
+    2,
+    18
+   ],
+   "out": false
+  },
+  {
+   "id": "shop-shut-sunday",
+   "rule": "ER-CAL-01",
+   "fn": "shopOpen",
+   "in": [
+    {
+     "openFromHour": 8,
+     "openUntilHour": 17
+    },
+    6,
+    10
+   ],
+   "out": false
+  },
+  {
+   "id": "caff-open-sunday",
+   "rule": "ER-CAL-01",
+   "fn": "shopOpen",
+   "in": [
+    {
+     "openFromHour": 6,
+     "openUntilHour": 17,
+     "sundayOpen": true
+    },
+    6,
+    10
+   ],
+   "out": true
+  },
+  {
+   "id": "churchgoer-at-chapel-on-sunday",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "nora",
+     "churchgoer": true
+    },
+    6,
+    10,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": "chapel"
+  },
+  {
+   "id": "others-keep-routine-on-sunday",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "lee"
+    },
+    6,
+    10,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "trader-at-market-thursday",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "brenda",
+     "trader": true
+    },
+    3,
+    10,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": "market"
+  },
+  {
+   "id": "follower-away-at-the-match",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "kevin",
+     "follows": true
+    },
+    5,
+    15,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": "off"
+  },
+  {
+   "id": "the-street-on-the-quay-for-the-display",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "albert"
+    },
+    21,
+    19.5,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": "quay"
+  },
+  {
+   "id": "a-shopkeeper-stays-in",
+   "rule": "ER-CAL-01",
+   "fn": "placeFor",
+   "in": [
+    {
+     "id": "grace",
+     "shopkeeper": true
+    },
+    21,
+    19.5,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": null
+  },
+  {
+   "id": "crowd-share-weekday",
+   "rule": "ER-CAL-01",
+   "fn": "crowdShare",
+   "in": [
+    1,
+    11,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": 0.85
+  },
+  {
+   "id": "crowd-share-market-day",
+   "rule": "ER-CAL-01",
+   "fn": "crowdShare",
+   "in": [
+    3,
+    11,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": 0.55
+  },
+  {
+   "id": "crowd-share-match",
+   "rule": "ER-CAL-01",
+   "fn": "crowdShare",
+   "in": [
+    5,
+    14.5,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "crowd-share-sunday",
+   "rule": "ER-CAL-01",
+   "fn": "crowdShare",
+   "in": [
+    6,
+    15,
+    {
+     "sundayServiceFromHour": 9.5,
+     "sundayServiceUntilHour": 11.5,
+     "marketFromHour": 8,
+     "marketUntilHour": 15,
+     "matchStreetFullHours": [
+      14.25,
+      16.75
+     ],
+     "matchStreetFullForHours": 1,
+     "matchAwayFromHour": 14.5,
+     "matchAwayUntilHour": 17,
+     "bonfireFromHour": 19,
+     "bonfireUntilHour": 21,
+     "remembranceFromHour": 10.25,
+     "remembranceUntilHour": 11.75,
+     "weekdayShare": 0.85,
+     "matchCrowdShare": 1,
+     "bonfireCrowdShare": 1,
+     "marketDayHookShare": 0.55,
+     "sundayShare": 0.45,
+     "sundayServiceShare": 0.6
+    }
+   ],
+   "out": 0.45
+  }
+ ]
+}
