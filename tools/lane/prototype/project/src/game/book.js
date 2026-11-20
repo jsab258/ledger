@@ -260,7 +260,8 @@ register({
       const m = G.money,
         b = X('book'),
         parts = [`${quid(m.clean)} in his pocket.`];
-      if (m.fares > 0) parts.push(`${quid(m.fares)} of fares in the fare book this week.`);
+      if (m.washed > 0) parts.push(`${quid(m.fares + m.washed)} in the fare book this week, ${quid(m.washed).replace(/\.00$/, '')} of it put through from the tin.`);
+      else if (m.fares > 0) parts.push(`${quid(m.fares)} of fares in the fare book this week.`);
       if (fl().tour) parts.push(m.dirty > 0 ? `The tin has about ${quid(Math.round(m.dirty / 100) * 100).replace(/\.00$/, '')} in it.` : 'The tin is empty.');
       parts.push(`Rent, ${quid(RULES.money.rentPence).replace(/\.00$/, '')}, Friday.`);
       if (b.shown) {

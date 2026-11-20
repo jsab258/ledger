@@ -286,7 +286,7 @@ async function boot() {
       saveNow(true);
       toTitle();
       try {
-        window.close();
+        if (window.opener) window.close(); // only a window a script opened can be closed by one
       } catch (e) {
         /* a page cannot always close itself */
       }

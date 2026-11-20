@@ -191,6 +191,7 @@ async function challenge(P, cause, items) {
   } else if (r.result === 'a chase') {
     S.chase = { seconds: 0, unseen: 0 };
     act('ran_police', { noiseR: RULES.police.runningNoiseMetres });
+    if (G.hooks.happened) G.hooks.happened('ran'); // whoever could see him just then saw him run (game/back.js)
     tell('"Oi! Stop!" A whistle behind him.', 'PC Ibbotson');
   }
   P.hold = false;

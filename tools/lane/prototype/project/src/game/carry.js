@@ -13,6 +13,7 @@ import { hyp, quid } from '../util.js';
 import { passTime } from '../work.js';
 import { has, drop } from './crime.js';
 import { LANDING_WORDS } from './outfit.js';
+import { happened } from './back.js';
 
 const T = RULES.game.outfit;
 const AT = () => [SPOTS.shelter[0] + T.manStandsFromShelter[0], SPOTS.shelter[1] + T.manStandsFromShelter[1]];
@@ -58,6 +59,7 @@ function handOver() {
   x.envelope = 'done';
   X('outfit').envelope = 'done';
   x.doneT = Math.round(G.t);
+  happened('made', [T.landingManIs]); // the outfit's man was there: he knows, and Ron will have it from him
   earn(T.firstCutPence, true, "his cut of the landing's envelope");
   sub(`Right. ${money(T.firstCutPence).replace('£', '')} pounds, that's yours. Tell Ron it's the same again Wednesday.`, 'The man by the shelter', 'face', 6);
   if (G.hooks.sfx) G.hooks.sfx('paper');
@@ -79,6 +81,8 @@ function lost(x, how) {
   x.envelope = how;
   X('outfit').envelope = how;
   x.lostT = Math.round(G.t);
+  if (how === 'police') happened('searched'); // whoever could see the quay just then saw the constable at his coat
+  happened('missed', [T.landingManIs]); // their man stood waiting, and knows that much
   if (how === 'police') write('The constable has the envelope. The landing is missed tonight, and the men behind it will hear so from their own man.', { key: 'carry1-lost', how: 'It happened to him' });
   else write('The landing shut with the envelope still on him. The ask is failed; Ron will hear of it before he does.', { key: 'carry1-late', how: 'His own watch' });
 }

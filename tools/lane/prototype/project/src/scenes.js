@@ -1026,7 +1026,8 @@ function mattersFor(P) {
           keepSay: book() + ' Through the book, or not?',
           take: async () => {
             endTalk();
-            await scene(wash);
+            if (G.hooks.count) await G.hooks.count();
+            else await scene(wash);
           },
         },
       ],
@@ -1899,7 +1900,7 @@ async function collapse() {
   await pausedWhile('dead on his feet: to bed', async () => {
     await fade(true, 'You are dead on your feet.\nYou get as far as your bed.');
     if (t.inCar) t.inCar = false;
-    if (G.hooks.enterRoom) G.hooks.enterRoom('boarding', true);
+    if (G.hooks.enterRoom) G.hooks.enterRoom('flat', true); // his bed is in the flat over the office (the one-shot)
     advanceTo(day() * 1440 + REST.wakesAfterCollapseAtHour * 60);
     t.hurt = Math.max(0, t.hurt - REST.collapseHealsHurtBy);
     await fade(false);
