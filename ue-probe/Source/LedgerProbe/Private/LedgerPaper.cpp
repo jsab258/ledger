@@ -571,8 +571,20 @@ FReply SPaperChoice::OnMouseButtonUp(const FGeometry& MyGeometry, const FPointer
 void SPaperChoice::OnMouseEnter(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
 {
 	SCompoundWidget::OnMouseEnter(MyGeometry, MouseEvent);
-	// the mouse puts it in hand, as the keys do
-	if (Enabled.Get()) { FSlateApplication::Get().SetUserFocus(0, SharedThis(this), EFocusCause::Mouse); }
+	// the mouse puts it in hand, as the keys do, but only a mouse that moved (20 November): Slate also sends an
+	// enter for a pointer resting where a choice appears (SlateUser.cpp SynthesizeCursorMoveIfNeeded, its previous
+	// position the current one, so no delta), and a pointer left over Quit made Enter close the game
+	if (Enabled.Get() && !MouseEvent.GetCursorDelta().IsNearlyZero()) { FSlateApplication::Get().SetUserFocus(0, SharedThis(this), EFocusCause::Mouse); }
+}
+
+FReply SPaperChoice::OnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	// a pointer that rested over the choice when it appeared, then moved within it, puts it in hand too
+	if (Enabled.Get() && !HasKeyboardFocus() && !MouseEvent.GetCursorDelta().IsNearlyZero())
+	{
+		FSlateApplication::Get().SetUserFocus(0, SharedThis(this), EFocusCause::Mouse);
+	}
+	return FReply::Unhandled();
 }
 
 FReply SPaperChoice::OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent)
