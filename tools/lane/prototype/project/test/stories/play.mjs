@@ -394,8 +394,9 @@ export async function open(o = {}) {
           const p = pts[i], last = i === pts.length - 1, d = hyp(c.x, c.z, p[0], p[1]);
           if (last && d < (opt.stopWithin || 3)) {
             set('KeyW', false); set('KeyA', false); set('KeyD', false);
-            set('KeyS', c.v > 0.25);
-            if (Math.abs(c.v) <= 0.25) { set('KeyS', false); if (++stopped > 20) i++; }
+            // (the automatic takes a brake held at a standstill for reverse: stopped, he holds it on the handbrake)
+            set('KeyS', c.v > 0.25); set('Space', Math.abs(c.v) <= 0.25);
+            if (Math.abs(c.v) <= 0.25) { set('KeyS', false); if (++stopped > 20) { set('Space', false); i++; } }
             return;
           }
           if (!last && d < 4.5) { prev = p; i++; return; }
@@ -405,7 +406,7 @@ export async function open(o = {}) {
           const err = angd(c.ang, Math.atan2(aim[0] - c.x, aim[1] - c.z));
           if (back > 0) { // backing off something: the wheel turned the other way
             back--;
-            set('KeyW', false); set('KeyS', true); set('KeyA', err < -0.1); set('KeyD', err > 0.1);
+            set('Space', false); set('KeyW', false); set('KeyS', true); set('KeyA', err < -0.1); set('KeyD', err > 0.1);
             if (!back) set('KeyS', false);
             return;
           }
@@ -415,10 +416,11 @@ export async function open(o = {}) {
           if (b && Math.abs(c.v) < 0.5) { if (++waited > 240) { waited = 0; edge = 240; } } else if (!b) waited = Math.max(0, waited - 1);
           const want = b ? 0 : Math.min(edge > 0 ? 3 : top, last ? Math.max(2.2, d * 0.7) : 99, Math.abs(err) > 1.0 ? 3 : Math.abs(err) > 0.35 ? 5 : 99, !last && d < 12 && pts[i + 1] && Math.abs(angd(Math.atan2(p[0] - c.x, p[1] - c.z), Math.atan2(pts[i + 1][0] - p[0], pts[i + 1][1] - p[1]))) > 0.6 ? 5 : 99);
           set('KeyA', err > 0.06); set('KeyD', err < -0.06);
-          set('KeyW', c.v < want - 0.3); set('KeyS', c.v > want + 1.2 || (want === 0 && c.v > 0.2));
+          set('KeyW', want > 0 && c.v < want - 0.3); set('KeyS', c.v > want + 1.2 || (want === 0 && c.v > 0.3));
+          set('Space', want === 0 && Math.abs(c.v) <= 0.3); // waiting: on the handbrake, never on a held brake
           if (S.frameNo % 60 === 0) { const moved = hyp(c.x, c.z, lx, lz); lx = c.x; lz = c.z; stuck = moved < 0.3 && want > 0 ? stuck + 1 : 0; if (stuck >= 2) { stuck = 0; back = 80; } S.driveDbg = { leg: i, blocker: b, want: Math.round(want * 10) / 10, err: Math.round(err * 100) / 100, edge, waited }; }
         });
-        for (const k of ['KeyW', 'KeyS', 'KeyA', 'KeyD']) S.ku(k);
+        for (const k of ['KeyW', 'KeyS', 'KeyA', 'KeyD', 'Space']) S.ku(k);
         return n;
       }, { pts, opt: Object.assign({}, opt, { until: opt.until ? opt.until.toString() : null }) });
       await P.frames(2);

@@ -667,7 +667,14 @@ export function stepCamera(dt) {
     cam.yaw = G.car.ang + Math.PI; // the one-shot: B held at the wheel looks back through the rear window (A24)
     cam.idle = 0;
   } else if (t.inCar) {
-    if (cam.idle > 1.2) cam.yaw += clamp(angDiff(cam.yaw, G.car.ang), -2.2 * dt, 2.2 * dt);
+    // the study's sprung arm: it swings to sit behind the car, a little late in a turn, never bolted to it
+    if (cam.idle > 1.2) {
+      const w = FEELT.cabArmSwingPerSecond * (0.48 + 0.52 * clamp(Math.abs(G.car.v) / FEELT.cabArmSwingFullAtMetresPerSecond, 0, 1)),
+        err = angDiff(cam.yaw, G.car.ang),
+        h = Math.min(dt, 0.05);
+      cam.yawV = (cam.yawV || 0) + (w * w * err - 2 * w * (cam.yawV || 0)) * h;
+      cam.yaw += cam.yawV * h;
+    } else cam.yawV = 0;
   } else if (!room && cam.idle > 1.6 && t.v > 0.5 && !F.on)
     cam.yaw +=
       clamp(angDiff(cam.yaw, t.ang), -0.7 * dt, 0.7 * dt) * (Math.abs(angDiff(cam.yaw, t.ang)) > 2.4 ? 0 : 1);
@@ -691,7 +698,7 @@ export function stepCamera(dt) {
   {
     const across = FEELT.cabViewAcrossAtRestDegrees + (FEELT.cabViewAcrossAt30MphDegrees - FEELT.cabViewAcrossAtRestDegrees) * clamp(Math.abs(G.car.v) / FEELT.cabViewWidensUpToMetresPerSecond, 0, 1);
     const want = t.inCar ? (Math.atan(Math.tan((across * Math.PI) / 360) / (camera.aspect || 1)) * 360) / Math.PI : FEELT.onFootViewUpDownDegrees;
-    const now = camera.fov + (want - camera.fov) * (cam.snap ? 1 : clamp(dt * FEELT.viewEasesPerSecond, 0, 1));
+    const now = camera.fov + (want - camera.fov) * (cam.snap ? 1 : clamp(dt * (t.inCar ? FEELT.cabViewEasesPerSecond : FEELT.viewEasesPerSecond), 0, 1));
     if (Math.abs(now - camera.fov) > 1e-3 && !window.LEDGER_CAM) {
       camera.fov = now;
       camera.updateProjectionMatrix();

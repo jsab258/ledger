@@ -5,9 +5,14 @@ export const TUNE = {
   cabCameraBackMetres: 5.8, // band 5 to 6.5 (measured 8.5)
   cabCameraUpMetres: 1.8, // band 1.6 to 2.0 (measured 3.4)
   cabCameraTargetHeightMetres: 1.35,
-  cabViewAcrossAtRestDegrees: 62.5, // band 60 to 65 (measured 87, never widening)
-  cabViewAcrossAt30MphDegrees: 67, // band 64 to 70
-  cabViewWidensUpToMetresPerSecond: 13.4, // 30 mph
+  // the driving study's camera (round 3): 62 degrees across at rest, a straight line up to 80.5 at 90 mph (68 at 30),
+  // answering at 4 a second; the arm swings behind the car as a sprung arm (6.2 a second at speed, half that crawling)
+  cabViewAcrossAtRestDegrees: 62, // band 60 to 65
+  cabViewAcrossAt30MphDegrees: 80.5, // (the name is kept: it is the width at the speed below, the study's 90 mph)
+  cabViewWidensUpToMetresPerSecond: 40.2, // 90 mph
+  cabViewEasesPerSecond: 4,
+  cabArmSwingPerSecond: 6.2,
+  cabArmSwingFullAtMetresPerSecond: 18,
   viewEasesPerSecond: 3,
   squeezedCameraRisesMetres: 2.4, // pulled in close on the street, the camera rises and looks down: his feet stay in frame
   squeezedCameraLooksDownMetres: 0.7,

@@ -9,6 +9,7 @@ import { nightF } from './seeing.js';
 import { buildCar, carLights } from './render/cars.js';
 import { S } from './render/sync.js';
 import { RULES } from './rules.js';
+import * as QR from './qr/cab.js';
 const TRAFFIC = RULES.traffic;
 const DRIVING = RULES.driving;
 
@@ -62,7 +63,7 @@ function solidAt(x, z, r, self, parkedOnly) {
 }
 // The cab Tom drives.
 // Round 6 (the gate): what the cab is doing that a save does not hold: the eased steering, a jam being timed.
-const CAB = { steer: 0, jam: 0, wedged: false, boxed: null };
+const CAB = { steer: 0, jam: 0, wedged: false, boxed: null, last: null };
 // for the test hook: the eased steering, whether the cab is wedged, and whether it stands clear of everything solid
 export const cabFeel = () => ({
   steerMinusOneToOne: CAB.steer,
@@ -200,138 +201,86 @@ export function stepCar(dt, inp) {
     t = G.tom;
   T.crashCool -= dt;
   if (!t.inCar) {
+    // left standing: held on its brakes
     c.v *= Math.max(0, 1 - dt * DRIVING.rollsToAStopPerSecond);
     c.braking = false;
     CAB.steer = 0;
     CAB.jam = 0;
     CAB.wedged = false;
     CAB.boxed = null;
+    QR.park();
     return;
   }
+  // The car is the driving study's (qr/cab.js). It is sat where the game's car stands whenever the game has moved
+  // the car itself (getting in, a load, a car fetched back or worked clear).
+  if (!QR.CAB.live || !CAB.last || hyp(c.x, c.z, CAB.last[0], CAB.last[1]) > 0.02 || Math.abs(c.ang - CAB.last[2]) > 0.001) QR.seat(c);
+  else if (Math.abs(c.v - CAB.last[3]) > 1e-6) QR.setSpeed(c, c.v); // the game itself has changed its speed (a wreck rolling to rest, a test's own run-up)
   const thr = inp.y,
-    hb = inp.hb;
-  // round 6: on keys the steering eases to full lock and centres itself; a stick (pad, touch) is used as it is
-  {
-    const want = inp.kx || 0,
-      per =
-        want === 0 ? DRIVING.keysCentreRealSeconds : DRIVING.keysTurnToFullLockRealSeconds,
-      step = dt / per;
-    CAB.steer += clamp(want - CAB.steer, -step, step);
-  }
-  const st = clamp(CAB.steer + (inp.x || 0), -1, 1);
+    hb = inp.hb,
+    cars = G.x && G.x.cars,
+    dead = !!(cars && cars.wrecked && G.played - cars.wrecked.played > RULES.game.cars.wreckRollsOnRealSeconds),
+    x0 = c.x,
+    z0 = c.z,
+    a0 = c.ang;
+  CAB.steer = -QR.CAB.k.steer; // the eased wheel, for the picture and the tests (positive to the right, as before)
   c.braking = (thr < 0 && c.v > DRIVING.brakeLightsAboveMetresPerSecond) || hb;
-  if (thr > 0)
-    c.v +=
-      (c.v < 0
-        ? DRIVING.pullAwayFromReverseMetresPerSecondSquared
-        : DRIVING.accelerationMetresPerSecondSquared) *
-      dt *
-      thr;
-  else if (thr < 0)
-    c.v +=
-      (c.v > DRIVING.brakesAboveMetresPerSecond
-        ? -DRIVING.brakingMetresPerSecondSquared
-        : -DRIVING.reverseAccelerationMetresPerSecondSquared) *
-      dt *
-      -thr;
-  c.v -= c.v * (hb ? DRIVING.handbrakeDragPerSecond : DRIVING.dragPerSecond) * dt;
-  c.v = clamp(
-    c.v,
-    -DRIVING.reverseTopMetresPerSecond,
-    DRIVING.topMetresPerSecond * (1 - c.dmg * DRIVING.damageSlowsByShare),
-  );
-  const grip = clamp(Math.abs(c.v) / DRIVING.fullSteeringFromMetresPerSecond, 0, 1) * Math.sign(c.v || 1);
-  const ang0 = c.ang;
-  c.ang -=
-    st *
-    grip *
-    (hb ? DRIVING.handbrakeTurnRadiansPerSecond : DRIVING.turnRadiansPerSecond) *
-    dt *
-    (1 -
-      clamp(
-        (Math.abs(c.v) - DRIVING.steeringEasesAboveMetresPerSecond) /
-          DRIVING.steeringEasesOverMetresPerSecond,
-        0,
-        DRIVING.steeringEasesByAtMostShare,
-      ));
-  // round 6: the cab never swings itself into something solid (that is how a car gets wedged on a pole or a wall)
-  if (c.ang !== ang0 && poseHit(c.x, c.z, c.ang) && !poseHit(c.x, c.z, ang0)) c.ang = ang0;
-  const fx = Math.sin(c.ang),
-    fz = Math.cos(c.ang),
-    nx = c.x + fx * c.v * dt,
-    nz = c.z + fz * c.v * dt;
-  let hit = c.v !== 0 && poseHit(nx, nz, c.ang),
-    crawl = false;
-  // round 6: never stranded (ER-DRIVE-01).
-  if (hit && poseHit(c.x, c.z, c.ang)) {
-    // Something is already in the cab's own space (a car that rolled into it, a save from before the posts were
-    // solid). It may always move the way that leads out soonest, at a crawl, and never deeper in.
-    const out = wayOut(c);
-    if (!CAB.wedged && out.any) sub(AT_ONCE.jam.wedged, '', 'over', DRIVING.crashLineShowsRealSeconds);
-    CAB.wedged = true;
-    if (c.v > 0 ? out.ahead : out.back) {
-      hit = false;
-      crawl = true;
-      c.v = clamp(c.v, -DRIVING.wedgedCrawlsMetresPerSecond, DRIVING.wedgedCrawlsMetresPerSecond);
-    } else {
-      c.v = 0; // not a clear way: it does not move, and nothing is damaged
-      if (!out.any && !CAB.boxed) CAB.boxed = [c.x, c.z];
-    }
-  } else if (hit) {
-    // Standing clear, but no room to roll either way: boxed in.
-    if (
-      !CAB.boxed &&
-      playAlong(c, 1, DRIVING.boxedInLooksMetres) + playAlong(c, -1, DRIVING.boxedInLooksMetres) <
-        DRIVING.boxedInBelowMetresOfPlay
-    )
-      CAB.boxed = [c.x, c.z];
-  } else if (c.v !== 0) CAB.wedged = false;
-  if (CAB.boxed) {
-    // He has tried for a moment and it has not got anywhere: the cab is worked clear onto the nearest open ground.
+  const near = [];
+  for (const v of S.traffic) if (v.car.g.visible && hyp(v.x, v.z, c.x, c.z) < 12) near.push(v);
+  QR.stepCab(dt, dead ? { kx: inp.kx, x: inp.x, y: -0.4, hb: false } : inp, dead ? 0 : 1 - c.dmg * DRIVING.damageSlowsByShare, near);
+  QR.read(c);
+  // never inside the town: water, the edge of the map, anything the solver did not hold (a rare deep overlap)
+  if (deepIn(c)) {
+    c.x = x0;
+    c.z = z0;
+    c.ang = a0;
+    c.v = 0;
+    QR.seat(c);
+  }
+  // a crash, said in words at once with what it has done to the car (ER-CORE-02, ER-DRIVE-08)
+  for (const h of QR.CAB.hits) {
+    if (h.v <= DRIVING.crashAboveMetresPerSecond || T.crashCool > 0) continue;
+    T.crashCool = DRIVING.crashCountedEveryRealSeconds;
+    const what = h.kind === 'post' ? 'a lamp post' : h.kind === 'parked' ? 'a parked car' : h.kind === 'car' ? 'a car in the road' : whatBlocks(h.x, h.z, 0.6) || hitWhat(c, dt),
+      worst = c.dmg >= DRIVING.damageAtMost;
+    c.dmg = Math.min(DRIVING.damageAtMost, c.dmg + 1);
+    act('crash', { noiseR: DRIVING.crashNoiseCarriesMetres });
+    if (G.hooks.emit) G.hooks.emit('cars.crash', { speed: h.v, what }); // the whole game: from about 35 mph it will not drive on (game/cars.js)
+    if (G.hooks.sfx) G.hooks.sfx('crash');
+    if (G.hooks.shake) G.hooks.shake(0.5);
+    sub(atOnce(worst ? AT_ONCE.crash.again : AT_ONCE.crash['dent' + c.dmg] || AT_ONCE.crash.again, { what }), '', 'over', DRIVING.crashLineShowsRealSeconds);
+  }
+  // never stranded (ER-DRIVE-01, the cab fix of 20 Nov): pressing and not moving, with no room to roll either way,
+  // the cab is worked clear onto the nearest open ground
+  if (!dead && Math.abs(thr) > DRIVING.workedClearThrottleAbove && Math.abs(c.v) < 0.3) {
+    if (!CAB.boxed) CAB.boxed = [c.x, c.z];
+    CAB.jam += dt;
     if (hyp(c.x, c.z, CAB.boxed[0], CAB.boxed[1]) > DRIVING.boxedInBelowMetresOfPlay) {
       CAB.boxed = null;
       CAB.jam = 0;
-    } else if (Math.abs(thr) > DRIVING.workedClearThrottleAbove) {
-      CAB.jam += dt;
-      if (CAB.jam > DRIVING.workedClearAfterRealSeconds && workClear(c)) {
-        CAB.boxed = null;
-        CAB.jam = 0;
-        CAB.wedged = false;
-        hit = false;
-        crawl = true; // it has just been put down: no step this frame
-        sub(AT_ONCE.jam.clear, '', 'over', DRIVING.crashLineShowsRealSeconds);
-      }
+    } else if (CAB.jam > DRIVING.workedClearAfterRealSeconds * 3 && playAlong(c, 1, DRIVING.boxedInLooksMetres) + playAlong(c, -1, DRIVING.boxedInLooksMetres) < DRIVING.boxedInBelowMetresOfPlay && workClear(c)) {
+      CAB.boxed = null;
+      CAB.jam = 0;
+      QR.seat(c);
+      sub(AT_ONCE.jam.clear, '', 'over', DRIVING.crashLineShowsRealSeconds);
     }
+  } else if (Math.abs(c.v) > 0.6) {
+    CAB.boxed = null;
+    CAB.jam = 0;
   }
-  if (hit) {
-    const sp = Math.abs(c.v);
-    if (sp > DRIVING.crashAboveMetresPerSecond && T.crashCool <= 0) {
-      T.crashCool = DRIVING.crashCountedEveryRealSeconds;
-      const what = hitWhat(c, dt),
-        worst = c.dmg >= DRIVING.damageAtMost;
-      c.dmg = Math.min(DRIVING.damageAtMost, c.dmg + 1);
-      act('crash', { noiseR: DRIVING.crashNoiseCarriesMetres });
-      if (G.hooks.emit) G.hooks.emit('cars.crash', { speed: sp, what }); // the whole game: from about 35 mph it will not drive on (game/cars.js)
-      if (G.hooks.sfx) G.hooks.sfx('crash');
-      if (G.hooks.shake) G.hooks.shake(0.5);
-      // round 6: said in words at once, with what it has done to the car (ER-CORE-02, ER-DRIVE-08)
-      sub(
-        atOnce(worst ? AT_ONCE.crash.again : AT_ONCE.crash['dent' + c.dmg] || AT_ONCE.crash.again, { what }),
-        '',
-        'over',
-        DRIVING.crashLineShowsRealSeconds,
-      );
-    }
-    c.v = -c.v * DRIVING.bouncesBackShare;
-  } else if (!crawl || CAB.wedged) {
-    c.x = c.x + fx * c.v * dt;
-    c.z = c.z + fz * c.v * dt;
-  }
+  const fx = Math.sin(c.ang),
+    fz = Math.cos(c.ang),
+    vWas = c.v;
   // people in the road
   for (const P of G.named.concat(G.crowd)) {
     if (P.gone || P.down || P.dead || P.space !== 'street' || P.inCar) continue;
-    const d = hyp(P.x, P.z, c.x + fx * 1.7 * Math.sign(c.v || 1), c.z + fz * 1.7 * Math.sign(c.v || 1));
-    if (d > DRIVING.hitsAPersonWithinMetres) continue;
+    // against the whole car, nose, tail and flanks (the study's car turns in its own length: a flank can meet a man too)
+    const pdx = P.x - c.x,
+      pdz = P.z - c.z,
+      pf = pdx * fx + pdz * fz,
+      pl = pdx * fz - pdz * fx,
+      d = hyp(P.x, P.z, c.x + fx * 1.7 * Math.sign(c.v || 1), c.z + fz * 1.7 * Math.sign(c.v || 1)),
+      flank = Math.abs(pl) < DRIVING.cabHalfWidthMetres + 0.3 && pf > -2.25 && pf < 2.35 && Math.abs(c.v) > 0.05;
+    if (d > DRIVING.hitsAPersonWithinMetres && !flank) continue;
     if (Math.abs(c.v) > DRIVING.knocksDownAboveMetresPerSecond) {
       P.down = true;
       P.hurt = clamp(
@@ -365,19 +314,30 @@ export function stepCar(dt, inp) {
       }
     } else {
       c.v = 0;
-      const a = Math.atan2(P.x - c.x, P.z - c.z) + 1.2;
-      const px = P.x + Math.sin(a) * 0.5,
-        pz = P.z + Math.cos(a) * 0.5;
+      // he steps out from the side of the car, clear of it
+      const side = pl >= 0 ? 1 : -1,
+        out = Math.max(0.5, DRIVING.cabHalfWidthMetres + 0.45 - Math.abs(pl));
+      const px = P.x + fz * side * out,
+        pz = P.z - fx * side * out;
       if (!blocked(px, pz)) {
         P.x = px;
         P.z = pz;
       }
     }
   }
+  if (c.v !== vWas) QR.slowTo(vWas ? c.v / vWas : 0); // somebody in the road stopped or slowed it
+  CAB.last = [c.x, c.z, c.ang, c.v];
   t.x = c.x;
   t.z = c.z;
   t.ang = c.ang;
   t.v = Math.abs(c.v);
+}
+// is the middle line of the cab well inside something (water and the map's edge count)?
+function deepIn(c) {
+  const fx = Math.sin(c.ang),
+    fz = Math.cos(c.ang);
+  for (const k of AXLES) if (blocked(c.x + fx * k, c.z + fz * k, 0.25)) return true;
+  return false;
 }
 export function nearCar(d = DRIVING.nearTheCabWithinMetres) {
   return hyp(G.tom.x, G.tom.z, G.car.x, G.car.z) < d;
