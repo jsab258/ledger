@@ -175,8 +175,8 @@ def write_report(path, faults, rows, ai_rows, when):
     caught_any = {r["fault"] for r in rows + ai_rows if r.get("caught")}
     planted = sorted({r["fault"] for r in rows + ai_rows if r.get("planted") is not False and r.get("caught") is not None})
     lines = ["# Testers' catch record, %s" % when[:10], "",
-             "Faults planted on purpose in a copy of the game (4t piece 8, his plan of 19 Nov), each taken from a fault "
-             "our testing met before; the game's own folder is never changed. Made by tools/lane/gate/plant/plant.py, "
+             "Faults planted on purpose in a copy of the game (4t piece 8, his plan of 19 Nov), each in an area where "
+             "our testing or he met a real fault before (the change itself made up); the game's own folder is never changed. Made by tools/lane/gate/plant/plant.py, "
              "run at %s, no model." % when, "",
              "Caught by at least one tester: %d of %d faults planted and tested." % (len(caught_any), len(planted)), "",
              "## Per tester", "", "| Tester | Caught | Planted for it |", "|---|---|---|"]
