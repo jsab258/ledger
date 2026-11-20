@@ -143,3 +143,25 @@ What every round's fresh readers praise, and a later run should not lose: Ron an
 What still holds it at 7 to 8, in every round whatever was changed: (1) surprise: any hidden hand behind the fire or the burned car is guessed by a genre-wise reader, and each extra layer added to hide it costs structure; (2) structure and pace: the bible carries more story than fifteen to twenty hours of a hands-first game want; (3) the truth reaches Tom by people telling him. A later run should cut, not add: fewer secrets, each found by a deed; a middle of fewer, longer scenes; and it should consider judging the story played in the prototype rather than on paper, since "told, not found" is partly a fault of a bible.
 
 STORY-FINAL.md is the story for him, from v8 with two small corrections the last readers all asked for (named there, not re-reviewed).
+
+# Phase 2: competing versions, then polish
+
+His pick, 20 November 2026, 17:13, of the advisor's option 1: "Break the plateau with competing versions: three writers each draft a different, leaner shape for the middle and the twist, with the parts readers love kept fixed; fresh readers pick the strongest, then polish rounds on it toward 9." Started 17:37. The writer is one Fable session (claude-fable-5-2); every reader is a fresh Opus helper given only what the step allows. Stops: exceptional (three readers at 9 or more, no category under 8, all three singling it out, and a fourth reader agreeing), 18:00 on Sunday 22 November, or the weekly allowance at 80%.
+
+How the reading was done, said plainly: story bible v8, its three reviews, BAR.md, this log, canon.md, the story rulings and VISION.md were read in full by the writer; DESIGN.md's sections on jobs, crew, rivals, the rise, the acts and the endings, and the players study's conclusions, were read; bibles v1 to v7, their twenty-one reviews, the treatment, the three READER files and BLIND-SPOTS.md were read in full by one Opus helper, who returned a digest (what was praised and in how many rounds, every fault named twice or more, ideas tried and dropped, and every reader's wish for a different shape). STORY-FINAL.md of phase 1 was not re-read line by line; it is v8 retold.
+
+## The contest (20 November)
+
+KEEP.md fixes what every version keeps (ten things praised in every round, and the frame) and the eleven faults every version must fix. CONTEST-NOTES.md lists, before each later version, what the earlier ones chose.
+
+- A, Twice. The club is open and real; the midpoint is the player's own deed (an ordinary account fare on Bonfire Night is last year's arson run again); the turn is Sheila writing his fare in the book in the words she used for Mickey.
+- B, No Charge. There is no outfit; a bookkeeper fills the envelopes by writing paid fares as free; the midpoint is the player finding his own fares in the book; the climax is the Friday round driven backwards.
+- C, The Passenger. The friendship is the plot; the midpoint is Ron at the Widow's gate in a foreman's coat; the turn is that Ron drove the firm's car on the night of the fire and sold himself to keep it quiet; the last input is a handbrake.
+
+Scores (critic, player, editor; overall, rank): A 7, 6, 6 (3rd, 3rd, 3rd); B 7, 7, 8 (2nd, 2nd, 1st); C 8, 8, 7 (1st, 1st, 2nd). Winner: C, on ranks 4 against 5 and 9. No reader would single any out yet. CONTEST-RESULT.md has the category scores, the eleven things C must mend and the ideas it takes from A and B.
+
+## Phase 2 score table
+
+| Round | Version | Critic | Player | Editor | Lowest category | Single it out |
+|---|---|---|---|---|---|---|
+| contest | C, The Passenger (treatment) | 8 | 8 | 7 | 6 (surprise, the editor) | no, nearly, no |
