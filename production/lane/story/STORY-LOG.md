@@ -385,3 +385,22 @@ His six changes: make the player commit to the wrong man at a cost; cut Sheila's
 Small faults the summariser found, to mend in M2: where a late arrival with her name on the paper ends up; whether Agar's telephone call changes anything; the count of people.
 
 Next: M2 answers each.
+
+## Round M2 (20 November, 22:50 to 23:20)
+
+Table line: | M2 | STORY-BIBLE-M2.md | 80, 80, 80; 8, 8, 9 | RDR2: 75, 75, 75; 7, 7, 7 | 7 against 8; NO, about 65% sure |
+
+What M2 changed: paying made the default and taking the press (a held button), with a page headed "Owed and owing" the player can read; the player can write two initials into last year's book, in ink, and the inspector and Ron both use it; Sheila's tells cut to two and the unguessed turn moved to why Ron sat in a dark car; the Bishop seen in week one and dead in week five, his coffin carried; the cast cut from twenty-one to fourteen (Tapper, Julie, Garbutt and Alison out of the main story); the inspector sent because of a telephone call and the watchman given his own reason for a year's silence; the wall walked man by man; the race up the hill changing the tone of an ending and not which ending.
+
+The three readers: 80 of 80 each (two mark the watch item "a middle that sags" against the hearing, whose result changes nothing); overall 8, 8, 9 against RDR2's 7, 7, 7. What they say holds it back: the big scenes belong to Ron and Sheila and the lead watches; a silent lead; small menace.
+
+The fourth reader (REVIEW-M2-fourth-games-writer.md): on the page 7 against RDR2's 8, and from the bible NO, about 65% sure, resting, he says, on faults that can be mended on paper:
+1. The lead watches the central drama; his one deed (the wall) decides the yard, not the main outcome.
+2. The ending's rule contradicts itself (she signs only if the truth is whole; or that is only its weather), and one ending hangs on a thread ("what he washed") the story no longer has.
+3. The false trail collapses early: the Bishop says Ron was on foot four days before the turn.
+4. No present threat with a face and hands; the stakes today are a tax inspection, a lease and a licence.
+5. The main pay-offs are gated on optional buttons (the "Asked" page).
+6. The last act holds about sixteen beats in three and a half hours.
+Also his note on method: the bible is written directly to the ruler, so the page's full marks are the flattery the measure feared; the judgement from the bible is the fair one.
+
+Two rounds have not moved the fourth reader (NO at 70%, 65%, 65%), so by the order's rule the method changes for M3. Not another answer to a list: the centre is moved onto the lead. In the fifth week Tom himself drives men to a job that goes wrong and has to choose, with the wheel in his hands, whether to go or go back: Sheila's night, lived by the player a year and six days on. The next night he writes his own line in the fare book, and the miles on the dial say how far he went before he turned. The inspector then reads two nights, and Sheila will put her name to hers only when Tom has put his to his own. The car theft, the crash, Agar's fare and one of Thursday's doors are cut to make the room.
