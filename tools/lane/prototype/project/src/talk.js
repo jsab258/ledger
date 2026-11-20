@@ -24,6 +24,9 @@ import {
 } from './ui.js';
 import { slipHTML, tomKnows } from './ledger_screen.js';
 import { RULES as NUMBERS } from './rules.js';
+import { ensureX } from './game/core.js';
+import { pay } from './money.js';
+import * as TALKRULE from './game/pieces/talk.js';
 const TALKING = NUMBERS.talk;
 
 const T = {
@@ -77,64 +80,9 @@ function timed(fn, ms) {
   if (ms) to = setTimeout(() => ctl.abort(), ms);
   return p.finally(() => clearTimeout(to));
 }
-function localIntent(text) {
-  const s = text.toLowerCase().trim();
-  let amount = 0;
-  const m = s.match(/£\s*(\d+)/) || s.match(/(\d+)\s*(quid|pounds?|nicker)/);
-  if (m) amount = +m[1];
-  else if (/fiver/.test(s)) amount = TALKING.fiverPounds;
-  else if (/tenner/.test(s)) amount = TALKING.tennerPounds;
-  let intent = 'smalltalk',
-    denies = false;
-  if (
-    amount ||
-    /(for your trouble|make it worth|something for you|take this|here'?s (a|some) (little )?(something|money)|buy your)/.test(
-      s,
-    )
-  )
-    intent = 'bribe';
-  else if (
-    /(or else|break your|hurt you|you'?ll regret|last warning|i know where you|keep your mouth shut|or i'?ll|watch your back|shut your|i'?ll have you|be a shame if)/.test(
-      s,
-    )
-  )
-    intent = 'threaten';
-  else if (
-    /(wasn'?t me|i was (at|in) |i was asleep|never (went|left|touched|saw|been)|i didn'?t|not true|you'?re mistaken|must have been someone)/.test(
-      s,
-    )
-  ) {
-    intent = 'lie';
-    denies = true;
-  } else if (
-    /^(yes|aye|all right|alright|ok|okay|i'?ll do it|fine|agreed|deal|go on then|i will|count me in)\b/.test(
-      s,
-    )
-  )
-    intent = 'agree';
-  else if (/^(no\b|not me|never\b|i won'?t|i'?m not|forget it|leave it|not a chance)/.test(s))
-    intent = 'refuse';
-  else if (
-    /(you look|lovely|good job|best .* in|i like your|respect you|kind of you|you'?re a (good|grand|fine))/.test(
-      s,
-    )
-  )
-    intent = 'flatter';
-  else if (/\?$|^(what|who|where|when|why|how|did|do|does|is|are|have|has|can|could|tell me|any)\b/.test(s))
-    intent = 'ask';
-  let topic = 'other';
-  if (
-    /(about me|say about|saying about|heard about me|they call me|call me|think of me|know about me|seen me|saw me)/.test(
-      s,
-    )
-  )
-    topic = 'me';
-  else if (/(fire|warehouse|no\.? ?4|number four|burn)/.test(s)) topic = 'fire';
-  else if (/(mickey|my uncle|suddaby)/.test(s)) topic = 'mickey';
-  else if (/(agar|widow|jensen|cammack|garbutt|fixer)/.test(s)) topic = 'rivals';
-  else if (/(owe|debt|the book|pay up|what'?s owed|slate)/.test(s)) topic = 'debt';
-  return { intent, topic, amount, denies };
-}
+// What his typed words are taken to mean: the rule piece's (game/pieces/talk.js). A sum of money spoken is not an
+// offer of money: only words that give it are (the smoke run of 20 Nov: "pay me 500 pounds" was logged as a bribe).
+const localIntent = (text) => TALKRULE.intent(text);
 async function classify(P, text, pending) {
   const loc = localIntent(text);
   if (!talkAvailable()) return loc;
@@ -153,11 +101,12 @@ ${pending ? 'The character has just asked him: "' + pending + '"\n' : ''}Player 
     if (r && INTENTS.includes(r.intent))
       return {
         live: true,
-        intent: r.intent,
+        // the model sorts, the game decides: money is offered only when the game's own rule reads an offer in his words
+        intent: r.intent === 'bribe' && loc.intent !== 'bribe' ? (loc.intent === 'smalltalk' ? 'ask' : loc.intent) : r.intent,
         topic: ['me', 'fire', 'mickey', 'rivals', 'debt', 'person', 'other'].includes(r.topic)
           ? r.topic
           : loc.topic,
-        amount: Math.max(0, Math.min(TALKING.offerAtMostPounds, +r.amount || loc.amount || 0)),
+        amount: loc.intent === 'bribe' ? Math.max(0, Math.min(TALKING.offerAtMostPounds, +r.amount || loc.amount || 0)) : 0,
         denies: !!r.denies,
       };
   } catch (e) {
@@ -274,6 +223,23 @@ async function sampleLine(P, directive, text, onText) {
   const out = clean(r && r.text);
   return out && !BANNED.test(out) ? out : null;
 }
+// What this person may say (the claim check's "known"): the people of the town by name, and what they hold of Tom.
+function knownTo(P) {
+  const all = Object.values(G.people).filter((q) => !q.anon && q.def && q.def.name).map((q) => q.def.name);
+  const mems = P.mind.mem.filter((m) => attached(m) && G.ev[m.e] && G.ev[m.e].kind !== 'inherit');
+  return {
+    people: all,
+    allNames: all,
+    surnames: all.map((n) => n.split(' ').slice(-1)[0]).concat(['Suddaby', 'Nowak', 'Agar', 'Jensen', 'Cammack', 'Garbutt', 'Ellis', 'Walsh', 'Rennison', 'Metcalfe', 'Rinaldi']),
+    deeds: mems.map((m) => KINDS[G.ev[m.e].kind].truth(G.ev[m.e])),
+    holdsAnything: mems.length > 0,
+  };
+}
+// The last line anybody said, kept for a report (ER-TALK-07: F9 in a talk or on the pause screen).
+function lastLine(P, text, live) {
+  const x = ensureX().econ;
+  if (x && text && text !== '...') x.lastLine = { text: String(text), who: P.def.name, live: !!live };
+}
 async function voice(P, res, text) {
   const cool = T.cool && Date.now() < T.cool;
   if (talkAvailable() && !cool) {
@@ -282,9 +248,16 @@ async function voice(P, res, text) {
       const out = await sampleLine(P, res.directive, text, (tx) => {
         p.textContent = tx || '...';
       });
-      if (out) {
+      // the claim check (ER-TALK-04): a live line that names somebody the town does not hold, lays a deed on Tom the
+      // speaker has no memory of, or uses a word the content rule or the year forbids is never shown: the written line plays
+      const claim = out ? TALKRULE.claimCheck(out, knownTo(P)) : null;
+      if (out && !claim.ok) {
+        G.stats.claimRefused = (G.stats.claimRefused || 0) + 1;
+        logLine(`A live line of ${P.def.name} was not shown (${claim.why})`, 'talk');
+      } else if (out) {
         p.textContent = out;
         G.stats.live++;
+        T.liveLine = out;
         return out;
       }
     } catch (e) {
@@ -368,16 +341,6 @@ export async function checkTalk(show) {
 }
 
 // ---------- the rules ----------
-function spend(pence) {
-  // dirty money first, then pocket
-  const m = G.money;
-  if (m.clean + m.dirty < pence) return false;
-  const d = Math.min(m.dirty, pence);
-  m.dirty -= d;
-  m.clean -= pence - d;
-  m.spent += pence;
-  return true;
-}
 function bestMem(P, pred) {
   let b = null;
   for (const m of P.mind.mem) {
@@ -499,7 +462,7 @@ function decide(P, it, text) {
           directive: 'He offers money he plainly has not got on him. React, in character.',
         };
       if ((d.venal ?? TALKING.venalAssumed) >= TALKING.takesMoneyFromVenal && !d.police) {
-        spend(p);
+        pay(p, false, 'money put in a hand', P.id);
         m.regard = clamp(m.regard + TALKING.regardAddedWhenBought, -1, 1);
         m.bought = true;
         act('paid_info', { target: P.id });
@@ -743,6 +706,7 @@ function npc(P, text) {
   return p;
 }
 function heard(P, text) {
+  lastLine(P, text, T.liveLine === text);
   hearName(P, text);
   talkHead();
   slip();
@@ -942,10 +906,12 @@ async function decStep(P, text, line) {
   if (!line) {
     const it = await classify(P, text, D.ask || (D.q != null ? D.opts[D.q].q : null) || 'a decision');
     if (T.P !== P || T.dec !== D) return;
-    if (D.q != null) job = it.intent === 'agree' ? 'yes' : it.intent === 'refuse' ? 'no' : 'talk';
+    // only a plain yes is taken (ER-TALK-03): "yes, but", "yes?" and "yes if" keep the talk going, whatever the sorter made of them
+    const yes = it.intent === 'agree' && TALKRULE.plainYes(text);
+    if (D.q != null) job = yes ? 'yes' : it.intent === 'refuse' ? 'no' : 'talk';
     else {
       idx =
-        it.intent === 'agree'
+        yes
           ? D.opts.findIndex((o) => o.agree)
           : it.intent === 'refuse'
             ? D.opts.findIndex((o) => o.refuse)

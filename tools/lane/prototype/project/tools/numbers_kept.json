@@ -83,8 +83,17 @@
  "src/kinds.js": {
   "u": 8
  },
- "src/money.js": {
-  "u": 1
+ "src/money.js": {},
+ "src/jobs.js": {},
+ "src/game/core.js": {
+  "u": 13,
+  "i": 4
  },
- "src/jobs.js": {}
+ "src/game/pieces/fights.js": {
+  "i": 51
+ },
+ "src/game/pieces/talk.js": {
+  "i": 1,
+  "t": 2
+ }
 }

@@ -1244,6 +1244,72 @@
    }
   },
   {
+   "id": "claim-invents-a-mister",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "Mr Hargreaves at the bank would know.",
+    {
+     "surnames": [
+      "Kirby",
+      "Dunn",
+      "Jensen",
+      "Garbutt"
+     ],
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "claim-a-titled-name-of-the-town",
+   "rule": "ER-TALK-04",
+   "fn": "claimCheck",
+   "in": [
+    "Mrs Dunn keeps the book.",
+    {
+     "surnames": [
+      "Kirby",
+      "Dunn",
+      "Jensen",
+      "Garbutt"
+     ],
+     "people": [
+      "Ron Kirby",
+      "Sheila Dunn"
+     ],
+     "allNames": [
+      "Ron Kirby",
+      "Sheila Dunn",
+      "Maureen Jensen",
+      "Keith Garbutt"
+     ],
+     "deeds": [
+      "carried a bag along the quay"
+     ],
+     "holdsAnything": true
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
    "id": "claim-plain-small-talk",
    "rule": "ER-TALK-04",
    "fn": "claimCheck",

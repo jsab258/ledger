@@ -1,6 +1,10 @@
 // Numbers and the rules table.
 //   node tools/numbers.mjs left             every number still written outside src/rules.js, file by file, and a
 //                                           pass or fail against tools/numbers_kept.json (the count that may stay)
+//   node tools/numbers.mjs game [--strict]  the same for the whole game's systems (src/game): game/tune, game/kinds and
+//                                           game/cast are the table; a number anywhere else in src/game must be in the
+//                                           record. Without --strict it lists the offenders and passes (the one-shot's
+//                                           first pass); `left` already holds the files named in GAME_HELD to it.
 //   node tools/numbers.mjs list <file>      the numbers in one file, in order, each with its place in the line
 //   node tools/numbers.mjs apply <names>    move numbers into src/rules.js under the names given (see below)
 // A names file: "@file src/x.js", "@alias section NAME" (the const the file reads that section through),
@@ -16,6 +20,19 @@ import * as acorn from 'acorn';
 const TRIVIAL = new Set(['0', '1', '2']);
 export const RULE_FILES = ['seeing', 'gossip', 'events', 'ledger', 'money', 'fares', 'jobs', 'police', 'routines', 'talk', 'talk_lines', 'scenes', 'work', 'fight', 'clock', 'kinds', 'cast', 'measures', 'light', 'state', 'player', 'drive'].map((f) => `src/${f}.js`);
 
+// The whole game (the one-shot, 20 Nov): the files of src/game that `left` holds to the record today. The others are
+// listed by `game` until their numbers have moved into game/tune.
+export const GAME_HELD = ['econ.js', 'pieces/money.js', 'pieces/flows.js', 'pieces/debts.js', 'pieces/fights.js', 'pieces/talk.js'].map((f) => `src/game/${f}`);
+const TABLE_DIRS = ['src/game/tune/', 'src/game/kinds/', 'src/game/cast/'];
+export function gameFiles(dir = 'src/game') {
+  const out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = dir + '/' + e.name;
+    if (e.isDirectory()) out.push(...gameFiles(p));
+    else if (e.name.endsWith('.js') && !TABLE_DIRS.some((t) => p.startsWith(t))) out.push(p);
+  }
+  return out.sort();
+}
 export function literals(src) {
   const ast = acorn.parse(src, { ecmaVersion: 'latest', sourceType: 'module', locations: true });
   const out = [];
@@ -95,7 +112,7 @@ if (mode === 'list') {
   const K = JSON.parse(fs.readFileSync('tools/numbers_kept.json', 'utf8'));
   const WHY = { u: 'unit conversions', i: 'indexes, counts and plain arithmetic', t: 'text and layout', g: 'places on the map', c: 'camera and controls', a: 'how people and things look' };
   let bad = 0;
-  for (const f of RULE_FILES) {
+  for (const f of RULE_FILES.concat(GAME_HELD.filter((g) => fs.existsSync(g)))) {
     const src = fs.readFileSync(f, 'utf8'), { out } = literals(src);
     const allowed = Object.values(K[f] || {}).reduce((a, b) => a + b, 0);
     const why = Object.entries(K[f] || {}).map(([k, v]) => `${v} ${WHY[k] || k}`).join(', ');
@@ -106,4 +123,17 @@ if (mode === 'list') {
   }
   console.log(bad ? 'FAIL: numbers outside src/rules.js that the record does not allow' : 'PASS: every number outside src/rules.js is one the record allows');
   process.exit(bad ? 1 : 0);
-} else console.log('usage: node tools/numbers.mjs left [--show] | list <file> | apply <names file>');
+} else if (mode === 'game') {
+  const K = JSON.parse(fs.readFileSync('tools/numbers_kept.json', 'utf8')), strict = process.argv.includes('--strict');
+  let bad = 0, total = 0;
+  for (const f of gameFiles()) {
+    const src = fs.readFileSync(f, 'utf8'), { out } = literals(src);
+    const allowed = Object.values(K[f] || {}).reduce((a, b) => a + b, 0);
+    const ok = out.length === allowed;
+    if (!ok) { bad++; total += Math.max(0, out.length - allowed); }
+    console.log(`${ok ? 'ok  ' : 'SEE '} ${f.padEnd(34)} ${String(out.length).padStart(4)} outside the table${ok ? '' : ' | the record allows ' + allowed}`);
+    if (process.argv.includes('--show') && !ok) out.forEach((l) => console.log(`       ${l.line}: ${flat(src.slice(Math.max(0, l.start - 40), l.end + 24))}`));
+  }
+  console.log(bad ? `${strict ? 'FAIL' : 'SEE'}: ${total} numbers in ${bad} files of src/game are outside game/tune and not in the record` : 'PASS: every number of the whole game is in game/tune, or one the record allows');
+  process.exit(bad && strict ? 1 : 0);
+} else console.log('usage: node tools/numbers.mjs left [--show] | game [--strict] [--show] | list <file> | apply <names file>');

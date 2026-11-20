@@ -224,6 +224,8 @@ const add = (piece, id, rule, fn, input, expect) => (sets[piece] || (sets[piece]
   add(t, 'claim-gambling', 'content rule', 'claimCheck', ['He owes the bookie, I heard.', K], { has: { ok: false } });
   add(t, 'claim-children', 'content rule', 'claimCheck', ['The kids on the corner saw it.', K], { has: { ok: false } });
   add(t, 'claim-wrong-year', 'canon era', 'claimCheck', ['Ring me on my mobile phone.', K], { has: { ok: false } });
+  add(t, 'claim-invents-a-mister', 'ER-TALK-04', 'claimCheck', ['Mr Hargreaves at the bank would know.', Object.assign({ surnames: ['Kirby', 'Dunn', 'Jensen', 'Garbutt'] }, K)], { has: { ok: false } });
+  add(t, 'claim-a-titled-name-of-the-town', 'ER-TALK-04', 'claimCheck', ['Mrs Dunn keeps the book.', Object.assign({ surnames: ['Kirby', 'Dunn', 'Jensen', 'Garbutt'] }, K)], { has: { ok: true } });
   add(t, 'claim-plain-small-talk', 'ER-TALK-04', 'claimCheck', ["It's been wet since August.", K], { has: { ok: true } });
   const H = { own: { ron: { 'Boss.': 1 } }, st: { 'the Hook': { "It's been wet since August.": 0 } } };
   add(t, 'own-line-not-twice-in-a-day', 'ER-TALK-02', 'lineAllowed', [H, 'Boss.', 'ron', 'the Hook', 1, false], { out: false });

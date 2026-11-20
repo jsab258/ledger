@@ -107,6 +107,16 @@ export const TUNE = {
     tierReadsMenace: [-0.5, -0.6, -0.8, -1],
     conditionWordsAtHurt: [0.2, 0.45, 0.7, 0.95],
   },
+  says: {
+    lineShowsRealSeconds: 6, // Sheila's word about the week's money, low on the screen
+    driversBookedAtHour: 18, // the drivers' day goes into the fare book at six
+    nightStartsAtHour: 22, // "last night" for the book's empty line
+    nightEndsAtHour: 5,
+    alibiCostsSheilaRegard: 0.08,
+    minutesInADay: 1440,
+    minutesInAnHour: 60,
+    logKeepsCharacters: 80,
+  },
   talk: {
     liveReplyHeardWithinRealSeconds: 2, // ER-TALK-01: or the written line plays
     liveReplyDroppedAfterRealSeconds: 8, // slower than this it is dropped with a brush-off

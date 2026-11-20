@@ -137,6 +137,13 @@ export function claimCheck(reply, known) {
       if (new RegExp('\\b' + n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(text) && !may.has(name.toLowerCase())) return { ok: false, why: 'names somebody the speaker does not know: ' + name };
     }
   }
+  // a titled name (Mr, Mrs, Father, DS and the like) must be somebody the town holds: nobody is invented in talk
+  if (known.surnames) {
+    const sur = new Set(known.surnames.map((n) => n.toLowerCase()));
+    const re = /\b(Mr|Mrs|Miss|Ms|Father|DS|PC|Sergeant|Constable|Inspector|Doctor|Dr)\.? ([A-Z][a-z]+)/g;
+    let m;
+    while ((m = re.exec(text))) if (!sur.has(m[2].toLowerCase())) return { ok: false, why: 'names somebody who is not in the town: ' + m[1] + ' ' + m[2] };
+  }
   if (ACCUSE.test(text)) {
     if (!known.holdsAnything) return { ok: false, why: 'says something of Tom the speaker holds no memory of' };
     const deeds = (known.deeds || []).map((d) => d.toLowerCase());
