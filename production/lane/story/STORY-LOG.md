@@ -165,3 +165,20 @@ Scores (critic, player, editor; overall, rank): A 7, 6, 6 (3rd, 3rd, 3rd); B 7, 
 | Round | Version | Critic | Player | Editor | Lowest category | Single it out |
 |---|---|---|---|---|---|---|
 | contest | C, The Passenger (treatment) | 8 | 8 | 7 | 6 (surprise, the editor) | no, nearly, no |
+| 1 | P2 v1 | 7 | 7 | 7 | 5 (the middle, the player) | no, no, no |
+
+## Phase 2, round 1 (20 November)
+
+What P2 v1 did: wrote the winner out as a bible of about 14,000 words, with the contest's eleven faults mended (no book in the gate hut; the Widow keeps her rule and Agar makes the telephone call; nobody asks about Tom's past; a reason in the inspector's remit; the line in the fare book matches the night as eleven miles; Ron told nobody of the offer, so the Fifth is not announced; the empty seat is three hours, with the two funniest set pieces in it) and the losers' ideas taken (the two strangers in car coats, the count, two widows in the cab, the bench at the hearing, the line Sheila wrote the day he came).
+
+Scores by category (critic, player, editor): Tom 7 7 8; cast 8 8 8; antagonists 6 6 6; mystery 7 8 7; opening 8 8 8; structure 6 6 6; middle 7 5 6; surprise 7 7 7; endings 8 8 8; side stories 6 7 7; tone 7 7 7; story and play 8 7 8.
+
+What the three said, in common:
+1. The climax is a pencil at a counter and its law does not hold (an old driving offence cannot be charged; the real stake is the theft); writing Tom's own name as the driver is a trick on his unsaid past.
+2. The hours between the middle's scenes are a loop described in one line; the wind-down road's jobs are not written.
+3. The theme is said aloud by nearly everyone.
+4. Danny and Agar are thin and fade; nobody presses in the last act.
+5. Ron goes to the gate whatever the player does; and every docker knows the Widow never talks to the police, so his fear of her does not hold.
+6. Fourteen logic and period faults from the editor (six years not three; no corridor to the police; four men or three; the Bishop on the sergeant's mother's street; the sums of the club).
+
+Next: P2 v2 answers each.
