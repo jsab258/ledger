@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-20 10:06 (the hourly run; the last session set its Stopped line at 09:32)
+**Started:** 2026-11-20 16:51 (the hourly run; the last session set its Stopped line at 16:37)
 
-**Row due:** by 11:16 (last row 10:16, doc 2026-11-20-1016-main; page read 10:08: verdicts none after 2026-11-20T06:52 UTC; advisor none after 09:51 +01:00, last ack 266)
-**Stopped:** 2026-11-20 10:09 (the 10:06 run handled advisor 266: Fable work runs one builder at a time at max effort, never several in parallel; RULINGS models line (4,898 of 4,900, wording trimmed, line key kept), enforcer note, one DECISIONS entry, ack and row 1016 written. Allowance 82% weekly, Fable 92%, above the 62.5% ceiling and the 75% hard stop: nothing started, stopped at once. Nothing running, no helpers, heavy lock free. Earlier: 09:32 handled advisor 265.)
+**Row due:** by 19:08 (last row 18:08, doc 2026-11-20-1808-main; page read 18:00: verdicts none after 2026-11-20T15:07 UTC; advisor none after 16:48 +01:00, last ack 271 at 18:08; no one-shot end row seen)
+**Stopped:** 2026-11-20 18:07 (history check OVER after advisor 271's Steam reviews item finished: lane a5e7a811b, wip commit with the tools, RULINGS, DECISIONS, RECIPE, retention and this file. No helpers, no background jobs, heavy lock untouched.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -30,29 +30,30 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
 
 
-## Done this run (04:07 on)
-- Game menu fix built and pushed (b6e9687bc). Ron's seated film: FAIL (step 1). Fins tries 1-2 failed, research, synthesis and diagnosis done, Fable brief ready (step 2). Uncommitted notes: DECISIONS (5 entries), time log, this file; commit them with the next work commit.
-
-## Done earlier (to 03:53)
-- Advisor 262 acked 01:28; night walk diagnosed; daily page read-back done. The skirt's fins measured by pleat_flat.py (research: tool-dev/reports/RESEARCH-PLEATS-LIE-FLAT-2026-11-20.md).
+## Done today
+- 04:07 on: game menu fix built and pushed (b6e9687bc). Ron's seated film: FAIL (step 1). Fins tries 1-2 failed, research, synthesis and diagnosis done, Fable brief ready (step 2).
+- 16:51-18:07, advisor 271 CLOSED: GTA V and RDR2 Steam reviews pulled, coded, hand-checked (tools/steam_review*.py; raw in F:/LedgerTools/steam-reviews); study on lane-2026-11 a5e7a811b; review fixed; rows and ack written.
 
 ## In flight
 - Nothing of mine runs; no helpers; the heavy lock is free. Three old bash wait loops (17, 19 Nov) linger, harmless; ending them was refused.
 
 ## Next, in order
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; above the ceiling start nothing new; advisor 258: keep main spend low, no Fable Kiln lane before the one-shot's end row (Sat 21 Nov).
-0. Verdicts (UTC, after 2026-11-20T06:52) and advisor (after 07:55 +01:00; last acks 263, 264). Row hourly (one is due by 08:56). When he taps Done on licence-rule-2026-11-20 and his session applies advisor 259, close it (needs_you_page.py --close) and the four licence items with decisions.
+0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20 and his session applies advisor 259, close it (needs_you_page.py --close) and the four licence items with decisions.
 0a. The one-shot (cloud) builds from 07:58 to about 18:00; its end row lifts the Fable hold: then steps 1, 2 and 5 below start.
 0b. The night walk of 20 Nov quit at the title (production/audits/night-walk-2026-11-20-diagnosis.md). Tester guard in play.py (02:20) and the game fix (try 1 of 2: a menu choice takes focus only from a pointer that moved) built, committed b6e9687bc and pushed 04:40. Tonight's packaged walk proves both: read its report in the morning.
-0c. Advisor 266 (his words 09:54): every Fable job runs ONE builder at a time at max effort, never several in parallel; the one-shot's second run follows it.
-1. Ron's seated film from the packaged copy DONE 04:52: FAIL, skin in the right hem-boot gap, larger than 19 Nov (DECISIONS 04:52; switches -SitProof -MickeysInside -IdleFilm=<dir> -IdleFilmWho=Ron -WearHeld=...; without -SitProof he stands in the street). Trousers stay held; seated hem cover try 2 of 2 goes into the legs' Fable lane after Saturday's end row, this film its acceptance view.
-2. Kiln v1 line 6, the fins: lane fins CLOSED 2 of 2 (4d2d608 bending band, a50e80d per-fabric thickness). Diagnosis done 06:58 (tool-dev/reports/KILN-FINS-DIAGNOSIS-2026-11-20.md): outcome A, the job's 160-degree fold angle holds the leaves; at 179 they lie down (3 of 16 pass, gap 0.9/0.3 mm) but self crossings 21 to 2138. Try 3 (the RULINGS 7 Nov different method, no yes needed): within-piece contact plus the fold angle as job data, brief READY at tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md; start one Fable helper at max the moment Saturday's one-shot end row is on the page. Lesson: test a diagnosis with one run before building a try on it.
+0c. Advisor 267 (11:05): until the one-shot's "One-shot stopped" row, no Fable work and nothing large, even under the ceiling; hourly runs read the page, write the row with weekly and Fable readings (the one-shot budgets from them), do small fixes only, then stop. After the end row: fins try 3, then legs' seated hem, then blouse2, one Fable builder at a time, if the week allows.
+0d. Advisor 266 (his words 09:54): every Fable job runs ONE builder at a time at max effort, never several in parallel; the one-shot's second run follows it.
+1. Ron's seated film from the packaged copy DONE 04:52: FAIL, skin in the right hem-boot gap, larger than 19 Nov (DECISIONS 04:52 has the switches). Trousers stay held; seated hem cover try 2 of 2 goes into the legs' Fable lane after Saturday's end row, this film its acceptance view.
+2. Kiln v1 line 6, the fins: lane fins CLOSED 2 of 2 (4d2d608 bending band, a50e80d per-fabric thickness). Diagnosis done 06:58 (tool-dev/reports/KILN-FINS-DIAGNOSIS-2026-11-20.md): outcome A, the job's 160-degree fold angle holds the leaves; at 179 they lie down (3 of 16 pass, gap 0.9/0.3 mm) but self crossings 21 to 2138. Try 3 (the RULINGS 7 Nov different method, no yes needed): within-piece contact plus the fold angle as job data, brief READY at tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md; start one Fable helper at max the moment Saturday's one-shot end row is on the page.
 4. Advisors 252/259: the licence edits to CLAUDE.md, RULINGS and the page check only when he asks in a session he starts; meanwhile decide licences by the allowlist's principles, never ask him (four licence items still open on his page: presentmon, kiln-front-end, font-pick, dinov3; close them with decisions in that session).
 4. When he taps Done on marvelous-box: md_job.py --start (try 2 of 2), then one export job over the 52 .zprj (ImportZprj, then export_api.ExportPatternJSON and ExportFBX beside each), check each opens again, list in production/art/clothing/LOG.md 'Exports'; copy the kiln-md-compare-2026-11-18 projects into F:/LedgerTools/garments. Then the reference drapes (Kiln v1 line 5).
 5. Blouse2's underarm (second fault) and the nylon wrist: Fable lanes only after Saturday's one-shot end row.
 6. History rewrite: HELD for his word at the PC. Then: progress page published daily; DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 20 Nov 16:53: Steam's appreviews address is retired (redirects); use IUserReviewsService/GetAppReviews (NOTEBOOK.md).
+- 20 Nov 15:52: advisor 270's RULINGS models-line edit ('Fable: one builder per piece of work, max effort (his, 20 Nov).', trimmed to hold 4,900) refused unattended; do it in a session he starts, then rulingsCheck.
 - 19 Nov 18:12: CLAUDE.md, RULINGS and page-check edits for advisor 252 refused by the unattended run's safety check (do not retry unattended).
 
 ## Kept as they are

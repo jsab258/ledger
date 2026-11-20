@@ -2807,3 +2807,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: the night walk passes the title; the tester's self-test 13 of 13. Cost: about 0.3 h with one diagnosis helper.
 - Failed: none yet; the game-side fix is owed.
 - Evidence: production/audits/night-walk-2026-11-20-diagnosis.md, tools/ai-tester/play.py
+
+### Player review study from a store's public reviews (20 Nov 2026)
+- Made: about 10,000 English store reviews per game for two reference games, coded by theme and folded into a three-game praise/punish ranking. Cost: about 1.5 h session, 0.2 h two reader helpers, 0.3 h one reviewer; pulls 1 h of machine time at 3-8 s a request.
+- Method: five kinds of pull (most helpful all time, newest, helpful in the past year, the first five weeks after the store release, a monthly fill sized so each game lands near the same total); overlaps removed by id; off-topic reviews (the online mode, the company, the launcher) set aside clause by clause; a word-list coder with a negation flip and the thumb as fallback; tuned on one hand-read set, frozen, scored once on a fresh hand-read set per game; ranked by the mean of each game's share.
+- Tools: the store's own public review interface (no key), Python, a reader model for the hand sets.
+- Target and check: agreement with the hand reading at least the earlier study's (53 and 65 of 100); reached 61 and 58; praise order 0.83, punish order 0.48.
+- Failed and why: the store had retired its old review address a month earlier, so the first try met a redirect; read the platform's current interface page before calling a source unreachable. The early weeks were taken from the first PC release, not the store release (a month later), so they came back empty. The fresh check found one theme scored against the wrong clause (praise and complaint in one clause) and stated it rather than retuning on the test set. A shell heredoc turned a regex's word boundary into a backspace byte: patch regexes with an editor, never a heredoc.
+- Evidence: F:/LedgerTools/steam-reviews/REVIEW-2026-11-20.md; production/research/lane/PLAYERS-KCD2-GTAV-RDR2-2026-11-20.md on lane-2026-11.
