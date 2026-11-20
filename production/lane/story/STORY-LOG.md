@@ -182,3 +182,21 @@ What the three said, in common:
 6. Fourteen logic and period faults from the editor (six years not three; no corridor to the police; four men or three; the Bishop on the sergeant's mother's street; the sums of the club).
 
 Next: P2 v2 answers each.
+
+## Phase 2, round 2 (20 November)
+
+Table line: | 2 | P2 v2 | 7 | 7 | 7 | 6 (structure, the critic; the middle, the editor) | no, no (close), no |
+
+What P2 v2 changed: the last Friday made a contest with every rival in the way; no false name for Tom (he can decline to name the driver and answer as the owner); each week of the middle given its own returning fare, dusk job and find in the count; Danny refused at the Widow's gate and Agar driven there to hear her price; a player who asks Ron first keeps him; what Ron feared changed from the police to Tom finding out; the editor's fourteen faults fixed.
+
+Scores by category (critic, player, editor): Tom 7 8 7; cast 8 8 8; antagonists 7 7 7; mystery 7 7 7; opening 8 8 8; structure 6 7 7; middle 7 7 6; surprise 7 7 7; endings 8 8 8; side stories 7 7 7; tone 7 7 7; story and play 7 8 8. The lowest category rose from 5 to 6; no overall score moved.
+
+What the three said, in common:
+1. The two real turns are told in speeches (the Bishop, the Widow, Ron, Sheila), not found by play. Let the player rebuild the eleven miles himself.
+2. The branch where Ron is asked first is one paragraph, and three later scenes assume he is at the gate.
+3. The last act is still days of talk at a counter and a run of errands; Agar is thin and his telephone call is luck; the copy to the police is invented when needed.
+4. The wind-down road has no turn of its own.
+5. Ron taking the gate hides nothing; the motive is still weak. Nobody is hurt in the present; the hooks never bite.
+6. Twelve logic and period faults (two tallies; how the street explained the Bishop's burns; the Jobcentre; a Catholic priest's church; a refused licence).
+
+Two rounds running have not raised the lowest reader's score (7, 7), so the order's rule applies and round 3 changes the method. Not another polish: Act III is rebuilt from its premise. The ledger comes due as a drive, not a desk: the warehouse was a bonded store, so the night is Customs and Excise's own; the inspector asks to be shown the eleven miles, and the climax is that route driven with him in the back seat. The second half's two turns are rebuilt to be found with the wheel and the mileometer (seven miles by the straight way; the other four are a bollard and back) and by a job, with the speeches cut. One thread is cut: the Widow holds nothing over anybody, in fact or by implication; Ron asked her for the coat.
