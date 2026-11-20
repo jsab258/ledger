@@ -193,14 +193,15 @@
    "group": "What the player does with his hands",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 11. Driving and the cab | DESIGN §5",
-   "standard": "M11: fragile like The Getaway (under 5 mph nothing; over 30 to 35 mph may not drive on); ER-DRIVE-01 (moves or can be left within 5 s); ER-DRIVE-08",
+   "standard": "M11: fragile like The Getaway (under 5 mph nothing; over 30 to 35 mph may not drive on); ER-DRIVE-01 (moves or can be left within 5 s); ER-DRIVE-08. Raised by Y1.1: front damage over the crash threshold pulls the car to one side until repaired, and a broken lamp darkens the road ahead at night; a dent is a mark witnesses remember.",
    "test": "S: pole and wall hits at 10, 20, 35, 50 mph; B: 30 minutes of crashing",
    "standard_source": "FEEL-TARGETS-DRIVING M11; DESIGN §5",
    "research": [],
    "status": "PENDING",
    "basis": "first targets from FEEL-TARGETS-DRIVING, to be replaced by the measured game band",
    "closed_by": "PC measuring 23 to 28 Nov (feel: on foot, driving, fists, being seen, chases)",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "1.2.5",
@@ -270,14 +271,15 @@
    "group": "What the player does with his hands",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 11. Driving and the cab | DESIGN-ADDENDUM-2026-11-20 §A24",
-   "standard": "A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18)",
+   "standard": "A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18). Raised by GTA VI's respray rule: new plates or a respray clear the police's noted plate for that car (see GV-02).",
    "test": "S: a repainted car is not named as the firm's by a witness who saw the old paint; addendum rules ER-PAINT-01",
    "standard_source": "DESIGN §5, §12, §18",
    "research": [],
    "status": "MEASURED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "1.2.10",
@@ -285,14 +287,15 @@
    "group": "What the player does with his hands",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 23. Taking a parked car | DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer)",
-   "standard": "Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car",
+   "standard": "Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car. Raised by Y1.2: the two ways in differ by the car: a brick through the quarter-light (about 3 s, loud) or a tool at the door and the ignition (about 10 s, quieter); a car with a steering lock cannot be taken; times to be checked in the footage pass.",
    "test": "S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01",
    "standard_source": "Q2 (open)",
    "research": [],
    "status": "MEASURED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "1.2.11",
@@ -1286,14 +1289,15 @@
    "group": "The town under the hood",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first | DESIGN §2",
-   "standard": "ER-EYES-09; ruling 23 Sep",
+   "standard": "ER-EYES-09; ruling 23 Sep. Raised by Y2.6: a person with the nerve for it (their temper) may step in, unarmed, at a hold-up or a beating in the street; Tom's line holds if that person is one it covers.",
    "test": "S: after a seen deed, look, gather, quieter talk",
    "standard_source": "ruling 23 Sep",
    "research": [],
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "2.5.4",
@@ -1468,14 +1472,15 @@
    "group": "The town under the hood",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 21. The police | DESIGN-ADDENDUM-2026-11-20 A36",
-   "standard": "rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.",
+   "standard": "rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S. Raised by Y2.3: the place stays warm for days, not minutes: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often; no circle on screen.",
    "test": "A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.",
    "standard_source": "DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30)",
    "research": [],
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "2.7.1",
@@ -1560,7 +1565,7 @@
    "group": "The town under the hood",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 16. Lifts, the fence and the shops | DESIGN §4, §9",
-   "standard": "About 0.4 (lead; the 1990 rate owed)",
+   "standard": "About 0.4 (lead; the 1990 rate owed). Raised by Y2.7: buyers differ in what they take (the second-hand shop radios and video recorders, the scrap yard car parts, a man at the back of the caff jewellery) and pay less for each further piece the same week; each is also a listener. No price table on screen.",
    "test": "S: golden rows",
    "standard_source": "DESIGN §4",
    "research": [
@@ -1569,7 +1574,8 @@
    "status": "UNMEASURED",
    "basis": "research item RN-13 has no dated study",
    "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "2.7.7",
@@ -2387,14 +2393,15 @@
    "group": "Story and people",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 34. Talk, where the consequences come back | DESIGN §11",
-   "standard": "About 30 own lines a regular; a person's own line once a day, a shared line once a week per street (ER-TALK-02)",
+   "standard": "About 30 own lines a regular; a person's own line once a day, a shared line once a week per street (ER-TALK-02). Raised by Y2.5: no shared street line heard twice in one real hour of play anywhere (GD-02).",
    "test": "H: transcripts",
    "standard_source": "RULINGS street lines; DESIGN §11",
    "research": [],
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "3.6.4",
@@ -3456,14 +3463,15 @@
    "group": "The interface and the Ledger",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: What the screen does show | DESIGN §17",
-   "standard": "ER-INPUT-02: held 0.2 s; everything usable has one",
+   "standard": "ER-INPUT-02: held 0.2 s; everything usable has one. Raised by Y1.8 (GTA VI fails it): with two usable things in reach the wrong action never fires; a tester walk presses the key 500 times in crowded spots and counts misfires (pass: zero).",
    "test": "H: walk-up sweep",
    "standard_source": "DESIGN §17",
    "research": [],
    "status": "MEASURED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "6.1.2",
@@ -3531,14 +3539,15 @@
    "group": "The interface and the Ledger",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: 24. Money in words, and the Ledger | DESIGN §10",
-   "standard": "Sure, thinks so, guesses by how learned (DESIGN §10)",
+   "standard": "Sure, thinks so, guesses by how learned (DESIGN §10). Raised by Y2.2: Tom's guess of what each person holds of him, slot by slot, in words (GV-02).",
    "test": "S: no entry without a source event",
    "standard_source": "DESIGN §10",
    "research": [],
    "status": "MEASURED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "6.2.2",
@@ -3834,14 +3843,15 @@
    "group": "The game's shape",
    "felt": true,
    "defined_in": "ONE-SHOT-PROMPT: What the screen does show | DESIGN §17",
-   "standard": "ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused",
+   "standard": "ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Raised by Y8.2: see GV-05 (no blocking fault three nights running).",
    "test": "S: reload at random moments; SaveChaos",
    "standard_source": "DESIGN §17; D35, D58",
    "research": [],
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run2": "raised"
   },
   {
    "id": "7.9",
@@ -5200,6 +5210,114 @@
    "source": "rulings",
    "parent": "",
    "ruling": "canon content rule"
+  },
+  {
+   "id": "GV-01",
+   "name": "The boot, seen",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-01",
+   "definition": "The cab's boot holds what is not on him: the envelope, a spare coat, a box. Opening it is an act with the seven slots; a constable who stops the cab with cause may look in it; a spare coat there is preparation (raised by Y1.3, Y1.6; idea 5).",
+   "standard": "Opening the boot is perceived like any act; a stop with cause searches it; what is in it survives save and load.",
+   "test": "B: boot opened in sight of a watcher x 20 (memory written); a stop with cause finds the boot's contents.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "1.6.9",
+   "run2": "added"
+  },
+  {
+   "id": "GV-02",
+   "name": "Shedding what a witness holds, slot by slot",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-02",
+   "definition": "Each slot a witness can hold is shed its own way, and only against witnesses who have not yet told anyone: the coat (change it at the office), the car (the second car, the roof sign off, new plates or a respray), the face (a cap and scarf at night, a barber for a week), the companion (walking apart from Ron), the weapon (got rid of). Tom's guess of what each person holds of him shows in words on the Ledger's People page, never as icons (raised by Y1.4, Y2.2; idea 1).",
+   "standard": "A changed slot no longer matches for witnesses who had not told; gossip already carried is never undone; the Ledger shows Tom's guess per slot in words.",
+   "test": "B: deed, change one slot, meet the same witness: only that slot fails to match; a witness who told first still names it.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "1.4.4, 1.6.10, 6.2.1",
+   "run2": "added"
+  },
+  {
+   "id": "GV-03",
+   "name": "The passenger who knows the way",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-03",
+   "definition": "Whoever rides with Tom (Ron, a crewman, a fare who knows the town) says the way by landmark in a chase and when asked on a fare: \"left after the chapel, he cannot follow you through the yard\". No marker; the words carry the where (raised by Y3.3; idea 4).",
+   "standard": "In a car chase with a passenger, at least one landmark line per 20 s of chase; every line names a real landmark on the way.",
+   "test": "B: car chases with each passenger; lines logged and checked against the map.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "1.2.7, 6.9",
+   "run2": "added"
+  },
+  {
+   "id": "GV-04",
+   "name": "Places stay open",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-04",
+   "definition": "Every building used in a job stays enterable afterwards, as a place in someone's life, unless the story closes it and says so (raised by Y4.2).",
+   "standard": "Every interior used once can be entered again after its job, or its closing is said in the world.",
+   "test": "B: after each job, a walk back into every interior it used.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "4.1.3",
+   "run2": "added"
+  },
+  {
+   "id": "GV-05",
+   "name": "Bugs at release",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-05",
+   "definition": "The release build has no blocking fault: never stuck, no lost save, no crash in a whole evening (raised by Y8.2: critics found almost no bugs in GTA VI; players punish bugs and ports most of all in the walkthrough games: GTA IV port 25.9%, bugs 12.7%; Forza Horizon 4 port 22.0%).",
+   "standard": "Three nights running, the AI tester's whole-evening and whole-week walks in the packaged build find zero blocking faults and zero crashes.",
+   "test": "The nightly tester walk, three nights in a row before the gate is called.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "7.8, 8.2.1",
+   "run2": "added"
+  },
+  {
+   "id": "GV-06",
+   "name": "How a deed is told: restraint and cruelty",
+   "group": "GTA VI yardstick (run 2 gaps)",
+   "felt": true,
+   "defined_in": "GTAVI-MAP-2026-11-21.md §GV-06",
+   "definition": "The telling carries how a deed was done, not only that it was: a man put down with three blows who is left alone is told differently from one who was kicked on the ground. The worst telling, once carried, is never undone (raised by Y2.4; idea 9; derived from people's beliefs, never a stored meter).",
+   "standard": "Two seeded fights differing only in restraint produce different told versions and different greetings within a game day.",
+   "test": "B: paired fights; the told lines and greetings compared.",
+   "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
+   "research": [],
+   "status": "MEASURED",
+   "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
+   "closed_by": "defined 21 Nov (run 2)",
+   "source": "GTA VI study",
+   "parent": "2.4.1, 2.12.4",
+   "run2": "added"
   }
  ]
 }

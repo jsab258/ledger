@@ -7,7 +7,7 @@ def cut(s,n=110):
     s=(s or '').replace('|','/').replace('\n',' ')
     return s if len(s)<=n else s[:n-3]+'...'
 L=[]
-L.append('# Design coverage map (20 November 2026)\n')
+L.append('# Design coverage map (20 November 2026; run 2, 21 November)\n')
 L.append('One row per part of LEDGER a player meets: the parts tree\'s leaves (group 9, the machinery, is not met by a player and is left out), plus rows added from the review studies, critics, the accessibility and PC standards, design-document categories and the first red team. The data is coverage.json; the review themes are themes.json; the source extractions are in sources/.\n')
 L.append('Unreal-only work (looks, engine, performance on his PC) is outside this proof; those rows are marked OUTSIDE and not judged here.\n')
 L.append('## Counts\n')
@@ -28,7 +28,7 @@ L.append('')
 L.append('## Review themes\n')
 inc=[t for t in th if not t['excluded']]
 tc=collections.Counter(t['status_of_parts'] for t in inc)
-L.append(f'{len(inc)} themes (Steam players for KCD2, GTA V and RDR2; critics for the same three) each map to a part with a test (themes.json). The weakest status among each theme\'s parts: '+'; '.join(f'{k} {v}' for k,v in tc.most_common())+f'. {len(th)-len(inc)} more themes from the October KCD2 and Mafia study are kept but not counted (Mafia is not a reference game, his ruling of 20 Nov). The six walkthrough games (Sleeping Dogs, GTA IV, L.A. Noire, Hitman, Watch Dogs: Legion, Forza Horizon 4) have no themes yet: their Steam study is still coding and lands after midnight; they are mapped when it does.\n')
+L.append(f'{len(inc)} themes (Steam players for KCD2, GTA V and RDR2; critics for the same three) each map to a part with a test (themes.json). The weakest status among each theme\'s parts: '+'; '.join(f'{k} {v}' for k,v in tc.most_common())+f'. {len(th)-len(inc)} more themes from the October KCD2 and Mafia study are kept but not counted (Mafia is not a reference game, his ruling of 20 Nov). Run 2 added the six walkthrough games\' Steam themes (WT rows, from STEAM-WALKTHROUGH-GAMES-2026-11-20 on wip) and the eight-game story patterns (SP rows); GTA VI\'s yardstick and mechanics are mapped line by line in GTAVI-MAP-2026-11-21.md.\n')
 groups=[]
 for r in R:
     g=r['group']

@@ -1,4 +1,4 @@
-# Design coverage map (20 November 2026)
+# Design coverage map (20 November 2026; run 2, 21 November)
 
 One row per part of LEDGER a player meets: the parts tree's leaves (group 9, the machinery, is not met by a player and is left out), plus rows added from the review studies, critics, the accessibility and PC standards, design-document categories and the first red team. The data is coverage.json; the review themes are themes.json; the source extractions are in sources/.
 
@@ -8,15 +8,15 @@ Unreal-only work (looks, engine, performance on his PC) is outside this proof; t
 
 | Status | Rows | Meaning |
 |---|---|---|
-| MEASURED | 164 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
+| MEASURED | 170 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
 | PENDING | 29 | defined, its standard waits on a dated study |
 | UNMEASURED | 71 | defined, no reference figure behind its standard yet |
 | UNDEFINED | 0 | needed, not defined (or only named) |
 | OUT | 14 | left out by his ruling or canon |
 | OUTSIDE | 57 | Unreal-only work, outside this proof |
-| all | 335 | |
+| all | 341 | |
 
-MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 15; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 12. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
+MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 21; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 12. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
 
 ## The punished categories, and what prevents each
 
@@ -40,7 +40,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | Scripted missions that fail for small deviations | 3.5.6 Job template and step states | Four job states and five step states; every step's place by landmark, two sources of di... | MEASURED |
 |  | 7.9 Failure without reload | ER-CORE-04: no game-over screen; control back within 2 real minutes | MEASURED |
 |  | GD-03 Jobs done out of order and sequence breaks | For every job, the AI tester runs all orders of its steps it can reach plus one skip by... | MEASURED |
-| Bugs, crashes, broken saves | 7.8 Saving | ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused | MEASURED |
+| Bugs, crashes, broken saves | 7.8 Saving | ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Rais... | MEASURED |
 |  | 8.2.1 Crash and bug reporting | (1) Nothing leaves the PC without a yes; (2) the report contains no typed talk and no s... | PENDING |
 |  | AX-07 Save thumbnails, rotating autosaves and never losing the only save (slots and autosave are already in the description) | (1) Eight manual slots with picture, day, hour, place; (2) three rotating autosaves; (3... | MEASURED |
 | Slow, clunky controls | 1.1.1 Walk, run and turn | ER-INPUT-01 (every action answers within 100 ms, eased keys, mouse look never jumps); f... | PENDING |
@@ -55,7 +55,7 @@ The review studies name these as punished across games. Each has a part, a stand
 
 ## Review themes
 
-184 themes (Steam players for KCD2, GTA V and RDR2; critics for the same three) each map to a part with a test (themes.json). The weakest status among each theme's parts: UNMEASURED 67; MEASURED 64; UNDEFINED 24; PENDING 14; OUTSIDE 8; OUT 6; NOT A DESIGN THEME 1. 58 more themes from the October KCD2 and Mafia study are kept but not counted (Mafia is not a reference game, his ruling of 20 Nov). The six walkthrough games (Sleeping Dogs, GTA IV, L.A. Noire, Hitman, Watch Dogs: Legion, Forza Horizon 4) have no themes yet: their Steam study is still coding and lands after midnight; they are mapped when it does.
+242 themes (Steam players for KCD2, GTA V and RDR2; critics for the same three) each map to a part with a test (themes.json). The weakest status among each theme's parts: UNMEASURED 97; MEASURED 77; PENDING 45; OUTSIDE 15; OUT 7; NOT A DESIGN THEME 1. 58 more themes from the October KCD2 and Mafia study are kept but not counted (Mafia is not a reference game, his ruling of 20 Nov). Run 2 added the six walkthrough games' Steam themes (WT rows, from STEAM-WALKTHROUGH-GAMES-2026-11-20 on wip) and the eight-game story patterns (SP rows); GTA VI's yardstick and mechanics are mapped line by line in GTAVI-MAP-2026-11-21.md.
 
 ## What the player does with his hands
 
@@ -77,8 +77,8 @@ The review studies name these as punished across games. Each has a part, a stand
 | 1.2.6 | Tailing and being tailed by car | UNMEASURED | none yet: following distance and the 'made' rule to be measured | ONE-SHOT-PROMPT: 14. Jobs / DESIGN §5 wrinkles; DESIGN-ADDENDUM §A2 | DESIGN §5 wrinkle 'the tail' (no numbers); research item RN-04 has no dated study | MEASUREMENTS-NEEDED.md (new, for the order of 2... |
 | 1.2.7 | Driving with passengers | UNMEASURED | No fare longer than 2 real minutes without a decision, a person or a sighting (ER-CORE-08); typing never mo... | ONE-SHOT-PROMPT: 11. Driving and the cab / DESIGN §5, §11 staging | DESIGN §1, §11; a felt number chosen by judgement, no reference figure be... | PC measuring 23 to 28 Nov (teardown: an hour of... |
 | 1.2.8 | Riding as a passenger | MEASURED | A crewman told to drive is an AI driver and always brakes for people (DESIGN §12); a skipped ride costs its... | ONE-SHOT-PROMPT: 11. Driving and the cab / DESIGN-ADDENDUM-2026-11-... | DESIGN §12; canon; his ruling, canon or a pass/fail rule |  |
-| 1.2.9 | Repairs, plates and paint | MEASURED | A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18) | ONE-SHOT-PROMPT: 11. Driving and the cab / DESIGN-ADDENDUM-2026-11-... | DESIGN §5, §12, §18; pass/fail rule (a guard or correctness test; no reference... |  |
-| 1.2.10 | Taking a parked car | MEASURED | Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car | ONE-SHOT-PROMPT: 23. Taking a parked car / DESIGN-ADDENDUM-2026-11-... | Q2 (open); pass/fail rule (a guard or correctness test; no reference... |  |
+| 1.2.9 | Repairs, plates and paint | MEASURED | A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18). Raised by GTA VI's respray rule... | ONE-SHOT-PROMPT: 11. Driving and the cab / DESIGN-ADDENDUM-2026-11-... | DESIGN §5, §12, §18; pass/fail rule (a guard or correctness test; no reference... |  |
+| 1.2.10 | Taking a parked car | MEASURED | Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car. Rais... | ONE-SHOT-PROMPT: 23. Taking a parked car / DESIGN-ADDENDUM-2026-11-... | Q2 (open); pass/fail rule (a guard or correctness test; no reference... |  |
 | 1.2.11 | The horn | MEASURED | rule: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a w... | ONE-SHOT-PROMPT: 11. Driving and the cab / DESIGN-ADDENDUM-2026-11-... | DESIGN-ADDENDUM-2026-11-20 A32 (from REFERENCE-MECHANICS-...; reference figure |  |
 | 1.3.1 | Blows and contact | PENDING | ER-FIGHT-01 (timings inside the melee sheet bands C1 to C15): C1 blow starts within 0.1 s; C2 jab 0.25 to 0... | ONE-SHOT-PROMPT: 10. Fists and the ladder / DESIGN §7 Feel | FEEL-TARGETS-MELEE (c); DESIGN §7; PC measuring 23 to 28 Nov (RN-05) | PC measuring 23 to 28 Nov (feel: on foot, drivi... |
 | 1.3.2 | Reading and answering blows | PENDING | Every incoming blow readable 0.45 to 0.80 s before it lands; at most two men swing at once, 0.4 s apart (ER... | ONE-SHOT-PROMPT: 10. Fists and the ladder / DESIGN §7; DESIGN-ADDEN... | DESIGN §7; melee sheet; PC measuring 23 to 28 Nov (RN-05) | PC measuring 23 to 28 Nov (feel: on foot, drivi... |
@@ -148,7 +148,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | 2.4.5 | The paper and the news | MEASURED | The press works only through a person, Alison (D56); a story prints only what she knows (canon moat) | ONE-SHOT-PROMPT: The paper and things to read / DESIGN-ADDENDUM-202... | D56; DESIGN §11; his ruling, canon or a pass/fail rule |  |
 | 2.5.1 | The walk to tell | MEASURED | No mobiles in 1990: the walk is the timer; at least 30 real s in Tom's sight (ER-EYES-04) | ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first /... | canon era; DESIGN §2; his ruling, canon or a pass/fail rule |  |
 | 2.5.2 | Stopping a witness | MEASURED | Ruling 3 Oct; ruling 1 Oct (neighbour reports unless on his side or talked round) | ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first /... | rulings 1 and 3 Oct; his ruling, canon or a pass/fail rule |  |
-| 2.5.3 | Crowd reaction to a deed | MEASURED | ER-EYES-09; ruling 23 Sep | ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first /... | ruling 23 Sep; his ruling, canon or a pass/fail rule |  |
+| 2.5.3 | Crowd reaction to a deed | MEASURED | ER-EYES-09; ruling 23 Sep. Raised by Y2.6: a person with the nerve for it (their temper) may step in, unarm... | ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first /... | ruling 23 Sep; his ruling, canon or a pass/fail rule |  |
 | 2.5.4 | A street on edge | MEASURED | rule: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's ... | ONE-SHOT-PROMPT: 19. Witnesses: the walk, and reaching them first /... | DESIGN-ADDENDUM-2026-11-20 A37 (from REFERENCE-MECHANICS-...; reference figure |  |
 | 2.5.5 | Finding an unseen deed | MEASURED | rule: Every unseen deed with a trace where a routine passes is found by the first person whose routine pass... | ONE-SHOT-PROMPT: 18. Finding a deed nobody saw / DESIGN-ADDENDUM-20... | DESIGN-ADDENDUM-2026-11-20 A38 (from REFERENCE-MECHANICS-...; reference figure |  |
 | 2.6.1 | The beat constable | MEASURED | Heard or seen 3 s before a challenge; calls out first (ER-POL-02) | ONE-SHOT-PROMPT: 21. The police / DESIGN §8 (new system needing its... | DESIGN §8; pass/fail rule (a guard or correctness test; no reference... |  |
@@ -166,7 +166,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | 2.7.3 | The wash | UNMEASURED | £10 plus 80% of real fares; Sheila warns first (ER-MONEY-04); a twenty-second decision once a day | ONE-SHOT-PROMPT: 26. The count and the wash / DESIGN §9 | DESIGN §9 (prototype's rule); a felt number chosen by judgement, no reference figure be... | MEASUREMENTS-NEEDED.md (new, for the order of 2... |
 | 2.7.4 | Rent and running costs | UNMEASURED | Doing nothing misses Friday's rent; a week of fares alone pays it (ER-MONEY-03); 1990 rent figure owed | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §9 | DESIGN §9; research item RN-13 has no dated study | MEASUREMENTS-NEEDED.md (new, for the order of 2... |
 | 2.7.5 | Purses, tills and shops | MEASURED | Purses and a weekly restock stay; no price tables or supply chains (DESIGN §18) | ONE-SHOT-PROMPT: 16. Lifts, the fence and the shops / DESIGN §9; DE... | DESIGN §9, §18; pass/fail rule (a guard or correctness test; no reference... |  |
-| 2.7.6 | Fencing | UNMEASURED | About 0.4 (lead; the 1990 rate owed) | ONE-SHOT-PROMPT: 16. Lifts, the fence and the shops / DESIGN §4, §9 | DESIGN §4; research item RN-13 has no dated study | MEASUREMENTS-NEEDED.md (new, for the order of 2... |
+| 2.7.6 | Fencing | UNMEASURED | About 0.4 (lead; the 1990 rate owed). Raised by Y2.7: buyers differ in what they take (the second-hand shop... | ONE-SHOT-PROMPT: 16. Lifts, the fence and the shops / DESIGN §4, §9 | DESIGN §4; research item RN-13 has no dated study | MEASUREMENTS-NEEDED.md (new, for the order of 2... |
 | 2.7.7 | Flows ledger | MEASURED | ER-MONEY-01 | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §9 | DESIGN §9; pass/fail rule (a guard or correctness test; no reference... |  |
 | 2.7.8 | Spending | MEASURED | What money buys is position (DESIGN §9); purses and weekly restock, no price tables (DESIGN §18) | ONE-SHOT-PROMPT: 16. Lifts, the fence and the shops / DESIGN-ADDEND... | DESIGN §9, §18; pass/fail rule (a guard or correctness test; no reference... |  |
 | 2.8.1 | The five debtors | UNMEASURED | Each debt teaches a different answer (DESIGN §4) | ONE-SHOT-PROMPT: 25. Debts and collections / DESIGN §4; first-week ... | DESIGN §4; standard is only a pointer to a design section, no number... | story measure (cloud, running 20 Nov) and STORY... |
@@ -312,12 +312,12 @@ The review studies name these as punished across games. Each has a part, a stand
 
 | Id | Part | Status | Standard | Defined in | Reference or basis | Closed by |
 |---|---|---|---|---|---|---|
-| 6.1.1 | The prompt | MEASURED | ER-INPUT-02: held 0.2 s; everything usable has one | ONE-SHOT-PROMPT: What the screen does show / DESIGN §17 | DESIGN §17; pass/fail rule (a guard or correctness test; no reference... |  |
+| 6.1.1 | The prompt | MEASURED | ER-INPUT-02: held 0.2 s; everything usable has one. Raised by Y1.8 (GTA VI fails it): with two usable thing... | ONE-SHOT-PROMPT: What the screen does show / DESIGN §17 | DESIGN §17; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.1.2 | Subtitles | MEASURED | A subtitle shows only with its audio (ruling 23 Sep); nothing under 24 units; no overlap at four window siz... | ONE-SHOT-PROMPT: What the screen does show / DESIGN §17 | RULINGS; DESIGN §17; his ruling, canon or a pass/fail rule |  |
 | 6.1.3 | The belief line | MEASURED | Within 3 s of a perceivable change (ER-CORE-02) | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger; What the scree... | DESIGN §10, §1; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.1.4 | Light and sound cues | MEASURED | Cue matches the rule's light value (DESIGN §2) | ONE-SHOT-PROMPT: What the screen does show / DESIGN §2 | DESIGN §2; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.1.5 | Knowing the time | MEASURED | The hour known within 3 s anywhere (ER-TIME-01); no timers on screen (ruling 23 Sep) | ONE-SHOT-PROMPT: 8. Light, noise and time / DESIGN-ADDENDUM-2026-11... | rulings; addendum; his ruling, canon or a pass/fail rule |  |
-| 6.2.1 | People | MEASURED | Sure, thinks so, guesses by how learned (DESIGN §10) | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §10 | DESIGN §10; pass/fail rule (a guard or correctness test; no reference... |  |
+| 6.2.1 | People | MEASURED | Sure, thinks so, guesses by how learned (DESIGN §10). Raised by Y2.2: Tom's guess of what each person holds... | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §10 | DESIGN §10; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.2.2 | Day book | MEASURED | ER-LEDG-01 | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §10 | DESIGN §10; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.2.3 | Open | MEASURED | ER-LEDG-03; ER-JOB-01 | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §10 | DESIGN §10, §4; pass/fail rule (a guard or correctness test; no reference... |  |
 | 6.2.4 | Money in words | MEASURED | ER-MONEY-02 | ONE-SHOT-PROMPT: 24. Money in words, and the Ledger / DESIGN §10 | DESIGN §9; pass/fail rule (a guard or correctness test; no reference... |  |
@@ -342,7 +342,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | 7.5 | The hour budget | PENDING | DESIGN table (on foot 25%, driving 22%, talk 19%, jobs 17%, fights and chases 8%, Ledger 6%, waiting 3%) re... | ONE-SHOT-PROMPT: 40. The hour budget and the feel targets / DESIGN §1 | DESIGN §1 (judgement); his question 20:29 (advisor 257); PC measuring 23 to 28 Nov (RN-14) | PC measuring 23 to 28 Nov (hour split, ACTIVITY... |
 | 7.6 | Tension and retellable moments | UNMEASURED | ER-TENS-01: at least 12 tense moments per 30 min from at least four sources, none over half; ER-TENS-02 | ONE-SHOT-PROMPT: 2. The tone and the bar; 40. The hour budget and t... | DESIGN §3; a felt number chosen by judgement, no reference figure be... | PC measuring 23 to 28 Nov (teardown: an hour of... |
 | 7.7 | Rising in position, felt | MEASURED | ER-RISE-01 to 03: no number on screen; each rung changes three things a newcomer can point to | ONE-SHOT-PROMPT: 32. The rise, heard in what people call him / DESI... | DESIGN §14; pass/fail rule (a guard or correctness test; no reference... |  |
-| 7.8 | Saving | MEASURED | ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused | ONE-SHOT-PROMPT: What the screen does show / DESIGN §17 | DESIGN §17; D35, D58; his ruling, canon or a pass/fail rule |  |
+| 7.8 | Saving | MEASURED | ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Raised by Y8.2: see GV-0... | ONE-SHOT-PROMPT: What the screen does show / DESIGN §17 | DESIGN §17; D35, D58; his ruling, canon or a pass/fail rule |  |
 | 7.9 | Failure without reload | MEASURED | ER-CORE-04: no game-over screen; control back within 2 real minutes | ONE-SHOT-PROMPT: 3. What is never in the game / DESIGN §1, §4, §7, §8 | DESIGN §1; pass/fail rule (a guard or correctness test; no reference... |  |
 | 7.10 | Difficulty as assists | MEASURED | D11: difficulty only as assists | ONE-SHOT-PROMPT: What the screen does show / DESIGN-ADDENDUM §A6 | D11; RULINGS What the game is; his ruling, canon or a pass/fail rule |  |
 | 7.11 | Waiting and time skips | MEASURED | ER-JOB-04; never force waiting (Study 17) | ONE-SHOT-PROMPT: 40. The hour budget and the feel targets / DESIGN ... | DESIGN §4, §6; pass/fail rule (a guard or correctness test; no reference... |  |
@@ -456,3 +456,14 @@ The review studies name these as punished across games. Each has a part, a stand
 | OUT-11 | American-style satire | OUT | - | canon or RULINGS | canon Tone: never GTA-style American satire; canon Tone: never GTA-style American satire |  |
 | OUT-12 | Game-over screen | OUT | - | canon or RULINGS | D35, D58; ruling 30 Oct: no game over; D35, D58; ruling 30 Oct: no game over |  |
 | OUT-13 | Children | OUT | - | canon or RULINGS | canon content rule; canon content rule |  |
+
+## GTA VI yardstick (run 2 gaps)
+
+| Id | Part | Status | Standard | Defined in | Reference or basis | Closed by |
+|---|---|---|---|---|---|---|
+| GV-01 | The boot, seen | MEASURED | Opening the boot is perceived like any act; a stop with cause searches it; what is in it survives save and ... | GTAVI-MAP-2026-11-21.md §GV-01 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+| GV-02 | Shedding what a witness holds, slot by slot | MEASURED | A changed slot no longer matches for witnesses who had not told; gossip already carried is never undone; th... | GTAVI-MAP-2026-11-21.md §GV-02 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+| GV-03 | The passenger who knows the way | MEASURED | In a car chase with a passenger, at least one landmark line per 20 s of chase; every line names a real land... | GTAVI-MAP-2026-11-21.md §GV-03 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+| GV-04 | Places stay open | MEASURED | Every interior used once can be entered again after its job, or its closing is said in the world. | GTAVI-MAP-2026-11-21.md §GV-04 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+| GV-05 | Bugs at release | MEASURED | Three nights running, the AI tester's whole-evening and whole-week walks in the packaged build find zero bl... | GTAVI-MAP-2026-11-21.md §GV-05 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+| GV-06 | How a deed is told: restraint and cruelty | MEASURED | Two seeded fights differing only in restraint produce different told versions and different greetings withi... | GTAVI-MAP-2026-11-21.md §GV-06 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
