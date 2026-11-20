@@ -327,3 +327,33 @@ Ruler version 1 (kept as measure/cal1/MEASURE.md) was built from the three measu
 This pilot is not the measure. The ruler disagreed with the reviews: players praise RDR2's story most of the three (47% of reviews, against 32% and 28%), and the ruler put it well below KCD2. The causes found, all faults of the method and not of the stories: (1) the summaries' first section gave away the turn and the ending, so "predictable" was failed for the format's own doing; (2) the KCD2 page told side stories and comic scenes and the two Rockstar pages did not, because one helper had been asked for them and two had not; (3) the test for an ending counted how it is computed, where players praise how it lands; (4) "told, not found" was our own readers' complaint and no pattern in the reviews; (5) The Passenger's page came from a design document, which states that choices matter, where the games' pages came from plot summaries, which do not. The format is now version 2 (no give-aways up top, two side stories told, comic and grave scenes concretely, instances and not claims) and all four summaries were redone to it.
 
 Next: ruler version 2, with these faults mended and checked against the eight-game patterns file when it lands (or built from three games at 04:00 Saturday if it has not), then the calibration proper with three new readers.
+
+## Step 4 proper and step 5: the measure (20 November, 22:10 to 22:35)
+
+The eight-game file landed at 22:09 (production/research/lane/STORY-PATTERNS-STEAM-2026-11-20.md). Ruler version 2 was rebuilt from it: nine praise and fault patterns named in at least five of the eight games, weighted by their pooled share, split into fourteen scored tests (80 praise points, 34 fault points), plus five watch items without points from the three-game study. Calibration round 2 (three new readers) ranked the references as players do but still disagreed with the reviews on three tests; they were fixed once (version 3) and round 3 ran with three new readers. measure/CALIBRATION.md has the tables, the agreements, the disagreements that remain and the limits.
+
+The measure (round 3; critic, player, editor):
+
+| Story | Checklist (of 80) | Overall | Core items failed |
+|---|---|---|---|
+| KCD2 | 55, 60, 60 | 6, 7, 6 | a moment that hits hard (all three), a turn that surprises (all three), a rushed or weak ending (all three), an ending that lands (one) |
+| RDR2 | 66, 75, 55 | 7, 8, 7 | a turn that surprises (all three); one reader each: a moment that hits hard; people with wants and planted and paid |
+| GTA V | 41, 64, 47 | 4, 6, 4 | a lead who is somebody (two), people you could tell apart (two), an ending that lands (all three), a turn that surprises (all three), a string of jobs (two) |
+| The Passenger (P2 v5 with v6's kitchen) | 80, 80, 80 | 9, 9, 8 | none |
+
+## Step 6: the bar, first test (20 November, 22:40): not met
+
+By the letter the three readers put The Passenger at or above the best reference on the checklist and overall with no fault item failed. The fourth reader (a seasoned games writer, given the whole bible and told plainly that our page is a plan and the others shipped games; measure/cal3/REVIEW-CAL3-fourth-games-writer.md) did not agree: on the same pages he marked RDR2 8 and The Passenger 7, and from the bible answered NO, with about 70% confidence, to "built competently, would it stand at or above the best of the three". So the story is not exceptional by the measured bar.
+
+His reasons, which are the list to write to (faults of the story, fixable on paper):
+1. The turn lands on the wrong relationship: it is about Sheila, whom the design keeps at arm's length; the hit lands on a stranger.
+2. The theme and the drama pull apart: asking Ron first removes the midpoint loss, so the best-played path gets the weakest story.
+3. The red herring breaks itself: the lessons prove Ron cannot drive; elimination points at Sheila early; the turn hangs on one pronoun.
+4. Low stakes and a passive climax: an assessment and a bail date; the last input is to do nothing.
+5. Act III is a run of errands with no clock tied to a person.
+6. Too many branches for the hours (six endings, four signatures, two middles, a second road).
+Also: Tom's change is counted, not shown as a deed; the comedy is labelled, not written. Only the built game can judge: an unvoiced lead carrying a friendship, typed questions, whether a weekly loop holds, whether an eleven-mile-an-hour drive is tension.
+
+His six changes of shape: make Sheila the second bond with three scenes for the hands before the turn; let the turn be found by the hands (the player sees her drive car two without touching the seat) and give the player a real reason to suspect Ron; Ron goes to the gate on every path, and asking changes what it means, not whether it happens; put a person on the clock in Act III (Ron means to give a false confession on Friday) and an active beat before the handbrake; three endings keyed to Ron's seat and two signatures; Tom's change as a deed that needs other hands, the middle cut from six weeks to four, the comic scenes written.
+
+Next: round M1. The bible is rewritten to these six (STORY-BIBLE-M1.md), a fresh summariser makes its page, three fresh readers score it with the three reference pages, and the fourth reader's test is run again.
