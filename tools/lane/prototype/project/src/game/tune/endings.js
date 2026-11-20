@@ -1,5 +1,6 @@
 // The numbers of the system "endings" (DESIGN 16, A7): plain data, imports nothing.
 export const TUNE = {
+  wentFromAdasRegardBy: 0.15, // he left her table for the yard gate: she saw which
   shown: ['The Kingdom', 'The Straight Life', 'Burn Both'],
   built: ['Both', 'Kingdom', 'Quiet', 'Straight', 'Burn'], // the five built states kept underneath (QUESTIONS 1)
   streetHoldsRacketsAsFactAtTellers: 6,

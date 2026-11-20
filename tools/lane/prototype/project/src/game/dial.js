@@ -98,3 +98,7 @@ on('act', (E) => {
 on('crime.holdup', ({ gun }) => {
   if (gun) move('gun seen', true, 'tom');
 });
+// defied at the sit-down, the head's men come onto his street carrying, and are seen: a gun on the Hook, through them
+on('rivals.sitdown', (e) => {
+  if (e.headsMenArmed) move('gun seen', true, e.head);
+});

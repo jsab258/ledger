@@ -21,6 +21,7 @@ export const TUNE = {
   ],
   noDeadWeekNeedsBeatsAtLeast: 1,
   inspectionItems: ['the fare book, weeks one to four', 'the drivers\' wage slips', 'the cars\' log books and receipts', 'the bank paying-in book', 'the fare book, the last three weeks'],
+  inWritingAtMost: 2, // asking for the request in writing buys a day, twice and no more
   bookStandsIfOffUnderPence: 2000,
   bookStrainedIfOffUnderPence: 12000,
 };

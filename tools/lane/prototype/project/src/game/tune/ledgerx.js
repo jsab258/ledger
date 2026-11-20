@@ -10,6 +10,7 @@ export const TUNE = {
   streetTalkAtMostEveryRealSeconds: 45,
   visitAgainAfterGameHours: 20, // A39: a second call inside this gap draws a cooler answer
   visitLastsAtMostRealSeconds: 120,
+  visitCountsAgainAfterGameHours: 20, // one honest visit a day can count, never four in an afternoon
   friendshipHoldsAtVisits: 4, // honest visits before the friendship can hold (3.2.5)
   watchShowsRealSeconds: 2,
   hourKnownWithinRealSeconds: 3,

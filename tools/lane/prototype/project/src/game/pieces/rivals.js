@@ -46,6 +46,22 @@ function fixer(buy, s) {
   if (buy === 'truce') return s.trucesSold >= F.truces ? { ok: false, why: 'one truce only' } : s.pocketPence >= F.trucePence ? { ok: true, pence: F.trucePence, truceUntilT: s.t + F.truceLastsGameDays * 1440 } : { ok: false, why: 'he has not got it' };
   return { ok: false, why: 'he sells three things' };
 }
-// The sit-down that ends Act II: one head; accept, defy, or counter with what he knows.
-const sitDown = (choice, s = {}) => (choice === 'accept' ? { ok: true, ends: 'Act II', state: 'under ' + s.head } : choice === 'defy' ? { ok: true, ends: 'Act II', state: 'at war with ' + s.head } : choice === 'counter' ? (s.knows ? { ok: true, ends: 'Act II', state: 'holds ' + s.head + ' off with what he knows' } : { ok: false, why: 'he knows nothing to counter with' }) : { ok: false, why: 'three answers only' });
-export const PIECE = { name: 'rivals', fns: { fresh, learns, climb, showFor, shown, answer, fixer, sitDown } };
+// The sit-down that ends Act II: one head; accept, defy, or counter with what he knows. The answer is a standing
+// state of the town, read every week after: under (a share goes up each week, the head stops climbing and keeps
+// the other two off him), at war (the head's second move comes again every week, and its men are seen armed),
+// held off (the head leaves him be, the other two do not).
+function sitDown(choice, s = {}) {
+  const S = T.sitDown;
+  if (choice === 'accept') return { ok: true, how: 'under', state: 'under ' + s.head, tributePencePerWeek: S.underTributePencePerWeek, headClimbs: false, othersHeldAtRung: S.underOthersHeldAtRung, headThreatEveryGameDays: null, headsMenArmed: false };
+  if (choice === 'defy') return { ok: true, how: 'war', state: 'at war with ' + s.head, tributePencePerWeek: 0, headClimbs: false, othersHeldAtRung: null, headThreatEveryGameDays: S.warThreatEveryGameDays, headsMenArmed: true };
+  if (choice === 'counter') return s.knows ? { ok: true, how: 'holds', state: 'holds ' + s.head + ' off with what he knows', tributePencePerWeek: 0, headClimbs: false, othersHeldAtRung: null, headThreatEveryGameDays: null, headsMenArmed: false } : { ok: false, why: 'he knows nothing to counter with' };
+  return { ok: false, why: 'three answers only' };
+}
+// What stands between him and a rival after the sit-down. sd: the sit-down as kept; id: the rival asked about.
+function standing(sd, id, rung) {
+  if (!sd) return { mayClimb: true, why: null };
+  if (id === sd.head) return { mayClimb: false, why: sd.how === 'war' ? 'at war: it does not climb, it comes' : 'settled at the sit-down' };
+  if (sd.how === 'under' && rung >= sd.othersHeldAtRung) return { mayClimb: false, why: 'he is under ' + sd.headCalled + ', and they know it' };
+  return { mayClimb: true, why: null };
+}
+export const PIECE = { name: 'rivals', fns: { fresh, learns, climb, showFor, shown, answer, fixer, sitDown, standing } };

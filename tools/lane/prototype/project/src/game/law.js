@@ -31,8 +31,9 @@ const offenceOf = (a, E) => (a.offence ? a.offence : E && KINDS[E.kind].damage ?
 function custody(a, ran, E) {
   const x = X('law'),
     offence = offenceOf(a, E);
-  const c = L.custody(offence, { ownedUp: !ran && offence === 'damage' && !x.charges.length, first: !x.charges.length && !x.cautions, woreCoat: G.tom.coat });
-  const hours = c.gameHours + (ran ? RULES.police.heldGameHoursAddedIfHeRan : 0);
+  // once DS Ellis has joined the street crimes to the fire (Act II's beat), nothing of his is small: no caution, and longer
+  const c = L.custody(offence, { ownedUp: !ran && offence === 'damage' && !x.charges.length && !x.oneCase, first: !x.charges.length && !x.cautions && !x.oneCase, woreCoat: G.tom.coat });
+  const hours = c.gameHours + (ran ? RULES.police.heldGameHoursAddedIfHeRan : 0) + (x.oneCase ? T.oneCaseAddsGameHours : 0);
   if (c.ends === 'cautioned') x.cautions++;
   else {
     x.charges.push({ offence, t: Math.round(G.t), e: E ? E.id : null });
@@ -403,7 +404,7 @@ function officeSearchStep() {
 
 register({
   id: 'law',
-  fresh: () => ({ ellis: { stage: 0, signShown: true, signShownT: null, owed: null }, charges: [], cautions: 0, arrests: [], takenFor: {}, watched: [], spot: null, ellisDue: null, deeds: [], edge: false, bought: {}, search: { noticeT: null, done: false, found: [] }, challengedT: -1e9, challenges: [], chases: [], stops: [], carChases: [], stoppedT: -1e9, plateNoted: false, manhuntArrest: false }),
+  fresh: () => ({ ellis: { stage: 0, signShown: true, signShownT: null, owed: null }, charges: [], cautions: 0, arrests: [], takenFor: {}, watched: [], spot: null, ellisDue: null, deeds: [], edge: false, bought: {}, search: { noticeT: null, done: false, found: [] }, challengedT: -1e9, challenges: [], chases: [], stops: [], carChases: [], stoppedT: -1e9, plateNoted: false, manhuntArrest: false, oneCase: false }),
   loaded() {
     G.hooks.custody = custody;
     S.beat = S.chase = S.carChase = null;
@@ -490,4 +491,10 @@ on('crime.holdup', ({ e, r }) => {
 });
 on('cars.reckless', ({ why, x, z }) => {
   if (L.stop({ hit: why === 'hit', onPavement: why === 'pavement', speed: Math.abs(G.car.v), inOfficersSight: patrolSees(x, z) }).stops) trafficStop(why);
+});
+// Act II: DS Ellis joins the street crimes to the fire. From then every arrest is part of one case.
+on('acts.beat', ({ id }) => {
+  if (id !== 'oneCase') return;
+  X('law').oneCase = true;
+  sign('ellis', 'DS Ellis has the fire and the street crimes in one file now. Nothing of his will be treated as small again.');
 });

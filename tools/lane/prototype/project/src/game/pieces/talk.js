@@ -52,8 +52,10 @@ function visit(p, t) {
   const soon = p.lastVisitT != null && t - p.lastVisitT < T.visitAgainAfterGameHours * 60;
   return { possible: true, door: soon ? 'cooler: "you again"' : 'asked in', score: null, lastsAtMostRealSeconds: T.visitLastsAtMostRealSeconds, carries: p.knowsOfLastNight ? 'what they heard of last night' : null };
 }
+// Does this visit count towards the friendship? Only a true thing told, and one a game day at most (3.2.7).
+const visitCounts = (v, t) => ({ counts: v.honest === true && (v.lastCountedT == null || t - v.lastCountedT >= T.visitCountsAgainAfterGameHours * 60) });
 // The friendship worth being honest for (3.2.5): it holds on honest visits and breaks on a lie caught.
 const friendship = (f) => (f.lieCaught ? 'lost' : f.honestVisits >= T.friendshipHoldsAtVisits ? 'holds' : f.honestVisits > 0 ? 'begun' : 'none');
 // How the player speaks (A25): every decision can be reached by pad alone.
 const padCan = (talk) => talk.suggested.length > 0 && talk.suggested.some((l) => plain(l) === 'yes') && talk.leaveOffered === true;
-export const PIECE = { name: 'talk', fns: { plain, decide, reply, claims, lineFree, greeting, haggle, visit, friendship, padCan } };
+export const PIECE = { name: 'talk', fns: { plain, decide, reply, claims, lineFree, greeting, haggle, visit, visitCounts, friendship, padCan } };

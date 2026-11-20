@@ -4,6 +4,12 @@ export const TUNE = {
   orderInputsAtMost: 2,
   orderAnsweredWithinRealSeconds: 1,
   followsAtMetres: 2,
+  // a man at his side in a fight (A16): he takes the second man
+  sideFightsWithinMetres: 1.6,
+  sideBlowEveryRealSeconds: 1.4,
+  sideBlowHurts: 0.34,
+  sideNerveGainsPerExchange: 0.05,
+  sideManDownGameMinutes: 30,
   lagsAtMostRealSeconds: 10,
   // the eight sent verbs of Act II (D56), in his order
   verbs: ['have a man hurt', 'point a plan at a person', 'frame someone', 'lean on a witness', 'move or hide a body', 'dock, expel or beat one of his own', 'send men at a rival property', 'have someone vouch for him'],

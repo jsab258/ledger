@@ -11,6 +11,8 @@ export const TUNE = {
   answers: ['pay', 'defy', 'counter with what he knows'],
   fixer: { name: 'Keith Garbutt', readPence: 2000, meetingPence: 5000, trucePence: 20000, truces: 1, truceLastsGameDays: 14 },
   rivalsComeSoonerIfArrangementEndedGameDays: 7,
+  sitDown: { underTributePencePerWeek: 6000, underOthersHeldAtRung: 2, warThreatEveryGameDays: 7 },
+  beatSightings: { fleet: 'three of his cars are on the air now', openGround: 'the old arrangement is gone and nobody holds his ground', oldFirmFades: 'the men behind the landing have handed him their end' },
 };
 export const SCHEDULES = {};
 export const PEOPLE = {};

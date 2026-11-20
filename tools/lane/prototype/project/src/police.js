@@ -331,27 +331,6 @@ export function statements(dayIdx) {
   }
   return out;
 }
-// A statement is on record: the walk to the phone box ended (game/walks.js). An officer comes for him at nine, never
-// sooner than a few hours after; a second statement joins the first, and the graver deed leads.
-export function statementMade(E, id) {
-  const st = G.story,
-    W = RULES.game.foot.walk,
-    violent = KINDS[E.kind].crime >= POL.violentFromCrimeLevel;
-  E.stmt = E.stmt || [];
-  if (!E.stmt.includes(id)) E.stmt.push(id);
-  let due = Math.floor(G.t / 1440) * 1440 + W.officerComesNextAtHour * 60;
-  while (due < G.t + W.officerComesAtLeastGameHoursAfter * 60) due += 1440;
-  const a = st.arrest;
-  if (a && !a.st) {
-    const worse = !a.e || !G.ev[a.e] || KINDS[E.kind].crime > KINDS[G.ev[a.e].kind].crime;
-    if (worse) a.e = E.id;
-    a.violent = a.violent || violent;
-    a.by = (a.by || []).concat(a.by && a.by.includes(id) ? [] : [id]);
-  } else if (!a) st.arrest = { e: E.id, violent, due, by: [id] };
-  logLine('A statement was made to the police: ' + KINDS[E.kind].truth(E) + ' (by ' + (G.people[id]?.def.name || id) + ')', 'police');
-  return st.arrest;
-}
-
 export function nightly(d) {
   // run once per night: whoever placed him only later (the coat, the cab) and means to tell sets off in the morning
   const st = G.story;

@@ -16,7 +16,9 @@ const T = RULES.game.rivals;
 const R = RIV.fns;
 const called = (id) => T.rivals[id].called;
 // What he knows that a rival would not want known (the counter): facts his hands or his fares turned up.
-const KNOWS = { widow: () => (G.x.fares.learned.gate_tax ? "who takes the money in the hut at the dock gate" : null), agar: () => (G.x.crime.facts.agar_licence ? "who wrote the complaint on the Board's paper" : null), cammack: () => (G.x.crime.facts.rita_book ? "whose lads are in Rita's book every week" : null) };
+// Mickey's real book, once Sheila has put it on the desk, holds what he paid each of them and when: a counter to any of the three.
+const book = () => (G.x.crime.facts.real_book ? "what Mickey paid them, week by week, in his own hand" : null);
+const KNOWS = { widow: () => (G.x.fares.learned.gate_tax ? "who takes the money in the hut at the dock gate" : book()), agar: () => (G.x.crime.facts.agar_licence ? "who wrote the complaint on the Board's paper" : book()), cammack: () => (G.x.crime.facts.rita_book ? "whose lads are in Rita's book every week" : book()) };
 
 // Something one of a rival's own people saw or heard of him (ER-RIV-01).
 export function learns(id, by, what, e) {
@@ -29,6 +31,7 @@ function climbAll() {
   const x = X('rivals');
   for (const id in x.r) {
     const sooner = G.story.flags.choice === 'wind' ? T.rivalsComeSoonerIfArrangementEndedGameDays * 1440 : 0;
+    if (!R.standing(x.sitDown, id, x.r[id].rung).mayClimb) continue; // what the sit-down settled stands (3.5.5)
     const r = R.climb(id, x.r[id], G.t + (x.r[id].rung === 0 ? sooner : 0));
     if (!r.climbed) continue;
     x.r[id] = Object.assign(r.rival, { lastT: G.t });
@@ -106,10 +109,41 @@ async function sitDown(m) {
   });
   let r = R.sitDown(['accept', 'defy', 'counter'][i], { head: called(m.id), knows: !!knows });
   if (!r.ok) r = R.sitDown('defy', { head: called(m.id) });
-  x.sitDown = { head: m.id, state: r.state, t: Math.round(G.t) };
+  x.sitDown = { head: m.id, headCalled: called(m.id), how: r.how, state: r.state, tributePencePerWeek: r.tributePencePerWeek, othersHeldAtRung: r.othersHeldAtRung, headThreatEveryGameDays: r.headThreatEveryGameDays, headsMenArmed: r.headsMenArmed, t: Math.round(G.t), lastThreatT: G.t, weeksPaid: 0, weeksShort: 0 };
+  if (r.how === 'holds') x.r[m.id].truceUntilT = null;
   x.r[m.id] = R.shown(x.r[m.id]);
   write(`The sit-down with ${called(m.id)}: ${r.state}.`, { how: 'Did it', key: 'sitdown' });
-  emit('rivals.sitdown', { head: m.id, state: r.state });
+  await scene(() => say(called(m.id), r.how === 'under' ? `Good. ${quid(r.tributePencePerWeek)} every Friday, by a man of mine who will call. And nobody else troubles you: that is what it buys.` : r.how === 'war' ? 'Then we are finished talking, Mr Nowak. You will see my people on your street, and you will not like how they come.' : 'I see. Then you and I will leave one another alone. I cannot speak for the others.'));
+  emit('rivals.sitdown', { head: m.id, state: r.state, how: r.how, headsMenArmed: r.headsMenArmed });
+}
+// ---- what the sit-down settled, week after week (3.5.5) ----
+function standingWeek() {
+  const x = X('rivals'),
+    sd = x.sitDown;
+  if (!sd) return;
+  if (sd.how === 'under') {
+    if (pay(sd.tributePencePerWeek, false, sd.headCalled + "'s share, Friday")) {
+      sd.weeksPaid++;
+      tell(`A man of ${sd.headCalled}'s is at the counter for the Friday envelope. ${quid(sd.tributePencePerWeek)} goes up the hill.`, '', 8);
+      write(`Friday: ${quid(sd.tributePencePerWeek)} to ${sd.headCalled}. That is what being under him costs, and what keeps the other two off.`, { how: 'Did it', key: 'tribute:' + sd.weeksPaid });
+    } else {
+      // he has not got it: the head's second move comes, as for any man who does not pay
+      sd.weeksShort++;
+      tell(`The Friday envelope for ${sd.headCalled} is short. His man looks at it, and leaves it on the counter.`, '', 8);
+      write(`Could not make ${sd.headCalled}'s Friday share. It will be answered.`, { how: 'Did it', key: 'tributeshort:' + sd.weeksShort });
+      threat(sd.head);
+    }
+  }
+}
+function standingDay() {
+  const x = X('rivals'),
+    sd = x.sitDown;
+  if (!sd || sd.how !== 'war' || G.t - sd.lastThreatT < sd.headThreatEveryGameDays * 1440) return;
+  sd.lastThreatT = G.t;
+  const Rv = T.rivals[sd.head];
+  tell(`${sd.headCalled} again: ${Rv.second}.`, '', 8);
+  write(`At war with ${sd.headCalled}: ${Rv.second}. It will come every week until one of them stops.`, { how: 'Saw it himself', key: 'war:' + Math.round(G.t) });
+  threat(sd.head);
 }
 // ---- the Fixer (2.10.4): true reads, a meeting, one truce ----
 async function fixer() {
@@ -153,9 +187,10 @@ register({
   },
   hourly(h) {
     if (h === 9 && (G.x.acts ? G.x.acts.act : 1) >= 2) climbAll();
+    if (h === 12) standingDay();
   },
   hotspots(out) {
-    if (G.tom.space === 'tearoom' && hourNow() >= 14 && hourNow() < 17 && (G.x.acts ? G.x.acts.act : 1) >= 2) out.push({ k: 'T', t: "Keith Garbutt's table", run: fixer });
+    if (G.tom.space === 'tearoom' && hourNow() >= 14 && hourNow() < 17 && G.x.acts && G.x.acts.fired.includes('rivalNoticed')) out.push({ k: 'T', t: "Keith Garbutt's table", run: fixer });
   },
   hook: {
     x: () => X('rivals'),
@@ -185,4 +220,18 @@ on('crew.broke', ({ id, fate }) => {
 on('crew.struck', ({ rival }) => {
   const x = X('rivals');
   if (x.r[rival]) x.r[rival].sightings.push({ by: T.rivals[rival].eyes[0], what: 'his men came at their property', t: G.t, e: null });
+});
+on('econ.week', () => standingWeek());
+// Act II's beats that are the rivals' business: each is something their own people can see, so they come sooner
+on('acts.beat', ({ id }) => {
+  if (id === 'realBook') G.x.crime.facts.real_book = Math.round(G.t); // a fact he holds now: it answers a pressure or a sit-down
+  if (id === 'rivalNoticed') write('If somebody is asking about him, somebody sells the answers: Keith Garbutt, at the back table of the tea room, two till five.', { key: 'garbutt', how: 'Sheila says', who: 'sheila' });
+  const what = T.beatSightings[id];
+  if (!what) return;
+  const x = X('rivals');
+  for (const r in x.r) {
+    // the whole port can see three cars on the air, or open ground: each rival's first man counts it, twice over if the ground is open
+    const n = id === 'fleet' ? 1 : T.climbsOnSightingsAtLeast;
+    for (let i = 0; i < n; i++) learns(r, T.rivals[r].eyes[0], what, null);
+  }
 });

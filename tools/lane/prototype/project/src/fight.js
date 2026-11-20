@@ -266,7 +266,7 @@ export function climb() {
       [0, LAD.pressureOfStare, LAD.pressureOfSquareUp, LAD.pressureOfThreat, LAD.pressureOfShove][next] +
       F.menace0 +
       (t.armed ? LAD.pressureAddedWhenArmed : 0) -
-      al.length * LAD.pressureLostPerAlly -
+      Math.max(0, al.length - (G.hooks.sideMen ? G.hooks.sideMen() : 0)) * LAD.pressureLostPerAlly - // a man at his side takes one of theirs out of the odds (A16)
       t.hurt * LAD.pressureLostPerHurt;
   let cornered = false;
   if (next === LAD.shoveRung) {
@@ -594,6 +594,14 @@ function hurtFoe(f, dmg, heavy) {
       }
   }
 }
+// A man put down by somebody at Tom's side: down like any other, never counted as Tom's own blow.
+function sideDown(f) {
+  const P = f.P;
+  f.st = 'down';
+  P.down = true;
+  tl('knockdown', { actor: who(P) });
+  P.fight = null;
+}
 function finish() {
   const t = G.tom,
     f = F.foes.find((x) => x.st === 'down' && hyp(x.P.x, x.P.z, t.x, t.z) < 2);
@@ -757,6 +765,8 @@ export function step(dt) {
   for (const f of live) {
     const P = f.P;
     if (f.st === 'flee' || f.st === 'down' || !P.fight) continue;
+    // the one-shot (A16, part 1.7.4): a man at Tom's side takes the second man; that man fights him, not Tom
+    if (G.hooks.sideFight && G.hooks.sideFight(f, live, dt, sideDown)) continue;
     const d = hyp(P.x, P.z, t.x, t.z),
       a = Math.atan2(t.x - P.x, t.z - P.z);
     P.ang += clamp(

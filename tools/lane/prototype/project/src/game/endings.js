@@ -15,6 +15,21 @@ import { sign, signsShown, reading } from './ledgerx.js';
 
 const T = RULES.game.endings;
 const S_ = STORY.fns;
+// what she asks when nothing is being said about him: [her question, if he tells her a true thing, if he keeps it light]
+const ASKS = {
+  ada: [
+    ['He sat in that chair every Wednesday for nine years and told me nothing. How is that office, really?', 'Well. That is more than I had out of him in nine years. Drink your tea.', 'Aye. That is what he used to say, and all.'],
+    ['Sheila was in the shop. She looks worn. What have you got her doing?', 'Then see she is paid for it. She kept that place standing.', 'Hm. She would not say either.'],
+    ['Somebody said there are more of your cars about than there were. Whose money is that?', 'I would rather know than not. I think.', 'Cars do not buy themselves, Tom.'],
+    ['Do you sleep, in that back room? You do not look as if you do.', 'No. I did not think so. Sit a bit longer, then.', 'If you say so.'],
+  ],
+  alison: [
+    ['Tell me one true thing about that office and I will tell you one about the fire.', 'Right. Mine: the brigade report says the back door of No. 4 was open before the fire.', 'Then I will keep mine as well.'],
+    ['Off the record. Who was your uncle afraid of?', 'That fits. The same name is on a planning letter I am not supposed to have.', 'Everybody says that. Somebody always was.'],
+    ['Do you know what the Harbour Board wants with Quay Street?', 'Then we are both looking at the same people. Good.', 'No. Nor does anybody who will talk to me.'],
+    ['Is it going to be all right, that firm of yours?', 'Thank you for not dressing it up.', 'You would say that to the paper.'],
+  ],
+};
 const FRIENDS = { ada: { place: 'ada', fromHour: 10, untilHour: 20 }, alison: { place: 'caff', fromHour: 12, untilHour: 14 } };
 
 // How many people hold his rackets as fact: told or seen, attached to him, a crime (never a number on screen).
@@ -29,7 +44,7 @@ export function endState() {
     x = X('endings');
   const hunted = G.x.law.ellis.stage >= 3 && G.x.law.charges.some((c) => c.offence === 'killing');
   const business = a.answer !== 'wind' && G.x.firm.f.cars.some((c) => c.driver) && !a.handedOver;
-  return { business, booksHold: a.insp ? a.insp.result === 'the books hold' : G.money.booksOff < RULES.game.acts.bookStrainedIfOffUnderPence, friendHolds: TALK.fns.friendship(x.friend) === 'holds', streetHoldsRackets: streetHoldsRackets(), hunted, handedOver: !!a.handedOver, charged: G.x.law.charges.length > 0 };
+  return { business, booksHold: a.insp ? a.insp.result === 'the books hold' : G.money.booksOff < RULES.game.acts.bookStrainedIfOffUnderPence, friendHolds: TALK.fns.friendship(x.friend) === 'holds', streetHoldsRackets: streetHoldsRackets(), hunted, handedOver: !!a.handedOver, charged: G.x.law.charges.length > 0, under: !!(G.x.rivals.sitDown && G.x.rivals.sitDown.how === 'under') };
 }
 export const endingNow = () => S_.ending(endState());
 // ---- calling on people (A39): only where and when the routine allows; no score; too soon is cooler ----
@@ -49,11 +64,19 @@ async function visit(id) {
       honest = i === 0;
       await say(id, honest ? 'Well. You said it to my face. That is more than he ever did.' : 'I see. I was told otherwise, by somebody with no reason to lie.');
     } else if (!cooler) {
-      honest = true;
-      await say(id, id === 'ada' ? 'He sat in that chair every Wednesday for nine years and told me nothing. You can do better than that.' : 'Tell me one true thing about that office and I will tell you one about the fire.');
+      // nothing is being said about him: she asks after the office, and he may tell her a true thing or keep it light.
+      // Only a true thing told counts, and one a day at most: sitting in her chair is not friendship (3.2.5, 3.2.7)
+      const n = x.visits.filter((q) => q.id === id).length % ASKS[id].length;
+      const i = await choose(id, ASKS[id][n][0], ['Tell her a true thing about it.', 'Keep it light.']);
+      honest = i === 0 ? true : null;
+      await say(id, i === 0 ? ASKS[id][n][1] : ASKS[id][n][2]);
     }
   });
-  if (honest === true) x.friend.honestVisits++;
+  const v2 = TALK.fns.visitCounts({ honest, lastCountedT: x.friend.lastCountedT ?? null }, G.t);
+  if (v2.counts) {
+    x.friend.honestVisits++;
+    x.friend.lastCountedT = G.t;
+  } else if (honest === true) honest = null; // true, but too soon after the last: it does not add up twice in a day
   else if (honest === false) x.friend.lieCaught = true; // she knew: a lie caught ends it
   x.friend.who = x.friend.who || id;
   x.visits.push({ id, door: v.door, honest, seconds: Math.round(G.played - t0), score: v.score, t: Math.round(G.t) });
@@ -135,4 +158,12 @@ register({
 });
 on('acts.inspected', () => {
   X('endings').landAfterT = G.t + 60; // the books open; then it ends as the state says
+});
+// the evening at Ada's with Ron at the door (Act II's one sure collision): staying is a true thing done in front of her
+on('acts.collision', ({ stayed }) => {
+  const x = X('endings');
+  if (stayed) {
+    x.friend.honestVisits++;
+    x.friend.who = x.friend.who || 'ada';
+  } else if (P_('ada')) P_('ada').mind.regard = Math.max(-1, P_('ada').mind.regard - T.wentFromAdasRegardBy);
 });

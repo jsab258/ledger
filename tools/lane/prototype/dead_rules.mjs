@@ -7,7 +7,8 @@
 //   4. every saved field of a system (its fresh() state under G.x) that is written and never read by the game
 //      (read only by the test hook counts as never read);
 //   5. every function in src/game whose only effect is a line in G.log (never shown to the player) or a line in
-//      the Ledger, where it can tell: nothing said, no scene, no act, no money, no state changed, nothing emitted.
+//      the Ledger, where it can tell: nothing said, no scene, no act, no money, no state changed, nothing emitted;
+//   6. every function a system file exports that nothing in the game calls (a test hook at most).
 // Usage: node tools/lane/prototype/dead_rules.mjs [--out FILE.md] [--json]
 // It prints the count on its last line as "DEAD RULES: N". The aim is zero. Exit code 0 (it is a count, not a gate)
 // unless --max N is given and the count is over it.
@@ -225,11 +226,27 @@ for (const p of files.filter((f) => !isPiece(f)))
     }
   });
 
-const out = { deadFns: [], ignored: [], unheard: [], writeOnly: [], logOnly: [] };
+// a rule used inside another rule of its piece is alive when that other rule is (showFor inside climb)
+const usedInside = {}; // 'piece.fn' -> Set of 'piece.fn' whose bodies name it
+for (const [pn, P] of Object.entries(pieces)) {
+  const { ast } = parsed[P.file];
+  const tops = {};
+  for (const st of ast.body) {
+    if (st.type === 'FunctionDeclaration') tops[st.id.name] = st;
+    if (st.type === 'VariableDeclaration') for (const d of st.declarations) if (d.id.type === 'Identifier' && d.init) tops[d.id.name] = d.init;
+  }
+  for (const [outer, node] of Object.entries(tops))
+    walk(node, (n) => {
+      if (n.type === 'Identifier' && n.name !== outer && P.fns[n.name] && tops[n.name] && !(n.parent.type === 'MemberExpression' && n.parent.property === n && !n.parent.computed) && !(n.parent.type === 'Property' && n.parent.key === n)) (usedInside[pn + '.' + n.name] = usedInside[pn + '.' + n.name] || new Set()).add(pn + '.' + outer);
+    });
+}
+const aliveInside = (key, seen = new Set()) => [...(usedInside[key] || [])].some((o) => !seen.has(o) && ((calls[o] || []).length || aliveInside(o, seen.add(o))));
+const out = { deadFns: [], ignored: [], unheard: [], writeOnly: [], logOnly: [], deadExports: [] };
 for (const [pn, P] of Object.entries(pieces))
   for (const [fn, F] of Object.entries(P.fns)) {
     const key = pn + '.' + fn,
       sites = calls[key] || [];
+    if (!sites.length && aliveInside(key)) continue;
     if (!sites.length) {
       out.deadFns.push({ id: key, where: line(P.file, F.node), why: 'never called from game code' });
       continue;
@@ -398,6 +415,33 @@ for (const p of files.filter((f) => rel(f).startsWith('game/') && !isPiece(f) &&
   });
 }
 
+// ---------- 6: a system's exported function nobody uses ----------
+for (const p of files.filter((f) => rel(f).startsWith('game/') && !isPiece(f) && !/\/(tune|kinds|cast|sim)\//.test(rel(f)) && !/(_all|index|systems)\.js$/.test(rel(f)))) {
+  const names = [];
+  for (const st of parsed[p].ast.body)
+    if (st.type === 'ExportNamedDeclaration' && st.declaration) {
+      if (st.declaration.type === 'FunctionDeclaration') names.push([st.declaration.id.name, st]);
+      if (st.declaration.type === 'VariableDeclaration') for (const d of st.declaration.declarations) if (d.id.type === 'Identifier' && d.init && isFn(d.init)) names.push([d.id.name, st]);
+    }
+  for (const [name, node] of names) {
+    let used = 0;
+    for (const q of files) {
+      walk(parsed[q].ast, (n) => {
+        if (n.type !== 'Identifier' || n.name !== name) return;
+        const par = n.parent;
+        if (par.type === 'FunctionDeclaration' && par.id === n) return;
+        if (par.type === 'VariableDeclarator' && par.id === n) return;
+        if (par.type === 'ImportSpecifier' || par.type === 'ExportSpecifier') return;
+        if (par.type === 'MemberExpression' && par.property === n && !par.computed) return;
+        if (q === p && inHook(n)) return; // offered to tests only
+        if (q !== p && par.type === 'Property' && par.key === n && par.value !== n) return;
+        used++;
+      });
+    }
+    if (!used) out.deadExports.push({ id: path.basename(p, '.js') + '.' + name, where: line(p, node), why: 'exported, and called by nothing in the game (a test hook at most)' });
+  }
+}
+
 // ---------- report ----------
 const total = Object.values(out).reduce((a, l) => a + l.length, 0);
 const heads = {
@@ -406,6 +450,7 @@ const heads = {
   unheard: '3. Events nobody listens for',
   writeOnly: '4. Saved fields written and never read by the game',
   logOnly: '5. A log or Ledger line standing in for something felt (where it can tell)',
+  deadExports: "6. A system's function nobody in the game calls",
 };
 if (args.includes('--json')) console.log(JSON.stringify({ total, counts: Object.fromEntries(Object.entries(out).map(([k, v]) => [k, v.length])), out }, null, 1));
 else {

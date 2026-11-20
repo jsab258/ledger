@@ -21,12 +21,13 @@ function beats(s, fired) {
 // No dead weeks (7.4): a week of Act II with no beat, no rival move and no job is flagged for the writing.
 const deadWeek = (w) => (w.beats || 0) + (w.rivalMoves || 0) + (w.jobs || 0) < A.noDeadWeekNeedsBeatsAtLeast;
 // Act III: one item each morning. He produces it or asks for it in writing. Graded by what the books hold.
-function inspect(day, books, choice) {
+function inspect(day, books, choice, inWritingUsed = 0) {
   const item = A.inspectionItems[day];
   if (item === undefined) return { item: null, grade: null, done: true };
   const off = books.booksOffPence || 0;
   const state = off < A.bookStandsIfOffUnderPence ? 'stands' : off < A.bookStrainedIfOffUnderPence ? 'strained' : 'does not stand';
-  if (choice === 'in writing') return { item, grade: 'put off a day', manner: 'he writes it down, courteous', sign: null, buysDays: 1, done: false };
+  // asking in writing buys a day, twice in the week and no more: after that he must produce it (the stall the depth check found)
+  if (choice === 'in writing' && inWritingUsed < A.inWritingAtMost) return { item, grade: 'put off a day', manner: 'he writes it down, courteous', sign: null, done: false, inWritingLeft: A.inWritingAtMost - inWritingUsed - 1 };
   const lieHeld = books.sheilaTrusts && books.sheilaSaidWhereItHolds && state === 'strained';
   const grade = state === 'stands' || lieHeld ? 'holds' : state === 'strained' ? 'questions' : 'fails';
   return { item, grade, manner: grade === 'holds' ? 'he nods and turns the page' : grade === 'questions' ? 'he reads the same line twice' : 'he stops being courteous', sign: grade === 'holds' ? null : E.signs.inspector, done: day >= A.inspectionItems.length - 1 };
@@ -37,14 +38,15 @@ const inspectionResult = (grades) => (grades.filter((g) => g === 'fails').length
 function ending(s) {
   const business = !!s.business && !!s.booksHold && !s.hunted;
   let built, shown, turn;
-  if (business && s.friendHolds && !s.streetHoldsRackets) [built, shown, turn] = ['Both', 'The Kingdom', 'at its best'];
+  if (business && s.under) [built, shown, turn] = ['Kingdom', 'The Kingdom', 'under another man'];
+  else if (business && s.friendHolds && !s.streetHoldsRackets) [built, shown, turn] = ['Both', 'The Kingdom', 'at its best'];
   else if (business) [built, shown, turn] = ['Kingdom', 'The Kingdom', 'at its plainest'];
   else if (s.friendHolds && s.handedOver && !s.hunted) [built, shown, turn] = ['Quiet', 'The Straight Life', 'at its best'];
   else if (s.friendHolds && !s.hunted) [built, shown, turn] = ['Straight', 'The Straight Life', 'at its plainest'];
   else [built, shown, turn] = ['Burn', 'Burn Both', s.hunted ? 'hunted' : 'what doing nothing produces'];
   return { built, shown, turn, close: closeLine(shown, turn, s) };
 }
-const closeLine = (shown, turn, s) => (shown === 'The Kingdom' ? (turn === 'at its best' ? 'The cabs go out at six. One friend still counts him, and the street says "Tom".' : 'The cabs go out at six. People are civil, and no more.') : shown === 'The Straight Life' ? (turn === 'at its best' ? "Somebody else's name goes over the door. He walks to the ferry with one suitcase, clean." : 'The office is shut. One person still asks him in for tea.') : s.hunted ? 'A car on the street and his description. The office door stands open.' : 'The sign comes down. Nobody on Quay Street says his name.');
+const closeLine = (shown, turn, s) => (shown === 'The Kingdom' && turn === 'under another man' ? 'The cabs go out at six, and every Friday an envelope goes up the hill. It is his name over the door.' : shown === 'The Kingdom' ? (turn === 'at its best' ? 'The cabs go out at six. One friend still counts him, and the street says "Tom".' : 'The cabs go out at six. People are civil, and no more.') : shown === 'The Straight Life' ? (turn === 'at its best' ? "Somebody else's name goes over the door. He walks to the ferry with one suitcase, clean." : 'The office is shut. One person still asks him in for tea.') : s.hunted ? 'A car on the street and his description. The office door stands open.' : 'The sign comes down. Nobody on Quay Street says his name.');
 // The signs he has been shown, and Tom's reading built only from them (6.2.5, ER-END-02).
 function reading(signs) {
   const lines = [];

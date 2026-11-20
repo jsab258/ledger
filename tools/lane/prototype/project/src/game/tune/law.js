@@ -3,6 +3,7 @@ export const TUNE = {
   // what an arrest costs in game hours, never the game
   custodyGameHours: { damage: 6, damageOwnedUp: 2, assault: 6, wounding: 8, robbery: 12, killing: 22 },
   arrestRealSecondsAtMost: 120,
+  oneCaseAddsGameHours: 2, // once the street crimes and the fire are one case
   announcesBeforeChallengeRealSeconds: 3,
   challengesWithinMetres: 14,
   stages: ['nothing', 'asking round', 'investigating', 'a manhunt'],

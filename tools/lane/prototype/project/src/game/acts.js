@@ -51,7 +51,7 @@ function beats() {
     write(b.says, { key: 'beat:' + b.id, how: 'Saw it himself' });
     if (b.id === 'realBook') write("Mickey's real book: everything he ran, in his own hand. The landing, the doors, who was paid and who paid.", { key: 'realbook', who: 'sheila', how: 'Sheila showed him' });
     if (b.id === 'collision') collision();
-    emit('acts.beat', { id: b.id });
+    emit('acts.beat', { id: b.id }); // each beat changes the game in the system that owns it (rivals, law, crew, crime, endings)
   }
 }
 // The one guaranteed collision: an evening of his day life interrupted by his night life at the door.
@@ -61,6 +61,7 @@ async function collision() {
     await say('ron', 'Boss. Sorry. There is a man at the yard gate who says it will not wait.');
     const i = await choose('', "Ada's cup is halfway to her mouth. Ron is in her doorway with his cap in his hand.", ['Stay. "It will wait, Ron."', 'Go. "I am sorry, Ada."']);
     X('acts').collision = i === 0 ? 'stayed' : 'went';
+    emit('acts.collision', { stayed: i === 0 });
     await say('ada', i === 0 ? 'Well. That is the first time anybody from that office has said that in my hearing.' : 'Go on, then. Mickey always went, too.');
   });
   write(`The evening at Ada's, and Ron at the door: ${X('acts').collision === 'stayed' ? 'he stayed' : 'he went'}. Ada saw which.`, { who: 'ada', how: 'Did it', key: 'collision' });
@@ -88,8 +89,9 @@ async function inspectionMorning() {
       books.sheilaSaidWhereItHolds = true;
     }
     await say('The inspector', `Good morning, Mr Nowak. This morning, if you would: ${item}.`);
-    const i = await choose('The inspector', 'I can wait while you find it.', ['Produce it.', 'Ask for the request in writing.']);
-    r = S_.inspect(I.day, books, i === 0 ? 'produce' : 'in writing');
+    const left = T.inWritingAtMost - I.inWriting;
+    const i = left > 0 ? await choose('The inspector', 'I can wait while you find it.', ['Produce it.', `Ask for the request in writing (${left === 1 ? 'he will do that once more' : 'he will do that twice'}).`]) : await choose('The inspector', 'You have had it in writing twice, Mr Nowak. This morning I must see it.', ['Produce it.']);
+    r = S_.inspect(I.day, books, i === 0 ? 'produce' : 'in writing', I.inWriting);
     await say('The inspector', r.grade === 'put off a day' ? 'In writing. Certainly. You shall have it by the second post.' : r.grade === 'holds' ? 'Thank you. That is in order.' : r.grade === 'questions' ? 'I see. I shall want to look at this page again, Mr Nowak.' : 'These figures are not a record of a taxi business, Mr Nowak. I think you know that.');
   });
   I.steps = (I.steps || []).concat([{ day: I.day, item, grade: r.grade, t: Math.round(G.t) }]);

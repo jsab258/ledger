@@ -2,6 +2,7 @@
 // 2.11.1 to 2.11.4): inherited men and recruits by a need or a hook; orders in two inputs; a man at his side; the
 // eight sent verbs, each through a named man who then knows; nerve, loyalty and the sign before a man breaks; the
 // cut. Rules: pieces/crew.js. No loyalty or nerve is ever a number on screen.
+import { F as FT } from '../fight.js';
 import { register, X, write, tell, hourNow, dayNow, here, P_, emit, on } from './core.js';
 import { G } from '../state.js';
 import { hyp, clamp, quid } from '../util.js';
@@ -74,6 +75,73 @@ function lean(id, tgt) {
   X('crew').sent.push({ verb: 'lean on him', through: id, target: tgt.id, chain: [{ who: 'tom', how: 'gave the order' }, { who: id, how: 'did it' }, { who: tgt.id, how: 'it was done to' }], t: Math.round(G.t) });
 }
 // ---- a man at his side (A16): follows at about 2 m, never in a doorway, one more man in the odds ----
+// ---- men at his side in a fight (A16, part 1.7.4): he takes the second man, so two against two is a fair fight ----
+const sideMenNow = () => {
+  const x = X('crew');
+  return Object.keys(x.men).filter((id) => x.men[id].in && x.men[id].with && P_(id) && !P_(id).down && !P_(id).dead && here(P_(id), T.orderWithinMetres * 2));
+};
+// Called by the fight for every standing foe, each step. True: this foe is busy with one of Tom's men.
+function sideFight(f, live, dt, putDown) {
+  const t = G.tom;
+  if (f.heldBy) {
+    const P = P_(f.heldBy),
+      Q = f.P;
+    if (!P || P.down || P.dead || P.space !== Q.space) return void (f.heldBy = null), false;
+    const d = hyp(P.x, P.z, Q.x, Q.z);
+    Q.ang = Math.atan2(P.x - Q.x, P.z - Q.z); // he has turned to face the man who came at him
+    P.ang = Math.atan2(Q.x - P.x, Q.z - P.z);
+    Q.fight.mode = 'guard';
+    if (d > T.sideFightsWithinMetres) {
+      if (!P.route) goToPoint(P, Q.x + Math.sin(Q.ang) * 1.1, Q.z + Math.cos(Q.ang) * 1.1, RULES.tom.runningMetresPerSecond);
+      return true;
+    }
+    P.route = null;
+    P.hold = true;
+    f.sideT = (f.sideT ?? T.sideBlowEveryRealSeconds) - dt;
+    if (f.sideT > 0) return true;
+    f.sideT = T.sideBlowEveryRealSeconds;
+    // one exchange: the steadier man lands it (their nerves, by the same rule that says who stands)
+    const mine = T.men[f.heldBy].nerve,
+      his = Q.def.nerve ?? RULES.ladder.nerveAssumed;
+    const lands = mine + (f.sideN = (f.sideN || 0) + 1) * T.sideNerveGainsPerExchange >= his || f.sideN % 2 === 0;
+    if (lands) {
+      Q.hurt = Math.min(1, (Q.hurt || 0) + T.sideBlowHurts);
+      if (G.hooks.sfx) G.hooks.sfx('hit');
+      if (Q.hurt >= 1) {
+        putDown(f);
+        f.heldBy = null;
+        P.hold = false;
+        tell(`${nameOf(P.id)} has put his man down.`, '', 4);
+        X('crew').sideFights.push({ man: P.id, foe: Q.id || Q.def.name, won: true, t: Math.round(G.t) });
+        return true;
+      }
+    } else {
+      const m = man(P.id);
+      m.hurt = (m.hurt || 0) + T.sideBlowHurts;
+      if (m.hurt >= 1) {
+        Object.assign(P, { down: true, downT: G.t + T.sideManDownGameMinutes, route: null, moving: false, hold: false });
+        m.with = false;
+        m.hurt = 0;
+        f.heldBy = null;
+        tell(`${nameOf(P.id)} is down. The second man turns back to Tom.`, '', 5);
+        X('crew').sideFights.push({ man: P.id, foe: Q.id || Q.def.name, won: false, t: Math.round(G.t) });
+        return false;
+      }
+    }
+    return true;
+  }
+  // not held: the nearest man to Tom is Tom's; each further one goes to a free man at his side
+  const order = live.slice().sort((a, b) => hyp(a.P.x, a.P.z, t.x, t.z) - hyp(b.P.x, b.P.z, t.x, t.z));
+  if (order[0] === f) return false;
+  const taken = live.map((q) => q.heldBy).filter(Boolean);
+  const free = sideMenNow().filter((id) => !taken.includes(id));
+  const r = C.atSide(sideMenNow().map((id) => ({ id })));
+  if (!free.length || r.hisSide < 2) return false;
+  f.heldBy = free[0];
+  man(free[0]).knows++; // he was in it: he knows what it was about
+  tell(`${nameOf(free[0])} takes the second man.`, '', 4);
+  return true;
+}
 function sideStep() {
   const t = G.tom,
     x = X('crew');
@@ -81,7 +149,7 @@ function sideStep() {
     const m = x.men[id],
       P = P_(id);
     if (!m.in || !P || P.gone || P.dead) continue;
-    if (m.with && t.space === 'street' && P.space === 'street' && !P.fight) {
+    if (m.with && t.space === 'street' && P.space === 'street' && !P.fight && !P.down && !(G.hooks.fighting && G.hooks.fighting() && P.hold)) {
       const d = hyp(P.x, P.z, t.x, t.z);
       if (d > T.followsFartherThanMetres && (!P.route || d > T.orderWithinMetres)) goToPoint(P, t.x - Math.sin(t.ang) * T.followsAtMetres, t.z - Math.cos(t.ang) * T.followsAtMetres, d > T.orderWithinMetres ? RULES.tom.runningMetresPerSecond : undefined);
       if (d > 40) Object.assign(P, { x: t.x - Math.sin(t.ang) * T.followsAtMetres, z: t.z - Math.cos(t.ang) * T.followsAtMetres, route: null }); // never lags more than a few seconds, never fails the job
@@ -196,7 +264,12 @@ export function payCut(id, takePence, paidPence) {
 
 register({
   id: 'crew',
-  fresh: () => ({ men: Object.fromEntries(Object.entries(T.men).map(([id, m]) => [id, { in: !!m.inherited, loyalty: m.loyalty, knows: 0, signShown: false, with: false, post: null, fate: 'holds' }])), orders: [], sent: [], fates: [], cuts: [], vouched: {}, framed: null, planned: null, ianPaid: false }),
+  fresh: () => ({ men: Object.fromEntries(Object.entries(T.men).map(([id, m]) => [id, { in: !!m.inherited, loyalty: m.loyalty, knows: 0, signShown: false, with: false, post: null, fate: 'holds' }])), orders: [], sent: [], fates: [], cuts: [], sideFights: [], vouched: {}, framed: null, planned: null, ianPaid: false }),
+  loaded(x) {
+    x.sideFights = x.sideFights || [];
+    G.hooks.sideMen = () => C.atSide(sideMenNow().map((id) => ({ id }))).hisSide - 1;
+    G.hooks.sideFight = sideFight;
+  },
   step() {
     if (!G.paused) sideStep();
   },
@@ -227,6 +300,8 @@ register({
     if (t.space === 'mickeys' && (G.x.acts ? G.x.acts.act : 1) >= 2 && !out.some((o) => o.t === 'Send a man')) out.push({ k: 'T', t: 'Send a man', run: sendScene });
   },
   hook: {
+    fight: () => ({ on: FT.on, rung: FT.rung, foes: FT.foes.map((f) => ({ id: f.P.id, st: f.st, heldBy: f.heldBy || null, hurt: f.P.hurt || 0, d: hyp(f.P.x, f.P.z, G.tom.x, G.tom.z) })), last: FT.last || null }),
+    sideMen: sideMenNow,
     x: () => X('crew'),
     roster: () => Object.keys(X('crew').men).filter(inCrew).map((id) => ({ id, name: nameOf(id), use: T.men[id].use, with: !!man(id).with })),
     recruit,
@@ -241,4 +316,9 @@ register({
 });
 on('law.arrested', () => {
   for (const id of withHim()) man(id).arrested = true;
+});
+// Act II: the first recruit. From now he has people to send: he is told how, once.
+on('acts.beat', ({ id }) => {
+  if (id !== 'firstRecruit') return;
+  tell('He has people now. The digits give an order to whoever is with him or nearest: 1 with me, 2 wait here, 3 watch that, 4 fetch him, 5 take this there, 6 drive, 7 lean on him.', '', 10);
 });
