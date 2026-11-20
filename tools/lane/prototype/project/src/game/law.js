@@ -189,7 +189,7 @@ async function challenge(P, cause, items) {
     act('talked_round', { silent: true, told: ['pc'] });
     await scene(() => say('pc', 'Aye, well. Get yourself home.'));
   } else if (r.result === 'a chase') {
-    S.chase = { seconds: 0, unseen: 0 };
+    S.chase = { seconds: 0, unseen: 0, pause: T.constableStartsAfterRealSeconds }; // he was standing with his notebook out: Tom has the first step
     act('ran_police', { noiseR: RULES.police.runningNoiseMetres });
     if (G.hooks.happened) G.hooks.happened('ran'); // whoever could see him just then saw him run (game/back.js)
     tell('"Oi! Stop!" A whistle behind him.', 'PC Ibbotson');
@@ -375,7 +375,6 @@ function carChaseStep(dt) {
   if (c.trail.length > 4000) c.trail.splice(0, 2000);
   const los = G.env.los(back[0], back[1], tx, tz);
   c.unseen = los ? 0 : c.unseen + dt;
-  if (los || c.lx === undefined) (c.lx = t.x), (c.lz = t.z); // the last place the constable saw him: all he knows
   c.slow = G.tom.inCar && Math.abs(G.car.v) < T.carChaseCaughtBelowMetresPerSecond ? c.slow + dt : 0;
   let st = EYES.fns.chase({ metres: los ? T.carChaseFollowsMetresBehind : 40, unseenSeconds: c.unseen, seconds: c.seconds, fromBehind: false }).st;
   if (c.slow >= T.carChaseCaughtAfterRealSeconds && los) st = 'caught';

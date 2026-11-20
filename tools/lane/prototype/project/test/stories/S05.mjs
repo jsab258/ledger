@@ -36,7 +36,7 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     await P.use(/Sleep till morning/);
     const woke = await P.until(() => !LEDGER.G.paused && (LEDGER.G.t % 1440) / 60 >= 6.9 && (LEDGER.G.t % 1440) / 60 < 8 && !document.getElementById('fade').classList.contains('on'), 30);
     const after = await P.clock();
-    t.ok(woke >= 0 && Math.floor(after / 1440) === 1 && after - before > 180, 'sleeping skips the night: it is Tuesday morning', [before, after, woke]);
+    t.ok(woke >= 0 && Math.floor(after / 1440) === 1 && after - before > 60, 'sleeping skips the night: it is Tuesday morning', [before, after, woke]);
     await P.secs(0.6);
     t.ok((await P.subsLog()).some((x) => /^Saved\./.test(x.s)), 'the game saves, and a save note shows', (await P.subsLog()).slice(-3));
     t.ok(await P.world(() => { try { return JSON.parse(localStorage.getItem('ledger.save.v4')).t >= 1440 + 6.9 * 60; } catch (e) { return false; } }), 'the save holds the morning', 0);

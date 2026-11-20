@@ -24,12 +24,16 @@ export function policeStep(dt) {
   if (!a.st) {
     if (G.t < a.due) return;
     a.st = 'come';
+    const indoors = P.gone || P.space !== 'street';
     P.override = null;
+    P.awake = true;
+    if (indoors) {
+      // a man already out on the street comes from where he stands; only one who was indoors comes down from the top
+      P.x = POL.arrivesAtXMetres;
+      P.z = POL.arrivesAtZMetres;
+    }
     P.gone = false;
     P.space = 'street';
-    P.awake = true;
-    P.x = POL.arrivesAtXMetres;
-    P.z = POL.arrivesAtZMetres;
     P.route = null;
     P.hold = true;
     P.mark = '!';

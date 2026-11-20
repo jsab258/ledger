@@ -60,6 +60,7 @@ export const TUNE = {
   challengeWithinMetres: 12,
   challengeAgainAfterGameMinutes: 45,
   searchWithinMetres: 2.5,
+  constableStartsAfterRealSeconds: 1.2,
   constableBlownAfterRealSeconds: 12,
   constableBlownMetresPerSecond: 3.2,
   constableLooksAboutRealSeconds: 1.5,

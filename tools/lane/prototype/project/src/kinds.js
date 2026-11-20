@@ -170,7 +170,7 @@ export const KINDS = {
   shove: K(
     'shove',
     (e) => `Tom laid hands on ${n(e)} on ${e.zone}`,
-    (e) => `Laid hands on ${n(e)}`,
+    (e) => `Laid hands on ${n(e).replace(/^([a-z])(?=\w* [A-Z])/, (c) => c.toUpperCase())}`,
     { grudge: 1, loud: 1 },
   ),
   strike: K(

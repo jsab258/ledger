@@ -1654,7 +1654,7 @@ function marks() {
   if (d === 1 && h >= STORY.morningToDoFromHour && !f.d2obj) {
     f.d2obj = 1;
     G.story.objective =
-      'Tuesday. Walk the street and hear what it made of yesterday. The Ledger [L] holds only what you have seen and heard yourself.';
+      'Tuesday. Walk the street and hear what it made of yesterday. The Ledger holds only what you have seen and heard yourself.';
   }
   if (d === 2 && h >= STORY.morningToDoFromHour && !f.d3obj) {
     f.d3obj = 1;
@@ -1906,6 +1906,7 @@ async function collapse() {
     await fade(false);
   });
   if (G.hooks.save) G.hooks.save();
+  sub('Saved.', '', 'over', 3);
 }
 export function initStory() {
   Object.assign(G.hooks, {
