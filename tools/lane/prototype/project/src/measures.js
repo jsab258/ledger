@@ -93,7 +93,7 @@ export const ASKS = [
   {
     id: 'bus',
     fromGameMinute: 1440 + ASKING.busAskFromHour * 60, // Tue 9.30am
-    question: 'Who saw Tom get off the bus on Monday?',
+    question: 'Who saw Tom come off the ferry on Monday?',
     where: 'People, or the Day book under Monday',
     target: (row) =>
       row.entry &&

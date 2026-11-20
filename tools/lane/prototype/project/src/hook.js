@@ -94,7 +94,8 @@ function read() {
     hour: r2(hour()),
     realSecondsPlayed: r1(G.played),
     phase: st.phase,
-    weekEnded: !!st.ended,
+    weekEnded: !!st.ended || !!(st.flags.choice && G.x && G.x.acts && G.x.acts.act >= 2), // the one-shot: week one ends on his answer, and Act II goes on
+    act: G.x && G.x.acts ? G.x.acts.act : 1,
     paused: !!G.paused,
     pausedBecause: G.pauseWhy || null,
     boxOpen: ui.modal || null,

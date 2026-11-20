@@ -321,7 +321,7 @@ try {
       const H = __h, c = LEDGER.G.car, tm = LEDGER.G.tom;
       H.cabAt(4.1, 20, 0, 0); c.dmg = 0;
       let seed = 12345; const rnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
-      let t = 0, inSolid = 0, dist = 0, lx = c.x, lz = c.z, th = 'KeyW', st = null, next = 0, first = null, esc = null, stops = 0, worst = 0, never = 0; const e0 = LEDGER.G.events.length, W = [];
+      let t = 0, inSolid = 0, dist = 0, lx = c.x, lz = c.z, th = 'KeyW', st = null, next = 0, first = null, esc = null, stops = 0, worst = 0, never = 0, wrecks = 0; const e0 = LEDGER.G.events.length, W = [];
       H.down(th);
       const set = (k) => { if (k !== th) { H.up(th); th = k; H.down(th); } };
       while (t < 60) {
@@ -332,7 +332,7 @@ try {
           // the rule's own way out: S for 2.5 s, then W for 2.5 s; free when the cab is a metre from where it stopped
           const gone = Math.hypot(c.x - esc.x, c.z - esc.z);
           if (gone >= 1) { worst = Math.max(worst, t - esc.t); esc = null; set('KeyW'); W.length = 0; }
-          else if (t - esc.t > 5) { never++; esc = null; set('KeyW'); W.length = 0; }
+          else if (t - esc.t > 5) { const wr = LEDGER.G.x.cars.wrecked; if (wr) { wrecks++; LEDGER.G.x.cars.wrecked = null; c.dmg = 0; } else never++; esc = null; set('KeyW'); W.length = 0; }
           else set(t - esc.t < 2.5 ? 'KeyS' : 'KeyW');
         } else if (t > 1.5 && recent.length > 60 && Math.max(...recent.map((p) => Math.hypot(p[1] - c.x, p[2] - c.z))) < 0.5) { esc = { t, x: c.x, z: c.z }; stops++; set('KeyS'); }
         LEDGER.tick(H.dt); t += H.dt;
@@ -341,12 +341,12 @@ try {
         W.push([t, c.x, c.z]); while (W.length && W[0][0] < t - 5) W.shift();
       }
       H.up(th); if (st) H.up(st);
-      return { inSolid, first, stops, worst, never, dist, crashes: LEDGER.G.events.slice(e0).filter((e) => e.kind === 'crash').length, inCar: tm.inCar };
+      return { inSolid, first, stops, worst, never, wrecks, dist, crashes: LEDGER.G.events.slice(e0).filter((e) => e.kind === 'crash').length, inCar: tm.inCar };
     });
     if (!m || m.interrupted) ok(false, 'the clumsy minute: a box kept opening: not reached');
     else {
       ok(m.inSolid === 0, `a clumsy minute at the wheel (${m.dist.toFixed(0)} m, ${m.crashes} crashes): the cab's body was in a wall, a post or a parked car on ${m.inSolid} frames${m.first ? ' (first at ' + JSON.stringify(m.first) + ')' : ''}`);
-      ok(m.never === 0 && m.dist > 30, `... it came to a stop ${m.stops} times and each time S then W had it a metre away within 5 s (slowest ${m.worst.toFixed(2)} s; never: ${m.never})`);
+      ok(m.never === 0 && m.dist > 30, `... it came to a stop ${m.stops} times and each time S then W had it a metre away within 5 s, or it would not drive on and said so (${m.wrecks} times) (slowest ${m.worst.toFixed(2)} s; never: ${m.never})`);
     }
   }
 
@@ -404,9 +404,14 @@ try {
         while (t < 6 && !P.down) { if (H.busy()) { H.up('KeyW'); P.x = was[0]; P.z = was[1]; return { interrupted: 1 }; } c.v = v; P.x = at[0] + 12; P.z = at[1]; P.route = null; P.moving = false; LEDGER.tick(H.dt); t += H.dt; }
         H.up('KeyW');
         const lines = H.since(before), others = H.people().filter((q) => q.down && q !== P).length;
-        for (let i = 0; i < 90; i++) LEDGER.tick(H.dt);
-        const r = { name: P.def.name, shown: shown ? shown.shownAs : null, down: !!P.down, dead: !!P.dead, hurt: P.hurt || 0, lines, others, kinds: G.events.slice(e0).map((e) => e.kind), deaths: Object.keys(G.story.flags.dead || {}).length };
-        P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; P.x = was[0]; P.z = was[1]; // put back on their feet for the next check
+        for (let i = 0; i < 125; i++) LEDGER.tick(H.dt);
+        // the one-shot (ER-DRIVE-05): after a hit the choice is put inside two seconds: stop and help, or drive off
+        const w = LEDGER.written.read(), hurt0 = P.hurt || 0, down0 = !!P.down;
+        const choice = w.open ? w.choices : null;
+        if (w.open) LEDGER.written.choose(0);
+        for (let i = 0; i < 30; i++) LEDGER.tick(H.dt);
+        const r = { name: P.def.name, shown: shown ? shown.shownAs : null, down: down0, dead: !!P.dead, hurt: hurt0, lines, others, choice, expectChoice: v >= LEDGER.rules.game.law.carForgivenBelowMetresPerSecond, kinds: G.events.slice(e0).map((e) => e.kind), deaths: Object.keys(G.story.flags.dead || {}).length };
+        P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; P.x = was[0]; P.z = was[1]; P.gone = false; P.override = null; delete G.x.cars.inHospital[P.id]; G.x.econ.fareShare = 1; G.x.econ.fareShareUntilT = null; G.story.arrest = null; // put back on their feet for the next check
         return r;
       }, [v]);
       const mph = (v * MPH).toFixed(0);
@@ -415,11 +420,14 @@ try {
       ok(r.down && !!line && want.test(line), `a person hit at ${mph} mph is told on screen the same frame: "${line}"`);
       ok(!r.dead && r.deaths === 0 && r.hurt > 0 && r.hurt <= D.runDownHurtAtMost && Math.abs(r.hurt - Math.min(D.runDownHurtAtMost, v * D.hurtPerMetrePerSecond)) < 0.03, `... hurt ${r.hurt.toFixed(2)} of 1 (it scales with the speed), and alive: a car hurts and never kills`);
       ok(!!r.shown && !!line && line.startsWith(r.shown), `... named as Tom knows them ("${r.shown}"; the name is ${r.name})`);
+      if (r.expectChoice) ok(Array.isArray(r.choice) && r.choice.length === 2 && /help/i.test(r.choice[0]) && /drive off/i.test(r.choice[1]) && !r.dead, `... and the choice is put inside two seconds: ${JSON.stringify(r.choice)}; neither ends the game`);
     }
     // three people standing together, driven through: every one of them is told
     const g = await tryIt(() => {
       const H = __h, G = LEDGER.G, c = G.car;
-      const three = G.named.filter((p) => !p.gone && !p.dead && !p.down && p.space === 'street' && !p.inCar).slice(0, 3);
+      // the one-shot: the checks before this one now take the game past the hour people go home (each stop-and-help costs minutes), so three people are stood out for it
+      const three = G.named.filter((p) => !p.dead && !p.down && !p.inCar && !p.def.police).slice(0, 3);
+      three.forEach((P) => { P.override = { where: 'rank', act: 'idle', until: G.t + 120 }; P.gone = false; P.space = 'street'; P.awake = true; P.hold = true; });
       if (three.length < 3) return { none: true };
       const at = H.open(20, 1.5);
       if (!at) return { none: true };
@@ -427,15 +435,20 @@ try {
       three.forEach((P, i) => { P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; P.route = null; P.moving = false; P.space = 'street'; });
       H.cabAt(spot[0] - 12, spot[1], Math.PI / 2, 9);
       let t = 0; H.down('KeyW');
-      while (t < 4) { if (H.busy()) { H.up('KeyW'); return { interrupted: 1 }; } c.v = Math.max(c.v, 9); for (const P of three) { P.route = null; P.moving = false; } LEDGER.tick(H.dt); t += H.dt; }
+      while (t < 4) { if (H.busy()) { if (three.every((P) => P.down)) break; H.up('KeyW'); return { interrupted: 1, why: LEDGER.G.pauseWhy, modal: LEDGER.ui.modal, down: three.map((P) => !!P.down), t }; } c.v = Math.max(c.v, 9); three.forEach((P, i) => { P.route = null; P.moving = false; if (!P.down) { P.gone = false; P.space = 'street'; P.awake = true; P.x = spot[0] + i * 0.9; P.z = spot[1] + (i - 1) * 0.5; } }); LEDGER.tick(H.dt); t += H.dt; }
       H.up('KeyW');
       const lines = LEDGER.ui.subs.map((s) => s.el.textContent);
       const shown = three.map((P) => LEDGER.people().find((q) => q.personId === P.id).shownAs);
       const r = { down: three.map((P) => !!P.down), dead: three.map((P) => !!P.dead), shown, lines };
-      for (const P of three) { P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; }
+      for (let i = 0; i < 90 && !LEDGER.written.read().open; i++) LEDGER.tick(H.dt);
+      r.choice = LEDGER.written.read().choices || null;
+      if (LEDGER.written.read().open) LEDGER.written.choose(0);
+      for (let i = 0; i < 30; i++) LEDGER.tick(H.dt);
+      for (const P of three) { P.down = false; P.hurt = 0; P.downT = 0; P.goalKey = ''; P.gone = false; P.override = null; P.hold = false; delete G.x.cars.inHospital[P.id]; }
+      G.x.econ.fareShare = 1; G.x.econ.fareShareUntilT = null; G.story.arrest = null;
       return r;
     });
-    if (!g || g.none || g.interrupted) ok(false, 'three people driven through: not reached');
+    if (!g || g.none || g.interrupted) ok(false, 'three people driven through: not reached ' + JSON.stringify(g));
     else ok(g.down.every(Boolean) && !g.dead.some(Boolean) && g.shown.every((n) => g.lines.some((l) => l.startsWith(n) && KNOCKED.some((p) => p.test(l)))), `three people standing together, driven through: all three go down, none is killed, and each is named on screen (${g.lines.join(' | ')})`);
   }
 

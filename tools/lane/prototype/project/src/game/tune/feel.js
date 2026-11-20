@@ -19,6 +19,9 @@ export const TUNE = {
   hintAfterStandingStillRealSeconds: 4,
   hintsNotTwoWithinRealSeconds: 12,
   nudgeAfterStandingAboutRealSeconds: 60,
+  arrivesAtXMetres: -44,
+  arrivesAtZMetres: 55,
+  arrivesFacingRadians: 1.45, // looking east, up the quay
 };
 export const SCHEDULES = {};
 export const PEOPLE = {};

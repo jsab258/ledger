@@ -753,22 +753,23 @@ async function startNew() {
     b.visible = false;
   });
   const t = G.tom;
-  t.x = -5.4;
-  t.z = 27.5;
-  t.ang = 0.6;
+  // the one-shot (DESIGN 15, built to the recommended answer of QUESTIONS 4): he arrives by ferry, at the landing,
+  // and walks up the quay to Quay Street. Control comes as soon as the letter is read.
+  t.x = RULES.game.feel.arrivesAtXMetres;
+  t.z = RULES.game.feel.arrivesAtZMetres;
+  t.ang = RULES.game.feel.arrivesFacingRadians;
   t.space = 'street';
   setInside(null);
   ui.roomName = null;
-  cam.yaw = 0.6;
+  cam.yaw = RULES.game.feel.arrivesFacingRadians;
   cam.pitch = 0.24;
   cam.dist = 5.4;
   snapCam();
-  spawnBusLeaving();
   show('hud', true);
   show('touch', G.settings.touch);
   setPaused(false, 'the new week has started');
   await fade(false);
-  sub('Quay Street. One suitcase. The bus does not wait.', '', 'over', 5);
+  sub('The ferry landing, under a grey sky. One suitcase. Quay Street is up the quay to the east, past the Harbour Office clock.', '', 'over', 7);
 }
 // Put a saved week back: the state, then the people rebuilt around their restored memories (each mind gets its
 // index again), then the room and the camera. Continue and the test hook both come through here.

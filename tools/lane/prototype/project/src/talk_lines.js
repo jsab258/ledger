@@ -153,7 +153,7 @@ export const SAY = {
     told: ["Sheila asked you straight and you wouldn't say. That's what they're telling."],
   },
   arrive: {
-    saw: ['One suitcase. I saw you get off the bus.'],
+    saw: ['One suitcase. I saw you come off the ferry.'],
     told: ['They say you came with one suitcase.'],
   },
 };

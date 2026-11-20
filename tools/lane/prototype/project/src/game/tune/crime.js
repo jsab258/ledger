@@ -11,6 +11,7 @@ export const TUNE = {
   doorWithinMetres: 2.4,
   containerWithinMetres: 2.2,
   casingWithinMetres: 30,
+  casingStandsRealSeconds: 4,
   liftWithinMetres: 1.2,
   liftFromBehindAboveRadians: 1.6,
   damageShowsGameDays: 1, // force shows on the door for a day

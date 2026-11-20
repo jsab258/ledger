@@ -17,15 +17,29 @@ import { PIECE as EYES } from './pieces/eyes.js';
 import { setFareShare } from './econ.js';
 
 const T = RULES.game.cars;
-const S = { pave: 0, tick: 0, hornT: -99 };
+const S = { pave: 0, tick: 0, hornT: -99, pendingHit: null };
 const raining = () => G.weather.rain > RULES.weather.rainingAboveRain;
 const firmCar = () => !X('cars').taken && !X('cars').resprayed;
 
 // ---- cars and people (1.2.5): the choice, put within 2 s; neither answer ends the game ----
-async function hit({ P, speed }) {
-  const x = X('cars');
+// A knock is noted at once; the choice is put a moment later (inside two seconds), so a cab that goes through
+// people standing together knocks them all down before one choice is put for all of it.
+function hitNoted({ P, speed }) {
   const h = LAW.fns.carHit(speed, false);
   if (!h.choiceWithinSeconds) return; // a clip at walking pace: a mouthful, and forgiven
+  // each further knock gives the cab a moment more, so the choice comes inside two seconds of the last of them
+  const was = S.pendingHit;
+  if (!was || speed > was.speed) S.pendingHit = { P, speed, left: T.choicePutAfterRealSeconds, others: was ? was.others.concat([was.P]) : [] };
+  else {
+    was.others.push(P);
+    was.left = T.choicePutAfterRealSeconds;
+  }
+}
+async function hit({ P, speed, others = [] }) {
+  const x = X('cars');
+  const h = LAW.fns.carHit(speed, false);
+  if (!h.choiceWithinSeconds) return;
+  for (const Q of others) hospital(Q, LAW.fns.carHit(speed, false));
   P.hurtKind = h.hurt;
   const name = P.anon ? P.def.desc : P.def.name;
   const i = await scene(() => choose('', `${name[0].toUpperCase() + name.slice(1)} is down in the road, and not getting up. The engine is still running.`, ['Stop and help.', 'Drive off.']));
@@ -63,7 +77,7 @@ function crash({ speed }) {
     r = LIFE.fns.crash(speed * T.mphPerMetrePerSecond);
   x.crashes.push({ mph: Math.round(speed * T.mphPerMetrePerSecond), stage: r.stage, t: Math.round(G.t) });
   if (!r.drives && !x.wrecked) {
-    x.wrecked = { t: G.t, backT: (dayNow() + 1) * 1440 + T.carFetchedBackAtHour * 60 };
+    x.wrecked = { t: G.t, played: G.played, backT: (dayNow() + 1) * 1440 + T.carFetchedBackAtHour * 60 };
     tell('The front is in. It will not drive on. He can get out [F]; the firm will fetch it, and it is off the road till tomorrow.', '', 8);
     write('Put the cab into something hard enough that it would not drive on. The firm fetched it; a day off the road.', { how: 'Did it' });
   }
@@ -168,12 +182,17 @@ register({
     const t = G.tom,
       c = G.car,
       x = X('cars');
+    if (S.pendingHit && (S.pendingHit.left -= dt) <= 0) {
+      const p = S.pendingHit;
+      S.pendingHit = null;
+      hit(p);
+    }
     if (x.wrecked) {
       if (G.t >= x.wrecked.backT) {
         x.wrecked = null;
         c.dmg = 0;
         Object.assign(c, { x: 4.1, z: 37.4, ang: 0, v: 0 }); // fetched, mended, back on the rank
-      } else if (t.inCar) c.v = 0;
+      } else if (t.inCar && G.played - x.wrecked.played > T.wreckRollsOnRealSeconds) c.v *= T.wreckSlowsEachStepTimes; // it rolls back off what it hit, then will not go
     }
     leaveTaken();
     if (!t.inCar) return void (S.pave = 0);
@@ -236,5 +255,5 @@ register({
     carHit: (speed, aimed) => LAW.fns.carHit(speed, aimed),
   },
 });
-on('cars.hit', hit);
+on('cars.hit', hitNoted);
 on('cars.crash', crash);

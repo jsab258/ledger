@@ -227,9 +227,11 @@ try {
   await runTo(4 * 1440 + 9.2 * 60);
   await ledgerVisit({ ms: 500 });
   await runTo(4 * 1440 + 16.2 * 60);
+  // the one-shot: Sheila asks on Sunday now (the design's section 16 and the real town's week). Saturday and Sunday pass.
+  await runTo(6 * 1440 + 16.2 * 60);
   await L(() => LEDGER.goInside("Mickey's Cars"));
   await L(() => { const G = LEDGER.G, P = G.people.sheila, t = G.tom; t.x = P.x; t.z = P.z + 1.9; }); await h.step(0.5);
-  log(' prompts by Sheila on Friday:', JSON.stringify(await L(() => LEDGER.prompts())));
+  log(' prompts by Sheila on Sunday:', JSON.stringify(await L(() => LEDGER.prompts())));
   await L(() => LEDGER.press('E')); await h.step(0.5);
   const end = await clear({ answer: 'yes', proposal: 0 });
   log(' the end:', end.filter((x) => /decided/.test(x)).join('; '));

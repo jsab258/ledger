@@ -46,8 +46,8 @@ export const KINDS = {
   ),
   arrive: K(
     'arrive',
-    () => 'Tom got off the bus on Quay Street with one suitcase',
-    () => 'Got off the bus with one suitcase',
+    () => 'Tom came off the ferry at the landing with one suitcase',
+    () => 'Came off the ferry with one suitcase',
   ),
   night_out: K(
     'night_out',

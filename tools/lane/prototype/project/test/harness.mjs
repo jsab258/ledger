@@ -60,6 +60,8 @@ export async function launch(o = {}) {
     newWeek: async () => {
       await nap(800); await page.click('[data-act="new"]'); await settle(); await nap(3500);
       await page.mouse.click(W / 2, H / 2); await settle(); await nap(1500); await page.mouse.click(W / 2, H / 2 + 10); await settle(); await nap(2500);
+      await page.evaluate(() => (LEDGER.game && LEDGER.game.town ? LEDGER.game.town.ready() : null)); // the one-shot: the real town is open before the week is stepped, so a seeded week is the same every time
+      await settle();
       await ev(() => { window.LEDGER_MANUAL = true; LEDGER.step(1); });
     },
     close: async () => { await browser.close(); srv.close(); },

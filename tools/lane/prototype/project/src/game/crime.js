@@ -205,7 +205,8 @@ function casingHotspot(out) {
     const s = T.sites[id],
       d = hyp(t.inCar ? G.car.x : t.x, t.inCar ? G.car.z : t.z, s.door[0], s.door[1]);
     if (x.cased[s.place] || d < T.doorWithinMetres + 2 || d > T.casingWithinMetres) continue;
-    out.push({ k: 'T', t: 'Watch ' + s.name + ' a while', run: () => caseNow(s) });
+    // he has to stand and watch a few seconds for it to count: a press in passing loses no time
+    out.push({ k: 'T', t: 'Watch ' + s.name + ' a while', run: () => begin('Watching ' + s.name, T.casingStandsRealSeconds, () => caseNow(s)) });
     return;
   }
 }

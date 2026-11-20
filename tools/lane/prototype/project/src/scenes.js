@@ -77,7 +77,7 @@ const alisonDue = () =>
   day() >= 2 && !fl().alison && hour() >= STORY.alisonAsksFromHour && hour() < STORY.alisonAsksUntilHour;
 const endReady = () =>
   !G.story.ended &&
-  !fl().choice && // the one-shot: once he has answered her, the game goes on into Act II (game/acts.js)
+  !fl().act1Done && // the one-shot: once he has answered her, the game goes on into Act II (game/acts.js)
   (day() > STORY.lastDayIndex || (day() === STORY.lastDayIndex && hour() >= STORY.weekEndsFromHour));
 const job3On = () =>
   fl().ask2 === 'yes' &&
@@ -651,9 +651,10 @@ const endScene = () =>
   });
 export async function endWeek(choice) {
   const st = G.story;
-  if (st.ended || fl().choice) return;
+  if (st.ended || fl().act1Done) return;
   if (G.hooks.act1End) {
     // the one-shot: his answer ends Act I, not the game. The street learns it, and Act II opens (game/acts.js).
+    fl().act1Done = 1;
     fl().choice = choice;
     act('choice_' + choice, { silent: true, told: ['sheila', 'pauline'] });
     return G.hooks.act1End(choice);
@@ -1862,7 +1863,7 @@ export function storyStep(dt) {
     day() >= REST.weekEndsUnansweredOnDayIndex &&
     h >= REST.weekEndsUnansweredAtHour &&
     !G.story.ended &&
-    !fl().choice &&
+    !fl().act1Done &&
     !G.paused
   ) {
     sub('You never went in. Sheila locked the door and went home. That is an answer as well.', '', 'over', 6);
