@@ -7,6 +7,8 @@ export async function start(o = {}) {
   await h.newWeek();
   await h.page.evaluate(() => LEDGER.game.town.ready());
   await h.settle();
+  // these tests were written with Tom starting at the foot of the office stair; he arrives at the ferry landing now
+  if (!o.atLanding) await h.page.evaluate(() => { LEDGER.goTo({ xMetres: -5.4, zMetres: 27.5 }); LEDGER.G.tom.ang = 0.6; });
   let bad = 0;
   const t = {
     h,

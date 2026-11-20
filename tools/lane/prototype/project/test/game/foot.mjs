@@ -11,7 +11,7 @@ t.ok(w.known.length <= 3, 'the paper map starts nearly empty: only what he has b
 const d = await t.ev(() => { const s = LEDGER.game.way.direct('landing', 'Ron'); return { s, known: LEDGER.game.way.known().includes('landing'), goal: LEDGER.game.way.goal() }; });
 t.ok(/shelter under the last lamp/.test(d.s) && d.known && d.goal.id === 'landing', 'a place named by its landmark goes on the map and becomes the goal', d);
 // lost: the nudge never inside 90 s, and once (ER-WAY-03)
-const n1 = await t.ev(() => { LEDGER.goTo('rank'); for (let i = 0; i < 80; i++) LEDGER.step(1); return LEDGER.game.way.goal().nudged; });
+const n1 = await t.ev(() => { LEDGER.goTo('rank'); for (let i = 0; i < 80; i++) LEDGER.step(1); const g = LEDGER.game.way.goal(); return g ? g.nudged : { tom: [LEDGER.G.tom.x, LEDGER.G.tom.z, LEDGER.G.tom.inCar], t: LEDGER.G.t }; });
 t.ok(n1 === false, 'no nudge inside 90 s', n1);
 const n2 = await t.ev(() => { for (let i = 0; i < 20; i++) LEDGER.step(1); return LEDGER.game.way.goal().nudged; });
 t.ok(n2 === true, 'the nudge comes after 90 s without progress, once', n2);

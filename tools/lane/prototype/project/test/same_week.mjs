@@ -25,7 +25,10 @@ const errors = h.errors.slice();
 await h.close();
 const save = JSON.parse(text);
 const parts = {};
-for (const k of Object.keys(save).sort()) parts[k] = sha(save[k]);
+// the one-shot: `at` is the wall clock at the save, no part of the week. Since the real town's code opens off the
+// clock, the test's own clock can stand a few seconds apart between two runs (one waiting timer taken early or
+// late), with every part of the week the same; so `at` is left out of the record.
+for (const k of Object.keys(save).sort()) if (k !== 'at') parts[k] = sha(save[k]);
 const now = {
   seed: SEED,
   ended: !!r.ended,

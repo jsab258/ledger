@@ -58,10 +58,12 @@ export async function launch(o = {}) {
     shot: async (file, wait = 1500) => { await ev(() => { window.LEDGER_NORENDER = false; }); await sleep(wait); await page.screenshot({ path: file }); await ev(() => { window.LEDGER_NORENDER = true; }); },
     // start a new week and get past the opening letter, with the game stepped by hand from then on
     newWeek: async () => {
-      await nap(800); await page.click('[data-act="new"]'); await settle(); await nap(3500);
-      await page.mouse.click(W / 2, H / 2); await settle(); await nap(1500); await page.mouse.click(W / 2, H / 2 + 10); await settle(); await nap(2500);
-      await page.evaluate(() => (LEDGER.game && LEDGER.game.town ? LEDGER.game.town.ready() : null)); // the one-shot: the real town is open before the week is stepped, so a seeded week is the same every time
-      await settle();
+      // the one-shot: the real town's code opens off the clock, so it is waited for after every step here: the town is open
+      // before anything is timed against it, and a seeded week is the same every time
+      const town = async () => { await page.evaluate(() => (window.LEDGER && LEDGER.game && LEDGER.game.town ? LEDGER.game.town.ready() : null)); await settle(); };
+      await nap(800); await page.click('[data-act="new"]'); await settle(); await town(); await nap(3500);
+      await page.mouse.click(W / 2, H / 2); await settle(); await town(); await nap(1500); await page.mouse.click(W / 2, H / 2 + 10); await settle(); await town(); await nap(2500);
+      await town();
       await ev(() => { window.LEDGER_MANUAL = true; LEDGER.step(1); });
     },
     close: async () => { await browser.close(); srv.close(); },
