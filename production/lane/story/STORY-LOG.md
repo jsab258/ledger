@@ -15,6 +15,7 @@ A later run continues from the last line of the table: read the newest STORY-BIB
 | 4 | v4 | 8 | 7 | 8 | 6 (structure and the middle, the critic; the middle and surprise, the player; surprise, the editor) | no, no, no |
 | 5 | v5 | 8 | 7 | 8 | 6 (the middle, the critic; structure, the player) | yes (with a caveat), no, no |
 | 6 | v6 | 7 | 8 | 7 | 6 (structure and pace, all three; surprise, the critic and the editor) | no, yes, no |
+| 7 | v7 | 8 | 8 | 7 | 6 (surprise, the player and the editor; structure, the editor) | no, yes (with a caveat), no |
 
 ## Round 1 (20 November, started 15:41)
 
@@ -108,3 +109,18 @@ What the three said, in common:
 5. Period: pound notes were gone by 1988; minicabs could not wait on ranks; the hearing's references; a date clash round the lock-up.
 
 Next: v7, cutting again.
+
+## Round 7 (20 November)
+
+What v7 changed: Ada's place is no longer a twist (Tom learns whose table it is on the first Sunday; she gives him an alibi before she has any call to); the midpoint is the burned car alone, with the book opened the day before; Danny runs a hardship fund that buys the club's people, which is Ada's reason; the last truth is found in Sheila's kitchen, not a car boot; Agar's confession moved to the end of Act II; Ada's door is the last errand of the Friday; three rungs on the straight road; the ferry's freephone in place of a rank; pound coins; one dig scene cut.
+
+Scores by category (critic, player, editor): Tom 7 8 8; cast 8 8 8; antagonists 8 7 7; mystery 8 7 7; opening 9 8 8; structure 7 7 6; middle 7 7 7; surprise 7 6 6; endings 8 8 8; side stories 8 8 7; tone 7 7 7; story and play 9 8 8. The player would single it out, with a caveat.
+
+What the three said, in common:
+1. The answer to the fire is a chain of loans and interest that cannot be held in the head; and it is guessed before Sheila's kitchen. Make it one lie; point at the tallyman first.
+2. Danny's denial and Darren's eagerness give the tape away. Let Danny take the credit.
+3. Act II crowds round the Fifth and sags in late November; the last Friday is crammed; the rivals lose their menace after the midpoint.
+4. Alison has little to be after the midpoint. Too many confessions of the same shape.
+5. In a game about books, the sums must balance (the carry and the rent gap, the Wednesday envelope, the miles). Several turning points want one line of motive.
+
+Next: v8, the last round.

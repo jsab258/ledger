@@ -1,0 +1,55 @@
+# LEDGER, story bible v7: a player's review
+
+## 1. Scores
+
+Overall: 8
+
+1. Tom: 8. A lead who cannot speak but has a want (his name said warmly), a flaw you play every day (take the tea or pay for it) and a fear that sits under the bed as a packed suitcase. The Ledger gives him a dry voice I would actually look forward to reading; the change shows in his last line in every ending.
+2. The cast: 8. Ron, Sheila, Ada, Terry and Pauline are people I would talk about afterwards, and June's three envelopes under the lamp is a quiet knockout. Too many others (Kevin, Lee, Garbutt, Lyle, Les, Philip) are one job each and I would forget them.
+3. The antagonists: 7. Three rivals with real motives and three different ways in, and Danny's page is a fine turn. But once Danny is cleared, none of them is frightening; the real menace is an old woman and a dead man, and the rivals become sad men and fair dealers.
+4. The central mystery: 7. It has a truth, it is dug up by hand, and it rewrites earlier scenes (the free Saturday fares, "new management", the letter). But the answer is the dead mentor, which I have seen before, and by the anniversary the list of suspects is three names with one obvious one.
+5. The opening and its retold scene: 8. The first night is brisk, the sum bites (one carry is exactly the rent), and the failed carry ending with "Nowak, T. £80" in the debt book is a great way to fail. The tea that turns out to be a job interview is the scene I would retell, and it plays differently the second time.
+6. Structure and pace: 7. The town's calendar pulls a slow player along and the rivals peak in turn, which is smart. The weight is badly spread: a set-up-heavy first half of Act II, a jammed second half, and a final Friday carrying six threads at once.
+7. The middle: 7. Bonfire Night, Hal's tape, the ward and the two widows are the best stretch of the game. Weeks two and three, between the hearing and the Fifth, risk feeling like a ladder of rungs, and the straight road's ladder is thinner (three rungs, fewer hands jobs) than the keeper's.
+8. Surprise against cliché: 6. The tape, Ron's silence about the importer's rent and June's envelopes surprised me. The innocent-looking widow who runs it all, the framed rival who "is telling the truth", the editor on the Board and the sainted uncle who did it are all familiar shapes, and the bible signposts them.
+9. The endings: 8. Each has a last scene and a last image, and the fare book line beneath the Ledger line is a lovely device. "Ron takes his test in March. He says rain by four" would make me put the pad down for a minute.
+10. The side stories: 8. Ivy and her daughter protecting each other from a thing both know is the best writing in the bible. The watch, the lilies and the wardrobe are proper stories with turns; the Tangs is the weakest of the five.
+11. Tone and humour: 7. Pauline on the radio, the driving lessons, the crabs in the ride-along and the ham that had a seat are funny. Some of the rest is quaint rather than funny, and the dark half has very little air in it once the Fifth has gone.
+12. Story and play feeding each other: 8. The offers system paying off at the hearing and in the phone box is the cleverest thing here; the lock-up being three different jobs depending on whether you watched a tape is exactly what I want. The last week leans on paper, and the final rival face-off is left vague.
+
+## 2. The five weakest points
+
+**1. The big truth is guessable, and arrives as confirmation rather than a turn.**
+What is wrong: the reveal that Mickey planned the fire and lied to Ada (section 8, Sheila's kitchen; section 10, item 5) is set up so plainly that a player who pokes at mysteries has it before the kitchen. Ada says "Mickey found the men. I found the reason" in week one. The real book says "Importer refused" in Mickey's hand. The importer says he paid, Ron says he put it on Mickey's desk, and the bible itself narrows the suspects to Cyril, Mickey or Ron. Of those, the dead uncle is the only one a story would choose.
+Why a player feels it: the kitchen should be the best scene in the game, and instead it is the scene where I find out I was right. "The mentor was the real villain" is a twist players name in reviews as predictable.
+Fix: use what is already there. The far bank's figures are entered "in a second hand very like" Mickey's, by Cyril. Make "Importer refused" look like it is in that second hand, so scene 11 and scene 17 point firmly at the tallyman, who also took the importer's complaint and sent him away. The player suspects Cyril for two weeks, maybe confronts him (he is over sixty, so it is talk, not hands). The fare book in the kitchen then turns it: same pen as the Monday "Paid" lines, and Mickey wrote both. The truth stays; the player's belief is wrong for longer.
+
+**2. The weight of the story is badly spread across Act II's second half and the final Friday.**
+What is wrong: between Wednesday 7 November and Saturday 1 December (section 7, scenes 12 to 21) the player meets the ward, the lock-up, the tape, Remembrance, the lesson or the hall, Ron's gate choice, the two widows, the anniversary, Alison's choice, the search, Danny's page or the bout, Garbutt's table and Agar in the rain. Then the last Friday (section 8) holds Mickey's page, Ellis's trade, every hook called in, the phone box, Ada's table, the rival in person and Reese's verdict.
+Why a player feels it: revelations stop landing when they come one a night. I would not have time to sit with Terry standing at Ada's window before the next truth arrived, and the climax risks feeling like a checklist.
+Fix: move Agar in the rain to the Tuesday or Wednesday night of Reese's week (the bible leaves those nights to "the town" anyway), and let Danny's page come straight after the tape, in the week of the Fifth. That thins the back half and gives Act III two strong night scenes before the kitchen. On the Friday, let Ellis's trade happen on Thursday night only, never on Friday.
+
+**3. The rivals lose their teeth after the Fifth, and the last face-off is undefined.**
+What is wrong: Danny is cleared, the Widow "never threatens, she prices", and Agar apologises before every blow and ends up confessing in the rain about his wife's house (section 5; scenes 16, 20, 21). Agar's hired men appear once at the yard and once at the hall. The final scene with the rival who phoned Customs (section 8, Friday) is one sentence: "settled there, with what Tom knows or with his hands or by walking round".
+Why a player feels it: the BAR's own warning about antagonists thinner than the leads applies. From mid-November nobody is coming for Tom, and the menace in the game belongs to people he cannot touch.
+Fix: give whichever rival left Garbutt's table hurt a real week of hands, written as three nights: Agar's security men try the yard and the mooring on the Tuesday night and stay parked outside after; the Widow takes Ron's old gang off the rank and has Kevin drive the drivers' sheets to Reese; Danny, with nothing left, runs a yellow car at every one of Tom's fares and comes to the phone box himself. Write each Friday face-off as an actual scene with one line that only that rival could say.
+
+**4. Alison is a function, not a person.**
+What is wrong: she is the dig partner (scenes 4, 10, 17), the love interest (one supper, interrupted by the burned car), and a choice about what to file. Her want is the story; her obstacle is a stock editor who sits on the Harbour Board. The "two drawers" line is lovely but it is the whole character (section 4, Alison and Tom).
+Why a player feels it: in GTA V and RDR2 the people who stick are the ones with something of their own going wrong. I would care about Alison's articles, not about Alison, and her ending ("whether she stayed") would not hurt.
+Fix: she lodges above Ada's. Give her the thing she knows and keeps: on the first Thursday she heard Ada tell Ellis that Tom was in the front room till half ten, and she was upstairs and knows he was not, or that he was. She sits on it, it moves between her drawers, and at some point she tells him she knew Ada lied for him and never asked why. That makes her a witness to the club, gives her a secret of her own and a betrayal she can choose, and puts her in Ada's house rather than beside the story. Add one scene after the Fifth that is not about the fire: her lodging, her flask, nothing to dig.
+
+**5. Too many named people, and the most interesting minor one is wasted.**
+What is wrong: the bible names well over forty people for a fifteen-hour story. Garbutt exists to host a table; Lee, Kevin, Mr Lyle and Les Coultas each do one job; Philip is a friend with no story. Meanwhile Cyril Blenkin writes in the real book, gave Ada the tally that drowned her son, sent the importer away and "took Mickey's word", and gets no scene of reckoning; his only payoff is asking "Nowak's?" in one ending (section 4; section 10, items 4 and 5).
+Why a player feels it: I would mix up Lee and Kevin, forget Garbutt, and never realise the old man at the landing had a hand in two deaths of the story.
+Fix: cut Garbutt and let Hal host the table (it is his shop already); fold Lee's collecting into Darren or Kevin. Spend the saved time on Cyril: one scene after the kitchen, at the landing, where Tom can tell him the importer paid. He has counted right for forty years and been wrong twice, both times on a Jensen or a Suddaby's word. That scene would be worth more than any three of the smaller people.
+
+## 3. Would I single this story out
+
+Yes, with a caveat. I would tell a friend to play it for Ron in the passenger seat naming every building by what it used to be, for the tea that turns out to have been a job interview, for Ada lit by a burning car and not looking surprised, for the two widows in the back of a cab with the meter running, and for the moment a VAT officer reads one line from a fare book aloud. Those are scenes people retell, and the idea that the dullest book in the office is the only one that never lied is a proper hook. The caveat is the one above: if the big truth stays as guessable as it is and the last fortnight stays this crowded, a reviewer would praise the people and call the plot familiar. Fix the first weak point and this becomes a 9.
+
+## 4. What must not be lost
+
+1. Ron and Tom, built for the hands: the passenger seat, the three driving lessons (the last one not funny), number nine on the quay wall, the story about the Bishop finished at last with the handbrake on, and every ending judged by which seat Ron is in. This is the Henry and Hans of the game.
+2. The fare book as alibi and noose, and Sheila's line in it: the free Saturday fares, the Monday runs to the Harbour Board, Reese reading "no charge", the kitchen with a pen and a fire in the grate, and every ending closing on a line in that book.
+3. The offers system: gifts and hooks that look the same, paid off at the hearing ("No references", and the silence), in the phone box on the last Friday, and in the deepest hook in the game being a pot of tea.
