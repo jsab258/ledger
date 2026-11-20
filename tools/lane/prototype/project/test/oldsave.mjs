@@ -32,8 +32,12 @@ try {
   const led = await B.ev(() => { LEDGER.ledger.open('people'); const r = { part: LEDGER.ledger.read().part, faults: LEDGER.ledger.faults(), first: LEDGER.ledger.book().slice(0, 4).map((e) => e.what) }; LEDGER.ledger.close(); return r; });
   log('the Ledger, rebuilt from the old save:', JSON.stringify(led).slice(0, 700));
   await B.ev(() => LEDGER.step(20)); await B.ev(() => LEDGER.saveNow(true)); log('saved again; report says:', (await B.ev(() => LEDGER.reportText())).split('\n').slice(5, 7).join(' // ').slice(0, 300));
+  // the one-shot (20 Nov 2026): an old save has no real town in it. It opens a fresh one at the save's clock, told what its people saw.
+  const tw = await B.ev(() => ({ live: LEDGER.game.town.live(), why: LEDGER.game.town.why(), old: LEDGER.G.x.town.old || null, faults: LEDGER.game.faults.length, refusals: LEDGER.game.town.refusals.length }));
+  log('the real town after an old save:', JSON.stringify(tw).slice(0, 900));
+  const townOk = tw.live && /before the real town/.test(tw.why) && !tw.faults && !tw.refusals;
   log('ERRORS new build', B.errs.length, B.errs.slice(0, 4).join('\n'));
   const phase = await B.ev(() => LEDGER.G.story.phase);
-  log(phase === 'play' && !B.errs.length && led.faults.entries > 0 && led.faults.entriesWithNoSourceEvent === 0 ? 'PASS' : 'FAIL');
+  log(phase === 'play' && !B.errs.length && led.faults.entries > 0 && led.faults.entriesWithNoSourceEvent === 0 && townOk ? 'PASS' : 'FAIL');
 } catch (e) { log('TEST FAIL', String(e.stack || e).slice(0, 600)); }
 await b.close(); s1.close(); s2.close();

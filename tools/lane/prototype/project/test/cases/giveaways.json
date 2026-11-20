@@ -1,0 +1,331 @@
+{
+ "piece": "giveaways",
+ "cases": [
+  {
+   "id": "nothing shown",
+   "rule": "ER-EYES-10",
+   "fn": "shown",
+   "in": [
+    {}
+   ],
+   "out": []
+  },
+  {
+   "id": "running in the coat with a bag",
+   "rule": "ER-EYES-10",
+   "fn": "shown",
+   "in": [
+    {
+     "run": true,
+     "coat": true,
+     "carry": true
+    }
+   ],
+   "out": [
+    "running",
+    "coat",
+    "load"
+   ]
+  },
+  {
+   "id": "bloodied with a weapon in the hand",
+   "rule": "ER-EYES-10",
+   "fn": "shown",
+   "in": [
+    {
+     "blood": true,
+     "armed": true
+    }
+   ],
+   "out": [
+    "blood",
+    "weapon"
+   ]
+  },
+  {
+   "id": "running alone is no mark",
+   "rule": "ER-EYES-10",
+   "fn": "hasMark",
+   "in": [
+    [
+     "running"
+    ]
+   ],
+   "out": false
+  },
+  {
+   "id": "the car is a mark",
+   "rule": "ER-EYES-10",
+   "fn": "hasMark",
+   "in": [
+    [
+     "car"
+    ]
+   ],
+   "out": true
+  },
+  {
+   "id": "running doubles how fast he is noticed",
+   "rule": "ER-EYES-10",
+   "fn": "noticeTimes",
+   "in": [
+    [
+     "running",
+     "coat"
+    ]
+   ],
+   "out": 2
+  },
+  {
+   "id": "walking does not",
+   "rule": "ER-EYES-10",
+   "fn": "noticeTimes",
+   "in": [
+    [
+     "coat"
+    ]
+   ],
+   "out": 1
+  },
+  {
+   "id": "give-away: coat at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "coat"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "coat"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: blood at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "blood"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "blood"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: dirt at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "dirt"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "dirt"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: weapon at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "weapon"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "weapon"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: wrong_clothes at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "wrong_clothes"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "wrong_clothes"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: marks at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "marks"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "marks"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: load at mark distance makes a silhouette a mark",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    [
+     "load"
+    ]
+   ],
+   "out": {
+    "rung": 2,
+    "holds": [
+     "load"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: the car is named even as a shape",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    1,
+    [
+     "car"
+    ]
+   ],
+   "out": {
+    "rung": 1,
+    "holds": [
+     "car"
+    ],
+    "more": true
+   }
+  },
+  {
+   "id": "give-away: running is caught sooner, the rung is the same",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    1,
+    [
+     "running"
+    ]
+   ],
+   "out": {
+    "rung": 1,
+    "holds": [],
+    "more": true
+   }
+  },
+  {
+   "id": "no give-away: the same act, nothing more",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    2,
+    []
+   ],
+   "out": {
+    "rung": 1,
+    "holds": [],
+    "more": false
+   }
+  },
+  {
+   "id": "too far for a mark: a coat at a silhouette's distance is not held",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    1,
+    1,
+    [
+     "coat"
+    ]
+   ],
+   "out": {
+    "rung": 1,
+    "holds": [],
+    "more": false
+   }
+  },
+  {
+   "id": "not seen at all: nothing is held",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    0,
+    0,
+    [
+     "coat",
+     "blood"
+    ]
+   ],
+   "out": {
+    "rung": 0,
+    "holds": [],
+    "more": false
+   }
+  },
+  {
+   "id": "a face already caught: the marks are held as well",
+   "rule": "ER-EYES-10",
+   "fn": "caught",
+   "in": [
+    3,
+    2,
+    [
+     "blood",
+     "weapon"
+    ]
+   ],
+   "out": {
+    "rung": 3,
+    "holds": [
+     "blood",
+     "weapon"
+    ],
+    "more": true
+   }
+  }
+ ]
+}

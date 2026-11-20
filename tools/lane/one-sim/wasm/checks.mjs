@@ -601,6 +601,79 @@ export async function runChecks({ brainBytes, checkBytes, tableText, dataText, l
         `The table of the prototype's ${kinds} kinds: ${n('saw')} a sighting, ${n('step')} the town's own step, ${n('open')} open acts with no call yet, ${n('none')} plain facts, ${n('never')} never passed on`);
   }
 
+  // ---- T13, T14: the doors added by the one-shot of 20 November 2026 ------------------------------
+  {
+    // T13: how well a witness sees him, whether he is in sight and how far a noise carries, asked through the new
+    // doors with each golden row's own numbers, against that row's answer.
+    const sim = await loadOneSim(brainBytes, quiet);
+    const num = (x) => Number(x);
+    let ok = 0; const bad = [];
+    const rows = (rule) => byRule.get(rule) || [];
+    for (const l of rows('IdRung')) { const f = l.split('|'); const got = sim.idRung(num(f[1]), num(f[2]), num(f[3]), f[4] === '1', f[5] === '1'); if (f.length === 7 && got === num(f[6])) ok++; else if (bad.length < 3) bad.push(l + ' gave ' + got); }
+    for (const l of rows('InSight')) { const f = l.split('|'); const got = sim.inSight(num(f[1]), num(f[2]), num(f[3]), f[4] === '1', num(f[5])) ? 1 : 0; if (f.length === 7 && got === num(f[6])) ok++; else if (bad.length < 3) bad.push(l + ' gave ' + got); }
+    for (const l of rows('AudibleRadius')) { const f = l.split('|'); const got = sim.audibleRadius(num(f[1]), num(f[2]), f[3] === '1'), want = num(f[4]); if (f.length === 5 && Math.abs(got - want) <= 1e-6 * Math.max(1, Math.abs(want))) ok++; else if (bad.length < 3) bad.push(l + ' gave ' + got); }
+    const all = rows('IdRung').length + rows('InSight').length + rows('AudibleRadius').length;
+    report.T13 = { rows: all, agree: ok };
+    result('T13 how well he is seen, through the new doors', all > 0 && ok === all, all > 0 && ok === all
+      ? `${rows('IdRung').length} IdRung, ${rows('InSight').length} InSight and ${rows('AudibleRadius').length} AudibleRadius golden rows asked through os_id_rung, os_in_sight and os_audible_radius: ${ok} of ${all} agree`
+      : `${ok} of ${all} agree; first: ${bad.join('; ')}`);
+  }
+  {
+    // T14: a crime that is no damage to the week's thing, on the deed's own timetable, through the town's own police file.
+    const cast = dataText['hook-cast.json'], problems = [];
+    const expect = (ok, what) => { if (!ok) problems.push(what); };
+    const refused = (fn, what) => { try { fn(); problems.push(what + ': taken'); } catch (e) { /* refused, as it should be */ } };
+    const fresh = () => openTown({ wasm: brainBytes, castJson: cast, startMinute: 936, print: quiet.print });
+    const D = 1440, wound = { minute: D + 11 * 60, area: 'mickeys', offence: Offence.Wounding, fact: 'p_wound_e1', words: 'he cut a man outside the cab office',
+      witnesses: [{ id: 'june', rung: 4 }, { id: 'grace', rung: 4, nerve: 0.8, loyalty: 0.3 }, { id: 'timid', rung: 4, nerve: 0.2, loyalty: 0.5 }, { id: 'nobody', rung: 4 }] };
+    const play = async (saveInTheMiddle) => {
+      let town = await fresh();
+      town.tick(wound.minute, 'mickeys');
+      const told = town.crime(wound);
+      let hours = town.tick(2 * D + 9 * 60 + 30, 'mickeys');
+      if (saveInTheMiddle) town = await openTown({ wasm: brainBytes, castJson: cast, saved: JSON.parse(JSON.stringify(town.save())), print: quiet.print });
+      hours = hours.concat(town.tick(3 * D + 10 * 60 + 30, 'mickeys'));
+      return { town, told, hours };
+    };
+    const a = await play(false), b = await play(true);
+    expect(a.told.told.join() === 'june' && a.told.queued.join() === 'june,grace,timid' && a.told.dropped.length === 1, 'a crime: who is told, who may go, who is left out: ' + JSON.stringify(a.told));
+    const nine = a.hours.find((h) => h.day === 2 && h.hour === 9), ten = a.hours.find((h) => h.day === 3 && h.hour === 10);
+    expect(nine && nine.crimeWent.map((w) => w.who).join() === 'june,grace', 'at nine the morning after, June and the steady stranger go and the timid one does not: ' + JSON.stringify(nine && nine.crimeWent));
+    expect(nine && /Wounding/.test(nine.ellis || ''), 'DS Ellis comes that morning for the wounding: ' + (nine && nine.ellis));
+    expect(!a.hours.some((h) => h.day === 2 && h.hour === 10 && h.taken), 'no constable on the morning of the report itself');
+    expect(ten && ten.taken === 'Charged' && ten.takenFor === 'player.p_wound_e1' && ten.held && ten.heldUntil === 3 * D + 18 * 60, 'at ten the day after a constable takes him: charged, eight hours: ' + JSON.stringify(ten && { taken: ten.taken, f: ten.takenFor, held: ten.held, until: ten.heldUntil }));
+    expect(JSON.stringify(a.town.save()) === JSON.stringify(b.town.save()), 'saved after the report and loaded, the week ends the same');
+    const t = a.town;
+    refused(() => t.crime({ ...wound, minute: t.now() }), 'the same crime told twice');
+    refused(() => t.crime({ ...wound, minute: t.now(), fact: 'p_x_e2', offence: 9 }), 'an offence the file has no name for');
+    refused(() => t.crime({ ...wound, minute: t.now(), fact: 'threat_e3' }), 'a story name of the town\'s own');
+    // a witness talked round before nine never goes
+    const q = await fresh();
+    q.tick(D + 12 * 60, 'mickeys');
+    q.crime({ minute: D + 12 * 60, area: 'mickeys', offence: Offence.Wounding, fact: 'p_wound_e5', words: 'he cut a man', witnesses: [{ id: 'june', rung: 4 }] });
+    expect(q.quiet('p_wound_e5', 'june') === true && q.quiet('p_wound_e5', 'june') === false, 'a witness is quietened once');
+    const qh = q.tick(3 * D + 11 * 60, 'mickeys');
+    expect(!qh.some((h) => h.crimeWent.length || h.taken), 'a quietened witness never goes, and nobody comes for him');
+    // an open act is held as not about his hidden life; a sighting is
+    const o = await fresh();
+    o.tick(D + 10 * 60, 'mickeys');
+    expect(o.sawOpen({ minute: D + 10 * 60, who: 'june', rung: 4, fact: 'p_fare_e7', area: 'mickeys', words: 'he drove the priest home' }) === true, 'an open act is taken');
+    expect(o.saw({ minute: D + 10 * 60, who: 'june', rung: 4, fact: 'p_parcel_e8', area: 'mickeys', words: 'he carried a holdall at night' }) === true, 'a sighting is taken');
+    const kn = o.knows().filter((k) => k.who === 'june');
+    expect(kn.some((k) => k.topic === 'player.p_fare_e7' && k.private === false) && kn.some((k) => k.topic === 'player.p_parcel_e8' && k.private === true), 'the open act is open and the sighting is about his hidden life: ' + JSON.stringify(kn.map((k) => [k.topic, k.private])));
+    expect(o.sawOpen({ minute: D + 10 * 60, who: 'grace', rung: 4, fact: 'p_fare_e9', area: 'mickeys', words: 'x' }) === false, 'an open act seen by nobody of the cast is not taken');
+    // the rule for somebody the cast lacks, and the rung, through the bridge
+    expect(o.rung(5, 1, 0.9, false, true) === 4 && o.rung(5, 1, 0, false, true) === 3 && o.rung(15, 1, 0, true, false) === 2 && o.rung(30, 1, 0, false, true) === 1, 'the rung through the bridge');
+    expect(o.covers('ron') && o.covers('rocco') && !o.covers('grace'), 'who the town has');
+    expect(o.temper('june') && o.temper('june').nerve >= 0 && o.temper('grace') === null, 'a temper only for the cast');
+    // a save from before these crimes were kept (version 1) still loads
+    const v1 = JSON.parse(JSON.stringify(o.save())); delete v1.crimes; v1.v = 1;
+    try { const t1 = await openTown({ wasm: brainBytes, castJson: cast, saved: v1, print: quiet.print }); expect(t1.crimes().length === 0, 'a version 1 save opens with no crimes'); } catch (e) { problems.push('a version 1 save: ' + e.message); }
+    report.T14 = { problems };
+    result('T14 a crime that is no damage: told, reported at nine by the port\'s own rule, a constable at ten', problems.length === 0, problems.length ? problems.join('; ')
+      : 'a wounding seen by June (of the cast), a steady and a timid stranger: June holds the story; June and the steady one go to the police at nine the morning after (WouldReport), the timid one never; DS Ellis comes that morning; a constable takes him at ten the day after, charged, eight hours (TakeIn); a save in the middle ends the same; told twice, an unknown offence and a town story name are refused; a quietened witness never goes; an open act is held as open; a version 1 save loads');
+  }
+
   if (printed.length) log(`info the modules printed ${printed.length} line(s); first: ${printed[0].slice(0, 120)}`);
   report.failed = failed;
   report.results = results;

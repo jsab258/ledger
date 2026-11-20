@@ -1,0 +1,1604 @@
+{
+ "piece": "witness_mind",
+ "cases": [
+  {
+   "id": "recognised by somebody who knows who he is",
+   "rule": "ER-EYES-06",
+   "fn": "mindOfRung",
+   "in": [
+    4,
+    {
+     "knowsWho": true,
+     "inCar": false,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "tom",
+    "face": 0.9,
+    "sure": 1,
+    "rung": 4,
+    "named": true
+   }
+  },
+  {
+   "id": "recognised by sight but they do not know who he is: a man, the face kept",
+   "rule": "ER-EYES-06",
+   "fn": "mindOfRung",
+   "in": [
+    4,
+    {
+     "knowsWho": false,
+     "inCar": false,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "man",
+    "face": 0.9,
+    "sure": 1,
+    "rung": 4,
+    "named": false
+   }
+  },
+  {
+   "id": "a face, by somebody who knows of him: the new owner, not his name",
+   "rule": "ER-EYES-06",
+   "fn": "mindOfRung",
+   "in": [
+    3,
+    {
+     "knowsWho": true,
+     "inCar": false,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "owner",
+    "face": 0.5,
+    "sure": 0.8,
+    "rung": 3,
+    "named": false
+   }
+  },
+  {
+   "id": "a mark: the coat",
+   "rule": "ER-EYES-10",
+   "fn": "mindOfRung",
+   "in": [
+    2,
+    {
+     "knowsWho": true,
+     "inCar": false,
+     "coat": true
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "coat",
+    "face": 0.12,
+    "sure": 0.55,
+    "rung": 2,
+    "named": false
+   }
+  },
+  {
+   "id": "a mark with no coat and no car is still only a man",
+   "rule": "ER-EYES-06",
+   "fn": "mindOfRung",
+   "in": [
+    2,
+    {
+     "knowsWho": true,
+     "inCar": false,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "man",
+    "face": 0.12,
+    "sure": 0.55,
+    "rung": 2,
+    "named": false
+   }
+  },
+  {
+   "id": "a shape in the cab names the car",
+   "rule": "ER-EYES-10",
+   "fn": "mindOfRung",
+   "in": [
+    1,
+    {
+     "knowsWho": false,
+     "inCar": true,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "cab",
+    "face": 0.05,
+    "sure": 0.4,
+    "rung": 1,
+    "named": false
+   }
+  },
+  {
+   "id": "a noise or less: somebody, never he did it",
+   "rule": "ER-EYES-06",
+   "fn": "mindOfRung",
+   "in": [
+    0,
+    {
+     "knowsWho": true,
+     "inCar": false,
+     "coat": true
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "man",
+    "face": 0,
+    "sure": 0.25,
+    "rung": 0,
+    "named": false
+   }
+  },
+  {
+   "id": "a face in the cab, by somebody who knows of him",
+   "rule": "ER-EYES-10",
+   "fn": "mindOfRung",
+   "in": [
+    3,
+    {
+     "knowsWho": true,
+     "inCar": true,
+     "coat": false
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": {
+    "who": "owner",
+    "face": 0.5,
+    "sure": 0.8,
+    "rung": 3,
+    "named": false
+   }
+  },
+  {
+   "id": "a kept rung is read back",
+   "rule": "ER-EYES-07",
+   "fn": "rungOfMind",
+   "in": [
+    {
+     "rung": 2,
+     "who": "tom"
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "an old memory that names him: recognised",
+   "rule": "ER-EYES-07",
+   "fn": "rungOfMind",
+   "in": [
+    {
+     "who": "tom",
+     "face": 0.2
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "an old memory of the coat: a mark",
+   "rule": "ER-EYES-07",
+   "fn": "rungOfMind",
+   "in": [
+    {
+     "who": "coat",
+     "face": 0
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "an old memory of a man with his face caught: a face",
+   "rule": "ER-EYES-07",
+   "fn": "rungOfMind",
+   "in": [
+    {
+     "who": "man",
+     "face": 0.4
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "an old memory of a man: a silhouette",
+   "rule": "ER-EYES-07",
+   "fn": "rungOfMind",
+   "in": [
+    {
+     "who": "man",
+     "face": 0.1
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a blow is assault",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "strike",
+    {
+     "crime": 2
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 2
+  },
+  {
+   "id": "a weapon used is wounding",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "weapon_used",
+    {
+     "crime": 2
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "a killing",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "kill",
+    {
+     "crime": 3
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 5
+  },
+  {
+   "id": "a person run down by the cab is wounding (a hit-and-run is looked for)",
+   "rule": "ER-DRIVE-10",
+   "fn": "offenceOf",
+   "in": [
+    "knocked",
+    {
+     "crime": 2
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "the cab put into something is damage",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "crash",
+    {
+     "crime": 0
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a new kind that damages a thing",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "window",
+    {
+     "crime": 1,
+     "town": "deed"
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 1
+  },
+  {
+   "id": "a new kind with its own offence (a robbery)",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "holdup",
+    {
+     "crime": 3,
+     "town": "saw",
+     "offence": 4
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 4
+  },
+  {
+   "id": "a new kind by its crime level",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "newkind",
+    {
+     "crime": 3,
+     "town": "saw"
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 3
+  },
+  {
+   "id": "an old kind with no offence (a parcel carried)",
+   "rule": "ER-POL-01",
+   "fn": "offenceOf",
+   "in": [
+    "parcel",
+    {
+     "crime": 1
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 0
+  },
+  {
+   "id": "facing a witness",
+   "rule": "ER-HIDE-01",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 0.3,
+     "inCar": false,
+     "metres": 5,
+     "light": 1,
+     "coat": false,
+     "night": 0
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "his back to a witness: no face",
+   "rule": "ER-HIDE-01",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 2.6,
+     "inCar": false,
+     "metres": 5,
+     "light": 1,
+     "coat": false,
+     "night": 0
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "the coat, collar up, at night: no face",
+   "rule": "ER-EYES-10",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 0.1,
+     "inCar": false,
+     "metres": 5,
+     "light": 0.7,
+     "coat": true,
+     "night": 1
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "the coat by day hides nothing",
+   "rule": "ER-EYES-10",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 0.1,
+     "inCar": false,
+     "metres": 5,
+     "light": 1,
+     "coat": true,
+     "night": 0
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "in the cab, close and lit: a face",
+   "rule": "ER-EYES-10",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 3,
+     "inCar": true,
+     "metres": 4,
+     "light": 0.7,
+     "coat": false,
+     "night": 1
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "in the cab, far or dark: no face",
+   "rule": "ER-EYES-10",
+   "fn": "faceToward",
+   "in": [
+    {
+     "offRadians": 0,
+     "inCar": true,
+     "metres": 12,
+     "light": 0.7,
+     "coat": false,
+     "night": 1
+    },
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": false
+  },
+  {
+   "id": "somebody neutral toward him",
+   "rule": "2.14",
+   "fn": "hostLoyalty",
+   "in": [
+    0,
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 0.5
+  },
+  {
+   "id": "somebody who likes him well",
+   "rule": "2.14",
+   "fn": "hostLoyalty",
+   "in": [
+    0.6,
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 0.8
+  },
+  {
+   "id": "somebody who cannot stand him",
+   "rule": "2.14",
+   "fn": "hostLoyalty",
+   "in": [
+    -1,
+    {
+     "faceScoreAtRung": [
+      0,
+      0.05,
+      0.12,
+      0.5,
+      0.9
+     ],
+     "sureAtRung": [
+      0.25,
+      0.4,
+      0.55,
+      0.8,
+      1
+     ],
+     "faceTowardHalfAngleRadians": 1.75,
+     "inCabFaceWithinMetres": 6,
+     "inCabFaceAboveLight": 0.5,
+     "coatHidesFaceWhenNightAbove": 0.45,
+     "offenceOfKind": {
+      "strike": 2,
+      "weapon_used": 3,
+      "kill": 5,
+      "knocked": 3,
+      "crash": 1
+     },
+     "offenceOfCrimeLevel": [
+      0,
+      0,
+      2,
+      3,
+      5
+     ],
+     "hostLoyaltyBase": 0.5,
+     "hostLoyaltyPerRegard": 0.5,
+     "coolsHalfInGameDaysByCrimeLevel": [
+      1,
+      2,
+      4,
+      7,
+      7
+     ],
+     "coolsHalfInGameDaysIfDecent": 1.5
+    }
+   ],
+   "out": 0
+  }
+ ]
+}

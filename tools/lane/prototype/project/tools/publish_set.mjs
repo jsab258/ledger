@@ -79,6 +79,18 @@ for (const f of ls('src/render', /\.js$/))
   if (f !== 'viewer.js')
     put(REN, `src/render/${f}`, `src/render/${f}`, `source/src/render/${f}`, firstLine(`src/render/${f}`));
 
+// The whole game (the one-shot, 20 Nov 2026): its systems, their numbers, kinds and people, and the rule pieces.
+const GAME = 'The source: the whole game (src/game/)';
+for (const dir of ['src/game', 'src/game/pieces', 'src/game/tune', 'src/game/kinds', 'src/game/cast'])
+  if (fs.existsSync(dir)) for (const f of ls(dir, /\.js$/)) put(GAME, `${dir}/${f}`, `${dir}/${f}`, `source/${dir}/${f}`, firstLine(`${dir}/${f}`));
+// The real town: the loader, the bridge and the cast file sit in onesim/ (written there by the build); the town's
+// rules themselves are the game's own code, compiled into one-sim.wasm, which is beside the page with its credits.
+const TOWN = "The real town (onesim/): the game's own town code, compiled for the browser";
+if (fs.existsSync('onesim'))
+  for (const f of ls('onesim', /\.mjs$/)) put(TOWN, `onesim/${f}`, `onesim/${f}`, `source/onesim/${f}`, firstLine(`onesim/${f}`) || 'The cast file, as text.');
+if (fs.existsSync('dist/one-sim.wasm')) put(TOWN, 'dist/one-sim.wasm', 'one-sim.wasm', 'one-sim.wasm', "The town's rules: LEDGER's own C++ town code, compiled (made by tools/lane/one-sim).", false);
+if (fs.existsSync('dist/ONE-SIM-CREDITS.md')) put(TOWN, 'dist/ONE-SIM-CREDITS.md', 'ONE-SIM-CREDITS.md', 'ONE-SIM-CREDITS.md', 'Credits and licence notices for the library pieces inside one-sim.wasm.');
+
 const BLD = 'The build';
 put(BLD, 'package.json', 'package.json', 'source/package.json', 'three pinned at 0.187.0; the build and test commands.');
 put(BLD, 'package-lock.json', 'package-lock.json', 'source/package-lock.json', 'Every package at its exact version.');
@@ -98,6 +110,9 @@ for (const t of TESTS)
   if (fs.existsSync(`test/${t}.mjs`))
     put(TST, `test/${t}.mjs`, `test/${t}.mjs`, `source/test/${t}.mjs`, firstLine(`test/${t}.mjs`));
 
+if (fs.existsSync('test/pieces.mjs')) put(TST, 'test/pieces.mjs', 'test/pieces.mjs', 'source/test/pieces.mjs', firstLine('test/pieces.mjs'));
+if (fs.existsSync('test/game')) for (const f of ls('test/game', /\.mjs$/)) put(TST, `test/game/${f}`, `test/game/${f}`, `source/test/game/${f}`, firstLine(`test/game/${f}`));
+if (fs.existsSync('test/cases')) for (const f of ls('test/cases', /\.json$/)) put(TST, `test/cases/${f}`, `test/cases/${f}`, `source/test/cases/${f}`, 'Test cases of the rule piece of the same name: inputs and expected outputs.');
 put(TST, 'test/golden/week.json', 'test/golden/week.json', 'source/test/golden/week.json', 'The record of the seeded week: what test/same_week.mjs compares with.');
 put(TST, 'test/golden/week_published_18nov.json', 'test/golden/week_published_18nov.json', 'source/test/golden/week_published_18nov.json', 'The same record for the page as published on 18 Nov, before the numbers were moved.');
 

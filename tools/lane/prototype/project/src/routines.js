@@ -5,6 +5,7 @@ import { CAST, KEEPERS } from './cast.js';
 import { NODES, nearNode, path, SPOTS, ROOMS, WINDOWS, EXITS, roomPos, zoneAt } from './map.js';
 import { newMind } from './events.js';
 import { RULES } from './rules.js';
+import { townPlace } from './game/town.js';
 const CROWD = RULES.crowd;
 
 const WALK = RULES.routines;
@@ -232,6 +233,12 @@ export function initPeople() {
 export function slot(P, h = hour(), d = day()) {
   if (P.override && (P.override.until === undefined || G.t < P.override.until)) return P.override;
   if (P.override) P.override = null;
+  // One number in the tuning table moves the nine people of both casts by the real town's own routine, wherever its
+  // place has a spot on this map. Off: the story's scenes are staged on the prototype's week (ONE-SHOT-SIM-DIFFERENCES.md).
+  if (RULES.game.town.nineStandByTheTownsRoutine && h === hour() && d === day()) {
+    const tp = townPlace(P.id);
+    if (tp && tp.spot) return { where: tp.spot, act: 'idle' };
+  }
   let best = null,
     bd = null;
   for (const s of P.def.sched || []) {
