@@ -617,7 +617,7 @@
    "by": [
     "monday-audit"
    ],
-   "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit Play builds (advisor 233): Monday audit checks every publish to him has a gate pass and known-issues note, and packaged builds he plays the clumsy-player pass. 19 Nov (advisors 253, 254): the allowance order by tools/pace_line.py (week-shape prototype_first); the daily publish by tools/progress_page.py --check in ci."
+   "note": "advisors 219, 224: a changelog check refusing a round entry that names no real-game item, design question or study finding is to be added to the prototype source project (tools/lane/prototype) when its next round lands; until then Monday's audit Play builds (advisor 233): Monday audit checks every publish to him has a gate pass and known-issues note, and packaged builds he plays the clumsy-player pass. 19 Nov (advisors 253, 254): the allowance order by tools/pace_line.py (week-shape prototype_first); the daily publish by tools/progress_page.py --check in ci. 20 Nov (advisor 262): feel on measured numbers and one shared colour grade are not polish; a feel-in-numbers check (each camera, movement, sound, controller or motion value in a publish names its measured source) is to be added to the publish gate in the prototype project at its next round; until then Monday's audit checks it."
   },
   {
    "line": "19 Nov: one parts tree holds the whole game",
