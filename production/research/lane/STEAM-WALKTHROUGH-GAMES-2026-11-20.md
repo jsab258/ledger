@@ -9,8 +9,8 @@ Twelve were named; GTA V is done, and GTA IV and Sleeping Dogs are on both lists
 | Game | Studied for | Steam app | Steam release used | State |
 |---|---|---|---|---|
 | Sleeping Dogs: Definitive Edition | driving, fists, on foot, chases | 307690 | 8 Oct 2014 | coded, checked |
-| GTA IV (The Complete Edition) | driving, fists, on foot, chases | 12210 | 2 Dec 2008 | pulling |
-| L.A. Noire | chases, driving | 110800 | 8 Nov 2011 | queued |
+| GTA IV (The Complete Edition) | driving, fists, on foot, chases | 12210 | 2 Dec 2008 | coded, checked |
+| L.A. Noire | chases, driving | 110800 | 8 Nov 2011 | coded, checked |
 | Hitman: World of Assassination | being seen | 1659040 | 20 Jan 2022 | queued |
 | Mafia: Definitive Edition | - | 1030840 | - | left out by his ruling |
 | Watch Dogs: Legion | driving, chases | 2239550 | 26 Jan 2023 | queued |
@@ -31,3 +31,7 @@ App ids and release dates read from Steam's store details on 20 Nov 2026, 18:15 
 ## Results
 
 (Filled as each game is coded.)
+
+## Remaining steps (the session's working list, 20 Nov 20:50; removed when done)
+
+Advisors 273 then 276 (his asks tonight, ahead of the rest): (a) restart the pulls in the background: sh F:/LedgerTools/steam-reviews/pull-walkthrough.sh (skips games already pulled; left: Hitman WoA, Watch Dogs: Legion, FH4), then sh F:/LedgerTools/steam-reviews/pull-kcd2-after.sh (KCD2 1771300, never on this PC); then delete the Mafia placeholder. (b) Each pulled game: steam_review_mech.py <reviews.jsonl> walkthrough/<key>-mech.json --mech <its list> (lists in steam_walkthrough_tables.py); 'sample <key> <jsonl> check-<key> 80 <seed> --mech ...'; a research-reader (Sonnet) with HAND-CHECK-BRIEF-WALKTHROUGH.md; 'score check-<key> --mech ...' appended to walkthrough/checks.md. (c) All six coded: tables into the study, each game's mechanic findings beside its walkthrough study (feel-2026-11-20/*-raw.md, refmech on lane-2026-11), one fresh Opus final-reviewer, fix once, commit; rows say games done of six. (d) Story (advisor 276) for KCD2, GTA V, RDR2, SD, GTA IV, L.A. Noire, Hitman, WDL: steam_story_coder.py <jsonl> walkthrough/<key>-story.json; 'sample <key> <jsonl> story-<key> 50 <seed>'; a Sonnet reader per game with HAND-CHECK-BRIEF-STORY.md; 'score story-<key>'; write production/research/lane/STORY-PATTERNS-STEAM-2026-11-20.md on lane-2026-11 (pull --rebase; never wip or main) per the advisor's outline (per game shares among story-speaking reviews with quotes; patterns named in 5+ of 8, ranked; one- or two-game traits); push at once; row starting 'Story patterns done'. The cloud story session waits for it. RECIPE.md is at 5,996 of 6,000 words: make room before this unit's lines.
