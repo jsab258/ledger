@@ -2,14 +2,16 @@
 
 The player sees only what a person sees (a screenshot and the words on screen) and acts only with keys. The game is
 stepped by hand: it stands still while the player thinks, and moves on only by the time each action takes, so a slow
-model plays at a person's pace in game time. Every action is logged with the game's own state beside it (the player
-never sees that part; the consequence checker and the panel read it later).
+model plays at a person's pace in game time. Reading is charged too: every new word on screen costs the time a
+person takes to read it (250 words a minute), so long talk moves the minute as it would for a person. The session
+stops itself at --minutes. Every action is logged with the game's own state beside it in the --hidden folder, kept
+apart from the screenshots (the player is never given that folder; the consequence checker and the panel read it).
 
-    python play.py serve --dist DIR --out DIR [--port 8765] [--seed 7]      (one session; leave it running)
+    python play.py serve --dist DIR --out DIR --hidden DIR [--minutes 60] [--port 8765] [--seed 7]   (leave it running)
     python play.py look                                                   (the screen now)
     python play.py hold KeyW 3          hold keys for game seconds; several keys joined by +, e.g. KeyW+ShiftLeft
     python play.py tap KeyE             one press, then a third of a second
-    python play.py type "Where's Mickey's?"   type words (into a talk box when one is open), then Enter
+    python play.py type "Hello there"   type words (into a talk box when one is open), then Enter
     python play.py turn 90              turn the view by degrees (stands in for the mouse; minus is left)
     python play.py wait 20              let game seconds pass with no keys (at most 60 at a time)
     python play.py stop                 end the session; writes session.json
@@ -33,19 +35,25 @@ sys.path.insert(0, GATE)
 DT = 1 / 60
 MAX_HOLD_S = 10
 MAX_WAIT_S = 60
+READ_WORDS_PER_S = 250 / 60
 
 STATE_JS = "() => LEDGER.read()"
 
 
 class Session:
-    def __init__(self, dist, out, seed):
+    def __init__(self, dist, out, seed, hidden, minutes):
         from clumsy import Proto
         self.g = Proto(dist, seed=seed)
         self.out = out
         os.makedirs(os.path.join(out, "shots"), exist_ok=True)
-        self.played_s = 0.0
+        self.played_s = 0.0   # game time the actions took plus reading time
+        self.keys_s = 0.0     # game time the actions took
+        self.read_s = 0.0
+        self.cap_s = minutes * 60
+        self.seen = set()
         self.n = 0
-        self.log = open(os.path.join(out, "actions.jsonl"), "a")
+        os.makedirs(hidden, exist_ok=True)
+        self.log = open(os.path.join(hidden, "actions.jsonl"), "a")
         self.started = time.time()
 
     def step(self, secs, keys=()):
@@ -56,19 +64,32 @@ class Session:
         for k in keys:
             g.up(k)
         self.played_s += secs
+        self.keys_s += secs
 
     def screen(self, action):
         self.n += 1
         shot = os.path.join(self.out, "shots", "%04d.png" % self.n)
         shot = self.g.shot(shot)
         words = {k: v for k, v in self.g.words().items() if v}
+        new = 0
+        for line in "\n".join(words.values()).split("\n"):
+            line = line.strip()
+            if line and line not in self.seen:
+                self.seen.add(line)
+                new += len(line.split())
+        self.read_s += new / READ_WORDS_PER_S
+        self.played_s += new / READ_WORDS_PER_S
         rec = {"n": self.n, "minute": round(self.played_s / 60, 2), "action": action, "words": words, "shot": shot}
+        if self.played_s >= self.cap_s:
+            rec["stopped"] = "the session's time is up: run play.py stop"
         hidden = {"state": self.g.state(), "errors": self.g.errors[-5:]}
         self.log.write(json.dumps(dict(rec, hidden=hidden)) + "\n")
         self.log.flush()
         return rec
 
     def act(self, cmd, args):
+        if self.played_s >= self.cap_s and cmd != "look":
+            return {"minute": round(self.played_s / 60, 2), "stopped": "the session's time is up: run play.py stop"}
         if cmd == "look":
             pass
         elif cmd == "hold":
@@ -92,16 +113,19 @@ class Session:
         return self.screen(" ".join([cmd] + list(args)))
 
     def stop(self):
-        s = {"minutes_played": round(self.played_s / 60, 2), "actions": self.n, "wall_minutes": round((time.time() - self.started) / 60, 1),
+        s = {"minutes_played": round(self.played_s / 60, 2), "minutes_of_keys": round(self.keys_s / 60, 2),
+             "minutes_reading": round(self.read_s / 60, 2), "actions": self.n, "wall_minutes": round((time.time() - self.started) / 60, 1),
              "errors": self.g.errors[:20]}
-        json.dump(s, open(os.path.join(self.out, "session.json"), "w"), indent=1)
+        json.dump(s, open(os.path.join(os.path.dirname(self.log.name), "session.json"), "w"), indent=1)
         self.log.close()
         self.g.close()
         return s
 
 
 def serve(a):
-    sess = Session(a.dist, a.out, a.seed)
+    if os.path.abspath(a.hidden).startswith(os.path.abspath(a.out) + os.sep):
+        raise SystemExit("--hidden must not be inside --out (the player may open files under --out)")
+    sess = Session(a.dist, a.out, a.seed, a.hidden, a.minutes)
     sess.g.clear(tries=0)  # leave the opening as a newcomer meets it
 
     class H(BaseHTTPRequestHandler):
@@ -147,6 +171,8 @@ def main(argv=None):
         ap.add_argument("--out", required=True)
         ap.add_argument("--port", type=int, default=8765)
         ap.add_argument("--seed", type=int, default=7)
+        ap.add_argument("--hidden", required=True, help="the game-state log, kept apart from the screenshots")
+        ap.add_argument("--minutes", type=float, default=60)
         serve(ap.parse_args(argv[1:]))
         return 0
     port = int(os.environ.get("LEDGER_PLAY_PORT", "8765"))

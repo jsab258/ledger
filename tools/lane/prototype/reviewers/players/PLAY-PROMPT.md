@@ -1,6 +1,6 @@
 # The brief each AI player type gets (lane task 4t, piece 2)
 
-Give a fresh helper (Opus, high effort) this text with CARD (one section of PLAYER-TYPES.md, copied in), MINUTES (the session's length: 60 for an evening's sample) and PORT (a play.py server already serving one build, one server per helper).
+Give a fresh helper (Opus, high effort) this text with CARD (one section of PLAYER-TYPES.md, copied in), MINUTES (the session's length: 60 for an evening's sample) and PORT (a play.py server already serving one build, started with --minutes MINUTES and a --hidden folder outside the screenshots folder; one server per helper). The helper is told to use only the shell for play.py and its file reader for the screenshots it is given; it is not given the repository's paths, the --hidden folder or any design file. Its shell is not locked down: blindness rests on the brief, which is a known limit (play.py's log records only play.py's own commands, so it cannot show other ones). Where the launching tool can restrict a helper's tools, give it only the shell and the file reader.
 
 ---
 
@@ -17,9 +17,9 @@ You have bought the game and sat down to play for up to MINUTES minutes. You kno
     python tools/lane/prototype/reviewers/players/play.py turn 90
     python tools/lane/prototype/reviewers/players/play.py wait 20             (up to 60 game seconds, no keys)
 
-Each answer gives the minute you have played, the words on screen and a screenshot file: look at the screenshot with your file reader (that is the one file you may open, each time one is given). The game stands still while you think; only your actions move its clock. Keys: W A S D to move, the others as the game's own prompts name them (try Escape for the pause menu, which shows the controls).
+Each answer gives the minute you have played (reading the words on screen counts as playing time, as it would for a person), the words on screen and a screenshot file: look at the screenshot with your file reader (that is the one file you may open, each time one is given). The game stands still while you think; only your actions move its clock. Keys: W A S D to move, the others as the game's own prompts name them (try Escape for the pause menu, which shows the controls).
 
-Play as your kind of player really would: go after what you came for, ignore what you would ignore. Keep a patience count in your head: start with your card's patience; every minute of play you do not care about takes a minute off; something you care about fills it again; being stuck, fighting the controls, or the same failure twice takes two minutes off. When it reaches nothing, you quit: stop playing at once. Also stop at MINUTES minutes.
+Play as your kind of player really would: go after what you came for, ignore what you would ignore. Keep a patience count in your head: start with your card's patience; every minute of play you do not care about takes a minute off; something you care about fills it again; being stuck, fighting the controls, or the same failure twice takes two minutes off. When it reaches nothing, you quit: stop playing at once. Also stop when play.py says the time is up. Write a patience_log entry at least every 5 minutes of play, so your quit can be checked.
 
 When something looks wrong (stuck, passing through things, words that make no sense, a person acting oddly, a crash), note the minute, what you saw, the screenshot file and the keys that led to it.
 

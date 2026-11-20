@@ -43,17 +43,19 @@ DT = 1 / 60
 # words that break the content rule if a line of prose shows them (canon.md: no alcohol or gambling shown or spoken
 # of; no children anywhere). Matched as whole words, case-blind.
 FAIL_WORDS = [
-    "beer", "beers", "lager", "ale", "ales", "pint", "pints", "whisky", "whiskey", "wine", "vodka", "brandy", "rum",
-    "gin", "cider", "drunk", "drunken", "booze", "boozer", "hangover", "pissed", "tipsy", "barman", "barmaid",
-    "bookie", "bookies", "bookmaker", "betting", "casino", "poker", "lottery", "gamble", "gambling", "gambler",
-    "fruit machine", "bingo", "roulette", "blackjack", "jackpot", "wager",
-    "child", "children", "kid", "kids", "toddler", "baby", "babies", "schoolboy", "schoolgirl", "schoolkids",
-    "pupil", "pupils", "teenager", "teenagers", "grandson", "granddaughter",
+    "beer", "beers", "lager", "ale", "ales", "pint", "pints", "whisky", "whiskey", "wine", "wines", "vodka", "brandy",
+    "gin", "cider", "shandy", "drunk", "drunken", "booze", "boozer", "hangover", "pissed", "tipsy", "barman", "barmaid",
+    "bookie", "bookies", "bookmaker", "bookmakers", "betting", "casino", "casinos", "poker", "lottery", "gamble",
+    "gambles", "gambling", "gambler", "gamblers", "fruit machine", "fruit machines", "bingo", "roulette", "blackjack",
+    "jackpot", "wager", "the pools", "a flutter",
+    "child", "children", "kid", "kids", "toddler", "babies", "schoolboy", "schoolgirl", "schoolkids", "bairn", "bairns",
+    "nipper", "nippers", "pram", "playground", "teenager", "teenagers", "grandson", "granddaughter",
 ]
 # words that are often fine ("I bet", "the pub" with no drink, "a lad" of thirty): reported, never failed
 WARN_WORDS = ["bet", "bets", "odds", "pub", "pubs", "bar", "drink", "drinks", "drinking", "lad", "lads", "lass",
               "young'un", "school", "boy", "girl", "boys", "girls", "youngster", "mum", "dad",
-              "son", "sons", "daughter", "daughters", "nephew", "niece"]  # grown sons and daughters are allowed
+              "son", "sons", "daughter", "daughters", "nephew", "niece",  # grown sons and daughters are allowed
+              "rum", "pupil", "pupils", "baby", "pools", "flutter"]  # "a rum do", the eye's pupil, "baby" as a pet name
 # prose strings that state the content rule itself, sent to the talk service, are not lines the game shows
 RULE_TEXT = re.compile(r"CONTENT RULES|content rule|No alcohol|no children|BANNED|never mention", re.I)
 
@@ -116,8 +118,14 @@ PEOPLE_JS = """() => { const L = LEDGER, G = L.G, out = [];
     const ok = Number.isFinite(P.x) && Number.isFinite(P.z);
     let bad = null;
     if (!ok) bad = 'no real position';
-    else if (!P.space || P.space === 'street') { if (L.isBlocked(P.x, P.z) && !P.inCar && !P.hidden && !P.down) bad = 'inside a solid at ' + P.x.toFixed(1) + ', ' + P.z.toFixed(1); }
+    else if (!P.space || P.space === 'street') {
+      // isBlocked allows Tom's 0.35 m body: a person counts as inside only if the centre and four points 0.35 m away are all blocked
+      const all = [[0, 0], [0.35, 0], [-0.35, 0], [0, 0.35], [0, -0.35]].every(([a, b]) => L.isBlocked(P.x + a, P.z + b));
+      if (all && !P.inCar && !P.hidden && !P.down) bad = 'inside a solid at ' + P.x.toFixed(1) + ', ' + P.z.toFixed(1); }
+    const age = P.age != null ? P.age : (P.def && P.def.ageYears);
+    if (bad == null && typeof age === 'number' && age < 18) bad = 'a person under 18 (age ' + age + '): no children anywhere';
     out.push({ id: P.id || (P.def && P.def.name) || '?', bad }); }
+  for (const id in (L.rules.people || {})) { const a = L.rules.people[id].ageYears; if (typeof a === 'number' && a < 18) out.push({ id, bad: 'written as under 18 (age ' + a + '): no children anywhere' }); }
   // Tom is left out: the checks put him at named places by hand (a door's point can sit in its wall); "never stuck"
   // judges Tom by walking him off again
   return out; }"""
@@ -175,6 +183,8 @@ class Checks:
         for h in range(self.hours):
             r = g.state()
             f = rule_faults(r, last, self.people_held(g))
+            sw = content_scan(json.dumps(list(g.words().values())).replace('\\n', ' '))
+            f += ["words on screen break the content rule: %s in %r" % (x["word"], x["line"][:80]) for x in sw["fails"]]
             for x in f:
                 faults.append("hour %d (%s %s): %s" % (h, r["day"], r["clock"], x))
             last = r
@@ -240,6 +250,7 @@ class Checks:
 
     def _save_reload(self, g):
         g.js("(t) => LEDGER.restore(t)", self.save_text)
+        again = g.js("() => LEDGER.saveText()")  # at once, before the clock moves
         g.run(0.5)
         g.clear()
         a, b = self.saved_read, g.state()
@@ -259,7 +270,17 @@ class Checks:
                 diffs.append("Tom's %s %r became %r" % (k, a["tom"].get(k), b["tom"].get(k)))
         if math.hypot(a["tom"]["xMetres"] - b["tom"]["xMetres"], a["tom"]["zMetres"] - b["tom"]["zMetres"]) > 3:
             diffs.append("Tom moved %.1f m on loading" % math.hypot(a["tom"]["xMetres"] - b["tom"]["xMetres"], a["tom"]["zMetres"] - b["tom"]["zMetres"]))
-        self.record("save and reload give back the same week", not diffs, "saveText after the long run; restore in a fresh page", diffs=diffs)
+        try:
+            a_s, b_s = json.loads(self.save_text), json.loads(again)
+            for d in (a_s, b_s):
+                for k in [k for k in d if (k == "at" or re.search(r"time|when|saved|stamp", k, re.I)) and not isinstance(d[k], (dict, list))]:
+                    d.pop(k)
+            whole = [k for k in sorted(set(a_s) | set(b_s)) if json.dumps(a_s.get(k), sort_keys=True) != json.dumps(b_s.get(k), sort_keys=True)]
+        except Exception as e:
+            whole = ["the saved week is not readable JSON: %s" % str(e)[:80]]
+        if whole:
+            diffs.append("the saved week differs after loading and saving again in: %s" % ", ".join(whole[:12]))
+        self.record("save and reload give back the same week", not diffs, "saveText after the long run; restore in a fresh page; saveText again and compare all but time stamps", diffs=diffs)
         g.js(RUN_HOUR_JS, [120, DT])
         errs = self.errors_of(g)
         self.record("plays on after reload", not errs and g.state()["phase"] == "play", "two minutes after the reload", errors=errs[:10])
@@ -290,6 +311,8 @@ class Checks:
             f.append("frame %.1f ms against %.1f accepted (cloud software drawing; his PC's number is the real one)" % (rec["frame_ms"], base["frame_ms"]))
         if same_kind and base.get("draw_calls") and rec["draw_calls"] and rec["draw_calls"] > base["draw_calls"] * SLOWER_FAILS:
             f.append("draw calls %d against %d accepted" % (rec["draw_calls"], base["draw_calls"]))
+        if base and not same_kind:
+            f.append("not compared: the baseline was taken %s the art and this run %s it; write a new baseline of the same kind" % ("with" if base.get("art") else "without", "with" if self.art else "without"))
         if rec["frame_ms"] is None:
             f.append("not reached: the game's benchmark gave no frame time (%s)" % bm.get("error", "no ms"))
         self.record("frame rate holds against the accepted build", not f, "600 logic steps timed; the game's own benchmark with drawing on",
@@ -310,7 +333,16 @@ class Checks:
         if not files:
             self.record("content rule in the game's words", False, "not reached: no source and no ledger.js")
             return
-        s = content_scan("\n".join(open(p, encoding="utf-8", errors="replace").read() for p in files))
+        text = "\n".join(open(p, encoding="utf-8", errors="replace").read() for p in files)
+        js = os.path.join(self.dist, "ledger.js")
+        if self.src and os.path.exists(js) and files and not files[0].endswith("ledger.js"):
+            built = open(js, encoding="utf-8", errors="replace").read()
+            sample = [x for x in prose_strings(text) if "\\" not in x and "${" not in x][::25][:40]
+            found = sum(1 for x in sample if x in built)
+            if not sample or found < 0.9 * len(sample):
+                self.record("content rule in the game's words", False, "not reached: the source folder does not match the build tested (%d of %d sample lines found in ledger.js)" % (found, len(sample)))
+                return
+        s = content_scan(text)
         self.record("content rule in the game's words", not s["fails"] and s["strings"] > 100,
                     "every prose string in %s against the word list (%d strings)" % (where, s["strings"]),
                     fails=s["fails"][:40], fail_count=len(s["fails"]), warnings=s["warns"])
@@ -357,9 +389,11 @@ def main(argv=None):
         except Exception as e:  # a check that breaks is itself a finding
             c.record("check ran: " + name, False, name, error=str(e)[:400])
         print("done", name, flush=True)
-    if a.write_baseline and getattr(c, "numbers", None):
+    if a.write_baseline and getattr(c, "numbers", None) and all(r["ok"] for r in c.results):
         json.dump(dict(c.numbers, written=datetime.datetime.now().isoformat(timespec="minutes")), open(a.baseline, "w"), indent=1)
         c.notes.append("baseline written: " + a.baseline)
+    elif a.write_baseline:
+        c.notes.append("baseline NOT written: a check failed (fix first, or accept the numbers by hand)")
     summary = summarise(c.results)
     report = {"when": datetime.datetime.now().isoformat(timespec="seconds"), "dist": a.dist, "art": art,
               "summary": summary, "results": c.results, "notes": c.notes, "numbers": getattr(c, "numbers", None)}

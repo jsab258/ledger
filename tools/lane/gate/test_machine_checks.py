@@ -36,3 +36,9 @@ def test_rules_tom_and_people():
     assert any("left play" in x for x in mc.rule_faults(read(phase="end"), None, []))
     assert mc.rule_faults(read(), read(minute=500), [{"id": "rita", "bad": None}]) == []
     assert mc.rule_faults(read(), None, [{"id": "rita", "bad": "inside a solid at 1, 2"}]) == ["rita: inside a solid at 1, 2"]
+
+
+def test_review_words():
+    s = mc.content_scan("const a = 'The bairn was asleep in the pram by the door.'; const b = 'That is a rum do, baby, and no mistake.';")
+    assert sorted(f["word"] for f in s["fails"]) == ["bairn", "pram"]
+    assert "rum" in s["warns"] and "baby" in s["warns"]

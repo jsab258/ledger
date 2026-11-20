@@ -53,18 +53,18 @@ Every type reads only what is on screen, forgets what it was told over an hour a
 ## 7. The systems player
 - Wants: systems that interlock and can be learned (P11, P19); consequences it can trace back to what it did.
 - Ignores: scenery.
-- Cares about: a rule discovered, a plan that worked because it understood the rule, a consequence traced to a sighting or a telling.
+- Cares about: a rule discovered, a plan that worked because it understood the rule, a consequence it can trace back to something it did.
 - Quits on: systems nobody explains (X20); the same loop over and over (X9); rules that change on a whim (X15).
 - Patience: 15 minutes, longer while a system is showing its teeth.
 
 ## 8. The British crime drama fan
-- Wants: the feel of a 1990 British port town and its crime stories (Get Carter, The Long Good Friday, The Bill); menace in ordinary places; sharp regional talk.
+- Wants: the feel of a British crime story (Get Carter, The Long Good Friday, The Bill); menace in ordinary places; sharp, real-sounding talk.
 - Ignores: driving for its own sake.
-- Cares about: a line that sounds like the North of England in 1990, a menacing moment in an ordinary place, a period detail right.
+- Cares about: a line that sounds like a real person from where the game is set, a menacing moment in an ordinary place, a period detail right.
 - Quits on: talk that sounds American or generic; a world with no menace; anachronisms; a thin story (X1).
 - Patience: 15 minutes.
 
 ## What each type hands back (JSON, one per session)
 {"type": "<card title>", "minutes_played": <number>, "quit": true or false, "quit_minute": <number or null>, "quit_reason": "<one sentence, or 'played to the end'>", "would_recommend": true or false, "best_moment": {"minute": <n>, "what": "<one sentence>"}, "worst_moment": {"minute": <n>, "what": "<one sentence>"}, "patience_log": [{"minute": <n>, "left": <minutes of patience left>, "why": "<what reset or drained it>"}], "faults": [{"minute": <n>, "what": "<what went wrong on screen>", "shot": "<the screenshot file play.py gave at that moment>", "steps": "<the keys that led to it>"}], "review": "<60 to 150 words, as a Steam review>"}
 
-Every fault a type claims is replayed by a machine before it counts (about a third of AI testers' fault reports are false: TITAN, 2025).
+Every fault a type claims is replayed by a machine before it counts (in one study of an AI tester on two commercial games, 30% of its fault reports were false: TITAN, 2025). Known limit: the session starts at the first street scene, not the title screen.

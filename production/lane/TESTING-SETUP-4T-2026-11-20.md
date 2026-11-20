@@ -10,8 +10,8 @@ The test hook, window.LEDGER, with at least: read(), places, goTo(place), goOuts
 
 | # | Piece | Where | Model | When | State (20 Nov 01:45) |
 |---|---|---|---|---|---|
-| 1 | Machine checks: rules, save and reload, never stuck, camera never inside a wall, frame rate, content words | tools/lane/gate/machine_checks.py (new), beside clumsy.py and gate.py | none (code) | every build | Built and run on the current build (see below); unit checks 5 of 5; a whole day's run about 4 minutes. Not yet called by gate.py (next: gate.py runs it and counts its faults as new or known). |
-| 2 | Eight AI player types who actually play, blind, with patience budgets | tools/lane/prototype/reviewers/players/ (PLAYER-TYPES.md, PLAY-PROMPT.md, play.py) | Opus, high | once per loop | Cards, brief and the play server written; the server tested with three actions. No model has played yet. |
+| 1 | Machine checks: rules, save and reload, never stuck, camera never inside a wall, frame rate, content words | tools/lane/gate/machine_checks.py (new), beside clumsy.py and gate.py | none (code) | every build | Built and run on the current build (see below); unit checks 6 of 6; a whole day's run about 4 minutes; reviewed and fixed. Not yet called by gate.py (next: gate.py runs it and counts its faults as new or known). |
+| 2 | Eight AI player types who actually play, blind, with patience budgets | tools/lane/prototype/reviewers/players/ (PLAYER-TYPES.md, PLAY-PROMPT.md, play.py) | Opus, high | once per loop | Cards, brief and the play server written and reviewed; the server tested (actions, reading time, the time cap, the separate log). No model has played yet. |
 | 3 | Breakers: cheat the money, skip the story, run everyone over, spam talk | tools/lane/prototype/reviewers/breakers/ | Sonnet | once per loop | Next. Same play.py, their own cards; every claimed fault replayed by machine. |
 | 4 | Feel in numbers, frame by frame, against the reference values | tools/lane/gate/feel_numbers.py | none (code) | once per loop | To build. Reads the hook's per-frame state (steering, camera, speed, punch timing) from scripted drills; reference values from the driving feel sheet, FEEL-TARGETS-MELEE and, from 23 Nov, the builder's measurements. |
 | 5 | Consequence checker: every reaction traces to sightings and tellings; no line repeated; nothing wrong for 1990; the content rules | tools/lane/gate/consequences.py | none, with Sonnet for the 1990 read | once per loop | To build. Reads play.py's hidden log (the game's events and memories beside each action). The content words are already in piece 1. |
@@ -19,7 +19,7 @@ The test hook, window.LEDGER, with at least: read(), places, goTo(place), goOuts
 | 7 | A short "try this" note for him when a loop changes something he would feel | tools/lane/gate/gate.py NOTE.md (exists), one line per felt change | none | each shipped loop | Exists in the gate; the loops fill it. |
 | 8 | Testing the testers: planted faults weekly; the panel beside his own words | tools/lane/gate/plant/ | none (planting), each piece's own model | weekly | To build. Faults planted are taken from our own past findings (rounds 1 to 6, the gate's KNOWN.json), muPRL's method; catch rate per piece recorded in production/lane/TESTER-CATCH-<date>.md. |
 
-Costs kept sensible as the lane prompt says: piece 1 on every build (about 5 minutes of computer time, no model); pieces 2, 3, 5, 6 once per loop. A loop's model cost is mostly the eight player types (about 60 minutes of play each at a person's pace; MIMIC measured about 6 US cents and 12 seconds per action for a comparable agent, so an hour's session of about 300 actions is roughly an hour of a helper).
+Costs kept sensible as the lane prompt says: piece 1 on every build (about 5 minutes of computer time, no model); pieces 2, 3, 5, 6 once per loop. A loop's model cost is mostly the eight player types (about 60 minutes of play each at a person's pace); our own cost per session is measured in the first loop (MIMIC's figure was for another model and does not carry over).
 
 ## Piece 1: first run (round 5 build without the art, 20 Nov)
 
@@ -28,9 +28,15 @@ Costs kept sensible as the lane prompt says: piece 1 on every build (about 5 min
 - Four game hours, then every named place: the rules held every hour; no scene or box that could not be closed; never stuck at 44 named places; save and reload gave back the same week and played on.
 - A whole game day (24 game hours, Monday 3.36pm to Tuesday 7pm) then every named place, run twice. Faults found, for the next loop:
   1. The camera is blocked at three named places: the bus stop on Quay Street (the shelter's panel covers Tom), the ferry landing (the Monday bag's pick-up) and Quay Street as a fare's drop.
-  2. People stand inside a solid at the same spot by the Quay Street bus stop (about -6.5, 21): four different people across three runs (two walkers, Dennis, another passer-by), so people pass through something Tom cannot (most likely the shelter).
+  2. Withdrawn after review: people seemed to stand inside a solid by the Quay Street bus stop, but the test used Tom's 0.35 m body allowance; with the centre and four points 0.35 m away all required to be blocked, it no longer shows in the runs since.
   3. A test artefact, not a game fault: named places can sit inside a door's wall when Tom is put there by hand; Tom is now judged only by "never stuck".
 - The first baseline is written from this build (tools/lane/gate/machine_baseline.json: logic step 0.13 ms, 550 draw calls, no art).
+
+## Fresh review (Opus at high, 20 Nov 01:40): PASS WITH FIXES, fixed once
+
+Must-fix, all done: the content scan now refuses to pass when the source it reads does not match the build it tests; the words on screen are scanned every game hour too; anyone under 18 (the crowd's ages and the written people's) fails "no children anywhere"; a person counts as inside a solid only if the centre and four points 0.35 m away are all blocked; play.py keeps the game-state log in its own folder away from the screenshots, its help names nothing from the game, it charges reading time (250 words a minute) beside key time and stops the session at its length. Should-fix done: the saved week is compared whole after a reload (all but time stamps); a baseline of another kind (with or without the art) is reported "not compared" instead of passing; a baseline is written only when every check passed; more words (bairn, pram, the pools, a flutter, shandy, plurals) and "rum", "pupil", "baby" moved to warnings; a patience log every 5 minutes; two card lines that hinted at the design reworded; the research file's cut-short sources and one-study figures said plainly.
+
+Left open, named: the live talk service runs only inside claude.ai, so live lines are not scanned in the cloud (scripted talk and the screen are); the camera is tried one way, on foot, outdoors; never stuck is not tried in the cab during the long run; words hidden by fading may count as shown; the helper's shell is not locked down (blindness rests on its brief); gate.py does not call the machine checks yet; no model has played yet; frame rate on his PC is not measured here.
 
 ## Order from here
 
