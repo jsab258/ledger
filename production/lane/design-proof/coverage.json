@@ -73,8 +73,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-02 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "1.1.5",
@@ -107,8 +110,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-04 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "1.1.7",
@@ -122,8 +128,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard or design marked not yet set",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.1.8",
@@ -184,8 +193,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (feel: on foot, driving, fists, being seen, chases)",
-   "source": "parts tree"
+   "closed_by": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game (PC, 23 to 26 Nov)",
+   "source": "parts tree",
+   "measure_how": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game",
+   "measure_when": "PC, 23 to 26 Nov",
+   "plan_group": "FEEL"
   },
   {
    "id": "1.2.4",
@@ -232,8 +244,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-04 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "1.2.7",
@@ -247,8 +262,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.2.8",
@@ -403,8 +421,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (feel: on foot, driving, fists, being seen, chases)",
-   "source": "parts tree"
+   "closed_by": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game (PC, 23 to 26 Nov)",
+   "source": "parts tree",
+   "measure_how": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game",
+   "measure_when": "PC, 23 to 26 Nov",
+   "plan_group": "FEEL"
   },
   {
    "id": "1.3.7",
@@ -433,8 +454,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (feel: on foot, driving, fists, being seen, chases)",
-   "source": "parts tree"
+   "closed_by": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game (PC, 23 to 26 Nov)",
+   "source": "parts tree",
+   "measure_how": "feel measuring block already in the order (FEEL-MEASUREMENT-METHOD-2026-11-20), with GTA VI as a fourth game",
+   "measure_when": "PC, 23 to 26 Nov",
+   "plan_group": "FEEL"
   },
   {
    "id": "1.3.9",
@@ -465,8 +489,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-06 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "1.3.11",
@@ -717,8 +744,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-09 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "1.6.3",
@@ -732,8 +762,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.6.4",
@@ -747,8 +780,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.6.5",
@@ -764,8 +800,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-10 has no dated study",
-   "closed_by": "PC measuring 23 to 28 Nov (hour split, ACTIVITY-SHARES)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.6.6",
@@ -779,8 +818,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.6.7",
@@ -914,8 +956,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.7.2",
@@ -944,8 +989,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "1.7.4",
@@ -991,8 +1039,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-11 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full (cloud, Sat 21 to Tue 24 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
+   "measure_when": "cloud, Sat 21 to Tue 24 Nov",
+   "plan_group": "B"
   },
   {
    "id": "2.1.3",
@@ -1038,8 +1089,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-12 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method (PC, 26 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A: an extra row on the feel sheets, same method",
+   "measure_when": "PC, 26 to 28 Nov",
+   "plan_group": "A"
   },
   {
    "id": "2.1.6",
@@ -1115,8 +1169,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (feel: on foot, driving, fists, being seen, chases)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "2.2.5",
@@ -1145,8 +1202,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.3.1",
@@ -1205,8 +1265,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures (cloud, Sat 21 to Wed 25 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
+   "measure_when": "cloud, Sat 21 to Wed 25 Nov",
+   "plan_group": "PUB"
   },
   {
    "id": "2.4.3",
@@ -1220,8 +1283,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard or design marked not yet set",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.4.4",
@@ -1388,8 +1454,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-13 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full (cloud, Sat 21 to Tue 24 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
+   "measure_when": "cloud, Sat 21 to Tue 24 Nov",
+   "plan_group": "B"
   },
   {
    "id": "2.6.5",
@@ -1418,8 +1487,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.6.7",
@@ -1494,8 +1566,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.7.2",
@@ -1509,8 +1584,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.7.3",
@@ -1524,8 +1602,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.7.4",
@@ -1541,8 +1622,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-13 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full (cloud, Sat 21 to Tue 24 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
+   "measure_when": "cloud, Sat 21 to Tue 24 Nov",
+   "plan_group": "B"
   },
   {
    "id": "2.7.5",
@@ -1573,9 +1657,12 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-13 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
+   "closed_by": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full (cloud, Sat 21 to Tue 24 Nov)",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
+   "measure_when": "cloud, Sat 21 to Tue 24 Nov",
+   "plan_group": "B"
   },
   {
    "id": "2.7.7",
@@ -1619,8 +1706,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "the story measure: the measured story fixes its content and counts (cloud, by Sat 28 Nov 12:00)",
+   "source": "parts tree",
+   "measure_how": "the story measure: the measured story fixes its content and counts",
+   "measure_when": "cloud, by Sat 28 Nov 12:00",
+   "plan_group": "STORY"
   },
   {
    "id": "2.8.2",
@@ -1634,8 +1724,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.9.1",
@@ -1649,8 +1742,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.9.2",
@@ -1664,8 +1760,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.10.1",
@@ -1724,8 +1823,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.11.1",
@@ -1739,8 +1841,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.11.2",
@@ -1769,8 +1874,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.11.4",
@@ -1814,8 +1922,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.12.3",
@@ -1829,8 +1940,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.12.4",
@@ -1844,8 +1958,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.12.5",
@@ -1859,8 +1976,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.13",
@@ -1904,8 +2024,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.15.2",
@@ -1919,8 +2042,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "2.15.3",
@@ -1979,8 +2105,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "2.19",
@@ -2024,8 +2153,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "the story measure: the measured story fixes its content and counts (cloud, by Sat 28 Nov 12:00)",
+   "source": "parts tree",
+   "measure_how": "the story measure: the measured story fixes its content and counts",
+   "measure_when": "cloud, by Sat 28 Nov 12:00",
+   "plan_group": "STORY"
   },
   {
    "id": "3.1.3",
@@ -2219,8 +2351,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "3.4.2",
@@ -2234,8 +2369,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "3.4.3",
@@ -2264,8 +2402,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "3.5.2",
@@ -2279,8 +2420,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "the story measure: the measured story fixes its content and counts (cloud, by Sat 28 Nov 12:00)",
+   "source": "parts tree",
+   "measure_how": "the story measure: the measured story fixes its content and counts",
+   "measure_when": "cloud, by Sat 28 Nov 12:00",
+   "plan_group": "STORY"
   },
   {
    "id": "3.5.3",
@@ -2294,8 +2438,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "the story measure: the measured story fixes its content and counts (cloud, by Sat 28 Nov 12:00)",
+   "source": "parts tree",
+   "measure_how": "the story measure: the measured story fixes its content and counts",
+   "measure_when": "cloud, by Sat 28 Nov 12:00",
+   "plan_group": "STORY"
   },
   {
    "id": "3.5.4",
@@ -2309,8 +2456,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "the story measure: the measured story fixes its content and counts (cloud, by Sat 28 Nov 12:00)",
+   "source": "parts tree",
+   "measure_how": "the story measure: the measured story fixes its content and counts",
+   "measure_when": "cloud, by Sat 28 Nov 12:00",
+   "plan_group": "STORY"
   },
   {
    "id": "3.5.5",
@@ -2324,8 +2474,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "story measure (cloud, running 20 Nov) and STORY-PATTERNS-STEAM (due after midnight 20/21 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "3.5.6",
@@ -2415,8 +2568,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "3.6.5",
@@ -3229,8 +3385,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.2",
@@ -3244,8 +3403,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.3",
@@ -3259,8 +3421,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.4",
@@ -3274,8 +3439,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.5",
@@ -3289,8 +3457,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.6",
@@ -3304,8 +3475,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.5.7",
@@ -3319,8 +3493,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard is only a pointer to a design section, no number or test",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces (PC, 27 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED A7: the listening pass on the teardown's town pieces",
+   "measure_when": "PC, 27 to 28 Nov",
+   "plan_group": "SND"
   },
   {
    "id": "5.6.1",
@@ -3424,8 +3601,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "5.9",
@@ -3651,8 +3831,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "6.6",
@@ -3757,8 +3940,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (hour split, ACTIVITY-SHARES)",
-   "source": "parts tree"
+   "closed_by": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study (after the one-shot, from about 3 Dec; the bar itself from the players study by the next run)",
+   "source": "parts tree",
+   "measure_how": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study",
+   "measure_when": "after the one-shot, from about 3 Dec; the bar itself from the players study by the next run",
+   "plan_group": "PANEL"
   },
   {
    "id": "7.3",
@@ -3772,8 +3958,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (hour split, ACTIVITY-SHARES)",
-   "source": "parts tree"
+   "closed_by": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study (after the one-shot, from about 3 Dec; the bar itself from the players study by the next run)",
+   "source": "parts tree",
+   "measure_how": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study",
+   "measure_when": "after the one-shot, from about 3 Dec; the bar itself from the players study by the next run",
+   "plan_group": "PANEL"
   },
   {
    "id": "7.4",
@@ -3819,8 +4008,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "7.7",
@@ -3910,8 +4102,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "7.13",
@@ -3925,8 +4120,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "two values in use (45 s and 30 s a game hour); the reference games publish their day lengths",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures (cloud, Sat 21 to Wed 25 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
+   "measure_when": "cloud, Sat 21 to Wed 25 Nov",
+   "plan_group": "PUB"
   },
   {
    "id": "7.14",
@@ -3940,8 +4138,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "a felt number chosen by judgement, no reference figure behind it",
-   "closed_by": "PC measuring 23 to 28 Nov (teardown: an hour of each reference game, every event listed)",
-   "source": "parts tree"
+   "closed_by": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split (PC, 25 to 28 Nov)",
+   "source": "parts tree",
+   "measure_how": "teardown: an hour of each reference game coded by the twelve kinds (TEARDOWN-BRIEF, Mafia replaced by GTA IV) and the hour split",
+   "measure_when": "PC, 25 to 28 Nov",
+   "plan_group": "TEAR"
   },
   {
    "id": "7.15",
@@ -4050,8 +4251,11 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "standard or design marked not yet set",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures (cloud, Sat 21 to Wed 25 Nov)",
+   "source": "parts tree",
+   "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
+   "measure_when": "cloud, Sat 21 to Wed 25 Nov",
+   "plan_group": "PUB"
   },
   {
    "id": "8.4.1",
@@ -4157,8 +4361,11 @@
    ],
    "status": "UNMEASURED",
    "basis": "research item RN-18 has no dated study",
-   "closed_by": "MEASUREMENTS-NEEDED.md (new, for the order of 23 Nov)",
-   "source": "parts tree"
+   "closed_by": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED) (cloud, next run (Sat 21 Nov))",
+   "source": "parts tree",
+   "measure_how": "design pass 2: the row's pointer replaced by a pass-or-fail test from the description's own numbers (no measuring needed; then MEASURED)",
+   "measure_when": "cloud, next run (Sat 21 Nov)",
+   "plan_group": "TEST"
   },
   {
    "id": "10.1",
@@ -4594,10 +4801,13 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "defined; figure by judgement; measured by the cloud branch count, by Wed 25 Nov",
-   "closed_by": "figure by judgement; measured by the cloud branch count, by Wed 25 Nov",
+   "closed_by": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures (cloud, Sat 21 to Wed 25 Nov)",
    "source": "design documents and talks (source f)",
    "parent": "7.15, 3.1.4",
-   "run2": "defined"
+   "run2": "defined",
+   "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
+   "measure_when": "cloud, Sat 21 to Wed 25 Nov",
+   "plan_group": "PUB"
   },
   {
    "id": "GD-05",
@@ -4900,10 +5110,13 @@
    "research": [],
    "status": "UNMEASURED",
    "basis": "defined; the agreement share is judgement; measured by a labelled test set, cloud, by Thu 26 Nov",
-   "closed_by": "the agreement share is judgement; measured by a labelled test set, cloud, by Thu 26 Nov",
+   "closed_by": "a labelled test set built and run in the cloud (cloud, by Thu 26 Nov)",
    "source": "red team 1",
    "parent": "3.6.1, 3.6.5, 3.6.2, 1.4.5",
-   "run2": "defined"
+   "run2": "defined",
+   "measure_how": "a labelled test set built and run in the cloud",
+   "measure_when": "cloud, by Thu 26 Nov",
+   "plan_group": "SET"
   },
   {
    "id": "RT-15",
