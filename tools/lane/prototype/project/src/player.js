@@ -8,7 +8,7 @@ import { nightF } from './seeing.js';
 import { BARKS } from './cast.js';
 import { ui, key as uiKey, setPrompts, sub, bubble, tomName, show } from './ui.js';
 import { F, frontUp, climb, backDown, input as fightInput, block as fightBlock, target, grab as fightGrab, carried as fightCarried } from './fight.js';
-import { stepCar, nearCar, exitPoint, footSolid, footClear, clearGround } from './drive.js';
+import { stepCar, nearCar, exitPoint, footSolid, footClear, clearGround, vehicleAt } from './drive.js';
 import { hotspots, beatFor } from './scenes.js';
 import { fareAccept } from './fares.js';
 import { startTalk } from './talk.js';
@@ -653,7 +653,8 @@ export function stepCamera(dt) {
         (solidCam(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < 9) ||
         // round 6 (ER-CAM-01, ER-DRIVE-06): nor behind a scrap heap, a stall or a crane leg, unless it looks over it
         (bigThingAt(tx - fx * cp * s, tz - fz * cp * s) && ty + spn * s < TOMS.cameraClearsBigThingsUnderMetres) ||
-        thinThingAt(tx - fx * cp * s, tz - fz * cp * s, ty + spn * s)
+        thinThingAt(tx - fx * cp * s, tz - fz * cp * s, ty + spn * s) ||
+        ((!t.inCar || s > RULES.game.feel.cameraAndVehicles.armClearOfOwnCabMetres) && vehicleAt(tx - fx * cp * s, tz - fz * cp * s, ty + spn * s))
       ) {
         d = Math.max(0.9, s - 0.45);
         break;

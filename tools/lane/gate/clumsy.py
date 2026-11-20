@@ -81,7 +81,8 @@ CAMERA_JS = """() => { const L = LEDGER, T = L.THREE, cam = L.camera, c = L.cam;
   let hits = []; try { hits = ray.intersectObjects(objs, false); } catch (e) { return { dist: d, hit: null, err: String(e) }; }
   const h = hits.find((x) => x.object.material && !(x.object.material.transparent && x.object.material.opacity < 0.5));
   return { dist: d, hit: h ? h.distance : null, what: h ? (h.object.name || h.object.type) : null,
-           camera: [to.x, to.y, to.z], look: [from.x, from.y, from.z] }; }"""
+           camera: [to.x, to.y, to.z], look: [from.x, from.y, from.z],
+           detail: h ? { cab: [L.G.car.x, L.G.car.z, L.G.car.ang, L.G.car.v], tom: [L.G.tom.x, L.G.tom.z, L.G.tom.inCar, L.G.tom.space], yaw: c.yaw, paused: L.G.paused, why: L.G.pauseWhy || null, modal: L.ui.modal, at: [h.point.x, h.point.y, h.point.z] } : null }; }"""
 
 
 class Proto:
@@ -208,7 +209,7 @@ class Gate:
         c = self.g.camera()
         near = 2.7 if self.g.js("() => LEDGER.G.tom.inCar") else 0.7
         v = inv.camera_clear(c.get("hit"), c.get("dist", 0), near)
-        r = self.record("camera clear", v["ok"], steps, where=where, **{k: c.get(k) for k in ("hit", "dist", "what", "camera")})
+        r = self.record("camera clear", v["ok"], steps, where=where, **{k: c.get(k) for k in ("hit", "dist", "what", "camera", "detail")})
         if not v["ok"]:
             r["shot"] = self.g.shot(os.path.join(self.shots, "camera-%02d.png" % len(self.results)))
         return r

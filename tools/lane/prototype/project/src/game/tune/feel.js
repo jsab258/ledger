@@ -22,6 +22,17 @@ export const TUNE = {
   arrivesAtXMetres: -44,
   arrivesAtZMetres: 55,
   arrivesFacingRadians: 1.45, // looking east, up the quay
+  // the camera comes in front of a vehicle that would hide Tom or the cab (drive.js vehicleAt, player.js)
+  cameraAndVehicles: {
+    carRoofMetres: 1.8,
+    busRoofMetres: 3.4,
+    grownMetres: 0.15,
+    carLengthMetres: 4.2,
+    carWidthMetres: 1.7,
+    cabHalfLengthMetres: 2.35,
+    cabHalfWidthMetres: 1.0,
+    armClearOfOwnCabMetres: 2.6, // the arm's first stretch is over the cab itself
+  },
 };
 export const SCHEDULES = {};
 export const PEOPLE = {};

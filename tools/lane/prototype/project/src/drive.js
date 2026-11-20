@@ -83,6 +83,32 @@ export const streetThings = () => ({
     bus: !!v.bus,
   })),
 });
+// The one-shot (the clumsy run's fault): a vehicle standing or passing between the camera and Tom hides him. The
+// camera comes in front of any vehicle its arm crosses below the vehicle's roof (player.js).
+export function vehicleAt(x, z, y) {
+  const K = RULES.game.feel.cameraAndVehicles;
+  for (const v of S.traffic) {
+    if (y >= (v.bus ? K.busRoofMetres : K.carRoofMetres)) continue;
+    const dx = x - v.x,
+      dz = z - v.z,
+      len = (v.car.len || K.carLengthMetres) / 2 + K.grownMetres;
+    if (Math.abs(dx) > len || Math.abs(dz) > len) continue;
+    const a = v.car.g.rotation.y,
+      along = dx * Math.sin(a) + dz * Math.cos(a),
+      across = dx * Math.cos(a) - dz * Math.sin(a);
+    if (Math.abs(along) < len && Math.abs(across) < (v.car.wid || K.carWidthMetres) / 2 + K.grownMetres) return true;
+  }
+  // his own cab, when he is on foot beside it
+  if (!G.tom.inCar && y < K.carRoofMetres) {
+    const c = G.car,
+      dx = x - c.x,
+      dz = z - c.z,
+      along = dx * Math.sin(c.ang) + dz * Math.cos(c.ang),
+      across = dx * Math.cos(c.ang) - dz * Math.sin(c.ang);
+    if (Math.abs(along) < K.cabHalfLengthMetres && Math.abs(across) < K.cabHalfWidthMetres) return true;
+  }
+  return false;
+}
 const AXLES = [1.55, 0, -1.55];
 // would the cab, standing here at this heading, be in something solid?
 function poseHit(x, z, ang, fixedOnly) {
