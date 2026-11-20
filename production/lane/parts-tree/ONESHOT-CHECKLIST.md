@@ -67,12 +67,12 @@ Parts: 200. Already passing their standard: 1 (keep them passing).
 - [ ] 2.5.1 The walk to tell. Now: built shallow. Design: DESIGN §2. Test: S: walk timed and visible.
 - [ ] 2.5.2 Stopping a witness. Now: built shallow. Design: DESIGN §2, §8. Test: S: each answer's effect on the report and the talk.
 - [ ] 2.5.3 Crowd reaction to a deed. Now: built. Design: DESIGN §2. Test: S: after a seen deed, look, gather, quieter talk.
-- [ ] 2.5.5 Finding an unseen deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A38. Test: Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows..
+- [ ] 2.5.5 Finding an unseen deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A38. Test: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows..
 - [ ] 2.6.1 The beat constable. Now: built shallow. Design: DESIGN §8 (new system needing its place in PLAN.md). Test: S and H: the challenge announced.
 - [ ] 2.6.2 Challenge and search. Now: built. Design: DESIGN §8. Test: S: a search finds what is carried.
 - [ ] 2.6.3 Statements and the arrest rule. Now: built. Design: DESIGN §8; C# Core. Test: S: golden rows.
 - [ ] 2.6.4 Custody as hours. Now: built shallow. Design: DESIGN §8. Test: S: arrest timed.
-- [ ] 2.6.10 Police after a deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A36. Test: After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S..
+- [ ] 2.6.10 Police after a deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A36. Test: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S..
 - [ ] 2.7.1 Clean money and the fare book. Now: built. Design: DESIGN §9. Test: S: sum of flows.
 - [ ] 2.7.2 Night money and the tin. Now: built. Design: DESIGN §9. Test: S: sum of flows.
 - [ ] 2.7.3 The wash. Now: built. Design: DESIGN §9. Test: S: warning before the books go off.
@@ -150,7 +150,7 @@ Parts: 200. Already passing their standard: 1 (keep them passing).
 - [ ] 1.6.10 Tom's wardrobe. Now: designed. Design: DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21. Test: S: a change of coat lowers a witness's mark rung; H: strangers greet differently; addendum rules ER-COAT-01.
 - [ ] 1.6.11 Casing a place. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A23. Test: S: a cased place's hours appear in the Ledger and match the routines; addendum rules ER-CASE-01.
 - [ ] 1.6.12 A torch on a night job. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A33. Test: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows)..
-- [ ] 1.6.13 Lifting from a pocket. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A34. Test: A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows)..
+- [ ] 1.6.13 Lifting from a pocket. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A34. Test: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows)..
 - [ ] 1.6.14 Damage by hand. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A35. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S..
 - [ ] 2.1.6 The town's calendar. Now: built shallow. Design: DESIGN-ADDENDUM-2026-11-20 §A20. Test: S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02.
 - [ ] 2.4.5 The paper and the news. Now: built shallow. Design: DESIGN-ADDENDUM-2026-11-20 §A19. Test: S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01.
@@ -168,7 +168,7 @@ Parts: 200. Already passing their standard: 1 (keep them passing).
 - [ ] 3.1.1 Act I, The Inheritance. Now: built. Design: DESIGN §16; game-design first-week designs. Test: H: the week run; panel M1.
 - [ ] 3.1.6 Mickey's past. Now: built shallow. Design: DESIGN §16; story outline. Test: S: the street version stays a street fact.
 - [ ] 3.2.5 Someone worth being honest for. Now: designed. Design: DESIGN §16 (Danby still to write). Test: S: the friendship reaches its ending state.
-- [ ] 3.2.7 Calling on people. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A39. Test: A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S..
+- [ ] 3.2.7 Calling on people. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A39. Test: A visit is possible only where and when the person's routine allows, shows no score, lasts under 2 real minutes, and a second call inside the set gap draws a cooler answer. Check S..
 - [ ] 3.3 Side stories. Now: designed. Design: DESIGN §4; drafts of 8 Nov. Test: H: found unaided; S: each ends in a town fact.
 - [ ] 3.5.3 Break-in sites. Now: designed. Design: DESIGN §4. Test: S: each site entered three ways.
 - [ ] 3.5.4 Tails, minding and lifts content. Now: designed. Design: DESIGN §4. Test: S: each instance's outcomes.

@@ -279,7 +279,8 @@
  {
   "id": "M2.62",
   "decision": "part",
-  "part": "2.6.5"
+  "part": "2.6.10",
+  "reason": "Police after a report: the constable to the spot, then A3 search (A36)."
  },
  {
   "id": "M2.64",
@@ -500,8 +501,8 @@
  {
   "id": "M3.24",
   "decision": "part",
-  "part": "2.4.4",
-  "reason": "It comes back: what the town saw returns to his face, the good with the bad."
+  "part": "3.7",
+  "reason": "A stranger Tom helps can come back later with a favour (A18, the returns-later beat)."
  },
  {
   "id": "M3.28",
@@ -583,8 +584,8 @@
  {
   "id": "M3.48",
   "decision": "part",
-  "part": "2.7.8",
-  "reason": "A bribe is something money buys; paying a witness is 2.5.2."
+  "part": "2.6.8",
+  "reason": "Bribing the law is the bought constable (A13); paying a witness is 2.5.2."
  },
  {
   "id": "M3.51",
@@ -611,8 +612,8 @@
  {
   "id": "M3.55",
   "decision": "part",
-  "part": "2.15.2",
-  "reason": "The cold-store shift contract and fares earn and explain money."
+  "part": "3.4",
+  "reason": "Honest work is the cab and the fares Tom starts with; the cold-store shift contract explains money (2.15.2)."
  },
  {
   "id": "M3.57",

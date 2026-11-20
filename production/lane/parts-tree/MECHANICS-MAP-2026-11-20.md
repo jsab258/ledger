@@ -1,20 +1,22 @@
 # Reference mechanics on the parts tree
 
-Dated 20 Nov 2026 (lane, task 1c). Every mechanic in production/research/lane/REFERENCE-MECHANICS-2026-11-20.md that its marks do not already rule out (289 of 483) now lands on a part, became a new part, or is marked not for LEDGER here with its reason. The 194 lines already marked not for LEDGER keep their reason in that file. Mapped by three Opus helpers at high effort (brief: work/refmech-map/BRIEF.md; raw: work/refmech-map/map-A, B, C.json); merged by tools/lane/parts-tree/sweep/refmech_merge_2026_11_20.py, which also writes each mechanic id into its part's notes.
+Dated 20 Nov 2026 (lane, task 1c). Every mechanic in production/research/lane/REFERENCE-MECHANICS-2026-11-20.md that its marks do not already rule out (289 of 483) now lands on a part, became a new part, or is marked not for LEDGER here with its reason. The 194 lines already marked not for LEDGER keep their reason in that file. Mapped by three Opus helpers at high effort (brief: work/refmech-map/BRIEF.md; raw: work/refmech-map/map-A, B, C.json); merged by tools/lane/parts-tree/sweep/refmech_merge_2026_11_20.py and kept current by refmech_refresh_2026_11_20.py, which writes each mechanic id into its part's notes. Fixed once after a fresh review (production/lane/REVIEW-1C-MERGE-2026-11-20.md).
 
-Counts: on an existing part 253; new parts 9 (from 12 mechanics); not for LEDGER 24.
+A line on an existing part says how LEDGER does it where that differs from the reference game ('LEDGER form'); 'LEDGER form only' means the reference game's version is not in LEDGER, only the narrower form named.
+
+Counts: on an existing part 251; new parts 9 (from 12 mechanics); not for LEDGER 26.
 
 ## New parts
 
-- 1.2.11 The horn: A horn on one key: a noise that turns heads, calls a fare or a crewman out, and is heard like any act. (M1.75; DESIGN-ADDENDUM A32)
-- 1.6.12 A torch on a night job: A hand torch in a pocket: it lights a dark room for searching and shows him to anyone who can see the beam. (M1.101; DESIGN-ADDENDUM A33)
-- 1.6.13 Lifting from a pocket: Taking a key, a letter or a wallet from a coat in a crowd or a packed room, as one held press; caught or not by the person's attention. (M1.97; DESIGN-ADDENDUM A34)
-- 1.6.14 Damage by hand: Tom himself puts a brick through a window or smashes a car or a shopfront: a message, loud and lasting. (M3.13; DESIGN-ADDENDUM A35)
-- 2.6.10 Police after a deed: What police do once a deed is reported or a chase lost: a constable at the spot, a search of the streets near it, then back to the beat. (M2.8, M2.30; DESIGN-ADDENDUM A36)
-- 2.5.4 A street on edge: Several deeds on one street in a short time make its people jumpier for a while, below the escalation dial. (M2.16; DESIGN-ADDENDUM A37)
-- 2.5.5 Finding an unseen deed: Who comes upon a deed nobody saw, and when: the owner home to a forced door, a worker at a body, a neighbour at broken glass. (M2.61; DESIGN-ADDENDUM A38)
-- 3.2.7 Calling on people: Time with the people who matter, chosen by Tom: tea at Ada's, the caff with Alison, a walk with Danby; too often and it wears thin. (M3.28, M3.29, M3.35; DESIGN-ADDENDUM A39)
-- 2.11.4 Crew pay and the cut: What each man is paid for a shift or a job, from which pot, and what short or late pay does to him. (M7.8; DESIGN-ADDENDUM A40)
+- 1.2.11 The horn: A horn on one key: a noise that turns heads, calls a fare or a crewman out, and is heard like any act. (DESIGN-ADDENDUM-2026-11-20 A32)
+- 1.6.12 A torch on a night job: A hand torch in a pocket: it lights a dark room for searching and shows him to anyone who can see the beam. (DESIGN-ADDENDUM-2026-11-20 A33)
+- 1.6.13 Lifting from a pocket: Taking a key, a letter or a wallet from a coat in a crowd or a packed room, as one held press; caught or not by the person's attention. (DESIGN-ADDENDUM-2026-11-20 A34)
+- 1.6.14 Damage by hand: Tom himself puts a brick through a window or smashes a car or a shopfront: a message, loud and lasting. (DESIGN-ADDENDUM-2026-11-20 A35)
+- 2.5.4 A street on edge: Several deeds on one street in a short time make its people jumpier for a while, below the escalation dial. (DESIGN-ADDENDUM-2026-11-20 A37)
+- 2.5.5 Finding an unseen deed: Who comes upon a deed nobody saw, and when: the owner home to a forced door, a worker at a body, a neighbour at broken glass. (DESIGN-ADDENDUM-2026-11-20 A38)
+- 2.6.10 Police after a deed: What police do once a deed is reported or a chase lost: a constable at the spot, a search of the streets near it, then back to the beat. (DESIGN-ADDENDUM-2026-11-20 A36)
+- 2.11.4 Crew pay and the cut: What each man is paid for a shift or a job, from which pot, and what short or late pay does to him. (DESIGN-ADDENDUM-2026-11-20 A40)
+- 3.2.7 Calling on people: Time with the people who matter, chosen by Tom: tea at Ada's, the caff with Alison, a walk with Danby; too often and it wears thin. (DESIGN-ADDENDUM-2026-11-20 A39)
 
 ## Not for LEDGER, with the reason
 
@@ -23,22 +25,24 @@ Counts: on an existing part 253; new parts 9 (from 12 mechanics); not for LEDGER
 - M1.33 Abort or feint an attack: DESIGN 7 makes the heavy blow a committed blow (0.63 to 0.85 s); commitment is what makes it readable and answerable, so it cannot be cancelled.
 - M1.47 Press prompt during grabs and takedowns: Nothing is drawn over heads and no fight cue is shown on screen (DESIGN 17; A29 ER-DEFEND-02); a timed button prompt is a reflex test the grab of A29 does not use.
 - M1.71 Shoot from a moving car: Guns are rare and late (ruling 18 Nov) and LEDGER is not a shooter (DESIGN 18); car chases end by cars and people.
-- M1.81 Carjack a driver: Only parked cars are taken, never a car with somebody in it (A27, built to the recommended answer of his question 2).
+- M1.81 Carjack a driver: Only parked cars are taken, never a car with somebody in it (A27, built to the recommended answer of his question 2; flips if he picks otherwise).
 - M1.85 Speed limiter: Ordinary fast driving is never stopped (A12, ER-TRAFFIC-02), so there is no law to break by accident and a limiter has no job.
-- M1.114 Photograph with a phone: The Ledger already writes down what Tom sees (DESIGN 10), so a camera adds nothing to the verbs or the town's memory; canon's smallest budget (and DESIGN 18 holds the camcorder to one side story).
-- M1.115 Plant a bug: What Tom knows comes from what he sees and what people tell him (DESIGN 2, 10); a planted bug is a spy-game tool outside a 1990 cab firm's world, and would make a gossip screen DESIGN 18 cuts.
+- M1.114 Photograph a target: A film camera would be the 1990 form; the Ledger already writes down what Tom sees (DESIGN 10), so a camera adds nothing to the verbs or the town's memory; canon's smallest budget (DESIGN 18 holds the camcorder to one side story).
+- M1.115 Plant a bug: A planted bug is a spy-game tool outside a 1990 cab firm's world; what Tom knows comes from what he sees and hears (DESIGN 2, 10).
 - M1.119 Smash parking meters for cash: A loop of smashing meters for coins is upkeep for money that DESIGN 18's grind test cuts; money comes through people and the firm (DESIGN 9).
 - M1.121 Tow cars to a drop: A towing job is a vehicle-job sim: not a driving game (canon, DESIGN 18), no taxi-sim parts, and it feeds neither the verbs nor the town's memory (smallest budget).
+- M1.122 Give lifts to hitchhikers: Fares are named people Pauline calls, going where their routine takes them; no random roadside pickups (DESIGN 18; canon: fares few and chosen).
 - M1.129 Binoculars: Sight uses the same bands for Tom and the town (DESIGN 2: shape 35 m, mark 18 m, face 8 m); casing (1.6.11) is done close, which is its risk, and a zoom tool would remove that.
 - M2.44 Cars sink when driven into water: Canon and A11: cars cannot leave the quay into the water; bollards and the edge stop them.
 - M3.18 Steal cars to order: Canon: not a driving game; DESIGN 18 cuts a garage of cars; taking a car is A27's single loud act, not a car-theft job family.
 - M4.27 Furnish the home: Choosing furniture and pets is cosmetic and feeds neither the verbs nor the town's memory (canon, smallest budget); the office and flat changing as he rises stays in 2.12.5.
-- M5.6 Small weapon reactions: No scopes in LEDGER and guns are rare and late (DESIGN 7); a gun reaction gag feeds neither the verbs nor the town's memory (canon, smallest budget).
-- M5.10 Sweat shows through clothes: Sweat through a shirt feeds neither the verbs nor the town's memory (canon, smallest budget); October in Britain under a coat.
-- M5.28 Selectable camera distances: His ruling sets the street camera (the Between height, 86 degrees, 3.1 m) and the game is third person only (project facts); one arm read from rows (DESIGN 17).
+- M5.6 Small weapon reactions: LEDGER is not a shooter (DESIGN 18) and guns are rare and late (ruling 18 Nov); a gun reaction gag feeds neither the verbs nor the town's memory (canon, smallest budget).
+- M5.10 Sweat shows through clothes: Sweat through a shirt feeds neither the verbs nor the town's memory (canon, smallest budget).
+- M5.28 Selectable camera distances: His ruling of 28 Oct sets the street camera (the Between height, 86 degrees, 3.1 m); one arm read from rows (DESIGN 17).
 - M5.29 Cinematic ride camera: Rides in the Hook are short and a ride can be skipped as passed time (A24); not a driving game (DESIGN 18).
 - M5.30 Music follows conduct: Music comes only from places, with a score only at cut scenes and act ends (A8); no measure of standing to follow (D33, D34).
 - M6.11 Ammunition count: No counts on screen (DESIGN 17: no meters); guns are rare and late and what a gun holds is known from the gun itself (1.3.10).
+- M6.38 Choose which HUD icons show: No icons over the world or on screen (DESIGN 17); what LEDGER has instead are switches for prompts, first hints and chatter subtitles (6.1, settings in 8.3).
 - M9.1 Replay editor: A replay editor feeds neither the verbs nor the town's memory (canon, smallest budget); the optional presentation floor names photo mode only (ruling 23 Sep).
 - M9.10 Cheat console: Typed commands are cut as a way to act (DESIGN 18); the tester's skip lives in the job template (3.5.6).
 - M10.5 Paid editions and add-on packs: One full release with new districts in free or paid updates (ruling 28 Oct, 10.6); outfit and car packs feed neither the verbs nor the town's memory (canon, smallest budget).
@@ -46,255 +50,253 @@ Counts: on an existing part 253; new parts 9 (from 12 mechanics); not for LEDGER
 ## On existing parts
 
 - M1.1 Walk, run and sprint: 1.1.1 Walk, run and turn
-- M1.3 Swimming: 4.2.4 The water's edge
-- M1.5 Sneak or crouch: 1.1.5 Hiding and keeping out of sight
-- M1.6 Climb fences, walls and crates: 1.1.8 Vaulting low walls and fences
+- M1.3 Swimming: 4.2.4 The water's edge. LEDGER form only: Tom never walks into the water; put in by others he climbs out at a ladder within a minute (A11). No swimming beyond that.
+- M1.5 Sneak or crouch: 1.1.5 Hiding and keeping out of sight. LEDGER form only: a held slow walk halves his footsteps' reach; no crouch (A1).
+- M1.6 Climb fences, walls and crates: 1.1.8 Vaulting low walls and fences. LEDGER form only: low walls, yard fences and bins at set places; climbing high walls stays out (A26; no jump, ruling 23 Sep).
 - M1.7 Vault while running: 1.1.8 Vaulting low walls and fences
-- M1.8 Foot chase through alleys: 1.5.1 Fleeing on foot
-- M1.10 Interact with one input: 6.1.1 The prompt
-- M1.11 Drop an item: 1.6.7 Getting rid of things
-- M1.12 Carry and drop a body or a person: 1.6.7 Getting rid of things
+- M1.8 Foot chase through alleys: 1.5.1 Fleeing on foot. Pursuing on foot is 1.5.2.
+- M1.10 Interact with one input: 6.1.1 The prompt. The objects themselves are 1.6.8.
+- M1.11 Drop an item: 1.6.7 Getting rid of things. Dropping or dumping what he carries is getting rid of it; what he carries is 1.6.9.
+- M1.12 Carry and drop a body or a person: 1.6.7 Getting rid of things. A body moved, by Tom or as the crew verb (1.7.2); carrying a hurt man to help is the call of 2.18.
 - M1.14 Pick up a dropped weapon: 1.3.6 Things to hand and carried weapons
-- M1.15 Search the unconscious or the dead: 1.6.2 Searching and taking
+- M1.15 Search the unconscious or the dead: 1.6.2 Searching and taking. A man down can be searched at A4's times, seen like any act (A29).
 - M1.16 Search drawers, cabinets and wardrobes: 1.6.2 Searching and taking
 - M1.17 Light strike: 1.3.1 Blows and contact
 - M1.18 Heavy strike: 1.3.1 Blows and contact
 - M1.19 Strike strings and combo enders: 1.3.1 Blows and contact
-- M1.20 Special attack button: 1.3.1 Blows and contact
-- M1.23 Guard-breaking strike: 1.3.2 Reading and answering blows
-- M1.25 Tackle: 1.5.2 Pursuing on foot
+- M1.20 Special attack button: 1.3.1 Blows and contact. The improvised swing with a thing to hand is 1.3.6.
+- M1.23 Guard-breaking strike: 1.3.2 Reading and answering blows. A blocked heavy blow staggers, a swung weapon breaks through a guard (A29).
+- M1.25 Tackle: 1.5.2 Pursuing on foot. Catching a runner is a hand on the collar within 1 m from behind, then the lower rungs (A3); a grab in a fight is 1.3.4.
 - M1.26 Block: 1.3.2 Reading and answering blows
-- M1.27 Perfect block or parry: 1.3.2 Reading and answering blows
+- M1.27 Perfect block or parry: 1.3.2 Reading and answering blows. Guard then counter in the other man's recovery (A29); no separate timed parry.
 - M1.28 Counter: 1.3.2 Reading and answering blows
-- M1.29 Counter timing: 1.3.2 Reading and answering blows
-- M1.30 Dodge: 1.3.2 Reading and answering blows
-- M1.31 Perfect dodge: 1.3.2 Reading and answering blows
-- M1.35 Hit the opening: 1.3.2 Reading and answering blows
+- M1.29 Counter timing: 1.3.2 Reading and answering blows. The counter lands only inside the first part of the other man's recovery after a slip or block (A29).
+- M1.30 Dodge: 1.3.2 Reading and answering blows. The slip (A29).
+- M1.31 Perfect dodge: 1.3.2 Reading and answering blows. The reward for a slip on the tell is the counter that follows (A29).
+- M1.35 Hit the opening: 1.3.2 Reading and answering blows. A blow inside the other man's recovery after a slip or block lands as a heavy blow at a jab's speed (A29); the dropped guard is 1.3.7.
 - M1.36 Spacing and herding: 1.3.8 Odds, crowds and nerve in a fight
-- M1.37 Fight stamina: 1.3.7 Condition without bars
+- M1.37 Fight stamina: 1.3.7 Condition without bars. Breath, not a bar (A29; melee sheet C11).
 - M1.39 Grapple: 1.3.4 The lower rungs
 - M1.40 Throw over a railing or edge: 1.3.5 The street as a weapon
 - M1.43 Knock out with strikes: 1.3.7 Condition without bars
-- M1.46 Knock out from behind or while asleep: 1.3.6 Things to hand and carried weapons
+- M1.46 Knock out from behind or while asleep: 1.3.6 Things to hand and carried weapons. The quiet blow from behind with a cosh or a fist (A23); no sleeping targets.
 - M1.48 Melee weapons that break: 1.3.6 Things to hand and carried weapons
-- M1.49 Disarm: 1.3.4 The lower rungs
+- M1.49 Disarm: 1.3.4 The lower rungs. The grab takes what is in his hand (A29).
 - M1.50 Fists with their own moves: 1.3.1 Blows and contact
 - M1.52 Avoid a brawl by backing off: 1.3.9 How a fight ends
 - M1.57 Aim and fire a gun: 1.3.10 Firearms
-- M1.58 Gun feel: 1.3.10 Firearms
-- M1.59 Over-the-shoulder aim camera and shoulder swap: 5.8.1 Camera rig by state
-- M1.67 Holster the gun: 1.4.4 Give-aways and the coat
+- M1.58 Gun feel: 1.3.10 Firearms. Feel targets owed inside the part, AAA when used (ruling 18 Nov).
+- M1.59 Over-the-shoulder aim camera and shoulder swap: 5.8.1 Camera rig by state. An aim row joins the camera rig's rows when the rare gun is built (1.3.10); no shoulder swap.
+- M1.67 Holster the gun: 1.3.10 Firearms. Putting a weapon away is part of carrying a rare weapon; a weapon drawn cannot be undrawn unseen (DESIGN 7).
 - M1.68 Gun scarcity: 1.3.10 Firearms
-- M1.69 Pistol whip: 1.3.10 Firearms
-- M1.70 Warning shot: 1.3.10 Firearms
+- M1.69 Pistol whip: 1.3.10 Firearms. A gun in the hand used as a club: a strike with the seven slots that also shows the gun (the dial).
+- M1.70 Warning shot: 1.3.10 Firearms. What a shot does and who hears it; a threat shot moves the dial to Fired like any shot.
 - M1.73 Drive a car: 1.2.1 Car handling
 - M1.74 Handbrake turn: 1.2.1 Car handling
-- M1.76 Look back while driving: 1.2.2 Car camera
+- M1.76 Look back while driving: 1.2.2 Car camera. A held key turns the car camera to the rear window (A24).
 - M1.77 Get in and out of a car: 1.2.3 Getting in and out
-- M1.78 Ram another vehicle: 1.2.4 Crashes, damage and unsticking
+- M1.78 Ram another vehicle: 1.2.4 Crashes, damage and unsticking. Ramming, damage by closing speed, nobody inside killed (A24).
 - M1.79 Run people down with the car: 1.2.5 Cars and people
 - M1.80 Steal a parked car: 1.2.10 Taking a parked car
-- M1.90 Vehicle camera switch: 1.2.2 Car camera
-- M1.91 Quiet or loud approach: 1.6.1 Getting in
-- M1.92 Hold up a shop or a person: 1.3.4 The lower rungs
-- M1.93 Hit a van in transit: 1.6.3 Lifts and the hot mark
-- M1.94 Safe cracking: 1.6.2 Searching and taking
+- M1.90 Vehicle camera switch: 1.2.2 Car camera. A choice of distance, if wanted, is a setting (8.3).
+- M1.91 Quiet or loud approach: 1.6.1 Getting in. Several keys to every lock: quiet (a key, a back way) or loud force.
+- M1.92 Hold up a shop or a person: 1.3.4 The lower rungs. Threaten (rung 3) with a demand; what is handed over is what the purse or till holds (2.7.5).
+- M1.93 Hit a van in transit: 1.6.3 Lifts and the hot mark. Goods taken off a lorry or van are a lift; an armed raid on an armoured cash van stays out (guns rare and late, ruling 18 Nov).
+- M1.94 Safe cracking: 1.6.2 Searching and taking. A safe needs its key or combination from a person, never a dial game (A4).
 - M1.98 Throw a stone to distract: 1.4.8 Drawing a watcher away
 - M1.99 Distract guard dogs: 4.11.1 Yard dogs
 - M1.100 Companion orders: 1.7.1 Orders in the field
 - M1.105 Skip time: 7.11 Waiting and time skips
 - M1.106 Change outfit: 1.6.10 Tom's wardrobe
 - M1.109 Greet or needle a passer-by: 1.4.7 Street manners
-- M1.110 Call out to stop someone: 1.4.7 Street manners
-- M1.111 Step into a fight: 3.7 Street happenings
-- M1.112 Unprovoked blow is a crime: 2.2.1 Seven slots per act
-- M1.113 Talk to passers-by: 3.6.4 Crowd lines by situation
-- M1.122 Give lifts to hitchhikers: 3.4.1 Fare people
-- M2.2 Offence severity: 2.6.4 Custody as hours
-- M2.3 Police act on sight or a witness's call: 2.5.1 The walk to tell
+- M1.110 Call out to stop someone: 1.4.7 Street manners. The call ("Oi!") stops a walker for about 2 s (A10).
+- M1.111 Step into a fight: 3.7 Street happenings. An authored row between townspeople the player can watch, join or break up (no random fights, DESIGN 18); stepping in uses the lower rungs (1.3.4).
+- M1.112 Unprovoked blow is a crime: 2.6.3 Statements and the arrest rule. An unprovoked blow is a deed like any other: seen, reported, and police come.
+- M1.113 Talk to passers-by: 3.6.4 Crowd lines by situation. Unnamed people answer with crowd lines; live talk is for named people (3.6.1); asking a stranger the way is 6.9.
+- M2.2 Offence severity: 2.6.4 Custody as hours. Hours by deed: about six for a window up to twenty-two for a killing.
+- M2.3 Police act on sight or a witness's call: 2.5.1 The walk to tell. A witness walks to a friend, a phone box or the station; the beat constable acts on what he sees (2.6.1).
 - M2.4 Stop a witness before they report: 2.5.2 Stopping a witness
-- M2.5 Witness resolve depends on standing: 2.14 Each person's temper
-- M2.7 Lose a chase by breaking sight: 1.5.4 Pursuers
-- M2.9 Swap cars to shake a description: 1.2.9 Repairs, plates and paint
-- M2.11 Surrender or resist: 2.6.2 Challenge and search
+- M2.5 Witness resolve depends on standing: 2.14 Each person's temper. Each named person's nerve and loyalty decides how hard he is to pay or frighten; the rule is QUESTIONS 3, already its own part.
+- M2.7 Lose a chase by breaking sight: 1.5.4 Pursuers. Pursuers give up once Tom is unseen 7 s or 70 m (ER-POL-04).
+- M2.9 Swap cars to shake a description: 1.2.9 Repairs, plates and paint. Shaun Hewson's respray and the plate as a mark; a car taken (1.2.10) is a different car to witnesses.
+- M2.11 Surrender or resist: 2.6.2 Challenge and search. Stand and be searched, run and it is a chase, or a word (A13).
 - M2.12 Arrest costs: 2.6.4 Custody as hours
-- M2.13 Death and hospital respawn: 1.3.9 How a fight ends
-- M2.14 Escalating police response: 2.6.5 DS Ellis and the four stages
-- M2.19 Street features that stop pursuers: 4.1.2 The rest of the Hook
-- M2.20 Each new crime is its own pursuit: 2.6.4 Custody as hours
+- M2.13 Death and hospital respawn: 1.3.9 How a fight ends. Tom cannot die; beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, costing days.
+- M2.14 Escalating police response: 2.6.5 DS Ellis and the four stages. Four stages with signs; armed officers and War-level cars are 2.6.6.
+- M2.19 Street features that stop pursuers: 4.1.2 The rest of the Hook. Back ways, ginnels, yards and bollarded lanes a car cannot follow are part of the Hook's layout as data; roadworks as dressing.
+- M2.20 Each new crime is its own pursuit: 2.6.4 Custody as hours. Each deed is its own matter; never taken twice for one.
 - M2.22 Traffic offences draw police: 2.6.7 Traffic police and stops
-- M2.24 Drawn gun alarms people and police: 2.2.5 Give-away rules
+- M2.24 Drawn gun alarms people and police: 2.2.5 Give-away rules. A weapon in the hand is a give-away; watchers scatter once it is out.
 - M2.25 Shots bring the law: 2.6.6 Armed response and the dial's police
 - M2.26 Hit-and-run brings the law: 1.2.5 Cars and people
 - M2.27 Bystanders flee or gawk: 2.5.3 Crowd reaction to a deed
-- M2.28 Followed person reacts: 1.1.6 Tailing on foot
-- M2.29 Shopkeepers remember a robber: 2.7.5 Purses, tills and shops
-- M2.31 Pedestrians obey crossings and watch for cars: 2.1.5 Crowd movement and avoidance
-- M2.34 Traffic by day of the week: 2.1.6 The town's calendar
-- M2.35 Drivers flash a wrong-way car: 4.5.1 Traffic drivers
+- M2.28 Followed person reacts: 1.1.6 Tailing on foot. A2: a mark is a doubt (he speeds up or changes route), a face he knows ends the tail: he turns and says so, or runs.
+- M2.29 Shopkeepers remember a robber: 2.7.5 Purses, tills and shops. Shops remember; memory is permanent (2.3.1).
+- M2.31 Pedestrians obey crossings and watch for cars: 2.1.5 Crowd movement and avoidance. People look before they step out (ER-DRIVE-04) and walk round each other; crossings belong in crowd movement.
+- M2.34 Traffic by day of the week: 2.1.6 The town's calendar. The week: market day, the Saturday match, Sunday; the crowd and traffic follow the calendar.
+- M2.35 Drivers flash a wrong-way car: 4.5.1 Traffic drivers. Traffic drivers reacting to other cars; a flash of lights at a car on the wrong side is one reaction.
 - M2.36 Traffic obeys lights and lanes: 4.5.1 Traffic drivers
-- M2.37 Scheduled world details: 4.7 Day and night
-- M2.38 Rain makes roads slippery: 1.2.1 Car handling
-- M2.39 Rain washes blood away: 2.19 Lasting marks on the town
-- M2.40 Sea state follows the weather: 4.8 Weather
-- M2.41 Bodies in water: 1.6.7 Getting rid of things
-- M2.42 Falls hurt by how you land: 1.3.7 Condition without bars
+- M2.37 Scheduled world details: 4.7 Day and night. Dusk falls and the lamps come on; lit windows follow routines.
+- M2.38 Rain makes roads slippery: 1.2.1 Car handling. Grip is part of handling; the one wetness value (4.8) lowers it.
+- M2.39 Rain washes blood away: 2.19 Lasting marks on the town. Lasting marks on the town: blood on a pavement stays until rain or a bucket washes it, as glass stays broken until mended.
+- M2.40 Sea state follows the weather: 4.8 Weather. Weather profiles drive the look, the dock water included; smallest budget, no boats beyond scenery (DESIGN 18).
+- M2.41 Bodies in water: 1.6.7 Getting rid of things. Getting rid of a body; a body in the dock is not gone: canon and DESIGN 7 say a body is never wiped, so it comes up at the basin later and is found.
+- M2.42 Falls hurt by how you land: 1.3.7 Condition without bars. The fall rule: a fall against a kerb, wall or step after a blow can kill, rarely; there are no heights to fall from (no jumping, the quay edge stops him).
 - M2.43 Car damage states: 1.2.4 Crashes, damage and unsticking
-- M2.46 Blood and wounds show: 1.3.7 Condition without bars
-- M2.47 Business requests: 2.17 Fronts and rackets held
+- M2.46 Blood and wounds show: 1.3.7 Condition without bars. Blood and a limp show condition; blood on him is a give-away (1.4.4).
+- M2.47 Business requests: 2.17 Fronts and rackets held. Fronts: trouble comes back to Tom through the man who runs it (A15).
 - M2.50 Quiet entry versus loud: 1.6.1 Getting in
-- M2.54 People react to dress: 2.12.4 Greetings by regard
+- M2.54 People react to dress: 2.12.4 Greetings by regard. Greetings by regard include his appearance; dress as a soft key is 2.12.3.
 - M2.55 Enemy fighting types: 1.3.12 Fighter types
-- M2.56 Protection shakedowns: 1.6.4 Fronting up
-- M2.57 Standing opens shops and discounts: 2.7.5 Purses, tills and shops
+- M2.56 Protection shakedowns: 1.6.4 Fronting up. Fronting up: collections and pressure in person; a round is collections repeated (2.17).
+- M2.57 Standing opens shops and discounts: 2.7.5 Purses, tills and shops. Haggling without a meter (A30): the buyer's answers come from his purse and how he regards Tom; access by standing is 2.12.3. No price tables (DESIGN 18).
 - M2.59 Crimes the town knows: 2.2.1 Seven slots per act
 - M2.60 Onlookers confront: 2.4.3 Showing what people know
-- M2.62 Pursuit after a report: 2.6.5 DS Ellis and the four stages
+- M2.62 Pursuit after a report: 2.6.10 Police after a deed. Police after a report: the constable to the spot, then A3 search (A36).
 - M2.64 Bail: 2.6.9 Charges, bail and the office searched
 - M2.67 Shunned after crime: 2.4.3 Showing what people know
-- M2.69 Talk down or pay off the law: 2.6.8 Bought men and squaring the law
+- M2.69 Talk down or pay off the law: 2.6.8 Bought men and squaring the law. A13: a word talks round a constable with no cause; a note to a bought man; offered to an honest one it is a crime he saw.
 - M2.71 Trespass: 2.2.6 Ground rules and trespass
-- M2.72 Crimes linked into one charge: 2.6.9 Charges, bail and the office searched
-- M2.75 Standing moves with deeds: 2.3.1 Per-person memory store
-- M2.78 Haggling changes a trader's regard: 2.7.5 Purses, tills and shops
+- M2.72 Crimes linked into one charge: 2.6.9 Charges, bail and the office searched. A charge joins Ellis's case; she joins the street's crimes to the fire.
+- M2.75 Standing moves with deeds: 2.3.1 Per-person memory store. Standing is what each person saw and was told, kept for good; never a number (DESIGN 18).
+- M2.78 Haggling changes a trader's regard: 2.7.5 Purses, tills and shops. A30: walking away from a haggle is remembered.
 - M2.79 Conspicuous clothes: 2.2.5 Give-away rules
 - M2.80 Light and dark change visibility: 2.2.3 Sight by distance and light
 - M2.81 Noise from movement: 2.2.4 Sound reach
-- M2.83 Masks and face cover: 1.6.10 Tom's wardrobe
-- M2.84 Change look to avoid recognition: 1.6.10 Tom's wardrobe
+- M2.83 Masks and face cover: 1.6.10 Tom's wardrobe. A21: a scarf up and a hat down at night break the face rung but are themselves a mark by day.
+- M2.84 Change look to avoid recognition: 1.6.10 Tom's wardrobe. A21: a second coat breaks the mark rung; a barber changes the look for a week.
 - M2.85 Those who know you see through disguise: 2.2.2 Identification ladder
-- M2.86 Same crime, same place, same outfit: 2.2.5 Give-away rules
+- M2.86 Same crime, same place, same outfit: 2.2.5 Give-away rules. The same coat as last night gives him away.
 - M2.87 Dirt and blood build up: 1.4.4 Give-aways and the coat
-- M2.89 Filthy player shunned: 2.12.3 Access and soft keys
+- M2.89 Filthy player shunned: 2.12.3 Access and soft keys. Dress and dirt as soft keys: a filthy man is refused at doors that would open to him clean.
 - M2.90 People sleep at night: 2.1.1 Schedules of named people
 - M2.91 Night watch questions you: 2.6.1 The beat constable
 - M2.92 Stolen goods sell low to a fence: 2.7.6 Fencing
-- M2.94 Fences refuse a wanted man: 2.7.6 Fencing
-- M2.95 Fencing opens through the story: 2.12.2 Rung table
+- M2.94 Fences refuse a wanted man: 2.7.6 Fencing. Rita refuses or lowballs goods whose deed is still hot in talk (A30: her answers come from how hot the goods are and how she regards Tom).
+- M2.95 Fencing opens through the story: 2.12.2 Rung table. Rita's back room opens at rung 2.
 - M2.97 Wanted stages from witness to manhunt: 2.6.5 DS Ellis and the four stages
 - M2.98 A stranger witness or one who knows you: 2.2.2 Identification ladder
 - M2.102 No charge without being identified: 2.6.3 Statements and the arrest rule
 - M2.104 Night and a mask lower the risk: 2.2.3 Sight by distance and light
 - M3.3 Missions that mix the verbs: 3.5.6 Job template and step states
-- M3.4 Mission sets in any order: 3.1.2 Act II, The Rise and the Squeeze
-- M3.6 Planning board after scouting: 1.6.6 Getting ready
-- M3.7 Choose the crew for a job: 1.6.6 Getting ready
+- M3.4 Mission sets in any order: 3.1.2 Act II, The Rise and the Squeeze. Beats fire on states, never on days.
+- M3.6 Planning board after scouting: 1.6.6 Getting ready. The plan is what casing and tails wrote in the Ledger, chosen in the minute before: which car, who comes, which way in. No planning-board screen; a plan pointed at a person by a sent man is 1.7.2.
+- M3.7 Choose the crew for a job: 1.6.6 Getting ready. Who comes is chosen at dusk; each man's nerve and loyalty is the risk (2.11.2).
 - M3.9 Side jobs from strangers and contacts: 3.3 Side stories
-- M3.11 Side jobs gated by earlier steps: 3.3 Side stories
+- M3.11 Side jobs gated by earlier steps: 3.3 Side stories. Offered by a person, on a state.
 - M3.12 Fetch and deliver: 3.5.1 Carries
 - M3.14 Escort someone out of danger: 1.6.5 Minding and waiting
-- M3.15 Draw the police away: 1.4.8 Drawing a watcher away
+- M3.15 Draw the police away: 1.4.8 Drawing a watcher away. A noise or a thrown thing turns a watcher, the beat constable included, or moves him off a door.
 - M3.17 Debt collection jobs: 3.5.2 Collections
-- M3.22 Help, ignore or harm a stranger: 3.7 Street happenings
-- M3.24 Helped strangers return the favour: 2.4.4 It comes back
-- M3.30 Threats after provocation: 2.10.1 Rival ladders
-- M3.31 Remarks near a body: 3.6.4 Crowd lines by situation
+- M3.22 Help, ignore or harm a stranger: 3.7 Street happenings. Street happenings: each offers a choice with the hands and leaves something the town knows.
+- M3.24 Helped strangers return the favour: 3.7 Street happenings. A stranger Tom helps can come back later with a favour (A18, the returns-later beat).
+- M3.30 Threats after provocation: 2.10.1 Rival ladders. Rival ladders: each rung said to his face or shown on his street.
+- M3.31 Remarks near a body: 3.6.4 Crowd lines by situation. Crowd lines by situation: a body or a man down is a situation with its own lines; the crowd's reaction is 2.5.3.
 - M3.34 Disguise to get in: 2.12.3 Access and soft keys
 - M3.38 A rise from driver to boss: 2.12.2 Rung table
-- M3.39 More money, more danger: 2.10.3 Pressures and answers
+- M3.39 More money, more danger: 2.10.3 Pressures and answers. What rises with him is risk; rivals go after his people.
 - M3.40 Rival families: 2.10 Rivals
-- M3.43 Main and side quests together: 3.3 Side stories
-- M3.44 Choose sides: 2.10.3 Pressures and answers
-- M3.45 Threaten in talk: 1.3.4 The lower rungs
-- M3.48 Bribery: 2.7.8 Spending
-- M3.51 Separate a man from his friends: 1.3.8 Odds, crowds and nerve in a fight
+- M3.43 Main and side quests together: 3.3 Side stories. Side stories run beside the acts from week one.
+- M3.44 Choose sides: 2.10.3 Pressures and answers. Each pressure has three answers; the sit-down is accept, defy or counter (3.5.5).
+- M3.45 Threaten in talk: 1.3.4 The lower rungs. Threaten is rung 3, said in talk or shown.
+- M3.48 Bribery: 2.6.8 Bought men and squaring the law. Bribing the law is the bought constable (A13); paying a witness is 2.5.2.
+- M3.51 Separate a man from his friends: 1.3.8 Odds, crowds and nerve in a fight. A man watched stands longer, so alone he gives way sooner.
 - M3.52 Who you face changes the outcome: 2.14 Each person's temper
 - M3.53 Quick reply lines: 3.6.6 Suggested lines
-- M3.54 Skip or leave dialogue: 6.7 Talk screen
-- M3.55 Honest work for bed and pay: 2.15.2 Ranks and accounts
-- M3.57 Jobs that expire: 3.5.6 Job template and step states
+- M3.54 Skip or leave dialogue: 6.7 Talk screen. Leave is always there; scenes skippable (5.8.3).
+- M3.55 Honest work for bed and pay: 3.4 Fares. Honest work is the cab and the fares Tom starts with; the cold-store shift contract explains money (2.15.2).
+- M3.57 Jobs that expire: 3.5.6 Job template and step states. Windows, not minutes; a missed window ends in a state the town can talk about.
 - M3.60 Tip-offs reveal targets: 3.5.7 How jobs reach him
-- M4.1 Open town from early on: 7.1 The first hour
+- M4.1 Open town from early on: 7.1 The first hour. Control on Quay Street in 20 s; the Hook plus the docks open (ruling 28 Oct).
 - M4.3 Landmarks to steer by: 4.1.3 Landmarks and signs
 - M4.4 Working industrial places: 4.2.2 Old Basin, fish dock, cold stores
-- M4.5 No loading at the edge of town: 4.1.4 The soft edge
+- M4.5 No loading at the edge of town: 4.1.4 The soft edge. The soft edge; streaming itself sits in 8.1.2.
 - M4.12 Readable letters and newspapers: 6.10 Letters and papers in hand
-- M4.14 Locals point out places: 6.9 Finding the way
-- M4.16 Sketch a place: 6.3 The paper map
-- M4.18 Buy businesses and property: 2.17 Fronts and rackets held
-- M4.19 Restricted places: 2.2.6 Ground rules and trespass
-- M4.21 Clocks show the time: 6.1.5 Knowing the time
-- M4.22 Bells near their buildings: 6.1.5 Knowing the time
-- M4.23 Props react to a fight: 8.10 Collision and physics
+- M4.14 Locals point out places: 6.9 Finding the way. People asked the way give it by landmark (A9); the paper map then marks it (6.3).
+- M4.16 Sketch a place: 6.3 The paper map. The paper map marks every place he has been, so a place he stood at is already noted; no sketching verb.
+- M4.18 Buy businesses and property: 2.17 Fronts and rackets held. A front is got by money, a favour or pressure (A15); no For Sale signs.
+- M4.19 Restricted places: 2.2.6 Ground rules and trespass. Forbidden places skip the first warning (A10).
+- M4.21 Clocks show the time: 6.1.5 Knowing the time. Street clocks over the Harbour Board and in the office (A31).
+- M4.22 Bells near their buildings: 6.1.5 Knowing the time. The chapel bell strikes the hours by day (A31); the school is closed (4.10), so no school bell.
+- M4.23 Props react to a fight: 8.10 Collision and physics. Props colliding believably with bodies and cars; damage that lasts sits in 2.19.
 - M4.25 A home base to sleep and change: 4.3.2 The flat above
 - M4.26 Storage at home or work: 1.6.9 Coat, pockets and office storage
-- M4.28 A garage and a car brought to you: 2.15.1 Fleet and drivers
-- M4.29 Street markets and vendors: 2.7.5 Purses, tills and shops
-- M4.35 Danger warnings for places: 2.2.6 Ground rules and trespass
+- M4.28 A garage and a car brought to you: 2.15.1 Fleet and drivers. The firm's cars in the yard placed by the board; a car that will not drive on is fetched (1.2.4).
+- M4.29 Street markets and vendors: 2.7.5 Purses, tills and shops. Shops and stalls keep hours and restock weekly; Thursday market day is on the calendar (2.1.6).
+- M4.35 Danger warnings for places: 2.2.6 Ground rules and trespass. A place reads as dangerous by its label and its warnings, and by rivals' men noticing him (2.10.1); never an on-screen warning.
 - M4.36 Houses to rob: 3.5.3 Break-in sites
 - M4.37 Fences at set places: 2.7.6 Fencing
 - M4.38 Wash off blood and dirt: 1.6.7 Getting rid of things
-- M5.1 Music radio stations in the car: 5.7.1 Radio programmes and period songs
-- M5.2 Broadcasts carry the story: 2.4.5 The paper and the news
-- M5.7 Cab light when a door opens: 4.6.1 Car designs
+- M5.1 Music radio stations in the car: 5.7.1 Radio programmes and period songs. Music from the cab's own radio (A8), invented or allowlisted; no station menu that slows the world.
+- M5.2 Broadcasts carry the story: 2.4.5 The paper and the news. News reaches the town through Alison's paper (D56: the press only through a person); radio programmes as sound sit in 5.7.1.
+- M5.7 Cab light when a door opens: 4.6.1 Car designs. The cab's interior light is part of the car's design; cheap, and the cab is a main verb.
 - M5.8 Engine ticks as it cools: 5.5.5 Car sound
-- M5.11 Wet shoes squeak: 5.5.1 Footsteps and foley
+- M5.11 Wet shoes squeak: 5.5.1 Footsteps and foley. Footsteps by surface and gait, the one wetness value choosing the wet set.
 - M5.12 Small placed sound sources: 5.5.3 Street beds and states
-- M5.13 Rain muffled inside the car: 5.5.4 Rain and rooms
-- M5.15 Counter warning cue: 1.3.2 Reading and answering blows
+- M5.13 Rain muffled inside the car: 5.5.4 Rain and rooms. The car is a room: the doorway rule changes the rain and echo inside it.
+- M5.15 Counter warning cue: 1.3.2 Reading and answering blows. LEDGER form: the wind-up in the body only (shoulders, feet, breath), no glow or shield icon (A29, ER-DEFEND-02).
 - M5.19 Fight camera: 5.8.1 Camera rig by state
 - M5.20 Driving camera: 1.2.2 Car camera
-- M5.21 Lighting, weather and animation: 5.4 Lighting and picture
-- M5.23 Acting and silences: 5.8.3 Staged scenes in play
-- M5.24 Visible blood frightens: 1.3.8 Odds, crowds and nerve in a fight
-- M5.25 Noticed cue during a theft: 1.4.1 Reading watchers
-- M5.26 Camera focus on a person: 5.8.1 Camera rig by state
-- M5.27 Combat free look: 5.8.1 Camera rig by state
+- M5.21 Lighting, weather and animation: 5.4 Lighting and picture. Light with weather in 4.8 and motion in 5.2.
+- M5.23 Acting and silences: 5.8.3 Staged scenes in play. Blocking, performance and timing of a beat, silences included.
+- M5.24 Visible blood frightens: 1.3.8 Odds, crowds and nerve in a fight. Men stand or give way by nerve; blood on Tom is a give-away (1.4.4) and lowers a man's nerve to stand up to him.
+- M5.25 Noticed cue during a theft: 1.4.1 Reading watchers. LEDGER form: how a weapon is held and seen is part of carrying it (1.4.1); nothing on screen marks it.
+- M5.26 Camera focus on a person: 5.8.1 Camera rig by state. The talk row, with Tom 1.5 m from the speaker (DESIGN 11).
+- M5.27 Combat free look: 5.8.1 Camera rig by state. Mouse and stick look stay live in the fight row; the row only sets framing.
 - M5.32 Photo mode camera tools: 6.8 Photo mode
-- M6.3 Minimap off and minimal HUD modes: 6.1 On screen in play
+- M6.3 Minimap off and minimal HUD modes: 6.1 On screen in play. No minimap at all; switches for prompts, first hints and chatter subtitles.
 - M6.7 Full map screen: 6.3 The paper map
-- M6.9 Place name on screen: 6.9 Finding the way
+- M6.9 Place name on screen: 6.9 Finding the way. Names come from street-name plates and the paper map, never a screen label (DESIGN 17, ruling 23 Sep).
 - M6.10 Money on screen: 6.2.4 Money in words
-- M6.12 Crosshair: 1.3.10 Firearms
+- M6.12 Crosshair: 1.3.10 Firearms. LEDGER form: no reticle; an optional small dot under the assists (7.10), off by default.
 - M6.13 Hints area and help screen: 6.5 Teaching the player
-- M6.14 Weapon wheel and quick slots: 1.6.9 Coat, pockets and office storage
+- M6.14 Weapon wheel and quick slots: 1.6.9 Coat, pockets and office storage. Two things under the coat; which comes out is chosen on the held input (ER-FIGHT-08), no wheel.
 - M6.17 Interaction menu: 6.2.3 Open
 - M6.22 Injury status: 1.3.7 Condition without bars
-- M6.24 Inventory screen: 1.6.9 Coat, pockets and office storage
+- M6.24 Inventory screen: 1.6.9 Coat, pockets and office storage. The Ledger's Open list says what he carries, in words (A5).
 - M6.25 Journal and log: 6.2.2 Day book
 - M6.26 Journal follows your conduct: 6.2.5 Tom's reading
 - M6.27 Codex of the world: 6.2.1 People
 - M6.30 Menu tabs and info toggle: 6.2 The Ledger notebook
-- M6.31 Haggling with a price slider: 2.7.5 Purses, tills and shops
-- M6.35 Pad prompts on keyboard: 6.6 Controls
-- M6.36 HUD cannot be fully hidden: 6.1 On screen in play
-- M6.37 Person-focus prompts: 6.1.1 The prompt
-- M6.38 Choose which HUD icons show: 6.1 On screen in play
+- M6.31 Haggling with a price slider: 2.7.5 Purses, tills and shops. Haggling without a meter: three offers in talk at most (A30).
+- M6.35 Pad prompts on keyboard: 6.6 Controls. Prompts follow the device last used.
+- M6.36 HUD cannot be fully hidden: 6.1 On screen in play. LEDGER form: under the interface switches and prompts (6.1), with nothing drawn over the world (DESIGN 17).
+- M6.37 Person-focus prompts: 6.1.1 The prompt. The acts themselves are street manners (1.4.7).
 - M7.5 Cancel a job: 7.9 Failure without reload
-- M7.6 Taxi fares as side income: 3.4 Fares
-- M7.7 Weekly income from businesses: 2.17 Fronts and rackets held
-- M7.9 Honest work and crime mixed early: 2.7 Money
-- M7.10 Targets pay by kind and risk: 2.7.5 Purses, tills and shops
-- M7.11 Scarce money early: 2.7.4 Rent and running costs
+- M7.6 Taxi fares as side income: 3.4 Fares. Few and chosen, never a taxi sim (canon 19 Nov).
+- M7.7 Weekly income from businesses: 2.17 Fronts and rackets held. Money arrives as the front's man brings it, short if he is (A15).
+- M7.9 Honest work and crime mixed early: 2.7 Money. Two pots: fares in the book, night money in the tin.
+- M7.10 Targets pay by kind and risk: 2.7.5 Purses, tills and shops. A purse or drawer pays only what it holds; searching for a home's stash is 1.6.2.
+- M7.11 Scarce money early: 2.7.4 Rent and running costs. £23.50 and the Friday rent (DESIGN 9).
 - M7.13 Buy and change clothes: 1.6.10 Tom's wardrobe
-- M7.17 Healing: 1.3.11 Marks that last
+- M7.17 Healing: 1.3.11 Marks that last. Marks heal on the clock; the doctor who asks no questions charges money (A21) while DESIGN 7 says hospital costs days: the two are to be reconciled inside this part (hospital days, the doctor money).
 - M7.30 Carry limit: 1.6.9 Coat, pockets and office storage
-- M7.31 Load slows you: 1.1.4 Carrying
+- M7.31 Load slows you: 1.1.4 Carrying. Carrying a load changes how he moves and is seen.
 - M7.35 Sleep passes time: 7.11 Waiting and time skips
 - M7.36 A period currency: 2.7 Money
-- M7.37 Haggling: 2.7.5 Purses, tills and shops
-- M7.39 Gang camp upgrades: 2.12.5 Property that reacts
+- M7.37 Haggling: 2.7.5 Purses, tills and shops. A30.
+- M7.39 Gang camp upgrades: 2.12.5 Property that reacts. The office fills as he rises; no upgrade shop.
 - M7.41 Mostly unarmed fights: 1.3 Fighting
-- M7.42 Play at your own pace: 7.2 An evening
-- M7.43 Smoke a cigarette: 1.1.7 Stopping and blending in
+- M7.42 Play at your own pace: 7.2 An evening. Nothing forces him out; jobs run in windows, not minutes.
+- M7.43 Smoke a cigarette: 1.1.7 Stopping and blending in. Light a cigarette as a way to stop and blend in; no meter effect.
 - M8.1 Save by sleeping: 7.8 Saving
-- M8.2 Manual save from a menu: 6.4 Menus
-- M8.3 Several save slots: 6.4 Menus
+- M8.2 Manual save from a menu: 6.4 Menus. Save and load in the menus, on top of the autosave (7.8).
+- M8.3 Several save slots: 6.4 Menus. Save and load in the menus; reloading never stopped (D35).
 - M8.4 Autosave: 7.8 Saving
 - M8.5 Save on quit: 7.8 Saving
-- M8.6 Load returns you to base: 7.8 Saving
-- M8.8 Saving icon: 8.2 Stability and saves that never break
-- M8.9 Quality presets and settings: 8.3.1 PC display options
-- M8.10 First-launch setup: 8.5 Install and launch
+- M8.6 Load returns you to base: 7.8 Saving. Continue returns him where he left (ER-SAVE-02).
+- M8.8 Saving icon: 8.2 Stability and saves that never break. A small saving sign is part of saves that never break.
+- M8.9 Quality presets and settings: 8.3.1 PC display options. Presets in 8.3; field of view and single settings here.
+- M8.10 First-launch setup: 8.5 Install and launch. First launch: sensible size, presets, then brightness and scale.
 - M8.11 High resolution and frame rate: 8.1 Performance
-- M8.12 Frame-rate dips in chases: 8.1.1 Frame, memory and crowd budget
+- M8.12 Frame-rate dips in chases: 8.1.1 Frame, memory and crowd budget. Never under 30 (ER-PERF-01).
 - M8.13 Pop-in and draw distance: 8.1.2 Streaming and loading
 - M9.2 Photo mode: 6.8 Photo mode
-- M9.4 Key remapping: 6.6 Controls
-- M9.5 Subtitles and their style: 6.1.2 Subtitles
+- M9.4 Key remapping: 6.6 Controls. Rebinding.
+- M9.5 Subtitles and their style: 6.1.2 Subtitles. Style choices sit with the text options in 8.4.
 - M9.6 Support report: 8.2.1 Crash and bug reporting
-- M9.7 Aim assist: 7.10 Difficulty as assists
+- M9.7 Aim assist: 7.10 Difficulty as assists. If rare late guns need it, aim help is one more assist, off by default (A6).
 - M9.9 Tutorials: 6.5 Teaching the player
-- M9.11 Toggles and tap assist: 8.4 Accessibility
-- M10.2 PC storefronts: 10.2 Store, rating and disclosure
+- M9.11 Toggles and tap assist: 8.4 Accessibility. Motor options: toggles for held and repeated inputs.
+- M10.2 PC storefronts: 10.2 Store, rating and disclosure. Which storefronts beyond Steam is decided with the store page.
 - M10.4 Story expansions after release: 10.6 After release

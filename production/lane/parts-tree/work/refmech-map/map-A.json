@@ -8,19 +8,19 @@
   "id": "M1.3",
   "decision": "part",
   "part": "4.2.4",
-  "reason": "Tom never walks into the water; put in by others he climbs out at a ladder within a minute (A11). No swimming beyond that."
+  "reason": "LEDGER form only: Tom never walks into the water; put in by others he climbs out at a ladder within a minute (A11). No swimming beyond that."
  },
  {
   "id": "M1.5",
   "decision": "part",
   "part": "1.1.5",
-  "reason": "A held slow walk halves his footsteps' reach; no crouch (A1)."
+  "reason": "LEDGER form only: a held slow walk halves his footsteps' reach; no crouch (A1)."
  },
  {
   "id": "M1.6",
   "decision": "part",
   "part": "1.1.8",
-  "reason": "Low walls, yard fences and bins at set places only; climbing high walls stays out (A26, ruling 23 Sep no jump)."
+  "reason": "LEDGER form only: low walls, yard fences and bins at set places; climbing high walls stays out (A26; no jump, ruling 23 Sep)."
  },
  {
   "id": "M1.7",
@@ -233,8 +233,8 @@
  {
   "id": "M1.67",
   "decision": "part",
-  "part": "1.4.4",
-  "reason": "Putting a weapon away is how he changes a give-away; a weapon drawn cannot be undrawn unseen (DESIGN 7)."
+  "part": "1.3.10",
+  "reason": "Putting a weapon away is part of carrying a rare weapon; a weapon drawn cannot be undrawn unseen (DESIGN 7)."
  },
  {
   "id": "M1.68",
@@ -313,7 +313,7 @@
  {
   "id": "M1.81",
   "decision": "out",
-  "reason": "Only parked cars are taken, never a car with somebody in it (A27, built to the recommended answer of his question 2)."
+  "reason": "Only parked cars are taken, never a car with somebody in it (A27, built to the recommended answer of his question 2; flips if he picks otherwise)."
  },
  {
   "id": "M1.85",
@@ -426,7 +426,8 @@
  {
   "id": "M1.112",
   "decision": "part",
-  "part": "2.2.1"
+  "part": "2.6.3",
+  "reason": "An unprovoked blow is a deed like any other: seen, reported, and police come."
  },
  {
   "id": "M1.113",
@@ -437,12 +438,12 @@
  {
   "id": "M1.114",
   "decision": "out",
-  "reason": "The Ledger already writes down what Tom sees (DESIGN 10), so a camera adds nothing to the verbs or the town's memory; canon's smallest budget (and DESIGN 18 holds the camcorder to one side story)."
+  "reason": "A film camera would be the 1990 form; the Ledger already writes down what Tom sees (DESIGN 10), so a camera adds nothing to the verbs or the town's memory; canon's smallest budget (DESIGN 18 holds the camcorder to one side story)."
  },
  {
   "id": "M1.115",
   "decision": "out",
-  "reason": "What Tom knows comes from what he sees and what people tell him (DESIGN 2, 10); a planted bug is a spy-game tool outside a 1990 cab firm's world, and would make a gossip screen DESIGN 18 cuts."
+  "reason": "A planted bug is a spy-game tool outside a 1990 cab firm's world; what Tom knows comes from what he sees and hears (DESIGN 2, 10)."
  },
  {
   "id": "M1.119",
@@ -456,9 +457,8 @@
  },
  {
   "id": "M1.122",
-  "decision": "part",
-  "part": "3.4.1",
-  "reason": "Fares are named people Pauline calls, going where their routine takes them; no random roadside pickups (DESIGN 18)."
+  "decision": "out",
+  "reason": "Fares are named people Pauline calls, going where their routine takes them; no random roadside pickups (DESIGN 18; canon: fares few and chosen)."
  },
  {
   "id": "M1.129",

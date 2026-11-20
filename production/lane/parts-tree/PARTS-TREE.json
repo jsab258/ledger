@@ -1818,7 +1818,8 @@
     "X16 Gunplay weak or inaccurate"
    ],
    "notes": [
-    "Reference mechanics (20 Nov): M1.57, M1.58, M1.68, M1.69, M1.70, M6.12"
+    "Reference mechanics (20 Nov): M1.57, M1.58, M1.67, M1.68, M1.69, M1.70, M6.12",
+    "Aiming (20 Nov, review of the mechanics map, M6.12): no reticle; an optional small dot under the assists (7.10), off by default."
    ],
    "children": [],
    "leaf": true
@@ -2165,7 +2166,7 @@
     "X11 Stealth thin, forced or stupid"
    ],
    "notes": [
-    "Reference mechanics (20 Nov): M1.67, M2.87"
+    "Reference mechanics (20 Nov): M2.87"
    ],
    "children": [],
    "leaf": true
@@ -3293,7 +3294,7 @@
    "name": "Lifting from a pocket",
    "what": "Taking a key, a letter or a wallet from a coat in a crowd or a packed room, as one held press; caught or not by the person's attention.",
    "felt": true,
-   "standard": "rule: A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows).",
+   "standard": "rule: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows).",
    "standard_source": "DESIGN-ADDENDUM-2026-11-20 A34 (from REFERENCE-MECHANICS-2026-11-20 M1.97)",
    "research_items": [],
    "designed_in": "DESIGN-ADDENDUM-2026-11-20 A34",
@@ -3319,7 +3320,7 @@
     "level": "low",
     "why": "rule-driven, on parts that exist"
    },
-   "test": "A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows).",
+   "test": "A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows).",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -4136,7 +4137,7 @@
     "PROTOTYPE-VS-DESIGN row 12: prototype ladder differs from the Core"
    ],
    "notes": [
-    "Reference mechanics (20 Nov): M1.112, M2.59"
+    "Reference mechanics (20 Nov): M2.59"
    ],
    "children": [],
    "leaf": true
@@ -4787,9 +4788,7 @@
     "S3 Something has to come back (memory that interrupts)",
     "S4 gossip timeliness in the first 30 real minutes"
    ],
-   "notes": [
-    "Reference mechanics (20 Nov): M3.24"
-   ],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -5099,7 +5098,7 @@
    "name": "Finding an unseen deed",
    "what": "Who comes upon a deed nobody saw, and when: the owner home to a forced door, a worker at a body, a neighbour at broken glass.",
    "felt": true,
-   "standard": "rule: Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows.",
+   "standard": "rule: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows.",
    "standard_source": "DESIGN-ADDENDUM-2026-11-20 A38 (from REFERENCE-MECHANICS-2026-11-20 M2.61)",
    "research_items": [],
    "designed_in": "DESIGN-ADDENDUM-2026-11-20 A38",
@@ -5125,7 +5124,7 @@
     "level": "low",
     "why": "rule-driven, on parts that exist"
    },
-   "test": "Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows.",
+   "test": "Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows.",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -5333,7 +5332,7 @@
     "round3/4: arrest without consequence"
    ],
    "notes": [
-    "Reference mechanics (20 Nov): M2.102"
+    "Reference mechanics (20 Nov): M1.112, M2.102"
    ],
    "children": [],
    "leaf": true
@@ -5438,7 +5437,7 @@
    ],
    "review_themes": [],
    "notes": [
-    "Reference mechanics (20 Nov): M2.14, M2.62, M2.97"
+    "Reference mechanics (20 Nov): M2.14, M2.97"
    ],
    "children": [],
    "leaf": true
@@ -5575,7 +5574,7 @@
    "checklist_items": [],
    "review_themes": [],
    "notes": [
-    "Reference mechanics (20 Nov): M2.69"
+    "Reference mechanics (20 Nov): M2.69, M3.48"
    ],
    "children": [],
    "leaf": true
@@ -5633,7 +5632,7 @@
    "name": "Police after a deed",
    "what": "What police do once a deed is reported or a chase lost: a constable at the spot, a search of the streets near it, then back to the beat.",
    "felt": true,
-   "standard": "rule: After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S.",
+   "standard": "rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.",
    "standard_source": "DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30)",
    "research_items": [],
    "designed_in": "DESIGN-ADDENDUM-2026-11-20 A36",
@@ -5659,12 +5658,13 @@
     "level": "low",
     "why": "rule-driven, on parts that exist"
    },
-   "test": "After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S.",
+   "test": "A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
    "notes": [
-    "Added 20 Nov by the lane from the reference-mechanics map (1c): M2.8, M2.30"
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M2.8, M2.30",
+    "Reference mechanics (20 Nov): M2.62"
    ],
    "children": [],
    "leaf": true
@@ -6094,9 +6094,7 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [
-    "Reference mechanics (20 Nov): M3.48"
-   ],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -7347,9 +7345,7 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [
-    "Reference mechanics (20 Nov): M3.55"
-   ],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -8311,7 +8307,7 @@
    "name": "Calling on people",
    "what": "Time with the people who matter, chosen by Tom: tea at Ada's, the caff with Alison, a walk with Danby; too often and it wears thin.",
    "felt": true,
-   "standard": "rule: A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S.",
+   "standard": "rule: A visit is possible only where and when the person's routine allows, shows no score, lasts under 2 real minutes, and a second call inside the set gap draws a cooler answer. Check S.",
    "standard_source": "DESIGN-ADDENDUM-2026-11-20 A39 (from REFERENCE-MECHANICS-2026-11-20 M3.28, M3.29, M3.35)",
    "research_items": [],
    "designed_in": "DESIGN-ADDENDUM-2026-11-20 A39",
@@ -8337,7 +8333,7 @@
     "level": "low",
     "why": "rule-driven, on parts that exist"
    },
-   "test": "A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S.",
+   "test": "A visit is possible only where and when the person's routine allows, shows no score, lasts under 2 real minutes, and a second call inside the set gap draws a cooler answer. Check S.",
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
@@ -8441,7 +8437,7 @@
     "round5: waiting 41%, driving 5% of the hour (GTA player quit at 5 min)"
    ],
    "notes": [
-    "Reference mechanics (20 Nov): M7.6"
+    "Reference mechanics (20 Nov): M3.55, M7.6"
    ],
    "children": [
     "3.4.1",
@@ -8496,9 +8492,7 @@
    "review_themes": [
     "P5 Side quests that are whole stories"
    ],
-   "notes": [
-    "Reference mechanics (20 Nov): M1.122"
-   ],
+   "notes": [],
    "children": [],
    "leaf": true
   },
@@ -9491,7 +9485,8 @@
    "checklist_items": [],
    "review_themes": [],
    "notes": [
-    "Reference mechanics (20 Nov): M1.111, M3.22"
+    "Reference mechanics (20 Nov): M1.111, M3.22, M3.24",
+    "Returns later (20 Nov, M3.24): a helped stranger may come back with a favour; see A18."
    ],
    "children": [],
    "leaf": true
@@ -13401,7 +13396,7 @@
    ],
    "review_themes": [],
    "notes": [
-    "Reference mechanics (20 Nov): M6.3, M6.36, M6.38"
+    "Reference mechanics (20 Nov): M6.3, M6.36"
    ],
    "children": [
     "6.1.1",
