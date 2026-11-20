@@ -20,7 +20,7 @@ Total new PC hours on top of what was already ordered: about 41 (24.5 for GTA VI
 
 | # | Work | Rows | When |
 |---|---|---|---|
-| 6 | Design pass 2: each pointer-only standard replaced by a pass-or-fail test from the description's own numbers | 2.4.3, 2.6.6, 2.7.1, 2.7.2, 2.7.3, 2.8.2, 2.9.2, 2.10.4, 2.11.1, 2.11.3, 2.12.2, 2.12.3, 2.15.2, 3.5.5, 8.10 (15 rows) | the next run, Sat 21 Nov |
+| 6 | Design pass 2 (done in run 2, 21 Nov): each pointer-only standard replaced by a pass-or-fail test (DEFINITIONS-2026-11-21, second part); 14 rows now MEASURED, 2.7.3 PENDING with GD-07 for its balance figures | 2.4.3, 2.6.6, 2.7.1 to 2.7.3, 2.8.2, 2.9.2, 2.10.4, 2.11.1, 2.11.3, 2.12.2, 2.12.3, 2.15.2, 3.5.5, 8.10 | done |
 | 7 | 1990 period sources (section B) | 2.1.2, 2.6.4, 2.7.4, 2.7.6 | Sat 21 to Tue 24 Nov |
 | 8 | Published guides and wikis (section C) | 2.4.2, 7.13, 8.3.1, GD-04 | Sat 21 to Wed 25 Nov |
 | 9 | Privacy check: UK and EU data protection read from the ICO's and the EU's own pages | 8.2.1, 10.11 (PENDING) | by Tue 24 Nov |

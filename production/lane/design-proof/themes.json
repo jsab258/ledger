@@ -963,7 +963,7 @@
    "2.4.3"
   ],
   "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -980,7 +980,7 @@
    "2.4.3"
   ],
   "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -997,7 +997,7 @@
    "2.4.3"
   ],
   "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -1014,7 +1014,7 @@
    "2.4.3"
   ],
   "test": "ER-EYES-08: every plainly seen deed said to Tom's face by someone he has met within one game day in week one, and within the first 30 real minutes at playing clock",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
  },
  {
@@ -2285,7 +2285,7 @@
    "2.1.1"
   ],
   "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -2302,7 +2302,7 @@
    "2.1.1"
   ],
   "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -2319,7 +2319,7 @@
    "2.1.1"
   ],
   "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": ""
  },
  {
@@ -2336,7 +2336,7 @@
    "2.1.1"
   ],
   "test": "Claim check: a sentence naming a fact the speaker lacks is refused (ER-TALK-04); a witness is only as sure as what they saw (ER-EYES-06); every visible person has a simulation identity",
-  "status_of_parts": "UNMEASURED",
+  "status_of_parts": "MEASURED",
   "excluded": "Mafia is not a reference game (his ruling 20 Nov)"
  },
  {

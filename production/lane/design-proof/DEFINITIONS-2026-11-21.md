@@ -336,3 +336,114 @@ Standard. The library holds enough happenings that none repeats on one street wi
 Test. B: a do-nothing-but-walk night in Act II and in Act III: the five-minute rule and the repeat rule logged.
 Source. The description, sections 14 (happenings) and 40; ruling 13 Nov; MEASUREMENTS-NEEDED A (density).
 Status: PENDING (PC measuring for the band, 23 to 28 Nov; the story measure for Act III's nights, by Sat 28 Nov).
+
+---
+
+# Design pass 2: tests for the rows whose standard was only a pointer (run 2, 21 November)
+
+Fifteen rows had a definition in the description but a standard that was only a pointer to a section. Each now has a pass-or-fail test from the description's own words. Where a balance number in it (a price, a share) is judgement, it follows the economy curve of GD-07 and the row says so.
+
+### 2.4.3 Showing what people know
+Definition. As the description, section 5: one ladder (notice, watch, comment, avoid, refuse, confront), posture first; witnesses talk quieter for a game hour after a deed.
+Standard. Every person who knows something of Tom shows it on that ladder before any line; nobody who knows nothing shows it; the step shown matches what they hold (a told version never above a seen one).
+Test. B: seeded deed, then a walk past 30 people: each one's shown step is checked against their memory store.
+Source. The description, section 5 (What a person catches; Who tells whom).
+Status: MEASURED (pass or fail on the description).
+
+### 2.6.6 Armed response and the dial's police
+Definition. As the description, sections 21 and 33: at Fired, armed officers come from the station for gun calls, slowly; at War, armed cars, stop and search on the street, everyone jumpier.
+Standard. No armed officer before Fired; at Fired every reported gun call brings armed officers later than an ordinary call; at War at least one armed car is on the Hook's streets and searches happen on the street; none of it shown on any map.
+Test. B: the dial forced through each state with seeded gun calls; police responses logged.
+Source. The description, sections 21, 33; RT-12.
+Status: MEASURED (pass or fail on the description).
+
+### 2.7.1 Clean money and the fare book
+Definition. As the description, section 24: clean money is in the fare book and can be spent anywhere; rent £18 every Friday; drivers' wages weekly from the book.
+Standard. Every fare driven, by Tom or the firm's drivers, enters the book; rent and wages leave it on their days; the book's balance always equals its flows (ER-MONEY-01).
+Test. B: a week of fares and wages; the book audited against the flows.
+Source. The description, section 24; RT-17.
+Status: MEASURED.
+
+### 2.7.2 Night money and the tin
+Definition. As the description, section 24: night money is in the tin at the office and cannot be explained.
+Standard. Every night job's take goes to the tin or the pocket, never the book except through the count; the tin can be lost only by being stolen or searched, said in words.
+Test. B: night jobs then the count; a break-in on the tin.
+Source. The description, sections 24, 26; RT-17.
+Status: MEASURED.
+
+### 2.7.3 The wash
+Definition. As the description, section 26: at the count the book can hide £10 plus 80% of the fares really driven since the last wash; over that Sheila warns first and thinks less of him; a front's till raises the limit by a set amount a week.
+Standard. The count never washes over the limit without Sheila's warning first; each week over is recorded for Act III; a front raises the limit by its set amount. The 80% and the front's amount are balance figures checked against GD-07's money curve.
+Test. B: counts at, under and over the limit; the record read by RT-01's grading.
+Source. The description, sections 26, 31; GD-07.
+Status: PENDING (the balance figures with GD-07, PC measuring 23 to 28 Nov).
+
+### 2.8.2 Partial payment and the book
+Definition. As the description, section 25: a debtor pays what his purse holds and the rest stays on the book; squeezing and letting go are told on the street.
+Standard. A payment never exceeds the debtor's purse; the remainder stays and is said in the Ledger's Money page; a squeeze or a let-off produces a told version within a game day.
+Test. B: each of the five debtors fronted up with different purses.
+Source. The description, section 25.
+Status: MEASURED.
+
+### 2.9.2 Keeping or ending the arrangement
+Definition. As the description, sections 36 and 37: kept, the landing men hand over their end of the Hook in Act II and fade; ended, the ground is open and the rivals' ladders start a rung sooner. Both reach Act II.
+Standard. Kept gives the hand-over beat; ended starts every rival one rung up; both reach rung 2 (RT-04).
+Test. B: week-one runs kept and ended; the Act II state compared.
+Source. The description, sections 36, 37; RT-04.
+Status: MEASURED.
+
+### 2.10.4 The Fixer
+Definition. As the description, section 29: Keith Garbutt sells true reads of a rival (true to what the town really holds), a meeting, and one truce (RT-06: holds a rival at its rung for two game weeks, once a game).
+Standard. Every read he sells is true to the town's memory at that moment; a meeting he brokers happens; the truce holds exactly two game weeks and is offered once. His prices follow GD-07's curve.
+Test. B: reads compared with the rival's true state; truce timing.
+Source. The description, sections 29, 30; RT-06.
+Status: MEASURED (prices follow GD-07).
+
+### 2.11.1 Recruiting
+Definition. As the description, section 27 and RT-07: from the thirty regulars by meeting a need (slow, holds) or spending a hook (quick, brittle); each recruit brings a use the firm lacks.
+Standard. A need recruit's loyalty ceiling is higher than a hook recruit's; each named recruit brings the use the description gives (locks, fists, nights on the warehouse row, the ferry, paint); boxing club men can be recruited there.
+Test. B: both roads on two men; the same pressure applied; who breaks first.
+Source. The description, section 27; RT-07.
+Status: MEASURED.
+
+### 2.11.3 Crew fates
+Definition. As the description, section 27: poached (the Widow takes his least loyal man), frightened off, arrested, docked or expelled by Tom, killed for good; each fate a town fact.
+Standard. Each fate reachable in play; each produces a told version and a Ledger line; a poach always takes the least loyal man.
+Test. B: seeded runs for each fate.
+Source. The description, section 27.
+Status: MEASURED.
+
+### 2.12.2 Rung table
+Definition. The rung table of the description, section 32, with the conditions of RT-04.
+Standard. As RT-04: each rung on exactly its holdings; what opens at each rung opens then and not before.
+Test. B: rung climbs with holdings added one at a time.
+Source. The description, section 32; RT-04.
+Status: MEASURED (design decision via RT-04).
+
+### 2.12.3 Access and soft keys
+Definition. As the description, section 32: standing, dress, an introduction, an appointment the Fixer brokers; a filthy man is refused where he would be let in clean; a decent jacket gets him past the Harbour Board's counter.
+Standard. Each soft key opens exactly its doors: the Harbour Board's counter refuses him in the arrival clothes and lets him in with the decent jacket; any door that opens to him clean refuses him bloodied or filthy.
+Test. B: the same doors tried in each outfit and state.
+Source. The description, section 32.
+Status: MEASURED.
+
+### 2.15.2 Ranks and accounts
+Definition. As the description, section 28: the rank outside Mickey's is his; the ferry rank and a second rank are won by being there with a car on the board enough days, or by a word with whoever holds them; accounts in order: the cold-store contract, the Harbour Board's late men, a solicitor's office.
+Standard. A rank is won by either road and never otherwise; accounts open in that order, each at its rung (the cold store at rung 3); "enough days" is five days in a fortnight (a balance figure checked with GD-07).
+Test. B: rank presence runs; account order.
+Source. The description, sections 28, 31.
+Status: MEASURED.
+
+### 3.5.5 Sit-downs
+Definition. As the description, section 30: in talk with a rival head, in a back room, at the Fixer's table or in the back of Tom's own cab; accept, defy, or counter with what he knows; only a plain yes taken; what cannot be undone asks twice; Leave always there; Act II ends at one.
+Standard. Each answer leads to a different following state; counter needs a hook Tom holds (RT-07); what was said is what the town then believes (a told version within a game day).
+Test. B: a sit-down played each way; the following state and the town's version compared.
+Source. The description, section 30; RT-06, RT-07.
+Status: MEASURED.
+
+### 8.10 Collision and physics
+Definition. Nothing passes through walls, bodies or cars; nobody and nothing is ever stuck for more than 5 s (ER-CORE-01); no car launches into the air or spins on a touch; a struck person falls as the hit's direction says; things to hand break by the description's blow counts.
+Standard. In a 2-hour soak of walking, driving and fights: zero pass-throughs, zero stuck over 5 s, zero launches.
+Test. B: the soak with a clip and pass-through detector.
+Source. ER-CORE-01; ER-FIGHT-06; the description, sections 10, 11.
+Status: MEASURED (guard).
