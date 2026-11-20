@@ -44,12 +44,15 @@ FRAME = DT
 # ---------------------------------------------------------------- reference bands
 # id: (low, high, unit, source, how sure). Only bands the sheets give; on foot waits for our own measurements.
 REFS = {
-    "M5_yaw63_s": (0.20, 0.35, "s", "driving sheet M5, ordinary hatch", "estimate [I]"),
-    "M5_centre_s": (0.6, 1.2, "s", "driving sheet M5, self-centre to under 5%", "estimate [I]"),
-    "M10_behind_m": (5.0, 7.0, "m", "driving sheet M10, camera behind the car's centre", "estimate [I]"),
-    "M10_height_m": (1.6, 2.2, "m", "driving sheet M10, camera height", "estimate [I]"),
-    "M10_lag_s": (0.1, 0.3, "s", "driving sheet M10, position lag", "estimate [I]"),
-    "M10_hfov0_deg": (60.0, 65.0, "deg", "driving sheet M10, field of view at rest", "estimate [I]"),
+    # the driving sheet's game set, its default since his ruling of 18 Nov (sheet section on the game band); the
+    # 17 Nov ordinary-hatch set is kept in REFS_ORDINARY and used with --ordinary
+    "M5_yaw63_s": (0.15, 0.25, "s", "driving sheet M5 game set, turn rate to 63% after the key at speed", "provisional game band"),
+    "M5_centre_s": (0.4, 0.9, "s", "driving sheet M5 game set, self-centre to under 5%", "provisional game band"),
+    "M10_behind_m": (5.0, 6.5, "m", "driving sheet M10 game set, camera behind the car's centre", "provisional game band"),
+    "M10_height_m": (1.6, 2.0, "m", "driving sheet M10 game set, camera height", "provisional game band"),
+    "M10_lag_s": (0.1, 0.25, "s", "driving sheet M10 game set, position lag", "provisional game band"),
+    "M10_hfov0_deg": (60.0, 65.0, "deg", "driving sheet M10 game set, field of view at rest", "provisional game band"),
+    "M10_hfov30_deg": (64.0, 70.0, "deg", "driving sheet M10 game set, field of view at 30 mph", "provisional game band"),
     "C1_jab_s": (0.0, 0.10, "s", "melee sheet C1, key to the blow starting", "estimate"),
     "C1_heavy_s": (0.0, 0.10, "s", "melee sheet C1", "estimate"),
     "C2_jab_contact_s": (0.25, 0.40, "s", "melee sheet C2, jab start to contact", "real jab 0.36 s [READ]"),
@@ -64,6 +67,25 @@ REFS = {
     "C10_foe_in_frame": (0.95, 1.0, "share", "melee sheet C10, both men in frame", "his 28 Oct pick"),
     "C10_feet_in_frame": (0.90, 1.0, "share", "melee sheet C10, the other man's feet in frame", "his 28 Oct pick"),
 }
+REFS_ORDINARY = {
+    "M5_yaw63_s": (0.20, 0.35, "s", "driving sheet M5, real ordinary hatch (17 Nov set)", "estimate [I]"),
+    "M5_centre_s": (0.6, 1.2, "s", "driving sheet M5, real ordinary hatch", "estimate [I]"),
+    "M10_behind_m": (5.0, 7.0, "m", "driving sheet M10, 17 Nov judgement", "estimate [I]"),
+    "M10_height_m": (1.6, 2.2, "m", "driving sheet M10, 17 Nov judgement", "estimate [I]"),
+    "M10_lag_s": (0.1, 0.3, "s", "driving sheet M10, 17 Nov judgement", "estimate [I]"),
+    "M10_hfov30_deg": (62.0, 68.0, "deg", "driving sheet M10, 17 Nov judgement", "estimate [I]"),
+}
+# what the sheets and the method ask for that this tool does not measure yet (listed in every report)
+NOT_MEASURED = [
+    "W3 the 90-degree corner; W5 as the method reads it (the man's height on screen); W6 the head's place on screen "
+    "and the shoulder offset (the tool gives camera distances and height in metres instead); W7 frames to start "
+    "following, most drift and frames to settle (the tool gives the follow time constant instead); W9 tight spaces "
+    "(the machine checks' camera test covers walls at every named place); W10 kerbs, doors and stairs",
+    "C2 the contact window, the heavy blow's recovery after a miss, the hook and the improvised swing; C5 to C9, "
+    "C11 to C15 (the melee drills in tools/lane/melee_drills.py cover several from the game's own record)",
+    "C10 the camera inside a wall in a fight, the close-in on contact held, the shake's peak and settling",
+    "M1 to M4, M6 to M9 (tools/lane/driving_drives.py and the driving gate measure the driving study's car)",
+]
 TOL = FRAME / 2  # a number within half a frame of its band's edge counts as inside (frames are 1/60 s)
 
 # ---------------------------------------------------------------- pure measures (tested in test_feel_numbers.py)
@@ -251,7 +273,8 @@ STEP_JS = """([n, dt, pre]) => { const F = window.__feel, out = [], S = eval(win
 OPEN_LINE_JS = """([props, len, half]) => { const L = LEDGER, G = L.G;
   const bad = (x, z) => L.isBlocked(x, z) || (L.isClearOnFoot ? !L.isClearOnFoot(x, z) : false) ||
     props.some((p) => Math.hypot(p[0] - x, p[1] - z) < p[2] + 0.6);
-  const folk = G.named.concat(G.crowd).filter((p) => !p.gone && p.space === 'street');
+  const folk = G.named.concat(G.crowd).filter((p) => !p.gone && p.space === 'street')
+    .concat(L.streetThings ? L.streetThings().cars.map((c) => ({ x: c.xMetres, z: c.zMetres })) : []);  // cars standing or moving
   for (let z = -120; z <= 160; z += 2) for (let x = -140; x <= 160; x += 2) for (const a of [0, Math.PI / 2, Math.PI, -Math.PI / 2]) {
     const fx = Math.sin(a), fz = Math.cos(a); let ok = true;
     for (let s = -8; s <= len && ok; s += 1) for (let w = -half; w <= half && ok; w += 0.75) {
@@ -272,7 +295,7 @@ class Feel:
         self.out = out
         self.refs = dict(REFS)
         for k, v in (refs or {}).items():  # [low, high] or [low, high, unit]: our own measured bands replace the sheets'
-            self.refs[k] = (v[0], v[1], v[2] if len(v) > 2 else ("s" if k.endswith("_s") else ""), "--refs file", "our measurement")
+            self.refs[k] = tuple(v) if len(v) >= 5 else (v[0], v[1], v[2] if len(v) > 2 else ("s" if k.endswith("_s") else ""), "--refs file", "our measurement")
         self.rows, self.faults, self.notes, self.drills = [], [], [], []
         pg = self.g.pg
         pg.set_viewport_size({"width": 480, "height": 270})  # same 16:9 shape; the picture is not looked at
@@ -334,9 +357,10 @@ class Feel:
         self.add("W2_walk_stop_s", time_to_fall(v, r0, 0.05) if vw else None, "walk")
         d_rest = steady([math.hypot(f["camx"] - f["tx"], f["camz"] - f["tz"]) for f in rest])
         d_walk = steady([math.hypot(f["camx"] - f["tx"], f["camz"] - f["tz"]) for f in walk])
-        self.add("W5_cam_behind_m", d_rest, "walk")
-        self.add("W6_cam_height_m", steady([f["camy"] for f in rest]), "walk")
-        self.add("W7_cam_lag_walk_s", lag_seconds(d_walk, d_rest, vw), "walk")
+        self.add("W5_cam_flat_m", d_rest, "walk")
+        self.add("W5_cam_straight_m", steady([math.dist((f["camx"], f["camy"], f["camz"]), (f["lookx"], f["looky"], f["lookz"])) for f in rest]), "walk")
+        self.add("W6_cam_up_m", steady([f["camy"] for f in rest]), "walk")
+        self.add("W7_cam_follow_tau_walk_s", lag_seconds(d_walk, d_rest, vw), "walk")
         self.add("W8_hfov_walk_deg", hfov(fr[-1]["vfov"], fr[-1]["aspect"]), "walk")
         self.notes.append("walk: Tom as the new week starts him (carrying: %s)" % (fr[0].get("carry") or "nothing"))
         # running: he cannot run with the suitcase, so it is taken from his hands for the run and the turn
@@ -362,7 +386,7 @@ class Feel:
         self.add("W1_run_s", time_to_reach(v, p0, vr) if vr else None, "run")
         self.add("W2_run_stop_s", time_to_fall(v, r0, 0.05) if vr else None, "run")
         d_run = steady([math.hypot(f["camx"] - f["tx"], f["camz"] - f["tz"]) for f in run])
-        self.add("W7_cam_lag_run_s", lag_seconds(d_run, d_rest, vr), "run")
+        self.add("W7_cam_follow_tau_run_s", lag_seconds(d_run, d_rest, vr), "run")
         self.add("W8_hfov_run_deg", hfov(run[-1]["vfov"], run[-1]["aspect"]), "run")
         # 180-degree turn while running: W held, then S instead (the camera's back)
         self.place_tom(x, z, a, empty_handed=True)
@@ -417,22 +441,43 @@ class Feel:
         else:
             self.add("M5_yaw63_s", None, "cab-steer")
             self.faults.append("cab: holding D at 9 m/s did not turn the cab")
-        # camera at rest and at a held 9 m/s, moving freely along the clear line
-        g.js("([x, z, a]) => { const L = LEDGER, c = L.G.car; c.x = x; c.z = z; c.ang = a; c.v = 0; L.cam.yaw = a; L.cam.snap = true; }", [x, z, a])
-        still = "(() => { const c = LEDGER.G.car; return () => { c.v = 0; }; })()"
-        go = "(() => { const c = LEDGER.G.car; return () => { c.v = 9; c.ang = %f; }; })()" % a
-        rest = self.step(120, still)
-        moving = self.step(150, go)
+        # camera at rest and at a held 30 mph, moving freely along a clear straight. Street traffic moves onto any
+        # line, so the straight is searched again just before (cars where they are now) and up to three tries made;
+        # the cab must stand clear and must move, or the drill is a fault, not a number
+        V = 13.41  # 30 mph, where the sheet gives the field of view band
+        ok, rest, moving, v_seen = False, [], [], None
+        for attempt in range(3):
+            sp = self.line()
+            if not sp:
+                break
+            x, z, a = sp
+            g.js("([x, z, a]) => { const L = LEDGER, c = L.G.car; c.x = x; c.z = z; c.ang = a; c.v = 0; L.cam.yaw = a; L.cam.snap = true; }", [x, z, a])
+            still = "(() => { const c = LEDGER.G.car; return () => { c.v = 0; }; })()"
+            go = "(() => { const c = LEDGER.G.car; return () => { c.v = %f; c.ang = %f; }; })()" % (V, a)
+            rest = self.step(120, still)
+            feel = g.js("() => LEDGER.cabFeel()")
+            moving = self.step(150, go)
+            v_seen = steady(speeds([f["cx"] for f in moving], [f["cz"] for f in moving]))
+            ok = not feel.get("wedged") and feel.get("standsClear") and v_seen and v_seen >= 0.9 * V
+            if ok:
+                break
+            self.notes.append("cab camera try %d at (%.0f, %.0f): the cab did not drive (wedged %s, stands clear %s, speed seen %s m/s)"
+                              % (attempt + 1, x, z, feel.get("wedged"), feel.get("standsClear"), None if v_seen is None else round(v_seen, 2)))
         fr = rest + moving
-        self.keep("cab-camera", "test setup: cab on a clear straight at (%.0f, %.0f), still 2 s, then its speed held at 9 m/s and its heading held 2.5 s" % (x, z), fr)
+        self.keep("cab-camera", "test setup: cab on a clear straight at (%.0f, %.0f) (searched again just before, cars where they then were), still 2 s, then its speed held at 30 mph (13.4 m/s) and its heading held 2.5 s" % (x, z), fr)
+        if not ok:
+            self.faults.append("cab camera: the cab did not drive in three tries: its camera numbers at speed not reached")
+        if not rest:
+            self.faults.append("cab camera: no clear straight found: not reached")
+            return
         dist = [math.hypot(f["camx"] - f["cx"], f["camz"] - f["cz"]) for f in fr]
         d0, d9 = steady(dist[:len(rest)]), steady(dist[len(rest):])
-        v9 = steady(speeds([f["cx"] for f in moving], [f["cz"] for f in moving]))
+        v9 = v_seen if v_seen and v_seen >= 0.9 * V else None
         self.add("M10_behind_m", d0, "cab-camera")
         self.add("M10_height_m", steady([f["camy"] for f in rest]), "cab-camera")
         self.add("M10_lag_s", lag_seconds(d9, d0, v9), "cab-camera")
         self.add("M10_hfov0_deg", hfov(rest[-1]["vfov"], rest[-1]["aspect"]), "cab-camera")
-        self.add("M10_hfov9_deg", hfov(moving[-1]["vfov"], moving[-1]["aspect"]), "cab-camera")
+        self.add("M10_hfov30_deg", hfov(moving[-1]["vfov"], moving[-1]["aspect"]) if v9 else None, "cab-camera")
         g.js("() => { const L = LEDGER; L.G.car.v = 0; if (L.G.tom.inCar && L.cab.getOut) L.cab.getOut(); }")
         g.clear()
 
@@ -447,7 +492,8 @@ class Feel:
               const P = men[0]; P.space = 'street'; P.x = x + Math.sin(a); P.z = z + Math.cos(a); P.hurt = 0; P.down = false; P.def.nerve = 0.95;
               L.fight.setOn([P]); F.tele = []; F.stam = 1; for (const f of F.foes) f.st = 'still'; L.cam.snap = true;
               return { man: P.def.name }; }""", [x, z, a])
-            steps = "test setup: Tom on open ground at (%.0f, %.0f); one man 1.0 m in front, made to stand still; the fight set on" % (x, z)
+            fr0_carry = self.g.js("() => LEDGER.G.tom.carry || 'nothing'")
+            steps = "test setup: Tom on open ground at (%.0f, %.0f); one man 1.0 m in front, made to stand still; the fight set on; Tom carrying what the new week gives him (%s)" % (x, z, fr0_carry)
             if s.get("error"):
                 self.faults.append("fists %s: %s: not reached" % (kind, s["error"]))
                 continue
@@ -484,6 +530,8 @@ class Feel:
                 fn(spot)
             except Exception as e:  # a drill that breaks is not reached, never passed
                 self.faults.append("%s: the drill broke (%s): not reached" % (name, str(e)[:200]))
+            finally:  # whatever he carried goes back in his hands before the next drill
+                self.g.js("() => { const t = LEDGER.G.tom; if (window.__feelCarry) { t.carry = window.__feelCarry; window.__feelCarry = null; } }")
         errs = [e for e in self.g.errors if "404" not in e]
         if errs:
             self.faults.append("page errors during the drills: %s" % "; ".join(errs[:5]))
@@ -500,6 +548,7 @@ def report_md(res):
     for r in res["numbers"]:
         band = "%s to %s %s" % (r["band"][0], r["band"][1], r.get("unit", "")) if r.get("band") else ""
         lines.append("| %s | %s | %s | %s | %s |" % (r["id"], r["value"], band, r["verdict"], r["drill"]))
+    lines += ["", "Not measured by this tool (yet):"] + ["- " + n for n in NOT_MEASURED]
     lines += ["", "Notes:"] + ["- " + n for n in res.get("notes", [])]
     lines += ["", "Faults: %d" % len(res["faults"])] + ["- " + f for f in res["faults"]]
     lines += ["", "Drills (recordings in the out folder):"] + ["- %s: %s (%d frames, %s)" % (d["drill"], d["steps"], d["frames"], d["recording"]) for d in res["drills"]]
@@ -511,10 +560,13 @@ def main(argv=None):
     ap.add_argument("--dist", required=True)
     ap.add_argument("--out", default=None)
     ap.add_argument("--refs", default=None)
+    ap.add_argument("--ordinary", action="store_true", help="judge the cab against the real ordinary hatch (17 Nov set) instead of the game set")
     a = ap.parse_args(argv)
     out = a.out or os.path.join(os.getcwd(), "feel-out")
     os.makedirs(out, exist_ok=True)
     refs = json.load(open(a.refs, encoding="utf-8")) if a.refs else None
+    if a.ordinary:
+        refs = dict(REFS_ORDINARY, **(refs or {}))
     f = Feel(a.dist, out, refs)
     try:
         f.run()
