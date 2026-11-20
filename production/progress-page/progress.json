@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 20 November 2026, 2:19",
+  "updated": "Friday 20 November 2026, 7:59",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -883,21 +883,21 @@
       {
         "key": "A",
         "name": "one evening that holds",
-        "parts": 121,
+        "parts": 124,
         "built": 56,
         "passing": 1
       },
       {
         "key": "B",
         "name": "a week that holds",
-        "parts": 38,
+        "parts": 43,
         "built": 3,
         "passing": 0
       },
       {
         "key": "C",
         "name": "the rise",
-        "parts": 27,
+        "parts": 28,
         "built": 0,
         "passing": 0
       },
@@ -922,15 +922,15 @@
       {
         "id": "1",
         "name": "What the player does with his hands",
-        "leaves": 57,
+        "leaves": 61,
         "prototype": {
           "missing": 1,
-          "designed": 23,
+          "designed": 27,
           "built shallow": 15,
           "built": 18
         },
         "unreal": {
-          "designed": 51,
+          "designed": 55,
           "built shallow": 4,
           "built": 2
         }
@@ -938,14 +938,14 @@
       {
         "id": "2",
         "name": "The town under the hood",
-        "leaves": 64,
+        "leaves": 68,
         "prototype": {
-          "designed": 20,
+          "designed": 24,
           "built shallow": 25,
           "built": 19
         },
         "unreal": {
-          "designed": 38,
+          "designed": 42,
           "built shallow": 9,
           "built": 16,
           "unknown": 1
@@ -954,15 +954,15 @@
       {
         "id": "3",
         "name": "Story and people",
-        "leaves": 32,
+        "leaves": 33,
         "prototype": {
-          "designed": 9,
+          "designed": 10,
           "built shallow": 13,
           "built": 9
         },
         "unreal": {
           "missing": 1,
-          "designed": 21,
+          "designed": 22,
           "built shallow": 6,
           "built": 4
         }
