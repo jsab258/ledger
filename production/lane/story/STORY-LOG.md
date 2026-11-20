@@ -357,3 +357,31 @@ Also: Tom's change is counted, not shown as a deed; the comedy is labelled, not 
 His six changes of shape: make Sheila the second bond with three scenes for the hands before the turn; let the turn be found by the hands (the player sees her drive car two without touching the seat) and give the player a real reason to suspect Ron; Ron goes to the gate on every path, and asking changes what it means, not whether it happens; put a person on the clock in Act III (Ron means to give a false confession on Friday) and an active beat before the handbrake; three endings keyed to Ron's seat and two signatures; Tom's change as a deed that needs other hands, the middle cut from six weeks to four, the comic scenes written.
 
 Next: round M1. The bible is rewritten to these six (STORY-BIBLE-M1.md), a fresh summariser makes its page, three fresh readers score it with the three reference pages, and the fourth reader's test is run again.
+
+## The measured rounds
+
+The bar each round (step 6 of the order): each of three fresh readers puts The Passenger at or above the best-scoring reference on the checklist and overall, with no fault item failed; then a fourth fresh reader (a seasoned games writer, given the whole bible and told which page is a plan) must agree. The checklist is at its ceiling, so the fourth reader's answer is what decides.
+
+| Round | Bible | The Passenger: checklist, overall (critic, player, editor) | Best reference the same round | Fourth reader: marks on the page (ours, best reference) and verdict from the bible |
+|---|---|---|---|---|
+| The measure | P2 v5 with v6's kitchen | 80, 80, 80; 9, 9, 8 | RDR2: 66, 75, 55; 7, 8, 7 | 7 against 8; NO, about 70% sure |
+| M1 | STORY-BIBLE-M1.md | 80, 80, 80; 8, 8, 8 | RDR2: 66, 75, 64; 7, 7, 7 | 9 against 8; NO, about 65% sure |
+
+## Round M1 (20 November, 22:26 to 22:45)
+
+What M1 changed (shape, not polish): Sheila made the second friendship, with three scenes for the hands before the turn (the pen and the fare line; the lift she takes once; "I don't drive"); the turn seen, not deduced (on the anniversary she takes car two out for the Bishop and the player follows her tail lights; they carry him down together; the corridor; two initials in the book); Ron goes to the gate on every path, and asking him only changes what the Fifth means; Ron given a real reason to be suspected (a gear change nobody taught him; sitting in the car at night); the last week given a clock with a man on it (Ron will confess falsely on Friday at four) and a fast drive after the slow one; Tom's change made a deed (he must ask the men on the dock wall to lift the yard gate); three endings by Ron's seat; two names and a fire in place of four signatures; the middle cut from six weeks to four, its shape turned over after the Fifth; the second road folded into one section; four comic scenes written out; the law harder (the Crown Court at Easter).
+
+The three readers: 80 of 80 each, overall 8, 8, 8, against RDR2 at 7, 7, 7. What they say holds it back: a lead who is close to a blank; small stakes; a crowded cast with names that are listed and never used; a puzzle-box feel.
+
+The fourth reader (REVIEW-M1-fourth-games-writer.md): on the page he now puts it above RDR2 (9 against 8), and from the bible still answers NO, about 65% sure: "a very good small story that people love", not at or above the best. He marks as written, not merely asserted, the bond, the people, the planting, the hard moment, the humour and the endings. His remaining faults of the story:
+1. The flaw inverts in play: players press every prompt, so the default player is a taker and an asker and "you never ask for owt" is never his.
+2. The turn is guessed, and the player is never made to commit to Ron, so "being sure and being wrong" happens only in his head.
+3. Low loss at the centre: nobody dies, nothing was taken, the grave scenes are quiet talks.
+4. Contrivances: a confession kept on a shelf for a year; the inspector who happens to be from the robbed department; the watchman's year of silence.
+5. Density: twenty-one people and three old dockers who look alike; the truth hangs on a man met in week four.
+6. The endings are decided by hidden tallies and a race of skill.
+His six changes: make the player commit to the wrong man at a cost; cut Sheila's tells and move the surprise onto Ron's reason; make the flaw the default and the wall a walked scene, man by man; let the Bishop die; cut the cast to about fourteen and put the Bishop on screen in week one; take skill and hidden tallies out of the ending.
+
+Small faults the summariser found, to mend in M2: where a late arrival with her name on the paper ends up; whether Agar's telephone call changes anything; the count of people.
+
+Next: M2 answers each.
