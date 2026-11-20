@@ -63,7 +63,7 @@ async function manners() {
       P.pauseT = m.stopsSeconds; // stops a walker for about 2 s and turns him round
       emit('foot.oi', P);
     }
-    bubble(P, ['A nod back.', P.mind.regard < -0.2 ? 'Is it.' : 'Morning.', P.def.nerve > 0.6 ? 'Help you?' : '...', 'What?'][i], RULES.game.feel.hintAfterStandingStillRealSeconds);
+    bubble(P, ['A nod back.', P.mind.regard < -0.2 ? 'Is it.' : hourNow() < 12 ? 'Morning.' : hourNow() < 18 ? 'Afternoon.' : 'Evening.', P.def.nerve > 0.6 ? 'Help you?' : '...', 'What?'][i], RULES.game.feel.hintAfterStandingStillRealSeconds);
   } else if (i === 4) {
     const g = G.x.way.goal;
     if (!g) return tell('He has nowhere he is looking for.', '');

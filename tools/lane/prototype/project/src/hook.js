@@ -26,7 +26,7 @@ import { RULES } from './rules.js';
 import { act } from './events.js';
 import { clockText, dateText, DAYS, hyp } from './util.js';
 import { KINDS } from './kinds.js';
-import { SPOTS, DESTS, ROOMS, INSIDE, roomPos, zoneAt, blocked as mapBlocked } from './map.js';
+import { SPOTS, DESTS, ROOMS, INSIDE, roomPos, zoneAt, blocked as mapBlocked, NODES, path as mapPath, nearNode, los as mapLos } from './map.js';
 import { ui, tomName, dialogNow, advance, pickOpt } from './ui.js';
 import { buildPrompts, onKey, enterRoom, leaveRoom, talkTo } from './player.js';
 import { startTalk, endTalk, talkLines, talkState, talkPick, talkType, talkKeyPress } from './talk.js';
@@ -554,8 +554,12 @@ export function installHook(x) {
     G,
     ui,
     cam: x.cam,
+    mix: x.mix,
+    roomOf: (id) => ROOMS[id],
     F: x.F,
     tick: (dt) => x.logic(dt), // one game step of dt real seconds (round 3: the drills step at 1/60 s)
+    // the street map as a player comes to know it: the story player walks by it with the keys (test/stories/play.mjs)
+    map: { NODES, path: mapPath, nearNode, clear: (ax, az, bx, bz) => mapLos(ax, az, bx, bz) },
     isBlocked: (px, pz) => mapBlocked(px, pz), // round 3: the wall drill looks for a wall
     // round 6 (the gate): is this clear ground for a man on foot (the map, the lamp posts and the parked cars);
     // the cab's eased steering and whether it is wedged; where F would put Tom down; read the pad now

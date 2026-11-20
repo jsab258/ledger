@@ -151,7 +151,22 @@ function burst(freq, q, dur, vol, o = {}) {
   s.start(t, Math.random() * 2);
   s.stop(t + dur + 0.2);
 }
-export function sfx(name) {
+export const MIX = []; // every sound asked for: { n: name, loud: 0..1, who?, at: real seconds played }
+export function heard(n, loud = 0.5, who) {
+  MIX.push({ n, loud: Math.round(loud * 100) / 100, who: who || '', at: Math.round(G.played * 100) / 100, t: Math.round(G.t * 10) / 10 });
+  if (MIX.length > 4000) MIX.splice(0, 1000);
+}
+// A spoken line: every subtitle comes with its audio (a voice in the mix, as long as the line)
+export function voice(who, text, loud = 0.6) {
+  heard('voice', loud, who);
+  if (!A.ctx) return;
+  const n = Math.min(14, Math.max(2, Math.round(String(text).length / 9)));
+  const base = 110 + ((String(who).length * 37) % 90);
+  for (let i = 0; i < n; i++) tone('sawtooth', base + rnd(-14, 26), base + rnd(-20, 20), 0.09, 0.05 * loud, { at: i * 0.11, bus: world, a: 0.01 });
+}
+const LOUD = { tick: 0.03, paper: 0.07, stamp: 0.5, coin: 0.08, door: 0.35, cardoor: 0.5, shout: 0.6, thud: 0.5, hit: 0.6, block: 0.3, crash: 0.7, face: 0.07, radio: 0.14, step: 0.05, stair: 0.2 };
+export function sfx(name, loud) {
+  if (name !== 'tick') heard(name, loud == null ? LOUD[name] || 0.2 : loud);
   if (!A.ctx) return;
   switch (name) {
     case 'tick':
@@ -167,6 +182,12 @@ export function sfx(name) {
     case 'coin':
       tone('triangle', 2100, 0, 0.09, 0.08);
       tone('triangle', 2900, 0, 0.14, 0.07, { at: 0.06 });
+      break;
+    case 'ferryhorn':
+      tone('sawtooth', 98, 92, 1.6, 0.35, { bus: world, a: 0.2 });
+      break;
+    case 'stair':
+      for (let i = 0; i < 4; i++) tone('sine', 140, 80, 0.07, 0.2, { at: i * 0.24, bus: world });
       break;
     case 'door':
       tone('sine', 150, 70, 0.14, 0.35, { bus: world });

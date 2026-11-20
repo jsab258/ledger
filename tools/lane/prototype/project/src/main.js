@@ -77,8 +77,8 @@ import { step as fightStep, F, block as fightBlock } from './fight.js';
 import { RULES } from './rules.js';
 import { initStory, newWeek, storyStep, endWeek } from './scenes.js';
 import { passTime } from './work.js';
-import { initTalk, checkTalk, talkLines, talkState, startTalk } from './talk.js';
-import { initAudio, audioStep, sfx } from './audio.js';
+import { initTalk, checkTalk, talkLines, talkState, startTalk , talkSay } from './talk.js';
+import { initAudio, audioStep, sfx, voice, MIX } from './audio.js';
 import { initSave, saveNow, findSave, restore, saveWhere } from './saving.js';
 
 let scene,
@@ -186,6 +186,7 @@ async function boot() {
   });
   Object.assign(ui.hooks, {
     sfx,
+    voice: (who, text, loud) => (loud === 0 ? null : voice(who, text, loud == null ? RULES.game.hour1.voiceLoudness : loud)),
     pause: () => {
       prevPanel = null;
       panel(pauseHTML(), 'pause');
@@ -265,6 +266,28 @@ async function boot() {
       startNew();
     },
     cont: continueWeek,
+    // any live line can be reported, from the talk screen or the pause menu (3.6.7): the last line heard is kept with
+    // who said it and when, and a note says so
+    report: (from) => {
+      const last = [...document.querySelectorAll('#tlog > *')].map((e) => e.textContent).filter(Boolean).pop() || G.story.lastHeard || '';
+      (G.story.reports = G.story.reports || []).push({ t: Math.round(G.t), line: String(last).slice(0, 300), from: from === 'talk' ? 'talk' : 'pause' });
+      if (from === 'talk') talkSay('sys', 'Line reported.');
+      else {
+        const el = $('saved');
+        if (el) el.textContent = 'Line reported.';
+      }
+    },
+    reportline: () => ui.hooks.report('pause'),
+    quit: () => {
+      saveNow(true);
+      toTitle();
+      try {
+        window.close();
+      } catch (e) {
+        /* a page cannot always close itself */
+      }
+      panel('<h1>Saved.</h1><p>The game is saved. This window can be closed.</p><div class="row"><button class="btn" data-act="back">Back</button></div>', 'quit');
+    },
     copy: copyReport,
     titlehow: () => {
       panel(howHTML(), 'how');
@@ -293,6 +316,7 @@ async function boot() {
   requestAnimationFrame(loop);
   installHook({
     logic,
+    mix: MIX,
     files: { list: loadFileList, read: readFile, zip: sourceZip, open: openFiles, state: FILES },
     benchmark,
     rig: { peopleInfo, buildCharR, poseCharR, poseClip },
@@ -337,7 +361,6 @@ function believed(E, P, b) {
   G.stats.noted = (G.stats.noted || 0) + 1;
   if (!G.ledger.hintL) {
     G.ledger.hintL = 1;
-    sub('L opens the Ledger: what you believe the street knows.', '', 'over', 6);
   }
 }
 function back() {
@@ -357,6 +380,17 @@ function back() {
   panel(pauseHTML(), 'pause');
 }
 function onSetting(k) {
+  if (k === 'layout') {
+    // the window is asked to take the chosen size (a desktop window does; a browser tab keeps its own and the page fits it)
+    const m = /(\d+) x (\d+)/.exec(G.settings.layout || '');
+    if (m)
+      try {
+        window.resizeTo(+m[1], +m[2]);
+      } catch (e) {
+        /* a tab may refuse */
+      }
+  }
+  if (k === 'bright') document.getElementById('c').style.filter = 'brightness(' + (G.settings.bright || 1) + ')';
   if (k === 'quality') setQuality(G.settings.quality);
   if (k === 'touch') show('touch', G.settings.touch && G.story.phase === 'play');
 }
@@ -687,16 +721,17 @@ function showTitle() {
     items.push({
       t: saveInfo.ended
         ? 'See how the week ended'
-        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][Math.floor(saveInfo.t / 1440)] || 'the week'}`,
+        : `Continue: ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][Math.floor(saveInfo.t / 1440) % 7] || 'the week'}`,
       act: 'cont',
     });
   items.push(
-    { t: 'New week', act: 'new', alt: !!saveInfo },
+    { t: 'New game', act: 'new', alt: !!saveInfo },
     { t: 'How the town watches', act: 'titlehow', alt: 1 },
     { t: 'Settings', act: 'titlesettings', alt: 1 },
     { t: 'Design notes', act: 'titlenotes', alt: 1 },
     { t: 'Source and files', act: 'titlefiles', alt: 1 },
     { t: 'Credits', act: 'titlecredits', alt: 1 },
+    { t: 'Quit', act: 'quit', alt: 1 },
   );
   titleMenu(items, true);
 }
@@ -742,9 +777,7 @@ async function startNew() {
   initAudio();
   titleMenu([], false);
   closePanel();
-  setPaused(true, 'starting a new week');
-  await fade(true, introLetter);
-  await waitClick(15000);
+  setPaused(true, 'starting a new game');
   clearTraffic();
   newWeek();
   gameLoaded();
@@ -755,21 +788,60 @@ async function startNew() {
   const t = G.tom;
   // the one-shot (DESIGN 15, built to the recommended answer of QUESTIONS 4): he arrives by ferry, at the landing,
   // and walks up the quay to Quay Street. Control comes as soon as the letter is read.
-  t.x = RULES.game.feel.arrivesAtXMetres;
-  t.z = RULES.game.feel.arrivesAtZMetres;
-  t.ang = RULES.game.feel.arrivesFacingRadians;
+  t.x = RULES.game.hour1.arrivesAtXMetres;
+  t.z = RULES.game.hour1.arrivesAtZMetres;
+  t.ang = RULES.game.hour1.arrivesFacingRadians;
   t.space = 'street';
   setInside(null);
   ui.roomName = null;
-  cam.yaw = RULES.game.feel.arrivesFacingRadians;
+  cam.yaw = RULES.game.hour1.arrivesFacingRadians;
   cam.pitch = 0.24;
   cam.dist = 5.4;
   snapCam();
+  // 0:00 the ferry comes in under a grey sky: one shot, 20 s, skippable (Escape); then control, at the foot of the gangway
+  show('hud', false);
+  await ferryShot();
   show('hud', true);
   show('touch', G.settings.touch);
-  setPaused(false, 'the new week has started');
-  await fade(false);
-  sub('The ferry landing, under a grey sky. One suitcase. Quay Street is up the quay to the east, past the Harbour Office clock.', '', 'over', 7);
+  snapCam();
+  setPaused(false, 'the new game has started');
+  saveNow(false);
+}
+// The one watched thing in the game: the port coming nearer from the ferry's rail. It ends by itself, or at once on Escape.
+const SHOT = { on: false, t: 0, done: null };
+function ferryShot() {
+  return new Promise((res) => {
+    SHOT.on = true;
+    ui.shot = true;
+    SHOT.t = 0;
+    const skip = (e) => {
+      if (e.code !== 'Escape' && e.code !== 'Enter' && e.code !== 'Space') return;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      fin();
+    };
+    const fin = () => {
+      if (!SHOT.on) return;
+      SHOT.on = false;
+      ui.shot = false;
+      removeEventListener('keydown', skip, true);
+      window.LEDGER_CAM = null;
+      res();
+    };
+    SHOT.done = fin;
+    addEventListener('keydown', skip, true);
+    if (G.hooks.sfx) G.hooks.sfx('ferryhorn', 0.7);
+  });
+}
+function ferryShotStep(dt) {
+  if (!SHOT.on) return;
+  SHOT.t += dt;
+  const T = RULES.game.hour1,
+    k = Math.min(1, SHOT.t / T.ferryShotRealSeconds),
+    e = k * k * (3 - 2 * k);
+  // from out on the water in to the landing, the gangway ahead
+  window.LEDGER_CAM = [T.arrivesAtXMetres + 14 * (1 - e), 7 - 3.5 * e, 112 - 30 * e, T.arrivesAtXMetres, 2.2, 58, 62];
+  if (SHOT.t >= T.ferryShotRealSeconds) SHOT.done();
 }
 // Put a saved week back: the state, then the people rebuilt around their restored memories (each mind gets its
 // index again), then the room and the camera. Continue and the test hook both come through here.
@@ -831,6 +903,7 @@ function showEnd() {
 let slowT = 0;
 function logic(dt) {
   const ph = G.story.phase;
+  ferryShotStep(dt);
   tickTimers(dt); // fades and goodbyes: timed by the game's steps, so they end in a hidden tab and in a stepped test
 
   if (ph === 'title') {
@@ -876,7 +949,10 @@ function loop(now) {
   if (!window.LEDGER_MANUAL) logic(dt);
   if (window.LEDGER_NORENDER) {
     // a test has switched the picture off: the words on screen still run
-    if (ph !== 'title') hud(dt);
+    if (ph !== 'title') {
+      stepCamera(dt);
+      hud(dt);
+    }
     padStep();
     return;
   }

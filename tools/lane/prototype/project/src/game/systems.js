@@ -1,6 +1,7 @@
 // One import a system, in step order. Fixed list: add sub-modules from inside your own system file.
 import './town.js';
 import './feel.js';
+import './hour1.js';
 import './foot.js';
 import './fightx.js';
 import './cars.js';

@@ -101,6 +101,17 @@ export const G = Object.assign(freshState(), {
     quality: 'high',
     autoRes: true,
     healthBar: false,
+    layout: '1280 x 720',
+    bright: 1,
+    reduceMotion: false,
+    prompts: true,
+    chatterSubs: true,
+    eyes: false,
+    slowFights: false,
+    driveHelp: false,
+    longWalks: false,
+    hintsAgain: false,
+    soundShown: false,
     vol: 0.8,
     music: 0.6,
     sens: 1,
@@ -109,7 +120,7 @@ export const G = Object.assign(freshState(), {
     hints: true,
     bloom: true,
     liveTalk: true,
-    asks: true, // the playtest's find-the-fact asks
+    asks: false, // the playtest's find-the-fact asks (off: nothing of the kind is on the game's screen)
     truthView: true, // the end screen's truth beside the Ledger (a playtest view)
     slipOpen: false, // the slip beside a talk starts folded; F2 unfolds it and the choice is remembered
     ledgerPart: 'people', // the Ledger opens on the part last used

@@ -14,7 +14,7 @@ const S = { lastHintPlayed: -99, idle: 0, about: 0 };
 // A first hint: once, only if hints are on, never two within twelve seconds (ER-FIRST-03).
 export function hint(id, text) {
   const x = X('feel');
-  if (x.hints[id] || G.settings.hints === false || G.played - S.lastHintPlayed < T.hintsNotTwoWithinRealSeconds) return false;
+  if (x.hints[id] || G.settings.hints === false || G.played - S.lastHintPlayed < T.hintsNotTwoWithinRealSeconds + 1) return false;
   x.hints[id] = Math.round(G.played);
   S.lastHintPlayed = G.played;
   sub(text, '', 'over', 7);
@@ -43,8 +43,8 @@ register({
     // the hands-on run's fault: a newcomer who never stood still was never told the keys. The first hint comes a few
     // seconds after he has control, whatever he is doing; the rest still wait for a pause.
     S.sinceStart = (S.sinceStart || 0) + dt;
-    if ((S.idle > 0 || S.sinceStart > T.firstHintAfterRealSeconds) && !x.hints.move) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
-    else if ((S.idle > T.hintsNotTwoWithinRealSeconds || S.sinceStart > T.secondHintAfterRealSeconds) && !x.hints.keys && x.hints.move) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
+    if (S.idle > 0 && !x.hints.move) hint('move', 'W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.');
+    else if (S.idle > 0 && !x.hints.keys && x.hints.move && x.hints.way) hint('keys', 'E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.');
     // Ron or Pauline nudge after a minute of standing about (DESIGN 15, teaching)
     S.about = t.still > 1 && !t.inCar && G.story.objective ? S.about + dt : 0;
     if (S.about > T.nudgeAfterStandingAboutRealSeconds) {

@@ -677,6 +677,21 @@ export const ROOMS = {
     locked: 1,
     spots: { ada: [-1.4, -1.0, 1.2], tom: [0.9, -0.8, -1.2] },
   },
+  // the one-shot: the flat over Mickey's, up the stair from the office (it has no street door of its own)
+  flat: {
+    name: "the flat over Mickey's",
+    w: 11,
+    d: 7,
+    k: 'boarding',
+    wall: '#b3a892',
+    floor: 'carpet',
+    street: [7.2, 36, -1.57],
+    mat: [-3.6, 3.0],
+    locked: 1,
+    upFrom: 'mickeys',
+    stair: [6.2, -0.4], // where the stair stands in the office, in the office's own metres
+    spots: { sylvia: [-3.4, -2.4, 0], june: [-1.6, -0.6, 1.0], bed: [3.6, -2.0, 1.57], chair: [-0.6, 0.4, 2.2], bag: [2.2, -2.8, 0] },
+  },
 };
 let ri = 0;
 for (const id in ROOMS) {
@@ -693,6 +708,8 @@ export const INSIDE = {
   backDoor: { name: "the door in Mickey's back room", room: 'mickeys', x: 5.4, z: -3.0, within: 1.2 },
   cot: { name: "the cot at Mickey's", room: 'mickeys', x: 5.6, z: -2.0, within: 1.4 },
   bed: { name: 'the bed at Regent House', room: 'boarding', x: 3.6, z: -2.0, within: 1.6 },
+  flatBed: { name: "the bed in the flat over Mickey's", room: 'flat', x: 3.6, z: -2.0, within: 1.6 },
+  stair: { name: "the stair to the flat at Mickey's", room: 'mickeys', x: 6.2, z: -0.4, within: 1.5 },
   caffCounter: { name: "the counter at Rinaldi's", room: 'caff', x: 1.0, z: -1.2, within: 1.5 },
   paperCounter: { name: "the counter at Peart's", room: 'news', x: 1.2, z: 0, within: 2 },
   chipCounter: { name: 'the counter at the Golden River', room: 'tangs', x: 0, z: -0.4, within: 2 },

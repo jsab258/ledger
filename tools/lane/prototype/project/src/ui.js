@@ -222,6 +222,7 @@ export function sub(text, who, cls = '', secs) {
   el.className = 's ' + cls;
   el.innerHTML = (who ? `<b>${esc(who)}</b>` : '') + esc(text);
   $('subs').appendChild(el);
+  if (ui.hooks.voice) ui.hooks.voice(who || '', text, !who ? 0 : cls === 'over' ? RULES.game.hour1.voiceFarLoudness : undefined);
   const lasts = secs || clamp(2.2 + text.length * 0.055, 3, 9);
   ui.subs.push({ el, t: lasts, secs: lasts, born: performance.now() });
   while (ui.subs.length > 3) {
@@ -237,8 +238,10 @@ export function bubble(P, text, secs = 3.5) {
     seen = (ui.saidAt || (ui.saidAt = new Map())).get(text);
   if (seen && seen.P !== P && now - seen.at < TALK_RULES.sameBubbleQuietRealSeconds * 1000) return;
   ui.saidAt.set(text, { P, at: now });
-  ui.bubs = ui.bubs.filter((b) => b.P !== P);
-  ui.bubs.push({ P, text, t: secs });
+  // the one-shot (S38): nothing is drawn over a head. What somebody near says is a subtitle with its voice, like every line.
+  if (!P || !inEarshot(P)) return;
+  if (ui.subs.some((s) => s.el.textContent.endsWith(text))) return;
+  sub(text, tomName(P), 'over', secs);
 }
 // a bubble shows only for someone Tom could see and hear: in range and not behind a wall
 function inEarshot(P) {
@@ -426,6 +429,7 @@ export function openTalk(P, o) {
     }
   };
   $('tbye').onclick = () => o.onBye();
+  $('treport').onclick = () => ui.hooks.report && ui.hooks.report('talk');
   $('tlines').onclick = (e) => {
     const b = e.target.closest('.opt');
     if (b && ui.hooks.talkPick) ui.hooks.talkPick(+b.dataset.i);
@@ -591,10 +595,12 @@ export function settingsHTML() {
     chk = (k) => `<input type="checkbox" data-set="${k}" ${s[k] ? 'checked' : ''}>`,
     rng = (k, a, b) =>
       `<input type="range" data-set="${k}" min="${a}" max="${b}" step="0.05" value="${s[k]}">`;
-  return `<h1>Settings</h1><h2>Picture</h2><label>Graphics quality ${sel('quality', ['low', 'medium', 'high'])}</label><label>Hold the frame rate by lowering resolution ${chk('autoRes')}</label><label>Bloom on lamps and windows ${chk('bloom')}</label><div class="row"><button class="btn alt" data-act="bench">Measure the frame time</button></div><p id="bench" style="font-size:13px;min-height:1.3em"></p>
-  <h2>Play</h2><label>Show a small health bar ${chk('healthBar')}</label><label>Mouse sensitivity ${rng('sens', 0.3, 2.5)}</label><label>Invert vertical look ${chk('invertY')}</label><label>Touch controls ${chk('touch')}</label><label>Show the town's eyes (testing only) ${chk('eyes')}</label><label>Playtest asks: find a fact in the Ledger at set moments ${chk('asks')}</label><label>End screen: show the truth beside the Ledger (playtest view) ${chk('truthView')}</label>
-  <h2>Live talk</h2><label>Let Claude voice what people say when you talk freely ${chk('liveTalk')}</label><p style="font-size:13px;margin:6px 0">The game always decides what happens. With this off, people answer in their written lines.</p><div class="row"><button class="btn alt" data-act="talkcheck">Check the live voices</button></div><p id="talkcheck" style="font-size:13px;min-height:1.3em"></p>
-  <h2>Sound</h2><label>Volume ${rng('vol', 0, 1)}</label><label>Score ${rng('music', 0, 1)}</label><div class="row"><button class="btn" data-act="back">Back</button></div>`;
+  const sizes = ['1280 x 720', '1600 x 900', '1920 x 1080', '1000 x 600'];
+  return `<h1>Settings</h1><h2>Picture</h2><label>Window size ${sel('layout', sizes)}</label><label>Graphics quality ${sel('quality', ['low', 'medium', 'high'])}</label><label>Brightness ${rng('bright', 0.7, 1.4)}</label><label>Hold the frame rate by lowering resolution ${chk('autoRes')}</label><label>Bloom on lamps and windows ${chk('bloom')}</label><label>Reduce motion (no camera shake) ${chk('reduceMotion')}</label>
+  <h2>Play</h2><label>Mouse sensitivity ${rng('sens', 0.3, 2.5)}</label><label>Invert vertical look ${chk('invertY')}</label><label>Touch controls ${chk('touch')}</label><label>Show key prompts ${chk('prompts')}</label><label>Show first hints ${chk('hints')}</label><label>Subtitles for street chatter ${chk('chatterSubs')}</label>
+  <h2>Assists (each changes only its own thing)</h2><label>Seeing: outline the people he can see who are facing him ${chk('eyes')}</label><label>Slower fights ${chk('slowFights')}</label><label>Driving help ${chk('driveHelp')}</label><label>Longer walks for a witness ${chk('longWalks')}</label><label>Hints again ${chk('hintsAgain')}</label><label>Sound shown in words ${chk('soundShown')}</label>
+  <h2>Live talk</h2><label>Let an AI voice what people say when he talks freely ${chk('liveTalk')}</label><p>The game always decides what happens. With this off, people answer in their written lines.</p>
+  <h2>Sound</h2><label>Volume ${rng('vol', 0, 1)}</label><div class="row"><button class="btn" data-act="back">Back</button></div>`;
 }
 export function bindSettings(onChange) {
   $('book')

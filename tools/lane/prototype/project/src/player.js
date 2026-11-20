@@ -161,7 +161,7 @@ export const unlock = () => {
 };
 // One key, as the keyboard sends it. The test hook comes through here too, so it takes the same path.
 export function onKey(code) {
-  if (G.story.phase !== 'play') return;
+  if (G.story.phase !== 'play' || ui.shot) return; // nothing is his to do while the ferry comes in (Escape there ends the shot: main.js)
   if (uiKey(code)) return;
   if (code === 'Escape' || code === 'KeyP') {
     unlock();
@@ -272,6 +272,18 @@ export function leaveRoom(exit2) {
   const t = G.tom,
     r = ROOMS[t.space];
   if (!r) return;
+  if (r.upFrom) {
+    // the one-shot: a room up a stair is left down the stair, into the room below
+    enterRoom(r.upFrom, true);
+    const [sx, sz] = roomPos(r.upFrom, r.stair[0] - 0.9, r.stair[1] + 0.3);
+    t.x = sx;
+    t.z = sz;
+    t.ang = -1.57;
+    cam.yaw = -1.57;
+    snapCam();
+    if (G.hooks.sfx) G.hooks.sfx('stair');
+    return;
+  }
   const s = exit2 ? r.exit2.street : r.street;
   t.space = 'street';
   t.x = s[0];
@@ -364,7 +376,7 @@ export function buildPrompts() {
     if (r) {
       const [mx, mz] = roomPos(r.id, r.mat[0], r.mat[1]);
       if (hyp(t.x, t.z, mx, mz) < TOMS.doorMatWithinMetres && !out.some((o) => o.k === 'E'))
-        out.push({ k: 'E', t: 'Leave', run: () => leaveRoom(false) });
+        out.push({ k: 'E', t: r.upFrom ? 'Down the stair to the office' : 'Leave ' + r.name + ' by the street door', run: () => leaveRoom(false) });
       if (r.exit2) {
         const [ex, ez] = roomPos(r.id, r.exit2.mat[0], r.exit2.mat[1]);
         if (hyp(t.x, t.z, ex, ez) < TOMS.wayOutWithinMetres && !out.some((o) => o.k === 'E'))
