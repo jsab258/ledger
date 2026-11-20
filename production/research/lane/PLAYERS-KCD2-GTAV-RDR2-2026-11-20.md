@@ -2,88 +2,95 @@
 
 20 November 2026, the lane (players study, Opus). KCD2 means Kingdom Come: Deliverance II, GTA V means Grand Theft Auto V and RDR2 means Red Dead Redemption 2. This replaces the Mafia half of production/research/aaa-reference/PLAYERS.md (12 Oct 2026) after his words of 14:30 today: Mafia is no longer a reference game, so it is left out entirely. Marks: every count is a site's own figure (Metacritic, OpenCritic, the 12 Oct Steam study), a helper's coding count over the reviews read, the check coder's count, or my own arithmetic; where it is not plain from the sentence, it says which. Nothing from any game is in this file: no game text, picture or audio, and no raw review text; only counts and short quotes (under 15 words, at most two players per theme). No GTA VI story detail appears anywhere.
 
+**Updated 20 Nov 2026, evening, on the production PC (advisor 271, his words 16:46):** GTA V and RDR2 now rest on about 10,000 English Steam reviews each, pulled and coded the 12 Oct way and checked by hand; the tables, the plain-words summary, the trust section and 'What this changes for LEDGER' are redone from them. The first pass (Metacritic, OpenCritic) is kept only where marked.
+
 ## In plain words
 
-What players of these three games care about most, in order:
+What players of these three games care about most, in order (Steam reviews for all three, from 20 Nov for GTA V and RDR2):
 
-1. A story and characters worth caring about. First in all three games, and strongest in RDR2, where almost half of the reviews read praise Arthur Morgan and his story.
-2. How it looks. Second overall; higher for the two Rockstar games than for KCD2.
-3. A world that feels alive and lived in. Third, and steady across all three (about a quarter of reviews in each).
-4. Then, far behind: side stories, music and sound (the radio in GTA V), a good PC version, plenty of game for the money.
+1. A story and characters worth caring about. First in all three games, and strongest in RDR2, where almost half of the reviews kept praise it.
+2. A world that feels alive and lived in. Second overall, ahead of looks once GTA V and RDR2 are read on Steam.
+3. How it looks. Third; RDR2 above all.
+4. Then, far behind: plenty of game for the money, side stories, music and sound, a good PC version, driving and riding (GTA V). Freedom to play (sandbox, heists) is large in GTA V (15%) and RDR2 (9%); never coded for KCD2, it is not ranked, though under the rule used for KCD2-only themes it would be joint fourth (7.9%).
 
-What they punish most:
+What they punish most, in the reviews read:
 
-1. Controls, menus and slow animations (RDR2 above all: about one review in four read).
-2. Boredom: stretches with nothing to do, slow travel.
-3. KCD2's combat (mostly a KCD2 complaint).
-4. A thin or predictable story, or characters nobody can like (GTA V's three leads draw this).
-5. Bugs, long cutscenes and a slow opening, the same loop over and over, and a bad PC launch (RDR2 in November 2019).
+1. A bad PC version (stutter, crashes, long loads, heavy demands) and bugs that stop progress or break the illusion, level across the three games: the PC version leads as drafted (10.2% against 9.7%), bugs lead if the Rockstar games are counted over all their reviews as KCD2 is (8.4% against 7.6%). The PC version is first within GTA V and within RDR2 under any count, and worst in the launch months (RDR2's December 2019 Steam launch above all).
+2. Boredom, and missions that waste time or fail you for doing it your way (both over-counted by the script on the check sets; rough).
+3. KCD2's combat (a KCD2 complaint; not coded for the other two).
+4. The same loop over and over.
+5. Slow controls, menus and animations: eighth by the script's count across the three, second in the script's RDR2 count once the miscounted story row is set aside, and equal with the PC version in RDR2's hand check (10 and 10 of 68 reviews kept, too few to separate); the script under-reads it.
 
-The biggest change for LEDGER: the town and Tom must feel quick in the hands. RDR2 shows that a world players adore can still have a quarter of its reviews complain of slow walking, slow looting and forced pace; LEDGER is a game mostly on foot in a small town, so its moment to moment feel (how fast Tom answers the keys, how long an action takes) needs a target before more content goes in.
+The script's "a thin story" row is not trusted: in RDR2's hand check the script gave it 11 times where the reading gave it once.
 
-How far to trust it: this run could not reach Steam (the session's network refused the host), so GTA V and RDR2 were read from Metacritic and OpenCritic player pages found by web search, about 800 reviews each, and coded by helpers. KCD2 keeps its Steam counts from 12 Oct. The order of the top themes is solid; the sizes are rough, and the complaint shares of GTA V and RDR2 are too low against KCD2's (see below).
+The biggest change from this afternoon's version: on Steam the PC version and bugs lead the complaints, and slow controls fall from first across the three games to close behind the PC version in RDR2. The recommendation on how quick Tom feels in the hands stands, and the PC-version lesson becomes the plainest one: a bad PC version is the complaint named most often in the Rockstar reviews, worst at launch.
+
+How far to trust it: about 10,000 Steam reviews per game, coded by a word-list script rebuilt from the 12 Oct method (differences listed below) and checked against fresh hand readings of 100 per game. It is more precise than the 12 Oct script (61 against 53 of 100 tags right) but finds fewer of the hand tags (58 against 65). The praise order is solid (0.83); the punish order is rough as a whole: rank agreement 0.28 for RDR2 and none to speak of for GTA V (too few hand complaint tags; 0.48 pooled).
 
 ## What was read, and how far to trust the counts
 
-- **Steam could not be reached.** Steam's public review interface (store.steampowered.com) was refused by this session's network (403 from the egress rule, no host allowed), so the planned Steam pulls for GTA V (app 271590, PC release 14 Apr 2015) and RDR2 (app 1174180, PC release 5 Nov 2019) were not made. Steam's store pages, fetched through the web tool, showed only an age gate. As the task says for this case, I used web search, then fetched only the review pages search returned, and I lower the confidence plainly.
-- **What was read instead.** Player reviews on Metacritic (its older page layout, legacy.prod.metacritic.com, which search returned page by page) and OpenCritic, plus five single Steam review pages that search returned. Metacritic's current pages ignored every filter (negative, neutral, page number) and always returned the same recent list, which was read once.
-- **How many.** GTA V: 825 English reviews coded, 2013 to Nov 2026, from 14 pages; 148 of them from PC or any-platform pages (Metacritic PC, GTA V Enhanced, Steam, and OpenCritic, which covers every platform). RDR2: 831 English reviews coded, 2018 to Nov 2026, from 17 pages; 243 from PC pages. Non-English reviews were skipped (115 on the GTA V console pages and 129 on the RDR2 pages with a count; the PC pages were not counted). The rest are from the PlayStation and Xbox pages of the same games: the single-player story is the same game, so they count for story, world and feel, but PC-only themes (the port, crashes) are reported from the PC pages as well. That is far below the 3,000 a game the Steam method aimed at.
-- **KCD2.** Its counts are kept from PLAYERS.md (12 Oct 2026): 5,701 English Steam reviews coded by script. A fresh pull was not possible. A tiny calibration, 40 KCD2 OpenCritic player reviews coded the same way as GTA V and RDR2, is in the checks below.
-- **Set aside (GTA V and RDR2 only).** Whole reviews only about GTA Online or Red Dead Online, anti-cheat, launchers, accounts or review bombs: GTA V 29 of 825, RDR2 14 of 831, left out of every share. Reviews that mixed the story game with those subjects were coded only on their story game sentences: GTA V 260, RDR2 109. Shares below are of the reviews kept: GTA V 796, RDR2 817. The set-aside count is low because Metacritic's player pages lean on the years after release; on Steam, where GTA V's recent reviews are mostly about Online, it would be far higher.
-- **The sample is lopsided, and differently from KCD2's.** KCD2's Steam sample held almost as many negative reviews as positive (2,589 of 5,701, by design). The GTA V and RDR2 samples hold what the pages held: of reviews with a score, GTA V 98 of 778 score 0 to 4, 92 score 5 to 7, 588 score 8 to 10; RDR2 99 of 773, 170 and 504. So complaints are under-sampled for GTA V and RDR2 by about three times against KCD2, and the punish shares of the three games cannot be compared in size; the order inside each game is the thing to read. Praise shares are likely a little high for the same reason.
-- **Who coded.** Helpers (Sonnet) read each page and gave each review the themes it clearly praises or punishes, from PLAYERS.md's theme list (the same 23 praise and 28 punish themes, below the line included). The first 315 PC reviews were coded by helpers reading the page text; the console pages were coded by the fetch tool itself over the whole page, on the same codebook. The 23 praise and 28 punish themes were coded by reading, not by the word-list script of 12 Oct, which lived outside the repository and could not run on pages instead of Steam data. Theme names are the old ones, a few written wider to fit these games: "menus, controls, camera and the interface" now names slow animations too (in RDR2 they are most of it); "quest design that wastes time or gives no direction" now names missions that fail you for doing it your way; "gunplay that feels weak or inaccurate" names auto-aim; "paid add-ons that feel thin or late" names microtransactions and missing story add-ons; "hunger, sleep, wear and washing" is called survival chores; "side quests" is side content; "it ran well" names a good PC version. KCD2's counts are for the old, narrower meanings.
-- **One new theme.** Freedom to play, lots to do (messing about in the sandbox, the heists, switching between three leads). The helpers wrote such praise as free notes outside the list; I gave the theme to a review by a keyword match over those notes (freedom, sandbox, activities, heists, three leads and the like), which also caught a few loose notes. 51 GTA V reviews: more than several listed themes, so it is shown, marked NEW, for GTA V only. RDR2's notes were too few for the match to mean anything, and KCD2 was not coded for it, so it is left out of the ranking.
-- **The check, and where it falls short of the task.** The task asked for a fresh sample of 100 per game. What was done: a second helper coded again, blind, the first English reviews on two console pages per game (GTA V: PlayStation 4 and Xbox One, 84 reviews; RDR2: two PlayStation 4 pages, 87 reviews; one page cut off early), and I compared the two codings review by review, pairing only where source, date and score agree. So the check is short of 100 per game, not random, and holds no PC page. GTA V, 83 reviews paired: of every 100 themes the first coding gave, 65 matched the check; of every 100 the check gave, the first coding found 87; set-aside status agreed on 78 of 83. RDR2, 61 reviews paired (the two codings numbered one page differently, so the rest could not be paired safely): 80 and 90; set-aside status agreed on 60 of 61. The order of themes agrees well: rank correlation 0.96 for praise and 0.78 for punish in GTA V (over 11 and 16 themes), 0.90 and 0.80 in RDR2 (17 and 19). So the first coding gives more themes than the second reader: counts run high by about a tenth to a third; the order holds. (The 12 Oct check compared a script with a hand reading, 53 and 65, order 0.84 and 0.91, so it is a similar but not the same test.)
-- **KCD2 calibration (unverified: its rows were not kept as a file).** 40 KCD2 OpenCritic player reviews coded the helper way gave story 9 (23%), looks 5 (13%), world 4 (10%), melee 5 (13%), against the Steam script's 32%, 18%, 25% and 18%. Too few to correct anything; it says the Steam script's shares may run higher than the helper coding's, so KCD2's shares in the tables may be a little high against the other two.
-- **Ranking rule.** As in PLAYERS.md: themes are ranked by the mean of each game's share of its own reviews, so no game outweighs another by sample size.
-- **Critics.** GTA V PC release: 8 reviews coded, short of the 10 asked (a ninth page was the console review, a tenth a preview, both left out) (PCGamesN, PC Gamer, WorthPlaying, The AU Review, Hardcore Gamer, Impulse Gamer, The Guardian read through inkl, GameSpot's PC update). RDR2 PC release: 11 (PC Gamer, Windows Central, bit-tech, WorthPlaying, GamingBolt, Gamereactor, GameZone, GameSkinny, God Is a Geek, Impulse Gamer, FutureFive). Aggregates as read on Metacritic's PC pages today: GTA V Metascore 96 from 57 critic reviews, user score 7.9 from 9,245 ratings; RDR2 Metascore 93 from 44 critic reviews, user score 6.8 from 5,614 ratings. KCD2's critics are as in PLAYERS.md (12 reviews; Metascore 89).
+- **Steam, reached from the production PC (20 Nov, 16:55 to 17:55).** Steam's old review address (store.steampowered.com/appreviews) was retired by Valve on 22 Oct 2026 and now redirects to the store front, which is what the cloud run met. Valve's replacement, IUserReviewsService/GetAppReviews on api.steampowered.com [ST-API], takes the same filters, needs no key, and answered from this PC. Pulls: one request at a time with a 3 to 8 second pause, English only, every purchase type (1,259 GTA V and 744 RDR2 reviews are by non-Steam buyers), Steam's default review-bomb filter left on; the five kinds of pull of PLAYERS.md: the most helpful of all time (600 a vote), the 500 most recent of each vote, the most helpful of the past 365 days (300 a vote), the most helpful per week for the first five weeks after the Steam release (100 a week a vote), and a monthly fill (GTA V 30 a month a vote over 139 months, RDR2 50 over 84, so each lands near 10,000 without one game dwarfing the other). Overlaps removed by review id. Raw text only in F:/LedgerTools/steam-reviews, outside the repository. Script: tools/steam_reviews.py on wip.
+- **RDR2's Steam release is 5 Dec 2019**, a month after its PC release on Rockstar's own launcher (5 Nov 2019). The first four weekly pulls from 5 Nov found nothing; the fifth (3 to 9 Dec) found 100 a vote, kept in the sample; the five weeks were then pulled again from 5 Dec. So RDR2's weekly pulls fetched 600 a vote and its first Steam week is sampled twice.
+- **Steam's totals (English, read 20 Nov):** GTA V 544,042 positive, 105,403 negative, 649,445 in all, Very Positive, 83.8% positive; RDR2 313,312 positive, 26,966 negative, 340,278, Very Positive, 92.1% positive [ST-API]. KCD2 (12 Oct): 92.9% positive.
+- **How many.** GTA V: 10,334 different English reviews, 5,234 positive and 5,100 negative, written 13 Apr 2015 to 20 Nov 2026. RDR2: 10,154, 5,123 positive and 5,031 negative, written 5 Dec 2019 to 20 Nov 2026. KCD2 keeps its 12 Oct sample (5,701, 3,112 positive and 2,589 negative).
+- **Set aside, on two grounds.** (a) Reviews whose only clauses are about GTA Online or Red Dead Online, anti-cheat, the launcher, accounts or bans: GTA V 1,479, RDR2 967. (b) Reviews the script found no theme in that also hold an online word or one off-topic word anywhere (the company, mods, keys, support, refund and the like): GTA V 2,337 (1,845 of them naming the game somewhere), RDR2 1,430 (988). In all GTA V 3,816 of 10,334 (37%), RDR2 2,397 of 10,154 (24%). So about 60% of set-asides are reviews the script could not tag, not reviews with nothing to say about the game; another 1,673 GTA V and 1,167 RDR2 untagged reviews stay in. Reviews that mix the online side with the story game are coded on their other clauses only: GTA V 2,727, RDR2 1,792. Kept: GTA V 6,518, RDR2 7,757. Shares for GTA V and RDR2 are of the reviews kept; KCD2's are of all 5,701 (no set-aside on 12 Oct). On the same check sets the hand reader set aside 58 of 100 GTA V and 32 of 100 RDR2, the script 43 and 26.
+- **The sample is not random**, as on 12 Oct: about as many negative as positive reviews, although the real negative share is 16% (GTA V) and 8% (RDR2). Read what is said inside each side, and the order of themes. The three games' samples are built in the same five kinds of pull, with different fill sizes (KCD2's most-helpful pull got 600 positive and 192 negative, its monthly fill up to 100), so their sizes compare better than in this afternoon's version, not exactly.
+- **Median hours played at review:** GTA V positive 108, negative 155; RDR2 positive 77, negative 20 (KCD2: 127 and 42).
+- **How a count is made.** A word-list script rebuilt from the 12 Oct method, because the 12 Oct script lived only in the cloud (tools/steam_review_coder.py on wip): each review is split into sentences and then clauses (at but, however, although, though, while, whereas and semicolons); a clause takes a theme when its words match; praise or complaint comes from word lists with a flip for not, never, no; a clause naming a theme with no clear side takes the review's thumb, for the themes where that is usually right, and only in reviews with no online talk. KCD2-only themes (melee, period detail, challenge, combat) were not coded for GTA V and RDR2 and count as 0 there; the first pass found them near 0 for the two Rockstar games except combat (1.5% and 3.4%).
+- **Where this differs from PLAYERS.md (12 Oct):** (1) clauses, not only sentences; (2) the thumb rule only in reviews with no online talk, not in all; (3) a set-aside, which 12 Oct did not have, so the KCD2 and Rockstar denominators differ; (4) a monthly fill of 30 or 50, not up to 100; (5) tuning on 60 GTA V reviews only, where 12 Oct tuned on two sets across both games; (6) a reader model (Sonnet) as hand coder, not the session; (7) the KCD2 column comes from the 12 Oct script, whose check differs (53 and 65 against 61 and 58), so each mean share mixes two scripts.
+- **The check.** A reader (Sonnet) coded by hand, blind to the script, 60 GTA V reviews for tuning, then fresh sets of 100 GTA V and 100 RDR2 reviews, disjoint from the tuning set (reviews under eight words left out). The script was tuned three times on the 60 (its last save 17:30), frozen (file hash 758ebc14 recorded at the moment of scoring, and unchanged since in its logic: only its description was brought in line afterwards), and scored once on the fresh GTA V set, then once on the RDR2 set drawn and hand-read after the freeze: of every 100 tags the script gave, 61 matched the hand reading (GTA V 59, RDR2 62); of every 100 hand tags, the script found 58 (GTA V 58, RDR2 57); set-aside status agreed on 157 of 200. Rank correlation of theme order, script against hand: praise 0.83 (GTA V 0.88, RDR2 0.82), punish 0.48 pooled (GTA V -0.19 over only 10 hand complaint tags, RDR2 0.28). The 12 Oct check gave 53 and 65, order 0.84 and 0.91. So praise reads about as well as on 12 Oct; punishment reads worse, and the punish counts below the PC version are rough as a whole. Miscounts seen on the check sets:
+  - **"A thin story" (punish) is over-counted:** RDR2 script 11, hand 1; GTA V 1 and 2. Reviews that praise the story and complain of something else in the same clause are scored against the story. Its row stays in the table, marked, and is left out of the reading.
+  - **"Controls, menus, slow animations" (punish) is under-counted:** RDR2 script 7, hand 10; GTA V 0 and 1. Also under-counted in RDR2: linear (0 and 4), cutscenes (0 and 3), paid extras (0 and 3).
+  - **Over-counted besides story:** RDR2 boring (6 and 3) and price (4 and 1); GTA V missions (3 and 0) and the same loop (3 and 0).
+- **Ranking rule.** As in PLAYERS.md: themes are ranked by the mean of each game's share of its own reviews. KCD2-only themes are ranked with 0 for the Rockstar games; freedom, coded only for the Rockstar games, is not ranked (it would be joint fourth, 7.9%, under the same rule).
+- **Critics.** Unchanged from this afternoon's version: GTA V PC 8 reviews, RDR2 PC 11; Metacritic as read today: GTA V Metascore 96 from 57 critics, user score 7.9 from 9,245 ratings; RDR2 93 from 44, user 6.8 from 5,614.
 
-### The sample by page (reviews coded)
+### The sample by kind of pull (reviews can sit in several rows)
 
-| Game | Page kind | Reviews |
-|---|---|---|
-| GTA V | Metacritic PC, older layout, pages 1 and 8 (2015 to 2020) | 90 |
-| GTA V | Metacritic PC, current recent list (Aug to Nov 2026) | 34 |
-| GTA V | OpenCritic players; Metacritic GTA V Enhanced; one Steam review | 24 |
-| GTA V | Metacritic PlayStation 4 (four pages), Xbox One, Xbox 360, PlayStation 3, PlayStation 5 | 677 |
-| RDR2 | Metacritic PC, older layout, three pages (2019 to 2023) | 158 |
-| RDR2 | Metacritic PC, current recent list (Sep to Nov 2026) | 41 |
-| RDR2 | OpenCritic players, two pages; four Steam reviews | 44 |
-| RDR2 | Metacritic PlayStation 4 (five pages), Xbox One (two pages) | 588 |
+| Kind | GTA V positive | GTA V negative | RDR2 positive | RDR2 negative |
+|---|---|---|---|---|
+| Most helpful of all time | 600 | 600 | 600 | 600 |
+| 500 most recent | 500 | 500 | 500 | 500 |
+| Most helpful, past 365 days | 300 | 300 | 300 | 300 |
+| Most helpful, first five weeks on Steam (weekly) | 500 | 500 | 600 (week 1 twice) | 600 (week 1 twice) |
+| Most helpful, monthly fill | 4,170 | 4,170 | 4,200 | 4,200 |
+| Different reviews in all | 5,234 | 5,100 | 5,123 | 5,031 |
 
-Reviews by year of writing, my count. GTA V: 2013 2, 2014 147, 2015 175, 2016 29, 2017 51, 2018 43, 2019 32, 2020 93, 2021 47, 2022 142, 2023 7, 2025 3, 2026 54. RDR2: 2018 281, 2019 149, 2020 102, 2021 130, 2022 58, 2023 29, 2024 1, 2026 81.
+Reviews by year of writing, my count. GTA V: 2015 1,437, 2016 720, 2017 757, 2018 to 2023 720 each, 2024 727, 2025 720, 2026 1,653. RDR2: 2019 806, 2020 1,392, 2021 to 2023 1,200 each, 2024 1,205, 2025 1,205, 2026 1,946.
+
+The first pass of this afternoon (Metacritic and OpenCritic, about 800 reviews a game, helper-coded) is replaced in the tables; its notes, quotes and critic counts are kept below where they still hold, marked "first pass".
 
 ## The twenty things players praised
 
-Counts are reviews and their share of that game's sample. KCD2: the 12 Oct Steam script counts. GTA V and RDR2: helper coding over the reviews kept.
+Counts are reviews and their share of that game's kept reviews. KCD2: the 12 Oct Steam script counts. GTA V and RDR2: the 20 Nov Steam script counts (same method, rebuilt). 'not coded (0)': a KCD2-only theme the script did not look for.
 
-| Rank | Theme | KCD2 (Steam, 5,701) | GTA V (796 kept) | RDR2 (817 kept) | Mean share |
+| Rank | Theme | KCD2 (Steam, 5,701) | GTA V (Steam, 6,518 kept) | RDR2 (Steam, 7,757 kept) | Mean share |
 |---|---|---|---|---|---|
-| 1 | A story and characters worth caring about | 1,836 (32.2%) | 263 (33.0%) | 365 (44.7%) | 36.6% |
-| 2 | How it looks | 1,015 (17.8%) | 237 (29.8%) | 332 (40.6%) | 29.4% |
-| 3 | A living, believable world that feels lived in | 1,398 (24.5%) | 184 (23.1%) | 232 (28.4%) | 25.3% |
-| 4 | Side content that are whole stories, not errands | 781 (13.7%) | 31 (3.9%) | 39 (4.8%) | 7.5% |
-| 5 | Music and sound (and the radio) | 270 (4.7%) | 44 (5.5%) | 78 (9.5%) | 6.6% |
-| 6 | It ran well, a good PC version | 444 (7.8%) | 70 (8.8%) | 25 (3.1%) | 6.6% |
-| 7 | A fair price and plenty of game for it | 403 (7.1%) | 46 (5.8%) | 41 (5.0%) | 6.0% |
-| 8 | Skill-based melee that rewards learning it | 1,009 (17.7%) | 1 (0.1%) | 0 (0.0%) | 5.9% |
-| 9 | Voice acting and performances | 219 (3.8%) | 22 (2.8%) | 43 (5.3%) | 3.9% |
-| 10 | Period accuracy and detail | 568 (10.0%) | 0 (0.0%) | 11 (1.3%) | 3.8% |
-| 11 | Humour, satire and a mix of tones | 269 (4.7%) | 47 (5.9%) | 4 (0.5%) | 3.7% |
-| 12 | Polish: few bugs | 258 (4.5%) | 27 (3.4%) | 21 (2.6%) | 3.5% |
-| 13 | Choices and roleplay that change what happens | 403 (7.1%) | 8 (1.0%) | 15 (1.8%) | 3.3% |
-| 14 | Crafting, skills, getting better at things | 508 (8.9%) | 2 (0.3%) | 5 (0.6%) | 3.3% |
-| 15 | Driving and riding that feel good | 37 (0.6%) | 54 (6.8%) | 8 (1.0%) | 2.8% |
-| 16 | The slow burn and long cinematic scenes (liked) | 195 (3.4%) | 4 (0.5%) | 29 (3.5%) | 2.5% |
-| 17 | Gunfights that feel weighty | 22 (0.4%) | 22 (2.8%) | 24 (2.9%) | 2.0% |
-| 18 | The world reacts to you | 168 (2.9%) | 6 (0.8%) | 5 (0.6%) | 1.4% |
-| 19 | Challenge as a reward | 235 (4.1%) | 0 (0.0%) | 1 (0.1%) | 1.4% |
-| 20 | An ending that landed | 71 (1.2%) | 4 (0.5%) | 16 (2.0%) | 1.2% |
-| NEW | Freedom to play, lots to do (sandbox, heists, three leads); keyword-assigned, not ranked | not coded | 51 (6.4%) | not coded | |
-
-Just below the line: stealth that works (KCD2 195, 3.4%; GTA V 1; RDR2 0); a love story or relationships (76, 1.3%; 1; 4); boss or duel fights (47, 0.8%; 0; 0).
+| 1 | A story and characters worth caring about | 1,836 (32.2%) | 1,840 (28.2%) | 3,668 (47.3%) | 35.9% |
+| 2 | A living, believable world that feels lived in | 1,398 (24.5%) | 1,154 (17.7%) | 2,356 (30.4%) | 24.2% |
+| 3 | How it looks | 1,015 (17.8%) | 1,071 (16.4%) | 2,395 (30.9%) | 21.7% |
+| 4 | A fair price and plenty of game for it | 403 (7.1%) | 541 (8.3%) | 644 (8.3%) | 7.9% |
+| 5 | Side content that are whole stories, not errands | 781 (13.7%) | 140 (2.1%) | 316 (4.1%) | 6.6% |
+| 6 | Music and sound (and the radio) | 270 (4.7%) | 313 (4.8%) | 654 (8.4%) | 6.0% |
+| 7 | Skill-based melee that rewards learning it | 1,009 (17.7%) | not coded (0) | not coded (0) | 5.9% |
+| 8 | It ran well, a good PC version | 444 (7.8%) | 320 (4.9%) | 255 (3.3%) | 5.3% |
+| 9 | Driving and riding that feel good | 37 (0.6%) | 669 (10.3%) | 378 (4.9%) | 5.3% |
+| 10 | Crafting, skills, getting better at things | 508 (8.9%) | 47 (0.7%) | 81 (1.0%) | 3.6% |
+| 11 | Voice acting and performances | 219 (3.8%) | 124 (1.9%) | 352 (4.5%) | 3.4% |
+| 12 | Choices and roleplay that change what happens | 403 (7.1%) | 81 (1.2%) | 133 (1.7%) | 3.3% |
+| 13 | Period accuracy and detail | 568 (10.0%) | not coded (0) | not coded (0) | 3.3% |
+| 14 | Humour, satire and a mix of tones | 269 (4.7%) | 192 (2.9%) | 70 (0.9%) | 2.9% |
+| 15 | An ending that landed | 71 (1.2%) | 102 (1.6%) | 401 (5.2%) | 2.7% |
+| 16 | The world reacts to you | 168 (2.9%) | 79 (1.2%) | 167 (2.2%) | 2.1% |
+| 17 | Polish: few bugs | 258 (4.5%) | 38 (0.6%) | 81 (1.0%) | 2.1% |
+| 18 | The slow burn and long cinematic scenes (liked) | 195 (3.4%) | 26 (0.4%) | 131 (1.7%) | 1.8% |
+| 19 | Gunfights that feel weighty | 22 (0.4%) | 124 (1.9%) | 238 (3.1%) | 1.8% |
+| 20 | Challenge as a reward | 235 (4.1%) | not coded (0) | not coded (0) | 1.4% |
+| NEW | Freedom to play, lots to do (sandbox, heists, three leads); not ranked | not coded | 974 (14.9%) | 691 (8.9%) | |
 
 ### Notes on the praise, theme by theme (top ten and the new one)
+
+First pass (Metacritic and OpenCritic, this afternoon): the notes, quotes and critic counts below come from it; shares quoted inside them are that pass's, not Steam's.
 
 1. **Story and characters.** Named more than anything in all three. RDR2 players write about Arthur Morgan, his redemption, crying, the bond with the gang; GTA V players about the three leads and the heists. Critics: GTA V 3 of 8, RDR2 8 of 11. Quotes: "Arthur Morgan is an unforgettable protagonist" (an OpenCritic player, 11 Nov 2026, RDR2); "I just love Franklin, Michael and Trevor" (a Metacritic player, 16 Apr 2015, GTA V); "characters who you actually care about, a first for me in a Rockstar game" (bit-tech, 19 Nov 2019, RDR2).
 2. **How it looks.** Higher for the Rockstar games: GTA V's PC version was praised as the best looking version, RDR2's land and light. Every critic of both PC releases praises the look (8 of 8, 11 of 11). Quotes: "great radio stations and next-gen graphics" (a Metacritic player, 15 May 2015, GTA V).
@@ -101,36 +108,36 @@ Also worth naming: humour and satire is a GTA V strength (5.9%), and two GTA V c
 
 ## The twenty things players punished
 
-Same method. Read the order inside each game, not the size across games: KCD2's sample is almost half negative, the other two about one in eight.
+Same method. All three samples are now about half negative by design, so sizes compare across games, within the check's limits. Two rows are marked by the hand check; read RDR2's hand order beside the table: of 68 reviews kept, a bad PC version 10, controls and slow animations 10, bugs 6, the same loop 5, weak gunplay 4, linear 4, boring 3, missions 3, cutscenes 3, saves 3, paid extras 3, difficulty 3, a thin story 1, and survival, price and dated 1 each. Ten and ten of 68 are too few to separate the first two.
 
-| Rank | Theme | KCD2 (Steam, 5,701) | GTA V (796 kept) | RDR2 (817 kept) | Mean share |
+| Rank | Theme | KCD2 (Steam, 5,701) | GTA V (Steam, 6,518 kept) | RDR2 (Steam, 7,757 kept) | Mean share |
 |---|---|---|---|---|---|
-| 1 | Menus, controls, camera and slow animations | 318 (5.6%) | 42 (5.3%) | 192 (23.5%) | 11.5% |
-| 2 | Boring: nothing to do for minutes | 623 (10.9%) | 41 (5.2%) | 123 (15.1%) | 10.4% |
-| 3 | Combat that felt clunky or unfair | 1,182 (20.7%) | 12 (1.5%) | 28 (3.4%) | 8.5% |
-| 4 | A story that felt predictable, cliched, rushed or thin | 476 (8.3%) | 75 (9.4%) | 49 (6.0%) | 7.9% |
-| 5 | Bugs that stop progress or break the illusion | 888 (15.6%) | 14 (1.8%) | 44 (5.4%) | 7.6% |
-| 6 | Too many or too long cutscenes, a slow opening, too much talk | 612 (10.7%) | 5 (0.6%) | 87 (10.6%) | 7.3% |
-| 7 | The same loop over and over | 385 (6.8%) | 32 (4.0%) | 56 (6.9%) | 5.9% |
-| 8 | Too short, too expensive, not worth the price | 464 (8.1%) | 54 (6.8%) | 10 (1.2%) | 5.4% |
-| 9 | Stutter, crashes, heavy hardware demands, a bad port | 260 (4.6%) | 30 (3.8%) | 61 (7.5%) | 5.3% |
-| 10 | Missions that waste time, give no direction or fail you for doing it your way | 409 (7.2%) | 18 (2.3%) | 33 (4.0%) | 4.5% |
-| 11 | Survival chores as friction | 217 (3.8%) | 1 (0.1%) | 64 (7.8%) | 3.9% |
-| 12 | A world that is hollow, or whose rules change on a whim | 227 (4.0%) | 9 (1.1%) | 37 (4.5%) | 3.2% |
-| 13 | Difficulty that is wrong | 338 (5.9%) | 13 (1.6%) | 8 (1.0%) | 2.8% |
-| 14 | Linear, an empty map, an interactive movie | 115 (2.0%) | 18 (2.3%) | 34 (4.2%) | 2.8% |
-| 15 | Gunplay that feels weak, or auto-aim | 28 (0.5%) | 13 (1.6%) | 49 (6.0%) | 2.7% |
-| 16 | A save system that costs time | 327 (5.7%) | 1 (0.1%) | 13 (1.6%) | 2.5% |
-| 17 | Systems nobody explains | 286 (5.0%) | 1 (0.1%) | 10 (1.2%) | 2.1% |
-| 18 | Paid extras, microtransactions, no story add-ons | 123 (2.2%) | 26 (3.3%) | 3 (0.4%) | 1.9% |
-| 19 | Looks poor or dated | 89 (1.6%) | 20 (2.5%) | 13 (1.6%) | 1.9% |
-| 20 | Stealth that is thin or stupid | 197 (3.5%) | 2 (0.3%) | 1 (0.1%) | 1.3% |
+| 1 | Stutter, crashes, heavy hardware demands, a bad port | 260 (4.6%) | 736 (11.3%) | 1,139 (14.7%) | 10.2% |
+| 2 | Bugs that stop progress or break the illusion | 888 (15.6%) | 347 (5.3%) | 647 (8.3%) | 9.7% |
+| 3 | A story that felt predictable, cliched, rushed or thin (over-counted: RDR2 check script 11, hand 1) | 476 (8.3%) | 455 (7.0%) | 928 (12.0%) | 9.1% |
+| 4 | Boring: nothing to do for minutes | 623 (10.9%) | 315 (4.8%) | 529 (6.8%) | 7.5% |
+| 5 | Missions that waste time, give no direction or fail you for doing it your way | 409 (7.2%) | 436 (6.7%) | 644 (8.3%) | 7.4% |
+| 6 | Combat that felt clunky or unfair | 1,182 (20.7%) | not coded (0) | not coded (0) | 6.9% |
+| 7 | The same loop over and over | 385 (6.8%) | 395 (6.1%) | 398 (5.1%) | 6.0% |
+| 8 | Menus, controls, camera and slow animations (under-counted: RDR2 check script 7, hand 10) | 318 (5.6%) | 167 (2.6%) | 698 (9.0%) | 5.7% |
+| 9 | Too short, too expensive, not worth the price | 464 (8.1%) | 272 (4.2%) | 241 (3.1%) | 5.1% |
+| 10 | Too many or too long cutscenes, a slow opening, too much talk | 612 (10.7%) | 13 (0.2%) | 63 (0.8%) | 3.9% |
+| 11 | Difficulty that is wrong | 338 (5.9%) | 126 (1.9%) | 292 (3.8%) | 3.9% |
+| 12 | A save system that costs time | 327 (5.7%) | 21 (0.3%) | 111 (1.4%) | 2.5% |
+| 13 | Systems nobody explains | 286 (5.0%) | 12 (0.2%) | 25 (0.3%) | 1.8% |
+| 14 | A world that is hollow, or whose rules change on a whim | 227 (4.0%) | 18 (0.3%) | 56 (0.7%) | 1.7% |
+| 15 | Survival chores as friction | 217 (3.8%) | 16 (0.2%) | 47 (0.6%) | 1.6% |
+| 16 | Paid extras, microtransactions, no story add-ons | 123 (2.2%) | 80 (1.2%) | 43 (0.6%) | 1.3% |
+| 17 | Stealth that is thin or stupid | 197 (3.5%) | 7 (0.1%) | 7 (0.1%) | 1.2% |
+| 18 | Linear, an empty map, an interactive movie | 115 (2.0%) | 0 (0.0%) | 24 (0.3%) | 0.8% |
+| 19 | Gunplay that feels weak, or auto-aim | 28 (0.5%) | 33 (0.5%) | 100 (1.3%) | 0.8% |
+| 20 | Looks poor or dated | 89 (1.6%) | 11 (0.2%) | 30 (0.4%) | 0.7% |
 
-Just below the line: racing missions and vehicle handling (KCD2 53, 0.9%; GTA V 20, 2.5%; RDR2 1); stiff faces and animation (134, 2.4%; 5; 4); slow or missing fixes (89, 1.6%; 4; 11); choices that change nothing (122, 2.1%; 0; 10); culture-war complaints (94, 1.6%; 6; 3; quoted nowhere); an ending that felt forced or sad (95, 1.7%; 5; 3); AI use by the studio (81, 1.4%; 0; 0); set pieces that repeat (28, 0.5%; 0; 2).
-
-What unhappy players say, read inside each game (reviews scored 0 to 4, my count): GTA V, 98 reviews: too short or not worth the price 20 (mostly paying again for the 2014 console re-release), paid extras and no story add-ons 17, boring 14, thin story 12, crashes 10. RDR2, 99 reviews: boring 34, controls and slow animations 33, crashes and a bad port 32, long cutscenes and slow opening 12, bugs 10, linear 10.
+First pass, kept for its reading of the unhappy reviews: What unhappy players say, read inside each game (reviews scored 0 to 4, my count): GTA V, 98 reviews: too short or not worth the price 20 (mostly paying again for the 2014 console re-release), paid extras and no story add-ons 17, boring 14, thin story 12, crashes 10. RDR2, 99 reviews: boring 34, controls and slow animations 33, crashes and a bad port 32, long cutscenes and slow opening 12, bugs 10, linear 10.
 
 ### Notes on the punishments, theme by theme (top ten and survival chores)
+
+First pass: notes, quotes and critic counts as this afternoon; their order follows the first pass, not the Steam table.
 
 1. **Controls, menus, slow animations.** RDR2's signature complaint: forced slow walking in camp and in missions, a looting or skinning animation for every action, a horse that is hard to steer, a control scheme with many buttons. Critics agree: 9 of 11 RDR2 PC reviews fault it, and 4 of 8 GTA V. Quotes: "Every action felt painstakingly slow" (a Metacritic player, 19 Nov 2026, RDR2); "very clunky controls, movement and menus" (an OpenCritic player, 22 Oct 2026, GTA V); "Arthur is both the greatest sharpshooter and the worst horse rider" (Windows Central, RDR2 PC).
 2. **Boring.** In RDR2, long rides and slow stretches; in GTA V, a sandbox that runs out. Quotes: "I stopped playing because it was sooo boring" (an OpenCritic player, 23 May 2026, RDR2); "open world full of nothing" (a Metacritic player, 6 Jun 2016, GTA V). No critic of either PC release calls either game boring.
@@ -148,7 +155,7 @@ Also: RDR2 reviewers punish law that knows too much (the law identifying Arthur 
 
 ## Where critics and players differ
 
-From my reading of the critics' coding and the players' counts.
+From my reading of the critics' coding and the players' counts. First pass: the player figures in this section are this afternoon's Metacritic and OpenCritic ones; on Steam boredom is fourth, not second, and the PC version is first (see the tables).
 
 - **Critics praise the world and the look in almost every review; players put the story first.** GTA V critics: world 8 of 8, look 8 of 8, story 3 of 8. RDR2 critics: look 11 of 11, world 9 of 11, story 8 of 11. Players: story first in both games.
 - **Critics barely mention boredom; it is the second complaint of players.** No critic of either PC release calls the game boring or slow to the point of fault, while RDR2's unhappy players name boredom more than anything (34 of 99).
@@ -163,46 +170,47 @@ Read against canon, RULINGS.md (read today) and the twenty basics. The release i
 
 ### The story
 
-1. **Characters worth caring about come first, and one lead beats three.** Story is the top praise in all three games and highest in RDR2, where the praise is for one man and his gang. GTA V's three leads earn praise for variety but most of its story complaints are that nobody can be attached to them. LEDGER has one lead, Tom, and a firm of regulars: the lesson is to spend the writing on Tom and the few people around him (Sheila, Ron, the crew) until a player would miss them.
+1. **Characters worth caring about come first, and one lead beats three.** Story is the top praise in all three games on Steam and highest in RDR2, where the praise is for one man and his gang. GTA V's three leads earn praise for variety but most of its story complaints are that nobody can be attached to them (first pass; GTA V's Steam hand check holds only 2 story complaints). LEDGER has one lead, Tom, and a firm of regulars: the lesson is to spend the writing on Tom and the few people around him (Sheila, Ron, the crew) until a player would miss them.
 2. **The scene a player retells.** In RDR2 it is Arthur's turn and the ending ("ending made me cry", a Metacritic player, 2 Oct 2026); in GTA V it is a heist, planned and done the player's way. LEDGER's first thirty minutes still need one scene a friend would retell (R6, P4, as on 12 Oct), and the rise needs at least one planned job that can be done more than one way.
-3. **Predictable or thin.** GTA V's story is punished for tone and unlikeable people more than for its plot. RDR2's most loved arc is a redemption, which LEDGER rules out (D58: no redemption); LEDGER's endings have to land through cost instead, which RULINGS 28 Sep already ties to what Tom saw and heard. Players punish an ending they could not see coming from their own play (12 Oct); none of the three games is punished much for its ending.
-4. **Cutscenes and the slow opening.** RDR2's slow first chapter and long scenes draw one review in ten; the few-short-skippable rule (23 Sep) and a reason to go out within two minutes (the friends' plan) are right and should stay hard.
+3. **Predictable or thin.** GTA V's story is punished for tone and unlikeable people more than for its plot (first pass; the Steam script over-counts this theme and cannot say). RDR2's most loved arc is a redemption, which LEDGER rules out (D58: no redemption); LEDGER's endings have to land through cost instead, which RULINGS 28 Sep already ties to what Tom saw and heard. Players punish an ending they could not see coming from their own play (12 Oct); none of the three games is punished much for its ending (first pass; no ending complaint is coded on Steam).
+4. **Cutscenes and the slow opening.** RDR2's slow first chapter and long scenes drew one review in ten in the first pass; on Steam the script under-reads this theme (RDR2 check: script 0, hand 3 of 68, about 4%), so its size is uncertain, not gone. The few-short-skippable rule (23 Sep) and a reason to go out within two minutes (the friends' plan) are right and should stay hard.
 
 ### The living world
 
-5. **A living world is third in every game, and steady.** It needs to read as people with their own day, which is what the Meridian Test and D25 already ask. As on 12 Oct, players rarely name the town reacting to them, critics do, and players punish law that knows too much (RDR2's law that names Arthur by magic). The claim check and the rule that a witness is only as sure as what they saw (30 Sep) are the answer; keep them over adding more reaction types.
+5. **A living world is second by mean share on Steam (24%), and in the top three of every game.** It needs to read as people with their own day, which is what the Meridian Test and D25 already ask. As on 12 Oct, players rarely name the town reacting to them, critics do, and players punish law that knows too much (RDR2's law that names Arthur by magic; first pass 4.5%, but the Steam count does not show it: 0.7% by the script, 0 in the hand check). The claim check and the rule that a witness is only as sure as what they saw (30 Sep) are the answer; keep them over adding more reaction types.
 6. **Missions that fail you for doing it your way are punished.** RDR2 is the warning. LEDGER's jobs (no waypoints) should accept any way of getting the result the job names, and fail only on what the town would notice.
-7. **Freedom to play is GTA V's own praise.** LEDGER has no jump, no sandbox chaos as such, and a small map; its version is the crime layer's verbs (D56) giving the player more than one way through a job, and the town remembering.
+7. **Freedom to play is GTA V's own praise** (Steam: 15% of GTA V's kept reviews, 9% of RDR2's; never coded for KCD2). LEDGER has no jump, no sandbox chaos as such, and a small map; its version is the crime layer's verbs (D56) giving the player more than one way through a job, and the town remembering.
 
-### Feel in the hands (new, and the biggest change)
+### Feel in the hands (new)
 
-8. **Controls and slow animations rank first by mean share, carried by RDR2 alone** (KCD2 5.6%, GTA V 5.3%, RDR2 23.5%). About a quarter of RDR2's reviews complain of forced slow walking, an animation for every looting or skinning, and heavy controls, and 9 of its 11 critics say so. LEDGER is mostly on foot, in a small town, with object interaction as a floor (23 Sep). Nothing in RULINGS sets how fast Tom answers the keys or how long an everyday action may take. Recommended: put two numbers into the feel-targets sheet (RULINGS 17 Nov, measured from footage): the time from a key press to Tom moving, and the longest a common action (a door, a pocket, a pickup, a till) may hold control, with RDR2 as the slow end to stay inside, not past. Never force a slow walk.
-9. **Survival chores.** RDR2's eating, cleaning and horse care draw 7.8%. LEDGER has no meters (no stats, D11, D33, D34); keep it that way, and keep coat, pockets and storage (23 Sep) quick.
+8. **Controls and slow animations: eighth by the Steam script's mean share, joint first in RDR2's hand check.** Script: KCD2 5.6%, GTA V 2.6%, RDR2 9.0%; the script under-reads it (RDR2 check script 7, hand 10 of 68 kept, 15%), and the first pass read 23.5% on Metacritic. So it is not the largest complaint across the three games, but in RDR2, the slow, on-foot game nearest LEDGER's pace, it is close behind the PC version: equal in the hand check (10 and 10 of 68, too few to separate) and second in the script's RDR2 count once the miscounted story row is set aside; 9 of 11 RDR2 critics fault it (first pass). In the first pass about a quarter of RDR2's reviews complained of forced slow walking, an animation for every looting or skinning, and heavy controls, and 9 of its 11 critics say so. LEDGER is mostly on foot, in a small town, with object interaction as a floor (23 Sep). Nothing in RULINGS sets how fast Tom answers the keys or how long an everyday action may take. Recommended: put two numbers into the feel-targets sheet (RULINGS 17 Nov, measured from footage): the time from a key press to Tom moving, and the longest a common action (a door, a pocket, a pickup, a till) may hold control, with RDR2 as the slow end to stay inside, not past. Never force a slow walk.
+9. **Survival chores.** RDR2's eating, cleaning and horse care drew 7.8% in the first pass; the Steam script finds 0.6% (hand check 1 of 68), so this is a smaller complaint than it looked. LEDGER has no meters (no stats, D11, D33, D34); keep it that way, and keep coat, pockets and storage (23 Sep) quick.
 10. **Travel.** RDR2's long rides are a large part of its boredom and repetition complaints. LEDGER's town is small, and by RULINGS 23 Sep others drive the firm's cars; whatever moves Tom across the town later (the arcade car once the map grows, 17 Nov), the way between two things worth doing must carry talk, a story or a choice, never dead minutes. PLAN's phase 3 exit (at most five empty minutes in thirty) covers it; count travel time in it.
 
 ### Looks
 
-11. **Looks matter more in these games than in KCD2.** Every critic of both PC releases praises the look, and players name it second. Nothing changes in LEDGER's bar (the Hook sheet, 2026-grade only, judged through the game's own camera); the data only says it is worth what it costs.
+11. **Looks matter more in RDR2 than in the other two.** Every critic of both PC releases praises the look; on Steam players name it third (RDR2 31%, KCD2 18%, GTA V 16%). Nothing changes in LEDGER's bar (the Hook sheet, 2026-grade only, judged through the game's own camera); the data only says it is worth what it costs.
 
 ### Length and price
 
-12. **Length and price are rarely the story in these games.** Plenty of game for the money is praised by 5 to 7% in all three; the GTA V complaints about price are about buying the same game again and about paid extras in Online, and RDR2 is almost never called short or dear. LEDGER's 15 to 20 hours (28 Oct) is shorter than all three; price is still not set. The 12 Oct candidate risk (price and length on the Monday risk list) stands; nothing here makes it more urgent.
+12. **Length and price are rarely the story in these games.** Plenty of game for the money is praised by 7 to 8% in all three on Steam (fourth by mean share); complaints of too short or too dear run 3 to 8%; the GTA V complaints about price are about buying the same game again and about paid extras in Online, and RDR2 is almost never called short or dear. LEDGER's 15 to 20 hours (28 Oct) is shorter than all three; price is still not set. The 12 Oct candidate risk (price and length on the Monday risk list) stands; nothing here makes it more urgent.
 13. **Updates after release.** GTA V players still punish the end of story add-ons. LEDGER plans more districts in updates after release (28 Oct); if they are announced, they must come, or be cut before anyone is told.
 
-### The PC version
+### The PC version (now the biggest change)
 
-14. **RDR2's launch shows what a bad port costs.** 23% of its reviews on PC-only pages punish crashes and stutter, two thirds of them in the first two months, while GTA V's careful port was praised in its own right (25%). The 60 fps line (23 Sep) and done meaning the packaged release build walked by the AI tester are the right defences; add a first-week crash and settings-reset check on a second PC before any public release.
+14. **A bad PC version is the complaint named most often in the Rockstar reviews read.** First within GTA V (11.3%) and RDR2 (14.7%) under any count; across the three games level with bugs (10.2% against 9.7% as counted here, bugs ahead if the Rockstar games are counted over all their reviews as KCD2 is). In RDR2's hand check 10 of 68, equal first, where the script reads it about right. It is worst at launch: of RDR2's kept reviews from its first two months on Steam (5 Dec 2019 to January 2020, 898 reviews), 42.5% punish crashes, stutter or demands, against 11.0% later; GTA V's first two months (to mid-June 2015, 717) 27.1%, against 9.3% later. The first pass's "GTA V's port drew almost no complaint" does not hold on Steam: both launches were punished, RDR2's harder; GTA V's launch was also praised more than RDR2's: 16.3% of its first-two-month reviews praise the PC version, against 11.2% for RDR2's (and 3.5% for GTA V later). (Launch months are over-sampled by the weekly pulls, so read these as inside-the-window shares.) The 60 fps line (23 Sep) and done meaning the packaged release build walked by the AI tester are the right defences; add a first-week crash and settings-reset check on a second PC before any public release.
 
 ### Things LEDGER has no answer for yet
 
-- **How fast Tom feels** (point 8): no target exists yet. This is the main new item.
-- **Music.** Music and sound is fifth in praise, and GTA V's radio is part of its identity. LEDGER has CC0 sound only (D26) and music deferred (PLAN, P18); a 1990 town with radios in its cab office, shops and cars will be judged on it. No ruling yet on what music plays.
+- **A first-week check of the PC version** (point 14): with bugs, the complaint named most often across the three games on Steam, and first in both Rockstar games; no check beyond the 60 fps line and the tester's walk exists yet.
+- **How fast Tom feels** (point 8): no target exists yet.
+- **Music.** Music and sound is sixth in praise on Steam, and GTA V's radio is part of its identity. LEDGER has CC0 sound only (D26) and music deferred (PLAN, P18); a 1990 town with radios in its cab office, shops and cars will be judged on it. No ruling yet on what music plays.
 - **Dead travel time** (point 10): no rule yet beyond PLAN's empty-minutes count.
 - **Price**: still unset (as on 12 Oct).
 
 ## Not reached
 
-- Steam's review interface and store pages: refused by this session's network (403, host not allowed); the store pages fetched through the web tool showed only an age gate. This is the reason the method changed.
+- First pass only: Steam's old review address, refused by the cloud's network (403); it was also retired by Valve on 22 Oct 2026 and redirects to the store front from any network. The 20 Nov evening update reached Valve's replacement interface from the production PC; nothing in the Steam pulls was refused.
 - Metacritic's current pages: every filter (negative, neutral, by score, page number) was ignored and the same recent list came back.
 - GameFAQs player reviews of RDR2 on PC: the site refused the fetch.
 - Metacritic's older KCD2 PC player page: no reviews in the text returned.
@@ -211,7 +219,10 @@ Read against canon, RULINGS.md (read today) and the twenty basics. The release i
 
 ## Unverified
 
-- Every theme count is a helper's coding, with the accuracy given above; none is a poll of players.
+- Every Steam theme count is the script's, with the accuracy given above (61 and 58 of 100 against the hand reading); none is a poll of players. The praise order is solid; the punish order is rough as a whole (RDR2 0.28, GTA V none to speak of, 0.48 pooled); two rows are marked as miscounted and four more over-counted on the check sets.
+- The hand reader is one model (Sonnet), not a person; the 12 Oct check was read by the session itself. On the same check sets the hand reader set aside more reviews than the script (58 against 43 of 100 GTA V, 32 against 26 RDR2).
+- Steam's review-bomb filter was left at its default (off-topic reviews left out); how many it removed is not reported by Steam.
+- The first-pass notes below (helper coding of Metacritic and OpenCritic):
 - The console pages were coded by the fetch tool over the whole page; two helpers reported loose coding on some lines of two RDR2 pages (PlayStation 4 page 45, Xbox One first page) and a few fields that came back out of place. Codes were read from wherever they sat in a line.
 - The KCD2 shares come from a word-list script over Steam reviews; the GTA V and RDR2 shares from reading. The calibration (40 reviews) hints that the script's shares run higher; it is too small to correct by.
 - Metacritic does not say how its older page order is chosen; the pages are whatever search returned.
@@ -221,6 +232,10 @@ Read against canon, RULINGS.md (read today) and the twenty basics. The release i
 ## Sources
 
 All read 20 November 2026 (session clock, Swiss time) unless a page's own date is given. Kinds: aggregate (Metacritic, OpenCritic), official (Steam), press (critic), own count.
+
+Steam (official; the reviews are their writers'; read 20 Nov 2026, 16:55 to 17:55 from the production PC):
+
+- [ST-API] Valve, IUserReviewsService documentation (read in full): https://partner.steamgames.com/doc/webapi/IUserReviewsService ; the interface itself: https://api.steampowered.com/IUserReviewsService/GetAppReviews/v1/ with appid 271590 (GTA V) and 1174180 (RDR2). Raw pulls in F:/LedgerTools/steam-reviews (outside the repository); scripts tools/steam_reviews.py, tools/steam_review_coder.py, tools/steam_review_check.py, tools/steam_review_tables.py on wip.
 
 Players (aggregate pages; the reviews are their writers'):
 
