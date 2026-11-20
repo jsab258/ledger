@@ -200,6 +200,7 @@ function damageHotspot(out) {
 function casingHotspot(out) {
   const t = G.tom,
     x = X('crime');
+  if (t.space !== 'street') return;
   for (const id in T.sites) {
     const s = T.sites[id],
       d = hyp(t.inCar ? G.car.x : t.x, t.inCar ? G.car.z : t.z, s.door[0], s.door[1]);
@@ -268,9 +269,10 @@ async function drawer() {
 function holdupHotspot(out) {
   const t = G.tom,
     x = X('crime'),
-    shop = RULES.game.shops.shops[t.space] ? t.space : null;
-  if (!shop || !t.armed || !RULES.game.rise.holdupTargets.includes(shop)) return;
-  const keeper = G.named.concat(G.crowd).find((P) => P.space === t.space && (P.keeper || P.id === PLACES[shop].owner));
+    shop = RULES.game.rise.holdupTargets.includes(t.space) && PLACES[t.space] ? t.space : null;
+  if (!shop || !t.armed) return;
+  const owner = G.people[PLACES[shop].owner];
+  const keeper = owner && owner.space === t.space && !owner.gone ? owner : G.named.concat(G.crowd).find((P) => P.space === t.space && P.keeper);
   const gun = has('gun');
   const may = RISE.fns.holdupMay({ rung: G.x.rise ? G.x.rise.rung : 1, weaponOut: true, gun, gunThrough: gun ? G.x.dial && G.x.dial.gunThrough : null, target: shop, keeper: keeper ? { age: keeper.def.age || 40, priest: keeper.id === 'walsh' } : null, heldUpBefore: x.heldUp, thisWeek: x.holdups.filter((h) => Math.floor(h.t / 10080) === Math.floor(G.t / 10080)).length, streetOnEdge: !!(G.x.law && G.x.law.edge) });
   if (!may.may || !keeper) return;

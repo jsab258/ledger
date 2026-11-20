@@ -126,7 +126,7 @@ export function sendNow(verb, through, target, toldTwice) {
   else if (verb === 'frame someone' && P) x.framed = { who: target, through, t: Math.round(G.t) };
   else if (verb === 'point a plan at a person' && P) x.planned = { who: target, through };
   const Ev = seed('sent', [through].concat(P ? [target] : []).filter((id) => G.people[id]), { through: nameOf(through), verb, name: P ? P.def.name : target || '' });
-  x.sent.push({ verb, through, target: target || null, chain: r.chain, e: Ev.id, t: Math.round(G.t) });
+  x.sent.push({ verb, through, target: target || null, chain: [{ who: 'tom', how: 'gave the order' }, { who: through, how: 'did it' }].concat(target ? [{ who: target, how: 'it was done to' }] : []), e: Ev.id, t: Math.round(G.t) });
   write(r.line[0].toUpperCase() + r.line.slice(1) + ' He knows, now.', { who: G.people[through] ? through : undefined, how: 'Gave the order', ev: Ev.id });
   emit('crew.sent', { verb, through, target });
   return r;

@@ -98,6 +98,7 @@ register({
     inWords,
     washRoom,
     weekCosts: () => M.weekCosts(X('econ').cars, X('econ').drivers),
+    x: () => X('econ'),
     fareShare,
   },
 });

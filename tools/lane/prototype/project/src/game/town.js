@@ -147,7 +147,8 @@ function acted(E) {
   const k = KINDS[E.kind];
   if (!k.damage) return;
   const x = X();
-  const wit = (E.wit || []).map((id) => ({ id, rung: rungOf(G.people[id].mind.by[E.id] || { who: 'man' }) }));
+  // a passer-by of the crowd is nobody of the cast: the town is told only of people it can name (they are dropped by the bridge too)
+  const wit = (E.wit || []).filter((id) => G.people[id] && !G.people[id].anon).map((id) => ({ id, rung: rungOf(G.people[id].mind.by[E.id] || { who: 'man' }) }));
   const what = { minute: G.t, area: areaNow(E.x, E.z, 'street'), thing: E.thing || 'a window', said: (E.thing || 'a window') + ' was damaged', witnesses: wit, fact: factOf(E), words: wordsOf(E) };
   run((town) => {
     if (town.deedHeld()) {
