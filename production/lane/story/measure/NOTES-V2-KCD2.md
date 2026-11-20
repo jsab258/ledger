@@ -1,0 +1,6 @@
+# Summariser's notes, format version 2, 20 November 2026
+
+Notes:
+1. Word count 2,195 by wc -w, headings included, inside 1,900 to 2,300. No files were written, apart from a scratch copy in the scratchpad folder.
+2. Gaps against Version 2. I found no source that tells a funny scene or a grave scene as a scene. The only sourced comic instances are the maypole and laundry tasks and the tavern brawl and stocks (the brawl is not labelled funny by any source). The graves are the massacre order, the broker's capture and the parents' vision. The summary does not label any of them. The opening scene players retell is not named by any source, so the heading's second half is unfilled.
+3. Single-source or conflicting points: the siege-first opening (Stevivor only; Windows Central says no flash-forward); how the ambush happens (Wikipedia has a night attack on the camp, Windows Central a pond); the victory screen from a later update (kcd2.org only); the hidden return-to-first-love variant (Wikipedia only); the friend as a romance option (Sportskeeda only). "The friend talks about his coming wedding" and the persuasion or coercion options come from the Sportskeeda Judgment Day walkthrough. The lead can also "drop it". The usurper is called the rightful king's half-brother in one source (Stevivor).

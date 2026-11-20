@@ -303,3 +303,27 @@ What did not move. Structure and pace never passed 7 from any reader in fourteen
 The honest reading: on paper, with hard readers, this story sits at 8, one point above phase 1, with a centre that is now the thing readers single out (Ron and the lessons, the eleven miles on a dial, the handbrake left alone, Sheila's own line). The last point is not on paper. The faults that remain (pace, how much is said to a silent driver, whether a turn is seen coming) are faults of play, and the cheapest next test is to build the first lesson, the count and the eleven miles in the prototype and judge those.
 
 Why it stopped here and not at the order's own stops (exceptional, Sunday 18:00, or 80% of the week): this one session has written seven bibles and read twenty-four reviews and is near the limit of what it can hold; the scores have sat at 7 to 8 for four rounds whatever was changed; and the weekly reading was 58% at 17:51 with the one-shot still building. A later run can go on from this table. The version to build from is P2 v5 (8, 8, 7 and the one yes), with v6's shorter kitchen scene; v4 scored 8, 8, 8 and differs little.
+
+# Phase 3: the measure (started 20 November 2026, 20:32)
+
+His words at 20:00: "what are we even measuring against?" The readers of phases 1 and 2 scored against BAR.md (KCD2's review data only) on an unanchored 1 to 10. His pick at 20:07: build the proper measure, then write against it; the story is not approved because it was not measured properly. One Fable session (claude-fable-5-2) designs the ruler and writes; Opus helpers read and summarise; Sonnet helpers read the web. Everything is in measure/.
+
+How a later run continues: read this section to its last line, then measure/MEASURE.md, measure/CALIBRATION.md and the newest REVIEW-M files. The reviews of helpers are saved from their replies by the session (helpers cannot write files here).
+
+## Step 3: like for like (done 20 November)
+
+measure/FORMAT.md is the one format (eight headings, about 2,100 words, names replaced by roles, no titles, instances and not claims). Four summaries: SUMMARY-KCD2.md, SUMMARY-RDR2.md and SUMMARY-GTAV.md by Sonnet helpers from public written sources (their lists in SOURCES-*.md and NOTES-V2-*.md), and SUMMARY-PASSENGER-v5k6.md by a fresh Opus helper from bible P2 v5 with v6's kitchen scene (the source is PASSENGER-SOURCE-v5k6.md). Labels shown to readers are in LABELS.md.
+
+## Step 4, first pass: ruler version 1 and a pilot calibration (20 November)
+
+Ruler version 1 (kept as measure/cal1/MEASURE.md) was built from the three measured games, since the eight-game file had not landed. Three fresh Opus readers scored the four version 1 summaries (measure/cal1/).
+
+| Reader | KCD2 | RDR2 | GTA V | The Passenger |
+|---|---|---|---|---|
+| Critic: checklist (of 74), overall | 45, 7 | 21, 5 | 7, 3 | 64, 8 |
+| Player | 61, 8 | 29, 6 | 13, 4 | 64, 7 |
+| Editor | 36, 7 | 21, 6 | 16, 4 | 64, 9 |
+
+This pilot is not the measure. The ruler disagreed with the reviews: players praise RDR2's story most of the three (47% of reviews, against 32% and 28%), and the ruler put it well below KCD2. The causes found, all faults of the method and not of the stories: (1) the summaries' first section gave away the turn and the ending, so "predictable" was failed for the format's own doing; (2) the KCD2 page told side stories and comic scenes and the two Rockstar pages did not, because one helper had been asked for them and two had not; (3) the test for an ending counted how it is computed, where players praise how it lands; (4) "told, not found" was our own readers' complaint and no pattern in the reviews; (5) The Passenger's page came from a design document, which states that choices matter, where the games' pages came from plot summaries, which do not. The format is now version 2 (no give-aways up top, two side stories told, comic and grave scenes concretely, instances and not claims) and all four summaries were redone to it.
+
+Next: ruler version 2, with these faults mended and checked against the eight-game patterns file when it lands (or built from three games at 04:00 Saturday if it has not), then the calibration proper with three new readers.
