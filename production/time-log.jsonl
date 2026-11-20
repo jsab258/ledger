@@ -931,3 +931,15 @@
 {"event": "start", "at": "2026-11-19T11:51:24", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "227a319d-a40e-481c-9607-e95cf63ea81f"}
 {"event": "start", "at": "2026-11-19T12:06:25", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "f099cf0f-9b31-4d04-b938-aafb4efe681c"}
 {"event": "start", "at": "2026-11-19T12:21:25", "task": "n16-1 session startup (auto)", "item": "n16-1", "phase": "2", "kind": "production", "auto": "session-startup", "session": "8c1c9880-ef23-423a-963a-fcf8c60f8329"}
+{"event": "start", "at": "2026-11-20T04:43:00", "task": "n16-2 Ron's held trousers: seated film packaged, review", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T04:52:00", "note": "FAIL: right ankle skin in the hem-boot gap"}
+{"event": "start", "at": "2026-11-20T04:31:00", "task": "night walk fix: game target build and push", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T04:40:00", "note": ""}
+{"event": "start", "at": "2026-11-20T04:31:00", "task": "n16-1 Kiln fins lane try 1 (helper)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T05:32:00", "note": "0/16, fins halved, floor = collision thickness"}
+{"event": "start", "at": "2026-11-20T05:37:00", "task": "n16-1 Kiln fins lane try 2 (helper)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T06:20:00", "note": "FAIL 0/16, no within-piece contact"}
+{"event": "start", "at": "2026-11-20T06:20:00", "task": "n16-1 Kiln fins research, synthesis, diagnosis (helpers)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T06:58:00", "note": ""}
+{"event": "start", "at": "2026-11-20T07:51:00", "task": "advisor 263-264: hold-ups ruling, licence item, waiting list, row, progress page", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-20T08:00:00", "note": ""}

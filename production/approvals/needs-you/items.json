@@ -1558,6 +1558,46 @@
    ],
    "state": "done",
    "closed": "2026-11-19 16:55, He pressed his Fable reset before 15:29 on 19 Nov (week 22%, Fable 0%; advisor 248)"
+  },
+  {
+   "id": "licence-rule-2026-11-20",
+   "added": "2026-11-20 07:57",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The builder tried this edit on 19 Nov at 18:12; the safety check refuses changes to the project rules in a run you did not start, so only a session you start can make it.",
+   "title": "Paste one line into the builder's session so licences stop being your question",
+   "text": "Your standing rule that licences are never your question (advisor 259) is not yet written into the project rules, so licence questions can still reach you.",
+   "why": [
+    "The safety check refuses this edit in a run you did not start; it needs one message from you at the PC.",
+    "Four licence items wait to be closed by that same session once the rule is in."
+   ],
+   "steps": [
+    "Open the Claude app on the PC",
+    "Open the builder's session (LEDGER)",
+    "Paste exactly: Apply advisor 259 now: my standing rule that licences are never my question goes into CLAUDE.md, RULINGS and the page check, as written there.",
+    "When it reports it done, tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "closing the four open licence questions and keeping licence asks off your page",
+   "recommendation": "Do it next time you are at the PC: about one minute.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open",
+   "closed": null
   }
  ]
 }

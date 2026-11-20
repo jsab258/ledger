@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Thursday 19 November, 16:55",
+ "kicker": "LEDGER · Needs you · 2 open · updated Friday 20 November, 7:54",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -31,6 +31,43 @@
    "tried": "The bridge's starter (13:43) found one copy, as wanted, but a small box of its own sits over the main window, so it stops by design; a scheduled run has no computer use, and Claude clicks nothing in a box it cannot read.",
    "recommendation": "Do it today when you are at the PC: about one minute.",
    "added": "2026-11-19 13:45",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ]
+  },
+  {
+   "kind": "need",
+   "key": "licence-rule-2026-11-20",
+   "name": "ACTION: Paste one line into the builder's session so licences stop being your question",
+   "why": [
+    "The safety check refuses this edit in a run you did not start; it needs one message from you at the PC.",
+    "Four licence items wait to be closed by that same session once the rule is in."
+   ],
+   "steps": [
+    "Open the Claude app on the PC",
+    "Open the builder's session (LEDGER)",
+    "Paste exactly: Apply advisor 259 now: my standing rule that licences are never my question goes into CLAUDE.md, RULINGS and the page check, as written there.",
+    "When it reports it done, tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "his-setting",
+   "tried": "The builder tried this edit on 19 Nov at 18:12; the safety check refuses changes to the project rules in a run you did not start, so only a session you start can make it.",
+   "recommendation": "Do it next time you are at the PC: about one minute.",
+   "added": "2026-11-20 07:57",
    "pictures": [],
    "detail": [],
    "options": [
