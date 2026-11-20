@@ -1,6 +1,6 @@
 # Design proof log
 
-## Run 1, 20 November 2026, 21:23 to about 22:05 (Opus 5.5, configured claude-opus-5-5)
+## Run 1, 20 November 2026, 21:23 to 21:55 (Opus 5.5, configured claude-opus-5-5)
 
 Done:
 - Step 0: start row 2026-11-20-2123-design. Budget 66% at 21:20 (newest main row), stop line 95%.

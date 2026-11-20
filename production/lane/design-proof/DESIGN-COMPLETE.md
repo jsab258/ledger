@@ -7,7 +7,7 @@ The design counts as complete, and the next one-shot prompt may be written from 
 3. Two red teams in a row, each of two fresh helpers given only the game description with ten parts silently removed, find no material gap that is not in the map.
 4. In both of those rounds each helper catches at least 9 of the 10 planted gaps.
 
-## Where it stands, 20 November 2026, 22:00
+## Where it stands, 20 November 2026, 21:55
 
 | Condition | State |
 |---|---|
