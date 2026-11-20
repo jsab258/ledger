@@ -13,7 +13,7 @@ import { register, emit, on } from './core.js';
 import { G } from '../state.js';
 import { clamp } from '../util.js';
 import { KINDS } from '../kinds.js';
-import { remember, logLine } from '../events.js';
+import { remember } from '../events.js';
 import { RULES } from '../rules.js';
 import { AREA_OF_ROOM, AREA_OF_ZONE } from './tune/town.js';
 import wasmBytes from './sim/one-sim.wasm';
@@ -91,10 +91,11 @@ function sync() {
 function hour(h) {
   const x = X();
   S.hours++;
-  for (const f of h.found) x.found.push({ who: CAST_TO_PROTOTYPE[f.who] || f.who, t: f.atMinute });
+  const deed = (x.deeds.find((q) => q.deed) || {}).e;
+  for (const f of h.found) emit('town.found', { who: CAST_TO_PROTOTYPE[f.who] || f.who, e: deed, t: f.atMinute });
   for (const w of h.went) {
     x.went.push({ who: CAST_TO_PROTOTYPE[w] || w, t: h.minute });
-    logLine((CAST_TO_PROTOTYPE[w] || w) + ' went to the police about the damage', 'police');
+    emit('town.went', { who: CAST_TO_PROTOTYPE[w] || w, e: deed }); // a walk to the phone box, which he may still cut short (game/walks.js)
   }
   if (h.ellis) x.ellis = { why: h.ellis, t: h.minute, shown: false };
   if (h.taken) x.taken = { how: h.taken, t: h.minute, until: h.heldUntil, shown: false };
@@ -164,7 +165,7 @@ function acted(E) {
 
 register({
   id: 'town',
-  fresh: () => ({ saved: null, fed: {}, found: [], went: [], ellis: null, taken: null, asks: null, tea: null, stories: 0, last: null, deeds: [], chains: [], refused: [], answered: {} }),
+  fresh: () => ({ saved: null, fed: {}, went: [], ellis: null, taken: null, asks: null, tea: null, stories: 0, last: null, deeds: [], chains: [], refused: [], answered: {} }),
   loaded(x) {
     const gen = ++S.gen;
     S.queue = [];

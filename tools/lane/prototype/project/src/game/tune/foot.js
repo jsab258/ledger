@@ -88,6 +88,44 @@ export const TUNE = {
   runnerCaughtLineRealSeconds: 2,
   belongsNoSecondLook: true,
   sitWithinMetres: 2.5,
+  // the walk: a witness who means to tell sets off for the phone box and is seen going (DESIGN 2, ER-EYES-04)
+  walk: {
+    startsAfterRealSeconds: 6, // she stands a moment first: he can see her make her mind up
+    onEdgeStartsSoonerTimes: 0.5, // a street on edge (A37)
+    metresPerSecond: 1.7, // quick, not running
+    lastsAtLeastRealSecondsInHisSight: 30,
+    reachWithinMetres: 3,
+    arrivesWithinMetres: 2.2,
+    phoneCallRealSeconds: 8,
+    nextWitnessAfterGameMinutes: 12, // if the first is stopped and another saw it plainly
+    walkersAtMostADeed: 2,
+    morningWalkAtHour: 8, // somebody who places him only later goes in the morning
+    officerComesNextAtHour: 9,
+    officerComesAtLeastGameHoursAfter: 3,
+    talkRoundNeedsRegard: 0.1,
+    talkRoundNeedsRegardUpright: 0.3,
+    talkedRoundRegardBy: -0.03,
+    talkFailedRegardBy: -0.05,
+    payNeedsVenal: 0.4,
+    payPenceByCrime: { 1: 1000, 2: 3000, 3: 0 },
+    payRefusedRegardBy: -0.15,
+    threatWorksBelowNerve: 0.7,
+    threatFearTo: 0.7,
+    threatRegardBy: -0.3,
+    putRightPence: 1500,
+    putRightNeedsRegardAbove: -0.3,
+    putRightRegardBy: 0.08,
+    askedTwiceRegardBy: -0.1,
+  },
+  // finding an unseen deed (A38): found by whoever is really there, the owner first
+  trace: {
+    notFoundBeforeGameMinutes: 4,
+    foundWithinMetres: 7,
+    ownerFindsWithinMetres: 14,
+    aftermathSure: 0.35,
+    aftermathHeatAdded: 0.1,
+    nextFinderAfterGameMinutes: 30,
+  },
 };
 export const SCHEDULES = {};
 export const PEOPLE = {};

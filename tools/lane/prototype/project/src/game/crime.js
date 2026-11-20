@@ -101,13 +101,13 @@ function searchStart(site, c) {
   begin('Searching ' + c.name, r.seconds, () => {
     x.searched[site.place + ':' + c.id] = Math.round(G.t);
     x.searches.push({ site: site.place, c: c.id, seconds: r.seconds, dark, torch: x.torchOn, t: Math.round(G.t) });
-    act('searched', { thing: c.name, place: site.name });
+    const Sv = act('searched', { thing: c.name, place: site.name });
     if (c.holds) earn(c.holds.pence, true, c.holds.why);
     if (c.goods) x.goods.push(Object.assign({ takenT: G.t, from: site.place }, c.goods));
     if (c.fact) x.facts[c.fact] = Math.round(G.t);
     write(c.line, { key: 'found:' + site.place + ':' + c.id, how: 'Found it' });
     tell(c.line, '', 7);
-    emit('crime.found', { site: site.place, c: c.id, fact: c.fact || null, pence: c.holds ? c.holds.pence : 0 });
+    emit('crime.found', { site: site.place, c: c.id, fact: c.fact || null, pence: c.holds ? c.holds.pence : 0, e: c.holds || c.goods ? Sv.id : null, thing: c.name });
   });
 }
 // ---- the fence (2.7.6, A30): Rita's back room buys, haggles in three offers at most, and remembers ----
@@ -168,6 +168,8 @@ function pocketHotspot(out) {
       } else
         begin('Easing it out', r.holdSeconds, () => {
           x.lifted[P.id] = Math.round(G.t);
+          const Lv = act('pocket', { name: P.def.name, silent: true, unfelt: true });
+          emit('crime.lifted', { e: Lv.id, from: P.id, missedBy: (dayNow() + 1) * 1440 + 7 * 60 });
           x.lifts.push({ from: P.id, felt: false, suspects: r.suspects, missedBy: (dayNow() + 1) * 1440 + 7 * 60, t: Math.round(G.t) });
           take(T.pockets[P.id], { key: T.things[T.pockets[P.id]].key });
           write(`Lifted ${T.things[T.pockets[P.id]].name} from ${P.def.name}'s pocket. It will be missed by morning.`, { who: P.id, how: 'Did it' });

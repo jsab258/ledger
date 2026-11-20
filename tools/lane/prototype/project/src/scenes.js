@@ -678,6 +678,8 @@ export async function endWeek(choice) {
 
 // ---------- hooks for talk, fights and the controller ----------
 export function beatFor(P) {
+  const walking = G.hooks.walkBeat && G.hooks.walkBeat(P); // a witness on the way to the phone box: he has reached them first (game/walks.js)
+  if (walking) return walking;
   const f = fl();
   switch (P.id) {
     case 'sheila':

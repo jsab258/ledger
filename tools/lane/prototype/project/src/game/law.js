@@ -5,15 +5,16 @@
 // around them: the nightly beat and its challenge with three answers, the hours each offence costs, DS Ellis's
 // four stages each with its sign, the office searched with notice, traffic stops, bought men, an officer at the
 // spot after a reported deed, and a street on edge. The rules are pieces/law.js.
-import { register, X, write, tell, hourNow, dayNow, here, P_, emit, on, tomXZ, freshLine } from './core.js';
+import { register, X, write, tell, hourNow, dayNow, here, P_, emit, on, tomXZ, freshLine, inView } from './core.js';
 import { G } from '../state.js';
 import { hyp, quid } from '../util.js';
 import { act, logLine } from '../events.js';
 import { pay } from '../money.js';
 import { choose, scene, say } from '../ui.js';
-import { goToPoint } from '../routines.js';
+import { goToPoint, gameMinPerSec } from '../routines.js';
+import { freeSpot } from '../map.js';
 import { KINDS } from '../kinds.js';
-import { sense, tomTarget } from '../seeing.js';
+import { sense, tomTarget, tomNotices } from '../seeing.js';
 import { RULES } from '../rules.js';
 import { PIECE as LAW } from './pieces/law.js';
 import { PIECE as EYES } from './pieces/eyes.js';
@@ -105,7 +106,7 @@ function beatStep(dt) {
     t = G.tom,
     x = X('law'),
     st = G.story;
-  const busy = (st.job && st.job.watch && st.job.watch.st !== 'over') || st.arrest || S.chase;
+  const busy = (st.job && st.job.watch && st.job.watch.st !== 'over') || (st.arrest && st.arrest.st) || S.chase || x.spot;
   const visits = L.onEdge(x.deeds, 'Quay Street', G.t).beatVisitsTimes;
   const on_ = night() && !busy && !P.dead && (visits > 1 || Math.floor(G.t / 60) % 2 === 0); // every other hour; every hour on a street on edge
   if (!on_) {
@@ -120,10 +121,12 @@ function beatStep(dt) {
     Object.assign(P, { override: null, gone: false, space: 'street', awake: true, x: T.beatEnds[0][0], z: T.beatEnds[0][1], route: null, hold: false });
     goToPoint(P, T.beatEnds[1][0], T.beatEnds[1][1], T.beatWalkMetresPerSecond);
   }
-  const to = T.beatEnds[1 - S.beat.leg];
+  const wg = x.watched.find((w) => w.untilT > G.t),
+    ends = wg ? [T.beatEnds[0], [wg.x, wg.z]] : T.beatEnds; // on a watched night his round turns at the watched ground
+  const to = ends[1 - S.beat.leg];
   if (hyp(P.x, P.z, to[0], to[1]) < 2 || !P.route) {
     S.beat.leg = hyp(P.x, P.z, to[0], to[1]) < 2 ? 1 - S.beat.leg : S.beat.leg;
-    const nx = T.beatEnds[1 - S.beat.leg];
+    const nx = ends[1 - S.beat.leg];
     goToPoint(P, nx[0], nx[1], T.beatWalkMetresPerSecond);
   }
   if (t.space !== 'street' || t.inCar || G.paused) return;
@@ -153,7 +156,7 @@ async function challenge(P, cause, items) {
   P.ang = Math.atan2(t.x - P.x, t.z - P.z);
   const weak = !cause.weaponShown && !cause.bloodied && !items.some((i) => i.unlawful) && !t.carry;
   const bought = x.bought.harker && x.bought.harker.paid;
-  const i = await scene(() => choose('pc', freshLine(BEAT_STOPS, '"You again. Pockets, please."'), ['Stand and be searched.', 'Run.', 'A word.']));
+  const i = await scene(() => choose('pc', cause.backAtTheSpot ? '"Back for another look, are we? Stand there. What have you got on you?"' : freshLine(BEAT_STOPS, '"You again. Pockets, please."'), ['Stand and be searched.', 'Run.', 'A word.']));
   const r = L.answerChallenge(['stand and be searched', 'run', 'a word'][i], { carried: items, weakCause: weak, noteOffered: false, officerBought: bought });
   x.challenges.push({ answer: i, result: r.result, t: Math.round(G.t) });
   if (r.result === 'searched') {
@@ -206,15 +209,94 @@ function chaseStep(dt) {
     ellisEvent('talk');
   }
 }
-// ---- police after a deed (A36): an officer at the spot, the ground watched until morning ----
+// ---- police after a deed (A36, part 2.6.10): once it is reported an officer walks to the spot and stands there a
+// while, with a torch at night; a body brings tape, and DS Ellis the next morning; the spot is watched ground
+// until morning, and going back there is the risk. Nothing on screen marks it: he reads the man, the torch, the tape.
 function afterDeed(E, body) {
   const x = X('law');
+  if (!E || x.watched.some((w) => w.e === E.id)) return;
   const r = L.afterDeed({ reported: true, body });
-  x.watched.push({ x: E.x, z: E.z, untilT: (dayNow() + (hourNow() >= r.watchedUntilHour ? 1 : 0)) * 1440 + r.watchedUntilHour * 60, why: KINDS[E.kind].mine(E), tape: r.tape, e: E.id });
-  logLine('An officer went to the spot: ' + KINDS[E.kind].truth(E), 'police');
-  if (r.ellisNextMorning) ellisEvent('body');
+  if (!r.officer) return;
+  const untilT = (dayNow() + (hourNow() >= r.watchedUntilHour ? 1 : 0)) * 1440 + r.watchedUntilHour * 60;
+  x.watched.push({ x: E.x, z: E.z, untilT, why: KINDS[E.kind].mine(E), tape: r.tape, e: E.id, tapeSeen: false });
+  // one officer: a graver deed, or the first, has him
+  if (!x.spot || (r.tape && !x.spot.tape)) x.spot = { x: E.x, z: E.z, e: E.id, st: 'sent', arriveByT: G.t + r.withinGameMinutes, staysUntilT: null, tape: r.tape, torch: r.torchAtNight, seen: false };
+  if (r.ellisNextMorning) x.ellisDue = { t: (dayNow() + 1) * 1440 + T.ellisNextMorningAtHour * 60, what: 'body' };
+  logLine('An officer is sent to the spot: ' + KINDS[E.kind].truth(E), 'police');
 }
-export const watchedNear = (x, z) => X('law').watched.find((w) => w.untilT > G.t && hyp(w.x, w.z, x, z) < T.challengeWithinMetres * 2) || null;
+function spotStep() {
+  const x = X('law'),
+    sp = x.spot,
+    P = P_('pc'),
+    t = G.tom;
+  if (!sp || !P || P.dead || S.chase || (G.story.arrest && G.story.arrest.st)) return;
+  const d = hyp(P.x, P.z, sp.x, sp.z),
+    tomFar = t.space !== 'street' || hyp(P.x, P.z, t.x, t.z) > 60;
+  if (sp.st === 'sent') {
+    if (P.gone || P.space !== 'street') Object.assign(P, { override: null, gone: false, space: 'street', awake: true, x: RULES.police.arrivesAtXMetres, z: RULES.police.arrivesAtZMetres });
+    P.override = null;
+    P.route = null;
+    // he is to be there inside the time the rule gives: a walk if that will do it, else at the double
+    sp.speed = Math.min(T.constableRunsMetresPerSecond, Math.max(T.officerToTheSpotMetresPerSecond, (d * 1.25) / Math.max(1, (sp.arriveByT - G.t) / gameMinPerSec())));
+    goToPoint(P, sp.x, sp.z, sp.speed);
+    sp.st = 'going';
+    S.beat = null;
+  } else if (sp.st === 'going') {
+    if (!P.route && d > 3) goToPoint(P, sp.x, sp.z, sp.speed || T.officerToTheSpotMetresPerSecond);
+    if (d <= 3 || (G.t >= sp.arriveByT && tomFar)) {
+      // he is there inside the time the rule gives; nobody is put anywhere while he could be seen walking
+      if (d > 3) {
+        const f = freeSpot(sp.x, sp.z) || [sp.x, sp.z];
+        Object.assign(P, { x: f[0], z: f[1] });
+      }
+      Object.assign(P, { route: null, hold: true });
+      sp.st = 'there';
+      sp.staysUntilT = G.t + T.officerStaysAtTheSpotGameMinutes;
+    }
+  } else if (sp.st === 'there') {
+    P.hold = true;
+    // he looks about him the whole time he stands there, and round at any step close by
+    P.ang = inView(P, 9) ? Math.atan2(t.x - P.x, t.z - P.z) : P.ang + 0.02;
+    if (G.t >= sp.staysUntilT) {
+      x.spot = null;
+      P.hold = false;
+      P.override = { where: 'off', act: 'idle' };
+      P.goalKey = '';
+      return;
+    }
+  }
+  // what he can read of it: the man at the spot, the torch at night, the tape
+  if (!sp.seen && sp.st !== 'sent' && (tomNotices(P) || inView(P, 30)) && hyp(P.x, P.z, t.x, t.z) < T.beatHeardWithinMetres * 1.5) {
+    sp.seen = true;
+    const where = sp.st === 'there' ? 'standing where it happened' : 'walking down to where it happened';
+    tell(night() && sp.torch ? `A torch, going slowly over the ground. The constable is ${where}.` : `The constable is ${where}, his notebook out.`, '', 7);
+    write(`A constable at the spot (${x.watched.find((w) => w.e === sp.e)?.why.toLowerCase() || 'what was done'}). Somebody rang them. That ground is watched until morning.`, { key: 'spot' + sp.e, how: 'Saw it himself', ev: sp.e });
+  }
+}
+// The watched ground: tape he can see, and an officer with cause if he comes back to it.
+function watchedStep() {
+  const x = X('law'),
+    t = G.tom;
+  if (t.space !== 'street' || G.paused) return;
+  const [tx, tz] = tomXZ();
+  const w = watchedNear(tx, tz);
+  if (!w) return;
+  if (w.tape && !w.tapeSeen && G.env.los(tx, tz, w.x, w.z)) {
+    w.tapeSeen = true;
+    tell('Blue and white tape across the way, tied off on a drainpipe. Nobody is getting through there today.', '', 7);
+    write('Police tape where it happened. A detective comes for that, in the morning.', { key: 'tape' + w.e, how: 'Saw it himself', ev: w.e });
+  }
+  const P = P_('pc');
+  if (t.inCar || !P || P.gone || P.space !== 'street' || G.t - x.challengedT < T.challengeAgainAfterGameMinutes) return;
+  const s = sense(P, tomTarget());
+  if (!(s.see || inView(P, T.challengeWithinMetres)) || hyp(P.x, P.z, t.x, t.z) > T.challengeWithinMetres) return;
+  const c = L.challenge({ trespassing: true }); // back at the spot is cause enough
+  if (!c.challenges) return;
+  x.challengedT = G.t;
+  x.backAtTheSpot = (x.backAtTheSpot || 0) + 1;
+  challenge(P, { trespassing: true, backAtTheSpot: true }, carried());
+}
+export const watchedNear = (x, z) => X('law').watched.find((w) => w.untilT > G.t && hyp(w.x, w.z, x, z) < T.watchedGroundWithinMetres) || null;
 // ---- traffic police (A12): one patrol car on its loop; a stop only on a reckless act in its sight ----
 function patrolAt() {
   const n = T.patrolLoop.length,
@@ -321,13 +403,15 @@ function officeSearchStep() {
 
 register({
   id: 'law',
-  fresh: () => ({ ellis: { stage: 0, signShown: true, signShownT: null, owed: null }, charges: [], cautions: 0, arrests: [], takenFor: {}, watched: [], deeds: [], edge: false, bought: {}, search: { noticeT: null, done: false, found: [] }, challengedT: -1e9, challenges: [], chases: [], stops: [], carChases: [], stoppedT: -1e9, plateNoted: false, manhuntArrest: false }),
+  fresh: () => ({ ellis: { stage: 0, signShown: true, signShownT: null, owed: null }, charges: [], cautions: 0, arrests: [], takenFor: {}, watched: [], spot: null, ellisDue: null, deeds: [], edge: false, bought: {}, search: { noticeT: null, done: false, found: [] }, challengedT: -1e9, challenges: [], chases: [], stops: [], carChases: [], stoppedT: -1e9, plateNoted: false, manhuntArrest: false }),
   loaded() {
     G.hooks.custody = custody;
     S.beat = S.chase = S.carChase = null;
   },
   step(dt) {
     if (G.paused) return;
+    spotStep();
+    watchedStep();
     beatStep(dt);
     chaseStep(dt);
     carChaseStep(dt);
@@ -336,6 +420,10 @@ register({
     const x = X('law');
     ellisSigns();
     x.watched = x.watched.filter((w) => w.untilT > G.t);
+    if (x.ellisDue && G.t >= x.ellisDue.t) {
+      ellisEvent(x.ellisDue.what); // a body: DS Ellis the next morning (A36)
+      x.ellisDue = null;
+    }
     const was = x.edge;
     x.edge = L.onEdge(x.deeds, 'Quay Street', G.t).onEdge;
     if (x.edge && !was) {
@@ -374,22 +462,21 @@ on('act', (E) => {
   if (!k || k.crime < 1) return;
   X('law').deeds.push({ street: /Quay Street/.test(E.zone) ? 'Quay Street' : E.zone, seen: (E.wit || []).length > 0 || (E.party || []).length > 0, t: G.t, e: E.id });
   if (X('law').deeds.length > 60) X('law').deeds.shift();
-  if (E.kind === 'kill') {
-    afterDeed(E, true);
-    ellisEvent((E.wit || []).length ? 'witnessed killing' : 'body');
-  }
+});
+// a deed is reported when a walk to the phone box ends: an officer to the spot; a killing somebody saw moves DS Ellis
+on('walks.told', ({ e, aftermath }) => {
+  const E = G.ev[e];
+  if (!E) return;
+  afterDeed(E, E.kind === 'kill');
+  if (E.kind === 'kill' && !aftermath) ellisEvent('witnessed killing');
 });
 on('town.hour', (h) => {
   const x = X('law');
-  if (h.went.length) {
-    const d = (G.x.town.deeds.find((q) => q.deed) || {}).e;
-    if (d && G.ev[d]) afterDeed(G.ev[d], false);
-  }
   if (h.ellis) ellisEvent(h.ellis === 'talk' ? 'talk' : 'detective crime reported');
   if (h.taken && !G.story.arrest) {
     // the real town's ten o'clock: he is taken for the damage. The prototype plays the scene; the hours are the offence's.
     const d = (G.x.town.deeds.find((q) => q.deed) || {}).e;
-    if (!(d && x.takenFor[d])) G.story.arrest = { e: d || null, violent: false, offence: 'damage', due: G.t, by: G.x.town.went.map((w) => w.who), town: h.taken };
+    if (!(d && x.takenFor[d]) && d && (G.ev[d].stmt || []).length) G.story.arrest = { e: d || null, violent: false, offence: 'damage', due: G.t, by: G.x.town.went.map((w) => w.who), town: h.taken };
   }
 });
 on('crime.holdup', ({ e, r }) => {

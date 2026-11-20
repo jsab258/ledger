@@ -102,4 +102,44 @@ function trespass(place, hour, secondsThere) {
 const marks = (daysSinceBeaten) => ({ bruised: daysSinceBeaten < T.bruisesLastGameDays, limp: daysSinceBeaten < T.limpLastsGameDays });
 // Casing (A23): watched long enough, a place's hours, key holder and open way are learned as the routines have them.
 const cased = (minutesWatched, place) => (minutesWatched >= T.casingLearnsAfterGameMinutes ? { learned: true, hours: [place.openFromHour, place.openUntilHour], keyHolder: place.keyHolder, openWay: place.openWay } : { learned: false });
-export const PIECE = { name: 'eyes', fns: { caught, cue, secondLook, reach, hears, horn, drawn, manner, tail, chase, pursuit, vault, search, lift, found, takeCar, trespass, marks, cased } };
+// The walk (DESIGN 2 "The walk", ER-EYES-04): a witness who means to tell sets off and is seen going. No phones in
+// pockets in 1990: the walk is the timer, and until it ends nothing is on record. s: { metres, inHisSight, onEdge }
+function walk(s) {
+  const W = T.walk;
+  const startsAfterSeconds = W.startsAfterRealSeconds * (s.onEdge ? W.onEdgeStartsSoonerTimes : 1);
+  const walkSeconds = s.metres / W.metresPerSecond;
+  const lastsSeconds = s.inHisSight ? Math.max(walkSeconds, W.lastsAtLeastRealSecondsInHisSight) : walkSeconds;
+  return { startsAfterSeconds, lastsSeconds, standsFirstSeconds: lastsSeconds - walkSeconds };
+}
+// He reaches the witness first: talk them round, pay, threaten, put it right, or let them go. A threat can stop
+// a report to the police, never the street's talk (ruling 3 Oct). s: { regard, nerve, venal, upright, crime
+// (1 minor, 2 violence, 3 killing), damage, askedBefore, pocketPence }
+function reached(choice, s) {
+  const W = T.walk,
+    out = (stops, o = {}) => Object.assign({ stops, costPence: 0, fearTo: null, regardBy: 0, streetStillTalks: true, makesAnAct: null, sooner: false }, o);
+  if (s.askedBefore) return out(false, { regardBy: W.askedTwiceRegardBy, sooner: true }); // one go at each witness
+  if (choice === 'let go') return out(false);
+  if (choice === 'talk round') {
+    const ok = s.crime <= 1 && s.regard >= (s.upright ? W.talkRoundNeedsRegardUpright : W.talkRoundNeedsRegard);
+    return ok ? out(true, { regardBy: W.talkedRoundRegardBy }) : out(false, { regardBy: W.talkFailedRegardBy });
+  }
+  if (choice === 'pay') {
+    const price = W.payPenceByCrime[Math.min(3, Math.max(1, s.crime))];
+    if (s.upright || s.venal < W.payNeedsVenal || s.crime >= 3) return out(false, { regardBy: W.payRefusedRegardBy, makesAnAct: 'bribe_try', sooner: true });
+    if (s.pocketPence < price) return out(false, { costPence: 0, short: true });
+    return out(true, { costPence: price, bought: true });
+  }
+  if (choice === 'threaten') {
+    // it works on anybody whose nerve is under the bar; it is itself a thing done to them, and the street hears of it
+    const ok = s.nerve < W.threatWorksBelowNerve;
+    return ok ? out(true, { fearTo: W.threatFearTo, regardBy: W.threatRegardBy, makesAnAct: 'threat' }) : out(false, { regardBy: W.threatRegardBy, makesAnAct: 'threat', sooner: true });
+  }
+  if (choice === 'put it right') {
+    // only damage can be put right, with money for the mending, and only with somebody not set against him
+    if (!s.damage || s.crime > 1) return out(false);
+    if (s.pocketPence < W.putRightPence) return out(false, { short: true });
+    return s.regard > W.putRightNeedsRegardAbove ? out(true, { costPence: W.putRightPence, regardBy: W.putRightRegardBy, streetStillTalks: true }) : out(false, { regardBy: 0 });
+  }
+  return out(false);
+}
+export const PIECE = { name: 'eyes', fns: { walk, reached, caught, cue, secondLook, reach, hears, horn, drawn, manner, tail, chase, pursuit, vault, search, lift, found, takeCar, trespass, marks, cased } };

@@ -207,3 +207,6 @@ export const tomXZ = () => (G.tom.inCar ? [G.car.x, G.car.z] : [G.tom.x, G.tom.z
 export const tomNear = (x, z, r) => G.tom.space === 'street' && hyp(tomXZ()[0], tomXZ()[1], x, z) <= r;
 // Is this person here with him, awake and able to answer?
 export const here = (P, r) => !!P && !P.dead && !P.gone && P.awake !== false && P.space === G.tom.space && hyp(P.x, P.z, G.tom.x, G.tom.z) <= r;
+// Can he see this person now? In front of him as the old rule has it, or simply close with a clear line: a man
+// notices who is a few strides off whichever way the camera looks.
+export const inView = (P, closeMetres = 12) => !!P && !P.gone && P.space === G.tom.space && !G.tom.inCar && hyp(P.x, P.z, G.tom.x, G.tom.z) <= closeMetres && G.env.los(G.tom.x, G.tom.z, P.x, P.z);

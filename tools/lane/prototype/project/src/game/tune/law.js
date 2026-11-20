@@ -31,6 +31,9 @@ export const TUNE = {
   // police after a deed (A36)
   officerAtTheSpotWithinGameMinutes: 20,
   spotWatchedUntilHour: 7,
+  officerToTheSpotMetresPerSecond: 1.6,
+  officerStaysAtTheSpotGameMinutes: 60,
+  watchedGroundWithinMetres: 24,
   ellisNextMorningAtHour: 9,
   // the beat
   beatFromHour: 21,
@@ -48,7 +51,7 @@ export const TUNE = {
   carHurtAtMetresPerSecond: { bruise: 0, 'broken leg': 6.7, badly: 13.4 }, // 15 mph and 30 mph
   carForgivenBelowMetresPerSecond: 2.2, // a clip at walking pace
   // each kind: [how newsworthy 0..1, how it reads -1 menace..+1 decent, crime level 0..3]
-  kinds: { searched_by: [0.4, -0.2, 0], talked_round: [0.1, 0, 0], paid_officer: [0.6, -0.6, 1], stopped_car: [0.35, -0.2, 0], drove_off_police: [0.6, -0.5, 1], office_searched: [0.6, -0.4, 0] },
+  kinds: { searched_by: [0.4, -0.2, 0], talked_round: [0.1, 0, 0], paid_officer: [0.6, -0.6, 1], paid_quiet: [0.5, -0.4, 0], stopped_car: [0.35, -0.2, 0], drove_off_police: [0.6, -0.5, 1], office_searched: [0.6, -0.4, 0] },
   beatEnds: [[5.6, 30], [5.6, -40]], // the beat along Quay Street's east pavement
   beatHeardWithinMetres: 22,
   challengeWithinMetres: 12,

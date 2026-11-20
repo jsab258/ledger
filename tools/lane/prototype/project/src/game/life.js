@@ -95,15 +95,8 @@ function bodies(d) {
   const x = X('life');
   for (const b of x.bodies) {
     if (b.found || b.asked) continue;
-    if (!b.hidden) {
-      // found by the first person whose routine passes it (A38): the first worker of the morning
-      const r = EYES.fns.found({ t: b.t, trace: 'a body' }, [{ id: 'the first dock worker', t: (Math.floor(b.t / 1440) + 1) * 1440 + T.bodyFoundAtHour * 60 }]);
-      if (r.by && G.t >= r.atT) {
-        b.found = { by: r.by, t: r.atT };
-        ellisEvent('body');
-        write(`They found ${b.name} at ${b.zone} this morning. There is tape across the street and a detective asking.`, { key: 'body:' + b.id, how: 'The street says' });
-      }
-    } else if (d - Math.floor(b.t / 1440) >= T.missingAskedAfterGameDays) {
+    // lying where a routine passes it is found by whoever really passes (game/traces.js); never found, he is missed
+    if (d - Math.floor(b.t / 1440) >= T.missingAskedAfterGameDays) {
       b.asked = Math.round(G.t);
       ellisEvent('talk');
       write(`People are asking where ${b.name} has got to. Nobody has seen ${b.sex === 'f' ? 'her' : 'him'} since ${DAYS[Math.floor(b.t / 1440) % 7]}.`, { key: 'missing:' + b.id, how: 'The street says' });
@@ -166,6 +159,12 @@ register({
     budget: () => L.budget(X('life').booked),
     hot: (kind, days) => L.hot(kind, days),
   },
+});
+on('traces.found', (f) => {
+  const b = f.kind === 'body' && X('life').bodies.find((q) => q.id === f.e);
+  if (!b || b.found) return;
+  b.found = { by: f.by, t: Math.round(G.t) };
+  write(`They have found ${b.name} at ${b.zone}. ${P_(f.by) ? P_(f.by).def.name + ' came on him' : 'Somebody came on him'}.`, { key: 'body:' + b.id, how: 'The street says' });
 });
 on('act', (E) => {
   if (E.kind !== 'kill') return;

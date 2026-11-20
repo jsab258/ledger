@@ -310,55 +310,59 @@ export function ellisStep(dt) {
 }
 
 // Who will give a statement about a crime: someone who saw him plainly, is not frightened or bought, and has not warmed to him.
+export function wouldTell(P, E) {
+  if (!P || P.dead || P.def.nostmt || P.def.police) return false;
+  const m = P.mind.by[E.id];
+  const plain = m && m.src !== 'told' && m.src !== 'heard' && attached(m);
+  if (!plain || m.sure < POL.statementNeedsSureAtLeast) return false; // saw him plainly
+  if (P.mind.fear >= POL.noStatementIfFearAtLeast || P.mind.bought) return false; // a threat can stop a report
+  const quietAbove = P.def.upright ? POL.uprightStaysQuietAboveRegard : POL.othersStayQuietAboveRegard;
+  return !(P.mind.regard > quietAbove); // has not warmed to him
+}
 export function statements(dayIdx) {
   const out = [];
   for (const E of G.events) {
     const k = KINDS[E.kind];
     if (k.crime < 1 || E.stmt !== undefined || Math.floor(E.t / 1440) > dayIdx) continue;
     const givers = [];
-    for (const id of new Set([...(E.wit || []), ...(E.party || [])])) {
-      const P = G.people[id];
-      if (!P || P.dead || P.def.nostmt) continue;
-      const m = P.mind.by[E.id];
-      const plain = m && m.src !== 'told' && m.src !== 'heard' && attached(m);
-      if (!plain || m.sure < POL.statementNeedsSureAtLeast) continue; // saw him plainly
-      if (P.mind.fear >= POL.noStatementIfFearAtLeast || P.mind.bought) continue; // a threat can stop a report
-      const quietAbove = P.def.upright ? POL.uprightStaysQuietAboveRegard : POL.othersStayQuietAboveRegard;
-      if (P.mind.regard > quietAbove) continue; // has warmed to him
-      givers.push(id);
-    }
+    for (const id of new Set([...(E.wit || []), ...(E.party || [])])) if (wouldTell(G.people[id], E)) givers.push(id);
     E.stmt = givers;
     if (givers.length) out.push(E);
   }
   return out;
 }
+// A statement is on record: the walk to the phone box ended (game/walks.js). An officer comes for him at nine, never
+// sooner than a few hours after; a second statement joins the first, and the graver deed leads.
+export function statementMade(E, id) {
+  const st = G.story,
+    W = RULES.game.foot.walk,
+    violent = KINDS[E.kind].crime >= POL.violentFromCrimeLevel;
+  E.stmt = E.stmt || [];
+  if (!E.stmt.includes(id)) E.stmt.push(id);
+  let due = Math.floor(G.t / 1440) * 1440 + W.officerComesNextAtHour * 60;
+  while (due < G.t + W.officerComesAtLeastGameHoursAfter * 60) due += 1440;
+  const a = st.arrest;
+  if (a && !a.st) {
+    const worse = !a.e || !G.ev[a.e] || KINDS[E.kind].crime > KINDS[G.ev[a.e].kind].crime;
+    if (worse) a.e = E.id;
+    a.violent = a.violent || violent;
+    a.by = (a.by || []).concat(a.by && a.by.includes(id) ? [] : [id]);
+  } else if (!a) st.arrest = { e: E.id, violent, due, by: [id] };
+  logLine('A statement was made to the police: ' + KINDS[E.kind].truth(E) + ' (by ' + (G.people[id]?.def.name || id) + ')', 'police');
+  return st.arrest;
+}
 
 export function nightly(d) {
-  // run once per night: who went to the police about what they saw
+  // run once per night: whoever placed him only later (the coat, the cab) and means to tell sets off in the morning
   const st = G.story;
   st.nightDone = st.nightDone || {};
   if (st.nightDone[d]) return;
   st.nightDone[d] = 1;
   const evs = statements(d);
-  if (!evs.length && !fl().ranPolice && !fl().assaultPolice) return;
-  const worst = evs.sort((a, b) => KINDS[b.kind].crime - KINDS[a.kind].crime)[0];
-  st.arrest = {
-    e: worst ? worst.id : null,
-    violent:
-      (worst && KINDS[worst.kind].crime >= POL.violentFromCrimeLevel) ||
-      !!fl().ranPolice ||
-      !!fl().assaultPolice,
-    due: (d + 1) * 1440 + POL.comesNextDayAtHour * 60,
-    by: worst ? worst.stmt : [],
-  };
-  logLine(
-    'A statement was made to the police: ' +
-      (worst
-        ? KINDS[worst.kind].truth(worst) +
-          ' (by ' +
-          worst.stmt.map((id) => G.people[id]?.def.name).join(', ') +
-          ')'
-        : 'he ran from them'),
-    'police',
-  );
+  if (G.hooks.morningWalk) for (const E of evs) G.hooks.morningWalk(E, E.stmt.slice());
+  // running from an officer, or laying hands on one, he saw for himself: no witness needs to walk anywhere
+  if (!fl().ranPolice && !fl().assaultPolice) return;
+  if (st.arrest) return void (st.arrest.violent = true);
+  st.arrest = { e: null, violent: true, due: (d + 1) * 1440 + POL.comesNextDayAtHour * 60, by: [] };
+  logLine('The police have their own reason to come for him: he ran from them', 'police');
 }

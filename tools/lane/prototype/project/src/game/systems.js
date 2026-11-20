@@ -11,6 +11,8 @@ import './life.js';
 import './shops.js';
 import './way.js';
 import './law.js';
+import './walks.js';
+import './traces.js';
 import './acts.js';
 import './endings.js';
 import './ledgerx.js';
