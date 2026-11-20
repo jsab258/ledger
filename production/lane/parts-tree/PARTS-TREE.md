@@ -29,6 +29,7 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.2.8 Riding as a passenger*. P:designed U:designed
   - 1.2.9 Repairs, plates and paint*. P:designed U:designed
   - 1.2.10 Taking a parked car*. P:designed U:designed
+  - 1.2.11 The horn*. P:designed U:designed
 - 1.3 Fighting*. P:built U:designed
   - 1.3.1 Blows and contact*. P:built U:designed +research
   - 1.3.2 Reading and answering blows*. P:built U:designed +research
@@ -68,6 +69,9 @@ The verbs: moving, driving, fighting, being seen, chases, jobs, the crew.
   - 1.6.9 Coat, pockets and office storage*. P:shallow U:designed
   - 1.6.10 Tom's wardrobe*. P:designed U:designed
   - 1.6.11 Casing a place*. P:designed U:designed
+  - 1.6.12 A torch on a night job*. P:designed U:designed
+  - 1.6.13 Lifting from a pocket*. P:designed U:designed
+  - 1.6.14 Damage by hand*. P:designed U:designed
 - 1.7 Running the crew*. P:designed U:designed
   - 1.7.1 Orders in the field*. P:designed U:designed
   - 1.7.2 Sending (the eight verbs)*. P:designed U:designed
@@ -101,11 +105,13 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.4.3 Showing what people know*. P:built U:shallow
   - 2.4.4 It comes back*. P:built U:built
   - 2.4.5 The paper and the news*. P:shallow U:designed
-- 2.5 Witnesses after a deed*. P:shallow U:shallow
+- 2.5 Witnesses after a deed*. P:designed U:shallow
   - 2.5.1 The walk to tell*. P:shallow U:shallow
   - 2.5.2 Stopping a witness*. P:shallow U:shallow
   - 2.5.3 Crowd reaction to a deed*. P:built U:shallow
-- 2.6 Police and law*. P:shallow U:designed
+  - 2.5.4 A street on edge*. P:designed U:designed
+  - 2.5.5 Finding an unseen deed*. P:designed U:designed
+- 2.6 Police and law*. P:designed U:designed
   - 2.6.1 The beat constable*. P:shallow U:shallow
   - 2.6.2 Challenge and search*. P:built U:designed
   - 2.6.3 Statements and the arrest rule. P:built U:built
@@ -115,6 +121,7 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.6.7 Traffic police and stops*. P:designed U:designed
   - 2.6.8 Bought men and squaring the law*. P:designed U:designed
   - 2.6.9 Charges, bail and the office searched*. P:shallow U:designed
+  - 2.6.10 Police after a deed*. P:designed U:designed
 - 2.7 Money*. P:shallow U:designed
   - 2.7.1 Clean money and the fare book. P:built U:designed
   - 2.7.2 Night money and the tin. P:built U:designed
@@ -139,6 +146,7 @@ The engine: routines, perception, memory, gossip, witnesses, police, money, debt
   - 2.11.1 Recruiting*. P:designed U:designed
   - 2.11.2 Nerve, loyalty and breaking*. P:designed U:designed
   - 2.11.3 Crew fates*. P:designed U:designed
+  - 2.11.4 Crew pay and the cut. P:designed U:designed
 - 2.12 Position in the town*. P:designed U:designed
   - 2.12.1 The name ladder*. P:built U:shallow
   - 2.12.2 Rung table*. P:designed U:designed
@@ -174,6 +182,7 @@ One main story with two or three endings, the cast, side stories, fares, jobs, d
   - 3.2.4 The crowd*. P:shallow U:missing
   - 3.2.5 Someone worth being honest for*. P:designed U:designed
   - 3.2.6 One complete person*. U:designed
+  - 3.2.7 Calling on people*. P:designed U:designed
 - 3.3 Side stories*. P:designed U:designed
 - 3.4 Fares*. P:shallow U:designed
   - 3.4.1 Fare people*. P:shallow U:designed

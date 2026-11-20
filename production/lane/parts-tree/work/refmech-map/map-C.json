@@ -1,0 +1,592 @@
+[
+ {
+  "id": "M4.1",
+  "decision": "part",
+  "part": "7.1",
+  "reason": "Control on Quay Street in 20 s; the Hook plus the docks open (ruling 28 Oct)."
+ },
+ {
+  "id": "M4.3",
+  "decision": "part",
+  "part": "4.1.3"
+ },
+ {
+  "id": "M4.4",
+  "decision": "part",
+  "part": "4.2.2"
+ },
+ {
+  "id": "M4.5",
+  "decision": "part",
+  "part": "4.1.4",
+  "reason": "The soft edge; streaming itself sits in 8.1.2."
+ },
+ {
+  "id": "M4.12",
+  "decision": "part",
+  "part": "6.10"
+ },
+ {
+  "id": "M4.14",
+  "decision": "part",
+  "part": "6.9",
+  "reason": "People asked the way give it by landmark (A9); the paper map then marks it (6.3)."
+ },
+ {
+  "id": "M4.16",
+  "decision": "part",
+  "part": "6.3",
+  "reason": "The paper map marks every place he has been, so a place he stood at is already noted; no sketching verb."
+ },
+ {
+  "id": "M4.18",
+  "decision": "part",
+  "part": "2.17",
+  "reason": "A front is got by money, a favour or pressure (A15); no For Sale signs."
+ },
+ {
+  "id": "M4.19",
+  "decision": "part",
+  "part": "2.2.6",
+  "reason": "Forbidden places skip the first warning (A10)."
+ },
+ {
+  "id": "M4.21",
+  "decision": "part",
+  "part": "6.1.5",
+  "reason": "Street clocks over the Harbour Board and in the office (A31)."
+ },
+ {
+  "id": "M4.22",
+  "decision": "part",
+  "part": "6.1.5",
+  "reason": "The chapel bell strikes the hours by day (A31); the school is closed (4.10), so no school bell."
+ },
+ {
+  "id": "M4.23",
+  "decision": "part",
+  "part": "8.10",
+  "reason": "Props colliding believably with bodies and cars; damage that lasts sits in 2.19."
+ },
+ {
+  "id": "M4.25",
+  "decision": "part",
+  "part": "4.3.2"
+ },
+ {
+  "id": "M4.26",
+  "decision": "part",
+  "part": "1.6.9"
+ },
+ {
+  "id": "M4.27",
+  "decision": "out",
+  "reason": "Choosing furniture and pets is cosmetic and feeds neither the verbs nor the town's memory (canon, smallest budget); the office and flat changing as he rises stays in 2.12.5."
+ },
+ {
+  "id": "M4.28",
+  "decision": "part",
+  "part": "2.15.1",
+  "reason": "The firm's cars in the yard placed by the board; a car that will not drive on is fetched (1.2.4)."
+ },
+ {
+  "id": "M4.29",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "Shops and stalls keep hours and restock weekly; Thursday market day is on the calendar (2.1.6)."
+ },
+ {
+  "id": "M4.35",
+  "decision": "part",
+  "part": "2.2.6",
+  "reason": "A place reads as dangerous by its label and its warnings, and by rivals' men noticing him (2.10.1); never an on-screen warning."
+ },
+ {
+  "id": "M4.36",
+  "decision": "part",
+  "part": "3.5.3"
+ },
+ {
+  "id": "M4.37",
+  "decision": "part",
+  "part": "2.7.6"
+ },
+ {
+  "id": "M4.38",
+  "decision": "part",
+  "part": "1.6.7"
+ },
+ {
+  "id": "M5.1",
+  "decision": "part",
+  "part": "5.7.1",
+  "reason": "Music from the cab's own radio (A8), invented or allowlisted; no station menu that slows the world."
+ },
+ {
+  "id": "M5.2",
+  "decision": "part",
+  "part": "2.4.5",
+  "reason": "News reaches the town through Alison's paper (D56: the press only through a person); radio programmes as sound sit in 5.7.1."
+ },
+ {
+  "id": "M5.6",
+  "decision": "out",
+  "reason": "No scopes in LEDGER and guns are rare and late (DESIGN 7); a gun reaction gag feeds neither the verbs nor the town's memory (canon, smallest budget)."
+ },
+ {
+  "id": "M5.7",
+  "decision": "part",
+  "part": "4.6.1",
+  "reason": "The cab's interior light is part of the car's design; cheap, and the cab is a main verb."
+ },
+ {
+  "id": "M5.8",
+  "decision": "part",
+  "part": "5.5.5"
+ },
+ {
+  "id": "M5.10",
+  "decision": "out",
+  "reason": "Sweat through a shirt feeds neither the verbs nor the town's memory (canon, smallest budget); October in Britain under a coat."
+ },
+ {
+  "id": "M5.11",
+  "decision": "part",
+  "part": "5.5.1",
+  "reason": "Footsteps by surface and gait, the one wetness value choosing the wet set."
+ },
+ {
+  "id": "M5.12",
+  "decision": "part",
+  "part": "5.5.3"
+ },
+ {
+  "id": "M5.13",
+  "decision": "part",
+  "part": "5.5.4",
+  "reason": "The car is a room: the doorway rule changes the rain and echo inside it."
+ },
+ {
+  "id": "M5.15",
+  "decision": "part",
+  "part": "1.3.2"
+ },
+ {
+  "id": "M5.19",
+  "decision": "part",
+  "part": "5.8.1"
+ },
+ {
+  "id": "M5.20",
+  "decision": "part",
+  "part": "1.2.2"
+ },
+ {
+  "id": "M5.21",
+  "decision": "part",
+  "part": "5.4",
+  "reason": "Light with weather in 4.8 and motion in 5.2."
+ },
+ {
+  "id": "M5.23",
+  "decision": "part",
+  "part": "5.8.3",
+  "reason": "Blocking, performance and timing of a beat, silences included."
+ },
+ {
+  "id": "M5.24",
+  "decision": "part",
+  "part": "1.3.8",
+  "reason": "Men stand or give way by nerve; blood on Tom is a give-away (1.4.4) and lowers a man's nerve to stand up to him."
+ },
+ {
+  "id": "M5.25",
+  "decision": "part",
+  "part": "1.4.1"
+ },
+ {
+  "id": "M5.26",
+  "decision": "part",
+  "part": "5.8.1",
+  "reason": "The talk row, with Tom 1.5 m from the speaker (DESIGN 11)."
+ },
+ {
+  "id": "M5.27",
+  "decision": "part",
+  "part": "5.8.1",
+  "reason": "Mouse and stick look stay live in the fight row; the row only sets framing."
+ },
+ {
+  "id": "M5.28",
+  "decision": "out",
+  "reason": "His ruling sets the street camera (the Between height, 86 degrees, 3.1 m) and the game is third person only (project facts); one arm read from rows (DESIGN 17)."
+ },
+ {
+  "id": "M5.29",
+  "decision": "out",
+  "reason": "Rides in the Hook are short and a ride can be skipped as passed time (A24); not a driving game (DESIGN 18)."
+ },
+ {
+  "id": "M5.30",
+  "decision": "out",
+  "reason": "Music comes only from places, with a score only at cut scenes and act ends (A8); no measure of standing to follow (D33, D34)."
+ },
+ {
+  "id": "M5.32",
+  "decision": "part",
+  "part": "6.8"
+ },
+ {
+  "id": "M6.3",
+  "decision": "part",
+  "part": "6.1",
+  "reason": "No minimap at all; switches for prompts, first hints and chatter subtitles."
+ },
+ {
+  "id": "M6.7",
+  "decision": "part",
+  "part": "6.3"
+ },
+ {
+  "id": "M6.9",
+  "decision": "part",
+  "part": "6.9",
+  "reason": "Names come from street-name plates and the paper map, never a screen label (DESIGN 17, ruling 23 Sep)."
+ },
+ {
+  "id": "M6.10",
+  "decision": "part",
+  "part": "6.2.4"
+ },
+ {
+  "id": "M6.11",
+  "decision": "out",
+  "reason": "No counts on screen (DESIGN 17: no meters); guns are rare and late and what a gun holds is known from the gun itself (1.3.10)."
+ },
+ {
+  "id": "M6.12",
+  "decision": "part",
+  "part": "1.3.10",
+  "reason": "How a rare gun is aimed is decided inside firearms, against DESIGN 17's no marks."
+ },
+ {
+  "id": "M6.13",
+  "decision": "part",
+  "part": "6.5"
+ },
+ {
+  "id": "M6.14",
+  "decision": "part",
+  "part": "1.6.9",
+  "reason": "Two things under the coat; which comes out is chosen on the held input (ER-FIGHT-08), no wheel."
+ },
+ {
+  "id": "M6.17",
+  "decision": "part",
+  "part": "6.2.3"
+ },
+ {
+  "id": "M6.22",
+  "decision": "part",
+  "part": "1.3.7"
+ },
+ {
+  "id": "M6.24",
+  "decision": "part",
+  "part": "1.6.9",
+  "reason": "The Ledger's Open list says what he carries, in words (A5)."
+ },
+ {
+  "id": "M6.25",
+  "decision": "part",
+  "part": "6.2.2"
+ },
+ {
+  "id": "M6.26",
+  "decision": "part",
+  "part": "6.2.5"
+ },
+ {
+  "id": "M6.27",
+  "decision": "part",
+  "part": "6.2.1"
+ },
+ {
+  "id": "M6.30",
+  "decision": "part",
+  "part": "6.2"
+ },
+ {
+  "id": "M6.31",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "Haggling without a meter: three offers in talk at most (A30)."
+ },
+ {
+  "id": "M6.35",
+  "decision": "part",
+  "part": "6.6",
+  "reason": "Prompts follow the device last used."
+ },
+ {
+  "id": "M6.36",
+  "decision": "part",
+  "part": "6.1"
+ },
+ {
+  "id": "M6.37",
+  "decision": "part",
+  "part": "6.1.1",
+  "reason": "The acts themselves are street manners (1.4.7)."
+ },
+ {
+  "id": "M6.38",
+  "decision": "part",
+  "part": "6.1",
+  "reason": "Switches for prompts, first hints and chatter subtitles; settings in 8.3."
+ },
+ {
+  "id": "M7.5",
+  "decision": "part",
+  "part": "7.9"
+ },
+ {
+  "id": "M7.6",
+  "decision": "part",
+  "part": "3.4",
+  "reason": "Few and chosen, never a taxi sim (canon 19 Nov)."
+ },
+ {
+  "id": "M7.7",
+  "decision": "part",
+  "part": "2.17",
+  "reason": "Money arrives as the front's man brings it, short if he is (A15)."
+ },
+ {
+  "id": "M7.8",
+  "decision": "new",
+  "new_key": "crew-pay",
+  "new": {
+   "parent": "2.11 (non-leaf, beside 2.11.2)",
+   "name": "Crew pay and the cut",
+   "what": "What each man is paid for a shift or a job, from which pot, and what short or late pay does to him.",
+   "felt": false,
+   "track": "both",
+   "gameplay": true,
+   "design": "A driver gets a weekly wage from the fare book (DESIGN 9); a man on a night job gets a cut agreed in a line of talk before it, paid from the tin. Going alone keeps the whole take but brings no second man. Paid short or late, his loyalty falls and he asks for it first, the sign before breaking (DESIGN 12); paid fairly, he holds longer. No split screen: every payment is a person and a flow in the flows ledger.",
+   "test": "S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger."
+  }
+ },
+ {
+  "id": "M7.9",
+  "decision": "part",
+  "part": "2.7",
+  "reason": "Two pots: fares in the book, night money in the tin."
+ },
+ {
+  "id": "M7.10",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "A purse or drawer pays only what it holds; searching for a home's stash is 1.6.2."
+ },
+ {
+  "id": "M7.11",
+  "decision": "part",
+  "part": "2.7.4",
+  "reason": "£23.50 and the Friday rent (DESIGN 9)."
+ },
+ {
+  "id": "M7.13",
+  "decision": "part",
+  "part": "1.6.10"
+ },
+ {
+  "id": "M7.17",
+  "decision": "part",
+  "part": "1.3.11",
+  "reason": "Marks heal on the clock; the doctor who asks no questions charges money (A21) while DESIGN 7 says hospital costs days: the two are to be reconciled inside this part (hospital days, the doctor money)."
+ },
+ {
+  "id": "M7.30",
+  "decision": "part",
+  "part": "1.6.9"
+ },
+ {
+  "id": "M7.31",
+  "decision": "part",
+  "part": "1.1.4",
+  "reason": "Carrying a load changes how he moves and is seen."
+ },
+ {
+  "id": "M7.35",
+  "decision": "part",
+  "part": "7.11"
+ },
+ {
+  "id": "M7.36",
+  "decision": "part",
+  "part": "2.7"
+ },
+ {
+  "id": "M7.37",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "A30."
+ },
+ {
+  "id": "M7.39",
+  "decision": "part",
+  "part": "2.12.5",
+  "reason": "The office fills as he rises; no upgrade shop."
+ },
+ {
+  "id": "M7.41",
+  "decision": "part",
+  "part": "1.3"
+ },
+ {
+  "id": "M7.42",
+  "decision": "part",
+  "part": "7.2",
+  "reason": "Nothing forces him out; jobs run in windows, not minutes."
+ },
+ {
+  "id": "M7.43",
+  "decision": "part",
+  "part": "1.1.7",
+  "reason": "Light a cigarette as a way to stop and blend in; no meter effect."
+ },
+ {
+  "id": "M8.1",
+  "decision": "part",
+  "part": "7.8"
+ },
+ {
+  "id": "M8.2",
+  "decision": "part",
+  "part": "6.4",
+  "reason": "Save and load in the menus, on top of the autosave (7.8)."
+ },
+ {
+  "id": "M8.3",
+  "decision": "part",
+  "part": "6.4",
+  "reason": "Save and load in the menus; reloading never stopped (D35)."
+ },
+ {
+  "id": "M8.4",
+  "decision": "part",
+  "part": "7.8"
+ },
+ {
+  "id": "M8.5",
+  "decision": "part",
+  "part": "7.8"
+ },
+ {
+  "id": "M8.6",
+  "decision": "part",
+  "part": "7.8",
+  "reason": "Continue returns him where he left (ER-SAVE-02)."
+ },
+ {
+  "id": "M8.8",
+  "decision": "part",
+  "part": "8.2",
+  "reason": "A small saving sign is part of saves that never break."
+ },
+ {
+  "id": "M8.9",
+  "decision": "part",
+  "part": "8.3.1",
+  "reason": "Presets in 8.3; field of view and single settings here."
+ },
+ {
+  "id": "M8.10",
+  "decision": "part",
+  "part": "8.5",
+  "reason": "First launch: sensible size, presets, then brightness and scale."
+ },
+ {
+  "id": "M8.11",
+  "decision": "part",
+  "part": "8.1"
+ },
+ {
+  "id": "M8.12",
+  "decision": "part",
+  "part": "8.1.1",
+  "reason": "Never under 30 (ER-PERF-01)."
+ },
+ {
+  "id": "M8.13",
+  "decision": "part",
+  "part": "8.1.2"
+ },
+ {
+  "id": "M9.1",
+  "decision": "out",
+  "reason": "A replay editor feeds neither the verbs nor the town's memory (canon, smallest budget); the optional presentation floor names photo mode only (ruling 23 Sep)."
+ },
+ {
+  "id": "M9.2",
+  "decision": "part",
+  "part": "6.8"
+ },
+ {
+  "id": "M9.4",
+  "decision": "part",
+  "part": "6.6",
+  "reason": "Rebinding."
+ },
+ {
+  "id": "M9.5",
+  "decision": "part",
+  "part": "6.1.2",
+  "reason": "Style choices sit with the text options in 8.4."
+ },
+ {
+  "id": "M9.6",
+  "decision": "part",
+  "part": "8.2.1"
+ },
+ {
+  "id": "M9.7",
+  "decision": "part",
+  "part": "7.10",
+  "reason": "If rare late guns need it, aim help is one more assist, off by default (A6)."
+ },
+ {
+  "id": "M9.9",
+  "decision": "part",
+  "part": "6.5"
+ },
+ {
+  "id": "M9.10",
+  "decision": "out",
+  "reason": "Typed commands are cut as a way to act (DESIGN 18); the tester's skip lives in the job template (3.5.6)."
+ },
+ {
+  "id": "M9.11",
+  "decision": "part",
+  "part": "8.4",
+  "reason": "Motor options: toggles for held and repeated inputs."
+ },
+ {
+  "id": "M10.2",
+  "decision": "part",
+  "part": "10.2",
+  "reason": "Which storefronts beyond Steam is decided with the store page."
+ },
+ {
+  "id": "M10.4",
+  "decision": "part",
+  "part": "10.6"
+ },
+ {
+  "id": "M10.5",
+  "decision": "out",
+  "reason": "One full release with new districts in free or paid updates (ruling 28 Oct, 10.6); outfit and car packs feed neither the verbs nor the town's memory (canon, smallest budget).",
+  "question": "Paid editions or add-on packs at release: (a) none, one edition, recommended; (b) a deluxe edition of outfits and cars."
+ }
+]

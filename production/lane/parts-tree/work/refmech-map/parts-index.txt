@@ -1,0 +1,354 @@
+0 | LEDGER | The whole game: a 1990 British port-town crime RPG in Unreal 5.8, proved first in a browser prototype. | VISION.md; DESIGN.md | track both
+  1 | What the player does with his hands | The verbs: moving, driving, fighting, being seen, chases, jobs, the crew. | DESIGN §1, §3 to §7, §12 | track both
+    1.1 | Moving on foot | Walking the town with the camera: the verb under every other verb. | DESIGN §17 camera, ER-INPUT-01 | track both
+      1.1.1 | Walk, run and turn | How Tom starts, stops, turns and runs on keys and pad; weight without lag. | DESIGN §17 (input only); feel not designed | track both
+      1.1.2 | On-foot camera follow | The street camera following Tom as he walks, runs and turns, never inside a wall. | DESIGN §17 | track both
+      1.1.3 | Doors, stairs and thresholds | Going through doors, up stairs and into rooms without stalls; no jump. | DESIGN §1, §6 rooms | track both
+      1.1.4 | Carrying | Holding a load (suitcase, holdall, envelope, a box) so it shows on him and changes how he moves and is seen. | DESIGN §3, §15 (the carry) | track both
+      1.1.5 | Hiding and keeping out of sight | Using doorways, shadow, standing still and turning away so fewer people see him; no crouch-walk stealth game. | DESIGN-ADDENDUM-2026-11-20 §A1 (new) | track both
+      1.1.6 | Tailing on foot | Following a person without being made, to learn a routine. | DESIGN §4 Tails; DESIGN-ADDENDUM §A2 | track both
+      1.1.7 | Stopping and blending in | Sit on a bench or wall, lean in a doorway, light a cigarette, wait at a bus stop: standing still without looking suspicious. | DESIGN-ADDENDUM-2026-11-20 §A10 | track both
+      1.1.8 | Vaulting low walls and fences | A context vault over low walls, yard fences and bins at set places; no jump key. | DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer) | track both
+    1.2 | Driving | The cab and other cars: at AAA quality as the end state, never a driving game. | DESIGN §5 | track both
+      1.2.1 | Car handling | Acceleration, braking, steering, grip and sway: the feel of a 1990 car, fun first. | DESIGN §5; driving study rounds 1 to 3 | track both
+      1.2.2 | Car camera | The chase camera behind the car, widening with speed, never inside anything. | DESIGN §17 | track both
+      1.2.3 | Getting in and out | Doors, seats, a blocked door, passengers getting in and out. | DESIGN §5 | track both
+      1.2.4 | Crashes, damage and unsticking | Damage in stages by closing speed, a car that will not drive on, never stuck, the firm fetches it. | DESIGN §5 | track both
+      1.2.5 | Cars and people | A car can knock a person down and hurt them badly, never kills; then stop and help or drive off. | DESIGN §5 | track both
+      1.2.6 | Tailing and being tailed by car | Following a car without being made; a car in the mirror. | DESIGN §5 wrinkles; DESIGN-ADDENDUM §A2 | track both
+      1.2.7 | Driving with passengers | Fares and crew in the car; talk while driving; a sit-down in the back seat. | DESIGN §5, §11 staging | track both
+      1.2.8 | Riding as a passenger | Kevin, Terry or a crewman drives Tom; the ride can be skipped as passed time. | DESIGN-ADDENDUM-2026-11-20 §A24 | track both
+      1.2.9 | Repairs, plates and paint | The firm fetches and mends a wrecked cab; Shaun Hewson's paint makes a cab not look like a cab; plates are what witnesses note. | DESIGN-ADDENDUM-2026-11-20 §A24 | track both
+      1.2.10 | Taking a parked car | Getting into a car that is not his by force (a window, a tool), loud, no minigame; the owner reports it. | DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer) | track both
+    1.3 | Fighting | Fists first, things to hand, carried weapons, guns rare and last; the whole street watches. | DESIGN §7; game-design/combat-design.md | track both
+      1.3.1 | Blows and contact | Strike timing and how contact is sold: freeze, camera close-in, shake, four sound layers. | DESIGN §7 Feel | track both
+      1.3.2 | Reading and answering blows | Block and dodge on sight of a readable wind-up. | DESIGN §7; DESIGN-ADDENDUM-2026-11-20 §A29 (guard, slip, cou | track both
+      1.3.3 | Targeting without lock-on | Tom hits the man the stick points at, sliding to range in the wind-up. | DESIGN §7 | track both
+      1.3.4 | The lower rungs | Stare, square up, threaten, shove or grab as acts with the seven slots; most confrontations end here. | DESIGN §7 | track both
+      1.3.5 | The street as a weapon | Walls, doorways, railings, car bonnets, steps, kerbs and the quay edge as paired moves. | DESIGN §7 | track both
+      1.3.6 | Things to hand and carried weapons | Chair, brick, dustbin lid, pipe; cosh, knuckleduster, knife, bat: seen, found, got rid of. | DESIGN §7 | track both
+      1.3.7 | Condition without bars | Posture, breath, a dropped guard, blood and a limp show a man's state; knock-outs; the fall rule. | DESIGN §7 | track both
+      1.3.8 | Odds, crowds and nerve in a fight | Two against one is deadly; men stand or give way by nerve; watchers keep their distance. | DESIGN §7 | track both
+      1.3.9 | How a fight ends | Back off, run, down, police, people step in; Tom beaten comes round with the cost said. | DESIGN §7 Death | track both
+      1.3.10 | Firearms | Rare, late guns: drawing, firing, what a shot does and who hears it. | DESIGN §7 Weapons, dial | track both
+      1.3.11 | Marks that last | Bruises, a cut lip and a limp stay on a beaten Tom for days; others see them; a doctor who asks no questions. | DESIGN-ADDENDUM-2026-11-20 §A21 | track both
+      1.3.12 | Fighter types | Authored kinds of opponent: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps distance. | DESIGN-ADDENDUM-2026-11-20 §A29 | track both
+    1.4 | Being seen | The felt side of the town's eyes: the player's three questions answered from picture and sound. | DESIGN §2 | track both
+      1.4.1 | Reading watchers | Head turns, longer looks, a pause in a walk, a figure at a lit window: a cue before knowing. | DESIGN §2 | track both
+      1.4.2 | Light and dark as cover | Tom can read how lit he is; dark doorways hide him; the dark is readable, not blind. | DESIGN §2, §6 | track both
+      1.4.3 | Hearing his own noise | His own noise mixed by the same number as its reach; a street that has noticed goes quiet. | DESIGN §2, §17 | track both
+      1.4.4 | Give-aways and the coat | Coat, blood, dirt, weapon in hand, running, the car: what makes him easier to know, and how he changes it. | DESIGN §2 'What gives him away' | track both
+      1.4.5 | Reaching the witness | Catching a witness on the walk to the phone box: talk round, pay, threaten, help, or let go. | DESIGN §2 'The walk' | track both
+      1.4.6 | Seeing assist | An optional outline of people Tom can see who are facing him; off by default. | DESIGN §2 | track both
+      1.4.7 | Street manners | A nod, a greeting, a hard look, a shove on one key: the smallest acts, answered by the person. | DESIGN-ADDENDUM-2026-11-20 §A10 | track both
+      1.4.8 | Drawing a watcher away | A noise or a thrown thing turns a watcher's head or moves him off a door. | DESIGN-ADDENDUM-2026-11-20 §A23 | track both
+    1.5 | Chases | On foot and by car; every chase ends, caught or lost. | DESIGN §7, §8 | track both
+      1.5.1 | Fleeing on foot | Running from a constable or men through alleys and yards; lost once unseen 7 s or 70 m. | DESIGN §8 The beat | track both
+      1.5.2 | Pursuing on foot | Chasing a runner fare, a man who ran from a fight, a witness heading for the phone. | DESIGN-ADDENDUM §A3 | track both
+      1.5.3 | Car chases | A refused stop, a hit-and-run, a rival's car: chased or chasing in the cab. | DESIGN §5 | track both
+      1.5.4 | Pursuers | How constables, rivals' men and police cars chase, shout, cut corners and give up. | DESIGN §8 | track both
+    1.6 | Jobs with the hands | The work itself: getting in, searching, taking, fronting up, minding, getting ready, getting rid. | DESIGN §4 | track both
+      1.6.1 | Getting in | A key lent or copied, a back way a routine leaves open, or force that is loud and shows; no lockpicking game. | DESIGN §4 | track both
+      1.6.2 | Searching and taking | Drawers, cupboards, safes, desks: what is found and taken, and the time it takes in a room. | DESIGN-ADDENDUM §A4 | track both
+      1.6.3 | Lifts and the hot mark | Taking goods; a hot mark that fades with value and distance; the owner never forgets. | DESIGN §4 | track both
+      1.6.4 | Fronting up | Collections and pressure in person: standing over a man, between talk and fists. | DESIGN §4, §7 lower rungs | track both
+      1.6.5 | Minding and waiting | Standing at a door, sitting in the car, being seen at someone's shoulder. | DESIGN §4 Minding | track both
+      1.6.6 | Getting ready | Coat on, two things in the pockets, which car, who comes: the minute before a job. | DESIGN §1 evening, §6, §7 | track both
+      1.6.7 | Getting rid of things | Weapons dumped, blood washed with water and privacy, goods sold or ditched, a body moved. | DESIGN §2, §7; body moving as a crew verb (§12) | track both
+      1.6.8 | Using the world | Object interaction: the phone box, the office radio and phone, doors, switches, the tin, the board. | DESIGN §17 Screen | track both
+      1.6.9 | Coat, pockets and office storage | What Tom carries and where things are kept: two pockets under the coat, a holdall, storage at the office. | DESIGN §7 Weapons; DESIGN-ADDENDUM §A5 | track both
+      1.6.10 | Tom's wardrobe | Buying and changing clothes: the three outfits of the rise, the dark coat, a second coat after a deed, a barber. | DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21 | track both
+      1.6.11 | Casing a place | Watching a place by day to learn its hours, who keeps the key, which way is left open. | DESIGN-ADDENDUM-2026-11-20 §A23 | track both
+    1.7 | Running the crew | Tom's power is people: orders in the field, sending in Act II, the board. | DESIGN §12 | track both
+      1.7.1 | Orders in the field | With me, wait here, watch that, fetch him, take this there, drive, lean on him. | DESIGN §12 Orders | track both
+      1.7.2 | Sending (the eight verbs) | D56's owed verbs through named men: hurt, plan, frame, lean on a witness, move a body, discipline, hit property, vouch. | DESIGN §12 | track both
+      1.7.3 | The board | A chalkboard in the office: cars, drivers, ranks, shifts; a minute a day at most. | DESIGN §12 | track both
+      1.7.4 | Men at his side | Crew who follow, ride along and stand in a fight with him, without blocking doors. | DESIGN-ADDENDUM-2026-11-20 §A16 | track both
+  2 | The town under the hood | The engine: routines, perception, memory, gossip, witnesses, police, money, debts, the outfit, rivals, crew, position. | DESIGN §2, §8 to §14 | track both
+    2.1 | Routines and the living town | Everyone keeps a day, with Tom or without him. | DESIGN §2 'The town lives without him' | track both
+      2.1.1 | Schedules of named people | Routines with places, each place with a cap and an owner so no doorway jams. | DESIGN §2; prototype rules.js schedules | track both
+      2.1.2 | The crowd's clock windows | Unnamed people by hour, their hours from 1990 research. | DESIGN §2 (hours owed) | track both
+      2.1.3 | Off-screen life | Unseen people go on perceiving, remembering and talking. | DESIGN §2 | track both
+      2.1.4 | Weather and hour change who is out | Rain empties the street; night thins it; the same way every time. | DESIGN §6 | track both
+      2.1.5 | Crowd movement and avoidance | People walk round each other and round Tom, queue, step aside, never clip through. | not designed | track both
+      2.1.6 | The town's calendar | Market day, Saturday's match, Sunday, and two dated days in the window (Bonfire Night with adults only, Remembrance Sunday). | DESIGN-ADDENDUM-2026-11-20 §A20 | track both
+    2.2 | Perception | The moat: every act exposes seven slots; identification climbs five rungs. | DESIGN §2 | track both
+      2.2.1 | Seven slots per act | Precursor, draw, act, victim, actor, flight, aftermath, each caught or missed. | DESIGN §2; C# Core | track both
+      2.2.2 | Identification ladder | Someone, a shape, a mark, a face, recognition; the top rung needs someone who knows him. | DESIGN §2; C# Core | track both
+      2.2.3 | Sight by distance and light | Shape at 35 m, mark at 18 m, face at 8 m; light scales it; glance 0.35 s, knowing 1.2 s. | DESIGN §2 | track both
+      2.2.4 | Sound reach | How far a noise carries by act, hour and rain. | DESIGN §2 | track both
+      2.2.5 | Give-away rules | What makes a witness catch more: running, the same coat, blood, dirt, a weapon, wrong clothes, the car, a camera. | DESIGN §2 | track both
+      2.2.6 | Ground rules and trespass | Whose ground it is (public, shop hours, private, forbidden) and the warnings given. | DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10 | track both
+    2.3 | Memory | Permanent per-person memory. | DESIGN §2 | track both
+      2.3.1 | Per-person memory store | What each person saw, heard and was told, kept for good across saves and skipped time. | DESIGN §2; C# Core | track both
+      2.3.2 | Witness certainty | A noise or a shape is suspicion, never 'he did it'. | DESIGN §2 | track both
+    2.4 | Gossip | Talk passing between people who meet; the engine, never the show. | DESIGN §2 | track both
+      2.4.1 | Transmission | Only between people who know each other and meet, within 6 m, weaker with each telling. | DESIGN §2; C# Core | track both
+      2.4.2 | Cooling by kind | A deed stays hot in talk 1 to 7 game days by kind; a body never cools; memory never cools. | DESIGN §2 (a town task with new golden rows) | track both
+      2.4.3 | Showing what people know | Notice, watch, comment, avoid, refuse, confront: knowledge shown, not displayed. | DESIGN §2 | track both
+      2.4.4 | It comes back | Every plainly seen deed is said to Tom's face by somebody he has met. | DESIGN §2 | track both
+      2.4.5 | The paper and the news | Alison Sedman's stories in the local paper: what she knows, printed; read in the caff and talked about. | DESIGN-ADDENDUM-2026-11-20 §A19 | track both
+    2.5 | Witnesses after a deed | What people do once they have seen something. | DESIGN §2 | track both
+      2.5.1 | The walk to tell | A witness who means to tell sets off to a friend, a phone box or the station, and is seen going. | DESIGN §2 | track both
+      2.5.2 | Stopping a witness | Talked round, paid, threatened, helped or let go; a threat stops a report, never the talk. | DESIGN §2, §8 | track both
+      2.5.3 | Crowd reaction to a deed | Near people look, some gather and drift back; witnesses talk quieter for a game hour. | DESIGN §2 | track both
+    2.6 | Police and law | A pressure Tom can read and answer, never the end of the game. | DESIGN §8 | track both
+      2.6.1 | The beat constable | A constable walks Quay Street and the quay at night and challenges on suspicion. | DESIGN §8 (new system needing its place in PLAN.md) | track both
+      2.6.2 | Challenge and search | Stand and be searched (what he finds he keeps), or run. | DESIGN §8 | track both
+      2.6.3 | Statements and the arrest rule | Talk brings questions, never an arrest; an arrest needs a named statement or an officer who saw. | DESIGN §8; C# Core | track both
+      2.6.4 | Custody as hours | Hours by deed, the duty solicitor, the coat kept, the street sees him go. | DESIGN §8 | track both
+      2.6.5 | DS Ellis and the four stages | Nothing, asking round, investigating, manhunt, each with its sign. | DESIGN §8 | track both
+      2.6.6 | Armed response and the dial's police | Armed officers come slowly for gun calls; armed cars and stop and search at War. | DESIGN §7 | track both
+      2.6.7 | Traffic police and stops | A patrol car; reckless driving in its sight starts a stop; the plate is noted. | DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12 | track both
+      2.6.8 | Bought men and squaring the law | A named officer who can be paid or leaned on; never the force as a whole. | DESIGN-ADDENDUM-2026-11-20 §A13 | track both
+      2.6.9 | Charges, bail and the office searched | A charge joins Ellis's case and the endings; bail; at the investigating stage, one search of the office. | DESIGN-ADDENDUM-2026-11-20 §A13 | track both
+    2.7 | Money | Two pots: clean money in the fare book, night money in the tin. | DESIGN §9 | track both
+      2.7.1 | Clean money and the fare book | The firm's clean record, spent anywhere. | DESIGN §9 | track both
+      2.7.2 | Night money and the tin | Money that cannot be explained. | DESIGN §9 | track both
+      2.7.3 | The wash | At the count with Sheila: the fare book can hide £10 plus 80% of fares really driven since the last wash. | DESIGN §9 | track both
+      2.7.4 | Rent and running costs | Friday rent, wages, cars off the road. | DESIGN §9 | track both
+      2.7.5 | Purses, tills and shops | People pay only what they hold; shops keep hours, restock weekly, haggle, refuse, remember. | DESIGN §9; DESIGN-ADDENDUM-2026-11-20 §A30 (haggling) | track both
+      2.7.6 | Fencing | Rita's back room buys hot goods at about 0.4 of an honest price. | DESIGN §4, §9 | track both
+      2.7.7 | Flows ledger | Every pound traced through a sum of flows. | DESIGN §9 | track both
+      2.7.8 | Spending | What money buys and where: tobacco, food at the caff, tools at the ironmonger, clothes, a solicitor, a bribe, a car. | DESIGN-ADDENDUM-2026-11-20 §A21 | track both
+    2.8 | Debts | Mickey's debt book. | DESIGN §4 | track both
+      2.8.1 | The five debtors | Darren £22, Wayne £30, Lee £15, Julie £9, Dennis £80: five debts, five lessons. | DESIGN §4; first-week designs | track both
+      2.8.2 | Partial payment and the book | A debtor pays what his purse holds; squeezing or letting go is told on the street. | DESIGN §4 | track both
+    2.9 | The outfit and the arrangement | The run to the ferry landing that Mickey kept. | DESIGN §15, §16 | track both
+      2.9.1 | The asks | Asks on nights one, three, five and seven; the envelope; the cut. | DESIGN §6, §15, §16 | track both
+      2.9.2 | Keeping or ending the arrangement | Keeping brings night money, cover and growing asks; ending brings freedom without cover. | DESIGN §16 | track both
+    2.10 | Rivals | Three heads, each going after a different ledger. | DESIGN §13 | track both
+      2.10.1 | Rival ladders | Noticed, a visit, pressure, a threat, a sit-down; no rung skipped. | DESIGN §13 | track both
+      2.10.2 | Rival eyes | Each knows only what its own people saw or heard. | DESIGN §13 | track both
+      2.10.3 | Pressures and answers | The Widow taxes drivers and poaches, Agar sends paper, Cammack brings heat; pay, defy or counter. | DESIGN §13 | track both
+      2.10.4 | The Fixer | Keith Garbutt sells true reads, a meeting and one truce. | DESIGN §13 | track both
+    2.11 | Crew under the hood | Men who know: needs, nerve, loyalty, fates. | DESIGN §12 | track both
+      2.11.1 | Recruiting | Meet a need (slow, holds) or spend a hook (quick, brittle). | DESIGN §12 | track both
+      2.11.2 | Nerve, loyalty and breaking | Past his nerve a man talks; the sign comes first. | DESIGN §12 | track both
+      2.11.3 | Crew fates | Poached, frightened, arrested, killed for good. | DESIGN §12 | track both
+    2.12 | Position in the town | The rise under the hood: never a number. | DESIGN §14 | track both
+      2.12.1 | The name ladder | The new owner, Nowak, Tom, Tommy; knowing, not liking; Sheila's exception. | DESIGN §14 | track both
+      2.12.2 | Rung table | What he holds and what opens at each of four rungs. | DESIGN §14 | track both
+      2.12.3 | Access and soft keys | Standing, dress, an introduction, an appointment the Fixer brokers. | DESIGN §14 | track both
+      2.12.4 | Greetings by regard | How the rise is heard in the street: afraid, angry, knows and likes him, his appearance, neutral. | DESIGN §11 | track both
+      2.12.5 | Property that reacts | The office fills, the flat stops being Mickey's, a lock-up, a second phone line. | DESIGN §14 | track both
+    2.13 | The escalation dial | Fists, shown, fired, war: a fact in the town's memory, not a meter. | DESIGN §7 | track both
+    2.14 | Each person's temper | Nerve, loyalty and readiness to talk for each named person. | QUESTIONS 3 (recommended) | track both
+    2.15 | The firm runs without him | Kevin drives days, Terry nights; the book fills slowly; the firm's name rises and falls. | DESIGN §5 | track both
+      2.15.1 | Fleet and drivers | Buying a car, hiring and losing drivers, shifts on the board. | DESIGN §12, §14; DESIGN-ADDENDUM-2026-11-20 §A14 | track both
+      2.15.2 | Ranks and accounts | Winning a rank, the cold-store shift contract, regular customers. | DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A14 | track both
+      2.15.3 | Other firms on the ranks | The other minicab firm people ring after a hit-and-run; a presence, not a fourth rival. | DESIGN-ADDENDUM-2026-11-20 §A14 | track both
+    2.16 | Death, bodies and the missing | A killing is permanent and remembered forever; a man who stops keeping his routine becomes the town's question. | DESIGN §7 Death | track both
+    2.17 | Fronts and rackets held | Taking a share of a business, putting a man in, money and trouble coming back; run through people, never sliders. | DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A15 | track both
+    2.18 | Ambulance and the hospital | Someone hurt is taken to hospital after a call from the phone box; stopping to help means making that call. | DESIGN-ADDENDUM-2026-11-20 §A22 | track both
+    2.19 | Lasting marks on the town | A forced door shows for a day; glass stays broken until mended; his cars on the ranks; things stay where they were left. | DESIGN §4 | track both
+  3 | Story and people | One main story with two or three endings, the cast, side stories, fares, jobs, dialogue. | DESIGN §16 | track both
+    3.1 | The main story | Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due. | DESIGN §16; story outline 28 Sep | track both
+      3.1.1 | Act I, The Inheritance | Week one, five threads, Sunday's question: wind it down, take it over, or refuse to say. | DESIGN §16; game-design first-week designs | track both
+      3.1.2 | Act II, The Rise and the Squeeze | About seven game weeks; beats fire on states; the guaranteed collision; a sit-down with one head. | DESIGN §16 (proposal for the writing) | track both
+      3.1.3 | Act III, The Ledger Comes Due | A VAT inspection week: one item each morning, Ellis's trade, a successor's offer. | DESIGN §16 | track both
+      3.1.4 | The endings | Two or three states (the Kingdom, the Straight Life, Burn Both), each with a better and a plainer way. | DESIGN §16 (three shown, five kept underneath) | track both
+      3.1.5 | Ending signs and Tom's reading | Every cost that decides the ending shows its sign before it decides. | DESIGN §16 | track both
+      3.1.6 | Mickey's past | The real book, the warehouse fire and its street version; the truth is never the street's. | DESIGN §16; story outline | track both
+    3.2 | The cast | Named people. | DESIGN §16 cast | track both
+      3.2.1 | Principals | Sheila, Ron, Darren, Ada, June, Father Walsh, Alison, Danby, Ellis, Agar, Jensen, Cammack, Garbutt. | canon; casting sheets; DESIGN §16 | track both
+      3.2.2 | The firm's people | Pauline on the radio, Kevin and Terry driving. | DESIGN §5, §12 | track both
+      3.2.3 | The thirty regulars | The cards as written, each with a routine and own lines. | regular cards; DESIGN §11 | track both
+      3.2.4 | The crowd | Unnamed townspeople, adults only, by hour. | DESIGN §2 | track both
+      3.2.5 | Someone worth being honest for | Alison Sedman or Philip Danby: one friendship that can hold. | DESIGN §16 (Danby still to write) | track both
+      3.2.6 | One complete person | The assembled unit: face, body, hair, clothes, voice, routine, lines, memory, measured as one cost. | KILN-TO-GAME-PLAN (Ron as one complete person, n16-2) | track unreal
+    3.3 | Side stories | 25 to 40 found on foot, no markers, each 3 to 5 steps, ending in something the town knows. | DESIGN §4; drafts of 8 Nov | track both
+    3.4 | Fares | Few and chosen, each a person with something going on, feeding the crime; never a taxi sim. | DESIGN §5 | track both
+      3.4.1 | Fare people | Named passengers going where their routine takes them at that hour. | DESIGN §5 | track both
+      3.4.2 | Wrinkles | The talker, the parcel, the tail, the runner, the wait, the hurry, the face. | DESIGN §5 | track both
+      3.4.3 | Pauline and the radio | Directions by landmark, repeated on a key; nothing said on it is private. | DESIGN §5 | track both
+    3.5 | Job content | The authored jobs. | DESIGN §4 | track both
+      3.5.1 | Carries | The envelope to the landing first, then later carries. | DESIGN §4, §15 | track both
+      3.5.2 | Collections | The five debts and later ones. | DESIGN §4 | track both
+      3.5.3 | Break-in sites | Rooms labelled by privacy with a night rule, each with its keys. | DESIGN §4 | track both
+      3.5.4 | Tails, minding and lifts content | Authored instances of the smaller families. | DESIGN §4 | track both
+      3.5.5 | Sit-downs | The steps that decide an act, in talk; can be in the back of his own cab. | DESIGN §11, §16 | track both
+      3.5.6 | Job template and step states | A job as a small graph of saved states: windows, landmarks, outcomes, a Ledger line per step, a tester's skip. | DESIGN §4 | track both
+      3.5.7 | How jobs reach him | Callers at the office, the phone, a message left with Sheila or Pauline, a man waiting by the car. | DESIGN-ADDENDUM-2026-11-20 §A17 | track both
+    3.6 | Dialogue | Talk content and its system; the moat, never the main thing. | DESIGN §11 | track both
+      3.6.1 | Live talk | Any named person can be spoken to live; a short thinking sound; brush-off when slow. | DESIGN §11; talk system in C# | track both
+      3.6.2 | Claim check | A character says only what the simulation knows; a sentence naming a fact the speaker lacks is refused. | DESIGN §11 | track both
+      3.6.3 | Written street lines | Own lines for Ron, Darren, Walsh, June; shared for Sheila, Alison, Ada; at most every 45 s. | DESIGN §11 | track both
+      3.6.4 | Crowd lines by situation | Greetings by regard, bumping, neighbours, talking to oneself at work, rain. | DESIGN §11 | track both
+      3.6.5 | Decision lines | The game's own yes, no and a line that keeps talking; only a plain yes; asked twice if permanent. | DESIGN §11 | track both
+      3.6.6 | Suggested lines | Tab on a keyboard, shown at once on a controller; Mixed sourcing. | DESIGN §11 | track both
+      3.6.7 | AI notice and line report | The AI notice once before the first talk; any live line reported from pause or a key. | DESIGN §11 | track both
+      3.6.8 | How the player speaks | Typing on a keyboard, suggested lines on a pad, whether Tom is heard aloud. | DESIGN-ADDENDUM-2026-11-20 §A25 | track both
+    3.7 | Street happenings | Small authored incidents placed on the clock and the town's state: a row on the pavement, a breakdown, a shoplifter, a lost tourist. | DESIGN-ADDENDUM-2026-11-20 §A18 | track both
+  4 | The place | Meridian's Hook and its docks: one port, dense, known by heart. | canon; atlas-01; DESIGN §6 | track both
+    4.1 | The Hook's layout | The map as data with testable layout rules. | atlas-01 | track both
+      4.1.1 | Quay Street | The built street: the six-bay parade, the shop block, the terraces, Mickey's. | canon; atlas-01 | track both
+      4.1.2 | The rest of the Hook | Streets, alleys, yards and back ways round Quay Street. | atlas-01 (rest of the Hook as data) | track both
+      4.1.3 | Landmarks and signs | Street signs and the landmarks people give directions by. | DESIGN §4; street_signs tool | track both
+      4.1.4 | The soft edge | A fare out of the Hook is driven to the west or north road and comes back as time passed. | DESIGN §5 | track both
+      4.1.5 | Street build rules | Width, props per 10 m, kit reuse, view ends, sightlines, one layer per street state. | study 04 (rules, not yet a spec) | track unreal
+    4.2 | The docks | The Hook's working waterfront (canon, 19 Nov). | canon; atlas proposal | track both
+      4.2.1 | Ferry landing and quay | Where Tom arrives; where the envelope goes. | DESIGN §15 | track both
+      4.2.2 | Old Basin, fish dock, cold stores | The working places and the packing shift. | DESIGN §5, §14; atlas proposal | track both
+      4.2.3 | Dock gate, customs, Harbour Board | The gate all three rivals want. | DESIGN §13 | track both
+      4.2.4 | The water's edge | Quay edges, ladders, the dock water: Tom never walks in; a man knocked in climbs out at a ladder. | DESIGN-ADDENDUM-2026-11-20 §A11 | track both
+    4.3 | Interiors | Rooms where jobs and stories go; every interior designed and photoreal (D14). | DESIGN §6 Rooms | track both
+      4.3.1 | Mickey's office and yard | The front room, radio, counter, the yard with two escapes. | DESIGN §6, §7, §8 | track both
+      4.3.2 | The flat above | Tom's home, Mickey's until it stops being. | DESIGN §6, §7, §8 | track both
+      4.3.3 | Shops and workplaces | The caff, Rita's back room, Hal's shop, the pawn, the launderette, the chandler. | DESIGN §6, §7, §8 | track both
+      4.3.4 | Homes | Ada's front room and other homes jobs and stories enter. | DESIGN §6, §7, §8 | track both
+      4.3.5 | Iveson's yard and hut | The scrapyard. | DESIGN §6, §7, §8 | track both
+      4.3.6 | The chapel and hall | Father Walsh's place; religion never a mechanic. | DESIGN §6, §7, §8 | track both
+      4.3.7 | The police station | Where custody happens. | DESIGN §6, §7, §8 | track both
+      4.3.8 | Where a beaten Tom wakes | The hospital ward and Grace Rinaldi's kitchen. | DESIGN §6, §7, §8 | track both
+    4.4 | Props and street furniture | Lamps, the phone box, bins, railings, bollards, signs. | TARGET-STREET-FURNITURE-2026-11-17; FURNITURE-SPECS | track unreal
+    4.5 | Traffic and parked cars | AI drivers that always brake for people; parked cars from the kit. | TRAFFIC-STAGE1-REFERENCE-MODEL; PLAN-PARKED-CARS | track both
+      4.5.1 | Traffic drivers | AI drivers at junctions, giving way, reacting to crashes and people; always braking for people. | TRAFFIC-STAGE1-REFERENCE-MODEL | track both
+      4.5.2 | Parked cars | Parked cars dressed along the kerbs from the car kit. | PLAN-PARKED-CARS-2026-11-17 | track unreal
+    4.6 | Vehicles | The firm's cabs, period cars, police cars and vans, all fictional. | car kit tools (car_kit, car_loft) | track unreal
+      4.6.1 | Car designs | Fictional 1990 makes that read as period without any real make. | car kit tools | track unreal
+      4.6.2 | Working vehicles | Vans, lorries, dock trucks, a bus as scenery, police cars, an ambulance. | not designed | track unreal
+    4.7 | Day and night | The clock's light: day and night now, four or five states later, no moving sun. | DESIGN §6 | track both
+    4.8 | Weather | Dry overcast, drizzle, rain; one wetness value drives look, sight, sound and who is out. | DESIGN §6; LIGHT-WEATHER-VALUES-2026-11-17 | track both
+    4.9 | 1990 detail | Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phone boxes. | STYLE-SHEET-1990-DRAFT | track both
+    4.10 | Pubs without drink and the closed school | Places that exist with no drink and no children. | canon | track both
+    4.11 | Animals and birds | Gulls and pigeons on a port street; dogs on a lead. | not designed | track both
+      4.11.1 | Yard dogs | A dog in a yard barks at a stranger: a witness by sound only, never hurt. | DESIGN-ADDENDUM-2026-11-20 §A23 | track both
+  5 | How it looks and sounds | Presentation: people, motion, places, light, sound, voices, music, camera, effects. | RULINGS The look; Faces; Clothes | track both
+    5.1 | Characters | People on screen. | casting sheets | track unreal
+      5.1.1 | Faces | MetaHuman faces cast from the casting sheets. | casting sheets | track unreal
+      5.1.2 | Bodies | Body types for the cast and crowd. | Kiln plan | track unreal
+      5.1.3 | Hair | Strands; no hair skill until one character passes the full gate. | hair pass list | track unreal
+      5.1.4 | Clothes | Kiln garments; three outfits across the rise and a dark coat for nights. | DESIGN §14; Kiln design note | track unreal
+      5.1.5 | Crowd variety | Many people without noticed repeats. | not designed | track unreal
+    5.2 | Animation | Movement. | RULINGS People's moves | track both
+      5.2.1 | Locomotion | Motion matching walk and run on Epic's Game Animation Sample. | RULINGS | track unreal
+      5.2.2 | Fight animation | Blows, reactions, falls; the source gets a lab test first. | combat design | track unreal
+      5.2.3 | Interaction animation | Doors, carrying, sitting, phones, car in and out, searching. | not designed as a list | track unreal
+      5.2.4 | Faces and mouths | Lip movement, expression, glances; audio-driven mouths for prepared lines. | RULINGS | track unreal
+      5.2.5 | Crowd and idle animation | Working, waiting, smoking, talking; idle breaks. | corner plan (n02-4) | track unreal
+      5.2.6 | Body language of knowing | Half-recognition, lying and having heard of Tom show in posture first. | D29; DESIGN §2 | track both
+      5.2.7 | Clip sourcing and cleanup | Library clips (Epic, MetaHuman, Mixamo, CMU), retargeting, foot-slide fixes. | RULINGS | track unreal
+      5.2.8 | Physical reactions and falls | Stagger, fall, being knocked down by a car, getting up: authored moves blended with physics. | DESIGN §7 | track unreal
+      5.2.9 | Live-talk faces | Mouths, gestures and glances for lines that are made live, not prepared. | RULINGS | track unreal
+    5.3 | Environment art | Buildings and ground. | Hook sheet | track unreal
+      5.3.1 | Building kits | Windows, doors, shopfronts, brick, Flemish bond. | kit specs | track unreal
+      5.3.2 | Materials and grime | A seeded wear layer; grime is the strategy (D53). | RULINGS | track unreal
+      5.3.3 | Wet street | Dark, glistening, mirroring sky and buildings; puddles are water. | RULINGS | track unreal
+      5.3.4 | Shop glass and windows | White frames, sash bars, sky in the glass; shop glass reflecting the street. | RULINGS | track unreal
+    5.4 | Lighting and picture | Light and grade. | RULINGS | track both
+      5.4.1 | Day exposure and sky | One stop darker, kept; the sky is a photograph. | RULINGS | track unreal
+      5.4.2 | Night lighting | Pools of lamp light with darkness between, lit windows, not one orange wash. | RULINGS | track both
+      5.4.3 | Grade, grain and depth of field | Presentation owed since D28. | not designed in detail | track unreal
+    5.5 | Sound | The street heard; sound carries the town's eyes. CC0 only (D26). | DESIGN §17 Sound | track both
+      5.5.1 | Footsteps and foley | Footsteps by surface and gait, cloth, handling. | DESIGN §17 | track both
+      5.5.2 | Doors and impacts | Doors that creak, hit and latch; a forced door the loudest thing in a quiet street. | DESIGN §17 | track both
+      5.5.3 | Street beds and states | Beds, capped one-shots and placed sources; four states of the hour. | DESIGN §17 | track both
+      5.5.4 | Rain and rooms | One rain value fades layers and halves voices; rooms change echo at the doorway. | DESIGN §17 | track both
+      5.5.5 | Car sound | 1990 by sound: engine note, automatic changes, squeal from 80% grip. | DESIGN §17 | track both
+      5.5.6 | Fight sound | Four layers landing within a frame of the blow. | DESIGN §17 | track both
+      5.5.7 | The mix | The quietest lead voice sets the mix; talk lowers the beds; silence the commonest music. | DESIGN §17 | track both
+    5.6 | Voices | Spoken lines. | RULINGS voices | track both
+      5.6.1 | Cast voices | Chosen voices per character, cast only on his yes. | RULINGS | track unreal
+      5.6.2 | Voice generation and watermark | Local voice program, prepared lines with acted references, the watermark kept. | RULINGS | track unreal
+      5.6.3 | Thinking sound and timing | A short thinking sound with a glance before an answer, cut when it starts. | RULINGS; DESIGN §11 | track both
+    5.7 | Music | Silence is the commonest music; never combat music. | DESIGN §17 (one line); DESIGN-ADDENDUM §A8 | track unreal
+      5.7.1 | Radio programmes and period songs | What plays on radios in cabs, shops and the office; the pirate radio station the brand bible owes. | not designed | track unreal
+    5.8 | Cameras and cut scenes | The camera system and the few short scenes. | DESIGN §17 | track both
+      5.8.1 | Camera rig by state | One arm read from rows: street, run, room, talk, fight, car; blends of a second or less. | DESIGN §17 | track both
+      5.8.2 | Cut scenes | Few, short, skippable; the ferry shot 20 s. | DESIGN §15 | track unreal
+      5.8.3 | Staged scenes in play | Scripted moments inside play: blocking, performance and timing of a story beat without taking control away. | DESIGN §11, §15 | track both
+    5.9 | Effects | Blood (light gore at most), rain, breath, smoke, broken glass. | not designed as a list | track unreal
+    5.10 | Art direction and look reference | The Hook sheet, grade targets, the floors and the KCD2 frames everything is judged against. | the Hook sheet | track unreal
+  6 | The interface and the Ledger | What is on screen: almost nothing, plus Tom's notebook and a paper map. | DESIGN §10, §17 | track both
+    6.1 | On screen in play | The minimal screen. | DESIGN §17 | track both
+      6.1.1 | The prompt | Names the person or thing ahead and in view. | DESIGN §17 | track both
+      6.1.2 | Subtitles | Only with their audio; large; switches for chatter subtitles. | DESIGN §17 | track both
+      6.1.3 | The belief line | A line low on screen when Tom comes to believe something new. | DESIGN §10 | track both
+      6.1.4 | Light and sound cues | The picture's corners follow the light value; no meters. | DESIGN §2 | track both
+      6.1.5 | Knowing the time | Tom's watch on a key, street clocks, the chapel bell by day: the hour without a screen clock. | DESIGN-ADDENDUM-2026-11-20 §A31 | track both
+    6.2 | The Ledger notebook | Tom's notebook of people and events: the one place he sees where he stands. | DESIGN §10; LEDGER-SCREEN-STUDY-2026-11-18 | track both
+      6.2.1 | People | What he knows of each, and what he believes they know of him, with how sure. | DESIGN §10 | track both
+      6.2.2 | Day book | Events in order; nothing erased; wrong beliefs struck through with day and reason. | DESIGN §10 | track both
+      6.2.3 | Open | Jobs, debts, promises and appointments, each naming a person and a landmark. | DESIGN §10 | track both
+      6.2.4 | Money in words | What he has and what is owed by Friday, in words. | DESIGN §10 | track both
+      6.2.5 | Tom's reading | On request and at each act's end: how things stand as Tom sees them, from signs he was given. | DESIGN §10 | track both
+    6.3 | The paper map | A map of the Hook that marks only places he has been or been told of. | DESIGN §10 | track both
+    6.4 | Menus | Title, pause, settings, save and load, credits. | DESIGN §17 | track both
+    6.5 | Teaching the player | Hints on first need or hesitation, each once; the interface appears piece by piece. | DESIGN §15 Teaching | track both
+    6.6 | Controls | Keyboard with mouse and a pad each drive everything; rebinding. | DESIGN §17 | track both
+    6.7 | Talk screen | Typing, suggested lines, the game's own decision lines, Leave always there. | DESIGN §11 | track both
+    6.8 | Photo mode | Optional presentation: a free camera to take pictures, off the play path. | not designed | track unreal
+    6.9 | Finding the way | Addresses, house numbers, street-name plates, passengers' 'left here', asking a stranger, a nudge when lost. | DESIGN §4 Guidance; DESIGN-ADDENDUM-2026-11-20 §A9 | track both
+    6.10 | Letters and papers in hand | Things to read: the paper, Agar's solicitor's letters, the VAT letter, notes, posters. | DESIGN-ADDENDUM-2026-11-20 §A19 | track both
+  7 | The game's shape | Pacing and structure: a minute, an evening, a week, three acts. | DESIGN §1, §3, §15, §16 | track both
+    7.1 | The first hour | Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30, the carry, the morning after. | DESIGN §15 (restaging, QUESTIONS 4 open) | track both
+    7.2 | An evening | One game day: an easy day, a tightening dusk, the job, getting home, the count, the sting next morning. | DESIGN §1, §3 | track both
+    7.3 | A week | Act I, Monday to Sunday, about two hours. | DESIGN §16 | track both
+    7.4 | Acts II and III pacing | State-fired beats across seven weeks, then the inspection week. | DESIGN §16 | track both
+    7.5 | The hour budget | How play time is shared: on foot, driving, talk, jobs, fights and chases, the Ledger, waiting. | DESIGN §1 | track both
+    7.6 | Tension and retellable moments | Nine sources of tension; a retellable moment each evening. | DESIGN §3 | track both
+    7.7 | Rising in position, felt | What a newcomer can point to at each rung: the name, greetings, property, clothes, access, the fleet. | DESIGN §14 | track both
+    7.8 | Saving | An autosave after every deed, consequence and job step; reloading never stopped. | DESIGN §17 | track both
+    7.9 | Failure without reload | Beaten, arrested, refused, late: each ends in a state the town can talk about. | DESIGN §1, §4, §7, §8 | track both
+    7.10 | Difficulty as assists | No stats, no difficulty ladder: assists only (seeing assist, hints, aim of driving help). | DESIGN-ADDENDUM §A6 | track both
+    7.11 | Waiting and time skips | 'Wait until' each known appointment; sleep as a skip; a wait stops for what the town has for him. | DESIGN §6; waiting design 29 Sep | track both
+    7.12 | Always something to do | By day, with no job live, a fare, a debt or a person with a word for him within 30 real seconds. | DESIGN §1 | track both
+    7.13 | The game clock | How fast a game hour passes in real time. | DESIGN §15 | track both
+    7.14 | Variety | No set piece twice in 30 minutes; no fare wrinkle twice running. | DESIGN §4 | track both
+    7.15 | After the ending | What happens when the story ends: the close, credits, and whether play continues. | DESIGN-ADDENDUM §A7 | track both
+    7.16 | Pastimes | Things to do with people that are not crime: the recommended answer is an amateur boxing club. | DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer) | track both
+  8 | Technical | Runs well on his PC and on players' PCs. | DESIGN §17 | track both
+    8.1 | Performance | Smooth play. | DESIGN §17 ER-PERF-01 | track unreal
+      8.1.1 | Frame, memory and crowd budget | Per-system budgets: update, texture pool, crowd, voice on the 6 GB card. | study 12 (budgets owed) | track unreal
+      8.1.2 | Streaming and loading | Loading the Hook and docks without stutter or long waits. | not designed | track unreal
+      8.1.3 | Player PCs and shader stutter | A minimum machine, scaling steps, shader compilation and traversal hitches fixed by precaching. | not designed | track unreal
+    8.2 | Stability and saves that never break | No crashes, no corrupt saves, long sessions safe. | simulation tests | track unreal
+      8.2.1 | Crash and bug reporting | Unreal's crash reporter, an in-game bug report, consented play records. | not designed | track unreal
+    8.3 | Settings | Graphics, audio and controls settings, presets. | DESIGN §17 | track unreal
+      8.3.1 | PC display options | Upscalers and frame generation, ultrawide, field of view, uncapped frame rate, HDR. | not designed | track unreal
+    8.4 | Accessibility | Text, hearing, motor and cognition options. | DESIGN §17 Screen | track both
+      8.4.1 | Visual stand-ins for sound cues | For deaf and hard-of-hearing players: what sound tells (noise reach, a street gone quiet) shown another way, as an option. | DESIGN-ADDENDUM-2026-11-20 §A6 | track both
+    8.5 | Install and launch | Starts from its shortcut, shows progress, opens at a sensible size. | DESIGN §17 | track unreal
+    8.6 | Live talk service | The server relay, the key never shipped, each copy's allowance, a spending stop, offline fallback. | RULINGS | track unreal
+      8.6.1 | Talk service longevity and offline | Cost per player hour, outages, the day the service ends, typing with a pad. | RULINGS | track unreal
+    8.7 | Local models on the card | Voice and fallback talk on the player's card, re-tested every three months. | RULINGS | track unreal
+    8.8 | Runtime content guards | The content rule on live speech and crowd generation. | canon | track both
+    8.9 | Text and language | English only; text out of code. | RULINGS | track both
+    8.10 | Collision and physics | Bodies, props, cars and doors colliding believably; ragdoll blended with authored falls. | not designed | track both
+  9 | The machinery | How the game is made: Kiln, the art pipeline, one simulation, the port, tests, records. | RULINGS | track both
+    9.1 | Kiln | His clothing pipeline, then props, vehicles, buildings and people modules. | Kiln design note; KILN-TO-GAME-PLAN | track unreal
+      9.1.1 | Drape | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.2 | Kiln-to-game adapter | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.3 | Garment mesh chain (weld, retopology, layout, bake) | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.4 | Skinning and pose tests | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.5 | Import to Unreal | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.6 | Packaged wear film and gate | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.7 | Bend-back for posed bodies | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+      9.1.8 | Cloth hand-off in game (Chaos, for skirts) | A stage of the Kiln-to-game chain (KILN-TO-GAME-PLAN-2026-11-17). | KILN-TO-GAME-PLAN | track unreal
+    9.2 | Art pipeline | MetaHuman casting, Blender kits, the asset plan, the catalogue. | asset plan; CATALOGUE | track unreal
+    9.3 | One simulation | The C# Core as source of truth, its C++ port in Unreal, its browser build in the prototype; one set of goldens. | ONE-SIM-METHOD-2026-11-19 | track both
+    9.4 | Prototype to Unreal port | Each system proved in the prototype ported under the same tests (money, debts, jobs, fights, talk). | ONE-SHOT-PORTING.md (to be written) | track both
+    9.5 | Testing and gates | The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eight, the nightly packaged walk, the publish gate. | DESIGN §19; tools/lane/gate | track both
+    9.6 | The tuning table | One home for every number the browser, the Core and Unreal are tuned from. | prototype rules.js | track both
+    9.7 | Records and guards | Doc caps, approvals, retention, git size guard, content and canon gates. | tools/ | track both
+      9.7.1 | Licence and terms record | The allowlist and THIRD-PARTY.md: every source's licence recorded; decided by the sessions (19 Nov). | license-allowlist.md | track both
+      9.7.2 | Recipe and handover | RECIPE.md and the handovers, so the method survives without the history. | RECIPE.md | track both
+    9.8 | Talk bench | Choosing talk and voice models by the kind of moment, re-checked monthly. | RULINGS | track unreal
+    9.9 | Feel measurement | Measuring sheets for driving and the other felt verbs and activity shares, from footage, outside only. | DRIVING-MEASUREMENT-METHOD; FEEL-MEASUREMENT-METHOD-2026-11- | track both
+    9.10 | Plan, forecast and spend | The dated plan, forecasts, hour coding, allowances and caps; a new system placed in PLAN.md first. | PLAN.md; order ledgers | track both
+    9.11 | Reference studies and re-checks | The 18 studies, unreached sources, re-checks (Study 17 review, GTA VI after a month). | aaa-reference studies | track both
+    9.12 | Design records | canon, VISION, DESIGN and its addendum, BUILD-ORDER, this parts tree. | production/lane/synthesis/ | track both
+  10 | Shipping | Getting the game out: one full release late in 2027. | RULINGS | track unreal
+    10.1 | Release build | The packaged release build and installer. | packaging scripts | track unreal
+    10.2 | Store, rating and disclosure | Store page, age rating, Steam's AI disclosure, price and length statement. | G4-RATING-AND-STORE-2026-11-17 | track unreal
+    10.3 | Friends' builds | A friends' build at the end of every phase from phase 4, on his PC. | RULINGS; friends-build MAP | track unreal
+    10.4 | Credits and notices | Third-party notices, credits for CC-BY makers, allowlist notices kept. | THIRD-PARTY.md | track unreal
+    10.5 | Release testing | Final passes over the whole game: every ending, every job outcome, long sessions. | DESIGN §19 | track unreal
+    10.6 | After release | Patches, new districts in updates, a stated position on mods. | RULINGS | track unreal
+    10.7 | Platform account, cloud saves and achievements | Steam integration: cloud saves, achievements if any, overlay, account handling. | not designed | track unreal
+    10.8 | Trailer, key art and store capsule | The pictures and film that sell it. | not designed | track unreal
+    10.9 | Player support and community | Where players report problems and get answers after release. | not designed | track unreal
+    10.10 | Legal and company admin | Name search, the company's admin, tax and contracts for selling the game. | not designed | track unreal
+    10.11 | Player data and privacy | Consent and data protection for what players type that is sent to the talk service. | not designed | track unreal
+    10.12 | Demo, price and wishlists | A demo of the first hour, the price, the wishlist plan. | not designed | track unreal

@@ -26,11 +26,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 233 leaves: missing 3, designed 63, built shallow 95, built 71, passes 1"
+     "evidence": "rollup of 242 leaves: missing 3, designed 72, built shallow 95, built 71, passes 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 295 leaves: missing 5, designed 181, built shallow 53, built 40, unknown 16"
+     "evidence": "rollup of 304 leaves: missing 5, designed 190, built shallow 53, built 40, unknown 16"
     }
    },
    "needs": [],
@@ -78,11 +78,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 57 leaves: missing 1, designed 23, built shallow 15, built 18"
+     "evidence": "rollup of 61 leaves: missing 1, designed 27, built shallow 15, built 18"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 57 leaves: designed 51, built shallow 4, built 2"
+     "evidence": "rollup of 61 leaves: designed 55, built shallow 4, built 2"
     }
    },
    "needs": [],
@@ -229,7 +229,8 @@
    ],
    "notes": [
     "prototype check passes its rule, but the feel standard is a research item, so not 'passes'",
-    "status set by the parts-tree session over the sweep's 'passes': walk passed his eye 26 Oct for its look (RULINGS People's moves), but ER-INPUT-01 is not measured in Unreal and feel numbers are a research item; open faults: treads on the spot at Mickey's front, foot slide unmeasured since 22 Oct (FINDINGS.md)"
+    "status set by the parts-tree session over the sweep's 'passes': walk passed his eye 26 Oct for its look (RULINGS People's moves), but ER-INPUT-01 is not measured in Unreal and feel numbers are a research item; open faults: treads on the spot at Mickey's front, foot slide unmeasured since 22 Oct (FINDINGS.md)",
+    "Reference mechanics (20 Nov): M1.1"
    ],
    "children": [],
    "leaf": true
@@ -391,7 +392,9 @@
    "review_themes": [
     "round5: holdall past the constable and Hal line most exciting (2 of 8)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.31"
+   ],
    "children": [],
    "leaf": true
   },
@@ -445,7 +448,9 @@
     "round1 to 4: no tense non-talk activity",
     "P14 Stealth, lockpicking and pickpocketing that work"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.5"
+   ],
    "children": [],
    "leaf": true
   },
@@ -496,7 +501,9 @@
    "review_themes": [
     "P14 Stealth, lockpicking and pickpocketing that work"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.28"
+   ],
    "children": [],
    "leaf": true
   },
@@ -539,7 +546,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.43"
+   ],
    "children": [],
    "leaf": true
   },
@@ -584,7 +593,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.6, M1.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -603,11 +614,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 10 leaves: designed 4, built shallow 3, built 3"
+     "evidence": "rollup of 11 leaves: designed 5, built shallow 3, built 3"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 10 leaves: designed 10"
+     "evidence": "rollup of 11 leaves: designed 11"
     }
    },
    "needs": [],
@@ -636,7 +647,8 @@
     "1.2.7",
     "1.2.8",
     "1.2.9",
-    "1.2.10"
+    "1.2.10",
+    "1.2.11"
    ],
    "leaf": false
   },
@@ -695,7 +707,9 @@
     "P17 Driving and riding that feel good",
     "X18 Racing missions and handling"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.73, M1.74, M2.38"
+   ],
    "children": [],
    "leaf": true
   },
@@ -741,7 +755,9 @@
     "round6: cab hidden behind scrap heap (fixed)",
     "P17 Driving and riding that feel good"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.76, M1.90, M5.20"
+   ],
    "children": [],
    "leaf": true
   },
@@ -793,7 +809,8 @@
     "round6 gate: never stranded; E-key double press minor"
    ],
    "notes": [
-    "status set by the parts-tree session over the sweep's 'passes': F in and out works and a blocked door never strands him (gate6.mjs), but gate6 accepts up to 5 s at a blocked door against ER-DRIVE-07's 2 s, and both sides are not timed"
+    "status set by the parts-tree session over the sweep's 'passes': F in and out works and a blocked door never strands him (gate6.mjs), but gate6 accepts up to 5 s at a blocked door against ER-DRIVE-07's 2 s, and both sides are not timed",
+    "Reference mechanics (20 Nov): M1.77"
    ],
    "children": [],
    "leaf": true
@@ -844,7 +861,9 @@
    "review_themes": [
     "round6 gate: damage never told (fixed); lamp posts ghost (fixed); stranded cab (fixed)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.78, M2.43"
+   ],
    "children": [],
    "leaf": true
   },
@@ -893,7 +912,9 @@
    "review_themes": [
     "round6 gate: run-down not told and no choice (told fixed; choice open to round 16)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.79, M2.26"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1078,7 +1099,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.9"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1122,7 +1145,52 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.80"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.2.11",
+   "level": 3,
+   "parent": "1.2",
+   "name": "The horn",
+   "what": "A horn on one key: a noise that turns heads, calls a fare or a crewman out, and is heard like any act.",
+   "felt": true,
+   "standard": "rule: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows).",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A32 (from REFERENCE-MECHANICS-2026-11-20 M1.75)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A32",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A32, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A32, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "0.5",
+    "unreal": "4",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows).",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M1.75"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1163,7 +1231,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.41"
+   ],
    "children": [
     "1.3.1",
     "1.3.2",
@@ -1239,7 +1309,9 @@
     "P4 Skill-based melee that rewards learning it",
     "X3 Combat clunky, unfair or unexplained"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.17, M1.18, M1.19, M1.20, M1.50"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1300,7 +1372,9 @@
     "P4 Skill-based melee that rewards learning it",
     "X3 Combat clunky, unfair or unexplained"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.23, M1.26, M1.27, M1.28, M1.29, M1.30, M1.31, M1.35, M5.15"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1399,7 +1473,9 @@
    "review_themes": [
     "round5: debt ladder the same five times (systems player); round3: ladder never explained"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.39, M1.49, M1.92, M3.45"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1445,7 +1521,9 @@
     "A17.12"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.40"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1499,7 +1577,9 @@
    "review_themes": [
     "round4: things to hand built for retellable fights"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.14, M1.46, M1.48"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1558,7 +1638,9 @@
    "review_themes": [
     "X3 Combat clunky, unfair or unexplained"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.37, M1.43, M2.42, M2.46, M6.22"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1615,7 +1697,9 @@
     "round4: every debtor gave way (fixed round 5: Lee stands)",
     "X12 Difficulty too hard early, forced, or too easy later"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.36, M3.51, M5.24"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1665,7 +1749,9 @@
    "review_themes": [
     "round3/4: arrests lead nowhere visible; round5: fight with Lee then arrest most exciting (5 of 8)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.52, M2.13"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1731,7 +1817,9 @@
     "P16 Gunfights that feel weighty",
     "X16 Gunplay weak or inaccurate"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.57, M1.58, M1.68, M1.69, M1.70, M6.12"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1774,7 +1862,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.17"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1817,7 +1907,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.55"
+   ],
    "children": [],
    "leaf": true
   },
@@ -1916,7 +2008,9 @@
     "round2: sightings with no visible cost (systems player)",
     "X11 Stealth thin, forced or stupid"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.25"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2070,7 +2164,9 @@
    "review_themes": [
     "X11 Stealth thin, forced or stupid"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.67, M2.87"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2208,7 +2304,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.109, M1.110"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2251,7 +2349,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.98, M3.15"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2350,7 +2450,9 @@
    "review_themes": [
     "round5: pursuit 0 in the hour (playtester record); round1: no pursuit"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.8"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2398,7 +2500,9 @@
    "review_themes": [
     "round2/3/4: nothing kicks off, pursuit 0"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.25"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2503,7 +2607,9 @@
     "A15.14"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2522,11 +2628,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 11 leaves: designed 7, built shallow 3, built 1"
+     "evidence": "rollup of 14 leaves: designed 10, built shallow 3, built 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 11 leaves: designed 10, built shallow 1"
+     "evidence": "rollup of 14 leaves: designed 13, built shallow 1"
     }
    },
    "needs": [],
@@ -2556,7 +2662,10 @@
     "1.6.8",
     "1.6.9",
     "1.6.10",
-    "1.6.11"
+    "1.6.11",
+    "1.6.12",
+    "1.6.13",
+    "1.6.14"
    ],
    "leaf": false
   },
@@ -2606,7 +2715,9 @@
     "round5 candidate (a): a break-in with a risk of being seen",
     "P14 Stealth, lockpicking and pickpocketing that work"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.91, M2.50"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2659,7 +2770,9 @@
     "A36.19"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.15, M1.16, M1.94"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2707,7 +2820,9 @@
     "A36.18"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.93"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2756,7 +2871,9 @@
    "review_themes": [
     "round5: debt ladder same five times; Lee stands (fixed r5)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.56"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2806,7 +2923,9 @@
    "review_themes": [
     "round5: waiting 41% (the playtester idling, not play)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.14"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2853,7 +2972,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.6, M3.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -2897,7 +3018,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.11, M1.12, M2.41, M4.38"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3024,7 +3147,9 @@
     "A36.21"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.26, M6.14, M6.24, M7.30"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3068,7 +3193,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.106, M2.83, M2.84, M7.13"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3113,6 +3240,135 @@
    "checklist_items": [],
    "review_themes": [],
    "notes": [],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.12",
+   "level": 3,
+   "parent": "1.6",
+   "name": "A torch on a night job",
+   "what": "A hand torch in a pocket: it lights a dark room for searching and shows him to anyone who can see the beam.",
+   "felt": true,
+   "standard": "rule: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows).",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A33 (from REFERENCE-MECHANICS-2026-11-20 M1.101)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A33",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A33, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A33, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "8",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows).",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M1.101"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.13",
+   "level": 3,
+   "parent": "1.6",
+   "name": "Lifting from a pocket",
+   "what": "Taking a key, a letter or a wallet from a coat in a crowd or a packed room, as one held press; caught or not by the person's attention.",
+   "felt": true,
+   "standard": "rule: A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows).",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A34 (from REFERENCE-MECHANICS-2026-11-20 M1.97)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A34",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A34, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A34, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1.5",
+    "unreal": "12",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows).",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M1.97"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "1.6.14",
+   "level": 3,
+   "parent": "1.6",
+   "name": "Damage by hand",
+   "what": "Tom himself puts a brick through a window or smashes a car or a shopfront: a message, loud and lasting.",
+   "felt": true,
+   "standard": "rule: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A35",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A35, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A35, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "10",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M3.13"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3219,7 +3475,9 @@
    "review_themes": [
     "X9 The same loop, over and over"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.100"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3375,11 +3633,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 64 leaves: designed 20, built shallow 25, built 19"
+     "evidence": "rollup of 68 leaves: designed 24, built shallow 25, built 19"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 64 leaves: designed 38, built shallow 9, built 16, unknown 1"
+     "evidence": "rollup of 68 leaves: designed 42, built shallow 9, built 16, unknown 1"
     }
    },
    "needs": [],
@@ -3523,7 +3781,9 @@
     "round5: P3 living world 50% praised (KCD2 24.5%); X15 hollow world 25%",
     "P3 A living world that feels lived in"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.90"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3730,7 +3990,9 @@
     "A13.26"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.31"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3773,7 +4035,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.34"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3871,7 +4135,9 @@
    "review_themes": [
     "PROTOTYPE-VS-DESIGN row 12: prototype ladder differs from the Core"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.112, M2.59"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3918,7 +4184,9 @@
    "review_themes": [
     "X11 Stealth thin, forced or stupid"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.85, M2.98"
+   ],
    "children": [],
    "leaf": true
   },
@@ -3972,7 +4240,9 @@
    "review_themes": [
     "X11 Stealth thin, forced or stupid"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.80, M2.104"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4022,7 +4292,9 @@
     "A14.05"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.81"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4068,7 +4340,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.24, M2.79, M2.86"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4111,7 +4385,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.71, M4.19, M4.35"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4212,7 +4488,8 @@
     "S2 Forgetting is loud, remembering is quiet"
    ],
    "notes": [
-    "status set by the parts-tree session over the sweep's 'passes': memory kept per person and a scripted week compares part for part after save and load (same_week.mjs, town.mjs), but the reload-at-random-moments test did not run"
+    "status set by the parts-tree session over the sweep's 'passes': memory kept per person and a scripted week compares part for part after save and load (same_week.mjs, town.mjs), but the reload-at-random-moments test did not run",
+    "Reference mechanics (20 Nov): M2.75"
    ],
    "children": [],
    "leaf": true
@@ -4456,7 +4733,9 @@
     "JP1 The town reacts to you (reputation, crime, NPC memory)",
     "X15 A world hollow, or whose rules change on a whim"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.60, M2.67"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4508,7 +4787,9 @@
     "S3 Something has to come back (memory that interrupts)",
     "S4 gossip timeliness in the first 30 real minutes"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.24"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4553,7 +4834,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.2"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4571,12 +4854,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 3 leaves: built shallow 2, built 1"
+     "status": "designed",
+     "evidence": "rollup of 5 leaves: designed 2, built shallow 2, built 1"
     },
     "unreal": {
      "status": "built shallow",
-     "evidence": "rollup of 3 leaves: built shallow 3"
+     "evidence": "rollup of 5 leaves: designed 2, built shallow 3"
     }
    },
    "needs": [],
@@ -4598,7 +4881,9 @@
    "children": [
     "2.5.1",
     "2.5.2",
-    "2.5.3"
+    "2.5.3",
+    "2.5.4",
+    "2.5.5"
    ],
    "leaf": false
   },
@@ -4651,7 +4936,9 @@
     "round3/4: arrests lead nowhere visible",
     "S3 Something has to come back (memory that interrupts)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.3"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4698,7 +4985,9 @@
    "review_themes": [
     "P12 Choices and roleplay that change what happens"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.4"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4754,7 +5043,95 @@
     "A25.13"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.27"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.5.4",
+   "level": 3,
+   "parent": "2.5",
+   "name": "A street on edge",
+   "what": "Several deeds on one street in a short time make its people jumpier for a while, below the escalation dial.",
+   "felt": true,
+   "standard": "rule: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A37 (from REFERENCE-MECHANICS-2026-11-20 M2.16)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A37",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A37, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A37, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "6",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M2.16"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.5.5",
+   "level": 3,
+   "parent": "2.5",
+   "name": "Finding an unseen deed",
+   "what": "Who comes upon a deed nobody saw, and when: the owner home to a forced door, a worker at a body, a neighbour at broken glass.",
+   "felt": true,
+   "standard": "rule: Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A38 (from REFERENCE-MECHANICS-2026-11-20 M2.61)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A38",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A38, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A38, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1.5",
+    "unreal": "10",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M2.61"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4772,12 +5149,12 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "built shallow",
-     "evidence": "rollup of 9 leaves: designed 3, built shallow 4, built 2"
+     "status": "designed",
+     "evidence": "rollup of 10 leaves: designed 4, built shallow 4, built 2"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 9 leaves: designed 5, built shallow 2, built 2"
+     "evidence": "rollup of 10 leaves: designed 6, built shallow 2, built 2"
     }
    },
    "needs": [],
@@ -4807,7 +5184,8 @@
     "2.6.6",
     "2.6.7",
     "2.6.8",
-    "2.6.9"
+    "2.6.9",
+    "2.6.10"
    ],
    "leaf": false
   },
@@ -4853,7 +5231,9 @@
    "review_themes": [
     "round5: holdall past the constable most exciting (2 of 8)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.91"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4901,7 +5281,9 @@
     "A15.16"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.11"
+   ],
    "children": [],
    "leaf": true
   },
@@ -4950,7 +5332,9 @@
    "review_themes": [
     "round3/4: arrest without consequence"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.102"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5001,7 +5385,9 @@
    "review_themes": [
     "round3/4: arrest without consequence; street does not see him go"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.2, M2.12, M2.20"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5051,7 +5437,9 @@
     "A15.12"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.14, M2.62, M2.97"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5094,7 +5482,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.25"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5138,7 +5528,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.22"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5182,7 +5574,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.69"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5226,7 +5620,52 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.64, M2.72"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
+   "id": "2.6.10",
+   "level": 3,
+   "parent": "2.6",
+   "name": "Police after a deed",
+   "what": "What police do once a deed is reported or a chase lost: a constable at the spot, a search of the streets near it, then back to the beat.",
+   "felt": true,
+   "standard": "rule: After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A36",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A36, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A36, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M2.8, M2.30"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5267,7 +5706,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.9, M7.36"
+   ],
    "children": [
     "2.7.1",
     "2.7.2",
@@ -5454,7 +5895,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.11"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5510,7 +5953,9 @@
     "A37.09"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.29, M2.57, M2.78, M4.29, M6.31, M7.10, M7.37"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5557,7 +6002,9 @@
     "A37.07"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.92, M2.94, M4.37"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5647,7 +6094,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.48"
+   ],
    "children": [],
    "leaf": true
   },
@@ -5959,7 +6408,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.40"
+   ],
    "children": [
     "2.10.1",
     "2.10.2",
@@ -6013,7 +6464,9 @@
    "review_themes": [
     "S3 Something has to come back (memory that interrupts)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.30"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6103,7 +6556,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.39, M3.44"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6163,11 +6618,11 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 3 leaves: designed 3"
+     "evidence": "rollup of 4 leaves: designed 4"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 3 leaves: designed 3"
+     "evidence": "rollup of 4 leaves: designed 4"
     }
    },
    "needs": [],
@@ -6189,7 +6644,8 @@
    "children": [
     "2.11.1",
     "2.11.2",
-    "2.11.3"
+    "2.11.3",
+    "2.11.4"
    ],
    "leaf": false
   },
@@ -6331,6 +6787,49 @@
    "leaf": true
   },
   {
+   "id": "2.11.4",
+   "level": 3,
+   "parent": "2.11",
+   "name": "Crew pay and the cut",
+   "what": "What each man is paid for a shift or a job, from which pot, and what short or late pay does to him.",
+   "felt": false,
+   "standard": "rule: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A40 (from REFERENCE-MECHANICS-2026-11-20 M7.8)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A40",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A40, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A40, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "1",
+    "unreal": "6",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M7.8"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "2.12",
    "level": 2,
    "parent": "2",
@@ -6466,7 +6965,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.95, M3.38"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6514,7 +7015,9 @@
    "review_themes": [
     "S5 Standing ladder is the cheapest early recognition"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.89, M3.34"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6562,7 +7065,9 @@
     "JP1 The town reacts to you (reputation, crime, NPC memory)",
     "S5 Standing ladder is the cheapest early recognition"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.54"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6605,7 +7110,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.39"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6696,7 +7203,8 @@
    "checklist_items": [],
    "review_themes": [],
    "notes": [
-    "status set by the parts-tree session over the sweep's 'passes': src/rules.js gives each named person nerve, talk, discretion, fear and liking; test 6.08 checks only that values sit in the table; nothing tests that the same deed goes differently by person; the standard waits on his answer to QUESTIONS 3"
+    "status set by the parts-tree session over the sweep's 'passes': src/rules.js gives each named person nerve, talk, discretion, fear and liking; test 6.08 checks only that values sit in the table; nothing tests that the same deed goes differently by person; the standard waits on his answer to QUESTIONS 3",
+    "Reference mechanics (20 Nov): M2.5, M3.52"
    ],
    "children": [],
    "leaf": true
@@ -6794,7 +7302,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.28"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6837,7 +7347,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.55"
+   ],
    "children": [],
    "leaf": true
   },
@@ -6973,7 +7485,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.47, M4.18, M7.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -7060,7 +7574,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.39"
+   ],
    "children": [],
    "leaf": true
   },
@@ -7079,11 +7595,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 31 leaves: designed 9, built shallow 13, built 9"
+     "evidence": "rollup of 32 leaves: designed 10, built shallow 13, built 9"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 32 leaves: missing 1, designed 21, built shallow 6, built 4"
+     "evidence": "rollup of 33 leaves: missing 1, designed 22, built shallow 6, built 4"
     }
    },
    "needs": [],
@@ -7257,7 +7773,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.4"
+   ],
    "children": [],
    "leaf": true
   },
@@ -7469,11 +7987,11 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 5 leaves: designed 1, built shallow 3, built 1"
+     "evidence": "rollup of 6 leaves: designed 2, built shallow 3, built 1"
     },
     "unreal": {
      "status": "designed",
-     "evidence": "rollup of 6 leaves: missing 1, designed 4, built shallow 1"
+     "evidence": "rollup of 7 leaves: missing 1, designed 5, built shallow 1"
     }
    },
    "needs": [],
@@ -7498,7 +8016,8 @@
     "3.2.3",
     "3.2.4",
     "3.2.5",
-    "3.2.6"
+    "3.2.6",
+    "3.2.7"
    ],
    "leaf": false
   },
@@ -7786,6 +8305,49 @@
    "leaf": true
   },
   {
+   "id": "3.2.7",
+   "level": 3,
+   "parent": "3.2",
+   "name": "Calling on people",
+   "what": "Time with the people who matter, chosen by Tom: tea at Ada's, the caff with Alison, a walk with Danby; too often and it wears thin.",
+   "felt": true,
+   "standard": "rule: A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S.",
+   "standard_source": "DESIGN-ADDENDUM-2026-11-20 A39 (from REFERENCE-MECHANICS-2026-11-20 M3.28, M3.29, M3.35)",
+   "research_items": [],
+   "designed_in": "DESIGN-ADDENDUM-2026-11-20 A39",
+   "track": "both",
+   "status": {
+    "prototype": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A39, 20 Nov; nothing built"
+    },
+    "unreal": {
+     "status": "designed",
+     "evidence": "DESIGN-ADDENDUM-2026-11-20 A39, 20 Nov; nothing built"
+    }
+   },
+   "needs": [],
+   "blocks": [],
+   "hours": {
+    "prototype": "2",
+    "unreal": "16",
+    "basis": "guess"
+   },
+   "risk": {
+    "level": "low",
+    "why": "rule-driven, on parts that exist"
+   },
+   "test": "A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S.",
+   "owner": "lane",
+   "checklist_items": [],
+   "review_themes": [],
+   "notes": [
+    "Added 20 Nov by the lane from the reference-mechanics map (1c): M3.28, M3.29, M3.35"
+   ],
+   "children": [],
+   "leaf": true
+  },
+  {
    "id": "3.3",
    "level": 2,
    "parent": "3",
@@ -7833,7 +8395,9 @@
     "P5 Side quests that are whole stories",
     "X8 Linear, an empty map, an interactive movie"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.9, M3.11, M3.43"
+   ],
    "children": [],
    "leaf": true
   },
@@ -7876,7 +8440,9 @@
    "review_themes": [
     "round5: waiting 41%, driving 5% of the hour (GTA player quit at 5 min)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.6"
+   ],
    "children": [
     "3.4.1",
     "3.4.2",
@@ -7930,7 +8496,9 @@
    "review_themes": [
     "P5 Side quests that are whole stories"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.122"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8130,7 +8698,9 @@
     "round5: holdall past the constable most exciting (2 of 8)",
     "X9 The same loop, over and over"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.12"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8176,7 +8746,9 @@
    "review_themes": [
     "round5: same ladder five times"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.17"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8220,7 +8792,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.36"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8369,7 +8943,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.3, M3.57"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8412,7 +8988,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.60"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8678,7 +9256,9 @@
     "round5 sweep: several walkers silent",
     "P15 Humour and a mix of tones"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.113, M3.31"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8775,7 +9355,9 @@
    "review_themes": [
     "round6: layout test fails at 1280 by 720 (subtitles under open talk box)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.53"
+   ],
    "children": [],
    "leaf": true
   },
@@ -8908,7 +9490,9 @@
    "owner": "town",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.111, M3.22"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9116,7 +9700,9 @@
    "review_themes": [
     "X8 Linear, an empty map, an interactive movie"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.19"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9170,7 +9756,9 @@
    "review_themes": [
     "X14 Quest design wastes time or gives no direction"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.3"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9214,7 +9802,9 @@
     "A21.10"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.5"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9391,7 +9981,9 @@
     "A12.13"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.4"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9475,7 +10067,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.3"
+   ],
    "children": [],
    "leaf": true
   },
@@ -9620,7 +10214,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.25"
+   ],
    "children": [],
    "leaf": true
   },
@@ -10023,7 +10619,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.35, M2.36"
+   ],
    "children": [],
    "leaf": true
   },
@@ -10155,7 +10753,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -10240,7 +10840,9 @@
     "A25.10"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.37"
+   ],
    "children": [],
    "leaf": true
   },
@@ -10289,7 +10891,9 @@
     "A24.06"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M2.40"
+   ],
    "children": [],
    "leaf": true
   },
@@ -10474,7 +11078,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.99"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11554,7 +12160,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.21"
+   ],
    "children": [
     "5.4.1",
     "5.4.2",
@@ -11803,7 +12411,9 @@
    "review_themes": [
     "P9 Music and sound design"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.11"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11901,7 +12511,9 @@
    "review_themes": [
     "P9 Music and sound design"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.12"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11949,7 +12561,9 @@
     "A28.10"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.13"
+   ],
    "children": [],
    "leaf": true
   },
@@ -11995,7 +12609,9 @@
    "review_themes": [
     "P17 Driving and riding that feel good"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.8"
+   ],
    "children": [],
    "leaf": true
   },
@@ -12388,7 +13004,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.1"
+   ],
    "children": [],
    "leaf": true
   },
@@ -12494,7 +13112,9 @@
     "round6: camera indoors and props fixed; vans and people open",
     "X7 Stutter, crashes, long loads, heavy hardware"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.59, M5.19, M5.26, M5.27"
+   ],
    "children": [],
    "leaf": true
   },
@@ -12592,7 +13212,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.23"
+   ],
    "children": [],
    "leaf": true
   },
@@ -12778,7 +13400,9 @@
     "A34.16"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.3, M6.36, M6.38"
+   ],
    "children": [
     "6.1.1",
     "6.1.2",
@@ -12836,7 +13460,8 @@
     "X20 Systems nobody explains"
    ],
    "notes": [
-    "status set by the parts-tree session over the sweep's 'passes': gate6.mjs checks the prompt's target and hold, but 'everything usable has a prompt' is unchecked (NOT_DONE: prompts not searched one by one; GATE-REVIEW-2026-11-19: no help prompt after a run-down)"
+    "status set by the parts-tree session over the sweep's 'passes': gate6.mjs checks the prompt's target and hold, but 'everything usable has a prompt' is unchecked (NOT_DONE: prompts not searched one by one; GATE-REVIEW-2026-11-19: no help prompt after a run-down)",
+    "Reference mechanics (20 Nov): M1.10, M6.37"
    ],
    "children": [],
    "leaf": true
@@ -12891,7 +13516,9 @@
    "review_themes": [
     "round6: layout fails at 1280 by 720 (subtitles under talk box)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M9.5"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13031,7 +13658,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.21, M4.22"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13076,7 +13705,9 @@
     "A35.16"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.30"
+   ],
    "children": [
     "6.2.1",
     "6.2.2",
@@ -13125,7 +13756,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.27"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13176,7 +13809,9 @@
    "review_themes": [
     "S1 Players retell what happened (Nemesis, Boatmurdered)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.25"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13236,7 +13871,9 @@
    "review_themes": [
     "X14 Quest design wastes time or gives no direction"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.17"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13282,7 +13919,9 @@
     "A37.02"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.10"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13328,7 +13967,9 @@
     "X10 An ending forced, sad for no reason, or abrupt",
     "X20 Systems nobody explains"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.26"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13386,7 +14027,9 @@
    "review_themes": [
     "X14 Quest design wastes time or gives no direction"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.16, M6.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13466,7 +14109,9 @@
     "X17 Menus, controls, camera and interface",
     "X19 A save system that costs time"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.2, M8.3"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13528,7 +14173,9 @@
     "X14 Quest design wastes time or gives no direction",
     "X20 Systems nobody explains"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.13, M9.9"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13612,7 +14259,9 @@
    "review_themes": [
     "X17 Menus, controls, camera and interface"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M6.35, M9.4"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13666,7 +14315,9 @@
     "round6: layout fails at 1280 by 720; E pressed twice after a talk types e (minor)",
     "X6 Bugs and glitches that stop progress or break the illusion"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M3.54"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13712,7 +14363,9 @@
    "review_themes": [
     "A9 photo mode (players asked for)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M5.32, M9.2"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13756,7 +14409,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.14, M6.9"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13799,7 +14454,9 @@
    "owner": "lane",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.12"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13918,7 +14575,9 @@
     "X4 Too many or too long cutscenes, slow opening, too much talk",
     "X5 Boring, nothing to do for minutes"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.1"
+   ],
    "children": [],
    "leaf": true
   },
@@ -13965,7 +14624,9 @@
     "round5: waiting 41%, longest empty 10.8 min",
     "P13 The slow burn and long cinematic scenes"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M7.42"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14259,7 +14920,9 @@
     "X19 A save system that costs time",
     "JX4 Choices that change nothing"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.1, M8.4, M8.5, M8.6"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14317,7 +14980,8 @@
     "X19 A save system that costs time"
    ],
    "notes": [
-    "status set by the parts-tree session over the sweep's 'passes': beaten Tom wakes at Rinaldi's and custody ends (test/town.mjs), but no failure route is timed against ER-CORE-04's 2 minutes; NOT_DONE: ER-CORE-02 to 04 checked only for a crash, a run-down and a wedged cab"
+    "status set by the parts-tree session over the sweep's 'passes': beaten Tom wakes at Rinaldi's and custody ends (test/town.mjs), but no failure route is timed against ER-CORE-04's 2 minutes; NOT_DONE: ER-CORE-02 to 04 checked only for a crash, a run-down and a wedged cab",
+    "Reference mechanics (20 Nov): M7.5"
    ],
    "children": [],
    "leaf": true
@@ -14372,7 +15036,9 @@
    "review_themes": [
     "X12 Difficulty too hard early, forced, or too easy later"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M9.7"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14420,7 +15086,9 @@
    "review_themes": [
     "round5: waiting 41% (waiting here is idle play, not the skip)"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M1.105, M7.35"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14768,7 +15436,8 @@
     "JX1 The look called poor, dated or glitchy"
    ],
    "notes": [
-    "prototype has a stand-in: DESIGN_NOTES Art pass frame time: 11.5 ms (87 fps) on RX 6700 High in Chrome at 2298 by 1252, 541 draw calls; 3440 by 1440 not measured; auto resolution scale; "
+    "prototype has a stand-in: DESIGN_NOTES Art pass frame time: 11.5 ms (87 fps) on RX 6700 High in Chrome at 2298 by 1252, 541 draw calls; 3440 by 1440 not measured; auto resolution scale; ",
+    "Reference mechanics (20 Nov): M8.11"
    ],
    "children": [
     "8.1.1",
@@ -14814,7 +15483,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.12"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14853,7 +15524,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.13"
+   ],
    "children": [],
    "leaf": true
   },
@@ -14967,7 +15640,9 @@
     "X7 Stutter, crashes, long loads, heavy hardware",
     "X19 A save system that costs time"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.8"
+   ],
    "children": [
     "8.2.1"
    ],
@@ -15006,7 +15681,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M9.6"
+   ],
    "children": [],
    "leaf": true
   },
@@ -15117,7 +15794,9 @@
    "owner": "builder",
    "checklist_items": [],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.9"
+   ],
    "children": [],
    "leaf": true
   },
@@ -15195,7 +15874,9 @@
     "F7"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M9.11"
+   ],
    "children": [
     "8.4.1"
    ],
@@ -15297,7 +15978,9 @@
     "A4"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M8.10"
+   ],
    "children": [],
    "leaf": true
   },
@@ -15568,7 +16251,9 @@
     "A12.18"
    ],
    "review_themes": [],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M4.23"
+   ],
    "children": [],
    "leaf": true
   },
@@ -16694,7 +17379,9 @@
     "JX6 Studio replaced a translator with AI",
     "P7/X2 price, length and value"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M10.2"
+   ],
    "children": [],
    "leaf": true
   },
@@ -16867,7 +17554,9 @@
     "A10 Mods",
     "A10 mods position"
    ],
-   "notes": [],
+   "notes": [
+    "Reference mechanics (20 Nov): M10.4"
+   ],
    "children": [],
    "leaf": true
   },

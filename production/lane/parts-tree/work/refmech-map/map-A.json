@@ -1,0 +1,468 @@
+[
+ {
+  "id": "M1.1",
+  "decision": "part",
+  "part": "1.1.1"
+ },
+ {
+  "id": "M1.3",
+  "decision": "part",
+  "part": "4.2.4",
+  "reason": "Tom never walks into the water; put in by others he climbs out at a ladder within a minute (A11). No swimming beyond that."
+ },
+ {
+  "id": "M1.5",
+  "decision": "part",
+  "part": "1.1.5",
+  "reason": "A held slow walk halves his footsteps' reach; no crouch (A1)."
+ },
+ {
+  "id": "M1.6",
+  "decision": "part",
+  "part": "1.1.8",
+  "reason": "Low walls, yard fences and bins at set places only; climbing high walls stays out (A26, ruling 23 Sep no jump)."
+ },
+ {
+  "id": "M1.7",
+  "decision": "part",
+  "part": "1.1.8"
+ },
+ {
+  "id": "M1.8",
+  "decision": "part",
+  "part": "1.5.1",
+  "reason": "Pursuing on foot is 1.5.2."
+ },
+ {
+  "id": "M1.10",
+  "decision": "part",
+  "part": "6.1.1",
+  "reason": "The objects themselves are 1.6.8."
+ },
+ {
+  "id": "M1.11",
+  "decision": "part",
+  "part": "1.6.7",
+  "reason": "Dropping or dumping what he carries is getting rid of it; what he carries is 1.6.9."
+ },
+ {
+  "id": "M1.12",
+  "decision": "part",
+  "part": "1.6.7",
+  "reason": "A body moved, by Tom or as the crew verb (1.7.2); carrying a hurt man to help is the call of 2.18."
+ },
+ {
+  "id": "M1.14",
+  "decision": "part",
+  "part": "1.3.6"
+ },
+ {
+  "id": "M1.15",
+  "decision": "part",
+  "part": "1.6.2",
+  "reason": "A man down can be searched at A4's times, seen like any act (A29)."
+ },
+ {
+  "id": "M1.16",
+  "decision": "part",
+  "part": "1.6.2"
+ },
+ {
+  "id": "M1.17",
+  "decision": "part",
+  "part": "1.3.1"
+ },
+ {
+  "id": "M1.18",
+  "decision": "part",
+  "part": "1.3.1"
+ },
+ {
+  "id": "M1.19",
+  "decision": "part",
+  "part": "1.3.1"
+ },
+ {
+  "id": "M1.20",
+  "decision": "part",
+  "part": "1.3.1",
+  "reason": "The improvised swing with a thing to hand is 1.3.6."
+ },
+ {
+  "id": "M1.23",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "A blocked heavy blow staggers, a swung weapon breaks through a guard (A29)."
+ },
+ {
+  "id": "M1.24",
+  "decision": "out",
+  "reason": "A man down is the fight's cost, not a stance (DESIGN 7, How a fight ends; getting up is 5.2.8); a strike from the ground is a brawler-game move his combat design of 12 Oct does not have."
+ },
+ {
+  "id": "M1.25",
+  "decision": "part",
+  "part": "1.5.2",
+  "reason": "Catching a runner is a hand on the collar within 1 m from behind, then the lower rungs (A3); a grab in a fight is 1.3.4."
+ },
+ {
+  "id": "M1.26",
+  "decision": "part",
+  "part": "1.3.2"
+ },
+ {
+  "id": "M1.27",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "Guard then counter in the other man's recovery (A29); no separate timed parry."
+ },
+ {
+  "id": "M1.28",
+  "decision": "part",
+  "part": "1.3.2"
+ },
+ {
+  "id": "M1.29",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "The counter lands only inside the first part of the other man's recovery after a slip or block (A29)."
+ },
+ {
+  "id": "M1.30",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "The slip (A29)."
+ },
+ {
+  "id": "M1.31",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "The reward for a slip on the tell is the counter that follows (A29)."
+ },
+ {
+  "id": "M1.32",
+  "decision": "out",
+  "reason": "Tom hits the man the stick points at (DESIGN 7); a chosen strike direction is KCD2's sword fencing, wrong for a fists-first 1990 street fight."
+ },
+ {
+  "id": "M1.33",
+  "decision": "out",
+  "reason": "DESIGN 7 makes the heavy blow a committed blow (0.63 to 0.85 s); commitment is what makes it readable and answerable, so it cannot be cancelled."
+ },
+ {
+  "id": "M1.35",
+  "decision": "part",
+  "part": "1.3.2",
+  "reason": "A blow inside the other man's recovery after a slip or block lands as a heavy blow at a jab's speed (A29); the dropped guard is 1.3.7."
+ },
+ {
+  "id": "M1.36",
+  "decision": "part",
+  "part": "1.3.8"
+ },
+ {
+  "id": "M1.37",
+  "decision": "part",
+  "part": "1.3.7",
+  "reason": "Breath, not a bar (A29; melee sheet C11)."
+ },
+ {
+  "id": "M1.39",
+  "decision": "part",
+  "part": "1.3.4"
+ },
+ {
+  "id": "M1.40",
+  "decision": "part",
+  "part": "1.3.5"
+ },
+ {
+  "id": "M1.43",
+  "decision": "part",
+  "part": "1.3.7"
+ },
+ {
+  "id": "M1.46",
+  "decision": "part",
+  "part": "1.3.6",
+  "reason": "The quiet blow from behind with a cosh or a fist (A23); no sleeping targets."
+ },
+ {
+  "id": "M1.47",
+  "decision": "out",
+  "reason": "Nothing is drawn over heads and no fight cue is shown on screen (DESIGN 17; A29 ER-DEFEND-02); a timed button prompt is a reflex test the grab of A29 does not use."
+ },
+ {
+  "id": "M1.48",
+  "decision": "part",
+  "part": "1.3.6"
+ },
+ {
+  "id": "M1.49",
+  "decision": "part",
+  "part": "1.3.4",
+  "reason": "The grab takes what is in his hand (A29)."
+ },
+ {
+  "id": "M1.50",
+  "decision": "part",
+  "part": "1.3.1"
+ },
+ {
+  "id": "M1.52",
+  "decision": "part",
+  "part": "1.3.9"
+ },
+ {
+  "id": "M1.57",
+  "decision": "part",
+  "part": "1.3.10"
+ },
+ {
+  "id": "M1.58",
+  "decision": "part",
+  "part": "1.3.10",
+  "reason": "Feel targets owed inside the part, AAA when used (ruling 18 Nov)."
+ },
+ {
+  "id": "M1.59",
+  "decision": "part",
+  "part": "5.8.1",
+  "reason": "An aim row joins the camera rig's rows when the rare gun is built (1.3.10); no shoulder swap."
+ },
+ {
+  "id": "M1.67",
+  "decision": "part",
+  "part": "1.4.4",
+  "reason": "Putting a weapon away is how he changes a give-away; a weapon drawn cannot be undrawn unseen (DESIGN 7)."
+ },
+ {
+  "id": "M1.68",
+  "decision": "part",
+  "part": "1.3.10"
+ },
+ {
+  "id": "M1.69",
+  "decision": "part",
+  "part": "1.3.10",
+  "reason": "A gun in the hand used as a club: a strike with the seven slots that also shows the gun (the dial)."
+ },
+ {
+  "id": "M1.70",
+  "decision": "part",
+  "part": "1.3.10",
+  "reason": "What a shot does and who hears it; a threat shot moves the dial to Fired like any shot."
+ },
+ {
+  "id": "M1.71",
+  "decision": "out",
+  "reason": "Guns are rare and late (ruling 18 Nov) and LEDGER is not a shooter (DESIGN 18); car chases end by cars and people."
+ },
+ {
+  "id": "M1.73",
+  "decision": "part",
+  "part": "1.2.1"
+ },
+ {
+  "id": "M1.74",
+  "decision": "part",
+  "part": "1.2.1"
+ },
+ {
+  "id": "M1.75",
+  "decision": "new",
+  "new_key": "horn",
+  "new": {
+   "parent": "1.2 (beside 1.2.3)",
+   "name": "The horn",
+   "what": "A horn on one key: a noise that turns heads, calls a fare or a crewman out, and is heard like any act.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "One key sounds the horn while held. It is a noise at a set reach (about 60 m by day, further at night, less in rain) that turns watchers' heads like any noise (2.2.4). A short toot outside a door brings out a fare or a man Tom is waiting for; a long blast in a quiet street at night is remembered as a noise and draws a look from lit windows. Pedestrians in the road step aside; it never alarms police on its own.",
+   "test": "A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows)."
+  }
+ },
+ {
+  "id": "M1.76",
+  "decision": "part",
+  "part": "1.2.2",
+  "reason": "A held key turns the car camera to the rear window (A24)."
+ },
+ {
+  "id": "M1.77",
+  "decision": "part",
+  "part": "1.2.3"
+ },
+ {
+  "id": "M1.78",
+  "decision": "part",
+  "part": "1.2.4",
+  "reason": "Ramming, damage by closing speed, nobody inside killed (A24)."
+ },
+ {
+  "id": "M1.79",
+  "decision": "part",
+  "part": "1.2.5"
+ },
+ {
+  "id": "M1.80",
+  "decision": "part",
+  "part": "1.2.10"
+ },
+ {
+  "id": "M1.81",
+  "decision": "out",
+  "reason": "Only parked cars are taken, never a car with somebody in it (A27, built to the recommended answer of his question 2)."
+ },
+ {
+  "id": "M1.85",
+  "decision": "out",
+  "reason": "Ordinary fast driving is never stopped (A12, ER-TRAFFIC-02), so there is no law to break by accident and a limiter has no job."
+ },
+ {
+  "id": "M1.90",
+  "decision": "part",
+  "part": "1.2.2",
+  "reason": "A choice of distance, if wanted, is a setting (8.3)."
+ },
+ {
+  "id": "M1.91",
+  "decision": "part",
+  "part": "1.6.1",
+  "reason": "Several keys to every lock: quiet (a key, a back way) or loud force."
+ },
+ {
+  "id": "M1.92",
+  "decision": "part",
+  "part": "1.3.4",
+  "reason": "Threaten (rung 3) with a demand; what is handed over is what the purse or till holds (2.7.5)."
+ },
+ {
+  "id": "M1.93",
+  "decision": "part",
+  "part": "1.6.3",
+  "reason": "Goods taken off a lorry or van are a lift; an armed raid on an armoured cash van stays out (guns rare and late, ruling 18 Nov)."
+ },
+ {
+  "id": "M1.94",
+  "decision": "part",
+  "part": "1.6.2",
+  "reason": "A safe needs its key or combination from a person, never a dial game (A4)."
+ },
+ {
+  "id": "M1.97",
+  "decision": "new",
+  "new_key": "pocket-lift",
+  "new": {
+   "parent": "1.6 (beside 1.6.3)",
+   "name": "Lifting from a pocket",
+   "what": "Taking a key, a letter or a wallet from a coat in a crowd or a packed room, as one held press; caught or not by the person's attention.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "Beside or behind a person in a crowd, a queue or a packed caff, one held press of about 2 s takes the one thing worth taking (authored: a key, a letter, a wallet); no minigame. The person may feel it: the chance rises with his attention, the light and how few people are near; felt, it is a deed with the seven slots and he turns on Tom there and then. A lifted key is one of the keys to a lock (1.6.1) and is missed by morning, so the owner knows when it went and who was near him.",
+   "test": "A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows)."
+  },
+  "question": "Should Tom be able to lift things from people's pockets? (a) yes, keys, letters and wallets only, as a quiet way into jobs [recommended]; (b) no."
+ },
+ {
+  "id": "M1.98",
+  "decision": "part",
+  "part": "1.4.8"
+ },
+ {
+  "id": "M1.99",
+  "decision": "part",
+  "part": "4.11.1"
+ },
+ {
+  "id": "M1.100",
+  "decision": "part",
+  "part": "1.7.1"
+ },
+ {
+  "id": "M1.101",
+  "decision": "new",
+  "new_key": "torch",
+  "new": {
+   "parent": "1.6 (beside 1.6.2)",
+   "name": "A torch on a night job",
+   "what": "A hand torch in a pocket: it lights a dark room for searching and shows him to anyone who can see the beam.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "A torch, bought at the ironmonger, takes one of the two pockets under the coat (1.6.9). Switched on, it lights a short cone; searches in a dark room take their table time (A4) with it and twice as long without it. A lit torch makes Tom count at a lit figure's light to anyone with a line of sight to him or the beam, and a beam moving behind a window is seen from the street as a precursor. Off, it is a thing in a pocket a constable may find.",
+   "test": "In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows)."
+  }
+ },
+ {
+  "id": "M1.105",
+  "decision": "part",
+  "part": "7.11"
+ },
+ {
+  "id": "M1.106",
+  "decision": "part",
+  "part": "1.6.10"
+ },
+ {
+  "id": "M1.109",
+  "decision": "part",
+  "part": "1.4.7"
+ },
+ {
+  "id": "M1.110",
+  "decision": "part",
+  "part": "1.4.7",
+  "reason": "The call (\"Oi!\") stops a walker for about 2 s (A10)."
+ },
+ {
+  "id": "M1.111",
+  "decision": "part",
+  "part": "3.7",
+  "reason": "An authored row between townspeople the player can watch, join or break up (no random fights, DESIGN 18); stepping in uses the lower rungs (1.3.4)."
+ },
+ {
+  "id": "M1.112",
+  "decision": "part",
+  "part": "2.2.1"
+ },
+ {
+  "id": "M1.113",
+  "decision": "part",
+  "part": "3.6.4",
+  "reason": "Unnamed people answer with crowd lines; live talk is for named people (3.6.1); asking a stranger the way is 6.9."
+ },
+ {
+  "id": "M1.114",
+  "decision": "out",
+  "reason": "The Ledger already writes down what Tom sees (DESIGN 10), so a camera adds nothing to the verbs or the town's memory; canon's smallest budget (and DESIGN 18 holds the camcorder to one side story)."
+ },
+ {
+  "id": "M1.115",
+  "decision": "out",
+  "reason": "What Tom knows comes from what he sees and what people tell him (DESIGN 2, 10); a planted bug is a spy-game tool outside a 1990 cab firm's world, and would make a gossip screen DESIGN 18 cuts."
+ },
+ {
+  "id": "M1.119",
+  "decision": "out",
+  "reason": "A loop of smashing meters for coins is upkeep for money that DESIGN 18's grind test cuts; money comes through people and the firm (DESIGN 9)."
+ },
+ {
+  "id": "M1.121",
+  "decision": "out",
+  "reason": "A towing job is a vehicle-job sim: not a driving game (canon, DESIGN 18), no taxi-sim parts, and it feeds neither the verbs nor the town's memory (smallest budget)."
+ },
+ {
+  "id": "M1.122",
+  "decision": "part",
+  "part": "3.4.1",
+  "reason": "Fares are named people Pauline calls, going where their routine takes them; no random roadside pickups (DESIGN 18)."
+ },
+ {
+  "id": "M1.129",
+  "decision": "out",
+  "reason": "Sight uses the same bands for Tom and the town (DESIGN 2: shape 35 m, mark 18 m, face 8 m); casing (1.6.11) is done close, which is its risk, and a zoom tool would remove that."
+ }
+]

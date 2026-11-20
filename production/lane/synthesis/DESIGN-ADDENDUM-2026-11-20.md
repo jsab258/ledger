@@ -364,3 +364,94 @@ Found by the lane's merged reference mechanics (gaps 20, 21). Windows, appointme
 
 Experience rule:
 - ER-TIME-01 The hour can be known within 3 s anywhere, without a screen clock. Check S.
+
+## A32. The horn (1.2.11)
+
+Found by mapping the reference mechanics onto the parts tree (M1.75, 20 Nov). Decided within canon, the pillars and his rulings.
+- One key sounds the horn while held.
+- It is a noise at a set reach (about 60 m by day, further at night, less in rain) that turns watchers' heads like any noise (2.2.4).
+- A short toot outside a door brings out a fare or a man Tom is waiting for; a long blast in a quiet street at night is remembered as a noise and draws a look from lit windows.
+- Pedestrians in the road step aside; it never alarms police on its own.
+
+Check: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows).
+
+## A33. A torch on a night job (1.6.12)
+
+Found by mapping the reference mechanics onto the parts tree (M1.101, 20 Nov). Decided within canon, the pillars and his rulings.
+- A torch, bought at the ironmonger, takes one of the two pockets under the coat (1.6.9).
+- Switched on, it lights a short cone; searches in a dark room take their table time (A4) with it and twice as long without it.
+- A lit torch makes Tom count at a lit figure's light to anyone with a line of sight to him or the beam, and a beam moving behind a window is seen from the street as a precursor.
+- Off, it is a thing in a pocket a constable may find.
+
+Check: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows).
+
+## A34. Lifting from a pocket (1.6.13)
+
+Found by mapping the reference mechanics onto the parts tree (M1.97, 20 Nov). Decided within canon, the pillars and his rulings.
+- Beside or behind a person in a crowd, a queue or a packed caff, one held press of about 2 s takes the one thing worth taking (authored: a key, a letter, a wallet); no minigame.
+- The person may feel it: the chance rises with his attention, the light and how few people are near; felt, it is a deed with the seven slots and he turns on Tom there and then.
+- A lifted key is one of the keys to a lock (1.6.1) and is missed by morning, so the owner knows when it went and who was near him.
+
+Check: A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows).
+
+Built to the recommended answer; recorded in DECISIONS-PENDING.md (the three questions for him are already used).
+
+## A35. Damage by hand (1.6.14)
+
+Found by mapping the reference mechanics onto the parts tree (M3.13, 20 Nov). Decided within canon, the pillars and his rulings.
+- A job or a pressure can ask Tom to damage something himself: a window, a windscreen, a van's lights, a shop's sign.
+- It is a loud act with the seven slots, heard at the force reach, and the damage stays until mended (2.19).
+- The owner reads it as a message from whoever he suspects; it climbs a rival's ladder if aimed at his.
+- Sending men to do it is the sent verb (1.7.2).
+
+Check: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.
+
+## A36. Police after a deed (2.6.10)
+
+Found by mapping the reference mechanics onto the parts tree (M2.8, M2.30, 20 Nov). Decided within canon, the pillars and his rulings.
+- Once a deed is reported, the beat constable (or a car at manhunt) goes to the spot and stays a while: a body brings tape, a torch at night and Ellis next morning.
+- After a lost chase the pursuer walks the nearby streets for a few game minutes, looking into yards and doorways, and takes the chase up again on sight.
+- The spot is watched ground for the rest of the night: going back there is the risk.
+- Nothing on screen marks where he searches; Tom reads it from the torch, the voice and the parked car.
+
+Check: After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S.
+
+## A37. A street on edge (2.5.4)
+
+Found by mapping the reference mechanics onto the parts tree (M2.16, 20 Nov). Decided within canon, the pillars and his rulings.
+- Two or three seen deeds on one street within a game day or two set it on edge: doors locked earlier, windows watched longer, witnesses set off to tell sooner, shops shut early, and the constable walks it more often.
+- It eases as the talk cools (2.4.2); the memories stay.
+- Shown in people and doors, never a meter; the dial (2.13) stays the only town-wide step.
+
+Check: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S.
+
+## A38. Finding an unseen deed (2.5.5)
+
+Found by mapping the reference mechanics onto the parts tree (M2.61, 20 Nov). Decided within canon, the pillars and his rulings.
+- Every unseen deed leaves its traces (a forced door, glass, a missing thing, a body), and whoever's routine next brings them past finds it: the owner on return, the cleaner at six, the first dock worker.
+- The finder becomes a witness of the aftermath slot only, and reports or tells as a witness would; a body is always found, at latest when the missing man becomes the town's question (2.16).
+- Nothing is found by chance roll: only by routines.
+
+Check: Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows.
+
+## A39. Calling on people (3.2.7)
+
+Found by mapping the reference mechanics onto the parts tree (M3.28, M3.29, M3.35, 20 Nov). Decided within canon, the pillars and his rulings.
+- Tom can call on a friend or the love interest at a place and hour their routine allows: a short scene of talk, no score and no pass mark.
+- What is said draws on what each knows (the claim check), so a visit after a bad night carries it.
+- Calling again too soon is remembered: a cooler door, a "you again".
+- The friendship that can hold (3.2.5) is built from these visits and the honesty in them.
+
+Check: A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S.
+
+Built to the recommended answer; recorded in DECISIONS-PENDING.md (the three questions for him are already used).
+
+## A40. Crew pay and the cut (2.11.4)
+
+Found by mapping the reference mechanics onto the parts tree (M7.8, 20 Nov). Decided within canon, the pillars and his rulings.
+- A driver gets a weekly wage from the fare book (DESIGN 9); a man on a night job gets a cut agreed in a line of talk before it, paid from the tin.
+- Going alone keeps the whole take but brings no second man.
+- Paid short or late, his loyalty falls and he asks for it first, the sign before breaking (DESIGN 12); paid fairly, he holds longer.
+- No split screen: every payment is a person and a flow in the flows ledger.
+
+Check: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.

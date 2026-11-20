@@ -4,9 +4,9 @@ Every gameplay part the one-shot (Friday 20 Nov, 22:10) builds into the browser 
 
 Rules for the one-shot: never change tools/lane/one-sim/; the town simulation stays the real one where the switch has landed; no polish (art, animation detail, voices, clothes and faces are never the browser's work); the content rule; a play build reaches him only through the publish gate. 'Now' is the prototype's status before the one-shot, from evidence (round 5 published, round 6 built and not published).
 
-Parts: 191. Already passing their standard: 1 (keep them passing).
+Parts: 200. Already passing their standard: 1 (keep them passing).
 
-## Stage A: one evening that holds (121 parts)
+## Stage A: one evening that holds (124 parts)
 
 - [ ] 1.1.1 Walk, run and turn. Now: built. Design: DESIGN §17 (input only); feel not designed. Test: feel numbers inside measured bands (input probe); H: 'did moving feel heavy or slippery?'; his eye in Unreal.
 - [ ] 1.1.2 On-foot camera follow. Now: built. Design: DESIGN §17. Test: B soak with clip detector; S frames counted for feet in frame; H screenshots in tight rooms.
@@ -20,6 +20,7 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 1.2.4 Crashes, damage and unsticking. Now: built. Design: DESIGN §5. Test: S: pole and wall hits at 10, 20, 35, 50 mph; B: 30 minutes of crashing.
 - [ ] 1.2.5 Cars and people. Now: built shallow. Design: DESIGN §5. Test: S: 1,000 seeded crossings with no contact; hits at 5, 15, 30, 50 mph, nobody dies; both choices seeded.
 - [ ] 1.2.7 Driving with passengers. Now: built shallow. Design: DESIGN §5, §11 staging. Test: H: fare log; S: a staged back-seat talk with the car moving.
+- [ ] 1.2.11 The horn. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A32. Test: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows)..
 - [ ] 1.3.1 Blows and contact. Now: built. Design: DESIGN §7 Feel. Test: S: melee drills at 1/60 s inside C1 to C15 (tools/lane/melee_drills.py); his feel check.
 - [ ] 1.3.2 Reading and answering blows. Now: built. Design: DESIGN §7; DESIGN-ADDENDUM-2026-11-20 §A29 (guard, slip, counter, breath, grab). Test: S: drills; H: 'did you see the blow coming?'; addendum rules ER-DEFEND-01 to 02.
 - [ ] 1.3.3 Targeting without lock-on. Now: built. Design: DESIGN §7. Test: S: targeting script with three men round Tom.
@@ -66,10 +67,12 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 2.5.1 The walk to tell. Now: built shallow. Design: DESIGN §2. Test: S: walk timed and visible.
 - [ ] 2.5.2 Stopping a witness. Now: built shallow. Design: DESIGN §2, §8. Test: S: each answer's effect on the report and the talk.
 - [ ] 2.5.3 Crowd reaction to a deed. Now: built. Design: DESIGN §2. Test: S: after a seen deed, look, gather, quieter talk.
+- [ ] 2.5.5 Finding an unseen deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A38. Test: Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows..
 - [ ] 2.6.1 The beat constable. Now: built shallow. Design: DESIGN §8 (new system needing its place in PLAN.md). Test: S and H: the challenge announced.
 - [ ] 2.6.2 Challenge and search. Now: built. Design: DESIGN §8. Test: S: a search finds what is carried.
 - [ ] 2.6.3 Statements and the arrest rule. Now: built. Design: DESIGN §8; C# Core. Test: S: golden rows.
 - [ ] 2.6.4 Custody as hours. Now: built shallow. Design: DESIGN §8. Test: S: arrest timed.
+- [ ] 2.6.10 Police after a deed. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A36. Test: After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S..
 - [ ] 2.7.1 Clean money and the fare book. Now: built. Design: DESIGN §9. Test: S: sum of flows.
 - [ ] 2.7.2 Night money and the tin. Now: built. Design: DESIGN §9. Test: S: sum of flows.
 - [ ] 2.7.3 The wash. Now: built. Design: DESIGN §9. Test: S: warning before the books go off.
@@ -130,7 +133,7 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 8.4.1 Visual stand-ins for sound cues. Now: built shallow. Design: DESIGN-ADDENDUM-2026-11-20 §A6. Test: H: ER-EYES-01 with sound off and the option on; addendum rules ER-ASSIST-01.
 - [ ] 9.6 The tuning table. Now: built. Design: prototype rules.js. Test: S: no magic number outside the table.
 
-## Stage B: a week that holds (38 parts)
+## Stage B: a week that holds (43 parts)
 
 - [ ] 1.1.6 Tailing on foot. Now: designed. Design: DESIGN §4 Tails; DESIGN-ADDENDUM §A2. Test: S: a scripted tail is made at the addendum's rule and never fails on a hidden distance; H: 'did losing him feel fair?'; addendum rules ER-TAIL-01 to 03.
 - [ ] 1.1.8 Vaulting low walls and fences. Now: missing. Design: DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer). Test: S: each vault point works in a chase; no vault anywhere else; addendum rules ER-VAULT-01.
@@ -146,8 +149,12 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 1.6.3 Lifts and the hot mark. Now: designed. Design: DESIGN §4. Test: S: golden rows for the mark; the owner recognises the goods.
 - [ ] 1.6.10 Tom's wardrobe. Now: designed. Design: DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21. Test: S: a change of coat lowers a witness's mark rung; H: strangers greet differently; addendum rules ER-COAT-01.
 - [ ] 1.6.11 Casing a place. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A23. Test: S: a cased place's hours appear in the Ledger and match the routines; addendum rules ER-CASE-01.
+- [ ] 1.6.12 A torch on a night job. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A33. Test: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows)..
+- [ ] 1.6.13 Lifting from a pocket. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A34. Test: A lift on an attentive person alone in daylight is always felt, one on a distracted person in a crowd of three or more is felt less than one time in four, and a lifted key is missed by the next morning (golden rows)..
+- [ ] 1.6.14 Damage by hand. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A35. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S..
 - [ ] 2.1.6 The town's calendar. Now: built shallow. Design: DESIGN-ADDENDUM-2026-11-20 §A20. Test: S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02.
 - [ ] 2.4.5 The paper and the news. Now: built shallow. Design: DESIGN-ADDENDUM-2026-11-20 §A19. Test: S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01.
+- [ ] 2.5.4 A street on edge. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A37. Test: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S..
 - [ ] 2.6.5 DS Ellis and the four stages. Now: built shallow. Design: DESIGN §8. Test: S: every route to a manhunt passes its signs.
 - [ ] 2.6.7 Traffic police and stops. Now: designed. Design: DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12. Test: S: a stop starts only on reckless driving in sight; ends within 2 minutes; addendum rules ER-TRAFFIC-01 to 02.
 - [ ] 2.7.5 Purses, tills and shops. Now: built shallow. Design: DESIGN §9; DESIGN-ADDENDUM-2026-11-20 §A30 (haggling). Test: S: a shop refuses and remembers; addendum rules ER-HAGGLE-01.
@@ -161,6 +168,7 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 3.1.1 Act I, The Inheritance. Now: built. Design: DESIGN §16; game-design first-week designs. Test: H: the week run; panel M1.
 - [ ] 3.1.6 Mickey's past. Now: built shallow. Design: DESIGN §16; story outline. Test: S: the street version stays a street fact.
 - [ ] 3.2.5 Someone worth being honest for. Now: designed. Design: DESIGN §16 (Danby still to write). Test: S: the friendship reaches its ending state.
+- [ ] 3.2.7 Calling on people. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A39. Test: A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S..
 - [ ] 3.3 Side stories. Now: designed. Design: DESIGN §4; drafts of 8 Nov. Test: H: found unaided; S: each ends in a town fact.
 - [ ] 3.5.3 Break-in sites. Now: designed. Design: DESIGN §4. Test: S: each site entered three ways.
 - [ ] 3.5.4 Tails, minding and lifts content. Now: designed. Design: DESIGN §4. Test: S: each instance's outcomes.
@@ -171,7 +179,7 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 7.10 Difficulty as assists. Now: built shallow. Design: DESIGN-ADDENDUM §A6. Test: S: each assist changes only its own thing; H: an impatient player finishes the first hour with assists on; addendum rules ER-ASSIST-01 to 02.
 - [ ] 7.16 Pastimes. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer). Test: H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01.
 
-## Stage C: the rise (27 parts)
+## Stage C: the rise (28 parts)
 
 - [ ] 1.3.10 Firearms. Now: designed. Design: DESIGN §7 Weapons, dial. Test: S: dial rules; feel numbers inside measured bands once researched.
 - [ ] 1.7.1 Orders in the field. Now: designed. Design: DESIGN §12 Orders. Test: S: each order; B: crew never block a lane.
@@ -187,6 +195,7 @@ Parts: 191. Already passing their standard: 1 (keep them passing).
 - [ ] 2.11.1 Recruiting. Now: designed. Design: DESIGN §12. Test: S: both roads seeded.
 - [ ] 2.11.2 Nerve, loyalty and breaking. Now: designed. Design: DESIGN §12. Test: S: sign before event in every seeded case.
 - [ ] 2.11.3 Crew fates. Now: designed. Design: DESIGN §12. Test: S: each fate reached by script.
+- [ ] 2.11.4 Crew pay and the cut. Now: designed. Design: DESIGN-ADDENDUM-2026-11-20 A40. Test: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger..
 - [ ] 2.12.2 Rung table. Now: designed. Design: DESIGN §14. Test: S: each rung's holdings and openings.
 - [ ] 2.12.3 Access and soft keys. Now: designed. Design: DESIGN §14. Test: S: each door's keys.
 - [ ] 2.12.5 Property that reacts. Now: designed. Design: DESIGN §14. Test: H: office at rung 1 and rung 3 compared.

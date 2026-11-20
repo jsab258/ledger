@@ -1,0 +1,628 @@
+[
+ {
+  "id": "M2.2",
+  "decision": "part",
+  "part": "2.6.4",
+  "reason": "Hours by deed: about six for a window up to twenty-two for a killing."
+ },
+ {
+  "id": "M2.3",
+  "decision": "part",
+  "part": "2.5.1",
+  "reason": "A witness walks to a friend, a phone box or the station; the beat constable acts on what he sees (2.6.1)."
+ },
+ {
+  "id": "M2.4",
+  "decision": "part",
+  "part": "2.5.2"
+ },
+ {
+  "id": "M2.5",
+  "decision": "part",
+  "part": "2.14",
+  "reason": "Each named person's nerve and loyalty decides how hard he is to pay or frighten; the rule is QUESTIONS 3, already its own part."
+ },
+ {
+  "id": "M2.7",
+  "decision": "part",
+  "part": "1.5.4",
+  "reason": "Pursuers give up once Tom is unseen 7 s or 70 m (ER-POL-04)."
+ },
+ {
+  "id": "M2.8",
+  "decision": "new",
+  "new_key": "police-aftermath",
+  "new": {
+   "parent": "2.6 (beside 2.6.5)",
+   "name": "Police after a deed",
+   "what": "What police do once a deed is reported or a chase lost: a constable at the spot, a search of the streets near it, then back to the beat.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "Once a deed is reported, the beat constable (or a car at manhunt) goes to the spot and stays a while: a body brings tape, a torch at night and Ellis next morning. After a lost chase the pursuer walks the nearby streets for a few game minutes, looking into yards and doorways, and takes the chase up again on sight. The spot is watched ground for the rest of the night: going back there is the risk. Nothing on screen marks where he searches; Tom reads it from the torch, the voice and the parked car.",
+   "test": "After a lost chase the constable searches the nearby streets, resumes on sight, and returns to his beat within the set time; a reported deed always brings an officer to its spot. Check S."
+  }
+ },
+ {
+  "id": "M2.9",
+  "decision": "part",
+  "part": "1.2.9",
+  "reason": "Shaun Hewson's respray and the plate as a mark; a car taken (1.2.10) is a different car to witnesses."
+ },
+ {
+  "id": "M2.11",
+  "decision": "part",
+  "part": "2.6.2",
+  "reason": "Stand and be searched, run and it is a chase, or a word (A13)."
+ },
+ {
+  "id": "M2.12",
+  "decision": "part",
+  "part": "2.6.4"
+ },
+ {
+  "id": "M2.13",
+  "decision": "part",
+  "part": "1.3.9",
+  "reason": "Tom cannot die; beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, costing days."
+ },
+ {
+  "id": "M2.14",
+  "decision": "part",
+  "part": "2.6.5",
+  "reason": "Four stages with signs; armed officers and War-level cars are 2.6.6."
+ },
+ {
+  "id": "M2.16",
+  "decision": "new",
+  "new_key": "street-on-edge",
+  "new": {
+   "parent": "2.5 (beside 2.5.3)",
+   "name": "A street on edge",
+   "what": "Several deeds on one street in a short time make its people jumpier for a while, below the escalation dial.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "Two or three seen deeds on one street within a game day or two set it on edge: doors locked earlier, windows watched longer, witnesses set off to tell sooner, shops shut early, and the constable walks it more often. It eases as the talk cools (2.4.2); the memories stay. Shown in people and doors, never a meter; the dial (2.13) stays the only town-wide step.",
+   "test": "A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S."
+  }
+ },
+ {
+  "id": "M2.19",
+  "decision": "part",
+  "part": "4.1.2",
+  "reason": "Back ways, ginnels, yards and bollarded lanes a car cannot follow are part of the Hook's layout as data; roadworks as dressing."
+ },
+ {
+  "id": "M2.20",
+  "decision": "part",
+  "part": "2.6.4",
+  "reason": "Each deed is its own matter; never taken twice for one."
+ },
+ {
+  "id": "M2.22",
+  "decision": "part",
+  "part": "2.6.7"
+ },
+ {
+  "id": "M2.24",
+  "decision": "part",
+  "part": "2.2.5",
+  "reason": "A weapon in the hand is a give-away; watchers scatter once it is out."
+ },
+ {
+  "id": "M2.25",
+  "decision": "part",
+  "part": "2.6.6"
+ },
+ {
+  "id": "M2.26",
+  "decision": "part",
+  "part": "1.2.5"
+ },
+ {
+  "id": "M2.27",
+  "decision": "part",
+  "part": "2.5.3"
+ },
+ {
+  "id": "M2.28",
+  "decision": "part",
+  "part": "1.1.6",
+  "reason": "A2: a mark is a doubt (he speeds up or changes route), a face he knows ends the tail: he turns and says so, or runs."
+ },
+ {
+  "id": "M2.29",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "Shops remember; memory is permanent (2.3.1)."
+ },
+ {
+  "id": "M2.30",
+  "decision": "new",
+  "new_key": "police-aftermath"
+ },
+ {
+  "id": "M2.31",
+  "decision": "part",
+  "part": "2.1.5",
+  "reason": "People look before they step out (ER-DRIVE-04) and walk round each other; crossings belong in crowd movement."
+ },
+ {
+  "id": "M2.34",
+  "decision": "part",
+  "part": "2.1.6",
+  "reason": "The week: market day, the Saturday match, Sunday; the crowd and traffic follow the calendar."
+ },
+ {
+  "id": "M2.35",
+  "decision": "part",
+  "part": "4.5.1",
+  "reason": "Traffic drivers reacting to other cars; a flash of lights at a car on the wrong side is one reaction."
+ },
+ {
+  "id": "M2.36",
+  "decision": "part",
+  "part": "4.5.1"
+ },
+ {
+  "id": "M2.37",
+  "decision": "part",
+  "part": "4.7",
+  "reason": "Dusk falls and the lamps come on; lit windows follow routines."
+ },
+ {
+  "id": "M2.38",
+  "decision": "part",
+  "part": "1.2.1",
+  "reason": "Grip is part of handling; the one wetness value (4.8) lowers it."
+ },
+ {
+  "id": "M2.39",
+  "decision": "part",
+  "part": "2.19",
+  "reason": "Lasting marks on the town: blood on a pavement stays until rain or a bucket washes it, as glass stays broken until mended."
+ },
+ {
+  "id": "M2.40",
+  "decision": "part",
+  "part": "4.8",
+  "reason": "Weather profiles drive the look, the dock water included; smallest budget, no boats beyond scenery (DESIGN 18)."
+ },
+ {
+  "id": "M2.41",
+  "decision": "part",
+  "part": "1.6.7",
+  "reason": "Getting rid of a body; a body in the dock is not gone: canon and DESIGN 7 say a body is never wiped, so it comes up at the basin later and is found."
+ },
+ {
+  "id": "M2.42",
+  "decision": "part",
+  "part": "1.3.7",
+  "reason": "The fall rule: a fall against a kerb, wall or step after a blow can kill, rarely; there are no heights to fall from (no jumping, the quay edge stops him)."
+ },
+ {
+  "id": "M2.43",
+  "decision": "part",
+  "part": "1.2.4"
+ },
+ {
+  "id": "M2.44",
+  "decision": "out",
+  "reason": "Canon and A11: cars cannot leave the quay into the water; bollards and the edge stop them."
+ },
+ {
+  "id": "M2.46",
+  "decision": "part",
+  "part": "1.3.7",
+  "reason": "Blood and a limp show condition; blood on him is a give-away (1.4.4)."
+ },
+ {
+  "id": "M2.47",
+  "decision": "part",
+  "part": "2.17",
+  "reason": "Fronts: trouble comes back to Tom through the man who runs it (A15)."
+ },
+ {
+  "id": "M2.50",
+  "decision": "part",
+  "part": "1.6.1"
+ },
+ {
+  "id": "M2.54",
+  "decision": "part",
+  "part": "2.12.4",
+  "reason": "Greetings by regard include his appearance; dress as a soft key is 2.12.3."
+ },
+ {
+  "id": "M2.55",
+  "decision": "part",
+  "part": "1.3.12"
+ },
+ {
+  "id": "M2.56",
+  "decision": "part",
+  "part": "1.6.4",
+  "reason": "Fronting up: collections and pressure in person; a round is collections repeated (2.17)."
+ },
+ {
+  "id": "M2.57",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "Haggling without a meter (A30): the buyer's answers come from his purse and how he regards Tom; access by standing is 2.12.3. No price tables (DESIGN 18)."
+ },
+ {
+  "id": "M2.59",
+  "decision": "part",
+  "part": "2.2.1"
+ },
+ {
+  "id": "M2.60",
+  "decision": "part",
+  "part": "2.4.3"
+ },
+ {
+  "id": "M2.61",
+  "decision": "new",
+  "new_key": "discovery",
+  "new": {
+   "parent": "2.5 (beside 2.5.1)",
+   "name": "Finding an unseen deed",
+   "what": "Who comes upon a deed nobody saw, and when: the owner home to a forced door, a worker at a body, a neighbour at broken glass.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "Every unseen deed leaves its traces (a forced door, glass, a missing thing, a body), and whoever's routine next brings them past finds it: the owner on return, the cleaner at six, the first dock worker. The finder becomes a witness of the aftermath slot only, and reports or tells as a witness would; a body is always found, at latest when the missing man becomes the town's question (2.16). Nothing is found by chance roll: only by routines.",
+   "test": "Every unseen deed with a trace is found by the first person whose routine passes it, and that person holds only the aftermath. Check S: golden rows."
+  }
+ },
+ {
+  "id": "M2.62",
+  "decision": "part",
+  "part": "2.6.5"
+ },
+ {
+  "id": "M2.64",
+  "decision": "part",
+  "part": "2.6.9"
+ },
+ {
+  "id": "M2.67",
+  "decision": "part",
+  "part": "2.4.3"
+ },
+ {
+  "id": "M2.69",
+  "decision": "part",
+  "part": "2.6.8",
+  "reason": "A13: a word talks round a constable with no cause; a note to a bought man; offered to an honest one it is a crime he saw."
+ },
+ {
+  "id": "M2.71",
+  "decision": "part",
+  "part": "2.2.6"
+ },
+ {
+  "id": "M2.72",
+  "decision": "part",
+  "part": "2.6.9",
+  "reason": "A charge joins Ellis's case; she joins the street's crimes to the fire."
+ },
+ {
+  "id": "M2.75",
+  "decision": "part",
+  "part": "2.3.1",
+  "reason": "Standing is what each person saw and was told, kept for good; never a number (DESIGN 18)."
+ },
+ {
+  "id": "M2.78",
+  "decision": "part",
+  "part": "2.7.5",
+  "reason": "A30: walking away from a haggle is remembered."
+ },
+ {
+  "id": "M2.79",
+  "decision": "part",
+  "part": "2.2.5"
+ },
+ {
+  "id": "M2.80",
+  "decision": "part",
+  "part": "2.2.3"
+ },
+ {
+  "id": "M2.81",
+  "decision": "part",
+  "part": "2.2.4"
+ },
+ {
+  "id": "M2.83",
+  "decision": "part",
+  "part": "1.6.10",
+  "reason": "A21: a scarf up and a hat down at night break the face rung but are themselves a mark by day."
+ },
+ {
+  "id": "M2.84",
+  "decision": "part",
+  "part": "1.6.10",
+  "reason": "A21: a second coat breaks the mark rung; a barber changes the look for a week."
+ },
+ {
+  "id": "M2.85",
+  "decision": "part",
+  "part": "2.2.2"
+ },
+ {
+  "id": "M2.86",
+  "decision": "part",
+  "part": "2.2.5",
+  "reason": "The same coat as last night gives him away."
+ },
+ {
+  "id": "M2.87",
+  "decision": "part",
+  "part": "1.4.4"
+ },
+ {
+  "id": "M2.89",
+  "decision": "part",
+  "part": "2.12.3",
+  "reason": "Dress and dirt as soft keys: a filthy man is refused at doors that would open to him clean."
+ },
+ {
+  "id": "M2.90",
+  "decision": "part",
+  "part": "2.1.1"
+ },
+ {
+  "id": "M2.91",
+  "decision": "part",
+  "part": "2.6.1"
+ },
+ {
+  "id": "M2.92",
+  "decision": "part",
+  "part": "2.7.6"
+ },
+ {
+  "id": "M2.94",
+  "decision": "part",
+  "part": "2.7.6",
+  "reason": "Rita refuses or lowballs goods whose deed is still hot in talk (A30: her answers come from how hot the goods are and how she regards Tom)."
+ },
+ {
+  "id": "M2.95",
+  "decision": "part",
+  "part": "2.12.2",
+  "reason": "Rita's back room opens at rung 2."
+ },
+ {
+  "id": "M2.97",
+  "decision": "part",
+  "part": "2.6.5"
+ },
+ {
+  "id": "M2.98",
+  "decision": "part",
+  "part": "2.2.2"
+ },
+ {
+  "id": "M2.102",
+  "decision": "part",
+  "part": "2.6.3"
+ },
+ {
+  "id": "M2.104",
+  "decision": "part",
+  "part": "2.2.3"
+ },
+ {
+  "id": "M3.3",
+  "decision": "part",
+  "part": "3.5.6"
+ },
+ {
+  "id": "M3.4",
+  "decision": "part",
+  "part": "3.1.2",
+  "reason": "Beats fire on states, never on days."
+ },
+ {
+  "id": "M3.6",
+  "decision": "part",
+  "part": "1.6.6",
+  "reason": "The plan is what casing and tails wrote in the Ledger, chosen in the minute before: which car, who comes, which way in. No planning-board screen; a plan pointed at a person by a sent man is 1.7.2."
+ },
+ {
+  "id": "M3.7",
+  "decision": "part",
+  "part": "1.6.6",
+  "reason": "Who comes is chosen at dusk; each man's nerve and loyalty is the risk (2.11.2)."
+ },
+ {
+  "id": "M3.9",
+  "decision": "part",
+  "part": "3.3"
+ },
+ {
+  "id": "M3.11",
+  "decision": "part",
+  "part": "3.3",
+  "reason": "Offered by a person, on a state."
+ },
+ {
+  "id": "M3.12",
+  "decision": "part",
+  "part": "3.5.1"
+ },
+ {
+  "id": "M3.13",
+  "decision": "new",
+  "new_key": "damage-by-hand",
+  "new": {
+   "parent": "1.6 (beside 1.6.4)",
+   "name": "Damage by hand",
+   "what": "Tom himself puts a brick through a window or smashes a car or a shopfront: a message, loud and lasting.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "A job or a pressure can ask Tom to damage something himself: a window, a windscreen, a van's lights, a shop's sign. It is a loud act with the seven slots, heard at the force reach, and the damage stays until mended (2.19). The owner reads it as a message from whoever he suspects; it climbs a rival's ladder if aimed at his. Sending men to do it is the sent verb (1.7.2).",
+   "test": "Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S."
+  }
+ },
+ {
+  "id": "M3.14",
+  "decision": "part",
+  "part": "1.6.5"
+ },
+ {
+  "id": "M3.15",
+  "decision": "part",
+  "part": "1.4.8",
+  "reason": "A noise or a thrown thing turns a watcher, the beat constable included, or moves him off a door."
+ },
+ {
+  "id": "M3.17",
+  "decision": "part",
+  "part": "3.5.2"
+ },
+ {
+  "id": "M3.18",
+  "decision": "out",
+  "reason": "Canon: not a driving game; DESIGN 18 cuts a garage of cars; taking a car is A27's single loud act, not a car-theft job family."
+ },
+ {
+  "id": "M3.22",
+  "decision": "part",
+  "part": "3.7",
+  "reason": "Street happenings: each offers a choice with the hands and leaves something the town knows."
+ },
+ {
+  "id": "M3.24",
+  "decision": "part",
+  "part": "2.4.4",
+  "reason": "It comes back: what the town saw returns to his face, the good with the bad."
+ },
+ {
+  "id": "M3.28",
+  "decision": "new",
+  "new_key": "calling-on",
+  "new": {
+   "parent": "3.2 (beside 3.2.5)",
+   "name": "Calling on people",
+   "what": "Time with the people who matter, chosen by Tom: tea at Ada's, the caff with Alison, a walk with Danby; too often and it wears thin.",
+   "felt": true,
+   "track": "both",
+   "gameplay": true,
+   "design": "Tom can call on a friend or the love interest at a place and hour their routine allows: a short scene of talk, no score and no pass mark. What is said draws on what each knows (the claim check), so a visit after a bad night carries it. Calling again too soon is remembered: a cooler door, a \"you again\". The friendship that can hold (3.2.5) is built from these visits and the honesty in them.",
+   "test": "A visit is possible only where and when the person's routine allows, shows no score, and a second call inside the set gap draws a cooler answer. Check S."
+  }
+ },
+ {
+  "id": "M3.29",
+  "decision": "new",
+  "new_key": "calling-on"
+ },
+ {
+  "id": "M3.30",
+  "decision": "part",
+  "part": "2.10.1",
+  "reason": "Rival ladders: each rung said to his face or shown on his street."
+ },
+ {
+  "id": "M3.31",
+  "decision": "part",
+  "part": "3.6.4",
+  "reason": "Crowd lines by situation: a body or a man down is a situation with its own lines; the crowd's reaction is 2.5.3."
+ },
+ {
+  "id": "M3.34",
+  "decision": "part",
+  "part": "2.12.3"
+ },
+ {
+  "id": "M3.35",
+  "decision": "new",
+  "new_key": "calling-on",
+  "question": "Does time with Alison or Danby play as visits Tom chooses, with no score (recommended), or only through story beats?"
+ },
+ {
+  "id": "M3.38",
+  "decision": "part",
+  "part": "2.12.2"
+ },
+ {
+  "id": "M3.39",
+  "decision": "part",
+  "part": "2.10.3",
+  "reason": "What rises with him is risk; rivals go after his people."
+ },
+ {
+  "id": "M3.40",
+  "decision": "part",
+  "part": "2.10"
+ },
+ {
+  "id": "M3.43",
+  "decision": "part",
+  "part": "3.3",
+  "reason": "Side stories run beside the acts from week one."
+ },
+ {
+  "id": "M3.44",
+  "decision": "part",
+  "part": "2.10.3",
+  "reason": "Each pressure has three answers; the sit-down is accept, defy or counter (3.5.5)."
+ },
+ {
+  "id": "M3.45",
+  "decision": "part",
+  "part": "1.3.4",
+  "reason": "Threaten is rung 3, said in talk or shown."
+ },
+ {
+  "id": "M3.48",
+  "decision": "part",
+  "part": "2.7.8",
+  "reason": "A bribe is something money buys; paying a witness is 2.5.2."
+ },
+ {
+  "id": "M3.51",
+  "decision": "part",
+  "part": "1.3.8",
+  "reason": "A man watched stands longer, so alone he gives way sooner."
+ },
+ {
+  "id": "M3.52",
+  "decision": "part",
+  "part": "2.14"
+ },
+ {
+  "id": "M3.53",
+  "decision": "part",
+  "part": "3.6.6"
+ },
+ {
+  "id": "M3.54",
+  "decision": "part",
+  "part": "6.7",
+  "reason": "Leave is always there; scenes skippable (5.8.3)."
+ },
+ {
+  "id": "M3.55",
+  "decision": "part",
+  "part": "2.15.2",
+  "reason": "The cold-store shift contract and fares earn and explain money."
+ },
+ {
+  "id": "M3.57",
+  "decision": "part",
+  "part": "3.5.6",
+  "reason": "Windows, not minutes; a missed window ends in a state the town can talk about."
+ },
+ {
+  "id": "M3.60",
+  "decision": "part",
+  "part": "3.5.7"
+ }
+]
