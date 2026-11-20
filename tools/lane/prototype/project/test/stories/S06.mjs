@@ -13,6 +13,9 @@ await run('S06', { from: (v) => 'S05 home ' + v }, async (P, t, n, variant) => {
   const made = variant !== 'quay';
   t.ok(made ? start.things.includes('made') : start.things.includes('missed'), 'what happened last night is the branch that was played', start.things);
   const T0 = await P.clock();
+  // daylight: the dark coat comes off before he goes down (a player reads "C Coat off")
+  await P.tap('KeyC'); await P.frames(20);
+  t.ok(!(await P.world(() => LEDGER.G.tom.coat)), 'the coat comes off for the day', (await P.screen()).prompts);
 
   // ----- 1. down the stair, out of the front door, into Quay Street -----
   const mat = await local('flat', -3.6, 3.0);
@@ -31,6 +34,7 @@ await run('S06', { from: (v) => 'S05 home ' + v }, async (P, t, n, variant) => {
     for (const [x, z] of [[7.6, 33], [7.6, 30.5], [7.6, 37.5]]) { await P.walkTo(x, z, { maxSecs: 30, until: said }); if (await P.world(said)) { heard = 1; break; } await P.until(said, 6); if (await P.world(said)) { heard = 1; break; } }
     if ((await P.clock()) - T0 > 1440) break;
   }
+  await P.secs(0.5);
   const line = ((await P.subsLog()).filter((x) => /^DARREN MILNER/.test(x.s) && /chief/.test(x.s)).pop() || { s: '' }).s;
   const took = (await P.clock()) - T0;
   t.ok(heard > 0 && took < 1440, 'Darren says it to his face within one game day', [Math.round(took), line]);

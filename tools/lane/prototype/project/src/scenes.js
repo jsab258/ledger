@@ -1536,7 +1536,7 @@ export function hotspots() {
 // ---------- the running week ----------
 function comebacks() {
   const t = G.tom;
-  if (G.paused || t.inCar || F.on || G.t < sayCool) return;
+  if (G.paused || t.inCar || F.on || G.t < sayCool || ui.subs.length) return; // never over another line
   const T = tomTarget();
   let best = null,
     bm = null,

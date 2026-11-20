@@ -145,8 +145,9 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     await outYard();
     // out of the yard at a walk (his ordinary footsteps), then slowly along the dark side of the quay by the water
     await P.world(() => { const S = window.__S; S.minPc = 99; S.lit = 0; S.eachs.dk = () => { const Q = LEDGER.G.people.pc, t = LEDGER.G.tom; if (!Q.gone && Q.space === 'street') S.minPc = Math.min(S.minPc, Math.hypot(Q.x - t.x, Q.z - t.z)); if (t.space === 'street' && t.light > 0.5) S.lit++; }; });
-    // his footsteps as the sound record has them, each over the hour's own factor (so two stretches can be compared)
-    const stepsOf = async (walk) => { const m = await P.world(() => LEDGER.mix.length), f0 = await P.world(() => LEDGER.noiseTimes()); await walk(); const f1 = await P.world(() => LEDGER.noiseTimes()); const a = await P.world((m) => LEDGER.mix.slice(m).filter((q) => q.n === 'step').map((q) => q.loud), m); return { a, f: Math.abs(f0 - f1) < 0.04 * f0 ? (f0 + f1) / 2 : 0 }; };
+    // his footsteps as the sound record has them, each over what the hour and the rain did to sound at that moment
+    await P.world(() => { const S = window.__S; S.stI = LEDGER.mix.length; S.st = []; S.eachs.st = () => { while (S.stI < LEDGER.mix.length) { const q = LEDGER.mix[S.stI++]; if (q.n === 'step') S.st.push(q.loud / LEDGER.noiseTimes()); } }; });
+    const stepsOf = async (walk) => { await P.world(() => { window.__S.st = []; }); await walk(); return { a: await P.world(() => window.__S.st.slice()) }; };
     const med = (a) => a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)];
     await go(24.5, 39);
     const normal = await stepsOf(() => go(26, 44));
@@ -156,8 +157,8 @@ await run('S05', { from: 'S04 yes' }, async (P, t, n, variant) => {
     const at = await man();
     await go(at[0] + 14, 56.8, { slow: true, maxSecs: 150 });
     const small = await P.world(() => LEDGER.rules.noise.deadOfNightTimes);
-    t.ok(normal.f && slow.f && normal.a.length > 2 && slow.a.length > 3 && Math.abs(med(slow.a) / slow.f / (med(normal.a) / normal.f) - 0.5) < 0.06, 'walking slowly (Z held) his footsteps carry half as far, and are heard half as loud', [med(normal.a), normal.f, med(slow.a), slow.f, normal.a.length, slow.a.length]);
-    t.ok(normal.f && Math.abs((med(normal.a) * 10 / normal.f) * small - 3.6) < 0.3, 'in the small hours (and dry) a normal footstep carries about 3.6 m', [(med(normal.a) * 10 / normal.f) * small, normal.f, small]);
+    t.ok(normal.a.length > 2 && slow.a.length > 3 && Math.abs(med(slow.a) / med(normal.a) - 0.5) < 0.06, 'walking slowly (Z held) his footsteps carry half as far, and are heard half as loud', [med(normal.a), med(slow.a), normal.a.length, slow.a.length]);
+    t.ok(Math.abs(med(normal.a) * 10 * small - 3.6) < 0.3, 'in the small hours (and dry) a normal footstep carries about 3.6 m', [med(normal.a) * 10 * small, small]);
     await handOver('dark');
     const took = (await P.played()) - w0;
     const seen = await P.world(() => [window.__S.minPc, window.__S.lit]);
