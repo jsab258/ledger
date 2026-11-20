@@ -11,9 +11,11 @@ So the lane can continue. Times are Swiss.
 - 21:54 the lane's merged reference mechanics read; A29 to A31; pushed.
 - 21:56 to 22:02 fresh Opus review: pass with fixes; all fixed (REVIEW-2026-11-20.md).
 
+## Done (20 Nov, lane)
+- 01:17 to 01:45 status sweep of the 91 late parts, prototype track, from the source (60 parts with a prototype track; tools/lane/parts-tree/sweep/late_parts_2026_11_20.py): built 6, built shallow 27, designed 25, missing 2. A fresh Sonnet spot-check of 15 changed three (1.1.7, 1.4.7, 5.8.3), applied. Unreal statuses left as set (repository records only). Rollup, renders, check.py 0 faults. The prototype as a whole now rolls up to built shallow (233 leaves: missing 3, designed 64, built shallow 93, built 72, passes 1).
+- The 4m merge (1c) was done by the tree session itself (A29 to A31 and the merged list); RN-01, 03, 05, 07, 08 updated by the lane at 00:45.
+
 ## Next (for the lane, when budget allows)
-- Status sweep of the 92 parts added after the first sweep: they show "designed" from their design, build not checked (list in work/added-ids.txt). Edit their statuses in the JSON, then rollup.py, render_md.py, render_views.py, check.py.
-- When FEEL-REFERENCE-GAMES-2026-11-20 and FEEL-MEASUREMENT-METHOD-2026-11-20 land, update RN-01, RN-03, RN-05, RN-07, RN-08 in the JSON's research_items.
 - His answers to the three questions: flip A26 to A28 if he picks otherwise.
 
 ## Broken or open

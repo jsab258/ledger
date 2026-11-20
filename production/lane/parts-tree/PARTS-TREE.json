@@ -25,8 +25,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 233 leaves: missing 2, designed 95, built shallow 68, built 65, passes 1, unknown 2"
+     "status": "built shallow",
+     "evidence": "rollup of 233 leaves: missing 3, designed 63, built shallow 95, built 71, passes 1"
     },
     "unreal": {
      "status": "designed",
@@ -78,7 +78,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 57 leaves: designed 27, built shallow 12, built 18"
+     "evidence": "rollup of 57 leaves: missing 1, designed 23, built shallow 15, built 18"
     },
     "unreal": {
      "status": "designed",
@@ -126,8 +126,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 8 leaves: designed 3, built shallow 2, built 3"
+     "status": "built shallow",
+     "evidence": "rollup of 8 leaves: missing 1, designed 1, built shallow 3, built 3"
     },
     "unreal": {
      "status": "designed",
@@ -514,8 +514,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "holding Z leans Tom on a wall and lets time pass (src/player.js waiting, G.fast; design_notes.js); no sit, bench, smoke or bus stop (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -559,8 +559,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A26 (to the recommended answer)); build not checked by the status sweep"
+     "status": "missing",
+     "evidence": "no vault anywhere in src (grep 'vault' empty); walls and fences are plain solids in map.js; question A26 pending (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1010,7 +1010,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+     "evidence": "Tom always drives; passengers are fares only (src/fares.js); no ride as passenger (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1054,7 +1054,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A24); build not checked by the status sweep"
+     "evidence": "no repair, plates or paint; round 6 removed stranding instead (src/drive.js wayOut, workClear) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1097,7 +1097,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A27 (to the recommended answer)); build not checked by the status sweep"
+     "evidence": "parked cars are solid obstacles only (src/drive.js trafficAt parkedOnly); no taking a car (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1750,7 +1750,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+     "evidence": "no lasting marks on Tom; rules.js only grades a run-down (runDownIsAClipBelowMetresPerSecond) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1793,7 +1793,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A29); build not checked by the status sweep"
+     "evidence": "src/fight.js has one opponent model (guard, swing, stagger); no boxer, brawler or big-man types (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -1835,8 +1835,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 8 leaves: designed 3, built shallow 3, built 2"
+     "status": "built shallow",
+     "evidence": "rollup of 8 leaves: designed 2, built shallow 4, built 2"
     },
     "unreal": {
      "status": "designed",
@@ -2182,8 +2182,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "stare, square up, threaten and shove are rungs of the fronting-up ladder (src/fight.js, design_notes_text.js), not free acts on one key; greeting only by typed or suggested talk (talk.js GREETS, hook.js); no nod (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -2227,7 +2227,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+     "evidence": "noise exists as Tom's own noise reach (ui.js mnoise, seeing.js) but nothing thrown or made to draw a watcher (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -2522,7 +2522,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 11 leaves: designed 8, built shallow 2, built 1"
+     "evidence": "rollup of 11 leaves: designed 7, built shallow 3, built 1"
     },
     "unreal": {
      "status": "designed",
@@ -2980,8 +2980,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §7 Weapons; DESIGN-ADDENDUM §A5); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "pocket money and the holdall carried on night jobs (src/money.js, jobs.js, hook.js pocketPence); no coat pockets or office storage (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -3043,7 +3043,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+     "evidence": "no wardrobe or changing clothes; seeing.js reads 'coat' as a recognition step only (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -3087,7 +3087,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+     "evidence": "no casing act; only design_notes_text.js mentions it (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -3331,7 +3331,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A16); build not checked by the status sweep"
+     "evidence": "no followers; Cammack's lads are a threat (src/scenes.js lads()), not Tom's men (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -3374,8 +3374,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 64 leaves: designed 25, built shallow 19, built 19, unknown 1"
+     "status": "built shallow",
+     "evidence": "rollup of 64 leaves: designed 20, built shallow 25, built 19"
     },
     "unreal": {
      "status": "designed",
@@ -3436,7 +3436,7 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 6 leaves: designed 1, built shallow 2, built 2, unknown 1"
+     "evidence": "rollup of 6 leaves: built shallow 4, built 2"
     },
     "unreal": {
      "status": "designed",
@@ -3695,8 +3695,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "built shallow",
+     "evidence": "crowd walks routines (src/routines.js goToPoint) with foot solids (drive.js footSolid, footClear); no queueing or stepping aside for each other found (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "unknown",
@@ -3748,8 +3748,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A20); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "weekdays named (src/util.js DAYS), rent Friday, jobs by weekday (jobs.js); no market day, match day or dated days (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -4087,7 +4087,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §4; DESIGN-ADDENDUM-2026-11-20 §A10); build not checked by the status sweep"
+     "evidence": "no trespass or ground rules in src (grep empty); shop hours only (rules.shops) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -4279,7 +4279,7 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 5 leaves: designed 1, built shallow 1, built 3"
+     "evidence": "rollup of 5 leaves: built shallow 2, built 3"
     },
     "unreal": {
      "status": "built",
@@ -4526,8 +4526,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/scenes.js paper(): an evening paper for 20p with headlines (talk_lines.js HEADLINES) and story news (lastNews); Alison Sedman's questions (scenes.js); her stories are not built from what she knows (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -4772,8 +4772,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 9 leaves: designed 4, built shallow 3, built 2"
+     "status": "built shallow",
+     "evidence": "rollup of 9 leaves: designed 3, built shallow 4, built 2"
     },
     "unreal": {
      "status": "designed",
@@ -5113,7 +5113,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §5; DESIGN-ADDENDUM-2026-11-20 §A12); build not checked by the status sweep"
+     "evidence": "no patrol car or traffic stop (grep empty); police are on foot (src/police.js) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -5157,7 +5157,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+     "evidence": "a bought witness gives no statement (src/police.js mind.bought) and talk has a bribe intent (talk.js); no named officer to pay (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -5200,8 +5200,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A13); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/police.js arrestScene, arrestNow, custody: Ellis asks Tom to the station; no charge joining the case, bail or office search (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -5245,7 +5245,7 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 8 leaves: designed 2, built shallow 3, built 3"
+     "evidence": "rollup of 8 leaves: designed 1, built shallow 4, built 3"
     },
     "unreal": {
      "status": "designed",
@@ -5620,8 +5620,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A21); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/rules.js prices: tea at the caff, the paper, chips, cosh and knife (scenes.js); no clothes, tools or property to buy (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6581,7 +6581,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §14); build not checked by the status sweep"
+     "evidence": "the office and flat do not change with play (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6716,7 +6716,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 3 leaves: designed 3"
+     "evidence": "rollup of 3 leaves: designed 2, built shallow 1"
     },
     "unreal": {
      "status": "designed",
@@ -6767,7 +6767,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §12, §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+     "evidence": "no fleet or drivers (grep empty) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6812,8 +6812,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "a rank and its sign exist (src/map.js rank, ranksign; rules.js routine at the rank) and fares come from it; no winning ranks or accounts (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6856,7 +6856,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A14); build not checked by the status sweep"
+     "evidence": "no other minicab firm (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6948,7 +6948,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §14; DESIGN-ADDENDUM-2026-11-20 §A15); build not checked by the status sweep"
+     "evidence": "no fronts or rackets held (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -6992,7 +6992,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A22); build not checked by the status sweep"
+     "evidence": "no ambulance or hospital (grep empty) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -7036,7 +7036,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
+     "evidence": "no lasting marks on the town (grep empty) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -7078,8 +7078,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 31 leaves: designed 13, built shallow 10, built 8"
+     "status": "built shallow",
+     "evidence": "rollup of 31 leaves: designed 9, built shallow 13, built 9"
     },
     "unreal": {
      "status": "designed",
@@ -8044,7 +8044,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "rollup of 7 leaves: designed 5, built 2"
+     "evidence": "rollup of 7 leaves: designed 3, built shallow 2, built 2"
     },
     "unreal": {
      "status": "designed",
@@ -8337,8 +8337,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §4); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/jobs.js JOBS table (from, to, pay, after hour) with saved state; not a general step graph with windows and outcomes (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -8387,8 +8387,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A17); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "jobs reach Tom through set scenes and the to-do line (src/scenes.js, ui.js obj); no phone, messages or callers (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -8431,7 +8431,7 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 8 leaves: designed 1, built shallow 3, built 4"
+     "evidence": "rollup of 8 leaves: built shallow 3, built 5"
     },
     "unreal": {
      "status": "built",
@@ -8840,8 +8840,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A25); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "typing on the keyboard and numbered suggested lines (src/talk.js, hook.js say a suggested line, ui.js talk box); pad cannot type words (6.6); Tom not heard aloud (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -8883,8 +8883,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A18); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "overheard lines on a timer (src/scenes.js overhear, talk_lines.js OVERHEARD) and the lads at night (lads()); no authored incidents placed on the clock (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -8926,8 +8926,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 22 leaves: designed 8, built shallow 7, built 7"
+     "status": "built shallow",
+     "evidence": "rollup of 22 leaves: designed 4, built shallow 11, built 7"
     },
     "unreal": {
      "status": "designed",
@@ -8979,8 +8979,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 4 leaves: designed 2, built shallow 1, built 1"
+     "status": "built shallow",
+     "evidence": "rollup of 4 leaves: designed 1, built shallow 2, built 1"
     },
     "unreal": {
      "status": "designed",
@@ -9134,8 +9134,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §4; street_signs tool); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "shop fascia signs (src/map.js sign: MICKEY'S CARS, LAVERACK) and named spots (map.js names); no street-name plates (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -9189,7 +9189,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §5); build not checked by the status sweep"
+     "evidence": "no out-of-town fares; the map is the Hook only (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -9271,8 +9271,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 4 leaves: designed 2, built shallow 1, built 1"
+     "status": "built shallow",
+     "evidence": "rollup of 4 leaves: designed 1, built shallow 2, built 1"
     },
     "unreal": {
      "status": "designed",
@@ -9410,7 +9410,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN §13); build not checked by the status sweep"
+     "evidence": "no dock gate, customs or Harbour Board in src (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -9450,8 +9450,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A11); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "water areas and a ladder (src/map.js WATER, ladder); water is blocked to walking; no knocked-in man climbing out (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -9942,8 +9942,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 1 leaves: designed 1"
+     "status": "built shallow",
+     "evidence": "rollup of 1 leaves: built shallow 1"
     },
     "unreal": {
      "status": "designed",
@@ -9995,8 +9995,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (TRAFFIC-STAGE1-REFERENCE-MODEL); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "AI traffic on routes with a bus (src/drive.js stepTraffic, spawn, spawnBusLeaving); giving way and reacting to people not checked (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -10307,8 +10307,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (STYLE-SHEET-1990-DRAFT); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "1990 money, the paper's headlines and shop signs (talk_lines.js, map.js); no poll-tax posters or brand set (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built shallow",
@@ -10359,7 +10359,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (canon); build not checked by the status sweep"
+     "evidence": "no pub or school places in src (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -10450,7 +10450,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A23); build not checked by the status sweep"
+     "evidence": "no yard dogs (only 'watchdog' in checks.js, a code timer) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -10493,7 +10493,7 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 12 leaves: designed 5, built shallow 7"
+     "evidence": "rollup of 12 leaves: designed 3, built shallow 8, built 1"
     },
     "unreal": {
      "status": "built shallow",
@@ -11142,7 +11142,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (D29; DESIGN §2); build not checked by the status sweep"
+     "evidence": "people are plain figures; no posture of knowing (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built shallow",
@@ -11531,8 +11531,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 1 leaves: designed 1"
+     "status": "built",
+     "evidence": "rollup of 1 leaves: built 1"
     },
     "unreal": {
      "status": "built",
@@ -11624,8 +11624,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (RULINGS); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "src/light.js one light field: sodium lamp pools with falloff, lit and late shop windows (channels 0 to 3), the same numbers for seeing (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built",
@@ -12267,7 +12267,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (RULINGS; DESIGN §11); build not checked by the status sweep"
+     "evidence": "no thinking sound or glance before an answer (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built",
@@ -12406,8 +12406,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 2 leaves: designed 1, built shallow 1"
+     "status": "built shallow",
+     "evidence": "rollup of 2 leaves: built shallow 2"
     },
     "unreal": {
      "status": "designed",
@@ -12567,8 +12567,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §11, §15); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/ui.js scene(), say(), choose() run written beats from scenes.js (Ellis's arrest, Alison, Sheila) but pause play; no blocking or performance inside play (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -12700,7 +12700,7 @@
    "status": {
     "prototype": {
      "status": "built",
-     "evidence": "rollup of 17 leaves: designed 5, built shallow 4, built 8"
+     "evidence": "rollup of 17 leaves: designed 2, built shallow 7, built 8"
     },
     "unreal": {
      "status": "designed",
@@ -12751,8 +12751,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 5 leaves: designed 2, built shallow 1, built 2"
+     "status": "built shallow",
+     "evidence": "rollup of 5 leaves: designed 1, built shallow 2, built 2"
     },
     "unreal": {
      "status": "designed",
@@ -13006,8 +13006,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A31); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "the time shows on screen always (src/ui.js dtime hhmm); no watch key, street clocks or chapel bell (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -13730,8 +13730,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN §4 Guidance; DESIGN-ADDENDUM-2026-11-20 §A9); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "the to-do line names places (src/ui.js obj, scenes.js objective 'Quay Street, the quay end, under the blue sign') and the Ledger map (6.3); no house numbers or asking the way (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -13774,8 +13774,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A19); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "Mrs Dunn's letter at the start (src/design_notes.js introLetter) and the evening paper (scenes.js paper); no solicitor's or VAT letters (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -13818,7 +13818,7 @@
    "status": {
     "prototype": {
      "status": "built shallow",
-     "evidence": "rollup of 16 leaves: missing 1, designed 3, built shallow 8, built 3, passes 1"
+     "evidence": "rollup of 16 leaves: missing 1, designed 2, built shallow 9, built 3, passes 1"
     },
     "unreal": {
      "status": "designed",
@@ -14584,8 +14584,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM §A7); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "src/end_screen.js the end of the week: truth beside the Ledger and the run report (a playtest view); no story close or credits (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -14629,7 +14629,7 @@
    "status": {
     "prototype": {
      "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A28 (to the recommended answer)); build not checked by the status sweep"
+     "evidence": "no pastimes (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -14671,8 +14671,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 4 leaves: designed 3, unknown 1"
+     "status": "built shallow",
+     "evidence": "rollup of 4 leaves: built shallow 3, built 1"
     },
     "unreal": {
      "status": "unknown",
@@ -15135,8 +15135,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 1 leaves: designed 1"
+     "status": "built shallow",
+     "evidence": "rollup of 1 leaves: built shallow 1"
     },
     "unreal": {
      "status": "designed",
@@ -15215,8 +15215,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DESIGN-ADDENDUM-2026-11-20 §A6); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "subtitles always shown (6.1.2) and a noise meter (src/ui.js mnoise); no stand-ins for other sound cues (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -15442,8 +15442,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (canon); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "src/talk.js RULES (absolute content rules sent with every live line) and BANNED word check on what comes back (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built",
@@ -15485,8 +15485,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (RULINGS); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "English only; lines kept in src/talk_lines.js and numbers in rules.js, but much text still inside code (scenes.js, ui.js) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "built shallow",
@@ -15535,8 +15535,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "unknown",
-     "evidence": "no evidence gathered (part added after the status sweep)"
+     "status": "built shallow",
+     "evidence": "src/map.js solids and sight lines, drive.js solidAt (lamp posts and parked cars solid since round 6, unpublished); no ragdoll, doors or props pushed (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "unknown",
@@ -15586,8 +15586,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 10 leaves: missing 1, designed 6, built shallow 1, built 2"
+     "status": "built",
+     "evidence": "rollup of 10 leaves: missing 1, built shallow 4, built 5"
     },
     "unreal": {
      "status": "designed",
@@ -16084,7 +16084,7 @@
    "status": {
     "prototype": {
      "status": "missing",
-     "evidence": "ONE-SHOT-PORTING.md does not exist yet (advisor 254 asks for it)"
+     "evidence": "no port yet; tools/lane/one-sim (way A) is the first step, not swapped in (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "missing",
@@ -16230,8 +16230,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "rollup of 2 leaves: designed 2"
+     "status": "built shallow",
+     "evidence": "rollup of 2 leaves: built shallow 1, built 1"
     },
     "unreal": {
      "status": "designed",
@@ -16278,8 +16278,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (license-allowlist.md); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "the prototype's licence lines are on the allowlist (lane log 19 Nov 19:17, item 18); tools/lane/one-sim licence lines approved (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -16319,8 +16319,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (RECIPE.md); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "tools/lane/prototype/project/CHANGELOG.md, RESULTS.md and the lane handover; no RECIPE lines for the prototype (the lane may not write RECIPE.md) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -16399,8 +16399,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (DRIVING-MEASUREMENT-METHOD; FEEL-MEASUREMENT-METHOD-2026-11-20 (pending)); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "the driving and feel sheets and method exist (production/research/lane/FEEL-MEASUREMENT-METHOD-2026-11-20.md, the driving sheet); no reference game measured yet (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -16446,8 +16446,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (PLAN.md; order ledgers); build not checked by the status sweep"
+     "status": "built shallow",
+     "evidence": "production/lane/ROUND-HOURS.md records each round's cloud hours and models (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -16487,8 +16487,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (aaa-reference studies); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "the 18 studies and the lane's reference research (production/research/lane/) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
@@ -16528,8 +16528,8 @@
    "track": "both",
    "status": {
     "prototype": {
-     "status": "designed",
-     "evidence": "design exists (production/lane/synthesis/); build not checked by the status sweep"
+     "status": "built",
+     "evidence": "canon.md, VISION.md, DESIGN.md and its addendum, BUILD-ORDER.md, this tree (production/lane/synthesis/, parts-tree/) (sweep 20 Nov 01:17)"
     },
     "unreal": {
      "status": "designed",
