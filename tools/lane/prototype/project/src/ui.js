@@ -102,9 +102,20 @@ export function hud(dt) {
   box.innerHTML = html;
   for (let i = ui.subs.length - 1; i >= 0; i--) {
     const s = ui.subs[i]; // a subtitle's time runs down with the game's steps: see tickTimers
-    if (s.t <= 0) {
+    // the one-shot (the smoke run's fault): a subtitle never outstays its time by more than a few seconds, whatever holds the game
+    if (s.t <= 0 || performance.now() - s.born > (s.secs + RULES.game.feel.subtitleClearsAfterRealSecondsAtMost) * 1000) {
       s.el.remove();
       ui.subs.splice(i, 1);
+    }
+  }
+  // the one-shot (the smoke run's fault): prompts never sit over subtitles: they stand clear above the lowest lines
+  {
+    const subs = $('subs'),
+      pr = $('prompt');
+    if (subs && pr) {
+      const need = ui.subs.length ? subs.offsetHeight + (parseFloat(getComputedStyle(subs).bottom) || 0) + PROMPT_CLEARS_SUBTITLES_PX : 0;
+      const want = need > PROMPT_BOTTOM_PX ? need + 'px' : '';
+      if (pr.style.bottom !== want) pr.style.bottom = want;
     }
   }
   ui.hudT -= dt;
@@ -200,6 +211,8 @@ export function hud(dt) {
 }
 // Round 6 (the gate): while a pad is in the hands the prompts name its buttons, not the keys.
 const PAD_NAMES = { E: 'A', T: 'X', F: 'Y', C: 'B', Q: 'LB', G: 'RB', Y: 'D-pad up' };
+const PROMPT_BOTTOM_PX = 168, // where the prompts stand by the page's own layout
+  PROMPT_CLEARS_SUBTITLES_PX = 10;
 export function setPrompts(list) {
   const k = list.map((p) => p.k + p.t).join('|');
   if (k === ui.pk) return;
@@ -214,7 +227,8 @@ export function sub(text, who, cls = '', secs) {
   el.className = 's ' + cls;
   el.innerHTML = (who ? `<b>${esc(who)}</b>` : '') + esc(text);
   $('subs').appendChild(el);
-  ui.subs.push({ el, t: secs || clamp(2.2 + text.length * 0.055, 3, 9) });
+  const lasts = secs || clamp(2.2 + text.length * 0.055, 3, 9);
+  ui.subs.push({ el, t: lasts, secs: lasts, born: performance.now() });
   while (ui.subs.length > 3) {
     ui.subs[0].el.remove();
     ui.subs.shift();
