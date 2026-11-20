@@ -34,6 +34,7 @@ export async function boot(o = {}) {
   const events = await import('../../src/events.js');
   const work = await import('../../src/work.js');
   const fight = await import('../../src/fight.js');
+  const talk = await import('../../src/talk.js');
   const G = S.G;
   clock.initEnv(() => G.tom.ang);
   scenes.initStory();
@@ -78,6 +79,10 @@ export async function boot(o = {}) {
           met.push(d.who + ': ' + d.text.slice(0, 60));
           UI.advance();
         }
+        await micro();
+      } else if (UI.ui.modal === 'talk') {
+        met.push('talk: left');
+        talk.endTalk(); // a talk somebody opened: Tom leaves it (a decision in it is left undecided)
         await micro();
       } else if (!G.paused && !UI.ui.modal && !UI.ui.inScene) {
         await step(0.2);

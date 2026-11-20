@@ -93,6 +93,7 @@ export function startWalk(P, E, soonerTimes = 1) {
     startAt: G.t + (WALK.setsOffAfterRealSeconds * soonerTimes * 60) / RULES.time.realSecondsPerGameHour,
     to,
     friend: to === 'friend' ? fr.F.id : null,
+    then: kindOf(E).crime >= 3 ? 'station' : 'phone', // after a friend, where the telling ends
     realLeft: 0,
     landBy: G.t + WALK.landsAnywayAfterGameMinutes,
     inSight: false,
@@ -104,7 +105,7 @@ function target(w) {
   if (w.to === 'friend') {
     const F = personOf(w.friend);
     if (F && !F.gone && F.space === 'street') return [F.x, F.z];
-    w.to = 'phone';
+    w.to = w.then || 'phone';
   }
   const s = w.to === 'station' ? SPOTS.station : SPOTS.phone;
   return [s[0], s[1]];
@@ -165,9 +166,9 @@ function stepWalks(dt) {
       const F = personOf(w.friend),
         m = P.mind.by[w.e];
       if (F && m) tell(P, F, m, zoneAt(P.x, P.z));
-      w.to = 'phone';
+      w.to = w.then || 'phone';
       P.hold = false;
-      send(P, 'phone', 'idle', w.landBy + 30);
+      send(P, w.to, 'idle', w.landBy + 30);
       continue;
     }
     if (w.to === 'friend' && !P.route && !P.moving) goToPoint(P, x2 + 0.8, z2 + 0.5);

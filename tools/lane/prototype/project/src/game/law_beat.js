@@ -62,7 +62,8 @@ export function causeNow(x) {
   return c;
 }
 function bring(P, x, z) {
-  P.override = null;
+  // on his beat by this system's doing, not by his week: held, so the routine leaves him to it
+  P.override = { where: 'off', act: 'idle', beat: 1 };
   P.gone = false;
   P.space = 'street';
   P.awake = true;
@@ -104,7 +105,10 @@ export function beatStep(dt, x) {
   if (!P || P.dead) return (b.st = 'off');
   if (b.st === 'scene') return;
   if (!out && (b.st === 'walk' || b.st === 'look')) {
-    sendOff(P);
+    // called away. If the same man is wanted for an arrest or for the carry's own beat, they have him now: leave him be
+    const st = G.story,
+      taken = b.officer === 'pc' && ((st.arrest && st.arrest.st) || (st.job && st.job.watch && st.job.watch.st !== 'over'));
+    if (!taken) sendOff(P);
     b.st = 'off';
     return;
   }
