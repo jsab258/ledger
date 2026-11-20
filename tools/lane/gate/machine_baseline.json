@@ -1,9 +1,9 @@
 {
- "tick_ms": 0.128,
- "frame_ms": 370.65,
- "draw_calls": 550,
- "triangles": 214193,
+ "tick_ms": 0.094,
+ "frame_ms": 461.225,
+ "draw_calls": 587,
+ "triangles": 325207,
  "size": "960x540",
- "art": false,
- "written": "2026-11-20T00:33"
+ "art": true,
+ "written": "2026-11-20T12:09"
 }
