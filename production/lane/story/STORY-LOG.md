@@ -235,3 +235,21 @@ What the three said, in common:
 6. Fourteen small faults (a fare that never happened written in the book; the colour of a 1961 licence; a seat nobody mended for a year; a lamp in a cigarette store).
 
 Next: P2 v5 answers each.
+
+## Phase 2, round 5 (20 November)
+
+Table line: | 5 | P2 v5 | 8 | 8 | 7 | 6 (structure, the critic; the middle, the editor) | no (close), yes, no |
+
+What P2 v5 changed: the turn hidden better (Mickey was a small man, so the seat tells nothing until his own fare book puts him on a ward; who taught Sheila to drive moved to Ada's tea on the Fifth); the climax made to turn on Tom asking Sheila what she wants; the wind-down road written as its own six weeks with its own worse Fifth; Agar's fare and the yard gate moved to open the last act, and the inspector's Thursday cut to two doors; the Widow given her last scene at the six o'clock pick, where her decency costs her a contract; a harder landing (whoever signs is charged, with a date at the magistrates' on 14 January; Sheila gives the book up herself).
+
+Scores by category (critic, player, editor): Tom 7 7 7; cast 9 8 8; antagonists 7 7 7; mystery 8 8 8; opening 8 8 7; structure 6 7 7; middle 7 7 6; surprise 7 7 7; endings 8 8 7; side stories 7 7 7; tone 8 7 7; story and play 8 8 8. The player would single it out: the first yes of phase 2.
+
+What the three said, in common:
+1. The best ending hangs on a question the game never prompts and the bible never designs as a verb.
+2. Ada's line on the Fifth (Sheila passed in 1961 and never drove since) hands over the driver five hours early; and one of Sheila's own lines is not strictly true, which the bible says never happens.
+3. The two branches (Ron asked first; the wind-down road) are still outlines beside the main line.
+4. The last act still talks too much, and tells the turn twice (the row, then the kitchen).
+5. Danny sets five of the six dusk jobs. The law is lopsided: only the driver is charged.
+6. Twelve small faults (a licence ran to seventy after 1976; nobody was picked at a gate under the scheme; where a burned man's tally would fall).
+
+Next: P2 v6 answers each.
