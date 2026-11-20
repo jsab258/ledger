@@ -217,3 +217,21 @@ What the three said, in common:
 5. Fourteen small faults (the glove surviving an earlier repair; a learner in a hire car; why Agar rings Customs and not the police; the header's dates).
 
 Three rounds running at 7, 7, 7. Round 4 changes the method again, and this time at the story's centre. Since every reader names the driver in week one, the bible will let them: the guess is made the trap. Taken from the two losing versions, which both put their turn on Sheila, and from phase 1's most praised surprise (the line in her hand): Ron truly cannot drive; he was in the fire, not at the wheel; the one who took the keys when Mickey went down, drove off at the first flame and came back was the bookkeeper, and the line in the fare book is her own night, written down because every fare goes in the book. The best ending is given a price.
+
+## Phase 2, round 4 (20 November): the centre changed
+
+Table line: | 4 | P2 v4 | 8 | 8 | 8 | 6 (antagonists, the critic) | no, no (close), no (two fixes from a 9) |
+
+What P2 v4 changed: the turn moved onto Sheila. Ron truly cannot drive; he was in the building and carried the Bishop out; the one who took the keys when Mickey went down, drove off at the first flame and turned round at the bollard was the bookkeeper, and the line in the fare book is her own night. The first week is built so that every player names Ron. Found by a seat jammed forward with a docker's tally in its runner, by the dial, and by one word from Ron at the mouth of the row. In the last act whoever's hand the name is in drives the inspector the eleven miles: Sheila herself; or Ron, lying for her, which he can only do if the player taught him; or Tom, with a dead man's name. The best ending has a price: she cannot keep the book.
+
+Scores by category (critic, player, editor): Tom 7 7 8; cast 9 8 8; antagonists 6 7 7; mystery 8 8 8; opening 8 8 7; structure 7 7 7; middle 7 7 7; surprise 7 7 7; endings 8 8 7; side stories 7 7 7; tone 7 7 7; story and play 9 8 8. The first round of either phase with all three readers at 8. The mystery rose to 8 from all three.
+
+What the three said, in common:
+1. The new turn is now signposted too: a short woman, a seat stuck forward, and Ron saying who taught her to drive in lesson one.
+2. Nothing decides what makes Sheila sign her own name; the climax should turn on Tom asking her.
+3. The wind-down road is still five bullet points.
+4. The last act is crowded and its landing soft (a kind officer, then a caution); the week of 3 December is empty; the Widow is missing from the climax and never pays.
+5. Take-or-pay can be solved by always taking.
+6. Fourteen small faults (a fare that never happened written in the book; the colour of a 1961 licence; a seat nobody mended for a year; a lamp in a cigarette store).
+
+Next: P2 v5 answers each.
