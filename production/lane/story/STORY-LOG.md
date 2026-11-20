@@ -253,3 +253,20 @@ What the three said, in common:
 6. Twelve small faults (a licence ran to seventy after 1976; nobody was picked at a gate under the scheme; where a burned man's tally would fall).
 
 Next: P2 v6 answers each.
+
+## Phase 2, round 6 (20 November)
+
+Table line: | 6 | P2 v6 | 8 | 8 | 7 | 6 (side stories, the critic; antagonists, the player and the editor; structure, the middle and side stories, the editor) | no (the last Friday deserves it), no (close), no |
+
+What P2 v6 changed: asking made a designed verb (a page headed "Asked" in the Ledger from the morning the Widow asks Tom; each person once; some will not answer); Ada's line made a list of everyone Mickey taught; the asked-first branch written as three scenes; the kitchen cut to four sentences, with the rest said at the bollard; everybody named is charged, and Ron and Sheila are bailed together; the dusk jobs shared between the three opponents; Frank Cammack planted at the gate in week two.
+
+Scores by category (critic, player, editor): Tom 7 8 7; cast 8 8 8; antagonists 7 6 6; mystery 8 8 7; opening 8 8 7; structure 7 7 6; middle 7 7 6; surprise 7 7 7; endings 8 8 8; side stories 6 7 6; tone 7 7 7; story and play 9 8 8.
+
+What the three said, in common:
+1. Scene 10 now gives Sheila away (her initials on the struck repair, and June's line), four hours before the turn at the row.
+2. Every opponent ends up decent: nobody is feared, and the last act has no menace.
+3. The last act is still people talking at a counter; Agar confesses in a speech.
+4. The cast and the branches sprawl: a second middle if Ron never leaves, a third on the wind-down road.
+5. Fourteen small faults (Pauline on the radio that night; a 1961 licence; Ron's burns; whose warehouse).
+
+Rounds 5 and 6 did not raise the lowest reader's score (7, 7), so round 7 changes the method again: it cuts. The asked-first branch goes back to one scene; the typed answers go; small names are folded together; and the Widow is rebuilt to stay hard to the end: she never gives anything for nothing.
