@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-20 22:11 (the hourly run; the last session set its Stopped line at 22:09)
+**Started:** 2026-11-20 23:07 (the hourly run; the last session set its Stopped line at 22:52)
 
-**Row due:** by 23:09 (last row 22:09; page read 22:13: verdicts none after 2026-11-20T17:00 UTC; advisor 281 and 282 acked 22:17, so filter advisor after 22:17:30 +01:00)
-**Stopped:** 2026-11-20 22:17 (advisors 281-282 done; pace +22 over the line, nothing else of his open to act on. No helpers or background jobs; heavy lock free.)
+**Row due:** by 00:09 (last row 23:09; page read 23:08: verdicts none after 2026-11-20T21:52 UTC; advisor 283 closed, ack 23:09; filter advisor after 23:09:00 +01:00, verdicts after 2026-11-20T22:08 UTC)
+**Stopped:** 2026-11-20 23:11 (advisor 283 closed; allowance 73% against the 73.4% ceiling, +24.6 over the line, Fable 44%; both open items his hands. No helpers or background jobs; heavy lock free.)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -32,10 +32,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
+- 23:07-23:11: advisor 283 closed (his words 23:03): GTA VI's story may be studied, no spoiler in anything he reads; RULINGS study line reworded (cap 4,899 held), enforcer note (story-working folders), DECISIONS line, ack and row on the page.
 - 22:11-22:17: advisors 281-282 closed (his answers 22:08, 22:10): RULINGS' study line (GTA VI measured first, higher bar wins) and genre line (no mods at release), Monday-audit notes in rulings-enforcers.json, cap held at 4,899; waiting-list item 32 (next week's PC block: Marvelous export, GTA VI ~24.5 h, then the reference games); DECISIONS line; ci 108/108. The design proof's mods part is the lane session's to mark OUT.
 - Morning: game menu fix pushed (b6e9687bc); Ron's seated film FAIL; fins tries 1-2 failed. Advisor 271 closed (GTA V, RDR2 reviews).
 - 21:57-22:09: advisor 276 closed: story patterns reviewed (PASS WITH FIXES), builder story_patterns.py and head fixed once, pushed on lane-2026-11 (6a475fbda; ranking pooled over 171 coded reviews). Advisor 273 closed: walkthrough study results written, reviewed (PASS WITH FIXES), fixed once, NOTEBOOK lines for both units, pushed wip a30366f8b (ci 108/108). Mafia placeholder stays (protected path); DECISIONS line.
-- 18:14-21:55: advisor 273: all six walkthrough games pulled; SD, GTA IV, L.A. Noire, Hitman, WDL, FH4 coded and hand-checked (F:/LedgerTools/steam-reviews/walkthrough/checks.md; L.A. Noire's mechanic check weak: mark it). Advisor 276: story coder frozen f9597545; story hand checks done for 7 of 8 (GTA V, RDR2, SD, GTA IV, L.A. Noire, Hitman, WDL); the script agrees weakly (precision 47, Hitman 22, WDL 24), so the patterns file rests on hand counts. Advisors 277, 278, 279 done (RULINGS, CLAUDE.md, order_ledger.py, progress page; acks on the page).
+- 18:14-21:55: walkthrough games coded and hand-checked (F:/LedgerTools/steam-reviews/walkthrough/checks.md); story patterns rest on hand counts; advisors 277-279 done.
 
 ## In flight
 - Nothing runs: all pulls finished (KCD2 3,939 reviews); no helpers; heavy lock free.
