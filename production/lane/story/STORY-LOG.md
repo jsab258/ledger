@@ -13,6 +13,7 @@ A later run continues from the last line of the table: read the newest STORY-BIB
 | 2 | v2 | 8 | 7 | 7 | 5 (the middle, the player) | no, no, no |
 | 3 | v3 | 8 | 8 | 7 | 6 (surprise, all three; structure, the editor) | no, no, no |
 | 4 | v4 | 8 | 7 | 8 | 6 (structure and the middle, the critic; the middle and surprise, the player; surprise, the editor) | no, no, no |
+| 5 | v5 | 8 | 7 | 8 | 6 (the middle, the critic; structure, the player) | yes (with a caveat), no, no |
 
 ## Round 1 (20 November, started 15:41)
 
@@ -76,3 +77,18 @@ What the three said, in common:
 6. Loose threads (June's letter and why she stays; whose packet was dropped; Julie; Garbutt's reason) and eleven logic and period faults.
 
 Next: v5. The last turn moves to a living person the player loves: the line in the fare book for the night of the fire is in Sheila's hand.
+
+## Round 5 (20 November)
+
+What v5 changed: the last turn is on a living person (the fare-book line for the night of the fire is in Sheila's hand: she wrote it when Mickey would not, waited a year for a reader, and posted the letter to get one); the last truth is found by the player on the Thursday night of the inspection, in the boot of the inspector's car, with a pen in reach; Agar can be faced for the fire; Ron's year of silence about the importer; the keeper's road named as five rungs and the weeks between scenes described; finds in place of several tellings; the first fare matches what the builder has built (Father Walsh from the infirmary).
+
+Scores by category (critic, player, editor): Tom 8 7 8; cast 9 9 8; antagonists 8 7 8; mystery 8 7 7; opening 8 8 7; structure 7 6 7; middle 6 7 8; surprise 7 7 7; endings 8 8 7; side stories 8 8 8; tone 7 8 8; story and play 8 8 8. The critic would single it out, with a caveat; the first yes.
+
+What the three said, in common:
+1. Too many people and layers behind the mystery; the last week still stacks pages read and speeches. Cut the thread down; play Sheila's confession at the boot.
+2. Act III is overloaded and the rivals shrink to obstacles; end the Friday face to face with whoever rang Customs.
+3. The middle's rungs have no person or turn; late November is thin; the round repeats.
+4. Continuity: the old fare books cannot be both on a shelf and locked away; Ellis's seizure empties the boot; Ada signs her own trail; Sheila's year of silence needs its reason; Ron's part in 1986 is not paid off with Tom.
+5. Terry fades after the ward, and Ada gets off lightly for him. Thirteen further logic and period faults.
+
+Next: v6, mostly cutting and joining.
