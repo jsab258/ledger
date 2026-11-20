@@ -14,6 +14,7 @@ A later run continues from the last line of the table: read the newest STORY-BIB
 | 3 | v3 | 8 | 8 | 7 | 6 (surprise, all three; structure, the editor) | no, no, no |
 | 4 | v4 | 8 | 7 | 8 | 6 (structure and the middle, the critic; the middle and surprise, the player; surprise, the editor) | no, no, no |
 | 5 | v5 | 8 | 7 | 8 | 6 (the middle, the critic; structure, the player) | yes (with a caveat), no, no |
+| 6 | v6 | 7 | 8 | 7 | 6 (structure and pace, all three; surprise, the critic and the editor) | no, yes, no |
 
 ## Round 1 (20 November, started 15:41)
 
@@ -92,3 +93,18 @@ What the three said, in common:
 5. Terry fades after the ward, and Ada gets off lightly for him. Thirteen further logic and period faults.
 
 Next: v6, mostly cutting and joining.
+
+## Round 6 (20 November)
+
+What v6 changed: one man from over the water in place of a chain of fixers; Sheila's confession played at the boot; a lighter last week that ends face to face with whichever rival rang Customs; five rungs with a person and a turn on each road; Ron's part in 1986 told by Ron and paid in the two widows' cab with Ron in the front seat; Terry given a reckoning with Ada; continuity faults fixed.
+
+Scores by category (critic, player, editor): Tom 8 8 8; cast 7 8 8; antagonists 7 7 8; mystery 7 8 7; opening 8 8 8; structure 6 6 6; middle 7 7 7; surprise 6 7 6; endings 8 8 8; side stories 8 8 8; tone 7 7 7; story and play 8 8 7. The player would single it out.
+
+What the three said, in common:
+1. There is too much story for fifteen to twenty hours: too many named people, hidden links and kept documents; the last act still holds a dozen beats. Cut and fold.
+2. Structure and pace is the weakest mark from all three. Move Agar's confession into Act II; make Ada's door the last errand; the Ledger should forecast risks, not results.
+3. The widow at the window as hidden head is guessed in week one; the man meant to hide her never acts like a head; her reason for the Fifth is thin.
+4. The inspector leaving a marked book in his car boot does not hold. Mickey's need for Ada's word is not explained.
+5. Period: pound notes were gone by 1988; minicabs could not wait on ranks; the hearing's references; a date clash round the lock-up.
+
+Next: v7, cutting again.
