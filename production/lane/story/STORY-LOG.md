@@ -404,3 +404,35 @@ The fourth reader (REVIEW-M2-fourth-games-writer.md): on the page 7 against RDR2
 Also his note on method: the bible is written directly to the ruler, so the page's full marks are the flattery the measure feared; the judgement from the bible is the fair one.
 
 Two rounds have not moved the fourth reader (NO at 70%, 65%, 65%), so by the order's rule the method changes for M3. Not another answer to a list: the centre is moved onto the lead. In the fifth week Tom himself drives men to a job that goes wrong and has to choose, with the wheel in his hands, whether to go or go back: Sheila's night, lived by the player a year and six days on. The next night he writes his own line in the fare book, and the miles on the dial say how far he went before he turned. The inspector then reads two nights, and Sheila will put her name to hers only when Tom has put his to his own. The car theft, the crash, Agar's fare and one of Thursday's doors are cut to make the room.
+
+## Round M3 (20 November, 22:58 to 23:15): the centre moved onto the lead
+
+Table line: | M3 | STORY-BIBLE-M3.md | 80, 80, 80; 8, 9, 9 | RDR2: 75, 75, 75; 7, 7, 8 | 7 against 8; NO, about 65% sure ("a mendable no") |
+
+What M3 changed (a change of method, not a list answered): Tom has a night of his own. On Saturday 24 November he drives Ron and Shiner to Danny's lock-up, it is an ambush, Ron is left inside, and the player chooses whether to go and whether to turn round, with the dial counting; he writes his own line in the fare book ("Four. I did eleven"); the inspector reads two nights; Sheila signs for hers only when Tom has signed for his; Tom is charged with the others. Cut to make room: the theft of car two, the crash, Agar's fare, one of Thursday's doors. Also: Danny given hands (one thing in person each week, a fight on the office step); the false trail kept alive until the morning of the turn (the Bishop says only "he come back for me"); the two questions the endings hang on are put in the player's hand at fixed beats; one rule for the endings (whether he signed).
+
+The three readers: 80 of 80 each, no watch item failed; overall 8, 9, 9 against RDR2's 7, 7, 8: the best three marks of the measured rounds.
+
+The fourth reader (REVIEW-M3-fourth-games-writer.md): the page 7 against 8, and from the bible NO, about 65% sure: better made on paper than most shipped bibles, likely to sit with the second and third of the references. Faults he calls mendable on paper:
+1. A player who declines the lock-up job has no night, and the last act assumes one.
+2. A two-suspect mystery: once Ron is cleared at dawn the night confirms and does not turn.
+3. The notebook writes the player's conclusions for him.
+4. The 24th ignores the plan on the board: the same ambush every time.
+5. Tom watches the corridor, and the Bishop dies off screen.
+6. Signing has no price felt in the hands.
+7. The last act holds three drives and too much procedure; a VAT officer demanding a signed admission is thin in law.
+8. Tom commits almost no crime with his own hands before the fifth week.
+9. Danny is always waiting; Shiner is always on hand.
+His six changes: every road gets its own night, and the plan changes who is caught and where the gap opens; a third real suspect, and Ron's reason found by the hands; Tom in the room when the Bishop dies, and the one who brings Ron and Sheila face to face; signing costs him the wheel (charged, he loses his licence, and in the best ending Ron drives and Tom rides); one authority and one last drive; a crime with his own hands every week from the second.
+
+## Where the measure stopped (20 November, 23:20)
+
+Not exceptional by the measured bar. In every round the three readers put The Passenger at or above the best reference on the checklist and overall with no fault item failed; in every round the fourth reader, shown the whole bible and told it was a plan, said no, at about 70%, 65%, 65% and 65%. Three changes of shape (the second friendship and the seen turn; the default flaw, the death and the smaller cast; the lead's own night) raised the three readers' marks a little (M3's 8, 9, 9 is the best of the measured rounds) and did not move the fourth reader.
+
+What this says about the method. The checklist is at its ceiling and cannot tell these versions apart. The fourth reader is the only gate left, and each fresh one finds a new list of about six faults in a twenty-thousand-word plan; answering a list has not yet produced a yes. Three things recur under every list: the lead is quiet and the loudest scenes belong to others; the stakes are small beside a story whose lead dies; and a plan cannot prove play. The first was answered in M3 as far as paper allows. The last cannot be answered on paper.
+
+Why it stopped here and not at the order's own stops (exceptional, 95% of the week, or Sunday 18:00): this one session has built the ruler, read thirty reviews and written three bibles, and is near what it can hold; the weekly reading was 71% at 22:38. A later run can go on from this section.
+
+For a later run. The version to build from is STORY-BIBLE-M3.md. The next round (M4) should take the M3 fourth reader's six changes, heaviest first, and also cut: the bible has grown to 21,000 words and should come back to about 14,000. Each round: a fresh neutral Opus summariser makes the page from the bible with section 0 and the head note removed (format version 2, in measure/FORMAT.md; the briefs used are in this log's rounds and the helpers' prompts are repeated in measure/README-ROUNDS.md); three fresh readers score it with the three reference pages in a new shuffled order (measure/LABELS.md); the fourth reader gets the pack and the bible. Consider changing the fourth reader's question, which may be unanswerable for any plan: ask instead for the three references' own bibles to be imagined at the same stage, or judge the first lesson, the count and Tom's night built in the prototype.
+
+STORY-FINAL.md is M3 as one read for him, with nine changes for his ruling and the score table. MEASURE-REPORT.md is the short report.
