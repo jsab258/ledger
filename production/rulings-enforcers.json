@@ -7,7 +7,7 @@
     "tools/catalogue.py::EVERY FOLDER OF ART AND RESEARCH HAS A LINE IN THE CATALOGUE, OR THE BUILD FAILS",
     "monday-audit"
    ],
-   "note": "catalogue catches art with no line; spec-and-check for every piece is judgement"
+   "note": "catalogue catches art with no line; spec-and-check for every piece is judgement; 20 Nov (advisor 277): quality judged first on real reference data, AI judge scores only once anchored: the Monday audit checks each gate names its reference data, and the lane's loops carry it"
   },
   {
    "line": "28 Oct, for the release:",
@@ -181,7 +181,7 @@
     "tools/token_audit.py::KILN BY ORDER ITEM",
     "monday-audit"
    ],
-   "note": "token_measures.py --kiln-share counts each step by order item (token_audit.is_kiln; untimed steps by what they touch) against week-shape.json's kiln_share (70% the week of 16 Nov, else 15%; advisor 218). The three proofs before props, vehicles or buildings modules (18 Nov): monday-audit checks no such module started before them. 19 Nov (advisor 241 points 3-4): share 70% kept after 23 Nov, checked by the Monday audit's Kiln share; Kiln's origins and licence are never raised: the Monday audit's brief skips them (judgement, no automatic check: a word screen would also catch Kiln's own design notes)."
+   "note": "token_measures.py --kiln-share counts each step by order item (token_audit.is_kiln; untimed steps by what they touch) against week-shape.json's kiln_share (70% the week of 16 Nov, else 15%; advisor 218). The three proofs before props, vehicles or buildings modules (18 Nov): monday-audit checks no such module started before them. 19 Nov (advisor 241 points 3-4): share 70% kept after 23 Nov, checked by the Monday audit's Kiln share; Kiln's origins and licence are never raised: the Monday audit's brief skips them (judgement, no automatic check: a word screen would also catch Kiln's own design notes).; 20 Nov (advisor 277): Kiln, hair and the crowd pause after the Marvelous export until the browser evening holds: the Monday audit line and the order enforce it"
   },
   {
    "line": "8 Nov, models: helpers are the project's agents",
@@ -204,7 +204,7 @@
    ]
   },
   {
-   "line": "3 Nov, reviews sized to the piece: a small",
+   "line": "3 Nov, reviews sized to the piece: small",
    "by": [
     "tools/settings_check.py::a helper moved to a dearer model is named",
     "monday-audit"
