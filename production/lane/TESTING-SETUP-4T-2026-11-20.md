@@ -1,0 +1,37 @@
+# The new testing setup (lane task 4t): plan and state
+
+Written by the cloud lane, 20 Nov 2026 from 01:20 Swiss time, from his words of 19 Nov 19:57 ("a regular AI and a clumsy tester might not be enough. Think this through") and his yes to the advisor's plan at 20:05. Research first: production/research/lane/AI-PLAYTESTING-METHODS-2026-11-20.md. Test tools only, in tools/lane/gate/ and tools/lane/prototype/reviewers/; the game's own source is never changed by them. Aim: pieces 1 to 3 ready before the one-shot finishes on Saturday 21 Nov, so they test its build.
+
+## What every piece needs from the one-shot's build
+
+The test hook, window.LEDGER, with at least: read(), places, goTo(place), goOutside(), isBlocked(x, z), tick(dt) with window.LEDGER_MANUAL, written (read, next, choose), press(key), saveText() and restore(text), rules, benchmark(), and the camera fields the clumsy newcomer reads (camera, cam, scene, THREE). The round 5 and 6 builds have all of it. If the one-shot renames any of these, the first loop adapts the testers before judging anything; a check that cannot run fails as "not reached", never passes.
+
+## The eight pieces
+
+| # | Piece | Where | Model | When | State (20 Nov 01:45) |
+|---|---|---|---|---|---|
+| 1 | Machine checks: rules, save and reload, never stuck, camera never inside a wall, frame rate, content words | tools/lane/gate/machine_checks.py (new), beside clumsy.py and gate.py | none (code) | every build | Built and run on the current build (see below); unit checks 5 of 5; a whole day's run about 4 minutes. Not yet called by gate.py (next: gate.py runs it and counts its faults as new or known). |
+| 2 | Eight AI player types who actually play, blind, with patience budgets | tools/lane/prototype/reviewers/players/ (PLAYER-TYPES.md, PLAY-PROMPT.md, play.py) | Opus, high | once per loop | Cards, brief and the play server written; the server tested with three actions. No model has played yet. |
+| 3 | Breakers: cheat the money, skip the story, run everyone over, spam talk | tools/lane/prototype/reviewers/breakers/ | Sonnet | once per loop | Next. Same play.py, their own cards; every claimed fault replayed by machine. |
+| 4 | Feel in numbers, frame by frame, against the reference values | tools/lane/gate/feel_numbers.py | none (code) | once per loop | To build. Reads the hook's per-frame state (steering, camera, speed, punch timing) from scripted drills; reference values from the driving feel sheet, FEEL-TARGETS-MELEE and, from 23 Nov, the builder's measurements. |
+| 5 | Consequence checker: every reaction traces to sightings and tellings; no line repeated; nothing wrong for 1990; the content rules | tools/lane/gate/consequences.py | none, with Sonnet for the 1990 read | once per loop | To build. Reads play.py's hidden log (the game's events and memories beside each action). The content words are already in piece 1. |
+| 6 | The panel judges recordings, against KCD2 and GTA | tools/lane/prototype/reviewers/panel/ | Opus, high | once per loop | To build. Frame strips (one shot every 10 to 20 s from the player types' sessions) with the action log, never a written summary. Replaces the old packet panel for the loops. |
+| 7 | A short "try this" note for him when a loop changes something he would feel | tools/lane/gate/gate.py NOTE.md (exists), one line per felt change | none | each shipped loop | Exists in the gate; the loops fill it. |
+| 8 | Testing the testers: planted faults weekly; the panel beside his own words | tools/lane/gate/plant/ | none (planting), each piece's own model | weekly | To build. Faults planted are taken from our own past findings (rounds 1 to 6, the gate's KNOWN.json), muPRL's method; catch rate per piece recorded in production/lane/TESTER-CATCH-<date>.md. |
+
+Costs kept sensible as the lane prompt says: piece 1 on every build (about 5 minutes of computer time, no model); pieces 2, 3, 5, 6 once per loop. A loop's model cost is mostly the eight player types (about 60 minutes of play each at a person's pace; MIMIC measured about 6 US cents and 12 seconds per action for a comparable agent, so an hour's session of about 300 actions is roughly an hour of a helper).
+
+## Piece 1: first run (round 5 build without the art, 20 Nov)
+
+- Content words: 1,150 prose strings in the game's source, no fault; warnings only for words that are often fine (lads, son, nephew, drink your tea).
+- Frame rate: one logic step 0.07 ms; the cloud's software drawing gives about 350 ms a frame at 960 by 540 with 555 draw calls (meaningless as a speed, kept only to catch a build that gets much slower; his PC's number is the real one).
+- Four game hours, then every named place: the rules held every hour; no scene or box that could not be closed; never stuck at 44 named places; save and reload gave back the same week and played on.
+- A whole game day (24 game hours, Monday 3.36pm to Tuesday 7pm) then every named place, run twice. Faults found, for the next loop:
+  1. The camera is blocked at three named places: the bus stop on Quay Street (the shelter's panel covers Tom), the ferry landing (the Monday bag's pick-up) and Quay Street as a fare's drop.
+  2. People stand inside a solid at the same spot by the Quay Street bus stop (about -6.5, 21): four different people across three runs (two walkers, Dennis, another passer-by), so people pass through something Tom cannot (most likely the shelter).
+  3. A test artefact, not a game fault: named places can sit inside a door's wall when Tom is put there by hand; Tom is now judged only by "never stuck".
+- The first baseline is written from this build (tools/lane/gate/machine_baseline.json: logic step 0.13 ms, 550 draw calls, no art).
+
+## Order from here
+
+3 (breakers) next run, then 5, 6, 4, 8. From 21:00 on 20 Nov to 08:30 on 21 Nov only 4d, 4f and 4t, and nothing in tools/lane/prototype/project/ or tools/lane/one-sim/ while the one-shot runs: every piece here lives in its own folder and only reads the build.
