@@ -47,8 +47,11 @@ Math.random = (() => { let s = %d >>> 0; return () => { s = (s + 0x6D2B79F5) >>>
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
 """
 
-WORDS_JS = """() => { const o = {}; for (const id of ['subs','prompt','obj','news','noted','called','bubbles','fare','dialog','panel','talk']) {
-  const e = document.getElementById(id); o[id] = e && e.offsetParent !== null ? (e.innerText || '').trim().slice(0, 200) : ''; } return o; }"""
+WORDS_JS = """() => { const o = {}, shown = (e) => !!e && !e.classList.contains('hidden') && getComputedStyle(e).display !== 'none'
+  && getComputedStyle(e).visibility !== 'hidden' && e.getClientRects().length > 0; for (const id of ['subs','prompt','obj','news','noted','called','bubbles','fare','dialog','panel','talk']) {
+  const e = document.getElementById(id); o[id] = shown(e) ? (e.innerText || '').trim().slice(0, 200) : ''; } return o; }"""
+# shown(e): on screen now. offsetParent alone misses fixed boxes (the written scene's #dialog is fixed, so its offsetParent
+# is always null and its words were never read, found 20 Nov by the panel's first packet)
 
 # The gate's own helpers in the page (test instrumentation only; the game's code is not changed).
 # msgs(): the game's message lists as a player could read them now: the subtitles (ui.subs), the Noted line when it

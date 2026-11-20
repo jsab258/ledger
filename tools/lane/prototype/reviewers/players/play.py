@@ -41,7 +41,8 @@ READ_WORDS_PER_S = 250 / 60
 STATE_JS = "() => LEDGER.read()"
 # what other people say on screen now, in full (for the consequence checker; never shown to the player): their lines
 # in a talk (not Tom's own, not the hints), the written scene's line, subtitles and speech bubbles within earshot
-SPOKEN_JS = """() => { const out = [], vis = (e) => e && e.offsetParent !== null;
+SPOKEN_JS = """() => { const out = [], vis = (e) => !!e && !e.classList.contains('hidden')
+  && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getClientRects().length > 0;
   if (vis(document.getElementById('talk'))) for (const p of document.querySelectorAll('#tlog p.npc')) out.push(p.textContent.trim());
   const d = document.getElementById('dtxt'); if (vis(d)) out.push(d.textContent.trim());
   if (window.__gate) { const m = window.__gate.msgs(); out.push(...m.subs, ...m.bubbles); }
@@ -97,8 +98,12 @@ class Session:
         for line in "\n".join(words.values()).split("\n"):
             line = line.strip()
             if line and line not in self.seen:
+                # talk types itself out letter by letter: a line caught half typed and later whole is charged once
+                if any(old.startswith(line) for old in self.seen):
+                    continue
+                before = max((len(old.split()) for old in self.seen if line.startswith(old)), default=0)
                 self.seen.add(line)
-                new += len(line.split())
+                new += max(0, len(line.split()) - before)
         self.read_s += new / READ_WORDS_PER_S
         self.played_s += new / READ_WORDS_PER_S
         rec = {"n": self.n, "minute": round(self.played_s / 60, 2), "action": action, "words": words, "shot": shot}
