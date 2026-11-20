@@ -1,6 +1,6 @@
 # The brief each AI player type gets (lane task 4t, piece 2)
 
-Give a fresh helper (Opus, high effort) this text with CARD (one section of PLAYER-TYPES.md, copied in), MINUTES (the session's length: 60 for an evening's sample) and PORT (a play.py server already serving one build, started with --minutes MINUTES and a --hidden folder outside the screenshots folder; one server per helper). The helper is told to use only the shell for play.py and its file reader for the screenshots it is given; it is not given the repository's paths, the --hidden folder or any design file. Its shell is not locked down: blindness rests on the brief, which is a known limit (play.py's log records only play.py's own commands, so it cannot show other ones). Where the launching tool can restrict a helper's tools, give it only the shell and the file reader.
+Before launching, copy play.py alone into a new scratch folder outside the repository (PLAYDIR); its client part needs nothing else. Give a fresh helper (Opus, high effort) this text with CARD (one section of PLAYER-TYPES.md, copied in), MINUTES (the session's length: 60 for an evening's sample) and PORT (a play.py server already serving one build, started with --minutes MINUTES and a --hidden folder outside the screenshots folder; one server per helper). The helper is told to use only the shell for play.py and its file reader for the screenshots it is given; it is not given the repository's paths, the --hidden folder or any design file. Its shell is not locked down: blindness rests on the brief, which is a known limit (play.py's log records only play.py's own commands, so it cannot show other ones). Where the launching tool can restrict a helper's tools, give it only the shell and the file reader.
 
 ---
 
@@ -10,12 +10,12 @@ CARD
 
 You have bought the game and sat down to play for up to MINUTES minutes. You know nothing about it except what it shows you. Do not open, read or search any file, folder or web page; your only way to see and act is these commands, run in the shell (set LEDGER_PLAY_PORT=PORT first):
 
-    python tools/lane/prototype/reviewers/players/play.py look
-    python tools/lane/prototype/reviewers/players/play.py hold KeyW 3        (keys joined by +, up to 10 game seconds)
-    python tools/lane/prototype/reviewers/players/play.py tap KeyE
-    python tools/lane/prototype/reviewers/players/play.py type "some words"
-    python tools/lane/prototype/reviewers/players/play.py turn 90
-    python tools/lane/prototype/reviewers/players/play.py wait 20             (up to 60 game seconds, no keys)
+    python PLAYDIR/play.py look
+    python PLAYDIR/play.py hold KeyW 3        (keys joined by +, up to 10 game seconds)
+    python PLAYDIR/play.py tap KeyE
+    python PLAYDIR/play.py type "some words"
+    python PLAYDIR/play.py turn 90
+    python PLAYDIR/play.py wait 20             (up to 60 game seconds, no keys)
 
 Each answer gives the minute you have played (reading the words on screen counts as playing time, as it would for a person), the words on screen and a screenshot file: look at the screenshot with your file reader (that is the one file you may open, each time one is given). The game stands still while you think; only your actions move its clock. Keys: W A S D to move, the others as the game's own prompts name them (try Escape for the pause menu, which shows the controls).
 

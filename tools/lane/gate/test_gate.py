@@ -52,3 +52,33 @@ def test_note_lists_known_and_new():
     assert "drive to the quay" in n and "pad (a pad only drives the Ledger)" in n
     assert "camera clear | indoors: Regent House (new, not yet fixed)" in n
     assert "untested" in n
+
+
+def test_machine_failures_count_like_clumsy_ones():
+    mrep = {"results": [{"rule": "camera never inside a wall (every named place)", "ok": False, "place": "Quay Street bus stop"},
+                        {"rule": "rules hold every game hour", "ok": True}]}
+    ok, new, old, _ = gate.judge(REP, KNOWN_ALL, "nothing", [{"ok": True}], mrep)
+    assert not ok and len(new) == 1 and new[0]["source"] == "machine"
+    known = dict(KNOWN_ALL, **{"camera never inside a wall (every named place) | Quay Street bus stop": "loop 1 fixes"})
+    ok, new, old, _ = gate.judge(REP, known, "nothing", [{"ok": True}], mrep)
+    assert ok and not new and len(old) == 3
+    # the same rule at another place is still new
+    mrep2 = {"results": [dict(mrep["results"][0], place="ferry landing")]}
+    assert not gate.judge(REP, known, "nothing", [{"ok": True}], mrep2)[0]
+
+
+def test_machine_asked_but_no_report_fails():
+    ok, new, _, _ = gate.judge(REP, KNOWN_ALL, "nothing", [{"ok": True}], {})
+    assert not ok and new[0]["rule"] == "machine checks ran"
+    assert gate.judge(REP, KNOWN_ALL, "nothing", [{"ok": True}], None)[0]  # skipped only in the gate's own tests
+
+
+def test_note_names_machine_faults():
+    mrep = {"results": [{"rule": "camera never inside a wall (every named place)", "ok": False, "place": "ferry landing"}]}
+    n = gate.note(REP, KNOWN_ALL, [], ["x"], mrep)
+    assert "ferry landing (new, not yet fixed)" in n
+
+
+def test_main_never_passes_with_machine_skipped():
+    import inspect
+    assert "ok = ok and mrep is not None" in inspect.getsource(gate.main)

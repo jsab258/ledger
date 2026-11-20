@@ -53,7 +53,10 @@ class Session:
         self.seen = set()
         self.n = 0
         os.makedirs(hidden, exist_ok=True)
-        self.log = open(os.path.join(hidden, "actions.jsonl"), "a")
+        if os.path.exists(os.path.join(hidden, "actions.jsonl")):
+            raise SystemExit("--hidden already holds a session: give each session its own folder (replays need one log each)")
+        self.log = open(os.path.join(hidden, "actions.jsonl"), "w")
+        self.log.write(json.dumps({"n": 0, "seed": seed}) + "\n")
         self.started = time.time()
 
     def step(self, secs, keys=()):
@@ -99,7 +102,7 @@ class Session:
             self.g.tap(args[0])
             self.step(1 / 3)
         elif cmd == "type":
-            self.g.pg.keyboard.type(args[0], delay=20)
+            self.g.pg.keyboard.type(" ".join(args), delay=20)  # unquoted words are all typed, as the log keeps them
             self.g.tap("Enter")
             self.step(0.5)
         elif cmd == "turn":
@@ -136,8 +139,8 @@ def serve(a):
             body = json.loads(self.rfile.read(int(self.headers["Content-Length"])) or b"{}")
             cmd, args = body.get("cmd", "look"), body.get("args", [])
             try:
-                if cmd == "stop":
-                    res = sess.stop()
+                if cmd == "stop":  # the page errors stay in the hidden session.json: the player never saw them
+                    res = {k: v for k, v in sess.stop().items() if k != "errors"}
                 else:
                     res = sess.act(cmd, args)
             except Exception as e:
@@ -159,8 +162,13 @@ def serve(a):
 def client(cmd, args, port):
     req = urllib.request.Request("http://127.0.0.1:%d/" % port, data=json.dumps({"cmd": cmd, "args": args}).encode(),
                                  headers={"Content-Type": "application/json"}, method="POST")
-    with urllib.request.urlopen(req, timeout=300) as r:
-        print(r.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            print(r.read().decode())
+    except OSError as e:  # the server is not running or went away: one plain line, not a traceback
+        print(json.dumps({"error": "no game is running on port %d (%s)" % (port, getattr(e, "reason", e))}))
+        return 1
+    return 0
 
 
 def main(argv=None):
@@ -179,8 +187,7 @@ def main(argv=None):
     if not argv:
         print(__doc__)
         return 2
-    client(argv[0], argv[1:], port)
-    return 0
+    return client(argv[0], argv[1:], port)
 
 
 if __name__ == "__main__":
