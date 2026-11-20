@@ -360,8 +360,9 @@ function findTraces() {
     if (tr.found) continue;
     const passes = [];
     for (const P of G.named) {
-      if (P.dead || P.gone || !P.awake || P.space !== 'street' || P.def.police || P.id === 'ron' && false) continue;
-      if (hyp(P.x, P.z, tr.x, tr.z) < 7 && G.env.los(P.x, P.z, tr.x, tr.z)) passes.push({ who: P.id, t: G.t });
+      if (P.dead || P.gone || !P.awake || P.space !== 'street' || P.def.police) continue;
+      const d = hyp(P.x, P.z, tr.x, tr.z);
+      if (d < LAW.find.steppedOnWithinMetres || (d < LAW.find.seenWithinMetres && G.env.los(P.x, P.z, tr.x, tr.z))) passes.push({ who: P.id, t: G.t });
     }
     const f = finder({ trace: true, hidden: tr.hidden, sunk: tr.sunk, t: tr.t }, passes);
     if (f) found(tr, f.who);

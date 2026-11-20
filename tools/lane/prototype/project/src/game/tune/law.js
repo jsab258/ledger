@@ -109,6 +109,10 @@ export const TUNE = {
     warStopSearchUntilHour: 23,
     warArmedOfficersAtMost: 4, // guns stay rare, on their side too
   },
+  find: {
+    seenWithinMetres: 7, // A38: a routine that passes this near, in sight of what was left, finds it
+    steppedOnWithinMetres: 3,
+  },
   missing: {
     noticedAfterGameHours: 24, // a man who stops keeping his routine becomes the town's question
     askedAgainEveryGameHours: 48,

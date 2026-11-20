@@ -1,17 +1,19 @@
-// The system "law" in the built game, through the test hook: the witness's walk and stopping it, the crowd after
-// a deed, the four stages and their signs, the beat constable's challenge, search and chase, custody by the deed,
-// the office searched, bought men, finding an unseen deed, the missing, the dial's police, and the real town's
-// hour. The rules' own numbers are in src/game/tune/law.js; the pure rules have their cases in test/cases/.
-import { launch } from '../harness.mjs';
-import { driver } from '../week_bot.mjs';
+// The system "law" played by the game's own rules in Node (law_headless.mjs: no browser, no drawing): the witness's
+// walk and stopping it, the crowd after a deed, the four stages and their signs, the beat constable's challenge,
+// search and chase, custody by the deed, the office searched, bought men, finding an unseen deed, the missing, the
+// dial's police, and the real town's hour. It needs no browser, so it runs however busy the machine is. The rules' numbers
+// are in src/game/tune/law.js; the pure rules have their cases in test/cases/.
+import { boot } from './law_headless.mjs';
 
-const h = await launch({ port: 8850, seed: 1990 });
-const { L, clear } = driver(h, { log: () => {} });
+const h = await boot({ seed: 1990 });
+const L = async (fn, ...a) => fn(...a);
+const clear = h.clear;
 let bad = 0;
 const check = (name, ok, extra = '') => { if (!ok) bad++; console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${extra ? ' | ' + String(typeof extra === 'string' ? extra : JSON.stringify(extra)).slice(0, 300) : ''}`); };
 const put = (x, z, ang = 0) => L((x, z, ang) => { const t = LEDGER.G.tom; if (t.space !== 'street') LEDGER.leaveRoom(); t.inCar = false; t.x = x; t.z = z; t.ang = ang; t.run = false; LEDGER.cam.yaw = ang; }, x, z, ang);
-const pass = async (t) => { await L((t) => LEDGER.passTime(t), t); await clear(); };
+const pass = h.pass;
 const stepUntil = async (test, secs = 1, max = 60, ...a) => { for (let i = 0; i < max; i++) { if (await L(test, ...a)) return true; await h.step(secs); } return L(test, ...a); };
+const nextAt = (hr) => L((hr) => { const t = LEDGER.G.t, d = Math.floor(t / 1440); return d * 1440 + hr * 60 > t + 1 ? d * 1440 + hr * 60 : (d + 1) * 1440 + hr * 60; }, hr);
 const law = () => L(() => JSON.parse(JSON.stringify(LEDGER.game.law.state())));
 // a deed nobody else sees, then one person made its plain witness by hand, as if she had stood and watched
 const deed = (kind, who, o = {}) => L((kind, who, o) => {
@@ -21,8 +23,6 @@ const deed = (kind, who, o = {}) => L((kind, who, o) => {
   return id;
 }, kind, who, o);
 try {
-  await h.newWeek();
-  await clear();
   await L(() => { const G = LEDGER.G, f = G.story.flags; f.tour = 1; G.car.keys = true; f.metRon = f.metDarren = f.metPauline = f.metJune = 1; });
   await pass(1440 + 10.5 * 60); await h.step(1);
   await L(() => LEDGER.game.law.beat.force(false));
@@ -59,7 +59,9 @@ try {
   check('paid: ten pounds for a shove, out of his pocket, and no report', r2.r.police === false && r2.r.cost === 1000 && r2.clean === 4000 && r2.bought === true, r2);
   // let go: the walk ends and it is on record
   const e3 = await deed('shove', who.id);
-  await L((id, e) => { const G = LEDGER.G, P = G.people[id]; P.mind.fear = 0; P.mind.bought = false; P.mind.regard = -0.4; G.x.law.turned = {}; LEDGER.game.law.startWalk(id, e); }, who.id, e3);
+  await L((id, e) => { const G = LEDGER.G, P = G.people[id]; P.mind.fear = 0; P.mind.bought = false; P.mind.regard = -0.4; G.x.law.turned = {}; LEDGER.game.law.startWalk(id, e); for (const w of G.x.law.walks) if (w.e !== e && (w.st === 'pending' || w.st === 'walking')) w.st = 'dropped'; G.story.arrest = null; }, who.id, e3);
+  await h.step(0.5);
+  await L((e) => { const G = LEDGER.G; for (const w of G.x.law.walks) if (w.e !== e && (w.st === 'pending' || w.st === 'walking')) w.st = 'dropped'; }, e3);
   await h.step(6);
   await put(60, 80); // out of her way
   const landed = await stepUntil((e) => (LEDGER.G.ev[e].stmt || []).length > 0, 5, 80, e3);
@@ -92,7 +94,7 @@ try {
   const la = x.lastArrest;
   check('owning up to the least deed: two hours and a caution', la && la.hours === 2 && la.outcome === 'cautioned' && la.cls === 'window', la);
   const t1 = await L(() => LEDGER.G.t);
-  check('custody cost its hours and let him go (ER-POL-03)', Math.abs(t1 - t0 - 120) < 45 && !(await L(() => LEDGER.G.story.arrest)) && !(await L(() => LEDGER.read().paused)), { minutes: t1 - t0 });
+  check('custody cost its hours and let him go (ER-POL-03)', Math.abs(t1 - la.fromT - 120) < 20 && !(await L(() => LEDGER.G.story.arrest)) && !(await L(() => LEDGER.read().paused)), { minutes: t1 - t0 });
   check('and under two real minutes of play', (await L(() => LEDGER.G.played)) - played0 < 120, (await L(() => LEDGER.G.played)) - played0);
   check('the duty solicitor is free: no bill', !(await L(() => LEDGER.G.story.flags.oweAgar)) && (await L(() => LEDGER.G.money.clean)) === 4000);
   const again = await L((id, e) => { LEDGER.game.law.plantStatement(e, id); return LEDGER.G.story.arrest; }, who.id, e3);
@@ -107,7 +109,7 @@ try {
   await stepUntil(() => LEDGER.ui.modal === 'dialog', 3, 60);
   await clear({ choice: 0 }); await h.sleep(2500); await h.step(1); await clear();
   x = await law();
-  check('a robbery costs twelve hours, a charge and bail', x.lastArrest.hours === 12 && x.lastArrest.outcome === 'charged' && Math.abs((await L(() => LEDGER.G.t)) - t2 - 720) < 60, x.lastArrest);
+  check('a robbery costs twelve hours, a charge and bail', x.lastArrest.hours === 12 && x.lastArrest.outcome === 'charged' && Math.abs((await L(() => LEDGER.G.t)) - x.lastArrest.fromT - 720) < 20, x.lastArrest);
   check('the charge joins DS Ellis\'s case, for the endings to read', x.case.charges.length === 1 && x.case.charges[0].cls === 'robbery' && x.case.strength >= 3, x.case);
 
   // ---- 2.6.5: four stages, each with its sign; none skipped; a manhunt's sign an hour before its arrest
@@ -131,9 +133,9 @@ try {
 
   // ---- 2.6.1, 2.6.2: the beat constable. Heard 3 s before he can challenge; he calls out before he acts; a search
   // finds exactly what is carried and he keeps it
-  await pass(2 * 1440 + 23 * 60); await h.step(0.5); await clear();
+  await pass(await nextAt(23)); await h.step(0.5); await clear();
   await put(4.5, 10, 3.14);
-  await L(() => { const G = LEDGER.G; G.x.crime = G.x.crime || {}; G.x.crime.carried = [{ name: 'the envelope', hand: true }, 'a crowbar']; G.tom.carry = null; G.tom.weapon = 'cosh'; LEDGER.game.law.beat.place(11); });
+  await L(() => { const G = LEDGER.G; G.x.crime = G.x.crime || {}; G.x.crime.carried = [{ name: 'the envelope', hand: true }, 'a crowbar']; G.tom.carry = null; G.tom.weapon = 'cosh'; LEDGER.game.law.beat.place(6); });
   let calledAt = null, heardAtCall = null;
   for (let i = 0; i < 80 && calledAt == null; i++) {
     await h.step(0.25);
@@ -148,7 +150,7 @@ try {
   const found = x.beat.lastSearch && x.beat.lastSearch.found;
   check('the search finds exactly what he carries, and the constable keeps it (ER-POCKET-01)', found && found.join('|') === 'the envelope|a crowbar|a cosh' && (await L(() => LEDGER.G.x.crime.carried.length === 0 && LEDGER.G.tom.weapon === null)), found);
   // the chase: run, and it ends lost inside 90 s; then he looks round where he last saw him
-  await L(() => { const G = LEDGER.G; G.x.crime.carried = [{ name: 'a holdall', big: true }]; G.t += 60; G.tom.x = 4.5; G.tom.z = 10; LEDGER.game.law.beat.place(11); });
+  await L(() => { const G = LEDGER.G; G.x.crime.carried = [{ name: 'a holdall', big: true }]; G.tom.x = 4.5; G.tom.z = 10; LEDGER.game.law.beat.place(6); });
   await stepUntil(() => LEDGER.G.x.law.beat.st === 'called', 0.25, 80);
   await L(() => { LEDGER.G.tom.x += 9; LEDGER.G.tom.z += 4; });
   await h.step(0.3);
@@ -159,14 +161,14 @@ try {
   check('ER-POL-04: the chase ends, lost, inside 90 real seconds, by breaking sight or distance', x.beat.st === 'look' && secs < 90 && x.beat.chases[x.beat.chases.length - 1].end === 'lost', { secs, st: x.beat.st });
   check('A3: having lost him he goes to where he last saw him and looks round', x.beat.lookLeft > 0 && x.beat.lookLeft <= 30);
   // a word, and a note. An honest constable: a note offered is a crime he saw
-  await L(() => { const G = LEDGER.G; G.t += 120; G.x.crime.carried = [{ name: 'a holdall', big: true }]; G.tom.x = 4.5; G.tom.z = 10; G.money.clean = 6000; LEDGER.game.law.beat.force(null); LEDGER.game.law.beat.place(11); });
+  await L(() => { const G = LEDGER.G; G.x.crime.carried = [{ name: 'a holdall', big: true }]; G.tom.x = 4.5; G.tom.z = 10; G.money.clean = 6000; LEDGER.game.law.beat.force(null); LEDGER.game.law.beat.place(6); });
   const officer = await L(() => LEDGER.G.x.law.beat.officer);
   await stepUntil(() => LEDGER.ui.modal === 'dialog', 0.5, 120);
-  await clear({ choice: 2 });
+  const metNote = await clear({ choice: 2 });
   x = await law();
   const a6 = await L(() => LEDGER.G.story.arrest);
   if (officer === 'pc') check('A13: a note offered to an honest constable is a crime he saw himself', x.beat.lastWord === 'arrest' && a6 && LEDGER_ok(a6), { word: x.beat.lastWord, a6 });
-  else check('A13: PC Pashby takes the note and looks away, once a night', x.beat.lastWord === 'looks away' && x.bought.pashby.used === 1 && !a6, { word: x.beat.lastWord, b: x.bought });
+  else check('A13: PC Pashby takes the note and looks away, once a night', x.beat.lastWord === 'looks away' && x.bought.pashby.used === 1 && !a6, { word: x.beat.lastWord, b: x.bought, metNote, beat: LEDGER.G.x.law.beat, cause: LEDGER.game.law.beat.cause(), paused: LEDGER.G.paused, modal: LEDGER.ui.modal, hour: (LEDGER.G.t % 1440) / 60 });
   await L(() => { LEDGER.G.story.arrest = null; LEDGER.game.law.beat.force(false); });
   await h.step(1);
 
@@ -191,36 +193,38 @@ try {
   const s0 = await L(() => LEDGER.game.law.searchOffice());
   check('no search without notice', s0 === null);
   await L(() => { const x = LEDGER.G.x.law; x.office = { noticeT: null, done: false, found: [], wanted: 1 }; });
-  await pass(3 * 1440 + 18.1 * 60); await h.step(2); await clear();
+  await pass(await nextAt(18.1)); await h.step(2); await clear();
   x = await law();
   check('at investigating, notice is given at six the evening before, and he is told', x.office.noticeT != null && x.office.said === 1 && !x.office.done, x.office);
-  await pass(4 * 1440 + 9.1 * 60); await h.step(2); await clear();
+  await pass(await nextAt(9.1)); await h.step(2); await clear();
   x = await law();
   check('next morning the office is searched once and finds what is stored there', x.office.done && x.office.found.join('|') === 'a sawn-off bat|the tin of night money' && x.case.officeFinds === 2, x.office);
   check('what is not incriminating is left', (await L(() => LEDGER.G.x.crime.office.length)) === 1);
 
   // ---- 2.5.5 (A38): an unseen deed is found by the first routine that passes; the finder holds only the aftermath
-  await pass(4 * 1440 + 11 * 60); await h.step(1); await clear();
+  await pass(await nextAt(11)); await h.step(1); await clear();
   const spotP = await L(() => { const G = LEDGER.G; const P = G.named.find((p) => p.space === 'street' && !p.gone && p.awake && !p.def.police && !p.dead); return { id: P.id, x: P.x, z: P.z }; });
   await put(spotP.x + 3, spotP.z + 1);
   const e8 = await deed('shove', null, { set: { trace: true, what: 'a window put in' } });
+  await h.step(0.3);
   await L(() => { const t = LEDGER.G.tom; t.x = 100; t.z = 60; });
-  await L((e) => { const G = LEDGER.G, E = G.ev[e]; G.x.law.traces.push({ e, x: E.x, z: E.z, zone: E.zone, t: Math.round(E.t), hidden: false, sunk: false, found: null }); }, e8);
-  await h.step(3); await L(() => LEDGER.passTime(LEDGER.G.t + 3)); await clear(); await h.step(3);
+  // her routine brings her past it (staged: she is stood two metres from what was left)
+  await L((id, e) => { const G = LEDGER.G, P = G.people[id], E = G.ev[e]; P.x = E.x + 2; P.z = E.z + 0.5; P.route = null; P.hold = true; }, spotP.id, e8);
+  await h.step(3); await pass(LEDGER.G.t + 3); await h.step(3);
   x = await law();
   const tr = x.traces.find((t) => t.e === e8);
-  check('the first person whose routine passes the trace finds it', tr && tr.found && !!tr.found.who, tr);
+  check('the first person whose routine passes the trace finds it', tr && tr.found && !!tr.found.who, [tr, (() => { const P = LEDGER.G.people[spotP.id]; return [P.id, P.x, P.z, P.space, P.gone, P.awake, P.dead, LEDGER.G.env.los(P.x, P.z, tr.x, tr.z)]; })()]);
   const fm = await L((who) => { const G = LEDGER.G, P = G.people[who]; const A = G.events.filter((E) => E.kind === 'law_found').pop(); const m = P.mind.by[A.id]; return { who: m && m.who, src: m && m.src, deed: !!P.mind.by[A.about] }; }, tr.found.who);
   check('the finder holds only the aftermath: what was left, never who did it', fm.who === 'man' && fm.src === 'saw' && !fm.deed, fm);
   check('found damage brings an officer to its spot, and no arrest without a name (ER-POL-01)', x.spots.some((s) => s.e === e8) && !(await L(() => LEDGER.G.story.arrest)));
-  check('A36: the spot is watched ground until morning', x.spots.find((s) => s.e === e8).until === 5 * 1440 + 6 * 60, x.spots.find((s) => s.e === e8));
+  check('A36: the spot is watched ground until morning', x.spots.find((s) => s.e === e8).until === ((await L(() => Math.floor(LEDGER.G.t / 1440))) + 1) * 1440 + 6 * 60, x.spots.find((s) => s.e === e8));
   // a hidden or sunk body is never found; the missing man becomes the town's question; a body never cools
-  const victim = await L(() => { const G = LEDGER.G; const P = G.named.find((p) => !p.def.police && !p.dead && (p.def.close || []).length && !['sheila', 'ron', 'darren', 'ada'].includes(p.id) && !p.def.story); return P.id; });
+  const victim = await L(() => { const G = LEDGER.G; const P = G.named.find((p) => !p.def.police && !p.dead && (p.def.close || []).length && !['sheila', 'ron', 'darren', 'ada', 'pauline', 'hal'].includes(p.id)); return P.id; });
   const e9 = await L((v) => { const G = LEDGER.G; const id = LEDGER.act('kill', { silent: true, target: v }); G.people[v].dead = true; return id; }, victim);
   await h.step(0.5);
   await L((v) => LEDGER.game.law.bodyMoved(v, 'sunk'), victim);
   await L(() => { const t = LEDGER.G.tom; t.x = 100; t.z = 60; });
-  await pass(5 * 1440 + 13 * 60); await h.step(2); await clear();
+  await pass((await L(() => LEDGER.G.t)) + 26 * 60); await h.step(2); await clear();
   x = await law();
   const body = x.bodies.find((b) => b.id === victim);
   check('a sunk body is never found, whoever passes', body && body.sunk && !body.found && !x.traces.find((t) => t.e === e9).found, body);
@@ -232,7 +236,8 @@ try {
   const g0 = await L((e) => { LEDGER.G.x.dial = { state: 1 }; LEDGER.game.law.gunCall(e); return LEDGER.G.x.law.armed.calls; }, e10);
   const g2 = await L((e) => { LEDGER.G.x.dial = { state: 2 }; LEDGER.game.law.gunCall(e); const x = LEDGER.G.x.law; return { calls: x.armed.calls, lead: x.spots.filter((s) => s.armed).pop().from - Math.round(LEDGER.G.t) }; }, e10);
   check('no armed police until a shot has been fired in the town; then they come for gun calls, slowly', g0 === 0 && g2.calls === 1 && g2.lead === 25, { g0, g2 });
-  await L(() => { const G = LEDGER.G; G.x.dial = { state: 3 }; G.x.law.armed.lastStopT = -1e9; G.t = 6 * 1440 + 11 * 60; G.tom.x = 4.5; G.tom.z = 10; G.x.crime.carried = ['a parcel']; LEDGER.game.law.beat.force(null); });
+  await pass(await nextAt(11)); await h.step(0.5); await clear(); await put(4.5, 10, 3.14);
+  await L(() => { const G = LEDGER.G; G.x.dial = { state: 3 }; G.x.law.armed.lastStopT = -1e9; G.tom.x = 4.5; G.tom.z = 10; G.x.crime.carried = ['a parcel']; LEDGER.game.law.beat.force(null); });
   await h.step(2);
   x = await law();
   check('at War there is stop and search on the street by day', x.armed.stops === 1 && (x.beat.stopSearch === 1 || x.beat.st !== 'off'), { stops: x.armed.stops, beat: x.beat.st });

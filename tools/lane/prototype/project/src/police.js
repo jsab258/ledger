@@ -204,7 +204,11 @@ async function custody(P, a, ran) {
     fl().assaultPolice = 0;
     lx.hunted = 0;
     t.space = 'street';
-    setInside(null);
+    try {
+      setInside(null);
+    } catch (e) {
+      /* a rules-only run (test/game/law_headless.mjs) has nothing drawn to switch */
+    }
     t.x = POL.releasedAtXMetres;
     t.z = POL.releasedAtZMetres;
     t.ang = 1.57;
