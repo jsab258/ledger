@@ -1,0 +1,307 @@
+{
+ "piece": "rise_rungs",
+ "cases": [
+  {
+   "id": "the nephew stays the nephew with nothing",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {},
+    1
+   ],
+   "out": 1
+  },
+  {
+   "id": "his answer alone is not the firm",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {
+     "tookItOn": true,
+     "cars": 2,
+     "recruits": 0
+    },
+    1
+   ],
+   "out": 1
+  },
+  {
+   "id": "answer, third car, first recruit: the firm is his",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {
+     "tookItOn": true,
+     "cars": 3,
+     "recruits": 1
+    },
+    1
+   ],
+   "out": 2
+  },
+  {
+   "id": "one step at a time",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {
+     "tookItOn": true,
+     "cars": 6,
+     "recruits": 3,
+     "nightDesk": true,
+     "fronts": 3,
+     "rounds": 2,
+     "coldStore": true,
+     "posts": 3,
+     "solicitor": true
+    },
+    1
+   ],
+   "out": 2
+  },
+  {
+   "id": "five cars, night desk, front, round, cold store: the Hook's firm",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {
+     "tookItOn": true,
+     "cars": 5,
+     "recruits": 2,
+     "nightDesk": true,
+     "fronts": 1,
+     "rounds": 1,
+     "coldStore": true
+    },
+    2
+   ],
+   "out": 3
+  },
+  {
+   "id": "a step never goes back",
+   "rule": "ER-RISE-02",
+   "fn": "rungFor",
+   "in": [
+    {
+     "cars": 1
+    },
+    3
+   ],
+   "out": 3
+  },
+  {
+   "id": "the port's man",
+   "rule": "DESIGN 14",
+   "fn": "rungFor",
+   "in": [
+    {
+     "cars": 5,
+     "fronts": 3,
+     "rounds": 2,
+     "posts": 3,
+     "solicitor": true
+    },
+    3
+   ],
+   "out": 4
+  },
+  {
+   "id": "what rung 3 still wants",
+   "rule": "DESIGN 14",
+   "fn": "missing",
+   "in": [
+    {
+     "tookItOn": true,
+     "cars": 5,
+     "nightDesk": true,
+     "fronts": 1,
+     "rounds": 0,
+     "coldStore": false
+    },
+    3
+   ],
+   "out": [
+    "a round",
+    "the cold-store contract"
+   ]
+  },
+  {
+   "id": "rung 1 is the new owner",
+   "rule": "ER-RISE-02",
+   "fn": "called",
+   "in": [
+    1
+   ],
+   "out": "the new owner"
+  },
+  {
+   "id": "rung 2 is Nowak",
+   "rule": "ER-RISE-02",
+   "fn": "called",
+   "in": [
+    2
+   ],
+   "out": "Nowak"
+  },
+  {
+   "id": "rung 3 is Tom",
+   "rule": "ER-RISE-02",
+   "fn": "called",
+   "in": [
+    3
+   ],
+   "out": "Tom"
+  },
+  {
+   "id": "rung 1 to 3: at least three things to point to",
+   "rule": "ER-RISE-03",
+   "fn": "differences",
+   "in": [
+    1,
+    3
+   ],
+   "outHas": {
+    "0": "People who know him say Nowak, not the new owner.",
+    "4": "People who know him say Tom.",
+    "8": "Shopkeepers hold the door."
+   }
+  },
+  {
+   "id": "rung 3 to 4 changes at least three things",
+   "rule": "ER-RISE-03",
+   "fn": "differences",
+   "in": [
+    3,
+    4
+   ],
+   "outHas": {
+    "2": "His men stand at the dock gate, the cold store and the landing."
+   }
+  },
+  {
+   "id": "the dock gate is shut to the nephew",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "dockGate",
+    {
+     "rung": 1,
+     "dress": 0
+    }
+   ],
+   "out": {
+    "open": false,
+    "by": null,
+    "missing": [
+     "standing"
+    ]
+   }
+  },
+  {
+   "id": "the dock gate opens on standing",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "dockGate",
+    {
+     "rung": 3,
+     "dress": 0
+    }
+   ],
+   "out": {
+    "open": true,
+    "by": "standing",
+    "missing": []
+   }
+  },
+  {
+   "id": "or on an introduction",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "dockGate",
+    {
+     "rung": 1,
+     "dress": 0,
+     "introducedBy": [
+      "lee"
+     ]
+    }
+   ],
+   "out": {
+    "open": true,
+    "by": "an introduction",
+    "missing": []
+   }
+  },
+  {
+   "id": "the Harbour Board wants a jacket",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "harbourCounter",
+    {
+     "rung": 3,
+     "dress": 0
+    }
+   ],
+   "out": {
+    "open": false,
+    "by": null,
+    "missing": [
+     "dress"
+    ]
+   }
+  },
+  {
+   "id": "the sit-down by the Fixer's appointment",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "sitDown",
+    {
+     "rung": 2,
+     "dress": 0,
+     "appointment": [
+      "sitDown"
+     ]
+    }
+   ],
+   "out": {
+    "open": true,
+    "by": "an appointment",
+    "missing": []
+   }
+  },
+  {
+   "id": "an appointment for one door opens no other",
+   "rule": "DESIGN 14",
+   "fn": "access",
+   "in": [
+    "solicitor",
+    {
+     "rung": 1,
+     "dress": 0,
+     "appointment": [
+      "sitDown"
+     ]
+    }
+   ],
+   "outHas": {
+    "open": false
+   }
+  },
+  {
+   "id": "the office at rung 3",
+   "rule": "DESIGN 14",
+   "fn": "property",
+   "in": [
+    3
+   ],
+   "out": {
+    "office": "a night desk and a second telephone",
+    "flat": "aired, a bed made"
+   }
+  }
+ ]
+}

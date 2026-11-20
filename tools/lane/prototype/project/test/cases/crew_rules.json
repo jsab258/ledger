@@ -1,0 +1,860 @@
+{
+ "piece": "crew_rules",
+ "cases": [
+  {
+   "id": "a need not yet met recruits nobody",
+   "rule": "DESIGN 12",
+   "fn": "recruit",
+   "in": [
+    "julie",
+    "need",
+    {
+     "needMet": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "by a need: slow, and it holds",
+   "rule": "DESIGN 12",
+   "fn": "recruit",
+   "in": [
+    "julie",
+    "need",
+    {
+     "needMet": true,
+     "nerve": 0.5
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "man": {
+     "loyalty": 0.6,
+     "ceiling": 0.9,
+     "brittle": false,
+     "road": "need"
+    }
+   }
+  },
+  {
+   "id": "by a hook: quick and brittle",
+   "rule": "DESIGN 12",
+   "fn": "recruit",
+   "in": [
+    "lee",
+    "hook",
+    {
+     "hookHeld": true,
+     "nerve": 0.7
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "man": {
+     "loyalty": 0.45,
+     "ceiling": 0.55,
+     "brittle": true
+    }
+   }
+  },
+  {
+   "id": "no hook, no man",
+   "rule": "DESIGN 12",
+   "fn": "recruit",
+   "in": [
+    "lee",
+    "hook",
+    {
+     "hookHeld": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "with me: answered",
+   "rule": "ER-CREW-01",
+   "fn": "order",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "with_me",
+    {
+     "act": 1,
+     "near": true,
+     "hasMark": true,
+     "carrying": true
+    }
+   ],
+   "out": {
+    "ok": true,
+    "say": "Behind you."
+   }
+  },
+  {
+   "id": "too far to hear",
+   "rule": "ER-CREW-01",
+   "fn": "order",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "with_me",
+    {
+     "near": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "Sheila will not lean on anybody, and says why",
+   "rule": "ER-CREW-01",
+   "fn": "order",
+   "in": [
+    {
+     "id": "sheila",
+     "role": "the door",
+     "can": [
+      "wait_here",
+      "watch_that"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "lean_on",
+    {
+     "act": 1,
+     "near": true,
+     "hasMark": true,
+     "carrying": true
+    }
+   ],
+   "out": {
+    "ok": false,
+    "say": "I don't lay hands on people. Never have."
+   }
+  },
+  {
+   "id": "fetch him needs a him",
+   "rule": "ER-CREW-01",
+   "fn": "order",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "fetch_him",
+    {
+     "near": true,
+     "hasMark": false
+    }
+   ],
+   "out": {
+    "ok": false,
+    "say": "Who? Show me him first."
+   }
+  },
+  {
+   "id": "take this needs a thing",
+   "rule": "ER-CREW-01",
+   "fn": "order",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "take_this",
+    {
+     "near": true,
+     "carrying": false
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a man who is gone takes no orders",
+   "rule": "DESIGN 12",
+   "fn": "order",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": "poached"
+    },
+    "with_me",
+    {
+     "act": 1,
+     "near": true,
+     "hasMark": true,
+     "carrying": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "nothing is sent in Act I",
+   "rule": "DESIGN 12",
+   "fn": "send",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "hurt",
+    {
+     "act": 1,
+     "target": "dennis"
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "have a named man hurt through a named man: asks twice",
+   "rule": "ER-CREW-04",
+   "fn": "send",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "hurt",
+    {
+     "act": 2,
+     "target": "dennis"
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "asksTwice": true,
+    "chain": {
+     "knows": [
+      "ron",
+      "dennis"
+     ],
+     "accompliceKnows": true
+    }
+   }
+  },
+  {
+   "id": "a vouch can be undone and asks once",
+   "rule": "ER-CREW-04",
+   "fn": "send",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "vouch",
+    {
+     "act": 2,
+     "target": "grace"
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "asksTwice": false
+   }
+  },
+  {
+   "id": "past his nerve he says so",
+   "rule": "ER-CREW-01",
+   "fn": "send",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.5,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0.1,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "hurt",
+    {
+     "act": 2,
+     "target": "dennis"
+    }
+   ],
+   "out": {
+    "ok": false,
+    "say": "I've not the stomach for that. Ask somebody else.",
+    "asksTwice": false
+   }
+  },
+  {
+   "id": "the chain names who told whom and who did what",
+   "rule": "ER-EYES-05",
+   "fn": "chain",
+   "in": [
+    "lean_witness",
+    "ron",
+    "brenda"
+   ],
+   "outHas": {
+    "links": {
+     "0": {
+      "from": "tom",
+      "to": "ron"
+     },
+     "1": {
+      "from": "ron",
+      "to": "brenda"
+     }
+    }
+   }
+  },
+  {
+   "id": "paid short: loyalty falls",
+   "rule": "A40",
+   "fn": "settle",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    1000,
+    400,
+    false
+   ],
+   "outHas": {
+    "short": true,
+    "man": {
+     "loyalty": 0.56,
+     "owedPence": 600
+    },
+    "flow": {
+     "from": "the tin",
+     "to": "ron",
+     "pence": 400
+    }
+   }
+  },
+  {
+   "id": "paid fairly: he holds longer",
+   "rule": "A40",
+   "fn": "settle",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    1000,
+    1000,
+    false
+   ],
+   "outHas": {
+    "short": false,
+    "man": {
+     "loyalty": 0.76,
+     "owedPence": 0
+    }
+   }
+  },
+  {
+   "id": "loyalty never passes its ceiling",
+   "rule": "DESIGN 12",
+   "fn": "strain",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.94,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    },
+    "stoodBy"
+   ],
+   "outHas": {
+    "loyalty": 0.95
+   }
+  },
+  {
+   "id": "a steady man shows nothing",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "sign": null,
+    "broke": null
+   }
+  },
+  {
+   "id": "owed and low: he asks for his cut first",
+   "rule": "A40",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.2,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 600,
+     "signed": null,
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "sign": "asks_cut",
+    "broke": null
+   }
+  },
+  {
+   "id": "low with no sign yet cannot break",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.1,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "sign": "looks_away",
+    "broke": null
+   }
+  },
+  {
+   "id": "the sign shown, still low: he goes to whoever pays",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.1,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": "looks_away",
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "broke": "rival",
+    "man": {
+     "fate": "poached"
+    }
+   }
+  },
+  {
+   "id": "worn past his nerve, sign shown: he talks to the police",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.5,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0.7,
+     "owedPence": 0,
+     "signed": "not_at_post",
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "broke": "police",
+    "man": {
+     "fate": "frightened"
+    }
+   }
+  },
+  {
+   "id": "worn, first look: he is not at his post",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.5,
+     "loyalty": 0.7,
+     "ceiling": 0.95,
+     "wear": 0.7,
+     "owedPence": 0,
+     "signed": null,
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "sign": "not_at_post",
+    "broke": null
+   }
+  },
+  {
+   "id": "mended in time: the sign clears",
+   "rule": "ER-CREW-03",
+   "fn": "look",
+   "in": [
+    {
+     "id": "ron",
+     "role": "the door",
+     "can": [
+      "with_me",
+      "wait_here",
+      "watch_that",
+      "fetch_him",
+      "take_this",
+      "lean_on"
+     ],
+     "nerve": 0.85,
+     "loyalty": 0.6,
+     "ceiling": 0.95,
+     "wear": 0,
+     "owedPence": 0,
+     "signed": "looks_away",
+     "fate": null
+    }
+   ],
+   "outHas": {
+    "sign": null,
+    "man": {
+     "signed": null
+    }
+   }
+  },
+  {
+   "id": "a cut is at least a tenner",
+   "rule": "A40",
+   "fn": "cut",
+   "in": [
+    2000
+   ],
+   "out": 1000
+  },
+  {
+   "id": "a cut is three tenths of a big take",
+   "rule": "A40",
+   "fn": "cut",
+   "in": [
+    10000
+   ],
+   "out": 3000
+  },
+  {
+   "id": "one on one is a fair fight",
+   "rule": "ER-SIDE-01",
+   "fn": "odds",
+   "in": [
+    1,
+    1
+   ],
+   "outHas": {
+    "reads": "a fair fight"
+   }
+  },
+  {
+   "id": "two against one is deadly",
+   "rule": "DESIGN 7",
+   "fn": "odds",
+   "in": [
+    1,
+    2
+   ],
+   "outHas": {
+    "reads": "deadly"
+   }
+  },
+  {
+   "id": "three against one is a beating",
+   "rule": "DESIGN 7",
+   "fn": "odds",
+   "in": [
+    1,
+    3
+   ],
+   "outHas": {
+    "reads": "a beating"
+   }
+  },
+  {
+   "id": "Ron at his side makes two against two fair",
+   "rule": "ER-SIDE-01",
+   "fn": "odds",
+   "in": [
+    2,
+    2
+   ],
+   "outHas": {
+    "reads": "a fair fight",
+    "tomWinsShare": 0.5
+   }
+  },
+  {
+   "id": "a follower stands two metres behind, off his line",
+   "rule": "ER-CREW-02",
+   "fn": "followPoint",
+   "in": [
+    0,
+    0,
+    0,
+    2
+   ],
+   "out": {
+    "x": 0.6,
+    "z": -2
+   }
+  }
+ ]
+}

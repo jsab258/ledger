@@ -1,0 +1,665 @@
+{
+ "piece": "rival_ladder",
+ "cases": [
+  {
+   "id": "no move before the business has grown",
+   "rule": "DESIGN 16",
+   "fn": "canAdvance",
+   "in": [
+    "jensen",
+    {
+     "rung": 0,
+     "shown": false,
+     "since": 0,
+     "used": []
+    },
+    {
+     "t": 11000,
+     "act": 1,
+     "sightings": [
+      {
+       "by": "lee",
+       "e": 7,
+       "t": 10100
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "no sighting by its people, no move",
+   "rule": "ER-RIV-01",
+   "fn": "canAdvance",
+   "in": [
+    "jensen",
+    {
+     "rung": 0,
+     "shown": false,
+     "since": 0,
+     "used": []
+    },
+    {
+     "t": 11000,
+     "act": 2,
+     "sightings": []
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "none of its people has seen or heard anything of him"
+   }
+  },
+  {
+   "id": "somebody else's eyes are not the Widow's",
+   "rule": "ER-RIV-01",
+   "fn": "canAdvance",
+   "in": [
+    "jensen",
+    {
+     "rung": 0,
+     "shown": false,
+     "since": 0,
+     "used": []
+    },
+    {
+     "t": 11000,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "rita",
+       "e": 3,
+       "t": 10000
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "Lee saw him: the Widow notices",
+   "rule": "ER-RIV-01",
+   "fn": "advance",
+   "in": [
+    "jensen",
+    {
+     "rung": 0,
+     "shown": false,
+     "since": 0,
+     "used": []
+    },
+    {
+     "t": 11000,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "lee",
+       "e": 7,
+       "t": 10100
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "move": {
+     "rival": "jensen",
+     "rung": 1,
+     "kind": "noticed",
+     "from": {
+      "by": "lee",
+      "e": 7
+     }
+    },
+    "rival": {
+     "rung": 1,
+     "shown": false,
+     "used": [
+      "lee:7"
+     ]
+    }
+   }
+  },
+  {
+   "id": "the last rung must first be said or shown",
+   "rule": "ER-RIV-02",
+   "fn": "canAdvance",
+   "in": [
+    "jensen",
+    {
+     "rung": 1,
+     "shown": false,
+     "since": 11000,
+     "used": [
+      "lee:7"
+     ]
+    },
+    {
+     "t": 99000,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "lee",
+       "e": 7,
+       "t": 10100
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "the last rung has not yet been said or shown"
+   }
+  },
+  {
+   "id": "too soon after the last",
+   "rule": "ER-RIV-02",
+   "fn": "canAdvance",
+   "in": [
+    "jensen",
+    {
+     "rung": 1,
+     "shown": true,
+     "since": 11000,
+     "used": [
+      "lee:7"
+     ]
+    },
+    {
+     "t": 12000,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "lee",
+       "e": 7,
+       "t": 10100
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "too soon after the last"
+   }
+  },
+  {
+   "id": "three days on: a visit, never two rungs",
+   "rule": "ER-RIV-02",
+   "fn": "advance",
+   "in": [
+    "jensen",
+    {
+     "rung": 1,
+     "shown": true,
+     "since": 11000,
+     "used": [
+      "lee:7"
+     ]
+    },
+    {
+     "t": 15320,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "lee",
+       "e": 7,
+       "t": 10100
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "move": {
+     "rung": 2,
+     "kind": "a visit"
+    }
+   }
+  },
+  {
+   "id": "if the run was ended they come sooner",
+   "rule": "DESIGN 16",
+   "fn": "canAdvance",
+   "in": [
+    "cammack",
+    {
+     "rung": 1,
+     "shown": true,
+     "since": 11000,
+     "used": []
+    },
+    {
+     "t": 13880,
+     "act": 1,
+     "runEnded": true,
+     "sightings": [
+      {
+       "by": "rita",
+       "e": 2,
+       "t": 9000
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": true
+   }
+  },
+  {
+   "id": "the top of the ladder",
+   "rule": "ER-RIV-02",
+   "fn": "canAdvance",
+   "in": [
+    "agar",
+    {
+     "rung": 5,
+     "shown": true,
+     "since": 0
+    },
+    {
+     "t": 99999,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "susan",
+       "e": 1,
+       "t": 1
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "held off while paid",
+   "rule": "ER-RIV-03",
+   "fn": "canAdvance",
+   "in": [
+    "agar",
+    {
+     "rung": 3,
+     "shown": true,
+     "since": 0,
+     "holdUntil": 50000
+    },
+    {
+     "t": 40000,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "susan",
+       "e": 1,
+       "t": 1
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "held off for now"
+   }
+  },
+  {
+   "id": "the Widow goes after his people",
+   "rule": "DESIGN 13",
+   "fn": "pressure",
+   "in": [
+    "jensen",
+    3
+   ],
+   "out": "a tax on his drivers at the dock gate"
+  },
+  {
+   "id": "Agar goes after his clean money with paper",
+   "rule": "DESIGN 13",
+   "fn": "pressure",
+   "in": [
+    "agar",
+    3
+   ],
+   "out": "a solicitor's letter about the private-hire licence"
+  },
+  {
+   "id": "Cammack goes after his cover",
+   "rule": "DESIGN 13",
+   "fn": "pressure",
+   "in": [
+    "cammack",
+    3
+   ],
+   "out": "trouble on Quay Street that brings the police"
+  },
+  {
+   "id": "pay: it holds for a week and the price rises",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "jensen",
+    {
+     "rung": 3,
+     "shown": true,
+     "since": 20000
+    },
+    "pay",
+    {
+     "t": 20000,
+     "moneyPence": 5000
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "endsTheGame": false,
+    "rival": {
+     "paid": 1,
+     "holdUntil": 30080
+    },
+    "effects": {
+     "0": {
+      "what": "pays",
+      "pence": 1500
+     }
+    }
+   }
+  },
+  {
+   "id": "pay with an empty pocket is refused, and nothing ends",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "agar",
+    {
+     "rung": 3,
+     "shown": true,
+     "since": 20000
+    },
+    "pay",
+    {
+     "t": 20000,
+     "moneyPence": 100
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "endsTheGame": false
+   }
+  },
+  {
+   "id": "the second payment costs more",
+   "rule": "ER-RIV-03",
+   "fn": "price",
+   "in": [
+    "jensen",
+    {
+     "paid": 1
+    }
+   ],
+   "out": 2250
+  },
+  {
+   "id": "defy: it lands on his people and comes sooner",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "jensen",
+    {
+     "rung": 3,
+     "shown": true,
+     "since": 20000
+    },
+    "defy",
+    {
+     "t": 20000
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "endsTheGame": false,
+    "rival": {
+     "since": 18560,
+     "answered": "defy"
+    }
+   }
+  },
+  {
+   "id": "counter needs something he knows",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "cammack",
+    {
+     "rung": 4,
+     "shown": true,
+     "since": 20000
+    },
+    "counter",
+    {
+     "t": 20000,
+     "knows": []
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "He has nothing on them to counter with.",
+    "endsTheGame": false
+   }
+  },
+  {
+   "id": "counter with what he knows: a rung back",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "cammack",
+    {
+     "rung": 4,
+     "shown": true,
+     "since": 20000
+    },
+    "counter",
+    {
+     "t": 20000,
+     "knows": [
+      "Rita keeps his takings"
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "rival": {
+     "rung": 3,
+     "holdUntil": 34400
+    },
+    "endsTheGame": false
+   }
+  },
+  {
+   "id": "nothing to answer below pressure",
+   "rule": "ER-RIV-03",
+   "fn": "answer",
+   "in": [
+    "agar",
+    {
+     "rung": 2,
+     "shown": true
+    },
+    "pay",
+    {
+     "t": 1,
+     "moneyPence": 99999
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "the sit-down: accept settles it",
+   "rule": "DESIGN 13",
+   "fn": "sitDown",
+   "in": [
+    "jensen",
+    {
+     "rung": 5,
+     "shown": false
+    },
+    "accept",
+    {}
+   ],
+   "outHas": {
+    "ok": true,
+    "rival": {
+     "settled": "accept"
+    },
+    "endsTheGame": false
+   }
+  },
+  {
+   "id": "the sit-down: defy settles it too",
+   "rule": "DESIGN 13",
+   "fn": "sitDown",
+   "in": [
+    "jensen",
+    {
+     "rung": 5
+    },
+    "defy",
+    {}
+   ],
+   "outHas": {
+    "ok": true,
+    "rival": {
+     "settled": "defy"
+    },
+    "endsTheGame": false
+   }
+  },
+  {
+   "id": "no sit-down before the top rung",
+   "rule": "ER-RIV-02",
+   "fn": "sitDown",
+   "in": [
+    "jensen",
+    {
+     "rung": 4
+    },
+    "accept",
+    {}
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "the Fixer's read is the rival's own state",
+   "rule": "DESIGN 13",
+   "fn": "fixer",
+   "in": [
+    "read",
+    {
+     "jensen": {
+      "rung": 2
+     },
+     "fixer": {}
+    },
+    {
+     "rival": "jensen",
+     "moneyPence": 2000,
+     "t": 0
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "pence": 1000,
+    "read": {
+     "rung": 2,
+     "standsAt": "a visit",
+     "through": [
+      "lee",
+      "kevin"
+     ],
+     "next": "pressure"
+    }
+   }
+  },
+  {
+   "id": "one truce",
+   "rule": "DESIGN 13",
+   "fn": "fixer",
+   "in": [
+    "truce",
+    {
+     "agar": {
+      "rung": 3
+     },
+     "fixer": {
+      "truceUsed": true
+     }
+    },
+    {
+     "rival": "agar",
+     "moneyPence": 99999,
+     "t": 0
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "One truce. He said one."
+   }
+  },
+  {
+   "id": "a truce holds a fortnight",
+   "rule": "DESIGN 13",
+   "fn": "fixer",
+   "in": [
+    "truce",
+    {
+     "agar": {
+      "rung": 3
+     },
+     "fixer": {}
+    },
+    {
+     "rival": "agar",
+     "moneyPence": 6000,
+     "t": 1000
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "holdUntil": 21160,
+    "truceUsed": true
+   }
+  },
+  {
+   "id": "a settled rival moves no more",
+   "rule": "DESIGN 13",
+   "fn": "canAdvance",
+   "in": [
+    "agar",
+    {
+     "rung": 3,
+     "shown": true,
+     "since": 0,
+     "settled": "accept"
+    },
+    {
+     "t": 99999,
+     "act": 2,
+     "sightings": [
+      {
+       "by": "susan",
+       "e": 1,
+       "t": 1
+      }
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  }
+ ]
+}

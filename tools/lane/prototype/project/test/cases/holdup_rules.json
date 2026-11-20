@@ -1,0 +1,495 @@
+{
+ "piece": "holdup_rules",
+ "cases": [
+  {
+   "id": "never in Act I standing",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 1,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 35
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never with bare hands",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": null,
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 35
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a cosh is not a weapon to rob with",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": "cosh",
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 35
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "the weapon must be out",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": "flick knife",
+     "shown": false,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 35
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "The weapon has to be out first."
+   }
+  },
+  {
+   "id": "never a woman",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 3,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "f",
+      "age": 30
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never anyone of sixty or over",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 3,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "shop",
+      "open": true,
+      "sex": "m",
+      "age": 60
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never the priest",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 3,
+     "weapon": "revolver",
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 50,
+      "priest": true
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never a house",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 3,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "house"
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never a car with somebody in it",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 3,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "car"
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "never a shut shop",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "shop",
+      "open": false,
+      "sex": "m",
+      "age": 40
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a man alone, rung 2, knife out: possible",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": "flick knife",
+     "shown": true,
+     "target": {
+      "kind": "person",
+      "sex": "m",
+      "age": 35
+     }
+    }
+   ],
+   "out": {
+    "ok": true,
+    "why": ""
+   }
+  },
+  {
+   "id": "an open shop with a man behind it: possible",
+   "rule": "ER-HOLDUP-01",
+   "fn": "can",
+   "in": [
+    {
+     "rung": 2,
+     "weapon": "bat",
+     "shown": true,
+     "target": {
+      "kind": "shop",
+      "open": true,
+      "sex": "m",
+      "age": 45
+     }
+    }
+   ],
+   "out": {
+    "ok": true,
+    "why": ""
+   }
+  },
+  {
+   "id": "a nervous man alone gives way to a knife",
+   "rule": "A41",
+   "fn": "outcome",
+   "in": [
+    {
+     "nerve": 0.4
+    },
+    {
+     "watchers": 0,
+     "weapon": "flick knife"
+    }
+   ],
+   "out": "gives"
+  },
+  {
+   "id": "the same man with the street watching shouts",
+   "rule": "A41",
+   "fn": "outcome",
+   "in": [
+    {
+     "nerve": 0.4
+    },
+    {
+     "watchers": 3,
+     "weapon": "flick knife"
+    }
+   ],
+   "out": "shouts"
+  },
+  {
+   "id": "a middling man alone runs",
+   "rule": "A41",
+   "fn": "outcome",
+   "in": [
+    {
+     "nerve": 0.6
+    },
+    {
+     "watchers": 0,
+     "weapon": "flick knife"
+    }
+   ],
+   "out": "runs"
+  },
+  {
+   "id": "a hard man stands against a knife",
+   "rule": "A41",
+   "fn": "outcome",
+   "in": [
+    {
+     "nerve": 0.85
+    },
+    {
+     "watchers": 0,
+     "weapon": "flick knife"
+    }
+   ],
+   "out": "stands"
+  },
+  {
+   "id": "a hard man gives way to a gun",
+   "rule": "A41",
+   "fn": "outcome",
+   "in": [
+    {
+     "nerve": 0.85
+    },
+    {
+     "watchers": 0,
+     "weapon": "revolver"
+    }
+   ],
+   "out": "gives"
+  },
+  {
+   "id": "the take is the purse, no more",
+   "rule": "ER-HOLDUP-03",
+   "fn": "take",
+   "in": [
+    650,
+    "gives"
+   ],
+   "out": 650
+  },
+  {
+   "id": "nothing from a man who runs",
+   "rule": "ER-HOLDUP-03",
+   "fn": "take",
+   "in": [
+    650,
+    "runs"
+   ],
+   "out": 0
+  },
+  {
+   "id": "nothing from a man who stands",
+   "rule": "ER-HOLDUP-03",
+   "fn": "take",
+   "in": [
+    9600,
+    "stands"
+   ],
+   "out": 0
+  },
+  {
+   "id": "a weekday till",
+   "rule": "ER-HOLDUP-03",
+   "fn": "till",
+   "in": [
+    1
+   ],
+   "out": 4200
+  },
+  {
+   "id": "a Saturday till",
+   "rule": "ER-HOLDUP-03",
+   "fn": "till",
+   "in": [
+    5
+   ],
+   "out": 9600
+  },
+  {
+   "id": "the mark has his face",
+   "rule": "ER-HOLDUP-02",
+   "fn": "witness",
+   "in": [
+    false
+   ],
+   "out": {
+    "rung": 3,
+    "as": "a face",
+    "sure": 1
+   }
+  },
+  {
+   "id": "covered: a mark, never nothing",
+   "rule": "ER-HOLDUP-02",
+   "fn": "witness",
+   "in": [
+    true
+   ],
+   "out": {
+    "rung": 2,
+    "as": "a mark",
+    "sure": 0.6
+   }
+  },
+  {
+   "id": "a knife shown tells the dial a blade",
+   "rule": "ER-HOLDUP-04",
+   "fn": "dialEvent",
+   "in": [
+    "flick knife",
+    2
+   ],
+   "out": {
+    "type": "blade_seen",
+    "witnesses": 2
+   }
+  },
+  {
+   "id": "a gun shown tells the dial a gun",
+   "rule": "ER-HOLDUP-04",
+   "fn": "dialEvent",
+   "in": [
+    "revolver",
+    1
+   ],
+   "out": {
+    "type": "gun_seen",
+    "witnesses": 1
+   }
+  },
+  {
+   "id": "it comes back within a game day",
+   "rule": "ER-HOLDUP-05",
+   "fn": "withinADay",
+   "in": [
+    {
+     "t": 8000,
+     "mark": "k_news",
+     "street": "Quay Street"
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "late at night it still comes back within a day",
+   "rule": "ER-HOLDUP-05",
+   "fn": "withinADay",
+   "in": [
+    {
+     "t": 7199,
+     "mark": "hal",
+     "street": "Quay Street"
+    }
+   ],
+   "out": true
+  },
+  {
+   "id": "Ellis next morning at nine",
+   "rule": "ER-HOLDUP-05",
+   "fn": "aftermath",
+   "in": [
+    {
+     "t": 8000,
+     "mark": "hal",
+     "street": "Quay Street"
+    }
+   ],
+   "outHas": {
+    "3": {
+     "what": "ellis",
+     "at": 9180,
+     "by": "hal"
+    }
+   }
+  },
+  {
+   "id": "reached first: no report, no detective, the talk stands",
+   "rule": "A41",
+   "fn": "aftermath",
+   "in": [
+    {
+     "t": 8000,
+     "mark": "hal",
+     "street": "Quay Street",
+     "reached": true
+    }
+   ],
+   "outHas": {
+    "0": {
+     "what": "walk"
+    },
+    "1": {
+     "what": "street on edge"
+    },
+    "2": {
+     "what": "a cooler name"
+    },
+    "3": {
+     "what": "night fares fall"
+    }
+   }
+  }
+ ]
+}

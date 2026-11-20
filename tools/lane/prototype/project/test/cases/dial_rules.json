@@ -1,0 +1,397 @@
+{
+ "piece": "dial_rules",
+ "cases": [
+  {
+   "id": "gun seen by nobody moves nothing",
+   "rule": "ER-FIGHT-08",
+   "fn": "step",
+   "in": [
+    0,
+    {
+     "type": "gun_seen",
+     "witnesses": 0
+    }
+   ],
+   "out": {
+    "state": 0,
+    "moved": false,
+    "why": "nobody saw or heard it"
+   }
+  },
+  {
+   "id": "gun fired unheard moves nothing",
+   "rule": "ER-FIGHT-08",
+   "fn": "step",
+   "in": [
+    1,
+    {
+     "type": "gun_fired",
+     "witnesses": 0
+    }
+   ],
+   "outHas": {
+    "state": 1,
+    "moved": false
+   }
+  },
+  {
+   "id": "a gun seen sets Shown",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    0,
+    {
+     "type": "gun_seen",
+     "witnesses": 1
+    }
+   ],
+   "out": {
+    "state": 1,
+    "moved": true,
+    "why": "gun_seen"
+   }
+  },
+  {
+   "id": "a gun seen again changes nothing",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    1,
+    {
+     "type": "gun_seen",
+     "witnesses": 3
+    }
+   ],
+   "outHas": {
+    "state": 1,
+    "moved": false
+   }
+  },
+  {
+   "id": "a shot heard sets Fired",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    0,
+    {
+     "type": "gun_fired",
+     "witnesses": 2
+    }
+   ],
+   "outHas": {
+    "state": 2,
+    "moved": true
+   }
+  },
+  {
+   "id": "a second shooting once Fired is War",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    2,
+    {
+     "type": "gun_fired",
+     "witnesses": 1
+    }
+   ],
+   "outHas": {
+    "state": 3,
+    "moved": true
+   }
+  },
+  {
+   "id": "arming his crew, known, from Fists is Shown",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    0,
+    {
+     "type": "crew_armed",
+     "witnesses": 1
+    }
+   ],
+   "outHas": {
+    "state": 1
+   }
+  },
+  {
+   "id": "arming his crew once Fired is War",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    2,
+    {
+     "type": "crew_armed",
+     "witnesses": 4
+    }
+   ],
+   "outHas": {
+    "state": 3
+   }
+  },
+  {
+   "id": "buying from the docks unseen moves nothing",
+   "rule": "ER-FIGHT-08",
+   "fn": "step",
+   "in": [
+    1,
+    {
+     "type": "guns_bought",
+     "witnesses": 0
+    }
+   ],
+   "outHas": {
+    "state": 1,
+    "moved": false
+   }
+  },
+  {
+   "id": "a blade seen never moves the dial",
+   "rule": "ER-HOLDUP-04",
+   "fn": "step",
+   "in": [
+    0,
+    {
+     "type": "blade_seen",
+     "witnesses": 5
+    }
+   ],
+   "outHas": {
+    "state": 0,
+    "moved": false
+   }
+  },
+  {
+   "id": "War is the top",
+   "rule": "DESIGN 7",
+   "fn": "step",
+   "in": [
+    3,
+    {
+     "type": "gun_fired",
+     "witnesses": 9
+    }
+   ],
+   "outHas": {
+    "state": 3,
+    "moved": false
+   }
+  },
+  {
+   "id": "13 quiet days: no fall",
+   "rule": "DESIGN 7",
+   "fn": "quiet",
+   "in": [
+    3,
+    13
+   ],
+   "out": {
+    "state": 3,
+    "fell": false
+   }
+  },
+  {
+   "id": "two quiet weeks: one step",
+   "rule": "DESIGN 7",
+   "fn": "quiet",
+   "in": [
+    3,
+    14
+   ],
+   "out": {
+    "state": 2,
+    "fell": true
+   }
+  },
+  {
+   "id": "never back to Fists",
+   "rule": "DESIGN 7",
+   "fn": "quiet",
+   "in": [
+    1,
+    60
+   ],
+   "out": {
+    "state": 1,
+    "fell": false
+   }
+  },
+  {
+   "id": "Fired falls to Shown",
+   "rule": "DESIGN 7",
+   "fn": "quiet",
+   "in": [
+    2,
+    20
+   ],
+   "out": {
+    "state": 1,
+    "fell": true
+   }
+  },
+  {
+   "id": "a shot by day, dry: 177 m",
+   "rule": "DESIGN 7",
+   "fn": "shotReach",
+   "in": [
+    12,
+    0
+   ],
+   "out": 177
+  },
+  {
+   "id": "a shot at night carries twice as far",
+   "rule": "DESIGN 6",
+   "fn": "shotReach",
+   "in": [
+    2,
+    0
+   ],
+   "out": 354
+  },
+  {
+   "id": "rain cuts it",
+   "rule": "DESIGN 6",
+   "fn": "shotReach",
+   "in": [
+    12,
+    1
+   ],
+   "out": 106
+  },
+  {
+   "id": "no carriers at Fists",
+   "rule": "ER-FIGHT-09",
+   "fn": "carriersPerSide",
+   "in": [
+    0
+   ],
+   "out": 0
+  },
+  {
+   "id": "a few named carriers at War",
+   "rule": "ER-FIGHT-09",
+   "fn": "carriersPerSide",
+   "in": [
+    3
+   ],
+   "out": 3
+  },
+  {
+   "id": "a shot cannot kill below War",
+   "rule": "ER-FIGHT-09",
+   "fn": "shotOutcome",
+   "in": [
+    2,
+    0,
+    0.01
+   ],
+   "out": {
+    "kills": false,
+    "hurt": "badly hurt"
+   }
+  },
+  {
+   "id": "at War a shot can kill",
+   "rule": "ER-FIGHT-09",
+   "fn": "shotOutcome",
+   "in": [
+    3,
+    0,
+    0.1
+   ],
+   "out": {
+    "kills": true,
+    "hurt": "dead"
+   }
+  },
+  {
+   "id": "deaths an act are capped",
+   "rule": "ER-FIGHT-09",
+   "fn": "shotOutcome",
+   "in": [
+    3,
+    3,
+    0.0
+   ],
+   "out": {
+    "kills": false,
+    "hurt": "badly hurt"
+   }
+  },
+  {
+   "id": "armed officers only from Fired",
+   "rule": "DESIGN 7",
+   "fn": "police",
+   "in": [
+    1
+   ],
+   "out": {
+    "armedOfficersForGunCalls": false,
+    "armedCars": false,
+    "stopAndSearch": false
+   }
+  },
+  {
+   "id": "armed cars and stop and search at War",
+   "rule": "DESIGN 7",
+   "fn": "police",
+   "in": [
+    3
+   ],
+   "out": {
+    "armedOfficersForGunCalls": true,
+    "armedCars": true,
+    "stopAndSearch": true
+   }
+  },
+  {
+   "id": "War makes night fares fall",
+   "rule": "DESIGN 7",
+   "fn": "town",
+   "in": [
+    3
+   ],
+   "outHas": {
+    "nightFaresTimes": 0.6
+   }
+  },
+  {
+   "id": "three seeded weeks at War, seed 1",
+   "rule": "ER-FIGHT-09",
+   "fn": "warWeeks",
+   "in": [
+    1,
+    3
+   ],
+   "outHas": {
+    "carriersPerSide": 3,
+    "deathsAtMost": 3
+   }
+  },
+  {
+   "id": "three seeded weeks at War, seed 1990",
+   "rule": "ER-FIGHT-09",
+   "fn": "warWeeks",
+   "in": [
+    1990,
+    3
+   ],
+   "outHas": {
+    "carriersPerSide": 3
+   }
+  },
+  {
+   "id": "three seeded weeks at War, seed 77",
+   "rule": "ER-FIGHT-09",
+   "fn": "warWeeks",
+   "in": [
+    77,
+    3
+   ],
+   "outHas": {
+    "carriersPerSide": 3
+   }
+  }
+ ]
+}

@@ -1,0 +1,1137 @@
+{
+ "piece": "firm_rules",
+ "cases": [
+  {
+   "id": "a car costs what it costs",
+   "rule": "A14",
+   "fn": "buyCar",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    10000
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a bought car is car three, with nobody driving it",
+   "rule": "ER-FIRM-01",
+   "fn": "buyCar",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    18000
+   ],
+   "out": {
+    "ok": true,
+    "why": "",
+    "pence": 18000,
+    "car": {
+     "id": "car three",
+     "driver": null,
+     "rank": null,
+     "off": false
+    }
+   }
+  },
+  {
+   "id": "a driver put on it joins the board at the home rank",
+   "rule": "ER-FIRM-01",
+   "fn": "crew",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": null,
+       "rank": null,
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "car three",
+    "julie"
+   ],
+   "outHas": {
+    "ok": true,
+    "cars": {
+     "2": {
+      "driver": "julie",
+      "rank": "mickeys"
+     }
+    }
+   }
+  },
+  {
+   "id": "one driver, one car",
+   "rule": "A14",
+   "fn": "crew",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "car one",
+    "julie"
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a car with no driver goes on no rank",
+   "rule": "A14",
+   "fn": "place",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": null
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "car one",
+    "ferry"
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a car put on the ferry rank",
+   "rule": "A14",
+   "fn": "place",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "car one",
+    "ferry"
+   ],
+   "outHas": {
+    "ok": true,
+    "cars": {
+     "0": {
+      "rank": "ferry"
+     }
+    }
+   }
+  },
+  {
+   "id": "a day there counts",
+   "rule": "A14",
+   "fn": "rankDay",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    }
+   ],
+   "outHas": {
+    "ranks": {
+     "ferry": {
+      "held": false,
+      "days": 1
+     },
+     "mickeys": {
+      "held": true
+     }
+    },
+    "won": []
+   }
+  },
+  {
+   "id": "the fifth day wins the ferry rank",
+   "rule": "A14",
+   "fn": "rankDay",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {
+      "ferry": {
+       "held": false,
+       "days": 4
+      }
+     },
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    }
+   ],
+   "outHas": {
+    "ranks": {
+     "ferry": {
+      "held": true,
+      "days": 5
+     }
+    },
+    "won": [
+     "ferry"
+    ]
+   }
+  },
+  {
+   "id": "no car there, no day",
+   "rule": "A14",
+   "fn": "rankDay",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    }
+   ],
+   "outHas": {
+    "ranks": {
+     "ferry": {
+      "held": false,
+      "days": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "the cold store wants three cars",
+   "rule": "A14",
+   "fn": "account",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "coldstore",
+    {
+     "rung": 2,
+     "met": [
+      "norman"
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "He has not the cars to cover it."
+   }
+  },
+  {
+   "id": "the cold store wants a word with Norman first",
+   "rule": "ER-REACH-01",
+   "fn": "account",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "coldstore",
+    {
+     "rung": 2,
+     "met": []
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "the cold-store contract",
+   "rule": "DESIGN 14",
+   "fn": "account",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "coldstore",
+    {
+     "rung": 2,
+     "met": [
+      "norman"
+     ]
+    }
+   ],
+   "out": {
+    "ok": true,
+    "why": "",
+    "name": "the cold-store shift contract"
+   }
+  },
+  {
+   "id": "the Harbour Board only after the cold store",
+   "rule": "A14",
+   "fn": "account",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      },
+      {
+       "id": "car four",
+       "driver": "mal"
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "harbour",
+    {
+     "rung": 3,
+     "met": [
+      "susan"
+     ]
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "an account adds fares to the book",
+   "rule": "ER-FIRM-01",
+   "fn": "dayFares",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {
+      "coldstore": true
+     },
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    {}
+   ],
+   "outHas": {
+    "pence": 2100
+   }
+  },
+  {
+   "id": "his own car earns nothing without him",
+   "rule": "DESIGN 5",
+   "fn": "dayFares",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    {}
+   ],
+   "outHas": {
+    "pence": 600
+   }
+  },
+  {
+   "id": "the board is words, never a number",
+   "rule": "ER-FIRM-01",
+   "fn": "board",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {
+      "coldstore": true
+     },
+     "fronts": {
+      "launderette": {
+       "man": "julie"
+      }
+     },
+     "rounds": {},
+     "unpaid": {}
+    },
+    {
+     "kevin": "Kevin",
+     "julie": "Julie"
+    }
+   ],
+   "out": [
+    "Car one: Kevin, the rank outside Mickey's",
+    "Car two: himself, the rank outside Mickey's",
+    "Car three: Julie, the ferry rank",
+    "The rank outside Mickey's: ours",
+    "The ferry rank: the other firm",
+    "The station rank: the other firm",
+    "Account: the cold-store shift contract",
+    "Front: the launderette, through Julie"
+   ]
+  },
+  {
+   "id": "a front needs one of his people in it",
+   "rule": "ER-FRONT-01",
+   "fn": "front",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "launderette",
+    "money",
+    {
+     "moneyPence": 99999
+    }
+   ],
+   "outHas": {
+    "ok": false,
+    "why": "It needs one of his people put in it."
+   }
+  },
+  {
+   "id": "a front by money",
+   "rule": "A15",
+   "fn": "front",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "launderette",
+    "money",
+    {
+     "moneyPence": 9000,
+     "man": "julie"
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "pence": 9000,
+    "front": {
+     "man": "julie"
+    }
+   }
+  },
+  {
+   "id": "a front by a favour",
+   "rule": "A15",
+   "fn": "front",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "caff",
+    "favour",
+    {
+     "man": "darren",
+     "keeper": {
+      "regard": 0.5
+     }
+    }
+   ],
+   "outHas": {
+    "ok": true,
+    "pence": 0
+   }
+  },
+  {
+   "id": "a front by pressure on somebody not frightened fails and is known",
+   "rule": "A15",
+   "fn": "front",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "caff",
+    "pressure",
+    {
+     "man": "darren",
+     "keeper": {
+      "fear": 0.1
+     }
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "no front on a street he has frightened",
+   "rule": "A41",
+   "fn": "front",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    "launderette",
+    "money",
+    {
+     "moneyPence": 99999,
+     "man": "julie",
+     "streetOnEdge": true
+    }
+   ],
+   "outHas": {
+    "ok": false
+   }
+  },
+  {
+   "id": "a front pays through its man and raises the wash",
+   "rule": "ER-FRONT-01",
+   "fn": "week",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {
+      "launderette": {
+       "man": "julie"
+      }
+     },
+     "rounds": {},
+     "unpaid": {}
+    },
+    {
+     "julie": {
+      "loyalty": 0.6
+     }
+    }
+   ],
+   "out": {
+    "flows": [
+     {
+      "from": "the launderette",
+      "to": "the fare book",
+      "pence": 1200,
+      "why": "brought by julie",
+      "through": "julie"
+     }
+    ],
+    "trouble": [],
+    "washExtraPence": 4000
+   }
+  },
+  {
+   "id": "a short man brings it short, and that is the trouble",
+   "rule": "ER-FRONT-01",
+   "fn": "week",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {
+      "quay": {
+       "man": "darren"
+      }
+     },
+     "unpaid": {}
+    },
+    {
+     "darren": {
+      "loyalty": 0.3
+     }
+    }
+   ],
+   "out": {
+    "flows": [
+     {
+      "from": "the quay stalls",
+      "to": "the tin",
+      "pence": 1750,
+      "why": "brought by darren",
+      "through": "darren"
+     }
+    ],
+    "trouble": [
+     {
+      "at": "the quay stalls",
+      "through": "darren",
+      "what": "it came short"
+     }
+    ],
+    "washExtraPence": 0
+   }
+  },
+  {
+   "id": "a man gone: nobody brings it",
+   "rule": "ER-FRONT-01",
+   "fn": "week",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {
+      "caff": {
+       "man": "lee"
+      }
+     },
+     "rounds": {},
+     "unpaid": {}
+    },
+    {
+     "lee": {
+      "loyalty": 0.5,
+      "fate": "poached"
+     }
+    }
+   ],
+   "outHas": {
+    "flows": [],
+    "washExtraPence": 0,
+    "trouble": {
+     "0": {
+      "through": "lee"
+     }
+    }
+   }
+  },
+  {
+   "id": "wages paid",
+   "rule": "A40",
+   "fn": "wages",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    4500,
+    9000
+   ],
+   "out": {
+    "due": 9000,
+    "paid": 9000,
+    "unpaid": {},
+    "left": []
+   }
+  },
+  {
+   "id": "one wage short: he is owed a week",
+   "rule": "A40",
+   "fn": "wages",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {}
+    },
+    4500,
+    5000
+   ],
+   "out": {
+    "due": 9000,
+    "paid": 4500,
+    "unpaid": {
+     "julie": 1
+    },
+    "left": []
+   }
+  },
+  {
+   "id": "two weeks unpaid: the driver leaves",
+   "rule": "A14",
+   "fn": "wages",
+   "in": [
+    {
+     "cars": [
+      {
+       "id": "car one",
+       "driver": "kevin",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car two",
+       "driver": "tom",
+       "rank": "mickeys",
+       "off": false
+      },
+      {
+       "id": "car three",
+       "driver": "julie",
+       "rank": "ferry",
+       "off": false
+      }
+     ],
+     "ranks": {},
+     "accounts": {},
+     "fronts": {},
+     "rounds": {},
+     "unpaid": {
+      "julie": 1,
+      "kevin": 1
+     }
+    },
+    4500,
+    0
+   ],
+   "outHas": {
+    "paid": 0,
+    "left": [
+     "kevin",
+     "julie"
+    ]
+   }
+  }
+ ]
+}
