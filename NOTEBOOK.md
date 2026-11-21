@@ -2879,3 +2879,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: the nine rows per chase, each tied to a clip time; summary counts checked against the per-chase lines.
 - Failed and why: frames lag behind seeks in a hidden pane (take each screenshot twice); one timed-out script kept drawing over later sheets (reload the page to kill it); adverts must run out muted first; HUD crops must be placed per game (two Sleeping Dogs crops missed the heat number); GTA IV uploads are nearly all six-star shoot-outs, leaving one row open.
 - Evidence: production/research/lane/measurements/car-chases-sheet-2026-11-21.md
+
+### Players' first hours measured from public video (21 Nov 2026)
+- Made: a sheet of seven questions (boredom, skips, getting lost, delight, stops, first tries, the hour's shape) answered for nine first sessions, three each of three open-world games, chosen across kinds (speaking veteran, speaking newcomer, quiet or paired players); a cross-game reading. Cost: about 0.5 h session time, no helpers, no downloads.
+- Method: questions written before viewing; for each session open the video site's own transcript panel in the page and filter its lines by cue words (bored, how do I, where, laughter, wow, skip), reading each hit in context to tell the player's voice from the game's; then contact sheets of frames every 2.5 min over the first hour, each frame classed as control, story scene or menu (the HUD's minimap marks control); count per hour, every remark with its minute mark.
+- Tools: the built-in browser; a page script that seeks, draws and labels frames into a canvas; the transcript panel.
+- Target and check: counts per question per player tied to minute marks; shares from frame counts with the unsure frames listed.
+- Failed and why: the transcript panel stays unrendered in a hidden pane until the page is scrolled by a real input; caption files fetched directly come back empty (a token is needed); wide canvases overflow the pane (keep under 790 px); adverts mid-sheet stop the frames; edited uploads and "game movie" cuts look like sessions and must be checked for a greeting and continuous clock; writing a "read at" time before reading the clock produced wrong stamps (fixed from the clock).
+- Evidence: production/research/lane/measurements/players-first-hours-sheet-2026-11-21.md
