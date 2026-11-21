@@ -1518,8 +1518,8 @@
      "Not now"
     ]
    ],
-   "state": "open",
-   "closed": null
+   "state": "done",
+   "closed": "2026-11-21 10:08, He answered the box (Done 09:44); the bridge started 10:05 and all 52 projects were exported by 10:15."
   },
   {
    "id": "fable-press-2026-11-19",
@@ -1636,8 +1636,8 @@
      "Not now"
     ]
    ],
-   "state": "open",
-   "closed": null
+   "state": "done",
+   "closed": "2026-11-21 10:03, He signed in 09:46; a short command-line call answered at 10:08."
   }
  ]
 }

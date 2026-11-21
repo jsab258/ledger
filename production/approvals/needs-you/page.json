@@ -1,85 +1,11 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 2 open · updated Saturday 21 November, 9:47",
+ "kicker": "LEDGER · Needs you · 0 open · updated Saturday 21 November, 10:08",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Pick an answer under each item; a note is optional."
+  "Nothing open: the page says so."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": [
-  {
-   "kind": "need",
-   "key": "marvelous-box-2026-11-19",
-   "name": "ACTION: Answer the small Marvelous box, then leave Marvelous open",
-   "why": [
-    "The export of every Marvelous project to open files waits on it.",
-    "Every garment is already saved on F:, so nothing is lost."
-   ],
-   "steps": [
-    "Look at Marvelous Designer on the PC",
-    "Answer or close the small box in front of it (a sign-in box: sign in; anything else: OK or Close)",
-    "Leave Marvelous open, then tap Done below"
-   ],
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "only_you": "his-setting",
-   "tried": "The bridge's starter (13:43) found one copy, as wanted, but a small box of its own sits over the main window, so it stops by design; a scheduled run has no computer use, and Claude clicks nothing in a box it cannot read.",
-   "recommendation": "Do it today when you are at the PC: about one minute.",
-   "added": "2026-11-19 13:45",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ],
-    [
-     "no",
-     "Not now"
-    ]
-   ]
-  },
-  {
-   "kind": "need",
-   "key": "cli-signin-2026-11-21",
-   "name": "ACTION: Sign the night's Claude back in (about two minutes)",
-   "why": [
-    "Without it, tonight's bench and picture check fail again.",
-    "The game itself and the walk are fine; only those two checks need it."
-   ],
-   "steps": [
-    "On the PC, open Command Prompt (Start, type cmd, Enter)",
-    "Type claude and press Enter",
-    "Type /login and press Enter, then finish the sign-in in the browser it opens",
-    "Back in Command Prompt, type /exit and press Enter, then tap Done below"
-   ],
-   "links": [
-    {
-     "label": "This page",
-     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-    }
-   ],
-   "only_you": "sign-in",
-   "tried": "Sessions may not sign in for you; the app's own sessions still work, but the separate command-line Claude the night job uses lost its sign-in at 02:09 last night.",
-   "recommendation": "Do it today when you are at the PC: about two minutes.",
-   "added": "2026-11-21 08:32",
-   "pictures": [],
-   "detail": [],
-   "options": [
-    [
-     "done",
-     "Done (recommended)"
-    ],
-    [
-     "no",
-     "Not now"
-    ]
-   ]
-  }
- ]
+ "sections": []
 }

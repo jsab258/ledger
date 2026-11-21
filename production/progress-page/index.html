@@ -1,5 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
+
 <title>The Meridian Line</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,6 +118,11 @@ h3{font-weight:800;font-size:19px;line-height:1.15}
 .pieces .ps.beaten{color:var(--ink)}
 .pieces .pl{grid-column:1 / -1;color:var(--ink)}
 .defeated{opacity:.86}
+.paused{opacity:.72}
+.paused .state{border:1px dashed var(--muted);color:var(--muted)}
+.paused .hp-fill{background:var(--muted);opacity:.5}
+.bchip.paused{border-left-color:var(--muted)}
+.bchip.paused .bh{color:var(--muted)}
 .defeated h3{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ok)}
 .bosses-count{font:700 14px/1 var(--mono);color:var(--muted)}
 
@@ -260,59 +266,182 @@ figcaption{font-size:14px;color:var(--muted)}
 .plegend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted)}
 .plegend span{display:inline-flex;align-items:center;gap:5px}
 .plegend i{display:inline-block;width:12px;height:10px}
+/* The plan on top (20 Nov, his ask for a top-down plan): right now, needs you, two weeks, the stages, what it runs on; the rest folded */
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.nowgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.ncard{background:var(--surface);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.ncard header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ncard h3{font-size:17px}
+.st{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:5px 7px;white-space:nowrap;border:1px solid var(--rule);color:var(--muted)}
+.st.running{background:var(--line);border-color:var(--line);color:var(--surface)}
+.st.needs{background:var(--brick);border-color:var(--brick);color:var(--surface)}
+.st.slow{border-style:dashed}
+.big{font:700 22px/1.15 var(--mono);font-variant-numeric:tabular-nums}
+.big small{font:400 13px/1.3 var(--display);color:var(--muted);margin-left:6px}
+.big.txt{font:700 16px/1.3 var(--display)}
+.pbar{height:10px;background:var(--track);position:relative;overflow:hidden}
+.pbar i{position:absolute;inset:0 auto 0 0;background:var(--line)}
+.eta,.ncard .what{margin:0;font-size:14.5px;line-height:1.45}
+.ncard .what{font-size:13.5px;color:var(--muted)}
+.eta b{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--line);margin-right:6px}
+.readings{margin:0;font-size:14.5px;border-left:3px solid var(--line);padding-left:10px;max-width:75ch}
+.asks{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:ask}
+.ask{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--brick);padding:14px 16px;display:grid;gap:8px;min-width:0;counter-increment:ask}
+.ask .q{font:700 16px/1.35 var(--display);margin:0}
+.ask .q::before{content:counter(ask) ". ";color:var(--brick)}
+.ask .by{font:700 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brick)}
+.ask ol{margin:0;padding-left:22px;display:grid;gap:5px;font-size:14.5px}
+.rec{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 6px;background:var(--ok);color:var(--surface);margin-left:6px;vertical-align:1px}
+.ask a.go{justify-self:start;font:700 14px/1 var(--display);padding:0 12px;border:1px solid var(--line);color:var(--line);text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.ask .url{font:400 12px/1.35 var(--mono);color:var(--muted);overflow-wrap:anywhere;margin:0}
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:22px 40px;align-items:start}
+.wk{display:grid;gap:6px;min-width:0}
+.wk h3{font:700 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line)}
+.dlist{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.day{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px dashed var(--rule)}
+.day .dd{font:700 13px/1.25 var(--mono);font-variant-numeric:tabular-nums}
+.day .dd small{display:block;font-weight:400;color:var(--muted)}
+.day.today{background:var(--surface);box-shadow:inset 4px 0 0 var(--brick);padding-left:10px}
+.day.today .dd{color:var(--brick)}
+.day.past{opacity:.55}
+.dits{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px;line-height:1.4;min-width:0}
+.dits li{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px;align-items:baseline}
+.who{font:700 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 5px;border:1px solid var(--rule);color:var(--muted);white-space:nowrap;text-align:center}
+.who.cloud{border-color:var(--line);color:var(--line)}
+.who.pc{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.who.you{background:var(--brick);border-color:var(--brick);color:var(--surface)}
+.who.deadline{border-color:var(--brick);color:var(--brick)}
+.who.pause{border-style:dashed}
+.who.renew,.who.done{border-color:var(--ok);color:var(--ok)}
+.legend .who{display:inline-block;min-width:0}
+.goal{display:grid;gap:6px}
+.goal h3{font-size:clamp(20px,3vw,24px)}
+.stages .stop{padding-bottom:26px}
+.steps{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:12px minmax(0,1fr);gap:2px 9px;font-size:14px;line-height:1.4;align-items:start}
+.mk{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);display:block;margin-top:5px}
+.mk.done{background:var(--line)}
+.mk.here{background:var(--brick);border-color:var(--brick)}
+.mk.ahead{border-style:dotted;border-color:var(--muted)}
+.steps .sn.done{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.steps .when{grid-column:2;font:400 12.5px/1.35 var(--mono);color:var(--muted)}
+.steps .cnt{font:700 12px/1 var(--mono);color:var(--brick);margin-left:6px;white-space:nowrap}
+.stages .here .dot::after{animation:none;opacity:0}
+.playbox{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--brick);padding:16px 18px;gap:6px}
+.playline{margin:0;font:800 clamp(24px,4.5vw,34px)/1.15 var(--display)}
+.live{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--rule)}
+.live li{display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--rule);font-size:14.5px}
+.live li.small{display:block}
+.live .st{text-align:center}
+.live .lt{font:400 12.5px/1.2 var(--mono);color:var(--muted);white-space:nowrap}
+#liveAllow{justify-self:start;font:700 14px/1 var(--display);padding:0 12px;border:1px solid var(--line);color:var(--line);background:transparent;min-height:40px;cursor:pointer}
+.stages .stop-n{color:var(--line)}
+.srows{display:grid;grid-template-columns:minmax(0,1fr) minmax(80px,1.1fr) 40px;gap:8px 10px;align-items:center;font-size:14px}
+.srows .bar{height:10px;background:var(--track);position:relative;overflow:hidden}
+.srows .bar i{position:absolute;inset:0 auto 0 0;background:var(--line)}
+.srows .bar i.res{background:repeating-linear-gradient(135deg,var(--line) 0 4px,transparent 4px 8px)}
+.srows .p{font:700 13px/1 var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.waits{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.waits li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 14px;padding:8px 0;border-bottom:1px dashed var(--rule);font-size:14px;line-height:1.4}
+.waits li:last-child{border-bottom:0}
+.waits .u{color:var(--muted)}
+.waits .u::before{content:"Waits until: ";font:700 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--line)}
+@media (max-width:520px){.waits li{grid-template-columns:minmax(0,1fr)}}
+.risks{margin:0;padding-left:20px;display:grid;gap:8px;font-size:14.5px;line-height:1.45}
+.fold{border-top:1px solid var(--rule)}
+.fold > summary{cursor:pointer;padding:14px 0 4px;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary > span{font:800 20px/1.2 var(--display);min-width:0}
+.fold > summary small{display:block;font:400 14px/1.4 var(--display);color:var(--muted);margin-top:4px}
+.fold > summary::after{content:"Open";flex:none;font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--line);border:1px solid var(--line);padding:6px 8px}
+.fold[open] > summary::after{content:"Close"}
+.fold > .fold-body{display:grid;gap:40px;padding:22px 0 6px}
+summary:focus-visible{outline:3px solid var(--brick);outline-offset:2px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
 .err{color:var(--brick);font-weight:600}
 </style>
 
 <div class="wrap">
   <header class="mast">
-    <div class="kicker">LEDGER &middot; progress</div>
+    <div class="kicker">LEDGER &middot; the plan</div>
     <h1>The Meridian Line</h1>
-    <p class="lede">One date, and the two tracks that move it: what the game is, proved in the prototype, and what it looks like, built in Unreal. Bosses sit on what they block.</p>
-    <div class="ticket" id="ticket" aria-label="The date and where the game is now">
-      <div class="field"><span class="label">Now</span><span class="v">Loading...</span></div>
-    </div>
+    <p class="lede">When you can play, what needs you, what runs now, and the road to release.</p>
   </header>
 
-  <section class="col" aria-labelledby="h-week" id="weekSec">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
-      <h2 id="h-week">This week</h2>
-      <span class="bosses-count" id="weekLabel"></span>
-    </div>
-    <div class="weekgrid" id="weekGrid"></div>
+  <section class="col playbox" aria-labelledby="h-play">
+    <span class="kicker" id="h-play">When you can play</span>
+    <p class="playline" id="playWhen"></p>
+    <p class="sub" id="playWhat"></p>
+    <p class="small" id="playAfter"></p>
   </section>
 
-  <div class="board tracks">
-    <section class="col" aria-labelledby="h-proto">
-      <div><span class="kicker">Track 1</span><h2 id="h-proto">What the game is</h2></div>
-      <p class="sub">The prototype in the browser: the whole design, round by round, played and judged before Unreal takes each part over.</p>
-      <div class="ticket mini" id="protoTicket"></div>
-      <ol class="route" id="protoRoute"></ol>
-      <div class="panel" id="t1"></div>
-      <div class="panel" id="panel"></div>
-      <div class="panel" id="partsView"></div>
-      <ul class="pieces" id="beside"></ul>
-    </section>
+  <section class="col" aria-labelledby="h-needs" id="needsSec">
+    <div class="sec-head"><h2 id="h-needs">Needs you</h2><span class="bosses-count" id="needsCount"></span></div>
+    <ol class="asks" id="asks"></ol>
+  </section>
 
+  <section class="col" aria-labelledby="h-live" id="liveSec">
+    <div class="sec-head"><h2 id="h-live">Running now</h2><span class="bosses-count" id="liveStamp"></span></div>
+    <ul class="live" id="live"><li class="small">Loading live status...</li></ul>
+    <p class="small" id="liveNote">Your scheduled cloud tasks, refreshed every minute. The builder on your PC isn't listed.</p>
+    <button type="button" class="go" id="liveAllow" hidden>Show live status</button>
+  </section>
+
+  <section class="col" aria-labelledby="h-plan" id="planSec">
+    <h2 id="h-plan">The plan</h2>
+    <ol class="route stages" id="stages"></ol>
+  </section>
+
+  <section class="col" aria-labelledby="h-days" id="daysSec">
+    <div class="sec-head"><h2 id="h-days">The next two weeks</h2></div>
+    <div class="legend" id="whoLegend" aria-hidden="true"></div>
+    <div class="days" id="days"></div>
+  </section>
+
+  <details class="fold" id="foldRisks">
+  <summary><span>Risks and what waits</span></summary>
+  <div class="fold-body">
+    <ul class="risks" id="risks"></ul>
+    <ul class="waits" id="waiting"></ul>
+  </div>
+  </details>
+
+  <!-- Retired from view on 20 Nov (superseded by the plan above): the builder's week box and the old Track 1 blocks. Kept hidden so the nightly progress.json still renders without errors. -->
+  <div hidden aria-hidden="true">
+    <section id="weekSec"><h2 id="h-week">This week</h2><span id="weekLabel"></span><div id="weekGrid"></div></section>
+    <div id="protoTicket"></div><ol id="protoRoute"></ol><div id="t1"></div><div id="panel"></div><ul id="beside"></ul>
+  </div>
+
+  <details class="fold" id="foldTracks">
+  <summary><span>Unreal, phase by phase</span></summary>
+  <div class="fold-body">
     <section class="col" aria-labelledby="h-line">
-      <div><span class="kicker">Track 2</span><h2 id="h-line">What the game looks like</h2></div>
-      <p class="sub">The Unreal game, phase by phase. The solid line is the adopted plan; the dotted line is still a sketch. Each phase shows what it takes from the prototype.</p>
+      <p class="sub">The solid line is the adopted plan; the dotted line is still a sketch.</p>
+      <h2 id="h-line" hidden>Unreal, phase by phase</h2>
       <ol class="route" id="route"></ol>
       <p class="sketch-note" id="sketchNote"></p>
       <p class="small" id="hoursToGo"></p>
     </section>
+    <section class="col" aria-labelledby="h-boss">
+      <div class="sec-head"><h2 id="h-boss">Bosses</h2><span class="bosses-count" id="bossCount"></span></div>
+      <p class="sub">Each boss is named on the thing it blocks. A boss falls when its number reaches its goal, or when you rule the goal met. Paused bosses wait by your ruling of 20 November.</p>
+      <div class="bosses" id="bosses"></div>
+      <p class="small" id="bossesClosed"></p>
+    </section>
   </div>
+  </details>
 
-  <section class="col" aria-labelledby="h-boss">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
-      <h2 id="h-boss">Bosses</h2>
-      <span class="bosses-count" id="bossCount"></span>
-    </div>
-    <p class="sub">Each boss is named on the thing it blocks. A boss falls when its number reaches its goal, or when you rule the goal met.</p>
-    <div class="bosses" id="bosses"></div>
-    <p class="small" id="bossesClosed"></p>
-  </section>
+  <details class="fold" id="foldParts">
+  <summary><span>Parts of the whole game</span></summary>
+  <div class="fold-body">
+    <div class="panel" id="partsView"></div>
+  </div>
+  </details>
 
+  <details class="fold" id="foldRoad">
+  <summary><span>The road to release</span></summary>
+  <div class="fold-body">
+  <div class="ticket" id="ticket" aria-label="The release date and where the game is now"><div class="field"><span class="label">Now</span><span class="v">Loading...</span></div></div>
   <section class="road" aria-labelledby="h-road">
     <h2 id="h-road">The road to release</h2>
     <p class="sub" id="roadSub">Each phase's expected start and end, worked out from the advisor's estimates of 5 November, never from how fast phase 1 ran. Re-forecast every month.</p>
@@ -340,7 +469,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     <p class="sub">Each Monday: what the week spent, what was done and what failed, and the risks.</p>
     <div id="weekList"></div>
   </section>
+  </div>
+  </details>
 
+  <details class="fold" id="foldStreet">
+  <summary><span>Quay Street, day by day</span></summary>
+  <div class="fold-body">
   <section class="street" aria-labelledby="h-street">
     <h2 id="h-street">Quay Street, day by day</h2>
     <div class="controls">
@@ -375,9 +509,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     </div>
     <p class="small" id="gapNote"></p>
   </section>
+  </div>
+  </details>
 
   <footer>
-    <span>Numbers come from the builder's own measurements, the cloud lane's records and your rulings, as recorded in the project. The builder refreshes this page each night; the date is re-forecast monthly from measured costs.</span>
+    <span>The advisor keeps the plan. Figures in the folded sections are the builder's, from his last nightly update.</span>
     <span id="updated"></span>
   </footer>
 </div>
@@ -464,8 +600,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     if (P) add("What the game is", P.of ? "Round " + P.round + " of " + P.of : String(P.round), (P.stages.find(x => x.state === "here") || {}).name || "");
     const here = d.stations.find(s => s.n === d.here) || d.stations[0];
     add("What it looks like", "Phase " + here.n + ": " + here.name, d.line2027 ? (d.line2027.behind_w > 0 ? d.line2027.behind_w + " weeks behind plan" : d.line2027.behind_w < 0 ? (-d.line2027.behind_w) + " weeks ahead of plan" : "on plan") + ", " + d.line2027.as_of : "");
-    const fight = d.bosses.filter(b => b.state !== "defeated").length;
-    add("Bosses standing", fight + " of " + d.bosses.length, null, true);
+    const fight = d.bosses.filter(b => b.state !== "defeated" && b.state !== "paused").length, paused = d.bosses.filter(b => b.state === "paused").length;
+    add("Bosses fighting", fight + " of " + d.bosses.length, paused ? paused + " paused by your ruling" : null, true);
   }
 
   // THIS WEEK (19 Nov): finished, blocked, what to try, decisions
@@ -627,8 +763,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (s.n === d.here && d.bosses && d.bosses.length){
         const bc = el("div", "bchips");
         for (const bo of d.bosses){
-          const c = el("div", "bchip" + (bo.state === "defeated" ? " defeated" : ""));
-          c.append(el("span", "bn", bo.name), el("span", "bh", bo.state === "defeated" ? "Down" : bo.state === "unchecked" ? "HP ?" : "HP " + hpOf(bo) + "%"));
+          const c = el("div", "bchip" + (bo.state === "defeated" ? " defeated" : bo.state === "paused" ? " paused" : ""));
+          c.append(el("span", "bn", bo.name), el("span", "bh", bo.state === "defeated" ? "Down" : bo.state === "paused" ? "Paused" : bo.state === "unchecked" ? "HP ?" : "HP " + hpOf(bo) + "%"));
           if (bo.blocks) c.append(el("span", "bb", "Blocks: " + bo.blocks));
           bc.append(c);
         }
@@ -692,13 +828,13 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
 
   function renderBossList(list, gridId, countId){
     const g = $(gridId); g.replaceChildren();
-    const down = list.filter(b => b.state === "defeated").length;
-    $(countId).textContent = down + " of " + list.length + " down";
+    const down = list.filter(b => b.state === "defeated").length, paused = list.filter(b => b.state === "paused").length;
+    $(countId).textContent = down + " of " + list.length + " down" + (paused ? ", " + paused + " paused" : "");
     for (const b of list){
       const hp = hpOf(b);
       const a = el("article", "boss " + b.state);
       const h = el("header"); h.append(el("h3", null, b.name));
-      h.append(el("span", "state", b.state === "defeated" ? "Defeated" + (b.when ? " " + b.when : "") : b.state === "unchecked" ? "Not re-checked" : "Fighting"));
+      h.append(el("span", "state", b.state === "defeated" ? "Defeated" + (b.when ? " " + b.when : "") : b.state === "unchecked" ? "Not re-checked" : b.state === "paused" ? "Paused" : "Fighting"));
       a.append(h);
       a.append(el("p", "what", b.what));
       if (b.blocks) a.append(el("p", "blocks", "Blocks: " + b.blocks));
@@ -876,7 +1012,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     if (s.n === 1 && d.bosses_closed) row("Boss", d.bosses_closed);
     else if (s.n === d.here){
       const down = d.bosses.filter(b => b.state === "defeated"), fight = d.bosses.filter(b => b.state !== "defeated");
-      row("Boss", down.length + " of " + d.bosses.length + " down (" + down.map(b => b.name).join(", ") + "). Still standing: " + fight.map(b => b.name).join(", ") + ".");
+      row("Boss", down.length + " of " + d.bosses.length + " down" + (down.length ? " (" + down.map(b => b.name).join(", ") + ")" : "") + ". Still standing: " + fight.map(b => b.name + (b.state === "paused" ? " (paused)" : "")).join(", ") + ".");
     } else row("Boss", s.n === 0 ? "None." : "None named yet; its bosses are set when the phase opens.");
     row("Next step", s.next_step || s.note || "");
     box.append(dl);
@@ -897,6 +1033,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     const sc = $("gscroll");
     const toToday = () => { sc.scrollLeft = Math.max(0, gx(todayMs()) - sc.clientWidth * 0.25); };
     toToday(); requestAnimationFrame(toToday);
+    const fr = $("foldRoad"); if (fr) fr.addEventListener("toggle", () => { if (fr.open) requestAnimationFrame(toToday); });
     for (const [id, v] of [["docks-in", true], ["docks-out", false]]){
       $(id).addEventListener("click", () => {
         docksIn = v; $("docks-in").setAttribute("aria-pressed", String(v)); $("docks-out").setAttribute("aria-pressed", String(!v));
@@ -1025,12 +1162,182 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
 
   fetch("progress.json", {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
     renderTicket(d); renderWeek(d); renderProto(d); renderTrack1(d); renderRoute(d); renderBosses(d); renderStreet(d); if (d.forecast) renderRoad(d);
-    $("updated").textContent = "Updated " + d.updated + ".";
+    $("updated").textContent = "Builder's last update: " + d.updated + ".";
   }).catch(() => {
     const t = $("ticket"); t.replaceChildren();
     const f = el("div", "field"); f.append(el("span", "label", "Progress")); f.append(el("span", "v err", "The progress data didn't load. Reload the page to try again.")); t.append(f);
   });
 })();
 </script>
+<script>
+/* THE PLAN (20 Nov, lean): plan.json holds the plan, kept by the advisor; "Running now" is live from his scheduled cloud tasks through the Claude Code Remote connector */
+(function(){
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const pad = n => String(n).padStart(2, "0");
+  const ymd = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const at = s => new Date(s + "T12:00:00");
+  const WHO = {cloud: "Cloud", pc: "Your PC", you: "You", pause: "Pause", renew: "Reset", deadline: "Deadline", done: "Done"};
+  const STATE = {done: "Done", here: "Now", next: "Next", ahead: "Later"};
+
+  function renderPlan(P){
+    const Y = P.play || {};
+    $("playWhen").textContent = Y.when || "";
+    $("playWhat").textContent = Y.what || "";
+    $("playAfter").textContent = Y.after || "";
+
+    const L = P.needs_you || [], ol = $("asks"); ol.replaceChildren();
+    $("needsCount").textContent = L.length ? String(L.length) : "Nothing";
+    if (!L.length) ol.append(el("li", "small", "Nothing needs you."));
+    for (const a of L){
+      const li = el("li", "ask");
+      li.append(el("p", "q", a.q));
+      if (a.by) li.append(el("span", "by", a.by));
+      if ((a.options || []).length > 1){ const o = el("ol"); for (const op of a.options){ const x = el("li", null, op.label); if (op.rec) x.append(el("span", "rec", "Recommended")); o.append(x); } li.append(o); }
+      if (a.link){ const go = el("a", "go", (a.link_label || "Open") + " ↗"); go.href = a.link; go.target = "_blank"; go.rel = "noopener"; li.append(go); li.append(el("p", "url", a.link)); }
+      ol.append(li);
+    }
+
+    const r = $("stages"); r.replaceChildren();
+    for (const s of (P.stages || [])){
+      const cls = s.state === "here" ? "here" : s.state === "done" ? "passed" : s.state === "next" ? "next" : "sketch";
+      const li = el("li", "stop " + cls); li.append(el("span", "dot"));
+      const b = el("div", "body");
+      b.append(el("span", "stop-n", (STATE[s.state] || "") + (s.when ? " · " + s.when : "")));
+      b.append(el("span", "stop-name", s.name));
+      if (s.line) b.append(el("p", "stop-get", s.line));
+      li.append(b); r.append(li);
+    }
+
+    const box = $("days"); box.replaceChildren();
+    const lg = $("whoLegend"); lg.replaceChildren();
+    for (const k of ["you", "pc", "cloud", "deadline", "pause", "renew"]) lg.append(el("span", "who " + k, WHO[k]));
+    const today = ymd(new Date()), groups = [];
+    for (const d of (P.days || [])){
+      const dt = at(d.date), mon = new Date(dt); mon.setDate(dt.getDate() - ((dt.getDay() + 6) % 7));
+      const key = ymd(mon); let g = groups.find(x => x.key === key); if (!g){ g = {key, mon, days: []}; groups.push(g); } g.days.push(d);
+    }
+    const dm = d => d.toLocaleDateString("en-GB", {day: "numeric", month: "short"});
+    for (const g of groups){
+      const w = el("section", "wk"); const sun = new Date(g.mon); sun.setDate(g.mon.getDate() + 6);
+      w.append(el("h3", null, (g.days.some(d => d.date === today) ? "This week, " : "Week of ") + dm(g.mon) + " to " + dm(sun)));
+      const ul = el("ol", "dlist");
+      for (const d of g.days){
+        const dt = at(d.date), isT = d.date === today;
+        const li = el("li", "day" + (isT ? " today" : d.date < today ? " past" : "")); if (isT) li.setAttribute("aria-current", "date");
+        const dd = el("div", "dd", dt.toLocaleDateString("en-GB", {weekday: "short"}) + " " + dt.getDate()); dd.append(el("small", null, isT ? "Today" : dt.toLocaleDateString("en-GB", {month: "short"}))); li.append(dd);
+        const it = el("ul", "dits"); for (const x of d.items){ const rr = el("li"); rr.append(el("span", "who " + x.who, WHO[x.who] || x.who), el("span", null, x.t)); it.append(rr); }
+        li.append(it); ul.append(li);
+      }
+      w.append(ul); box.append(w);
+    }
+
+    const rk = $("risks"); rk.replaceChildren(); for (const x of (P.risks || [])) rk.append(el("li", null, x));
+    const wl = $("waiting"); wl.replaceChildren();
+    for (const x of (P.waiting || [])){ const li = el("li"); li.append(el("span", null, x.what), el("span", "u", x.until)); wl.append(li); }
+  }
+
+  fetch("plan.json", {cache: "no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(renderPlan).catch(() => {
+    $("playWhen").replaceChildren(el("span", "err", "The plan didn't load. Reload the page to try again."));
+  });
+
+  // RUNNING NOW: live, from his scheduled cloud tasks (Claude Code Remote, list_triggers); nothing here is typed by hand.
+  // Two queries: one-time sessions (newest first, followed back three days) and repeating tasks (all pages); pages end early when prompts are long, so cursors are followed.
+  const SERVER = "Claude Code Remote", TOOL = "list_triggers";
+  const Q = {once: {limit: 100, enabled: true, recurring: false}, repeat: {limit: 100, enabled: true, recurring: true}};
+  const MAXPAGES = 6, BACK = 3 * 864e5;
+  const store = {once: null, repeat: null}, seq = {once: 0, repeat: 0};
+  const stamps = {once: null, repeat: null}; let mcp = null, hadData = false;
+  const hm = ms => { const d = new Date(ms), t = new Date(); const s = pad(d.getHours()) + ":" + pad(d.getMinutes()); return ymd(d) === ymd(t) ? s : d.toLocaleDateString("en-GB", {weekday: "short"}) + " " + s; };
+  const clean = n => { let x = n.replace(/\s*\([^)]*\)\s*$/, "").replace(/^LEDGER\s*/i, "").split(":")[0].trim(); return x.charAt(0).toUpperCase() + x.slice(1); };
+  function parse(result){
+    let payload = result && result.payload;
+    if (payload == null && result && result.content && result.content[0] && result.content[0].text) payload = result.content[0].text;
+    if (payload && typeof payload === "object") return payload;
+    if (typeof payload !== "string") return null;
+    const s = payload.indexOf("{"); if (s < 0) return null;
+    let depth = 0, inStr = false, esc = false;
+    for (let i = s; i < payload.length; i++){
+      const c = payload[i];
+      if (inStr){ if (esc) esc = false; else if (c === "\\") esc = true; else if (c === '"') inStr = false; continue; }
+      if (c === '"') inStr = true; else if (c === "{") depth++; else if (c === "}"){ depth--; if (depth === 0){ try { return JSON.parse(payload.slice(s, i + 1)); } catch (e){ return null; } } }
+    }
+    return null;
+  }
+  async function collect(kind, first){
+    const my = ++seq[kind];
+    let obj = parse(first), rows = (obj && obj.data) || [], pages = 1;
+    while (obj && obj.has_more && obj.next_cursor && pages < MAXPAGES){
+      if (kind === "once"){ const last = rows[rows.length - 1]; if (last && last.created_at && Date.now() - Date.parse(last.created_at) > BACK) break; }
+      try { obj = parse(await mcp.callTool(SERVER, TOOL, Object.assign({}, Q[kind], {cursor: obj.next_cursor}))); } catch (e){ break; }
+      if (my !== seq[kind]) return;
+      rows = rows.concat((obj && obj.data) || []); pages++;
+    }
+    if (my !== seq[kind]) return;
+    store[kind] = rows;
+    const st = first && first.cache && first.cache.storedAt ? first.cache.storedAt : Date.now();
+    stamps[kind] = Math.min(st, Date.now());
+    renderLive();
+  }
+  function renderLive(){
+    const list = $("live"); list.replaceChildren();
+    const rows = [].concat(store.once || [], store.repeat || []).filter(t => /LEDGER/i.test(t.name || ""));
+    const now = Date.now(), dayMs = 864e5, out = [], seen = new Set();
+    for (const t of rows){
+      if (seen.has(t.id)) continue; seen.add(t.id);
+      const lr = t.last_run || {}, st = String(lr.status || "");
+      const fired = lr.fired_at ? Date.parse(lr.fired_at) : null, done = lr.finished_at ? Date.parse(lr.finished_at) : null;
+      const next = t.next_run_at ? Date.parse(t.next_run_at) : null, name = clean(t.name);
+      if (/PENDING|RUNNING/.test(st) && !done && fired && now - fired < 2 * dayMs) out.push({k: 0, name, chip: "Running", cls: "running", time: "since " + hm(fired)});
+      else if (t.enabled && next && next > now && next - now < 12 * 36e5) out.push({k: 2, name, chip: "Next", cls: "slow", time: hm(next), at: next});
+      else if (done && now - done < dayMs) out.push({k: 1, name, chip: /FAIL/.test(st) ? "Failed" : "Finished", cls: /FAIL/.test(st) ? "needs" : "", time: hm(done), at: -done});
+    }
+    out.sort((a, b) => a.k - b.k || (a.at || 0) - (b.at || 0) || a.name.localeCompare(b.name));
+    if (!out.length) list.append(el("li", "small", "Nothing running in the cloud right now."));
+    for (const o of out){ const li = el("li"); li.append(el("span", "st " + o.cls, o.chip), el("span", "ln", o.name), el("span", "lt", o.time)); list.append(li); }
+    const sv = [stamps.once, stamps.repeat].filter(Boolean);
+    $("liveStamp").textContent = "Live \u00b7 " + hm(sv.length ? Math.min.apply(null, sv) : now);
+  }
+  const MSG = {
+    needs_reauth: "Reconnect Claude Code Remote in claude.ai Settings, Connectors, to see live status.",
+    server_not_connected: "Add the Claude Code Remote connector in claude.ai Settings, Connectors, to see live status.",
+    selection_required: "Choose which Claude Code Remote connector this page should use when claude.ai asks.",
+    blocked_by_policy: "Your organisation's settings block live status here.",
+    not_in_manifest: "Live status needs your approval for this page.",
+    approval_required: "Live status needs your one-time approval.",
+    not_granted: "Live status is off for this page.",
+    capability_disabled: "Live status is off for this page."
+  };
+  function liveError(err){
+    const code = (err && err.code) || "upstream_error";
+    if (MSG[code]){
+      store.once = store.repeat = null; hadData = false;
+      $("live").replaceChildren(el("li", "small", MSG[code]));
+      $("liveAllow").hidden = !(code === "approval_required" || code === "not_in_manifest");
+      $("liveStamp").textContent = "";
+    } else if (!hadData){
+      $("live").replaceChildren(el("li", "small", "Live status could not be reached just now. It tries again in a minute."));
+    } else if (!/could not refresh/.test($("liveStamp").textContent)){
+      $("liveStamp").textContent += " · could not refresh";
+    }
+  }
+  function onEvent(kind){ return ev => {
+    if (ev.type === "data"){ hadData = true; $("liveAllow").hidden = true; collect(kind, ev.result); }
+    else liveError(ev.error);
+  }; }
+  (async () => {
+    try { mcp = window.claude && window.claude.use ? await window.claude.use("mcp") : null; } catch (e){ mcp = null; }
+    if (!mcp){ $("live").replaceChildren(el("li", "small", "Live status shows when this page is open in Claude.")); $("liveNote").hidden = true; return; }
+    for (const kind of ["once", "repeat"]) mcp.watchTool(SERVER, TOOL, Q[kind], onEvent(kind), {refetchInterval: 60000});
+    $("liveAllow").addEventListener("click", async () => {
+      $("liveAllow").disabled = true;
+      try { for (const kind of ["once", "repeat"]){ const res = await mcp.callTool(SERVER, TOOL, Q[kind]); hadData = true; await collect(kind, res); } $("liveAllow").hidden = true; }
+      catch (e){ liveError(e); }
+      finally { $("liveAllow").disabled = false; }
+    });
+  })();
+})();
+</script>
+
 
 </body></html>

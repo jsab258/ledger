@@ -2860,3 +2860,8 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md.
 
 - 21 Nov 2026, reading a status corner from public footage: crop the screen's corner (about the right 30% of width, top 12% of height) from many moments into one sheet, so "no warning ever showed" is checked frame by frame rather than remembered; hiding the page behind the sheet beats scrolling the player away (page layers clip a fixed sheet). Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md.
+
+### Exporting a cloth tool's projects before its licence lapses (21 Nov 2026)
+- Made: every saved project of the subscription cloth tool (52) reopened and written out as open files: the pattern as JSON and the garment as FBX beside each. Cost: 0.4 h, 25 min machine.
+- Method: one small job per project through the tool's own scripting bridge (fresh scene, open, export both, record sizes); the open is the reopen check; a rerun skips projects whose files exist. Try one project first, then all.
+- Check: every project opened and both files are non-empty (52 of 52). Failed: nothing; the wait was a modal box only a person could answer. Evidence: F:/LedgerTools/md-jobs/export-2026-11-21.json

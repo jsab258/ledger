@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 20 November 2026, 7:59",
+  "updated": "Saturday 21 November 2026, 10:17",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -48,7 +48,7 @@
       "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
       "size": "3 to 4 weeks",
       "state": "here",
-      "note": "Started 9 November, when your tap closed phase 1. The shops already in the street stay.",
+      "note": "Started 9 November, when your tap closed phase 1. The shops already in the street stay. 20 Nov: Kiln v1's Monday goal is withdrawn and the look work pauses after the Marvelous export, by your ruling.",
       "arrived": [
         "Lamp posts",
         "Rita's pawnbroker",
@@ -172,13 +172,13 @@
         }
       ],
       "short": "Quay Street",
-      "next_step": "First: card memory and headroom (the cooking plan is written and reviewed), then the street's budget and scale test.",
+      "next_step": "First the Marvelous export (your box on the page, by Thu 26 Nov). Then the look work here pauses by your ruling of 20 Nov (Kiln, hair, the crowd) until the browser game's evening holds; the walkthrough measuring comes next.",
       "fc_w": [
         4.5,
         7.7
       ],
       "began": "2026-11-09",
-      "actual_w": 1.6
+      "actual_w": 1.7
     },
     {
       "n": 3,
@@ -314,11 +314,11 @@
       "name": "The Tailor",
       "what": "Period clothes on the cast, close up, holding in walk, sit and turn; repeats at about half the first's cost.",
       "display": "Tom 3 of 4 pieces settled; Ron and Darren interim; Sheila filmed, one collar fault set aside",
-      "state": "fighting",
+      "state": "paused",
       "start_label": "phase 2 began 9 Nov",
-      "last": "11 Nov: Sheila filmed in the packaged game; the neckband shards at her collar pass, the cardigan still shows through the collar fall in strips (two tries spent, set aside). Tom's jacket stays set aside.",
+      "last": "Paused by your ruling of 20 Nov: after the Marvelous export it waits until the browser game's evening holds. 11 Nov: Sheila filmed in the packaged game; the neckband shards at her collar pass, the cardigan still shows through the collar fall in strips (two tries spent, set aside). Tom's jacket stays set aside.",
       "route": "Our own refit, with MetaTailor (free version) and Houdini's cloth (Vellum) on test.",
-      "blocks": "the cast’s clothes in phase 2. Kiln is its weapon (v1: 0 of 6); Marvelous lapses 26 November."
+      "blocks": "the cast's clothes in phase 2. Kiln is its weapon; Kiln v1's Monday goal withdrawn by your ruling; Marvelous lapses 26 November."
     },
     {
       "name": "People in motion",
@@ -333,8 +333,8 @@
       "name": "Hair",
       "what": "One character's hair passing the full gate: behind, close up, sitting and walking, at four distances, day and night, wet, no shimmer.",
       "display": "Not started at the gate; strands stay (9 Nov)",
-      "state": "fighting",
-      "last": "No character's hair has passed yet. Houdini's free licence cooks headless but cannot export the hair to Unreal (needs Indie, about US$299 a year): asked only if Houdini still wins after its cloth test.",
+      "state": "paused",
+      "last": "Paused by your ruling of 20 Nov: after the Marvelous export it waits until the browser game's evening holds. No character's hair has passed yet. Houdini's free licence cooks headless but cannot export the hair to Unreal (needs Indie, about US$299 a year): asked only if Houdini still wins after its cloth test.",
       "route": "Houdini on test (Darren's curls).",
       "blocks": "the principals close up, phase 2."
     },
@@ -342,8 +342,8 @@
       "name": "The crowd and card memory",
       "what": "Graphics card memory with the whole street and its people, within the 6 GB line for the game alone.",
       "display": "6,005 MB in the 8 Nov walk (a middle reading, not the peak)",
-      "state": "fighting",
-      "last": "Whether the reading is the game alone is still being checked; the crowd beyond the named people is not yet priced.",
+      "state": "paused",
+      "last": "Paused by your ruling of 20 Nov: after the Marvelous export it waits until the browser game's evening holds. Whether the reading is the game alone is still being checked; the crowd beyond the named people is not yet priced.",
       "route": "AMD's memory tools, if you say yes.",
       "blocks": "a full street of people within the card’s memory, phase 2 and the Hook."
     },
@@ -411,24 +411,24 @@
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-21",
-      "line": "Morning, Saturday 21 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
+      "date": "2026-11-20",
+      "line": "Morning, Friday 20 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-21.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-20.jpg"
+          "today": "production/previews/morning-hook-day-2026-11-20.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-19.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-21.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-20.jpg"
+          "today": "production/previews/morning-reverse-day-2026-11-20.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-19.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-21.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-20.jpg"
+          "today": "production/previews/morning-night-2026-11-20.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-19.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
@@ -541,8 +541,8 @@
   },
   "carried": [],
   "line2027": {
-    "as_of": "Friday 20 November",
-    "behind_w": 0.0,
+    "as_of": "Saturday 21 November",
+    "behind_w": 0.1,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   },
   "forecast": {

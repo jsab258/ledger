@@ -13,7 +13,9 @@ Hours are the time log's tasks whose names name the piece (tools/timelog.py, sum
 
 ## Exports before a Marvelous month ends
 
-None yet. The subscription began 26 October, billed monthly (RULINGS, Clothes), so the first month ends about 26 November (unverified: the renewal date on his account is not read).
+- 21 Nov 2026 10:05-10:15: all 52 saved projects on F:/LedgerTools exported through the bridge (tools/md-bridge/export_all.py, one job per project): each opened in a fresh scene (all 52 reopened), its pattern as <name>.pattern.json and its garment as <name>.garment.fbx beside the .zprj; 104 MB in all. Tom's zip jacket 35 (v3 to v25b and grips), jeans 8, jumper 3, the Kiln compare runs 6. Results: F:/LedgerTools/md-jobs/export-2026-11-21.json. The compare runs also copied whole into F:/LedgerTools/garments/kiln-md-compare-2026-11-18 (299 MB, checked identical).
+
+The subscription began 26 October, billed monthly (RULINGS, Clothes), so the first month ends about 26 November (unverified: the renewal date on his account is not read).
 
 ## 2 November 2026: Epic's four MetaHuman footwear outfits, from Fab (his download, his yes of 31 October)
 
