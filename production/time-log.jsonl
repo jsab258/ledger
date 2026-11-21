@@ -965,3 +965,5 @@
 {"event": "stop", "at": "2026-11-21T11:15:00", "note": ""}
 {"event": "start", "at": "2026-11-21T11:16:00", "task": "GTA VI G5: LGU3b6jXhjI escape stepped", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T11:22:00", "note": ""}
+{"event": "start", "at": "2026-11-21T11:23:00", "task": "GTA VI G5: candidates checked, handover", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T11:29:00", "note": ""}
