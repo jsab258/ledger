@@ -2865,3 +2865,9 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Made: every saved project of the subscription cloth tool (52) reopened and written out as open files: the pattern as JSON and the garment as FBX beside each. Cost: 0.4 h, 25 min machine.
 - Method: one small job per project through the tool's own scripting bridge (fresh scene, open, export both, record sizes); the open is the reopen check; a rerun skips projects whose files exist. Try one project first, then all.
 - Check: every project opened and both files are non-empty (52 of 52). Failed: nothing; the wait was a modal box only a person could answer. Evidence: F:/LedgerTools/md-jobs/export-2026-11-21.json
+
+### Reading car speed from public footage of a game with no speedometer (21 Nov 2026)
+- Made: a set-aside attempt at acceleration, top speed and braking for one open-world game from browser footage. Cost: 0.4 h, no helpers.
+- Method: find standstills automatically (frame difference over a third of a second, every 3 s, read in the page from the video drawn to a canvas), then time lane dashes past the car (try 1) or read the in-car dial in first person (try 2).
+- Failed and why: the chase camera sits low behind the vehicle, so dashes beside it are short, dark and hidden; the first-person dial is covered by the hands and the player looks about. Lesson: for a game with no speed on screen, look first for a clip filmed for speed (a timed run, lamp posts of known spacing) before stepping frames; the standstill scan itself works and is cheap.
+- Check: none passed; set aside after two tries. Evidence: production/research/lane/measurements/gtavi-driving-builder-2026-11-21.md

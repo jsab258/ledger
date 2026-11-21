@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-21 10:50 (the hourly run)
+**Started:** 2026-11-21 11:33 (the hourly run)
 
 **Row due:** by 12:23 (last row 11:23; page read 11:22: verdicts none after 2026-11-21T09:50 UTC, advisor none after 10:50 +01:00; filter verdicts after 2026-11-21T10:22 UTC, advisor after 11:22:00 +01:00)
 **Stopped:** 2026-11-21 11:31 (history past its point, 250k; allowance 83% at about the 83.6% ceiling; next: a second G5 heat sample and the return case, best found in long streams during the players' study; then driving and G1-G3)
