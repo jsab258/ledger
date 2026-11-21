@@ -111,3 +111,4 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 19 Nov 05:54: the trousers' first import raised TypeError (int of None): a new garment folder needs its line in asset-budgets.json (folders and a parts entry), as Sheila's on 11 Nov.
 - 19 Nov 05:21: the trousers' boots job on Kiln main stopped at once on SetSeamlineZipper (renamed kiln_api.kiln_set_seam_zipper on 18 Nov); KILN_LEGACY_NAMES=1 runs the job unchanged.
 - 19 Nov 09:10: aaa-study joined the backup list by a size-only sweep; it holds game extracts. Read a folder before adding it.
+- 20 Nov 15:52: advisor 270's RULINGS models-line edit ('Fable: one builder per piece of work, max effort (his, 20 Nov).', trimmed to hold 4,900) refused unattended; do it in a session he starts, then rulingsCheck. (21 Nov: done since, RULINGS' models line carries it)

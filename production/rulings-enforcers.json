@@ -107,9 +107,10 @@
    "by": [
     "tools/page_read_hook.py",
     "advisor:needs-you-check",
-    "monday-audit"
+    "monday-audit",
+    "advisor:daily-backstop"
    ],
-   "note": "page (and advisor rows) read within 15 min; acks are judgement 19 Nov (advisor 241 point 6): a mid-week pick waits for Monday's order unless he writes 'now' with the hours displaced; enforced by tools/order_ledger.py's waiting list (anything new joins section 3) and the Monday audit."
+   "note": "page (and advisor rows) read within 15 min; acks are judgement 19 Nov (advisor 241 point 6): a mid-week pick waits for Monday's order unless he writes 'now' with the hours displaced; enforced by tools/order_ledger.py's waiting list (anything new joins section 3) and the Monday audit. 21 Nov (advisor 285): allowance that would go unused before a reset funds planned or waiting-list work without his 'now'; new work still waits; the advisor's daily allowance check enforces it."
   },
   {
    "line": "2 Nov, his page: \"LEDGER: Needs you\"",
@@ -298,7 +299,8 @@
    "line": "28 Oct, the camera: the street camera at",
    "by": [
     "monday-audit"
-   ]
+   ],
+   "note": "21 Nov (advisor 284, by his leave 07:40): field of view a setting 75-100, default 86; the game's settings code (waiting item 33) and the Monday audit check it."
   },
   {
    "line": "29 Oct, the day's exposure: one stop darker",

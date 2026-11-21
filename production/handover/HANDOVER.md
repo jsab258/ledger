@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-20 23:07 (the hourly run; the last session set its Stopped line at 22:52)
+**Started:** 2026-11-21 07:52 (the hourly run)
 
-**Row due:** by 00:09 (last row 23:09; page read 23:08: verdicts none after 2026-11-20T21:52 UTC; advisor 283 closed, ack 23:09; filter advisor after 23:09:00 +01:00, verdicts after 2026-11-20T22:08 UTC)
-**Stopped:** 2026-11-20 23:11 (advisor 283 closed; allowance 73% against the 73.4% ceiling, +24.6 over the line, Fable 44%; both open items his hands. No helpers or background jobs; heavy lock free.)
+**Row due:** by 06:22 (last row 05:22; page read 07:22: verdicts none after 2026-11-21T05:22 UTC; advisor none after 23:09; filter advisor after 23:09:00 +01:00, verdicts after 2026-11-21T05:22 UTC)
+**Stopped:** (running; the 07:37 run and those before it stopped at a 75% stop that had lapsed, advisor 284)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
@@ -43,11 +43,12 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 000. Advisors 273, 276, 281, 282 are DONE (both reviewed and fixed once; the studies stand; no further tries owed). Read the advisor channel first: anything new from him comes before the rest.
-00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; 70% at 22:09 against the 72.4% ceiling (hard stop 75%), +22 over the line: only his asks, at most two Sonnet helpers; if nothing of his is open and everything below waits, write the handover and stop rather than idle.
+00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
+0d. NOW (advisor 285, his '1' 07:44): the PC measuring block started 21 Nov: GTA VI's footage pass first (lane FOOTAGE-MEASURING.md, story missions allowed, no spoiler to him), then the feel block (FEEL-MEASUREMENT-METHOD-2026-11-20.md), then car chases (advisor 286: five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, against the Hook and docks, about 3 h; after GTA VI, before the feel block), then MEASUREMENTS-NEEDED's extra rows; the Marvelous export when he answers its box. Rows: game and verb, when each game's numbers land, weekly points per measuring hour (measured).
 0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20, close it and the four licence items with decisions.
 0a. His rulings tonight (advisor 277): after the Marvelous export, Kiln, hair and the crowd pause until the browser evening holds; Kiln v1's Monday goal withdrawn. Next week: the export, the walkthrough measuring, browser-game work. Steps below that serve Kiln wait unless the order says otherwise.
 0b. Tonight's packaged walk proves the tester guard and the menu fix (try 1 of 2; production/audits/night-walk-2026-11-20-diagnosis.md): read its report in the morning.
-0c. Fable: one builder at a time, max effort (advisor 266); none before the one-shot's end row (advisor 267).
+0c. Fable: one builder at a time, max effort (advisor 266).
 1. Ron's seated hem cover try 2 of 2 (Fable legs lane), this morning's FAIL film its acceptance view: paused with Kiln unless the order says otherwise.
 2. Fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md): paused with Kiln.
 3. Advisors 252/259: the licence edits only in a session he starts; four licence items open (presentmon, kiln-front-end, font-pick, dinov3).
@@ -56,7 +57,6 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 20 Nov 16:53: Steam's appreviews address is retired (redirects); use IUserReviewsService/GetAppReviews (NOTEBOOK.md).
-- 20 Nov 15:52: advisor 270's RULINGS models-line edit ('Fable: one builder per piece of work, max effort (his, 20 Nov).', trimmed to hold 4,900) refused unattended; do it in a session he starts, then rulingsCheck.
 - 19 Nov 18:12: CLAUDE.md, RULINGS and page-check edits for advisor 252 refused by the unattended run's safety check (do not retry unattended).
 
 ## Kept as they are
