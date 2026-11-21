@@ -87,5 +87,14 @@
    "basis": "pass or fail on the ICO's guidance and Article 50 (run 3)",
    "closed_by": "cloud privacy check, 21 Nov"
   }
+ },
+ "d": {
+  "RT-14": {
+   "status": "MEASURED",
+   "standard": "On the labelled set typed-talk/RT14-SET-2026-11-21.jsonl (300 lines, period, modern, terse and misspelt, 66 hard), the reader's act matches the label or an allowed alternative on at least 95% of lines and 90% of hard lines; every amount read exactly; every offer, threat, promise and lie enters the hearer's memory.",
+   "standard_source": "typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28",
+   "basis": "bar set just under measured labeller agreement (run 3)",
+   "closed_by": "labelled set built and checked 21 Nov; run on the reader when built"
+  }
  }
 }

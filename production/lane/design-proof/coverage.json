@@ -5086,19 +5086,20 @@
    "group": "Red team 1 (real gaps)",
    "felt": true,
    "defined_in": "DEFINITIONS-2026-11-21 §RT-14",
-   "standard": "On a hand-labelled set of typed lines, the reading agrees with the label on at least the agreed share; amounts read exactly; every offer, threat, promise and lie enters the hearer's memory.",
+   "standard": "On the labelled set typed-talk/RT14-SET-2026-11-21.jsonl (300 lines, period, modern, terse and misspelt, 66 hard), the reader's act matches the label or an allowed alternative on at least 95% of lines and 90% of hard lines; every amount read exactly; every offer, threat, promise and lie enters the hearer's memory.",
    "test": "A labelled set of 300 lines (period and modern phrasing) run through the reader; memory checked after each.",
-   "standard_source": "The description, sections 34 and the moat (seven slots).",
+   "standard_source": "typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28",
    "research": [],
-   "status": "UNMEASURED",
-   "basis": "defined; the agreement share is judgement; measured by a labelled test set, cloud, by Thu 26 Nov",
-   "closed_by": "the agreement share is judgement; measured by a labelled test set, cloud, by Thu 26 Nov",
+   "status": "MEASURED",
+   "basis": "bar set just under measured labeller agreement (run 3)",
+   "closed_by": "labelled set built and checked 21 Nov; run on the reader when built",
    "source": "red team 1",
    "parent": "3.6.1, 3.6.5, 3.6.2, 1.4.5",
    "run2": "defined",
    "measure_how": "a labelled test set built and run in the cloud",
    "measure_when": "cloud, by Thu 26 Nov",
-   "plan_group": "SET"
+   "plan_group": "SET",
+   "run3": "d"
   },
   {
    "id": "RT-15",
@@ -5517,9 +5518,9 @@
  ],
  "counts": {
   "rows": 341,
-  "MEASURED": 194,
+  "MEASURED": 195,
   "PENDING": 29,
-  "UNMEASURED": 47,
+  "UNMEASURED": 46,
   "UNDEFINED": 0,
   "OUT": 14,
   "OUTSIDE": 57

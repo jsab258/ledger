@@ -1,0 +1,52 @@
+{
+ "agree": 295,
+ "kappa": 0.981,
+ "hard": [
+  63,
+  65
+ ],
+ "plain": [
+  232,
+  235
+ ],
+ "amounts": [
+  28,
+  28
+ ],
+ "lies": [
+  20,
+  20
+ ],
+ "disagreements": [
+  [
+   7,
+   "anyone in?",
+   "question",
+   "small_talk"
+  ],
+  [
+   103,
+   "Oh, I'm sure he's an angel.",
+   "claim",
+   "refuse"
+  ],
+  [
+   123,
+   "Do one.",
+   "refuse",
+   "insult"
+  ],
+  [
+   167,
+   "Oh, brilliant idea, Darren. Yes, let's do exactly that.",
+   "agree",
+   "refuse"
+  ],
+  [
+   250,
+   "Where were you Tuesday night, then? The old bill will want to know.",
+   "question",
+   "threat"
+  ]
+ ]
+}
