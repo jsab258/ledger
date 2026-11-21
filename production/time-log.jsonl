@@ -1047,3 +1047,5 @@
 {"event": "stop", "at": "2026-11-21T23:48:30", "note": "156:07 pursuit ended by death: stars and icons cleared together, cash to 0 (being-seen sheet)"}
 {"event": "start", "at": "2026-11-21T23:53:14", "task": "measuring: G3 a free-roam car entry (mzGG_I0LSIM 174-176 min)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:54:11", "note": "G3 first free-roam entry: carjack, door to moving about 5 s (driving sheet)"}
+{"event": "start", "at": "2026-11-21T23:58:26", "task": "measuring: G3 second entry (mzGG_I0LSIM 152:20-152:56)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:58:43", "note": "152:20-152:55 not an entry (a boot interaction); noted in the driving sheet"}
