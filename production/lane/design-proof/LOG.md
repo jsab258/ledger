@@ -52,3 +52,5 @@ Next run starts here:
 3. When the PC measuring and the story measure report: update statuses row by row.
 4. Red team 3 (Sun 29 Nov): rerun scripts/rt2_build.py adapted (fold in design pass 3, ten new planted parts not in planted.json or planted-2.json, refer to sections by name), the improved briefs in redteam/BRIEFS.md (round 2 change), two fresh Opus helpers, triage as triage-v2/v3. Red team 4 the next day if 3 is clean.
 5. Point for his ruling carried by the advisor: AX-03's field of view.
+
+Fit check of 21 Nov: 34 pairs (13 fit, 5 do not fit, 14 cannot tell yet, 1 gap, 1 contradiction), 10 new number gaps, 61 players' questions (35 answered, 16 gaps, 10 fit problems), 4 scope questions; its gaps and misfits are to be added to the coverage map by the next design proof run, and the fit check and the players' questions run again before red team 3.
