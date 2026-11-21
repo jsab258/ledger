@@ -181,7 +181,7 @@ Method: the stars row alone (x 1600-1900, y 22-67 of the 1080p frame) drawn twic
 - Corrections to the passes above: the "28 s out of sight" at 13:56-14:30 and "three white from 15:00" were misreads of the flash at coarse steps; there was no pursuit before the heat in this stretch.
 - G5 counts now: re-identification on return seen twice. Return from heat here resumed pursuit at the same level (four to four, no star added); in iWrYrsVXTS0 return from Visual Lost (not heat) added a star. So: seen again ends heat at once; whether it raises a star depends on the state or the offence, two samples, unsettled. Heat's length: about 50 s here (ended by being seen), at least about 6 min in LGU3b6jXhjI (censored).
 
-## G5, two more returns: mzGG_I0LSIM, a free-roam live stream (published 2026-11-19 15:55 Pacific, after release, 3:19:04, uncut by its own frames over the stretch read; read 21 Nov 2026 about 23:25-23:35 Swiss by the clock)
+## G5, two more returns: mzGG_I0LSIM, a free-roam live stream (published 2026-11-19 15:55 Pacific, after release, 3:19:04, uncut by its own frames over the stretch read; read 21 Nov 2026 about 23:17-23:25 Swiss by the clock)
 Method: the stars row (x 1640-1920, y 0-90 of the 1080p frame), 10 s steps over 148:00-162:00, then 1 s steps (each at the half second) over 155:20-155:50 and 160:20-161:05; read by eye. A pixel measure of each star slot was tried first and discarded: the sky behind the slots outweighs the stars.
 - 154:30-155:28: the star row appears (hollow outlines, then three grey of five slots).
 - 155:29-155:36: three grey stars (unseen); 155:37: three white (seen again); three white held to at least 155:49. Return added no star.

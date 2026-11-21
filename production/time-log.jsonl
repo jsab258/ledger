@@ -1035,3 +1035,5 @@
 {"event": "stop", "at": "2026-11-21T23:11:18", "note": "leads dated; mzGG_I0LSIM scanned: night 157-193 min, possible wanted spells 33-51, 145, 155 min (STATUS.md)"}
 {"event": "start", "at": "2026-11-21T23:15:28", "task": "measuring: G5 does returning into sight add a star (mzGG_I0LSIM 33-51 min)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:22:38", "note": "G5: two more return samples on mzGG_I0LSIM, no star added; four in all (being-seen sheet, STATUS.md)"}
+{"event": "start", "at": "2026-11-21T23:26:35", "task": "measuring: G2 no street lamps, headlamps only (mzGG_I0LSIM 170-185 min)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:27:30", "note": "G2: third both-lamps sample (2-3 car lengths); no lamps-out drive in the stream, none case still set aside (g-rows sheet)"}

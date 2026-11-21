@@ -101,6 +101,15 @@ Second no-lamps search (21:13): UO8J6pzedyY (lamp settings, published 2026-11-19
 
 Third no-lamps search (21 Nov 21:30 Swiss): a web search for a night chase on an unlit road returned only full-game walkthroughs (YDNs_sPEcJc, ARwju5Gyk64, 9DFDdPQjraU, HGTNP_tOfIQ and others), none marked at a lamps-out or unlit stretch; scrubbing hours of footage does not fit the room under the ceiling. The no-lamps case is SET ASIDE until a timestamped clip turns up (a chapter list or a viewer's note naming a dark-road chase or a lamps-off stealth drive). G2 stands at two of three cases measured.
 
+Both lamps, third sample, and the stream's dark stretch (read 21 Nov 2026 about 23:28-23:32 Swiss by the clock): mzGG_I0LSIM (free-roam live stream, published 2026-11-19 15:55 Pacific, after release, 3:19:04), sheet 170-189 min at 1 min, four frames at 178:40-180:30 full size.
+
+| Case | Clip, time | Lit road ahead | Seen beyond the pool |
+|---|---|---|---|
+| Both lamps, pickup on an unlit gravel track | mzGG_I0LSIM 172:00 | bright pool about 2-3 car lengths | the track's edge faintly to about 5 |
+| Both lamps, pickup on an unlit two-lane road, lamp posts far ahead | mzGG_I0LSIM 176:00-177:00 | about 2-3 car lengths | the road by the far posts' glow, not the lamps |
+
+Not a no-lamps case: at 178-181 min the pickup is parked on rocks and the player is on foot (a phone menu at 178:40, the cab's own light at 180:00). On foot in the unlit hills (174, 182-185 min) the ground and a figure read a few metres round the player by the sky alone, with the town's lights far below; that is the ambient level a lamps-out car would drive in (a proxy, not the case). The none case stays set aside. Both lamps now three samples, all 2-3 car lengths bright.
+
 ## G7 night row, release-day sample (read 21 Nov 2026 about 21:32-21:35 Swiss)
 
 Clip m_2RP_EIHM8 ("1 HOUR of GTA 6 First-Person Gameplay in 4K", published 2026-11-20 04:42 Pacific, after release, 3648 s; an edited free-roam reel, not one continuous take). A brightness scan every 240 s found the night stretch at about 2160-2540 s (mean luma 18-37 against 56-113 by day); a frame sheet at 60 s steps shows a porch at night, a night highway on a motorbike, then downtown streets. Counted by eye on frames drawn at 1000 px from the 1080 stream: at 2520 s a wide downtown avenue at night holds about 2-3 figures on the left pavement and 0 on the right (soft at that size: unverified count, plus or minus 1); at 2490 s one person sits in a doorway on a dark side pavement, no one else in view. The clip cuts to day at about 2535 s. This agrees with the first pass's night row (pavements 3-8 at the busiest, quiet streets 0, night like day or thinner): G7's night row PARTLY CONFIRMED on a release-day clip, one downtown view only; a continuous night walk after release would settle it.
