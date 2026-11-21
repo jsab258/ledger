@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-21 21:41 (the hourly run)
 
-**Row due:** by 22:39 (last row 21:39; page read 21:28: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 20:26:00 +01:00; last ack 296 at 20:26)
+**Row due:** by 23:46 (last row 22:46; page read 22:50: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:30:00 +01:00; last ack 302 at 22:45)
 **Uncommitted:** none.
-**Stopped:** 2026-11-21 21:40 (the 21:27 run: G2 no-lamps set aside, G7 night row partly confirmed on a release-day reel, two pushes; stopped lean, 90% against ceiling 92%)
+**Stopped:** 2026-11-21 22:56 (the 21:41 run: advisors 297-302 done, all eleven sheets reconciled, the block repriced with depth; stopped lean at 91% against ceiling 93%, next run near)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -34,13 +34,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 21 Nov 20:22-21:14: G7 first pass, beach; G2 one and both lamps confirmed.
-- 21 Nov 21:27-21:40: G2 no-lamps SET ASIDE (third search: only full-game walkthroughs, no marked unlit stretch); G7 night row partly confirmed on m_2RP_EIHM8 (release-day reel; night found by a brightness scan). Pushed; row 21:39.
-- 21 Nov 22:00: advisor 297 done (tools/research_rules_check.py; seven sheets owe Built on: next small piece).
-- 21 Nov 17:46: advisor 295 done. The lane's two corrected feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (the guard refused a commit from here; do not retry).
+- 21 Nov 21:41-22:55: advisors 297-302 done and acknowledged: research_rules_check in ci (all eleven sheets reconciled, owed list empty); the prototype-play item off his page and the order (page check refuses such asks until production/lane/one-shot/REPORT-*.md exists); live voices and six preparation items in RULINGS (at its 4,900 cap); voice items 39-40 on the waiting list; STATUS.md: solid rule, none solid today, about 141 h (134 to go, near 11 Dec), one-stream leads. Space check 22:56: GO (C 45 GB, F 30 GB).
+- Corrected lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (do not retry the commit).
 
 ## In flight
-- Nothing runs; no helpers; heavy lock clear. Browser pane: UO8J6pzedyY with a frame sheet over it (reload clears it).
+- Nothing runs; no helpers; heavy lock clear. Browser pane closed.
 - Finding clips: WebSearch with allowed_domains youtube.com, then fetch('/watch?v=ID') from a youtube tab and read title, datePublished, duration for several ids at once.
 - Frame sheets: seek, wait until not seeking and readyState 2 (up to 8 s), draw into a fixed div, zoom the screenshot (viewport 1024 shown at 800: a 480 px canvas reads at 375); step 1 s or finer for blinking HUD. Check each clip's datePublished (release 19 Nov). YouTube search pages draw nothing while the pane is hidden; watch pages work: find ids by WebSearch.
 
@@ -48,9 +46,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as footage allows; G5 settled 21 Nov 16:26 on 4Sj3c8sMO-Y by a 1 s frame sheet (one grey 93 s, four grey flashing 50 s, four red heat 50 s, seen: four white, no star added; the earlier 'three white' was a flash misread). Open: whether return adds a star (one sample each way).
-0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G7's continuous post-release night walk (partly confirmed 21:35; eiSklleD708, 909Gxmye7n8, vRRqGNTIwtI are pre-release; a brightness scan finds night stretches in long reels cheaply), G5 whether return adds a star (one sample each way), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
-- Allowance: 90% at 21:39 against a ceiling of 92%; spend since 21:27 US$1.60; no helpers. Log every step (timelog.py).
+0e. Being seen: counts and open rows in its sheet; G5 return-adds-a-star unsettled (one sample each way).
+0g. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count for the design gate; each piece now aims at five uncut, dated samples, and the cheaper route comes first: check the one-stream leads in STATUS.md (dates, cuts, spoilers) and use one uncut stream for several rows at once; Monday's frame-reading trial before more hours. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G7's continuous post-release night walk (partly confirmed 21:35; eiSklleD708, 909Gxmye7n8, vRRqGNTIwtI are pre-release; a brightness scan finds night stretches in long reels cheaply), G5 whether return adds a star (one sample each way), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
+- Allowance: 91% at 22:46 against a ceiling of 93%; spend since 21:41 US$9.54; one Sonnet extractor (finished). Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.

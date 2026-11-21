@@ -36,6 +36,7 @@ Rate used (estimate, from today's logs): a sample read to the solid rule costs a
 - Finish (estimate, none set before): at about 7 measuring hours a day, about 134 hours is about 19 working days, near 11 Dec.
 - Cheaper routes, to test before more hours go in: Monday's frame-reading trial (Sonnet reading, Opus spot checks); one uncut clip serving several studies at once (a launch stream gives being seen, car entry, chases and first hours together).
 - Reprice again after the feel block's first game and after Monday's trial.
+- Leads for the one-stream route (web search 21 Nov 2026, titles only; publish dates, cuts and spoiler risk unchecked; check each before use): r38SUFPeuew (a blind no-commentary playthrough said to keep every death and retry, story: spoiler screen needed), p9nm8JoKIjw (a live gameplay stream), the channel UC9gFXHBRrVx8UTpkIn89PeA (long-form no-commentary PS5 livestreams), mzGG_I0LSIM (free roam and a military base, said spoiler-free), n9A0lM-f-aQ (free roam, city traffic). One uncut stream could serve being seen (G5 return, S3, S7), car entry (G3), chases and first hours at once.
 
 ## By aspect and game
 | Aspect | Games | Planned h | Logged h | State | The one open question |

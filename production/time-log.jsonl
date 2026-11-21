@@ -1029,3 +1029,5 @@
 {"event": "stop", "at": "2026-11-21T22:15:00", "note": ""}
 {"event": "start", "at": "2026-11-21T22:35:00", "task": "0d measuring: advisor 302 depth reprice (extractor helper, Sonnet; solid rule applied, open items priced)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T22:41:00", "note": ""}
+{"event": "start", "at": "2026-11-21T22:45:00", "task": "0d measuring: last two Built on sections, space check, one-stream leads, handover", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T22:56:00", "note": ""}
