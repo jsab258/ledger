@@ -75,14 +75,23 @@ The same uploader and method in Portsmouth, a naval port, winter or early spring
 - Q5 (4:30): people at the rail standing side-on, leaning on it or with hands in pockets, spaced a metre or more apart.
 - Q7 light: low winter sun, long shadows, warm light on brick, a pale washed sky; dry ground.
 
-## First look, seven clips (14:27-14:46 by the clock, 87 frames, about 0.3 PC h)
+### Clip 8: DaveSpencer32, "HULL BUSES APRIL 1990", https://www.youtube.com/watch?v=v1FxqrtECw8 (2:33; read 21 Nov 2026 about 14:50 Swiss)
+Buses at Hull's station arcade and a main road, April 1990 as titled (unverified). 8 frames, 0:10 then every 25 s, two closer crops.
+- Q1 and Q5 (0:10-1:02): a bus queue under a heavy stone arcade of round arches beside the station: 10-14 people standing, loosely spaced, a metre or so apart, facing the road; most still, a few stepping out to look for the bus; hands in pockets.
+- Q3 (crops at 0:38, 1:02): dark coats and jackets the majority (navy, brown, black), two pale raincoats or light jackets, one person in pale trousers and white trainers; bare heads, one woman with a shoulder bag; nobody in bright colour in this overcast April queue.
+- Q2 (2:20): a main road with a pale saloon and a dark saloon queued at lights, a coach behind; buses in cream and blue and in green and cream; a no-entry sign on its post at the arcade end.
+- Q4 (1:50): a long four-storey 1960s office-and-shop block in pale panels with a continuous ground-floor shop parade under a flat canopy; a small dark cafe-type unit at the corner with a handful of people outside.
+- Q7: overcast, damp-looking pavement, the stone arcade soot-dark and streaked; litter none seen at this size.
+- Q6: no cigarette made out in either crop (resolution too low for a count).
+
+## First look, eight clips (14:27-14:55 by the clock, 101 frames, about 0.5 PC h)
 Clips 6 and 7 added daytime people: spring clothes light and varied (shirt-sleeves, bright tops, pale trousers), winter coats dark, zipped colour-block jackets present; parked cars nose to tail, 4-5 in about 20 m of shopping-street kerb; small groups of 8-9 at crossings and stops. Q6 smoking still unanswered (too small to read in every clip).
 What the footage gives LEDGER now, as presence, not rates:
 - Night streets (clips 1, 3): the lit shop window is the brightest thing on any night street, spilling white light 2-3 m onto the pavement; beyond it near-black; mixed white and orange lamp heads; upper floors dark above the fascias. Night crowds dress in dark masses: long and mid coats in black, navy, brown; a few pale anoraks catch the shop light.
 - The docks (clip 4): white tubular railings on every quay edge; black timber lock gates slimed green to the tide line; dark brick offices and warehouses with names painted straight on the brick in white capitals; narrow warehouse lanes with a parked trailer and a forklift in the road and nearly nobody on foot.
 - Shopfronts (clips 2, 5): dark fascias with white lettering; empty units with cards in bare windows and loose cardboard behind; soot-dark stone beside cream stucco streaked under the sills; guard rails at junctions; buses in fleet liveries (green and cream, cream and red).
 - Overcast days read near-monochrome (clips 1, 4).
-Not answered yet: Q1's daytime counts per frame, Q3 per-person clothing tallies, Q5 stance by day and Q6 smoking. None of the five clips walks a busy daytime shopping street with people close to the lens; the frames read were 25 s to 6 min apart, far wider than the 10 s asked. Leads for the next session, not yet read: "HULL BUSES APRIL 1990" (DaveSpencer32, v1FxqrtECw8, the method of clips 6-7), the same uploader's other 1989-90 towns, "Southampton 1993 Ocean Village, Bargate..." (Quagmi, 14:43, three years late; a check only). For Q6 smoking, closer filming is needed: regional news vox pops of 1989-90 (people framed chest-up) are the likeliest source.
+Not answered yet: Q1's daytime counts per frame, Q3 per-person clothing tallies, Q5 stance by day and Q6 smoking. None of the five clips walks a busy daytime shopping street with people close to the lens; the frames read were 25 s to 6 min apart, far wider than the 10 s asked. Leads for the next session, not yet read: "HULL BUSES APRIL 1990" (DaveSpencer32, v1FxqrtECw8, the method of clips 6-7), the same uploader's other 1989-90 towns, "Southampton 1993 Ocean Village, Bargate..." (Quagmi, 14:43, three years late; a check only). Clip 8 (Hull buses, April 1990) since read, above. A further lead, sampled at 4 frames only (1:00-8:00, about 14:54 Swiss): Media 19, "Sunderland: The Jewel in the Cap - Part Two (1990/91)", https://www.youtube.com/watch?v=jjwFr4yaTjM (19:01), a documentary with burned-in subtitles: a night illuminations switch-on with a councillor at a striped kiosk, close interviews, a shipyard-edge wasteland with terraces on the skyline; close framing, so the likeliest Q5-Q6 source found, not yet read. For Q6 smoking, closer filming is needed: regional news vox pops of 1989-90 (people framed chest-up) are the likeliest source.
 
 ## Not reached or not readable
 
