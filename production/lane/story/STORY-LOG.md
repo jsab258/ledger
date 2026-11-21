@@ -441,6 +441,8 @@ Reader check (21 November, 07:35 to 07:55): the fourth reader as briefed was not
 
 Aspect bars of 21 Nov (ASPECT-BARS-2026-11-21.md): story v3 is scored per aspect against the best game for that aspect, as well as overall against the best game.
 
+GTA VI added as a story reference (see GTAVI-STORY-REFERENCE-2026-11-21.md); story v3 measures against nine shipped games, and against GTA VI's mark if it is the higher bar.
+
 ## Story v3 (from 21 November, 09:57): the brief of eleven ideas
 
 The brief is v3/BRIEF-V3-2026-11-21.md; read it first. Work lives in v3/.
