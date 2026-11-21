@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-21 23:07 (the hourly run)
 
-**Row due:** by 23:46 (last row 22:46; page read 22:50: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:30:00 +01:00; last ack 302 at 22:45)
+**Row due:** by 00:53 (last row 23:53; page read 00:02: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
 **Uncommitted:** none.
-**Stopped:** 2026-11-21 22:56 (the 21:41 run: advisors 297-302 done, all eleven sheets reconciled, the block repriced with depth; stopped lean at 91% against ceiling 93%, next run near)
+**Stopped:** 2026-11-22 00:17 (the 23:07 run: the one-stream route worked on mzGG_I0LSIM; G5, S7, G2, G3 samples added; stopped near the history point, allowance 91% unmoved; next run takes the 0g list)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -32,23 +32,22 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Measuring block in every row (advisors 292, 295):** read from measurements/STATUS.md (per aspect and game: planned, logged, state, open question); weekly points per measured hour, expected finish (estimate marked). Mafia is never a reference.
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
-
 ## Done today
-- 21 Nov 21:41-22:55: advisors 297-302 done and acknowledged: research_rules_check in ci (all eleven sheets reconciled, owed list empty); the prototype-play item off his page and the order (page check refuses such asks until production/lane/one-shot/REPORT-*.md exists); live voices and six preparation items in RULINGS (at its 4,900 cap); voice items 39-40 on the waiting list; STATUS.md: solid rule, none solid today, about 141 h (134 to go, near 11 Dec), one-stream leads. Space check 22:56: GO (C 45 GB, F 30 GB).
+- 21 Nov 23:07-22 Nov 00:17 (this run): advisor 302's cheaper route tried on one uncut launch stream, mzGG_I0LSIM (3 h 19 min free roam, published 19 Nov). Gave: G5 two more returns (no star added; four samples, three none); S7 a fourth report delay (about 24 s); G2 a third both-lamps sample (no lamps-out drive in it); a pursuit ended by death (stars, icons, cash cleared together); G3 two entries timed (carjack door to moving about 5 s; parked car door to seated 1.5-2 s). n9A0lM-f-aQ is edited (sponsor insert): G7 day counts leads only. Port-town Q6: the "Calendar 1990" playlist is a wall-calendar slideshow (dropped); a research-reader found no free, close 1988-92 archive footage (notes port-towns-q6-leads-2026-11-22.md). Rows 23:16, 23:53. Ten pushes, checks 110/110.
+
 - Corrected lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (do not retry the commit).
 
 ## In flight
-- Nothing runs; no helpers; heavy lock clear. Browser pane closed.
-- Finding clips: WebSearch with allowed_domains youtube.com, then fetch('/watch?v=ID') from a youtube tab and read title, datePublished, duration for several ids at once.
-- Frame sheets: seek, wait until not seeking and readyState 2 (up to 8 s), draw into a fixed div, zoom the screenshot (viewport 1024 shown at 800: a 480 px canvas reads at 375); step 1 s or finer for blinking HUD. Check each clip's datePublished (release 19 Nov). YouTube search pages draw nothing while the pane is hidden; watch pages work: find ids by WebSearch.
+- Nothing runs; no helpers (one research-reader finished 00:03); heavy lock clear. Browser pane closed.
+- Finding clips: WebSearch (allowed_domains youtube.com), then fetch('/watch?v=ID') in a youtube tab for title, datePublished, duration (release 19 Nov); playlists list the same way. Search pages draw nothing while the pane is hidden.
+- Frame sheets: seek, wait until not seeking and readyState 2, draw into a fixed canvas, one zoom per sheet. Night by a brightness scan every 2 min; stars row x 1640-1920, y 0-90 of 1080p, by eye at 1 s (pixel measures read the sky); car entries by full frames at 30 s, 120 px.
 
 ## Next, in order
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0e. Being seen: counts and open rows in its sheet; G5 return-adds-a-star unsettled (one sample each way).
-0g. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count for the design gate; each piece now aims at five uncut, dated samples, and the cheaper route comes first: check the one-stream leads in STATUS.md (dates, cuts, spoilers) and use one uncut stream for several rows at once; Monday's frame-reading trial before more hours. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G7's continuous post-release night walk (partly confirmed 21:35; eiSklleD708, 909Gxmye7n8, vRRqGNTIwtI are pre-release; a brightness scan finds night stretches in long reels cheaply), G5 whether return adds a star (one sample each way), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
-- Allowance: 91% at 22:46 against a ceiling of 93%; spend since 21:41 US$9.54; one Sonnet extractor (finished). Log every step (timelog.py).
+0g. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). NEXT, smallest first: G3 more entries in mzGG (candidates 113:00 and 120:30 at 1 s, then 0.5 s; 0-95 min unread); G5 a fifth return (other wanted spells in mzGG: its HUD corner at 10 s over 0-150 min); r38SUFPeuew (20 Nov, 1 h 41 min, blind, every death kept: S3, S7, G5 and first hours; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 'Newcastle Past and Present: Shops and Shopping' (yfanefa 27294, 1990) if it plays free; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
+- Allowance: 91% at 00:14 against a ceiling of 93.4% (unmoved this run); spend since 23:07 US$7.28; one Sonnet research-reader (finished). Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.
@@ -57,7 +56,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 21 Nov 16:25: a pixel count read HUD icons as stars; 2 s steps alias the blink. 20:27: YouTube search blank in a hidden pane.
+- 21-22 Nov this run: a per-slot pixel measure of the stars read the sky (read by eye instead); an 'uncut' description was false (n9A0lM-f-aQ); two windows guessed as car entries were not (152:40 a boot, 122:00 already driving); the safety check refused bash lines mixing unset or powershell -c with ci-checks: run ci-checks alone with env -u, Get-Date in its own PowerShell call; read times were written ahead of the clock twice (corrected): read Get-Date before stamping.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
