@@ -211,6 +211,8 @@ real_table() {
     catalogue-selftest    "$REPO"                 "$PY tools/catalogue.py --selftest" \
     outside-only          "$REPO"                 "$PY tools/outside_only_check.py" \
     outside-only-selftest "$REPO"                 "$PY tools/outside_only_check.py --selftest" \
+    research-rules        "$REPO"                 "$PY tools/research_rules_check.py" \
+    research-rules-selftest "$REPO"               "$PY tools/research_rules_check.py --selftest" \
     branch-check          "$REPO"                 "$PY tools/branch_check.py" \
     branch-check-selftest "$REPO"                 "$PY tools/branch_check.py --selftest" \
     homes                 "$REPO"                 "$PY tools/homes_check.py" \

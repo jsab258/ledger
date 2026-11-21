@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-21 21:00 (the hourly run)
+**Started:** 2026-11-21 21:41 (the hourly run)
 
-**Row due:** by 22:12 (last row 21:12; page read 21:01: nothing new; filter verdicts after 2026-11-21T20:00 UTC, advisor after 20:26:00 +01:00; last ack 296 at 20:26)
+**Row due:** by 22:39 (last row 21:39; page read 21:28: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 20:26:00 +01:00; last ack 296 at 20:26)
 **Uncommitted:** none.
-**Stopped:** 2026-11-21 21:14 (the 21:00 run: G2 both lamps and G7 beach confirmed on release-day clips, pushed; stopped lean, pace +22 over the line, 89% against ceiling 91.6%)
+**Stopped:** 2026-11-21 21:40 (the 21:27 run: G2 no-lamps set aside, G7 night row partly confirmed on a release-day reel, two pushes; stopped lean, 90% against ceiling 92%)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -34,8 +34,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 21 Nov 20:22-20:55: advisor 296 (room in small pieces): G7 crowd count (café strip about 10, pavements 3-8, stops 0-3, beach 10-18 from a pre-release candidate, quiet streets 0), G2 one and both lamps; port-town Q6 leads listed (measurements/gtavi-g-rows-builder-2026-11-21.md, STATUS.md). Three pushes, checks green.
-- 21 Nov 21:00-21:14: G2 both lamps and G7 beach confirmed on release-day clips; night walks and lamps-out clips only pre-release or unusable (builder sheet). Pushed; row 21:12.
+- 21 Nov 20:22-21:14: G7 first pass, beach; G2 one and both lamps confirmed.
+- 21 Nov 21:27-21:40: G2 no-lamps SET ASIDE (third search: only full-game walkthroughs, no marked unlit stretch); G7 night row partly confirmed on m_2RP_EIHM8 (release-day reel; night found by a brightness scan). Pushed; row 21:39.
+- 21 Nov 22:00: advisor 297 done (tools/research_rules_check.py; seven sheets owe Built on: next small piece).
 - 21 Nov 17:46: advisor 295 done. The lane's two corrected feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (the guard refused a commit from here; do not retry).
 
 ## In flight
@@ -48,8 +49,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
 0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as footage allows; G5 settled 21 Nov 16:26 on 4Sj3c8sMO-Y by a 1 s frame sheet (one grey 93 s, four grey flashing 50 s, four red heat 50 s, seen: four white, no star added; the earlier 'three white' was a flash misread). Open: whether return adds a star (one sample each way).
-0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G2's no-lamps case (two searches found none; try a chase or stealth mission clip after release, or set aside), G7's post-release night walk (909Gxmye7n8, vRRqGNTIwtI are pre-release candidates), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
-- Allowance: 89% at 21:12 against a ceiling of 91.6%; spend since 21:00 about US$2.5; no helpers. Log every step (timelog.py).
+0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G7's continuous post-release night walk (partly confirmed 21:35; eiSklleD708, 909Gxmye7n8, vRRqGNTIwtI are pre-release; a brightness scan finds night stretches in long reels cheaply), G5 whether return adds a star (one sample each way), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
+- Allowance: 90% at 21:39 against a ceiling of 92%; spend since 21:27 US$1.60; no helpers. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.

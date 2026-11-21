@@ -105,7 +105,7 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 
 ## 14. Session running and records
 
-**Works.** Order items in a ledger with statuses, checked on push. One permanent owner page from one data file, taps read before asking. Cap what is read most; move, never drop. An hourly gate takes over after a stop; stop work ends 10 minutes before a start. Price cache writes by cause from logs. Compare models blind on recent items. Distil skills by writer and reviewer, the writer resumed to fix. Helper-written content gets a fresh reviewer for what each person could know. Desktop tools by script APIs; one permitted menu item by accessibility invoke, logged.
+**Works.** Order items in a ledger with statuses, checked on push. One permanent owner page from one data file, taps read before asking. Checks key on rulings' wording. Cap what is read most; move, never drop. An hourly gate takes over after a stop; stop work ends 10 minutes before a start. Price cache writes by cause from logs. Compare models blind on recent items. Distil skills by writer and reviewer, the writer resumed to fix. Helper-written content gets a fresh reviewer for what each person could know. Desktop tools by script APIs; one permitted menu item by accessibility invoke, logged.
 **Cost.** 0.2 to 1 h a tool.
 **Failed.** Chained scheduled runs; a gate counting its own runs; word caps hiding entry counts; rulings cited from memory.
 **Links.** [his-page](.claude/skills/his-page/SKILL.md); NB 25 Oct (order ledger), 30 Oct (accessibility invoke), 2 Nov (standing page), 4 to 9 Nov (lean start; take-over; caps; cache money; skills distilled; blind comparison; GUI tool unattended).
