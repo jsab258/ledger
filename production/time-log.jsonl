@@ -971,3 +971,5 @@
 {"event": "stop", "at": "2026-11-21T13:40:00", "note": ""}
 {"event": "start", "at": "2026-11-21T13:47:00", "task": "35.4 conversation filming, first look (KCD2, RDR2)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T13:55:00", "note": ""}
+{"event": "start", "at": "2026-11-21T14:28:00", "task": "n16-11 item 35 study 3 first look (port towns footage)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T14:50:00", "note": ""}

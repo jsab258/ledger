@@ -2895,3 +2895,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: cuts a minute and mean shot length per conversation, with the sizes counted; checked against the earlier study's figure.
 - Failed and why: 2 s steps at 131 px were unreadable; the earlier study's 3.3 s mean shot did not reproduce in one indoor talk (6 s), so more samples are needed before a target.
 - Evidence: production/research/lane/measurements/conversation-filming-sheet-2026-11-21.md
+
+### Archive street footage of one period, first look (21 Nov 2026)
+- Made: readings of five amateur clips of coastal and port towns from one period (night streets, a dock edge, shopfronts, traffic), as presence notes beside written questions. Cost: about 0.4 h session time, no helpers.
+- Method: questions first; each clip paused and stepped by page script in the built-in browser, one cropped frame per step read by eye; the year taken from a camcorder date stamp where burned in, else marked as the uploader's statement.
+- Tools: the built-in browser, its page script and cropped captures.
+- Target and check: per question, what the frames show, with clip and time mark; a final list of what is still unanswered.
+- Failed and why: holiday tapes, edited visits and building surveys hold few people close to the lens, so crowd counts, clothing tallies, stance and smoking stayed unanswered; steps of 25 s to 6 min are far wider than the 10 s asked; search pages draw nothing while the browser pane is hidden until a screenshot is taken. Next: street-level filming made for another subject (buses, markets), where people pass close by chance.
+- Evidence: production/research/lane/measurements/port-towns-archive-sheet-2026-11-21.md

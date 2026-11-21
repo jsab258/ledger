@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-21 13:10 (the hourly run)
+**Started:** 2026-11-21 14:22 (the hourly run)
 
-**Row due:** by 14:05 (last row 13:05; page read 13:05: verdicts none after 2026-11-21T11:49 UTC, advisor none after 291 (12:15 +01:00, acknowledged 12:25); filter verdicts after 2026-11-21T12:07 UTC, advisor after 12:25:00 +01:00)
-**Stopped:** 2026-11-21 13:05 (history past its point, 333k of 250k, stopped at the end of the car-chase item; allowance 84% at the ceiling; next: the players' first-hours study, 0g)
+**Row due:** by 15:26 (last row 14:26; page read 14:24: no verdicts after 2026-11-21T12:57 UTC, no advisor after 14:00 +01:00; filter verdicts after 2026-11-21T13:24 UTC, advisor after 14:00:00 +01:00)
+**Stopped:** 2026-11-21 14:03 (history past its point, 322k of 250k, stopped at the end of study 4's first look; allowance 85% at the ceiling 85.6%; next: item 35 study 3, port-town archive)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -33,20 +33,20 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 21 Nov 12:22-13:05: advisor 291 acknowledged, joined the waiting list as item 37. Car chases measured and pushed (d734c9aa0); RECIPE.md is at its 6,000 cap, so the unit's lines went to NOTEBOOK.md. Players' study questions written (uncommitted until this stop's commit).
+- 21 Nov 13:10-14:03: item 35 study 1 done (players' first hours, nine sessions, 8119ac4e7); study 4 first look (conversation filming, four conversations); advisor 292 (measuring block in every row) and 293 (friends play the browser evening before Unreal: into RULINGS, enforcer note) acknowledged; both pushed (the second commit at 14:00).
 
 ## In flight
-- Nothing runs; heavy lock free; no helpers. Browser pane: a YouTube tab with a drawing canvas over it, harmless (reload clears it).
-- Frame-reading tricks (this session): define the sheet function after each navigate; play muted 2 s and let adverts run out before seeking; take every screenshot twice (the first is often stale); a timed-out script keeps running and draws over later sheets, so reload the page to stop it; 3 columns of 341 px fit the pane; HUD crops per game: GTA top-right 1640/1920, 0, 280x70; GTA IV 0.80, 0, 0.20x0.12; Sleeping Dogs heat is a number in a flame at the minimap's top (two crops missed it: find its y on one frame first).
+- Nothing runs; no helpers; heavy lock untouched. Browser pane: a YouTube tab with a drawing canvas over it (reload clears it).
+- Page tricks: YouTube's transcript panel ("Show transcript") appears only after a real scroll input in the hidden pane (computer scroll, then find); direct caption fetches return empty. Frames: define the sheet function after each navigate; keep the canvas under 790 px wide; launch the sheet without await and wait about 30-40 s, then zoom the screenshot; skip adverts first (.ad-showing). Five across at 158 px shows shot size; 131 px does not. Never write a "read at" time before reading the clock.
 
 ## Next, in order
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
-0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md, lean order: being seen and G4-G6, then driving and G1-G3, fists, on foot; no spoiler to him), car chases (five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, about 3 h), the four footage studies (waiting item 35, players first), the feel block, then MEASUREMENTS-NEEDED's rows. Rows: game and verb, weekly points per measuring hour.
-0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as far as footage allows; G5 has one uncut escape (Visual Lost to heat about 20 s, heat at least about 6 min) and one map frame. Still open: re-identification on return and a second heat sample, both from the launch streams in the players' study (item 35). Stars and icons: top-right 280x140 px of a 1080p frame; minimap bottom-left 360x440 from y 640.
+0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
+0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as footage allows; G5 one uncut escape and one map frame; open: re-identification on return, a second heat sample.
 0f. Car chases DONE (d734c9aa0, 19 of 20; GTA IV row 5 open).
-0g. NEXT: the players' first-hours study (item 35 study 1, about 6 PC h): questions P1-P7 written in measurements/players-first-hours-sheet-2026-11-21.md; choose three uncut first sessions per game (KCD2, RDR2, GTA VI launch streams, no story to him), then read. G3 seconds and G5's second heat sample come from the GTA VI launch streams. Then studies 2-4 of item 35, then item 37 (district about 4 PC h, street life about 3 PC h), then the feel block.
-- Allowance: at the ceiling (83% at 11:52 against 83.8%); work lean, no helpers, until the line climbs (about 0.8 point an hour).
+0g. Item 35: study 1 DONE (measurements/players-first-hours-sheet-2026-11-21.md); study 4 first look DONE (conversation-filming-sheet; more samples wanted: KCD2 free-talk entry, RDR2 one-to-one, 0.5 s steps). NEXT study 3: archive footage of British port towns 1989-90 (crowds, traffic, clothes, shopfronts, stance, smoking), about 3 PC h, questions first, browser only. Then study 2 (our prototype filmed by the same method; needs a tester run and Sonnet frame reading with Opus spot checks, so wait for room under the ceiling), then item 37 (district about 4 PC h, street life about 3 PC h), then the feel block. G3 car-entry seconds still need a free-roam clip; G5's second heat sample and re-identification still open (one lead in the players' sheet, Valkyrae 15:10, scripted).
+- Allowance: at the ceiling (85% at 13:46 against 85.6%); work lean, no helpers. Cost so far about 1-2 weekly points per measured hour. Measuring block at 13:46: about 5.1 of 146 PC h (GTA VI 3.6 of 24.5, car chases done, players done); study 4 about 0.2 h since.
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17; menu fix holds; his command-line sign-in done. Talk stages fix made 21 Nov 08:40 (try 1 of 2: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail; the bench and picture check should pass now.
