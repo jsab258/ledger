@@ -438,3 +438,10 @@ For a later run. The version to build from is STORY-BIBLE-M3.md. The next round 
 STORY-FINAL.md is M3 as one read for him, with nine changes for his ruling and the score table. MEASURE-REPORT.md is the short report.
 
 Reader check (21 November, 07:35 to 07:55): the fourth reader as briefed was not fit against players' story ranking of eight shipped games (rank correlation 0.41, 16 of 23 pairs; pass mark 0.60 and 18, set beforehand); with the brief mended once to judge as players do, 0.91 and 22 of 23 twice over, fit but not proven blind (every reader recognised every game); by it The Passenger (M3) is 6th, 7th and 7th of nine, mean 7.1 against RDR2's 9.5, all three no (READER-CHECK-2026-11-21.md).
+
+## Story v3 (from 21 November, 09:57): the brief of eleven ideas
+
+The brief is v3/BRIEF-V3-2026-11-21.md; read it first. Work lives in v3/.
+
+- 21 Nov 09:57: started (claude-fable-5-2). Brief saved and pushed.
+- 21 Nov 10:35: Phase 1 step 1 done: v3/RESEARCH.md (ideas 1 and 11) from four fresh claude-sonnet research helpers (notes with links in v3/research/). Firm on the Scheme's dates and numbers and the cab booking law; thin on the men's own voices (the fetch tool summarises; no local paper of 1989 or 1990 was opened). Owed list at the foot of RESEARCH.md.
