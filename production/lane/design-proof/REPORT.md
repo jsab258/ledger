@@ -12,10 +12,10 @@ Not complete yet. Every part is now defined; none is left undefined.
 
 What changed today:
 - The pre-mortem's guards are in the gate: "measured" means a real figure, design choices are counted apart; "material gap" is defined before red team 3; at most four red-team rounds, then anything open comes to him as scope.
-- The 22 gaps of red team 2 are defined: attacking the police, who knows Tom, how the ending is chosen, rivals' bases and men, guns, the phone and the rest.
+- Red team 2's 22 gaps are defined: attacking the police, who knows Tom, how the ending is chosen, rivals' bases, guns, the phone.
 - The Hook has a road plan in metres, built on the 48 m Quay Street: a car crosses in about 66 s, a walk takes about 5 minutes, and car chases get a 1.5 km loop round the docks (about one 90 s chase a lap).
 - The clock is written both ways, so his answer drops straight in.
-- A fresh reviewer found 30 faults; all fixed once.
+- A fresh reviewer's 30 faults: fixed once.
 
 Before the gate:
 - His clock answer (C11), by Sat 28 Nov.
