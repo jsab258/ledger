@@ -73,7 +73,16 @@ Both lamps (read 21 Nov 2026 about 20:40 Swiss): SzqxC2w8ock (lawful drive, no H
 | Both lamps, unlit two-lane road through scrub | SzqxC2w8ock 84:00 | bright pool about 2-3 car lengths, road readable to about 5 | edge lines and verge faintly to about 10 by the sky's glow; treeline against a blue-grey sky |
 | Both lamps, causeway behind a lorry | SzqxC2w8ock 76:00 | the lorry 3 car lengths ahead lit by the lamps | the road beyond lit by the lorry's own lamps |
 
-Finding (one sample each, estimate): both lamps light about twice what one does (2-3 bright, about 5 readable, against about 2); GTA VI's night sky is bright enough that road edges read far past any lamp, so losing a lamp shortens the pool but never blinds the driver.
+Both lamps, second sample (read 21 Nov 2026 about 21:01 Swiss): WgsrRHyp8iE, "night driving", published 2026-11-19 08:00 Pacific (release day), 23:57, a pickup on highways throughout; sheet every 90 s.
+
+| Case | Clip, time | Lit road ahead | Seen beyond the pool |
+|---|---|---|---|
+| Both lamps, unlit four-lane road, poles and scrub | WgsrRHyp8iE 1:00 | bright pool about 2-3 car lengths | lane lines and verge to about 10 and more by the sky's glow; far lamp posts |
+| Both lamps, unlit bend onto a slip road | WgsrRHyp8iE 2:30 | about 2 car lengths | the bend's lines readable to about 6-8 |
+
+The rest of the clip is lit highway (no lamp case). g9T1FmUCQNw checked: published 2026-11-18 08:36 Pacific (before release), another drive: set aside. Neither shows a car with lamps out.
+
+Finding (two samples, estimate): both lamps light about twice what one does (2-3 bright, about 5 readable, against about 2); GTA VI's night sky is bright enough that road edges read far past any lamp, so losing a lamp shortens the pool but never blinds the driver.
 
 Finding (one sample, estimate): a single lamp in the dark lights only about 2 car lengths; what the rider sees further comes from the town's own lights, not the lamp.
 
