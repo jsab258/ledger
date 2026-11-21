@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-21 16:22 (the hourly run)
+**Started:** 2026-11-21 17:37 (the hourly run)
 
-**Row due:** by 16:48 (last row 15:48; page read 16:09, nothing new; filter verdicts after 2026-11-21T15:09 UTC, advisor after 15:28:00 +01:00; ack 294 written 15:45)
-**Stopped:** 2026-11-21 16:16 (history 241k of 250k after G5; any next footage item would cross the point mid-item, so stopped at the item boundary)
+**Row due:** by 18:44 (last row 17:44; page read 17:39; filter verdicts after 2026-11-21T16:39 UTC, advisor after 17:40:00 +01:00; ack 295 written 17:40)
+**Stopped:** 2026-11-21 17:46 (advisor 295 done; allowance 87% against a ceiling of 88.8%, so lean: no study started; a later run resumes at 0g)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -28,12 +28,14 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Tries (RULINGS 7 Nov) over CLAUDE.md:** after two failed tries one genuinely different researched method; up to four while each closes the gap by a third with no new fault; none asks him. Helpers quote CLAUDE.md's 'third try needs his yes': correct them.
 - **Page read-back, daily by the session (19 Nov):** the nightly task is off since 12 Nov; once a day query verdicts with "at" after the last read-back, out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index` (ci's page-answers-fresh fails after 2 days).
 - **Storage and backup (advisors 196-198, 203):** writes and deletes only through retention.py and the storage map; nothing of his. Kiln's LOOP.md and reports folder joined the backup list today.
-- **Measuring block in every row (advisor 292, 21 Nov):** PC hours done against planned per block (GTA VI 24.5, car chases 3, players 6, own build 2, port towns 3, conversations 2, district 4, street life 3, feel 82, extra rows 16.5), weekly points per measured hour, expected finish at current pace (estimate marked). Done at 13:46: GTA VI about 3.6, car chases 1.0 (done), players 0.5 (done).
+- **Measuring block in every row (advisors 292, 295):** read from measurements/STATUS.md (per aspect and game: planned, logged, state, open question); weekly points per measured hour, expected finish (estimate marked). Mafia is never a reference.
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 
 ## Done today
-- 21 Nov 15:39-16:16: advisor 294 (reconcile footage with the old period research) acknowledged and done: RECONCILED tables on the port-town sheet and studies 1, 2, 10; waiting item 38 holds the owners' changes; memory saved. Study 10 reactions: KCD2 two clips, RDR2 one (still bystanders / a knot of 2-4 / Yakuza's ring of 10-12: a design choice). G5 second sample. Page read-back done. All pushed.
+- 21 Nov 15:39-16:16: advisor 294 done (RECONCILED tables; waiting item 38 holds the owners' changes); study 10 reactions; read-back; pushed.
+- 21 Nov 16:22-16:37: G5 settled by a 1 s frame sheet (see 0e); pushed.
+- 21 Nov 17:39-17:46: advisor 295: Mafia DE out of the feel block (order item 30 and the lane sheets; feel 82 to 78.7 PC h, block 146 to 142.7); measurements/STATUS.md, progress by aspect and game, now updated after EVERY study step and read by the hourly row (its figures go in the row). The lane's two feel sheets corrected in F:/LedgerTools/tmp/lane-feel-mafia-out; a commit onto lane-2026-11 from here was refused by the guard: leave them for that branch's session or a merge, do not retry.
 
 ## In flight
 - Nothing runs; no helpers; heavy lock clear. Browser pane: the GTA VI clip 4Sj3c8sMO-Y with a frame sheet over it (reload clears it).
@@ -45,7 +47,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
 0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as footage allows; G5 settled 21 Nov 16:26 on 4Sj3c8sMO-Y by a 1 s frame sheet (one grey 93 s, four grey flashing 50 s, four red heat 50 s, seen: four white, no star added; the earlier 'three white' was a flash misread). Open: whether return adds a star (one sample each way).
 0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT: item 35 study 2 (our prototype filmed by the same method, held against the sheets' figures; tester run, Sonnet frame reading, Opus spot checks) once there is room under the ceiling; then the feel block. Meanwhile, lean: study 10 spread and settling (an uncut MKIceAndFire KCD2 part with a crime in town); study 3 narrowed to Q6 smoking (chest-up 1989-90 vox pops), Q1 at 10 s, Q5 stance; G3 an uncut free-roam car entry and heat's length when it clears unseen.
-- Allowance: 86% all session (15:39 to 16:16) against a ceiling of 87.2%; work lean, no helpers. Measuring block: about 6.6 of 146 PC h (estimate).
+- Allowance: 87% at 17:44 against a ceiling of 88.8%; work lean, no helpers. Measuring block: time log 2.9, estimate 6.7 of 142.7 PC h; log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17; menu fix holds; his command-line sign-in done. Talk stages fix made 21 Nov 08:40 (try 1 of 2: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail; the bench and picture check should pass now.
@@ -54,8 +56,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 21 Nov 15:42: wrote a sheet's window as "15:42-16:05" ahead of the clock again; corrected from Get-Date before commit. Write the end only after reading the clock.
-- 21 Nov, the footage block's first passes (studies 1, 3, 4, 2, 10) were viewed before reading our own research (his correction 15:23, advisor 294); reconciled afterwards.
+- 21 Nov 16:25: a pixel count read HUD icons as stars; 2 s steps alias the blink. Read by eye at 1 s.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

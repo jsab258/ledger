@@ -997,3 +997,5 @@
 {"event": "stop", "at": "2026-11-21T16:11:00", "note": ""}
 {"event": "start", "at": "2026-11-21T16:22:00", "task": "0d GTA VI G5 settled (frame sheet)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T16:27:00", "note": ""}
+{"event": "start", "at": "2026-11-21T17:39:00", "task": "advisor 295: Mafia out of the feel block, measuring STATUS by aspect and game", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T17:46:00", "note": ""}

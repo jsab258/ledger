@@ -2921,3 +2921,5 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.1 h.
 - Failed: a pixel count on a wider crop measured two neighbouring icons, not the indicator; 20 s and 2 s steps both landed on one phase of a 2 s blink and invented a pursuit.
 - Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md, "G5 settled".
+
+- 2026-11-21 17:44, a measuring block's progress by aspect and source (advisor 295): one table per block (production/research/lane/measurements/STATUS.md), totals against planned hours, then a row per aspect and game with planned hours, logged hours, state and the one open question, updated after every step. A dropped source (Mafia DE) left every price at once: the feel block 82 to about 78.7 PC hours. Failed: the time log held about 2.9 h against the session's estimate of 6.7 (unlogged helper and early steps): log every step as it happens. A plumbing commit onto another session's branch was refused by the session's guard; corrected copies wait in F:/LedgerTools/tmp/lane-feel-mafia-out. Cost 0.2 h.
