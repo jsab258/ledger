@@ -8,15 +8,15 @@ Unreal-only work (looks, engine, performance on his PC) is outside this proof; t
 
 | Status | Rows | Meaning |
 |---|---|---|
-| MEASURED | 184 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
+| MEASURED | 186 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
 | PENDING | 30 | defined, its standard waits on a dated study |
-| UNMEASURED | 56 | defined, no reference figure behind its standard yet |
+| UNMEASURED | 54 | defined, no reference figure behind its standard yet |
 | UNDEFINED | 0 | needed, not defined (or only named) |
 | OUT | 14 | left out by his ruling or canon |
 | OUTSIDE | 57 | Unreal-only work, outside this proof |
 | all | 341 | |
 
-MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 25; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 22. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
+MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 25; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 22; bar on reference-game figures (Steam recommend rates); the panel's own calibration against real players is a separate check: 1; bar on reference-game figures (Steam recommend rates); the panel's own calibration is a separate check: 1. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
 
 ## The punished categories, and what prevents each
 
@@ -336,8 +336,8 @@ The review studies name these as punished across games. Each has a part, a stand
 | Id | Part | Status | Standard | Defined in | Reference or basis | Closed by |
 |---|---|---|---|---|---|---|
 | 7.1 | The first hour | MEASURED | ER-FIRST-01 to 04: control within 1.5 min, a verb within 3, a choice within 20; town visibly knows him by m... | ONE-SHOT-PROMPT: 4. The first hour, as staged / DESIGN §15 (restagi... | DESIGN §15; Study 2 (leads); canon targets; his ruling, canon or a pass/fail rule |  |
-| 7.2 | An evening | UNMEASURED | M1 4 of 8 on the evening run; 16 to 20 real minutes a game day | ONE-SHOT-PROMPT: 2. The tone and the bar; 40. The hour budget and t... | BUILD-ORDER M1; DESIGN §1; a felt number chosen by judgement, no reference figure be... | the panel of eight kinds of player on the built... |
-| 7.3 | A week | UNMEASURED | M1 5 of 8 on the week run | ONE-SHOT-PROMPT: 36. Act I, The Inheritance / DESIGN §16 | BUILD-ORDER; a felt number chosen by judgement, no reference figure be... | the panel of eight kinds of player on the built... |
+| 7.2 | An evening | MEASURED | At least 7 of 8 panel players recommend the evening, and the one who does not names no reason from the play... | ONE-SHOT-PROMPT: 2. The tone and the bar; 40. The hour budget and t... | PANEL-BAR-2026-11-21.md: Steam positive shares KCD2 92.9%...; bar on reference-game figures (Steam recommend rates); th... | bar set 21 Nov (run 3); read on the built proto... |
+| 7.3 | A week | MEASURED | At least 7 of 8 panel players recommend the week, the one who does not naming no reason from the top punish... | ONE-SHOT-PROMPT: 36. Act I, The Inheritance / DESIGN §16 | PANEL-BAR-2026-11-21.md (as 7.2); bar on reference-game figures (Steam recommend rates); th... | bar set 21 Nov (run 3); read on the built proto... |
 | 7.4 | Acts II and III pacing | MEASURED | Beats fire on states, never on days (DESIGN §16) | ONE-SHOT-PROMPT: 37. Act II, The Rise and the Squeeze / DESIGN §16 | DESIGN §16; pass/fail rule (a guard or correctness test; no reference... |  |
 | 7.5 | The hour budget | PENDING | DESIGN table (on foot 25%, driving 22%, talk 19%, jobs 17%, fights and chases 8%, Ledger 6%, waiting 3%) re... | ONE-SHOT-PROMPT: 40. The hour budget and the feel targets / DESIGN §1 | DESIGN §1 (judgement); his question 20:29 (advisor 257); PC measuring 23 to 28 Nov (RN-14) | PC measuring 23 to 28 Nov (hour split, ACTIVITY... |
 | 7.6 | Tension and retellable moments | UNMEASURED | ER-TENS-01: at least 12 tense moments per 30 min from at least four sources, none over half; ER-TENS-02 | ONE-SHOT-PROMPT: 2. The tone and the bar; 40. The hour budget and t... | DESIGN §3; a felt number chosen by judgement, no reference figure be... | teardown: an hour of each reference game coded ... |

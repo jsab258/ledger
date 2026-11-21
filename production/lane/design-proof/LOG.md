@@ -35,3 +35,8 @@ Next run starts here:
 3. When the PC measuring reports (from 24 Nov) and the story measure lands (by 28 Nov 12:00): update statuses row by row, then red team 3 on the measured design.
 4. Point for his ruling carried by the advisor: AX-03's field-of-view setting.
 Scripts, in order when rebuilding: classify.py, build.py, themes.py (run 1); apply_definitions.py, run2_map.py, run2_plan.py (run 2; each is safe to rerun); covmd.py last.
+
+## Run 3, 21 November 2026, from 07:35 (Opus 5.5, configured claude-opus-5-5)
+
+- Step 0: start row 2026-11-21-0735-design. Allowance 74% at 05:22 (newest row with a reading); stop line 95%.
+- Step (a) done: PANEL-BAR-2026-11-21.md. 7.2 and 7.3 MEASURED: at least 7 of 8 panel players recommend (KCD2-grade passes 89% of the time), M1 milestones 4 and 5 of 8 kept. scripts/run3_apply.py with scripts/run3_changes.json applies run 3's row changes by step (a, b, c, d, e); covmd.py after.
