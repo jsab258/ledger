@@ -1041,3 +1041,5 @@
 {"event": "stop", "at": "2026-11-21T23:33:09", "note": "G7 day: n9A0lM-f-aQ is edited (sponsor insert); four day counts as leads (g-rows sheet)"}
 {"event": "start", "at": "2026-11-21T23:37:18", "task": "measuring: G5 fifth return sample (mzGG_I0LSIM 157:30-159:00)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:38:22", "note": "158:08 fresh one-star spell, search flash; no return in window, no fifth sample (being-seen sheet)"}
+{"event": "start", "at": "2026-11-21T23:42:40", "task": "measuring: S7 report delay, the 154:30 spell's cause (mzGG_I0LSIM)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:43:45", "note": "S7 fourth sample: thrown weapon 154:09, three grey stars 154:33, about 24 s (being-seen sheet)"}
