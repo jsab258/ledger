@@ -406,28 +406,29 @@
       "2026-11-17",
       "2026-11-18",
       "2026-11-19",
-      "2026-11-20"
+      "2026-11-20",
+      "2026-11-21"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-20",
-      "line": "Morning, Friday 20 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
+      "date": "2026-11-21",
+      "line": "Morning, Saturday 21 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-20.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-19.jpg"
+          "today": "production/previews/morning-hook-day-2026-11-21.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-20.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-20.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-19.jpg"
+          "today": "production/previews/morning-reverse-day-2026-11-21.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-20.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-20.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-19.jpg"
+          "today": "production/previews/morning-night-2026-11-21.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-20.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
