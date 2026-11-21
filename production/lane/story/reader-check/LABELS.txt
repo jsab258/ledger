@@ -1,0 +1,11 @@
+Labels: K is RDR2, B is GTAV, R is G4, M is KCD2, T is SD, F is HIT, N is WDL, W is LAN
+reader 1: F, M, B, K, T, N, W, R
+reader 2: F, M, W, T, R, N, B, K
+reader 3: T, B, N, K, W, R, M, F
+reader 4: K, R, F, T, M, W, B, N
+reader 5: R, F, T, B, N, W, K, M
+reader 6: R, T, M, W, N, K, B, F
+H is The Passenger (bible M3, disguised)
+reader 7: T, B, M, N, R, K, F, W, H
+reader 8: M, F, W, B, K, T, H, R, N
+reader 9: W, R, B, H, N, K, F, T, M
