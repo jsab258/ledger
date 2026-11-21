@@ -987,3 +987,5 @@
 {"event": "stop", "at": "2026-11-21T15:43:00", "note": ""}
 {"event": "start", "at": "2026-11-21T15:44:00", "task": "n16 waiting 35/37: studies 1, 2, 10 reconciled with earlier studies (advisor 294)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T15:49:00", "note": ""}
+{"event": "start", "at": "2026-11-21T15:50:00", "task": "n16 waiting 37 study 10: KCD2 reaction clips (two read)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T15:55:00", "note": ""}
