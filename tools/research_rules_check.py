@@ -22,7 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SHEETS = "production/research/lane/measurements"
 RULING_TEXT = "no Unreal work until the prototype"
 RULING_SINCE = "2026-11-21 10:25"
-OWED = {  # written before the check (21 Nov 21:50); each gets its section, then leaves this list
+OWED = {  # written before the check (21 Nov 21:51); each gets its section, then leaves this list
     "car-chases-sheet-2026-11-21.md",
     "gtavi-being-seen-builder-2026-11-21.md", "gtavi-driving-builder-2026-11-21.md",
     "gtavi-g-rows-builder-2026-11-21.md",

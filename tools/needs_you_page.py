@@ -31,7 +31,7 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(REPO, "production", "approvals", "needs-you")
 ITEMS = os.path.join(DIR, "items.json")
-# the one-shot's report, once it has run (DECISIONS 21 Nov 22:10); until one exists no item asks him to play the prototype
+# the one-shot's report, once it has run (DECISIONS 21 Nov 22:04); until one exists no item asks him to play the prototype
 ONE_SHOT_REPORTS = os.path.join(REPO, "production", "lane", "one-shot", "REPORT-*.md")
 PLAY_PROTO = re.compile(r"\b(play|test|try)\w*\b[^.]{0,60}\bprototype\b", re.I)
 URL = "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"   # his one permanent link (published 2 November 2026)

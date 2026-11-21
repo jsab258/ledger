@@ -1,11 +1,32 @@
 # The measuring block: progress by aspect and game
 
-Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:26: progress by what is measured and in which game). The hourly row reads it. Updated 21 Nov 2026 20:28 Swiss.
+Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:26: progress by what is measured and in which game). The hourly row reads it. Updated 21 Nov 2026 22:14 Swiss.
 
 ## Totals
 - Planned: about 142.7 PC hours (146 until 21 Nov 17:44; Mafia DE dropped from the feel block's fists and on foot, about 3.3 hours less with both measurers; his ruling that Mafia is never a reference).
 - Spent, from the time log: about 2.9 hours. The session's own estimate is about 6.7 hours: the time log missed most of the morning's GTA VI and car-chase work (helpers' and early-morning time not logged). The estimate is marked as one; from now every step is logged.
 - Done or first pass: car chases, players' first hours, port towns, conversations, small district, street life (first passes). Not started: our own build filmed, the feel block, the extra rows.
+
+## Repriced from logged time (advisor 301, 21 Nov 2026 22:14 Swiss; his question 22:12)
+Logged minutes from the time log (week of 16 Nov); where the log missed work the session's estimate is used and marked. A first pass with open questions is not finished: each study's remainder is what its open question still needs, estimated.
+
+| Study | Planned h | Spent so far h | Still open | Remaining h (estimate) |
+|---|---|---|---|---|
+| Car chases | 3 | about 1.0 (estimate) | nothing for now | 0 |
+| Players' first hours | 6 | 0.5 | one KCD2 fight's outcome; more samples per number | 0.5 |
+| Port towns 1989-90 | 3 | 1.1 | smoking in the street (leads need the pane shown) | 0.5 |
+| Conversations filmed | 2 | 0.1 | shot lengths on more conversations; KCD2's entry and exit | 0.5 |
+| Small district | 4 | 0.2 | counts beyond the first walk | 0.5 |
+| Street life | 3 | 0.3 | how a reaction spreads and settles | 0.5 |
+| GTA VI rows (being seen, driving, split hour, G2, G7, G8) | 24.5 | about 4.3 (logged about 1.3; the morning's work unlogged) | being seen: does return add a star; driving and split hour: five samples per number; G8 not started; G2 and G7 night: a timestamped post-release clip | about 6 |
+| Our own build filmed | 2 | 0 | all; needs a tester run, method untimed | 2 (kept) |
+| Extra rows (MEASUREMENTS-NEEDED A) | 16.5 | 0 | all; same method as the footage studies | about 5 (today's rate: first passes took about 15% of plan, doubled for the open questions) |
+| Feel block (fists, on foot, being seen, chases on foot, the rest) | 78.7 | 0 | all; a different method (two measurers, five samples a number), no logged rate yet | 78.7 (kept until its first game is timed) |
+| Total | 142.7 | about 7.5 | | about 94 more, about 102 in all |
+
+- Today's rate: the six footage studies' first passes took about 3.2 h against 21 planned (about 15%); with their open questions about 5.7 h, about a quarter of plan. GTA VI ran nearer a third.
+- Finish (estimate, none was set before): at today's pace of about 7 measuring hours a day, about 94 h is about 14 working days, near 6 Dec; the old 142.7 at that pace was about 20 days, near 12 Dec. The feel block decides it: 78.7 of the 94 hours are unrepriced.
+- Reprice again after the feel block's first game, and after Monday's cheaper frame-reading trial.
 
 ## By aspect and game
 | Aspect | Games | Planned h | Logged h | State | The one open question |
