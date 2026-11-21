@@ -1598,6 +1598,46 @@
    ],
    "state": "open",
    "closed": null
+  },
+  {
+   "id": "cli-signin-2026-11-21",
+   "added": "2026-11-21 08:32",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "sign-in",
+   "tried": "Sessions may not sign in for you; the app's own sessions still work, but the separate command-line Claude the night job uses lost its sign-in at 02:09 last night.",
+   "title": "Sign the night's Claude back in (about two minutes)",
+   "text": "Last night's checks that use Claude (the sentence bench and the walk's picture check) all failed because the command-line Claude's sign-in expired.",
+   "why": [
+    "Without it, tonight's bench and picture check fail again.",
+    "The game itself and the walk are fine; only those two checks need it."
+   ],
+   "steps": [
+    "On the PC, open Command Prompt (Start, type cmd, Enter)",
+    "Type claude and press Enter",
+    "Type /login and press Enter, then finish the sign-in in the browser it opens",
+    "Back in Command Prompt, type /exit and press Enter, then tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "tonight's sentence bench and the walk's picture check",
+   "recommendation": "Do it today when you are at the PC: about two minutes.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "open",
+   "closed": null
   }
  ]
 }
