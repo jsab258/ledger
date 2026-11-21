@@ -47,7 +47,7 @@ Rate used (estimate, from today's logs): a sample read to the solid rule costs a
 | Car chases | GTA VI, GTA V, GTA IV, Sleeping Dogs | 3 | about 1.0 (estimate) | done | none for now |
 | Players' first hours | KCD2, RDR2, GTA VI | 6 | 0.5 | done (first pass) | the first fight's outcome in one KCD2 sample is unclear |
 | Our own build filmed (item 35 study 2) | LEDGER prototype | 2 | 0 | not started (waits for room under the allowance ceiling) | how our talk camera and street compare with the sheets' figures |
-| Port towns 1989-90 (study 3) | archive footage | 3 | 1.1 | first pass, reconciled | smoking in the street (chest-up vox pops 1989-90; leads listed 20:50: ITV Calendar 1990 playlist, needs the pane shown) |
+| Port towns 1989-90 (study 3) | archive footage | 3 | 1.1 | first pass, reconciled | smoking in the street (chest-up vox pops 1989-90; the 20:50 "Calendar 1990" playlist lead was a wall-calendar slideshow, dropped 22 Nov 00:09; next: Yorkshire Film Archive, BFI regional news) |
 | Conversations filmed (study 4) | RDR2, KCD2 | 2 | 0.1 | first pass, reconciled | shot lengths on more than a few conversations |
 | Small district fresh for 50 hours (study 2) | Yakuza 0, Sleeping Dogs | 4 | 0.2 | first pass | counts beyond the first district walk |
 | Street life (study 10) | RDR2, GTA VI, KCD2 | 3 | 0.3 | first pass, reconciled | how a reaction spreads and settles (needs an uncut KCD2 part with a crime in town) |

@@ -132,6 +132,8 @@ What this changes in the study: Q3 clothes, Q4 shopfronts and Q7 light are alrea
 - Clip years are the uploaders' statements except clip 1 (camcorder date stamp, October 1989).
 
 ## Q6 leads (searched 21 Nov 2026 about 20:50 Swiss, web search only; nothing read yet)
-- ITV Calendar "1990 Calendar" playlist (PLMdCfrNPl8thx1cN3dt_cx-7fjhXmHX77): regional news items of 1990, the likeliest chest-up street interviews; the playlist page draws nothing while the browser pane is hidden, so its ids are still to be listed.
+- (Dropped 22 Nov 00:09) "1990 Calendar" playlist (PLMdCfrNPl8thx1cN3dt_cx-7fjhXmHX77): listed by fetching the playlist page; 26 videos, the first four read from their watch pages are 20-25 s slides of a wall calendar ("January 1990 Calendar" and so on), not ITV's Calendar programme. A title match, not a source.
 - nT1PYm4o4gw, "Grimsby Town Centre & Grange estate 1987": a home-video walk to a shopping precinct; 1987 is a year outside canon's window, usable only for stance, not as period proof.
 - Generic vox-pop searches return modern channels only; BBC Archive, ITN Source, British Pathé and the Yorkshire Film Archive are the named homes for dated 1990 clips (unreached).
+
+- 22 Nov 2026 about 00:07 Swiss: the "1990 Calendar" lead for Q6 checked and dropped. A web search (youtube.com) for Calendar 1990 street vox pops found a playlist titled "1990 Calendar" (https://www.youtube.com/playlist?list=PLXw9C1Y6at_c): its 13 videos (read from their watch pages) are 20-25 s slides of a wall calendar, one per month, not the Yorkshire news programme. The same search found Calendar clips from 1990 (Glct_0fMSXQ, a studio guest, May 1990) but no street vox pop. It belongs to the same wall-calendar channel as the dropped lead above. Q6 stays open; next leads: the Yorkshire Film Archive and the BFI's regional news holdings, read on their own pages.
