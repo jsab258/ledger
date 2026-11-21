@@ -4,8 +4,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-21 12:22 (the hourly run)
 
-**Row due:** by 12:52 (last row 11:52; page read 12:03: verdicts none after 2026-11-21T10:22 UTC, advisor none after the last ack 10:58 +01:00; filter verdicts after 2026-11-21T11:03 UTC, advisor after 12:03:00 +01:00)
-**Stopped:** 2026-11-21 12:04 (history near its point, 225k of 250k, stopped at a clean break; allowance 83% at the ceiling; next: car chases, 0f)
+**Row due:** by 14:05 (last row 13:05; page read 13:05: verdicts none after 2026-11-21T11:49 UTC, advisor none after 291 (12:15 +01:00, acknowledged 12:25); filter verdicts after 2026-11-21T12:07 UTC, advisor after 12:25:00 +01:00)
+**Stopped:** 2026-11-21 13:05 (history past its point, 333k of 250k, stopped at the end of the car-chase item; allowance 84% at the ceiling; next: the players' first-hours study, 0g)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -32,19 +32,19 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 21 Nov 11:33-12:05: GTA VI driving M1-M3 set aside after two tries (no HUD speed; the chase view hides dashes behind a pickup; the first-person dial is covered); GTA V's sheet stands in. M10 first reading (camera about 2.2 m up, looking slightly down). G3: only edited shorts (rules as claims; one game message seen); its seconds wait for the launch streams. Car-chase sheet begun (rows K1-K9) with GTA VI chase 1 from LGU3b6jXhjI's notes. Pushed (cc28ad0b7). Notes: measurements/gtavi-driving-builder-2026-11-21.md, car-chases-sheet-2026-11-21.md.
-- 21 Nov 10:50-11:31: advisors 289 and 290 acted on and pushed; G6 settled from the game's Help (Jx9flonxAqw); G5 begun.
+- 21 Nov 12:22-13:05: advisor 291 acknowledged, joined the waiting list as item 37. Car chases measured and pushed (d734c9aa0); RECIPE.md is at its 6,000 cap, so the unit's lines went to NOTEBOOK.md. Players' study questions written (uncommitted until this stop's commit).
 
 ## In flight
-- Nothing runs; heavy lock free; no helpers. Browser pane: LGU3b6jXhjI open, paused, harmless.
+- Nothing runs; heavy lock free; no helpers. Browser pane: a YouTube tab with a drawing canvas over it, harmless (reload clears it).
+- Frame-reading tricks (this session): define the sheet function after each navigate; play muted 2 s and let adverts run out before seeking; take every screenshot twice (the first is often stale); a timed-out script keeps running and draws over later sheets, so reload the page to stop it; 3 columns of 341 px fit the pane; HUD crops per game: GTA top-right 1640/1920, 0, 280x70; GTA IV 0.80, 0, 0.20x0.12; Sleeping Dogs heat is a number in a flame at the minimap's top (two crops missed it: find its y on one frame first).
 
 ## Next, in order
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md, lean order: being seen and G4-G6, then driving and G1-G3, fists, on foot; no spoiler to him), car chases (five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, about 3 h), the four footage studies (waiting item 35, players first), the feel block, then MEASUREMENTS-NEEDED's rows. Rows: game and verb, weekly points per measuring hour.
 0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as far as footage allows; G5 has one uncut escape (Visual Lost to heat about 20 s, heat at least about 6 min) and one map frame. Still open: re-identification on return and a second heat sample, both from the launch streams in the players' study (item 35). Stars and icons: top-right 280x140 px of a 1080p frame; minimap bottom-left 360x440 from y 640.
-0f. NEXT (car chases, advisor 286; sheet measurements/car-chases-sheet-2026-11-21.md): re-step LGU3b6jXhjI 6:30-8:10 at 6 s for K3-K5 (police cars in view, tactics, road, crashes). Frames came out black at 12:04 even with the frame-callback wait: after navigating, play the video for a second first so the stream loads, then pause and seek. Then GTA VI chases 2-5 (candidates on the sheet: 8-DRGbQ1IXc check its date; KZsskohjvlw skipping story parts), then GTA V, GTA IV, Sleeping Dogs, five each (older footage, no release-date issue). M10 on a daylight saloon frame (xgCY2UE55gM 2:04) when convenient. G3 seconds and G5's second heat sample come from the launch streams in the players' study.
-- Page tricks (this session): pixels of the YouTube video are readable in a canvas, so frame differences can be counted in the page (a standstill scan: difference over a third of a second every 3 s); hidden-pane seeks slow to about 1 a second after a few hundred; screenshots often need a second try (the first times out); a canvas wider than the pane is clipped, so keep sheets to 4 columns.
+0f. Car chases DONE 21 Nov 12:22-12:57 (d734c9aa0): 19 of 20 on measurements/car-chases-sheet-2026-11-21.md (GTA VI 5, GTA V 5, Sleeping Dogs 5, GTA IV 4; its fifth row open: nearly every GTA IV upload is a six-star shoot-out; try "gta 4 2 star" or a long free-roam video if a slot is spare). Cross-game reading at the sheet's end. M10 on a daylight saloon frame (xgCY2UE55gM 2:04) when convenient.
+0g. NEXT: the players' first-hours study (item 35 study 1, about 6 PC h): questions P1-P7 written in measurements/players-first-hours-sheet-2026-11-21.md; choose three uncut first sessions per game (KCD2, RDR2, GTA VI launch streams, no story to him), then read. G3 seconds and G5's second heat sample come from the GTA VI launch streams. Then studies 2-4 of item 35, then item 37 (district about 4 PC h, street life about 3 PC h), then the feel block.
 - Allowance: at the ceiling (83% at 11:52 against 83.8%); work lean, no helpers, until the line climbs (about 0.8 point an hour).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
