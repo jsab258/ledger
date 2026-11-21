@@ -2903,3 +2903,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: per question, what the frames show, with clip and time mark; a final list of what is still unanswered.
 - Failed and why: holiday tapes, edited visits and building surveys hold few people close to the lens; street filming made for buses gave the first daytime people, but smoking stayed unreadable; read times were first written from estimate, not the clock, and had to be corrected; steps of 25 s to 6 min are far wider than the 10 s asked; search pages draw nothing while the browser pane is hidden until a screenshot is taken. Next: street-level filming made for another subject (buses, markets), where people pass close by chance.
 - Evidence: production/research/lane/measurements/port-towns-archive-sheet-2026-11-21.md
+
+### Footage studies reconciled with earlier research (21 Nov 2026)
+- Made: a reconciliation table on a footage study's sheet, each footage finding marked confirms, contradicts or adds against the project's earlier period research, both sources named.
+- Method: before viewing, search the research library, reference pages, art bible, garment list and canon for each question's subject; after viewing, one table row per finding; where they disagree, dated photographs and footage of the real place win, and the change goes to the waiting list for the old file's owner; questions the old research already answers get no more viewing hours. Watch for footage of a regenerated place standing in for its period working state.
+- Tools: text search over the repository; the sheet's own question list.
+- Target and check: every footage finding has a mark and both sources; the remaining viewing list is narrowed to what only footage can answer.
+- Cost: about 0.1 h (one session, reading by search rather than whole files).
+- Failed: the first pass of eight clips was read without the earlier research and spent viewing time on clothes, shopfronts and light that photographs already answered (his correction, 21 Nov).
+- Evidence: production/research/lane/measurements/port-towns-archive-sheet-2026-11-21.md, RECONCILED section.
