@@ -9,7 +9,7 @@ The design counts as complete, and the next one-shot prompt may be written from 
 
 ## Process guards (from the pre-mortem of 21 Nov, ways 3, 4 and 19; written by run 4, 21 Nov)
 
-**G-A. MEASURED means a real figure.** A row counts as MEASURED for the gate only when its standard rests on one of: a reference game's measured number; a dated real-world figure or a dated published standard (law, regulator guidance, accessibility guidelines); or a pass-or-fail rule of his (his ruling, canon or his numbered decisions). Each MEASURED row says which in its field real_basis. A standard the design sessions chose is a design decision: status DECIDED, listed below for him to overturn. DECIDED rows pass condition 1 as decisions, never as measurements, and the gate's report always gives three numbers side by side: rows MEASURED, rows resting on a reference game's number or a dated real-world figure, and rows DECIDED. Applied to the map on 21 Nov by scripts/run4_guard.py (a first pass by rule and by hand; a later run may move a row with a stated reason): the 195 rows called MEASURED became 101 MEASURED (66 on his rulings or canon, 20 on reference-game numbers, 15 on dated real-world figures or published standards) and 94 DECIDED.
+**G-A. MEASURED means a real figure.** A row counts as MEASURED for the gate only when its standard rests on one of: a reference game's measured number; a dated real-world figure or a dated published standard (law, regulator guidance, accessibility guidelines); or a pass-or-fail rule of his (his ruling, canon or his numbered decisions). Each MEASURED row says which in its field real_basis. A standard the design sessions chose is a design decision: status DECIDED, listed below for him to overturn. DECIDED rows pass condition 1 as decisions, never as measurements, and the gate's report always gives three numbers side by side: rows MEASURED, rows resting on a reference game's number or a dated real-world figure, and rows DECIDED. Applied to the map on 21 Nov by scripts/run4_guard.py (a first pass by rule and by hand; a later run may move a row with a stated reason): the 195 rows called MEASURED became 99 MEASURED and 96 DECIDED (two rows, 2.17 and 1.6.10, moved after the reviewer's sample check).
 
 **G-B. What a material gap is.** Defined on 21 Nov, before red team 3, and not to be changed until the gate is met or round 4 is done. A gap a red team raises is material when it is a part missing or undefined in the design, and at least one of these holds:
 1. a player would meet it in the first game week (Act I and the first week of Act II, or any hour of the 41 playthrough checks' first week);
@@ -22,35 +22,37 @@ Anything else (taste, polish, more of something that exists, Unreal-only looks, 
 
 **G-D. The clock before red team 3.** His open C11 is settled before red team 3 (pre-mortem way 19). Its rows are PENDING his answer; both versions are written in DEFINITIONS-2026-11-21.md (design pass 3, the clock) so either answer drops in the same day.
 
-## Where it stands, 21 November 2026, after run 3
+## Where it stands, 21 November 2026, after run 4
 
 | Condition | State |
 |---|---|
-| 1. Rows | Not met. 363 rows: 195 MEASURED, 29 PENDING, 46 UNMEASURED, 22 UNDEFINED (red team 2's gaps, new today), 14 OUT, 57 OUTSIDE. Of the 195, about 24 rest on reference-game or period figures (15 before, plus the panel bar, rent, custody, the fence, cooling, display options and replay branches today); the rest are his rulings, canon, guidelines, design decisions he may overturn, or pass-or-fail guards. |
-| 2. Themes | Met as a mapping (all 242 themes on parts with a test); they close with condition 1. |
-| 3. Red teams | Not met. Round 1 found 19 material gaps, round 2 found 22 (RT2-01 to RT2-22, edges of existing systems rather than missing systems). Clean rounds so far: 0. |
-| 4. Catch rate | Round 1: 10 and 9 of 10. Round 2a: 10 and 8 (brief improved once); round 2b: 9 and 10 of 10. |
+| 1. Rows | Not met. 398 rows: 101 MEASURED, 131 DECIDED, 49 PENDING, 46 UNMEASURED, 0 UNDEFINED, 14 OUT, 57 OUTSIDE. Of the 101 MEASURED: 20 on reference-game numbers, 15 on dated real-world figures or published standards (together 35), 66 on his rulings or canon. |
+| 2. Themes | Met as a mapping (all 242 themes on parts with a test); they close with condition 1. Not recomputed for the 35 new rows of run 4, which hang on parts already mapped. |
+| 3. Red teams | Not met. Round 1: 19 material gaps; round 2: 22. Both rounds' gaps are now defined. Clean rounds so far: 0. Rounds left: 3 and 4 (G-C). |
+| 4. Catch rate | Round 1: 10 and 9 of 10. Round 2a: 10 and 8; round 2b after one brief fix: 9 and 10. |
 
 ## What stands between the design and the gate, with dates
 
 | What | Rows | Closed by | When |
 |---|---|---|---|
-| Red team 2's 22 gaps: the cold-store contract loop, attacking the police, knowing Tom, how the ending is chosen, killing needed people, the firm failing, rivals' ladder and men, turf, crowd witnesses, finishing a downed man, the fatal fall, robbed when beaten, guns reaching Tom, the successor, police memory, a gun at a War stop, the licence hearing, the phone, the clock in moving talk, after the ending, a caught foot chase | 22 UNDEFINED | design pass 3 in the cloud, in the design's own words, with a fresh reviewer | Sun 22 Nov |
+| His answer on the clock (C11): A 45 s a game hour with a slower first evening, or B 60 s with a 7-week calendar; both written in design pass 3 | 7.13, CLK-01 to CLK-07, FIT-F13 (9 PENDING) | his answer, put to him by the advisor; the chosen version is dropped in the same day | before red team 3 (G-D), so by Sat 28 Nov |
 | GTA VI's footage pass, first (his ruling, the full pass) | GTA VI's column on the PENDING feel rows; GD-02; 1.2.10, 2.6.10 | PC measuring, block 1 (about 24.5 PC hours) | Mon 23 to Tue 24 Nov |
-| Feel numbers for KCD2, GTA V and RDR2 | 16 PENDING, 3 UNMEASURED | PC measuring, block 2 | Tue 24 to Thu 26 Nov |
-| The teardown and the hour split | 7.5 PENDING; 23 UNMEASURED | PC measuring, block 3 | Wed 25 to Fri 27 Nov |
-| Extra rows on the feel sheets | 6 UNMEASURED; GD-01, GD-02, GD-07, GD-08, RT-10, RT-11, RT-19, 2.7.3 PENDING | PC measuring, block 4 (about 14.5 PC hours) | Thu 26 to Sat 28 Nov |
+| Feel numbers for KCD2, GTA V and RDR2, with walk and run speeds | 16 PENDING, 3 UNMEASURED; FIT-G4, FIT-F21 | PC measuring, block 2 | Tue 24 to Thu 26 Nov |
+| The teardown and the hour split | 7.5 PENDING; 23 UNMEASURED; FIT-F16 | PC measuring, block 3 | Wed 25 to Fri 27 Nov |
+| Extra rows on the feel sheets, with chase lengths in four games (GTA IV in Mafia DE's place) | 6 UNMEASURED; GD-01, GD-02, GD-07, GD-08, RT-10, RT-11, RT-19, 2.7.3 PENDING; FIT-F04 | PC measuring, block 4 (about 16.5 PC hours) | Thu 26 to Sat 28 Nov |
 | The listening pass | 8 UNMEASURED | PC measuring, block 5 (about 2 PC hours) | Fri 27 to Sat 28 Nov |
-| Who is out on a port street by hour (no 1990 figure found on 21 Nov) | 2.1.2 UNMEASURED | ONS time in and out of home tables, scaled back; PC reads the MTUS 1987 file if they give no hours | cloud by Thu 26 Nov |
-| The day's length: the references run 48 to 144 real minutes a day against LEDGER's 18 (45 s an hour) | 7.13 PENDING | his open feel decision C11 and the PC's timing of a reference evening (A5) | 23 to 28 Nov |
-| Story content, Act III's shape, the jobs after week one, humour per act | 5 UNMEASURED; GD-05, RT-01, RT-02, RT-03 PENDING | the story measure | by Sat 28 Nov 12:00 |
-| Red team 3: a fresh copy with design pass 3 folded in, ten new planted parts, the improved briefs | conditions 3 and 4 | cloud, two fresh Opus helpers | Sun 29 Nov |
-| Red team 4, needed because the gate wants two clean rounds in a row and none has been clean yet | conditions 3 and 4 | cloud | Mon 30 Nov at the earliest |
-| One point for his ruling: a field-of-view setting (AX-03) | not blocking | the advisor puts it to him | when he answers |
+| 1990 prices (spending, guns) and who is out by hour | FIT-G8, RT2-14, FIT-G9, 2.1.2 | cloud: dated 1990 price sources; ONS time in and out of home tables, scaled back | by Thu 26 Nov |
+| Cloud checks on the line table and the money run | FIT-F19, FIT-F24 | cloud, 0.5 h and 2 h | F19 by Thu 26 Nov; F24 by Sat 28 Nov |
+| Checks on the next prototype build: the one-hit wreck's rate and something within 30 s | FIT-F05, FIT-F32 | cloud, 1.5 h on the build | by Sat 28 Nov; if no build by then they stay PENDING and go to him with red team 4's list |
+| Story content, Act III's shape, the ending rule, the successor | 5 UNMEASURED; GD-05, RT-01, RT-02, RT-03, RT2-04, RT2-15 PENDING | the story measure | by Sat 28 Nov 12:00 |
+| The fit check and the players' questions again, on the defined design | before red team 3 | cloud | Sat 28 Nov |
+| Red team 3: a fresh copy with design passes 2 and 3 folded in, ten new planted parts, the improved briefs, triage by the four tests of G-B | conditions 3 and 4 | cloud, two fresh Opus helpers | Sun 29 Nov |
+| Red team 4, the last round (G-C); anything still open after it goes to him once as scope with a recommendation | conditions 3 and 4 | cloud | Mon 30 Nov |
+| The DECIDED list shown to him (131 rows, below), each his to overturn | condition 1 | the advisor | before the gate |
 
-Done on 21 Nov (run 3): the panel bar (7.2, 7.3), the 1990 figures (2.7.4, 2.6.4, 2.7.6), the published figures (2.4.2, 8.3.1, GD-04), the privacy check (8.2.1, 10.11), the typed-talk set (RT-14), red team 2.
+Done on 21 Nov (run 4): the process guards G-A to G-D; design pass 3 (red team 2's 22 gaps, the fit check's ten gaps with the Hook's road plan in metres, its four text fixes, its open pairs given measurements, seven players' gaps, the advisor's three decisions D-Q2 to D-Q4); the clock written both ways; a fresh reviewer's 30 points fixed once.
 
-Earliest the gate can be met: Mon 30 Nov to Tue 1 Dec, one day later than run 2 said, because the gate needs two clean red teams in a row and round 2 was not clean: red team 3 on Sun 29 Nov and red team 4 on Mon 30 Nov must both find nothing material, after design pass 3 closes the 22 gaps on Sun 22 Nov, the PC measuring (23 to 28 Nov) and the story measure (by 28 Nov). If red team 3 finds gaps again, each further round costs about a day.
+Earliest the gate can be met: Mon 30 Nov to Tue 1 Dec, unchanged: red team 3 on Sun 29 Nov and red team 4 on Mon 30 Nov must both be clean, after the PC measuring (23 to 28 Nov), the story measure (28 Nov) and his clock answer. If either round is not clean, there is no round 5: the open items go to him on Mon 30 Nov as scope, and the gate is judged on his answers (about Tue 1 Dec). The giant prompt is written only after the gate (pre-mortem way 4).
 
 ## DECIDED rows: design decisions for him to overturn
 
@@ -70,6 +72,7 @@ Each row below has a pass-or-fail standard the design sessions chose inside his 
 | 1.6.1 | Getting in | DESIGN §4 Break-ins |
 | 1.6.7 | Getting rid of things | DESIGN §2, §7 |
 | 1.6.8 | Using the world | DESIGN §17 |
+| 1.6.10 | Tom's wardrobe | DESIGN §14; rulings 29 Sep, 3 Oct |
 | 1.6.11 | Casing a place | DESIGN §4, §10 |
 | 1.7.4 | Men at his side | DESIGN §7, §12 |
 | 2.1.1 | Schedules of named people | DESIGN §2; aaa-s01-04 |
@@ -102,6 +105,7 @@ Each row below has a pass-or-fail standard the design sessions chose inside his 
 | 2.12.3 | Access and soft keys | The description, section 32. |
 | 2.14 | Each person's temper | QUESTIONS 3 (open since 29 Sep) |
 | 2.15.2 | Ranks and accounts | The description, sections 28, 31. |
+| 2.17 | Fronts and rackets held | DESIGN §14; canon |
 | 3.1.3 | Act III, The Ledger Comes Due | DESIGN §16 |
 | 3.1.5 | Ending signs and Tom's reading | DESIGN §16 |
 | 3.5.5 | Sit-downs | The description, section 30; RT-06, RT-07. |
@@ -152,3 +156,38 @@ Each row below has a pass-or-fail standard the design sessions chose inside his 
 | GV-04 | Places stay open | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md |
 | GV-05 | Bugs at release | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md |
 | GV-06 | How a deed is told: restraint and cruelty | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md |
+| RT2-01 | The cold-store contract and rung 3 are circular | design pass 3, RT2-01 |
+| RT2-02 | Attacking the police | design pass 3, RT2-02 |
+| RT2-03 | What makes a person know Tom | design pass 3, RT2-03 |
+| RT2-05 | Killing principals and needed people | design pass 3, RT2-05 |
+| RT2-06 | The firm failing for good | design pass 3, RT2-06 |
+| RT2-07 | What moves a rival up his ladder | design pass 3, RT2-07 |
+| RT2-08 | Rivals as actors | design pass 3, RT2-08 |
+| RT2-09 | Turf: posts held and lost | design pass 3, RT2-09 |
+| RT2-10 | Crowd extras as witnesses | design pass 3, RT2-10 |
+| RT2-11 | Finishing a downed man, kicks and bodies | design pass 3, RT2-11 |
+| RT2-12 | The rare fatal fall | design pass 3, RT2-12 |
+| RT2-13 | Robbed when beaten | design pass 3, RT2-13 |
+| RT2-16 | Police memory and arrest hours for road deeds | design pass 3, RT2-16 |
+| RT2-17 | A gun found in a stop at War | design pass 3, RT2-17 |
+| RT2-18 | The licence hearing | design pass 3, RT2-18 |
+| RT2-19 | The phone as a verb | design pass 3, RT2-19 |
+| RT2-20 | The clock in moving talk | design pass 3, RT2-20 |
+| RT2-21 | After the ending and past nine weeks | design pass 3, RT2-21 |
+| RT2-22 | A foot chase caught by a constable | design pass 3, RT2-22 |
+| FIT-G1 | The Hook's road plan in metres, the chase loop | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G2 | Car speeds and the stop band | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G3 | A chase at the soft edge | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G5 | The beat constable's round | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G6 | How many street happenings are written | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G7 | How many fare people are written | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-G10 | Opening hours, day and night | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-F03 | What the 70 m of a lost chase means | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-F20 | Which fares carry a wrinkle (every one after the first) | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P04 | The struck person's fall | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P17 | At least five kinds of fighter | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P18 | Two against one stays deadly | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P34 | At least 24 rooms open | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P45 | Birds and animals | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-P52 | What an ordinary drawer holds | design pass 3; FIT-CHECK-2026-11-21.md |
+| FIT-L01 | 60 street lines for the 12 people seen most, 30 for the rest | design pass 3; FIT-CHECK-2026-11-21.md |

@@ -17,7 +17,7 @@ manual = {
      'AX-01','AX-02','AX-03','AX-04','AX-05','AX-06','AX-08','AX-09','AX-11']},
 }
 # rows whose source names only DESIGN sections or open questions despite a "ruling" basis label
-force_decided = {'1.2.10','2.14','7.16','1.2.9','AX-07','AX-10'}
+force_decided = {'1.2.10','2.14','7.16','1.2.9','AX-07','AX-10','2.17','1.6.10'}  # 2.17, 1.6.10 moved after the run 4 reviewer's sample check
 his_pat = re.compile(r'ruling|RULINGS|canon|\bD\d+\b|his combat design', re.I)
 for r in d['rows']:
     if r.get('run4_was') == 'MEASURED' and r['status'] in ('MEASURED', 'DECIDED'):
