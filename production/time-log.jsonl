@@ -961,3 +961,5 @@
 {"event": "stop", "at": "2026-11-21T11:09:00", "note": ""}
 {"event": "start", "at": "2026-11-21T11:10:00", "task": "GTA VI G5: leads and the Defuse guide", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T11:13:00", "note": ""}
+{"event": "start", "at": "2026-11-21T11:13:00", "task": "GTA VI G5: map chapter; reader helper (Sonnet) on written guides", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T11:15:00", "note": ""}
