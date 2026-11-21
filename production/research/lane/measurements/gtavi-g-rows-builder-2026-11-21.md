@@ -43,7 +43,16 @@ Beach, uncut, no wanted level (read 21 Nov 2026 about 20:47 Swiss): DQqv-E4guu8,
 | Beach, open sand | DQqv-E4guu8 13:37 | about 10 (1 close, the rest lying or sitting spread out) |
 | Outdoor gym on the sand | DQqv-E4guu8 8:31 | about 8-10 |
 
-Finding (candidate): the beach is GTA VI's crowded place: 10 to 18 people in one view, spread thin over open sand, against about 10 at a café and 0-8 elsewhere.
+Beach, confirmation (read 21 Nov 2026 about 21:07 Swiss): IpautGTJrQQ, "Ocean Beach", published 2026-11-19 06:49 Pacific (release day), 24:11, day, on foot, no wanted level; 16-frame sheet, four busiest drawn large.
+
+| View | Clip, time | People in view |
+|---|---|---|
+| Beach under an umbrella, towels | IpautGTJrQQ 5:41 | about 10-12 (4 close, 6-8 further along the sand) |
+| Beach, umbrellas toward the towers | IpautGTJrQQ 8:31 | about 4-6 (2 close, a dog, a few far) |
+| Beach, umbrella rows | IpautGTJrQQ 12:47 | about 10-12 |
+| Beach toward the water | IpautGTJrQQ 17:03 | about 10-12 (3 sitting close, 6-8 at the water) |
+
+Finding (confirmed on a release-day clip, 21:07): the beach is GTA VI's crowded place: about 10 to 18 people in one view (the release-day clip 10-12 at its busiest, 4-6 in a quieter stretch), spread thin over open sand, against about 10 at a café and 0-8 elsewhere.
 
 Finding: GTA VI's stops and stations hold 0 to 3 people in view, fewer than the café strip; transport places are not where it gathers its crowd.
 
