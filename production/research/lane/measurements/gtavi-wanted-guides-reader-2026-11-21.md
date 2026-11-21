@@ -35,6 +35,24 @@ Q1 search area; Q2 duration and heat; Q3 heat icons and masks; Q4 Defuse/provoke
 ## Q7 Six stars
 - Gtabase: scale has six stars. Keengamer: six-star zone can cover the whole map; police response more dangerous; no thresholds. Dexerto (13 Nov, pre-release) and Allthings.how (updated 6 Sep) not used.
 
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/18-gta6-first-read.md (release-day systems read of 19 Nov: how witnesses, descriptions, the stars and police work; what LEDGER keeps) and 15-crime-toolkit.md (KCD2's hot goods, witness counter and fences). This pass added only post-release guides; nothing here was re-measured on footage.
+
+| Find here | Study 18 or 15 | Confirms, contradicts or adds |
+|---|---|---|
+| Q1 star states: hollow, solid white, flashing, red | 18: the same four states, red as an area search | Confirms. Wording differs only in red: here "chase over, attention remains in the area"; both say the area stays watched. The being-seen builder's G5 frame sheet saw all four on footage. |
+| Q1 Hot Area grows to the whole map at six stars | 18: whole-map heat at six stars, one guide, unverified; a P2 risk for LEDGER | Confirms on a second post-release guide; still no size in metres anywhere. |
+| Q1 minimap gap kept centred until the bar goes | 18: none | Adds the escape's shape; no numbers. |
+| Q2 no seconds for heat decay or search | 18: none either | Confirms the gap: timing must come from footage (the being-seen builder), never from guides. |
+| Q2 return in the same look or car re-identifies | 18: red areas stay; going back too soon re-identifies | Confirms. |
+| Q3 icons and how each clears | 18: six slots (face, clothes, vehicle, weapon, camera, companion), cleared as listed | Confirms; adds blood and dye packs affecting recognition, a safehouse shower, cloud cameras that cannot be destroyed, long guns that cannot be concealed. |
+| Q4 defuse or provoke | 18: none | Adds only that no post-release guide states the conditions; the one source is pre-release and not used. |
+| Q5 witnesses must report before police respond | 18: a wanted level starts only when a crime is reported or detected; 15: KCD2's witness counter (starts 1 to 3, a warning each tick, the last at 12, 20 s grace) | Confirms 18. GTA states no delay where KCD2 times it, so KCD2 stays the timing reference for LEDGER's witnesses. |
+| Q6 the spray shop clears the vehicle icon; some trackers refused | 18: repainting clears the vehicle icon | Confirms; adds the tracker refusal. |
+| Q7 six stars, no thresholds | 18: six stars | Confirms; thresholds still unknown. |
+
+LEDGER's difference stands as study 18 put it: GTA's record is one authority's yes or no; LEDGER's is per witness and remembered. Nothing in this pass changes that.
+
 ## Sources
 | URL | Title | Published | Read | Full |
 |---|---|---|---|---|
