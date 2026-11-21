@@ -180,3 +180,16 @@ Method: the stars row alone (x 1600-1900, y 22-67 of the 1080p frame) drawn twic
 - 15:58: four white filled stars (In Pursuit: seen again).
 - Corrections to the passes above: the "28 s out of sight" at 13:56-14:30 and "three white from 15:00" were misreads of the flash at coarse steps; there was no pursuit before the heat in this stretch.
 - G5 counts now: re-identification on return seen twice. Return from heat here resumed pursuit at the same level (four to four, no star added); in iWrYrsVXTS0 return from Visual Lost (not heat) added a star. So: seen again ends heat at once; whether it raises a star depends on the state or the offence, two samples, unsettled. Heat's length: about 50 s here (ended by being seen), at least about 6 min in LGU3b6jXhjI (censored).
+
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/18-gta6-first-read.md (a wanted level starts only when a crime is reported or detected; unseen crimes make none; the star states; icons cleared each its own way), 15-crime-toolkit.md (KCD2's witness counter: starts at 1 to 3, a warning each tick, the last at 12, 20 s of grace), 01-npc-life.md (KCD2 notices at once within 2.5 m, as the street-life sheet quotes it), and the wanted-guides and car-chase sheets beside this one. Every number here is a lead under STATUS.md's solid rule.
+
+| Find here | Earlier study | Confirms, contradicts or adds |
+|---|---|---|
+| S1: a gun levelled, first clear reaction about 1.0 s (0.3-1.4 s, five samples); complying about 2.1-2.2 s | 01: KCD2 notices at once within 2.5 m | Adds GTA VI's reaction time; agrees in kind (near-instant at close range). |
+| G4: a threat alone raised no star within 28-45 s (five hold-ups); violence or a shot raised stars 1-26 s after | 18: a level starts only on a report or detection | Confirms on footage, and adds the times. |
+| S7: the report 19-42 s after the threat (four samples) | 15: KCD2's counter with 20 s of grace | Adds; the same order of delay as KCD2's grace, so a witness in LEDGER can plausibly take 20-40 s to raise the town. |
+| Two robberies with every witness subdued, and one unseen, raised nothing | 18: unseen crimes make none | Confirms (n=1 unseen; two subdued). |
+| G6: the clothes icon gone on the first frame after buying a top; the car icon gone within 0.5 s of a respray | 18 and the guides sheet: each icon cleared its own way | Confirms; adds that clearing is instant, not delayed. |
+| G5: sight lost to heat about 20 s (two samples); heat about 50 s to at least 6 min | Car-chase sheet: search about 20-35 s low, three minutes or more high | Agrees across both sheets. |
+| G5: the heat area about a neighbourhood across (one pause-map frame) | Guides sheet: no size anywhere; 18: the whole map at six stars | Adds the first size (one frame). |
