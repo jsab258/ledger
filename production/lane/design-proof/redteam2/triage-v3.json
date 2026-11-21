@@ -1,0 +1,2090 @@
+[
+ {
+  "src": "A1",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A31",
+  "cite": "DEFINITIONS-2026-11-21.md RT-02, RT-03 (written scenes owed by the story measure, STORY-BIBLE-M1, PENDING to 28 Nov)",
+  "missing": "Written scenes, the fire's truth, old firm's men, envelope contents, side stories still to be written",
+  "material": false
+ },
+ {
+  "src": "A2",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A1",
+  "cite": "DEFINITIONS-2026-11-21.md RT-01 (five mornings, holds/thin/falls from wash weeks); ONE-SHOT-PROMPT.md s38",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A3",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A95",
+  "cite": "ONE-SHOT-PROMPT.md S32 (Act III opens with the letter after the sit-down), s38",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A4",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A2",
+  "cite": "ONE-SHOT-PROMPT.md s39 (three endings, signs); DEFINITIONS-2026-11-21.md RT-01 (business survives if no item fell, at most two thin)",
+  "missing": "No rule maps books, friendship held, Ellis's charges, hunted state, rival rungs, successor and street-as-fact to one of the five built states; 'friendship holds' and Burn Both entry undefined",
+  "material": true
+ },
+ {
+  "src": "A5",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A52",
+  "cite": "ONE-SHOT-PROMPT.md s20 (no court, no prison; a charge joins Ellis case and is read at the ending); DEFINITIONS RT-06, RT-13; earlier A52, A94",
+  "missing": "How charges weigh into the ending; what losing the licence hearing or the car inspection does to the firm",
+  "material": true
+ },
+ {
+  "src": "A6",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A7",
+  "cite": "ONE-SHOT-PROMPT.md s10 Death, bodies and the missing; s27 crew fates; DEFINITIONS-2026-11-21.md RT-09 (Tom's line)",
+  "missing": "What happens to acts, rival ladder, sit-down, radio, book when Tom kills or hospitalises Ron, Pauline, Darren, Sheila, a rival head, Garbutt, a bought officer, Ellis or the inspector; no protection or fallback written",
+  "material": true
+ },
+ {
+  "src": "A7",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A33",
+  "cite": "RULINGS.md Faces (11 casting sheets approved as text); ONE-SHOT-PROMPT.md s5 (new minor people named within canon); canon.md cast",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A8",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A33",
+  "cite": "RULINGS.md Faces (11 casting sheets approved as text); ONE-SHOT-PROMPT.md s5 (new minor people named within canon); canon.md cast [ages are on the approved casting sheets]",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A9",
+  "verdict": "planted",
+  "planted_n": 1,
+  "same_as": "A24",
+  "cite": "ONE-SHOT-PROMPT.md s15 (list of enterable rooms); layout is atlas-01 (RULINGS 5 Oct), GD-01 crossing time",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A10",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A25",
+  "cite": "ONE-SHOT-PROMPT.md s20, S11 (station is a skip under 2 min), s10 (comes round in hospital), A22",
+  "missing": "Not said whether station and hospital are modelled or enterable and where Tom reappears after release",
+  "material": false
+ },
+ {
+  "src": "A11",
+  "verdict": "planted",
+  "planted_n": 1,
+  "same_as": "A13",
+  "cite": "ONE-SHOT-PROMPT.md s15 Break-ins (see A13 earlier)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A12",
+  "verdict": "planted",
+  "planted_n": 2,
+  "same_as": "A14",
+  "cite": "ONE-SHOT-PROMPT.md s17 Hold-ups",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A13",
+  "verdict": "planted",
+  "planted_n": 2,
+  "same_as": "A14",
+  "cite": "ONE-SHOT-PROMPT.md s17 Hold-ups (shops and tills); also DESIGN-ADDENDUM A21 till targets",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A14",
+  "verdict": "planted",
+  "planted_n": 3,
+  "same_as": "A30",
+  "cite": "ONE-SHOT-PROMPT.md s23 Taking a parked car",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A15",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A29",
+  "cite": "ONE-SHOT-PROMPT.md s27 Getting ready (two under coat, one in hand, drawer, shed, tin), s15 taking, s16",
+  "missing": "Item list, holdall capacity, pocket cash limit, drawer and shed capacity",
+  "material": false
+ },
+ {
+  "src": "A16",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A27",
+  "cite": "ONE-SHOT-PROMPT.md s10 (finishing is a separate decision), s27 (move or hide a body, sunk body never found); DEFINITIONS-2026-11-21.md RT-11",
+  "missing": "Input and scene for finishing a man down; how Tom drags, loads or sinks a body; knife wounds on men Tom fights",
+  "material": true
+ },
+ {
+  "src": "A17",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A27",
+  "cite": "ONE-SHOT-PROMPT.md s10 (finishing is a separate decision), s27 (move or hide a body, sunk body never found); DEFINITIONS-2026-11-21.md RT-11 [also B18 rare fall, A28 weapon numbers]",
+  "missing": "Input and scene for finishing a man down; how Tom drags, loads or sinks a body; knife wounds on men Tom fights",
+  "material": true
+ },
+ {
+  "src": "A18",
+  "verdict": "gap",
+  "planted_n": null,
+  "same_as": "A8",
+  "cite": "none (grep: no rule for striking, disarming or killing a constable, Ellis or the patrol crew)",
+  "missing": "Charge weight, effect on Ellis's stage, manhunt trigger, arrest hours when Tom hits or kills an officer",
+  "material": true
+ },
+ {
+  "src": "A19",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s21 (challenge: stand, run, word), s22 (foot chase ends in 90 s, caught or lost; car chase caught is a stop or an arrest); s20 (arrest needs a signed statement or an officer who saw it)",
+  "missing": "What a constable's foot chase ends in when Tom is caught: a search, a caution, an arrest or nothing, and whether running alone counts as a deed; and what seeing him again later is for. Only the car chase says 'a stop or an arrest'.",
+  "material": true
+ },
+ {
+  "src": "A20",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A12",
+  "cite": "ONE-SHOT-PROMPT.md s3 Controls (prototype keys, rebinding, pad reaches every verb); DEFINITIONS-2026-11-21.md AX-05",
+  "missing": "No default key table for move/run/use/blows/guard/slip/grab/drive keys or gamepad layout on the page (prototype's bindings are outside it)",
+  "material": false
+ },
+ {
+  "src": "A21",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A12",
+  "cite": "ONE-SHOT-PROMPT.md s3 Controls (prototype keys, rebinding, pad reaches every verb); DEFINITIONS-2026-11-21.md AX-05",
+  "missing": "No default key table for move/run/use/blows/guard/slip/grab/drive keys or gamepad layout on the page (prototype's bindings are outside it)",
+  "material": false
+ },
+ {
+  "src": "A22",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A48",
+  "cite": "ONE-SHOT-PROMPT.md s27 (orders, man at his side, crew fates); DEFINITIONS-2026-11-21.md 2.11.3; DESIGN ER-CREW-01/02",
+  "missing": "Crew size cap, how many follow, crew fighting values, digit-to-order mapping",
+  "material": false
+ },
+ {
+  "src": "A23",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s3 Controls (M street manners picked by the stick or mouse), s9; no weapon wheel is a stated exclusion",
+  "missing": "Look of the picker; art and interface detail",
+  "material": false
+ },
+ {
+  "src": "A24",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Interface detail: s3 (interface appears piece by piece), s10 pattern 'the input does nothing and he says so'",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A25",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Engine input handling; s3 (no jump, no crouch, no climb)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A26",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "AX-05 (every action rebindable, per device); key-position binding is engine standard",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A27",
+  "verdict": "planted",
+  "planted_n": 10,
+  "same_as": "A10",
+  "cite": "DEFINITIONS-2026-11-21.md RT-15 Live-talk abuse and off-limits input (typed text that claims to act is talk, never an act; abuse, off topic, injection answered in character)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A28",
+  "verdict": "planted",
+  "planted_n": 10,
+  "same_as": "A10",
+  "cite": "DEFINITIONS-2026-11-21.md RT-15 Live-talk abuse and off-limits input (typed text that claims to act is talk, never an act; abuse, off topic, injection answered in character)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A29",
+  "verdict": "planted",
+  "planted_n": 10,
+  "same_as": "A10",
+  "cite": "DEFINITIONS-2026-11-21.md RT-15 Live-talk abuse and off-limits input (typed text that claims to act is talk, never an act; abuse, off topic, injection answered in character)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A30",
+  "verdict": "planted",
+  "planted_n": 10,
+  "same_as": "A10",
+  "cite": "DEFINITIONS-2026-11-21.md RT-15 Live-talk abuse and off-limits input (typed text that claims to act is talk, never an act; abuse, off topic, injection answered in character)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A31",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s34 (only a plain yes is taken; anything undoable asks twice); DEFINITIONS RT-14 (agree is an act)",
+  "missing": "Which typed forms count as yes is the reader's job, measured by the labelled set of 300 lines",
+  "material": false
+ },
+ {
+  "src": "A32",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS RT-14 (amounts read exactly; a tenner is 10, twenty quid is 20; over what Tom carries fails in character)",
+  "missing": "Slang amounts beyond the two examples go into the labelled test set",
+  "material": false
+ },
+ {
+  "src": "A33",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B65",
+  "cite": "DEFINITIONS-2026-11-21.md RT-14 (promise read with what and when; lie contradicts what Tom knows; broken promise comes back)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A34",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 (Esc pauses everywhere; up, down and Enter in any panel); text-field key handling is interface detail",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A35",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s34 (Leave is always offered; Talk never decides alone), s3",
+  "missing": "Walking away mid-sentence and what the other makes of it",
+  "material": false
+ },
+ {
+  "src": "A36",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A102",
+  "cite": "DEFINITIONS-2026-11-21.md RT-18 (clock stops in talk and pause only; Ledger, map, letters stop Tom not the town)",
+  "missing": "Whether the world freezes in talk staged while driving or walking (sit-down in the cab, witness walk)",
+  "material": true
+ },
+ {
+  "src": "A37",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s34 (an on-screen keyboard is there on a pad); its layout is interface art",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A38",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B24",
+  "cite": "RULINGS.md 28 Oct, 24 Sep, 23 Sep (offline brush-off); DEFINITIONS-2026-11-21.md 10.11; ONE-SHOT-PROMPT.md s34; RT-14 (live reply to act)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A39",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A9",
+  "cite": "RULINGS.md 28 Oct (live talk through our server, allowance, spending stop, written lines offline); coverage 8.6.1; DEFINITIONS-2026-11-21.md 10.11; ONE-SHOT-PROMPT.md s34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A40",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A36",
+  "cite": "RULINGS.md The voices in the game (cast voices and accents fixed); canon.md (fictional port town)",
+  "missing": "Region and dialect never named in prose; carried by cast voices and casting sheets",
+  "material": false
+ },
+ {
+  "src": "A41",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A35",
+  "cite": "RULINGS.md 1 Oct (Tom's written lines approved), 8 Oct (Tom L1 face); synthesis/DESIGN-ADDENDUM A25 (not voiced); ONE-SHOT-PROMPT.md s34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A42",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A4",
+  "cite": "DEFINITIONS-2026-11-21.md GD-07 (economy curve, sinks); MEASUREMENTS-NEEDED B1-B3, A11; ONE-SHOT-PROMPT.md frame rule 7",
+  "missing": "Prices, wages, cuts, fares per mile are first values the builder sets; none written; curve to be measured (PENDING)",
+  "material": false
+ },
+ {
+  "src": "A43",
+  "verdict": "planted",
+  "planted_n": 8,
+  "same_as": "A5",
+  "cite": "DEFINITIONS RT-16 Missed rent",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A44",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS RT-17 Money pots in practice; 2.7.1, 2.7.2 (payments draw from pocket, tin or book; no screen)",
+  "missing": "The input for paying or drawing money is not named (the use key and a prompt, s6, is the general rule)",
+  "material": false
+ },
+ {
+  "src": "A45",
+  "verdict": "planted",
+  "planted_n": 8,
+  "same_as": "A5",
+  "cite": "DEFINITIONS-2026-11-21.md RT-16 Missed rent",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A46",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A6",
+  "cite": "synthesis/DESIGN.md ER-CORE-04, ER-MONEY-03; DEFINITIONS-2026-11-21.md RT-16 (office never lost); ONE-SHOT-PROMPT.md s27 (drivers leave if unpaid, Pauline runs board)",
+  "missing": "No floor for the firm itself: book below zero, every driver gone, Sheila or Pauline lost or killed, all cars wrecked",
+  "material": true
+ },
+ {
+  "src": "A47",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A56",
+  "cite": "ONE-SHOT-PROMPT.md s36 (asks on nights one, three, five, seven, an envelope or a carry); DEFINITIONS-2026-11-21.md RT-02",
+  "missing": "Places, risks and cut of nights three, five, seven (story measure)",
+  "material": false
+ },
+ {
+  "src": "A48",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A31",
+  "cite": "DEFINITIONS-2026-11-21.md RT-02, RT-03 (written scenes owed by the story measure, STORY-BIBLE-M1, PENDING to 28 Nov)",
+  "missing": "Written scenes, the fire's truth, old firm's men, envelope contents, side stories still to be written",
+  "material": false
+ },
+ {
+  "src": "A49",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A31",
+  "cite": "DEFINITIONS-2026-11-21.md RT-02, RT-03 (written scenes owed by the story measure, STORY-BIBLE-M1, PENDING to 28 Nov)",
+  "missing": "Written scenes, the fire's truth, old firm's men, envelope contents, side stories still to be written",
+  "material": false
+ },
+ {
+  "src": "A50",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A32",
+  "cite": "canon.md Premise (Alison Sedman journalist, Philip Danby teacher, love interests) and content rule (no sexual content); ONE-SHOT-PROMPT.md s35 friendship thread",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A51",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A34",
+  "cite": "RULINGS.md 28 Sep (outline approved); canon.md (school closed); ONE-SHOT-PROMPT.md s5, s35",
+  "missing": "Goal and end state of June Suddaby, Father Walsh and Philip Danby (story measure)",
+  "material": false
+ },
+ {
+  "src": "A52",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A18",
+  "cite": "ONE-SHOT-PROMPT.md s29 (rivals' ground and eyes), s37 beats; DEFINITIONS-2026-11-21.md RT-05, RT-06",
+  "missing": "Rivals' bases, men, named lieutenants, what Tom can hit when sending men at a rival's property, and what a rival does when raided",
+  "material": true
+ },
+ {
+  "src": "A53",
+  "verdict": "planted",
+  "planted_n": 5,
+  "same_as": "A17",
+  "cite": "ONE-SHOT-PROMPT.md s30 The sit-down",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A54",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A94",
+  "cite": "ONE-SHOT-PROMPT.md s29 Agar (licence, letter, inspection); DEFINITIONS-2026-11-21.md RT-06 (solicitor names a hearing date)",
+  "missing": "What happens at the hearing, whether the licence can be lost, what that does to the firm",
+  "material": true
+ },
+ {
+  "src": "A55",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A51",
+  "cite": "ONE-SHOT-PROMPT.md s38, S33; DEFINITIONS-2026-11-21.md RT-01",
+  "missing": "Who among the crew makes the successor's offer and how chosen; which few people can be reached on the last day",
+  "material": true
+ },
+ {
+  "src": "A56",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B41",
+  "cite": "ONE-SHOT-PROMPT.md s14 (25 to 40, 3 to 5 steps); DEFINITIONS-2026-11-21.md GD-08",
+  "missing": "None listed or summarised; authored content pending",
+  "material": false
+ },
+ {
+  "src": "A57",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s14 (every step has a window on the town clock; failure continues); DEFINITIONS GD-03 (a job never waits on an impossible step, moves to failed)",
+  "missing": "Cap on jobs open at once and refusing an offer; tuning",
+  "material": false
+ },
+ {
+  "src": "A58",
+  "verdict": "planted",
+  "planted_n": 4,
+  "same_as": "A15",
+  "cite": "ONE-SHOT-PROMPT.md s25 Debts and collections",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A59",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B28",
+  "cite": "ONE-SHOT-PROMPT.md s5 (about nine game weeks), s39; DEFINITIONS-2026-11-21.md RT-04",
+  "missing": "What happens when the calendar runs out",
+  "material": true
+ },
+ {
+  "src": "A60",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A67",
+  "cite": "LIGHT-WEATHER-VALUES-2026-11-17.md (sunset 16:30 to 15:45, lamp switch-on); ONE-SHOT-PROMPT.md s5 weighted profiles",
+  "missing": "Sunrise, sunset and lamp times and weather weights by date not in the design file",
+  "material": false
+ },
+ {
+  "src": "A61",
+  "verdict": "planted",
+  "planted_n": 6,
+  "same_as": "A39",
+  "cite": "ONE-SHOT-PROMPT.md s8 Knowing the time (N)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A62",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A66",
+  "cite": "ONE-SHOT-PROMPT.md s3, s40 (sleep is a skip, stops for what the town has); RT-16 (sleeps in the office)",
+  "missing": "Where sleep is allowed, skip limits, effect on clothes and marks",
+  "material": false
+ },
+ {
+  "src": "A63",
+  "verdict": "planted",
+  "planted_n": 6,
+  "same_as": "A40",
+  "cite": "ONE-SHOT-PROMPT.md s8 (sound reach; Drawing a watcher away)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A64",
+  "verdict": "planted",
+  "planted_n": 6,
+  "same_as": "B31",
+  "cite": "ONE-SHOT-PROMPT.md s8 Drawing a watcher away; torch is s15 (lit torch counts as lit 0.7)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A65",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s7 Hiding (a still figure in a doorway counts at 0.12, caught only as a shape and beyond 8 m; rooms are their own light values 1, 0.7, 0.25, 0.12)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A66",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A29",
+  "cite": "ONE-SHOT-PROMPT.md s27 Getting ready (two under coat, one in hand, drawer, shed, tin), s15 taking, s16 [lifts off vans are s16; sizes go with the item list]",
+  "missing": "Item list, holdall capacity, pocket cash limit, drawer and shed capacity",
+  "material": false
+ },
+ {
+  "src": "A67",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A91",
+  "cite": "ONE-SHOT-PROMPT.md s16 Lifting from a pocket (authored thing, fixed limits); synthesis/DESIGN-ADDENDUM A34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A68",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s10 Tom's own line; DEFINITIONS RT-09 (strike, shove, grab and sends refused for covered people)",
+  "missing": "Staring, threatening or hitting a covered person with the car; the line is stated for hands and sends only",
+  "material": false
+ },
+ {
+  "src": "A69",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s11 soft edge (fares leave by the west or north road); s6 water's edge",
+  "missing": "The land edge on foot with no fare is not stated; level-design boundary",
+  "material": false
+ },
+ {
+  "src": "A70",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s9 Ground rules (public, open by hours, private, forbidden; a locked door says it is locked, s6; forbidden places skip the first warning)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A71",
+  "verdict": "planted",
+  "planted_n": 6,
+  "same_as": "B56",
+  "cite": "ONE-SHOT-PROMPT.md s8 Yard dogs (dogs never hurt: no verb harms a dog)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A72",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s11 Traffic (lights, lanes, always brake for people; only Tom's car strikes)",
+  "missing": "Density by hour and vehicle kinds are tuning and art",
+  "material": false
+ },
+ {
+  "src": "A73",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B44",
+  "cite": "ONE-SHOT-PROMPT.md s11; GV-01 (boot holds envelope, coat, box); GTAVI-MAP row 16 (respray)",
+  "missing": "Models, handling differences, lot stock, boot capacity, respray and plate cost and time",
+  "material": false
+ },
+ {
+  "src": "A74",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B20",
+  "cite": "ONE-SHOT-PROMPT.md s33; DEFINITIONS-2026-11-21.md RT-10 (revolver holds six, reload shown); GTAVI-MAP row 46 (no ammunition shops)",
+  "missing": "Who sells, price, where the Mickey's gun is and when; whether any gun besides the revolver exists",
+  "material": true
+ },
+ {
+  "src": "A75",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A80",
+  "cite": "ONE-SHOT-PROMPT.md s35 (club, calls on people), s40 (always something to do); synthesis/DESIGN-ADDENDUM A28; GTAVI-MAP row 72",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A76",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A41",
+  "cite": "canon.md Era; synthesis/DESIGN-ADDENDUM A17 (office phone, phone box call he makes back), A22 (call for ambulance)",
+  "missing": "Who Tom can ring (police, rival, anyone), coins, how a number is known, answering machine and pager use",
+  "material": true
+ },
+ {
+  "src": "A77",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A42",
+  "cite": "ONE-SHOT-PROMPT.md s5 The paper; synthesis/DESIGN-ADDENDUM A19, ER-PAPER-01",
+  "missing": "Authored versus generated, which days, size, whether read in full",
+  "material": false
+ },
+ {
+  "src": "A78",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s14 (letter opens as a page and goes into the Ledger), s38 (asks in writing)",
+  "missing": "Letters' content is owed to the story measure",
+  "material": false
+ },
+ {
+  "src": "A79",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A72",
+  "cite": "ONE-SHOT-PROMPT.md s24 (Ledger pages), s28 (board), s3 (up, down, Enter)",
+  "missing": "How the chalkboard is used in the world and the list of panels",
+  "material": false
+ },
+ {
+  "src": "A80",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s32 Property that reacts (the office fills: a night desk, more phones); rung 3 table",
+  "missing": "What the night desk does in play beyond being a rung item",
+  "material": false
+ },
+ {
+  "src": "A81",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A35",
+  "cite": "RULINGS.md 1 Oct (Tom's written lines approved), 8 Oct (Tom L1 face); synthesis/DESIGN-ADDENDUM A25 (not voiced); ONE-SHOT-PROMPT.md s34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A82",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A64",
+  "cite": "ONE-SHOT-PROMPT.md s32 Tom's wardrobe, s7 (blood until washed, dirt), s27; GV-02",
+  "missing": "Where Tom changes, how dirt accumulates, other hats and scarves",
+  "material": false
+ },
+ {
+  "src": "A83",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s3 Menus and saving (New game, Continue, Quit; Esc pauses; manual saves in several slots); DEFINITIONS AX-07 (eight slots), AX-06",
+  "missing": "Load game on the title screen and the pause menu's item list are not set in one place",
+  "material": false
+ },
+ {
+  "src": "A84",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Menu detail; s3 'no destructive choice sits one press from Resume'; AX-07 slots",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A85",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B68",
+  "cite": "ONE-SHOT-PROMPT.md s3 (autosave, held during a fight, never refused); DEFINITIONS-2026-11-21.md AX-07",
+  "missing": "Whether manual save is allowed mid-chase, mid-talk, in a sit-down",
+  "material": false
+ },
+ {
+  "src": "A86",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A78",
+  "cite": "Save migration tooling; AX-06 settings survive an update",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A87",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A75",
+  "cite": "RULINGS.md 23 Sep (60 fps at 3440x1440 on the RX 6700, never under 30); synthesis/DESIGN.md ER-PERF-01; ONE-SHOT-PROMPT.md s3 presets",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A88",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Engine and build measurement; s11 no loading at the soft edge, s3 progress while it prepares",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A89",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Standard engine display options; s3 offers presets, brightness and scale",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A90",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Standard engine layout; AX-01 tests 1280x720, 1920x1080 and 3440x1440",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A91",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 offers brightness; ER-NIGHT-01 brightness floor; calibration picture is interface art",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A92",
+  "verdict": "planted",
+  "planted_n": 9,
+  "same_as": "A74",
+  "cite": "DEFINITIONS AX-02 Subtitle options",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A93",
+  "verdict": "ruled_out",
+  "planted_n": null,
+  "same_as": "A77",
+  "cite": "RULINGS.md 23 Sep (English only, text out of code)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A94",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A76",
+  "cite": "Engine-standard pad details; AX-05 covers rebinding and sensitivity",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A95",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A76",
+  "cite": "Engine-standard pad details; AX-05 covers rebinding and sensitivity",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A96",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-04 (five sliders, mono, voices clear, loud noise softening); output device is system standard",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A97",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A38",
+  "cite": "synthesis/DESIGN-ADDENDUM A8 (music from places, score only at cut scenes and act ends, no combat music); canon.md (pirate radio owed by brand bible)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A98",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s8 (sound reach), s3 (sound shown), lane STREET-SOUND-SOURCES-AND-LISTENING-PLAN-2026-11-17.md; synthesis DESIGN-ADDENDUM A8",
+  "missing": "Sound brief by place and hour is audio production content",
+  "material": false
+ },
+ {
+  "src": "A99",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Optional extra assist; s3 lists the assists ('longer walks'), RT-18 Ledger pauses the town",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A100",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Optional extra assist; s3 (with every assist on an impatient player finishes the first hour)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A101",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "AX-01 (contrast 4.5 to 1, one plain face); optional extra",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A102",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-09 Screen narration of menus (menus, Ledger lines and prompts read aloud)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A103",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Optional extra; typed talk with suggested lines and pad keyboard is the stated input",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A104",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A44",
+  "cite": "ONE-SHOT-PROMPT.md s4 (every hint fires first time it can mean something, once, 12 s apart), S08",
+  "missing": "No hint list, wording or triggers; rule only",
+  "material": false
+ },
+ {
+  "src": "A105",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 assist 'hints again' from the Ledger; a bindings page is interface detail",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A106",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s4 (ferry shot skippable with Esc), s27 ride skip; RULINGS 23 Sep (few short skippable cutscenes)",
+  "missing": "Key and summary of other skipped scenes",
+  "material": false
+ },
+ {
+  "src": "A107",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A99",
+  "cite": "RULINGS.md 24 Sep (AI notice, Steam AI disclosure); shipping wording",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A108",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A100",
+  "cite": "DEFINITIONS-2026-11-21.md 10.9 Player support, 8.2.1 Crash and bug reporting",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A109",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s24 (Ledger opened in 120 ms, pages People, Day book, Open, Money, Map; any person in three inputs; wrong belief struck through with day and reason; look under the Hook sheet)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A110",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s24 paper map (a drawn map, marks only places been or told of; Comma stops Tom, pauses nothing)",
+  "missing": "Zoom and player marks",
+  "material": false
+ },
+ {
+  "src": "A111",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Interface placement; s3 'no prompt sits over a subtitle', s24 Ledger lines within 3 s",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A112",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s24 Money page in words (the example line: pocket, tin, rent, what Darren owes); no number on screen",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A113",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B72",
+  "cite": "DEFINITIONS-2026-11-21.md GD-02 (at least 25 in busiest view); MEASUREMENTS-NEEDED B4; ONE-SHOT-PROMPT.md s5 (tuning table's hours)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A114",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s5 (everyone keeps an hourly routine, people sleep at night, lit windows follow), s4 rain (fewer out, voices halved), s9 private-place warnings",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A115",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A83",
+  "cite": "ONE-SHOT-PROMPT.md s10 (people step in); GTAVI-MAP-2026-11-21.md 2.5.3 raised (a person with nerve may step in)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A116",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B34",
+  "cite": "ONE-SHOT-PROMPT.md s10 (comes round sometimes robbed), S17 (maybe robbed, said)",
+  "missing": "What is taken, by whom, recoverable, and the no-chance condition for 'sometimes'",
+  "material": true
+ },
+ {
+  "src": "A117",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B16",
+  "cite": "ONE-SHOT-PROMPT.md s20, s10, S11, S17",
+  "missing": "Days per injury, where Tom reappears, whether station and hospital are modelled",
+  "material": false
+ },
+ {
+  "src": "A118",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A48",
+  "cite": "ONE-SHOT-PROMPT.md s27 (orders, man at his side, crew fates); DEFINITIONS-2026-11-21.md 2.11.3; DESIGN ER-CREW-01/02",
+  "missing": "Crew size cap, how many follow, crew fighting values, digit-to-order mapping",
+  "material": false
+ },
+ {
+  "src": "A119",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A58",
+  "cite": "ONE-SHOT-PROMPT.md s31 Fronts (launderette, caff, empty unit; money, favour or pressure; named man); synthesis/DESIGN-ADDENDUM A15",
+  "missing": "Which job gets each front by each road, front's share and weekly wash amount, a rival's action on one",
+  "material": false
+ },
+ {
+  "src": "A120",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A60",
+  "cite": "ONE-SHOT-PROMPT.md s28; DEFINITIONS-2026-11-21.md 2.15.2 (five days in a fortnight)",
+  "missing": "Who holds the ferry rank and second rank now and what the word costs",
+  "material": false
+ },
+ {
+  "src": "A121",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A92",
+  "cite": "ONE-SHOT-PROMPT.md s12 (one other firm, two cars, never a rival); DESIGN-ADDENDUM A14",
+  "missing": "Owner and office location unnamed; whether Tom can frighten, buy or absorb it",
+  "material": false
+ },
+ {
+  "src": "A122",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s20 (once investigating Ellis may search the office once, notice the evening before; what is stored counts for the case); s37 beat One case",
+  "missing": "Which night and what a find weighs beyond joining the case; ties to the ending's charge weighing",
+  "material": false
+ },
+ {
+  "src": "A123",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A55",
+  "cite": "ONE-SHOT-PROMPT.md s21 (beat, one patrol car on a route, 'You, there'); S11",
+  "missing": "Routes and timetable of beat and patrol car, daytime police, second constable's role (authored routines)",
+  "material": false
+ },
+ {
+  "src": "A124",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s33 dial states (War: watchers run sooner and report more, night fares fall); DEFINITIONS RT-12",
+  "missing": "Numbers for the fall in fares and the watchers' speed are tuning-table values",
+  "material": false
+ },
+ {
+  "src": "A125",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A70",
+  "cite": "ONE-SHOT-PROMPT.md s39",
+  "missing": "Which of jobs, rivals, side stories, fronts, rent and the dial still run after the ending",
+  "material": true
+ },
+ {
+  "src": "A126",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Presentation detail; s39 close in the town then credits",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A127",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Engineering budget; ER-PERF-01 (60 fps at 3440x1440 on the RX 6700), GD-02",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A128",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s3 (a reload gives the same next hour, by design), s13 Fares, few and chosen",
+  "missing": "Whether scouting by reload is to be limited; design chose determinism",
+  "material": false
+ },
+ {
+  "src": "A129",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A71",
+  "cite": "Interface look is art direction under the Hook sheet; credits and photo mode under RULINGS floor",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A130",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A101",
+  "cite": "Cross-reference hygiene of the copy",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A131",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Document hygiene: the references are the design's own parts, shipped with the build",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A132",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS RT-04 (Act II is about seven weeks; the stall rule bites at the end of the eighth, said in the definition)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A133",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s5 (recognition gated by knowing him), s7 Sight (recognises at 25 m only if they know him; a face is a face at 8 m); the two figures serve different rungs",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A134",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Interface art; AX-11 (the light cue is corner darkening, the outline is a shape)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A135",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B70",
+  "cite": "ONE-SHOT-PROMPT.md s5 weighted profiles, 'same seed'; LIGHT-WEATHER-VALUES",
+  "missing": "Profile weights, duration, how the seed is chosen",
+  "material": false
+ },
+ {
+  "src": "A136",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A68",
+  "cite": "synthesis/DESIGN-ADDENDUM A20; ONE-SHOT-PROMPT.md s5 calendar (Thursday market, Saturday match, Sunday, Bonfire Night, Remembrance); routines are casting-sheet data",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A137",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A68",
+  "cite": "synthesis/DESIGN-ADDENDUM A20; ONE-SHOT-PROMPT.md s5 calendar (Thursday market, Saturday match, Sunday, Bonfire Night, Remembrance); routines are casting-sheet data",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A138",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 content rule (violence stays, full period swearing, no slurs); rating is shipping business, 10.12",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A139",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS 8.2.1, 10.11 (nothing leaves the PC without a yes); shipping privacy business",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "A140",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS 10.7 (Steam Cloud sync, clash shows both); offline is Steam client behaviour",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B1",
+  "verdict": "planted",
+  "planted_n": 7,
+  "same_as": "A21",
+  "cite": "ONE-SHOT-PROMPT.md s5 Who tells whom",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B2",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A49",
+  "cite": "ONE-SHOT-PROMPT.md s5 Each person their own temper, s27 (signs before breaking); DEFINITIONS-2026-11-21.md RT-07",
+  "missing": "Scales, thresholds and rates for nerve and loyalty (Core values, tuning)",
+  "material": false
+ },
+ {
+  "src": "B3",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A1",
+  "cite": "DEFINITIONS-2026-11-21.md RT-01 (five mornings, holds/thin/falls from wash weeks); ONE-SHOT-PROMPT.md s38",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B4",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A2",
+  "cite": "ONE-SHOT-PROMPT.md s39 (three endings, signs); DEFINITIONS-2026-11-21.md RT-01 (business survives if no item fell, at most two thin)",
+  "missing": "No rule maps books, friendship held, Ellis's charges, hunted state, rival rungs, successor and street-as-fact to one of the five built states; 'friendship holds' and Burn Both entry undefined",
+  "material": true
+ },
+ {
+  "src": "B5",
+  "verdict": "planted",
+  "planted_n": 2,
+  "same_as": "B10",
+  "cite": "ONE-SHOT-PROMPT.md s17 Hold-ups",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B6",
+  "verdict": "planted",
+  "planted_n": 1,
+  "same_as": "B11",
+  "cite": "ONE-SHOT-PROMPT.md s15 Break-ins",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B7",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A12",
+  "cite": "ONE-SHOT-PROMPT.md s3 Controls (prototype keys, rebinding, pad reaches every verb); DEFINITIONS-2026-11-21.md AX-05",
+  "missing": "No default key table for move/run/use/blows/guard/slip/grab/drive keys or gamepad layout on the page (prototype's bindings are outside it)",
+  "material": false
+ },
+ {
+  "src": "B8",
+  "verdict": "planted",
+  "planted_n": 10,
+  "same_as": "A10",
+  "cite": "DEFINITIONS RT-15",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B9",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B24",
+  "cite": "RULINGS.md 28 Oct, 24 Sep, 23 Sep (offline brush-off); DEFINITIONS-2026-11-21.md 10.11; ONE-SHOT-PROMPT.md s34; RT-14 (live reply to act)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B10",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A9",
+  "cite": "RULINGS.md 28 Oct (live talk through our server, allowance, spending stop, written lines offline); coverage 8.6.1; DEFINITIONS-2026-11-21.md 10.11; ONE-SHOT-PROMPT.md s34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B11",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s3 One clock (a game hour is 45 real seconds, a day 18 real minutes, one value in the tuning table); timings are written as 'real seconds' or 'game minute'; DEFINITIONS GD-01 (crossing 3 to 5 min on foot, 60 to 100 s by car, provisional)",
+  "missing": "The crossing band against the 45 s hour is a measured value (GD-01 pending); unit words are in the text",
+  "material": false
+ },
+ {
+  "src": "B12",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A102",
+  "cite": "DEFINITIONS-2026-11-21.md RT-18 (clock stops in talk and pause only; Ledger, map, letters stop Tom not the town)",
+  "missing": "Whether the world freezes in talk staged while driving or walking (sit-down in the cab, witness walk)",
+  "material": true
+ },
+ {
+  "src": "B13",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A7",
+  "cite": "ONE-SHOT-PROMPT.md s10 Death, bodies and the missing; s27 crew fates; DEFINITIONS-2026-11-21.md RT-09 (Tom's line)",
+  "missing": "What happens to acts, rival ladder, sit-down, radio, book when Tom kills or hospitalises Ron, Pauline, Darren, Sheila, a rival head, Garbutt, a bought officer, Ellis or the inspector; no protection or fallback written",
+  "material": true
+ },
+ {
+  "src": "B14",
+  "verdict": "planted",
+  "planted_n": 8,
+  "same_as": "B7",
+  "cite": "DEFINITIONS RT-16 Missed rent",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B15",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B3",
+  "cite": "ONE-SHOT-PROMPT.md s29 (ladder never skips), s37 (no dead weeks); DEFINITIONS-2026-11-21.md RT-04 (stall rule)",
+  "missing": "What moves a rival from visit to pressure to threat to sit-down (deeds, time, rung, pushback)",
+  "material": true
+ },
+ {
+  "src": "B16",
+  "verdict": "planted",
+  "planted_n": 5,
+  "same_as": "B4",
+  "cite": "ONE-SHOT-PROMPT.md s30 The sit-down",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B17",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A95",
+  "cite": "ONE-SHOT-PROMPT.md S32 (Act III opens with the letter after the sit-down), s38",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B18",
+  "verdict": "gap",
+  "planted_n": null,
+  "same_as": "A16",
+  "cite": "ONE-SHOT-PROMPT.md s31/s32 and DEFINITIONS-2026-11-21.md RT-04 both put the cold-store contract inside rung 3 yet say it is won at rung 3",
+  "missing": "What first gives the cold-store contract (trigger, giver, job) so rung 3 can be reached",
+  "material": true
+ },
+ {
+  "src": "B19",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A29",
+  "cite": "ONE-SHOT-PROMPT.md s27 Getting ready (two under coat, one in hand, drawer, shed, tin), s15 taking, s16",
+  "missing": "Item list, holdall capacity, pocket cash limit, drawer and shed capacity",
+  "material": false
+ },
+ {
+  "src": "B20",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B53",
+  "cite": "ONE-SHOT-PROMPT.md s16 (hot mark fades with value and distance; Rita refuses hot goods)",
+  "missing": "Fade rate and distance",
+  "material": false
+ },
+ {
+  "src": "B21",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A4",
+  "cite": "DEFINITIONS-2026-11-21.md GD-07 (economy curve, sinks); MEASUREMENTS-NEEDED B1-B3, A11; ONE-SHOT-PROMPT.md frame rule 7",
+  "missing": "Prices, wages, cuts, fares per mile are first values the builder sets; none written; curve to be measured (PENDING)",
+  "material": false
+ },
+ {
+  "src": "B22",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS RT-17 and 2.7.1 (book money pays a car, a front's share, shops and the doctor directly; cash is the pocket; nothing turns the book back into tin)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B23",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B22",
+  "cite": "ONE-SHOT-PROMPT.md s31, s26/S26; DESIGN-ADDENDUM A15",
+  "missing": "Which fronts cost what by each road, round setup and how a rival takes one",
+  "material": false
+ },
+ {
+  "src": "B24",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B22",
+  "cite": "ONE-SHOT-PROMPT.md s31, s26/S26; DESIGN-ADDENDUM A15",
+  "missing": "Which fronts cost what by each road, round setup and how a rival takes one",
+  "material": false
+ },
+ {
+  "src": "B25",
+  "verdict": "planted",
+  "planted_n": 4,
+  "same_as": "B40",
+  "cite": "ONE-SHOT-PROMPT.md s25 Debts and collections",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B26",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A28",
+  "cite": "ONE-SHOT-PROMPT.md s10 (things to hand, carried weapons); DEFINITIONS-2026-11-21.md RT-10, RT-11; GTAVI-MAP-2026-11-21.md row 46 (no ammunition count or shops)",
+  "missing": "Per-weapon damage, reach, speed, noise numbers (melee sheet, footage pending); ammunition supply ruled out, gun buying see A62",
+  "material": false
+ },
+ {
+  "src": "B27",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A27",
+  "cite": "ONE-SHOT-PROMPT.md s10 (finishing is a separate decision), s27 (move or hide a body, sunk body never found); DEFINITIONS-2026-11-21.md RT-11",
+  "missing": "Input and scene for finishing a man down; how Tom drags, loads or sinks a body; knife wounds on men Tom fights",
+  "material": true
+ },
+ {
+  "src": "B28",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A27",
+  "cite": "ONE-SHOT-PROMPT.md s10 (finishing is a separate decision), s27 (move or hide a body, sunk body never found); DEFINITIONS-2026-11-21.md RT-11",
+  "missing": "Input and scene for finishing a man down; how Tom drags, loads or sinks a body; knife wounds on men Tom fights",
+  "material": true
+ },
+ {
+  "src": "B29",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s21 (challenge: stand, run, word), s22 (foot chase ends in 90 s, caught or lost; car chase caught is a stop or an arrest); s20 (arrest needs a signed statement or an officer who saw it)",
+  "missing": "What a constable's foot chase ends in when Tom is caught: a search, a caution, an arrest or nothing, and whether running alone counts as a deed; and what seeing him again later is for. Only the car chase says 'a stop or an arrest'.",
+  "material": true
+ },
+ {
+  "src": "B30",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A86",
+  "cite": "ONE-SHOT-PROMPT.md s21 (search finds what is under the coat), s33 War (stop and search) [envelope, weapon, cash found in a stop: what a find does]",
+  "missing": "What a gun found in a stop and search does to Tom's case (charge, arrest hours)",
+  "material": true
+ },
+ {
+  "src": "B31",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B32",
+  "cite": "ONE-SHOT-PROMPT.md s20; DEFINITIONS-2026-11-21.md RT-13",
+  "missing": "What bail limits, what several charges do, how charges weigh into the ending",
+  "material": true
+ },
+ {
+  "src": "B32",
+  "verdict": "gap",
+  "planted_n": null,
+  "same_as": "A8",
+  "cite": "none (grep: no rule for striking, disarming or killing a constable, Ellis or the patrol crew)",
+  "missing": "Charge weight, effect on Ellis's stage, manhunt trigger, arrest hours when Tom hits or kills an officer",
+  "material": true
+ },
+ {
+  "src": "B33",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B16",
+  "cite": "ONE-SHOT-PROMPT.md s20, s10, S11, S17",
+  "missing": "Days per injury, where Tom reappears, whether station and hospital are modelled",
+  "material": false
+ },
+ {
+  "src": "B34",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A28",
+  "cite": "ONE-SHOT-PROMPT.md s10 (things to hand, carried weapons); DEFINITIONS-2026-11-21.md RT-10, RT-11; GTAVI-MAP-2026-11-21.md row 46 (no ammunition count or shops)",
+  "missing": "Per-weapon damage, reach, speed, noise numbers (melee sheet, footage pending); ammunition supply ruled out, gun buying see A62",
+  "material": false
+ },
+ {
+  "src": "B35",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A12",
+  "cite": "ONE-SHOT-PROMPT.md s3 Controls (prototype keys, rebinding, pad reaches every verb); DEFINITIONS-2026-11-21.md AX-05",
+  "missing": "No default key table for move/run/use/blows/guard/slip/grab/drive keys or gamepad layout on the page (prototype's bindings are outside it)",
+  "material": false
+ },
+ {
+  "src": "B36",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B62",
+  "cite": "ONE-SHOT-PROMPT.md s9 Ground rules (warns, warns again, calls someone or acts)",
+  "missing": "What 'acts' means (fight, call, dog)",
+  "material": false
+ },
+ {
+  "src": "B37",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B20",
+  "cite": "ONE-SHOT-PROMPT.md s33; DEFINITIONS-2026-11-21.md RT-10 (revolver holds six, reload shown); GTAVI-MAP row 46 (no ammunition shops)",
+  "missing": "Who sells, price, where the Mickey's gun is and when; whether any gun besides the revolver exists",
+  "material": true
+ },
+ {
+  "src": "B38",
+  "verdict": "planted",
+  "planted_n": 3,
+  "same_as": "B27",
+  "cite": "ONE-SHOT-PROMPT.md s23 Taking a parked car",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B39",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s11 (a cab that will not drive on: Tom walks, the firm fetches it, off the road a day), s20 (the coat is kept on arrest)",
+  "missing": "Where a cab left at the edge or at an arrest ends up overnight; not stated",
+  "material": false
+ },
+ {
+  "src": "B40",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B44",
+  "cite": "ONE-SHOT-PROMPT.md s11; GV-01 (boot holds envelope, coat, box); GTAVI-MAP row 16 (respray)",
+  "missing": "Models, handling differences, lot stock, boot capacity, respray and plate cost and time",
+  "material": false
+ },
+ {
+  "src": "B41",
+  "verdict": "planted",
+  "planted_n": 1,
+  "same_as": "A24",
+  "cite": "ONE-SHOT-PROMPT.md s15 (list of enterable rooms); layout is atlas-01 (RULINGS 5 Oct), GD-01 crossing time",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B42",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A69",
+  "cite": "ONE-SHOT-PROMPT.md s11 soft edge; s6 water's edge",
+  "missing": "The land edge on foot with no fare is not stated; level-design boundary",
+  "material": false
+ },
+ {
+  "src": "B43",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A33",
+  "cite": "RULINGS.md Faces (11 casting sheets approved as text); ONE-SHOT-PROMPT.md s5 (new minor people named within canon); canon.md cast",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B44",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A32",
+  "cite": "canon.md Premise (Alison Sedman journalist, Philip Danby teacher, love interests) and content rule (no sexual content); ONE-SHOT-PROMPT.md s35 friendship thread",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B45",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A50",
+  "cite": "ONE-SHOT-PROMPT.md s32 (trust comes with time and a clean week; a name step never goes back)",
+  "missing": "How much time; whether trust can be lost (name step never goes back)",
+  "material": false
+ },
+ {
+  "src": "B46",
+  "verdict": "gap",
+  "planted_n": null,
+  "same_as": "A22",
+  "cite": "ONE-SHOT-PROMPT.md s5 (recognition gated by knowing him) but no definition of knowing",
+  "missing": "What makes a person know Tom (spoken to, a fare, seen at the office, told his name) which gates recognition and the name ladder",
+  "material": true
+ },
+ {
+  "src": "B47",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A48",
+  "cite": "ONE-SHOT-PROMPT.md s27 (orders, man at his side, crew fates); DEFINITIONS-2026-11-21.md 2.11.3; DESIGN ER-CREW-01/02",
+  "missing": "Crew size cap, how many follow, crew fighting values, digit-to-order mapping",
+  "material": false
+ },
+ {
+  "src": "B48",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B64",
+  "cite": "DEFINITIONS-2026-11-21.md RT-08 (outcome like Tom's own deeds; the man knows); ONE-SHOT-PROMPT.md s27 (past his nerve he talks, fates)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B49",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A51",
+  "cite": "ONE-SHOT-PROMPT.md s38, S33; DEFINITIONS-2026-11-21.md RT-01",
+  "missing": "Who among the crew makes the successor's offer and how chosen; which few people can be reached on the last day",
+  "material": true
+ },
+ {
+  "src": "B50",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A56",
+  "cite": "ONE-SHOT-PROMPT.md s36 (asks on nights one, three, five, seven, an envelope or a carry); DEFINITIONS-2026-11-21.md RT-02",
+  "missing": "Places, risks and cut of nights three, five, seven (story measure)",
+  "material": false
+ },
+ {
+  "src": "B51",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B41",
+  "cite": "ONE-SHOT-PROMPT.md s14 (25 to 40, 3 to 5 steps); DEFINITIONS-2026-11-21.md GD-08",
+  "missing": "None listed or summarised; authored content pending",
+  "material": false
+ },
+ {
+  "src": "B52",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A66",
+  "cite": "ONE-SHOT-PROMPT.md s3, s40 (sleep is a skip, stops for what the town has); RT-16 (sleeps in the office)",
+  "missing": "Where sleep is allowed, skip limits, effect on clothes and marks",
+  "material": false
+ },
+ {
+  "src": "B53",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A41",
+  "cite": "canon.md Era; synthesis/DESIGN-ADDENDUM A17 (office phone, phone box call he makes back), A22 (call for ambulance)",
+  "missing": "Who Tom can ring (police, rival, anyone), coins, how a number is known, answering machine and pager use",
+  "material": true
+ },
+ {
+  "src": "B54",
+  "verdict": "planted",
+  "planted_n": 6,
+  "same_as": "B31",
+  "cite": "ONE-SHOT-PROMPT.md s8 (O stone or bin, N watch; the torch is s15)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B55",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B55",
+  "cite": "DEFINITIONS-2026-11-21.md 2.12.3 (filthy refused where clean admitted; Harbour Board counter); ONE-SHOT-PROMPT.md s32",
+  "missing": "Which other doors check clothes, how dirt is got and washed, where Tom changes",
+  "material": false
+ },
+ {
+  "src": "B56",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A64",
+  "cite": "ONE-SHOT-PROMPT.md s32 Tom's wardrobe, s7 (blood until washed, dirt), s27; GV-02",
+  "missing": "Where Tom changes, how dirt accumulates, other hats and scarves",
+  "material": false
+ },
+ {
+  "src": "B57",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B70",
+  "cite": "ONE-SHOT-PROMPT.md s5 weighted profiles, 'same seed'; LIGHT-WEATHER-VALUES",
+  "missing": "Profile weights, duration, how the seed is chosen",
+  "material": false
+ },
+ {
+  "src": "B58",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A67",
+  "cite": "LIGHT-WEATHER-VALUES-2026-11-17.md (sunset 16:30 to 15:45, lamp switch-on); ONE-SHOT-PROMPT.md s5 weighted profiles",
+  "missing": "Sunrise, sunset and lamp times and weather weights by date not in the design file",
+  "material": false
+ },
+ {
+  "src": "B59",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A38",
+  "cite": "synthesis/DESIGN-ADDENDUM A8 (music from places, score only at cut scenes and act ends, no combat music); canon.md (pirate radio owed by brand bible)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B60",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A44",
+  "cite": "ONE-SHOT-PROMPT.md s4 (every hint fires first time it can mean something, once, 12 s apart), S08",
+  "missing": "No hint list, wording or triggers; rule only",
+  "material": false
+ },
+ {
+  "src": "B61",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A99",
+  "cite": "RULINGS.md 24 Sep (AI notice, Steam AI disclosure); shipping wording",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B62",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s24 (Ledger pages, any person in three inputs, paper map, Open page; see A109 here)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B63",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B68",
+  "cite": "ONE-SHOT-PROMPT.md s3 (autosave, held during a fight, never refused); DEFINITIONS-2026-11-21.md AX-07",
+  "missing": "Whether manual save is allowed mid-chase, mid-talk, in a sit-down",
+  "material": false
+ },
+ {
+  "src": "B64",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-07 (eight slots, three rotating autosaves, atomic swap so a crash never loses the last good save); migration across patches see earlier A78",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B65",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A83",
+  "cite": "ONE-SHOT-PROMPT.md s3 Menus and saving; AX-06, AX-07, AX-02 (offered before first sound), AX-04",
+  "missing": "Load game and Credits on the title screen not set in one place",
+  "material": false
+ },
+ {
+  "src": "B66",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 (saves on quit; Continue returns Tom exactly), AX-07 never loses the only save; mid-reply quit is engineering",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B67",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "B24",
+  "cite": "RULINGS.md 28 Oct, 24 Sep, 23 Sep (offline brush-off); DEFINITIONS-2026-11-21.md 10.11; ONE-SHOT-PROMPT.md s34; RT-14 (live reply to act)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B68",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A75",
+  "cite": "RULINGS.md 23 Sep (60 fps at 3440x1440 on the RX 6700, never under 30); synthesis/DESIGN.md ER-PERF-01; ONE-SHOT-PROMPT.md s3 presets",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B69",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Standard engine display options; s3 presets, brightness and scale",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B70",
+  "verdict": "planted",
+  "planted_n": 9,
+  "same_as": "A74",
+  "cite": "DEFINITIONS AX-02 Subtitle options",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B71",
+  "verdict": "ruled_out",
+  "planted_n": null,
+  "same_as": "A77",
+  "cite": "RULINGS.md 23 Sep (English only, text out of code)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B72",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A76",
+  "cite": "Engine-standard pad details; AX-05 covers rebinding and sensitivity",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B73",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-04 Audio options (sliders, mono, voices clear, loud noise softening)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B74",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A12",
+  "cite": "DEFINITIONS AX-05 (every action rebindable, conflicts flagged in the test), s3 (Esc pauses everywhere; up, down, Enter in any panel)",
+  "missing": "Esc and digit handling while the talk box has focus; interface detail",
+  "material": false
+ },
+ {
+  "src": "B75",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A102",
+  "cite": "DEFINITIONS-2026-11-21.md RT-18 (clock stops in talk and pause only; Ledger, map, letters stop Tom not the town)",
+  "missing": "Whether the world freezes in talk staged while driving or walking (sit-down in the cab, witness walk)",
+  "material": true
+ },
+ {
+  "src": "B76",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "AX-05 (every hold becomes a tap); timing windows are tuning values",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B77",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Optional extra; hints again from the Ledger (s3) and the Open page serve",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B78",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-03 (each motion effect has its own switch); optional extras",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B79",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Interface placement; s3 'no prompt sits over a subtitle'",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B80",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "DEFINITIONS AX-01 (24 units is 24 px at 1080p, scales 100 to 200%, tested at three resolutions)",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B81",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B29",
+  "cite": "ONE-SHOT-PROMPT.md s39",
+  "missing": "What still runs after the ending and whether the hunted state persists",
+  "material": true
+ },
+ {
+  "src": "B82",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B57",
+  "cite": "ONE-SHOT-PROMPT.md s12; DESIGN-ADDENDUM A14",
+  "missing": "Owner, office, cars unnamed; whether Tom can buy, hurt or frighten it",
+  "material": false
+ },
+ {
+  "src": "B83",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A72",
+  "cite": "ONE-SHOT-PROMPT.md s24 (Ledger pages), s28 (board), s3 (up, down, Enter)",
+  "missing": "How the chalkboard is used in the world and the list of panels",
+  "material": false
+ },
+ {
+  "src": "B84",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A42",
+  "cite": "ONE-SHOT-PROMPT.md s5 The paper; synthesis/DESIGN-ADDENDUM A19, ER-PAPER-01",
+  "missing": "Authored versus generated, which days, size, whether read in full",
+  "material": false
+ },
+ {
+  "src": "B85",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "canon.md Era (CCTV rare); GTAVI-MAP row 52 (wiping recordings: CCTV rare)",
+  "missing": "Where the bank camera covers and its recycling; one place, a level detail",
+  "material": false
+ },
+ {
+  "src": "B86",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "ONE-SHOT-PROMPT.md s9 (a nod, a greeting, a hard look, a shove and 'Oi!'; each an act with seven slots, answered within 1 s, remembered; a greeting raises nothing; a hard look and a shove are rungs 1 and 4); s10 grab is its own input",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B87",
+  "verdict": "defined",
+  "planted_n": null,
+  "same_as": "A91",
+  "cite": "ONE-SHOT-PROMPT.md s16 Lifting from a pocket (authored thing, fixed limits); synthesis/DESIGN-ADDENDUM A34",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B88",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "B46",
+  "cite": "DEFINITIONS-2026-11-21.md 2.15.2 (rank by five days in a fortnight; accounts in order)",
+  "missing": "Place of the second rank; fares each account adds",
+  "material": false
+ },
+ {
+  "src": "B89",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "Document hygiene: the references are the design's own parts",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B90",
+  "verdict": "not_material",
+  "planted_n": null,
+  "same_as": "A101",
+  "cite": "Cross-reference hygiene of the copy",
+  "missing": "",
+  "material": false
+ },
+ {
+  "src": "B91",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": "A54",
+  "cite": "ONE-SHOT-PROMPT.md s5 (thirty regulars with routines), casting sheets approved (RULINGS 25 Sep), s21 (two bought officers), DEFINITIONS RT-03 (customs officer)",
+  "missing": "Minor roles and names are casting-sheet and story-measure content",
+  "material": false
+ },
+ {
+  "src": "B92",
+  "verdict": "partly",
+  "planted_n": null,
+  "same_as": null,
+  "cite": "s3 assists (seeing outline: people facing him; longer walks: a witness's walk 50% longer); s22 chase 7 s or 70 m",
+  "missing": "Whether longer walks stretches the chase rule; the outline's facing angle is a tuning value",
+  "material": false
+ }
+]

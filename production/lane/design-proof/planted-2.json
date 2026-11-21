@@ -1,0 +1,117 @@
+{
+ "made": "2026-11-21",
+ "round": 2,
+ "source": "ONE-SHOT-PROMPT.md from \"# LEDGER, as the player plays it\", tags stripped, \"Ids not placed\" dropped, DEFINITIONS-2026-11-21.md (both parts, definitions and standards, ids dropped; GD-06 mods kept as out) and GTAVI-MAP GV-01 to GV-06 folded in as six new sections; all ## sections renumbered 1..n after planting",
+ "planted": [
+  {
+   "n": 1,
+   "name": "Break-ins",
+   "parts": [
+    "1.6.x break-ins"
+   ],
+   "group": "1 verbs",
+   "heading": "Break-ins",
+   "words_removed": 424,
+   "removed_text_start": "## 15. Break-ins\n\nRooms are enterable where jobs and stories go: Mickey's and the flat above, the caff, Rita's back room, Hal's shop, Ada's front room, Iveson's hut, the chapel hall, and the break-in "
+  },
+  {
+   "n": 2,
+   "name": "Hold-ups",
+   "parts": [
+    "1.6.15"
+   ],
+   "group": "1 verbs",
+   "heading": "Hold-ups",
+   "words_removed": 582,
+   "removed_text_start": "## 17. Hold-ups\n\nThe owner's yes of 20 November: hold-ups of shops and of people, rare and late, loud, always witnessed and remembered, heavily punished, never a game over.\n\nWhen it can happen. Never "
+  },
+  {
+   "n": 3,
+   "name": "Taking a parked car",
+   "parts": [
+    "1.2.x taking a car"
+   ],
+   "group": "1 verbs",
+   "heading": "Taking a parked car",
+   "words_removed": 92,
+   "removed_text_start": "## 23. Taking a parked car\n\nOnly parked cars, never a car with somebody in it, and only by force: a window broken or a tool at the door, loud (heard at the force reach), about 6 s, no minigame. The ow"
+  },
+  {
+   "n": 4,
+   "name": "Debts and collections",
+   "parts": [
+    "2.8.x"
+   ],
+   "group": "2 town (money)",
+   "heading": "Debts and collections",
+   "words_removed": 177,
+   "removed_text_start": "## 25. Debts and collections\n\nMickey's debt book is five debts and five lessons, \u00a3156 in all:\n- Darren Milner, \u00a322: pays in what he hears.\n- Wayne Harrison, \u00a330: pays in goods from the pawn's back roo"
+  },
+  {
+   "n": 5,
+   "name": "The sit-down",
+   "parts": [
+    "3.5.5"
+   ],
+   "group": "3 story (rivals)",
+   "heading": "The sit-down",
+   "words_removed": 84,
+   "removed_text_start": "## 30. The sit-down\n\nA sit-down is the step that decides, in talk, with a rival head: in a back room, at the Fixer's table, or in the back of Tom's own cab, driving while they talk. It has three answe"
+  },
+  {
+   "n": 6,
+   "name": "Light, noise and time",
+   "parts": [
+    "1.4.x light and noise"
+   ],
+   "group": "1 verbs (perception)",
+   "heading": "Light, noise and time",
+   "words_removed": 307,
+   "removed_text_start": "## 8. Light, noise and time\n\nSound has a reach set by the act, the hour and the rain: a footstep at three in the morning carries about 3.6 m, at noon nothing; the car is heard within about 44 m by day"
+  },
+  {
+   "n": 7,
+   "name": "Who tells whom",
+   "parts": [
+    "2.3.x gossip routes"
+   ],
+   "group": "2 town (people)",
+   "heading": "Who tells whom",
+   "words_removed": 367,
+   "removed_text_start": "### Who tells whom\n\nTalk passes only between people who know each other and meet, within 6 m, weaker with each telling. In the real town code, talk passes every 6 game minutes, only between people its"
+  },
+  {
+   "n": 8,
+   "name": "Missed rent",
+   "parts": [
+    "RT-16"
+   ],
+   "group": "2 town (money)",
+   "heading": "Missed rent",
+   "words_removed": 112,
+   "removed_text_start": "### Missed rent\n\nRent is owed to the landlord's agent, a named man who calls at the counter. A missed Friday becomes arrears said in words in the Ledger and by the agent on Monday. Two missed: a lette"
+  },
+  {
+   "n": 9,
+   "name": "Subtitle options",
+   "parts": [
+    "AX-02"
+   ],
+   "group": "6 interface (accessibility)",
+   "heading": "Subtitle options",
+   "words_removed": 104,
+   "removed_text_start": "### Subtitle options\n\nSubtitles are on by default and offered before the first sound of the game (the first menu). Options: size (three steps), background box (off, half, full), speaker's name (on by "
+  },
+  {
+   "n": 10,
+   "name": "Live-talk abuse and off-limits input",
+   "parts": [
+    "RT-15"
+   ],
+   "group": "3 people (talk)",
+   "heading": "Live-talk abuse and off-limits input",
+   "words_removed": 126,
+   "removed_text_start": "### Live-talk abuse and off-limits input\n\nAny typed line that is abusive, off topic, out of period, against the content rule, or tries to steer the model (\"ignore your instructions\") is answered in ch"
+  }
+ ]
+}

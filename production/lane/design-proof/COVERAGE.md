@@ -11,10 +11,10 @@ Unreal-only work (looks, engine, performance on his PC) is outside this proof; t
 | MEASURED | 195 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
 | PENDING | 29 | defined, its standard waits on a dated study |
 | UNMEASURED | 46 | defined, no reference figure behind its standard yet |
-| UNDEFINED | 0 | needed, not defined (or only named) |
+| UNDEFINED | 22 | needed, not defined (or only named) |
 | OUT | 14 | left out by his ruling or canon |
 | OUTSIDE | 57 | Unreal-only work, outside this proof |
-| all | 341 | |
+| all | 363 | |
 
 MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; reference-game figures (run 3): 1; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 25; 1990 limits and typical stays found (run 3): 1; 1990 figures found (run 3): 1; published fencing studies (run 3): 1; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 22; bar on reference-game figures (Steam recommend rates); the panel's own calibration against real players is a separate check: 1; bar on reference-game figures (Steam recommend rates); the panel's own calibration is a separate check: 1; pass or fail on the ICO's published guidance (run 3): 1; reference list (run 3): 1; pass or fail on the ICO's guidance and Article 50 (run 3): 1; reference figures (run 3): 1; bar set just under measured labeller agreement (run 3): 1. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
 
@@ -467,3 +467,30 @@ The review studies name these as punished across games. Each has a part, a stand
 | GV-04 | Places stay open | MEASURED | Every interior used once can be entered again after its job, or its closing is said in the world. | GTAVI-MAP-2026-11-21.md §GV-04 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
 | GV-05 | Bugs at release | MEASURED | Three nights running, the AI tester's whole-evening and whole-week walks in the packaged build find zero bl... | GTAVI-MAP-2026-11-21.md §GV-05 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
 | GV-06 | How a deed is told: restraint and cruelty | MEASURED | Two seeded fights differing only in restraint produce different told versions and different greetings withi... | GTAVI-MAP-2026-11-21.md §GV-06 | production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
+
+## Red team 2 (real gaps)
+
+| Id | Part | Status | Standard | Defined in | Reference or basis | Closed by |
+|---|---|---|---|---|---|---|
+| RT2-01 | The cold-store contract and rung 3 are circular | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A16, B12; v3 B1... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-02 | Attacking the police | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A8; v3 A18, B32... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-03 | What makes a person know Tom | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A22; v3 B46); T... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-04 | How the ending is chosen | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A2, A52, B2, B3... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-05 | Killing principals and needed people | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A7, B8); Fallba... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-06 | The firm failing for good | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A6); The book b... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-07 | What moves a rival up his ladder | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (B3); What lifts... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-08 | Rivals as actors | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A18); Their bas... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-09 | Turf: posts held and lost | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A19); How the p... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-10 | Crowd extras as witnesses | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A23); Whether g... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-11 | Finishing a downed man, kicks and bodies | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A27, B19); The ... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-12 | The rare fatal fall | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (B18); The fixed... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-13 | Robbed when beaten | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (B34); What is t... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-14 | How guns reach Tom | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A62, B20); Wher... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-15 | The successor's offer and the last day | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A51, B36); Whic... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-16 | Police memory and arrest hours for road deeds | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A53); How long ... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-17 | A gun found in a stop at War | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A86); The charg... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-18 | The licence hearing | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A94); What happ... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-19 | The phone as a verb | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A41, B30); Whom... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-20 | The clock in moving talk | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A102, B17); Tal... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-21 | After the ending and past nine weeks | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (A69, A70, B28, ... | design pass 3, next run (from Sun 22 Nov) |
+| RT2-22 | A foot chase caught by a constable | UNDEFINED |  |  | ; needed, not defined: found by red team 2 (v3 A19, B29); W... | design pass 3, next run (from Sun 22 Nov) |

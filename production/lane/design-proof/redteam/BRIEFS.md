@@ -13,3 +13,9 @@ You are a lead systems designer who has shipped open-world games. Same game and 
 ## For the copy
 
 The "LEDGER, as the player plays it" half of the one-shot prompt; part-id tags stripped; the "Ids not placed" note dropped; ten parts' paragraphs removed and recorded in planted.json; from round 2, sections renumbered so no gap shows by numbering.
+
+## Round 2 change (21 Nov 2026, after helper B caught 8 of 10)
+
+B missed the subtitle options and what happens to unacceptable typed input; both are whole categories a design document covers. One sentence added to both briefs (A and B), generic, naming no planted part:
+
+"Also check, one by one, every way the player gives input (keys, pad, mouse, typed text) and what the game does with input it cannot or must not accept, and every option a player expects in Settings and accessibility (text, subtitles, audio, controls, display, comfort)."
