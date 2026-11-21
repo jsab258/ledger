@@ -2,6 +2,8 @@
 
 Date read: 2026-11-22. First-pass catalogue reading only; no film was watched, nothing downloaded. Smoking not judged. Pages were read through a fetch tool that summarises the page (not raw HTML), so field values are as that tool reported them.
 
+Built on: port-towns-archive-sheet-2026-11-21.md (study 3: its Q6 question, the YouTube archive clips too coarse to count cigarettes, the dropped "Calendar 1990" playlist lead) and the period research in production/research/ on 1990 street life; this file only adds archive catalogue leads.
+
 ## Result in one line
 
 No candidate found that plays free online without login and is dated 1988-1992 with close shots of passers-by described. Nearly every 1988-1992 item on BFI Replay (Yorkshire and North East Film Archive, North West Film Archive) is "libraries only". Candidates below are leads to check, best first.
