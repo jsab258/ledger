@@ -2849,3 +2849,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 15 minutes, plus a diagnosis helper (about 6 minutes).
 - Failed and why: the old walk passed on some nights and failed on others because where the person stood that day decided whether she was in sight.
 - Evidence: production/audits/night-walk-2026-11-21-diagnosis.md; tools/route_walk.py talk stage.
+
+### A reaction time read from public footage (21 Nov 2026)
+- Made: a reference game's "threatened person's first reaction" time, five samples from three videos, with a draft target and two behaviour rules (a threat alone raises no alarm for half a minute; violence raises it within seconds).
+- Method: read each video's publish date first and drop anything before the game's release; scan at coarse steps to find each event; then draw frames from the page's own player onto an overlay canvas, cropped to the subject, at 0.3-1 s steps; time from the cause's first clear frame (the aim marker or the weapon level) to the subject's first clear body change; treat cuts by the maker as unreadable, not as data; read the on-screen status corner separately, cropped, to time alerts.
+- Tools: the built-in browser, the page player's own seek, a canvas overlay; no downloads.
+- Target and check: five samples per number; range and middle recorded; each time plus or minus one step.
+- Cost: about 70 minutes of session for five samples and two side findings; no helpers.
+- Failed and why: one clip rejected for its date; one hold-up unreadable because the maker cut angles at the moment; a hidden browser pane redraws late, so take the screenshot twice when a sheet looks half drawn.
+- Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md.
