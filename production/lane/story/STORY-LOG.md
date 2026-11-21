@@ -448,4 +448,5 @@ GTA VI added as a story reference (see GTAVI-STORY-REFERENCE-2026-11-21.md); sto
 The brief is v3/BRIEF-V3-2026-11-21.md; read it first. Work lives in v3/.
 
 - 21 Nov 09:57: started (claude-fable-5-2). Brief saved and pushed.
-- 21 Nov 10:35: Phase 1 step 1 done: v3/RESEARCH.md (ideas 1 and 11) from four fresh claude-sonnet research helpers (notes with links in v3/research/). Firm on the Scheme's dates and numbers and the cab booking law; thin on the men's own voices (the fetch tool summarises; no local paper of 1989 or 1990 was opened). Owed list at the foot of RESEARCH.md.
+- 21 Nov 10:11: Phase 1 step 1 done: v3/RESEARCH.md (ideas 1 and 11) from four fresh claude-sonnet research helpers (notes with links in v3/research/). Firm on the Scheme's dates and numbers and the cab booking law; thin on the men's own voices (the fetch tool summarises; no local paper of 1989 or 1990 was opened). Owed list at the foot of RESEARCH.md.
+- 21 Nov 10:21: Phase 1 step 2 done: twenty premises in v3/premises/ (SET-X and SET-Y by two fresh claude-fable-5-2 helpers from PREMISE-BRIEF.md alone, SET-Z by the session; Z1 is The Passenger at its best). The ranking plan, with the blindness fix and the pass marks, is v3/premises/PLAN-P1.md, pushed before any reader ran. Next: the packer (one fresh claude-opus) writes the 32-pitch pack; three fresh claude-opus readers rank it.
