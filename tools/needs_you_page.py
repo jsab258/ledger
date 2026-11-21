@@ -22,6 +22,7 @@ database (collection "items"), so a checker can read either. His picks are store
 (verdicts/<id>); they are read before anything about the page is asked again.
 """
 import datetime
+import glob
 import json
 import os
 import re
@@ -30,6 +31,9 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(REPO, "production", "approvals", "needs-you")
 ITEMS = os.path.join(DIR, "items.json")
+# the one-shot's report, once it has run (DECISIONS 21 Nov 22:10); until one exists no item asks him to play the prototype
+ONE_SHOT_REPORTS = os.path.join(REPO, "production", "lane", "one-shot", "REPORT-*.md")
+PLAY_PROTO = re.compile(r"\b(play|test|try)\w*\b[^.]{0,60}\bprototype\b", re.I)
 URL = "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"   # his one permanent link (published 2 November 2026)
 FIELDS = ("id", "added", "text", "links", "recommendation", "state")
 # A TAG BEFORE EVERY ITEM (his message of 17 Nov 14:38, advisor 199): ACTION (his hands at the PC, a sign-in, a click),
@@ -82,7 +86,7 @@ def load(path=ITEMS):
     return json.load(open(path, encoding="utf-8"))
 
 
-def faults(data, check_files=True):
+def faults(data, check_files=True, one_shot_done=None):
     out = []
     seen = set()
     for it in data.get("items", []):
@@ -138,6 +142,16 @@ def faults(data, check_files=True):
         if it.get("state") == "open" and PLACEHOLDER.search(json.dumps(it, ensure_ascii=False)):
             # RULINGS 3 Oct: placeholders meanwhile, never on his page (advisor 205's backfill)
             out.append("%s: a placeholder on his page (RULINGS 3 Oct: never on his page)" % it.get("id"))
+    # his ruling 21 Nov 21:43 (advisor 298): he plays only after the one-shot, perhaps after a few loops; no item asks
+    # him to play or test the prototype while no one-shot report exists
+    if one_shot_done is None:
+        one_shot_done = bool(glob.glob(ONE_SHOT_REPORTS))
+    if not one_shot_done:
+        for it in data.get("items", []):
+            words = " ".join(str(it.get(k, "")) for k in ("title", "text"))
+            if it.get("state") == "open" and PLAY_PROTO.search(words):
+                out.append("%s: asks him to play or test the prototype before the one-shot has run (his ruling 21 Nov "
+                           "21:43, advisor 298)" % it.get("id"))
     days = {}
     for it in data.get("items", []):
         # "unless something blocks" (RULINGS 8 Nov): an item naming in "blocks" the work it stops is outside the count
@@ -316,6 +330,10 @@ def selftest():
     batch = [dict(good["items"][0], id="t%d" % n, added="2026-11-16 %02d:00" % (8 + n)) for n in range(3)]
     check("three batches of open items in one day are refused", faults({"items": batch}) != [])
     check("two batches in one day pass", faults({"items": batch[:2]}) == [])
+    proto = dict(good["items"][0], title="Play the current prototype for 30 minutes", text="Play it, then tap.")
+    check("an item asking him to play the prototype before the one-shot is refused (advisor 298)",
+          faults({"items": [proto]}, one_shot_done=False) != [])
+    check("the same item passes once a one-shot report exists", faults({"items": [proto]}, one_shot_done=True) == [])
     check("a third batch naming what it blocks passes",
           faults({"items": batch[:2] + [dict(batch[2], blocks="the Fable work waits on it")]}) == [])
     # --waiting (advisor 231): a waiting line asking him needs an open item's id; K1-K7 and past answers pass
