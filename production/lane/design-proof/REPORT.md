@@ -1,21 +1,27 @@
-# Design proof: third report (21 November 2026, run 3)
+# Design proof: fourth report (21 November 2026, run 4)
 
-Not complete yet. The cloud figures are in; the second red team found 22 new gaps.
+Not complete yet. Every part is now defined; none is left undefined.
 
-363 rows, one per part a player meets:
-- Measured: 195 (about 24 on reference-game or 1990 figures)
-- Pending a dated study: 29
+398 rows, one per part a player meets:
+- Measured: 101, now only where the standard rests on something real: 20 on reference-game numbers, 15 on dated real-world figures, 66 on his rulings or canon
+- Decided: 131, design decisions inside his rulings, listed for him to overturn
+- Pending a dated study or his answer: 49
 - Unmeasured: 46
-- Undefined: 22 (new today, from red team 2)
-- Out by his rulings: 14
-- Outside (Unreal-only and shipping): 57
+- Undefined: 0
+- Out by his rulings: 14; outside (Unreal-only and shipping): 57
 
-What run 3 did:
-- The panel's bar: at least 7 of 8 players recommend an evening and a week, from Steam's recommend rates (KCD2 93%, RDR2 92%, GTA V 84%).
-- 1990 figures: rent (council £23 a week, private £65), custody (inside the 24 and 36 hour limits; most were held under six hours), a fence pays about a third. Not found: who is out on the street by hour.
-- Game figures: crimes cool over a few game days (KCD2); GTA V and RDR2 days last 48 real minutes, LEDGER's 18; PC display options; replay branches.
-- The privacy check: crash reports only with a yes; the AI notice on its own screen, as EU law now requires.
-- 300 test lines for typed talk, checked by a second labeller (98% agreement).
-- Red team 2: catch rates 10 and 8 of 10, then 9 and 10 after one brief fix. Its 22 gaps are edges of systems: attacking the police, killing someone the story needs, how the ending is chosen, what moves a rival.
+What changed today:
+- The pre-mortem's guards are in the gate: "measured" means a real figure, design choices are counted apart; "material gap" is defined before red team 3; at most four red-team rounds, then anything open comes to him as scope.
+- The 22 gaps of red team 2 are defined: attacking the police, who knows Tom, how the ending is chosen, rivals' bases and men, guns, the phone and the rest.
+- The Hook has a road plan in metres, built on the 48 m Quay Street: a car crosses in about 66 s, a walk takes about 5 minutes, and car chases get a 1.5 km loop round the docks (about one 90 s chase a lap).
+- The clock is written both ways, so his answer drops straight in.
+- A fresh reviewer found 30 faults; all fixed once.
 
-Next: the 22 gaps defined on Sun 22 Nov; the PC measuring 23 to 28 Nov; the story by 28 Nov; red teams 3 and 4 on 29 and 30 Nov, both clean. The gate about 30 Nov to 1 Dec at the earliest.
+Before the gate:
+- His clock answer (C11), by Sat 28 Nov.
+- The PC measuring, 23 to 28 Nov (GTA VI first).
+- 1990 prices and street hours from the cloud, by Thu 26 Nov.
+- The story, by Sat 28 Nov.
+- Red teams 3 and 4 on 29 and 30 Nov.
+
+The gate: about Mon 30 Nov to Tue 1 Dec at the earliest.

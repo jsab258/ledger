@@ -54,3 +54,20 @@ Next run starts here:
 5. Point for his ruling carried by the advisor: AX-03's field of view.
 
 Fit check of 21 Nov: 34 pairs (13 fit, 5 do not fit, 14 cannot tell yet, 1 gap, 1 contradiction), 10 new number gaps, 61 players' questions (35 answered, 16 gaps, 10 fit problems), 4 scope questions; its gaps and misfits are to be added to the coverage map by the next design proof run, and the fit check and the players' questions run again before red team 3.
+
+## Run 4, 21 November 2026, from 09:05 (Opus 5.5, configured claude-opus-5-5)
+
+- Step 0: start row 2026-11-21-0905-design. Allowance 78% at 08:52 (newest row with a reading); stop line 95%.
+- Step (a) done: DESIGN-COMPLETE.md carries the process guards G-A (MEASURED only on a real figure; DECIDED for design decisions, listed for him; the gate reports real-figure rows), G-B (material gap: first week, stuck, breaks a ruling, blocks a playthrough check), G-C (at most four red-team rounds, then scope to him), G-D (the clock before red team 3). scripts/run4_guard.py split the 195 MEASURED rows (field real_basis; force_decided list for rows judged by hand). covmd.py shows DECIDED and the real-basis counts.
+- Step (b) done: DEFINITIONS-2026-11-21.md, new heading "Design pass 3": the advisor's decisions D-Q2 to D-Q4 (DECIDED), G1 the road plan in metres (on the built 48 m Quay Street and its bend; crossings 548 m by road, 475 m on foot; chase loop 1,528 m), G2 to G10, the text fixes F03, F20, F13, F15, the open pairs given measurements (F04 with GTA IV, F05, F16, F19, F21, F24, F32), the players' gaps P04, P09, P17, P18, P34, P45, P52, L-01, and RT2-01 to RT2-22. FIT-CHECK's F04 names GTA IV in Mafia DE's place.
+- Step (c) done: the clock both ways (CLK-01 to CLK-07, a table A against B), rows PENDING his C11. AX-03's field of view taken as his ruling (75 to 100, default 86).
+- Fresh Opus reviewer: 30 points, fixed once (list at the top of design pass 3). Kept: D-Q2 to D-Q4 as DECIDED, as the brief directs.
+- Step (d) done: scripts/run4_apply.py writes the RT2 statuses and adds 35 rows (FIT-*, CLK-*); counts block in coverage.json (398 rows: 101 MEASURED, of them 35 on reference or real-world figures and 66 on his rulings or canon; 131 DECIDED; 49 PENDING; 46 UNMEASURED; 0 UNDEFINED; 14 OUT; 57 OUTSIDE). COVERAGE.md regenerated; DESIGN-COMPLETE.md's table with dates and the DECIDED list; REPORT.md (fourth). themes.json not recomputed (new rows hang on mapped parts).
+
+Next run starts here:
+1. When he answers C11: drop the chosen column of the clock table into the definitions (and RT-04's fail-safe week, F13), set CLK-01 to CLK-07, 7.13 and FIT-F13 to DECIDED or MEASURED by the guard; rerun run4_apply.py's counts and covmd.py.
+2. Cloud by Thu 26 Nov: 1990 prices (G8, RT2-14) from dated sources; 2.1.2 and G9 from the ONS tables; F19 the line-table count.
+3. When the PC measuring and the story measure report (24 to 28 Nov): update rows; F24 money run once G8 is in.
+4. Sat 28 Nov: the fit check and the players' questions again on the defined design.
+5. Red team 3 (Sun 29 Nov) and 4 (Mon 30 Nov): rt2_build.py adapted (fold in passes 2 and 3; ten new planted parts not in planted.json or planted-2.json; refer to sections by name); triage line by line against G-B's four tests, naming the test met. No round 5 (G-C).
+Scripts in order when rebuilding: run 1 to 3 scripts, then run4_guard.py, run4_apply.py, covmd.py last.
