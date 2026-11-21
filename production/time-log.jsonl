@@ -955,3 +955,7 @@
 {"event": "stop", "at": "2026-11-21T10:58:00", "note": ""}
 {"event": "start", "at": "2026-11-21T10:58:00", "task": "GTA VI G6: the game's Help on heat icons", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T11:02:00", "note": ""}
+{"event": "start", "at": "2026-11-21T11:02:00", "task": "GTA VI G5: search area, first clip", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T11:07:00", "note": ""}
+{"event": "start", "at": "2026-11-21T11:07:00", "task": "GTA VI G5: 6:05-9:35 stepped", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T11:10:00", "note": ""}
