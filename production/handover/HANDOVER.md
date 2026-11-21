@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-21 09:22 (the hourly run)
+**Started:** 2026-11-21 10:02 (the hourly run)
 
-**Row due:** by 10:25 (last row 09:25; page read 09:42: verdicts none after 2026-11-21T08:23 UTC; advisor 287 acked 09:48; filter advisor after 09:30:00 +01:00, verdicts after 2026-11-21T08:42 UTC)
+**Row due:** by 11:15 (last row 10:15; page read 10:33: verdicts none after 2026-11-21T09:20 UTC; advisor 288 and the 10:10 model watchdog acked; filter advisor after 10:10:00 +01:00, verdicts after 2026-11-21T09:33 UTC)
 **Stopped:** 2026-11-21 09:53 (history past its point, 255k; allowance 80% against the 82% ceiling; next: 0e, more of kc_QthzX9So for S3 and S7)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -32,7 +32,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 21 Nov 09:22-09:53: GTA VI being seen: the unseen robbery stepped to its end (no star in about 4 min with staff subdued); witnesses inside (kc_QthzX9So: customers cower within 3 s; the call 32 and 42 s after the threat when witnesses are left free; the outfit wheel at one's car); advisor 287 (clock, 28 Nov story rule) into RULINGS, waiting item 34; advisor 259 APPLIED on his message (licences never his: CLAUDE.md, RULINGS, page check 35/35, page item closed); all pushed.
+- 21 Nov 10:02-10:45: his sign-in checked and closed; marvelous-box Done acted on: the 52-project export (above); his page now has nothing open; progress page refreshed on the live base with 21 Nov pictures; advisor 288 into RULINGS; GTA VI being seen: kc_QthzX9So's pawn shop (resist, report 19 s with gunfire), corner shop (comply 1 s; subdued, no report), electronics shop (report about 25 s); G6 two clean samples (4x1Z8hOWn_0, 7QJWRNYq8qc).
+- 21 Nov 09:22-09:53: GTA VI being seen (unseen robbery to its end; witnesses inside, kc_QthzX9So); advisor 287 into RULINGS; advisor 259 applied (licences never his: CLAUDE.md, RULINGS, page check); pushed.
 
 ## In flight
 - Nothing runs; heavy lock free. Browser pane: a YouTube tab with an overlay canvas, harmless.
@@ -41,13 +42,12 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisor 285, his '1' 07:44): the PC measuring block started 21 Nov: GTA VI's footage pass first (lane FOOTAGE-MEASURING.md, story missions allowed, no spoiler to him), then the feel block (FEEL-MEASUREMENT-METHOD-2026-11-20.md), then car chases (advisor 286: five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, against the Hook and docks, about 3 h; after GTA VI, before the feel block), then MEASUREMENTS-NEEDED's extra rows; the Marvelous export when he answers its box. Rows: game and verb, when each game's numbers land, weekly points per measuring hour (measured).
-0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md): S1 done; G4 unseen side done (n=1); S3 one bounded, S7 two (kc_QthzX9So 2:43-4:58). Next: more of kc_QthzX9So for S3/S7 (stores near 9:00, 17:40, 21:10; the shopkeeper who aims back near 9:30); G6 needs a this-week clip without cuts (8dTwnFFjspo rejected, pre-release); then G5, stretches 2-3, driving, advisor 286's car chases. Sheets: hide the page (ytd-app visibility hidden), canvas fixed at top, wait for seek and readyState 2; corners crop for stars.
-0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20, close it and the four licence items with decisions.
+0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md): S1 done; S3 comply 2 (about 1 s hands up; at most 3 s cowering), resist 1 (return fire about 2 s); S7 4 with free witnesses (32, 42, 19, about 25 s; gunfire starts at two stars); G4 unseen side 2 (all witnesses subdued, no report in 4 and 2 min); kc_QthzX9So is spent. G6: two clean samples (a bought top clears "outfit known" at once; a respray clears "vehicle known" within 0.5 s; stars unchanged), the icons named by the game's own legend (7QJWRNYq8qc 0:45); the face icon not yet seen clearing. Next: Grw0hsFkE-s's heist example (face icon with a mask; S1, S3, S7), then G5, stretches 2-3, driving, advisor 286's car chases. Sheets: canvas fixed at top, ytd-app visible while drawing and hidden before the screenshot (a hidden page draws black), wait for seek and readyState 2; icon strip = the frame's top-right 160 by 70 px scaled up; take the screenshot twice if it times out.
+0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
-0b. Night walk 21 Nov: 14 of 17; menu fix holds. Diagnosis done (production/audits/night-walk-2026-11-21-diagnosis.md): (1) bench and eyes fail because the command-line Claude Code's sign-in (used by the 01:30 'LEDGER nightly walk' task) expired; HIS HANDS: in a Command Prompt run claude, type /login, finish in the browser, /exit. On his page 08:34 as cli-signin-2026-11-21 (ACTION) and asked in chat as NEEDS YOU; after his Done, confirm with one short claude -p, then close it. (2) Talk stages: the tester types when Sheila is within 3.5 m but out of sight; fix made 21 Nov 08:40 (try 1 of 2): route_walk presses T alone, waits 6 s for talk-open, else walks round to her once and tries again, then types with play.py say --open (no second T); selftests 24/24 and 13/13. Tonight's walk proves it: read talk-open's detail.
+0b. Night walk 21 Nov: 14 of 17; menu fix holds. His command-line sign-in done 09:46, checked 10:08 and closed (advisor 288). Talk stages: fix made 21 Nov 08:40 (try 1 of 2; route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail, and the bench and picture check should pass now.
 1. Paused with Kiln: Ron's seated hem cover try 2 of 2 (Fable legs lane; the 20 Nov FAIL film its acceptance view); fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md).
-3. Advisor 259 APPLIED 21 Nov 09:48 (his message in the session): licences are never his; decide by the allowlist principles, record in DECISIONS and the allowlist; the page check refuses licence items. Font, DINOv3, PresentMon already listed; the Kiln front end is the session's to decide when Kiln resumes.
-4. When he taps Done on marvelous-box (deadline Thu 26 Nov, first in next week's order): md_job.py --start (try 2 of 2), one export job over the 52 .zprj (ImportZprj, ExportPatternJSON, ExportFBX beside each), check each reopens, list in production/art/clothing/LOG.md under Exports; copy kiln-md-compare-2026-11-18 into F:/LedgerTools/garments.
+4. Marvelous export DONE 21 Nov 10:15 (bridge start try 2 of 2 worked): all 52 .zprj reopened, pattern JSON and garment FBX beside each (tools/md-bridge/export_all.py; results F:/LedgerTools/md-jobs/export-2026-11-21.json; LOG.md Exports); compare runs copied to F:/LedgerTools/garments. Marvelous stays open (his word). Advisor 288: no Unreal work until the browser prototype is done, then Kiln (RULINGS 20 Nov line).
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)

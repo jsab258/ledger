@@ -949,3 +949,5 @@
 {"event": "stop", "at": "2026-11-20T17:57:00", "note": ""}
 {"event": "start", "at": "2026-11-20T17:57:01", "task": "Steam reviews: reviewer check and lane commit (advisor 271)", "phase": "0", "kind": "review"}
 {"event": "stop", "at": "2026-11-20T18:07:08", "note": "lane a5e7a811b; review F:/LedgerTools/steam-reviews/REVIEW-2026-11-20.md"}
+{"event": "start", "at": "2026-11-21T10:02:00", "task": "n16-1 Marvelous export of 52 projects, sign-in check, pages", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T10:21:00", "note": ""}
