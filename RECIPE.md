@@ -119,11 +119,11 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Evidence: production/research/texture-pipeline/ (MAP, MAP-REVIEW, PROOF).
 
 ### A turn-end check that holds only the scheduled worker (11 Nov)
-- Made: a stop hook that sends the scheduled production session back once when it ends a turn without handing over; tightened the same day so it holds nothing else. Never-used skills hidden for this project only (local settings).
-- Method: tell who the session is from how its log opens and from the start gate's verdict inside it (the opening message is the scheduled task's tag AND the gate said GO), never from a name appearing anywhere in the log; a guard lets a turn already sent back go, so it cannot loop.
+- Made: a stop hook sending the scheduled production session back once if it ends a turn without handing over; holds nothing else. Unused skills hidden locally.
+- Method: identify the session by how its log opens AND the start gate's GO inside it, never by a name anywhere in the log; a turn already sent back goes, so no loop.
 - Tools: Claude Code Stop hook (command, JSON on stdin, decision block); Python reading the session's JSONL log.
 - Target and check: hold every GO run and nothing else. Own tests 14 of 14; on the last 80 real logs, 41 GO runs held, 32 WAIT runs and the owner's own chats let go (the first version held all of them).
-- Cost: about 0.5 h. Failed: the first test (the task's name in the log) held any chat that had read the task file, WAIT runs included; synthetic tests passed, real logs found it.
+- Cost: about 0.5 h. Failed: matching the task's name held any chat that had read the task file; synthetic tests passed, real logs caught it.
 - Evidence: tools/stop_hook.py (--selftest).
 
 - 2026-11-12, licence read at source when HTTPS fails: a library's terms page failed its certificate check over HTTPS; the same page over plain HTTP, saved raw and read whole, confirmed the terms that secondary sites had quoted. Method: fetch the raw page by another transport before marking terms unverified; never treat a quote elsewhere as the source. Tools: curl. Check: the wording matches word for word. Cost: 0.1 h. Evidence: production/research/ai-video-motion/CMU-TERMS-AND-CLIPS-2026-11-12.md.
@@ -182,3 +182,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Made: one drape refitted onto two other bodies, passing every check. Cost: 7 h lane.
 - Method: untangle seam-side crossings before the start check, refit, sew with bands frozen, settle; two band measures, the line set before any run. Shortfall: one band 0.3 points over a self-set line, less than the source itself moves; the cure is a source at rest.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md
+- 2026-11-22, footage with no window on screen: some players never finish a seek while hidden; test one seek first, else date clips from watch pages. A 429 is a refusal. Cost 0.15 h. Evidence: measurements/STATUS.md.

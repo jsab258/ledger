@@ -1055,3 +1055,7 @@
 {"event": "stop", "at": "2026-11-22T00:06:58", "note": "G3 second entry: parked pickup, door to seated about 1.5-2 s (driving sheet); Q6 reader notes filed"}
 {"event": "start", "at": "2026-11-22T00:15:52", "task": "measuring: G3 third entry (mzGG_I0LSIM 122:00-122:36)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-22T00:16:03", "note": "122:00-122:35 not an entry (already driving); next candidates 113:00, 120:30 noted"}
+{"event": "start", "at": "2026-11-22T00:23:14", "task": "n16-11 GTA VI G3 entries mzGG", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T00:26:52", "note": "video would not decode in a hidden pane; G7/G8 leads found instead"}
+{"event": "start", "at": "2026-11-22T00:26:00", "task": "n16-11 port towns Q6 archive film", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T00:31:00", "note": ""}

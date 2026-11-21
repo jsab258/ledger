@@ -39,3 +39,10 @@ Other 1988-1992 items in BFI Replay's "How We Shopped" collection (https://repla
 - MACE / Media Archive for Central England, Screen Archive South East catalogue pages for 1988-1992: not reached.
 - North West Film Archive own site: not read (only BFI Replay entries).
 - Whether yfanefa.com record 27294 plays free: page gives no access statement; unverified.
+
+## Record 27294 watched (22 Nov 2026, about 00:27-00:30 Swiss by the clock)
+- https://www.yfanefa.com/record/27294 "Newcastle Past and Present: Shops and Shopping" (NEFA 22503, 1990, colour, sound, 37 min 11 s; Turners Film & Video, presented by John Grundy): it plays free in the archive's own player (duration read from the player, 2231 s); the earlier "unverified" line is answered.
+- Frames drawn at 60 s over the whole film, then 10-20 s over the street stretches, read by eye. Most of the film is archive stills, adverts, maps and interviews; the 1990 street shots are few: about 19:20-20:00 (the presenter outside a department store, a busy narrow shopping lane behind, about ten people), 21:25-21:35 (a market stall, about six people), 22:00-22:15 (street brass players, close), 34:20 (a pedestrian shopping precinct, about eight people, a bench), 35:40 (a shop counter), 36:00 (the quayside from above, parked cars).
+- Smoking in the street: no one seen smoking in these shots (about 25 people in all, at this frame size). One film, a handful of shots: a lead, not a number by STATUS.md's rule.
+- Adds for clothes (a lead): light anoraks and zip jackets, a patterned knit jumper under an open jacket, jeans; no hats among the adults in the 1990 shots.
+- Worth reading at 1 s only if Q6 needs more: the five stretches above; the rest is stills.
