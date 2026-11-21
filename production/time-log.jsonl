@@ -995,3 +995,5 @@
 {"event": "stop", "at": "2026-11-21T16:08:00", "note": ""}
 {"event": "start", "at": "2026-11-21T16:09:00", "task": "n16 GTA VI being seen G5: re-identification check", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T16:11:00", "note": ""}
+{"event": "start", "at": "2026-11-21T16:22:00", "task": "0d GTA VI G5 settled (frame sheet)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T16:27:00", "note": ""}

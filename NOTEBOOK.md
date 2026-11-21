@@ -2912,3 +2912,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 0.1 h (one session, reading by search rather than whole files).
 - Failed: the first pass of eight clips was read without the earlier research and spent viewing time on clothes, shopfronts and light that photographs already answered (his correction, 21 Nov).
 - Evidence: production/research/lane/measurements/port-towns-archive-sheet-2026-11-21.md, RECONCILED section.
+
+### 21 Nov 2026, HUD: reading a game's wanted indicator from footage
+- Made: a settled two-minute sequence of a wanted indicator's states, correcting two earlier coarse reads.
+- Method: crop only the indicator's row, draw it at twice size, step at half its flash period or finer, read by eye. Find the period first at fine steps, then choose the step.
+- Tools: the browser pane, a canvas frame sheet drawn from the video element.
+- Target and check: every state change dated to 0.5 s; each reading confirmed on neighbouring frames.
+- Cost: about 0.1 h.
+- Failed: a pixel count on a wider crop measured two neighbouring icons, not the indicator; 20 s and 2 s steps both landed on one phase of a 2 s blink and invented a pursuit.
+- Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md, "G5 settled".
