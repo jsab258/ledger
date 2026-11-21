@@ -181,6 +181,14 @@ Method: the stars row alone (x 1600-1900, y 22-67 of the 1080p frame) drawn twic
 - Corrections to the passes above: the "28 s out of sight" at 13:56-14:30 and "three white from 15:00" were misreads of the flash at coarse steps; there was no pursuit before the heat in this stretch.
 - G5 counts now: re-identification on return seen twice. Return from heat here resumed pursuit at the same level (four to four, no star added); in iWrYrsVXTS0 return from Visual Lost (not heat) added a star. So: seen again ends heat at once; whether it raises a star depends on the state or the offence, two samples, unsettled. Heat's length: about 50 s here (ended by being seen), at least about 6 min in LGU3b6jXhjI (censored).
 
+## G5, two more returns: mzGG_I0LSIM, a free-roam live stream (published 2026-11-19 15:55 Pacific, after release, 3:19:04, uncut by its own frames over the stretch read; read 21 Nov 2026 about 23:25-23:35 Swiss by the clock)
+Method: the stars row (x 1640-1920, y 0-90 of the 1080p frame), 10 s steps over 148:00-162:00, then 1 s steps (each at the half second) over 155:20-155:50 and 160:20-161:05; read by eye. A pixel measure of each star slot was tried first and discarded: the sky behind the slots outweighs the stars.
+- 154:30-155:28: the star row appears (hollow outlines, then three grey of five slots).
+- 155:29-155:36: three grey stars (unseen); 155:37: three white (seen again); three white held to at least 155:49. Return added no star.
+- 160:20: two white; 160:21-160:38: two grey (unseen, about 18 s); 160:39: two white (seen again); 160:46: three white, 7 s after the return; four white by 161:00. Return added no star at once; the rise 7 s later has a cause not visible in the stars row.
+- Grey against red (heat) not separated at this crop; both stretches read as grey.
+- G5 counts now: return into sight four samples: two added none (these), one added none from heat (4Sj3c8sMO-Y), one added a star from Visual Lost (iWrYrsVXTS0). Lead: being seen again resumes pursuit at the same level; a star then comes from fresh offences, not from the return. One more sample each way before it counts as solid. Further spells in this stream: about 158:00-160:20 (one star returning at 158:40) and 33-51 min read none (money and weapon only).
+
 ## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
 Built on, read 21 Nov 2026: production/research/aaa-reference/studies/18-gta6-first-read.md (a wanted level starts only when a crime is reported or detected; unseen crimes make none; the star states; icons cleared each its own way), 15-crime-toolkit.md (KCD2's witness counter: starts at 1 to 3, a warning each tick, the last at 12, 20 s of grace), 01-npc-life.md (KCD2 notices at once within 2.5 m, as the street-life sheet quotes it), and the wanted-guides and car-chase sheets beside this one. Every number here is a lead under STATUS.md's solid rule.
 
