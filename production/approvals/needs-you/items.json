@@ -1638,6 +1638,45 @@
    ],
    "state": "done",
    "closed": "2026-11-21 10:03, He signed in 09:46; a short command-line call answered at 10:08."
+  },
+  {
+   "id": "prototype-thirty-minutes-2026-11-21",
+   "added": "2026-11-21 10:51",
+   "tag": "REVIEW",
+   "kind": "person-look",
+   "title": "Play the current prototype for 30 minutes, any evening before Fri 27 Nov",
+   "text": "Play the browser prototype for about 30 minutes, then tap how it felt below and add a line on what bored or pleased you.",
+   "why": [
+    "Your verdict calibrates the AI judges: the panel and the player types judge the same build, and their scores count only where they agree with yours.",
+    "One of the seven preparation items before the one-shot (your ruling of 10:42)."
+   ],
+   "links": [
+    {
+     "label": "The prototype",
+     "url": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "calibrating the AI judges before the one-shot",
+   "recommendation": "Any evening this week; play as you would a new game, no need to finish anything.",
+   "options": [
+    [
+     "good",
+     "Worth playing on (recommended if it held you)"
+    ],
+    [
+     "mixed",
+     "Some of it held me"
+    ],
+    [
+     "poor",
+     "It did not hold me"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }
