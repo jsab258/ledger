@@ -49,6 +49,8 @@ Section A total: about 14.5 PC hours (A5 and A10 to A11 can move to the cloud if
 
 ## B. 1990 figures from period sources (cloud)
 
+Done 21 Nov (run 3), CLOUD-FIGURES-2026-11-21.md: B1, B2, B3 measured; B4 not found (next: ONS tables by Thu 26 Nov; PC fallback the MTUS 1987 file, about 1 h); B5 done as PRIVACY-CHECK-2026-11-21.md.
+
 | What | Rows | Method | Hours |
 |---|---|---|---|
 | B1 Rent for a small office and flat, cab running costs | 2.7.4 | 1990 newspaper adverts, published price indices | 1 |
@@ -58,6 +60,8 @@ Section A total: about 14.5 PC hours (A5 and A10 to A11 can move to the cloud if
 | B5 Consent and transparency for crash reports and typed talk | 8.2.1, 10.11 | the ICO's and the EU's own published guidance, read in full | 1 |
 
 ## C. Published guides and wikis (cloud)
+
+Done 21 Nov (run 3), CLOUD-FIGURES-2026-11-21.md: C1, C3, C4 measured; C2 figures found (48 to 144 real minutes a day against our 18), row pending his decision C11 and A5.
 
 | What | Rows | Method | Hours |
 |---|---|---|---|
