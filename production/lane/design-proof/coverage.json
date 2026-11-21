@@ -1,8 +1,9 @@
 {
  "made": "2026-11-20",
- "note": "One row per part a player meets (parts tree leaves, group 9 machinery left out), plus rows added from the sources. OUTSIDE = Unreal-only work (looks, engine, performance on his PC), outside this proof. Run 2 (21 Nov): the 44 UNDEFINED rows defined (DEFINITIONS-2026-11-21.md), 15 pointer-only rows given tests, GTA VI gap rows GV-01 to GV-06 added (GTAVI-MAP-2026-11-21.md); every UNMEASURED row carries measure_how and measure_when.",
+ "note": "One row per part a player meets (parts tree leaves, group 9 machinery left out), plus rows added from the sources. OUTSIDE = Unreal-only work (looks, engine, performance on his PC), outside this proof. Run 2 (21 Nov): the 44 UNDEFINED rows defined (DEFINITIONS-2026-11-21.md), 15 pointer-only rows given tests, GTA VI gap rows GV-01 to GV-06 added (GTAVI-MAP-2026-11-21.md); every UNMEASURED row carries measure_how and measure_when. Run 4 (21 Nov): DECIDED = defined with a pass-or-fail standard that is a design decision, his to overturn; MEASURED now means the standard rests on a real figure (real_basis says which).",
  "statuses": [
   "MEASURED",
+  "DECIDED",
   "PENDING",
   "UNMEASURED",
   "UNDEFINED",
@@ -57,7 +58,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.1.4",
@@ -228,7 +231,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.2.6",
@@ -281,7 +286,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.2.9",
@@ -293,11 +300,14 @@
    "test": "S: a repainted car is not named as the firm's by a witness who saw the old paint; addendum rules ER-PAINT-01",
    "standard_source": "DESIGN §5, §12, §18",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.2.10",
@@ -309,11 +319,14 @@
    "test": "S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01",
    "standard_source": "Q2 (open)",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.2.11",
@@ -328,7 +341,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.3.1",
@@ -374,10 +389,13 @@
    "test": "S: targeting script with three men round Tom",
    "standard_source": "DESIGN §7",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.3.4",
@@ -392,7 +410,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.3.5",
@@ -407,7 +427,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.3.6",
@@ -440,7 +462,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.3.8",
@@ -473,7 +497,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.3.10",
@@ -505,10 +531,13 @@
    "test": "S: a marked Tom is caught more; marks fade on the clock; addendum rules ER-MARK-01",
    "standard_source": "DESIGN §2, §7",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.3.12",
@@ -523,7 +552,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.4.1",
@@ -569,10 +600,13 @@
    "test": "H: sound-only test",
    "standard_source": "DESIGN §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.4.4",
@@ -584,10 +618,13 @@
    "test": "S: golden rows, one per give-away",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.4.5",
@@ -602,7 +639,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.4.6",
@@ -614,10 +653,13 @@
    "test": "S: screen inventory with the assist on",
    "standard_source": "DESIGN §2, §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.4.7",
@@ -632,7 +674,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.4.8",
@@ -644,10 +688,13 @@
    "test": "S: a noise inside reach turns a head; outside reach does nothing",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.5.1",
@@ -710,10 +757,13 @@
    "test": "S: pursuer gives up at the rule; never cheats through walls",
    "standard_source": "DESIGN §8",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.6.1",
@@ -725,10 +775,13 @@
    "test": "S: a room entered three ways; force heard at its reach",
    "standard_source": "DESIGN §4 Break-ins",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.6.2",
@@ -834,10 +887,13 @@
    "test": "S: washing clears the give-away and plants a witness at the launderette",
    "standard_source": "DESIGN §2, §7",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.6.8",
@@ -849,10 +905,13 @@
    "test": "H: walk-up sweep with no prompt faults",
    "standard_source": "DESIGN §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.6.9",
@@ -867,7 +926,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.6.10",
@@ -882,7 +943,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.6.11",
@@ -894,10 +957,13 @@
    "test": "S: a cased place's hours appear in the Ledger and match the routines; addendum rules ER-CASE-01",
    "standard_source": "DESIGN §4, §10",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "1.6.12",
@@ -912,7 +978,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.6.13",
@@ -927,7 +995,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.6.14",
@@ -942,7 +1012,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "1.7.1",
@@ -975,7 +1047,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "1.7.3",
@@ -1005,10 +1079,13 @@
    "test": "B: followers never block; S: a fight with Ron at his side goes as the odds say; addendum rules ER-SIDE-01",
    "standard_source": "DESIGN §7, §12",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.1.1",
@@ -1020,10 +1097,13 @@
    "test": "S: walk checks wherever Tom stands; no jammed doorway in a seeded week",
    "standard_source": "DESIGN §2; aaa-s01-04",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.1.2",
@@ -1056,10 +1136,13 @@
    "test": "S: a seeded week gives the same result watched or unwatched",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.1.4",
@@ -1071,10 +1154,13 @@
    "test": "S: the same seed dry, drizzle, rain",
    "standard_source": "DESIGN §6",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.1.5",
@@ -1109,7 +1195,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.2.1",
@@ -1124,7 +1212,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.2.2",
@@ -1139,7 +1229,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.2.3",
@@ -1186,10 +1278,13 @@
    "test": "S: golden rows per give-away",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.2.6",
@@ -1222,7 +1317,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.3.2",
@@ -1237,7 +1334,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.4.1",
@@ -1252,7 +1351,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.4.2",
@@ -1271,7 +1372,9 @@
    "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
    "measure_when": "cloud, Sat 21 to Wed 25 Nov",
    "plan_group": "PUB",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.4.3",
@@ -1283,11 +1386,14 @@
    "test": "B: seeded deed, then a walk past 30 people: each one's shown step is checked against their memory store.",
    "standard_source": "The description, section 5 (What a person catches; Who tells whom).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.4.4",
@@ -1302,7 +1408,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.4.5",
@@ -1317,7 +1425,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.5.1",
@@ -1332,7 +1442,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.5.2",
@@ -1347,7 +1459,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.5.3",
@@ -1363,7 +1477,9 @@
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.5.4",
@@ -1378,7 +1494,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.5.5",
@@ -1393,7 +1511,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.6.1",
@@ -1405,10 +1525,13 @@
    "test": "S and H: the challenge announced",
    "standard_source": "DESIGN §8",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.2",
@@ -1420,10 +1543,13 @@
    "test": "S: a search finds what is carried",
    "standard_source": "DESIGN §8",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.3",
@@ -1435,10 +1561,13 @@
    "test": "S: golden rows",
    "standard_source": "DESIGN §8",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.4",
@@ -1459,7 +1588,9 @@
    "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
    "measure_when": "cloud, Sat 21 to Tue 24 Nov",
    "plan_group": "B",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "2.6.5",
@@ -1471,10 +1602,13 @@
    "test": "S: every route to a manhunt passes its signs",
    "standard_source": "DESIGN §8; ending signs 30 Sep",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.6",
@@ -1486,11 +1620,14 @@
    "test": "B: the dial forced through each state with seeded gun calls; police responses logged.",
    "standard_source": "The description, sections 21, 33; RT-12.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.7",
@@ -1502,10 +1639,13 @@
    "test": "S: a stop starts only on reckless driving in sight; ends within 2 minutes; addendum rules ER-TRAFFIC-01 to 02",
    "standard_source": "DESIGN §5, §18",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.8",
@@ -1520,7 +1660,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.6.9",
@@ -1532,10 +1674,13 @@
    "test": "S: a charge reaches the endings; a search finds what is stored at the office; addendum rules ER-SEARCHED-01",
    "standard_source": "DESIGN §8, §18",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.6.10",
@@ -1551,7 +1696,9 @@
    "basis": "reference figure",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.7.1",
@@ -1563,11 +1710,14 @@
    "test": "B: a week of fares and wages; the book audited against the flows.",
    "standard_source": "The description, section 24; RT-17.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.7.2",
@@ -1579,11 +1729,14 @@
    "test": "B: night jobs then the count; a break-in on the tin.",
    "standard_source": "The description, sections 24, 26; RT-17.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.7.3",
@@ -1620,7 +1773,9 @@
    "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
    "measure_when": "cloud, Sat 21 to Tue 24 Nov",
    "plan_group": "B",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "2.7.5",
@@ -1632,10 +1787,13 @@
    "test": "S: a shop refuses and remembers; addendum rules ER-HAGGLE-01",
    "standard_source": "DESIGN §9, §18",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.7.6",
@@ -1657,7 +1815,9 @@
    "measure_how": "MEASUREMENTS-NEEDED B: 1990 period sources, read in full",
    "measure_when": "cloud, Sat 21 to Tue 24 Nov",
    "plan_group": "B",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "2.7.7",
@@ -1669,10 +1829,13 @@
    "test": "S: no money from nowhere",
    "standard_source": "DESIGN §9",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.7.8",
@@ -1684,10 +1847,13 @@
    "test": "S: each shop sells its list; H: 'what did you spend on?'; addendum rules ER-SPEND-01",
    "standard_source": "DESIGN §9, §18",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.8.1",
@@ -1717,11 +1883,14 @@
    "test": "B: each of the five debtors fronted up with different purses.",
    "standard_source": "The description, section 25.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.9.1",
@@ -1751,11 +1920,14 @@
    "test": "B: week-one runs kept and ended; the Act II state compared.",
    "standard_source": "The description, sections 36, 37; RT-04.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.10.1",
@@ -1767,10 +1939,13 @@
    "test": "S: no rung skipped, each said or shown",
    "standard_source": "DESIGN §13",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.10.2",
@@ -1782,10 +1957,13 @@
    "test": "S: every rival move traces; ER-EYES-05 no all-knowing town: every reaction by a neighbour, the police or a rival prints its chain of sightings",
    "standard_source": "DESIGN §13; Core rule",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.10.3",
@@ -1797,10 +1975,13 @@
    "test": "S: each pressure's three answers",
    "standard_source": "DESIGN §13",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.10.4",
@@ -1812,11 +1993,14 @@
    "test": "B: reads compared with the rival's true state; truce timing.",
    "standard_source": "The description, sections 29, 30; RT-06.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.11.1",
@@ -1828,11 +2012,14 @@
    "test": "B: both roads on two men; the same pressure applied; who breaks first.",
    "standard_source": "The description, section 27; RT-07.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.11.2",
@@ -1844,10 +2031,13 @@
    "test": "S: sign before event in every seeded case",
    "standard_source": "DESIGN §12",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.11.3",
@@ -1859,11 +2049,14 @@
    "test": "B: seeded runs for each fate.",
    "standard_source": "The description, section 27.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.11.4",
@@ -1878,7 +2071,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "2.12.1",
@@ -1893,7 +2088,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.12.2",
@@ -1905,11 +2102,14 @@
    "test": "B: rung climbs with holdings added one at a time.",
    "standard_source": "The description, section 32; RT-04.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.12.3",
@@ -1921,11 +2121,14 @@
    "test": "B: the same doors tried in each outfit and state.",
    "standard_source": "The description, section 32.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.12.4",
@@ -1976,7 +2179,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.14",
@@ -1988,10 +2193,13 @@
    "test": "S: the same deed goes differently with different people there",
    "standard_source": "QUESTIONS 3 (open since 29 Sep)",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.15.1",
@@ -2021,11 +2229,14 @@
    "test": "B: rank presence runs; account order.",
    "standard_source": "The description, sections 28, 31.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "2.15.3",
@@ -2040,7 +2251,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.16",
@@ -2055,7 +2268,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.17",
@@ -2070,7 +2285,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "2.18",
@@ -2103,7 +2320,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.1.1",
@@ -2118,7 +2337,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.1.2",
@@ -2148,10 +2369,13 @@
    "test": "S: each morning's step graded; H: 'how does this end, and why'",
    "standard_source": "DESIGN §16",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.1.4",
@@ -2166,7 +2390,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.1.5",
@@ -2178,10 +2404,13 @@
    "test": "S: balance sweep; H predicts the ending",
    "standard_source": "DESIGN §16",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.1.6",
@@ -2196,7 +2425,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.2.1",
@@ -2211,7 +2442,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.2.2",
@@ -2226,7 +2459,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.2.3",
@@ -2241,7 +2476,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.2.4",
@@ -2256,7 +2493,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "3.2.5",
@@ -2271,7 +2510,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.2.6",
@@ -2301,7 +2542,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "3.3",
@@ -2316,7 +2559,9 @@
    "status": "MEASURED",
    "basis": "reference figure",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "3.4.1",
@@ -2367,7 +2612,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.5.1",
@@ -2451,11 +2698,14 @@
    "test": "B: a sit-down played each way; the following state and the town's version compared.",
    "standard_source": "The description, section 30; RT-06, RT-07.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.5.6",
@@ -2467,10 +2717,13 @@
    "test": "S: job data checks; every outcome reached by script",
    "standard_source": "DESIGN §4; Studies 11, 16",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.5.7",
@@ -2482,10 +2735,13 @@
    "test": "S: every job has a giver and a channel; H: 'how did you hear of it?'; addendum rules ER-REACH-01",
    "standard_source": "DESIGN §4",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.6.1",
@@ -2500,7 +2756,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.6.2",
@@ -2515,7 +2773,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.6.3",
@@ -2531,7 +2791,9 @@
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.6.4",
@@ -2561,10 +2823,13 @@
    "test": "S: 170 lines that are not a plain yes",
    "standard_source": "DESIGN §11",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "3.6.6",
@@ -2579,7 +2844,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.6.7",
@@ -2594,7 +2861,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.6.8",
@@ -2609,7 +2878,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "3.7",
@@ -2624,7 +2895,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.1.1",
@@ -2666,10 +2939,13 @@
    "test": "H: newcomer reaches named places",
    "standard_source": "DESIGN §4",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "4.1.4",
@@ -2681,10 +2957,13 @@
    "test": "S: leaving the map edge in the cab",
    "standard_source": "DESIGN §5; Study 2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "4.1.5",
@@ -2759,7 +3038,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.3.1",
@@ -2909,7 +3190,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.5.2",
@@ -2969,7 +3252,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.8",
@@ -2984,7 +3269,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.9",
@@ -2999,7 +3286,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.10",
@@ -3014,7 +3303,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "4.11.1",
@@ -3026,10 +3317,13 @@
    "test": "S: a bark draws the owner within the rule; addendum rules ER-DOG-01",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "5.1.1",
@@ -3196,7 +3490,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "5.2.7",
@@ -3333,7 +3629,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "5.4.3",
@@ -3519,7 +3817,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "5.7.1",
@@ -3549,7 +3849,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "5.8.2",
@@ -3624,11 +3926,14 @@
    "test": "H: walk-up sweep",
    "standard_source": "DESIGN §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.1.2",
@@ -3643,7 +3948,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "6.1.3",
@@ -3655,10 +3962,13 @@
    "test": "S: trigger each perceivable change",
    "standard_source": "DESIGN §10, §1",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.1.4",
@@ -3670,10 +3980,13 @@
    "test": "H: ER-EYES-01 with the cue off and on",
    "standard_source": "DESIGN §2",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.1.5",
@@ -3688,7 +4001,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "6.2.1",
@@ -3700,11 +4015,14 @@
    "test": "S: no entry without a source event",
    "standard_source": "DESIGN §10",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.2.2",
@@ -3716,10 +4034,13 @@
    "test": "S: struck through, never removed",
    "standard_source": "DESIGN §10",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.2.3",
@@ -3731,10 +4052,13 @@
    "test": "H: 'what next, and where' from the Ledger alone",
    "standard_source": "DESIGN §10, §4",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.2.4",
@@ -3746,10 +4070,13 @@
    "test": "H: asked what he has",
    "standard_source": "DESIGN §9",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.2.5",
@@ -3761,10 +4088,13 @@
    "test": "H predicts the ending from it",
    "standard_source": "DESIGN §10, §16",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.3",
@@ -3779,7 +4109,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "6.4",
@@ -3791,10 +4123,13 @@
    "test": "S and B: pause, continue, quit on every device",
    "standard_source": "DESIGN §17; basics 1 to 5, 19",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.5",
@@ -3824,10 +4159,13 @@
    "test": "S: the same scripted evening by each device",
    "standard_source": "DESIGN §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.7",
@@ -3839,10 +4177,13 @@
    "test": "S: typing never moves Tom; Leave always offered",
    "standard_source": "DESIGN §11",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.8",
@@ -3854,11 +4195,14 @@
    "test": "B (bot): 200 random photo-mode sessions with clip detector and before and after save hashes; S: a saved picture has no interface pixel.",
    "standard_source": "Ruling 23 Sep (optional presentation allowed); the camera rule; GTA V and RDR2 photo modes as the common PC expectation [I: widely known, not measured here].",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "6.9",
@@ -3873,7 +4217,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "6.10",
@@ -3885,10 +4231,13 @@
    "test": "S: each letter opens and goes in the Ledger",
    "standard_source": "DESIGN §17",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "7.1",
@@ -3903,7 +4252,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "7.2",
@@ -3922,7 +4273,9 @@
    "measure_how": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study",
    "measure_when": "after the one-shot, from about 3 Dec; the bar itself from the players study by the next run",
    "plan_group": "PANEL",
-   "run3": "a"
+   "run3": "a",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "7.3",
@@ -3941,7 +4294,9 @@
    "measure_how": "the panel of eight kinds of player on the built prototype (M1); its bar figure from the players study",
    "measure_when": "after the one-shot, from about 3 Dec; the bar itself from the players study by the next run",
    "plan_group": "PANEL",
-   "run3": "a"
+   "run3": "a",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "7.4",
@@ -3953,10 +4308,13 @@
    "test": "H: sampled stretches; S: no dead weeks",
    "standard_source": "DESIGN §16",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "7.5",
@@ -4003,10 +4361,13 @@
    "test": "H: same street at rung 1 and 3",
    "standard_source": "DESIGN §14",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "7.8",
@@ -4022,7 +4383,9 @@
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
    "source": "parts tree",
-   "run2": "raised"
+   "run2": "raised",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "7.9",
@@ -4034,10 +4397,13 @@
    "test": "S: every failure route timed",
    "standard_source": "DESIGN §1",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "7.10",
@@ -4052,7 +4418,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "7.11",
@@ -4064,10 +4432,13 @@
    "test": "S: the week of waits",
    "standard_source": "DESIGN §4, §6",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "pass/fail rule (a guard or correctness test; no reference figure needed)",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "7.12",
@@ -4137,7 +4508,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "7.16",
@@ -4149,10 +4522,13 @@
    "test": "H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01",
    "standard_source": "Q3 (open); canon",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "8.1.1",
@@ -4218,7 +4594,9 @@
    "closed_by": "cloud privacy check, 21 Nov",
    "source": "parts tree",
    "run2": "defined",
-   "run3": "c"
+   "run3": "c",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "8.3.1",
@@ -4237,7 +4615,9 @@
    "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
    "measure_when": "cloud, Sat 21 to Wed 25 Nov",
    "plan_group": "PUB",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "8.4.1",
@@ -4252,7 +4632,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "8.5",
@@ -4282,7 +4664,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "8.7",
@@ -4312,7 +4696,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "8.9",
@@ -4327,7 +4713,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "8.10",
@@ -4341,11 +4729,14 @@
    "research": [
     "RN-18"
    ],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "design pass 2"
+   "run2": "design pass 2",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "10.1",
@@ -4435,7 +4826,9 @@
    "status": "MEASURED",
    "basis": "his ruling, canon or a pass/fail rule",
    "closed_by": "",
-   "source": "parts tree"
+   "source": "parts tree",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "10.7",
@@ -4447,11 +4840,14 @@
    "test": "Two-machine sync test x 10; clash test x 5.",
    "standard_source": "The description, section 3 (no meters); VISION (no stats or counts); Steamworks Cloud as commonly used [I].",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "10.8",
@@ -4478,11 +4874,14 @@
    "test": "Ten test reports from the pause menu.",
    "standard_source": "The description, section 34 (line report); sources/a11y-pc.json (PC expectations).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "parts tree",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "10.10",
@@ -4514,7 +4913,9 @@
    "closed_by": "cloud privacy check, 21 Nov",
    "source": "parts tree",
    "run2": "defined",
-   "run3": "c"
+   "run3": "c",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "10.12",
@@ -4547,7 +4948,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.1, 8.9",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-02",
@@ -4564,7 +4967,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.1.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-03",
@@ -4581,7 +4986,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "1.1.2, 5.8.1",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-04",
@@ -4598,7 +5005,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "5.5.7",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-05",
@@ -4615,7 +5024,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.6",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-06",
@@ -4632,7 +5043,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.4",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-07",
@@ -4644,12 +5057,15 @@
    "test": "SaveChaos style: kill the process at random points during 100 saves; every time a save loads and equals one of the last two good states.",
    "standard_source": "The description, section 3 (saving); ER-SAVE-01; PC players' expectation from the players study (bugs and broken saves punished).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "7.8",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "AX-08",
@@ -4666,7 +5082,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.4, 10.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-09",
@@ -4683,7 +5101,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.4",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "AX-10",
@@ -4695,12 +5115,15 @@
    "test": "B: scripted focus loss and resize during walking, driving, a fight and talk.",
    "standard_source": "PC players' expectations (sources/a11y-pc.json, PC section); the description, section 3 (Esc pauses everywhere).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.4",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "AX-11",
@@ -4717,7 +5140,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "accessibility and PC standards (source e)",
    "parent": "6.1.4, 6.2.1",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "GD-01",
@@ -4763,12 +5188,15 @@
    "test": "B: permuted step runs on every authored job.",
    "standard_source": "The description, sections 14 and 3 (no game over, never stuck); the review studies (missions on rails punished in 5 of 8 games, STORY-PATTERNS rank 5).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "design documents and talks (source f)",
    "parent": "3.5.6, 2.19",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GD-04",
@@ -4789,7 +5217,9 @@
    "measure_how": "MEASUREMENTS-NEEDED C: published guides and wikis for the reference games' figures",
    "measure_when": "cloud, Sat 21 to Wed 25 Nov",
    "plan_group": "PUB",
-   "run3": "b"
+   "run3": "b",
+   "run4_was": "MEASURED",
+   "real_basis": "reference game"
   },
   {
    "id": "GD-05",
@@ -4920,12 +5350,15 @@
    "test": "B: three week-one bots (each answer) and a do-nothing Act II bot; the act, rung and ladder log checked.",
    "standard_source": "The description, sections 29 (ladder never skips a rung), 30 (Act II ends at a sit-down), 32 (the rung table), 36, 37 (opens on rung 2; beats on states); ER-CORE-04 (no dead end).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "3.1.2, 3.1.3, 2.12.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-05",
@@ -4937,12 +5370,15 @@
    "test": "B: an Act III run checking the other two ladders' state and pressure each day.",
    "standard_source": "The description, sections 29, 37, 39.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.10.1, 3.1.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-06",
@@ -4954,12 +5390,15 @@
    "test": "B: ladder runs to the threat rung for each rival; counter with and without a hook.",
    "standard_source": "The description, sections 29, 30.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.10.1, 2.10.3, 2.10.4, 3.5.5",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-07",
@@ -4971,12 +5410,15 @@
    "test": "B: recruit two men by each road and apply the same pressure; hook use logged.",
    "standard_source": "The description, sections 24 (Ledger certainty), 27, 29, 30.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.11.1, 2.10.3, 3.5.5",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-08",
@@ -4988,12 +5430,15 @@
    "test": "B: each of the eight verbs sent twenty times with seeds; outcomes traced to watchers.",
    "standard_source": "The description, section 27.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "1.7.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-09",
@@ -5005,12 +5450,15 @@
    "test": "B: seeded fights and sends including covered people; any such strike fails.",
    "standard_source": "The description, section 10 (Tom's own line) and its conflicts note on hold-ups.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "1.3.4, 1.7.2",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-10",
@@ -5056,12 +5504,15 @@
    "test": "B: seeded sequences of shootings seen and unseen; the dial's state checked.",
    "standard_source": "The description, section 33.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.13",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-13",
@@ -5073,12 +5524,15 @@
    "test": "B: seeded deeds and quiet stretches; the stage log against the rules.",
    "standard_source": "The description, sections 20, 21.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.6.5, 2.6.9",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-14",
@@ -5099,7 +5553,9 @@
    "measure_how": "a labelled test set built and run in the cloud",
    "measure_when": "cloud, by Thu 26 Nov",
    "plan_group": "SET",
-   "run3": "d"
+   "run3": "d",
+   "run4_was": "MEASURED",
+   "real_basis": "real-world figure or published standard"
   },
   {
    "id": "RT-15",
@@ -5116,7 +5572,9 @@
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "3.6.2, 8.8, 3.6.1",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "his ruling or canon"
   },
   {
    "id": "RT-16",
@@ -5128,12 +5586,15 @@
    "test": "B: the do-nothing run through three Fridays; a pay-late run.",
    "standard_source": "The description, sections 24 (rent), 3 (no game over); the doing-nothing run of S23.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.7.4",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-17",
@@ -5145,12 +5606,15 @@
    "test": "B: every kind of payment from each place; a break-in; a night search with cash on Tom.",
    "standard_source": "The description, sections 21 (what he finds he keeps), 24 (two pots; clean money spent anywhere), 26 (the count), 27 (cut from the tin).",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "2.7.1, 2.7.2, 2.7.7",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-18",
@@ -5162,12 +5626,15 @@
    "test": "B: clock read before and after each screen.",
    "standard_source": "The description, sections 24 (the map stops Tom but pauses nothing), 27, 34.",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "red team 1",
    "parent": "6.2, 6.3, 7.13",
-   "run2": "defined"
+   "run2": "defined",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "RT-19",
@@ -5418,12 +5885,15 @@
    "test": "B: boot opened in sight of a watcher x 20 (memory written); a stop with cause finds the boot's contents.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "1.6.9",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GV-02",
@@ -5436,12 +5906,15 @@
    "test": "B: deed, change one slot, meet the same witness: only that slot fails to match; a witness who told first still names it.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "1.4.4, 1.6.10, 6.2.1",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GV-03",
@@ -5454,12 +5927,15 @@
    "test": "B: car chases with each passenger; lines logged and checked against the map.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "1.2.7, 6.9",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GV-04",
@@ -5472,12 +5948,15 @@
    "test": "B: after each job, a walk back into every interior it used.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "4.1.3",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GV-05",
@@ -5490,12 +5969,15 @@
    "test": "The nightly tester walk, three nights in a row before the gate is called.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "7.8, 8.2.1",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "id": "GV-06",
@@ -5508,12 +5990,15 @@
    "test": "B: paired fights; the told lines and greetings compared.",
    "standard_source": "production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md",
    "research": [],
-   "status": "MEASURED",
+   "status": "DECIDED",
    "basis": "design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn)",
    "closed_by": "defined 21 Nov (run 2)",
    "source": "GTA VI study",
    "parent": "2.4.1, 2.12.4",
-   "run2": "added"
+   "run2": "added",
+   "run4_was": "MEASURED",
+   "real_basis": "",
+   "decided_note": "design decision; his to overturn (run 4 guard)"
   },
   {
    "name": "The cold-store contract and rung 3 are circular",

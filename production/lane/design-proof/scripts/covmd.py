@@ -7,16 +7,16 @@ def cut(s,n=110):
     s=(s or '').replace('|','/').replace('\n',' ')
     return s if len(s)<=n else s[:n-3]+'...'
 L=[]
-L.append('# Design coverage map (20 November 2026; run 2, 21 November)\n')
+L.append('# Design coverage map (20 November 2026; updated by run 4, 21 November)\n')
 L.append('One row per part of LEDGER a player meets: the parts tree\'s leaves (group 9, the machinery, is not met by a player and is left out), plus rows added from the review studies, critics, the accessibility and PC standards, design-document categories and the first red team. The data is coverage.json; the review themes are themes.json; the source extractions are in sources/.\n')
 L.append('Unreal-only work (looks, engine, performance on his PC) is outside this proof; those rows are marked OUTSIDE and not judged here.\n')
 L.append('## Counts\n')
 L.append('| Status | Rows | Meaning |\n|---|---|---|')
-mean={'MEASURED':'defined, standard set from reference data, his ruling or canon, or a pass/fail guard','PENDING':'defined, its standard waits on a dated study','UNMEASURED':'defined, no reference figure behind its standard yet','UNDEFINED':'needed, not defined (or only named)','OUT':'left out by his ruling or canon','OUTSIDE':'Unreal-only work, outside this proof'}
-for s in d['statuses']: L.append(f'| {s} | {c[s]} | {mean[s]} |')
+mean={'MEASURED':'defined, standard rests on a real figure: a reference game\'s number, a dated real-world figure or published standard, or a rule of his (his ruling or canon)','DECIDED':'defined, pass-or-fail standard is a design decision; listed for him to overturn; not counted as MEASURED by the gate','PENDING_HIS':'defined both ways; waits on his answer (the clock, C11)','PENDING':'defined, its standard waits on a dated study','UNMEASURED':'defined, no reference figure behind its standard yet','UNDEFINED':'needed, not defined (or only named)','OUT':'left out by his ruling or canon','OUTSIDE':'Unreal-only work, outside this proof'}
+for s in d['statuses']: L.append(f'| {s} | {c[s]} | {mean.get(s,s)} |')
 L.append(f'| all | {len(R)} | |\n')
-mb=collections.Counter(r['basis'] for r in R if r['status']=='MEASURED')
-L.append('MEASURED rows by basis: '+'; '.join(f'{k}: {v}' for k,v in mb.items())+'. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.\n')
+mb=collections.Counter(r.get('real_basis','') for r in R if r['status']=='MEASURED')
+L.append('MEASURED rows by real basis (the pre-mortem guard of 21 Nov): '+'; '.join(f'{k}: {v}' for k,v in mb.items())+'. Rows resting on a reference game\'s number or a dated real-world figure: '+str(mb['reference game']+mb['real-world figure or published standard'])+'. Design decisions are DECIDED, not MEASURED, and are listed in DESIGN-COMPLETE.md for him to overturn.\n')
 L.append('## The punished categories, and what prevents each\n')
 L.append('The review studies name these as punished across games. Each has a part, a standard and a test; the status shows how firm the standard is.\n')
 L.append('| Punished | Part | Standard | Status |\n|---|---|---|---|')
