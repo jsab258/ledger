@@ -2831,3 +2831,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: each mechanic count backed by its hand precision; reached for driving, fists and being seen (precision 55 to 80 in four of eight cases); chases 20 to 38; moving on foot 0 (not measurable this way: the word list catches cut-scene stutter and camera talk).
 - Failed and why: a word-list coder for a mechanic overcounts badly when the mechanic's words are common in story talk (police in a police story) or in a racing game's general praise (precision 33): hand-check before quoting any share. Two games were not on the store at all. A placeholder folder made to skip a left-out game sits under a protected path and the storage guard refuses its deletion: put skip markers in the script, not the data folder.
 - Evidence: production/research/lane/STEAM-WALKTHROUGH-GAMES-2026-11-20.md; F:/LedgerTools/steam-reviews/walkthrough/checks.md, tables.md.
+
+### Timing an hour of play by kind from public video (21 Nov 2026)
+- Made: one measured hour of a reference game's free roam split into twelve activity kinds, folded into the design's hour budget.
+- Method: draw frames sampled every 10 s onto a canvas inside the video page (the player's own seek, wait for the frame, draw), read 12 frames per screenshot, write one span per change; span edges carry up to 10 s of error, so this is a fast first pass, not the paused-at-every-change method.
+- Tools: the in-app browser, a page script, a text sheet.
+- Target and check: minutes per kind, folded shares, longest span, changes and distinct kinds per 30 minutes; the second measurer times the same stretch blind.
+- Cost: about 18 minutes of session and 1 weekly point per hour of footage.
+- Failed and why: the video layer hides overlay tiles in screenshots (scroll the player out of view); mid-roll adverts stall seeking (reload past them); 400 px tiles cannot show a glance, so witness timing needs 800 px frames and footage whose camera holds the witnesses, which free-roam compilations rarely do.
+- Evidence: production/research/lane/measurements/gtavi-split-hour-1-builder-2026-11-21.md, gtavi-being-seen-builder-2026-11-21.md.

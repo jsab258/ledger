@@ -32,25 +32,20 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 
 ## Done today
-- 23:07-23:11: advisor 283 closed (his words 23:03): GTA VI's story may be studied, no spoiler in anything he reads; RULINGS study line reworded (cap 4,899 held), enforcer note (story-working folders), DECISIONS line, ack and row on the page.
-- 22:11-22:17: advisors 281-282 closed (his answers 22:08, 22:10): RULINGS' study line (GTA VI measured first, higher bar wins) and genre line (no mods at release), Monday-audit notes in rulings-enforcers.json, cap held at 4,899; waiting-list item 32 (next week's PC block: Marvelous export, GTA VI ~24.5 h, then the reference games); DECISIONS line; ci 108/108. The design proof's mods part is the lane session's to mark OUT.
-- Morning: game menu fix pushed (b6e9687bc); Ron's seated film FAIL; fins tries 1-2 failed. Advisor 271 closed (GTA V, RDR2 reviews).
-- 21:57-22:09: advisor 276 closed: story patterns reviewed (PASS WITH FIXES), builder story_patterns.py and head fixed once, pushed on lane-2026-11 (6a475fbda; ranking pooled over 171 coded reviews). Advisor 273 closed: walkthrough study results written, reviewed (PASS WITH FIXES), fixed once, NOTEBOOK lines for both units, pushed wip a30366f8b (ci 108/108). Mafia placeholder stays (protected path); DECISIONS line.
-- 18:14-21:55: walkthrough games coded and hand-checked (F:/LedgerTools/steam-reviews/walkthrough/checks.md); story patterns rest on hand counts; advisors 277-279 done.
+- 21 Nov 07:52-08:28: advisors 284-286 closed (field of view setting, spare allowance rule, stop 95%, car chases added); GTA VI free-roam stretch 1 timed and pushed (8fb283c70); night walk read; 20 Nov's done list is in git history.
 
 ## In flight
-- Nothing runs: all pulls finished (KCD2 3,939 reviews); no helpers; heavy lock free.
+- The diagnoser on the night walk's talk and sign-in faults (report file in 0b); nothing else runs; heavy lock free.
 
 ## Next, in order
-000. Advisors 273, 276, 281, 282 are DONE (both reviewed and fixed once; the studies stand; no further tries owed). Read the advisor channel first: anything new from him comes before the rest.
+000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisor 285, his '1' 07:44): the PC measuring block started 21 Nov: GTA VI's footage pass first (lane FOOTAGE-MEASURING.md, story missions allowed, no spoiler to him), then the feel block (FEEL-MEASUREMENT-METHOD-2026-11-20.md), then car chases (advisor 286: five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, against the Hook and docks, about 3 h; after GTA VI, before the feel block), then MEASUREMENTS-NEEDED's extra rows; the Marvelous export when he answers its box. Rows: game and verb, when each game's numbers land, weekly points per measuring hour (measured).
+0e. Done 21 Nov 08:24: GTA VI stretch 1 of 3 timed (measurements/gtavi-split-hour-1-builder-2026-11-21.md: driving 40%, on foot 36%, fights and chases 12%, jobs 7%, talk 0%); about 1 weekly point per footage hour. Next: being seen from the candidate police videos in measurements/gtavi-being-seen-builder-2026-11-21.md (clip check first; 800 px frames), then G4-G6, then stretches 2 and 3, then driving. Update the recipe map (RULINGS 9 Nov) for NOTEBOOK's 21 Nov entry. Row 08:24 written.
 0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20, close it and the four licence items with decisions.
-0a. His rulings tonight (advisor 277): after the Marvelous export, Kiln, hair and the crowd pause until the browser evening holds; Kiln v1's Monday goal withdrawn. Next week: the export, the walkthrough measuring, browser-game work. Steps below that serve Kiln wait unless the order says otherwise.
-0b. Tonight's packaged walk proves the tester guard and the menu fix (try 1 of 2; production/audits/night-walk-2026-11-20-diagnosis.md): read its report in the morning.
-0c. Fable: one builder at a time, max effort (advisor 266).
-1. Ron's seated hem cover try 2 of 2 (Fable legs lane), this morning's FAIL film its acceptance view: paused with Kiln unless the order says otherwise.
-2. Fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md): paused with Kiln.
+0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
+0b. Night walk 21 Nov: 14 of 17; the menu fix holds (street chose=new, try 1 of 2 worked). New faults: talk-open, talk-typed, reply-words fail; bench and eyes all fail on 'OAuth session expired' in the night's claude -p. A diagnoser (started 08:27) writes production/audits/night-walk-2026-11-21-diagnosis.md: read it; if the fix needs his sign-in, a NEEDS YOU item. Tries on these: 0 of 2.
+1. Paused with Kiln: Ron's seated hem cover try 2 of 2 (Fable legs lane; the 20 Nov FAIL film its acceptance view); fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md).
 3. Advisors 252/259: the licence edits only in a session he starts; four licence items open (presentmon, kiln-front-end, font-pick, dinov3).
 4. When he taps Done on marvelous-box (deadline Thu 26 Nov, first in next week's order): md_job.py --start (try 2 of 2), one export job over the 52 .zprj (ImportZprj, ExportPatternJSON, ExportFBX beside each), check each reopens, list in production/art/clothing/LOG.md under Exports; copy kiln-md-compare-2026-11-18 into F:/LedgerTools/garments.
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
