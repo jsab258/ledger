@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-21 08:49 (the hourly run)
 
-**Row due:** by 06:22 (last row 05:22; page read 07:22: verdicts none after 2026-11-21T05:22 UTC; advisor none after 23:09; filter advisor after 23:09:00 +01:00, verdicts after 2026-11-21T05:22 UTC)
+**Row due:** by 09:57 (last row 08:57; page read 08:52: verdicts none after 2026-11-21T05:22 UTC; advisor none after 08:10 (286 acked); filter advisor after 08:10:00 +01:00, verdicts after 2026-11-21T07:52 UTC)
 **Stopped:** 2026-11-21 08:43 (history past its point; next: the hold-up at 0:10-0:18 of iOIaXfAInNQ at 1 s, re-pinning the overlay to the top before each screenshot, which drifted at the end)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
