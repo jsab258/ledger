@@ -13,10 +13,10 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 
 ## 1. Research, studies and targets
 
-**Works.** Written questions first. Index archives before unpacking; extract metadata only, capped, one extractor at a time, outside the repository, kept until the fresh review has re-measured. Tag every number (measured, read, inferred, name only) and date it; each finding becomes a target with a check or a reason to ignore, and a tracked order line. Primary sources in full; unreached sources listed, never used. Give reviewers the project's own files: most faults were in claims about the project. Licence first when buying. Exact targets before building: parts in millimetres with material, colour, wear and source tag; photographs measured as the check measures renders (tight box on the object's face); every check row has a wrong copy that must fail it by name; placements tested against the place's own pieces, doors and walking strip.
+**Works.** Written questions first. Extracts (void since 17 Nov): metadata only, capped, outside the repository, kept until re-measured. Footage: frames sheeted in the page; counts are lower bounds. Tag and date every number (measured, read, inferred, name only); each finding becomes a target with a check or a reason to ignore, and an order line. Primary sources in full; unreached sources listed, never used. Give reviewers the project's own files (most faults were claims about it). Licence first when buying. Exact targets before building: parts in millimetres with material, colour, wear and source tag; photographs measured as the check measures renders (tight box on the object's face); every check row has a wrong copy that must fail it by name; placements tested against the place's own pieces, doors and walking strip.
 **Day-one values** (from the studies, to test): stage what the player passes, simulate what the loop reads; kit streets (about 3 floor types, about 15 uses a mesh); variety from colourways (4 to 8) and decals; small lights shadowless, at most 8 casters a frame; costly effects on heroes; budgets first (about 3 ms animation, 3.5 ms people); something new every 3 min; failure as kept state; tuning as data.
 **Cost.** A study 0.6 to 1.3 helper hours, its review 0.2 to 0.3; a target 1 to 2 h plus review and fix.
-**Failed.** A 26 GB uncapped extract filled the disk; extracts deleted before review; a game key left on the system drive; wide photo boxes measured brick; a check comparing two constants never fails.
+**Failed.** A 26 GB uncapped extract filled the disk; extracts deleted before review; a game key left on the system drive; wide photo boxes measured brick; a check comparing two constants never fails; guessed read times (21 Nov).
 **Links.** NB "Step zero", "Universal AAA starting values"; 25 and 28 Oct studies; 13 Oct units 8, 9, 13; 8 Nov cost estimate.
 
 ## 2. Street surfaces and wear
@@ -182,3 +182,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Made: one drape refitted onto two other bodies, passing every check. Cost: 7 h lane.
 - Method: untangle seam-side crossings before the start check, refit, sew with bands frozen, settle; two band measures, the line set before any run. Shortfall: one band 0.3 points over a self-set line, less than the source itself moves; the cure is a source at rest.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md
+
