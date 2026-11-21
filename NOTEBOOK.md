@@ -2923,3 +2923,9 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md, "G5 settled".
 
 - 2026-11-21 17:44, a measuring block's progress by aspect and source (advisor 295): one table per block (production/research/lane/measurements/STATUS.md), totals against planned hours, then a row per aspect and game with planned hours, logged hours, state and the one open question, updated after every step. A dropped source (Mafia DE) left every price at once: the feel block 82 to about 78.7 PC hours. Failed: the time log held about 2.9 h against the session's estimate of 6.7 (unlogged helper and early steps): log every step as it happens. A plumbing commit onto another session's branch was refused by the session's guard; corrected copies wait in F:/LedgerTools/tmp/lane-feel-mafia-out. Cost 0.2 h.
+
+### Counting a game's crowd and lamp reach from public footage (21 Nov 2026)
+- Made: first passes of two footage rows: people per busy view (three kinds of place, day and night) and road lit ahead by one headlamp. Cost: about 10 min.
+- Method: sheet 16 frames across an uncut clip to find the places, then draw each chosen frame large and count by eye; count people besides the player, call every count a lower bound at the drawn size; throw out frames spoiled by a game state (a wanted level empties a beach); a clip published before release is a candidate only. Lamp reach in vehicle lengths against the vehicle and road marks, from the chase camera, marked estimate.
+- Failed: a driving-only clip holds almost no people; search pages draw nothing in a hidden browser pane while watch pages do.
+- Evidence: production/research/lane/measurements/gtavi-g-rows-builder-2026-11-21.md

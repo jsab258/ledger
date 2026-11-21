@@ -999,3 +999,7 @@
 {"event": "stop", "at": "2026-11-21T16:27:00", "note": ""}
 {"event": "start", "at": "2026-11-21T17:39:00", "task": "advisor 295: Mafia out of the feel block, measuring STATUS by aspect and game", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T17:46:00", "note": ""}
+{"event": "start", "at": "2026-11-21T20:23:38", "task": "0d GTA VI G7 crowd count (advisor 296)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T20:28:46", "note": "G7 first pass; production/research/lane/measurements/gtavi-g-rows-builder-2026-11-21.md"}
+{"event": "start", "at": "2026-11-21T20:28:46", "task": "0d GTA VI G2 headlamp loss (advisor 296)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T20:30:49", "note": "G2 one-lamp case; same sheet"}

@@ -1,6 +1,6 @@
 # The measuring block: progress by aspect and game
 
-Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:26: progress by what is measured and in which game). The hourly row reads it. Updated 21 Nov 2026 17:44 Swiss.
+Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:26: progress by what is measured and in which game). The hourly row reads it. Updated 21 Nov 2026 20:28 Swiss.
 
 ## Totals
 - Planned: about 142.7 PC hours (146 until 21 Nov 17:44; Mafia DE dropped from the feel block's fists and on foot, about 3.3 hours less with both measurers; his ruling that Mafia is never a reference).
@@ -12,6 +12,7 @@ Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:2
 |---|---|---|---|---|---|
 | GTA VI, being seen (S1-S8, G4-G6) | GTA VI | part of 24.5 | 0.7 (estimate about 3.6+) | under way: S1 done; S3, S7, G4 sampled; G5 settled; G6 closed as far as footage allows | does returning into sight add a star (one sample each way) |
 | GTA VI, driving and the split hour | GTA VI | part of 24.5 | in the above | first pass (builder sheets) | five samples per number not yet reached |
+| GTA VI, rows G2, G7, G8 (crowd, headlamps, repeated lines) | GTA VI | part of 24.5 (G-rows about 3.25) | 0.1 | G7 first pass 21 Nov 20:28 (busiest view about 10, pavements 3-8, quiet streets 0, night alike); G2 one-lamp case 20:30 (about 2 car lengths lit); G8 not started | G2: both lamps and none (car clips); G7: a tram stop, an uncut beach with no stars, a post-release night clip |
 | Car chases | GTA VI, GTA V, GTA IV, Sleeping Dogs | 3 | about 1.0 (estimate) | done | none for now |
 | Players' first hours | KCD2, RDR2, GTA VI | 6 | 0.5 | done (first pass) | the first fight's outcome in one KCD2 sample is unclear |
 | Our own build filmed (item 35 study 2) | LEDGER prototype | 2 | 0 | not started (waits for room under the allowance ceiling) | how our talk camera and street compare with the sheets' figures |
