@@ -2858,3 +2858,5 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 70 minutes of session for five samples and two side findings; no helpers.
 - Failed and why: one clip rejected for its date; one hold-up unreadable because the maker cut angles at the moment; a hidden browser pane redraws late, so take the screenshot twice when a sheet looks half drawn.
 - Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md.
+
+- 21 Nov 2026, reading a status corner from public footage: crop the screen's corner (about the right 30% of width, top 12% of height) from many moments into one sheet, so "no warning ever showed" is checked frame by frame rather than remembered; hiding the page behind the sheet beats scrolling the player away (page layers clip a fixed sheet). Evidence: production/research/lane/measurements/gtavi-being-seen-builder-2026-11-21.md.

@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed and why, the next steps in order and the tries used. Older lessons: TRIED-ARCHIVE.md.
 
-**Started:** 2026-11-21 08:49 (the hourly run)
+**Started:** 2026-11-21 09:22 (the hourly run)
 
-**Row due:** by 09:57 (last row 08:57; page read 08:52: verdicts none after 2026-11-21T05:22 UTC; advisor none after 08:10 (286 acked); filter advisor after 08:10:00 +01:00, verdicts after 2026-11-21T07:52 UTC)
+**Row due:** by 10:25 (last row 09:25; page read 09:23: verdicts none after 2026-11-21T07:52 UTC; advisor none after 08:10 (286 acked); filter advisor after 08:10:00 +01:00, verdicts after 2026-11-21T08:23 UTC)
 **Stopped:** 2026-11-21 09:16 (history at its point, 242k of 250k; next: rmhryFPJ0AE from 2:40 for the hostage prompt and any alarm, then the rest of 0e)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -42,7 +42,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisor 285, his '1' 07:44): the PC measuring block started 21 Nov: GTA VI's footage pass first (lane FOOTAGE-MEASURING.md, story missions allowed, no spoiler to him), then the feel block (FEEL-MEASUREMENT-METHOD-2026-11-20.md), then car chases (advisor 286: five each for GTA VI, GTA V, GTA IV, Sleeping Dogs, own sheet, against the Hook and docks, about 3 h; after GTA VI, before the feel block), then MEASUREMENTS-NEEDED's extra rows; the Marvelous export when he answers its box. Rows: game and verb, when each game's numbers land, weekly points per measuring hour (measured).
-0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md): S1 done. Next: rmhryFPJ0AE (robbing unseen) for G4; S3 and S7 from the hold-ups' customers; do the icons clear with a mask or new clothes or car (8dTwnFFjspo); then G5-G6, stretches 2-3, driving, advisor 286's car chases. Read by the canvas overlay (the file says how); screenshot twice if a sheet is half drawn.
+0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md): S1 done; G4 unseen side done 09:25 (no stars, n=1). Next: S3 and S7 from the hold-ups' customers; do the icons clear with a mask or new clothes or car (8dTwnFFjspo); then G5-G6, stretches 2-3, driving, advisor 286's car chases. Read by the canvas overlay (the file says how); screenshot twice if a sheet is half drawn.
 0. Verdicts and advisor as on the Row due line; row hourly. When he taps Done on licence-rule-2026-11-20, close it and the four licence items with decisions.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17; menu fix holds. Diagnosis done (production/audits/night-walk-2026-11-21-diagnosis.md): (1) bench and eyes fail because the command-line Claude Code's sign-in (used by the 01:30 'LEDGER nightly walk' task) expired; HIS HANDS: in a Command Prompt run claude, type /login, finish in the browser, /exit. On his page 08:34 as cli-signin-2026-11-21 (ACTION) and asked in chat as NEEDS YOU; after his Done, confirm with one short claude -p, then close it. (2) Talk stages: the tester types when Sheila is within 3.5 m but out of sight; fix made 21 Nov 08:40 (try 1 of 2): route_walk presses T alone, waits 6 s for talk-open, else walks round to her once and tries again, then types with play.py say --open (no second T); selftests 24/24 and 13/13. Tonight's walk proves it: read talk-open's detail.
