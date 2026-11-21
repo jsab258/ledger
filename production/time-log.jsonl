@@ -969,3 +969,5 @@
 {"event": "stop", "at": "2026-11-21T11:29:00", "note": ""}
 {"event": "start", "at": "2026-11-21T13:10:00", "task": "35.1 players' first hours study (KCD2, RDR2, GTA VI)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T13:40:00", "note": ""}
+{"event": "start", "at": "2026-11-21T13:47:00", "task": "35.4 conversation filming, first look (KCD2, RDR2)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T13:55:00", "note": ""}

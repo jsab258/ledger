@@ -2887,3 +2887,11 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Target and check: counts per question per player tied to minute marks; shares from frame counts with the unsure frames listed.
 - Failed and why: the transcript panel stays unrendered in a hidden pane until the page is scrolled by a real input; caption files fetched directly come back empty (a token is needed); wide canvases overflow the pane (keep under 790 px); adverts mid-sheet stop the frames; edited uploads and "game movie" cuts look like sessions and must be checked for a greeting and continuous clock; writing a "read at" time before reading the clock produced wrong stamps (fixed from the clock).
 - Evidence: production/research/lane/measurements/players-first-hours-sheet-2026-11-21.md
+
+### How two reference games film a conversation, first look (21 Nov 2026)
+- Made: shot-by-shot readings of four conversations (two dialogue-mode talks, one story group scene, one set of free street interactions): cuts a minute, shot lengths, sizes, framing. Cost: about 0.2 h session time, no helpers.
+- Method: questions first; frames drawn at 1 s into a page canvas five across at 158 px (smaller thumbnails could not show shot size); a cut is a framing change between frames; size from the face's share of frame height; compilations used only inside one interaction.
+- Tools: the built-in browser and its frame-drawing page script.
+- Target and check: cuts a minute and mean shot length per conversation, with the sizes counted; checked against the earlier study's figure.
+- Failed and why: 2 s steps at 131 px were unreadable; the earlier study's 3.3 s mean shot did not reproduce in one indoor talk (6 s), so more samples are needed before a target.
+- Evidence: production/research/lane/measurements/conversation-filming-sheet-2026-11-21.md
