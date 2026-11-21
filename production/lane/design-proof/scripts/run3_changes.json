@@ -14,5 +14,62 @@
    "basis": "bar on reference-game figures (Steam recommend rates); the panel's own calibration is a separate check",
    "closed_by": "bar set 21 Nov (run 3); read on the built prototype from about 3 Dec"
   }
+ },
+ "b": {
+  "2.7.4": {
+   "status": "MEASURED",
+   "standard": "Doing nothing misses Friday's rent; a week of fares alone pays it (ER-MONEY-03). The £18 rent sits in the 1990 band: council £23.36 a week (Apr 1990), private £65 (1991); cab running costs from 1990 fares (about £1.04 a mile London cab) and diesel about 45p a litre.",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md B1: Hansard 27 Jun 1990, 15 Apr 1993, 30 Jan 1992, 18 May 1990",
+   "basis": "1990 figures found (run 3)",
+   "closed_by": "cloud section B, 21 Nov"
+  },
+  "2.6.4": {
+   "status": "MEASURED",
+   "standard": "About 6 h a window, 8 a wounding, 12 a robbery, 22 a killing, then released under investigation or charged and remanded (not bail); under 2 real minutes; never twice for one deed (ER-POL-03). Inside PACE limits (24 h, 36 serious); 73% of 1984-87 detainees held under 6 h; 542 held over 24 h in 1990.",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md B2: Hansard 8 Jul 1987; Home Office bulletin 1991 via Statewatch; Bottomley 1991 via Kemp and others",
+   "basis": "1990 limits and typical stays found (run 3)",
+   "closed_by": "cloud section B, 21 Nov"
+  },
+  "2.7.6": {
+   "status": "MEASURED",
+   "standard": "About a third of retail (0.33), from 0.2 for jewellery to 0.4 for a video recorder; less for each further piece the same week; buyers differ in what they take (second-hand shop radios and video recorders, scrap yard car parts, a man at the back of the caff jewellery); each is also a listener. No price table on screen.",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md B3: Sutton 2014; AIC 2002; BOCSAR 1998",
+   "basis": "published fencing studies (run 3)",
+   "closed_by": "cloud section B, 21 Nov"
+  },
+  "2.1.2": {
+   "measure_how": "ONS time in and out of the home tables (2000-01, 2014-15) scaled back with 1983 and 1987 shift patterns; if no hours, the MTUS 1987 file on the PC",
+   "measure_when": "cloud by Thu 26 Nov; PC fallback in the order of 23 Nov",
+   "closed_by": "1990 sources not found in run 3; next: ONS tables by Thu 26 Nov"
+  },
+  "2.4.2": {
+   "status": "MEASURED",
+   "standard": "1 to 7 game days by kind (a lift or a scuffle a day or two, a break-in about three, a wounding or robbery about a week), replacing the Core's single 96-hour half-life; a told version cools like the seen one; slots shed by GV-02.",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md C1: KCD2 wanted fades within a few in-game days (GamerBlurb, PC Gamer, Gfinity 2025); RDR2 bounty held until paid (rdr2.org 2023); GTA VI clues shed by change (Vice, GamesRadar 2026)",
+   "basis": "reference-game figures (run 3)",
+   "closed_by": "cloud section C, 21 Nov"
+  },
+  "7.13": {
+   "status": "PENDING",
+   "standard": "45 real s a game hour (18 real minutes a day) in the prototype; references run 48 (GTA V, RDR2), about 96 (KCD1) and about 144 (GTA VI, unconfirmed) minutes a day; the 30 s Unreal clock (12 minutes) is not to be built; his feel decision C11 open; the reference evening (dusk to midnight) in real minutes timed by A5",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md C2",
+   "basis": "reference figures found; waits on his open decision C11 and the A5 footage check",
+   "closed_by": "C11 on his page and A5, 23 to 28 Nov",
+   "measure_how": "A5 times a reference evening on footage; C11 decides",
+   "measure_when": "23 to 28 Nov"
+  },
+  "8.3.1": {
+   "status": "MEASURED",
+   "standard": "Resolution incl. 21:9 at 3440x1440; windowed, borderless, full screen; V-sync; frame cap 30/60/120/none; a quality preset with per-option overrides; resolution scale; an upscaler where the engine has one; motion blur off by default; a benchmark or settings preview; HDR and field of view judged with Unreal (field of view his point AX-03)",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md C3: RDR2 PC options (Shacknews 19 Nov 2019; PC Gamer 30 Dec 2019); sources/a11y-pc.json",
+   "basis": "reference list (run 3)",
+   "closed_by": "cloud section C, 21 Nov"
+  },
+  "GD-04": {
+   "status": "MEASURED",
+   "standard_source": "CLOUD-FIGURES-2026-11-21.md C4: KCD2 one ending, 8 epilogue decisions and 3 later paths (Gamepressure, PC Gamer 2025); RDR2 2 endings, 4 with honour (rdr2.org 2023, SegmentNext 2024); LEDGER's eight differences in five hours asks more than either",
+   "basis": "reference figures (run 3)",
+   "closed_by": "cloud section C, 21 Nov"
+  }
  }
 }
