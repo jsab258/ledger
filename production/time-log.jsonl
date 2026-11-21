@@ -1045,3 +1045,5 @@
 {"event": "stop", "at": "2026-11-21T23:43:45", "note": "S7 fourth sample: thrown weapon 154:09, three grey stars 154:33, about 24 s (being-seen sheet)"}
 {"event": "start", "at": "2026-11-21T23:48:14", "task": "measuring: G5/G6 the three stars clearing after 156:00 (mzGG_I0LSIM)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:48:30", "note": "156:07 pursuit ended by death: stars and icons cleared together, cash to 0 (being-seen sheet)"}
+{"event": "start", "at": "2026-11-21T23:53:14", "task": "measuring: G3 a free-roam car entry (mzGG_I0LSIM 174-176 min)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:54:11", "note": "G3 first free-roam entry: carjack, door to moving about 5 s (driving sheet)"}
