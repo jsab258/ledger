@@ -1,0 +1,4 @@
+reader 1: A=SD, B=WDL, C=RDR2, D=PM3, E=HIT, F=LAN, G=G4, H=GTAV, J=KCD2
+reader 2: A=KCD2, B=GTAV, C=SD, D=PM3, E=RDR2, F=HIT, G=WDL, H=LAN, J=G4
+reader 3: A=GTAV, B=G4, C=LAN, D=KCD2, E=HIT, F=WDL, G=SD, H=RDR2, J=PM3
+RDR2, GTAV, G4 (GTA IV), KCD2, SD (Sleeping Dogs), HIT (Hitman WoA), WDL (Watch Dogs: Legion), LAN (L.A. Noire), PM3 (The Passenger, bible M3, the newest scored version)

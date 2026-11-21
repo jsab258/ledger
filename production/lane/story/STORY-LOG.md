@@ -439,6 +439,8 @@ STORY-FINAL.md is M3 as one read for him, with nine changes for his ruling and t
 
 Reader check (21 November, 07:35 to 07:55): the fourth reader as briefed was not fit against players' story ranking of eight shipped games (rank correlation 0.41, 16 of 23 pairs; pass mark 0.60 and 18, set beforehand); with the brief mended once to judge as players do, 0.91 and 22 of 23 twice over, fit but not proven blind (every reader recognised every game); by it The Passenger (M3) is 6th, 7th and 7th of nine, mean 7.1 against RDR2's 9.5, all three no (READER-CHECK-2026-11-21.md).
 
+Aspect bars of 21 Nov (ASPECT-BARS-2026-11-21.md): story v3 is scored per aspect against the best game for that aspect, as well as overall against the best game.
+
 ## Story v3 (from 21 November, 09:57): the brief of eleven ideas
 
 The brief is v3/BRIEF-V3-2026-11-21.md; read it first. Work lives in v3/.
