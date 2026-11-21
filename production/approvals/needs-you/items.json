@@ -1596,8 +1596,8 @@
      "Not now"
     ]
    ],
-   "state": "open",
-   "closed": null
+   "state": "done",
+   "closed": "2026-11-21 09:47, he sent the line in the session at 09:43; applied: CLAUDE.md, RULINGS and the page check (refuses licence items, self-test)"
   },
   {
    "id": "cli-signin-2026-11-21",

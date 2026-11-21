@@ -38,11 +38,11 @@ TAGS = ("ACTION", "DECISION", "REVIEW")
 # HIS HANDS ONLY WHEN NOTHING ELSE CAN (his messages of 17 Nov 16:34 and 16:36, advisors 203 and 204): an open ACTION
 # item names in "only_you" exactly one of these reasons and in "tried" one line saying which other routes were tried
 # and why each fails; the check refuses it otherwise, and the page shows both under the title.
-ONLY_YOU = ("sign-in", "purchase", "licence", "taste", "his-setting")
+ONLY_YOU = ("sign-in", "purchase", "taste", "his-setting")
 # A DECISION ONLY WHEN IT IS HIS (his message of 18 Nov 12:13, advisor 221): an open DECISION item names in "kind" one of
 # CLAUDE.md's categories he alone decides. His own tools are not licences; deleting something nothing uses, guarded
 # by a check, is not his decision either.
-DECISION_KINDS = ("money", "sign-in", "hands", "licence-off-list", "canon", "story", "scope", "frame-look", "person-look",
+DECISION_KINDS = ("money", "sign-in", "hands", "canon", "story", "scope", "frame-look", "person-look",
                   "taste", "identity")
 PICTURES_REL = "production/approvals/needs-you/pictures"   # an open item's pictures, ignored by git (pictures stay out of it)
 # OWN LEFTOVERS NEVER REACH HIS PAGE (his decision, 16 Nov 12:23, advisor 174; RULINGS 29 Oct): an open item asking him
@@ -57,6 +57,12 @@ OWN_WORDS = re.compile(r"(working outputs?|leftovers?|tool[- ]tests?|test output
 # the items sharing one 'added' time).
 HANDS_WORDS = re.compile(r"\b(install|installing|reinstall|uninstall|change (a|the|its|this) settings?|settings? change|"
                          r"turn (on|off)|switch (on|off)|click|tick|untick|enable|disable)\b", re.I)
+
+
+# LICENCES ARE NEVER HIS QUESTION (his ruling of 19 Nov 17:29, advisors 252 and 259): an open item whose title, text,
+# kind or reason asks him about a licence is refused; the session decides by the allowlist's principles and records the
+# choice in DECISIONS.md and the allowlist. Money stays his, as money.
+LICENCE_WORDS = re.compile(r"\b(licen[cs]e[sd]?|licen[cs]ing|allow-?list(ed)?|copyleft|NoAI)\b", re.I)
 
 
 PLACEHOLDER = re.compile(r"\b(placeholder|lorem ipsum|TODO|TBD)\b", re.I)
@@ -112,6 +118,10 @@ def faults(data, check_files=True):
                 and OWN_WORDS.search(str(it.get("text", "")))):
             out.append("%s asks him about deleting the session's own outputs: delete them under RULINGS 29 Oct, one "
                        "DECISIONS line each, no page item (his decision 16 Nov); if they are his, mark his_files" % it.get("id"))
+        if it.get("state") == "open" and LICENCE_WORDS.search(" ".join(str(it.get(k, "")) for k in
+                                                                   ("title", "text", "kind", "only_you", "recommendation"))):
+            out.append("%s asks him about a licence: licences are never his question; decide by the allowlist's "
+                       "principles and record it in DECISIONS.md and the allowlist (his ruling 19 Nov, advisor 259)" % it.get("id"))
         if it.get("state") == "open" and not it.get("his_hands") and HANDS_WORDS.search(str(it.get("text", ""))):
             out.append("%s asks his hands for an install, a setting or a click: do it yourself; only what the app's "
                        "safety check needs from him goes on the page, marked his_hands (advisor 177)" % it.get("id"))
@@ -296,6 +306,10 @@ def selftest():
     his = dict(good["items"][0], text="May Claude delete C:/LedgerTools/ai-video (26 GB, your dropped video route)?", his_files=True)
     check("an item about his own files, marked his_files, passes", faults({"items": [his]}) == [])
     check("an ordinary ask about a test passes", faults({"items": [dict(good["items"][0], text="Your hands: start the tool test window once.")]}) == [])
+    lic = dict(good["items"][0], text="One pick: may the prototype use this Apache 2.0 licence font?")
+    check("an open item asking about a licence is refused", faults({"items": [lic]}) != [])
+    check("a licence kind on a decision is refused", faults({"items": [dict(good["items"][0], tag="DECISION", kind="licence-off-list")]}) != [])
+    check("the same words on a done item are history", faults({"items": [dict(lic, state="done", closed="2026-11-21 09:50, x")]}) == [])
     inst = dict(good["items"][0], text="Your hands: install the new driver and change the setting to 60 Hz.")
     check("an item asking him to install or change a setting is refused", faults({"items": [inst]}) != [])
     check("a click the app's safety check needs, marked his_hands, passes", faults({"items": [dict(inst, his_hands=True)]}) == [])

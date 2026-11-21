@@ -20,7 +20,7 @@ At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's ope
 
 - Not a programmer: plain words, short; no paths, hashes, flags or tool output unless asked.
 - Updates in the chat, copied to the page's reports: plain, at most ten lines, no files, no promised times; never idle while the goal runs.
-- Ask him only for money, his sign-in or hands, licences outside the list, canon, story or scope, and whole-frame or whole-person looks at their gate; decide the rest (RULINGS 30 Oct). One multiple-choice question, recommendation marked; carry on meanwhile.
+- Ask him only for money, his sign-in or hands, canon, story or scope, and whole-frame or whole-person looks at their gate; licences never (allowlist principles decide, DECISIONS records); decide the rest (RULINGS 30 Oct). One multiple-choice question, recommendation marked; carry on meanwhile.
 - Anything needed from him: its own message, sent before any report, starting "NEEDS YOU:" with exactly what to do and every link, nothing else (RULINGS 1 Nov). Reports carry no asks; results reach his page as they land.
 - Wrong: one sentence; move on.
 
@@ -53,7 +53,7 @@ At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's ope
 - Two tries means two, then research; a third try needs his yes first, asked once with its reason; without it the fault is set aside and named in the summary.
 - Every piece changed in a day is walked by the AI tester in that night's packaged build; a piece passes only there, offline checks are screens; a big item is "ready for review" until he passes it. Nothing is multiplied before he approves one complete sample in the assembled game.
 - The gate: your check against references (photographs, approved face, casting sheet, accent by ear), then fresh reviewers sized to the piece (RULINGS 3 Nov), the last good picture beside: what changed; is it a fault? Then the Hook sheet, KCD2 frames, clothes' floor; a visible change since he looked. New faults block; known shortfalls are listed, failing nothing alone; narrow, known points pass.
-- His page, "LEDGER: Needs you" (one permanent link, RULINGS 2 Nov; no daily pages): only what is open (people, street frames, story, menace, canon, money, licences, scope, taste, identity), each item its one line, links, recommendation and time added, gone once answered or done; one phone screen, at most three one-line decisions with recommendations, picks stored; pictures full size; shortfalls first; yes only for 2026-grade work; nothing his rulings settle.
+- His page, "LEDGER: Needs you" (one permanent link, RULINGS 2 Nov; no daily pages): only what is open (people, street frames, story, menace, canon, money, scope, taste, identity), each item its one line, links, recommendation and time added, gone once answered or done; one phone screen, at most three one-line decisions with recommendations, picks stored; pictures full size; shortfalls first; yes only for 2026-grade work; nothing his rulings settle.
 - Approvals live beside what they approve and lapse with their basis (tools/approvals.py).
 - Simulation: CoreTests, Soak, SaveChaos, PerceptionGolden, StrangerTest and a regression test before committing; the port matches the C# goldens.
 - Subagents for bounded tasks and independent checks, never as director; of two fine ways, the cheaper. Helpers never send clicks or keys; computer use as RULINGS 29 and 30 Oct.

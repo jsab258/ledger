@@ -25,6 +25,7 @@ NEVER SHIP
 2. Luma Genie outputs.
 3. Hunyuan3D outputs if distribution may include EU, UK or South Korea (territory-excluded license); given Switzerland plus likely EU reach, treat as banned.
 4. Google Photorealistic 3D Tiles as shipped assets.
+4a. CGTrader models (its licence carries a no-AI clause; ruled 2 October 2026); the Gent jacket draft only as a reference. Moved here from RULINGS.md on 21 November 2026, when licences became the sessions' decision (his ruling of 19 November, advisor 259).
 5. Real brands, logos, car models, lyrics, likenesses, cloned real voices, celebrity styles.
    Marvelous Designer's own avatars, sample garments, patterns and trims, and anything made in its free trial.
    "Cloned real voices" means the voices of identifiable real people and public figures. It does NOT cover anonymous volunteers who recorded for speech research under an open licence, such as the University of Edinburgh's VCTK corpus (CC BY 4.0, credited), whose consent is taken to cover cloned game characters as a stated risk on the record. Ruled by Jafar 2026-09-24.
