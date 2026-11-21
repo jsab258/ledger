@@ -2,7 +2,7 @@
 
 Begun 21 Nov 2026 13:48 Swiss by the production session. About 2 PC hours estimated, not measured. Public video watched in the built-in browser, never downloaded. Study 2 (our own prototype filmed) needs a tester run and frame-reading helpers; with the allowance at the ceiling and helpers paused, study 4 goes first (browser only, same method); study 2 follows when the line allows.
 
-Home first: production/research/aaa-reference/studies/03-dialogue-barks.md (3 Oct) already records KCD2's dialogue camera alternating close shot and close-up, about 3.3 s a shot, street lines never moving it. This sheet re-measures it on more conversations and adds RDR2.
+Home first: production/research/aaa-reference/studies/03-dialogue-barks.md (3 Oct) already records KCD2's dialogue camera alternating close shot and close-up, street lines never moving it (the 3.3 s a shot first quoted here is the set-aside Mafia study's cutscene median, not KCD2's: corrected 21 Nov, see RECONCILED). This sheet re-measures it on more conversations and adds RDR2.
 
 ## Questions, written before any viewing
 - C1 Kind: which conversations: the free talk the player starts in the world (RDR2's greet and antagonize; KCD2's dialogue mode), against story scenes. Measure free talk first; story scenes only as the comparison.
@@ -30,9 +30,20 @@ A compilation of street interactions; its maker's edits fall between interaction
 
 ## Reading (four conversations; thin, a first look)
 - Free talk in the world: RDR2 keeps the play camera, no cuts, the other person whole-body at a few metres (1 sample, many interactions). KCD2's free talk enters its dialogue camera (the 3 Oct study; not re-measured here).
-- Dialogue mode one-to-one (KCD2): close shot and reverse, over-the-shoulder mediums between, a close-up for emphasis; about 10 cuts a minute, shots 2-14 s, mean about 6 s here against 3.3 s in the 3 Oct study (two samples disagree; more needed).
+- Dialogue mode one-to-one (KCD2): close shot and reverse, over-the-shoulder mediums between, a close-up for emphasis; about 10 cuts a minute, shots 2-14 s, mean about 6 s here; study 03 has no KCD2 shot length to set it against (the 3.3 s once quoted was the set-aside Mafia study's cutscene median); more samples needed.
 - Story scenes with several people: both games cut faster (about 14-20 a minute, mean 3-4 s) and go wider (medium, medium-long, long group shots).
 - For LEDGER (a reading, not a target): street talk can stay in the play camera as RDR2 does, cheapest and never jarring; a sit-down talk can use KCD2's close shot and reverse at about 6-10 cuts a minute.
+
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/03-dialogue-barks.md (28 Oct, from KCD2's own dialogue data: 78% of conversation lines carry a camera command, named shots close shot 46%, close-up 41%, medium 13%; lines in the world carry no camera) and 09-camera-controls.md (28 Oct: KCD2 authors a shot for most lines, custom 28,819, close shot 14,135, close-up 12,496, medium 3,975; LEDGER ignores shots authored per line because its talk is live). The 28 Oct studies were data reads; this sheet is the first on footage.
+
+| Find here | Study 03 or 09 | Confirms, contradicts or adds |
+|---|---|---|
+| KCD2 dialogue mode: close shot and reverse, a close-up for emphasis, mediums between | 03: close shot 46%, close-up 41%, medium 13% of named shots | Confirms the order of sizes on footage. |
+| KCD2 about 10 cuts a minute, shots 2-14 s, mean about 6 s | 03 and 09: no shot length for KCD2 | Adds the first KCD2 shot length. Corrects this sheet's first pass, which set it against 3.3 s; that number is the set-aside Mafia study's cutscene median, so nothing contradicts the 6 s. |
+| RDR2 free talk keeps the play camera, no cuts | 03: KCD2's lines in the world carry no camera | Confirms the pattern across both games: talk in the street does not cut. |
+| Group story scenes cut faster (14-20 a minute) and wider | 09: none for group scenes | Adds. |
+| For LEDGER: street talk in the play camera; a sit-down talk at 6-10 cuts a minute | 09: shots authored per line ignored, LEDGER's talk being live | Agrees: a live talk can use a few fixed set-ups (close shot, reverse) without per-line authoring; the cut rate needs a rule, not a script. |
 
 ## Not reached
 - Frames were stepped at 1 s, not the 0.5 s the questions set; lengths are to about 1 s.
