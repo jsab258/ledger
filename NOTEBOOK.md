@@ -2897,9 +2897,9 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Evidence: production/research/lane/measurements/conversation-filming-sheet-2026-11-21.md
 
 ### Archive street footage of one period, first look (21 Nov 2026)
-- Made: readings of five amateur clips of coastal and port towns from one period (night streets, a dock edge, shopfronts, traffic), as presence notes beside written questions. Cost: about 0.4 h session time, no helpers.
+- Made: readings of seven amateur clips of coastal and port towns from one period (night streets, a dock edge, shopfronts, traffic, daytime crossings), as presence notes beside written questions. Cost: about 0.3 h session time by the clock, no helpers.
 - Method: questions first; each clip paused and stepped by page script in the built-in browser, one cropped frame per step read by eye; the year taken from a camcorder date stamp where burned in, else marked as the uploader's statement.
 - Tools: the built-in browser, its page script and cropped captures.
 - Target and check: per question, what the frames show, with clip and time mark; a final list of what is still unanswered.
-- Failed and why: holiday tapes, edited visits and building surveys hold few people close to the lens, so crowd counts, clothing tallies, stance and smoking stayed unanswered; steps of 25 s to 6 min are far wider than the 10 s asked; search pages draw nothing while the browser pane is hidden until a screenshot is taken. Next: street-level filming made for another subject (buses, markets), where people pass close by chance.
+- Failed and why: holiday tapes, edited visits and building surveys hold few people close to the lens; street filming made for buses gave the first daytime people, but smoking stayed unreadable; read times were first written from estimate, not the clock, and had to be corrected; steps of 25 s to 6 min are far wider than the 10 s asked; search pages draw nothing while the browser pane is hidden until a screenshot is taken. Next: street-level filming made for another subject (buses, markets), where people pass close by chance.
 - Evidence: production/research/lane/measurements/port-towns-archive-sheet-2026-11-21.md
