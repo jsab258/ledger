@@ -45,6 +45,13 @@ Frames 5:00-5:30 every 10 s (a seafront promenade at night), 25:00-25:10 (drivin
 4. Props carry the street between people: KCD2's dense stalls and parked carts with no one at them (clip 4) do the work a crowd would.
 5. For LEDGER (a quiet British street, 1990, on foot): the fitting figures are the low counts and the places-to-stand rule. A target to test in study 2 on our prototype: 2-7 people in a busy view by day, about half of them standing or seated at a place made for it (a bus stop, a shop door, a kerb, a bench, a kiosk), groups of 2-3 facing inward, and props (parked vans, crates, a barrow) where people are few. Figures from small samples; not yet targets.
 
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/01-npc-life.md (KCD2 and Mafia data, 25 Oct) and 04-street-world.md. This pass was viewed before they were read; the marks below are after.
+- Finding 1 (2-10 people in a busy view): adds; study 01 says people on screen by day or night is set in neither game's data, so footage is the only source.
+- Findings 2-3 (people stand where something invites it; groups of 2-3 facing inward): confirm study 01's usable objects as places in the routine (KCD2's 1,041 benches, each seat a slot; Mafia's smart objects with up to three slots, 22 for two) and its lesson 3 (benches, tables, doors as places with caps).
+- Finding 4 (props carry the street between people): confirms study 04's dressing where the player walks and its props per 10 m.
+- Open Q3 (reactions to the player), narrowed: study 01 already gives the noticing numbers (KCD2 notices at once within 2.5 m; Mafia's glance becomes a look in 0.35 s, 0.7 s if the player stands still) and Mafia's reaction set (bark, startle, stop, look, flee, panic). Footage is needed only for what the data cannot show: how a reaction spreads to others and how long the street takes to settle.
+
 ## Not reached or unverified
 - Q3 reactions to the player (delay, kind, spread, settling time): no clip read showed the player provoking anyone; the RDR2 clip with that promise was a scripted encounter. Our GTA VI being-seen sheet (gtavi-being-seen-builder-2026-11-21.md) holds the crime-witness side; a reaction clip for RDR2 and KCD2 is still wanted.
 - Q1 idle actions a minute: stills at 10 s show postures, not action loops; a minute of real-time viewing per game is needed.

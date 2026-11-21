@@ -129,6 +129,14 @@ Control about 57-76% of the hour's frames, the highest of the three games; the o
 - Frame classes are judged at thumbnail size (control, story scene, menu); the RDR2 clips used two readings of "riding with dialogue", so part of their spread is the rule.
 - G3 (car entry seconds) not timed: the launch streams' first drives are scripted entries; a free-roam entry remains for a later clip.
 
+## RECONCILED with our earlier study (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/02-first-30-minutes.md (KCD2 and Mafia openings rebuilt from their files and written sources, 28 Oct; minutes estimated, no recording). This pass was viewed before it was read; the marks below are after.
+- First control: contradicts study 02's KCD2 "at least 3.5 min" (an estimate from cutscene lengths): two of three players here had control inside 2 min. Real play measured wins; the change goes to the waiting list for the studies' owner. The proposed benchmark (control within 1.5 min) is unchanged.
+- Share out of control: KCD2 39-45% in control over the first hour here, against study 02's "a fifth to two-fifths of the half hour spent watching". Partly definitions (here menus and dialogue count as out of control; study 02 counted cutscenes only) and partly the longer window; marked disagrees, not resolved; the benchmark's "watching well under 29%" is checked on our own prototype (study 2).
+- Getting lost is controls and interface, not the way: confirms study 02's lessons 2 and 3 (hints fired by hesitation, the interface revealed piece by piece).
+- The felt leash, named by three of nine: confirms lesson 6 (a soft edge, turned back inside the world) and adds that players notice it and want a reason.
+- No boredom said in nine first hours: consistent with study 02's something new every three minutes in both games; adds real players' word for it.
+
 ## A reading for LEDGER (not a target; a target from it gets its own reviewer)
 - Control early: two KCD2 players had control inside 2 min; GTA VI's 7.5 min drew the one impatience said at an opening.
 - A leash needs a reason: movement limits in an opening were noticed and named by three of nine players.

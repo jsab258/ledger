@@ -56,6 +56,13 @@ Frames at 2:00-2:50 every 10 s (day), 15:00 (night, rain) and 25:00 (rain, dusk)
 4. Each frontage is dense even when the street is empty: 2-4 signs and 1-3 loose props per frontage in Kamurocho (clip 1); Hong Kong's frames rely on hanging signs more than ground clutter (clip 5).
 5. For LEDGER (our kind of game, a few streets, on foot): the numbers that fit are Yakuza 0's on-foot ones, not Sleeping Dogs' driving share. A target to check against our own prototype in study 2: a staged street incident every 5 minutes or so of walking at night (Yakuza's rate, cut to our quieter town and its content rule), onlookers gathering at any incident, 2-4 signs and 1-3 props per frontage, and talk played on the street, not only indoors. These are first-pass figures from small samples; they become targets only after study 2 measures ours by the same method.
 
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/17-yakuza-shenmue.md (his study of 31 Oct: Kamurocho about 0.36 km2, about 8 min across; side stories found on foot; dense, reused district) and 04-street-world.md (Mafia and KCD2 level data: Mafia's 4.9 props per 10 m; dress where the player walks); game-design/town-plan.md (British sign grammar). This pass was viewed before they were read; the marks below are after.
+- Findings 1-2 (a stage, not a corridor; thin crowds): confirm study 17's density from going up and dense frontages, not crowds; add the counts (0-3 by day in Kamurocho), which study 17 had none of.
+- Finding 3 (at least 2 street fights in 10 night minutes): confirms study 17's "random thug fights are frequent", which was inferred; his lesson 7 there already rules them out for LEDGER (most confrontations end before a blow). So the rate stands as a rate of incidents of any kind, never of fights.
+- Finding 4 (2-4 signs and 1-3 props per frontage): props agree with study 04's at least 5 per 10 m of street, both sides (1-3 per 8 m frontage each side is about 2.5-7.5 per 10 m); signs contradict town-plan's British grammar (shop signs on shops, few signs): Kamurocho's signage belongs to its own place, so the old rule wins for Meridian and the signs figure is dropped.
+- No more viewing on district size or reuse: study 17 answers them.
+
 ## Not reached or unverified
 - Q1 as written (every enterable or speaking thing per walking minute) needs real-time viewing at 1-2 s steps; not done in this pass. Frames at 5-10 s steps cannot see shop doors that can be entered.
 - Q4 within one game's chapters (does Kamurocho change from chapter to chapter in Yakuza 0) not confirmed: frames show day in one hour and night in another, but not whether the clock is fixed by chapter.

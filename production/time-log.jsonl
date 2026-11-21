@@ -985,3 +985,5 @@
 {"event": "stop", "at": "2026-11-21T15:26:51", "note": "first pass; sheet street-life-sheet-2026-11-21.md"}
 {"event": "start", "at": "2026-11-21T15:39:00", "task": "n16 waiting 35 study 3: reconciled with the period research (advisor 294)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T15:43:00", "note": ""}
+{"event": "start", "at": "2026-11-21T15:44:00", "task": "n16 waiting 35/37: studies 1, 2, 10 reconciled with earlier studies (advisor 294)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T15:49:00", "note": ""}
