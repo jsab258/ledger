@@ -5,7 +5,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 **Started:** 2026-11-21 08:49 (the hourly run)
 
 **Row due:** by 09:57 (last row 08:57; page read 08:52: verdicts none after 2026-11-21T05:22 UTC; advisor none after 08:10 (286 acked); filter advisor after 08:10:00 +01:00, verdicts after 2026-11-21T07:52 UTC)
-**Stopped:** 2026-11-21 08:43 (history past its point; next: the hold-up at 0:10-0:18 of iOIaXfAInNQ at 1 s, re-pinning the overlay to the top before each screenshot, which drifted at the end)
+**Stopped:** 2026-11-21 09:16 (history at its point, 242k of 250k; next: rmhryFPJ0AE from 2:40 for the hostage prompt and any alarm, then the rest of 0e)
 (The hourly task runs `python tools/fresh_gate.py` first; at each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). HIS GOAL THIS WEEK (advisor 220): Kiln v1 by Mon 23 Nov 13:00; everything else serves it or waits. Plan: F:/LedgerTools/tool-dev/reports/KILN-V1-CHECKLIST-2026-11-18.md (top of LOOP.md): 0 of 6 lines done. Pace (advisor 246): 47% at 13:37, non-Fable 23.5% against the ceiling 44.8%, hard stop 75%; Fable 51%, burn it on Kiln before his reset. This week (RULINGS): eight helpers a session, Fable at max on Kiln's hardest pieces, high effort on hard code and reviews.
