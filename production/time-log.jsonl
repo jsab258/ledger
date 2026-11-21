@@ -1039,3 +1039,5 @@
 {"event": "stop", "at": "2026-11-21T23:27:30", "note": "G2: third both-lamps sample (2-3 car lengths); no lamps-out drive in the stream, none case still set aside (g-rows sheet)"}
 {"event": "start", "at": "2026-11-21T23:31:26", "task": "measuring: G7 crowd by day, uncut walk n9A0lM-f-aQ", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:33:09", "note": "G7 day: n9A0lM-f-aQ is edited (sponsor insert); four day counts as leads (g-rows sheet)"}
+{"event": "start", "at": "2026-11-21T23:37:18", "task": "measuring: G5 fifth return sample (mzGG_I0LSIM 157:30-159:00)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:38:22", "note": "158:08 fresh one-star spell, search flash; no return in window, no fifth sample (being-seen sheet)"}
