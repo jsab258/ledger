@@ -71,5 +71,21 @@
    "basis": "reference figures (run 3)",
    "closed_by": "cloud section C, 21 Nov"
   }
+ },
+ "c": {
+  "8.2.1": {
+   "status": "MEASURED",
+   "standard": "(1) Nothing leaves the PC without a yes, and nothing is read or sent before it; (2) the question says what is sent, why, to whom and how long it is kept; No and Never as easy as Yes and Always; withdrawable in Settings; (3) the report contains no typed talk, no save unless ticked, no serial, machine id, user name or named path; (4) an unsent local report is deleted after 30 days; (5) the game never crashes while writing its own report (a forced crash test).",
+   "standard_source": "PRIVACY-CHECK-2026-11-21.md: ICO storage and access guidance (13 May, 29 Apr 2026), ICO blog 11 Sep 2025; consent route as fault reports are not strictly necessary",
+   "basis": "pass or fail on the ICO's published guidance (run 3)",
+   "closed_by": "cloud privacy check, 21 Nov"
+  },
+  "10.11": {
+   "status": "MEASURED",
+   "standard": "(1) The AI notice, its own screen before the first typed line, says replies are made by a named AI service over the internet, what is sent, why and for how long, and offers offline play as an equal choice; readable again from pause; (2) nothing typed is sent before it is answered; (3) offline mode plays the whole first hour; (4) no copy of typed text kept beyond the story's memory unless reported; (5) the service's retention and the deletion route are as stated.",
+   "standard_source": "PRIVACY-CHECK-2026-11-21.md: ICO guidance; EU AI Act Article 50(1), in force 2 Aug 2026 (Commission FAQ 24 Jul 2026)",
+   "basis": "pass or fail on the ICO's guidance and Article 50 (run 3)",
+   "closed_by": "cloud privacy check, 21 Nov"
+  }
  }
 }

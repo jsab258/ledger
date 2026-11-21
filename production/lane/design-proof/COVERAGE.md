@@ -8,15 +8,15 @@ Unreal-only work (looks, engine, performance on his PC) is outside this proof; t
 
 | Status | Rows | Meaning |
 |---|---|---|
-| MEASURED | 192 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
-| PENDING | 31 | defined, its standard waits on a dated study |
+| MEASURED | 194 | defined, standard set from reference data, his ruling or canon, or a pass/fail guard |
+| PENDING | 29 | defined, its standard waits on a dated study |
 | UNMEASURED | 47 | defined, no reference figure behind its standard yet |
 | UNDEFINED | 0 | needed, not defined (or only named) |
 | OUT | 14 | left out by his ruling or canon |
 | OUTSIDE | 57 | Unreal-only work, outside this proof |
 | all | 341 | |
 
-MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; reference-game figures (run 3): 1; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 25; 1990 limits and typical stays found (run 3): 1; 1990 figures found (run 3): 1; published fencing studies (run 3): 1; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 22; bar on reference-game figures (Steam recommend rates); the panel's own calibration against real players is a separate check: 1; bar on reference-game figures (Steam recommend rates); the panel's own calibration is a separate check: 1; reference list (run 3): 1; reference figures (run 3): 1. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
+MEASURED rows by basis: his ruling, canon or a pass/fail rule: 70; pass/fail rule (a guard or correctness test; no reference figure needed): 52; reference figure: 15; reference-game figures (run 3): 1; public guideline, canon, his ruling or a guard (DEFINITIONS-2026-11-21): 25; 1990 limits and typical stays found (run 3): 1; 1990 figures found (run 3): 1; published fencing studies (run 3): 1; design decision, pass or fail (DEFINITIONS-2026-11-21; he may overturn): 22; bar on reference-game figures (Steam recommend rates); the panel's own calibration against real players is a separate check: 1; bar on reference-game figures (Steam recommend rates); the panel's own calibration is a separate check: 1; pass or fail on the ICO's published guidance (run 3): 1; reference list (run 3): 1; pass or fail on the ICO's guidance and Article 50 (run 3): 1; reference figures (run 3): 1. Honest note: only the "reference figure" rows rest on numbers taken from the reference games; the others are pass or fail by a ruling, canon or a guard, which a checker can score but which no reference game set.
 
 ## The punished categories, and what prevents each
 
@@ -41,7 +41,7 @@ The review studies name these as punished across games. Each has a part, a stand
 |  | 7.9 Failure without reload | ER-CORE-04: no game-over screen; control back within 2 real minutes | MEASURED |
 |  | GD-03 Jobs done out of order and sequence breaks | For every job, the AI tester runs all orders of its steps it can reach plus one skip by... | MEASURED |
 | Bugs, crashes, broken saves | 7.8 Saving | ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Rais... | MEASURED |
-|  | 8.2.1 Crash and bug reporting | (1) Nothing leaves the PC without a yes; (2) the report contains no typed talk and no s... | PENDING |
+|  | 8.2.1 Crash and bug reporting | (1) Nothing leaves the PC without a yes, and nothing is read or sent before it; (2) the... | MEASURED |
 |  | AX-07 Save thumbnails, rotating autosaves and never losing the only save (slots and autosave are already in the description) | (1) Eight manual slots with picture, day, hour, place; (2) three rotating autosaves; (3... | MEASURED |
 | Slow, clunky controls | 1.1.1 Walk, run and turn | ER-INPUT-01 (every action answers within 100 ms, eased keys, mouse look never jumps); f... | PENDING |
 |  | 6.6 Controls | ER-INPUT-03; ER-INPUT-01 | MEASURED |
@@ -359,7 +359,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | 8.1.1 | Frame, memory and crowd budget | OUTSIDE | 6 GB card line is the game alone (24 Oct); spare card time 1.7 ms | study 12 (budgets owed) | RULINGS 24 Oct; study 12; Unreal-only work (looks, engine, performance): outside th... |  |
 | 8.1.2 | Streaming and loading | OUTSIDE | none yet: load and hitch limits to be set | not designed | study 04, 12; Unreal-only work (looks, engine, performance): outside th... |  |
 | 8.1.3 | Player PCs and shader stutter | OUTSIDE | Epic's PSO precaching for shader stutter; minimum spec to be set | not designed | Epic tech blog on shader stutter (red team source); Unreal-only work (looks, engine, performance): outside th... |  |
-| 8.2.1 | Crash and bug reporting | PENDING | (1) Nothing leaves the PC without a yes; (2) the report contains no typed talk and no save unless ticked; (... | DEFINITIONS-2026-11-21 §8.2.1 | UK GDPR and EU GDPR consent and data minimisation (Articl...; defined; its number waits on: cloud privacy check, by Tue... | cloud privacy check, by Tue 24 Nov |
+| 8.2.1 | Crash and bug reporting | MEASURED | (1) Nothing leaves the PC without a yes, and nothing is read or sent before it; (2) the question says what ... | DEFINITIONS-2026-11-21 §8.2.1 | PRIVACY-CHECK-2026-11-21.md: ICO storage and access guida...; pass or fail on the ICO's published guidance (run 3) | cloud privacy check, 21 Nov |
 | 8.3.1 | PC display options | MEASURED | Resolution incl. 21:9 at 3440x1440; windowed, borderless, full screen; V-sync; frame cap 30/60/120/none; a ... | not designed | CLOUD-FIGURES-2026-11-21.md C3: RDR2 PC options (Shacknew...; reference list (run 3) | cloud section C, 21 Nov |
 | 8.4.1 | Visual stand-ins for sound cues | MEASURED | ER-SND-01's information reachable without sound, never as a meter of others' minds (D33) | ONE-SHOT-PROMPT: What the screen does show / DESIGN-ADDENDUM-2026-1... | DESIGN §17; D33; his ruling, canon or a pass/fail rule |  |
 | 8.5 | Install and launch | OUTSIDE | ER-START-01 (basics 1 to 5) | DESIGN §17 | DESIGN §17; Unreal-only work (looks, engine, performance): outside th... |  |
@@ -383,7 +383,7 @@ The review studies name these as punished across games. Each has a part, a stand
 | 10.8 | Trailer, key art and store capsule | OUTSIDE | Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade ... | not designed | RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate; Unreal-only work (looks, engine, performance): outside th... |  |
 | 10.9 | Player support and community | MEASURED | Every route present; a test report reaches the support inbox with its build and the player's words within 5... | DEFINITIONS-2026-11-21 §10.9 | The description, section 34 (line report); sources/a11y-p...; design decision, pass or fail (DEFINITIONS-2026-11-21; he... | defined 21 Nov (run 2) |
 | 10.10 | Legal and company admin | OUTSIDE | none; money matters are his | not designed | map-departments; RULINGS 16 Sep; Unreal-only work (looks, engine, performance): outside th... |  |
-| 10.11 | Player data and privacy | PENDING | (1) The note is shown before the first typed line; (2) offline mode plays the whole first hour; (3) the ser... | DEFINITIONS-2026-11-21 §10.11 | UK GDPR and EU GDPR transparency and erasure (Articles 12...; defined; its number waits on: cloud privacy check, by Tue... | cloud privacy check, by Tue 24 Nov |
+| 10.11 | Player data and privacy | MEASURED | (1) The AI notice, its own screen before the first typed line, says replies are made by a named AI service ... | DEFINITIONS-2026-11-21 §10.11 | PRIVACY-CHECK-2026-11-21.md: ICO guidance; EU AI Act Arti...; pass or fail on the ICO's guidance and Article 50 (run 3) | cloud privacy check, 21 Nov |
 | 10.12 | Demo, price and wishlists | OUTSIDE | None at this gate. | DEFINITIONS-2026-11-21 §10.12 | CLAUDE.md (money is his); the shipping rows 10.1 to 10.5 ...; shipping business; price is his, later | after the prototype |
 
 ## Accessibility and PC settings
