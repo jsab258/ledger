@@ -993,3 +993,5 @@
 {"event": "stop", "at": "2026-11-21T16:00:00", "note": ""}
 {"event": "start", "at": "2026-11-21T16:01:00", "task": "n16 GTA VI being seen G5: second sample (4Sj3c8sMO-Y)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T16:08:00", "note": ""}
+{"event": "start", "at": "2026-11-21T16:09:00", "task": "n16 GTA VI being seen G5: re-identification check", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T16:11:00", "note": ""}
