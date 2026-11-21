@@ -951,3 +951,7 @@
 {"event": "stop", "at": "2026-11-20T18:07:08", "note": "lane a5e7a811b; review F:/LedgerTools/steam-reviews/REVIEW-2026-11-20.md"}
 {"event": "start", "at": "2026-11-21T10:02:00", "task": "n16-1 Marvelous export of 52 projects, sign-in check, pages", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T10:21:00", "note": ""}
+{"event": "start", "at": "2026-11-21T10:50:00", "task": "advisors 289-290: one-shot gate, prototype play item", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T10:58:00", "note": ""}
+{"event": "start", "at": "2026-11-21T10:58:00", "task": "GTA VI G6: the game's Help on heat icons", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T11:02:00", "note": ""}
