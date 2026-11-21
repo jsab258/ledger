@@ -65,3 +65,16 @@ Our counts from 19 chases (GTA VI 5, GTA V 5, GTA IV 4, Sleeping Dogs 5), each a
 - Car changes rarely end a chase while seen (GTA V twice, Sleeping Dogs, GTA IV); one out of sight did (GTA VI chase 2).
 - Unique moves worth noting: Sleeping Dogs' leap from car to car; GTA VI's tips naming how to escape ('hiding or escaping their search area').
 For LEDGER (a reading for the design, not a decision): a 1990 docks town has no motorway and few open grounds, so the GTA IV and Sleeping Dogs pattern fits best: short sight-lines, sight broken at corners, alleys and the dock sheds, a search that ends in under a minute at the lowest level and lasts minutes at higher ones, police few at once (one or two cars, a van for boxing), a helicopter doubtful for a small town's force in 1990 (unverified; to check in the period research). The measuring hours and the rows still open are listed above.
+
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/lane/DRIVING-ESTIMATE-AI-2026-11-17.md (police chases as the second biggest driving item: pursuit driving, a search after sight is lost, roadblocks, losing the police, the town knowing the chase; ranges by judgement), production/research/aaa-reference/studies/18-gta6-first-read.md (the star states: flashing when sight is lost, red for an area search; return too soon re-identifies; the vehicle icon cleared by abandoning or repainting), 15-crime-toolkit.md (KCD2's witness counter, 20 s of grace on leaving), the wanted-guides sheet beside this one (no guide gives seconds) and production/research/crime-scene-1990/SUMMARY.md (period police: forensics only, nothing on pursuit or air support).
+
+| Find here | Earlier study | Confirms, contradicts or adds |
+|---|---|---|
+| Search after sight is lost: about 20-35 s at the lowest levels, three or more minutes at three stars and above | 18 and the guides sheet: no seconds anywhere | Adds the first timings (floors, few samples). |
+| Escape needs sight broken, then the search outlasted | 18: flashing when sight is lost, red for the area search | Confirms the states on footage. |
+| A car change while seen rarely ends a chase; one out of sight did | 18: the vehicle icon cleared by abandoning or repainting | Confirms, and adds that a change in sight clears nothing. |
+| No spike strips or set roadblocks at these steps | Estimate: roadblocks listed in the police-chase item | Contradicts nothing (uploaders' choices, coarse steps); a reading only: the first pass of LEDGER's chases can leave roadblocks out and the estimate's range shrink with them, if the design agrees. |
+| Police in frame usually 0 or 1, at most about 4 | Estimate: none | Adds; fits a small town's force. |
+| Sleeping Dogs' heat falls and rises again | 15: KCD2's counter rises a step a tick, with 20 s of grace on leaving | Adds a second model of heat that climbs and decays; KCD2 has no cars, so its counter stays the witness model, not the chase model. |
+| A helicopter doubtful for a small town's force in 1990 | Crime-scene 1990: nothing on air support | Open: no source in our library; unverified until the period research covers it. |

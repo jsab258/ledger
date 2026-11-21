@@ -23,7 +23,6 @@ SHEETS = "production/research/lane/measurements"
 RULING_TEXT = "no Unreal work until the prototype"
 RULING_SINCE = "2026-11-21 10:25"
 OWED = {  # written before the check (21 Nov 21:51); each gets its section, then leaves this list
-    "car-chases-sheet-2026-11-21.md",
     "gtavi-being-seen-builder-2026-11-21.md",
     "gtavi-g-rows-builder-2026-11-21.md",
 }
@@ -86,7 +85,7 @@ def run():
 def selftest():
     assert unreal_findings("x " + RULING_TEXT + " y", ["abc"]) and not unreal_findings("lifted", ["abc"])
     f = builton_findings({"a.md": "# A\nBuilt on, read 21 Nov: x", "b.md": "# B\nno section",
-                          "car-chases-sheet-2026-11-21.md": "x", "STATUS.md": "x"})
+                          sorted(OWED)[0]: "x", "STATUS.md": "x"})
     assert [k for k, _ in f] == ["FAIL", "owed"], f
     m = mafia_findings({"s.md": "Mafia DE: 20 min to measure\nMafia DE: set aside (his ruling)\n"
                                 "Built on study 01 (KCD2 and Mafia data)"})
