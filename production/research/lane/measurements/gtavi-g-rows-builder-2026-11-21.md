@@ -56,7 +56,7 @@ Finding (confirmed on a release-day clip, 21:07): the beach is GTA VI's crowded 
 
 Finding: GTA VI's stops and stations hold 0 to 3 people in view, fewer than the café strip; transport places are not where it gathers its crowd.
 
-Night confirmation tried (20:52): gHfxP4YtTmE, night driving, published 2026-11-18 07:38 Pacific (before release), 4:00, a drive throughout: no confirmation; WgsrRHyp8iE and g9T1FmUCQNw not yet checked.
+Night confirmation tried (20:52): gHfxP4YtTmE, night driving, published 2026-11-18 07:38 Pacific (before release), 4:00, a drive throughout: no confirmation; WgsrRHyp8iE (release day) is highway only, g9T1FmUCQNw pre-release. A further search (21:11) found night on-foot clips only before release: 909Gxmye7n8 (Ocean Beach at night, 18 Nov), vRRqGNTIwtI (Ocean Drive at night, 18 Nov): candidates if needed; a post-release night walk still owed.
 
 Finding: GTA VI's busiest ordinary view in these clips holds about 10 people, and only where a café gathers them; a busy pavement holds 3 to 8; quiet residential streets hold none, by day as by night. Night on the busy strip is about the same as day (4 to 7). This matches the block's thin-crowd counts elsewhere (port towns 1-3 off the main streets, 8-9 at a crossing; small district 0-3; street life 2-7).
 
@@ -97,4 +97,4 @@ Finding (one sample, estimate): a single lamp in the dark lights only about 2 ca
 
 No-lamps search (20:42): a web search for lamps-off clips found qzq7J6VAtfA (how to switch the lamps off; published 2026-11-18 19:02 Pacific, before release; 30 s filmed off a television of a car parked in a lit car park): rejected, it shows no road. Other ids from that search not yet sheeted: WgsrRHyp8iE, g9T1FmUCQNw, gHfxP4YtTmE (night driving; dates unchecked).
 
-Open: the none case (a car with lamps shot out or off); the one-lamp case on a car rather than a motorbike; YouTube's search pages draw nothing while the browser pane is hidden (watch pages work), so finding those clips waits for the pane shown or a web search for the ids. One of three cases owed.
+Second no-lamps search (21:13): UO8J6pzedyY (lamp settings, published 2026-11-19 17:17 Pacific, after release, 1:13) is filmed at dusk with the menu over a blurred frame: it shows the lamps are a player setting (the vehicle options hold a lamps-off choice) but no dark road; WowLEH7VCi0 is pre-release. Open: the none case (a car with lamps shot out or off); the one-lamp case on a car rather than a motorbike; YouTube's search pages draw nothing while the browser pane is hidden (watch pages work), so finding those clips waits for the pane shown or a web search for the ids. One of three cases owed.
