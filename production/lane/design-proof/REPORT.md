@@ -5,7 +5,7 @@ Not complete yet. The cloud figures are in; the second red team found 22 new gap
 363 rows, one per part a player meets:
 - Measured: 195 (about 24 on reference-game or 1990 figures)
 - Pending a dated study: 29
-- Unmeasured: 46, each with how and when
+- Unmeasured: 46
 - Undefined: 22 (new today, from red team 2)
 - Out by his rulings: 14
 - Outside (Unreal-only and shipping): 57
