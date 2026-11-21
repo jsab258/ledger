@@ -83,5 +83,16 @@ Against DESIGN's budget (on foot 25, driving 22, talk 19, jobs 17, fights and ch
 - Longest span of each kind: driving 4:50 (46:25-51:15, a night highway drive: the one span over 3 minutes with nothing new, ER-CORE-05); on foot 2:50; job 2:30; chase 1:30.
 - Witness moments for the being-seen sheet (to step frame by frame): 27:45-28:15 bar patrons cowering; 37:45-38:15 police arriving at the fuel station after a break-in; 41:55-44:05 two shop counters; 54:55-56:25 hidden from a police car.
 
+## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+Built on, read 21 Nov 2026: production/research/aaa-reference/studies/02-first-30-minutes.md (KCD2 and Mafia openings: something new about every three minutes, no stretch much past five, about 10 activities in 30 minutes, 18 to 44% watching), production/lane/synthesis/DESIGN.md's hour budget (study 17's lesson 2; its driving share a prototype value, not adopted), BUILD-ORDER.md's M5 bar (no stretch over 5 minutes with nothing new, at most 5 empty minutes in 30) and studies/18-gta6-first-read.md (8 of 18 reviews find slow opening hours or a sag).
+
+| Find here | Earlier study | Confirms, contradicts or adds |
+|---|---|---|
+| Longest span with nothing new: 4:50, a night highway drive | Study 02: no stretch much past 5 minutes; M5: none over 5 | Confirms the 5-minute bar from GTA VI's own free roam: its one long empty stretch sits just under it. |
+| About 70 activity changes in the hour | Study 02: something new about every 3 minutes | Adds; not the same count (a change of activity is not always something new), so the two are not compared as one number. |
+| 7 distinct kinds in the first half hour, 8 in the second (a floor) | Study 02: about 10 activities in 30 minutes in both openings | Agrees in size, given this sheet's kinds are coarser than study 02's activities. |
+| Shares: driving 40%, on foot 36%, talk 0%, watching 0% | DESIGN: on foot 25, driving 22, talk 19; study 02: 18 to 44% watching in the openings | Adds; contradicts neither, because free roam carries no story (no talk, no cut scenes). It does not support raising LEDGER's driving share: DESIGN keeps that a prototype question under canon's "not a driving game". |
+| Free roam only | Study 18: slow opening hours are a review theme | Open: a free-roam hour cannot test the story's pacing; the story's hour needs its own stretch. |
+
 ## Cost
 About 18 minutes of the session from first search to this sheet, about 1 weekly point (76% to 77%), US$4.46 since 07:52 including the morning's records. Sampling one hour of footage at 10 s: about 1 point.
