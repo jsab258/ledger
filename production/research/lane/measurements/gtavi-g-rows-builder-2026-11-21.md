@@ -34,11 +34,22 @@ Stops and stations (read 21 Nov 2026 about 20:45 Swiss): IRseI7AQlkY, "Using all
 | Metro platform, train in | IRseI7AQlkY 23:24 | 0 on the platform; 2-3 seen through the carriage windows |
 | Metro passage to the exits | IRseI7AQlkY 27:51 | 3 walking |
 
+Beach, uncut, no wanted level (read 21 Nov 2026 about 20:47 Swiss): DQqv-E4guu8, "Beaches & Vice City (PS5 4K)", published 2026-11-18 09:37 Pacific, a day before release: a candidate sample like the night clip; 15:58, day.
+
+| View | Clip, time | People in view |
+|---|---|---|
+| Beach toward the sea | DQqv-E4guu8 1:21 | about 15-18 (3 close, 1 lying, about 8-10 at the water's edge, 2-3 on the sand) |
+| Beach under umbrellas | DQqv-E4guu8 2:22 | about 9-12 (a group of 5-6 standing, 3-4 on loungers) |
+| Beach, open sand | DQqv-E4guu8 13:37 | about 10 (1 close, the rest lying or sitting spread out) |
+| Outdoor gym on the sand | DQqv-E4guu8 8:31 | about 8-10 |
+
+Finding (candidate): the beach is GTA VI's crowded place: 10 to 18 people in one view, spread thin over open sand, against about 10 at a café and 0-8 elsewhere.
+
 Finding: GTA VI's stops and stations hold 0 to 3 people in view, fewer than the café strip; transport places are not where it gathers its crowd.
 
 Finding: GTA VI's busiest ordinary view in these clips holds about 10 people, and only where a café gathers them; a busy pavement holds 3 to 8; quiet residential streets hold none, by day as by night. Night on the busy strip is about the same as day (4 to 7). This matches the block's thin-crowd counts elsewhere (port towns 1-3 off the main streets, 8-9 at a crossing; small district 0-3; street life 2-7).
 
-Open: stops and stations counted (above; no tram in Leonida's clips read, its bus, rail and metro stand in); the beach's own busy count is not reached (8:45 is one man close up; 19:45 is spoiled by stars): one uncut beach stretch with no wanted level; a post-release night clip to confirm the night row. Five samples per number not reached.
+Open: stops and stations counted (above; no tram in Leonida's clips read, its bus, rail and metro stand in); the beach counted from a pre-release candidate (above), so a post-release beach clip and a post-release night clip to confirm the night row. Five samples per number not reached.
 
 Time: about 6 min of reading; logged with timelog.py.
 
