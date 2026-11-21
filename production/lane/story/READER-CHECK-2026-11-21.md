@@ -2,9 +2,9 @@
 
 For Jafar. The "fourth reader" (a games writer who has shipped) has said no to The Passenger four times. Today he was checked against real players.
 
-What was done. The players' story ranking of eight shipped games came from the Steam story study (praise minus complaint per review): RDR2 alone at the top; then GTA V, GTA IV and KCD2, too close to separate; then Sleeping Dogs and Hitman; then Watch Dogs: Legion and L.A. Noire. Each game was written up in the measure's format with names and settings changed, and fresh readers ranked them. The pass mark was written down and pushed before any reader ran: a rank correlation of at least 0.60, at least 18 of the 23 comparable pairs the same way round as players, and RDR2 first or second for two of three readers.
+What was done. The players' story ranking of eight shipped games came from the Steam story study (praise minus complaint per review): RDR2 alone at the top; then GTA V, GTA IV and KCD2, too close to separate; then Sleeping Dogs and Hitman; then Watch Dogs: Legion and L.A. Noire. Each was written up in the measure's format, names and settings changed, and fresh readers ranked them. The pass mark was written down and pushed before any reader ran: a rank correlation of at least 0.60, at least 18 of the 23 comparable pairs the same way round as players, and RDR2 first or second for two of three readers.
 
-The reader as used until now: not fit. Correlation 0.41, 16 of 23 pairs. He put RDR2 first, as players do, but ranked L.A. Noire second (players put it near the bottom) and GTA V near the bottom (players put it second tier). He judges craft (planting, pay-off), where players judge whether they love the people.
+The reader as used until now: not fit. Correlation 0.41, 16 of 23 pairs. He put RDR2 first, as players do, but ranked L.A. Noire second (players put it near the bottom) and GTA V near the bottom (players put it second tier). He judges craft; players judge whether they love the people.
 
 The brief, mended once: the reader is asked how the players will rate the story, and told what players weigh. Three new readers: correlation 0.91, 22 of 23 pairs, RDR2 first for all three. Fit. Three more new readers matched it (0.91, 22 of 23).
 
