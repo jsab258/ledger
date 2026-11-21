@@ -110,6 +110,19 @@ Both lamps, third sample, and the stream's dark stretch (read 21 Nov 2026 about 
 
 Not a no-lamps case: at 178-181 min the pickup is parked on rocks and the player is on foot (a phone menu at 178:40, the cab's own light at 180:00). On foot in the unlit hills (174, 182-185 min) the ground and a figure read a few metres round the player by the sky alone, with the town's lights far below; that is the ambient level a lamps-out car would drive in (a proxy, not the case). The none case stays set aside. Both lamps now three samples, all 2-3 car lengths bright.
 
+## G7 by day, a further clip (read 21 Nov 2026 about 23:36-23:40 Swiss by the clock)
+
+Clip n9A0lM-f-aQ ("GTA 6 Free Roam in 4K", published 2026-11-19 03:18 Pacific, after release, 37:22). Described as uncut, but its frames show an edit: a sponsor's live-action car advert at about 20-23 min, and dusk in the first minutes against full day by 14 min. So counts here are leads only, never solid. Sheet at 1, 3, 5, 7, 9, 11, 14, 17, 20, 23, 26 and 30 min, 480 px.
+
+| View | Clip, time | People in view |
+|---|---|---|
+| Rooftop pool, day | n9A0lM-f-aQ 9:00 | 3 (on loungers) |
+| Footbridge over the river, day | n9A0lM-f-aQ 14:00 | 0 besides the player |
+| Paved plaza by towers, day | n9A0lM-f-aQ 17:00 | about 9 (a group of 7-8 round the player, 1-2 further off) |
+| Downtown one-way street, day | n9A0lM-f-aQ 26:00 | about 1-2 on the pavements, a few cars |
+
+Agrees with the first pass (busy views about 10, ordinary streets a few). The first 11 min are swimming, a helicopter and a parachute at dusk; 30 min is open country.
+
 ## G7 night row, release-day sample (read 21 Nov 2026 about 21:32-21:35 Swiss)
 
 Clip m_2RP_EIHM8 ("1 HOUR of GTA 6 First-Person Gameplay in 4K", published 2026-11-20 04:42 Pacific, after release, 3648 s; an edited free-roam reel, not one continuous take). A brightness scan every 240 s found the night stretch at about 2160-2540 s (mean luma 18-37 against 56-113 by day); a frame sheet at 60 s steps shows a porch at night, a night highway on a motorbike, then downtown streets. Counted by eye on frames drawn at 1000 px from the 1080 stream: at 2520 s a wide downtown avenue at night holds about 2-3 figures on the left pavement and 0 on the right (soft at that size: unverified count, plus or minus 1); at 2490 s one person sits in a doorway on a dark side pavement, no one else in view. The clip cuts to day at about 2535 s. This agrees with the first pass's night row (pavements 3-8 at the busiest, quiet streets 0, night like day or thinner): G7's night row PARTLY CONFIRMED on a release-day clip, one downtown view only; a continuous night walk after release would settle it.

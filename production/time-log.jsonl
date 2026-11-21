@@ -1037,3 +1037,5 @@
 {"event": "stop", "at": "2026-11-21T23:22:38", "note": "G5: two more return samples on mzGG_I0LSIM, no star added; four in all (being-seen sheet, STATUS.md)"}
 {"event": "start", "at": "2026-11-21T23:26:35", "task": "measuring: G2 no street lamps, headlamps only (mzGG_I0LSIM 170-185 min)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:27:30", "note": "G2: third both-lamps sample (2-3 car lengths); no lamps-out drive in the stream, none case still set aside (g-rows sheet)"}
+{"event": "start", "at": "2026-11-21T23:31:26", "task": "measuring: G7 crowd by day, uncut walk n9A0lM-f-aQ", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:33:09", "note": "G7 day: n9A0lM-f-aQ is edited (sponsor insert); four day counts as leads (g-rows sheet)"}
