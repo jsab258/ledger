@@ -25,9 +25,20 @@ Clips:
 | Club front, night (candidate) | TcWGXPUHRGI 5:10 | about 2-3 |
 | Street by steps, night (candidate) | TcWGXPUHRGI 5:35 | 0 |
 
+Stops and stations (read 21 Nov 2026 about 20:45 Swiss): IRseI7AQlkY, "Using all the Public Transportation options", published 2026-11-20 11:00 Pacific (after release), 35:39, day; sheeted at 16 points, four views drawn at 480 px.
+
+| View | Clip, time | People in view |
+|---|---|---|
+| Roadside bus stop, day | IRseI7AQlkY 3:21 (sheet size only) | 0 besides the player |
+| Rail platform under a canopy, train in | IRseI7AQlkY 14:29 | 1 (far down the platform) |
+| Metro platform, train in | IRseI7AQlkY 23:24 | 0 on the platform; 2-3 seen through the carriage windows |
+| Metro passage to the exits | IRseI7AQlkY 27:51 | 3 walking |
+
+Finding: GTA VI's stops and stations hold 0 to 3 people in view, fewer than the café strip; transport places are not where it gathers its crowd.
+
 Finding: GTA VI's busiest ordinary view in these clips holds about 10 people, and only where a café gathers them; a busy pavement holds 3 to 8; quiet residential streets hold none, by day as by night. Night on the busy strip is about the same as day (4 to 7). This matches the block's thin-crowd counts elsewhere (port towns 1-3 off the main streets, 8-9 at a crossing; small district 0-3; street life 2-7).
 
-Open: no tram stop found in these clips (a stop or station view is still owed); the beach's own busy count is not reached (8:45 is one man close up; 19:45 is spoiled by stars): one uncut beach stretch with no wanted level; a post-release night clip to confirm the night row. Five samples per number not reached.
+Open: stops and stations counted (above; no tram in Leonida's clips read, its bus, rail and metro stand in); the beach's own busy count is not reached (8:45 is one man close up; 19:45 is spoiled by stars): one uncut beach stretch with no wanted level; a post-release night clip to confirm the night row. Five samples per number not reached.
 
 Time: about 6 min of reading; logged with timelog.py.
 
@@ -42,6 +53,17 @@ Clip: BE-pNIoct4Y, "Relaxing Night Ride Through Vice City", published 2026-11-20
 | One lamp, unlit dirt track | BE-pNIoct4Y 17:20 | about 2 car lengths, a warm pool fading by about 3 | nothing of the track; only far town lights |
 | One lamp, rail line through a yard (some lamps far off) | BE-pNIoct4Y 13:56 | about 1-2 car lengths | the rails for about 10 car lengths by the far lamps' glow, not the headlamp |
 
+Both lamps (read 21 Nov 2026 about 20:40 Swiss): SzqxC2w8ock (lawful drive, no HUD, after release), a pickup at night, sheet 70:00-85:00 at 1 min.
+
+| Case | Clip, time | Lit road ahead | Seen beyond the pool |
+|---|---|---|---|
+| Both lamps, unlit two-lane road through scrub | SzqxC2w8ock 84:00 | bright pool about 2-3 car lengths, road readable to about 5 | edge lines and verge faintly to about 10 by the sky's glow; treeline against a blue-grey sky |
+| Both lamps, causeway behind a lorry | SzqxC2w8ock 76:00 | the lorry 3 car lengths ahead lit by the lamps | the road beyond lit by the lorry's own lamps |
+
+Finding (one sample each, estimate): both lamps light about twice what one does (2-3 bright, about 5 readable, against about 2); GTA VI's night sky is bright enough that road edges read far past any lamp, so losing a lamp shortens the pool but never blinds the driver.
+
 Finding (one sample, estimate): a single lamp in the dark lights only about 2 car lengths; what the rider sees further comes from the town's own lights, not the lamp.
 
-Open: the both-lamps case (a car on an unlit road) and the none case (a car with lamps shot out or off); YouTube's search pages draw nothing while the browser pane is hidden (watch pages work), so finding those clips waits for the pane shown or a web search for the ids. Two of three cases owed.
+No-lamps search (20:42): a web search for lamps-off clips found qzq7J6VAtfA (how to switch the lamps off; published 2026-11-18 19:02 Pacific, before release; 30 s filmed off a television of a car parked in a lit car park): rejected, it shows no road. Other ids from that search not yet sheeted: WgsrRHyp8iE, g9T1FmUCQNw, gHfxP4YtTmE (night driving; dates unchecked).
+
+Open: the none case (a car with lamps shot out or off); the one-lamp case on a car rather than a motorbike; YouTube's search pages draw nothing while the browser pane is hidden (watch pages work), so finding those clips waits for the pane shown or a web search for the ids. One of three cases owed.
