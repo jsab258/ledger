@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-21 20:22 (the hourly run)
 
-**Row due:** by 20:57 (last row 19:57; page read 20:25: no verdicts; advisor 296 acked 20:26; filter verdicts after 2026-11-21T19:25 UTC, advisor after 20:25:00 +01:00)
-**Uncommitted, goes with the next work commit:** production/research/token-audit/DAILY-2026-11-21.md (advisor 19:41: the day's token file; written 19:58, not yet on wip; push it with the next accepted commit, never alone).
-**Stopped:** 2026-11-21 20:08 (the 20:07 run: page and advisor read, nothing new; allowance 88% against a ceiling of 90.9%, Fable 47%: lean again, no study started; the next run rows by 20:57 and resumes at 0g when there is room)
+**Row due:** by 21:40 (last row 20:40; page read 20:50: nothing new; filter verdicts after 2026-11-21T19:50 UTC, advisor after 20:25:00 +01:00; advisor 296 acked 20:26)
+**Uncommitted:** none (the day's token file went with 3bf88145f).
+**Stopped:** 2026-11-21 20:54 (the 20:22 run: advisor 296 acted on, G7 and G2 pieces pushed; the next small pieces need YouTube search or playlist pages, which draw nothing while the browser pane is hidden: next run, first check the pane (tabs_context), find ids by WebSearch otherwise)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -35,7 +35,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Done today
 - 21 Nov 15:39-16:37: advisor 294 done; study 10 reactions; G5 settled; pushed.
-- 21 Nov 20:22-20:31: advisor 296 (use room in small pieces, smallest first): G7 crowd count first pass, G2 one-lamp case (measurements/gtavi-g-rows-builder-2026-11-21.md, STATUS.md row).
+- 21 Nov 20:22-20:55: advisor 296 (room in small pieces): G7 crowd count (café strip about 10, pavements 3-8, stops 0-3, beach 10-18 from a pre-release candidate, quiet streets 0), G2 one and both lamps; port-town Q6 leads listed (measurements/gtavi-g-rows-builder-2026-11-21.md, STATUS.md). Three pushes, checks green.
 - 21 Nov 17:39-17:46: advisor 295: Mafia DE out of the feel block (block 142.7 PC h); measurements/STATUS.md updated after every study step and read by the hourly row. The lane's two corrected feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (the guard refused a commit from here; do not retry).
 
 ## In flight
@@ -47,8 +47,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
 0e. Being seen (measurements/gtavi-being-seen-builder-2026-11-21.md, all counts there): S1 done; S3, S7, G4 sampled; G6 closed as footage allows; G5 settled 21 Nov 16:26 on 4Sj3c8sMO-Y by a 1 s frame sheet (one grey 93 s, four grey flashing 50 s, four red heat 50 s, seen: four white, no star added; the earlier 'three white' was a flash misread). Open: whether return adds a star (one sample each way).
-0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G2's both-lamps and none cases (car clips), G7's tram stop and uncut beach, G8 repeated lines (needs captions or sound: the session hears nothing, so counts only from captions), the split of an hour's second stretch, port-town crowd counts and stance; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut MKIceAndFire KCD2 part with a crime in town); study 3 narrowed to Q6 smoking (chest-up 1989-90 vox pops), Q1 at 10 s, Q5 stance; G3 an uncut free-roam car entry and heat's length when it clears unseen.
-- Allowance: 88% at 20:30 against a ceiling of 91.1%; no helpers. Log every step (timelog.py).
+0g. Footage first passes DONE: item 35 studies 1, 3, 4; item 37 studies 2 and 10 (sheets in measurements/, each with its RECONCILED table and OPEN list). Advisor 294 rule: every study first reads production/research/ and aaa-reference/studies/ on its subject. NEXT (advisor 296): each run takes the next footage piece that fits the room, smallest first: G2's no-lamps case (a car with lamps out), G7's post-release beach and night clips (WgsrRHyp8iE, g9T1FmUCQNw unchecked), port-town Q6 from the ITV Calendar 1990 playlist (ids need the pane shown), G8 repeated lines (captions only: the session hears nothing), the split hour's second stretch; item 35 study 2 (our prototype filmed) once a run has room, after the Monday reset if need be. Also: study 10 spread and settling (an uncut KCD2 part with a crime in town); study 3 Q1 at 10 s, Q5 stance; G3 a free-roam car entry and heat's length.
+- Allowance: 88% at 20:50 against a ceiling of 91.1%; spend since 20:22 about US$5; no helpers. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.

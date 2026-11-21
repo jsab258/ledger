@@ -47,6 +47,8 @@ Finding (candidate): the beach is GTA VI's crowded place: 10 to 18 people in one
 
 Finding: GTA VI's stops and stations hold 0 to 3 people in view, fewer than the café strip; transport places are not where it gathers its crowd.
 
+Night confirmation tried (20:52): gHfxP4YtTmE, night driving, published 2026-11-18 07:38 Pacific (before release), 4:00, a drive throughout: no confirmation; WgsrRHyp8iE and g9T1FmUCQNw not yet checked.
+
 Finding: GTA VI's busiest ordinary view in these clips holds about 10 people, and only where a café gathers them; a busy pavement holds 3 to 8; quiet residential streets hold none, by day as by night. Night on the busy strip is about the same as day (4 to 7). This matches the block's thin-crowd counts elsewhere (port towns 1-3 off the main streets, 8-9 at a crossing; small district 0-3; street life 2-7).
 
 Open: stops and stations counted (above; no tram in Leonida's clips read, its bus, rail and metro stand in); the beach counted from a pre-release candidate (above), so a post-release beach clip and a post-release night clip to confirm the night row. Five samples per number not reached.

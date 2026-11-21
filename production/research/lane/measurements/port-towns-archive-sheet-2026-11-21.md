@@ -130,3 +130,8 @@ What this changes in the study: Q3 clothes, Q4 shopfronts and Q7 light are alrea
 - YouTube search pages did not draw while the browser pane was hidden; a screenshot made them draw (method note, not a source).
 - Smoking (Q6) unreadable at night in clip 3; not counted as none.
 - Clip years are the uploaders' statements except clip 1 (camcorder date stamp, October 1989).
+
+## Q6 leads (searched 21 Nov 2026 about 20:50 Swiss, web search only; nothing read yet)
+- ITV Calendar "1990 Calendar" playlist (PLMdCfrNPl8thx1cN3dt_cx-7fjhXmHX77): regional news items of 1990, the likeliest chest-up street interviews; the playlist page draws nothing while the browser pane is hidden, so its ids are still to be listed.
+- nT1PYm4o4gw, "Grimsby Town Centre & Grange estate 1987": a home-video walk to a shopping precinct; 1987 is a year outside canon's window, usable only for stance, not as period proof.
+- Generic vox-pop searches return modern channels only; BBC Archive, ITN Source, British Pathé and the Yorkshire Film Archive are the named homes for dated 1990 clips (unreached).
