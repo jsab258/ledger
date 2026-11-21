@@ -717,6 +717,10 @@ def act(verb, rest):
     elif verb == "say":
         # say WORDS --film (30 October, the second talk film's review: its film began after the line was sent, so the
         # camera's move in was never seen): frames from the T press on, taken beside the typing
+        # say WORDS --open (21 Nov, the night walk: T answers only someone in plain sight, so a T pressed beside Sheila
+        # behind the kiosk opened nothing and the line went in as keys): the box is already open, so no T here
+        already_open = "--open" in rest
+        rest = [a for a in rest if a != "--open"]
         filming = bool(rest) and rest[-1] == "--film"
         words = " ".join(rest[:-1] if filming else rest)[:200]
         stop = threading.Event()
@@ -728,8 +732,9 @@ def act(verb, rest):
                     time.sleep(0.125)
             grabber = threading.Thread(target=grab, daemon=True)
             grabber.start()
-        tap("t")
-        time.sleep(0.6)
+        if not already_open:
+            tap("t")
+            time.sleep(0.6)
         type_text(words)
         time.sleep(0.2)
         enter()

@@ -2840,3 +2840,12 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Cost: about 18 minutes of session and 1 weekly point per hour of footage.
 - Failed and why: the video layer hides overlay tiles in screenshots (scroll the player out of view); mid-roll adverts stall seeking (reload past them); 400 px tiles cannot show a glance, so witness timing needs 800 px frames and footage whose camera holds the witnesses, which free-roam compilations rarely do.
 - Evidence: production/research/lane/measurements/gtavi-split-hour-1-builder-2026-11-21.md, gtavi-being-seen-builder-2026-11-21.md.
+
+### A tester's talk that typed into nothing (21 Nov 2026)
+- Made: the automated walk now opens a conversation with its key alone, waits for the game's 'opened' line, comes round once if nothing opens, and only then types.
+- Method: when a tester's reach check (distance) is looser than the game's (distance and sight), never send typed words on the looser check: ask the game first and act on its answer.
+- Tools: the walk script, the tester's key sender, the game log.
+- Target and check: the talk stages pass when the person stands in reach but behind an obstacle; selftests guard the order of the key and the words; the night's packaged walk is the real check.
+- Cost: about 15 minutes, plus a diagnosis helper (about 6 minutes).
+- Failed and why: the old walk passed on some nights and failed on others because where the person stood that day decided whether she was in sight.
+- Evidence: production/audits/night-walk-2026-11-21-diagnosis.md; tools/route_walk.py talk stage.

@@ -609,6 +609,7 @@ def walk(editor, out, town=False, sit=False):
     # ONLY IN REACH: a line typed with no box open goes to the game as keys.
     w = r.where()
     near = "lena" in w and "tom" in w and math.hypot(w["lena"][0] - w["tom"][0], w["lena"][1] - w["tom"][1]) <= w["lena"][2]
+    opened = False
     if near:
         if CAMERA:      # the talk's camera row blends in from the box's opening (SliceCharacter.cpp CameraRowTick)
             # filmed from the T press (30 October, the second talk film's review: the move in was never seen), then
@@ -620,15 +621,32 @@ def walk(editor, out, town=False, sit=False):
             # the ease out was never filmed): a second filmed 15 s, the line gone and the camera back at the street's
             play("wait", "15", "--film")
             FILM_MARKS["talk"] = [a + 1, film_count()]
+            opened = r.expect("talk-open", 10)
         else:
-            play("say", LINE)
-        r.expect("talk-open", 10)
+            # T FIRST, THEN THE WORDS (21 Nov, the night walk: Sheila 2.3 m away behind the grey steel kiosk; the game's T
+            # answers only someone in plain sight, the reach check here is distance only, so the typed line went in as
+            # keys). Open the box alone; if it does not open, come round to her again once and press T again.
+            for attempt in range(2):
+                play("press", "T")
+                if r.wait_stage("talk-open", 6) is not None:
+                    opened = True
+                    break
+                walk_to_person(r, "lena", 0.8)
+                w = r.where()
+                t = w.get("tom")
+                if t and "lena" in w:
+                    r.turn_to(bearing(t[0], t[1], w["lena"][0], w["lena"][1]))
+            r.record("talk-open", opened, "box opened by T alone" if opened else
+                     "T opened no box twice (out of sight?); no line typed")
+            if opened:
+                play("say", LINE, "--open")
+    if near and opened:
         if r.expect("talk-typed", 10) and r.said_back() != LINE:
             r.rows[-1]["ok"] = False
             r.rows[-1]["detail"] += " said=%r not as typed" % r.said_back()
             print("route talk-typed   FAIL  said not as typed: %r" % r.said_back(), flush=True)
         r.expect("reply-words", 30)
-    else:
+    elif not near:
         r.record("talk-open", False, "never in reach of Sheila (%s)" % (
             "she is not on the street" if "lena" not in w else "%.1f m away" % math.hypot(w["lena"][0] - w["tom"][0], w["lena"][1] - w["tom"][1])))
     play("wait", "8")
@@ -720,6 +738,10 @@ def selftest():
     check("the Wednesday's hour: D0 and D1, Z; before it, a wait; in it, here; after it, Z",
           morning_step("D0", "10:30") == "z" and morning_step("D1", "10:30") == "z" and morning_step("D2", "09:51") == 7
           and morning_step("D2", "05:00") == 30 and morning_step("D2", "10:30") == "here" and morning_step("D2", "13:00") == "z")
+    with open(os.path.abspath(__file__), encoding="utf-8") as fh:
+        src = fh.read()
+    i_t, i_say = src.find('play("press", "T")'), src.find('play("say", LINE, "--open")')
+    check("the talk opens the box with T alone before typing (21 Nov, out of sight behind the kiosk)", 0 < i_t < i_say)
     check("no run of 8-hour Z landings can step past the Wednesday's hours",
           all(any(morning_step("D2", "%02d:%02d" % (((m + 480 * k) % 1440) // 60, (m + 480 * k) % 60)) != "z" for k in range(3)) for m in range(0, 1440, 5)))
     seat = next(s for s in SEATS() if "middle" in s["name"])
