@@ -1043,3 +1043,5 @@
 {"event": "stop", "at": "2026-11-21T23:38:22", "note": "158:08 fresh one-star spell, search flash; no return in window, no fifth sample (being-seen sheet)"}
 {"event": "start", "at": "2026-11-21T23:42:40", "task": "measuring: S7 report delay, the 154:30 spell's cause (mzGG_I0LSIM)", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-21T23:43:45", "note": "S7 fourth sample: thrown weapon 154:09, three grey stars 154:33, about 24 s (being-seen sheet)"}
+{"event": "start", "at": "2026-11-21T23:48:14", "task": "measuring: G5/G6 the three stars clearing after 156:00 (mzGG_I0LSIM)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-21T23:48:30", "note": "156:07 pursuit ended by death: stars and icons cleared together, cash to 0 (being-seen sheet)"}
