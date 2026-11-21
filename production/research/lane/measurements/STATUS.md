@@ -7,26 +7,35 @@ Kept current after every study step (advisor 295, 21 Nov 2026; his question 17:2
 - Spent, from the time log: about 2.9 hours. The session's own estimate is about 6.7 hours: the time log missed most of the morning's GTA VI and car-chase work (helpers' and early-morning time not logged). The estimate is marked as one; from now every step is logged.
 - Done or first pass: car chases, players' first hours, port towns, conversations, small district, street life (first passes). Not started: our own build filmed, the feel block, the extra rows.
 
-## Repriced from logged time (advisor 301, 21 Nov 2026 22:14 Swiss; his question 22:12)
-Logged minutes from the time log (week of 16 Nov); where the log missed work the session's estimate is used and marked. A first pass with open questions is not finished: each study's remainder is what its open question still needs, estimated.
+## Solid or thin: one rule for every study (advisor 302, his words 22:14: depth before speed)
+A number is solid only when it rests on at least five samples from uncut, dated footage (for GTA VI, published after the 19 Nov release) read at a step finer than the thing measured (the driving method's rule). Everything else is a lead. Only solid numbers count as measured for the design gate. Every open question is either priced to finish or marked not needed, naming the blueprint part it would have served; none is dropped silently.
 
-| Study | Planned h | Spent so far h | Still open | Remaining h (estimate) |
-|---|---|---|---|---|
-| Car chases | 3 | about 1.0 (estimate) | nothing for now | 0 |
-| Players' first hours | 6 | 0.5 | one KCD2 fight's outcome; more samples per number | 0.5 |
-| Port towns 1989-90 | 3 | 1.1 | smoking in the street (leads need the pane shown) | 0.5 |
-| Conversations filmed | 2 | 0.1 | shot lengths on more conversations; KCD2's entry and exit | 0.5 |
-| Small district | 4 | 0.2 | counts beyond the first walk | 0.5 |
-| Street life | 3 | 0.3 | how a reaction spreads and settles | 0.5 |
-| GTA VI rows (being seen, driving, split hour, G2, G7, G8) | 24.5 | about 4.3 (logged about 1.3; the morning's work unlogged) | being seen: does return add a star; driving and split hour: five samples per number; G8 not started; G2 and G7 night: a timestamped post-release clip | about 6 |
-| Our own build filmed | 2 | 0 | all; needs a tester run, method untimed | 2 (kept) |
-| Extra rows (MEASUREMENTS-NEEDED A) | 16.5 | 0 | all; same method as the footage studies | about 5 (today's rate: first passes took about 15% of plan, doubled for the open questions) |
-| Feel block (fists, on foot, being seen, chases on foot, the rest) | 78.7 | 0 | all; a different method (two measurers, five samples a number), no logged rate yet | 78.7 (kept until its first game is timed) |
-| Total | 142.7 | about 7.5 | | about 94 more, about 102 in all |
+## Repriced with depth (advisors 301 and 302, 21 Nov 2026; Swiss time in the commit)
+Solid count today: none. Every number in the eleven sheets rests on fewer than five samples, or on mixed cut and uncut footage, or on a step coarser than what it measures or not stated (an extraction of every number and open item, checked against the rule above, 21 Nov). All are leads; none counts as measured for the design gate yet.
+Rate used (estimate, from today's logs): a sample read to the solid rule costs about 0.15 to 0.3 h (finding an uncut, dated clip about 10 minutes; a frame sheet at 1 s or finer about 5 minutes; G5's settling took about 15 minutes). The first passes' rate (about a quarter of plan) bought leads, not solid numbers.
 
-- Today's rate: the six footage studies' first passes took about 3.2 h against 21 planned (about 15%); with their open questions about 5.7 h, about a quarter of plan. GTA VI ran nearer a third.
-- Finish (estimate, none was set before): at today's pace of about 7 measuring hours a day, about 94 h is about 14 working days, near 6 Dec; the old 142.7 at that pace was about 20 days, near 12 Dec. The feel block decides it: 78.7 of the 94 hours are unrepriced.
-- Reprice again after the feel block's first game, and after Monday's cheaper frame-reading trial.
+| Study | Planned h | Spent h | To finish to solid (five uncut samples a number) | Marked not needed (the design part it would have served) | Remaining h (estimate) |
+|---|---|---|---|---|---|
+| Car chases (DESIGN 8, 5) | 3 | about 1.0 | five uncut chases a game for the four games, read at 5 s or finer for K1-K7 and K9 (about 20 x 0.3 h); the fifth GTA IV row | roadblocks beyond what is seen (8: a reading only); the 1990 helicopter goes to period research, not footage | about 6 |
+| Conversations (DESIGN 17, 11) | 2 | 0.1 | five each at 0.5 s: KCD2 dialogue mode, RDR2 free talk, RDR2 one-to-one, with C6 entry and exit (15 x 0.2 h) | C4 speakers' distance beyond the estimate (17: the camera rule needs shot sizes, not metres) | about 3 |
+| GTA VI being seen (DESIGN 2, 8) | part of 24.5 | about 3.6 | S1 three more; S3 and S7 five each; G5 heat length and return, five; G6 which icon clears on clothes, mask, car, five each; the clip check on iOIaXfAInNQ (about 25 x 0.25 h) | defuse (8: LEDGER's talk with police is its own live talk); unreached written guides (footage answers the same) | about 6 |
+| GTA VI driving (DESIGN 5) | part of 24.5 | in the above | M10 framing on five clips; G3 car entry seconds, five uncut | M1-M3 for GTA VI (5: GTA VI never a blocker; timings come from games that show speed); GTA IV-like weight (5: answered by the feel block's GTA IV) | about 1.5 |
+| GTA VI G-rows (DESIGN 2, 6, 11) | part of 24.5 | 0.6 | G7 day, night, beach, stops to five post-release samples each; G2 one and both lamps to five; G8 repeated lines, five listens | G2 no lamps stays set aside until a timestamped clip appears (6: the night's lamp pools, served by the two lit cases) | about 6 |
+| GTA VI split hour (DESIGN 15, 1) | part of 24.5 | in the above | four more free-roam hours at 10 s for five-hour shares (4 x 0.3 h); unconfirmed spans stepped | the story's pacing (15: served by players' first hours); witness moments (moved to being seen) | about 1.5 |
+| GTA VI wanted guides | part of 24.5 | in the above | nothing: every open point is timing that footage gives (priced under being seen) | further guide reading (2, 8: footage answers it) | 0 |
+| Players' first hours (DESIGN 15) | 6 | 0.5 | five uncut, no-commentary first sessions a game for KCD2, RDR2, GTA VI at 2.5 min or finer; the share out of control against study 02 (about 12 x 0.3 h) | none | about 3.5 |
+| Port towns 1989-90 (DESIGN 2, town look) | 3 | 1.1 | Q6 smoking, Q1 daytime counts at 10 s, Q5 stance by day, five clips each | Q3, Q4, Q7 (the sheet's own word: the period research answers them) | about 1.5 |
+| Small district (DESIGN 2, 3) | 4 | 0.2 | crossings of one street at 10-20 s, five; Q1 things a minute at 1-2 s, five | Like a Dragon's Kamurocho (3: the same district as Yakuza 0, nothing new); Q6 size and walking time (study 17 answers it) | about 1.5 |
+| Street life (DESIGN 2, 3) | 3 | 0.3 | Q3 reactions to the player, five a game for RDR2, KCD2, GTA VI; Q1 idle actions a minute, five a game; busy daytime views for RDR2 and GTA VI, five each (about 40 short samples) | none | about 6 |
+| Our own build filmed | 2 | 0 | all (needs a tester run) | none | 2 |
+| Extra rows (MEASUREMENTS-NEEDED A) | 16.5 | 0 | all, at the solid rule | none yet | 16.5 (kept: the first-pass rate no longer applies) |
+| Feel block | 78.7 | 0 | all; two measurers, five samples a number (already the solid rule) | none | 78.7 (kept until its first game is timed) |
+| Total | 142.7 | about 7.5 | | | about 134 more, about 141 in all |
+
+- The honest total stays near the plan: about 141 hours against 142.7. The first reprice (about 102, advisor 301) counted first passes as nearly done; with every open question priced to five uncut samples, the footage studies need about 37 more hours, not about 3.
+- Finish (estimate, none set before): at about 7 measuring hours a day, about 134 hours is about 19 working days, near 11 Dec.
+- Cheaper routes, to test before more hours go in: Monday's frame-reading trial (Sonnet reading, Opus spot checks); one uncut clip serving several studies at once (a launch stream gives being seen, car entry, chases and first hours together).
+- Reprice again after the feel block's first game and after Monday's trial.
 
 ## By aspect and game
 | Aspect | Games | Planned h | Logged h | State | The one open question |
