@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-22 02:37 (the hourly run)
 
-**Row due:** by 02:40 (last row 01:38; page read 01:38: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
-**Uncommitted:** this file only (no work commit this run; no notes-only commits).
-**Stopped:** 2026-11-22 01:38 (the 01:37 run: page and advisor read, nothing new; row 01:38; allowance 92%, pace +21.5; the runner was packaging for the night walk, so no footage opened; G3 carjack lead 47:50-48:50 still first)
+**Row due:** by 04:30 (last row 03:30; page read 03:20: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
+**Uncommitted:** nothing (committed with the G5 review).
+**Stopped:** 2026-11-22 03:41 (the 02:37 run: G3 carjack two samples, set aside to Monday; G5 heat length reviewed LEAD, one escape sample; research-rules fixed for the runner's probe; rows 02:38, 03:30; allowance 92%; stopped near the history point, as the next footage piece would cross it mid-piece)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -34,9 +34,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Done today
 - 22 Nov 02:37-02:45: seeks worked (pane shown). G3 carjack: the 47:50 lead was an empty parked sheriff truck (a sixth parked entry, about 2-2.5 s); mzGG 57-97 min and r38SUFPeuew 0-101 min read at 30 s, leads at 2-3 s: no carjack in either; clips jsy42SsvtPU (short, rejected) and pLvFTGZmx9A (edited; a locked-car break-in about 6 s, a lead). Row 02:38.
-- 22 Nov 00:22-01:15: G3 parked-car entry SOLID (mzGG 3:26, 7:28, 12:07, 121:21, 127:53; about 2 s); G5 return SOLID (104:46). mzGG 20-57 min, no carjack. Seeks hang when the pane is hidden or no window is on screen.
-
+- 22 Nov 00:22-01:15: G3 parked-car entry and G5 return SOLID. Seeks hang when the pane is hidden or no window shows.
 - Lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out (no retry).
+
 
 ## In flight
 - Nothing runs; no helpers; heavy lock clear.
@@ -47,7 +47,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). Tools in the page: window.sheet(t0,step,n,cols) and window.rowsheet (stars corner) are lost on reload; rewrite (draw to a fixed canvas, screenshot; 4 columns to read labels). NEXT, smallest first: G3 carjack, four more (both uncut streams and two clips read, none; XYwMzjdCGFE read (edited; a pull-out about 5 s, a lead); six sources read 22 Nov, two samples (mHUdMpyQWUo 21:48, about 2-3 s): set aside to Monday's reprice); G5 heat length, one more (fourth: mHUdMpyQWUo 21:54-23:10, one white star; window.rowsheet2 draws the stars corner large); r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
+0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). Tools in the page: window.sheet(t0,step,n,cols) and window.rowsheet (stars corner) are lost on reload; rewrite (draw to a fixed canvas, screenshot; 4 columns to read labels). NEXT, smallest first: G3 carjack, four more (both uncut streams and two clips read, none; XYwMzjdCGFE read (edited; a pull-out about 5 s, a lead); six sources read 22 Nov, two samples (mHUdMpyQWUo 21:48, about 2-3 s): set aside to Monday's reprice); G5 heat length: reviewed LEAD, one escape sample (mHUdMpyQWUo 21:54-23:10); four more, star lit to cleared by escape, free roam only (rowsheet2 draws the stars corner large); r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
 - Allowance: 92% at 02:38, ceiling 95%. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused.
