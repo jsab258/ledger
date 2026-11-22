@@ -182,4 +182,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Made: one drape refitted onto two other bodies, passing every check. Cost: 7 h lane.
 - Method: untangle seam-side crossings before the start check, refit, sew with bands frozen, settle; two band measures, the line set before any run. Shortfall: one band 0.3 points over a self-set line, less than the source itself moves; the cure is a source at rest.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md
-- 2026-11-22, a duration from one uncut stream: scan at 30 s for changes, then 0.5 s round each; five samples finer than the action made the first solid number. Test one seek first. Cost 0.27 h. Evidence: measurements/STATUS.md.
+- 2026-11-22, footage durations: scan 30 s, then 0.5 s round changes; five finer samples make a number solid. Rare acts: search clips naming the act; edited clips count only unbroken round it. Cost 1 h. Evidence: measurements/STATUS.md.
