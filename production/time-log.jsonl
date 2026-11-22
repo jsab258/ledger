@@ -1087,3 +1087,8 @@
 {"event": "stop", "at": "2026-11-22T03:34:00", "note": ""}
 {"event": "start", "at": "2026-11-22T03:34:00", "task": "GTA VI G5 heat review applied", "phase": "measuring", "kind": "review"}
 {"event": "stop", "at": "2026-11-22T03:41:00", "note": ""}
+{"event": "start", "at": "2026-11-22T03:53:28", "task": "gtavi-g5-heat-length", "phase": "measuring", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T04:09:15", "note": ""}
+{"event": "start", "at": "2026-11-22T04:09:15", "task": "gtavi-g5-heat-length", "phase": "measuring", "kind": "production"}
+{"event": "start", "at": "2026-11-22T04:04:00", "task": "nightly-walk-stale-run-fix", "phase": "build", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T04:12:00", "note": "play.py start/finish: a reused pid no longer reads as the tester's game"}

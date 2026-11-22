@@ -502,7 +502,7 @@ def start(args):
     except Exception:
         pass
     st = load_state()
-    if st and not st.get("finished") and pid_alive(st["pid"]):
+    if st and not st.get("finished") and own_game_alive(st["pid"]):
         print("aiTester status=ALREADY-RUNNING folder=%s (finish it first)" % st["folder"])
         return 2
     # AN EDITOR ON THIS PC BLOCKS THE BUILD MACHINE'S BUILD (24 September), so
@@ -810,7 +810,7 @@ def finish(rest):
         print("aiTester status=NO-RUN")
         return 1
     summary = " ".join(rest).strip() or None
-    if pid_alive(st["pid"]) and user32.IsWindow(st["hwnd"]):
+    if own_game_alive(st["pid"]) and user32.IsWindow(st["hwnd"]):
         user32.PostMessageW(st["hwnd"], 0x0010, 0, 0)   # WM_CLOSE: the game's own window, closed as a person would
         t0 = time.time()
         while pid_alive(st["pid"]) and time.time() - t0 < 60:
@@ -849,6 +849,13 @@ def process_image(pid):
 # (its recorded id) and its image the editor or the packaged game; anything
 # else is refused, whatever the id now names.
 OWN_GAME_IMAGES = ("unrealeditor.exe", "ledgerprobe.exe")
+
+
+def own_game_alive(pid):
+    """THE TESTER'S GAME STILL RUNS, not merely its old process number (22 November: the night walk met
+    ALREADY-RUNNING for a run left unfinished the night before; its game had gone and Windows had given its
+    number to another program, so the walk never started). Alive and one of the tester's own game images."""
+    return pid_alive(pid) and os.path.basename(process_image(pid)).lower() in OWN_GAME_IMAGES
 
 
 def close(rest):
@@ -904,6 +911,8 @@ def selftest():
           0 < float(REAL_TALK_BUDGET_USD) <= 0.50 and 'env["LEDGER_TALK_BUDGET_USD"] = REAL_TALK_BUDGET_USD' in src
           and '--real-talk is for the finished game only' in src)
     check("its save is never the player's", '"-EncounterSave=" + save' in src)
+    check("a reused process number is not the tester's game", not own_game_alive(os.getpid())
+          and "not st.get(\"finished\") and own_game_alive(st[\"pid\"])" in src)
     fake_home = os.path.normcase(os.environ.get("USERPROFILE", r"C:\Users\Jafar"))
     fe = friends_env({"PATH": os.pathsep.join([os.path.join(fake_home, "miniconda3"), r"C:\Windows\System32",
                                                r"C:\Tools\Python312"]),
