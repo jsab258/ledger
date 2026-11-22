@@ -1063,3 +1063,11 @@
 {"event": "stop", "at": "2026-11-22T00:50:00", "note": ""}
 {"event": "start", "at": "2026-11-22T00:51:00", "task": "n16-11 GTA VI G5 fifth return, mzGG 102:48-107:00 (return rule solid)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-22T01:00:00", "note": ""}
+{"event": "start", "at": "2026-11-22T01:10:00", "task": "GTA VI G3 carjack: mzGG 20-57 min at 30 s", "phase": "measuring", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T01:15:00", "note": ""}
+{"event": "start", "at": "2026-11-22T02:37:00", "task": "GTA VI G3 carjack: 47:50 lead and mzGG 57-97 min", "phase": "measuring", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T02:41:00", "note": ""}
+{"event": "start", "at": "2026-11-22T02:41:00", "task": "GTA VI G3 carjack: r38SUFPeuew 0-101 min", "phase": "measuring", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T02:45:00", "note": ""}
+{"event": "start", "at": "2026-11-22T02:46:00", "task": "GTA VI G3 carjack: clip search, jsy42SsvtPU, pLvFTGZmx9A", "phase": "measuring", "kind": "production"}
+{"event": "stop", "at": "2026-11-22T02:57:00", "note": ""}

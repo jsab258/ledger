@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-22 00:43 (the hourly run)
+**Started:** 2026-11-22 02:37 (the hourly run)
 
-**Row due:** by 02:05 (last row 01:04; page read 00:56: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
-**Uncommitted:** none.
-**Stopped:** 2026-11-22 01:05 (the 00:43 run: before the 01:30 night walk; two numbers solid, pushed)
+**Row due:** by 02:40 (last row 01:38; page read 01:38: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
+**Uncommitted:** this file only (no work commit this run; no notes-only commits).
+**Stopped:** 2026-11-22 01:38 (the 01:37 run: page and advisor read, nothing new; row 01:38; allowance 92%, pace +21.5; the runner was packaging for the night walk, so no footage opened; G3 carjack lead 47:50-48:50 still first)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -33,10 +33,10 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22 Nov 00:43-01:06: seeks worked this run (window state varies: test each run). G3 parked-car entry SOLID (five on mzGG: 3:26, 7:28, 12:07, 121:21, 127:53; door to seated about 2 s); G5 return SOLID (fifth sample 104:46: seen again resumes pursuit at the level held). 113:00 was a death, not an entry. Row 01:04.
-- 22 Nov 00:22-00:35: no window on screen, seeks hung; leads only (m_2RP_EIHM8, 2EaoIgWAW5g, NEFA 22503).
+- 22 Nov 02:37-02:45: seeks worked (pane shown). G3 carjack: the 47:50 lead was an empty parked sheriff truck (a sixth parked entry, about 2-2.5 s); mzGG 57-97 min and r38SUFPeuew 0-101 min read at 30 s, leads at 2-3 s: no carjack in either (his own car, a garage, a tank); clips jsy42SsvtPU (short, rejected) and pLvFTGZmx9A (edited; a locked-car break-in about 6 s, a lead). Row 02:38; page read 02:50, nothing new.
+- 22 Nov 00:22-01:15: G3 parked-car entry SOLID (mzGG 3:26, 7:28, 12:07, 121:21, 127:53; about 2 s); G5 return SOLID (104:46). mzGG 20-57 min, no carjack. Seeks hang when the pane is hidden or no window is on screen.
 
-- Corrected lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (do not retry the commit).
+- Lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out (no retry).
 
 ## In flight
 - Nothing runs; no helpers; heavy lock clear.
@@ -47,10 +47,10 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). Tools in the page: window.sheet(t0,step,n,cols) and window.rowsheet (stars corner) are lost on reload; rewrite (draw to a fixed canvas, screenshot; 4 columns to read labels). NEXT, smallest first: G3 carjack, four more (mzGG 20-95 min unread at 30 s); G5 heat length, two more (red stars' start and end, as 103:24-104:31); r38SUFPeuew (20 Nov, 1 h 41 min, blind, every death kept: S3, S7, G5 and first hours; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
-- Allowance: 91% at 01:04, ceiling 95%; spend since 00:43 US$2.49. Log every step (timelog.py).
+0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). Tools in the page: window.sheet(t0,step,n,cols) and window.rowsheet (stars corner) are lost on reload; rewrite (draw to a fixed canvas, screenshot; 4 columns to read labels). NEXT, smallest first: G3 carjack, four more (both uncut streams and two clips read, none; next XYwMzjdCGFE, nZz58NecuKs, mHUdMpyQWUo at 30 s, then 2 s round leads; time door-open to moving); keep the pane shown: it hung when hidden; G5 heat length, two more (red stars' start and end, as 103:24-104:31); r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
+- Allowance: 92% at 02:38, ceiling 95%. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
-0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
+0a. Advisor 277: Kiln, hair and the crowd paused.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.
 1. Paused with Kiln: Ron's seated hem cover try 2 of 2 (Fable legs lane; the 20 Nov FAIL film its acceptance view); fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md).
 4. Marvelous export done 21 Nov (results F:/LedgerTools/md-jobs/export-2026-11-21.json; LOG.md Exports). Marvelous stays open (his word). No Unreal work until the browser prototype is done, then Kiln (advisor 288).
