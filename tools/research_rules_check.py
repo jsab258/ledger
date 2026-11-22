@@ -60,8 +60,11 @@ def read(path):
 
 def run():
     rulings = read(os.path.join(ROOT, "RULINGS.md"))
-    commits = subprocess.run(["git", "log", "--since=" + RULING_SINCE, "--format=%h", "--", "ue-probe"],
-                             cwd=ROOT, capture_output=True, text=True).stdout.split()
+    # The build machine's own probe commit after each nightly packaged build (author "LEDGER probe") is not
+    # session work: the nightly build and walk stand (DECISIONS 22 Nov). Only other authors count.
+    log = subprocess.run(["git", "log", "--since=" + RULING_SINCE, "--format=%h\t%an", "--", "ue-probe"],
+                         cwd=ROOT, capture_output=True, text=True).stdout.splitlines()
+    commits = [ln.split("\t")[0] for ln in log if ln.strip() and ln.split("\t")[-1] != "LEDGER probe"]
     sheets = {os.path.basename(p): read(p) for p in glob.glob(os.path.join(ROOT, SHEETS, "*.md"))}
     lane = os.path.join(ROOT, "production/research/lane")
     watched = dict(sheets)
