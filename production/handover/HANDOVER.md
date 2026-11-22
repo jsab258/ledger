@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-22 00:43 (the hourly run)
 
-**Row due:** by 01:25 (last row 00:25; page read 00:25: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
+**Row due:** by 02:05 (last row 01:04; page read 00:56: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
 **Uncommitted:** none.
-**Stopped:** 2026-11-22 00:38 (the 00:22 run: YouTube frames would not decode with no window on screen; leads and one archive film recorded; stopped early to keep the ceiling's room for a run that can read frames, DECISIONS 22 Nov)
+**Stopped:** 2026-11-22 01:05 (the 00:43 run: before the 01:30 night walk; two numbers solid, pushed)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -33,8 +33,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22 Nov 00:22-00:35 (this run): no window on screen, so the hidden browser never finished a YouTube seek (readyState 1); the captions route answered 429 (not worked round). Leads instead (STATUS.md 'More leads'): m_2RP_EIHM8 (G8's first choice), 2EaoIgWAW5g (borderline date). The archive's own player does decode hidden: NEFA 22503 (Newcastle 1990) plays free, read at 60 s then 10-20 s: mostly stills, no smoker seen in about 25 people (a lead; port-towns-q6-leads note). Row 00:25 (first stamped 00:35 ahead of the clock, corrected).
-- 21 Nov 23:07-00:17: the one-stream route on mzGG_I0LSIM gave G5 two returns, S7 a fourth delay (about 24 s), G2 a third both-lamps sample, G3 two entries (carjack door to moving about 5 s; parked car door to seated 1.5-2 s); n9A0lM-f-aQ is edited (leads only). Ten pushes.
+- 22 Nov 00:43-01:06: seeks worked this run (window state varies: test each run). G3 parked-car entry SOLID (five on mzGG: 3:26, 7:28, 12:07, 121:21, 127:53; door to seated about 2 s); G5 return SOLID (fifth sample 104:46: seen again resumes pursuit at the level held). 113:00 was a death, not an entry. Row 01:04.
+- 22 Nov 00:22-00:35: no window on screen, seeks hung; leads only (m_2RP_EIHM8, 2EaoIgWAW5g, NEFA 22503).
 
 - Corrected lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out for that branch's session (do not retry the commit).
 
@@ -47,8 +47,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). NEXT, smallest first: G3 more entries in mzGG (candidates 113:00 and 120:30 at 1 s, then 0.5 s; 0-95 min unread); G5 a fifth return (other wanted spells in mzGG: its HUD corner at 10 s over 0-150 min); r38SUFPeuew (20 Nov, 1 h 41 min, blind, every death kept: S3, S7, G5 and first hours; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
-- Allowance: 91% at 00:24, ceiling 94.5%; spend since 00:22 about US$2. Log every step (timelog.py).
+0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. The one-stream route works (mzGG_I0LSIM, STATUS.md line 39). Tools in the page: window.sheet(t0,step,n,cols) and window.rowsheet (stars corner) are lost on reload; rewrite (draw to a fixed canvas, screenshot; 4 columns to read labels). NEXT, smallest first: G3 carjack, four more (mzGG 20-95 min unread at 30 s); G5 heat length, two more (red stars' start and end, as 103:24-104:31); r38SUFPeuew (20 Nov, 1 h 41 min, blind, every death kept: S3, S7, G5 and first hours; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
+- Allowance: 91% at 01:04, ceiling 95%; spend since 00:43 US$2.49. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused until the browser evening holds; Kiln v1's Monday goal withdrawn.
 0b. Night walk 21 Nov: 14 of 17. Talk stages fix (try 1 of 2, 21 Nov 08:40: route_walk presses T alone, waits for talk-open, comes round once, then play.py say --open); tonight's walk proves it: read talk-open's detail.
@@ -57,7 +57,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 21-22 Nov: pixel measures of the stars read the sky (by eye instead); 'uncut' descriptions can be false; run ci-checks alone with env -u, Get-Date in its own call; times were stamped ahead of the clock three times (00:25 row too): read Get-Date before stamping. 22 Nov: YouTube seeks hang with no window on screen (above).
+- 21-22 Nov: pixel measures of the stars read the sky (by eye instead); 'uncut' descriptions can be false; run ci-checks alone with env -u, Get-Date in its own call; times were stamped ahead of the clock three times (00:25 row too): read Get-Date before stamping. 22 Nov: seeks hang in some runs only (test one); stamps ran ahead again at 00:50.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

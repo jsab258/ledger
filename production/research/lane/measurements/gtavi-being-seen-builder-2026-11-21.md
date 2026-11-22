@@ -193,6 +193,14 @@ Method: the stars row (x 1640-1920, y 0-90 of the 1080p frame), 10 s steps over 
 - 157:30-158:53 read at 1 s (21 Nov 2026 about 23:40-23:42 Swiss): no star row 157:30-158:07 (the three stars of 156:00 gone; when they went is between 156:00 and 157:30, not read); a fresh one-star row at 158:08 (one filled, four hollow); the HUD gone 158:11-158:25 (a pale full-screen view); from 158:26 the one star flashes white and grey each second to at least 158:53 (the search flash). No return into sight in this window, so no fifth sample; two stars by 160:10.
 
 ## RECONCILED with our earlier studies (advisor 294, added 21 Nov 2026 after the first pass)
+## G5, a fifth return: mzGG_I0LSIM 102:48-107:00 (same stream; read 22 Nov 2026 about 00:56-01:00 Swiss by the clock)
+Method: the stars corner (x 1560-1920, y 10-82 of 1080p) at 10 s over 100:00-110:30 to find the spell, then at 1 s over 102:45-103:45 and 104:22-104:57; read by eye.
+- 102:48: a two-star row appears (hollow, then grey); grey and hollow to 103:23.
+- 103:24-104:31: two red stars (the lost state the guides call red; about 68 s).
+- 104:32-104:45: two hollow white outlines, steady (not the one-second pursuit flash).
+- 104:46-104:49: two filled white (seen again); 104:50: three filled white, 4 s after the return; three white with flashes to past 106:40, four by 106:50; the HUD gone about 107:00-107:20 and $0 at 107:30 (read as a death, as at 156:07; a lead).
+- G5 counts now: return into sight five samples: four resumed pursuit at the same level at once (155:37, 160:39, 104:46 here, 4Sj3c8sMO-Y), one added a star (iWrYrsVXTS0, from Visual Lost). In two of the four a star followed 4-7 s later, cause not visible in the stars row. **Solid by STATUS.md's rule: being seen again resumes pursuit at the level held; it does not itself add a star.** The later rises stay a lead. Heat (red) lengths: about 68 s here and about 50 s in 4Sj3c8sMO-Y, each ended by the player being found, and at least about 6 min in LGU3b6jXhjI: three samples, a lead.
+
 Built on, read 21 Nov 2026: production/research/aaa-reference/studies/18-gta6-first-read.md (a wanted level starts only when a crime is reported or detected; unseen crimes make none; the star states; icons cleared each its own way), 15-crime-toolkit.md (KCD2's witness counter: starts at 1 to 3, a warning each tick, the last at 12, 20 s of grace), 01-npc-life.md (KCD2 notices at once within 2.5 m, as the street-life sheet quotes it), and the wanted-guides and car-chase sheets beside this one. Every number here is a lead under STATUS.md's solid rule.
 
 | Find here | Earlier study | Confirms, contradicts or adds |
