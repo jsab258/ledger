@@ -21,7 +21,8 @@ Method researched: g5-heat-review-2026-11-22.md (the measure it set: whole wante
 | F | 33:48 (33:47 none) | 37:29 (37:28 lit) | about 221 s | 1 s | 3 | white, red, then grey | driving away at night; but the stars are hidden 36:33 to 36:52 while the weapon readout shows (a second shop scene, gun drawn), three red before and two grey after | no: not shown to be one spell (re-read at 1 s about 04:13) |
 | G | 43:10 (one star) | 43:57 (43:56 red, 43:58 none) | about 47 s | 2 s | 2 | red 43:42 to 43:56 (the reviewer's reading) | driving away | yes |
 | - | 4:00 or before | 11:40 | over 7 min | 5 s | 3 | white, grey 11:00 to 11:15 | wasted at 11:41 (drowned) | no: death |
-| - | 44:56 to the clip's end, with gaps | - | - | 10 s | 4 | - | not read: stars nearly unbroken 48:30 to 60:30, ending red | not read |
+| H | 44:52 (44:50 none; two red 44:52 to 44:56, one white 44:58) | 47:00 (two red 46:56 to 46:59, none 47:00) | about 128 s | 2 s lit, 1 s cleared | 2 | red at both ends, grey 46:10 to 46:54 | on foot 45:10 to 45:40, a lorry taken about 46:20, driving it on (full frames every 10 s, no cut seen; the cut check is coarser than A to G's); read 22 Nov about 04:35, not yet reviewed | yes (a seventh, unreviewed) |
+| - | 47:24 (one star) to the clip's end | not cleared in the clip | over 13 min | 10 s | 3 | white, grey 52:56 to 53:46 and 58:26 to 59:46, then white again | still wanted at 60:36 | no: no clearing |
 
 ## A second player: JVXbhH7NRGw (added 22 Nov about 04:15)
 - https://www.youtube.com/watch?v=JVXbhH7NRGw, a live stream archive, 13,019 s; its own player data read 22 Nov about 04:05 Swiss: stream start 2026-11-21T00:54:32Z, published 2026-11-20T20:44:55-08:00: after the 19 Nov release. Third person, facecam top left, the stars corner clear. Frame sheets: F:/LedgerTools/game-inputs/footage/g5-JVXbhH7NRGw-2026-11-22. First hour scanned at 30 s.
@@ -44,5 +45,5 @@ Method researched: g5-heat-review-2026-11-22.md (the measure it set: whole wante
 - Four of the five two-star samples come from one player and one session; both players flee by car.
 - B's start is uncertain by 5 s (whether the lone star at 15:15 is the spell's start).
 - Cuts shorter than the frame step inside a spell cannot be ruled out.
-- 44:56 to the end not read; E and the 4:00 spell are deaths, left out.
+- 44:56 to the end read 22 Nov about 04:33-04:36 (10 s corner sheet, then 1-2 s at the edges): one more two-star escape (H) and one spell still lit at the clip's end; no one-star or three-star escape here. E and the 4:00 spell are deaths, left out.
 - A night-to-day change between 42:00 and 42:20 was checked at 2 s (read about 04:07): a crash at 42:05, wasted 42:06 to 42:12 with no stars lit, then day at a filling station from 42:14: the game's respawn, not an edit; outside every counted spell.

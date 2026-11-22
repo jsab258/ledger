@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-22 03:52 (the hourly run)
+**Started:** 2026-11-22 04:32 (the hourly run)
 
-**Row due:** by 05:02 (last row 04:02; page read about 04:20: nothing new; filter verdicts after 2026-11-21T20:28 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
-**Uncommitted:** nothing (committed with G5 SOLID and the tester fix). Not mine, left alone: four Mickey's office prints modified in production/assets/office-print/mickeys.
-**Stopped:** 2026-11-22 04:22 (the 03:52 run: G5 heat length SOLID at peak two stars, five reviewed samples from two players, a sixth unreviewed; one and three stars leads; the night walk did not start, tester start fixed, try 1 of 2; row 04:02; allowance 92%; stopped near the history point, 234k of 250k, as the next piece would cross it)
+**Row due:** by 05:37 (last row 04:37; page read about 04:33: nothing new; filter verdicts after 2026-11-22T03:33 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
+**Uncommitted:** nothing (committed with sample H). Not mine, left alone: four Mickey's office prints modified in production/assets/office-print/mickeys.
+**Stopped:** 2026-11-22 04:44 (the 04:32 run: m_2RP_EIHM8 44:56-60:40 read: sample H, two stars, about 128 s, unreviewed; no one- or three-star escape; row 04:37; allowance 93% of a 95% stop with 1 d 8 h to the reset, so stopped early to keep the last points for the day's summary and the lane)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -33,7 +33,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22 Nov 03:52-04:22: G5 heat length SOLID at peak two stars (m_2RP_EIHM8 one hour: seven spells, four clean two-star escapes, D three-star, two deaths, F split; JVXbhH7NRGw: J1 one star, J2 and J3 two stars); two fresh reviews (LEAD with corrections, then SOLID narrowly). 2EaoIgWAW5g rejected on date (stream started 18 Nov 19:49 UTC); fCofR6iJ3ZA rejected (18 Nov, re-processed). Tester start fix. Row 04:02.
+- 22 Nov 04:32-04:40: m_2RP 44:56-60:40 read: H (44:52-47:00, about 128 s, two stars, unreviewed); its last spell still lit at the end. Row 04:37.
+- 22 Nov 03:52-04:22: G5 peak two stars SOLID after two reviews; 2EaoIgWAW5g and fCofR6iJ3ZA rejected on date. Tester start fix.
 - Lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out (no retry).
 
 
@@ -47,8 +48,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 000. Read the advisor channel first.
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. NEXT, smallest first: G3 carjack set aside to Monday's reprice (two samples; a car taken at m_2RP 12:40 is a lead); G5 heat length: peak two stars SOLID 22 Nov (review 3; J3 about 91 s unreviewed, a fourth reviewer may add it); one star (two: 55, 75 s) and three stars (one: 322 s) stay leads; JVXbhH7NRGw (live, after release, 3 h 37 min) has a 6-star spell 13:30-27:30 and its 1-3.6 h unscanned: the next source for one and three stars; m_2RP 44:56-60:40 unread; r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only; m_2RP_EIHM8 has no captions); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
-- Allowance: 92% at 04:02, ceiling 95%. Log every step (timelog.py).
+0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. NEXT, smallest first: G3 carjack set aside to Monday's reprice (two samples; a car taken at m_2RP 12:40 is a lead); G5 heat length: peak two stars SOLID 22 Nov (review 3; J3 about 91 s unreviewed, a fourth reviewer may add it); one star (two: 55, 75 s) and three stars (one: 322 s) stay leads; JVXbhH7NRGw (live, after release, 3 h 37 min) has a 6-star spell 13:30-27:30 and its 1-3.6 h unscanned: the next source for one and three stars; m_2RP fully read (H added 22 Nov 04:35); r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only; m_2RP_EIHM8 has no captions); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
+- Allowance: 93% at 04:36, ceiling 95%; at 94% or more do only the day's summary (by 07:00) and the hourly row, nothing else, until the reset at 13:00 Monday. Log every step (timelog.py).
 0. Verdicts and advisor as on the Row due line; row hourly.
 0a. Advisor 277: Kiln, hair and the crowd paused.
 0b. Night walk 22 Nov did NOT run: ALREADY-RUNNING on the 21 Nov 02:04 run left unfinished, its old process number reused by another program. Fixed 04:12 (play.py start and finish need the process to be the tester's own game; try 1 of 2; selftest 14/14; checked on the real record). Tonight's walk proves it, and the talk stages fix (try 1 of 2, 21 Nov 08:40) is still unproven: read talk-open's detail.
