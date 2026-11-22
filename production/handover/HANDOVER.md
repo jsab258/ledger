@@ -2,11 +2,13 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-22 04:32 (the hourly run)
+**Started:** 2026-11-22 12:52 (the hourly run)
 
-**Row due:** by 05:37 (last row 04:37; page read about 04:33: nothing new; filter verdicts after 2026-11-22T03:33 UTC, advisor after 22:45:00 +01:00; last ack 302 at 22:45)
+**Row due:** by 13:08 (last row 12:08; page read 12:23: nothing new; filter verdicts after 2026-11-22T11:08 UTC, advisor after 2026-11-22T09:25:00+01:00; last ack 305).
 **Uncommitted:** nothing (committed with sample H). Not mine, left alone: four Mickey's office prints modified in production/assets/office-print/mickeys.
-**Stopped:** 2026-11-22 04:44 (the 04:32 run: m_2RP_EIHM8 44:56-60:40 read: sample H, two stars, about 128 s, unreviewed; no one- or three-star escape; row 04:37; allowance 93% of a 95% stop with 1 d 8 h to the reset, so stopped early to keep the last points for the day's summary and the lane)
+**Stopped:** 2026-11-22 12:53 (the 12:52 run: advisors 306, 307 acked; all starts held to Mon 07:00; allowance 96%)
+
+**Hold until:** 2026-11-23 07:00 (advisors 306, 307; delete this line at 07:00 once resumed)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -35,7 +37,6 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Done today
 - 22 Nov 04:32-04:40: m_2RP 44:56-60:40 read: H (44:52-47:00, about 128 s, two stars, unreviewed); its last spell still lit at the end. Row 04:37.
 - 22 Nov 03:52-04:22: G5 peak two stars SOLID after two reviews; 2EaoIgWAW5g and fCofR6iJ3ZA rejected on date. Tester start fix.
-- Lane feel sheets wait in F:/LedgerTools/tmp/lane-feel-mafia-out (no retry).
 
 
 ## In flight
@@ -45,14 +46,13 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Night by a brightness scan every 2 min; stars read by eye (pixel measures read the sky).
 
 ## Next, in order
-000. Read the advisor channel first.
+000. Read the advisor channel first. Mon 23 Nov 07:00 (advisor 307, his words 22 Nov 12:41): resume; first row at 07:00 with the reading; use the room to about 98.5% by 12:50, never past 99%, reading every 30 minutes; in order: (1) advisor 303's code measurers on this PC (HUD template matching for stars and timers, local person detector, frame difference for cuts), each tested on frames already read against the numbers already read; (2) the cheap-reader trial ready to run on the API credit at 13:00 (advisors 304, 305); (3) the reprice of advisor 303 before the reset; (4) study 2, our own build filmed, if room is left. From next week an hourly run at the stop or with nothing to start writes nothing and ends at once (advisor 306).
+000a. FIRST AFTER THE MONDAY RESET (advisor 303; his words 22 Nov 08:22, "Dec 11 is way too late", efficiency ruling 11 Nov): redesign the measuring block to finish by Fri 27 Nov at the strict rule's quality: code reads the HUD (stars, timers, speed by template matching), cuts by frame difference, people by a local detector; models only label and spot-check; Monday's Sonnet/Haiku trial with Opus checks; one uncut long stream serves every study in it; coarse pass, fine steps only round events; parallel helpers; every row names its blueprint part and decision, others cut and listed; no-video rows to a cloud session. Advisor 304: frame labelling as scripted calls on his API credit (Haiku or Sonnet, whichever agrees with Opus spot checks), not the weekly allowance; key never printed, copied or committed; a spending stop at the month's remaining credit; the token file and reprice give credit used and left, cost per frame by model, hours it carries before 27 Nov. Advisor 305 (his words 22 Nov 09:07, "just need to use them up before they expire"): find this month's credit expiry and what is left; plan the frame labelling to use it all by then; if measuring alone will not, put other planned scripted work on it (talk reply labelling, Kiln render checks, review panel calibration, the checkers' AI players), cheapest agreeing model first; each daily token file shows expiry, used and left until spent. Reprice by Mon 23 Nov 20:00 (hours, points, finish date, cuts and why).
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
-0g. FIRST test one seek on mzGG (readyState 2 or more after seeking); if stuck, this run has no window on screen: only text work (clip dating, archive players), and stop early as 22 Nov 00:35 did. DEPTH FIRST (advisor 302): only numbers solid by STATUS.md's rule count; each piece aims at five uncut, dated samples, cheapest route first. NEXT, smallest first: G3 carjack set aside to Monday's reprice (two samples; a car taken at m_2RP 12:40 is a lead); G5 heat length: peak two stars SOLID 22 Nov (review 3; J3 about 91 s unreviewed, a fourth reviewer may add it); one star (two: 55, 75 s) and three stars (one: 322 s) stay leads; JVXbhH7NRGw (live, after release, 3 h 37 min) has a 6-star spell 13:30-27:30 and its 1-3.6 h unscanned: the next source for one and three stars; m_2RP fully read (H added 22 Nov 04:35); r38SUFPeuew (read for cars 22 Nov; still for S3, S7, G5 deaths; no spoiler passed on); G7 a continuous post-release night walk downtown (mzGG's night is country); G8 repeated lines (captions only; m_2RP_EIHM8 has no captions); Q6 next archive record; item 35 study 2 (our prototype filmed) after the Monday reset; Monday's frame-reading trial.
-- Allowance: 93% at 04:36, ceiling 95%; at 94% or more do only the day's summary (by 07:00) and the hourly row, nothing else, until the reset at 13:00 Monday. Log every step (timelog.py).
-0. Verdicts and advisor as on the Row due line; row hourly.
+0g. GTA VI footage queue (depth first, advisor 302): the full list moved 22 Nov 12:55 to TRIED-ARCHIVE.md, "Moved from the handover"; read it before the next footage piece.
 0a. Advisor 277: Kiln, hair and the crowd paused.
-0b. Night walk 22 Nov did NOT run: ALREADY-RUNNING on the 21 Nov 02:04 run left unfinished, its old process number reused by another program. Fixed 04:12 (play.py start and finish need the process to be the tester's own game; try 1 of 2; selftest 14/14; checked on the real record). Tonight's walk proves it, and the talk stages fix (try 1 of 2, 21 Nov 08:40) is still unproven: read talk-open's detail.
+0b. Night walk fixes unproven: play.py needs the tester's own game (try 1 of 2, 22 Nov 04:12) and the talk stages fix (try 1 of 2, 21 Nov); tonight's walk proves both (detail in TRIED-ARCHIVE.md).
 1. Paused with Kiln: Ron's seated hem cover try 2 of 2 (Fable legs lane; the 20 Nov FAIL film its acceptance view); fins try 3 brief READY (tool-dev/reports/BRIEF-KILN-LANE-FINS3-FABLE.md).
 4. Marvelous export done 21 Nov (results F:/LedgerTools/md-jobs/export-2026-11-21.json; LOG.md Exports). Marvelous stays open (his word). No Unreal work until the browser prototype is done, then Kiln (advisor 288).
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
@@ -62,7 +62,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
-- Tries used: Marvelous bridge start 1/2 (19 Nov, four copies, his item); layered stage trace (no try); layered fix 2/2 (both failed 19 Nov: pass weighting, interleave; Fable next); trousers seat 2 tries (accepted 17:15); seated hem gap 1/2 (F5-a); coat Opus 2/2, Fable 1/2 (the 19 Nov run on the joined lane was a measurement); stiffness 2/2 (Fable; a third method may follow); Marvelous drapes 2/2 on the FBX route, .avt route 1/2 (worked); legs 2/2 (Fable); R4 passed at try 1 (refit2); layered3 Fable 2/2 (set aside 19 Nov); jumper import 2 (the first failed on a missing budget line); blouse set aside (Fable).
+- Tries used: the full list moved 22 Nov 12:55 to TRIED-ARCHIVE.md, "Moved from the handover".
 - API spend: US$3.77 this month (8 and 16 Nov); none 17-18 Nov.
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).
 

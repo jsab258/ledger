@@ -280,6 +280,17 @@ def stated_quiet_due(text):
         if line.startswith("**Next due:**") and QUIET_WORD in line.lower():
             return line_time(line, "Next due")
     return None
+# A FULL HOLD (advisors 306, 307, 22 November; his words 12:41): at the week's stop even the 55-minute page checks
+# spend about US$2.3 each, so a handover line "**Hold until:** YYYY-MM-DD HH:MM" holds every start after a clean
+# stop until that time, with no page check. Written only when he or the advisor orders a hold.
+
+
+def stated_hold(text):
+    """The Hold until time, else None."""
+    for line in text.splitlines():
+        if line.startswith("**Hold until:**"):
+            return line_time(line, "Hold until")
+    return None
 # THE RUN'S MODEL (advisor 162, 14 November; his words at 21:11: "can't happen again"): every session of 14 Nov ran
 # on Fable against RULINGS 8 and 10 Nov (Opus for the session), about twice the dollars per step, and nothing checked
 # it for a day. The task's model is set in the app, outside the session; a read-only search of the app's folders
@@ -394,6 +405,9 @@ def decide_base(now, text, idle_min, walk_reported=False, job_running=False, pac
             return "WAIT the week was %+.1f points ahead at %s: no session until %s (advisor 114; at most %d min " \
                    "after the stop, his word 13 Nov)" % (pace["ahead"], pace["at"].strftime("%H:%M"),
                                                          until.strftime("%H:%M"), AHEAD_MAX_WAIT_MIN)
+    hold = stated_hold(text)
+    if stopped >= started and not job_running and hold is not None and now < hold:
+        return "WAIT a full hold until %s (advisors 306, 307): no session, no page check" % hold.strftime("%d %b %H:%M")
     due = stated_quiet_due(text)
     if stopped >= started and not job_running and due is not None and not (pace and pace["priority"]):
         until = min(due, stopped + datetime.timedelta(minutes=QUIET_CHECK_MIN))
@@ -665,7 +679,12 @@ def selftest():
               ("no Next due line: as before", decide(at(12, 40), hs, 25), "GO"),
               ("a Next due line not stating quiet (the hourly row's time, 16 Nov): never holds",
                decide(at(12, 40), hs + "**Next due:** 2026-11-04 15:00 (the hourly row; last row 12:09)\n", 25), "GO"),
-              ("a Row due line never holds", decide(at(12, 40), hs + "**Row due:** 2026-11-04 15:00\n", 25), "GO")]
+              ("a Row due line never holds", decide(at(12, 40), hs + "**Row due:** 2026-11-04 15:00\n", 25), "GO"),
+              ("a full hold, 5 h after the stop: WAIT, no page check (advisor 307)",
+               decide(at(17, 20), hs + "**Hold until:** 2026-11-05 07:00\n", 300), "WAIT a full hold"),
+              ("a full hold past its time: GO", decide(at(12, 40), hs + "**Hold until:** 2026-11-04 12:30\n", 25), "GO"),
+              ("a full hold never holds a session not stopped",
+               decide(at(12, 40), r + "**Hold until:** 2026-11-05 07:00\n", 40), "GO the last session (started")]
     # The run's model (advisor 162): read from the logs; wrong model: no page check, due work goes and says so.
     fable, opus = "claude-fable-5-2", "claude-opus-5-5"
     mlogs = os.path.join(tmp, "model-logs")
