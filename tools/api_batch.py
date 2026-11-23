@@ -46,6 +46,7 @@ PRICE = {"claude-haiku-5-5": (0.10, 0.50), "claude-haiku-4-5": (1.0, 5.0), "clau
 #: 2.5, not the first 3.5 (3 November: the harm reader's 64 requests measured 2.84 characters a token, 495,828
 #: characters for 174,565 tokens, so the "worst case" read US$0.39 for a run that cost US$0.44; 2.5 keeps it a worst case)
 CHARS_PER_TOKEN = 2.5
+IMAGE_TOKENS = 1600
 
 
 def month_start(day):
@@ -83,9 +84,21 @@ def ceiling_today(lines, day):
 def worst_cost(req, batch=False):
     if req.get("model") not in PRICE:
         raise ValueError("unknown model %r (prices: %s)" % (req.get("model"), ", ".join(sorted(PRICE))))
-    text = (req.get("system") or "") + "".join(
-        m["content"] if isinstance(m.get("content"), str) else json.dumps(m.get("content")) for m in req["messages"])
-    tin = len(text) / CHARS_PER_TOKEN
+    # A PICTURE IS PRICED AS THE API PRICES IT, not as its encoded text (23 Nov 2026: 43 frame sheets read as US$42
+    # worst case by their base64 length; a picture costs about width x height / 750 tokens, and the API shrinks any
+    # picture to about 1.15 megapixels first, so IMAGE_TOKENS, its ceiling, keeps this a worst case without decoding).
+    images, parts = 0, [req.get("system") or ""]
+    for m in req["messages"]:
+        c = m.get("content")
+        if isinstance(c, str):
+            parts.append(c)
+            continue
+        for block in c or []:
+            if isinstance(block, dict) and block.get("type") == "image":
+                images += 1
+            else:
+                parts.append(json.dumps(block))
+    tin = len("".join(parts)) / CHARS_PER_TOKEN + images * IMAGE_TOKENS
     pin, pout = PRICE[req["model"]]
     usd = tin / 1e6 * pin + int(req["max_tokens"]) / 1e6 * pout
     return usd * (0.5 if batch else 1.0)
@@ -260,6 +273,9 @@ def main(argv):
 
 
 def selftest():
+    pic = {"model": "claude-haiku-5-5", "max_tokens": 0, "messages": [{"role": "user", "content": [
+        {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": "A" * 400000}}]}]}
+    assert abs(worst_cost(pic) - 1600 / 1e6 * 0.10) < 1e-9, "a picture is priced by its tokens, not its encoded length"
     ok = bad = 0
 
     def check(name, cond):
