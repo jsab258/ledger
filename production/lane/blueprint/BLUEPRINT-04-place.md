@@ -15,14 +15,14 @@ The map as data with testable layout rules.
 - How it works: Quay Street is the built street, in the Hook, Mickey's on it: 48 m from the quay, climbing about 3 m, then bending east behind the parade, 11 m wide with both pavements. The east side is the six-bay parade; the west block across from the north half of the parade carries shops; the west block across from Mickey's, at the quay end, is plain terraces. Trades by bay: 1 fishmonger, 3 the empty unit to let (whitewashed), 4 launderette, 5 grocer; west north: a newsagent and tobacconist, an ironmonger, a tea room. Four concrete lamp columns stand at x 8 east, 18 west, 28 east, 38 west. The 593 pieces keep their east_parade_ identifiers, which carry no claim about location. Every visual is judged against the Hook sheet and KCD2 frames; dated photographs win.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; canon's three sides Test: the gate; his eye on whole street frames
 - Source: canon; RULINGS The look (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon ('The built street', 'Quay Street's three sides'); RULINGS 'The look and the street' (3 Oct trades, 5 Oct atlas); DEFINITIONS G1; TARGET-STREET-FURNITURE-2026-11-17 S1
-- Status: outside. Coverage row: 4.1.1. Conflicts settled: C-077, C-078.
+- Status: outside. Coverage row: 4.1.1. Conflicts settled: C-092, C-093.
 
 ### 4.1.2 The rest of the Hook
 
 - How it works: The rest of the Hook is the G1 road plan: a quay road of 540 m, a north road of 338 m to the soft edge, Chapel Lane 240 m, the cold-store road 380 m, the dock road 350 m, Basin Road 353 m, the warehouse row 350 m, and foot-only lanes (the yards' lane 63 m, the terraces' ginnel 345 m, two 50 m warehouse cuts) with six vault places. About 620 by 400 m, all reachable. Density goes up and back, not out: back rooms, yards, alleys, upstairs flats. The look follows the Hook sheet and KCD2 frames, with a thinner dressing away from Quay Street where the player does not walk.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; density up and back, not out (Study 17) Test: the gate; B navigation soak
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate; DESIGN §6 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: atlas-01 (DISTRICTS, TOWN-FORM-BIBLE); DEFINITIONS G1; DESIGN s.6; Study 4 target 3; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
-- Status: outside. Coverage row: 4.1.2. Conflicts settled: C-079, C-080.
+- Status: outside. Coverage row: 4.1.2. Conflicts settled: C-094, C-095.
 
 ### 4.1.3 Landmarks and signs
 
@@ -36,28 +36,28 @@ The map as data with testable layout rules.
 - How it works: A fare that leaves the Hook is driven to the west road or the north road and comes back as time passed and money paid; nothing fails for leaving and nothing loads. A chase, by car or on foot, that reaches the edge ends there as lost within 2 s: the pursuer turns back, Tom goes out and returns after 30 game minutes, and the patrol waits on that road for the rest of the night, so he must come back past it. A plate read within 18 m in light 0.7 or more is noted, and a deed the officer saw brings a constable to the office the next morning at ten. Driving to the edge with no fare offers the six districts by landmark.
 - Standard: Nothing fails for leaving (DESIGN §5) Test: S: leaving the map edge in the cab
 - Source: DESIGN §5; Study 2 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.11; COPY-2 s.10; DESIGN s.5; DEFINITIONS G3, G1
-- Status: decided. Coverage row: 4.1.4. Conflicts settled: C-081.
+- Status: decided. Coverage row: 4.1.4. Conflicts settled: C-096.
 
 ### 4.1.5 Street build rules
 
 - How it works: Study 4's street rules, still rules and not yet a spec: front-to-front width between 9 and 15 m (Quay Street passes); at least 5 props per 10 m of street from a fixed list (bins, signs, boxes, pots, seating, lamps, bikes, litter, post boxes, kiosks), the Quay Street scene file placing about 9 per 10 m; dress where the player walks; kit reuse counted per street (the terraces share one family, the shops and Mickey's are one-offs); interiors only where the story goes; every fixed camera's view along the street ends on a building or a turn; one switchable layer per street state (day, night, market, blocked) once the town grows past one street.
 - Standard: Study 4's measured street rules Test: automatic layout check against the rules
 - Source: aaa-reference study 04; TRACE s04 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: aaa-reference study 04 'Targets for LEDGER's phase 2'; TRACE s04; RULINGS 17 Nov
-- Status: outside. Coverage row: 4.1.5. Conflicts settled: C-082.
+- Status: outside. Coverage row: 4.1.5. Conflicts settled: C-097.
 
 ### GD-01 Travel time across the playable map
 
 - How it works: Provisional bands until measured: the Hook is crossed end to end (ferry landing to the north road) on foot in 3 to 5 real minutes and by car in 60 to 100 s. On the G1 plan the car crossing is 548 m with three corners, about 66 s for the ordinary-driving bot at 20 mph (about 44 s at 28 mph); the walking crossing is 475 m, about 4.9 minutes at Tom's 1.6 m/s, taken as 5 real minutes for notice. Every go-to step is reachable unaided in 3 minutes and nothing to do is more than 30 real seconds away by day. To be replaced by the reference games' crossings (KCD2's Kuttenberg, RDR2's Saint Denis, a GTA V district, GTA VI's streets).
 - Standard: Provisional bands until measured: on foot 3 to 5 real minutes, by car 60 to 100 s; to be replaced by the reference games' town crossings (KCD2's Kuttenberg, RDR2's Saint Denis, a GTA V district, GTA VI's Vice City streets as a fourth). Test: B: timed crossings by the walk and drive bots on the prototype map.
 - Source: ER-JOB-01; the description, section 40; MEASUREMENTS-NEEDED A (travel time). (waits on a dated study). Designed in: DEFINITIONS GD-01, G1, G4; FIT-CHECK F01; MEASUREMENTS-NEEDED A8; COPY-2 s.37
-- Status: pending. Coverage row: GD-01. Conflicts settled: C-083.
+- Status: pending. Coverage row: GD-01. Conflicts settled: C-098.
 
 ### FIT-G1 The Hook's road plan in metres, the chase loop
 
-- How it works: The Hook and its docks on one plan in metres, origin at the ferry landing, x east, y north. Quay Street is the built 48 m street, climbing about 3 m, bending east behind the parade. Roads: quay road 540 m (9 m wide), the bend 42 m, north road 338 m to the soft edge, Chapel Lane 240 m, cold-store road 380 m, dock road 350 m, Basin Road 353 m, basin's north road 260 m, warehouse row 350 m; foot-only lanes: the yards' lane 63 m, the terraces' ginnel 345 m, two warehouse cuts of 50 m, with six vault places. The footprint is about 620 by 400 m (0.25 km2), all reachable. The chase loop is 1,528 m (76 to 96 s a lap at 35 to 45 mph), with a basin ring of about 1,000 m and a third loop of about 910 m sharing six junctions. If the docks are cut, the loop goes with them and chases shorten to 45 s.
+- How it works: The Hook and its docks on one plan in metres, origin at the ferry landing, x east, y north. Quay Street is the built 48 m street, climbing about 3 m, bending east behind the parade. Roads: quay road 540 m (9 m wide), the bend 42 m, north road 338 m to the soft edge, Chapel Lane 240 m, cold-store road 380 m, dock road 350 m, Basin Road 353 m, basin's north road 260 m, warehouse row 350 m; foot-only lanes: yards' lane 63 m, the terraces' ginnel 345 m, two warehouse cuts of 50 m, six vault places. Footprint about 620 by 400 m (0.25 km2), all reachable. Crossings 548 m by road, 475 m on foot. The chase loop is 1,528 m (76 to 96 s a lap), with a basin ring of about 1,000 m and a third loop of about 910 m sharing six junctions. One lap is one short chase. If the docks are cut, car chases run the 910 m parade loop, shorter by about half, not a 45 s chase.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G1 and D-Q2; FIT-CHECK F01, F02, F22; RULINGS 5 Oct, map ruling
-- Status: decided. Coverage row: FIT-G1. Conflicts settled: C-084, C-085.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G1, D-Q2; design pass 4 C-01; FIT-CHECK F01, F02, F22; RULINGS 28 Oct and 19 Nov
+- Status: decided. Coverage row: FIT-G1. Conflicts settled: C-099, C-100, C-101, C-102.
 
 ## 4.2 The docks
 
@@ -73,10 +73,10 @@ The Hook's working waterfront (canon, 19 Nov).
 
 ### 4.2.2 Old Basin, fish dock, cold stores
 
-- How it works: The Old Basin's mouth runs 250 to 480 m along the quay road, crossed on the fixed basin bridge; the fish dock is at 480 to 540 m (Brenda Laverack goes there at dawn; 15 to 25 people between 05:30 and 07:00; gulls in flocks of 5 to 20). The Old Basin Cold Stores stand on the cold-store road, north side, x 300 to 470, a 170 m block with a loading yard mouth at x 340; the packing shift leaves them at half past five and is a fare. From rung 3 the cold-store contract makes the packing shift the firm's daily legitimate loop. Basin Road, the basin's north road (the burned warehouse at x 300 to 360) and the warehouse row (Norman Dent's warehouses) complete the working places. If time runs short the docks are cut first.
+- How it works: The Old Basin's mouth runs 250 to 480 m along the quay road, crossed on the fixed basin bridge; the fish dock is at 480 to 540 m (Brenda Laverack goes there at dawn; 10 to 18 people between 05:30 and 07:00; gulls in flocks of 5 to 20). The Old Basin Cold Stores stand on the cold-store road, north side, x 300 to 470, a 170 m block with a loading yard mouth at x 340; the packing shift leaves them at half past five and is a fare. From rung 3 the cold-store contract makes the packing shift the firm's daily legitimate loop. Basin Road, the basin's north road (the burned warehouse at x 300 to 360) and the warehouse row (Norman Dent's warehouses) complete the working places. If time runs short the docks are cut first.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN s.5, s.13, s.14; atlas-01 TOWN-FORM-BIBLE D04; DEFINITIONS G1, G9; COPY-2 s.12, s.31; RULINGS 28 Oct; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
-- Status: outside. Coverage row: 4.2.2. Conflicts settled: C-086.
+- Status: outside. Coverage row: 4.2.2. Conflicts settled: C-103.
 
 ### 4.2.3 Dock gate, customs, Harbour Board
 
@@ -113,7 +113,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 
 ### 4.3.3 Shops and workplaces
 
-- How it works: Quay Street's shops open 09:00 to 17:30 Monday to Saturday and shut on Sunday; the newsagent 06:00 to 18:00; the caff 06:00 to 15:00 (to 22:00 on Friday and Saturday), tea 30p, a meal £2.50; the launderette (bay 4) 08:00 to 23:00; the pawn (Wayne Harrison) 10:00 to 17:00 with its back room by knock to 22:00 and its window lit at night; the chip shop on the parade to 23:30. Rita Welburn's back room fences at about 0.4 of an honest price from rung 2 (her front is the shops' sample); Hal has a shop; the ironmonger sells a crowbar £6, torch £4, key cut £1.50; the ship's chandler stands on the quay road with the boxing club's old hall behind. Nothing serves drink and nobody plays for money.
+- How it works: Quay Street's shops open 09:00 to 17:30 Monday to Saturday and shut on Sunday; the newsagent 06:00 to 18:00; the caff 06:00 to 15:00 (to 22:00 on Friday and Saturday), tea 30p, a meal £2.50; the launderette (bay 4) 08:00 to 23:00; the pawn (Wayne Harrison) 10:00 to 17:00 with its back room by knock to 22:00 and its window lit at night; the chip shop on the parade to 23:30. Rita Welburn's back room fences at about a third of retail (0.33, CLOUD-FIGURES B3) from rung 2 (her front is the shops' sample); Hal has a shop; the ironmonger sells a crowbar £6, torch £4, key cut £1.50; the ship's chandler stands on the quay road with the boxing club's old hall behind. Nothing serves drink and nobody plays for money.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN s.6, s.15; COPY-2 s.14, s.29; DEFINITIONS G8, G10; RULINGS 22 Oct, 3 Oct, 8 Nov; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.3.3.
@@ -123,7 +123,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - How it works: Ada's front room is where tea is taken at nine ('Ada's pot on at nine'); her window looks on the street Tom must cross, and she sits in a dark front room as the one watcher who is a window; her back gate opens on the terraces' ginnel. The retired doctor's terrace stitches wounds for money (£20) and asks nothing. Other homes are the rooms jobs and stories enter (upstairs flats, back rooms), at least 14 rooms across the eight named places. The collision beat puts a man at Ada's door for Tom.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: COPY-2 s.4, s.9, s.31; DESIGN s.6, s.15; DEFINITIONS P34, G1, G8; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
-- Status: outside. Coverage row: 4.3.4. Conflicts settled: C-087.
+- Status: outside. Coverage row: 4.3.4. Conflicts settled: C-104.
 
 ### 4.3.5 Iveson's yard and hut
 
@@ -141,10 +141,10 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 
 ### 4.3.7 The police station
 
-- How it works: The station is where custody happens: a constable walks up (go with him, or run), then the station, the duty solicitor (free) and the hours pass, under 2 real minutes of play. About 6 hours for a window (2 and a caution if he owns up), 8 for a wounding, 12 for a robbery, 22 for a killing, then charged and remanded or released under investigation. The coat is kept if he wore it; he is never taken twice for one deed. Two named officers can be bought (£50 to look away from a car once, £200 to lose a statement once); Ellis is not among them. At dial state Fired armed officers come from the station slowly.
+- How it works: The station is where custody happens: a constable walks up (go with him, or run), then the station, the duty solicitor (free) and the hours pass, under 2 real minutes of play. About 6 hours for a window (2 and a caution if he owns up), 8 for a wounding, 12 for a robbery, 22 for a killing, then charged and remanded, or released without charge or on police bail pending inquiries. The coat is kept if he wore it; he is never taken twice for one deed. Two named officers can be bought (£50 to look away from a car once, £200 to lose a statement once); Ellis is not among them. At dial state Fired armed officers come from the station slowly.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: ONE-SHOT-PROMPT s.20, s.21; COPY-2 s.17, s.18, s.27; DEFINITIONS G8; CLOUD-FIGURES-2026-11-21 B2; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
-- Status: outside. Coverage row: 4.3.7. Conflicts settled: C-088.
+- Status: outside. Coverage row: 4.3.7. Conflicts settled: C-105.
 
 ### 4.3.8 Where a beaten Tom wakes
 
@@ -174,10 +174,10 @@ Lamps, the phone box, bins, railings, bollards, signs.
 
 ### 4.4 Props and street furniture
 
-- How it works: Quay Street's furniture: four concrete lamp columns (lamp_post_C, 220 mm square at the foot tapering to 125 mm, lantern top at 5.0 m, unpainted concrete), staining still to finish; boat-shaped aluminium lanterns with 35 W low-pressure sodium lamps, each a straight-down pool (cone 22 to 46 degrees, 167 lm) plus a 40 lm bulb glow reaching 1 m, 4.83 m up, giving pools with darkness between. The KX100 phone box stays; no skip or pallets until real. Street name plates in Marcellus SC. Sources in order: free CC0 or unmarked CC-BY first, else our own from photographs. At least 5 props per 10 m of street.
-- Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; 3 Oct sources (free first, else our own from photographs) Test: small-piece review (RULINGS 3 Nov)
+- How it works: Quay Street's furniture: four concrete lamp columns (lamp_post_C, 220 mm square at the foot tapering to 125 mm, lantern top at 5.0 m, unpainted concrete), staining still to finish; boat-shaped aluminium lanterns with 35 W low-pressure sodium lamps, each a straight-down pool (cone 22 to 46 degrees, 167 lm) plus a 40 lm bulb glow reaching 1 m, 4.83 m up, giving pools with darkness between. The KX100 phone box stays; no skip or pallets until real. Street name plates in Marcellus SC. Sources in order: free CC0 or unmarked CC-BY first, else the studio's own from photographs. At least 5 props per 10 m of street.
+- Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; 3 Oct sources (free first, else the studio's own from photographs) Test: small-piece review (RULINGS 3 Nov)
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate; ruling 3 Oct (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: TARGET-STREET-FURNITURE-2026-11-17 S1 to S4; FURNITURE-SPECS-2026-11-17; RULINGS 22 Oct, 2 Oct, 3 Oct, 1 Oct; Study 4
-- Status: outside. Coverage row: 4.4. Conflicts settled: C-089.
+- Status: outside. Coverage row: 4.4. Conflicts settled: C-106.
 
 ### FIT-P52 What an ordinary drawer holds
 
@@ -196,11 +196,11 @@ AI drivers that always brake for people; parked cars from the kit.
 - How it works: Traffic stage 1 is the background cars at the street's end. Each lane draws arrivals from a seeded stream, so the same week plays the same: average gaps 50 s in the rush hours, 75 s by day, 150 s in the evening, 450 s at night, never under 4 s in one lane, at most three cars in the pool. Cars drive 20 to 28 mph (never over 30), follow the Intelligent Driver Model, slow to 20 mph from 60 m before Quay Street's mouth, and stop about 2 m behind a person in the lane, hooting at 3 s and 10 s. A person who steps out inside stopping distance (23 m at 30 mph) is never struck: the car halts dead. Only the player's car can strike anybody; AI drivers always brake, a crewman told to drive too.
 - Standard: AI drivers always brake for people (canon); ER-DRIVE-04 Test: S: 1,000 seeded crossings; 40 minutes lawful driving with no hits
 - Source: canon; DESIGN §5 (his ruling or canon). Designed in: TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18; COPY-2 s.10, s.11; DESIGN s.5 (ER-DRIVE-04); DEFINITIONS G2; canon (cars)
-- Status: measured. Coverage row: 4.5.1. Conflicts settled: C-090.
+- Status: measured. Coverage row: 4.5.1. Conflicts settled: C-107.
 
 ### 4.5.2 Parked cars
 
-- How it works: Our own scripted Blender hatchback goes first as the one parked car; the other three follow only after he has seen it. Kerb places are held in production/specs/street-vehicles.json; budget 40,000 triangles, 4 LODs, 2,048 px, simple collision, at most six cars in view at 0.5 ms. P9 gate: a blind reviewer on the untextured body names no model with confidence and places it in Britain or Europe, 1985 to 1991. Traffic from their kit follows in the friends' build after one passes. Nothing is bought for street or cars.
+- How it works: The studio's own scripted Blender hatchback goes first as the one parked car; the other three follow only after he has seen it. Kerb places are held in production/specs/street-vehicles.json; budget 40,000 triangles, 4 LODs, 2,048 px, simple collision, at most six cars in view at 0.5 ms. P9 gate: a blind reviewer on the untextured body names no model with confidence and places it in Britain or Europe, 1985 to 1991. Traffic from their kit follows in the friends' build after one passes. Nothing is bought for street or cars.
 - Standard: His look at one parked car before twenty (ruling 17 Nov) Test: the gate
 - Source: RULINGS cars 17 Nov (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: PLAN-PARKED-CARS-2026-11-17; RULINGS 17 Nov, 6 Nov, 16 Sep; canon 'Brands and law'
 - Status: outside. Coverage row: 4.5.2.
@@ -234,7 +234,7 @@ The clock's light: day and night now, four or five states later, no moving sun.
 - How it works: Day and night now, four or five light states later, no moving sun (7 Oct). Night is pools of lamp light with darkness between and lit windows, never one orange wash (1 Oct); dusk comes with the lamps switching on (about 70 lux, the sodium taking 8 to 15 minutes to turn full yellow). Day exposure stays one stop darker (29 Oct). Sound carries about twice as far in the small hours. Tom and the ground 5 m round him stay readable at night; the frame's corners darken with the same light value the watchers use. Under the ruled clock a game day is 24 real minutes and the dark part about 14 of them.
 - Standard: Ruling 7 Oct; night as pools of lamp light with dark between (1 Oct) Test: the gate at night
 - Source: RULINGS weather and night (his ruling or canon). Designed in: DESIGN s.6 (ER-NIGHT-01, 02); LIGHT-WEATHER-VALUES-2026-11-17; RULINGS 1 Oct, 7 Oct, 29 Oct; DEFINITIONS CLK-05
-- Status: measured. Coverage row: 4.7. Conflicts settled: C-091, C-092.
+- Status: measured. Coverage row: 4.7. Conflicts settled: C-108, C-109.
 
 ## 4.8 Weather
 
@@ -255,10 +255,10 @@ Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phon
 
 ### 4.9 1990 detail
 
-- How it works: Late-analog 1990: landlines, phone boxes, answering machines, pagers, cash and paper; no mobiles, no internet. CCTV only at the bank, one camcorder in town as a rare witness. Poll-tax posters are an invented local campaign, never real parties or people. Money is pounds and pence only, written plain; typed letters in Courier Prime, street plates in Marcellus SC. The brand bible still owes six names: the football club, the local paper, the pirate radio station, the regional TV channel, the telephone operator (kiosk mark) and the postal cypher. The interface style sheet is a draft, nothing ruled.
+- How it works: Late-analog 1990: landlines, phone boxes, answering machines, pagers, cash and paper; no mobiles, no internet. CCTV only at the bank (built to Q10's recommendation; canon leaves a second site to him), one camcorder in town as a rare witness. Poll-tax posters are an invented local campaign, never real parties or people. Money is pounds and pence only, written plain; typed letters in Courier Prime, street plates in Marcellus SC. The brand bible still owes six names: the football club, the local paper, the pirate radio station, the regional TV channel, the telephone operator (kiosk mark) and the postal cypher. The interface style sheet is a draft, nothing ruled.
 - Standard: canon era; late-analog; brand bible owes the football club, paper, pirate radio, TV channel, phone operator, postal cypher Test: canon-gate and content-gate; his eye
 - Source: canon Era, Brands and law (his ruling or canon). Designed in: canon 'Era' and 'Brands and law'; STYLE-SHEET-1990-DRAFT-2026-11-18; RULINGS 3 Oct; COPY-2 s.2, s.5
-- Status: measured. Coverage row: 4.9. Conflicts settled: C-093.
+- Status: measured. Coverage row: 4.9. Conflicts settled: C-110.
 
 ## 4.10 Pubs without drink and the closed school
 
@@ -270,7 +270,7 @@ Places that exist with no drink and no children.
 - How it works: Pubs may stand as buildings on the street, boarded or serving food, never entered for drink; Mickey's is a minicab office (D19, superseding D15's pub). Alcohol and gambling are out entirely, in image and speech, and nobody can bet on anything, including at the boxing club. The school stands closed for the game's window: the building is there and nobody is in it; no children are rendered, in the crowd or in dialogue. Enforced at six sites including the animation library by clip name. Tuesday's chapel hall evening (tea and talk) is the model for a place that exists without drink.
 - Standard: canon content rule: pubs as places, boarded or serving food; the school stands closed Test: content gate over clips and props
 - Source: canon D18 (his ruling or canon). Designed in: canon content rule (D18) and Mickey's (D19); COPY-2 s.3, s.29; DEFINITIONS G10
-- Status: measured. Coverage row: 4.10. Conflicts settled: C-094.
+- Status: measured. Coverage row: 4.10. Conflicts settled: C-111.
 
 ## 4.11 Animals and birds
 
