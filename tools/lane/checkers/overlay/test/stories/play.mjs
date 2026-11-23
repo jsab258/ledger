@@ -549,7 +549,8 @@ async function watchers(P, t) {
   });
   const a = await snap();
   const text = await P.page.evaluate(() => LEDGER.saveText());
-  await P.page.evaluate((s) => LEDGER.restore(s), text);
+  // after round 2: the parts are emptied first, so a part the save forgets cannot survive in the page and pass
+  await P.page.evaluate((s) => { const G = LEDGER.G; G.debts = {}; G.ledger = Array.isArray(G.ledger) ? [] : {}; for (const id in G.minds || {}) if (G.minds[id] && Array.isArray(G.minds[id].mem)) G.minds[id].mem = []; return LEDGER.restore(s); }, text);
   await P.frames(30);
   const b = await snap();
   const diff = Object.keys(a).filter((k) => a[k] !== b[k]);

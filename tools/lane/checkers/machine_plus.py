@@ -11,7 +11,7 @@ code is never changed. A check that could not be made fails as "not reached", ne
   nobody under 18             every person's age as the game keeps it (P.def.age): round 1 read a field the game
                               does not use, so a passer-by of fifteen passed.
   the street is peopled       every game hour of a day, the crowd on the street against the game's own table for that
-                              hour (at least half of it, and at least one after dark): round 1 never counted people.
+                              hour (at least a quarter of it, the game thinning it in rain, and at least one after dark): round 1 never counted people.
   every fare pays             six fares in a row through the game's own fare calls: each pays and the fare book grows.
   every talk can be left      each named person on the street: talk opened with E, then Escape; the box must close.
   the pause menu by keys      Escape opens it, the arrow keys move between its buttons, Escape closes it.
@@ -24,15 +24,34 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 GATE = os.path.join(os.path.dirname(HERE), "gate")
 sys.path.insert(0, GATE)
 from machine_checks import content_scan, prose_strings, TICK_COST_JS  # noqa: E402
+from consequences import FAIL_1990  # noqa: E402
+
+# added after round 2 (a planted "Text me" line passed every checker): later-years words in the built game's lines
+FAIL_1990_PLUS = FAIL_1990 + ["text me", "text you", "texts", "app", "apps", "podcast", "streaming", "netflix", "whatsapp"]
+RX_1990 = re.compile(r"\b(" + "|".join(re.escape(w) for w in sorted(FAIL_1990_PLUS, key=len, reverse=True)) + r")\b", re.I)
 
 DT = 1 / 60
 
 
-def built_prose(js):
-    """Lines of prose in the built ledger.js (minified, three.js inside): prose_strings, then only strings that read as
-    words (no code marks, four fifths letters and spaces). Round 1's scan read the source and refused the build."""
+def js_strings(js):
+    """String literals of a minified script: each kind of quote scanned on its own, so an apostrophe inside a
+    double-quoted line can no longer pair with the next string's quote (round 2 found one regex for all three
+    kinds skipped such lines). Misread spans are mostly code and are dropped by built_prose."""
     out = []
-    for s in prose_strings(js):
+    for q in ("'", '"', "`"):
+        pat = re.escape(q) + r"((?:[^" + re.escape(q) + r"\\\n]|\\.){12,})" + re.escape(q)
+        out += [m.group(1) for m in re.finditer(pat, js)]
+    return out
+
+
+def built_prose(js):
+    """Lines of prose in the built ledger.js (minified, three.js inside): string literals that read as words (a space,
+    a word of three letters, no code marks, four fifths letters and spaces). Round 1's scan read the source and
+    refused the build."""
+    out = []
+    for s in js_strings(js):
+        if len(s) < 12 or " " not in s or not re.search(r"[A-Za-z]{3,} [A-Za-z]{2,}", s):
+            continue
         if re.search(r"[={}<>;\\]|\bthis\.|\(\)|=>|\bvoid\b|\bnew [A-Z]", s):
             continue
         if sum(c.isalpha() or c == " " for c in s) < 0.8 * len(s):
@@ -80,6 +99,9 @@ class Run:
         self.record("content in the built game", ok if s["strings"] > 300 else False,
                     "lines of prose in the built ledger.js: %d" % s["strings"],
                     fails=[(x["word"], x["line"][:100]) for x in s["fails"]][:12])
+        late = [(m.group(1), x[:100]) for x in lines for m in [RX_1990.search(x)] if m]
+        self.record("nothing of later years in the built game", len(lines) > 300 and not late,
+                    "the same lines against words never right in Britain in 1990", late=late[:12])
 
     def ages_and_crowd(self, hours):
         g = self.proto()
@@ -93,7 +115,7 @@ class Run:
             for _ in range(hours):
                 c = g.js(CROWD_JS)
                 seen += 1
-                if c["out"] < max(1, c["want"] // 2):
+                if c["out"] < max(1, c["want"] // 4):  # a quarter: the game thins the crowd in rain by design (round 2: half gave false alarms on wet days)
                     thin.append("%02d:00 %d out, the table says %d" % (c["hour"], c["out"], c["want"]))
                 g.clear(10)
                 g.run(secs, every=secs)
@@ -136,7 +158,7 @@ class Run:
         g = self.proto()
         try:
             ids = g.js("() => LEDGER.G.named.filter((P) => !P.gone && !P.dead && (!P.space || P.space === 'street' || (P.atWindow && P.win))).map((P) => P.id)")
-            stuck, opened = [], []
+            stuck, opened, unopened = [], [], []
             for pid in ids:
                 g.clear(10)
                 got = g.js("""(id) => { const L = LEDGER, G = L.G, P = G.people[id], t = G.tom;
@@ -148,6 +170,7 @@ class Run:
                 g.run(1.2)
                 m = g.js("() => LEDGER.ui.modal")
                 if m not in ("talk", "dialog"):
+                    unopened.append(pid)  # after round 2: a person never opened is said, never skipped in silence
                     continue
                 opened.append(pid)
                 for _ in range(3):
@@ -157,8 +180,8 @@ class Run:
                     g.run(0.8)
                 if g.js("() => LEDGER.ui.modal") == "talk":
                     stuck.append(pid)
-            self.record("every talk can be left", bool(opened) and not stuck,
-                        "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times", opened=opened, stuck=stuck)
+            self.record("every talk can be left", bool(opened) and not stuck and not unopened,
+                        "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times", opened=opened, stuck=stuck, not_opened=unopened)
         finally:
             g.close()
 
