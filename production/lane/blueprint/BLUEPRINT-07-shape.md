@@ -15,7 +15,7 @@ Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30,
 - How it works: The ferry shot runs 20 s, then control at 0:20. Quay Street at 1:30 (talk possible, the AI notice once before the first talk), Sheila's walk-round at 1:45, the first verb with the hands at 2:30 (car two, a fare to the priest's house, the fare goes in the book), the debt book at 4:30, the first choice and deed at 5:30 (Darren's 22 pounds: front him, take what he offers, or strike it out), Ron's first ask at 7:00, the carry at 9:00 and the landing at 11:30. Tuesday at 13:00 brings it back to his face, the count at 14:00, and the hour runs on to minute 56 (two men by car two, rent due tomorrow). Numbers: control within 1.5 min (here 20 s), a verb within 3, a choice and a deed within 20 (aim 6), no stretch over 3.5 min without control, under 5% watched, every scene skippable and 60 s at most, something new every 3 min, about 13 distinct activities by minute 30, the town visibly knows him by minute 30 (planned at minute 13), a search, lost fight or arrest each under 2 min.
 - Standard: ER-FIRST-01 to 04: control within 1.5 min, a verb within 3, a choice within 20; town visibly knows him by minute 30 (Meridian Test) Test: H: first-hour run timed; S: control timing
 - Source: DESIGN §15; Study 2 (leads); canon targets (his ruling or canon). Designed in: DESIGN §15 (table and ER-FIRST-01 to 04); GAME-DESCRIPTION-COPY-2 §4; ONE-SHOT-PROMPT 4; DEFINITIONS design pass 3, clock table CLK-01; QUESTIONS 4; RULINGS 28 Sep, 3 Oct
-- Status: measured. Coverage row: 7.1. Conflicts settled: C-124, C-125.
+- Status: ruled (his ruling or canon). Coverage row: 7.1. Conflicts settled: C-124, C-125.
 
 ## 7.2 An evening
 
@@ -27,7 +27,7 @@ One game day: an easy day, a tightening dusk, the job, getting home, the count, 
 - How it works: One game day is an easy day, a tightening dusk, a job done under watch for 3 to 6 real minutes, getting home, the count with Sheila (tin against the fare book), and the sting or reward said to his face next morning. The bar is that at least 7 of 8 panel players recommend the evening and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). A 7 of 8 pass is met by a KCD2-grade game 89.4% of the time (KCD2 92.9% Steam positive, RDR2 92.1%, GTA V 83.8%); the milestone M1 stays 4 of 8. Under the ruled clock the game day is 24 real minutes and the 18:00 to 24:00 evening 6 running minutes.
 - Standard: At least 7 of 8 panel players recommend the evening, and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). M1 milestone after the one-shot stays 4 of 8. 24 real minutes a game day, the evening 6 (his clock ruling of 21 Nov). Test: H: the evening run and the panel
 - Source: PANEL-BAR-2026-11-21.md: Steam positive shares KCD2 92.9%, RDR2 92.1%, GTA V 83.8% (players study, 20 Nov); 7 of 8 passes a KCD2-grade game 89% of the time (reference game). Designed in: PANEL-BAR-2026-11-21; DESIGN §1, §3; BUILD-ORDER M1; DEFINITIONS clock table CLK-05; GAME-DESCRIPTION-COPY-2 §2
-- Status: measured. Coverage row: 7.2. Conflicts settled: C-126, C-127.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.2. Conflicts settled: C-126, C-127.
 
 ## 7.3 A week
 
@@ -39,7 +39,7 @@ Act I, Monday to Sunday, about two hours.
 - How it works: Act I is Monday 15 October to Sunday, about two hours, the most scripted act. Five threads run through it: the outfit's claim (asks on nights one, three, five and seven), the warehouse fire, Mickey's real book behind the locked door, the street deciding who he is, and someone worth being honest for. Rent of 18 pounds falls on Friday; on Sunday Sheila asks which it is to be (wind it down, take it over, refuse to say). The bar is 7 of 8 panel players recommending the week, M1 stays 5 of 8.
 - Standard: At least 7 of 8 panel players recommend the week, the one who does not naming no reason from the top punished list. M1 milestone stays 5 of 8. Test: H: the week run and the panel
 - Source: PANEL-BAR-2026-11-21.md (as 7.2) (reference game). Designed in: PANEL-BAR-2026-11-21; GAME-DESCRIPTION-COPY-2 §30; DESIGN §16; DEFINITIONS CLK-06
-- Status: measured. Coverage row: 7.3. Conflicts settled: C-128.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.3. Conflicts settled: C-128.
 
 ## 7.4 Acts II and III pacing
 
@@ -72,7 +72,7 @@ State-fired beats across seven weeks, then the inspection week.
 - How it works: One week number: Act II is about 5 game weeks under the ruled clock (version B, 60 s a game hour), and the fail-safe starts four game days before the end of that fifth week so the remaining climbs (one a game day) bring the sit-down by the week's end. Act III is always the calendar's last week, the seventh. Pass: no Act II runs past its fail-safe week, tested by a do-nothing Act II bot. RT-04's old wording 'by the end of the eighth game week' is replaced by this one.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock'; design pass 3 F13; RULINGS 21 Nov
-- Status: measured. Coverage row: FIT-F13. Conflicts settled: C-134, C-135.
+- Status: ruled (his ruling or canon). Coverage row: FIT-F13. Conflicts settled: C-134, C-135.
 
 ## 7.5 The hour budget
 
@@ -91,7 +91,7 @@ How play time is shared: on foot, driving, talk, jobs, fights and chases, the Le
 - How it works: Each act's hours count everything played in it: main beats, jobs, side stories, fares, happenings and free time. The main line is about 12 hours, about 25 side stories at about 12 minutes are about 5 hours (at least 22, at most 28), and the rest inside the acts' hours, so the whole lands at 15 to 20. Under his clock (CLK-06): Act I 1.9 to 2.8 hours, Act II 9.3 to 14, Act III 1.9 to 2.8; three bot playthroughs check the 15 to 20. A median panel playthrough must land at 15 to 20 hours with the library at 22 to 28 side stories of 10 to 14 minutes.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS F15, D-Q3; FIT-CHECK F15, question 3; RULINGS 28 Oct and 21 Nov (15 to 20 hours, side stories inside)
-- Status: measured. Coverage row: FIT-F15. Conflicts settled: C-138, C-139, C-140.
+- Status: ruled (his ruling or canon). Coverage row: FIT-F15. Conflicts settled: C-138, C-139, C-140.
 
 ### FIT-F16 Act hours against places and people
 
@@ -141,7 +141,7 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 - How it works: The game autosaves after every deed, every consequence and every change of a job step, holds the save during a fight and never refuses it, and saves on quit and when Tom sleeps. A reload at any moment gives the same next hour, and nothing about a person's memory is lost to a save, a load or skipped time. At least eight manual slots (picture, day, hour, place, rung in words) and three rotating autosaves; a save is written to a new file and swapped in once complete, so a power cut never loses the last good one.
 - Standard: ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Raised by Y8.2: see GV-05 (no blocking fault three nights running). Test: S: reload at random moments; SaveChaos
 - Source: DESIGN §17; D35, D58 (his ruling or canon). Designed in: DESIGN §17 (ER-SAVE-01); GAME-DESCRIPTION-COPY-2 §3, §35 (saving); DEFINITIONS AX-07; GTAVI-MAP Y8.2
-- Status: measured. Coverage row: 7.8.
+- Status: ruled (his ruling or canon). Coverage row: 7.8.
 
 ## 7.9 Failure without reload
 
@@ -165,7 +165,7 @@ No stats, no difficulty ladder: assists only (seeing assist, hints, aim of drivi
 - How it works: There is no difficulty ladder; the only difficulty is assists, each changing only its own thing and all off by default: the seeing outline, slower fights (wind-ups 25% longer, one man swinging at a time), driving help (steering eased on keys, stronger brakes), longer walks (a witness's walk 50% longer), hints again from the Ledger, and sound shown. With every assist on an impatient player still finishes the first hour. Aim-assist steps (off, light, strong) join once guns exist.
 - Standard: D11: difficulty only as assists Test: S: each assist changes only its own thing; H: an impatient player finishes the first hour with assists on; addendum rules ER-ASSIST-01 to 02
 - Source: D11; RULINGS What the game is (his ruling or canon). Designed in: DESIGN-ADDENDUM §A6 (ER-ASSIST-01, 02); GAME-DESCRIPTION-COPY-2 §3; DEFINITIONS AX-05; RULINGS 'What the game is'
-- Status: measured. Coverage row: 7.10.
+- Status: ruled (his ruling or canon). Coverage row: 7.10.
 
 ## 7.11 Waiting and time skips
 
@@ -215,7 +215,7 @@ How fast a game hour passes in real time.
 - How it works: A game hour is 60 real seconds, so a game day is 24 real minutes; no first-evening rate change. The value lives once in the tuning table and every system reads it. The 30 s Unreal clock (a 12 minute day) is not to be built. References run 48 (GTA V, RDR2), about 96 (KCD) and about 144 (GTA VI, unconfirmed) real minutes a day, so LEDGER's day is the shortest by his choice; the evening is 6 real minutes against GTA V's about 12. No file may still carry 45 s, 18 real minutes or 9 weeks (text search).
 - Standard: 60 real s a game hour, 24 real minutes a day, evening 6 real minutes (references 48 to 144 minutes a day, CLOUD-FIGURES C2); no file still says 45 s Test: S: one value in the tuning table, read by both
 - Source: CLOUD-FIGURES-2026-11-21.md C2 (his ruling or canon). Designed in: RULINGS 21 Nov; DEFINITIONS design pass 4 'The clock: version B taken', R2; CLOUD-FIGURES C2
-- Status: measured. Coverage row: 7.13. Conflicts settled: C-149.
+- Status: ruled (his ruling or canon). Coverage row: 7.13. Conflicts settled: C-149.
 
 ### RT-18 Pause and clock
 
@@ -236,49 +236,49 @@ How fast a game hour passes in real time.
 - How it works: The staged first hour's talk stops total 2.5 to 3.5 real minutes, so the hand-over at the landing falls between 22:00 and 01:00 on the clock (the landing's window). With about 2.5 real minutes stopped in talk, play minute 7:00 reads about 21:10 and 11:30 about 00:40; with 2 minutes the landing would read about 01:10. No first-evening rate change is built (version A's fix is withdrawn).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock' CLK-01; design pass 3 clock table CLK-01 (F07); FIT-CHECK F07
-- Status: measured. Coverage row: CLK-01. Conflicts settled: C-152.
+- Status: ruled (his ruling or canon). Coverage row: CLK-01. Conflicts settled: C-152.
 
 ### CLK-02 The hurry wrinkle in clock terms
 
 - How it works: The hurry wrinkle is given in clock terms 1.5 game hours ahead ('it's gone half eight' for the ten o'clock ferry), which is 90 real seconds, about one car crossing with spare. The old line 'the last ferry in four minutes' fits neither game nor real minutes.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-02; design pass 3 CLK-02 (F08); FIT-CHECK F08; COPY-2 s.12
-- Status: measured. Coverage row: CLK-02. Conflicts settled: C-153.
+- Status: ruled (his ruling or canon). Coverage row: CLK-02. Conflicts settled: C-153.
 
 ### CLK-03 Routines against walking
 
 - How it works: Each person's places lie within about 200 m of walking (about 125 real seconds, 2 game hours); longer moves are a few blocks of several game hours.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-03; design pass 3 CLK-03 (F09)
-- Status: measured. Coverage row: CLK-03. Conflicts settled: C-154.
+- Status: ruled (his ruling or canon). Coverage row: CLK-03. Conflicts settled: C-154.
 
 ### CLK-04 Job windows against the walk to them
 
 - How it works: Job windows are at least 2 game hours (2 real minutes) and every timed step is known at least 5 game hours (5 real minutes, one walking crossing) before it opens; 'wait until' is offered for all. A lint over the job library checks it.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-04 and the clock standard (2); design pass 3 CLK-04 (F10); G1 (crossing 4.9 min)
-- Status: measured. Coverage row: CLK-04. Conflicts settled: C-155.
+- Status: ruled (his ruling or canon). Coverage row: CLK-04. Conflicts settled: C-155.
 
 ### CLK-05 The evening and the shop day
 
 - How it works: The evening (18:00 to 24:00) is 6 real minutes, the shop day (09:00 to 17:30) 8.5 minutes, and dark about 14 of the 24 real minutes of a day. GTA V's evening is about 12 real minutes and KCD's about 24; the player will feel the evening most, and CLK-04's windows are set so nothing is missed for it.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-05; design pass 3 CLK-05 (F11); CLOUD-FIGURES C2
-- Status: measured. Coverage row: CLK-05. Conflicts settled: C-156.
+- Status: ruled (his ruling or canon). Coverage row: CLK-05. Conflicts settled: C-156.
 
 ### CLK-06 Calendar and acts
 
 - How it works: The calendar is 7 game weeks from Monday 15 October to about 2 December 1990: Act I one week (1.9 to 2.8 running hours), Act II five weeks (9.3 to 14), Act III one week (1.9 to 2.8); Act II's fail-safe starts four game days before the end of its fifth week. Bonfire Night and Remembrance Sunday stay inside week 4. The running total is 13 to 20 hours against his 15 to 20, so the low end may fall short; three bot playthroughs decide, and if the median is short the fix is fewer nights skipped by default, never a longer calendar.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-06 and F13; design pass 3 CLK-06 (F13, F14); RULINGS 21 Nov
-- Status: measured. Coverage row: CLK-06. Conflicts settled: C-157, C-158.
+- Status: ruled (his ruling or canon). Coverage row: CLK-06. Conflicts settled: C-157, C-158.
 
 ### CLK-07 Weekly rhythms (rent, cooling, rival rungs)
 
 - How it works: Weekly rhythms hold in game days: rent of 18 pounds each Friday, two quiet game weeks to cool the dial and Ellis one step, a rival rung a week, talk cooling over 1 to 7 game days (24 real minutes to 2.8 real hours). Act II's five weeks hold two dial falls and every rival's four climbs; rival climbs fire on states, not weeks.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-07; design pass 3 CLK-07 and RT2-07; FIT-CHECK F26
-- Status: measured. Coverage row: CLK-07. Conflicts settled: C-159.
+- Status: ruled (his ruling or canon). Coverage row: CLK-07. Conflicts settled: C-159.
 
 ## 7.14 Variety
 
@@ -302,14 +302,14 @@ What happens when the story ends: the close, credits, and whether play continues
 - How it works: When the story ends, a short close in the town (who is where, who calls him what) plays, then the credits, then play returns in the town at the ending's state within 10 s, or the player can quit to the title. No new main beats, no new game plus; the Ledger's last page says so. The clock runs on, side stories stay open, fares, happenings, rent and the dial run as before, and rivals stay where they were.
 - Standard: Optional presentation after the ending (ruling 23 Sep floor) Test: S: the close plays, credits roll, the player returns to a stated place; addendum rules ER-AFTER-01
 - Source: ruling 23 Sep (his ruling or canon). Designed in: DESIGN-ADDENDUM §A7 (ER-AFTER-01); GAME-DESCRIPTION-COPY-2 §33; DEFINITIONS RT2-21; RULINGS 23 Sep
-- Status: measured. Coverage row: 7.15.
+- Status: ruled (his ruling or canon). Coverage row: 7.15.
 
 ### GD-04 A second playthrough: what differs
 
 - How it works: A replay that answers differently meets named differences: Sunday's three answers, the arrangement kept or ended (rivals a rung sooner), which rival notices first, the five debtors each paid another way, the fronts and men chosen, and the endings (three, each with a better and a plainer turn). Pass: a replay with a different Sunday answer and a different first rival meets at least eight named differences in its first five hours. For comparison KCD2 has one main ending, 8 epilogue decisions and 3 later paths, and RDR2 2 endings with 4 variants by honour.
 - Standard: A replay with a different Sunday answer and a different first rival meets at least eight named differences a player can point to in its first five hours. The figure is judgement until checked against KCD2's and RDR2's published branch counts. Test: Two bot playthroughs with opposite choices; a fresh reviewer lists the differences from both logs.
 - Source: CLOUD-FIGURES-2026-11-21.md C4: KCD2 one ending, 8 epilogue decisions and 3 later paths (Gamepressure, PC Gamer 2025); RDR2 2 endings, 4 with honour (rdr2.org 2023, SegmentNext 2024); LEDGER's eight differences in five hours asks more than either (reference game). Designed in: DEFINITIONS GD-04; CLOUD-FIGURES C4; GAME-DESCRIPTION-COPY-2 §37, §33
-- Status: measured. Coverage row: GD-04. Conflicts settled: C-162.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: GD-04. Conflicts settled: C-162.
 
 ### RT2-21 After the ending and past nine weeks (seven under the ruled clock)
 
