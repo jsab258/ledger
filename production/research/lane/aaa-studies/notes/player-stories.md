@@ -2,6 +2,8 @@
 
 Read 23 Nov 2026. Lane: aaa-studies. British spelling.
 
+**Recoded 23 Nov 2026 after the study's review:** rows 9, 10 and 14 (scheduled hangings with no deed of the player's) and row 39 (the briefcase homes in on a target; nothing reacts later) set to came back N; some summaries reworded for the house rules. The counts tables below are recomputed by script from the rows.
+
 **Sampling warning.** These are stories people chose to post or that writers chose to quote, often in threads asking for the most memorable, so they skew to extremes (very funny, very sad, very odd). Several come second-hand through news articles that quote a Reddit post; Reddit itself was not directly reachable, so the posts are read at one remove. Many pages gave one to a dozen stories, not a random sample. Nothing here estimates how often such moments happen.
 
 **Target missed.** 80+ stories overall was met (see counts). 15 per game was met only for RDR2 and Mordor. KCD2, Hitman and GTA V are short. GTA VI has no stories, by design.
@@ -45,7 +47,7 @@ Source 12 was unused. Pages that gave no usable text: Reddit itself (not in resu
 
 ## Coded stories
 
-Systems vocabulary used: NPC memory/recognition; witnesses/law response; physics/ragdoll; animals/wildlife; NPC routine; random encounter; companion/AI ally; disguise/stealth; reputation/honour; combat AI; vehicle/driving; weather/time; dialogue choice; nemesis/recurring enemy; economy/theft. S = scripted; E = emergent; 'S (choice altered)' = scripted moment the player's choice changed. 'Named' means a named individual (an orc title counts). 'Back' means the world reacted later. Summaries are in my own words.
+Systems vocabulary used: NPC memory/recognition; witnesses/law response; physics/ragdoll; animals/wildlife; NPC routine; random encounter; companion/AI ally; disguise/stealth; reputation/honour; combat AI; vehicle/driving; weather/time; dialogue choice; nemesis/recurring enemy; economy/theft. S = scripted; E = emergent; 'S (choice altered)' = scripted moment the player's choice changed. 'Named' means a named individual (an orc title counts). 'Back' means the world reacted later. Summaries are in the helper's own words.
 
 | # | Game | Summary | S/E | Systems | Named | Back | Tone | Src | Date |
 |---|---|---|---|---|---|---|---|---|---|
@@ -57,29 +59,29 @@ Systems vocabulary used: NPC memory/recognition; witnesses/law response; physics
 | 6 | RDR2 | Skipped petting a dog in a hurry and felt guilty | E | animals/wildlife | N | N | funny | 2 | 4 Nov 2022 |
 | 7 | RDR2 | Took a Night Folk NPC to Saint Denis; he tried to run instead of fighting | E | NPC routine; companion/AI ally | N | N | funny | 2 | 4 Nov 2022 |
 | 8 | RDR2 | First visit to Valentine: public hanging; player tried and failed to save the man | E | NPC routine; witnesses/law response | N | N | sad | 3 | 16 Oct 2023 |
-| 9 | RDR2 | Man already jailed on arrival was hanged days later with his wife crying | E | NPC routine; witnesses/law response | N | Y | sad | 3 | 17 Oct 2023 |
-| 10 | RDR2 | Saloon worker hanged later, tied to her own side task, only at certain hours | E | NPC routine; random encounter | N | Y | sad | 3 | 17 Oct 2023 |
+| 9 | RDR2 | Man already jailed on arrival was hanged days later | E | NPC routine; witnesses/law response | N | N | sad | 3 | 17 Oct 2023 |
+| 10 | RDR2 | A woman met in a side task was hanged later, only at certain hours | E | NPC routine; random encounter | N | N | sad | 3 | 17 Oct 2023 |
 | 11 | RDR2 | Hotel cash-theft side task appeared only after six playthroughs; player shot the target and fled | E | random encounter; witnesses/law response | N | N | funny | 3 | 17 Oct 2023 |
 | 12 | RDR2 | Mounted lawmen outside Saint Denis ordered player away; comply or fight | E | witnesses/law response; random encounter | N | N | tense | 3 | 17 Oct 2023 |
 | 13 | RDR2 | Leaving Saint Denis, raiders with a mounted gun ambushed and killed the player | E | random encounter; combat AI | N | N | funny | 3 | 18 Oct 2023 |
-| 14 | RDR2 | Hanging seen repeatedly across 1,400 hours of play | E | NPC routine | N | Y | sad | 3 | 17 Oct 2023 |
+| 14 | RDR2 | Hanging seen repeatedly across 1,400 hours of play | E | NPC routine | N | N | sad | 3 | 17 Oct 2023 |
 | 15 | RDR2 | Refused Mary's later request for help after being rejected by her | S (choice altered) | dialogue choice; reputation/honour | Y | Y | sad | 4 | 13 Nov 2024 |
 | 16 | RDR2 | Turned down Sadie's request about two brothers | S (choice altered) | dialogue choice | Y | N | tense | 4 | 13 Nov 2024 |
 | 17 | RDR2 | Stopped to free a man from a bear trap, then dealt with a kidnapper | E | random encounter; reputation/honour | N | N | triumphant | 4 | 13 Nov 2024 |
 | 18 | RDR2 | Stranger picked a fight with player; a second stranger stabbed him from behind and walked off | E | random encounter; NPC routine | N | N | funny | 5 | 22 Feb 2020 |
-| 19 | RDR2 | Drunk in saloon tried to smoke his bottle; player then shot the room | E | NPC routine | N | N | funny | 6 | read 23 Nov 2026 (undated) |
+| 19 | RDR2 | A man in a bar did something absurd with what he held; player then shot the room | E | NPC routine | N | N | funny | 6 | read 23 Nov 2026 (undated) |
 | 20 | RDR2 | Player dismounted just before a ride cutscene and had to wade through snow after the gang | S (choice altered) | companion/AI ally; weather/time | Y | N | funny | 7 | 2 Dec 2018 |
 | 21 | RDR2 | Small dog jumped onto a carriage as its owner set off, seen after 1,500 hours | E | animals/wildlife; NPC routine | N | N | triumphant | 8 | 2 Jun 2023 |
 | 22 | RDR2 | Epilogue: John takes his old guns and Arthur's hat from a chest | S | dialogue choice | N | N | sad | 9 | undated, read 23 Nov 2026 |
 | 23 | RDR2 | Final ride to the mountain moved a player more than any game | S | weather/time | N | N | sad | 10 | 5 Oct 2023 |
 | 24 | RDR2 | Horse shot and Arthur says thanks to it; commenter cried | S | animals/wildlife | N | N | sad | 10 | 5 Oct 2023 |
-| 25 | KCD2 | Player killed a carpenter's family to rob them, then the widow recognised the stolen gear and reported him | E | NPC memory/recognition; witnesses/law response | N | Y | funny | 13 | 7 Feb 2025 |
+| 25 | KCD2 | Player killed the carpenter to rob the house, then the widow recognised the stolen gear and reported him | E | NPC memory/recognition; witnesses/law response | N | Y | funny | 13 | 7 Feb 2025 |
 | 26 | KCD2 | Refused a musical instrument, player stole it; vendor tied the theft to the earlier chat | E | NPC memory/recognition; dialogue choice | N | Y | funny | 14 | 10 Feb 2025 |
-| 27 | KCD2 | Arrested three days after a horse theft; only a stable girl saw him flee | E | witnesses/law response; economy/theft | N | Y | tense | 14 | 10 Feb 2025 |
+| 27 | KCD2 | Arrested three days after a horse theft; only a stable hand saw him flee | E | witnesses/law response; economy/theft | N | Y | tense | 14 | 10 Feb 2025 |
 | 28 | KCD2 | Robbed sleeping bath attendants at 3am; guards later named him for the attack | E | witnesses/law response; NPC memory/recognition | N | Y | funny | 14 | 10 Feb 2025 |
 | 29 | KCD2 | Spotted wearing clothes taken during a quest; town now treats him as a thief | E | NPC memory/recognition; reputation/honour | N | Y | tense | 17 | undated, read 23 Nov 2026 |
 | 30 | KCD2 | Hid indoors when the owner noticed an open door while he was stealing | E | witnesses/law response; disguise/stealth | N | N | tense | 17 | undated, read 23 Nov 2026 |
-| 31 | KCD2 | Followed a dice player to rob him and watched him walk out of town because he had no home | E | NPC routine; economy/theft | N | N | sad | 16 | 22 May 2025 |
+| 31 | KCD2 | Followed a man he meant to rob and watched him walk out of town because he had no home | E | NPC routine; economy/theft | N | N | sad | 16 | 22 May 2025 |
 | 32 | KCD2 | Crowd of NPCs seen leaving the city at night, thought to be a bug | E | NPC routine | N | N | funny | 16 | 22 May 2025 |
 | 33 | KCD2 | Accidentally took an apple and ended with Kuttenberg guards and civilians dead | E | witnesses/law response; combat AI | N | Y | funny | 15 | 14 Mar 2025 |
 | 34 | KCD2 | Slaughtered a fortress garrison after being spotted while rescuing Hans; made leaving easy | E | combat AI; disguise/stealth | Y | N | triumphant | 15 | 14 Mar 2025 |
@@ -87,7 +89,7 @@ Systems vocabulary used: NPC memory/recognition; witnesses/law response; physics
 | 36 | KCD2 | Whistling counted as a crime and escalated into chaos | E | witnesses/law response | N | N | funny | 11 | undated, read 23 Nov 2026 |
 | 37 | KCD2 | Stole a shirt, wore it before its owner; villagers died in the aftermath | E | NPC memory/recognition; witnesses/law response | N | Y | funny | 11 | undated, read 23 Nov 2026 |
 | 38 | Hitman | Disguised 47 walked past a suspicious guard, threw a scalpel then missed him with a shot | E | disguise/stealth; combat AI | N | N | funny | 18 | 4 Jun 2024 |
-| 39 | Hitman | Thrown briefcase curved slowly and homed back on the thrower | E | physics/ragdoll | N | Y | funny | 19 | 13 Nov 2018 |
+| 39 | Hitman | Thrown briefcase curved slowly and homed in on a target | E | physics/ragdoll | N | N | funny | 19 | 13 Nov 2018 |
 | 40 | Hitman | Thrown items drifted in a slow arc, clip widely shared | E | physics/ragdoll | N | N | funny | 19 | 13 Nov 2018 |
 | 41 | Hitman | Guards stepped on rakes and knocked themselves out; viewers argued why | E | NPC routine; physics/ragdoll | N | N | funny | 20 | undated, read 23 Nov 2026 |
 | 42 | Hitman | Drowned a target in a toilet, then ran the tap so staff would find the body | E | NPC routine; witnesses/law response | Y | Y | funny | 21 | 28 Nov 2022 |
@@ -130,11 +132,15 @@ Systems vocabulary used: NPC memory/recognition; witnesses/law response; physics
 | 79 | Mordor | Ran from a captain early; he reappeared in a later fight as the nemesis | E | nemesis/recurring enemy | N | Y | funny | 29 | 28 Apr 2016 |
 | 80 | Mordor | Killed three nemeses in a row; each death gave a new one | E | nemesis/recurring enemy | N | Y | triumphant | 29 | 29 Apr 2016 |
 | 81 | Mordor | A nemesis took ages to remove until the player beheaded him | E | nemesis/recurring enemy | N | Y | triumphant | 29 | 1 May 2016 |
-| 82 | Mordor | Captain beat the player in a brawl, rose by his deaths, was finally trapped with bees and caragors | E | nemesis/recurring enemy | Y | Y | triumphant | 30 | undated, read 23 Nov 2026 |
+| 82 | Mordor | Captain beat the player in a brawl, rose by his deaths, finally beaten after bees and caragors split his allies | E | nemesis/recurring enemy | Y | Y | triumphant | 30 | undated, read 23 Nov 2026 |
 
 GTA VI: no story rows. Systems only, from two secondary reports (32, 33), unverified: a pursuit starts when an NPC or camera sees a crime; police are said to recall face, car and outfit; a six-star wanted system with a hidden 'criminal profile' weighing crimes; talk-down dialogue options; wildlife; stolen-car security tools. No story, character or mission content was read or recorded.
 
 ## Counts
+
+**Recomputed after the recoding (these supersede the original tables below):** RDR2 24 stories, 5 named, 2 came back, 8 funny; KCD2 13, 1, 7, 8; Hitman 11, 1, 2, 9; GTA V 13, 1, 0, 10; Mordor 21, 9, 10, 13; all 82, 17 named, 21 came back, 48 funny; named and came back together 7 (rows 2, 15, 42, 68, 73, 74, 82). Came back by system: witnesses/law 7 of 21, nemesis 10 of 21, NPC routine 1 of 14, random encounter 0 of 9, physics 0 of 8, NPC memory/recognition 5 of 5, dialogue choice 3 of 5, reputation 3 of 4; others unchanged.
+
+Original tables (before recoding):
 
 | Game | Stories | Emergent (E) | Scripted, choice altered / scripted | Named person | Came back | Funny |
 |---|---|---|---|---|---|---|
@@ -183,7 +189,7 @@ Systems among the stories that came back (25): nemesis/recurring enemy 10, witne
 Counts are from the table above (82 stories; skewed sample, so read as direction, not size).
 
 - **Two systems carry the stories that came back.** Nemesis/recurring enemy (Mordor, 21 stories, 10 came back) and witnesses/law response with NPC recognition (mostly KCD2, 21 and 5 stories, 8 and 5 came back). Between them they account for most of the 25 "came back" stories. Every NPC memory/recognition story came back, by definition: a person remembered a face, a coat or a talk.
-- **Named people come almost only from the nemesis system.** 9 of the 17 named-person stories are Mordor, where the game hands the orc a name and a trait. Outside Mordor only 8 of 61 stories name anyone, and several of those are scripted characters or a game target. In KCD2 the witnesses were mostly "a stable girl", "the widow", "the guards": present and decisive, but unnamed in the retelling.
+- **Named people come almost only from the nemesis system.** 9 of the 17 named-person stories are Mordor, where the game hands the orc a name and a trait. Outside Mordor only 8 of 61 stories name anyone, and several of those are scripted characters or a game target. In KCD2 the witnesses were mostly "a stable hand", "the widow", "the guards": present and decisive, but unnamed in the retelling.
 - **Plan meets person is mostly the KCD2 shape.** A player does a crime, a nobody sees a small thing (stolen gear on a body, a chat before the theft, a glimpse of someone fleeing), and the consequence lands days or a visit later. These are retold as funny or tense, and the teller blames or admires the person, not the system.
 - **Funny dominates (59% pooled).** Physics and vehicle stories (GTA V, Hitman) are funny, 77% and 82% by game, but almost none came back: physics/ragdoll 8 stories, 1 came back; vehicle/driving 5, none. They are good for a clip, weak for a story that returns.
 - **RDR2's stories are different.** Fewer came back (5 of 24) and the sad ones are mostly scripted or semi-scripted moments (the last ride, the horse, the hangings). Its emergent stories are random encounters and routines with strangers, retold once and not revisited. Scripted moments the player altered by choice (Mary, Sadie, Charlotte) did come back.
@@ -193,7 +199,7 @@ Counts are from the table above (82 stories; skewed sample, so read as direction
 
 ## Not reached
 
-- GTA VI: no player stories (SYSTEMS ONLY; none read, none written). Systems come from two secondary reports whose accuracy I could not check.
+- GTA VI: no player stories (SYSTEMS ONLY; none read, none written). Systems come from two secondary reports whose accuracy could not be checked.
 - Reddit threads directly, ResetEra, GameFAQs, GTAForums: not fetched (not returned by search or fetch failed). Most Reddit stories arrive through articles that quote them.
 - Steam KCD2 discussion threads: pages loaded as empty shells.
 - KCD2 (13), Hitman (11) and GTA V (13) are under 15 each. Hitman and GTA V need Reddit and video-description sources to fill.
