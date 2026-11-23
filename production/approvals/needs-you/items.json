@@ -1,147 +1,223 @@
 {
-  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
-  "items": [
+ "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
+ "items": [
+  {
+   "id": "adopt-order-2026-11-23",
+   "tag": "DECISION",
+   "kind": "scope",
+   "title": "Adopt the order of 23 November (runs to Mon 30 Nov 13:00)",
+   "text": "Adopt next week's order: every measurement the blueprint needs by Fri 27 Nov, in installed games first, then footage; a normal week, line 0 to 90%.",
+   "why": [
+    "Last week's order ends today at 13:00; work from 13:00 follows the adopted order.",
+    "Built by the advisor from the running list on 22 Nov; his later rows of that evening (installed games, GTA V, the budget table, the audit) are folded in at its end."
+   ],
+   "links": [
     {
-      "id": "adopt-order-2026-11-23",
-      "tag": "DECISION",
-      "kind": "scope",
-      "title": "Adopt the order of 23 November (runs to Mon 30 Nov 13:00)",
-      "text": "Adopt next week's order: every measurement the blueprint needs by Fri 27 Nov, in installed games first, then footage; a normal week, line 0 to 90%.",
-      "why": [
-        "Last week's order ends today at 13:00; work from 13:00 follows the adopted order.",
-        "Built by the advisor from the running list on 22 Nov; his later rows of that evening (installed games, GTA V, the budget table, the audit) are folded in at its end."
-      ],
-      "links": [
-        {
-          "label": "This page",
-          "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-        }
-      ],
-      "recommendation": "Yes: it puts the whole week on the measurements, so the design can close by Friday.",
-      "options": [
-        [
-          "yes",
-          "Yes, adopt it (recommended)"
-        ],
-        [
-          "monday",
-          "Decide on Monday"
-        ]
-      ],
-      "state": "done",
-      "added": "2026-11-23 07:09",
-      "detail": [
-        "Runs from your tap to Mon 30 Nov 13:00. A normal week: the line runs 0 to 90% to Mon 30 Nov 07:00; the advisor's cloud work takes about half, the PC about half.",
-        "The purpose: every measurement the design needs, done by Fri 27 Nov, so the design can close and the one-shot can start (plan date the Mon 7 Dec reset).",
-        "The PC's items: the measuring block, code reading what code can and the cheapest agreeing model labelling frames on the API credit, installed games first, then footage (60 h); our own build filmed and the cheap-reader trial, Monday 13:00 (3 h); live talk's delay and cost against the 2 s bar (8 h); the monthly voice-model scan (3 h); the recipe rewrite (3 h); the weekly audit, judgement first (3 h); efficiency and safety (6 h).",
-        "Also from Sunday evening's rows: the size table from inZOI's and Silent Hill 2's files before you uninstall them; GTA V measured and torn down once you install it; a small hidden-details catalogue.",
-        "Waiting until after the prototype: Kiln and the garments, then the Unreal street work."
-      ],
-      "closed": "2026-11-23 13:29, adopted by his tap, 08:12 23 Nov"
-    },
-    {
-      "id": "prototype-thirty-minutes-2026-11-21",
-      "added": "2026-11-21 10:51",
-      "tag": "REVIEW",
-      "kind": "person-look",
-      "title": "Play the current prototype for 30 minutes, any evening before Fri 27 Nov",
-      "text": "Play the browser prototype for about 30 minutes, then tap how it felt below and add a line on what bored or pleased you.",
-      "why": [
-        "Your verdict calibrates the AI judges: the panel and the player types judge the same build, and their scores count only where they agree with yours.",
-        "One of the seven preparation items before the one-shot (your ruling of 10:42)."
-      ],
-      "links": [
-        {
-          "label": "The prototype",
-          "url": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A"
-        },
-        {
-          "label": "This page",
-          "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-        }
-      ],
-      "blocks": "calibrating the AI judges before the one-shot",
-      "recommendation": "Any evening this week; play as you would a new game, no need to finish anything.",
-      "options": [
-        [
-          "good",
-          "Worth playing on (recommended if it held you)"
-        ],
-        [
-          "mixed",
-          "Some of it held me"
-        ],
-        [
-          "poor",
-          "It did not hold me"
-        ]
-      ],
-      "state": "done",
-      "closed": "2026-11-21 21:58, withdrawn by his ruling 21 Nov 21:43 (advisor 298): he plays only after the one-shot, perhaps after a few loops"
-    },
-    {
-      "id": "uninstall-three-games-2026-11-23",
-      "added": "2026-11-23 13:58",
-      "tag": "ACTION",
-      "his_hands": true,
-      "only_you": "his-setting",
-      "tried": "Sessions never uninstall your programs; their numbers are now recorded.",
-      "title": "You can uninstall inZOI, Silent Hill 2 and Mafia: The Old Country",
-      "text": "Their numbers are saved: Silent Hill 2's settings and both games' sizes in today's table; their earlier studies stay on drive F.",
-      "why": [
-        "inZOI and Silent Hill 2 free about 72 GB on C:, room toward RDR2 (about 120 GB).",
-        "Mafia: The Old Country is no longer needed for anything."
-      ],
-      "steps": [
-        "Uninstall them the way you installed them, whenever suits you",
-        "Tap Done below"
-      ],
-      "links": [
-        {
-          "label": "This page",
-          "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-        }
-      ],
-      "blocks": "nothing; only disk room for the next game",
-      "recommendation": "Uninstall all three when convenient.",
-      "options": [
-        [
-          "done",
-          "Done (recommended)"
-        ],
-        [
-          "no",
-          "Not now"
-        ]
-      ],
-      "state": "open"
-    },
-    {
-      "id": "audit-2026-11-23",
-      "added": "2026-11-23 14:10",
-      "tag": "REVIEW",
-      "title": "Last week in short: the Monday audit",
-      "text": "A double week that used 99% and about US$2,340 at list price, and closed none of the order's 11 items (your rulings parked eight of them).",
-      "why": [
-        "Biggest waste: the Kiln helpers, at least US$1,165 on 17 to 19 Nov.",
-        "Biggest risk: the measuring finishing by Fri 27 Nov; tonight's reprice decides."
-      ],
-      "steps": [],
-      "links": [
-        {
-          "label": "This page",
-          "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
-        }
-      ],
-      "detail": [
-        "Verdicts: progress bad (Kiln ended 0 of 6, now paused); speed bad (7.5 measuring hours gave one reviewed solid number); quality bad (the night walk failed three nights on the tester's own tools; last night 14 of 15 stages); your time watch (about two to four of 20 asks were not yours); efficiency bad.",
-        "Recommendations, ranked: (1) prove the code measurers and the cheap frame reader today and reprice the measuring with the installed games, judged Friday by rows done; (2) read frames on the monthly API credit so none expires unused (about US$197 left, ending about 11 Dec, assumed), judged next Monday; (3) count the approvals you are asked for each day, judged against today's twelve.",
-        "If tonight's reprice shows Fri 27 Nov out of reach at your five-sample rule, one question comes to you on Tuesday with a recommendation.",
-        "A fresh reviewer challenged the audit; its disagreements and how each was settled are in the audit itself."
-      ],
-      "recommendation": "Nothing to decide today.",
-      "options": [],
-      "state": "open"
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
-  ]
+   ],
+   "recommendation": "Yes: it puts the whole week on the measurements, so the design can close by Friday.",
+   "options": [
+    [
+     "yes",
+     "Yes, adopt it (recommended)"
+    ],
+    [
+     "monday",
+     "Decide on Monday"
+    ]
+   ],
+   "state": "done",
+   "added": "2026-11-23 07:09",
+   "detail": [
+    "Runs from your tap to Mon 30 Nov 13:00. A normal week: the line runs 0 to 90% to Mon 30 Nov 07:00; the advisor's cloud work takes about half, the PC about half.",
+    "The purpose: every measurement the design needs, done by Fri 27 Nov, so the design can close and the one-shot can start (plan date the Mon 7 Dec reset).",
+    "The PC's items: the measuring block, code reading what code can and the cheapest agreeing model labelling frames on the API credit, installed games first, then footage (60 h); our own build filmed and the cheap-reader trial, Monday 13:00 (3 h); live talk's delay and cost against the 2 s bar (8 h); the monthly voice-model scan (3 h); the recipe rewrite (3 h); the weekly audit, judgement first (3 h); efficiency and safety (6 h).",
+    "Also from Sunday evening's rows: the size table from inZOI's and Silent Hill 2's files before you uninstall them; GTA V measured and torn down once you install it; a small hidden-details catalogue.",
+    "Waiting until after the prototype: Kiln and the garments, then the Unreal street work."
+   ],
+   "closed": "2026-11-23 13:29, adopted by his tap, 08:12 23 Nov"
+  },
+  {
+   "id": "prototype-thirty-minutes-2026-11-21",
+   "added": "2026-11-21 10:51",
+   "tag": "REVIEW",
+   "kind": "person-look",
+   "title": "Play the current prototype for 30 minutes, any evening before Fri 27 Nov",
+   "text": "Play the browser prototype for about 30 minutes, then tap how it felt below and add a line on what bored or pleased you.",
+   "why": [
+    "Your verdict calibrates the AI judges: the panel and the player types judge the same build, and their scores count only where they agree with yours.",
+    "One of the seven preparation items before the one-shot (your ruling of 10:42)."
+   ],
+   "links": [
+    {
+     "label": "The prototype",
+     "url": "https://claude.ai/artifact/XYNhFAFNxTtNQN9yYjYh3A"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "calibrating the AI judges before the one-shot",
+   "recommendation": "Any evening this week; play as you would a new game, no need to finish anything.",
+   "options": [
+    [
+     "good",
+     "Worth playing on (recommended if it held you)"
+    ],
+    [
+     "mixed",
+     "Some of it held me"
+    ],
+    [
+     "poor",
+     "It did not hold me"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-21 21:58, withdrawn by his ruling 21 Nov 21:43 (advisor 298): he plays only after the one-shot, perhaps after a few loops"
+  },
+  {
+   "id": "uninstall-three-games-2026-11-23",
+   "added": "2026-11-23 13:58",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Sessions never uninstall your programs; their numbers are now recorded.",
+   "title": "You can uninstall inZOI, Silent Hill 2 and Mafia: The Old Country",
+   "text": "Their numbers are saved: Silent Hill 2's settings and both games' sizes in today's table; their earlier studies stay on drive F.",
+   "why": [
+    "inZOI and Silent Hill 2 free about 72 GB on C:, room toward RDR2 (about 120 GB).",
+    "Mafia: The Old Country is no longer needed for anything."
+   ],
+   "steps": [
+    "Uninstall them the way you installed them, whenever suits you",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "nothing; only disk room for the next game",
+   "recommendation": "Uninstall all three when convenient.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-23 15:23, His tap 14:40 and his words 14:39: Mafia, inZOI and Silent Hill 2 are uninstalled"
+  },
+  {
+   "id": "audit-2026-11-23",
+   "added": "2026-11-23 14:10",
+   "tag": "REVIEW",
+   "title": "Last week in short: the Monday audit",
+   "text": "A double week that used 99% and about US$2,340 at list price, and closed none of the order's 11 items (your rulings parked eight of them).",
+   "why": [
+    "Biggest waste: the Kiln helpers, at least US$1,165 on 17 to 19 Nov.",
+    "Biggest risk: the measuring finishing by Fri 27 Nov; tonight's reprice decides."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "detail": [
+    "Verdicts: progress bad (Kiln ended 0 of 6, now paused); speed bad (7.5 measuring hours gave one reviewed solid number); quality bad (the night walk failed three nights on the tester's own tools; last night 14 of 15 stages); your time watch (about two to four of 20 asks were not yours); efficiency bad.",
+    "Recommendations, ranked: (1) prove the code measurers and the cheap frame reader today and reprice the measuring with the installed games, judged Friday by rows done; (2) read frames on the monthly API credit so none expires unused (about US$197 left, ending about 11 Dec, assumed), judged next Monday; (3) count the approvals you are asked for each day, judged against today's twelve.",
+    "If tonight's reprice shows Fri 27 Nov out of reach at your five-sample rule, one question comes to you on Tuesday with a recommendation.",
+    "A fresh reviewer challenged the audit; its disagreements and how each was settled are in the audit itself."
+   ],
+   "recommendation": "Nothing to decide today.",
+   "options": [],
+   "state": "open"
+  },
+  {
+   "id": "store-copies-for-measuring-2026-11-23",
+   "added": "2026-11-23 15:26",
+   "tag": "DECISION",
+   "kind": "hands",
+   "title": "Install GTA V and RDR2 from your store account for measuring?",
+   "text": "GTA V, GTA IV and KCD2 in C:/Games load unsigned files in place of the publishers' own (the launcher and sign-in files), so the session will not run them. Sleeping Dogs (GOG) is clean and is measured now.",
+   "why": [
+    "GTA V, GTA IV and KCD2 in C:/Games carry replaced, unsigned launcher files; the session will not run replaced program files of unknown origin.",
+    "Copies from Steam, Rockstar, Epic or GOG carry the publishers' signed files; Sleeping Dogs (GOG) is clean and is measured now."
+   ],
+   "steps": [
+    "If you own them on a store: install GTA V (and RDR2) from that store's own app, onto C:/Games",
+    "Tap your answer below"
+   ],
+   "links": [
+    {
+     "label": "Steam",
+     "url": "https://store.steampowered.com/"
+    },
+    {
+     "label": "Rockstar Games Launcher",
+     "url": "https://www.rockstargames.com/downloads"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "GTA V's and RDR2's drills (n23-1); footage covers them meanwhile",
+   "recommendation": "Install GTA V and RDR2 from your store account; until then Sleeping Dogs and footage carry the measuring.",
+   "options": [
+    [
+     "store",
+     "I will install from my store account (recommended)"
+    ],
+    [
+     "footage",
+     "Keep GTA V and RDR2 on footage only"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "scripted-keys-in-games-2026-11-23",
+   "added": "2026-11-23 15:40",
+   "tag": "DECISION",
+   "kind": "hands",
+   "title": "May the session send scripted keys to Sleeping Dogs to measure it?",
+   "text": "Five identical runs a number (walk, run, a car from standstill, one punch), the screen recorded; only after you have been away 10 minutes; it stops the moment you touch the mouse or keyboard.",
+   "why": [
+    "Your 29 Oct ruling allows sending keys only to Marvelous unless you say yes here.",
+    "Nothing is changed in the game: no mods, no downloads, only keys from outside and a screen recording."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the installed-game drills (n23-1); footage carries the measuring meanwhile",
+   "recommendation": "Yes, for Sleeping Dogs and any game later installed from your own store account.",
+   "options": [
+    [
+     "yes",
+     "Yes, Sleeping Dogs and store copies (recommended)"
+    ],
+    [
+     "no",
+     "No, footage only"
+    ]
+   ],
+   "state": "open"
+  }
+ ]
 }

@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-23 13:07 (the hourly run)
+**Started:** 2026-11-23 15:22 (the hourly run)
 
 **Row due:** at the next start (last row 14:50; page read 14:40: no verdicts; filter verdicts after 2026-11-23T13:40 UTC, advisor after 2026-11-23T14:20:00+01:00; last ack 327).
 **Uncommitted:** nothing beyond what the Stopped line names.

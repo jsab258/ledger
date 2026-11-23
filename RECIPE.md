@@ -185,4 +185,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - 2026-11-22, footage durations: spells at 30 s, edges at 1 s, endings in full frames (menus and cameras fake edges); five per level. Cost 1.7 h. Evidence: measurements/g5-heat-samples-m_2RP-2026-11-22.md.
 - 2026-11-22: a spell lit at a clip's end never counts.
 - 2026-11-23, shipped budgets: the pack tool pulls settings files; own presets first, base files decode levels; encrypted packs give sizes only; a 'frame time' key was a hitch threshold. 1 h. Evidence: games-numbers/BUDGET-TABLE-2026-11-23.md.
-- 2026-11-23, model frame readers: three models on 1,710 timed cells; the strong model misread lit stars; count by code, check by eye; thinking can empty a short allowance. US$3.83. Evidence: measurements/STATUS.md.
+- 2026-11-23, HUD icons from video: models misread them (1,710 cells, US$3.83); blob search takes scenery and digits; fixed slots plus one template per slot work (47 of 49). 1.2 h. Evidence: measurements/STATUS.md.

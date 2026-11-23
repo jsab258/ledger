@@ -1094,3 +1094,7 @@
 {"event": "stop", "at": "2026-11-22T04:12:00", "note": "play.py start/finish: a reused pid no longer reads as the tester's game"}
 {"event": "start", "at": "2026-11-22T04:33:19", "task": "G5 heat length one/three stars: m_2RP 44:56-60:40", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-22T04:36:38", "note": "m_2RP 44:56-60:40 read: H two-star about 128 s; no one/three-star escape"}
+{"event": "start", "at": "2026-11-23T15:24:00", "task": "n23-2", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T15:34:00", "note": "star slot reader (try 3), G5 star level re-read"}
+{"event": "start", "at": "2026-11-23T15:22:00", "task": "n23-1", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T15:27:00", "note": "page reads, store-copies item, method research brief"}
