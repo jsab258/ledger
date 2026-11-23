@@ -19,3 +19,4 @@ Next run starts here:
 3. When story v3 is picked: name it in BLUEPRINT.md's story section and point chapter 03 at its bible.
 4. When he answers a question (his page or advisor rows): replace the recommendation, drop the question.
 5. When a design proof run lands (design pass, fit check rerun, red teams 3 and 4): fold its changed rows in.
+Prior research index of 23 Nov: fold PRIOR-RESEARCH-INDEX.md into the blueprint; every part's standard names prior research where it exists.
