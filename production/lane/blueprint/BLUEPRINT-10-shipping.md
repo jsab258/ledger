@@ -27,7 +27,7 @@ Store page, age rating, Steam's AI disclosure, price and length statement.
 - How it works: Steam runs its own content survey and rating (unrated games are hidden in Germany since 15 Nov 2024); a PEGI 16 (ESRB M) target is likely, and what would push it to 18 is the design rule for fights, menace and talk (beating a downed or pleading person, torture, close-up gore or reward for cruelty, taught crime methods, live talk beyond the rated level). The AI disclosure is drafted: live-generated yes (townspeople's replies by Claude, voices made on the player's own computer), pre-generated yes for shipped AI art, voices and text, no for coding help, with seven guardrails described. The store fee is 100 US dollars per game, 30 days between paying and release, the Coming Soon page public at least two weeks before. The length statement is 15 to 20 hours.
 - Standard: Steam's AI disclosure as drafted (24 Sep); length 15 to 20 hours (28 Oct) Test: rating questionnaire; disclosure matches the build
 - Source: RULINGS 24 Sep, 28 Oct; G4-RATING-AND-STORE (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: G4-RATING-AND-STORE-2026-11-17 s1 to s4; production/store/steam-ai-disclosure.md; RULINGS 24 Sep, 28 Oct
-- Status: outside. Coverage row: 10.2. Conflicts settled: C-157.
+- Status: outside. Coverage row: 10.2. Conflicts settled: C-179.
 
 ## 10.3 Friends' builds
 
@@ -39,7 +39,7 @@ A friends' build at the end of every phase from phase 4, on his PC.
 - How it works: A friends' build is made at the end of every phase from phase 4 on, on his PC and his own account, through the shortcut, with his key capped at 5 dollars an evening and no relay. It passes the Meridian Test: friends do not bounce off, the town visibly knows them, talk feels live and he would rather play it, and nothing unfinished is in sight, checked against the twenty basics. The friends' evening comes after the whole street, and before Unreal, real players meet the browser evening once it meets the measured bar, with verdicts beside his and the AI panel's.
 - Standard: Meridian Test (3 Oct): they do not bounce off, the town knows them, talk feels live, he would rather play it Test: the Meridian Test
 - Source: RULINGS 3 Oct, 28 Oct, 1 Nov (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 3 Oct, 4 Oct, 28 Oct, 1 Nov, 21 Nov; production/friends-build/MAP.md
-- Status: outside. Coverage row: 10.3. Conflicts settled: C-158.
+- Status: outside. Coverage row: 10.3. Conflicts settled: C-180.
 
 ## 10.4 Credits and notices
 
@@ -63,7 +63,7 @@ Final passes over the whole game: every ending, every job outcome, long sessions
 - How it works: Final passes over the whole game: every ending reached by a scripted route including from a hunted state, every outcome of every job (failures included) reached by a script and leaving a Ledger line, and long sessions. The panel passes at 6 of 8 on a whole playthrough, from the first hour to the ending (BUILD-ORDER M1).
 - Standard: ER-END-01, ER-JOB-05 across the whole game; the panel at 6 of 8 Test: all scripted routes in the release build
 - Source: DESIGN §16, §4; BUILD-ORDER (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN §16 (ER-END-01), §4 (ER-JOB-05); BUILD-ORDER M1; DESIGN §19
-- Status: outside. Coverage row: 10.5. Conflicts settled: C-159.
+- Status: outside. Coverage row: 10.5. Conflicts settled: C-181.
 
 ## 10.6 After release
 
@@ -82,7 +82,7 @@ Patches, new districts in updates, a stated position on mods.
 - How it works: There are no mods and no community content at release; the part is left out. KCD2 reviews mention mods in 3.8% of reviews, praise and complaint together.
 - Standard: left out Test: tester count or rule check
 - Source: ST mods theme (KCD2, 3.8 percent of reviews) (left out by his ruling or canon). Designed in: DEFINITIONS GD-06; RULINGS 23 Sep (no mods at release); themes-steam.json ST-184
-- Status: out. Coverage row: GD-06. Conflicts settled: C-160.
+- Status: out. Coverage row: GD-06. Conflicts settled: C-182.
 
 ## 10.7 Platform account, cloud saves and achievements
 
@@ -142,7 +142,7 @@ Consent and data protection for what players type that is sent to the talk servi
 - How it works: The AI notice is its own screen shown before the first typed line and answered before anything typed is sent: it says replies are made by a named AI service over the internet, what he types is sent to it, why, and for how long, and it offers offline play (written lines only) as an equal choice; it can be read again from the pause menu. A privacy page in Settings repeats it and offers deletion of anything held off the PC. Offline mode plays the whole first hour; no copy of typed text is kept beyond the story's memory of what was said unless the player reports a line; EU AI Act Article 50(1) has applied since 2 Aug 2026.
 - Standard: (1) The AI notice, its own screen before the first typed line, says replies are made by a named AI service over the internet, what is sent, why and for how long, and offers offline play as an equal choice; readable again from pause; (2) nothing typed is sent before it is answered; (3) offline mode plays the whole first hour; (4) no copy of typed text kept beyond the story's memory unless reported; (5) the service's retention and the deletion route are as stated. Test: B: first-hour run offline; S: note present before first talk.
 - Source: PRIVACY-CHECK-2026-11-21.md: ICO guidance; EU AI Act Article 50(1), in force 2 Aug 2026 (Commission FAQ 24 Jul 2026) (real-world figure or published standard). Designed in: DEFINITIONS 10.11; PRIVACY-CHECK-2026-11-21; GAME-DESCRIPTION-COPY-2 §28, §36
-- Status: measured. Coverage row: 10.11. Conflicts settled: C-161, C-162.
+- Status: measured. Coverage row: 10.11. Conflicts settled: C-183, C-184.
 
 ## 10.12 Demo, price and wishlists
 
