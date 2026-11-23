@@ -12,10 +12,11 @@ The map as data with testable layout rules.
 
 ### 4.1.1 Quay Street
 
-- How it works: Quay Street is the built street, in the Hook, Mickey's on it: 48 m from the quay, climbing about 3 m, then bending east behind the parade, 11 m wide with both pavements. The east side is the six-bay parade; the west block across from the north half of the parade carries shops; the west block across from Mickey's, at the quay end, is plain terraces. Trades by bay: 1 fishmonger, 3 the empty unit to let (whitewashed), 4 launderette, 5 grocer; west north: a newsagent and tobacconist, an ironmonger, a tea room. Four concrete lamp columns stand at x 8 east, 18 west, 28 east, 38 west. The 593 pieces keep their east_parade_ identifiers, which carry no claim about location. Every visual is judged against the Hook sheet and KCD2 frames; dated photographs win.
+- How it works: Quay Street is the built street, in the Hook, Mickey's on it: 48 m from the quay, climbing about 3 m, then bending east behind the parade, 10.25 m front to front with both pavements (terrace-fronts.md, atlas-01; C-226). The east side is the six-bay parade; the west block across from the north half of the parade carries shops; the west block across from Mickey's, at the quay end, is plain terraces. Trades by bay: 1 fishmonger, 3 the empty unit to let (whitewashed), 4 launderette, 5 grocer; west north: a newsagent and tobacconist, an ironmonger, a tea room. Four concrete lamp columns stand at x 8 east, 18 west, 28 east, 38 west. The 593 pieces keep their east_parade_ identifiers, which carry no claim about location. Every visual is judged against the Hook sheet and KCD2 frames; dated photographs win.
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; canon's three sides Test: the gate; his eye on whole street frames
 - Source: canon; RULINGS The look (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon ('The built street', 'Quay Street's three sides'); RULINGS 'The look and the street' (3 Oct trades, 5 Oct atlas); DEFINITIONS G1; TARGET-STREET-FURNITURE-2026-11-17 S1
 - Status: outside. Coverage row: 4.1.1. Conflicts settled: C-092, C-093.
+- Prior research: production/specs/terrace-fronts.md and atlas-01 ADOPTED-2026-10-06: carriageway 6.0 m, footways 2.0 m, front to front 10.25 m, granite kerb upstand 115 mm (the scene file's 125 is wrong), bays 6 m, 1 in 12 climb at the north end.
 
 ### 4.1.2 The rest of the Hook
 
@@ -30,6 +31,7 @@ The map as data with testable layout rules.
 - Standard: Every go-to step named by a landmark reachable unaided in 3 minutes (ER-JOB-01) Test: H: newcomer reaches named places
 - Source: DESIGN §4 (DECIDED by the design proof, for him to overturn). Designed in: COPY-2 s.13 'Finding the way'; DESIGN s.4 (ER-JOB-01); DESIGN-ADDENDUM A9; STYLE-SHEET-1990-DRAFT 1.5; RULINGS (paper map, street signs)
 - Status: decided. Coverage row: 4.1.3.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-07 every Act I step reachable by landmark with the map shut; 6 of 8 open it less in evening two; decided. None measured.
 
 ### 4.1.4 The soft edge
 
@@ -37,6 +39,7 @@ The map as data with testable layout rules.
 - Standard: Nothing fails for leaving (DESIGN §5) Test: S: leaving the map edge in the cab
 - Source: DESIGN §5; Study 2 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.11; COPY-2 s.10; DESIGN s.5; DEFINITIONS G3, G1
 - Status: decided. Coverage row: 4.1.4. Conflicts settled: C-096.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided. None measured.
 
 ### 4.1.5 Street build rules
 
@@ -44,6 +47,7 @@ The map as data with testable layout rules.
 - Standard: Study 4's measured street rules Test: automatic layout check against the rules
 - Source: aaa-reference study 04; TRACE s04 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: aaa-reference study 04 'Targets for LEDGER's phase 2'; TRACE s04; RULINGS 17 Nov
 - Status: outside. Coverage row: 4.1.5. Conflicts settled: C-097.
+- Prior research: game-design/street-spec.md and research/procedural-density: terrace street 6.5 to 7.5 m with 2 m pavements, high street 9 to 10 m with 3 m, block depth 16 to 19 m; research/hitman-density: density is connections, more than one way out and a different way back.
 
 ### GD-01 Travel time across the playable map
 
@@ -51,6 +55,10 @@ The map as data with testable layout rules.
 - Standard: Provisional bands until measured: on foot 3 to 5 real minutes, by car 60 to 100 s; to be replaced by the reference games' town crossings (KCD2's Kuttenberg, RDR2's Saint Denis, a GTA V district, GTA VI's Vice City streets as a fourth). Test: B: timed crossings by the walk and drive bots on the prototype map.
 - Source: ER-JOB-01; the description, section 40; MEASUREMENTS-NEEDED A (travel time). (waits on a dated study). Designed in: DEFINITIONS GD-01, G1, G4; FIT-CHECK F01; MEASUREMENTS-NEEDED A8; COPY-2 s.37
 - Status: pending. Coverage row: GD-01. Conflicts settled: C-098.
+- Prior research: research/street-scale-test: the Hook 0.107 square km, about 500 m of road, about ten street-lengths; walking every slot about 1.4 km, 422 m for the three nearest copies (a layout, not a crossing time).
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-10 things met per minute and crossing times set from footage; pending. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
+- Prior research: aaa-studies/DENSE-DISTRICT-REVIEWS.md: one writer crossed Like a Dragon's Ijincho in under three minutes avoiding fights; studies/17 gives about 8 minutes for Kamurocho (inferred); crossing times owed from footage (DENSE-10).
 
 ### FIT-G1 The Hook's road plan in metres, the chase loop
 
@@ -58,6 +66,7 @@ The map as data with testable layout rules.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G1, D-Q2; design pass 4 C-01; FIT-CHECK F01, F02, F22; RULINGS 28 Oct and 19 Nov
 - Status: decided. Coverage row: FIT-G1. Conflicts settled: C-099, C-100, C-101, C-102.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-02 no stretch over 40 m without a door to a place with a person in it; decided. None measured.
 
 ## 4.2 The docks
 
@@ -70,6 +79,7 @@ The Hook's working waterfront (canon, 19 Nov).
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: COPY-2 s.1, s.4; DESIGN s.15; DEFINITIONS G1, G10; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.2.1.
+- Prior research: research/south-quay: granite cope 0.60 across, 0.30 deep, 50 mm proud (chosen, no source), setts 100 to 200 mm, wall batter 1 in 20 (chosen), water 3.20 m below the cope at half tide.
 
 ### 4.2.2 Old Basin, fish dock, cold stores
 
@@ -88,7 +98,7 @@ The Hook's working waterfront (canon, 19 Nov).
 ### 4.2.4 The water's edge
 
 - How it works: Tom never walks or runs into the water: the quay edge stops him like a kerb that cannot be stepped off, and cars cannot leave the quay (bollards and the edge stop them, and a car backs out). In a fight the quay edge is one of the street's places: a man put in climbs out at the nearest ladder within 60 real seconds, soaked and humiliated, and the town talks. Water never kills. Tom, put in by others, climbs out the same way. Things can be thrown in (a weapon, goods, a bag); what goes in is gone and whoever saw it keeps it. Tested by 30 minutes along every quay edge on foot and by car with no fall in.
-- Standard: Never stuck (ER-CORE-01); Tom cannot die (his ruling); water never kills Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02
+- Standard: Never stuck (ER-CORE-01); Tom cannot die (his ruling of 12 Oct, archived DECISIONS 13 Oct 02:45); water never kills Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02
 - Source: DESIGN §1; his rulings (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.6; COPY-2 s.6; DESIGN-ADDENDUM A11 (ER-WATER-01, 02); DESIGN s.1
 - Status: ruled (his ruling or canon). Coverage row: 4.2.4.
 
@@ -103,6 +113,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work; ruling 4 Oct (Mickey's office: real glass, 1990 cab office wear) Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon ('Mickey's is a minicab office'); RULINGS 4 Oct; COPY-2 s.1, s.6, s.4; DEFINITIONS G1, G4, G5; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.3.1.
+- Prior research: game-design/mickeys-office and research/interior-blockout (shell 6 by 8 m); research/cab-office-interior-1990: no openable photograph of a real British minicab office interior dated 1985 to 1995; the one real interior is Brixton 1980, black and white.
 
 ### 4.3.2 The flat above
 
@@ -117,6 +128,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN s.6, s.15; COPY-2 s.14, s.29; DEFINITIONS G8, G10; RULINGS 22 Oct, 3 Oct, 8 Nov; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.3.3.
+- Prior research: research/shopfronts: stallriser 0.40 to 0.70 m (spec 0.60), fascia at most 0.60 m and a fifth of the front (spec 0.55), mullions 40 to 70 mm proud (spec 48); research/shop-hours-1990; research/shop-window-interiors (one authored room per shop, near 0.6 to 1 m real geometry).
 
 ### 4.3.4 Homes
 
@@ -124,6 +136,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: COPY-2 s.4, s.9, s.31; DESIGN s.6, s.15; DEFINITIONS P34, G1, G8; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.3.4. Conflicts settled: C-104.
+- Prior research: production/art/atlas-02 (search summaries, leads): 18.5% of homes without central heating, satellite dishes about 1 in 20 to 30 homes, Squarials dead after November 1990; research/phase5-procedural brick and window figures from a dated photograph.
 
 ### 4.3.5 Iveson's yard and hut
 
@@ -166,11 +179,13 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 P34; FIT-CHECK P34; ONE-SHOT-PROMPT s.15
 - Status: decided. Coverage row: FIT-P34.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-02 no stretch over 40 m without a door to a place with a person in it; decided. None measured.
+- Prep: INVENTORY section 2: needed 27 or more enterable rooms (24 plus the three rival bases, raided as break-ins with men inside, RT2-08); the prototype has 17; built from room kits in map.js, about 5 hours if made in the one-shot.
 
 ## 4.4 Props and street furniture
 
 Lamps, the phone box, bins, railings, bollards, signs.
-
+- Prior research: production/cloud-week/targets and research/street-clutter-1990: pillar box 390 mm across, 1,500 high (the earlier 489 is wrong); KX100 kiosk 890 mm square, about 2,190 tall; four concrete lamp columns, low-pressure sodium; no tactile paving in 1990; skip plates (1984 regulations); to-let boards (SI 1989/670).
 
 ### 4.4 Props and street furniture
 
@@ -197,6 +212,7 @@ AI drivers that always brake for people; parked cars from the kit.
 - Standard: AI drivers always brake for people (canon); ER-DRIVE-04 Test: S: 1,000 seeded crossings; 40 minutes lawful driving with no hits
 - Source: canon; DESIGN §5 (his ruling or canon). Designed in: TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18; COPY-2 s.10, s.11; DESIGN s.5 (ER-DRIVE-04); DEFINITIONS G2; canon (cars)
 - Status: ruled (his ruling or canon). Coverage row: 4.5.1. Conflicts settled: C-107.
+- Prior research: research/traffic (TRAFFIC-COST-2026-11-17): at most two moving cars in view, one every 40 to 90 s by day, 15 to 20 mph, density by hour 1.0 at 07 to 10 and 17 to 20, 0.8 by day, 0.2 in the small hours; the 0.5 ms budget for up to six cars is unmeasured.
 
 ### 4.5.2 Parked cars
 
@@ -204,6 +220,7 @@ AI drivers that always brake for people; parked cars from the kit.
 - Standard: His look at one parked car before twenty (ruling 17 Nov) Test: the gate
 - Source: RULINGS cars 17 Nov (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: PLAN-PARKED-CARS-2026-11-17; RULINGS 17 Nov, 6 Nov, 16 Sep; canon 'Brands and law'
 - Status: outside. Coverage row: 4.5.2.
+- Prior research: research/period-vehicles-and-props: Ford, Vauxhall and Rover about 55% of the 1990 market; plates G until 31 Jul 1990, then H; police cars with a white stripe, no Battenburg; buses deregulated 26 Oct 1986; the car script's 15,000-triangle bevelled boxes were partly a Nanite stand-in fault.
 
 ## 4.6 Vehicles
 
@@ -216,6 +233,7 @@ The firm's cabs, period cars, police cars and vans, all fictional.
 - Standard: Fictional makes only; no real car models (canon) Test: the gate; a look-alike check against real makes
 - Source: canon Brands and law (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon 'Brands and law'; PLAN-PARKED-CARS s.2; TRAFFIC-STAGE1 rule 3; DEFINITIONS RT-04, G8
 - Status: outside. Coverage row: 4.6.1.
+- Prior research: research/field-scans (public blog): background cars 5,000 to 25,000 triangles, hero 40,000 to 80,000, hatchback first; research/asset-plan: nothing free fits, own design in Blender.
 
 ### 4.6.2 Working vehicles
 
@@ -227,7 +245,8 @@ The firm's cabs, period cars, police cars and vans, all fictional.
 ## 4.7 Day and night
 
 The clock's light: day and night now, four or five states later, no moving sun.
-
+- Prior research: research/evening-light-1990: low-pressure sodium 589 nm, about sRGB 255,140,0, warm-up red-pink then yellow-orange; 35 W lantern about 4,550 lm (unverified); about 10 lux under the lamp, 0.5 midway at 30 m (inferred); real night photographs 3.0 to 5.2 stops pool to gap; autumn dark by about 20:00. The 4500 K Mafia lamp has lapsed.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-08 the night is its own street; a third of jobs and side stories after dark; decided. None measured.
 
 ### 4.7 Day and night
 
@@ -239,7 +258,7 @@ The clock's light: day and night now, four or five states later, no moving sun.
 ## 4.8 Weather
 
 Dry overcast, drizzle, rain; one wetness value drives look, sight, sound and who is out.
-
+- Prior research: research/phase2-plan TARGET-LIGHT-WEATHER-2026-11-17: EV100 11 to 12.8 by day (two real rainy exposures 11.9 and 12.3); overcast noon 6,000 to 18,000 lux; British overcast about 2 to 1 over sun (1,403 sunshine hours a year at 54.5 N).
 
 ### 4.8 Weather
 
@@ -251,7 +270,7 @@ Dry overcast, drizzle, rain; one wetness value drives look, sight, sound and who
 ## 4.9 1990 detail
 
 Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phone boxes.
-
+- Prior research: about thirty dated Geograph photographs of 1975 to 1995 (production/cloud-week), TSRGD road markings, poll-tax posters as an invented campaign, canon's CCTV and camcorder; search-summary figures stay leads until re-read.
 
 ### 4.9 1990 detail
 
@@ -263,7 +282,8 @@ Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phon
 ## 4.10 Pubs without drink and the closed school
 
 Places that exist with no drink and no children.
-
+- Prior research: production/specs/the-pub-without-drink.md; atlas-02's facts stand only for the building's front of boarded or food-serving pubs, never for drink; atlas-01's pub, cask line and betting offices, and the pub-regular line bank, are void under the content rule.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided. None measured.
 
 ### 4.10 Pubs without drink and the closed school
 
