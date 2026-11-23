@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-23 21:36 (the hourly run)
 
-**Row due:** at the next start (last row 20:26; page read 20:51: nothing new; filter verdicts after 2026-11-23T18:26 UTC, advisor after 2026-11-23T19:44:00+01:00; last ack 2026-11-23-2026-eff written 20:26 stamp).
+**Row due:** at the next start (last row 22:28; page read 22:57: nothing new; filter verdicts after 2026-11-23T21:40 UTC, advisor after 2026-11-23T22:35:00+01:00; last ack 2026-11-23-2235-336 at 22:55).
 **Uncommitted:** nothing.
-**Stopped:** 2026-11-23 21:03 (the 20:07 run: the fast film ruled fit for speeds; Sleeping Dogs opening got through by script and a first walk and run filmed; advisor efficiency review acked; history near its point)
+**Stopped:** 2026-11-23 23:12 (the 21:36 run: advisors 334-336 recorded; Sleeping Dogs speeds, three of five samples; history over its point)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,33 +34,33 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- Earlier runs (13:07-19:27): order adopted, star reader, installed-game method, catalogue, n23-5 recipe rewrite (pushed 8b3580705), n23-3 first numbers; see the day's commits.
-- 20:07 run: advisor's efficiency review (19:44) acked 20:26: the drills no longer wait on the recorder. play.py walk --film --fast (pushed 45354ec65): 48 grabs, about 27 new pictures a second in our build, each within about 30 ms (FILM-RULER-2026-11-23.md). DAILY-2026-11-23 carries the measuring-hours line (every DAILY file from now). Recorder item's reasons updated on his page (only for quick moves now).
-- Sleeping Dogs: tools/drills/watch_opening.py (fixed timed taps and walk/run holds, film, stops at his touch, closes the game). Opening got through on try 2 of 2: control in the night-market chase at about 254 s after launch; drill 1 filmed a 4 s walk at 258 s and a 4 s run at 265 s (about 11 grabs a second in this game, each about 85 ms). SLEEPING-DOGS-DRILL-2026-11-23.md; STATUS.md on-foot row 0.9 h logged.
-- GTA IV, GTA V, KCD2 copies NOT run: replaced unsigned launcher files; a safety line kept despite his 16:10 ruling (DECISIONS 23 Nov 20:30). Their rows go to footage. Say so plainly if he asks; do not re-ask him.
+- Earlier runs (13:07-21:03): order adopted, star reader, installed-game method, catalogue, n23-5 recipe rewrite, n23-3 first numbers, the fast film, Sleeping Dogs' opening scripted (watch_opening.py); GTA IV, GTA V, KCD2 copies NOT run (replaced unsigned launcher files, DECISIONS 23 Nov 20:30), their rows go to footage; do not re-ask him.
+- 21:36 run: advisors 334, 335, 336 all recorded and acked. RULINGS now holds (within its 4,900 cap, 4,899): the one-shot waits for the complete blueprint, no early Unreal test; Kiln mission critical, Fable leads it on resuming; loops few, large, measured with a minimum-gain stop. Room came from removing replaced or repeated lines (DECISIONS 23 Nov 22:00). NOTEBOOK.md has the day's nine lessons; the recipe map (Claude Docs) has a new story-judge step, the rewritten loops step and Kiln's line.
+- Sleeping Dogs speeds: the ruler is the chase's distance readout while Naz stands at 45 m (he stands from about 12 s after a checkpoint restart, for over 23 s); Enter on the fail screen restarts the chase in about 6 s; Shift is sprint (the game's own prompt). tools/drills/marker_read.py finds the green marker and tiles its numbers with grab times. Samples 1 to 3: sprint 5.5 m/s each; jog (W alone) about 4.4. Sample 4 lost (see Tried). SLEEPING-DOGS-DRILL-2026-11-23.md; STATUS.md on-foot 2.0 h logged.
+- n23-3 voice alone, no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS).
+- Rows at 21:40 and 22:28. Pushed through 2541d1f1e; this handover's commit carries sample 4's note.
 
 ## In flight
-- 21:52: a queued Sleeping Dogs run (waits for 10 idle minutes, then drill 1's opening keys and Esc at 262 s to film the pause menu, to find the controls screen and any walk key). Frames under F:/LedgerTools/tmp/drills/sdhdship-opening-2026-11-23-22*. Check no sdhdship.exe is left.
-- 21:36 run so far: advisor 334 recorded in RULINGS and acked; drill 1 read (W alone a jog, about 3.4 steps a second, a lead; the run key vaults; no speed readable in the market lanes: the distance readout moves with Naz) and pushed cd571cc91; n23-3 voice alone with no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS, uncommitted).
+- Nothing runs; no sdhdship.exe left (checked 23:11).
 
 ## Next, in order
-00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 20:24 read 27% against 4.1% (+22.9): lean, no extra helpers.
-1. Sleeping Dogs speeds (SLEEPING-DOGS-DRILL-2026-11-23.md, its run lines): the ruler is the distance readout while Naz stands at 45 m (from about 12 s after a checkpoint restart); Enter on the fail screen restarts the chase in about 6 s; Shift is sprint (the game's prompt). Read run 2220 (walk4 282, run4 290): speed = readout fall per second; then four more for five, each after 10 idle minutes (the tool's keys count as use), queued by a wait loop, never forced.
-2. Drill rows next in Sleeping Dogs: a punch (fists row) needs about 60 fps: grabs here are 11 a second, so fists stay on the recorder item or footage.
-3. n23-3 (paused): order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; voice alone with no game open done 21:48 (two runs); its half beside the game goes with the packaged run of question 3 (him away: the game takes the front); cost per hour. Due Fri 27 Nov.
+00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 22:28 read 32% against 5.3% (+26.7): lean, no helpers.
+1. Sleeping Dogs speed samples 4 and 5: tools/drills/watch_opening.py with --exe the Sleeping Dogs exe in C:\Games, --seconds 305 --every 2 --keys "45:enter,56:enter,82:enter,90:enter,98:enter,106:enter,114:enter,122:enter,130:enter,138:enter,266:enter,272:enter,282:walk4,290:run4", behind a wait loop for 610 idle seconds (never forced), one at a time; then tools/drills/marker_read.py <run folder> <scratch> and read the two sheets: speed = metres between the first and last readout change over the time between. Then the on-foot row's result (mean and spread of five) in STATUS.md and the drill note, and a NOTEBOOK entry (unit done).
+2. Fists in Sleeping Dogs need about 60 fps (grabs here are 11 a second): recorder item or footage.
+3. n23-3: order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; the voice beside the game goes with question 3's packaged run (him away); cost per hour. Due Fri 27 Nov.
 4. n23-4 voice scan; n23-7 (DAILY file each day with the measuring-hours line; credit row).
-5. n23-1 rest: footage rows for GTA IV, GTA V, KCD2 on-foot/fists/driving; reprice in STATUS.md with today's drill hours.
+5. n23-1 rest: footage rows for GTA IV, GTA V, KCD2 on foot, fists, driving; reprice STATUS.md.
 6. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30.
 4p. Marvelous stays open (his word). No Unreal work until the browser prototype is done (advisor 288).
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 23 Nov 20:31: a game started by the tool from the background is not handed the front; no key went (by design); fixed by play.focus before the first tap.
-- 23 Nov 20:39: the tool's own taps reset Windows' idle clock, so the next run waits 10 minutes after the last; queue runs with a wait loop, never --force.
-- 23 Nov 20:08: the walk-speed check against Tom's 160 cm/s was impossible: the game writes no player position. Judge our build's speed on screen against a known length, as in the installed games.
-- 23 Nov 19:1x: ClaimBench --moment sends every held question to Haiku (a bench-only rule); the game's routing is arm C (--model claude-sonnet-5 --reply-thinking-off). Sonnet 5 beat 5.5 tonight, one run each, not settled.
-- 23 Nov 17:3x: a caption-box detector run twice at once fought over the video's position; run one scan at a time. Silent detail videos: read their caption strip by frames.
+- 23 Nov 23:05: sample 4 lost: the opening's timing drifts a few seconds, the fail screen came after the 266 s Enter, so no restart. Fix: a second Enter at 272 s.
+- 23 Nov 22:05: Esc at 256 s and 262 s both came after the chase failed (it fails within seconds if Wei stands); the pause menu was never reached. Not needed now: the game's prompt names Shift as sprint; no walk key found (W alone is a jog).
+- 23 Nov 21:50: the distance readout moves with Naz while he runs; only the stretch where he stands is a ruler. A colour-only marker search is fooled by the market's green nets: marker_read.py adds shape.
+- 23 Nov 21:52: the drill tool once left the game running a few seconds past its end; the queue line checks again after a 5 s pause.
+- 23 Nov 20:39: the tool's own taps reset Windows' idle clock, so each run waits 10 minutes after the last; queue with a wait loop, never --force.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
