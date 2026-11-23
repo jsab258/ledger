@@ -15,35 +15,35 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - How it works: Week one runs from Monday 15 October 1990 to Sunday, about two hours, the most scripted stretch. Tom arrives with £23.50, rent of £18 falls on Friday, and Mickey's debt book holds five debts worth £156. Five threads run through it: the outfit's claim (asks on nights one, three, five and seven, each an envelope or a carry Ron brings), the warehouse fire, Mickey's real book, the street deciding who he is, and someone worth being honest for. On Sunday Sheila asks 'So which is it going to be?': wind it down, take it over, or refuse to say, and the street learns the answer. Every answer reaches Act II's opening state by a state, not a date: 'take it over' and 'wind it down' on Sunday, 'refuse to say' when a third car, a first recruit, or the outfit's ask taken twice in week two makes the firm his. The panel bar is 5 of 8 for a week as the first milestone (M1); 7 of 8 is the gate's bar for the release-grade prototype. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: The first week's nine designs stand as written (ruling 29 Sep); M1 5 of 8 for a week Test: H: the week run; panel M1
 - Source: ruling 29 Sep; BUILD-ORDER (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.36; COPY-2 s.30 and s.4; DESIGN s.15, s.16; DEFINITIONS RT-04; PANEL-BAR-2026-11-21; BUILD-ORDER M1; RULINGS 'The story and the first week'
-- Status: measured. Coverage row: 3.1.1. Conflicts settled: C-047.
+- Status: measured. Coverage row: 3.1.1. Conflicts settled: C-060.
 
 ### 3.1.2 Act II, The Rise and the Squeeze
 
 - How it works: Act II opens on its state: Sheila has her answer and the firm is his (rung 2). Eight beats fire on states in any order the states allow: the old firm's end (landing men hand over and fade, or the rivals start a rung sooner), each rival's first notice, the real book on Sheila's trust, the cold-store contract on rung 3, the first gun, Ellis reaching 'investigating' (one case with the fire), the guaranteed collision (a day appointment and a night job fall on one evening, played at the door of his day life), and the sit-down with one head that ends the act. The firm climbs rungs 2 to 4 while each rival climbs its ladder; every game week brings one rival rung, one firm change and one return of a deed; sending opens here. A fail-safe starts four game days before the end of the act's last week: the highest rival then climbs its remaining rungs one a game day, so Act II still ends at a sit-down. Under the 21 Nov ruling the act is about 5 game weeks and 9.3 to 14 running hours; rung 3 is five cars, a night desk, a first front, a first round and the cold-store contract; rung 4 is at least two fronts and two rounds plus men at the dock gate, the cold store and the landing. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Beats fire on states, never on days; 11 to 14 hours Test: H: a played stretch of Act II; S: every beat reachable
 - Source: DESIGN §16 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.37; COPY-2 s.31; DESIGN s.16; DEFINITIONS RT-04, F13, F15, CLK-06; RULINGS 21 Nov
-- Status: unmeasured. Coverage row: 3.1.2. Conflicts settled: C-048, C-049, C-050.
+- Status: unmeasured. Coverage row: 3.1.2. Conflicts settled: C-061, C-062, C-063.
 
 ### 3.1.3 Act III, The Ledger Comes Due
 
 - How it works: One week, 2 to 3 hours (1.9 to 2.8 under the ruled clock). A courteous letter on the counter announces a VAT inspection by Customs and Excise. Each of five mornings the inspector asks for one item (a week of the fare book, the cars' records, the wages, an account's invoices), and Tom produces it or asks for it in writing. Each item is graded from the books: holds, thin or falls (RT-01), and the inspector's manner shows it first, warmer or colder. Sheila, if she trusts him, says where the lie holds; Ellis offers a trade (give her a rival, and the street learns who talks); a crewman may offer to take the firm over, withdrawn if a morning falls. On the last day Tom can call on three people at most before the books open at five in the afternoon. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Each morning one deciding step graded by what the books hold (DESIGN §16) Test: S: each morning's step graded; H: 'how does this end, and why'
 - Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.38; COPY-2 s.32; DESIGN s.16; DEFINITIONS RT-01, RT2-15, CLK-06
-- Status: decided. Coverage row: 3.1.3. Conflicts settled: C-051.
+- Status: decided. Coverage row: 3.1.3. Conflicts settled: C-064.
 
 ### 3.1.4 The endings
 
 - How it works: Endings are states, never picked from a list, and no single beat fails the run. Three are shown, each with a better and a plainer turn, over five built states: the Kingdom (business survives and the books hold; best turn the built 'Both'), the Straight Life (no business, one friendship holds; best turn the built 'Quiet'), and Burn Both (neither). A fixed rule reads the save when the books open on Act III's last day: the business survives if the licence stands, at least car two runs, no morning fell and at most two were thin; a friendship holds if Alison or Danby was called on at least three times with no cooler door at the last and has not learned of a killing as fact; the Kingdom's best turn also needs the street holding none of his rackets as fact and no serious charge outstanding; the Straight Life's best turn needs the successor's offer accepted and not withdrawn and Tom not hunted for a killing. No redemption path; every ending is reachable by a route, including from a hunted state. After it a short close in the town, credits, then play resumes within 10 s with no new main beats; no new game plus. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Two or three endings (ruling 28 Oct, his pick M8 19 Nov); ending states never picked from a list; no single beat fails the run Test: S: every ending by a scripted route, including hunted (ER-END-01)
 - Source: RULINGS; advisor 241 point 8 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.39; COPY-2 s.33; DESIGN s.16, QUESTIONS 1; DEFINITIONS RT2-04, RT-01; canon OPEN 3; RULINGS 28 Oct
-- Status: measured. Coverage row: 3.1.4. Conflicts settled: C-052, C-053.
+- Status: measured. Coverage row: 3.1.4. Conflicts settled: C-065, C-066.
 
 ### 3.1.5 Ending signs and Tom's reading
 
 - How it works: Every cost that decides the ending shows its sign before it decides: the inspector's manner when the books stop standing, Sheila's words when the true books cross the line, a friend's unasked act, a telling overheard as fact ('everyone knows he robbed the grocer'), Ellis asking and then telling, the police's four stages (nothing, asking round, investigating, manhunt), the successor's offer and its withdrawal, the keeper's shutter coming down. Tom's reading, on Full stop and at each act's end, is built only from the signs he was given, never the true state, and says 'quiet' only when every factor is quiet. No ending lands while his reading says quiet, and the tester asked 'how does this end, and why' must predict the ending the state gives. Each sign and the ending rule call one state function, so they cannot disagree. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: ER-END-02, ER-END-03; D58; ending signs 30 Sep Test: S: balance sweep; H predicts the ending
 - Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.39; COPY-2 s.33; DESIGN s.16 (ER-END-02, ER-END-03); game-design/ending-signs-2026-09-30.md; DEFINITIONS RT2-04
-- Status: decided. Coverage row: 3.1.5. Conflicts settled: C-054.
+- Status: decided. Coverage row: 3.1.5. Conflicts settled: C-067.
 
 ### 3.1.6 Mickey's past
 
@@ -64,14 +64,14 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - How it works: Each of Act II's eight beats gets a written scene: who, where, what is at stake, what the player can choose, what comes back. The old firm's hand-over names three things (the landing, its men, its night custom); Mickey's real book gives at least five new names of arrangements and debts; the envelopes of Act I's nights five and seven carry what the measured story says; the collision is written for each pairing of a day appointment and a night job the state allows. Every scene names at least one choice and one return and needs no system the game lacks. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Every beat has its scene; every scene names at least one choice and one return; none needs a system the game lacks. Test: Trace check: beat to scene to system (TRACE style), by a fresh reviewer.
 - Source: The description, sections 36 and 37; the story measure's bible (current version STORY-BIBLE-M1). (waits on a dated study). Designed in: DEFINITIONS RT-02; COPY-2 s.31, s.38; ONE-SHOT-PROMPT s.36, s.37
-- Status: pending. Coverage row: RT-02. Conflicts settled: C-055.
+- Status: pending. Coverage row: RT-02. Conflicts settled: C-068.
 
 ### RT2-04 How the ending is chosen
 
 - How it works: A fixed rule, a pure function of the save at the books' opening on Act III's last day. Business survives if the licence stands, at least car two runs, and the books hold. A friendship holds if Alison or Danby was called on at least three times with no cooler door at the last and has not learned of a killing as fact. Business plus friendship is the Kingdom; its best turn needs the street holding none of his rackets as fact (no telling at fact strength among at least three of the nine principals), no serious charge outstanding and nobody given to Ellis. No business and a friendship is the Straight Life; its best turn needs the successor's offer accepted and not withdrawn and Tom not hunted for a killing. Otherwise Burn Both. Charges and bail are read in the close; Ellis's trade removes one charge. All five built states are reached by five scripted routes. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-04 Test: B (bot), as written under RT2-04
 - Source: design pass 3, RT2-04 (waits on a dated study). Designed in: DEFINITIONS design pass 3 RT2-04; RT-01; ONE-SHOT-PROMPT s.38, s.39; DESIGN s.16
-- Status: pending. Coverage row: RT2-04. Conflicts settled: C-056.
+- Status: pending. Coverage row: RT2-04. Conflicts settled: C-069.
 
 ### RT2-15 The successor's offer and the last day
 
@@ -104,14 +104,14 @@ Named people.
 - How it works: The thirty regulars stand as written (ruling 30 Sep): each has a routine, a temper (own nerve, loyalty and readiness to talk) and about 30 own street lines, except Sheila, Alison and Ada who keep the shared lines; Ron, Darren, Father Walsh and June have their own. The 12 most-seen people get 60 own lines each. A person's own line comes at most once a day. Among them: Brenda Laverack, Wayne Harrison, Lee Drewery, Julie Kettlewell, Dennis Iveson and his yard hand, Ian Megginson, Norman Dent, Karen Grummitt, Shaun Hewson, Susan Coverdale, Rita Welburn, Hal and Grace Rinaldi.
 - Standard: Thirty regulars stand as written (ruling 30 Sep); about 30 own street lines each Test: H: transcripts; S: line counts
 - Source: ruling 30 Sep; DESIGN §11 (his ruling or canon). Designed in: COPY-2 s.5, s.28; DESIGN s.11; DEFINITIONS L-01; RULINGS 'Talk and AI' street lines
-- Status: measured. Coverage row: 3.2.3. Conflicts settled: C-057.
+- Status: measured. Coverage row: 3.2.3. Conflicts settled: C-070.
 
 ### 3.2.4 The crowd
 
-- How it works: The crowd is adults only, in period clothes, generated under the content rule. Each kind of speaker has at least 6 lines per situation. The crowd keeps clock windows by hour (dock shift at dawn, shoppers by day, street emptying at night), walks round people and things without clipping, looks before stepping into the road and uses crossings. Counts on Quay Street's parade front: 6 to 10 from 05:30, 25 to 35 in the busy bands (08:00 to 09:30, 12:00 to 14:00, 16:30 to 18:00), 3 to 6 from 22:00, 0 to 2 after 01:00; at least 25 distinct people in the busiest view; rain halves each band, Thursday market takes a third off the shops' bands, Saturday's match doubles the street at 15:00 and 17:00. The 5 Oct audit found 6 of 13 street figures with a resident behind them and 38 of the simulation's 41 residents never drawn.
+- How it works: The crowd is adults only, in period clothes, generated under the content rule, with at least 6 lines per kind of speaker per situation. It keeps clock windows by hour (dock shift at dawn, shoppers by day, street emptying at night), walks round people and things, looks before stepping into the road and uses crossings. One camera frame at the default field of view (86) on the parade holds 4 to 10 distinct people at busy bands, 2 to 7 at other daytime hours and 0 to 2 on quiet nights; the market and the match may hold 15 to 25. About half stand or sit at a place made for it, in groups of 2 to 3 facing inward. Over the whole 100 m parade front the G9 stretch bands apply (see FIT-G9). The 5 Oct audit found 6 of 13 street figures with a resident behind them.
 - Standard: No children anywhere (canon); 6 of 13 street figures have a resident behind them (map-players) Test: S: crowd generation content check; counts by hour
-- Source: canon; PLAYERS second study (reference game). Designed in: COPY-2 s.5; DESIGN s.2; DEFINITIONS GD-02, G9; production/audits/sweep-2026-10-05/walkers-vs-residents.md; PLAYERS.md catalogue disagreement 4; canon content rule
-- Status: measured. Coverage row: 3.2.4.
+- Source: canon; PLAYERS second study (reference game). Designed in: DEFINITIONS design pass 4 Run 5 second pass GD-02; design pass 3 G9; COPY-2 s.5; DESIGN s.2; walkers-vs-residents audit; PLAYERS; canon content rule
+- Status: measured. Coverage row: 3.2.4. Conflicts settled: C-071.
 
 ### 3.2.5 Someone worth being honest for
 
@@ -125,7 +125,7 @@ Named people.
 - How it works: The assembled unit: face, body, hair, clothes, voice, routine, lines and memory, measured as one cost. Ron is the sample (n16-2): face P2 frozen, voice p227, routine and talk as data, and his work trousers the first Kiln garment. Rule: nothing is multiplied before he approves one complete sample in the assembled game; one person is approved in game before twenty, and townspeople are measured at 0, 5, 10 and 20 packaged. Risk register: 44 named people, phases forecast 52 to 71 weeks against about 54, the cost of one complete person unmeasured; if cost per piece has not clearly fallen by 1 February, scope moves, never quality.
 - Standard: Nothing multiplied before he approves one complete sample in the assembled game (CLAUDE.md) Test: his eye in the packaged game
 - Source: CLAUDE.md; Kiln plan; risk register (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: CLAUDE.md 'How the work is done'; KILN-TO-GAME-PLAN-2026-11-17; RON-ROUTINE-TALK-2026-11-17; parts-tree work/map-gaps-studies.md G11; RULINGS 30 Sep, 5 and 6 Nov
-- Status: outside. Coverage row: 3.2.6. Conflicts settled: C-058.
+- Status: outside. Coverage row: 3.2.6. Conflicts settled: C-072.
 
 ### 3.2.7 Calling on people
 
@@ -144,7 +144,7 @@ Named people.
 - How it works: Side stories are found on foot with no markers, mostly light or grey against the main story, each 3 to 5 steps and ending in something the town knows; some are offered only after earlier steps; they run beside the acts from week one (one is placed at minute 23 of the first hour). Count: about 25 (at least 22, at most 28) at a median 10 to 14 minutes, about 5 hours inside the 15 to 20. The 32 drafts of 8 Nov are the list to draw from. Each act holds at least one scene written to be funny.
 - Standard: 25 to 40; whole stories, not errands (PLAYERS praise 5); the 32 drafts of 8 Nov Test: H: found unaided; S: each ends in a town fact
 - Source: DESIGN §4; Study 17 (reference game). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13, s.4; DESIGN s.4; DEFINITIONS F15, GD-05
-- Status: measured. Coverage row: 3.3. Conflicts settled: C-059.
+- Status: measured. Coverage row: 3.3. Conflicts settled: C-073.
 
 ## 3.4 Fares
 
@@ -156,14 +156,14 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - How it works: Pauline calls the fares Tom is offered. Each is a named person going where their routine takes them at that hour: Brenda Laverack to the fish dock at dawn, the packing shift from the Old Basin cold stores at half past five, a lodger for the last ferry, Alison to the warehouse row. A fare lasts 1 to 2 real minutes and pays 80p plus distance; driving them teaches the map and the hours. At least 40 fare people are written, each with lines for at least two fares (a first ride and a later one changed by what Tom did); Tom is offered about 40 to 80 in a playthrough. Kevin and Terry drive the ordinary fares off screen, so a player who only drives fares can still pay the rent: the drivers' fares bring the book about £85 to £95 a week and Tom's own fares make up Friday's £18.
 - Standard: 1 to 2 real minutes; 80p plus distance; drawn from routines (DESIGN §5) Test: H: fare freshness over a week; ER-CORE-08
 - Source: DESIGN §5 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.13; COPY-2 s.12; DESIGN s.5; DEFINITIONS G7, G8
-- Status: unmeasured. Coverage row: 3.4.1. Conflicts settled: C-060, C-061.
+- Status: unmeasured. Coverage row: 3.4.1. Conflicts settled: C-074, C-075.
 
 ### 3.4.2 Wrinkles
 
 - How it works: Every fare after the first teaching fare carries one wrinkle, a small decision, and no wrinkle comes twice running: the talker (says something true about somebody), the parcel ('take this too, no questions'), the tail (a car in the mirror, or 'follow him'), the runner (out of the door without paying), the wait ('keep the engine running'), the hurry, and the face (somebody who matters gets in). Kevin and Terry's off-screen fares carry none. Under the ruled clock the hurry is given in clock terms, 1.5 game hours ahead ('it's gone half eight'), about 90 real seconds.
-- Standard: About half of Act I's fares carry one; no wrinkle twice running (ER-JOB-06) Test: H: the log; S: no repeat twice running
+- Standard: Every fare after the first teaching fare carries one (F20); no wrinkle twice running (ER-JOB-06) Test: H: the log; S: no repeat twice running
 - Source: DESIGN §5, §4 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.13 and its conflicts note; COPY-2 s.12, s.41; DESIGN s.5; DEFINITIONS F20, G7, CLK-02
-- Status: unmeasured. Coverage row: 3.4.2. Conflicts settled: C-062, C-063.
+- Status: unmeasured. Coverage row: 3.4.2. Conflicts settled: C-076, C-077.
 
 ### 3.4.3 Pauline and the radio
 
@@ -177,14 +177,14 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - How it works: At least 40 written fare people (Tom is offered about 40 to 80 fares in a playthrough), each a named person going where their routine takes them, each with lines for at least two fares (a first ride and a later one changed by what Tom has done). Every fare after the first teaching fare carries one wrinkle, none twice running. In a 17-hour playthrough no fare person rides with the same lines twice.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G7; FIT-CHECK F20, G7; COPY-2 s.12
-- Status: decided. Coverage row: FIT-G7. Conflicts settled: C-064.
+- Status: decided. Coverage row: FIT-G7. Conflicts settled: C-078.
 
 ### FIT-F20 Which fares carry a wrinkle (every one after the first)
 
 - How it works: Every fare Tom is offered after the first teaching fare carries one wrinkle; 'about half' is replaced by 'every'. Kevin and Terry's ordinary fares are driven off screen and have none. No wrinkle twice running. Checked by the fare log of a playthrough.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 F20; FIT-CHECK F20, P60; COPY-2 s.12, s.41; canon 19 Nov
-- Status: decided. Coverage row: FIT-F20. Conflicts settled: C-065.
+- Status: decided. Coverage row: FIT-F20. Conflicts settled: C-079.
 
 ## 3.5 Job content
 
@@ -193,10 +193,10 @@ The authored jobs.
 
 ### 3.5.1 Carries
 
-- How it works: The first carry is the outfit's envelope to the ferry landing after ten (the landing's window is 22:00 to 01:00). Three routes: the lit quay (quick, seen), the yard and lane behind the warehouses walking slowly in the dark (slower, footsteps carry half as far), and the cab (quickest, known: anyone who sees it names the car). The beat constable walks at 1.1 m/s: his night cycle is about 7 real minutes, Mickey's door is in his sight at least every 4 minutes, the landing and the yards' lane at least every 7.5; with the street on edge a second constable halves the gaps. If he calls out Tom stands and is searched (the constable keeps the envelope, the ask fails and goes on as a state) or runs; a chase ends within 90 s. At the landing a man says 'Mickey's?', the cut comes back and goes in the tin. A carried holdall slows Tom to 5.3 m/s on the run.
+- How it works: The first carry is the outfit's envelope to the ferry landing after ten (the landing's window is 22:00 to 01:00). Three routes: the lit quay (quick, seen), the yard and lane behind the warehouses walking slowly in the dark (slower, footsteps carry half as far), and the cab (quickest, known: anyone who sees it names the car). The beat constable walks at 1.1 m/s: his night cycle is about 7 real minutes, Mickey's door is in his sight at least every 4 minutes, the landing and the yards' lane at least every 7.5. If he calls out Tom stands and is searched (the constable keeps the envelope, the ask fails and goes on as a state) or runs; a chase has no timer and ends lost, caught, wrecked or at the edge. At the landing a man says 'Mickey's?', the cut comes back and goes in the tin. A carried holdall slows Tom to 5.3 m/s on the run.
 - Standard: Three routes: lit quay quick and seen, dark yard slower, cab quickest and known Test: S: three routes each finish; H retellable
-- Source: DESIGN §15 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.4, S05; COPY-2 s.4, s.13; DESIGN s.4, s.15; DEFINITIONS G4, G5, G10
-- Status: unmeasured. Coverage row: 3.5.1. Conflicts settled: C-066.
+- Source: DESIGN §15 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.4; COPY-2 s.4, s.13; DESIGN s.4, s.15; DEFINITIONS design pass 3 G4, G5, G10; design pass 4 C-01
+- Status: unmeasured. Coverage row: 3.5.1. Conflicts settled: C-080, C-081.
 
 ### 3.5.2 Collections
 
@@ -214,7 +214,7 @@ The authored jobs.
 
 ### 3.5.4 Tails, minding and lifts content
 
-- How it works: Tails, minding and lifts are authored instances, each with its outcomes like every job. A tail target looks back every 20 to 40 s on foot and at every corner; a shape is nothing, a mark is a doubt, a face he knows ends the tail; losing sight is not failing. Minding is standing at a door, sitting in the car or being seen at a shoulder; the town records who stood with whom and the job sets the pay. Lifts: goods carry a hot mark that fades with value and distance while the owner never forgets; a pocket lift is a held press of about 2 s, felt by an attentive man, in good light or with fewer than three people near; Rita fences at about 0.4 of an honest price from rung 2.
+- How it works: Tails, minding and lifts are authored instances, each with its outcomes like every job. A tail target looks back every 20 to 40 s on foot and at every corner; a shape is nothing, a mark is a doubt, a face he knows ends the tail; losing sight is not failing. Minding is standing at a door, sitting in the car or being seen at a shoulder; the town records who stood with whom and the job sets the pay. Lifts: goods carry a hot mark that fades with value and distance while the owner never forgets; a pocket lift is a held press of about 2 s, felt by an attentive man, in good light or with fewer than three people near; Rita fences at about a third of retail (0.33, CLOUD-FIGURES B3) from rung 2.
 - Standard: DESIGN §4 Test: S: each instance's outcomes
 - Source: DESIGN §4 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.14, s.16; COPY-2 s.13, s.14; DESIGN s.4; DESIGN-ADDENDUM A2, A34
 - Status: unmeasured. Coverage row: 3.5.4.
@@ -231,7 +231,7 @@ The authored jobs.
 - How it works: A job is a small graph of saved states: four job states and five step states, every change saved. Each step has a place by landmark, who is there, a window on the town's clock, the act the town can perceive, two or more outcomes where it decides, a Ledger line of about 22 words, two or more sources of direction and a tester's skip. Six laws: offered by a person on a state; three keys to every lock; windows not minutes (no lateness fail inside at least 2 game hours, a 'wait until' for every known appointment); failure continues; authored never rolled; no set piece twice in 30 minutes. Steps sleep while Tom is away and settle by the clock. Under the ruled clock every timed step is known at least 5 game hours before it opens.
 - Standard: Four job states and five step states; every step's place by landmark, two sources of direction, a skip (DESIGN §4; ER-JOB-02, 05, 07) Test: S: job data checks; every outcome reached by script
 - Source: DESIGN §4; Studies 11, 16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN s.4 (ER-JOB-01 to 07); DEFINITIONS CLK-04, GD-03
-- Status: decided. Coverage row: 3.5.6. Conflicts settled: C-067.
+- Status: decided. Coverage row: 3.5.6. Conflicts settled: C-082.
 
 ### 3.5.7 How jobs reach him
 
@@ -271,21 +271,21 @@ Talk content and its system; the moat, never the main thing.
 - How it works: A character says only what the simulation knows. The claim check refuses any sentence naming a person, place, event, number or year the speaker's facts lack, and replies cite their facts: Ada knows what Ada saw and was told; a man who only heard of last night says 'I heard something about you', never what happened. Live talk names no real make, brand, shop, club, programme, paper or public figure and nothing after 1992. The reply check runs on Haiku with a small local checker first at the open cut-off. Tested with planted bad replies (ER-TALK-04).
 - Standard: ER-TALK-04; ruling 25 Sep; speech rulings 7 to 28 Oct Test: S: planted bad replies
 - Source: RULINGS; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11; RULINGS 25 Sep, 29 Sep, 7 to 28 Oct
-- Status: measured. Coverage row: 3.6.2. Conflicts settled: C-068.
+- Status: measured. Coverage row: 3.6.2. Conflicts settled: C-083.
 
 ### 3.6.3 Written street lines
 
 - How it works: Everything the town says unprompted is written ahead and checked once: about 7 words a line, a remark said within 7 m, everyday street talk at most every 45 s, at least three closing lines each. A regular has about 30 own lines (60 for the 12 most seen); a person's own line comes once a day at most. Sheila, Alison and Ada keep the shared lines; Ron, Darren, Father Walsh and June have their own. No shared street line is heard twice in one real hour anywhere. At up to 80 remarks an hour and 6 lines a situation, at least 14 situations must be live in every hour (F19).
 - Standard: About 30 own lines a regular; a person's own line once a day, a shared line once a week per street (ER-TALK-02). Raised by Y2.5: no shared street line heard twice in one real hour of play anywhere (GD-02). Test: H: transcripts
 - Source: RULINGS street lines; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-02); DEFINITIONS GD-02, L-01, F19; RULINGS street lines
-- Status: measured. Coverage row: 3.6.3. Conflicts settled: C-069, C-070.
+- Status: measured. Coverage row: 3.6.3. Conflicts settled: C-084, C-085.
 
 ### 3.6.4 Crowd lines by situation
 
 - How it works: The crowd's lines are written at least 6 per situation per kind of speaker. Situations: greetings by regard (afraid, angry, knows and likes him, his appearance, neutral), bumping into someone, neighbours greeting each other, talking to oneself at work, rain, and a body or a man down. Greetings by regard are how the rise is heard.
 - Standard: At least 6 lines per situation per kind of speaker (DESIGN §11) Test: S: line counts; content gate
 - Source: DESIGN §11 (no reference figure yet). Designed in: ONE-SHOT-PROMPT 'Who lives here'; COPY-2 s.5; DESIGN s.11
-- Status: unmeasured. Coverage row: 3.6.4. Conflicts settled: C-071.
+- Status: unmeasured. Coverage row: 3.6.4. Conflicts settled: C-086.
 
 ### 3.6.5 Decision lines
 
@@ -320,14 +320,14 @@ Talk content and its system; the moat, never the main thing.
 - How it works: Shared street lines against how often they are said: a remark at most every 45 s means up to 80 an hour, no shared line twice in one real hour, and at least 6 lines per situation, so at least 14 situations must be live in every hour of a week. Measured by counting the situations in the line table (cloud, 0.5 hour, by Thu 26 Nov).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 'open pairs' F19; FIT-CHECK F19; GD-02
-- Status: pending. Coverage row: FIT-F19. Conflicts settled: C-072.
+- Status: pending. Coverage row: FIT-F19. Conflicts settled: C-087.
 
 ### FIT-L01 60 street lines for the 12 people seen most, 30 for the rest
 
 - How it works: The 12 people seen most (Ron, Pauline, Darren, Kevin, Terry, the beat constable, the caff's owner, Brenda Laverack, Wayne Harrison, Rita Welburn, Lee Drewery and Father Walsh, or whoever a two-week routine log shows most seen, leaving out Sheila, Alison and Ada) each have 60 own street lines; everyone else keeps 30. A person's own line comes at most once a day, so the 12 do not repeat within 60 game days.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 L-01 and D-Q4; FIT-CHECK F18; RULINGS street lines
-- Status: decided. Coverage row: FIT-L01. Conflicts settled: C-073.
+- Status: decided. Coverage row: FIT-L01. Conflicts settled: C-088.
 
 ## 3.7 Street happenings
 
@@ -339,18 +339,18 @@ Small authored incidents placed on the clock and the town's state: a row on the 
 - How it works: Street happenings are small authored scenes placed by the town's state and the hour, never by dice: a row on a doorstep, a van broken down across the lane, a shoplifter running from the grocer (grocer open, known thief out), a lost man with a suitcase, a dog loose on the quay, a woman locked out, a man fallen on the cobbles, a crate off a lorry at the dock gate. Each takes under two minutes, offers a choice with the hands and leaves something the town knows. At least 60 are written across at least 8 kinds (about one every 15 real minutes, about 70 in 17 hours); no scene is seen twice within 3 real hours and none twice unless its people have changed; none twice in 30 minutes or twice in a week on one street. A helped stranger can turn up days later with a small favour.
 - Standard: Authored, each with a spec and a check, never rolled at random (ruling 13 Nov; DESIGN §18 cuts random encounters); no set piece twice in 30 minutes (ER-JOB-06) Test: S: placement by state; H: empty minutes fall; addendum rules ER-HAPPEN-01 to 02
 - Source: ruling 13 Nov; DESIGN §4, §18 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN-ADDENDUM A18; DEFINITIONS G6, RT-19; RULINGS 13 Nov
-- Status: measured. Coverage row: 3.7. Conflicts settled: C-074.
+- Status: measured. Coverage row: 3.7. Conflicts settled: C-089.
 
 ### RT-19 Content supply at night and late in Acts II-III
 
 - How it works: Street happenings are authored, never rolled. Nights without a job hold a fare with a wrinkle on the radio, a rival's man seen, a crewman with a problem, a happening, or a call on someone whose routine allows it. Never five minutes with nothing new; by day something within 30 real seconds. The library holds enough happenings that none repeats on one street within a game week (about 2.8 real hours under the ruled clock), and the count per hour falls inside the teardown's band. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: The library holds enough happenings that none repeats on one street within a game week; the count per hour inside the teardown's band (GD-02). Test: B: a do-nothing-but-walk night in Act II and in Act III: the five-minute rule and the repeat rule logged.
 - Source: The description, sections 14 (happenings) and 40; ruling 13 Nov; MEASUREMENTS-NEEDED A (density). (waits on a dated study). Designed in: DEFINITIONS RT-19, G6; COPY-2 s.13, s.38; RULINGS 13 Nov; MEASUREMENTS-NEEDED A9
-- Status: pending. Coverage row: RT-19. Conflicts settled: C-075.
+- Status: pending. Coverage row: RT-19. Conflicts settled: C-090.
 
 ### FIT-G6 How many street happenings are written
 
 - How it works: At least 60 written street happenings across at least 8 kinds: the six (the row, the breakdown, the shoplifter, the lost man with a suitcase, the dog loose, the woman locked out) plus a man fallen on the cobbles (help him up, rob him or walk on) and a crate off a lorry at the dock gate (help, take or walk on). Placed by state and hour. No scene twice within 3 real hours; none twice in the game unless its people have changed. Every scene passes the content gate.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G6; FIT-CHECK F17, P11; COPY-2 s.13
-- Status: decided. Coverage row: FIT-G6. Conflicts settled: C-076.
+- Status: decided. Coverage row: FIT-G6. Conflicts settled: C-091.
