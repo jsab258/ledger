@@ -15,11 +15,11 @@ Everyone keeps a day, with Tom or without him.
 - How it works: Everyone named keeps a routine, hour by hour: where they are, what they do, which door they use. Each place in a routine has a cap and an owner, so no doorway jams. People sleep at night and their windows go dark; a lit window means somebody is home. Under the 60 s clock a person's places lie within about 200 m of walking (about 125 real seconds, 2 game hours); longer moves are a few blocks of several game hours. The town code uses no chance, so the same week plays the same way twice.
 - Standard: Places with a cap and an owner (Studies 1, 17); every walk arrives (prototype walk checks) Test: S: walk checks wherever Tom stands; no jammed doorway in a seeded week
 - Source: DESIGN §2; aaa-s01-04 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5 (The town lives without him); DEFINITIONS CLK-03 (F09)
-- Status: decided. Coverage row: 2.1.1. Conflicts settled: C-024.
+- Status: decided. Coverage row: 2.1.1. Conflicts settled: C-036.
 
 ### 2.1.2 The crowd's clock windows
 
-- How it works: The unnamed crowd keeps clock windows: the dock shift at dawn, shoppers through the day, the street emptying at night; adults only. On Quay Street's parade front (100 m, both pavements) the bands are 05:30 to 07:00 6 to 10 people; 08:00 to 09:30, 12:00 to 14:00 and 16:30 to 18:00 25 to 35; other daytime 12 to 20; 18:00 to 22:00 8 to 14; 22:00 to 01:00 3 to 6; 01:00 to 05:30 0 to 2 besides the constable. On the quay road by the fish dock 05:30 to 07:00 it is 15 to 25. Rain halves each band; Thursday's market takes a third off the shops' daytime bands; Saturday's match doubles the street at 15:00 and 17:00 for half an hour. These bands are the design's until the 1990 hours are found.
+- How it works: The unnamed crowd keeps clock windows: the dock shift at dawn, shoppers through the day, the street emptying at night; adults only. On Quay Street's parade front (100 m, both pavements) the bands (design pass 4, rescaled) are 05:30 to 07:00 5 to 8 people; 08:00 to 09:30, 12:00 to 14:00 and 16:30 to 18:00 12 to 20; other daytime 6 to 12; 18:00 to 22:00 5 to 10; 22:00 to 01:00 2 to 5; 01:00 to 05:30 0 to 2 besides the constable. On the quay road by the fish dock 05:30 to 07:00 it is 10 to 18. One camera frame holds 4 to 10 at a busy band (GD-02). Rain halves each band; Thursday's market takes a third off the shops' daytime bands; Saturday's match doubles the street at 15:00 and 17:00 for half an hour (up to 30). These bands are the design's until the 1990 hours are found.
 - Standard: Hours from 1990 research (owed) Test: S: crowd counts by hour match the researched table
 - Source: DESIGN §2; aaa-s01-05 (no reference figure yet). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5; DEFINITIONS G9 (FIT-G9); CLOUD-FIGURES B4
 - Status: unmeasured. Coverage row: 2.1.2.
@@ -50,14 +50,14 @@ Everyone keeps a day, with Tom or without him.
 - How it works: The game runs from Monday 15 October 1990. Thursday is market day in Copper Row and empties the Hook's shops; Saturday's match fills the street at three and five; on Sunday the shops shut and the chapel is busy. Two dated days: Bonfire Night (a display on the quay, adults only), taken as Monday 5 November, and Remembrance Sunday at the chapel on 11 November, both in week 4 of the 7-week calendar. Nobody speaks of real people or news; the invented local poll-tax campaign may be talked about. After the ending the town repeats its ordinary weeks with no special days beyond Christmas Day.
 - Standard: No real people or events spoken of (canon: no real people); no children (canon) Test: S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02
 - Source: canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A20; DESCRIPTION-COPY-2 §5; DEFINITIONS CLK-06, RT2-21; canon (Brands, content rule)
-- Status: measured. Coverage row: 2.1.6. Conflicts settled: C-025.
+- Status: measured. Coverage row: 2.1.6. Conflicts settled: C-037.
 
 ### FIT-G9 Crowd counts by hour and place
 
-- How it works: People in view on Quay Street's parade front (100 m, both pavements): 05:30 to 07:00, 6 to 10; 08:00 to 09:30, 12:00 to 14:00 and 16:30 to 18:00, 25 to 35; other daytime, 12 to 20; 18:00 to 22:00, 8 to 14; 22:00 to 01:00, 3 to 6; 01:00 to 05:30, 0 to 2 besides the constable. On the quay road by the fish dock 05:30 to 07:00, 15 to 25. Rain halves each band; Thursday's market takes a third off the shops' daytime bands; Saturday's match doubles the street at 15:00 and 17:00 for half an hour. Counts sampled each game hour fall inside the band in dry weather and inside half the band in rain.
+- How it works: People in view over Quay Street's parade front (100 m, both pavements), by hour, rescaled to GD-02: 05:30 to 07:00, 5 to 8; busy bands 08:00 to 09:30, 12:00 to 14:00 and 16:30 to 18:00, 12 to 20; other daytime hours 6 to 12; 18:00 to 22:00, 5 to 10; 22:00 to 01:00, 2 to 5; 01:00 to 05:30, 0 to 2 besides the constable; the quay road by the fish dock 05:30 to 07:00, 10 to 18. Rain halves each band; Thursday's market takes a third off the shops' daytime bands; Saturday's match doubles the street at 15:00 and 17:00 for half an hour (up to 30, the archive's event-night top). Counts sampled each game hour fall inside the band in dry weather and inside half the band in rain. These are stretch counts, more than one camera frame holds (a frame is 4 to 10, see GD-02).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS §G9; FIT-CHECK F12, F31, P30; DESCRIPTION-COPY-2 §5
-- Status: pending. Coverage row: FIT-G9.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 G9; design pass 4 'The crowd against the counted views' and Run 5 second pass (stretch counts stay as rescaled)
+- Status: pending. Coverage row: FIT-G9. Conflicts settled: C-038.
 
 ### FIT-G10 Opening hours, day and night
 
@@ -101,7 +101,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 
 ### 2.2.5 Give-away rules
 
-- How it works: Each give-away makes a witness catch more than the same act without it: running; the same coat as last night; blood until washed with water in private (the launderette washes a coat too and remembers it); dirt; a weapon in the hand (watchers scatter once one is out); clothes wrong for the door he knocks at; bruises, a cut lip or a limp; a holdall; the car. A deed done from the car always names the car; the coat buys doubt about the face and none about the car. CCTV is rare (the bank's), its tape recycled weekly.
+- How it works: Each give-away makes a witness catch more than the same act without it: running; the same coat as last night; blood until washed with water in private (the launderette washes a coat too and remembers it); dirt; a weapon in the hand (watchers scatter once one is out); clothes wrong for the door he knocks at; bruises, a cut lip or a limp; a holdall; the car. A deed done from the car always names the car; the coat buys doubt about the face and none about the car. CCTV is rare (the bank's; a second site is his, Q10), its tape recycled weekly.
 - Standard: ER-EYES-10 Test: S: golden rows per give-away
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2 (ER-EYES-10); DESCRIPTION-COPY-2 §7; canon (Era)
 - Status: decided. Coverage row: 2.2.5.
@@ -156,7 +156,7 @@ Talk passing between people who meet; the engine, never the show.
 - How it works: Talk cools by kind, about 1 to 7 game days: a scuffle or lift a day or two, a break-in about three, a wounding or robbery about a week; a hit-and-run 3 game days, an officer struck 7; a body or a killing never cools, and the person who saw keeps it for good. A told version cools like the seen one. This replaces the Core's single 96-hour half-life and needs new golden rows. KCD2's wanted status fades in a few in-game days; RDR2's bounty stays until paid. Under the 60 s clock talk cools in 24 real minutes to 2.8 real hours.
 - Standard: 1 to 7 game days by kind (a lift or a scuffle a day or two, a break-in about three, a wounding or robbery about a week), replacing the Core's single 96-hour half-life; a told version cools like the seen one; slots shed by GV-02. Test: S: new golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md C1: KCD2 wanted fades within a few in-game days (GamerBlurb, PC Gamer, Gfinity 2025); RDR2 bounty held until paid (rdr2.org 2023); GTA VI clues shed by change (Vice, GamesRadar 2026) (reference game). Designed in: DESIGN §2; CLOUD-FIGURES C1; DEFINITIONS RT2-16, CLK-07; ONE-SHOT-PROMPT Who tells whom
-- Status: measured. Coverage row: 2.4.2. Conflicts settled: C-026.
+- Status: measured. Coverage row: 2.4.2. Conflicts settled: C-039.
 
 ### 2.4.3 Showing what people know
 
@@ -167,7 +167,7 @@ Talk passing between people who meet; the engine, never the show.
 
 ### 2.4.4 It comes back
 
-- How it works: In week one every answer to the outfit and every plainly seen deed is said to Tom's face by somebody he has met, within one game day (on paper: the outfit's answer at minute 13 by Darren; a seen night 16 times in 16). Something must come back to him within his first 30 real minutes. Every reaction traces to a chain of sightings and tellings the test hook can print; there is no all-knowing town. At 60 s a game hour a game day is 24 real minutes.
+- How it works: In week one every answer to the outfit and every plainly seen deed is said to Tom's face by somebody he has met, within one game day (on paper at the old clock: the outfit's answer at minute 13 by Darren; a seen night 16 times in 16). Something must come back to him within his first 30 real minutes. Every reaction traces to a chain of sightings and tellings the test hook can print; there is no all-knowing town. At 60 s a game hour a game day is 24 real minutes.
 - Standard: ER-EYES-08: in week one within one game day; and within the first 30 real minutes at the playing clock (gossip timeliness, map-players S4) Test: S: 16 seeded weeks; timeliness at the playing clock
 - Source: DESIGN §2; PLAYERS second study (reference game). Designed in: DESIGN §2 (ER-EYES-08); ONE-SHOT-PROMPT Who tells whom, S06; PARTS-TREE map-players S4; DEFINITIONS clock
 - Status: measured. Coverage row: 2.4.4.
@@ -224,7 +224,7 @@ What people do once they have seen something.
 - How it works: Each slot a witness can hold is shed its own way, and only against witnesses who have not yet told anyone: the coat (change it at the office), the car (the second car, the roof sign off, new plates or a respray), the face (a cap and scarf at night, a barber for a week), the companion (walk apart from Ron), the weapon (get rid of it). Gossip already carried is never undone, so a witness who told first still names it. Tom's guess of what each person holds of him shows in words on the Ledger's People page, never as icons. A cap or scarf is itself a mark by day.
 - Standard: A changed slot no longer matches for witnesses who had not told; gossip already carried is never undone; the Ledger shows Tom's guess per slot in words. Test: B: deed, change one slot, meet the same witness: only that slot fails to match; a witness who told first still names it.
 - Source: production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md (DECIDED by the design proof, for him to overturn). Designed in: GTAVI-MAP §GV-02; DESIGN-ADDENDUM A21; DESCRIPTION-COPY-2 §26
-- Status: decided. Coverage row: GV-02. Conflicts settled: C-027.
+- Status: decided. Coverage row: GV-02. Conflicts settled: C-040.
 
 ### RT2-10 Crowd extras as witnesses
 
@@ -243,14 +243,14 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: At night (22:00 to 06:00) the beat constable walks a fixed two-part beat at 1.1 m/s: a short round of about 200 m (up Quay Street past Mickey's, round the bend to the yards' lane, down to the quay road and back; about 3 real minutes, Mickey's door tried) then a 240 m landing leg (about 3.6 minutes, the landing looked over for 15 s); the whole cycle about 7 real minutes. The beat never changes by chance, so the player can learn it. He is always heard or seen at least 3 s before he can challenge, and he calls out first. He challenges on suspicion: carrying at night, running, bloodied, or where he should not be. By day he walks Quay Street and the north road to the cold-store road. A rattled bin moves him off the beat and he rejoins it where he left.
 - Standard: Heard or seen 3 s before a challenge; calls out first (ER-POL-02) Test: S and H: the challenge announced
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 (ER-POL-02); DEFINITIONS G5; DESCRIPTION-COPY-2 §18; ONE-SHOT-PROMPT 21
-- Status: decided. Coverage row: 2.6.1. Conflicts settled: C-028.
+- Status: decided. Coverage row: 2.6.1. Conflicts settled: C-041.
 
 ### 2.6.2 Challenge and search
 
 - How it works: Stand, and he searches: he finds exactly what is under the coat and in the hand, and what he finds he keeps. Run, and it is a chase. Or a word: talked round if he has no cause; a note offered works on one of the two bought men; offered to an honest one, it is a crime he saw. A foot chase that ends with his hand on Tom's collar is searched as if Tom had stood: nothing found and no cause beyond running gives a name taken and a word; a weapon, stolen goods, the envelope, a signed statement or a deed the officer saw gives an arrest. The next challenge by that officer is on cause.
 - Standard: DESIGN §8: stand and be searched, run and it is a chase Test: S: a search finds what is carried
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8; DESIGN-ADDENDUM A13; DEFINITIONS RT2-22; DESCRIPTION-COPY-2 §18
-- Status: decided. Coverage row: 2.6.2. Conflicts settled: C-029.
+- Status: decided. Coverage row: 2.6.2. Conflicts settled: C-042.
 
 ### 2.6.3 Statements and the arrest rule
 
@@ -261,17 +261,17 @@ A pressure Tom can read and answer, never the end of the game.
 
 ### 2.6.4 Custody as hours
 
-- How it works: An arrest costs hours, never the game, and under 2 real minutes of play: a constable walks up (go with him, or run), the station, the duty solicitor (free), the hours pass. About 6 hours for a window (2 and a caution if he owns up), 8 for a wounding, 12 for a robbery, 22 for a killing, then released under investigation or charged and remanded. Also 8 for a hit-and-run or an officer struck, 12 for a gun found at a War stop, 22 for an officer killed; a refused stop with no deed behind it is 2 hours and a caution (a charge the second time). The coat is kept if he wore it; never taken twice for one deed; the street sees him go. This sits inside PACE (24 hours, 36 for serious).
-- Standard: About 6 h a window, 8 a wounding, 12 a robbery, 22 a killing, then released under investigation or charged and remanded (not bail); under 2 real minutes; never twice for one deed (ER-POL-03). Inside PACE limits (24 h, 36 serious); 73% of 1984-87 detainees held under 6 h; 542 held over 24 h in 1990. Test: S: arrest timed
+- How it works: An arrest costs hours, never the game, and under 2 real minutes of play: a constable walks up (go with him, or run), the station, the duty solicitor (free), the hours pass. About 6 hours for a window (2 and a caution if he owns up), 8 for a wounding, 12 for a robbery, 22 for a killing, then released without charge or on police bail pending inquiries, or charged and remanded (PACE 1984 as it stood in 1990). Also 8 for a hit-and-run or an officer struck, 12 for a gun found at a War stop, 22 for an officer killed; a refused stop with no deed behind it is 2 hours and a caution (a charge the second time). The coat is kept if he wore it; never taken twice for one deed; the street sees him go. This sits inside PACE (24 hours, 36 for serious).
+- Standard: About 6 h a window, 8 a wounding, 12 a robbery, 22 a killing, then released without charge or on police bail pending inquiries, or charged and remanded (the 1990 terms; "released under investigation" is later wording); under 2 real minutes; never twice for one deed (ER-POL-03). Inside PACE limits (24 h, 36 serious); 73% of 1984-87 detainees held under 6 h; 542 held over 24 h in 1990. Test: S: arrest timed
 - Source: CLOUD-FIGURES-2026-11-21.md B2: Hansard 8 Jul 1987; Home Office bulletin 1991 via Statewatch; Bottomley 1991 via Kemp and others (real-world figure or published standard). Designed in: DESIGN §8; CLOUD-FIGURES B2; DEFINITIONS RT2-02, RT2-16, RT2-17; DESCRIPTION-COPY-2 §17
-- Status: measured. Coverage row: 2.6.4. Conflicts settled: C-030.
+- Status: measured. Coverage row: 2.6.4. Conflicts settled: C-043.
 
 ### 2.6.5 DS Ellis and the four stages
 
 - How it works: Ellis is already on the warehouse fire. She comes to Quay Street for a body, for a detective's crime once reported, and from the second day for talk once three people of Tom's day world pass on talk of his nights. Four stages, each with its sign: nothing; asking round (her name in the street's talk); investigating (an officer at his door, the office search with notice); a manhunt (a car on the street and his description said aloud). No stage is skipped unseen, and a manhunt's sign shows at least one game hour (60 real seconds) before an arrest. She falls one stage after two quiet game weeks with no new reported deed or charge (never below asking round once she has reached investigating); a manhunt falls to investigating after three days without a sighting.
 - Standard: No stage skipped unseen; a manhunt's sign shows at least one game hour before an arrest (ER-POL-05, provisional on C5) Test: S: every route to a manhunt passes its signs
 - Source: DESIGN §8; ending signs 30 Sep (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 (ER-POL-05); DEFINITIONS RT-13, RT2-02; ONE-SHOT-PROMPT 21; RULINGS 30 Sep
-- Status: decided. Coverage row: 2.6.5. Conflicts settled: C-031.
+- Status: decided. Coverage row: 2.6.5. Conflicts settled: C-044.
 
 ### 2.6.6 Armed response and the dial's police
 
@@ -285,28 +285,28 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: One patrol car works the Hook by day and night on a route; more only at War. The Hook is a 30 mph town; traffic drives at 20 to 28 mph and the patrol is no faster than Tom's car on a straight. The patrol stops a driver doing 50 mph or more or any reckless act (a hit, the pavement, a red light at speed) in its sight; 31 to 49 mph draws a look and a noted plate, never a stop. A stop: the car flashes and sounds, the constable looks at the car and driver (a search if he has cause), notes the plate and gives a caution, under 2 real minutes; refuse and it is a chase. No fines as a system.
 - Standard: Reckless driving in a police car's sight starts a stop; refusing it is a chase (DESIGN §5); no fines as a system (DESIGN §18) Test: S: a stop starts only on reckless driving in sight; ends within 2 minutes; addendum rules ER-TRAFFIC-01 to 02
 - Source: DESIGN §5, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §5, §18; DESIGN-ADDENDUM A12; DEFINITIONS G2; DESCRIPTION-COPY-2 §18
-- Status: decided. Coverage row: 2.6.7. Conflicts settled: C-032.
+- Status: decided. Coverage row: 2.6.7. Conflicts settled: C-045.
 
 ### 2.6.8 Bought men and squaring the law
 
 - How it works: Two named officers in the Hook can be paid or leaned on, each with a price and a limit: one looks away from a car once (£50), the other loses a statement once (£200). A constable's challenge can be answered with a note if he is one of them; offered to an honest one it is a crime he saw. Buying one is an act a colleague may see, and that colleague keeps it. A bought officer Tom strikes stops being bought for good. The station as a whole never changes.
 - Standard: Police corruptible as individuals, never as a thesis (canon) Test: S: one bought officer, his limits; the rest of the station unchanged; addendum rules ER-BOUGHT-01
 - Source: canon (his ruling or canon). Designed in: canon (content rule); DESIGN-ADDENDUM A13; DEFINITIONS G8, RT2-02; DESCRIPTION-COPY-2 §18
-- Status: measured. Coverage row: 2.6.8. Conflicts settled: C-033.
+- Status: measured. Coverage row: 2.6.8. Conflicts settled: C-046.
 
 ### 2.6.9 Charges, bail and the office searched
 
 - How it works: An arrest ends in a caution, or a charge and bail. A charge joins Ellis's case and is read at the ending; there is no court scene and no prison. Charges accumulate one per arrest that ends in a charge, and an office-search find adds one; Ellis's trade (giving her a rival) removes one. Once Ellis reaches investigating she may search the office once, always with notice the evening before (a constable's word at the door, Sheila's warning), and what is stored there counts for the case.
 - Standard: An arrest is hours, a caution, or a charge and bail; no prison terms (DESIGN §8, §18) Test: S: a charge reaches the endings; a search finds what is stored at the office; addendum rules ER-SEARCHED-01
 - Source: DESIGN §8, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8, §18; DESIGN-ADDENDUM A13; DEFINITIONS RT-13, RT2-04; DESCRIPTION-COPY-2 §17
-- Status: decided. Coverage row: 2.6.9. Conflicts settled: C-034.
+- Status: decided. Coverage row: 2.6.9. Conflicts settled: C-047.
 
 ### 2.6.10 Police after a deed
 
-- How it works: A reported deed always brings an officer to its spot; a body brings tape, a torch at night and Ellis next morning. The spot is watched ground for the rest of the night, and the place stays warm for days: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often. After a lost chase the officer walks to the last place he saw Tom and looks round for about a game hour (half a real minute at most on the spot). An anonymous 999 call brings a constable that night but never makes an arrest alone. Nothing on screen marks where he searches.
+- How it works: A reported deed always brings an officer to its spot; a body brings tape, a torch at night and Ellis next morning. The spot is watched ground for the rest of the night, and the place stays warm for days: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often. After a lost chase the patrol searches the last-seen streets for 30 to 120 real s, slowly, lamp on the turnings, then waits on that road for the rest of the night; seen inside the search, the same chase resumes (design pass 4, DP5-C03). An anonymous 999 call brings a constable that night but never makes an arrest alone. Nothing on screen marks where he searches.
 - Standard: rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S. Raised by Y2.3: the place stays warm for days, not minutes: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often; no circle on screen. Test: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30) (reference game). Designed in: DESIGN-ADDENDUM A36; GTAVI-MAP Y2.3 (bars raised); DESCRIPTION-COPY-2 §18; DEFINITIONS RT2-19
-- Status: measured. Coverage row: 2.6.10. Conflicts settled: C-035.
+- Status: measured. Coverage row: 2.6.10. Conflicts settled: C-048.
 
 ### RT-13 Ellis's case model
 
@@ -341,7 +341,7 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: At night the beat constable walks a fixed two-part beat at 1.1 m/s: a short round of about 200 m (up Quay Street past Mickey's, round the bend to the yards' lane, down to the quay road and back to the street's foot, about 3 real minutes, Mickey's door tried) and a landing leg of 240 m (about 3.6 minutes, 15 s looking over the landing), the whole cycle about 7 real minutes under either clock. Mickey's door is in his sight at least every 4 real minutes, the yards' lane and the landing every 7.5; with the street on edge a second constable walks half a cycle behind and the gaps become 2 and 4. The beat never changes by chance and two runs from the same save are identical; a rattled bin moves him off and he rejoins where he left. By day he walks Quay Street and the north road to the cold-store road.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §G5; FIT-CHECK F06, P53; DESCRIPTION-COPY-2 §18
-- Status: decided. Coverage row: FIT-G5. Conflicts settled: C-036.
+- Status: decided. Coverage row: FIT-G5. Conflicts settled: C-049.
 
 ## 2.7 Money
 
@@ -374,7 +374,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - How it works: Rent is £18 every Friday, owed to the landlord's agent, a named man who calls at the counter; drivers' wages (£90 a week) come out of the book weekly. Doing nothing misses Friday's rent; a week of Tom's own fares alone pays it. A missed Friday becomes arrears said in the Ledger and by the agent on Monday; two missed: a letter and notice to quit the flat above in a fortnight; three: the flat is let and Tom sleeps in the office. The office itself is never lost, and paying arrears ends the ladder. A car hit at about 35 mph is off the road for a day.
 - Standard: Doing nothing misses Friday's rent; a week of fares alone pays it (ER-MONEY-03). The £18 rent sits in the 1990 band: council £23.36 a week (Apr 1990), private £65 (1991); cab running costs from 1990 fares (about £1.04 a mile London cab) and diesel about 45p a litre. Test: S: both weeks scripted
 - Source: CLOUD-FIGURES-2026-11-21.md B1: Hansard 27 Jun 1990, 15 Apr 1993, 30 Jan 1992, 18 May 1990 (real-world figure or published standard). Designed in: DESIGN §9 (ER-MONEY-03); CLOUD-FIGURES B1; DEFINITIONS RT-16, G8; DESIGN §5
-- Status: measured. Coverage row: 2.7.4. Conflicts settled: C-037.
+- Status: measured. Coverage row: 2.7.4. Conflicts settled: C-050.
 
 ### 2.7.5 Purses, tills and shops
 
@@ -388,7 +388,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - How it works: Rita's back room (open from rung 2) buys hot goods at about a third of retail (0.33): about 0.2 for jewellery up to 0.4 for a video recorder, less for each further piece the same week. Buyers differ: the second-hand shop takes radios and video recorders, the scrap yard car parts, a man at the back of the caff jewellery, and Wayne's pawn takes goods too; each is also a listener. Rita refuses or lowballs goods whose deed is still hot in talk. A haggle is three offers at most, and no price table shows.
 - Standard: About a third of retail (0.33), from 0.2 for jewellery to 0.4 for a video recorder; less for each further piece the same week; buyers differ in what they take (second-hand shop radios and video recorders, scrap yard car parts, a man at the back of the caff jewellery); each is also a listener. No price table on screen. Test: S: golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md B3: Sutton 2014; AIC 2002; BOCSAR 1998 (real-world figure or published standard). Designed in: CLOUD-FIGURES B3; DESIGN §4, §9; GTAVI-MAP Y2.7; DESIGN-ADDENDUM A30; DESCRIPTION-COPY-2 §14
-- Status: measured. Coverage row: 2.7.6. Conflicts settled: C-038.
+- Status: measured. Coverage row: 2.7.6. Conflicts settled: C-051.
 
 ### 2.7.7 Flows ledger
 
@@ -430,14 +430,14 @@ Two pots: clean money in the fare book, night money in the tin.
 - How it works: Every item on the spending list has a price, spoken by the seller and never shown as a table (1990 prices, to be checked): 20 cigarettes £1.70; the paper 25p; tea at the caff 30p; a caff meal £2.50; a crowbar £6; a torch £4; a key cut £1.50; a second-hand coat £15; the decent jacket £45; the good overcoat £90; the barber £4; a used car £600 to £1,200; the doctor's stitches £20; a brief on call £50 a week; a bought officer £50 to look away once, £200 to lose a statement once. A driver's wage is £90 a week; a man's cut £10 to £40. In Act I each driver's fares bring the book about £85 to £95 a week; from rung 2 each car on a good rank brings £110 to £140.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS §G8; FIT-CHECK F24, P15; DESCRIPTION-COPY-2 §14
-- Status: pending. Coverage row: FIT-G8. Conflicts settled: C-039.
+- Status: pending. Coverage row: FIT-G8. Conflicts settled: C-052.
 
-### FIT-F24 Money over nine weeks (in against out)
+### FIT-F24 Money over nine weeks (in against out; seven under the ruled clock)
 
 - How it works: In week one Tom's own fares (about 18 at around £1.30) come to about £23, which covers the £18 rent, and the debts alone could bring £156; after week one there is nothing to compare, and the worry is money that stops mattering. The fix is G8's amounts for the spending list, then a money run over the whole calendar on the sim once the figures exist (cloud, by Sat 28 Nov). The related wash row (F25) needs night income, which has no amount; the count can hide at least £70 a week plus 80% of the firm's fares.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS §G8, GD-07; FIT-CHECK F24, F25
-- Status: pending. Coverage row: FIT-F24. Conflicts settled: C-040.
+- Status: pending. Coverage row: FIT-F24. Conflicts settled: C-053.
 
 ## 2.8 Debts
 
@@ -482,7 +482,7 @@ The run to the ferry landing that Mickey kept.
 - How it works: The contract comes before rung 3, never from it. The cold stores' shift manager (a named minor man) offers it once the firm has met the packing shift on time on five mornings in one game week and holds at least four cars; winning it opens the dock gate. Rung 3 is reached with five cars, a night desk, a first front, a first round and the contract. It is open on every road out of Act I, wound down included. It is lost after three missed mornings in one game week (its fares stop and the dock gate's daily pass goes, but no rung or name goes back), paused while the licence is suspended, and can be won again once, the same way.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-01 Test: B (bot), as written under RT2-01
 - Source: design pass 3, RT2-01 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-01; DESIGN §14; DESCRIPTION-COPY-2 §25
-- Status: decided. Coverage row: RT2-01. Conflicts settled: C-041.
+- Status: decided. Coverage row: RT2-01. Conflicts settled: C-054.
 
 ## 2.10 Rivals
 
@@ -494,7 +494,7 @@ Three heads, each going after a different ledger.
 - How it works: Each rival climbs the same ladder: noticed, a visit, pressure, a threat, a sit-down. No rung is skipped and each is said to his face or shown on his street within a game day. Every climb is lifted from the rung below by a state: noticed by the first thing its people see or hear of Tom; a visit by two more sightings or tellings, or Tom reaching rung 2; pressure by refusing the visit, rung 3 or a deed against its men; a threat by defying or countering a pressure or a second deed; the sit-down by defying the threat, rung 4 or one of its men killed. Paying holds a rival two game weeks unless Tom does a deed against him.
 - Standard: ER-RIV-02 Test: S: no rung skipped, each said or shown
 - Source: DESIGN §13 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §13 (ER-RIV-02); DEFINITIONS RT2-07, RT-04; DESCRIPTION-COPY-2 §24
-- Status: decided. Coverage row: 2.10.1. Conflicts settled: C-042.
+- Status: decided. Coverage row: 2.10.1. Conflicts settled: C-055.
 
 ### 2.10.2 Rival eyes
 
@@ -526,7 +526,7 @@ Three heads, each going after a different ledger.
 
 ### RT-06 Rival threat rung and counters
 
-- How it works: At the threat rung each rival shows one harm in its own style, said to his face or shown on his property, never yet done to a person: the Widow's men put the office window in or tell a driver he will not drive again; Agar's solicitor names a date for the licence hearing; Cammack's boys slash car two's tyres on the rank. Property harm is repaired by people for money and a day (the glazier, the tyre man) and the street sees it. A counter spends a hook Tom holds. The Fixer's truce holds a rival two game weeks, once a game.
+- How it works: At the threat rung each rival shows one harm in its own style, said to his face or shown on his property, never yet done to a person: the Widow's men put the office window in or tell a driver he will not drive again; Agar's solicitor names a date for the licence hearing; Cammack's lads slash car two's tyres on the rank. Property harm is repaired by people for money and a day (the glazier, the tyre man) and the street sees it. A counter spends a hook Tom holds. The Fixer's truce holds a rival two game weeks, once a game.
 - Standard: Each rival's threat rung shows one harm in its own style; every harm repairable; a counter needs a hook Tom holds; a truce holds exactly two game weeks. Test: B: ladder runs to the threat rung for each rival; counter with and without a hook.
 - Source: The description, sections 29, 30. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-06, RT2-18; DESCRIPTION-COPY-2 §24, §38
 - Status: decided. Coverage row: RT-06.
@@ -536,7 +536,7 @@ Three heads, each going after a different ledger.
 - How it works: Each rival rung is lifted by a state, from the rung below, never two, never by time alone: noticed on the first thing its people see or hear of Tom; a visit on two more sightings or tellings of his firm on that rival's ground, or Tom reaching rung 2; pressure on refusing the visit, rung 3 or any deed against its men or property; a threat on defying or countering a pressure or a second deed; the sit-down on defying the threat, rung 4 or one of its men killed. A deed against a rival lifts him one rung at once. Paying at a rung holds that rival there two game weeks unless Tom does a deed against him. Each climb is said to Tom's face or shown on his street within a game day. The only climb on time is the fail-safe.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-07 Test: B (bot), as written under RT2-07
 - Source: design pass 3, RT2-07 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-07, RT-04, RT-06; DESCRIPTION-COPY-2 §24
-- Status: decided. Coverage row: RT2-07. Conflicts settled: C-043.
+- Status: decided. Coverage row: RT2-07. Conflicts settled: C-056.
 
 ### RT2-08 Rivals as actors
 
@@ -585,7 +585,7 @@ The rise under the hood: never a number.
 
 ### 2.12.1 The name ladder
 
-- How it works: Each person uses the name they have reached: the new owner, then Nowak, then Tom, then Tommy (Tom to most and Tommy to two or three at rung 4). The gate is knowing, not liking: a man who fears him may still call him Tom. A step never goes back, and each step up is heard within a game day of being reached. Sheila withholds his name until she trusts him, which comes with time and a clean week in which he never asked her to put the books off.
+- How it works: Each person uses the name they have reached: the new owner, then Nowak, then Tom, then Tommy (Tom to most and Tommy to two or three at rung 4). The gate is knowing, not liking: a man who fears him may still call him Tom. A step never goes back, and each step up is heard within a game day of being reached. Sheila withholds his name until she trusts him, which comes with a clean week in which he never asked her to put the books off (built so meanwhile; Q7 for him: a visible state rather than a day count).
 - Standard: canon; ER-RISE-02 (heard within a game day, never goes back) Test: S: each step heard within a day
 - Source: canon premise; ruling 29 Sep (his ruling or canon). Designed in: canon (Premise and cast); DESIGN §14 (ER-RISE-02); DESCRIPTION-COPY-2 §26; RULINGS 29 Sep
 - Status: measured. Coverage row: 2.12.1.
@@ -595,7 +595,7 @@ The rise under the hood: never a number.
 - How it works: Four rungs, each on exactly its holdings. Rung 1, the nephew: two cars, two drivers, Ron, Sheila, £23.50, the debt book; opens the street, the rank, the landing. Rung 2, Nowak: his answer to Sheila, a third car, a first recruit; opens Mickey's locked office and the real book (on trust) and Rita's back room. Rung 3, Tom: five cars, a night desk, a first front, a first round and the cold-store contract; opens the Harbour Board's counter and a solicitor. Rung 4, the port's man: fronts and rounds across the Hook (at least two of each), men at the dock gate, cold store and landing, a brief on call; opens the sit-down and people stepping aside.
 - Standard: As RT-04: each rung on exactly its holdings; what opens at each rung opens then and not before. Test: B: rung climbs with holdings added one at a time.
 - Source: The description, section 32; RT-04. (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §14; DEFINITIONS §2.12.2, RT-04, RT2-01, RT2-09; DESCRIPTION-COPY-2 §26
-- Status: decided. Coverage row: 2.12.2. Conflicts settled: C-044, C-045.
+- Status: decided. Coverage row: 2.12.2. Conflicts settled: C-057, C-058.
 
 ### 2.12.3 Access and soft keys
 
@@ -673,7 +673,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - How it works: The rank outside Mickey's is his. The ferry rank and a second rank are won by being there with a car on the board five days in a fortnight, or by a word with whoever holds them. Accounts open in order: the cold-store contract, the Harbour Board's late men, a solicitor's office. The cold-store manager offers the contract once the packing shift has been met on time five mornings in one game week and the firm holds at least four cars; it is lost after three missed mornings in a week and can be won again once. From rung 2 each car on a good rank brings £110 to £140 a week.
 - Standard: A rank is won by either road and never otherwise; accounts open in that order, each at its rung (the cold store at rung 3); "enough days" is five days in a fortnight (a balance figure checked with GD-07). Test: B: rank presence runs; account order.
 - Source: The description, sections 28, 31. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.15.2, RT2-01, G8; DESIGN-ADDENDUM A14; DESCRIPTION-COPY-2 §23
-- Status: decided. Coverage row: 2.15.2. Conflicts settled: C-046.
+- Status: decided. Coverage row: 2.15.2. Conflicts settled: C-059.
 
 ### 2.15.3 Other firms on the ranks
 
