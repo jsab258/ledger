@@ -12,7 +12,7 @@ His clothing pipeline, then props, vehicles, buildings and people modules.
 
 ### 9.1 Kiln
 
-- How it works: His clothing pipeline, then props, vehicles, buildings and people modules.
+- How it works: His clothing pipeline, then props, vehicles, buildings and people modules. Paused now: after the Marvelous export, Kiln, hair and the crowd wait for the browser prototype's evening, and no Unreal work runs until the prototype is done (RULINGS 20 and 21 Nov).
 - Standard: Three proofs before any other module (18 Nov): held-back garments pass; Ron walks the packaged game in a Kiln outfit; a garment costs a fraction of the old route Test: Kiln v1 checklist; held-back jobs
 - Source: RULINGS 13, 14, 18 Nov (machinery: not met by the player; no coverage row). Designed in: Kiln design note; KILN-TO-GAME-PLAN
 - Status: machinery. Coverage row: none (group 9 is not met by the player).
