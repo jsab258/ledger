@@ -44,6 +44,7 @@ Rate used (estimate, from today's logs): a sample read to the solid rule costs a
 - Agreement with Opus: Sonnet 73% white, 78% grey; Haiku 76% white, 63% grey. Neither passes.
 - But Opus is not a fit answer key: on sheet 6wy7gx (m_2RP_EIHM8, 9:00 to 10:50) it read two white stars where the pixels, zoomed, show three, and Sonnet and Haiku read three; at 9:05 the frame shows three white and three grey, and all three models miscounted the grey.
 - Verdict: no model is adopted as the star reader. Stars and timers are code's job (bright-blob count per cell against a template, checked by eye on two sheets); models only label scenes and spot-check. The answer key for any later model trial is that code count, not Opus.
+- The code counter, first pass (tools/star_count.py, 14:40): lit counts match every eye-checked cell on 6wy7gx; grey counts still take grey scenery, and white timer digits read as lit stars in three cells. Two calibration tries used; research (how HUD readers in speedrun and esports tools find icon slots) before a third.
 - FLAG on the one solid number: "G5 heat length at peak two stars" was read from this clip, whose peak shows three lit stars. The durations may stand, but the star level they belong to must be re-read by the code count before the number counts at the gate.
 
 ## By aspect and game
