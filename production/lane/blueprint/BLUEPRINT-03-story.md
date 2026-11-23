@@ -15,7 +15,7 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - How it works: Week one runs from Monday 15 October 1990 to Sunday, about two hours, the most scripted stretch. Tom arrives with £23.50, rent of £18 falls on Friday, and Mickey's debt book holds five debts worth £156. Five threads run through it: the outfit's claim (asks on nights one, three, five and seven, each an envelope or a carry Ron brings), the warehouse fire, Mickey's real book, the street deciding who he is, and someone worth being honest for. On Sunday Sheila asks 'So which is it going to be?': wind it down, take it over, or refuse to say, and the street learns the answer. Every answer reaches Act II's opening state by a state, not a date: 'take it over' and 'wind it down' on Sunday, 'refuse to say' when a third car, a first recruit, or the outfit's ask taken twice in week two makes the firm his. The panel bar is 5 of 8 for a week as the first milestone (M1); 7 of 8 is the gate's bar for the release-grade prototype. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: The first week's nine designs stand as written (ruling 29 Sep); M1 5 of 8 for a week Test: H: the week run; panel M1
 - Source: ruling 29 Sep; BUILD-ORDER (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.36; COPY-2 s.30 and s.4; DESIGN s.15, s.16; DEFINITIONS RT-04; PANEL-BAR-2026-11-21; BUILD-ORDER M1; RULINGS 'The story and the first week'
-- Status: measured. Coverage row: 3.1.1. Conflicts settled: C-060.
+- Status: ruled (his ruling or canon). Coverage row: 3.1.1. Conflicts settled: C-060.
 
 ### 3.1.2 Act II, The Rise and the Squeeze
 
@@ -36,7 +36,7 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - How it works: Endings are states, never picked from a list, and no single beat fails the run. Three are shown, each with a better and a plainer turn, over five built states: the Kingdom (business survives and the books hold; best turn the built 'Both'), the Straight Life (no business, one friendship holds; best turn the built 'Quiet'), and Burn Both (neither). A fixed rule reads the save when the books open on Act III's last day: the business survives if the licence stands, at least car two runs, no morning fell and at most two were thin; a friendship holds if Alison or Danby was called on at least three times with no cooler door at the last and has not learned of a killing as fact; the Kingdom's best turn also needs the street holding none of his rackets as fact and no serious charge outstanding; the Straight Life's best turn needs the successor's offer accepted and not withdrawn and Tom not hunted for a killing. No redemption path; every ending is reachable by a route, including from a hunted state. After it a short close in the town, credits, then play resumes within 10 s with no new main beats; no new game plus. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Two or three endings (ruling 28 Oct, his pick M8 19 Nov); ending states never picked from a list; no single beat fails the run Test: S: every ending by a scripted route, including hunted (ER-END-01)
 - Source: RULINGS; advisor 241 point 8 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.39; COPY-2 s.33; DESIGN s.16, QUESTIONS 1; DEFINITIONS RT2-04, RT-01; canon OPEN 3; RULINGS 28 Oct
-- Status: measured. Coverage row: 3.1.4. Conflicts settled: C-065, C-066.
+- Status: ruled (his ruling or canon). Coverage row: 3.1.4. Conflicts settled: C-065, C-066.
 
 ### 3.1.5 Ending signs and Tom's reading
 
@@ -50,7 +50,7 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - How it works: Mickey died of his heart at the office early one morning; Ron found him; nobody thinks otherwise (ruling 30 Sep). Winding the business down ends Mickey's arrangement. The warehouse fire has a street version that is a street fact (Iveson bought out of it, Alison asks about it, Ellis is on it) and the truth is never the street's, however it is asked. Only regulars who knew Mickey describe him, in two approved lines. Mickey's real book (everything he ran, in his own hand) sits behind the locked inner office and is shown when Sheila trusts Tom; it gives at least five new names of debts and arrangements, and Mickey's revolver lies under it, found once. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
 - Standard: Ruling 30 Sep (Mickey's death and the fire) Test: S: the street version stays a street fact
 - Source: ruling 30 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.36; COPY-2 s.30, s.31; DESIGN s.9, s.16; RULINGS 30 Sep; DEFINITIONS RT-02
-- Status: measured. Coverage row: 3.1.6.
+- Status: ruled (his ruling or canon). Coverage row: 3.1.6.
 
 ### RT-01 Act III morning grading
 
@@ -90,35 +90,35 @@ Named people.
 - How it works: The principals are canon's cast, each a whole person with a routine, a memory and live talk: Sheila Dunn (53, bookkeeper, at Mickey's since 22), Ron Kirby (58, ex-docker, the door and rank), Darren Milner (25, street hustler), Ada, June Suddaby, Father Brendan Walsh, Alison Sedman, Philip Danby (a teacher who is never seen at work), DS Carol Ellis, Geoffrey Agar, Maureen Jensen, Danny Cammack and Keith Garbutt. What the town calls Tom climbs the new owner, Nowak, Tom, Tommy; Sheila alone withholds his name until she trusts him. Faces are frozen for Ron (P2), Sheila (S4 with its hair), Darren (S6, Epic's short cut) and Tom (L1); the other eleven casting sheets are approved as text and their faces are cast in MetaHuman from them. Voices on Pocket: Sheila p267, Ron p227, Darren recast p286, Agar p226, the dispatcher p280; Danny p243, June p277 and Father Walsh get a listening page and are cast only on his yes.
 - Standard: Casting sheets approved as text (25 Sep); faces frozen for Ron, Sheila, Darren, Tom Test: his eye on each whole person; H: talk transcripts
 - Source: RULINGS faces line; canon (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.1, 'Who lives here'; COPY-2 s.5; canon Premise and cast; RULINGS 'Faces, hair and voices'; DESIGN s.16
-- Status: measured. Coverage row: 3.2.1.
+- Status: ruled (his ruling or canon). Coverage row: 3.2.1.
 
 ### 3.2.2 The firm's people
 
 - How it works: Pauline Kitching runs the radio and calls the fares; Kevin Needham drives days and Terry Hodgson nights, whether Tom drives or not, so the book fills slowly without him; Ron is on the door and the rank, Sheila at the book, Darren runs messages and sells what he hears. Kevin is also one of the Widow's eyes among the regulars. Pauline, Kevin and Terry are among the 12 most-seen people who get 60 own street lines each (L-01). The dispatcher's voice is p280.
 - Standard: the thirty regulars as written Test: S: the firm runs; H: Pauline's directions
 - Source: ruling 30 Sep (his ruling or canon). Designed in: COPY-2 s.5, s.12; DESIGN s.5, s.12, s.13, s.16; DEFINITIONS L-01; RULINGS voices
-- Status: measured. Coverage row: 3.2.2.
+- Status: ruled (his ruling or canon). Coverage row: 3.2.2.
 
 ### 3.2.3 The thirty regulars
 
 - How it works: The thirty regulars stand as written (ruling 30 Sep): each has a routine, a temper (own nerve, loyalty and readiness to talk) and about 30 own street lines, except Sheila, Alison and Ada who keep the shared lines; Ron, Darren, Father Walsh and June have their own. The 12 most-seen people get 60 own lines each. A person's own line comes at most once a day. Among them: Brenda Laverack, Wayne Harrison, Lee Drewery, Julie Kettlewell, Dennis Iveson and his yard hand, Ian Megginson, Norman Dent, Karen Grummitt, Shaun Hewson, Susan Coverdale, Rita Welburn, Hal and Grace Rinaldi.
 - Standard: Thirty regulars stand as written (ruling 30 Sep); about 30 own street lines each Test: H: transcripts; S: line counts
 - Source: ruling 30 Sep; DESIGN §11 (his ruling or canon). Designed in: COPY-2 s.5, s.28; DESIGN s.11; DEFINITIONS L-01; RULINGS 'Talk and AI' street lines
-- Status: measured. Coverage row: 3.2.3. Conflicts settled: C-070.
+- Status: ruled (his ruling or canon). Coverage row: 3.2.3. Conflicts settled: C-070.
 
 ### 3.2.4 The crowd
 
 - How it works: The crowd is adults only, in period clothes, generated under the content rule, with at least 6 lines per kind of speaker per situation. It keeps clock windows by hour (dock shift at dawn, shoppers by day, street emptying at night), walks round people and things, looks before stepping into the road and uses crossings. One camera frame at the default field of view (86) on the parade holds 4 to 10 distinct people at busy bands, 2 to 7 at other daytime hours and 0 to 2 on quiet nights; the market and the match may hold 15 to 25. About half stand or sit at a place made for it, in groups of 2 to 3 facing inward. Over the whole 100 m parade front the G9 stretch bands apply (see FIT-G9). The 5 Oct audit found 6 of 13 street figures with a resident behind them.
 - Standard: No children anywhere (canon); 6 of 13 street figures have a resident behind them (map-players) Test: S: crowd generation content check; counts by hour
 - Source: canon; PLAYERS second study (reference game). Designed in: DEFINITIONS design pass 4 Run 5 second pass GD-02; design pass 3 G9; COPY-2 s.5; DESIGN s.2; walkers-vs-residents audit; PLAYERS; canon content rule
-- Status: measured. Coverage row: 3.2.4. Conflicts settled: C-071.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.2.4. Conflicts settled: C-071.
 
 ### 3.2.5 Someone worth being honest for
 
 - How it works: One of Act I's five threads: a friendship that can hold, with Alison Sedman or Philip Danby, built from short calls and the honesty in them. Whether it holds at the close is part of every ending: it holds when the friend has been called on at least three times with no cooler door at the last and has not learned of a killing by Tom as fact. A friend's unasked act is one of the ending's signs. Danby is a teacher by trade but the school stands closed, so he is never seen at work; Alison's thread starts with her fare to the warehouse row, asking about the fire.
 - Standard: One of Act I's five threads; Danby is never seen at work (the school stands closed) Test: S: the friendship reaches its ending state
 - Source: DESIGN §16; canon (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.35; COPY-2 s.29, s.4; DESIGN s.16; DEFINITIONS RT2-04; canon
-- Status: measured. Coverage row: 3.2.5.
+- Status: ruled (his ruling or canon). Coverage row: 3.2.5.
 
 ### 3.2.6 One complete person
 
@@ -132,7 +132,7 @@ Named people.
 - How it works: Tom calls on a friend or the love interest at a place and hour their routine allows: tea at Ada's, the caff with Alison, a walk with Danby. It is a short scene of talk under 2 real minutes with no score and no pass mark. What is said draws on what each knows, so a visit after a bad night carries it. Calling again inside the set gap is remembered: a cooler door, 'you again'. It counts in the talk share (under 30% of play, aim about 19%). At least three calls without a cooler door at the last make a friendship that holds; on Act III's last day he can make at most three calls.
 - Standard: rule: A visit is possible only where and when the person's routine allows, shows no score, lasts under 2 real minutes, and a second call inside the set gap draws a cooler answer. Check S. Test: A visit is possible only where and when the person's routine allows, shows no score, lasts under 2 real minutes, and a second call inside the set gap draws a cooler answer. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A39 (from REFERENCE-MECHANICS-2026-11-20 M3.28, M3.29, M3.35) (reference game). Designed in: ONE-SHOT-PROMPT s.35; COPY-2 s.29; DESIGN-ADDENDUM A39; DEFINITIONS RT2-04, RT2-15
-- Status: measured. Coverage row: 3.2.7.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.2.7.
 
 ## 3.3 Side stories
 
@@ -144,7 +144,7 @@ Named people.
 - How it works: Side stories are found on foot with no markers, mostly light or grey against the main story, each 3 to 5 steps and ending in something the town knows; some are offered only after earlier steps; they run beside the acts from week one (one is placed at minute 23 of the first hour). Count: about 25 (at least 22, at most 28) at a median 10 to 14 minutes, about 5 hours inside the 15 to 20. The 32 drafts of 8 Nov are the list to draw from. Each act holds at least one scene written to be funny.
 - Standard: 25 to 40; whole stories, not errands (PLAYERS praise 5); the 32 drafts of 8 Nov Test: H: found unaided; S: each ends in a town fact
 - Source: DESIGN §4; Study 17 (reference game). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13, s.4; DESIGN s.4; DEFINITIONS F15, GD-05
-- Status: measured. Coverage row: 3.3. Conflicts settled: C-073.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.3. Conflicts settled: C-073.
 
 ## 3.4 Fares
 
@@ -170,7 +170,7 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - How it works: Pauline gives the way by landmark ('past the chapel, second left, the house with the slippers on the step') and says it again on R. The way she gives is always right: a scripted driver following her words alone arrives. Nothing said on the radio is private: the office and every cab hear it, and so does anyone who sits in a cab, so the first thing the Widow learns of Tom may come from his own day driver. A passenger who knows the way adds a landmark line at least once per 20 s of a chase.
 - Standard: ER-DRIVE-09: always right, repeated on a key Test: S: a scripted driver follows each fare's words alone
 - Source: DESIGN §5; canon (radio) (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.13; COPY-2 s.12; DESIGN s.5 (ER-DRIVE-09); GTAVI-MAP GV-03; canon (the radio)
-- Status: measured. Coverage row: 3.4.3.
+- Status: ruled (his ruling or canon). Coverage row: 3.4.3.
 
 ### FIT-G7 How many fare people are written
 
@@ -264,21 +264,21 @@ Talk content and its system; the moat, never the main thing.
 - How it works: Anyone named can be spoken to live (every named character where possible, the main ones at least), only when the player speaks to someone. Before a live answer a short thinking sound and a glance play, cut when the answer starts, never a loading sign. A reply is heard within 2 s or the written line plays; a line slower than 8 s is dropped with an in-character brush-off and a small sign, and offline the written street carries on the same way. The 2 s bar is a newcomer's real questions; small talk is reported beside it. No prepared openings, skill checks or mission nags. Talk stays under 30% of play.
 - Standard: Reply within 2 s or the written line plays; slower than 8 s dropped (ER-TALK-01); median first speech 2 s or less Test: S: slow stand-in; packaged speech measure
 - Source: DESIGN §11; RULINGS speech line (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-01); RULINGS 'Talk and AI' (23 Sep, 28 Sep, 7 to 28 Oct)
-- Status: measured. Coverage row: 3.6.1.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.1.
 
 ### 3.6.2 Claim check
 
 - How it works: A character says only what the simulation knows. The claim check refuses any sentence naming a person, place, event, number or year the speaker's facts lack, and replies cite their facts: Ada knows what Ada saw and was told; a man who only heard of last night says 'I heard something about you', never what happened. Live talk names no real make, brand, shop, club, programme, paper or public figure and nothing after 1992. The reply check runs on Haiku with a small local checker first at the open cut-off. Tested with planted bad replies (ER-TALK-04).
 - Standard: ER-TALK-04; ruling 25 Sep; speech rulings 7 to 28 Oct Test: S: planted bad replies
 - Source: RULINGS; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11; RULINGS 25 Sep, 29 Sep, 7 to 28 Oct
-- Status: measured. Coverage row: 3.6.2. Conflicts settled: C-083.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.2. Conflicts settled: C-083.
 
 ### 3.6.3 Written street lines
 
 - How it works: Everything the town says unprompted is written ahead and checked once: about 7 words a line, a remark said within 7 m, everyday street talk at most every 45 s, at least three closing lines each. A regular has about 30 own lines (60 for the 12 most seen); a person's own line comes once a day at most. Sheila, Alison and Ada keep the shared lines; Ron, Darren, Father Walsh and June have their own. No shared street line is heard twice in one real hour anywhere. At up to 80 remarks an hour and 6 lines a situation, at least 14 situations must be live in every hour (F19).
 - Standard: About 30 own lines a regular; a person's own line once a day, a shared line once a week per street (ER-TALK-02). Raised by Y2.5: no shared street line heard twice in one real hour of play anywhere (GD-02). Test: H: transcripts
 - Source: RULINGS street lines; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-02); DEFINITIONS GD-02, L-01, F19; RULINGS street lines
-- Status: measured. Coverage row: 3.6.3. Conflicts settled: C-084, C-085.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.3. Conflicts settled: C-084, C-085.
 
 ### 3.6.4 Crowd lines by situation
 
@@ -299,21 +299,21 @@ Talk content and its system; the moat, never the main thing.
 - How it works: Suggested lines are about 4 words, on Tab on a keyboard and shown at once on a controller. They are 'Mixed': written ahead for hellos, goodbyes and decisions, the small model's otherwise. Tom's written lines are approved.
 - Standard: Ruling 1 Oct Test: S: shown on both devices
 - Source: RULINGS 1 Oct (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; RULINGS 1 Oct
-- Status: measured. Coverage row: 3.6.6.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.6.
 
 ### 3.6.7 AI notice and line report
 
 - How it works: The AI notice shows once, before the first talk, as its own screen: it says the characters' replies are made by an AI service over the internet, what he types is sent to it, why, and how long it is kept; offline play (written lines only) is offered as an equal choice and the notice can be read again from the pause menu. Nothing typed is sent before it is answered. Any live line can be reported from the pause menu or by a key. The EU AI Act's Article 50 duty is in force since 2 Aug 2026 and the notice meets it.
 - Standard: ER-TALK-07; ruling 24 Sep Test: S: report filed from talk and from pause
 - Source: RULINGS 24 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-07); PRIVACY-CHECK-2026-11-21; RULINGS 24 Sep
-- Status: measured. Coverage row: 3.6.7.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.7.
 
 ### 3.6.8 How the player speaks
 
 - How it works: On a keyboard the player types or picks a suggested line (Tab); on a pad suggested lines show at once and an on-screen keyboard is there. Typing never moves Tom. Tom's lines are text and he is not voiced (a voice only on his yes). A whole talk, decision included, can be done by pad alone (ER-SPEAK-01). Spoken microphone input is not designed.
 - Standard: Suggested lines on Tab, shown at once on a controller (ruling 1 Oct); Tom's written lines approved; no voice for Tom without his yes (24 Sep) Test: S: a whole talk by pad alone; addendum rules ER-SPEAK-01
 - Source: RULINGS 1 Oct, 24 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN-ADDENDUM A25; RULINGS 1 Oct, 24 Sep
-- Status: measured. Coverage row: 3.6.8.
+- Status: ruled (his ruling or canon). Coverage row: 3.6.8.
 
 ### FIT-F19 Enough shared-line situations live each hour
 
@@ -339,7 +339,7 @@ Small authored incidents placed on the clock and the town's state: a row on the 
 - How it works: Street happenings are small authored scenes placed by the town's state and the hour, never by dice: a row on a doorstep, a van broken down across the lane, a shoplifter running from the grocer (grocer open, known thief out), a lost man with a suitcase, a dog loose on the quay, a woman locked out, a man fallen on the cobbles, a crate off a lorry at the dock gate. Each takes under two minutes, offers a choice with the hands and leaves something the town knows. At least 60 are written across at least 8 kinds (about one every 15 real minutes, about 70 in 17 hours); no scene is seen twice within 3 real hours and none twice unless its people have changed; none twice in 30 minutes or twice in a week on one street. A helped stranger can turn up days later with a small favour.
 - Standard: Authored, each with a spec and a check, never rolled at random (ruling 13 Nov; DESIGN §18 cuts random encounters); no set piece twice in 30 minutes (ER-JOB-06) Test: S: placement by state; H: empty minutes fall; addendum rules ER-HAPPEN-01 to 02
 - Source: ruling 13 Nov; DESIGN §4, §18 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN-ADDENDUM A18; DEFINITIONS G6, RT-19; RULINGS 13 Nov
-- Status: measured. Coverage row: 3.7. Conflicts settled: C-089.
+- Status: ruled (his ruling or canon). Coverage row: 3.7. Conflicts settled: C-089.
 
 ### RT-19 Content supply at night and late in Acts II-III
 
