@@ -4,20 +4,20 @@ Not complete yet. Nothing is undefined.
 
 401 rows, one per part a player meets:
 - Measured: 111 (21 on reference-game numbers, 15 on dated real-world figures, 75 on his rulings or canon)
-- Decided: 132, design choices inside his rulings, his to overturn
+- Decided: 132, his to overturn
 - Pending a dated study: 42
-- Unmeasured: 45, each with how and when it gets measured
+- Unmeasured: 45
 - Out by his rulings: 14; outside (Unreal-only and shipping): 57
 
 What changed today:
 - His clock is written in: 60 s a game hour, a 24-minute day, 7 game weeks, Act II five.
-- Chases lose their 90-second timer. The reference chases run 2 to 8 minutes and GTA VI's end only by escape or capture, so ours end only when lost, caught, wrecked or at the edge. The exact length and search time wait on five-sample numbers this week.
-- The busiest street view is reset to 12 to 20 people: above GTA VI's counted streets (about 10), within what 1990 footage shows.
+- Chases lose their 90-second timer (GTA VI's end only by escape or capture); length and search time wait on this week's numbers.
+- The crowd is set by counts: 4 to 10 people in a busy street frame, as KCD2, GTA VI and Sleeping Dogs show; 15 to 25 at the market and the match. A reviewer's 100 at a GTA VI tram stop gets counted this week.
+- Two rulings to revisit, both with keep recommended: the map against chases (it holds 1 to 3 minutes) and the clock.
 - Getting into a car is the first feel number on five real samples (GTA VI, about 2 seconds).
-- A fresh reviewer's 14 faults: fixed once.
 
 Before the gate:
-- The PC measuring, Mon 23 to Fri 27 Nov, GTA VI first. About 134 hours are priced against 60 in the order; the cheaper routes must close that, and Monday's reprice will say.
+- The PC measuring, Mon 23 to Fri 27 Nov, GTA VI first. About 134 hours priced against 60; Monday's reprice says if the cheaper routes close it.
 - 1990 prices and who is out by hour, by Thu 26 Nov.
 - The story, by Sat 28 Nov.
 - Red teams 3 and 4 on Sun 29 and Mon 30 Nov.

@@ -87,3 +87,12 @@ Next run starts here:
 4. Sat 28 Nov: the fit check and the players' questions again; then red teams 3 (Sun 29) and 4 (Mon 30) on the blueprint, rt2_build.py adapted, ten new planted parts, triage by G-B. No round 5.
 5. Read on arrival: production/research/lane/aaa-studies/ (studies A and B, landing this week) and production/lane/blueprint/PRIOR-RESEARCH-INDEX.md; map their standards to rows.
 Scripts in order when rebuilding: runs 1 to 4 scripts, run5_apply.py, covmd.py last.
+
+## Run 5, second pass (job fire, 23 Nov from 13:28)
+
+- Start row 2026-11-23-1328-designproof. The job's points 1 (clock B), 2 (only solid numbers count; two solid so far) and 7 were already done in the first pass at 13:18 to 13:27.
+- Built on the research folders on wip (no PRIOR-RESEARCH-INDEX.md yet): study 01-npc-life, performance-budget, street-life finding 5.
+- GD-02 settled by the counts: one frame 4 to 10 at busy bands, 2 to 7 other daytime, 0 to 2 quiet night, 15 to 25 at the market and match; the first pass's 12 to 20 withdrawn; GTA VI's 100+ tram-stop claim goes to block 1 to count on full-size frames.
+- Chases against the map: the Hook holds 1 to 3 minutes without repeating roads; the references' 4 to 8 do not. Rulings to revisit written (R1 map, R2 clock), keep recommended for both, in DEFINITIONS run 5 second pass and DESIGN-COMPLETE. No fresh reviewer for this short pass (arithmetic checked by hand); the next run's reviewer reads it with the measuring updates.
+- Counts unchanged: 401 rows, 111 MEASURED, 132 DECIDED, 42 PENDING, 45 UNMEASURED, 0 UNDEFINED.
+Next run starts at "Next run starts here" of run 5 above, plus: put R1 and R2 to him through the advisor; count GTA VI's tram stop in block 1.

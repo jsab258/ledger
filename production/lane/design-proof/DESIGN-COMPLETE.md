@@ -31,7 +31,7 @@ Anything else (taste, polish, more of something that exists, Unreal-only looks, 
 | 3. Red teams | Not met. Round 1: 19 material gaps; round 2: 22; all defined. Clean rounds so far: 0. Rounds left: 3 and 4 (G-C). |
 | 4. Catch rate | Round 1: 10 and 9 of 10. Round 2a: 10 and 8; round 2b after one brief fix: 9 and 10. |
 
-Run 5 (23 Nov): his clock B written in (G-D met: the clock is settled before red team 3); design pass 4 took the chase off its 90 s timer (GTA VI's bar), reset the busiest-view crowd on the counted views, and measured car entry on GTA VI's five samples; a fresh reviewer's 14 points fixed once.
+Run 5 (23 Nov): his clock B written in (G-D met: the clock is settled before red team 3); design pass 4 took the chase off its 90 s timer (GTA VI's bar), reset the crowd on the counted views (one frame 4 to 10 at busy hours, the market and match 15 to 25), and measured car entry on GTA VI's five samples; a fresh reviewer's 14 points fixed once.
 
 ## What stands between the design and the gate, with dates
 
@@ -54,6 +54,12 @@ Run 5 (23 Nov): his clock B written in (G-D met: the clock is settled before red
 The measuring is the risk. STATUS.md prices about 134 PC hours to bring every number to five samples; the order gives n23-1 60. The gate holds its date only if the cheaper routes (code measurers, the cheap reader, installed games first, one stream for several studies) close that gap; Monday's reprice says whether they do. If not, the lean order in MEASUREMENTS-NEEDED.md runs first, and the rows left at Fri 27 Nov are listed here by name and move the gate by the days they take.
 
 Earliest the gate can be met: Mon 30 Nov to Tue 1 Dec, if the measuring closes by Fri 27 Nov and red teams 3 and 4 are both clean. Otherwise no round 5: the open items go to him on Mon 30 Nov as scope and the gate is judged on his answers (about Tue 1 Dec), and any measuring still open pushes it later, inside the one-shot's plan date of Mon 7 Dec.
+
+## Rulings to revisit and his questions (run 5)
+
+Written in DEFINITIONS-2026-11-21.md, run 5's second pass, for the advisor to put to him; each ruling stands until he answers.
+- R1 the map against car chases: A keep, chases 1 to 3 minutes (recommended); B one chase road past the soft edge; C decide on this week's chase lengths.
+- R2 the clock against the references' longer days: A keep 60 s (recommended); B 90 s; C after the first loops.
 
 ## DECIDED rows: design decisions for him to overturn
 
