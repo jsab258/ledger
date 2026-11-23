@@ -44,7 +44,7 @@ Players (hand-coded, read 23 Nov 2026):
 
 Beyond these: one Steam review of Yakuza 3 Remastered (26 Dec 2024, 22.5 hours, thumbs up) praises Kamurocho at night and calls the day maps ugly and the play tedious at times (D10); one Giant Bomb forum post says familiarity made the player stop checking the map and that changes tied to the story kept it alive (undated, D9). The poll (D4) is a vote on small against big worlds, not on revisiting.
 
-Numbers found: Yokohama about three times Kamurocho (D7, informal). Like a Dragon completionist about 97.5 hours (TheGamer estimate, Feb 2021, updated Feb 2024, D8; not HowLongToBeat). Yakuza 0 reviewer over 100 hours (D5). Not found: street or block counts (D6 gives none), side story counts, encounter rates, the share of play spent in the district.
+Numbers found (see also "Built on" below: study 17 gives about 8 minutes across, inferred, and about 100 side stories, unconfirmed): Yokohama about three times Kamurocho (D7, informal). Like a Dragon completionist about 97.5 hours (TheGamer estimate, Feb 2021, updated Feb 2024, D8; not HowLongToBeat). Yakuza 0 reviewer over 100 hours (D5). Not found: street or block counts (D6 gives none), side story counts, encounter rates, the share of play spent in the district.
 
 ## Sleeping Dogs
 
@@ -97,6 +97,21 @@ The district for each game: Kamurocho (Yakuza 0, the Tokyo map only); Ijincho (L
 - Steam discussions for Yakuza 0 and Like a Dragon; Reddit; Backloggd; most Steam reviews of Sleeping Dogs.
 - Toshihiro Nagoshi or Masayoshi Yokoyama on reusing Kamurocho; any street or block count; side story counts; encounter rates; HowLongToBeat.
 - Owed by the PC part: Steam discussions and reviews pulled the 20 Nov way (Yakuza 0, Like a Dragon, Sleeping Dogs), Reddit threads, Backloggd.
+
+## Built on, and where it differs
+
+Read first (23 Nov run, second pass): the blueprint's PRIOR-RESEARCH-INDEX.md and the studies it points to on this subject.
+- aaa-reference/studies/17-yakuza-shenmue (October): Kamurocho modelled on Kabukicho (the real Kabukicho is about 0.36 km2, a figure for the real place, not the game's map), about 8 minutes' walk end to end (marked inferred there), about 100 side stories (unconfirmed); side stories found on foot without markers, many comic; random fights frequent, not to be copied. Its importer notes that none of its numbers has been re-read or freshly reviewed. This study first said no size or side story count was found; the earlier figures stand with their marks, and DENSE-09 and DENSE-05 agree with that study's rows 3 and 7. The Hook is about 0.107 km2 (street-scale-test, 16 Nov, marked partly holding in the index); no size of the game's Kamurocho is known to compare it with, so the footage counts settle crossing times.
+- research/hitman-density (Sep): density is connections, not size; no dead ends; more than one way out and a different way back. DENSE-02 adds doors every 40 m; the two hold together.
+- The Push Square crossing figure for Ijincho (under three minutes avoiding battles) sits beside study 17's 8 minutes for Kamurocho; both are readings, the footage counts settle them.
+
+## Rulings to revisit
+
+None argued against. Checked and kept: no random fights or encounters (section 3), supported by "never far from a fight" and the random-battle complaint; the Hook plus docks as the whole map, docks cut first if short (RULINGS 28 Oct), supported by the small-dense preference (57% of 1,228) and the "three times emptier" larger map.
+
+## For the builder's PC measuring
+
+Sleeping Dogs (soon installed) can be measured in play, not only footage, by one protocol: no guide, a fresh save after the opening, crossings only (end to end along the longest street of one named district, on foot and by car, real seconds), accepting every side job offered on the way and counting it, and counting things met per street minute and fights met while crossing per hour. These fill the Sleeping Dogs row of the footage table above. Yakuza 0 and Like a Dragon stay footage counts.
 
 ## Sources (as used above; URLs and read dates in notes/dense-district.md)
 

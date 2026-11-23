@@ -102,6 +102,22 @@ The game's description already sets the measure (section 2): a moment worth rete
 - Any measure of how often such moments happen per hour in the reference games; that needs footage or play logs, not posts.
 - Five Shadow of War stories were read and left out (a different game).
 
+## Built on, and where it differs
+
+Read first (23 Nov run, second pass): the blueprint's PRIOR-RESEARCH-INDEX.md and the studies it points to on this subject.
+- players-and-a-world-that-remembers (14 Sep): Nemesis, Dwarf Fortress and RimWorld players retell; something has to come back. This study's 82 stories agree and add which systems make the comeback.
+- emergent-story-legibility (14 Sep): a memory nobody voices is no memory; the callback is Mordor's whole fame. Agrees; STORY-05 is that callback counted.
+- STORY-PATTERNS-STEAM-2026-11-20 (lane, PC pull): what players say about authored story (characters first, 46% of coded story sub-themes). This study covers the other half, the unscripted stories; no conflict.
+- The game's description (section 2, the friend's retelling) sets the measure; this study does not change it, only makes it countable.
+
+## Rulings to revisit
+
+None argued against. Checked and kept: no random encounters (section 3) and street happenings authored with a spec and a check (3.7): RDR2's random encounters made 9 stories and none came back, so the evidence supports the ruling; no random street fights or encounters (section 3): same.
+
+## For the builder's PC measuring (KCD2, GTA V, RDR2 installed)
+
+The rate players' posts cannot give: in one ordinary evening (three real hours) of each of KCD2, GTA V and RDR2 played without a guide, count the moments that meet the four tests of section 2 (chosen, could have gone another way, a named person, came back later), and the near misses, logged with STORY-01's fields. Without replays, "could have gone another way" is judged by the counter as met when at least two options were open to the player at the moment of choice and the game visibly offered or allowed each; a moment where only one was open is a near miss. This is the reference band for STORY-02 and STORY-03.
+
 ## Sources (numbers as in notes/player-stories.md, where URLs and read dates are)
 
 1 GamesRadar, 8 Nov 2019. 2 GamingBible, 4 Nov 2022. 3 Steam RDR2 thread, 16 to 18 Oct 2023. 4 public dataset copy of a Reddit post, 13 Nov 2024. 5 Kotaku, 22 Feb 2020. 6 GameRant, undated. 7 Mein-MMO, 2 Dec 2018. 8 GamingBible, 2 Jun 2023. 9 GamePro, undated. 10 GamingBible, 5 Oct 2023. 11 GamePro, undated. 13 GameRant, 7 Feb 2025. 14 Gfinity, 10 Feb 2025. 15 GameRant, 14 Mar 2025. 16 Vice, 22 May 2025. 17 TheGamer, undated. 18 GGRecon, 4 Jun 2024. 19 PC Gamer, 13 Nov 2018. 20 TheGamer, undated. 21, 22 Hitman Forum threads, 2022 and 2021. 23 Game Informer, 15 Oct 2013. 24 Gameranx, 16 Dec 2025. 25 Sportskeeda, undated. 26 Kotaku, 9 Jan 2015. 27 to 29 Steam Mordor threads, 2016 to 2017. 30 PCGamesN, undated. 32, 33 GTA VI systems reports, seen and not used.
