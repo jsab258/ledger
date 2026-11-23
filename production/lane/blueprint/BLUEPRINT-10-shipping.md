@@ -75,7 +75,7 @@ Patches, new districts in updates, a stated position on mods.
 - How it works: More districts (Copper Row, the Exchange, the Parade, Fairview, Ironside, Gullwing) come in updates after release, free or paid; there are no paid outfit or car packs and one edition only. There are no mods at release. Patches and a position on mods after release are not designed.
 - Standard: More districts in updates after release (28 Oct) Test: none until release
 - Source: RULINGS 28 Oct (his ruling or canon). Designed in: RULINGS 28 Oct, 23 Sep; canon.md (seven districts); MECHANICS-MAP M10.4, M10.5; DECISIONS-PENDING 20 Nov
-- Status: measured. Coverage row: 10.6.
+- Status: ruled (his ruling or canon). Coverage row: 10.6.
 
 ### GD-06 Mods and community content
 
@@ -142,7 +142,7 @@ Consent and data protection for what players type that is sent to the talk servi
 - How it works: The AI notice is its own screen shown before the first typed line and answered before anything typed is sent: it says replies are made by a named AI service over the internet, what he types is sent to it, why, and for how long, and it offers offline play (written lines only) as an equal choice; it can be read again from the pause menu. A privacy page in Settings repeats it and offers deletion of anything held off the PC. Offline mode plays the whole first hour; no copy of typed text is kept beyond the story's memory of what was said unless the player reports a line; EU AI Act Article 50(1) has applied since 2 Aug 2026.
 - Standard: (1) The AI notice, its own screen before the first typed line, says replies are made by a named AI service over the internet, what is sent, why and for how long, and offers offline play as an equal choice; readable again from pause; (2) nothing typed is sent before it is answered; (3) offline mode plays the whole first hour; (4) no copy of typed text kept beyond the story's memory unless reported; (5) the service's retention and the deletion route are as stated. Test: B: first-hour run offline; S: note present before first talk.
 - Source: PRIVACY-CHECK-2026-11-21.md: ICO guidance; EU AI Act Article 50(1), in force 2 Aug 2026 (Commission FAQ 24 Jul 2026) (real-world figure or published standard). Designed in: DEFINITIONS 10.11; PRIVACY-CHECK-2026-11-21; GAME-DESCRIPTION-COPY-2 §28, §36
-- Status: measured. Coverage row: 10.11. Conflicts settled: C-183, C-184.
+- Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 10.11. Conflicts settled: C-183, C-184.
 
 ## 10.12 Demo, price and wishlists
 
