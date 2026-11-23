@@ -23,6 +23,7 @@ The minimal screen.
 - Standard: A subtitle shows only with its audio (ruling 23 Sep); nothing under 24 units; no overlap at four window sizes (ER-SCREEN-02) Test: S: layout test at four sizes
 - Source: RULINGS; DESIGN §17 (his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN §17 ER-SCREEN-02; DEFINITIONS-2026-11-21 §AX-01, §AX-02; PARTS-TREE 6.1.2
 - Status: ruled (his ruling or canon). Coverage row: 6.1.2.
+- Prior research: research/aaa-reference study 10 (file-read, a lead): subtitle default 39 units, range 34 to 54; research/ui-design: 36 at 1080 and 48 on his 3440 by 1440, at most about 40 letters a line, 7 to 1 contrast. Keep 24 as the floor, name 39 as the default, define the unit, check at 48.
 
 ### 6.1.3 The belief line
 
@@ -70,6 +71,7 @@ Tom's notebook of people and events: the one place he sees where he stands.
 - Standard: ER-LEDG-03; ER-JOB-01 Test: H: 'what next, and where' from the Ledger alone
 - Source: DESIGN §10, §4 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §10 ER-LEDG-03, §4 ER-JOB-01; DESCRIPTION-2 §20; PARTS-TREE 6.2.3
 - Status: decided. Coverage row: 6.2.3.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
 
 ### 6.2.4 Money in words
 
@@ -84,11 +86,12 @@ Tom's notebook of people and events: the one place he sees where he stands.
 - Standard: ER-END-02, 03 Test: H predicts the ending from it
 - Source: DESIGN §10, §16 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §10, §16 ER-END-02, ER-END-03; DESCRIPTION-2 §33; RULINGS 28 Sep; PARTS-TREE 6.2.5
 - Status: decided. Coverage row: 6.2.5.
+- Prior research: research/ending-reading: do not show a number for the ending; give signs.
 
 ## 6.3 The paper map
 
 A map of the Hook that marks only places he has been or been told of.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-07 every Act I step reachable by landmark with the map shut; 6 of 8 open it less in evening two; decided. None measured.
 
 ### 6.3 The paper map
 
@@ -112,7 +115,7 @@ Title, pause, settings, save and load, credits.
 ## 6.5 Teaching the player
 
 Hints on first need or hesitation, each once; the interface appears piece by piece.
-
+- Prior research: aaa-reference study 02 (file-read, a lead): KCD2 shows prompts only on hesitation at 10, 20 and 30 s for 10 s; research/teaching-in-thirty-minutes: the old test ran at 2 game minutes a second and four toasts fired within 90 s. Confirm the timings from play (section 8).
 
 ### 6.5 Teaching the player
 
@@ -136,7 +139,9 @@ Keyboard with mouse and a pad each drive everything; rebinding.
 ## 6.7 Talk screen
 
 Typing, suggested lines, the game's own decision lines, Leave always there.
-
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-07 live replies median about 12 words, cap 35 (70 for an account), street lines about 7; the 12 is background only. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided; TALK-10 talk under 30%, aim 19%; half of Act I decision talks staged at the matter; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-11 choices per minute and exchange length set from footage; pending. None measured.
 
 ### 6.7 Talk screen
 
@@ -151,6 +156,7 @@ Typing, suggested lines, the game's own decision lines, Leave always there.
 - Standard: On the labelled set typed-talk/RT14-SET-2026-11-21.jsonl (300 lines, period, modern, terse and misspelt, 66 hard), the reader's act matches the label or an allowed alternative on at least 95% of lines and 90% of hard lines; every amount read exactly; every offer, threat, promise and lie enters the hearer's memory. Test: A labelled set of 300 lines (period and modern phrasing) run through the reader; memory checked after each.
 - Source: typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28 (real-world figure or published standard). Designed in: DEFINITIONS-2026-11-21 §RT-14; typed-talk/README.md and agreement-2026-11-21.json; DESCRIPTION-2 §28
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: RT-14. Conflicts settled: C-122.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
 
 ## 6.8 Photo mode
 
@@ -167,7 +173,7 @@ Optional presentation: a free camera to take pictures, off the play path.
 ## 6.9 Finding the way
 
 Addresses, house numbers, street-name plates, passengers' 'left here', asking a stranger, a nudge when lost.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-07 every Act I step reachable by landmark with the map shut; 6 of 8 open it less in evening two; decided. None measured.
 
 ### 6.9 Finding the way
 
