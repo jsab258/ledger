@@ -134,8 +134,15 @@ def read_spend():
 
 def log_spend(what, usd, calls, source):
     now = datetime.datetime.now()
+    # A LINE NEVER GLUED TO THE LAST (23 Nov 2026: another writer left no line ending, today's line joined it, the
+    # pair no longer parsed and the day's spend read US$0 to the ceiling check): start on a fresh line if needed.
+    lead = ""
+    if os.path.exists(SPEND) and os.path.getsize(SPEND):
+        with open(SPEND, "rb") as fh:
+            fh.seek(-1, os.SEEK_END)
+            lead = "" if fh.read(1) == b"\n" else "\n"
     with open(SPEND, "a", encoding="utf-8") as fh:
-        fh.write(json.dumps({"day": now.date().isoformat(), "at": now.strftime("%H:%M"), "what": what, "usd": round(usd, 4),
+        fh.write(lead + json.dumps({"day": now.date().isoformat(), "at": now.strftime("%H:%M"), "what": what, "usd": round(usd, 4),
                              "calls": calls, "source": source}) + "\n")
 
 
