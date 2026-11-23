@@ -23,6 +23,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: Between height, 86 degree lens, 3.1 m back, feet in frame; never inside a wall, body or car (ER-CAM-01, ER-CAM-02); follow lag and turn feel to be measured Test: B soak with clip detector; S frames counted for feet in frame; H screenshots in tight rooms
 - Source: ruling 28 Oct (camera); DESIGN §17 (waits on a dated study). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §17 ER-CAM-01/02; RULINGS 28 Oct (camera) and 21 Nov (setting); FEEL-TARGETS-MELEE C10; DEFINITIONS AX-03 and pass 3 header
 - Status: pending. Coverage row: 1.1.2. Conflicts settled: C-001.
+- Prior research: PRIOR-RESEARCH-INDEX section 3 group 1: camera measured in his packaged build (production/specs/camera.json: feet fully in frame from 3.0 m); that file's talk (1.2 m, 63 degrees), run and room rows were copied from Mafia's files and are provisional.
 
 ### 1.1.3 Doors, stairs and thresholds
 
@@ -30,6 +31,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: Never stuck (ER-CORE-01: moves on within 5 s); in or out of a door in under 2 s; no jump (ruling 23 Sep) Test: B: 30 minutes of walking into every door and stair; S: door use timed
 - Source: DESIGN §1 ER-CORE-01; ruling 23 Sep (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §1 ER-CORE-01; RULINGS 23 Sep genre line (no jump)
 - Status: ruled (his ruling or canon). Coverage row: 1.1.3.
+- Prior research: research/interior-blockout and research/office-camera (research-3 and research-4 sheets): Tom is 68 cm wide, so a real front door leaves about 11 cm a side; walks were straight lines with a 30 cm capsule, no nav mesh and no doors, so every target through a wall failed; third-person rooms run 1.5 to 2 times real size.
 
 ### 1.1.4 Carrying
 
@@ -62,9 +64,9 @@ Walking the town with the camera: the verb under every other verb.
 ### 1.1.8 Vaulting low walls and fences
 
 - How it works: At set places only (low walls, yard fences and bins under about 1.2 m, marked in the map data), running at one carries Tom over in about 0.8 s. Nowhere else: no jump key, no climbing. A constable vaults the same places in 1.2 s, so a yard and back fence is a real way to gain ground. The road plan has six vault places: one on the yards' lane, three on the terraces' ginnel, one on each warehouse cut.
-- Standard: Recommended answer to QUESTIONS-FOR-JAFAR-2026-11-20 Q1, built to it meanwhile; never a jump (ruling 23 Sep); vault speed and heights to be measured Test: S: each vault point works in a chase; no vault anywhere else; addendum rules ER-VAULT-01
-- Source: ruling 23 Sep; Q1 (open) (waits on a dated study). Designed in: DESIGN-ADDENDUM A26; DESCRIPTION-COPY-2 §6; DEFINITIONS pass 3 §G1, §G4
-- Status: pending. Coverage row: 1.1.8. Conflicts settled: C-003.
+- Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A26) confirmed it as recommended; never a jump (ruling 23 Sep); vault speed and heights to be measured Test: S: each vault point works in a chase; no vault anywhere else; addendum rules ER-VAULT-01
+- Source: ruling 23 Sep; Q1, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A26) (his answer; speed and heights wait on a dated study). Designed in: DESIGN-ADDENDUM A26; DESCRIPTION-COPY-2 §6; DEFINITIONS pass 3 §G1, §G4
+- Status: pending (in scope by his answer of 20 Nov; speed and heights wait on the measuring). Coverage row: 1.1.8. Conflicts settled: C-003.
 
 ### FIT-G4 Tom's, the constables' and the runner's speeds
 
@@ -84,6 +86,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: Game set M1 to M9 (e.g. 0 to 30 mph 3.0 to 4.5 s; dry braking 30 mph 8 to 11 m; steering yaw 63% in 0.15 to 0.25 s); ER-DRIVE-02 on keys Test: S: drives D1 to D8 by keys and pad inside the bands; his feel check
 - Source: FEEL-TARGETS-DRIVING (c2); DESIGN §5; to be replaced by the measured sheet (DRIVING-MEASUREMENT-METHOD) (waits on a dated study). Designed in: FEEL-TARGETS-DRIVING (c2) M1 to M9; DESIGN §5 ER-DRIVE-02; DESCRIPTION-COPY-2 §10; DEFINITIONS pass 3 §G2
 - Status: pending. Coverage row: 1.2.1. Conflicts settled: C-004, C-005.
+- Prior research: his rulings of 17 and 18 Nov (fun first, automatic gearbox, real figures a floor, game-band targets, cars hurt and never kill) replace the old 'no drivable vehicle, ever' (game-design/agency-model.md, streets-and-cars-spec.md); PRIOR-RESEARCH-INDEX section 1 item 4.
 
 ### 1.2.2 Car camera
 
@@ -126,6 +129,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: No fare longer than 2 real minutes without a decision, a person or a sighting (ER-CORE-08); typing never moves Tom (ER-TALK-05) Test: H: fare log; S: a staged back-seat talk with the car moving
 - Source: DESIGN §1, §11 (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §10, §34; DESIGN §1 ER-CORE-08, §11 ER-TALK-05; DEFINITIONS RT2-20; GTAVI-MAP GV-03
 - Status: unmeasured. Coverage row: 1.2.7.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
 
 ### 1.2.8 Riding as a passenger
 
@@ -140,13 +144,14 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18). Raised by GTA VI's respray rule: new plates or a respray clear the police's noted plate for that car (see GV-02). Test: S: a repainted car is not named as the firm's by a witness who saw the old paint; addendum rules ER-PAINT-01
 - Source: DESIGN §5, §12, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A24; DESIGN §5, §12, §18; GTAVI-MAP GV-02
 - Status: decided. Coverage row: 1.2.9. Conflicts settled: C-011.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-06 cars and men show harm; no repeated care action required; decided. None measured.
 
 ### 1.2.10 Taking a parked car
 
 - How it works: Only parked cars, never one with somebody in it, and only by force, with no minigame. It is loud (heard at the force reach), the owner reports it when he finds it gone, the car is then known to the police, and a taken car has no roof sign so witnesses do not name it as the firm's. Taking one by force takes about 6 s (the description, section 23, kept by design pass 4). GTA VI's two ways in (a brick through the quarter-light or a tool at the door) are a lead to check in the footage pass, without their times; a car with a steering lock cannot be taken.
-- Standard: Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car. Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
-- Source: Q2 (open) (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
-- Status: decided. Coverage row: 1.2.10. Conflicts settled: C-012.
+- Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A27) confirmed it as recommended; no lockpicking game (DESIGN §18); never a moving car. Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
+- Source: Q2, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A27) (his answer). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
+- Status: ruled (his answer of 20 Nov 07:39, advisor 263: confirmed as recommended). Coverage row: 1.2.10. Conflicts settled: C-012.
 
 ### 1.2.11 The horn
 
@@ -201,6 +206,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: ER-FIGHT-01 (timings inside the melee sheet bands C1 to C15): C1 blow starts within 0.1 s; C2 jab 0.25 to 0.40 s to contact, heavy 0.63 to 0.85 s; C3 hit-stop 0.025 to 0.13 s by blow; camera close-in held about 0.8 s Test: S: melee drills at 1/60 s inside C1 to C15 (tools/lane/melee_drills.py); his feel check
 - Source: FEEL-TARGETS-MELEE (c); DESIGN §7 (waits on a dated study). Designed in: FEEL-TARGETS-MELEE C1 to C4, C10; DESIGN §7 Feel; DESCRIPTION-COPY-2 §9
 - Status: pending. Coverage row: 1.3.1.
+- Prior research: research/aaa-reference study 14 (read from files, a lead): KCD2 swing to contact about 0.75 s, hit reaction median 1.27 s; game-design/combat-design.md (12 Oct): no health bar, no lock-on, no combat music.
 
 ### 1.3.2 Reading and answering blows
 
@@ -250,13 +256,15 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Fair one-on-one roughly even; skill beats mashing (patient bot wins most, masher under 3 in 10, ER-FIGHT-07); watchers about 3 m (lead) Test: S: scripted patient and mashing fighters; seeded nerve cases
 - Source: DESIGN §7 (no reference figure yet). Designed in: DESIGN §7 ER-FIGHT-07; DESCRIPTION-COPY-2 §9; DEFINITIONS pass 3 §P18
 - Status: unmeasured. Coverage row: 1.3.8.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
 
 ### 1.3.9 How a fight ends
 
 - How it works: A fight ends when someone backs off, runs, goes down, the police arrive or people step in; backing off and running are inputs at every moment. Tom cannot die: beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, with a street that knows he lost, and is in control within 60 real seconds with the cost said. Hospital costs days, never money, and plants a witness.
-- Standard: A way out at every moment (ER-FIGHT-03); Tom never dies, in control within 60 real s (ER-FIGHT-04); Tom cannot die (the approved design) Test: S: each of five endings scripted; beaten route timed
+- Standard: A way out at every moment (ER-FIGHT-03); Tom never dies, in control within 60 real s (ER-FIGHT-04); Tom cannot die (his ruling of 12 Oct, archived DECISIONS 13 Oct 02:45; canon OPEN 3) Test: S: each of five endings scripted; beaten route timed
 - Source: DESIGN §7; the description §3; the approved design, canon OPEN 3 (his ruling or canon). Designed in: DESIGN §7 Death; DESCRIPTION-COPY-2 §9; DEFINITIONS RT2-13; canon OPEN 3 (the approved whole-game design)
 - Status: ruled (his ruling or canon). Coverage row: 1.3.9. Conflicts settled: C-014.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
 
 ### 1.3.10 Firearms
 
@@ -264,6 +272,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Guns rare and late (ruling 18 Nov end state A); AAA when used; shot heard 177 m by day; feel numbers to be measured Test: S: dial rules; feel numbers inside measured bands once researched
 - Source: RULINGS 28 Oct combat line; DESIGN §7 dial (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §27; DESIGN §7 dial; DEFINITIONS RT-10, RT2-14; RULINGS 28 Oct combat line (18 Nov end state A)
 - Status: unmeasured. Coverage row: 1.3.10.
+- Prior research: game-design/weapons-spec.md (approved 29 Jul): a .38 heard about 177 m on a daytime street, capped at 250 m; guns only through people; drawing a weapon is a verb that cannot be undone.
 
 ### 1.3.11 Marks that last
 
@@ -271,6 +280,10 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Condition shows in the body, never a bar (DESIGN §7); a mark is a give-away (DESIGN §2) Test: S: a marked Tom is caught more; marks fade on the clock; addendum rules ER-MARK-01
 - Source: DESIGN §2, §7 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A21 (ER-MARK-01); DESCRIPTION-COPY-2 §9; DEFINITIONS RT-11, §G8
 - Status: decided. Coverage row: 1.3.11.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-04 a man Tom beat shows a mark for a game day and mentions it first; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided; STORY-05 a rival's man meets Tom twice; every man he beat meets him within three game days; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-04 a cost to body or standing shows and has an end or a way back; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
 
 ### 1.3.12 Fighter types
 
@@ -320,6 +333,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-13 Test: B (bot), as written under RT2-13
 - Source: design pass 3, RT2-13 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 RT2-13; DESCRIPTION-COPY-2 §9
 - Status: decided. Coverage row: RT2-13. Conflicts settled: C-018.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
 
 ### RT2-14 How guns reach Tom
 
@@ -353,6 +367,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: Cue at the start of the 1.2 s to know him, at least 0.8 s before identification (ER-EYES-03); posture first (D29); a window is a watcher only when a figure shows at it (ER-NIGHT-02); reference behaviour to be measured Test: H: the three questions at ten random moments, 8 of 10 right, sound off and light cue off
 - Source: DESIGN §2; D29 (waits on a dated study). Designed in: DESIGN §2 ER-EYES-01, -03; DESIGN §6 ER-NIGHT-02; DESCRIPTION-COPY-2 §7
 - Status: pending. Coverage row: 1.4.1.
+- Prior research: research/detection-legibility: three states readable at once by posture and head turns, never bars; a readout is fair when it gives back what the character knows and the camera took away, cheating when it adds what he does not know.
 
 ### 1.4.2 Light and dark as cover
 
@@ -374,6 +389,10 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: ER-EYES-10: each give-away raises what a witness catches; a deed from the car always names the car Test: S: golden rows, one per give-away
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2 'What gives him away', ER-EYES-10; DESIGN-ADDENDUM A21; GTAVI-MAP GV-02; DESCRIPTION-COPY-2 §7
 - Status: decided. Coverage row: 1.4.4. Conflicts settled: C-020.
+- Prior research: coverage audits of Hitman, KCD2 and RDR2 (research-2 sheet): disguise fools strangers, never people who know him; a new coat does not beat someone who knows him; coat, not face, is what RDR2 recognises.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Tom links him only while he wears it; decided, thin. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 
 ### 1.4.5 Reaching the witness
 
@@ -381,6 +400,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: The walk lasts at least 30 real s when it starts in Tom's sight (ER-EYES-04); a threat stops a report, never the talk (ruling 3 Oct) Test: S: walk timed; H: 'did you get to her first?'
 - Source: DESIGN §2; ruling 3 Oct (his ruling or canon). Designed in: DESIGN §2 'The walk', ER-EYES-04; DESCRIPTION-COPY-2 §16, §8; RULINGS 3 Oct; DEFINITIONS RT2-19
 - Status: ruled (his ruling or canon). Coverage row: 1.4.5.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided. None measured.
 
 ### 1.4.6 Seeing assist
 
@@ -395,6 +415,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: Answered in body or voice within 1 s; each is an act with the seven slots (canon moat) Test: S: each gesture answered within 1 s and remembered; addendum rules ER-MANNER-01
 - Source: canon; DESIGN §7 lower rungs (his ruling or canon). Designed in: DESIGN-ADDENDUM A10 (ER-MANNER-01); DESCRIPTION-COPY-2 §8
 - Status: ruled (his ruling or canon). Coverage row: 1.4.7.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-06 every person answers a street manner within 1 s (ruled, though the study says measured). None measured.
 
 ### 1.4.8 Drawing a watcher away
 
@@ -510,6 +531,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: Hot mark fades with value and distance; owner never forgets; fence about 0.33 of retail (CLOUD-FIGURES B3) Test: S: golden rows for the mark; the owner recognises the goods
 - Source: DESIGN §4 Lifts (no reference figure yet). Designed in: DESIGN §4 Lifts; DESCRIPTION-COPY-2 §14; DESIGN-ADDENDUM A41; CLOUD-FIGURES B3
 - Status: unmeasured. Coverage row: 1.6.3. Conflicts settled: C-035.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-05 every buyer has a weekly purse; a refusal or part-payment in the last two weeks; decided. None measured.
 
 ### 1.6.4 Fronting up
 
@@ -538,6 +560,8 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: Blood until washed with water and privacy; the launderette washes a coat and remembers it; a body is never wiped Test: S: washing clears the give-away and plants a witness at the launderette
 - Source: DESIGN §2, §7 (DECIDED by the design proof, for him to overturn). Designed in: DESCRIPTION-COPY-2 §22, §9, §7; DESIGN §2, §7, §12; DEFINITIONS RT2-11
 - Status: decided. Coverage row: 1.6.7.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-03 a daily act holds control at most 10 s the first time, 5 after; decided; IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 
 ### 1.6.8 Using the world
 
@@ -559,6 +583,10 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: Three outfits across the game each changing how strangers speak and which doors open (DESIGN §14); his to approve in the game's camera Test: S: a change of coat lowers a witness's mark rung; H: strangers greet differently; addendum rules ER-COAT-01
 - Source: DESIGN §14; rulings 29 Sep, 3 Oct (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §14; DESIGN-ADDENDUM A21; DESCRIPTION-COPY-2 §26; DEFINITIONS pass 3 §G8; RULINGS 29 Sep, 3 Oct (clothes)
 - Status: decided. Coverage row: 1.6.10.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Tom links him only while he wears it; decided, thin. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
 
 ### 1.6.11 Casing a place
 
@@ -566,6 +594,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: What is learned goes in the Ledger as a sourced line (ER-LEDG-01); windows, not minutes (DESIGN §4) Test: S: a cased place's hours appear in the Ledger and match the routines; addendum rules ER-CASE-01
 - Source: DESIGN §4, §10 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A23; DESCRIPTION-COPY-2 §13; DESIGN §4, §10 ER-LEDG-01
 - Status: decided. Coverage row: 1.6.11.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-02 a planned job's three keys leave at least two different traces; decided. None measured.
 
 ### 1.6.12 A torch on a night job
 
@@ -601,6 +630,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-19 Test: B (bot), as written under RT2-19
 - Source: design pass 3, RT2-19 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 RT2-19; DESCRIPTION-COPY-2 §16
 - Status: decided. Coverage row: RT2-19.
+- Prep: INVENTORY section 2: 3 phone boxes needed (the prototype has 1 in map.js), 0.2 hour if made in the one-shot.
 
 ## 1.7 Running the crew
 
