@@ -2,6 +2,43 @@
  "about": "What is open for Jafar, one item a thing he is asked (his order of 2 November 2026: one permanent page, 'LEDGER: Needs you'). state: open or done; an item leaves the page when he has answered it or done it, and stays here with 'closed' (when, and how). Read by tools/needs_you_page.py; published beside the page and copied into its database (collection 'items') for the advisor's checker.",
  "items": [
   {
+   "id": "adopt-order-2026-11-23",
+   "tag": "DECISION",
+   "kind": "scope",
+   "title": "Adopt the order of 23 November (runs to Mon 30 Nov 13:00)",
+   "text": "Adopt next week's order: every measurement the blueprint needs by Fri 27 Nov, in installed games first, then footage; a normal week, line 0 to 90%.",
+   "why": [
+    "Last week's order ends today at 13:00; work from 13:00 follows the adopted order.",
+    "Built by the advisor from the running list on 22 Nov; his later rows of that evening (installed games, GTA V, the budget table, the audit) are folded in at its end."
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: it puts the whole week on the measurements, so the design can close by Friday.",
+   "options": [
+    [
+     "yes",
+     "Yes, adopt it (recommended)"
+    ],
+    [
+     "monday",
+     "Decide on Monday"
+    ]
+   ],
+   "state": "open",
+   "added": "2026-11-23 07:09",
+   "detail": [
+    "Runs from your tap to Mon 30 Nov 13:00. A normal week: the line runs 0 to 90% to Mon 30 Nov 07:00; the advisor's cloud work takes about half, the PC about half.",
+    "The purpose: every measurement the design needs, done by Fri 27 Nov, so the design can close and the one-shot can start (plan date the Mon 7 Dec reset).",
+    "The PC's items: the measuring block, code reading what code can and the cheapest agreeing model labelling frames on the API credit, installed games first, then footage (60 h); our own build filmed and the cheap-reader trial, Monday 13:00 (3 h); live talk's delay and cost against the 2 s bar (8 h); the monthly voice-model scan (3 h); the recipe rewrite (3 h); the weekly audit, judgement first (3 h); efficiency and safety (6 h).",
+    "Also from Sunday evening's rows: the size table from inZOI's and Silent Hill 2's files before you uninstall them; GTA V measured and torn down once you install it; a small hidden-details catalogue.",
+    "Waiting until after the prototype: Kiln and the garments, then the Unreal street work."
+   ]
+  },
+  {
    "id": "lane-task-at-pc-2026-11-17",
    "added": "2026-11-17 16:30",
    "his_hands": true,

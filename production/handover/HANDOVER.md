@@ -2,13 +2,13 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-22 12:52 (the hourly run)
+**Started:** 2026-11-23 07:07 (the hourly run)
 
-**Row due:** by 13:08 (last row 12:08; page read 12:23: nothing new; filter verdicts after 2026-11-22T11:08 UTC, advisor after 2026-11-22T09:25:00+01:00; last ack 305).
-**Uncommitted:** nothing (committed with sample H). Not mine, left alone: four Mickey's office prints modified in production/assets/office-print/mickeys.
-**Stopped:** 2026-11-22 12:53 (the 12:52 run: advisors 306, 307 acked; all starts held to Mon 07:00; allowance 96%)
+**Row due:** at 13:00 resume (page read 07:07: no verdicts; filter verdicts after 2026-11-23T06:07 UTC, advisor after 2026-11-23T07:10:00+01:00; last ack 319).
+**Uncommitted:** nothing, but NOT PUSHED: the 07:10 commit (the order of 23 Nov, its page item). ci failed order-ledger (the new order has no item ledger; n16 and carried n09 items must be carried or closed in it, see tools/order_ledger.py) and progress-page; fix both at 13:00, then push. His page shows the order's gist, no file link.
+**Stopped:** 2026-11-23 07:10 (the 07:07 run: advisor 317 moved the hold to 13:00; only the order of 23 Nov saved and its adoption item raised; advisors 309-319 acked; allowance 99%)
 
-**Hold until:** 2026-11-23 07:00 (advisors 306, 307; delete this line at 07:00 once resumed)
+**Hold until:** 2026-11-23 13:00 (advisor 317: week at 99%; delete this line at 13:00 once resumed)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
 **The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
@@ -35,9 +35,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22 Nov 04:32-04:40: m_2RP 44:56-60:40 read: H (44:52-47:00, about 128 s, two stars, unreviewed); its last spell still lit at the end. Row 04:37.
-- 22 Nov 03:52-04:22: G5 peak two stars SOLID after two reviews; 2EaoIgWAW5g and fCofR6iJ3ZA rejected on date. Tester start fix.
-
+- 23 Nov 07:07-07:10: the order of 23 Nov saved, its adoption item on his page, advisors 309-319 acked.
 
 ## In flight
 - Nothing runs; no helpers; heavy lock clear.
@@ -46,7 +44,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Night by a brightness scan every 2 min; stars read by eye (pixel measures read the sky).
 
 ## Next, in order
-000. Read the advisor channel first. Mon 23 Nov 07:00 (advisor 307, his words 22 Nov 12:41): resume; first row at 07:00 with the reading; use the room to about 98.5% by 12:50, never past 99%, reading every 30 minutes; in order: (1) advisor 303's code measurers on this PC (HUD template matching for stars and timers, local person detector, frame difference for cuts), each tested on frames already read against the numbers already read; (2) the cheap-reader trial ready to run on the API credit at 13:00 (advisors 304, 305); (3) the reprice of advisor 303 before the reset; (4) study 2, our own build filmed, if room is left. From next week an hourly run at the stop or with nothing to start writes nothing and ends at once (advisor 306).
+0000. At 13:00 (advisor 317): read verdicts for 'adopt-order-2026-11-23'; on his yes do the order's section 1 point 6 (week-shape.json inactive, goal line to production/orders/2026-11-23.md). Then (1) 317's budget table from inZOI's and Silent Hill 2's files, about 3 h, then one page line that both can go; (2) 307's code measurers, the cheap-reader trial, the reprice by 20:00; (3) advisor 313: the C: folder list with sizes (safe/keep) in the first row, and the nightly package and walk paused to Sunday nights only; (4) the 13:30 audit in its new form (318, 319, judgement first, a fresh reviewer). The 00:41 and 05:41 night checks are answered in ack 319. 311 is withdrawn (312).
 000a. FIRST AFTER THE MONDAY RESET (advisor 303; his words 22 Nov 08:22, "Dec 11 is way too late", efficiency ruling 11 Nov): redesign the measuring block to finish by Fri 27 Nov at the strict rule's quality: code reads the HUD (stars, timers, speed by template matching), cuts by frame difference, people by a local detector; models only label and spot-check; Monday's Sonnet/Haiku trial with Opus checks; one uncut long stream serves every study in it; coarse pass, fine steps only round events; parallel helpers; every row names its blueprint part and decision, others cut and listed; no-video rows to a cloud session. Advisor 304: frame labelling as scripted calls on his API credit (Haiku or Sonnet, whichever agrees with Opus spot checks), not the weekly allowance; key never printed, copied or committed; a spending stop at the month's remaining credit; the token file and reprice give credit used and left, cost per frame by model, hours it carries before 27 Nov. Advisor 305 (his words 22 Nov 09:07, "just need to use them up before they expire"): find this month's credit expiry and what is left; plan the frame labelling to use it all by then; if measuring alone will not, put other planned scripted work on it (talk reply labelling, Kiln render checks, review panel calibration, the checkers' AI players), cheapest agreeing model first; each daily token file shows expiry, used and left until spent. Reprice by Mon 23 Nov 20:00 (hours, points, finish date, cuts and why).
 00. Allowance first: `python tools/pace_line.py <week> --fable <fable>`; the stop is 95% (week-shape.json hard_stop; the 75% lapsed at his 19 Nov Fable reset, advisor 284), ceiling line+25 capped at 95. Spare allowance before a reset funds planned or waiting work unasked (his rule 21 Nov, advisor 285).
 0d. NOW (advisors 285, 286, 289): the PC measuring block: GTA VI's footage pass (lane branch's production/research/lane/gtavi/FOOTAGE-MEASURING.md; no spoiler to him), the footage studies (item 35), item 37, the feel block, then MEASUREMENTS-NEEDED's rows.
