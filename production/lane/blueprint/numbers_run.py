@@ -65,7 +65,7 @@ def money_run(p, b, wash_share=WASH_SHARE, own_fares_only=False):
     for w in range(1, WEEKS + 1):
         cars = cars_owned(bought)
         drivers = max(0, cars - 0)          # each car a paid driver; Tom's own fares on top
-        per_car = DRIVER_BOOK_ACT1[i] if w == 1 else CAR_BOOK_LATER[i]
+        per_car = DRIVER_BOOK_ACT1[i] if (w == 1 or p == "fares only") else CAR_BOOK_LATER[i]   # the fares-only player wins no good rank
         firm_fares = drivers * per_car
         tom_fares = fares_week * FARE_VALUE[i]
         book += firm_fares + tom_fares - drivers * WAGE - RENT
@@ -93,10 +93,16 @@ def money_run(p, b, wash_share=WASH_SHARE, own_fares_only=False):
                                               "bought officer, a statement", "a brief on call, 4 weeks"):
                 continue
             cost = CAR_PRICE[i] if price == "car" else FRONT_SHARE[i] if price == "front" else price
-            if book + pocket >= cost:
+            night_ok = price in ("car", "front")          # RT-17: a car or a front's share may be paid from the tin
+            if book + pocket + (tin if night_ok else 0) >= cost:
                 take = min(pocket, cost)
                 pocket -= take
-                book -= cost - take
+                rest = cost - take
+                if night_ok:
+                    t = min(tin, rest)
+                    tin -= t
+                    rest -= t
+                book -= rest
                 bought.append(name)
             else:
                 break                      # saves for the next thing on the list rather than buying past it
@@ -122,69 +128,78 @@ ACT2_START, ACT2_END = 8, 42            # game days, clock B
 FAILSAFE_FROM = ACT2_END - 4             # four game days before Act II's last week ends
 
 
-def ladder_run(style, hold_days=14, min_gap=0, sitdown_from=0):
-    """style: payer (pays every pressure, no deeds), steady (pays once, rises, one deed a fortnight), hard (deeds and defiance).
-    Returns the day each rival reached each rung and the day Act II ends (first sit-down)."""
-    rivals = {r: dict(rung=0, held_until=0, last=-99, log={}) for r in ("widow", "agar", "cammack")}
-    tom_rung = {8: 2}
-    if style != "payer":
-        tom_rung.update({22: 3, 35: 4})
-    deeds = {"payer": [], "steady": [(16, "cammack"), (30, "widow")], "hard": [(9, "cammack"), (10, "cammack"), (11, "cammack"), (12, "widow")]}[style]
-    defy = style == "hard"
-    paid_once = set()
-    end = None
+FIRST_NOTICE = {"widow": 8, "cammack": 10, "agar": 13}   # ASSUMED stagger: docks first (his drivers at the gate), Agar's paper last
+
+
+def ladder_run(style, hold_days=14, min_gap=0, max_pays=None):
+    """RT2-07 as written: five rungs, never skipped, one rung per trigger; a deed lifts at once; paying holds hold_days
+    unless a deed. style: payer (pays at every rung, no deeds), steady (pays each rival once, then refuses; defies Cammack's
+    pressure on day 18, counters the Widow's on day 27; deeds on days 16 and 30; rung 3 day 22, rung 4 day 35),
+    hard (deeds days 9 to 12, defies every pressure and threat). Fixes: min_gap (days between a rival's rungs) and
+    max_pays (a rival takes at most that many payments in all, then moves to the next rung)."""
+    rivals = {r: dict(rung=0, held_until=0, last=-99, log={}, pays=0) for r in FIRST_NOTICE}
+    tom_rung = {8: 2} if style == "payer" else {8: 2, 22: 3, 35: 4}
+    events = {"payer": {}, "steady": {(16, "cammack"): "deed", (30, "widow"): "deed", (18, "cammack"): "defy", (27, "widow"): "defy"},
+              "hard": {(9, "cammack"): "deed", (10, "cammack"): "deed", (11, "widow"): "deed", (12, "widow"): "deed"}}[style]
+    state = {"end": None}
+
     def lift(r, d, why):
         R = rivals[r]
-        if R["rung"] >= 5 or d - R["last"] < min_gap:
-            return
-        if R["rung"] == 4 and d < sitdown_from and why != "fail-safe":
-            return
+        if R["rung"] >= 5 or (d - R["last"] < min_gap and why != "fail-safe"):
+            return False
         R["rung"] += 1
         R["last"] = d
         R["log"][RUNGS[R["rung"]]] = (d, why)
+        if R["rung"] == 5 and state["end"] is None:
+            state["end"] = d
+        return True
+
     for d in range(ACT2_START, ACT2_END + 1):
         tr = max(v for k, v in tom_rung.items() if k <= d)
         if d >= FAILSAFE_FROM:
             top = max(rivals, key=lambda k: rivals[k]["rung"])
             if rivals[top]["rung"] < 5:
-                rivals[top]["last"] = -99
                 lift(top, d, "fail-safe")
                 rivals[top]["held_until"] = 0
         for r, R in rivals.items():
-            held = d < R["held_until"]
+            if state["end"] is not None:
+                break
             if R["rung"] == 0:
-                lift(r, d, "first sighting")
+                if d >= FIRST_NOTICE[r]:
+                    lift(r, d, "first sighting")
                 continue
-            dd = [x for x in deeds if x[0] == d and x[1] == r]
-            if dd:
+            ev = events.get((d, r))
+            if ev == "deed":
                 lift(r, d, "a deed against him")
                 R["held_until"] = 0
                 continue
-            if held:
+            if d < R["held_until"]:
                 continue
-            if R["rung"] == 1 and (tr >= 2 or d - R["last"] >= 3):
-                lift(r, d, "Tom at rung 2 or two more sightings")
-            elif R["rung"] == 2:
-                if style == "payer" or (style == "steady" and r not in paid_once):
-                    R["held_until"] = d + hold_days
-                    paid_once.add(r)
-                    R["log"].setdefault("paid", []).append(d) if isinstance(R["log"].get("paid"), list) else R["log"].__setitem__("paid", [d])
-                elif tr >= 3 or defy:
-                    lift(r, d, "refused, or Tom at rung 3")
-            elif R["rung"] == 3 and (defy or (style == "steady" and tr >= 3 and d - R["last"] >= 5)):
-                lift(r, d, "defied or countered")
-            elif R["rung"] == 4 and (defy or tr >= 4):
-                lift(r, d, "defied, or Tom at rung 4")
-            if R["rung"] == 5 and end is None:
-                end = d
-        if end is not None:
+            if R["rung"] == 1:
+                if tr >= 2 or d - R["last"] >= 3:
+                    lift(r, d, "Tom at rung 2, or two more sightings")
+                continue
+            wants_pay = style == "payer" or (style == "steady" and R["pays"] == 0 and R["rung"] == 2)
+            if wants_pay and (max_pays is None or R["pays"] < max_pays):
+                R["held_until"] = d + hold_days
+                R["pays"] += 1
+                R["log"].setdefault("paid", []).append(d)
+                continue
+            refused_by_rival = wants_pay and max_pays is not None and R["pays"] >= max_pays
+            if R["rung"] == 2 and (not wants_pay or refused_by_rival or tr >= 3):
+                lift(r, d, "visit refused (or no more money taken), or Tom at rung 3")
+            elif R["rung"] == 3 and (ev == "defy" or style == "hard" or refused_by_rival):
+                lift(r, d, "pressure defied or countered")
+            elif R["rung"] == 4 and (ev == "defy" or style == "hard" or tr >= 4 or refused_by_rival):
+                lift(r, d, "threat defied, or Tom at rung 4")
+        if state["end"] is not None:
             break
-    weeks_with_rung = set()
+    weeks = set()
     for R in rivals.values():
         for k, v in R["log"].items():
             if k != "paid":
-                weeks_with_rung.add((v[0] - ACT2_START) // 7 + 1)
-    return rivals, end, sorted(weeks_with_rung)
+                weeks.add((v[0] - ACT2_START) // 7 + 1)
+    return rivals, state["end"], sorted(weeks)
 
 
 # ---- repeats for a player who plays most nights ----
@@ -228,10 +243,11 @@ def main():
     print()
     print("== Rivals' ladder, clock B (Act II days 8 to 42, fail-safe from day 38) ==")
     for style in ("payer", "steady", "hard"):
-        for gap, sd in ((0, 0), (4, 0), (4, 29)):
-            rivals, end, weeks = ladder_run(style, min_gap=gap, sitdown_from=sd)
-            tag = "as designed" if gap == 0 else (f"fix: one rung a rival every {gap} game days" + (f", sit-down not before day {sd} (Act II week 4)" if sd else ""))
-            print(f"-- {style}, {tag}: Act II ends day {end} (week {None if end is None else (end - ACT2_START)//7 + 1} of Act II); weeks of Act II with a rung change: {weeks}")
+        for tag, kw in (("as designed", {}), ("fix A: one rung a rival every 5 game days", dict(min_gap=5)),
+                        ("fix B: fix A, and a paid rival holds 7 days and takes at most 2 payments", dict(min_gap=5, hold_days=7, max_pays=2))):
+            rivals, end, weeks = ladder_run(style, **kw)
+            wk = None if end is None else (end - ACT2_START) // 7 + 1
+            print(f"-- {style}, {tag}: Act II ends day {end} (week {wk} of Act II); weeks of Act II with a rung change: {weeks}")
             for r, R in rivals.items():
                 print(f"   {r:8s} " + "; ".join(f"{k} {v[0] if not isinstance(v, list) else v}" for k, v in R["log"].items()))
     print()
