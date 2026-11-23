@@ -1,0 +1,479 @@
+{
+ "G1ov": [
+  {
+   "rule": "content in the built game",
+   "ok": false,
+   "steps": "lines of prose in the built ledger.js: 3019",
+   "fails": [
+    [
+     "pint",
+     "See you down the pub for a pint."
+    ]
+   ]
+  },
+  {
+   "rule": "nothing of later years in the built game",
+   "ok": true,
+   "steps": "the same lines against words never right in Britain in 1990",
+   "late": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": true,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": []
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": false,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": [
+    "09:00 4 out, the table says 16",
+    "09:00 4 out, the table says 16",
+    "10:00 5 out, the table says 16",
+    "13:00 6 out, the table says 16"
+   ]
+  },
+  {
+   "rule": "every fare pays",
+   "ok": false,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "bad": [
+    "fare 1 paid nothing",
+    "fare 2 paid nothing",
+    "fare 3 paid nothing",
+    "fare 4 paid nothing",
+    "fare 5 paid nothing",
+    "fare 6 paid nothing"
+   ],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": true,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": null
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": true,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.134,
+    "this": 0.156,
+    "ref2": 0.199
+   }
+  }
+ ],
+ "H2": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 1971",
+   "fails": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": true,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": []
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": true,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": []
+  },
+  {
+   "rule": "every fare pays",
+   "ok": true,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    240,
+    260,
+    160,
+    170,
+    190,
+    270
+   ],
+   "bad": [],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": true,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": null
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": true,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.14,
+    "this": 0.24,
+    "ref2": 0.184
+   }
+  }
+ ],
+ "H1": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 1970",
+   "fails": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": true,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": []
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": false,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": [
+    "11:00 7 out, the table says 16"
+   ]
+  },
+  {
+   "rule": "every fare pays",
+   "ok": true,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    260,
+    200,
+    230,
+    330,
+    150,
+    160
+   ],
+   "bad": [],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": true,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": null
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": true,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.234,
+    "this": 0.189,
+    "ref2": 0.317
+   }
+  }
+ ],
+ "H3": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 1971",
+   "fails": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": true,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": []
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": false,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": [
+    "16:00 2 out, the table says 16",
+    "17:00 2 out, the table says 16",
+    "09:00 2 out, the table says 16",
+    "09:00 2 out, the table says 16",
+    "10:00 2 out, the table says 16",
+    "11:00 2 out, the table says 16",
+    "12:00 1 out, the table says 16",
+    "13:00 2 out, the table says 16",
+    "14:00 2 out, the table says 16",
+    "15:00 2 out, the table says 16",
+    "16:00 2 out, the table says 16",
+    "17:00 2 out, the table says 16"
+   ]
+  },
+  {
+   "rule": "every fare pays",
+   "ok": true,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    200,
+    180,
+    270,
+    180,
+    170,
+    250
+   ],
+   "bad": [],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": true,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": null
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": true,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.175,
+    "this": 0.17,
+    "ref2": 0.188
+   }
+  }
+ ],
+ "G3ov": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 3018",
+   "fails": []
+  },
+  {
+   "rule": "nothing of later years in the built game",
+   "ok": true,
+   "steps": "the same lines against words never right in Britain in 1990",
+   "late": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": true,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": []
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": false,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": [
+    "03:00 0 out, the table says 1",
+    "04:00 0 out, the table says 1"
+   ]
+  },
+  {
+   "rule": "every fare pays",
+   "ok": true,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    200,
+    180,
+    140,
+    330,
+    140,
+    310
+   ],
+   "bad": [],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": true,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": null
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": false,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.158,
+    "this": 0.808,
+    "ref2": 0.141
+   }
+  }
+ ],
+ "G2ov": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 3018",
+   "fails": []
+  },
+  {
+   "rule": "nothing of later years in the built game",
+   "ok": true,
+   "steps": "the same lines against words never right in Britain in 1990",
+   "late": []
+  },
+  {
+   "rule": "nobody under 18",
+   "ok": false,
+   "steps": "every person the game holds, by the age it keeps",
+   "people": 57,
+   "bad": [
+    "c5 is 15"
+   ]
+  },
+  {
+   "rule": "the street is peopled",
+   "ok": false,
+   "steps": "24 game hours of a new game, the crowd counted each hour",
+   "thin": [
+    "15:00 5 out, the table says 16"
+   ]
+  },
+  {
+   "rule": "every fare pays",
+   "ok": true,
+   "steps": "test setup: the cab keys given and Tom put in the cab; 6 fares in a row through the game's own fare calls",
+   "paid": [
+    260,
+    150,
+    210,
+    150,
+    160,
+    200
+   ],
+   "bad": [],
+   "fare_count": 6
+  },
+  {
+   "rule": "every talk can be left",
+   "ok": true,
+   "steps": "each named person on the street or at a window (Tom put beside them): E, then Escape up to three times",
+   "opened": [
+    "ron",
+    "june",
+    "walsh",
+    "lee",
+    "nora",
+    "dennis",
+    "norman",
+    "shaun"
+   ],
+   "stuck": []
+  },
+  {
+   "rule": "the pause menu by keys",
+   "ok": false,
+   "steps": "Escape, ArrowDown, Escape",
+   "opened": "pause",
+   "focus": "...",
+   "after": "pause"
+  },
+  {
+   "rule": "frame rate against a twin",
+   "ok": true,
+   "steps": "one logic step, this build between two runs of the reference build",
+   "tick_ms": {
+    "ref": 0.159,
+    "this": 0.156,
+    "ref2": 0.15
+   }
+  }
+ ]
+}

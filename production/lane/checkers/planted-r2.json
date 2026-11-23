@@ -1,0 +1,179 @@
+{
+ "round": 2,
+ "note": "Planted faults, round 2 (23 Nov 2026), after the mend. Kept outside the repository while the checkers ran; committed only after scoring.",
+ "faults": [
+  {
+   "id": "drop-off-needs-exact-stop",
+   "kind": "passes on the scripted path, breaks off it",
+   "plain": "a fare is set down only when the cab stops within 2 m of the door (it was 7), so a person stopping a car-length off circles for ever; the story driver stops on the spot",
+   "edits": [
+    {
+     "file": "rules.js",
+     "old": "    dropOffWithinMetres: 7,",
+     "new": "    dropOffWithinMetres: 2,"
+    }
+   ]
+  },
+  {
+   "id": "news-goes-cold",
+   "kind": "a witness who forgets",
+   "plain": "what people know goes cold in about 40 game minutes instead of a day, so nothing is passed on the next morning",
+   "edits": [
+    {
+     "file": "rules.js",
+     "old": "    heatFadeGameMinutes: 1700,",
+     "new": "    heatFadeGameMinutes: 40,"
+    }
+   ]
+  },
+  {
+   "id": "long-lines-not-kept",
+   "kind": "a person who repeats one line",
+   "plain": "long lines are no longer kept from being said twice in a week, so people repeat themselves",
+   "edits": [
+    {
+     "file": "game/core.js",
+     "old": "  if (l && wordsIn(l) >= SAID_ONCE_FROM_WORDS) said[l] = 1;",
+     "new": ""
+    }
+   ]
+  },
+  {
+   "id": "flat-stair-night",
+   "kind": "a dead end that soft-locks",
+   "plain": "from 10pm to 6am the stair down from the flat has no prompt: up there at night he cannot leave until morning",
+   "edits": [
+    {
+     "file": "player.js",
+     "old": "        out.push({ k: 'E', t: r.upFrom ? 'Down the stair",
+     "new": "        if (!(r.upFrom && (hour() >= 22 || hour() < 6))) out.push({ k: 'E', t: r.upFrom ? 'Down the stair"
+    }
+   ]
+  },
+  {
+   "id": "handbrake-sticks",
+   "kind": "a car that sticks",
+   "plain": "once the cab has been left standing, its handbrake stays on for ever after: it barely crawls",
+   "edits": [
+    {
+     "file": "qr/cab.js",
+     "old": "    k.hb = approach(k.hb, inp.hb ? 1 : 0, STEP * 9);",
+     "new": "    k.hb = approach(k.hb, inp.hb || CAB.wasParked ? 1 : 0, STEP * 9);"
+    },
+    {
+     "file": "qr/cab.js",
+     "old": "export function park() {",
+     "new": "export function park() {\n  CAB.wasParked = 1;"
+    }
+   ]
+  },
+  {
+   "id": "talk-box-keeps-keys",
+   "kind": "a menu that swallows keys",
+   "plain": "when a talk ends the typing box keeps the keys, so the move keys type into a hidden box until he clicks",
+   "edits": [
+    {
+     "file": "ui.js",
+     "old": "    $('tin').blur();\n    if (document.activeElement && document.activeElement !== document.body",
+     "new": "    if (false && document.activeElement && document.activeElement !== document.body"
+    }
+   ]
+  },
+  {
+   "id": "rain-empties-streets",
+   "kind": "an empty street",
+   "plain": "when it is wet (as on the first evening) almost nobody of the crowd is out, day or night",
+   "edits": [
+    {
+     "file": "routines.js",
+     "old": "  return G.hooks.crowd ? G.hooks.crowd(base) : base;",
+     "new": "  if (G.weather && G.weather.wet > 0.5) return 1;\n  return G.hooks.crowd ? G.hooks.crowd(base) : base;"
+    }
+   ]
+  },
+  {
+   "id": "ledger-not-saved",
+   "kind": "a save that loses a step",
+   "plain": "the Ledger's pages are not saved: after loading, what he had written and learned is gone",
+   "edits": [
+    {
+     "file": "saving.js",
+     "old": "  'ledger',\n",
+     "new": ""
+    }
+   ]
+  },
+  {
+   "id": "voices-silent",
+   "kind": "a check that passes because it tests the wrong thing",
+   "plain": "every spoken line is put in the sound record but no voice is ever played (the stories read the record, not the sound)",
+   "edits": [
+    {
+     "file": "audio.js",
+     "old": "  heard('voice', loud, who);\n  if (!A.ctx) return;",
+     "new": "  heard('voice', loud, who);\n  if (!A.ctx || loud > -1) return;"
+    }
+   ]
+  },
+  {
+   "id": "text-me-line",
+   "kind": "1990: an anachronism",
+   "plain": "a small-talk line asks him to text her",
+   "edits": [
+    {
+     "file": "talk_lines.js",
+     "old": "  small: [\n    \"It's been wet since August.\",",
+     "new": "  small: [\n    \"It's been wet since August.\",\n    \"Text me when you're back, love.\","
+    }
+   ]
+  },
+  {
+   "id": "kids-line",
+   "kind": "content rule: no children, spoken of",
+   "plain": "a brush-off line speaks of fetching the kids from school",
+   "edits": [
+    {
+     "file": "talk_lines.js",
+     "old": "  busy: ['Not now.', \"I'm busy.\"],",
+     "new": "  busy: ['Not now.', \"I'm busy.\", \"Not now, I've the kids to fetch from school.\"],"
+    }
+   ]
+  },
+  {
+   "id": "run-down-kills",
+   "kind": "a car hurts, never kills",
+   "plain": "a person knocked down and taken to hospital is dead",
+   "edits": [
+    {
+     "file": "game/cars.js",
+     "old": "  P.down = false;\n  P.gone = true;",
+     "new": "  P.down = false;\n  P.gone = true;\n  P.dead = true;"
+    }
+   ]
+  },
+  {
+   "id": "long-subtitles-stick",
+   "kind": "a subtitle that never clears",
+   "plain": "any line longer than 90 letters stays on screen ten minutes until three newer lines push it off",
+   "edits": [
+    {
+     "file": "ui.js",
+     "old": "  const lasts = secs || clamp(2.2 + text.length * 0.055, 3, 9);",
+     "new": "  const lasts = text.length > 90 ? 600 : secs || clamp(2.2 + text.length * 0.055, 3, 9);"
+    }
+   ]
+  },
+  {
+   "id": "flat-camera-in-wall",
+   "kind": "camera inside a wall",
+   "plain": "in the flat the camera no longer swings clear of the walls",
+   "edits": [
+    {
+     "file": "player.js",
+     "old": "    while (a !== 0 && hidden())",
+     "new": "    while (a !== 0 && hidden() && room.id !== 'flat')"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "C0f": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 52,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 54,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 29,
+   "fails": []
+  }
+ },
+ "flat-stair-night": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 56,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 72,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 41,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 34,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "FAIL",
+   "secs": 70,
+   "fails": [
+    "TEST FAIL runs, run 1: walking back past that spot brings a fresh call | got [{\"s\":\"THE CONSTABLE\\\"You, there. Hold on a minute.\\\"\",\"at\":386.4,\"t\":1451.2}]",
+    "TEST FAIL runs, run 1: he can walk to -10, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -30, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -43, 56 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: at the landing a man in the dark says \"Mickey's?\" | got []",
+    "TEST FAIL runs, run 1: the hand-over has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: the hand-over plays and his cut comes back | got [\"TERRY HODGSON\\\"That detective has been asking about you. Ellis, her name is.\\\"\",\"A glance, and on.\"]",
+    "TEST FAIL runs, run 1: the cut is in the Money page in words, under the tin | got [\"Money\",\"\u00a333.78 in his pocket. \u00a310.28 of fares in the fare book this week. The tin has about \u00a310 in it. Rent, \u00a318, Friday. Darren still owes \u00a312. Wayne owes \u00a330. Lee owes \u00a315. Julie owes \u00a39. Dennis owes \u00a380.\"]",
+    "TEST FAIL runs, run 1: the hand-over and the cut each have their Ledger line | got []",
+    "TEST FAIL runs, run 1: he comes home by the yard: the back door has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: he can walk to 1005, 1003 | got [158.1,58.7,\"street\"]",
+    "TEST FAIL runs, run 1: sleeping skips the night: it is Tuesday morning | got [1986.3022222222396,3300.0133333333333,1.2666666666666666]",
+    "S05 FAIL (12)"
+   ]
+  },
+  "S06": {
+   "verdict": "FAIL",
+   "secs": 73,
+   "fails": [
+    "TEST FAIL runs, run 1: Tuesday morning, in the flat over the office | got {\"day\":2,\"hour\":7.003925925925925,\"space\":\"flat\",\"things\":[\"ran\",\"searched\",\"missed\"]}",
+    "TEST FAIL runs, run 1: what happened last night is the branch that was played | got [\"ran\",\"searched\",\"missed\"]",
+    "TEST FAIL runs, run 1: what he says matches the branch (runs) | got \"DARREN MILNERIbbotson had your coat open on the quay, I hear. Their man watched it from the shelter, and no envelope came. They count that, chief.\"",
+    "S06 FAIL (3)"
+   ]
+  }
+ },
+ "debts-f": {
+  "S01": {
+   "verdict": "FAIL",
+   "secs": 66,
+   "fails": [
+    "TEST FAIL waits, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":2200, | after: {}\"]",
+    "TEST FAIL skips, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":2200, | after: {}\"]",
+    "S01 FAIL (2)"
+   ]
+  },
+  "S02": {
+   "verdict": "FAIL",
+   "secs": 49,
+   "fails": [
+    "TEST FAIL run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":2200, | after: {}\"]",
+    "S02 FAIL (1)"
+   ]
+  },
+  "S03": {
+   "verdict": "FAIL",
+   "secs": 25,
+   "fails": [
+    "TEST FAIL book, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":2200, | after: {}\",\"ledger: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}},{\\\"e\\\":26,\\\"t\\\":1191,\\\"seen\\\":{\\\"ron\\\":{\\\"b\\\":\\\"saw\\\",\\\"t\\\":1191,\\\"fro | after: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}},{\\\"e\\\":26,\\\"t\\\":1191,\\\"seen\\\":{\\\"ron\\\":{\\\"b\\\":\\\"saw\\\",\\\"t\\\":1191,\\\"fro\"]",
+    "TEST FAIL fronts, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":1200, | after: {}\"]",
+    "TEST FAIL takes, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":0,\\\"st | after: {}\",\"ledger: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}},{\\\"e\\\":26,\\\"t\\\":1191,\\\"seen\\\":{\\\"ron\\\":{\\\"b\\\":\\\"saw\\\",\\\"t\\\":1191,\\\"fro | after: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}},{\\\"e\\\":26,\\\"t\\\":1191,\\\"seen\\\":{\\\"ron\\\":{\\\"b\\\":\\\"saw\\\",\\\"t\\\":1191,\\\"fro\"]",
+    "TEST FAIL strikes, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"debts: {\\\"dennis\\\":{\\\"owed\\\":8000,\\\"st\\\":\\\"open\\\"},\\\"lee\\\":{\\\"owed\\\":1500,\\\"st\\\":\\\"open\\\"},\\\"darren\\\":{\\\"owed\\\":2200, | after: {}\"]",
+    "S03 FAIL (4)"
+   ]
+  }
+ },
+ "talk-box-keeps-keys": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 73,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 49,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 23,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 22,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "FAIL",
+   "secs": 59,
+   "fails": [
+    "TEST FAIL runs, run 1: walking back past that spot brings a fresh call | got [{\"s\":\"THE CONSTABLE\\\"You, there. Hold on a minute.\\\"\",\"at\":386.4,\"t\":1451.2}]",
+    "TEST FAIL runs, run 1: he can walk to -10, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -30, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -43, 56 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: at the landing a man in the dark says \"Mickey's?\" | got []",
+    "TEST FAIL runs, run 1: the hand-over has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: the hand-over plays and his cut comes back | got [\"TERRY HODGSON\\\"That detective has been asking about you. Ellis, her name is.\\\"\",\"A glance, and on.\"]",
+    "TEST FAIL runs, run 1: the cut is in the Money page in words, under the tin | got [\"Money\",\"\u00a333.78 in his pocket. \u00a310.28 of fares in the fare book this week. The tin has about \u00a310 in it. Rent, \u00a318, Friday. Darren still owes \u00a312. Wayne owes \u00a330. Lee owes \u00a315. Julie owes \u00a39. Dennis owes \u00a380.\"]",
+    "TEST FAIL runs, run 1: the hand-over and the cut each have their Ledger line | got []",
+    "TEST FAIL runs, run 1: he comes home by the yard: the back door has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: he can walk to 1005, 1003 | got [158.1,58.7,\"street\"]",
+    "TEST FAIL runs, run 1: sleeping skips the night: it is Tuesday morning | got [1986.3022222222396,3300.0133333333333,1.2666666666666666]",
+    "S05 FAIL (12)"
+   ]
+  },
+  "S06": {
+   "verdict": "FAIL",
+   "secs": 47,
+   "fails": [
+    "TEST FAIL runs, run 1: Tuesday morning, in the flat over the office | got {\"day\":2,\"hour\":7.003925925925925,\"space\":\"flat\",\"things\":[\"ran\",\"searched\",\"missed\"]}",
+    "TEST FAIL runs, run 1: what happened last night is the branch that was played | got [\"ran\",\"searched\",\"missed\"]",
+    "TEST FAIL runs, run 1: what he says matches the branch (runs) | got \"DARREN MILNERIbbotson had your coat open on the quay, I hear. Their man watched it from the shelter, and no envelope came. They count that, chief.\"",
+    "S06 FAIL (3)"
+   ]
+  }
+ },
+ "ledger-f": {
+  "S01": {
+   "verdict": "FAIL",
+   "secs": 75,
+   "fails": [
+    "TEST FAIL waits, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}}],\\\"notes\\\":[{\\\"t\\\":1022,\\\"kind\\\":\\\"note\\\",\\\"text\\\":\\\"Ron Kirby spo | after: {\\\"book\\\":{\\\"n\\\":3,\\\"entries\\\":[{\\\"id\\\":1,\\\"kind\\\":\\\"open\\\",\\\"t\\\":1187,\\\"place\\\":\\\"Mickey's Cars\\\",\\\"who\\\":\\\"sh\"]",
+    "TEST FAIL skips, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}}],\\\"notes\\\":[{\\\"t\\\":1012,\\\"kind\\\":\\\"note\\\",\\\"text\\\":\\\"Ron Kirby spo | after: {}\"]",
+    "S01 FAIL (2)"
+   ]
+  },
+  "S02": {
+   "verdict": "FAIL",
+   "secs": 56,
+   "fails": [
+    "TEST FAIL run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":2,\\\"t\\\":936,\\\"seen\\\":{}},{\\\"e\\\":20,\\\"t\\\":1133,\\\"seen\\\":{\\\"ron\\\":{\\\"b\\\":\\\"saw\\\",\\\"t\\\":1133,\\\"fro | after: {\\\"book\\\":{\\\"n\\\":3,\\\"entries\\\":[{\\\"id\\\":1,\\\"kind\\\":\\\"open\\\",\\\"t\\\":1212,\\\"place\\\":\\\"Quay Street\\\",\\\"who\\\":\\\"shei\"]",
+    "S02 FAIL (1)"
+   ]
+  },
+  "S03": {
+   "verdict": "FAIL",
+   "secs": 27,
+   "fails": [
+    "TEST FAIL book, run 1: the Day book has the fare and the debt book | got \"THE LEDGER\\nQ\\nPEOPLE\\nDAY BOOK\\nOPEN\\nMONEY\\nE\\nCLOSE\\nMon 15 Oct\\nThe week so far\\nMon 15 Oct: Nothing written.\\nMon 15 Oct\\nMon 15 Oct, 10.38pm \u00b7 Mickey's Cars\\nMickey's debt book: Darren Milner \u00a322, Wayne Harrison \u00a330, Lee Drewery \u00a315, Julie Kettlewell \u00a39, Dennis Iveson \u00a380. \u00a3156. Rent \u00a318, Friday.\\nSheila showed him the book. Source: event 43, noticed, Mon 15 Oct, 10.38pm, the Hook.\\nMon 15 Oct, 10.32pm \u00b7 M\"",
+    "TEST FAIL book, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[],\\\"notes\\\":[{\\\"t\\\":1329,\\\"kind\\\":\\\"note\\\",\\\"text\\\":\\\"Sheila Dunn, at the fare book: \\\\\\\"Two p | after: {\\\"book\\\":{\\\"n\\\":8,\\\"entries\\\":[{\\\"id\\\":1,\\\"kind\\\":\\\"open\\\",\\\"t\\\":1362,\\\"place\\\":\\\"Mickey's Cars\\\",\\\"who\\\":\\\"sh\"]",
+    "TEST FAIL fronts, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":56,\\\"t\\\":1374,\\\"seen\\\":{\\\"darren\\\":{\\\"b\\\":\\\"there\\\",\\\"t\\\":1374,\\\"from\\\":null,\\\"n\\\":0}},\\\"othe | after: {}\"]",
+    "TEST FAIL takes, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":29,\\\"t\\\":1374,\\\"seen\\\":{\\\"darren\\\":{\\\"b\\\":\\\"said\\\",\\\"t\\\":1374,\\\"from\\\":null,\\\"n\\\":0}},\\\"other | after: {\\\"book\\\":{\\\"n\\\":8,\\\"entries\\\":[{\\\"id\\\":1,\\\"kind\\\":\\\"open\\\",\\\"t\\\":1378,\\\"place\\\":\\\"Quay Street, the quay en\"]",
+    "TEST FAIL strikes, run 1: watch: a save and reload give back the same game (debts, Ledger, money, flags, memories) | got [\"ledger: {\\\"acts\\\":[{\\\"e\\\":29,\\\"t\\\":1374,\\\"seen\\\":{\\\"darren\\\":{\\\"b\\\":\\\"said\\\",\\\"t\\\":1374,\\\"from\\\":null,\\\"n\\\":0}},\\\"other | after: {}\"]",
+    "S03 FAIL (5)"
+   ]
+  }
+ },
+ "news-goes-cold": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 64,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 44,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 25,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 21,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "PASS",
+   "secs": 48,
+   "fails": []
+  },
+  "S06": {
+   "verdict": "PASS",
+   "secs": 46,
+   "fails": []
+  }
+ },
+ "run-down-kills clumsy person_hit": [
+  {
+   "rule": "a person hit is hurt, never killed",
+   "ok": "True",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W"
+  },
+  {
+   "rule": "a person hit: told on screen",
+   "ok": "True",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W; the game's message lists read each frame from the hit"
+  },
+  {
+   "rule": "everyone knocked down is told on screen",
+   "ok": "False",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W; others who went down in the same run"
+  },
+  {
+   "rule": "everyone knocked down is told on screen",
+   "ok": "True",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W; others who went down in the same run"
+  },
+  {
+   "rule": "a person hit: a choice is offered (stop and help, or drive off)",
+   "ok": "True",
+   "steps": "the key prompts and the written choice 3 s after the hit"
+  },
+  {
+   "rule": "no page errors",
+   "ok": "True",
+   "steps": "whole run"
+  }
+ ]
+}

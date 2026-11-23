@@ -1,0 +1,101 @@
+{
+ "H2": [
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 9 m from a lamp post at (-28.0, -172.0), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 18 m from a lamp post at (5.7, -134.0), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 9 m from a parked car at (12.0, -127.4), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 23 m from a wall 23 m ahead of (-2.1, -36.2), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 10 m from a a moving car at (-98.0, 30.0), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a bollard was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a traffic was reached"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold D 0.6 s"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; after D held 0.6 s, let go"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold A 0.6 s, then let go of A and press D in the same frame"
+  },
+  {
+   "rule": "a person hit is hurt, never killed",
+   "ok": "False",
+   "steps": "no one was knocked down after trying ['Ron Kirby', 'Darren Milner', 'June Suddaby', 'Father Walsh', 'Nora Cronin', 'Nora Cronin']"
+  },
+  {
+   "rule": "no pause nothing holds",
+   "ok": "False",
+   "steps": "count of pauses nothing was holding over the whole run"
+  },
+  {
+   "rule": "tested something: a person hit: told on screen",
+   "ok": "False",
+   "steps": "no case of this rule was reached in the run"
+  }
+ ],
+ "H3": [
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a bollard was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a traffic was reached"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold D 0.6 s"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; after D held 0.6 s, let go"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold A 0.6 s, then let go of A and press D in the same frame"
+  },
+  {
+   "rule": "no pause nothing holds",
+   "ok": "False",
+   "steps": "count of pauses nothing was holding over the whole run"
+  }
+ ]
+}
