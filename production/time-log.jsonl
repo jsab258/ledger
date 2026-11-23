@@ -1112,3 +1112,5 @@
 {"event": "stop", "at": "2026-11-23T19:05:00", "note": "recipe rewrite, review fixes"}
 {"event": "start", "at": "2026-11-23T19:06:00", "task": "n23-3", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-23T19:26:00", "note": "questions, three text-model arms"}
+{"event": "start", "at": "2026-11-23T20:07:00", "task": "n23-1 film ruler (fast grabber, our build)", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T20:22:00", "note": ""}

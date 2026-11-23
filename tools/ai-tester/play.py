@@ -3,7 +3,7 @@
 
     python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR] [--packaged EXE] [--shortcut LNK]
     python tools/ai-tester/play.py shot
-    python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run] [--film]
+    python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run] [--film [--fast]]
     python tools/ai-tester/play.py film                  (the run's filmed walking, stitched into one clip)
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
     python tools/ai-tester/play.py press E|T|Z|Esc|Q|Enter|Up|Down
@@ -87,8 +87,11 @@ def film_dir(st):
     return os.path.join(STATE_DIR, "film", st["stamp"].replace(":", "").replace(" ", "-"))
 
 
-def film_frame(st, hwnd):
-    """One frame of the walking recording, the window's own pixels (screenshot below)."""
+def film_frame(st, hwnd, buffer=None):
+    """One frame of the walking recording, the window's own pixels (screenshot below).
+    With a buffer list (walk --fast, 23 Nov: the 0.12 s gap and the JPEG save held the
+    film near six frames a second, too coarse for the drills), the frame is only grabbed
+    and kept; flush_frames saves them after the key is let go."""
     d = film_dir(st)
     os.makedirs(d, exist_ok=True)
     try:
@@ -96,6 +99,9 @@ def film_frame(st, hwnd):
         im = screenshot(hwnd)
         t1 = time.perf_counter()
     except RuntimeError:
+        return
+    if buffer is not None:
+        buffer.append((t0, t1, im))
         return
     st["film_n"] = st.get("film_n", 0) + 1
     # each frame's grab window on the high-resolution clock (advisor 333, 23 Nov: the drills
@@ -105,6 +111,26 @@ def film_frame(st, hwnd):
     w, h = im.size
     im.resize((FILM_WIDTH, max(1, round(h * FILM_WIDTH / float(w))))).save(
         os.path.join(d, "f-%05d.jpg" % st["film_n"]), quality=82)
+
+
+def flush_frames(st, buffer):
+    """Saves the frames a fast walk kept, each with its grab window, as film_frame would."""
+    d = film_dir(st)
+    with open(os.path.join(d, "times.jsonl"), "a", encoding="utf-8") as tf:
+        for t0, t1, im in buffer:
+            st["film_n"] = st.get("film_n", 0) + 1
+            tf.write(json.dumps({"n": st["film_n"], "t0": round(t0, 4), "t1": round(t1, 4)}) + "\n")
+            w, h = im.size
+            im.resize((FILM_WIDTH, max(1, round(h * FILM_WIDTH / float(w))))).save(
+                os.path.join(d, "f-%05d.jpg" % st["film_n"]), quality=82)
+
+
+def film_event(st, what):
+    """A key's moment on the frames' own clock, so input and film share one clock (method review, 23 Nov)."""
+    d = film_dir(st)
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "times.jsonl"), "a", encoding="utf-8") as tf:
+        tf.write(json.dumps({"event": what, "t": round(time.perf_counter(), 4)}) + "\n")
 
 
 def film(rest):
@@ -188,19 +214,25 @@ def tap(name):
     send_key(SCAN[name]); time.sleep(0.08); send_key(SCAN[name], up=True)
 
 
-def hold(name, seconds, run=False, each=None):
-    """Holds a key for the time given; 'each', if given, is called over and over while it is held."""
+def hold(name, seconds, run=False, each=None, gap=None, mark=None):
+    """Holds a key for the time given; 'each', if given, is called over and over while it is held,
+    'gap' seconds apart (FILM_GAP_S unless given); 'mark', if given, is told the key's down and up."""
+    gap = FILM_GAP_S if gap is None else gap
     if run:
         send_key(SCAN["shift"])
     send_key(SCAN[name])
+    if mark:
+        mark("key_down")
     t_end = time.time() + seconds
     try:
         while each is not None and time.time() < t_end:
             each()
-            time.sleep(max(0.0, min(FILM_GAP_S, t_end - time.time())))
+            time.sleep(max(0.0, min(gap, t_end - time.time())))
         time.sleep(max(0.0, t_end - time.time()))
     finally:
         send_key(SCAN[name], up=True)
+        if mark:
+            mark("key_up")
         if run:
             send_key(SCAN["shift"], up=True)
 
@@ -685,7 +717,13 @@ def act(verb, rest):
         seconds = min(4.0, max(0.2, float(rest[1]) if len(rest) > 1 else 1.0))
         running = "--run" in rest
         filming = "--film" in rest
-        hold(WALK_KEY.get(direction, "w"), seconds, running, each=(lambda: film_frame(st, hwnd)) if filming else None)
+        fast = filming and "--fast" in rest
+        kept = [] if fast else None
+        hold(WALK_KEY.get(direction, "w"), seconds, running,
+             each=(lambda: film_frame(st, hwnd, kept)) if filming else None,
+             gap=0.0 if fast else None, mark=(lambda what: film_event(st, what)) if filming else None)
+        if fast:
+            flush_frames(st, kept)
         # walk ... --film --tail SECONDS (29 October, the run film's review: its stop fell in the second between two
         # commands, so the camera's ease back out was never seen): filming goes on after the key is let go
         if filming and "--tail" in rest:
