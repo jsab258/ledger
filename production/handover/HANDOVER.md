@@ -40,13 +40,14 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - GTA IV, GTA V, KCD2 copies NOT run: replaced unsigned launcher files; a safety line kept despite his 16:10 ruling (DECISIONS 23 Nov 20:30). Their rows go to footage. Say so plainly if he asks; do not re-ask him.
 
 ## In flight
-- Nothing runs. Sleeping Dogs closed by the tool (check no sdhdship.exe before any build).
+- 21:52: a queued Sleeping Dogs run (waits for 10 idle minutes, then drill 1's opening keys and Esc at 262 s to film the pause menu, to find the controls screen and any walk key). Frames under F:/LedgerTools/tmp/drills/sdhdship-opening-2026-11-23-22*. Check no sdhdship.exe is left.
+- 21:36 run so far: advisor 334 recorded in RULINGS and acked; drill 1 read (W alone a jog, about 3.4 steps a second, a lead; the run key vaults; no speed readable in the market lanes: the distance readout moves with Naz) and pushed cd571cc91; n23-3 voice alone with no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS, uncommitted).
 
 ## Next, in order
 00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 20:24 read 27% against 4.1% (+22.9): lean, no extra helpers.
-1. Sleeping Dogs walk and run speeds from drill 1's frames (F:/LedgerTools/tmp/drills/sdhdship-opening-2026-11-23-2055, walk4-* and run4-*, times in times.jsonl rows with "hold"): first measure a length in the game itself (the market's herringbone paving brick, or the on-screen distance to Naz while he stands), then Wei's progress per frame; code reads, two sheets by eye. Then four more runs for five (each run restarts from launch, keys as the 2055 run: Enter 45, 56, every 8 s 82-138, walk4 258, run4 265; about 7 min each; only after 10 idle minutes, and the tool's own keys count as use). Whether Shift changes the gait: compare walk4 and run4 frames.
+1. Sleeping Dogs speeds (SLEEPING-DOGS-DRILL-2026-11-23.md, its run lines): the ruler is the distance readout while Naz stands at 45 m (from about 12 s after a checkpoint restart); Enter on the fail screen restarts the chase in about 6 s; Shift is sprint (the game's prompt). Read run 2220 (walk4 282, run4 290): speed = readout fall per second; then four more for five, each after 10 idle minutes (the tool's keys count as use), queued by a wait loop, never forced.
 2. Drill rows next in Sleeping Dogs: a punch (fists row) needs about 60 fps: grabs here are 11 a second, so fists stay on the recorder item or footage.
-3. n23-3 (paused): order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; voice alone (latency.py without --live, --voice game, --prewarm; free); cost per hour. Due Fri 27 Nov.
+3. n23-3 (paused): order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; voice alone with no game open done 21:48 (two runs); its half beside the game goes with the packaged run of question 3 (him away: the game takes the front); cost per hour. Due Fri 27 Nov.
 4. n23-4 voice scan; n23-7 (DAILY file each day with the measuring-hours line; credit row).
 5. n23-1 rest: footage rows for GTA IV, GTA V, KCD2 on-foot/fists/driving; reprice in STATUS.md with today's drill hours.
 6. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.

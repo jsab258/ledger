@@ -9,7 +9,7 @@ GOAL (to Mon 30 Nov 13:00): his order of 23 November, adopted 23 Nov 08:12 (prod
 - [ ] n23-6 weekly audit; n23-7 efficiency and safety.
 - [x] Advisor 324: hidden-details catalogue (production/research/lane/details-catalogue/CATALOGUE.md).
 
-STATE (23 Nov 19:05): one number solid; drills wait for the recorder on his page; catalogue and recipe rewrite done.
+STATE (23 Nov 21:55): one number solid; drills run on the fast film (Sleeping Dogs: opening scripted, drill 1 read as leads; speed runs need open ground); n23-3 text model and voice alone measured; catalogue and recipe rewrite done.
 
 ## Handovers
 
