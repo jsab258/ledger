@@ -84,3 +84,33 @@ Found today that was not in the pre-mortem: the watchdog would count the cloud s
 | 74 The repository is public | Partial: no keys or large files committed. His decision (account) [his question 1] | His | his | 30 Nov |
 | 75 No real players before release | His ruling 21 Nov: friends play the browser evening once it meets the bar. To add: a date in the 7 Dec re-forecast [A7] | His (ruled); Adv | his | 7 Dec |
 | 78 Shipping outside the gate | Partial: rating note, Steam AI disclosure draft, privacy check. To add: a dated shipping list in the reachability chapter [C1] | Cld keeper | partial | 7 Dec |
+
+## The advisor's further guards, checked 23 Nov 13:35
+
+| Guard | Ways | Runs and would catch in time? | State |
+|---|---|---|---|
+| The hold at the stop (advisor 306 at 95%, 317 at 98%); idle runs write nothing | 10, 60 | No, not yet: the lane kept writing a row every hour at the stop through Sunday (11:16 to 21:16), eight of them after advisor 306 said no hourly rows; the rule is not yet in RULINGS (order 1.4, due on his tap). Builder records it today [B1]; the lane is now paused | partial |
+| The lane paused until the one-shot | 43, 56 | Yes: no enabled lane schedule, no lane row since 22 Nov 21:16 | guarded |
+| Measuring redesigned for Fri 27 Nov (advisor 303) | 10, 12, 13 | Not yet shown: design proof run 5 (13:2x today) prices about 134 PC hours left against 60 in the order. The 20:00 reprice decides; if it is still over, the lean order in MEASUREMENTS-NEEDED.md applies | set |
+| Only solid numbers count (advisor 302) | 3, 15 | Yes: STATUS.md's rule; the keeper's rule (a); DESIGN-COMPLETE G-A | guarded |
+| API credit used before it expires (advisor 305) | 10 | Not shown: the 22 Nov daily token file is missing and the 21 Nov file has no credit or expiry lines; RULINGS covers spending the credit, not using it up (order 1.4) | partial |
+| The weekly order built by a Sunday task | 11, 44, 46 | Exists (Sundays 15:47, from 29 Nov); not yet run; prompt audit and budgeting to add [A7] | set |
+| Never ask him to play or test before the one-shot (advisor 298) | 64, 65 | Mostly: RULINGS line 38, the order build and the hourly update say so; one hole: the 7 Dec launch check still lists his 30 minutes [A4] | partial |
+| Installed games played and measured under guards (advisors 310, 321) | 12, 13, 15, 20 | Ordered (n23-1, GTA V first); not yet in RULINGS (the 17 Nov outside-only line still stands there); builder updates it today [B1] | set |
+| Rulings revisited, not obeyed silently | 17, 39, 71 | Yes in the keeper (rule c) and the design proof (run 5 lists the map and the clock, 13:2x today); not in story v3's brief [C3] | partial |
+| The blueprint keeper daily on its own schedule | 2, 3, 14, 16, 17, 40, 78 | Yes: daily 10:23, first own run Tue 24 Nov | guarded |
+| The hourly update written in the cloud | 45, 62, 65 | Yes: 07:01 to 23:01, last run succeeded at 13:02; the missed-reminder check to add [A5] | guarded |
+
+A fresh Opus checker verified this table; two rows were corrected (the hold, the token files). Effect on the counts above: way 43 stays guarded; ways 3, 10 and 15 gain support but keep their states. Totals unchanged.
+
+## His taps per week (each cloud start from the advisor's chat asks one)
+
+The guards are placed so that none needs a new start or a new schedule. Every cloud text (C1 to C5) goes in a brief the advisor already edits or a relaunch it already makes; C6 (the lane's RULINGS) and A11 (the fallback page) ride inside the blueprint keeper's daily run, which starts on its own schedule with no tap. If editing a stored prompt also asks him, A1 to A8 cost eight taps once, this week only; nothing recurs. His three questions are three answers once.
+
+| Source | Taps |
+|---|---|
+| New schedules from these guards | 0 |
+| New cloud starts from these guards | 0 |
+| Prompt edits A1 to A8 (only if edits ask approval) | up to 8, once |
+| His questions (repository, the cab port, the canon line) | 3 answers, once |
+| Recurring from these guards | 0 a week |

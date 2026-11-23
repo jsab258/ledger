@@ -1,6 +1,6 @@
 # Guards to set, 23 Nov 2026: the ready texts
 
-For the advisor to set in one pass. Each text is the exact sentence to add or replace, with the task id or the row it goes in, and the ways it closes (GUARDS.md). Urgent first: A1 before the watchdog's next run, since a Fable story row (2026-11-23-1315-story) can be read as the builder's model.
+For the advisor to set in one pass. His taps: none of these needs a new cloud start or a new schedule (every cloud item rides a brief or relaunch already planned, or the keeper's own daily run); if editing a stored prompt asks his approval, A1 to A8 cost up to eight taps once. Each text is the exact sentence to add or replace, with the task id or the row it goes in, and the ways it closes (GUARDS.md). Urgent first: A1 before the watchdog's next run, since a Fable story row (2026-11-23-1315-story) can be read as the builder's model.
 
 ## Advisor: scheduled-task prompts and rows
 
@@ -41,8 +41,7 @@ Add to step 1: "Read production/lane/premortem/GUARDS.md and GUARDS-TO-SET-*.md;
 **A10. Red team 3's brief, at its launch on Sun 29 Nov (ways 5, 36).**
 Add: "Of the ten planted parts, five are taken from production/research/lane/REFERENCE-MECHANICS-2026-11-20.md items that were never written into any LEDGER file (check with git grep on both branches before planting); report their catch rate apart from the five removed from the text. Before the round, a fresh Opus reviewer samples 20 theme-test pairs from themes.json and judges whether each test measures its theme; under 2 of 20 failing passes, otherwise the failing pairs are redefined first."
 
-**A11. A fallback page, by job runner (way 73). By Fri 4 Dec.**
-Job text: "Write production/lane/FALLBACK.md, under 400 words: if Fable is unavailable or the subscription changes, what of the plan runs on Opus 5.5 alone (one-shot, loops, story, checkers), at what pace in weekly points, and what slips by how long. Sources: the logs of the first one-shot and the story runs, the meter readings in the rows. One fresh reviewer."
+**A11. A fallback page (way 73). By Fri 4 Dec.** No new start: add as a one-time item to the blueprint keeper's prompt (it may write production/lane/FALLBACK.md once). Item text: "Write production/lane/FALLBACK.md, under 400 words: if Fable is unavailable or the subscription changes, what of the plan runs on Opus 5.5 alone (one-shot, loops, story, checkers), at what pace in weekly points, and what slips by how long. Sources: the logs of the first one-shot and the story runs, the meter readings in the rows. One fresh reviewer."
 
 **A12. The story to him on Sat 28 Nov (way 28).** Present STORY-V3-SUMMARY.md as one phone screen: the premise in two lines, its numbers beside RDR2 and the best per aspect, at most three one-line decisions each with a recommendation, the summary linked.
 
@@ -97,7 +96,7 @@ Job text: "Write production/lane/FALLBACK.md, under 400 words: if Fable is unava
 
 **C5. Blueprint prep trig_01PhpaXNa1YdaS1pk98wuB4X, on its next relaunch (way 39).** Append to TECH-PLAN: "For each module, its Unreal counterpart and the port test that proves it, so nothing browser-only is built; the cab named as the first port when Unreal work resumes."
 
-**C6. Job runner job, by Wed 25 Nov (way 54).** "On lane-2026-11 only: replace RULINGS.md with wip's current copy (it has no merge markers and is within its 4,900-word cap; the lane copy has two marker lines and 5,014 words); confirm tools/doc-caps.py passes on the lane; commit 'Lane RULINGS replaced by wip's: merge markers removed'. Nothing else."
+**C6. Lane RULINGS, by Wed 25 Nov (way 54).** No new start: add as a one-time item to the blueprint keeper's prompt for its run of Tue 24 Nov (it may write RULINGS.md on lane-2026-11 for this alone). Item text: "On lane-2026-11 only: replace RULINGS.md with wip's current copy (it has no merge markers and is within its 4,900-word cap; the lane copy has two marker lines and 5,014 words); confirm tools/doc-caps.py passes on the lane; commit 'Lane RULINGS replaced by wip's: merge markers removed'. Nothing else."
 
 ## His list (account, canon, scope), for the advisor to put to him
 
