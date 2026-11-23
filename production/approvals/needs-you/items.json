@@ -115,6 +115,33 @@
         ]
       ],
       "state": "open"
+    },
+    {
+      "id": "audit-2026-11-23",
+      "added": "2026-11-23 14:10",
+      "tag": "REVIEW",
+      "title": "Last week in short: the Monday audit",
+      "text": "A double week that used 99% and about US$2,340 at list price, and closed none of the order's 11 items (your rulings parked eight of them).",
+      "why": [
+        "Biggest waste: the Kiln helpers, at least US$1,165 on 17 to 19 Nov.",
+        "Biggest risk: the measuring finishing by Fri 27 Nov; tonight's reprice decides."
+      ],
+      "steps": [],
+      "links": [
+        {
+          "label": "This page",
+          "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+        }
+      ],
+      "detail": [
+        "Verdicts: progress bad (Kiln ended 0 of 6, now paused); speed bad (7.5 measuring hours gave one reviewed solid number); quality bad (the night walk failed three nights on the tester's own tools; last night 14 of 15 stages); your time watch (about two to four of 20 asks were not yours); efficiency bad.",
+        "Recommendations, ranked: (1) prove the code measurers and the cheap frame reader today and reprice the measuring with the installed games, judged Friday by rows done; (2) read frames on the monthly API credit so none expires unused (about US$197 left, ending about 11 Dec, assumed), judged next Monday; (3) count the approvals you are asked for each day, judged against today's twelve.",
+        "If tonight's reprice shows Fri 27 Nov out of reach at your five-sample rule, one question comes to you on Tuesday with a recommendation.",
+        "A fresh reviewer challenged the audit; its disagreements and how each was settled are in the audit itself."
+      ],
+      "recommendation": "Nothing to decide today.",
+      "options": [],
+      "state": "open"
     }
   ]
 }
