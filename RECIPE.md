@@ -164,13 +164,13 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Tools: the packaged game's test switches; PIL for crops; one fresh final reviewer per view.
 - Target and check: no skin, clipping or floating cloth seated; listed shortfalls no worse than standing. Failed: a few pixels of bare ankle between hem and boot top when the knee bends.
 - Cost: about 0.5 h. Evidence: F:/LedgerTools/game-inputs/films/ron-work-trousers-2026-11-19/seated/REVIEW-SEATED-1.md
-- Lesson: film every garment indoors under even light as well as outdoors: the crotch drop read mild on the street and plain in the office.
+- Lesson: film garments indoors under even light too; a fault mild outdoors read plain indoors.
 
 ### Sitting shape bars from a passed garment (19 Nov 2026)
 - Made: bars for a seated shape check (gap from seat and thighs to the cloth, hem shape against rest), set from a garment already passed in the game, then applied to a new garment on another body.
 - Method: run the same posed check on the passed reference in the same pose; bar = reference x 1.10 + 1 mm; judge new garments against it beside the through/inside counts.
-- Tools: the project's posed-check script (no Blender), skinned FBX and the wearer's weights body. Cost: 0.1 h, 4 s machine.
-- Failed and why: the hem measure reads zero on any skinned garment, because hem points follow the shin and foot bones rigidly; a seated gap between hem and footwear needs the footwear in the check, or the film.
+- Tools: the posed-check script, skinned FBX, the wearer's weights body. 0.1 h.
+- Failed: the hem measure reads zero on skinned garments (hem points follow the shin rigidly); a hem-to-boot gap needs the footwear in the check, or the film.
 - Evidence: F:/LedgerTools/tool-dev/runs/sit-shape-2026-11-19/RESULT.md
 
 ### Layered garment fix, set aside (19 Nov 2026)
@@ -185,3 +185,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - 2026-11-22, footage durations: spells at 30 s, edges at 1 s, endings in full frames (menus and cameras fake edges); five per level. Cost 1.7 h. Evidence: measurements/g5-heat-samples-m_2RP-2026-11-22.md.
 - 2026-11-22: a spell lit at a clip's end never counts.
 - 2026-11-23, shipped budgets: the pack tool pulls settings files; own presets first, base files decode levels; encrypted packs give sizes only; a 'frame time' key was a hitch threshold. 1 h. Evidence: games-numbers/BUDGET-TABLE-2026-11-23.md.
+- 2026-11-23, model frame readers: three models on 1,710 timed cells; the strong model misread lit stars; count by code, check by eye; thinking can empty a short allowance. US$3.83. Evidence: measurements/STATUS.md.
