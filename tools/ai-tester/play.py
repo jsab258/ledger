@@ -92,10 +92,16 @@ def film_frame(st, hwnd):
     d = film_dir(st)
     os.makedirs(d, exist_ok=True)
     try:
+        t0 = time.perf_counter()
         im = screenshot(hwnd)
+        t1 = time.perf_counter()
     except RuntimeError:
         return
     st["film_n"] = st.get("film_n", 0) + 1
+    # each frame's grab window on the high-resolution clock (advisor 333, 23 Nov: the drills
+    # need frame times; a frame's moment lies between t0 and t1, so its error is (t1-t0)/2)
+    with open(os.path.join(d, "times.jsonl"), "a", encoding="utf-8") as tf:
+        tf.write(json.dumps({"n": st["film_n"], "t0": round(t0, 4), "t1": round(t1, 4)}) + "\n")
     w, h = im.size
     im.resize((FILM_WIDTH, max(1, round(h * FILM_WIDTH / float(w))))).save(
         os.path.join(d, "f-%05d.jpg" % st["film_n"]), quality=82)

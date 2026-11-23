@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-23 18:51 (the hourly run)
 
-**Row due:** at the next start (last rows 17:22 hourly, 17:50 catalogue; page read 17:40: no verdicts, no advisor; filter verdicts after 2026-11-23T16:40 UTC, advisor after 2026-11-23T16:15:00+01:00; last ack 332 at 16:30).
-**Uncommitted:** nothing beyond what the Stopped line names.
-**Stopped:** 2026-11-23 18:08 (the 17:21 run: catalogue done and pushed; DAILY file; n23-5 research notes in; stopped before the recipe rewrite, which needs the whole recipe read and would not fit this run's history, 290k)
+**Row due:** at the next start (last row 19:28 run-end; page read 19:26: advisor 333 acked; filter verdicts after 2026-11-23T18:26 UTC, advisor after 2026-11-23T19:10:00+01:00; last ack 333 written 19:30 stamp).
+**Uncommitted:** nothing.
+**Stopped:** 2026-11-23 19:27 (the 18:51 run: recipe rewrite done and pushed; n23-3's first text-model numbers; advisor 333 acked; play.py film frames time-stamped; history near its point)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,21 +34,22 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 13:07-14:40: order adopted (his tap 08:12); ledger, archive, week-shape inactive, progress page, budget table, nightly schedule weekly; advisors 320-323 acked.
-- 15:22-15:44: advisors 328-330 acked; tools/star_slots.py (47 of 49); G5 flag cleared; INSTALLED-METHOD.md written and reviewed. Pushed 4aa0f93e5.
-- 16:22-16:43: advisors 331-332 acked; his games ruling in RULINGS; ffmpeg on the allowlist, its run refused, asked on his page; installed-game reprice. Pushed 697d7ae91.
-- 17:21-18:08: hourly row 17:22; the hidden-details catalogue DONE (details-catalogue/CATALOGUE.md, NOTES-C; review PASS WITH FIXES, all 21 applied; row 17:50 on his page); NOW.md moved to this order; pushed f9ea54ea6. n23-5's questions written (production/research/recipe-rewrite/QUESTIONS-2026-11-23.md). DAILY-2026-11-23.md written by an extractor helper (US$48.17 by 17:50; API credit US$193.55 left to 12 Dec, ceiling about US$10 a day). final-reviewer and research-synthesis set to medium effort (due 13:00 today). Advisor 310 found already in RULINGS (DECISIONS 18:05).
+- Earlier runs (13:07-18:08): order adopted, star reader, installed-game method, catalogue, n23-5 research; see the day's commits.
+- n23-5 recipe rewrite DONE: RECIPE.md chapters 0, 0b (the one-go build's start conditions, checks, the 20 Nov failure), 1 (a design counts as measured); 25 entries folded; review PASS WITH FIXES, all 7 applied; pushed 8b3580705. Recipe map needed no change.
+- n23-3 started: questions and first numbers in production/research/voice-latency/N23-3-QUESTIONS-2026-11-23.md (Sonnet 5 1.19 s median, Sonnet 5.5 1.57, Haiku 1.71; one run each; US$0.946 of measure-2026-11-23's dollar, logged).
+- Advisor 333 (measuring is the critical path; drills first, hours logged in STATUS.md; recipe and records wait): acked 19:30. play.py film_frame now writes times.jsonl (each frame's grab window, perf_counter).
 
 ## In flight
 - Nothing runs. Browser pane page tools (lost on reload): capt/capt2 caption-strip finders, grab sheets.
 
 ## Next, in order
-00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 17:22 read 24% against 2.4% (ceiling line plus 25, advisor 330): under it; lean, few helpers.
-0. His page: recorder-for-drills-2026-11-23 still open. Without the recorder BOTH n23-1's drills AND n23-2's ruler check wait: the walk film (F:/LedgerTools/tmp/ai-tester/film/2026-11-23-0236, 94 frames) is play.py screen grabs at about 8 a second with no frame times, so it cannot time a walk (true walk 160, run 420 cm/s, SliceCharacter.h). With the recorder: KCD2 first per INSTALLED-METHOD.md, then Sleeping Dogs, GTA V, GTA IV openings by fixed key scripts; and film our packaged build for the ruler check.
-1. n23-5 recipe rewrite: questions 3 answered (in QUESTIONS-2026-11-23.md: about 3,000 words of unfolded notebook entries since line 113 make room), 1/4/5/6 in OWN-FILES-NOTES-2026-11-23.md (1 and 6 partly). Gaps: DESIGN-COMPLETE.md and tools/lane/parts-tree/check.py live on origin/lane-2026-11 only (read with git show origin/lane-2026-11:production/lane/design-proof/DESIGN-COMPLETE.md); no build check tests the five-sample rule or the one-shot start gate. Question 2: WEB-NOTES-2026-11-23.md, thin (5 useful sources, fetches came back as digests, no first-hand Warhorse or Rockstar account; the Volition GDC 2015 abstract makes the slice the exit gate from pre-production). Next: the rewrite itself (fold the unfolded entries into their chapters; the order in chapter 0 and how a design counts as measured in chapter 1, linking tools/research_rules_check.py and needs_you_page.py; name that no build check tests the five-sample rule or the one-shot start gate), one fresh reviewer, commit.
-2. n23-3 live talk measurements due Fri 27 Nov (Pocket delay against the 2 s bar); n23-4 voice scan; n23-7 (the credit row now in DAILY-2026-11-23.md; keep it daily).
-3. n23-1: the reprice split and feel rows once drills run; every row names its blueprint decision.
-4. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
+00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 18:52 read 26% against 3.3% (+22.7, under the ceiling plus 25, advisor 330): lean.
+0. ADVISOR 333: the measuring block first, hours logged in STATUS.md as they go; the next row owes hours since 13:00 and first drill numbers.
+1. Test the time-stamped film (untested): our packaged build, play.py start past the title (Enter, then Enter x14, memory tester-film-past-the-title), walk straight with --film, then speed from the frames' times and the player's position against the true walk 160 cm/s, run 420 (SliceCharacter.h). This is also n23-2's ruler check. If its error is under the drills' need, the installed-game drills start with it per INSTALLED-METHOD.md (Sleeping Dogs, GTA V, GTA IV, KCD2), each only after he has been away 10 minutes, stopping at his first touch. If not, footage rows first; the recorder item stays on his page.
+2. n23-3 (paused): the order-swapped repeat pair (B then C) on the next measuring dollar (measure-2026-11-24); firsts-label for invented details; voice alone (latency.py without --live, --voice game, --prewarm; free); together beside the packaged game; cost per hour. Measurements due Fri 27 Nov.
+3. n23-4 voice scan; n23-7 (credit row in each DAILY file; DAILY-2026-11-23.md written 17:50, not refreshed).
+4. n23-1: the reprice split and feel rows once drills run; every row names its blueprint decision.
+5. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
 0g. GTA VI footage queue: TRIED-ARCHIVE.md, "Moved from the handover".
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30.
 1p. Paused with Kiln: Ron's seated hem cover try 2 of 2; fins try 3 brief READY.
@@ -56,6 +57,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 23 Nov 19:1x: ClaimBench --moment sends every held question to Haiku (a bench-only rule); the game's routing is arm C (--model claude-sonnet-5 --reply-thinking-off). Sonnet 5 beat 5.5 tonight, the reverse of 16 Nov: one run each, not settled.
 - 23 Nov 17:3x: a caption-box detector run twice at once fought over the video's position and missed half the boxes; run one scan at a time. Silent detail videos have empty transcripts: read their caption strip by frames.
 - 23 Nov 16:2x: running a just-fetched ffmpeg, and a page script fetching YouTube captions, were refused by the permission check; not worked round. Stamps ran ahead twice more: Get-Date first.
 - 21-22 Nov: 'uncut' descriptions can be false; seeks hang in some runs (test one); run ci-checks alone (./tools/ci-checks.sh after unset MSYS_NO_PATHCONV; env -u bash is refused); stamps ran about 10 minutes ahead of the clock five times: Get-Date in its own call before every stamp.
