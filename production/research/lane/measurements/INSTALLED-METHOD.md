@@ -6,8 +6,8 @@ INSTALLED-METHOD-NOTES-2026-11-23.md (questions in INSTALLED-METHOD-QUESTIONS.md
 
 ## Before any run
 
-- Permission: scripted keys sent into a game are simulated keyboard input, which RULINGS 29-30 Oct allow only in Marvelous unless he says yes on his page. No drill runs before that yes (item on his page, 23 Nov).
-- The copy: every program file the game loads beside its executable carries the publisher's valid signature, checked before the first run. On 23 Nov GTA V, GTA IV and KCD2 in C:/Games load replaced, unsigned files and are not run (DECISIONS 23 Nov 15:26). Sleeping Dogs: its GOG installer is signed but its game executable is not (GOG ships unsigned games); the session treats a GOG-installed copy whose files match GOG's install as the publisher's own, and records that judgement in DECISIONS. RDR2: checked when installed.
+- Permission (his ruling 23 Nov 16:06-16:10, advisors 331-332, RULINGS 17/23 Nov): scripted keys from outside the game are allowed for measuring, offline and single-player only; drills still wait until he has been away 10 minutes and stop at his first touch.
+- The copy: the games installed on his PC are used as they are (Sleeping Dogs, GTA V, GTA IV, KCD2; RDR2 once installed). We never change, add or remove game files, bypass protection or anti-cheat, or go online (never GTA Online). How his copies are installed is not written about. The installed list is read at the start of each day and new games folded into the measuring.
 - Tools: PresentMon (allowlist item 12). A screen recorder: ffmpeg is not on the allowlist; its licence is recorded on the allowlist with a named build source before it is fetched (licences are the session's to decide, RULINGS 19 Nov), else Windows' own capture is used.
 
 ## What is measured where

@@ -185,7 +185,8 @@
      "Keep GTA V and RDR2 on footage only"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-23 16:23, his tap 16:06 and words 16:10: use the games installed now; RULINGS 17/23 Nov"
   },
   {
    "id": "scripted-keys-in-games-2026-11-23",
@@ -211,6 +212,45 @@
     [
      "yes",
      "Yes, Sleeping Dogs and store copies (recommended)"
+    ],
+    [
+     "no",
+     "No, footage only"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-23 16:23, his tap 16:06 and words 16:10: use what is installed; advisor 331, 332; RULINGS 17/23 Nov"
+  },
+  {
+   "id": "recorder-for-drills-2026-11-23",
+   "added": "2026-11-23 16:36",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The session fetched the free recorder (ffmpeg); this PC's safety check refused to run it without your word.",
+   "title": "Let the session use a free screen recorder (ffmpeg) for the game drills",
+   "text": "The drills in your installed games need the screen recorded; the free recorder ffmpeg is cleared for measuring, never shipped, but the safety check on this PC wants your own yes.",
+   "why": [
+    "Without a recorder the drills give no numbers; footage carries the measuring meanwhile.",
+    "Sleeping Dogs also has no save yet, so its opening comes first; the session tries it by script."
+   ],
+   "steps": [
+    "Open the newest LEDGER session in the Claude app at the PC",
+    "Type: Yes, fetch and run ffmpeg for the game drills",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the installed-game drills (n23-1); footage covers them meanwhile",
+   "recommendation": "Yes, when you are next at the PC.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
     ],
     [
      "no",

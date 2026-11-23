@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-23 15:22 (the hourly run)
+**Started:** 2026-11-23 16:22 (the hourly run)
 
-**Row due:** at the next start (last row 14:50; page read 14:40: no verdicts; filter verdicts after 2026-11-23T13:40 UTC, advisor after 2026-11-23T14:20:00+01:00; last ack 327).
+**Row due:** at the next start (last row 15:24; page read 15:40: no verdicts, no advisor; filter verdicts after 2026-11-23T14:40 UTC, advisor after 2026-11-23T15:15:00+01:00; last ack 330 at 15:24).
 **Uncommitted:** nothing beyond what the Stopped line names.
-**Stopped:** 2026-11-23 14:48 (the 13:07 run: order adopted and in force, budget table, weekly walk, audit on his page, two rulings, the reader trial and a first star counter; stopped at a clean point with the week at 18% against the line's 1.1, near advisor 325's line plus 20, to leave room for the cloud sessions)
+**Stopped:** 2026-11-23 15:44 (the 15:22 run: advisors 328-330 acked; star slot reader and G5 re-read; installed-game method written and reviewed; two questions on his page; stopped at a clean point near the history limit, 237k of 250k)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -36,18 +36,20 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Done today
 - 23 Nov 07:07-07:10: the order of 23 Nov saved, its adoption item raised.
 - 13:07-14:40: his tap (08:12) adopted it; its item ledger written, last week's items carried into orders/archive/2026-11-23.md; week-shape.json inactive; progress page with last week's numbers; the budget table (production/research/games-numbers/BUDGET-TABLE-2026-11-23.md, reviewed, fixes applied); his page: the three games can go (item uninstall-three-games-2026-11-23); nightly package and walk weekly, the night after Sunday (production/playtest/nightly/schedule.json, walk_tonight() in tools/nightly_walk.py); api_batch prices pictures by tokens; advisors 320-323 acked; the C: folder list in the 14:00 row.
+- 15:22-2026-11-23 15:44: advisors 328-330 acked with the drive reading (C: 205 GB free, RDR2 fits leaving about 85 GB); the uninstall item closed; tools/star_slots.py (n23-2 try 3, fixed slots and a template, from HUD-ICON-READING-NOTES): 47 of 49 on 6wy7gx, about 30 of 36 on 49g1xb, red stars as lit; G5's flag cleared (A, B, C, G are two-star spells; STATUS.md); INSTALLED-METHOD.md written, reviewed (INSTALLED-METHOD-REVIEW), revised; GTA V, GTA IV, KCD2 copies load replaced unsigned files: not run (DECISIONS 15:26); his page asks store copies and scripted keys in Sleeping Dogs. Pushed 4aa0f93e5.
 
 ## In flight
 - Nothing runs; no helpers.
 - Page tools (lost on reload; rewrite): seekTo(v,t); starscan(t0,t1,step,cols,cw) and starscanT(times,cols,cw) crop x 0.854W-W, y 0-0.083H into a fixed canvas, labels UNDER cells; fsheetT(times,cols,cw) full frames. Canvas at most 6 x 130 px wide; poll window._r (45 s limit).
 
 ## Next, in order
-00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. A normal week: the line runs 0 to 90% from Mon 23 Nov 13:00 to Mon 30 Nov 07:00, ceiling line+25. At 14:00 the week read 12% against 0.6% (the advisor's cloud sessions, started 13:08, share it): more than 6 ahead means finish the item in hand and start nothing new until back on the line.
-0. Advisors 324-327 acked 14:35. Advisor 325: measuring work keeps starting up to the line plus 20, held above it. Next: advisor 324 (the hidden-details catalogue widened to GTA VI, RDR2, KCD2, GTA V, GTA IV, Sleeping Dogs, Yakuza; captions by the cheap reader on the API credit; due Thu 26 Nov 18:00; about 4 h).
-1. n23-2: the trial is done (STATUS.md: no model adopted; Opus misread lit stars; stars and timers by code). tools/star_count.py is a first pass: lit right, grey and timer digits wrong, two calibration tries used; research how HUD readers find icon slots (fixed slot positions from the lit stars' spacing) before a third. Re-read G5's star level with it (STATUS.md flag: this clip's peak shows three lit stars). Then the ruler check: film our own packaged build (play.py; true values walk 160 and run 420 cm/s, SliceCharacter.h) and measure them by the footage method; error per kind of number into STATUS.md.
-2. n23-1: reprice with the installed games (advisor 321: GTA V installed; offline story mode, screen and frame-time tools only, no mods; then GTA IV, Sleeping Dogs, RDR2); feel rows by five scripted runs each, then the GTA V teardown (advisor 314). Every row names its blueprint decision.
-3. Advisor 320, the backup's 28 GB on C:: `attrib +U -P` from this session returned 0 but left the files unchanged (two tries: the reference folder, then one file, 23 Nov 13:48). Research before a third method: whether Dropbox's cloud-files client honours the unpinned flag, and whether this session's sandbox blocks attribute writes there; the backup task runs from Task Scheduler and might set it there. Nothing in his Dropbox was changed.
-4. n23-3 (live talk delay against the 2 s bar), n23-4 (voice-model scan), n23-5 (recipe rewrite), n23-7 (credit expiry and remainder in each DAILY file; the 19:00 DAILY file). The audit reviewer suggests writing advisor 310 (installed games may be played) into RULINGS within its cap.
+00. Pace first: `python tools/pace_line.py <week> --fable <fable>` (needs the number). Ceiling now line plus 25 (advisor 330, replaces 325). At 15:23 the week read 20% against 1.3%: under the ceiling, keep measuring.
+0. Read his answers on the two new items: store-copies-for-measuring-2026-11-23 and scripted-keys-in-games-2026-11-23. With a yes on keys: the first Sleeping Dogs drill per INSTALLED-METHOD.md (fetch PresentMon; ffmpeg only after an allowlist line naming its build; check the GOG files first and record the judgement; scan-code test; walk and run first; only when he has been away 10 min). Without it: footage only, and say so in the reprice.
+1. Advisor 324: the hidden-details catalogue widened (GTA VI, RDR2, KCD2, GTA V, GTA IV, Sleeping Dogs, Yakuza; captions by the cheap reader on the API credit; due Thu 26 Nov 18:00; about 4 h).
+2. n23-2: the ruler check (film our own packaged build with play.py; true walk 160, run 420 cm/s, SliceCharacter.h; measure by the footage method; error per kind of number into STATUS.md). star_slots.py's known misses: grey over bright or white backgrounds, faint grey; empty slots untrusted.
+3. n23-1: the reprice (advisor 328's split: drills in installed clean copies vs footage), then the feel rows; every row names its blueprint decision.
+4. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third (Dropbox's client and the unpinned flag; whether this session's sandbox blocks the attribute write).
+5. n23-3, n23-4, n23-5, n23-7 (the 19:00 DAILY file). Advisor 310 into RULINGS within its cap.
 0g. GTA VI footage queue (depth first, advisor 302): the full list moved 22 Nov 12:55 to TRIED-ARCHIVE.md, "Moved from the handover"; read it before the next footage piece.
 0a. Advisor 277: Kiln, hair and the crowd paused.
 0b. Night walk fixes: the 23 Nov walk ran 14 of 15 stages (per the audit's reviewer; read its report); the next walk is Mon 30 Nov 01:30.

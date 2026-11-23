@@ -266,7 +266,7 @@
    ]
   },
   {
-   "line": "17 Nov: other games are studied from the outside only",
+   "line": "17 Nov, 23 Nov: other games are studied from outside their files",
    "by": [
     "monday-audit",
     "tools/outside_only_check.py::outsideOnly FAIL another game's decompiler, extractor or files are present",
