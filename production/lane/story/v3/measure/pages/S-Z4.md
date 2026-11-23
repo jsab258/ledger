@@ -1,0 +1,79 @@
+## What it is about
+
+In 1991, two summers after a northern republic abolished the register reserving dock work for registered stevedores, the last autumn before the severance cheque falls from thirty-five to twenty thousand crowns is running out in a port's old harbour quarter and casual hiring is back.
+
+The lead, a stranger, steps off the ferry to inherit his dead uncle's radio-taxi office. With no markers and a letter steering by vanished landmarks, he learns places by what they were.
+
+Four counts shrink weekly: the doorman's map of closed buildings; the pen inside the dock gate, where former registered men stand at six to be picked, sixty for twenty places the first Monday, falling weekly to thirty-eight; the last quay crane, shorter each pass; and the work, as a nameboard falls, men queue for the cheque and the fire-night bonfire burns the old call stand.
+
+The question is what the lead owes the old stevedore who opens every door, and the dead man whose number he drives on.
+
+## The lead
+
+He wants to be nobody's passenger, yet is led to his own door, knocks are answered for the man behind him, and his bookkeeper avoids his name. He never asks: lost ninety seconds, he mutters a street plate and tries another turning, though the player may ask anyone, logged in the day book. Nightly he walks, marking map corners with the doorman's names and the council's and chalking each kerb learned. His talk is the player's bar fixed lines; offered the way, he says he knows where he is. Fares direct him, the neighbour thanks him for streets unseen in seventy years on one, and the town jokes weekly that he asks gulls the way.
+
+## The people who matter
+
+The doorman, fifty-eight, thirty years a registered stevedore, is sent for and carried everywhere. From his bollard he speaks slowly, names buildings by what they were, gives turns after they have gone, swears only at road signs and calls the lead boss. In week one he asks if he is too old to learn to drive; by evening car two has learner plates.
+
+The bookkeeper, fifty-three, has kept the dispatch book thirty-one years. The law wants a badge number on each booking and the lead has none, so she writes the dead owner's, 712, saying once she would sooner not. On the first Friday she books an unnamed candidate for the seventh Friday's council driving examination, and she prices the doorman's damage separately.
+
+The gate boss, sixty-one, runs the waterfront syndicate on the lawful dock gate labour contract, her men selling the tap on the shoulder for a cut. Widowed by a hold and unable to drive, she is his first fare at twenty to six each working day under a 1971 booking, in front, the doorman silent behind, timing the run on her husband's watch. She never threatens or lies to him, honours every deal and wants a foreman the pen will stand for.
+
+The hustler, twenty-five, wants a seat in the car. He sells the lead the radio from the lead's own car, then riding in front says what each building will become and calls every turn early, wrongly and confidently.
+
+Around them are the day driver, the dispatcher, a stevedore owing fifteen crowns, a chain-smoking back-page debtor, the neighbour, the owner's daughter, a detective, the priest and the examiner.
+
+## The opening and the scene players retell
+
+The letter says left at the Seamen's Hall, past the weighbridge, under the harbour board's clock. The hall sells carpets, the weighbridge is a car park, the clock is wrong. After the player twice passes the unmarked office, the doorman says so from his bollard, adds he was standing in the hall, and holds open the quarter's first door.
+
+The first fare is the priest, the doorman uninvited beside him naming passed turnings. Rather than ask, the lead circles the chapel block until the player stops; on the fourth lap the priest says he has buried three men off this street who never found it either.
+
+The retold scene is the first lesson, a straight waterside mile at eleven miles an hour. The player holds the handbrake and a key that makes the lead say stop, and, asked which way on a road without turnings, does not know either. At the end stands a bollard in the firm's blue. The doorman waves his whole arm at a night-watchman and the car follows; told to stop, he says he is waving, and is told stop means the car too. A timely handbrake halts a yard short; a late one taps the bollard, entered free as the firm's already.
+
+## The middle
+
+Weeks one to three are a daily round: the gate boss to the pen at dawn, twenty men in and forty home, then fares, debt collections, watched carries, fights, break-ins and lessons, a fifth of it driving. With the doorman behind, doors open; alone, the lead is eyed through glass and forces them loudly, as a crime.
+
+Choices build a record: the hustler fronted up, paid in gossip or struck; the indebted stevedore beaten publicly, let stand or left to pay down; a laid-off woman spared or shamed, deciding whether a driver is trustworthy later; the chain-smoker's tin of old and new coins receipted or refused, as the pen hears; and the gate boss's toll on the firm's cars paid by the lead or his drivers or fought at the gate, deciding how long they stay. Breaking into a yard hut for eighty crowns, he finds only her receipt; on Friday she pays in full.
+
+In the second lesson the doorman narrates the road like a ship coming upriver, waves the car into eleven feet of fence, then changes down for the bend by ear. In the third, in rain, he says he wants once to pull up at a house and have somebody come out because he has come.
+
+In week three the neighbour sees the doorman leave at five in his good boots; he will not say why. In any order the player can tail him to the gate hut, risking being seen; find the pen's dinners, carried since the canteen shut, in the day driver's boot, and be known for it by one; watch the hustler take casuals' coins; or break into the gate hut to find a cab radio by a pad of times and places. Each finding enters the lead's ledger. On week four's first Monday the doorman stands in the pen in her foreman's coat, reading her list.
+
+Among twenty-five unmarked side stories, a stevedore mocked for leaving before midnight is blind once the quay lamps go out, and the lead can force one lit all night at berth four; a father steps half a pace back to stay unpicked, and his son takes the tap anyway rather than undo the gift.
+
+## The turn
+
+By the coat's second week the gate boss's men have met three of the office's jobs, and something true counts against each of three men, none of them selling. For three days the player may confront any, a plain yes asked twice. Accused, the doorman taps the chain-smoker at the pen and promises the office key, a voice laughs and the gate boss calls it well done. The day driver leaves his keys and her dinner money on the bonnet to drive her men; thirty-one go hungry that Friday. The hustler shows the copy of the lead's map he sells casuals. Unconfronted, the doorman learns he was followed, or was asked and left alone, or the player guesses the radio.
+
+Saturday's job is met too. At the memorial Sunday count the lead reads the bookkeeper's spiked receipts aloud: each coat morning a back-page debtor was picked and came in to pay. Her last line answers the player's road, and the lead strikes his suspicion through in his own hand.
+
+In week five clerks and casuals drive a foreign ship's cars off by night, once registered work; the chain-smoker and four back-page men want six. He plans it alone from a parked cab: the barrier means asking the doorman, now night foreman, the swing bridge shuts an hour either side of high water, and the indebted stevedore watches the fish dock lane. The record supplies the drivers, and the job comes off whole, in part or not at all.
+
+If it is bottled, the lead wakes in a shed to the gate boss's rule that whoever drives off her quay what is not his drives no more. The doorman claims the night; she will not bend. Put out, the lead may beat on the door, sit in the car or drive away. The doorman emerges hands held out: "You'll have to do the door, boss." Towards the infirmary he calls every turn early and clearly, a first, and at five the lead buttons his coat, top first. The daughter says a cup by Christmas, never a wheel; the bookkeeper closes his account unpriced. Otherwise the rule is kept at the morning call, the doorman stepping forward.
+
+## The last act
+
+In week six, the doorman plastered to both elbows, the lead works alone. Doors stay shut, a fare waits for the rival firm, and two men by the car are a deadly fight. In her hut the gate boss offers him the coat, and her radio speaks in his dispatcher's voice: his office has been in her hut since the January storm.
+
+He may take the coat and read the list at six, opening every door at the gate; sell or keep the back pages; spare, beat or fatally drop the indebted stevedore, which the town never forgets; and sell the six cars, line them up outside her hut or leave them sheeted. Any morning he may unsay an accusation in the pen.
+
+Or he drives to the doorman's house and opens the passenger door, and the lessons reverse: the lead opens every door, and nightly, radio off, the doorman names a place by what it was for the lead to find and chalk a back-page man's kerb. Their first radio-dead job is met by nobody. The doorman tells the detective he shut his hands in a big door; at the count the bookkeeper reads the road code to one man who cannot turn the pages and one who has not noticed the questions are now his.
+
+In week seven the hustler's three invented jobs, misread on air, leave her men three wet nights. On Thursday night the lead fetches thirty-one men by the doorman's nicknames, one touch of the horn at each door, and a man comes out or a curtain moves. At twenty to six on Friday he drives the gate boss the long way, the doorman behind, past men with bags at their kerbs. She admits the uncle lent her the radio and offers once at six: the gate with her, or a bus. The player gets no new choice, only lines the record has earned.
+
+At nine, having waited outside the doorman's house and held his door, the lead hears the bookkeeper tell the examiner she never named her candidate, and admits driving on a dead man's number. He reads four pairs of street plates unaided and passes, or is told to return in January.
+
+## The endings
+
+Two things decide the ending: the coat or the doorman's house, and whether the men at their kerbs on the last night outnumber the pen, a count built from the doorman's picks, spared debtors, kept back pages, drivers looked after, wrong accusations unsaid, the indebted stevedore's fate and doors found in the dark.
+
+With the seat kept and the kerbs full, the doorman reads the list in turn, nobody paying, the chain-smoker holding it. The gate boss calls it the old register, gives it until spring and books Monday's front seat. The number 712 returns under the dead owner's last line; hands, dock and any wrongly named man stay as they are; the hustler sits behind her. The lead holds the passenger door, asks "Which way?", and takes the carpet warehouse turn before the doorman names it.
+
+With the seat kept and the kerbs too few, the lead hands her the gate and opens her door; she calls her twenty from a full pen, and nothing changes. The examination is the same, and at the end the lead takes each turn a street late as the doorman calls it, and they go round the block.
+
+With the coat, the last ride, empty behind, begins "Good morning, foreman." He reads the list knowing every man's name and street, and the office fills while the doorman nods people through a door he cannot open. On the seventh Friday no car comes, so the doorman walks to the examiner. A casual asks for the street named after the old hall, and the lead knows it at once, nobody in the front seat to tell.
+
+No ending puts the doorman at the wheel.
