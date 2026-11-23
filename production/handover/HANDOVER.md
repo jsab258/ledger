@@ -2,16 +2,15 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-23 07:07 (the hourly run)
+**Started:** 2026-11-23 13:07 (the hourly run)
 
 **Row due:** at 13:00 resume (page read 07:07: no verdicts; filter verdicts after 2026-11-23T06:07 UTC, advisor after 2026-11-23T07:10:00+01:00; last ack 319).
 **Uncommitted:** nothing, but NOT PUSHED: the 07:10 commit (the order of 23 Nov, its page item). ci failed order-ledger (the new order has no item ledger; n16 and carried n09 items must be carried or closed in it, see tools/order_ledger.py) and progress-page; fix both at 13:00, then push. His page shows the order's gist, no file link.
 **Stopped:** 2026-11-23 07:10 (the 07:07 run: advisor 317 moved the hold to 13:00; only the order of 23 Nov saved and its adoption item raised; advisors 309-319 acked; allowance 99%)
 
-**Hold until:** 2026-11-23 13:00 (advisor 317: week at 99%; delete this line at 13:00 once resumed)
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
-**The goal:** his order of 16 November (production/orders/2026-11-16.md, adopted 15 Nov 21:08; runs to 13:00 Monday 23 November). Kiln v1's Monday goal withdrawn (advisor 277); the PC measuring block leads. Pace rules: production/week-shape.json and `python tools/pace_line.py`.
+**The goal:** his order of 23 November (production/orders/2026-11-23.md, adopted by his tap 23 Nov 08:12 Swiss; runs to Mon 30 Nov 13:00). The measuring block (n23-1) leads; the normal line 0 to 90% by Mon 30 Nov 07:00 (week-shape.json inactive); `python tools/pace_line.py`.
 
 ## Standing ways of working (carry across every rewrite)
 - **The night (advisor 42 and 44, 9 Nov):** round the clock; during the night's build and walk only work touching Unreal and heavy local jobs pause; never stop for the night. Space checked before the night build by 23:30.

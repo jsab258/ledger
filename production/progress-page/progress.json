@@ -1,5 +1,5 @@
 {
-  "updated": "Saturday 21 November 2026, 10:17",
+  "updated": "Monday 23 November 2026, 13:14",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -178,7 +178,7 @@
         7.7
       ],
       "began": "2026-11-09",
-      "actual_w": 1.7
+      "actual_w": 2.0
     },
     {
       "n": 3,
@@ -442,7 +442,7 @@
   "studies": {
     "done": 16,
     "total": 16,
-    "order": "2026-11-16.md",
+    "order": "2026-11-23.md",
     "list": [
       {
         "n": 1,
@@ -544,8 +544,8 @@
   },
   "carried": [],
   "line2027": {
-    "as_of": "Saturday 21 November",
-    "behind_w": 0.1,
+    "as_of": "Monday 23 November",
+    "behind_w": 0.4,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   },
   "forecast": {
@@ -692,6 +692,40 @@
     }
   ],
   "weeks": [
+    {
+      "label": "Week of 16 to 22 November, a double week (read Monday 23 November)",
+      "rows": [
+        [
+          "Allowance used",
+          "99% (read 07:07 Monday; starts held to 13:00 to stay under it)"
+        ],
+        [
+          "Spend, list-price measure",
+          "about US$2,340 for 16 to 22 November by calendar day (the week before: US$930); not a bill: the plan's allowance is what is paid"
+        ],
+        [
+          "Game's own API credit",
+          "US$0 this week (US$3.77 this month)"
+        ],
+        [
+          "Order items",
+          "11: none closed as done; all 11 carried into the order of 23 November, the week's hours went to clothing tools, the prototype and the measuring block by his rulings"
+        ],
+        [
+          "Done in the week",
+          "Marvelous patterns exported before the renewal (21 Nov); GTA VI's two-star escape length measured on five uncut samples"
+        ],
+        [
+          "Failed or set aside",
+          "the night walk did not start on 22 Nov (fixed, unproven until tonight); Kiln, hair and the crowd paused by his ruling"
+        ]
+      ],
+      "risks": [
+        "The measuring block must finish by Fri 27 Nov for the blueprint to close; past estimates ran long.",
+        "Last week ended at 99% of the allowance; this week's line tops at 90% by Monday 07:00.",
+        "C: carries a 27 GB second copy of the backup until it is made online-only."
+      ]
+    },
     {
       "label": "Week of 9 to 15 November (read Monday 16 November)",
       "rows": [
