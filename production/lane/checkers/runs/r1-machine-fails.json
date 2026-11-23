@@ -1,0 +1,202 @@
+{
+ "G3": [
+  {
+   "rule": "content rule in the game's words",
+   "ok": false,
+   "where": null,
+   "steps": "not reached: the source folder does not match the build tested (34 of 40 sample lines found in ledger.js)",
+   "faults": null
+  },
+  {
+   "rule": "frame rate holds against the accepted build",
+   "ok": false,
+   "where": null,
+   "steps": "600 logic steps timed; the game's own benchmark with drawing on",
+   "faults": [
+    "logic step 0.82 ms against 0.09 accepted",
+    "draw calls 887 against 587 accepted"
+   ]
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Laverack's (street door)",
+   "steps": "goTo Laverack's (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "the Golden River (street door)",
+   "steps": "goTo the Golden River (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (street door)",
+   "steps": "goTo Regent House (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "the ferry landing (the Monday bag: pick-up)",
+   "steps": "goTo the ferry landing (the Monday bag: pick-up)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (fare destination)",
+   "steps": "goTo Regent House (fare destination)",
+   "faults": null
+  }
+ ],
+ "G2": [
+  {
+   "rule": "content rule in the game's words",
+   "ok": false,
+   "where": null,
+   "steps": "not reached: the source folder does not match the build tested (34 of 40 sample lines found in ledger.js)",
+   "faults": null
+  },
+  {
+   "rule": "frame rate holds against the accepted build",
+   "ok": false,
+   "where": null,
+   "steps": "600 logic steps timed; the game's own benchmark with drawing on",
+   "faults": [
+    "logic step 0.19 ms against 0.09 accepted",
+    "draw calls 887 against 587 accepted"
+   ]
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Laverack's (street door)",
+   "steps": "goTo Laverack's (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (street door)",
+   "steps": "goTo Regent House (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "the ferry landing (the Monday bag: pick-up)",
+   "steps": "goTo the ferry landing (the Monday bag: pick-up)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (fare destination)",
+   "steps": "goTo Regent House (fare destination)",
+   "faults": null
+  }
+ ],
+ "G1": [
+  {
+   "rule": "content rule in the game's words",
+   "ok": false,
+   "where": null,
+   "steps": "not reached: the source folder does not match the build tested (34 of 40 sample lines found in ledger.js)",
+   "faults": null
+  },
+  {
+   "rule": "frame rate holds against the accepted build",
+   "ok": false,
+   "where": null,
+   "steps": "600 logic steps timed; the game's own benchmark with drawing on",
+   "faults": [
+    "logic step 0.15 ms against 0.09 accepted"
+   ]
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Laverack's (street door)",
+   "steps": "goTo Laverack's (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (street door)",
+   "steps": "goTo Regent House (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "the ferry landing (the Monday bag: pick-up)",
+   "steps": "goTo the ferry landing (the Monday bag: pick-up)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (fare destination)",
+   "steps": "goTo Regent House (fare destination)",
+   "faults": null
+  },
+  {
+   "rule": "save and reload give back the same week",
+   "ok": false,
+   "where": null,
+   "steps": "saveText after the long run; restore in a fresh page; saveText again and compare all but time stamps",
+   "faults": null
+  }
+ ],
+ "clean": [
+  {
+   "rule": "content rule in the game's words",
+   "ok": false,
+   "where": null,
+   "steps": "not reached: the source folder does not match the build tested (34 of 40 sample lines found in ledger.js)",
+   "faults": null
+  },
+  {
+   "rule": "frame rate holds against the accepted build",
+   "ok": false,
+   "where": null,
+   "steps": "600 logic steps timed; the game's own benchmark with drawing on",
+   "faults": [
+    "logic step 0.15 ms against 0.09 accepted"
+   ]
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Laverack's (street door)",
+   "steps": "goTo Laverack's (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (street door)",
+   "steps": "goTo Regent House (street door)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "the ferry landing (the Monday bag: pick-up)",
+   "steps": "goTo the ferry landing (the Monday bag: pick-up)",
+   "faults": null
+  },
+  {
+   "rule": "camera never inside a wall (every named place)",
+   "ok": false,
+   "where": "Regent House (fare destination)",
+   "steps": "goTo Regent House (fare destination)",
+   "faults": null
+  }
+ ]
+}

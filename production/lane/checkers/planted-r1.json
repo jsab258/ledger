@@ -1,0 +1,230 @@
+{
+ "round": 1,
+ "note": "Planted faults, round 1 (23 Nov 2026). Kept outside the repository while the checkers ran; committed only after scoring.",
+ "faults": [
+  {
+   "id": "second-fare-unpaid",
+   "kind": "passes on the scripted path, breaks off it",
+   "plain": "the first fare pays; every later fare pays nothing and nothing is said",
+   "edits": [
+    {
+     "file": "fares.js",
+     "old": "  let paid = f.pay;\n",
+     "new": "  let paid = f.pay;\n  if (G.money.fareCount > 0) paid = 0;\n"
+    }
+   ]
+  },
+  {
+   "id": "passer-by-fare-unpaid",
+   "kind": "a fare that never pays",
+   "plain": "a passer-by who hails the cab rides and never pays",
+   "edits": [
+    {
+     "file": "fares.js",
+     "old": "  if (G.hooks.emit) G.hooks.emit('fare.done', { f, P, paid });",
+     "new": "  if (P.anon) paid = 0;\n  if (G.hooks.emit) G.hooks.emit('fare.done', { f, P, paid });"
+    }
+   ]
+  },
+  {
+   "id": "yard-dead-end",
+   "kind": "a dead end that soft-locks",
+   "plain": "Mickey's yard: both gaps closed and the back door locked after 8pm, so going out the back at night traps him",
+   "edits": [
+    {
+     "file": "map.js",
+     "old": "R(26.6, 37.6, 27, 41),",
+     "new": "R(26.6, 34.4, 27, 41),"
+    },
+    {
+     "file": "map.js",
+     "old": "R(23.7, 40.6, 27, 41),",
+     "new": "R(21.9, 40.6, 27, 41),"
+    },
+    {
+     "file": "player.js",
+     "old": "          enterRoom('mickeys');",
+     "new": "          if (hour() >= 20 || hour() < 6) return;\n          enterRoom('mickeys');"
+    }
+   ]
+  },
+  {
+   "id": "lines-repeat",
+   "kind": "a person who repeats one line",
+   "plain": "every list of lines gives its first line every time, and long lines are no longer kept from coming again",
+   "edits": [
+    {
+     "file": "game/core.js",
+     "old": "  const l = from.length ? from[Math.floor(Math.random() * from.length)] : fallback || '';\n  if (l && wordsIn(l) >= SAID_ONCE_FROM_WORDS) said[l] = 1;",
+     "new": "  const l = lines.length ? lines[0] : fallback || '';"
+    }
+   ]
+  },
+  {
+   "id": "witness-forgets-on-load",
+   "kind": "a witness who forgets",
+   "plain": "loading a save wipes what everyone saw with their own eyes (told memories kept)",
+   "edits": [
+    {
+     "file": "saving.js",
+     "old": "  for (const k of KEYS) if (o[k] !== undefined) G[k] = o[k];",
+     "new": "  for (const k of KEYS) if (o[k] !== undefined) G[k] = o[k];\n  for (const id in G.minds || {}) { const M = G.minds[id]; if (M && Array.isArray(M.mem)) M.mem = M.mem.filter((m) => m.src !== 'saw'); }"
+    }
+   ]
+  },
+  {
+   "id": "cab-sticks-after-post",
+   "kind": "a car that sticks",
+   "plain": "once the cab touches a lamp post or street furniture its engine gives no power again, with no word said",
+   "edits": [
+    {
+     "file": "qr/cab.js",
+     "old": "  v.powerScale = power;",
+     "new": "  v.powerScale = CAB.postHit ? 0 : power;"
+    },
+    {
+     "file": "qr/cab.js",
+     "old": "  CAB.touching = true;\n}",
+     "new": "  CAB.touching = true;\n  if (kind === 'post' || kind === 'prop') CAB.postHit = 1;\n}"
+    }
+   ]
+  },
+  {
+   "id": "pause-menu-swallows-keys",
+   "kind": "a menu that swallows keys",
+   "plain": "the pause menu takes no keys: Escape does not close it, arrows and Enter do nothing (mouse only)",
+   "edits": [
+    {
+     "file": "ui.js",
+     "old": "    if (items.length && ui.modal !== 'file') {",
+     "new": "    if (items.length && ui.modal !== 'file' && ui.modal !== 'pause') {"
+    },
+    {
+     "file": "ui.js",
+     "old": "      if (ui.modal !== 'end') {\n        if ((G.story.phase",
+     "new": "      if (ui.modal !== 'end' && ui.modal !== 'pause') {\n        if ((G.story.phase"
+    }
+   ]
+  },
+  {
+   "id": "empty-night-street",
+   "kind": "an empty street at night",
+   "plain": "from 9pm to 6am nobody of the crowd is out",
+   "edits": [
+    {
+     "file": "routines.js",
+     "old": "  return G.hooks.crowd ? G.hooks.crowd(base) : base;",
+     "new": "  if (hour() >= 21 || hour() < 6) return 0;\n  return G.hooks.crowd ? G.hooks.crowd(base) : base;"
+    }
+   ]
+  },
+  {
+   "id": "debts-not-saved",
+   "kind": "a save that loses a step",
+   "plain": "the debt book is not saved: after loading, every debt is back as it was at the start",
+   "edits": [
+    {
+     "file": "saving.js",
+     "old": "  'debts',\n",
+     "new": ""
+    }
+   ]
+  },
+  {
+   "id": "heads-turn-in-data-only",
+   "kind": "a check that passes because it tests the wrong thing",
+   "plain": "people's minds turn to look at him but their drawn heads no longer turn (the story reads the mind, not the picture)",
+   "edits": [
+    {
+     "file": "render/sync.js",
+     "old": "          : P.mind.look > 0\n            ? toTom",
+     "new": "          : P.mind.look > 99\n            ? toTom"
+    }
+   ]
+  },
+  {
+   "id": "hints-nag",
+   "kind": "control: a story check aims straight at it",
+   "plain": "a second hint can follow the first after 2 seconds instead of 12",
+   "edits": [
+    {
+     "file": "game/tune/feel.js",
+     "old": "  hintsNotTwoWithinRealSeconds: 12,",
+     "new": "  hintsNotTwoWithinRealSeconds: 2,"
+    }
+   ]
+  },
+  {
+   "id": "drink-line",
+   "kind": "content rule",
+   "plain": "a goodbye line speaks of the pub and a pint",
+   "edits": [
+    {
+     "file": "talk_lines.js",
+     "old": "  bye: ['Mind how you go.', 'Aye.', 'Ta-ra.'],",
+     "new": "  bye: ['Mind how you go.', 'Aye.', 'Ta-ra.', \"See you down the pub for a pint.\"],"
+    }
+   ]
+  },
+  {
+   "id": "teen-in-crowd",
+   "kind": "content rule: no children",
+   "plain": "one passer-by is fifteen",
+   "edits": [
+    {
+     "file": "routines.js",
+     "old": "      age: old ? CROWD.oldWalkerAgeYears : CROWD.walkerAgeYears,",
+     "new": "      age: old ? CROWD.oldWalkerAgeYears : i === 5 ? 15 : CROWD.walkerAgeYears,"
+    }
+   ]
+  },
+  {
+   "id": "slow-step",
+   "kind": "frame rate",
+   "plain": "every game step does about 3 ms of needless work",
+   "edits": [
+    {
+     "file": "game/core.js",
+     "old": "export function gameStep(dt) {\n  ensureX();",
+     "new": "export function gameStep(dt) {\n  ensureX();\n  { let s = 0; for (let i = 0; i < 300000; i++) s += Math.sqrt(i); globalThis.__ls = s; }"
+    }
+   ]
+  },
+  {
+   "id": "ada-talk-no-leave",
+   "kind": "a dead end that soft-locks (talk)",
+   "plain": "in a talk with Ada, Leave and Escape do nothing: the talk cannot be ended",
+   "edits": [
+    {
+     "file": "ui.js",
+     "old": "  $('tbye').onclick = () => o.onBye();",
+     "new": "  $('tbye').onclick = () => P.id !== 'ada' && o.onBye();"
+    }
+   ]
+  },
+  {
+   "id": "count-doubles-money",
+   "kind": "money from nowhere",
+   "plain": "at Sheila's count the pocket gets twice what leaves the tin",
+   "edits": [
+    {
+     "file": "game/count.js",
+     "old": "  m.clean += amt;\n  m.washed += amt;",
+     "new": "  m.clean += amt * 2;\n  m.washed += amt;"
+    }
+   ]
+  },
+  {
+   "id": "bollard-not-solid",
+   "kind": "drawn but not solid",
+   "plain": "a bollard on the quay is drawn but Tom and the cab pass through it",
+   "edits": [
+    {
+     "file": "map.js",
+     "old": "P('bollard', 0, 61, { r: 0.3 });",
+     "new": "P('bollard', 0, 61, { r: 0.01 });"
+    }
+   ]
+  }
+ ]
+}

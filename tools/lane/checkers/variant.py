@@ -6,7 +6,7 @@ checkers run, and no checker is given it, its path, or the planted source: they 
 exactly as they will get the one-shot's build. The game's own folder is never changed: the project is copied
 outside the repository, the edits applied there, and the copy built.
 
-    python variant.py build   --work DIR [--faults FILE --ids a,b | --clean]
+    python variant.py build   --work DIR [--faults FILE --ids a,b] [--overlay]   (--overlay: the mended story watchers)
     python variant.py stories --work DIR [S01 S02 ...]        the play stories as in-game tests, in order, once
     python variant.py machine --work DIR --out DIR [args..]    the machine checks on the variant's build
     python variant.py clumsy  --work DIR --out DIR [args..]
@@ -38,7 +38,7 @@ def apply_edits(project, fault):
     return None
 
 
-def do_build(work, faults_file=None, ids=None):
+def do_build(work, faults_file=None, ids=None, overlay=False):
     work = os.path.abspath(work)
     proj = work + "-project"
     if os.path.exists(proj):
@@ -53,6 +53,14 @@ def do_build(work, faults_file=None, ids=None):
                 print("NOT PLANTED:", why)
                 return 1
         print("planted %d" % len(want))
+    if overlay:  # the checkers' mended story player (watchers), copied over the project's own test files
+        od = os.path.join(HERE, "overlay")
+        for root, _, names in os.walk(od):
+            for n in names:
+                rel = os.path.relpath(os.path.join(root, n), od)
+                os.makedirs(os.path.dirname(os.path.join(proj, rel)), exist_ok=True)
+                shutil.copy2(os.path.join(root, n), os.path.join(proj, rel))
+        print("overlay in")
     B.PROJECT = proj
     seed = os.environ.get("CHECKERS_SEED_WORK")  # a built work folder whose packages can be copied (saves npm ci)
     if seed and not os.path.isdir(os.path.join(work, "node_modules")) and os.path.isdir(os.path.join(seed, "node_modules")):
@@ -122,11 +130,12 @@ def main():
     ap.add_argument("--faults")
     ap.add_argument("--ids", default="")
     ap.add_argument("--out")
+    ap.add_argument("--overlay", action="store_true")
     a, rest = ap.parse_known_args()
     if B._inside_repo(a.work):
         raise SystemExit("work outside the repository")
     if a.what == "build":
-        return do_build(a.work, a.faults, [x for x in a.ids.split(",") if x])
+        return do_build(a.work, a.faults, [x for x in a.ids.split(",") if x], a.overlay)
     if a.what == "stories":
         return do_stories(a.work, rest or ["S01", "S02", "S03", "S04", "S05", "S06"])
     script = {"machine": "machine_checks.py", "clumsy": "clumsy.py", "conseq": "consequences.py"}[a.what]

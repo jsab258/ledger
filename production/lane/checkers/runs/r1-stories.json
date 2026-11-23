@@ -1,0 +1,217 @@
+{
+ "G3": {
+  "S01": {
+   "verdict": "FAIL",
+   "secs": 116,
+   "fails": [
+    "TEST FAIL waits, run 1: no second hint inside 12 real seconds | got [{\"s\":\"W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.\",\"at\":0.25},{\"s\":\"A MANY'alright.\",\"at\":0.25},{\"s\":\"E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.\",\"at\":2}]",
+    "TEST FAIL skips, run 1: no second hint inside 12 real seconds | got [{\"s\":\"Quay Street is up the quay to the east, past the Harbour Office clock. Mickey's is at the quay end, under the blue sign.\",\"at\":0.25},{\"s\":\"W A S D to walk. The mouse looks about. Shift runs. L opens the Ledger.\",\"at\":2},{\"s\":\"E uses what is in front of him. N is his watch. M is street manners. Comma is the paper map. Full stop is how things stand.\",\"at\":5}]",
+    "S01 FAIL (2)"
+   ]
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 132,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 48,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 49,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "FAIL",
+   "secs": 175,
+   "fails": [
+    "TEST FAIL runs, run 1: the constable walks to the last place he saw him | got [[7,-18],{\"x\":14.196886947729315,\"z\":-13.709779718937353,\"gone\":false,\"d\":10.185229228253649}]",
+    "TEST FAIL runs, run 1: walking back past that spot brings a fresh call | got [{\"s\":\"THE CONSTABLE\\\"You, there. Hold on a minute.\\\"\",\"at\":388.6,\"t\":1454.1},{\"s\":\"THE CONSTABLE\\\"You. Stop there.\\\"\",\"at\":447.68,\"t\":1532.9}]",
+    "TEST FAIL runs, run 1: run from again, he is lost again inside 90 seconds | got {\"st\":\"caught\",\"seconds\":11,\"t\":1549}",
+    "TEST FAIL runs, run 1: he can walk to -10, 57 | got [29.1,-8.9,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -30, 57 | got [29.1,-8.9,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -43, 56 | got [29.1,-8.9,\"street\"]",
+    "TEST FAIL runs, run 1: at the landing a man in the dark says \"Mickey's?\" | got []",
+    "TEST FAIL runs, run 1: the hand-over has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: the hand-over plays and his cut comes back | got [\"PC IBBOTSONA hand on his shoulder. \\\"Nobody runs from me for nothing.\\\"\",\"A CONSTABLEOi! Stop there!\"]",
+    "TEST FAIL runs, run 1: the cut is in the Money page in words, under the tin | got []",
+    "TEST FAIL runs, run 1: the hand-over and the cut each have their Ledger line | got []",
+    "TEST FAIL runs, run 1: he comes home by the yard: the back door has its prompt | got []",
+    "TEST FAIL runs, run 1: he can walk to 1005, 1003 | got [-5.6,22,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to 1963, 999 | got [-5.6,22,\"street\"]",
+    "TEST FAIL runs, run 1: the bed in the flat has its prompt | got []",
+    "TEST FAIL runs, run 1: sleeping skips the night: it is Tuesday morning | got [2031.4888888901353,2031.4888888901353,-1]",
+    "TEST FAIL runs, run 1: the game saves, and a save note shows | got [{\"s\":\"A LAD IN A SHELL SUITCammack says this end's spoken for.\",\"at\":451.02,\"t\":1537.4},{\"s\":\"PC IBBOTSONA hand on his shoulder. \\\"Nobody runs from me for nothing.\\\"\",\"at\":459.47,\"t\":1548.6},{\"s\":\"A CONSTABLEOi! Stop there!\",\"at\":459.48,\"t\":1548.6}]",
+    "S05 FAIL (17)"
+   ]
+  },
+  "S06": {
+   "verdict": "FAIL",
+   "secs": 145,
+   "fails": [
+    "TEST FAIL runs, run 1: Tuesday morning, in the flat over the office | got {\"day\":1,\"hour\":9.81444444446508,\"space\":\"street\",\"things\":[\"ran\",\"searched\",\"missed\"]}",
+    "TEST FAIL runs, run 1: what happened last night is the branch that was played | got [\"ran\",\"searched\",\"missed\"]",
+    "TEST FAIL runs, run 1: he can walk to 1956, 1003 | got [126.9,54.2,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to 996, 1003 | got [161,61,\"street\"]",
+    "TEST FAIL runs, run 1: what he says matches the branch (runs) | got \"DARREN MILNERIbbotson had your coat open on the quay, I hear. Their man watched it from the shelter, and no envelope came. They count that, chief.\"",
+    "TEST FAIL runs, run 1: Darren was not there: the printed chain shows who saw it and the two meetings that brought it to him | got [{\"what\":\"ran\",\"at\":\"Tue 0:16\",\"saw\":[\"the outfit's man\"],\"told\":[\"the outfit's man told Ron Kirby at the rank, Tue 10:27\",\"Ron Kirby told Darren Milner on the pavement outside Mickey's, Tue 11:07\"],\"knows\":[\"the outfit's man\",\"Ron Kirby\",\"Darren Milner\"],\"said\":[\"Darren Milner\"]},{\"what\":\"searched\",\"at\":\"Tue 9:49\",\"saw\":[\"Ron Kirby\",\"Kevin Needham\",\"Shaun Hewson\"],\"told\":[\"Ron Kirby told Darren Milner on the pavement outside Mickey's, Tue 11:07\"],\"knows\":[\"Ron Kirby\",\"Kevin Needham\",\"Shaun Hewson\",\"Darren Milner\"],\"said\":[\"Darren Milner\"]},{\"what\":\"missed\",\"at\":\"Tue 9:49\",\"saw\":[\"the outfit's",
+    "S06 FAIL (6)"
+   ]
+  }
+ },
+ "G2": {
+  "S01": {
+   "verdict": "FAIL",
+   "secs": 79,
+   "fails": [
+    "TEST FAIL waits, run 1: the AI notice never shows again | got null",
+    "TEST FAIL skips, run 1: the AI notice never shows again | got null",
+    "S01 FAIL (2)"
+   ]
+  },
+  "S02": {
+   "verdict": "FAIL",
+   "secs": 46,
+   "fails": [
+    "TEST FAIL run 1: he can walk to 996, 1003 | got [995.8,1002.6,\"mickeys\"]",
+    "TEST FAIL run 1: he can walk to 6, 36 | got [995.8,1002.6,\"mickeys\"]",
+    "TEST FAIL run 1: he stops close beside it, its side against his kerb-side door | got [4,36.3,[86,51.4,1.57,1.8,4.6]]",
+    "TEST FAIL run 1: he leaves by the road side | got [1002.6,36.3,51.4]",
+    "S02 FAIL (4)"
+   ]
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 26,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 28,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "FAIL",
+   "secs": 88,
+   "fails": [
+    "TEST FAIL dark, run 1: he can walk to 26, 44 | got [21.5,40.3,\"street\"]",
+    "TEST FAIL dark, run 1: he can walk to 26, 50 | got [22.8,39.4,\"street\"]",
+    "TEST FAIL dark, run 1: he can walk to 26, 57 | got [1956.4,1002.1,\"flat\"]",
+    "TEST FAIL dark, run 1: he can walk to -30, 57 | got [1954.8,996.8,\"flat\"]",
+    "TEST FAIL dark, run 1: he can walk to -43, 56 | got [1954.8,996.8,\"flat\"]",
+    "TEST FAIL dark, run 1: at the landing a man in the dark says \"Mickey's?\" | got []",
+    "TEST FAIL dark, run 1: the hand-over has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL dark, run 1: the hand-over plays and his cut comes back | got [\"Boots, slow and even, a street away. The constable is about.\",\"Saved.\"]",
+    "TEST FAIL dark, run 1: the cut is in the Money page in words, under the tin | got [\"Money\",\"\u00a333.78 in his pocket. \u00a310.28 of fares in the fare book this week. The tin has about \u00a310 in it. Rent, \u00a318, Friday. Darren owes \u00a322. Wayne owes \u00a330. Lee owes \u00a315. Julie owes \u00a39. Dennis owes \u00a380.\"]",
+    "TEST FAIL dark, run 1: the hand-over and the cut each have their Ledger line | got [\"The landing shut with the envelope still on him. The ask is failed; Ron will hear of it before he does.\"]",
+    "TEST FAIL runs, run 1: it is lost once he is out of sight for 7 seconds (or 70 m) | got {\"st\":\"caught\",\"seconds\":13,\"t\":1473}",
+    "TEST FAIL runs, run 1: the run has its Ledger line | got [\"Struck through Tue 16 Oct: A constable knows.\",\"A constable knows.\"]",
+    "TEST FAIL runs, run 1: the constable walks to the last place he saw him | got [null,{\"x\":23.007382503338544,\"z\":41.61831697134298,\"gone\":false,\"d\":0.948597883955815}]",
+    "TEST FAIL runs, run 1: and looks round there | got [null,{\"x\":23.007382503338544,\"z\":41.61831697134298,\"gone\":false,\"d\":0.948597883955815}]",
+    "TEST FAIL runs, run 1: the story stopped: TypeError: Cannot read properties of null (reading '0')",
+    "S05 FAIL (15)"
+   ]
+  },
+  "S06": {
+   "verdict": "FAIL",
+   "secs": 60,
+   "fails": [
+    "TEST FAIL quay, run 1: the flows ledger balances | got {\"pocket\":5378,\"tin\":0,\"pocketByFlows\":4378,\"tinByFlows\":0,\"holds\":false}",
+    "TEST FAIL quay, run 1: no fault inside any system | got [\"econ: money from nowhere (pocket 5378 against 4378 by flows, tin 0 against 0)\"]",
+    "TEST FAIL cab, run 1: the flows ledger balances | got {\"pocket\":7022,\"tin\":678,\"pocketByFlows\":5200,\"tinByFlows\":678,\"holds\":false}",
+    "TEST FAIL cab, run 1: no fault inside any system | got [\"econ: money from nowhere (pocket 7022 against 5200 by flows, tin 678 against 678)\"]",
+    "TEST FAIL dark, run 1: Tuesday morning, in the flat over the office | got {\"day\":1,\"hour\":14.431333333303026,\"space\":\"flat\",\"things\":[\"missed\"]}",
+    "TEST FAIL dark, run 1: what happened last night is the branch that was played | got [\"missed\"]",
+    "TEST FAIL dark, run 1: what he says matches the branch (dark) | got \"DARREN MILNERRon says the landing stood waiting and no envelope came. They don't like waiting, chief. They count it.\"",
+    "TEST FAIL dark, run 1: the flows ledger balances | got {\"pocket\":5378,\"tin\":0,\"pocketByFlows\":4378,\"tinByFlows\":0,\"holds\":false}",
+    "TEST FAIL dark, run 1: no fault inside any system | got [\"econ: money from nowhere (pocket 5378 against 4378 by flows, tin 0 against 0)\"]"
+   ]
+  }
+ },
+ "G1": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 66,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 52,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 29,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 27,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "PASS",
+   "secs": 82,
+   "fails": []
+  },
+  "S06": {
+   "verdict": "PASS",
+   "secs": 86,
+   "fails": []
+  }
+ },
+ "clean": {
+  "S01": {
+   "verdict": "PASS",
+   "secs": 49,
+   "fails": []
+  },
+  "S02": {
+   "verdict": "PASS",
+   "secs": 59,
+   "fails": []
+  },
+  "S03": {
+   "verdict": "PASS",
+   "secs": 40,
+   "fails": []
+  },
+  "S04": {
+   "verdict": "PASS",
+   "secs": 31,
+   "fails": []
+  },
+  "S05": {
+   "verdict": "FAIL",
+   "secs": 74,
+   "fails": [
+    "TEST FAIL runs, run 1: walking back past that spot brings a fresh call | got [{\"s\":\"THE CONSTABLE\\\"You, there. Hold on a minute.\\\"\",\"at\":386.4,\"t\":1451.2}]",
+    "TEST FAIL runs, run 1: he can walk to -10, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -30, 57 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: he can walk to -43, 56 | got [3.2,40.6,\"street\"]",
+    "TEST FAIL runs, run 1: at the landing a man in the dark says \"Mickey's?\" | got []",
+    "TEST FAIL runs, run 1: the hand-over has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: the hand-over plays and his cut comes back | got [\"TERRY HODGSON\\\"That detective has been asking about you. Ellis, her name is.\\\"\",\"A glance, and on.\"]",
+    "TEST FAIL runs, run 1: the cut is in the Money page in words, under the tin | got [\"Money\",\"\u00a333.78 in his pocket. \u00a310.28 of fares in the fare book this week. The tin has about \u00a310 in it. Rent, \u00a318, Friday. Darren still owes \u00a312. Wayne owes \u00a330. Lee owes \u00a315. Julie owes \u00a39. Dennis owes \u00a380.\"]",
+    "TEST FAIL runs, run 1: the hand-over and the cut each have their Ledger line | got []",
+    "TEST FAIL runs, run 1: he comes home by the yard: the back door has its prompt | got [\"CCoat off\"]",
+    "TEST FAIL runs, run 1: he can walk to 1005, 1003 | got [158.1,58.7,\"street\"]",
+    "TEST FAIL runs, run 1: sleeping skips the night: it is Tuesday morning | got [1986.3022222222396,3300.0133333333333,1.2666666666666666]",
+    "S05 FAIL (12)"
+   ]
+  },
+  "S06": {
+   "verdict": "FAIL",
+   "secs": 70,
+   "fails": [
+    "TEST FAIL runs, run 1: Tuesday morning, in the flat over the office | got {\"day\":2,\"hour\":7.003925925925925,\"space\":\"flat\",\"things\":[\"ran\",\"searched\",\"missed\"]}",
+    "TEST FAIL runs, run 1: what happened last night is the branch that was played | got [\"ran\",\"searched\",\"missed\"]",
+    "TEST FAIL runs, run 1: what he says matches the branch (runs) | got \"DARREN MILNERIbbotson had your coat open on the quay, I hear. Their man watched it from the shelter, and no envelope came. They count that, chief.\"",
+    "S06 FAIL (3)"
+   ]
+  }
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "G3": [
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a bollard was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a traffic was reached"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold D 0.6 s"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; after D held 0.6 s, let go"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold A 0.6 s, then let go of A and press D in the same frame"
+  },
+  {
+   "rule": "everyone knocked down is told on screen",
+   "ok": "False",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W; others who went down in the same run"
+  },
+  {
+   "rule": "no pause nothing holds",
+   "ok": "False",
+   "steps": "count of pauses nothing was holding over the whole run"
+  }
+ ],
+ "G2": [
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 9 m from a lamp post at (-28.0, -172.0), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a wall was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a bollard was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a parked car was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a traffic was reached"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold D 0.6 s"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; after D held 0.6 s, let go"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold A 0.6 s, then let go of A and press D in the same frame"
+  },
+  {
+   "rule": "everyone knocked down is told on screen",
+   "ok": "False",
+   "steps": "test setup: Ron Kirby held still on the street, cab 14 m back at 4.5 m/s on a clear line, hold W; others who went down in the same run"
+  },
+  {
+   "rule": "pause and resume by Escape",
+   "ok": "False",
+   "steps": "Escape, 0.3 s, Escape"
+  },
+  {
+   "rule": "back to play after button spam",
+   "ok": "False",
+   "steps": "300 random keys 0.1 s apart (seed 11), then Escape up to 5 times"
+  },
+  {
+   "rule": "no pause nothing holds",
+   "ok": "False",
+   "steps": "count of pauses nothing was holding over the whole run"
+  }
+ ],
+ "clean": [
+  {
+   "rule": "never stuck (cab after a hit)",
+   "ok": "False",
+   "steps": "test setup: cab put 11 m from a wall 11 m ahead of (-29.1, 10.5), facing it, damage set to 0; hold W; then S 2.5 s, W 2.5 s"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a bollard was reached"
+  },
+  {
+   "rule": "damage told",
+   "ok": "False",
+   "steps": "no damaging crash into a traffic was reached"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold D 0.6 s"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; after D held 0.6 s, let go"
+  },
+  {
+   "rule": "keyboard steering eased",
+   "ok": "False",
+   "steps": "test setup: cab on open ground at (-2, 40), kept on its spot and its speed held at 9 m/s each frame; hold A 0.6 s, then let go of A and press D in the same frame"
+  },
+  {
+   "rule": "no pause nothing holds",
+   "ok": "False",
+   "steps": "count of pauses nothing was holding over the whole run"
+  }
+ ]
+}
