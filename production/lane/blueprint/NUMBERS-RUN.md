@@ -4,6 +4,10 @@ Blueprint preparation item (b), 23 Nov 2026, blueprint preparation session (Opus
 
 Sources: DEFINITIONS-2026-11-21.md (G7, G8, RT-16, RT-17, RT2-01, RT2-07, RT-06, RT-12, RT-13, RT2-14, 2.7.3, GD-07, L-01, G6, GD-02), ONE-SHOT-PROMPT.md (sections 1, 13, 16, 24 to 34, 37, 40), CLOUD-FIGURES-2026-11-21.md (fence 0.33, London fares 1990), FIT-CHECK-2026-11-21.md (F19, F20, F24), RULINGS.md on wip (clock 60 s a game hour, about 7 weeks; guns rare and late; a car hurts and never kills; Tom cannot die; length 15 to 20 hours), BLUEPRINT-07-shape.md (rung 2 on Sunday's answer; Act II about 5 game weeks; fail-safe four days before its end).
 
+Built on (PRIOR-RESEARCH-INDEX.md, read 23 Nov): the old research has few 1990 prices (index section 5: no office rent, wages by trade, bus fares or takings). What it has is used as a check: 1990 average gross weekly earnings 263.10, men 295.60, women 201.50 (ONS figures in production/art/atlas-02/research/household-contents-and-upstairs.md, via the index's art sheet), against which G8's driver wage of 90 a week is low unless drivers are part-time or on commission, a point for Thursday's price check; provincial minicabs needed no meter in 1990 (the minicab research, production/art/mickeys-cars, citing the Local Government (Miscellaneous Provisions) Act 1976, s71; a lead taken from present-day council pages, not re-read), so the fare rate may be the firm's own price board, which would leave M1's fix free. The repeat rules of production/cloud-week/lines/rules.json (same speaker same line 30 minutes apart, any speaker 2 minutes, at most 6 lines a minute) are older and looser than GD-02 (no shared line twice in a real hour); P3 uses GD-02.
+
+Measured or not: nothing in this file is a measurement. The figures are the design's own (DECIDED or PENDING) and the ASSUMED bands below; under advisor 302's rule (STATUS.md on wip) no footage number is used.
+
 Calendar: his clock, 49 game days. Act I is week 1, Act II weeks 2 to 6 (days 8 to 42), Act III week 7. A "most nights" player plays 42 of the 49 nights.
 
 ## 1. Amounts the design does not give
@@ -126,3 +130,19 @@ P6. Jobs. "No set piece twice in thirty minutes" and "three keys to every lock" 
 4. In the one-shot: the same three players as bots in the built game; this run's numbers become their expected rows.
 
 Nothing here needs Jafar. M1 and the line sizes are tuning values. M3, M4, R1 and R2 change DECIDED definitions: each is a decision for the blueprint keeper to record in DECISIONS.md and fold in, and stays his to overturn.
+
+## Rulings to revisit
+
+Two findings press on his rulings. Neither argues for changing them; each is put as one question so he can say so. Until he answers, the rulings stand.
+
+1. The clock (his clock of 21 Nov: 60 s a game hour, about 7 weeks, Act II about 5). Evidence: in a 5-week Act II, rung 3 is out of reach at the design's car prices (M3), the cooling rates allow at most two falls (R4), and an aggressive player can end the act in its first week (R1). All three have fixes that keep the clock (hire purchase, rung spacing, a re-read of cooling).
+Question: the clock,
+- A (recommended): keep his 21 Nov clock and take the fixes M3, R1 and R2;
+- B: keep the clock and the 7 weeks, but give Act II 5.5 weeks by shortening Act III to its five inspection mornings (inside 15 to 20 hours);
+- C: keep the clock and shorten the ladder to four rungs.
+
+2. Fares few and chosen (canon's line, approved 19 Nov). Evidence: the clean path lives on fares; at a London 1990 fare the first week's rent needs 14 fares against about 6 offered (M1), and the clean-only player sinks (M2). The fix is the fare's worth, not the number of fares.
+Question: fares,
+- A (recommended): keep few and chosen; set a Hook fare at 2.50 to 3.50 and give week one at least 7;
+- B: more fares in Act I only (about 12 in week one);
+- C: lower the rent below 18.

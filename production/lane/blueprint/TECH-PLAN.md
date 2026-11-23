@@ -4,7 +4,9 @@ Blueprint preparation item (a), written 23 Nov 2026 by the blueprint preparation
 
 Sources: tools/lane/prototype/ (code read and run on 23 Nov), production/lane/ONE-SHOT-PROMPT.md, ONE-SHOT-LOG.md, ONE-SHOT-CHECK-1 and -2 (20 Nov), ONE-SHOT-PORTING.md, ONE-SHOT-SIM-DIFFERENCES.md, premortem/PREMORTEM-2026-11-21.md, tools/lane/one-sim/ (README, BRIDGE, PROGRESS), tools/lane/gate/machine_checks.py, RULINGS.md on wip (clock 60 s a game hour, 21 Nov), BLUEPRINT-08-technical.md.
 
-Words: "measured" means run on 23 Nov in this session and the method is given; "target" means a budget the one-shot must meet, not yet shown.
+Words: "measured" means run on our own prototype or on his PC by our own tools, with the method given; "target" means a budget the one-shot must meet, not yet shown. Under advisor 302's rule (production/research/lane/measurements/STATUS.md on wip), only numbers that file marks solid count as measured for the design gate; none of this plan's numbers are footage numbers, and every figure taken from another game's footage here is a lead.
+
+Built on (the prior research index, PRIOR-RESEARCH-INDEX.md, read 23 Nov): voice-latency (IN-GAME-2026-11-02, POCKET-CPU-2026-10-21, CHECK-TIME-2026-10-27), frame-headroom (Pocket beside the game, 23 Oct to 6 Nov), live-speech-architecture, talk-helper (FIRST-WORDS-2026-09-30) for section 10; the Unreal frame records of 21 Oct to 17 Nov (worst walking frame 30.3 ms on 21 Oct; median 14.0 to 14.3 ms on the 17 Nov scale ladder, no people in it) for section 6, as the only PC frame history the project has.
 
 ## 1. Measured on the current prototype (23 Nov)
 
@@ -156,3 +158,40 @@ The hidden and staging checks are planned, not built (premortem way 29). What th
 5. Move lines, places and fares into src/data with `src` fields (today's 650 to 800 written strings and 14 fares carry over).
 
 Each step has its test; nothing in this list needs Jafar.
+
+## 10. Live voices: his PC's Pocket voices through a small local helper
+
+His ruling (RULINGS prototype line, recorded with advisor 299): the prototype's live voices are the Pocket voices on his PC, reached through a small local helper, built in the loops once the browser evening holds. The cloud cannot run this; the builder measures it on his PC this week.
+
+What exists to build on (all on wip): the talk program (LedgerTalk, holding the key, the cap and the claim check; the key never reaches the browser, RULINGS 24 Sep and 1 Nov), the Pocket voice server (tools/voice-live/pocket-server.py, the cast's three voices learned, below-normal priority since 22 Oct and 4 threads since 23 Oct so it does not stall the game, POCKET-CPU-2026-10-21 and frame-headroom), and the latency tool (tools/voice-live/latency.py) that times line-sent to first sound.
+
+The hookup:
+1. One helper process on his PC starts the talk program and the Pocket server and listens on 127.0.0.1 only.
+2. The helper also serves the browser game itself from a local folder, and the game is played from there when live voices are on. Reason: a page published on claude.ai may not be allowed to connect to a program on his own computer (its content rules and Chrome's checks on public pages reaching private addresses); the first test is whether the published page can reach the helper at all, and if not, local serving is the route.
+3. The page sends the player's line, who is spoken to and the scene over one WebSocket; the helper streams back the reply's text first (for the subtitle) and then the voice in short chunks of raw audio, which the page plays through Web Audio as they arrive, on the voices bus of SOUND-PLAN (SND-24).
+4. If no first sound has arrived 2.0 s after the line was sent, the page shows and speaks the written line (tone voice) instead and drops the live reply when it lands; after about 8 s the live reply is abandoned. This is the design's rule (ONE-SHOT-PROMPT section 40: "reply within 2 s or the written line"), not a ruling of his; the written line replaces the live reply, it is not a prepared opening before it (his 7 Oct ruling: no prepared openings). Without the helper the game runs exactly as now, written lines only.
+5. The helper logs, per line: sent, first sentence written, check cleared, first audio made, first audio sent; the page logs first audio played. These six stamps are the measurement.
+
+Delay budget, from the player's line sent to the first audible word, against the 2.0 s bar (median; the bar is judged on the 20 held newcomer questions, his ruling of 26 Oct):
+
+| Step | Budget | What the project has measured (his PC, our tools; dates) |
+|---|---|---|
+| Page to helper (localhost WebSocket) | 0.02 s | not measured; a local round trip is normally a few milliseconds (estimate) |
+| Talk program: first sentence written | 1.00 s | median 0.72 s beside the game on 1 Nov and about 0.8 s in run C with the small-talk model; 1.64 s with the larger model in run B (IN-GAME-2026-11-02) |
+| Claim check on that sentence | 0.30 s | 0.11 to 0.21 s after the first sentence in run B; a sentence the check's list flags waited 2.3 to 2.8 s before early looks (CHECK-TIME-2026-10-27) |
+| Pocket: first audio made | 0.20 s | median 0.13 s, slowest 0.26 s, processor otherwise idle (POCKET-CPU-2026-10-21) |
+| Helper to page, scheduled in Web Audio, through the sound card | 0.10 s | not measured; one chunk plus the browser's output delay (estimate) |
+| Margin | 0.38 s | |
+| Total | 2.00 s | the Unreal game's own end-to-end measure: median 2.02 s, 14 of 30 under 2.0 s (run F, 4 Nov); 1.07 s median in run D with an easier line set |
+
+The 0.30 s check budget holds only when the check's list clears the sentence outright; a sentence it flags took 2.3 to 2.8 s before early looks (CHECK-TIME-2026-10-27), which no margin absorbs, so flagged sentences are where the written line will take over.
+
+What the numbers say: the voice and the browser path take about 0.3 s; the talk program takes the rest, and it already sits at the bar in the Unreal game (2.02 s on 4 Nov). The browser hookup can meet the bar only if it adds no more than run F's path did, so the builder's measurement this week should report each of the six stamps, not only the total. Pass: median first audible word 2.0 s or less on the 20 held questions, the number under 2.0 s and the 90th percentile stated, and no frame over 33.3 ms in the browser while Pocket speaks (beside the Unreal game, Pocket on six threads gave one frame of 45 to 53 ms a walk; on four threads none went over 33.3, frame-headroom 23 Oct).
+
+## Rulings to revisit
+
+One, put as his question; until he answers, his rulings stand. The 2 s bar (his ruling of 7 Oct, judged on newcomers' real questions since 26 Oct) is met or missed by the talk program, which sits at it today (2.02 s median, 4 Nov), and his ruling of 7 Oct also says no prepared openings. The design's fallback (a written line when no live voice has come by 2 s) is close to a prepared line, though it replaces the reply rather than leading into it.
+Question: when the live reply is late,
+- A (recommended): after 2 s the person says a written line in place of the live reply, and the live reply is dropped;
+- B: no written line; the person stays silent until the live reply comes, up to about 8 s;
+- C: a written line only for a newcomer's first question.
