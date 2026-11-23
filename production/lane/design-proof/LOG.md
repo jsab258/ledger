@@ -97,3 +97,4 @@ Scripts in order when rebuilding: runs 1 to 4 scripts, run5_apply.py, covmd.py l
 - Counts unchanged: 401 rows, 111 MEASURED, 132 DECIDED, 42 PENDING, 45 UNMEASURED, 0 UNDEFINED.
 Next run starts at "Next run starts here" of run 5 above, plus: put R1 and R2 to him through the advisor; count GTA VI's tram stop in block 1.
 - 23 Nov (blueprint keeper): From 23 Nov the design proof checks BLUEPRINT.md, and red teams 3 and 4 are given the blueprint, not the old description.
+- 2026-11-23, studies set B (cloud): five new files for the next design proof run in production/research/lane/aaa-studies/: WHERE-PLAYERS-QUIT.md (WQ-01 to WQ-07), MISSIONS-AND-SIDE-QUESTS.md (MS-01 to MS-09), MONEY-AND-PROGRESSION.md (MP-01 to MP-07; MP-01 likely clashes with G8's top price), FAILURE-AND-FRUSTRATION.md (FF-01 to FF-07), IMMERSION-FEATURES.md (IM-01 to IM-07); each standard names the coverage rows it touches.
