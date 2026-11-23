@@ -12,10 +12,10 @@ Read 23 Nov 2026 from outside only (reviews, interviews, articles). No videos, n
 7. TheGamer, undated, read 23 Nov 2026. https://www.thegamer.com/yakuza-yokohama-kamurocho-sequels-grow/
 8. TheGamer, Kane, 20 Feb 2021 (updated 16 Feb 2024). https://www.thegamer.com/yakuza-games-time-complete/
 9. Giant Bomb forum post, undated, read 23 Nov 2026. https://giantbomb.com/yakuza/3025-766/forums/immersion-by-familiarity-a-look-at-kamurocho-in-th-1808491/
-10. Steam review (Like a Dragon-era game, user RensAgatha), 26 Dec 2024. https://steamcommunity.com/id/RensAgatha/recommended/1088710
+10. Steam review (Yakuza 3 Remastered, app 1088710, user RensAgatha), 26 Dec 2024. https://steamcommunity.com/id/RensAgatha/recommended/1088710
 11. GamesRadar, Taylor-Kent, 21 Feb 2025, Pirate Yakuza in Hawaii. https://gamesradar.com/games/action-rpg/like-a-dragon-pirate-yakuza-in-hawaii-is-a-greatest-hits-album-and-then-some-i-spent-15-hours-clearing-a-recycled-map-id-already-explored-and-loved-every-second
 12. PC Gamer, Sleeping Dogs review, 6 Sep 2012 (74). https://www.pcgamer.com/sleeping-dogs-review/
-13. Game Informer, Amini, 14 Aug 2012. https://kotaku.com/sleeping-dogs-the-kotaku-review-5934272 (URL says Kotaku; fetched text credited to Tina Amini, 14 Aug 2012. Attribution uncertain.)
+13. Kotaku review, Tina Amini, 14 Aug 2012. https://kotaku.com/sleeping-dogs-the-kotaku-review-5934272 (credit confirmed on the live page by the study's reviewer, 23 Nov 2026).
 14. GamesRadar, Sleeping Dogs review, 16 Aug 2012. https://www.gamesradar.com/sleeping-dogs-review
 15. Giant Bomb user review, undated, read 23 Nov 2026. https://www.giantbomb.com/sleeping-dogs/3030-29441/user-reviews/2200-23895/
 
