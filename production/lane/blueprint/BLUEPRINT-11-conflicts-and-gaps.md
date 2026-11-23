@@ -1,0 +1,487 @@
+# BLUEPRINT 11: conflicts settled and gaps for the design proof
+
+Part of the LEDGER blueprint (index: BLUEPRINT.md).
+
+## Conflicts settled
+
+Rule: canon outranks everything, then his rulings (the later stands), then the newer design source (DEFINITIONS of 21 Nov and its design pass 3; the GTA VI map, fit check and cloud figures of 21 Nov; the description copy of 21 Nov; the addendum of 20 Nov; the description of 20 Nov; VISION of 19 Nov; DESIGN and BUILD-ORDER of 18 Nov). Each line: the conflict, side a, side b, what won and why. The winner is what the part entry already says.
+
+### Settled by the keeper at the top level
+
+- C-000a The clock. The description and the addendum use 45 real seconds a game hour and a nine-week calendar; the clock rows (7.13, CLK-01 to CLK-07, FIT-F13) were pending his C11. His ruling of 21 Nov (60 s a game hour, Act II about 5 game weeks, about 7 weeks in all) wins: it is his ruling and newer. RT-04's fail-safe moves with it to four game days before the end of Act II's fifth week. coverage.json is the design proof's file and still says pending; the next design proof run sets those rows.
+- C-000b Field of view. DESIGN and AX-03's text fix it at 86 degrees; his ruling of 21 Nov makes it a setting from 75 to 100, default 86. The ruling wins.
+- C-000c Story. The latest full draft is STORY-FINAL.md (The Passenger, 20 Nov), never approved; story v3 is in progress (phase 1 done 21 Nov, top three premises ranked) and not picked. His ruling of 20 and 21 Nov wants his yes on the measured story. The story chapter is pending until v3 is picked; mechanics stand, plot does not.
+
+### Settled part by part
+
+- C-001 (1.1.2 On-foot camera follow): Is the field of view fixed or a setting?. a: DEFINITIONS AX-03 (run 2): stays at the ruled 86 degrees, a setting not built. b: RULINGS 28 Oct as amended 21 Nov, and DEFINITIONS pass 3 header: setting 75 to 100, default 86, built. Won: b (ruling and newer).
+- C-002 (1.1.4 Carrying): Can Tom run while carrying?. a: Prototype round 6 (via the row): running blocked while carrying. b: DEFINITIONS G4: holdall run 5.3 m/s. Won: b (newer (21 Nov) and the description says it slows him a little).
+- C-003 (1.1.8 Vaulting low walls and fences): Is a vault allowed under the no-jump ruling?. a: RULINGS 23 Sep genre line: no jump. b: A26 and the description: vault at set places, built to the recommended answer to his Q1. Won: b (built meanwhile to the recommended answer; no jump key exists, so the ruling's words still hold, but he has not answered Q1).
+- C-004 (1.2.1 Car handling): Steering response. a: FEEL-TARGETS-DRIVING c2 M5: yaw to 63% in 0.15 to 0.25 s. b: DESIGN ER-DRIVE-02 and the description: eases to lock in 0.2 to 0.35 s. Won: b (newer (18 Nov over 17 Nov); may be different measures, to be settled in the measured sheet).
+- C-005 (1.2.1 Car handling): Top speed. a: FEEL-TARGETS-DRIVING c2 M2: 95 to 110 mph. b: DEFINITIONS G2: every car in the Hook reaches 60 mph on the 420 m straights and no more there. Won: b (newer (21 Nov) and the Hook has no longer straight).
+- C-006 (1.2.3 Getting in and out): Blocked-door time. a: Parts-tree note: the gate6 test accepts up to 5 s at a blocked door. b: DESIGN ER-DRIVE-07: in or out in under 2 s. Won: b (the rule is the standard; the test is looser).
+- C-007 (1.2.4 Crashes, damage and unsticking): Where damage starts. a: FEEL-TARGETS-DRIVING M11: under 5 mph no damage. b: DESIGN ER-DRIVE-08 and the description: a touch under 10 mph is forgiven. Won: b (newer).
+- C-008 (1.2.4 Crashes, damage and unsticking): Where the car stops driving. a: M11: over 30 mph may not drive on. b: DESIGN §5 and the description: from about 35 mph in one hit. Won: b (newer).
+- C-009 (1.2.8 Riding as a passenger): What a game hour costs in real time on a skipped ride. a: DESCRIPTION-COPY-2 'One clock': a game hour is 45 real seconds. b: RULINGS 21 Nov: 60 real seconds a game hour. Won: b (ruling).
+- C-010 (1.2.9 Repairs, plates and paint): Does a respray undo earlier sightings?. a: A24 and the description: earlier sightings no longer name this car. b: GV-02: only against witnesses who have not yet told anyone; gossip already carried is never undone. Won: b (newer and the memory rule is permanent).
+- C-011 (1.2.10 Taking a parked car): How long taking a car takes. a: A27 and the description: about 6 s. b: GTAVI-MAP Y1.2 (21 Nov): about 3 s by brick, about 10 s by tool. Won: b (newer; times still to be checked in the footage pass).
+- C-012 (FIT-G2 Car speeds and the stop band): Top speed against the driving sheet. a: FEEL-TARGETS-DRIVING M2: 95 to 110 mph. b: DEFINITIONS G2: 60 mph on the Hook's straights. Won: b (newer).
+- C-013 (1.3.9 How a fight ends): When Tom is robbed after a beating. a: DESIGN §7: robbed by chance. b: DEFINITIONS RT2-13: only by men who rob for a living, never a constable, the boxing club or a debtor; takes exactly the paper money and what he holds. Won: b (newer and the town uses no chance).
+- C-014 (1.3.12 Fighter types): How many fighter kinds. a: A29 and the description: four kinds ('a few'). b: DEFINITIONS P17: at least five, adding the wiry one who slips and runs. Won: b (newer).
+- C-015 (RT-09 Tom's line against women, over-sixties and the priest): Is the line settled?. a: DESIGN §7 and QUESTIONS 2: invented by the prototype, waits for his ruling. b: DEFINITIONS RT-09 and the description: Tom's own line, built. Won: b (newer; it is a design decision, his to overturn).
+- C-016 (RT2-11 Finishing a downed man, kicks and bodies): Finishing a downed man. a: A29, §3 of the description and his combat design: no finishers. b: RT2-11 and DESIGN §7: a separate decision in the quiet afterwards, asked twice, no animation at length. Won: b (DESIGN §7 itself allows it as a decision; there is no finisher move).
+- C-017 (RT2-13 Robbed when beaten): When Tom is robbed. a: DESIGN §7: robbed by chance. b: DEFINITIONS RT2-13: by named robbing kinds only, exact list of what is taken. Won: b (newer and the town uses no chance).
+- C-018 (FIT-P17 At least five kinds of fighter): Number of fighter kinds. a: DESCRIPTION-COPY-2 §9 and A29: four. b: DEFINITIONS P17: five. Won: b (newer).
+- C-019 (1.4.4 Give-aways and the coat): Does a second coat clear earlier sightings?. a: A21: breaks the mark rung for anybody who saw the first. b: GV-02: only for witnesses who have not told anyone. Won: b (newer).
+- C-020 (1.5.3 Car chases): What 'lost' means for a car chase. a: DESCRIPTION-COPY-2 §19 and DESIGN §8: 7 s or 70 m. b: DEFINITIONS F03: 7 s unseen, or the gap over 200 m while unseen (70 m only on foot). Won: b (newer and 70 m would end every car chase at the first corner).
+- C-021 (FIT-G3 A chase at the soft edge): Where the north soft edge is. a: DEFINITIONS G1: the north road runs to the soft edge at y 400 (footprint y 0 to 400). b: DEFINITIONS G3: the north road at y 440. Won: a (G1 is the plan the lengths come from; G3's figure looks like an earlier plan).
+- C-022 (FIT-F03 What the 70 m of a lost chase means): Distance for a car chase. a: DESCRIPTION-COPY-2 §19: 7 s or 70 m for car chases. b: DEFINITIONS F03: 200 m for cars. Won: b (newer; the copy has not taken the new words).
+- C-023 (1.6.3 Lifts and the hot mark): The fence's rate. a: DESIGN §4 and the description: about 0.4 of the honest price (a lead). b: CLOUD-FIGURES B3 (21 Nov): set it to about a third (0.33), between 0.2 jewellery and 0.4 a video recorder. Won: b (newer and measured; the description has not yet been updated).
+- C-024 (2.1.1 Schedules of named people): Walking radius of one routine's places. a: DEFINITIONS clock version A: within about 150 m (95 real s). b: DEFINITIONS clock version B: within about 200 m (125 real s). Won: b (ruling).
+- C-025 (2.1.6 The town's calendar): How many game weeks the calendar and Act II run. a: DESIGN-ADDENDUM A20 and the game description section 5: about nine game weeks; Act II about seven (DESIGN s16). b: RULINGS 21 Nov: clock 60 real seconds a game hour, about 7 game weeks in all, Act II about 5 (DEFINITIONS clock, version B). Won: b (ruling).
+- C-026 (2.4.2 Cooling by kind): How long a deed stays hot. a: C# Core: a single 96-hour half-life for all deeds. b: DESIGN §2 and CLOUD-FIGURES C1: 1 to 7 game days by kind. Won: b (newer).
+- C-027 (GV-02 Shedding what a witness holds, slot by slot): Whether a new coat always lowers the old witness to a shape. a: DESIGN-ADDENDUM A21 (ER-COAT-01): a new coat lowers what a witness of the old one can catch to a shape. b: GTAVI-MAP GV-02: only for witnesses who have not yet told; one who told first still names it. Won: b (newer).
+- C-028 (2.6.1 The beat constable): How often the constable passes Mickey's door at night. a: FIT-CHECK F06: suggested every 2 to 3 real minutes. b: DEFINITIONS G5: at least once every 4 real minutes (yards' lane and landing every 7.5), a deliberate choice so the night has gaps to read. Won: b (newer).
+- C-029 (2.6.2 Challenge and search): How many answers a challenge has. a: DESIGN §8: two (stand and be searched, or run). b: DESIGN-ADDENDUM A13 and the description: three (stand, run, or a word). Won: b (newer).
+- C-030 (2.6.4 Custody as hours): What follows 22 hours for a killing. a: DESIGN §8 and the description: 'and then bail' (DESIGN notes bail after a killing was rare, to be checked). b: CLOUD-FIGURES B2 and the row's standard: released under investigation or charged and remanded, not bail. Won: b (newer).
+- C-031 (2.6.5 DS Ellis and the four stages): When Ellis starts asking about talk. a: DESIGN §8: from day 4. b: ONE-SHOT-PROMPT 21 and the description: from the second day. Won: b (newer).
+- C-032 (2.6.7 Traffic police and stops): What counts as reckless speed. a: DESIGN-ADDENDUM A12: 'a speed far over the limit (to measure against the game's band)'. b: DEFINITIONS G2: a stop at 50 mph or more. Won: b (newer).
+- C-033 (2.6.8 Bought men and squaring the law): Whether DS Ellis can be bought. a: DESIGN-ADDENDUM A13: not decided, her casting sheet leaves it open and it is his. b: DESCRIPTION-COPY-2 §18 and ONE-SHOT-PROMPT 21: Ellis herself is not among them. Won: b (newer).
+- C-034 (2.6.9 Charges, bail and the office searched): Bail after the gravest charge. a: DESIGN §18 and A13: a charge and bail. b: CLOUD-FIGURES B2 via 2.6.4: after a killing, charged and remanded, not bail. Won: b (newer).
+- C-035 (2.6.10 Police after a deed): How long the spot stays watched. a: DESIGN-ADDENDUM A36: the rest of the night. b: GTAVI-MAP Y2.3: warm for days; two nights of more frequent walks. Won: b (newer).
+- C-036 (FIT-G5 The beat constable's round): How often the constable passes Mickey's door. a: FIT-CHECK F06: suggested every 2 to 3 real minutes. b: DEFINITIONS G5: every 4 real minutes at most, chosen so the night has gaps to read. Won: b (newer).
+- C-037 (2.7.4 Rent and running costs): The weekly rent against 1990 figures. a: Description and canon: £18 a week for the office. b: CLOUD-FIGURES B1 (Hansard): council rent £23.36 a week (Apr 1990), private £65 (1991). Won: a (design kept: B1 notes the £18 is cheap but does not change it).
+- C-038 (2.7.6 Fencing): The fence's rate. a: DESIGN §4, the description and the row's own summary: about 0.4 of an honest price. b: CLOUD-FIGURES B3 and the row's standard: about a third (0.33), 0.2 to 0.4 by goods (Sutton 2014, AIC 2002, BOCSAR 1998). Won: b (newer).
+- C-039 (FIT-G8 Prices of what money buys): The 1990 prices. a: DEFINITIONS G8: the figures above. b: Dated 1990 sources: not yet read (cloud check due Thu 26 Nov). Won: a (newer; the figures stand until checked, within 25% is the pass line).
+- C-040 (FIT-F24 Money over nine weeks (in against out)): Length of the money run. a: FIT-CHECK F24 and this row's name: a nine-week money run. b: RULINGS 21 Nov: about 7 game weeks in all. Won: b (ruling).
+- C-041 (RT2-01 The cold-store contract and rung 3 are circular): Whether the contract is won at or before rung 3. a: DESCRIPTION-COPY-2 §25 and DESIGN §14: won at rung 3 (part of what rung 3 holds). b: DEFINITIONS RT2-01: won on the way to rung 3 and held at it. Won: b (newer).
+- C-042 (2.10.1 Rival ladders): When the fail-safe climbs begin. a: DEFINITIONS RT-04: by the end of the eighth game week. b: DEFINITIONS F13 and clock B with RULINGS 21 Nov: from four game days before the end of Act II's fifth week, one rung a game day. Won: b (ruling).
+- C-043 (RT2-07 What moves a rival up his ladder): When the fail-safe climbs begin. a: DEFINITIONS RT-04: if no ladder has reached its top by the end of the eighth game week. b: DEFINITIONS F13 with RULINGS 21 Nov (60 s clock, Act II about 5 weeks): from four game days before the end of Act II's fifth week. Won: b (ruling).
+- C-044 (2.12.2 Rung table): When the dock gate opens. a: DESIGN §14 rung table: at rung 3. b: DEFINITIONS RT2-01: when the cold-store contract is won, on the way to rung 3. Won: b (newer).
+- C-045 (2.12.2 Rung table): Whether the contract is held at or won before rung 3. a: DESCRIPTION-COPY-2 §25: won at rung 3. b: DEFINITIONS RT2-01: won before rung 3, held at it (no circle). Won: b (newer).
+- C-046 (2.15.2 Ranks and accounts): Where the cold-store contract sits against rung 3. a: DEFINITIONS §2.15.2: the cold store at rung 3. b: DEFINITIONS RT2-01: won on the way to rung 3 and held at it. Won: b (newer).
+- C-047 (3.1.1 Act I, The Inheritance): Do the first week's nine designs stand as written?. a: row standard and DESIGN s.15: nine first-week designs kept as written (ruling 29 Sep). b: RULINGS 28 Sep and 20 Nov: the outline and the first week's nine designs are re-measured with the story measure, nothing final until he approves the measured story. Won: b (ruling).
+- C-048 (3.1.2 Act II, The Rise and the Squeeze): Game clock and the calendar. a: description sections 3, 5 and 37 (COPY-2 s.5, s.31): 45 s a game hour, 18-minute day, calendar about nine game weeks, Act II about seven weeks. b: RULINGS 21 Nov: 60 s a game hour (24-minute day), about 7 game weeks in all, Act II about 5 (DEFINITIONS clock, version B). Won: b (ruling).
+- C-049 (3.1.2 Act II, The Rise and the Squeeze): Act II hours. a: DESIGN s.16 and DEFINITIONS F15: Act II 11 to 14 hours. b: DEFINITIONS CLK-06 version B (the ruled clock): Act II 5 weeks, 9.3 to 14 running hours, whole game 13 to 20 hours. Won: b (ruling (the ruled calendar sets the hours)).
+- C-050 (3.1.2 Act II, The Rise and the Squeeze): Fail-safe week. a: DEFINITIONS RT-04: sit-down forced by the end of the eighth game week. b: DEFINITIONS F13: fail-safe starts four game days before the end of the last week (seventh under clock A, fifth under clock B). Won: b (newer).
+- C-051 (3.1.3 Act III, The Ledger Comes Due): Act III hours. a: description s.38: 2 to 3 hours. b: DEFINITIONS CLK-06 version B: 1.9 to 2.8 hours (version A would give 1.4 to 2.1). Won: b (ruling (clock B)).
+- C-052 (3.1.4 The endings): How many endings. a: DESIGN s.16 and QUESTIONS 1: open; his 28 Oct ruling says two or three, the 28 Sep outline and built story have five. b: canon OPEN 3 (19 Nov, whole design approved) and the description: three shown, five built states kept underneath. Won: b (canon).
+- C-053 (3.1.4 The endings): Order of the ending rule. a: game-design ending-signs 30 Sep: the Core resolves in the order Quiet, Both, StraightLife, Kingdom, else BurnBoth. b: DEFINITIONS RT2-04: Kingdom and Both first by business and books, then Straight Life and Quiet, else Burn Both. Won: b (newer (the C# goldens must be checked against it)).
+- C-054 (3.1.5 Ending signs and Tom's reading): What the books line is. a: ending-signs 30 Sep: Core thresholds as numbers (books 0.62, friend 0.55, talk 0.5, Ellis 0.5). b: DEFINITIONS RT-01: graded by weeks over the wash limit (£10 plus 80% of real fares): holds, thin, falls. Won: b (newer; the player never sees a number either way).
+- C-055 (RT-02 Main-story beat content): Which story bible is current. a: DEFINITIONS RT-02 (21 Nov): current version STORY-BIBLE-M1. b: STORY-FINAL.md (20 Nov): its builders' version is STORY-BIBLE-M3; v3 in progress. Won: b (newer (nothing approved; pending)).
+- C-056 (RT2-04 How the ending is chosen): Order of the ending rule. a: game-design ending-signs 30 Sep: Core order Quiet, Both, StraightLife, Kingdom, else BurnBoth. b: DEFINITIONS RT2-04: business and books first, then friendship. Won: b (newer; must be run against the C# goldens).
+- C-057 (3.2.3 The thirty regulars): Own street lines per regular. a: row standard and DESIGN s.11: about 30 own lines each. b: DEFINITIONS L-01 (D-Q4): 60 for the 12 most seen, 30 for the rest. Won: b (newer).
+- C-058 (3.2.6 One complete person): When Ron is built in Unreal. a: KILN-TO-GAME-PLAN 17 Nov: Ron walks packaged in a Kiln outfit as the next proof. b: RULINGS 20 and 21 Nov: Kiln, hair and the crowd pause; no Unreal work until the prototype is done, then Kiln. Won: b (ruling).
+- C-059 (3.3 Side stories): How many side stories. a: row standard and DESIGN s.4: 25 to 40. b: DEFINITIONS F15 (D-Q3): about 25, at least 22, at most 28. Won: b (newer).
+- C-060 (3.4.1 Fare people): How many fare people. a: FIT-CHECK F20: at least 30. b: DEFINITIONS G7: at least 40. Won: b (newer).
+- C-061 (3.4.1 Fare people): Fares offered in a playthrough. a: FIT-CHECK F20: about 55 to 110. b: DEFINITIONS G7: about 40 to 80. Won: b (newer).
+- C-062 (3.4.2 Wrinkles): How many fares carry a wrinkle. a: row standard and DESIGN s.5: about half of Act I's fares. b: DEFINITIONS F20 and canon 19 Nov: every fare after the first. Won: b (newer).
+- C-063 (3.4.2 Wrinkles): How the hurry is said. a: DESIGN s.5: 'the last ferry in four minutes'. b: DEFINITIONS CLK-02 version B: 1.5 game hours ahead in clock terms, 90 real seconds. Won: b (ruling (60 s clock)).
+- C-064 (FIT-G7 How many fare people are written): How many fare people. a: FIT-CHECK F20: at least 30. b: DEFINITIONS G7: at least 40. Won: b (newer).
+- C-065 (FIT-F20 Which fares carry a wrinkle (every one after the first)): How many fares carry a wrinkle. a: DESIGN s.5: about half of Act I's fares. b: DEFINITIONS F20 and canon's line of 19 Nov: every fare after the first. Won: b (newer).
+- C-066 (3.5.1 Carries): Where the dark route runs. a: description s.4: 'the yard and the lane behind the warehouses'. b: DEFINITIONS G1: the warehouse row is at x 480, 480 m east of the landing at x 0; the yards' lane joins the quay road at x 175 and the ginnel at x 60. Won: b (newer (coordinates)).
+- C-067 (3.5.6 Job template and step states): Smallest job window. a: description and DESIGN s.4: at least 2 game hours. b: DEFINITIONS CLK-04: at least 3 game hours under clock A, at least 2 under clock B. Won: b (ruling (clock B, which equals the description)).
+- C-068 (3.6.2 Claim check): How hard the claim check is. a: RULINGS 25 Sep: the claim check is a net, not a wall. b: RULINGS 7 to 28 Oct (speech): a hard rule refuses any person, place, event, number or year the speaker's facts lack. Won: b (ruling (later)).
+- C-069 (3.6.3 Written street lines): How often a shared line may repeat. a: row text and DESIGN ER-TALK-02: a shared line once a week per street. b: DEFINITIONS GD-02 (raised by Y2.5): no shared street line heard twice in one real hour anywhere. Won: b (newer).
+- C-070 (3.6.3 Written street lines): Own lines per regular. a: DESIGN s.11: about 30. b: DEFINITIONS L-01: 60 for the 12 most seen. Won: b (newer).
+- C-071 (3.6.4 Crowd lines by situation): Which situations. a: DESIGN s.11 lists five (greetings, bumping, neighbours, talking to oneself, rain). b: COPY-2 s.5 adds a body or a man down. Won: b (newer).
+- C-072 (FIT-F19 Enough shared-line situations live each hour): How often a shared line may repeat. a: description s.28 and DESIGN: once a week per street. b: GD-02: not twice in one real hour. Won: b (newer).
+- C-073 (FIT-L01 60 street lines for the 12 people seen most, 30 for the rest): Calendar length behind '60 game days'. a: DEFINITIONS L-01: 60 game days is about the whole calendar (nine weeks, 63 days). b: RULINGS 21 Nov: about 7 game weeks, 49 days. Won: b (ruling).
+- C-074 (3.7 Street happenings): How many happenings. a: FIT-CHECK F17: at least 40 scenes, about 100 in 17 hours. b: DEFINITIONS G6: at least 60 scenes, about 70 in 17 hours. Won: b (newer).
+- C-075 (RT-19 Content supply at night and late in Acts II-III): Repeat rule for happenings. a: RT-19: none repeats on one street within a game week. b: DEFINITIONS G6: no scene twice within 3 real hours, none twice unless people changed. Won: b (newer and stricter (a game week is 168 real minutes under the ruled clock)).
+- C-076 (FIT-G6 How many street happenings are written): How many happenings. a: FIT-CHECK F17: at least 40 scenes. b: DEFINITIONS G6: at least 60. Won: b (newer).
+- C-077 (4.1.1 Quay Street): Where the chandler stands. a: RULINGS 3 Oct: 'east_chandler a ship's chandler' (read as on the street's east side). b: DEFINITIONS G1: the chandler and the boxing club's hall are on the quay road, 190 to 230 m, north side. Won: b (newer; 'east_chandler' reads as an asset name).
+- C-078 (4.1.1 Quay Street): Street width. a: DEFINITIONS G1: 11 m with both pavements. b: Study 4 and the scene file: 10.25 m front to front. Won: a (newer; both lie inside the 9 to 15 m band).
+- C-079 (4.1.2 The rest of the Hook): The basin crossing. a: atlas-01 TOWN-FORM-BIBLE: the basin swing crossing is an unengineered proposal. b: DEFINITIONS G1: the quay road crosses the Old Basin's mouth on a fixed basin bridge. Won: b (newer).
+- C-080 (4.1.2 The rest of the Hook): Drink and betting in atlas-01. a: atlas-01 MICKEYS.md and DISTRICTS.md (September): a cask line at Mickey's, betting offices in Copper Row. b: canon D18 and D19: no alcohol or gambling at all, Mickey's is a minicab office. Won: b (canon).
+- C-081 (4.1.4 The soft edge): North soft edge position. a: DEFINITIONS G3: north road at y 440. b: DEFINITIONS G1: north road ends at y 400. Won: b (the plan table is what the map-data check reads).
+- C-082 (4.1.5 Street build rules): Method and reference of Study 4. a: Study 4 (25 Oct): measured from Mafia: The Old Country's and KCD2's level files; the 4.9 props per 10 m is Mafia's. b: RULINGS 17 Nov: other games studied from the outside only, never files opened; DEFINITIONS 21 Nov: Mafia is never a reference. Won: b (ruling).
+- C-083 (GD-01 Travel time across the playable map): Walking pace. a: FIT-CHECK F01 and the usual figure: 1.4 m/s. b: DEFINITIONS G4: Tom walks at 1.6 m/s, a design choice so the crossing stays inside 5 minutes. Won: b (newer).
+- C-084 (FIT-G1 The Hook's road plan in metres, the chase loop): Where the north soft edge is. a: DEFINITIONS G1 table: the north road ends at y 400 (footprint to y 400). b: DEFINITIONS G3: the soft edge is the north road at y 440. Won: a (the plan's table is what the map-data check (standard 1) reads).
+- C-085 (FIT-G1 The Hook's road plan in metres, the chase loop): Quay Street width. a: DEFINITIONS G1: 11 m with both pavements. b: Study 4 and the street scene: 10.25 m front to front. Won: a (newer; both lie inside the 9 to 15 m band).
+- C-086 (4.2.2 Old Basin, fish dock, cold stores): Basin crossing. a: atlas-01: the swing crossing is a proposal. b: DEFINITIONS G1: fixed basin bridge. Won: b (newer).
+- C-087 (4.3.4 Homes): Where the retired doctor lives. a: COPY-2 s.9: a terrace by the quay. b: DEFINITIONS G1: the retired doctor's terrace is on Chapel Lane. Won: b (newer (coordinates)).
+- C-088 (4.3.7 The police station): After a killing. a: COPY-2 s.17: 22 hours 'and then bail'. b: CLOUD-FIGURES B2: charged and remanded or released under investigation. Won: b (newer and ranks higher).
+- C-089 (4.4 Props and street furniture): Mafia as a reference. a: TARGET-STREET-FURNITURE (17 Nov) and Study 4 take Mafia's lamp and sign rates and 4.9 props per 10 m. b: RULINGS 17 Nov and DEFINITIONS 21 Nov: Mafia is only a study of Unreal's use, never a reference. Won: b (ruling).
+- C-090 (4.5.1 Traffic drivers): Length of a game hour in the traffic bands. a: TRAFFIC-STAGE1 model: bands are whole game hours of 30,000 ms (30 real seconds). b: RULINGS 21 Nov: 60 s a game hour. Won: b (ruling (gaps are in real seconds, so only the band edges move)).
+- C-091 (4.7 Day and night): Game clock and the calendar. a: description sections 3, 5 and 37 (COPY-2 s.5, s.31): 45 s a game hour, 18-minute day, calendar about nine game weeks, Act II about seven weeks. b: RULINGS 21 Nov: 60 s a game hour (24-minute day), about 7 game weeks in all, Act II about 5 (DEFINITIONS clock, version B). Won: b (ruling).
+- C-092 (4.7 Day and night): Evening length. a: clock A: evening 4.5 real minutes, dark about 10.5 of 18 minutes. b: clock B: evening 6 real minutes, dark about 14 of 24 minutes. Won: b (ruling).
+- C-093 (4.9 1990 detail): CCTV sites. a: canon: the bank and a second site that is Jafar's to name. b: COPY-2 s.2: CCTV only at the bank. Won: a (canon).
+- C-094 (4.10 Pubs without drink and the closed school): Atlas-01 drink and betting. a: atlas-01 MICKEYS.md and DISTRICTS.md: a cask line and betting offices. b: canon D18: none. Won: b (canon).
+- C-095 (5.1.1 Faces): How many cast faces the game needs. a: RULINGS 25 Sep: the other eleven sheets, so 15 principal faces. b: PARTS-TREE 5.1.1 evidence (audit M17): about 4 of about 50 cast faces made. Won: a (ruling; the 50 is an audit count with no sheets behind it).
+- C-096 (5.1.4 Clothes): Camera the clothes are judged through. a: RUBRIC.md (2 Oct): street arm 3.2 m, engine default 90 degree lens, talk camera 4.4 m from the face. b: RULINGS 28 Oct: 86 degree lens, 3.1 m back (setting 75 to 100, 21 Nov). Won: b (ruling and newer).
+- C-097 (5.2.2 Fight animation): How much longer wind-ups are in the slower-fights assist. a: FEEL-TARGETS-MELEE C5 (18 Nov): accessible wind-up 1.25 to 1.5 times longer. b: DESCRIPTION-2 §3 (21 Nov): wind-ups readable 25% longer. Won: b (newer).
+- C-098 (5.5.6 Fight sound): Timing of the four layers. a: DESIGN §17 and the row: four layers landing within a frame of the blow. b: FEEL-TARGETS-MELEE C13: only the impact is within 0.034 s; whoosh, pain and shout have wider windows. Won: b (the sheet's per-layer table is the measured source).
+- C-099 (5.7.1 Radio programmes and period songs): A radio in the cab. a: ADDENDUM §A8 (20 Nov): music comes from a radio in a cab among other places. b: DEFINITIONS §P09 (21 Nov): no music station in the cab. Won: b (newer).
+- C-100 (5.7.1 Radio programmes and period songs): Where a score may play. a: ADDENDUM §A8: a score under cut scenes, act ends and an ending's close. b: DEFINITIONS §P09: music is heard only where it plays in the world. Won: b (newer; see his).
+- C-101 (FIT-P09 Music made for the game, placed in the world): Music in the cab and under cut scenes. a: ADDENDUM §A8: radio in a cab; a score under cut scenes and act ends. b: DEFINITIONS §P09: no cab music station; music only where it plays in the world. Won: b (newer).
+- C-102 (5.8.1 Camera rig by state): Field of view. a: DESIGN §17 and DEFINITIONS §AX-03 (older text): fixed 86 degrees, a setting waits for his ruling. b: RULINGS 21 Nov: setting 75 to 100, default 86. Won: b (ruling).
+- C-103 (6.1.5 Knowing the time): Length of a game hour. a: ONE-SHOT-PROMPT and DESCRIPTION-2 §3: 45 real seconds. b: RULINGS 21 Nov: 60 real seconds (settles C11, version B). Won: b (ruling).
+- C-104 (6.2.4 Money in words): Weekly rent. a: DESCRIPTION-2 and DESIGN §9: 18 pounds a week. b: CLOUD-FIGURES B1: 1990 council rent 23.36, private 65. Won: a (canon and the description keep 18; the cloud figures call it cheap but defensible).
+- C-105 (RT-14 Typed-talk interpretation): The pass share. a: DEFINITIONS §RT-14: 'at least the agreed share', set once measured. b: typed-talk README (run 3): at least 95% of all lines and 90% of hard lines. Won: b (newer, measured).
+- C-106 (6.8 Photo mode): Which camera rule. a: DEFINITIONS §6.8 cites ER-CAM-02 for the camera never inside geometry. b: DESIGN §17: ER-CAM-01 is that rule; ER-CAM-02 is feet in frame. Won: b (DESIGN §17 as the source of record).
+- C-107 (7.1 The first hour): Clock the hour is staged on. a: DESIGN §15 and the description: 45 real s a game hour; at that rate the landing reads about 03:30 to 07:00 though it is open 22:00 to 01:00 (FIT-CHECK F07). b: RULINGS 21 Nov: 60 s a game hour; CLK-01 version B: with 2.5 to 3.5 real min stopped in talk the hand-over reads about 00:40, inside the window, no special rule. Won: b (ruling).
+- C-108 (7.1 The first hour): Fares in the Tuesday day shift. a: DESIGN §15: three fares, two with a wrinkle. b: Description §4 and its conflicts note: two fares, not three. Won: b (newer).
+- C-109 (7.2 An evening): Length of a game day in real minutes. a: Row standard and DESIGN §1: 16 to 20 real minutes a game day (45 s a game hour gives 18). b: RULINGS 21 Nov and CLK-05 version B: 60 s a game hour, a 24 minute day, evening 6 real minutes. Won: b (ruling).
+- C-110 (7.2 An evening): Panel bar for the evening. a: BUILD-ORDER M1: 4 of 8 for an evening. b: PANEL-BAR (21 Nov): 7 of 8 is the gate's bar for the release-grade prototype; 4 of 8 stays as the first milestone only. Won: b (newer).
+- C-111 (7.3 A week): Act I length. a: Description §30 and DESIGN §16: about two hours. b: CLK-06 version B (the ruled clock): 1.9 to 2.8 running hours. Won: b (ruling; it brackets the old figure).
+- C-112 (7.4 Acts II and III pacing): Length of Act II. a: Description §31 and DESIGN §16: about seven game weeks, 11 to 14 hours. b: RULINGS 21 Nov: Act II about 5 game weeks, about 7 in all. Won: b (ruling).
+- C-113 (7.4 Acts II and III pacing): When the fail-safe starts. a: RT-04 as first written: the end of the eighth game week. b: F13 (design pass 3): four game days before the end of Act II's seventh week under clock A, of the fifth under B. Won: b (newer and ruling).
+- C-114 (GD-03 Jobs done out of order and sequence breaks): How many routes a job has. a: DESIGN §4 and description §13: three keys to every lock. b: DESIGN ER-JOB-03: finished by at least two scripted approaches. Won: a (the law is three keys; the check needs only two).
+- C-115 (RT-04 Act transitions and stall paths): When the fail-safe starts. a: RT-04: by the end of the eighth game week of Act II. b: F13: four game days before the end of Act II's last week (the seventh under clock A, the fifth under B); RULINGS 21 Nov: Act II about 5 weeks. Won: b (newer and ruling).
+- C-116 (RT-04 Act transitions and stall paths): Test point. a: RT-04 test: sit-down by about week eight. b: CLK-06 version B: fail-safe at the end of Act II's week 5. Won: b (ruling).
+- C-117 (FIT-F13 Act II's week count and its fail-safe): Which week number. a: FIT-CHECK F13 and DEFINITIONS F13: PENDING, 7 (clock A) or 5 (clock B). b: RULINGS 21 Nov: Act II about 5 game weeks. Won: b (ruling).
+- C-118 (FIT-F13 Act II's week count and its fail-safe): Act III's opening. a: F13 text: Act III opens by the start of the calendar's ninth week. b: Ruling: 7 weeks in all, so the start of the seventh. Won: b (ruling).
+- C-119 (7.5 The hour budget): Driving share. a: DESIGN §1: 22%. b: Description §34 and §41: about a fifth, never over 25%. Won: b (newer).
+- C-120 (7.5 The hour budget): Whether canon pulls two ways on how play time is spent. a: DESIGN §1: canon's older 'What LEDGER is not' calls what people know the mechanic, so the conflict is his to settle (QUESTIONS 5). b: canon.md, 'What LEDGER is not (rewritten to the pillar, Jafar, 19 November 2026)': verbs get the full budget, memory and gossip are the engine. Won: b (canon).
+- C-121 (FIT-F15 What the act hours include (side stories inside 15 to 20 h)): Side stories. a: DESIGN §4: 25 to 40 side stories. b: F15 and D-Q3: about 25, at least 22, at most 28. Won: b (newer).
+- C-122 (FIT-F15 What the act hours include (side stories inside 15 to 20 h)): Main line length. a: Story bible: about 14 hours. b: D-Q3: about 12 hours (noted for the story session). Won: b (newer).
+- C-123 (FIT-F15 What the act hours include (side stories inside 15 to 20 h)): Act II hours. a: F15: 11 to 14 hours. b: CLK-06 version B (the ruled clock): 9.3 to 14, total 13 to 20 against his 15 to 20. Won: b (ruling).
+- C-124 (FIT-F16 Act hours against places and people): Act II hours in the sum. a: FIT-CHECK F16: 11 to 14 hours. b: CLK-06 version B: 9.3 to 14 hours. Won: b (ruling).
+- C-125 (7.9 Failure without reload): What follows 22 hours for a killing. a: Description §17: 'and then bail'. b: CLOUD-FIGURES B2: should read released under investigation, or charged and remanded. Won: b (newer, sourced to 1990 figures).
+- C-126 (7.12 Always something to do): Walking speed behind the 30 second circle. a: FIT-CHECK F32: 1.4 m/s (assumed), a circle of about 40 m. b: DEFINITIONS G4 (design pass 3): Tom walks at 1.6 m/s, so 30 s is about 48 m. Won: b (newer).
+- C-127 (GD-02 Density: something to meet every so many metres or seconds on a street): How soon a shared street line may repeat. a: Description §28: a shared line once a week per street. b: GD-02: no shared line twice in one real hour. Won: b (newer, raised from Y2.5).
+- C-128 (FIT-F32 Something within 30 s by day): Walk speed behind the circle. a: FIT-CHECK F32: 1.4 m/s, about 40 m. b: DEFINITIONS G4: 1.6 m/s, about 48 m. Won: b (newer).
+- C-129 (7.13 The game clock): The clock rate. a: Row standard, description §3 and the prototype: 45 real s a game hour (18 minutes a day); C11 still open. b: RULINGS 21 Nov: 60 s a game hour; DEFINITIONS version B. Won: b (ruling; settles C11).
+- C-130 (RT-18 Pause and clock): Whether the clock stops in all talk. a: RT-18: stops in talk. b: RT2-20 (design pass 3): stops only in standing talk with the talk screen up; talk staged while walking or driving runs the clock. Won: b (newer).
+- C-131 (RT2-20 The clock in moving talk): Whether the clock stops in all talk. a: RT-18 and description §34: the clock stops in talk. b: RT2-20: only standing talk. Won: b (newer).
+- C-132 (CLK-01 The staged first hour against the landing's window): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-133 (CLK-02 The hurry wrinkle in clock terms): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-134 (CLK-03 Routines against walking): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-135 (CLK-04 Job windows against the walk to them): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-136 (CLK-05 The evening and the shop day): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-137 (CLK-06 Calendar and acts): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-138 (CLK-06 Calendar and acts): Calendar length. a: Description §5 and DESIGN-ADDENDUM A20: about nine game weeks. b: RULINGS 21 Nov: about 7 game weeks in all. Won: b (ruling).
+- C-139 (CLK-07 Weekly rhythms (rent, cooling, rival rungs)): Clock the row was written for. a: FIT-CHECK and the old description: 45 s a game hour (version A), C11 open. b: RULINGS 21 Nov: 60 s a game hour (version B). Won: b (ruling).
+- C-140 (7.14 Variety): How soon a happening may repeat. a: Description §13 and ONE-SHOT-PROMPT 14: none twice in 30 minutes or twice in a week on one street. b: DEFINITIONS G6: no single scene twice within 3 real hours, and none twice in the game unless its people have changed. Won: b (newer).
+- C-141 (7.14 Variety): How many fares carry a wrinkle. a: DESIGN §5 and the old description: about half. b: Description §41, F20: every fare after the first. Won: b (canon's 19 Nov line, newer).
+- C-142 (GD-04 A second playthrough: what differs): Whether the figure is checked. a: DEFINITIONS GD-04: UNMEASURED, judgement until checked against KCD2's and RDR2's branch counts. b: CLOUD-FIGURES C4 (later, 21 Nov): counts found, LEDGER's eight in five hours already asks more than either. Won: b (newer).
+- C-143 (RT2-21 After the ending and past nine weeks): Calendar length behind the row. a: Row name and text: past nine weeks (clock A, ending about 16 Dec). b: RULINGS 21 Nov and CLK-06 version B: seven weeks, ending about 2 Dec. Won: b (ruling).
+- C-144 (OUT-12 Game-over screen): Where the rule is written. a: Row standard: D35, D58 and a ruling of 30 Oct. b: RULINGS (wip): reloading never stopped; hold-ups never a game over; the plain rule is in the description §3 and DESIGN ER-CORE-04. Won: b (the sources that exist).
+- C-145 (8.1.1 Frame, memory and crowd budget): Whether the frame target includes the voice. a: RULINGS 23 Sep: 60 fps with the voice running. b: RULINGS 24 Oct: the 6 GB card line is the game alone, for now. Won: b (newer ruling, marked 'for now').
+- C-146 (8.1.3 Player PCs and shader stutter): Video memory a machine needs. a: research/hardware-floor (14 Sep, never ruled): a floor of 12 GB video memory, 16 GB system memory, 6 cores, SSD at 1080p. b: RULINGS 24 Oct: the 6 GB card line is the game alone for now. Won: b (ruling).
+- C-147 (8.2.1 Crash and bug reporting): Whether the row is still pending. a: DEFINITIONS 8.2.1: four-point standard, status PENDING the privacy check. b: PRIVACY-CHECK (21 Nov): five-point standard, status MEASURED against the ICO guidance. Won: b (newer; additive).
+- C-148 (GV-05 Bugs at release): Nights of testing. a: GV-05: three nights running in the packaged build. b: RULINGS 6 Oct: packaged builds nightly only if wip moved, and a rest on Monday. Won: b (ruling).
+- C-149 (8.3.1 PC display options): Field of view. a: CLOUD-FIGURES C3 and the row: field of view is his open point AX-03, judged with Unreal. b: RULINGS 28 Oct line as amended 21 Nov: a setting 75 to 100, 86 the default. Won: b (ruling).
+- C-150 (AX-01 Text and interface size, contrast and font): How many window sizes are tested. a: DESIGN ER-SCREEN-02: four window sizes. b: AX-01 test: three resolutions at three scales. Won: b (newer).
+- C-151 (AX-03 Motion and comfort settings (shake, bob, blur, field of view, background movement)): Field of view. a: DEFINITIONS AX-03 text and the description §35: stays 86 degrees, a setting would change the ruling and is not built. b: RULINGS 21 Nov and the design pass 3 preamble: a setting 75 to 100, default 86. Won: b (ruling).
+- C-152 (AX-04 Audio options (separate sliders, mono, speech clarity)): Whether the player hears every noise at its true strength. a: DESIGN ER-SND-01: every noise the rule hears, the player hears at the same strength. b: AX-04: voices clear and loud noise softening change levels. Won: b (newer, as opt-in options).
+- C-153 (AX-07 Save thumbnails, rotating autosaves and never losing the only save (slots and autosave are already in the description)): Number of manual slots. a: Description §3: 'several slots'. b: AX-07: at least eight. Won: b (newer and specific).
+- C-154 (8.5 Install and launch): What the first menu offers. a: Description §3: presets, then brightness and scale, then New game, Continue, Quit. b: AX-02 and AX-09: subtitle options and read-menus-aloud are also offered on the first menu. Won: b (newer; additive).
+- C-155 (8.6.1 Talk service longevity and offline): Where talk goes today. a: Steam AI disclosure draft (3 Oct correction): straight from the game to Anthropic on LEDGER's own key, his PC only; the server is built but not hosted. b: RULINGS 24 Sep: at release through the studio's server. Won: b (ruling for release; the draft's own note says the sentence returns once the server runs).
+- C-156 (8.7 Local models on the card): How often the local model is re-tested. a: RULINGS 28 Oct and the row: about every three months. b: RULINGS 12 Nov: monthly from 7 Dec on the talk bench. Won: b (newer ruling).
+- C-157 (10.2 Store, rating and disclosure): Where the disclosed talk runs. a: Steam AI draft: today straight from the game to Anthropic on the studio's key, his PC only; the server is not hosted. b: RULINGS 24 Sep: at release through the studio's server. Won: b (ruling; the draft says its server sentence returns only once the server runs).
+- C-158 (10.3 Friends' builds): When friends first play. a: RULINGS 28 Oct: a friends' build at the end of every phase from phase 4 (Unreal). b: RULINGS 21 Nov: real players first on the browser evening, once it meets the measured bar, before Unreal. Won: b (newer; the earlier build still stands after it).
+- C-159 (10.5 Release testing): Panel bar. a: BUILD-ORDER (18 Nov): 6 of 8 for a whole playthrough. b: PANEL-BAR (21 Nov): 7 of 8 is the gate's bar for the evening and the week. Won: a (PANEL-BAR sets no new figure for the whole playthrough, so the older one stands).
+- C-160 (GD-06 Mods and community content): Whether any ruling exists. a: ST-184 (12 Oct): test 'none: no ruling on mods'. b: RULINGS 23 Sep: no mods at release, and his ruling of 20 Nov 22:08. Won: b (ruling).
+- C-161 (10.11 Player data and privacy): The notice. a: DEFINITIONS 10.11 and description §36: a short privacy note beside the AI notice; status PENDING. b: PRIVACY-CHECK: its own screen, readable again from pause; status MEASURED. Won: b (newer; additive).
+- C-162 (10.11 Player data and privacy): How often the notice shows. a: Description §28: once, before the first talk. b: PRIVACY-CHECK: also readable again from the pause menu at any time. Won: b (newer).
+
+## Gaps for the design proof
+
+Found while consolidating; nothing here is invented to fill them. Each line: the part, then what a builder would still need. Most are first values the PC measuring (23 to 28 Nov) or the cloud figures are due to give.
+
+- 1.1.1 Walk, run and turn: No start, stop or turn-rate numbers; the speeds above are first values waiting on the PC footage measuring (23 to 28 Nov).
+- 1.1.2 On-foot camera follow: Follow lag and turn feel have no numbers (PC measuring, 23 to 28 Nov).
+- 1.1.3 Doors, stairs and thresholds: No time or speed for doors, stairs or thresholds on foot, and no stair rule beyond 'walked, not snagged'. The row's status MEASURED rests on the 5 s rule alone.
+- 1.1.4 Carrying: Only the holdall has a speed; no figures for the suitcase or a box, and no pick-up or put-down times (PC measuring A1, about 1 h).
+- 1.1.5 Hiding and keeping out of sight: The felt rules are first values; GTA VI and other reference behaviour is still to be measured (PC block 1).
+- 1.1.6 Tailing on foot: The row's 'none yet' is stale on the look-back rhythm (now 20 to 40 s) but following-distance bands and the 'made' thresholds are still unset (PC measuring A2, about 2 h).
+- 1.1.7 Stopping and blending in: No time after which a stander 'without a reason' draws a look, and no places list for where standing belongs.
+- 1.1.8 Vaulting low walls and fences: Vault heights and speed are first values (to measure); what Tom does at a high wall (cannot climb, stops) is only in the description's staged chase.
+- FIT-G4 Tom's, the constables' and the runner's speeds: Figures stand until the reference games' walk and run speeds are measured (PC block 2); beat pace 1.1 m/s is 'widely stated, not checked against a primary source'.
+- 1.2.1 Car handling: The sheet is to be replaced by the measured one (PC block 1 and 2); the description does not say whether the 60 mph cap is a speed limiter or road length alone.
+- 1.2.2 Car camera: Not said whether the 75 to 100 field of view setting scales the car camera (its rest value of 60 to 65 is below the setting's floor of 75); no number for how far it comes in front of thin things.
+- 1.2.3 Getting in and out: No rule for passengers' seats or where a fare sits, and the test needs to time both sides.
+- 1.2.4 Crashes, damage and unsticking: No figures for how hard the pull to one side is, how far a broken lamp cuts the light, or how a dent shows to a witness.
+- 1.2.5 Cars and people: How many game days the firm's name and fares suffer is a 'first value' left blank in ER-DRIVE-10 and not given in the sources read.
+- 1.2.6 Tailing and being tailed by car: Following distances and the point at which he is made by car are not set (PC measuring A2).
+- 1.2.9 Repairs, plates and paint: No cost, time or place for new plates or a respray, and no one is named who supplies plates.
+- 1.2.10 Taking a parked car: Force reach in metres is not stated; which cars carry a steering lock is not set; the copy of the description (COPY-2) no longer has the section.
+- 1.2.11 The horn: Night and rain multipliers on the 60 m reach are not given.
+- GV-01 The boot, seen: Boot capacity is not given.
+- GV-03 The passenger who knows the way: What happens in a chase with no passenger is not stated (Pauline's radio is the only fallback in the description).
+- FIT-F05 How often the one-hit wreck happens in ordinary driving: If it fails, no fallback rule is written (a taller wreck threshold would be a feel change).
+- 1.3.1 Blows and contact: Values are first values until the PC footage block (1 and 2) measures KCD2, GTA V, RDR2 and GTA VI.
+- 1.3.2 Reading and answering blows: The addendum's slip of 'about 0.3 s' and the sheet's whole dodge of 0.50 to 0.80 s (blows cannot land for 0.20 to 0.35 s) read as different parts of the move; the builder should confirm which is which.
+- 1.3.4 The lower rungs: How a man decides to give way at each rung is only 'nerve' in words; no thresholds.
+- 1.3.5 The street as a weapon: Out-of-fight time is given only for railings; no times for the other six places.
+- 1.3.6 Things to hand and carried weapons: No damage ordering numbers beyond 'bat more than cosh' (RT-11); knuckleduster and knife wounds are only described.
+- 1.3.7 Condition without bars: The cosh knock-out length is 'LEDGER's own first value' (10 to 30 s taken from the fist figure).
+- 1.3.8 Odds, crowds and nerve in a fight: Nerve has no numbers beyond the qualitative rules.
+- 1.3.9 How a fight ends: 'The cost said' has no format or wording rule; days in hospital are given only for a knife wound (5 game days).
+- 1.3.10 Firearms: Draw, aim and hit timings are not set (PC measuring A12, about 1.5 h, after the rest).
+- 1.3.11 Marks that last: Real-time length depends on the clock: at 60 s a game hour (a 24 minute day) three game days is about 72 real minutes.
+- RT-09 Tom's line against women, over-sixties and the priest: How the player can tell a person is over sixty is not stated.
+- RT-10 Firearms as a verb: Draw, aim and hit timing bands are not set until the firearms footage is measured (PC block 4, 26 to 28 Nov).
+- RT-11 Hidden damage and injury states: Capacity numbers per type are not set; the melee sheet's 3 to 6 heavy blows to put down a fresh man (C15) is the only band so far.
+- RT2-11 Finishing a downed man, kicks and bodies: 'Knife wounds rung 7' and 'a killing' with a weapon give the player a way to kill that the ruling says is rare; the sources do not bound how often it is offered.
+- RT2-12 The rare fatal fall: The 'within 3 s of a blow' timing of the description is not restated in the definition.
+- RT2-14 How guns reach Tom: Prices are PENDING a check against dated 1990 figures (with G8, cloud, by Thu 26 Nov).
+- 1.4.1 Reading watchers: Reference behaviour for the cues has not been measured yet (PC block 1).
+- 1.4.2 Light and dark as cover: The brightness floor has no number; it 'lives in the one tuning table' but the table is not in these sources.
+- 1.4.3 Hearing his own noise: Only the footstep (3.6 m at 3 am) and the cab and horn have distances; running, doors and a shout have none (PC listening pass A7).
+- 1.4.4 Give-aways and the coat: No figures for how much each give-away raises what a witness catches (golden rows, one per give-away, are owed).
+- 1.4.5 Reaching the witness: No price or odds for paying a witness (it follows her purse and temper in words).
+- 1.4.6 Seeing assist: The look of the outline (colour, thickness, distance) is not given.
+- 1.4.7 Street manners: Reach in metres for a nod or call is not given.
+- 1.4.8 Drawing a watcher away: The reach of a stone or a bin is not given.
+- 1.5.1 Fleeing on foot: Feel is still to be measured in reference games (PC block 1).
+- 1.5.2 Pursuing on foot: The row's 'none yet' is stale: catch-up speed is now set at a first value; give-up rules beyond 7 s or 70 m are not set.
+- 1.5.4 Pursuers: Rivals' men as pursuers are only 'Named only': no speeds, shouts or give-up rules are given for them.
+- FIT-G3 A chase at the soft edge: 'Out and back 30 game minutes' now lasts 30 real seconds under the 60 s clock ruling; whether that is long enough to feel like time passed is not tested.
+- FIT-F04 Chase length against the reference games (GTA IV in Mafia DE's place): No reference chase length exists yet; if the references run well past 90 s the limit may need to move.
+- 1.6.1 Getting in: No time to copy a key, no reach for force in metres.
+- 1.6.2 Searching and taking: The row's 'none yet' is stale; the table is first values awaiting the footage pass (A3, about 1 h).
+- 1.6.3 Lifts and the hot mark: No numbers for how the hot mark fades (days or metres).
+- 1.6.4 Fronting up: No figure for how much a squeeze brings beyond the purse, or how long the street tells it.
+- 1.6.5 Minding and waiting: No pay figures in the sources; they are per job.
+- 1.6.10 Tom's wardrobe: Prices are PENDING a check against dated 1990 sources (G8).
+- 1.6.11 Casing a place: How long a casing takes to learn something is not given.
+- 1.6.12 A torch on a night job: Cone length and beam reach are not given.
+- 1.6.13 Lifting from a pocket: Middle cases (attentive but crowded and dark) are not set; the standard's golden rows cover only the two corners.
+- 1.6.14 Damage by hand: The force reach in metres and the time to break a window are not given.
+- RT2-19 The phone as a verb: Opening hours or ring-back for homes' phones are not stated.
+- 1.7.1 Orders in the field: Order range and how long an order holds are not given.
+- 1.7.2 Sending (the eight verbs): No cost or cut for a send is given here.
+- 1.7.3 The board: 'Enough days' to win a rank is not given.
+- 2.1.1 Schedules of named people: No number for the cap at each kind of place (how many may stand at a door or in a room); the parts tree prices the routines as a guess.
+- 2.1.2 The crowd's clock windows: The 1990 table of who is out by hour is not found (ONS tables to be read by Thu 26 Nov, MTUS 1987 file on the PC as fallback), so every band above is unchecked.
+- 2.1.4 Weather and hour change who is out: Rain's cut to sight and sound has no figure beyond 'halves the voices' and 'halves each crowd band'; drizzle has no figure of its own.
+- 2.1.5 Crowd movement and avoidance: No avoidance distance, step-aside time or queue rule; no figure for how a crowd person passes Tom.
+- 2.1.6 The town's calendar: The hour and place of the Bonfire Night display and of the chapel service are not given; the club's name for the match and the paper's name are owed by the brand bible.
+- FIT-G9 Crowd counts by hour and place: Bands wait on the 1990 hours-in-and-out-of-home figures (ONS, by Thu 26 Nov).
+- 2.2.3 Sight by distance and light: These are LEDGER's own first values; the reference games' figures (GTA VI footage block, 23 to 24 Nov) are not in yet, so none is checked.
+- 2.2.4 Sound reach: The force reach has no metre figure; rain's cut and the car's night reach ('much further') have no number; the figures are judgement until the listening pass (PC, 27 to 28 Nov).
+- 2.2.5 Give-away rules: 'Catches more' has no number per give-away; only that each beats the plain act (golden rows, one per give-away).
+- 2.2.6 Ground rules and trespass: Only the half-minute total is given; the gap between the first and second warning is not.
+- 2.4.2 Cooling by kind: Days are given for a scuffle, lift, break-in, wounding, robbery, hit-and-run and officer struck; none for a hold-up, a shot heard or a car stolen.
+- 2.4.3 Showing what people know: No timing, distance or memory-strength threshold for moving between the six steps.
+- 2.4.4 It comes back: The 'within one game day' rule is for week one only; nothing says how fast a deed must come back later in the game.
+- 2.4.5 The paper and the news: No rule for which events Alison chooses to write, or which two days the paper comes out.
+- 2.5.2 Stopping a witness: No price for paying a witness (G8 has no item for it).
+- 2.5.3 Crowd reaction to a deed: The distance within which people look is a placeholder ('[first value] m') in ER-EYES-09; only 'a few metres' is given.
+- 2.5.4 A street on edge: No figure for how much earlier doors lock or how much sooner witnesses set off.
+- 2.5.5 Finding an unseen deed: No figure for how long before a missing man becomes the question.
+- RT2-10 Crowd extras as witnesses: No cap on how many kept extras the save holds.
+- 2.6.3 Statements and the arrest rule: Not said whether a face pointed out without a name counts as a named statement for an arrest.
+- 2.6.5 DS Ellis and the four stages: Whether a witnessed killing may go straight to a manhunt (his C5) is still open; the design works under either answer.
+- 2.6.6 Armed response and the dial's police: 'Slowly' and 'later than an ordinary call' have no seconds or minutes; the number of armed cars beyond 'at least one' is not given.
+- 2.6.8 Bought men and squaring the law: The names and prices of the two officers are not fixed beyond the G8 amounts.
+- 2.6.9 Charges, bail and the office searched: No figure for how a charge on bail weighs on Ellis's case beyond being read at the ending.
+- FIT-G5 The beat constable's round: The 1.1 m/s beat pace is a traditional figure not checked against a primary source.
+- 2.7.2 Night money and the tin: No figure for how much night money a job brings (G8 gives only a man's cut of £10 to £40).
+- 2.7.3 The wash: The front's weekly amount has no number; the 80% and the amount wait on the economy curve (GD-07, PC measuring 23 to 28 Nov).
+- 2.7.4 Rent and running costs: No figure for running costs (fuel, repairs) in the game's own tuning; only the 1990 reference figures (about £1.04 a mile London cab, diesel about 45p a litre).
+- 2.7.5 Purses, tills and shops: No purse sizes for shopkeepers or people (only that they limit what is paid).
+- 2.7.6 Fencing: The drop for each further piece in a week has no number; the hot mark's fade with value and distance has none either.
+- 2.7.8 Spending: The G8 prices are the design's and unchecked against dated 1990 sources (cloud, by Thu 26 Nov); the front's share and a hook's price (what Darren sells) have no figure.
+- GD-07 Economy over weeks: what money buys and how it rises across 15 to 20 hours: No named out-of-reach item for each act's end, and no income figure for fronts or the cold-store contract; the curve's shape is not yet set (PC measuring, 23 to 28 Nov).
+- FIT-G8 Prices of what money buys: Unchecked against dated 1990 sources; no price for a front's share, a hook, a witness paid off, the Widow's tax or the Fixer's reads.
+- FIT-F24 Money over nine weeks (in against out): No income figure for night jobs, fronts or the contract, so in against out cannot be run past week one.
+- 2.8.1 The five debtors: No purse amount for any debtor (what each can pay at a first call), and the story measure for the five (due Sat 28 Nov) is not in.
+- 2.9.1 The asks: The amount of Tom's cut is not given anywhere.
+- 2.10.3 Pressures and answers: No amount for the Widow's tax or for a pay-off, and no cost for the glazier or tyre man.
+- 2.10.4 The Fixer: His prices have no figures (they wait on GD-07's curve).
+- RT-05 The two rivals not met at Act II's end: Their pressure at the Act III rung is not described (no list of what each does in that week).
+- RT-06 Rival threat rung and counters: No repair cost for the glazier or tyre man.
+- RT2-08 Rivals as actors: The lieutenants' and the nine men's names are left to the casting sheet; none is given here.
+- 2.11.1 Recruiting: No numeric loyalty ceiling for either road and no time a need recruit takes.
+- 2.11.2 Nerve, loyalty and breaking: No numbers for nerve or loyalty or for the point where a man breaks (to be measured per person, see 2.14).
+- 2.11.4 Crew pay and the cut: No figure for how much a short or late payment lowers loyalty.
+- 2.12.1 The name ladder: Which two or three people call him Tommy is not decided; how long 'time' is for Sheila's trust is not given beyond one clean week.
+- 2.12.3 Access and soft keys: Only two doors are tied to a named outfit (the Harbour Board's counter, the licensing hearing); there is no list of which other doors need which clothes.
+- 2.12.4 Greetings by regard: No count of kinds of speaker; the teardown (23 rows, 25 to 27 Nov) has not yet set the 6-line figure from a reference game.
+- 2.12.5 Property that reacts: A lock-up and a second phone line (named in the row) are not found in any source; only the office, the flat and the fleet are given, so the per-rung list of three changes is incomplete.
+- RT-07 Hooks and knowledge as leverage: No price for a hook from Darren and no rule for how believable a bluff is.
+- 2.13 The escalation dial: ER-FIGHT-09's cap on deaths an act is a placeholder ('[first value]'); only 'a few named carriers per side' is given.
+- 2.14 Each person's temper: No per-person values yet and no source named for them (casting sheets are the likely place).
+- 2.15.1 Fleet and drivers: No fleet size for rung 4, no shift lengths and no drivers-per-car rule.
+- 2.15.2 Ranks and accounts: The second rank's place is still to be put in the atlas; the unlock conditions for the Harbour Board's late men and the solicitor's office are not given.
+- 2.15.3 Other firms on the ranks: How many game days the fares stay away is a placeholder ('[first value] game days' in ER-DRIVE-10).
+- RT2-05 Killing principals and needed people: No fallback is written for Rita, Wayne, Hal, Ian Megginson, Sheila's own absence (she is kept from his hands, but can leave, see RT2-06) or the retired doctor.
+- 2.17 Fronts and rackets held: No price for a front's share, no weekly takings for a front or a round, and no list of which businesses can be taken.
+- RT2-09 Turf: posts held and lost: The size of the night runs' loss and the Widow's tax are not given in money.
+- 2.18 Ambulance and the hospital: No table of hospital days per kind of hurt (only a knife wound at 5 game days).
+- 2.19 Lasting marks on the town: How long an owner takes to mend glass has no figure.
+- 3.1.1 Act I, The Inheritance: The first week's content beyond the five threads (what each night's ask carries, which scenes fill days two to six) waits on the measured story; nothing in the design sources fixes it.
+- 3.1.2 Act II, The Rise and the Squeeze: Under the ruled clock the whole game runs 13 to 20 hours, below the ruled 15 to 20 at its lower end; DEFINITIONS' fix is more nights skipped by default, never a shorter calendar. Per-beat hours and the scenes themselves (RT-02) are not written.
+- 3.1.3 Act III, The Ledger Comes Due: Five mornings but only four items are named (fare book, cars' records, wages, an account's invoices); the fifth is not. What 'asks for it in writing' costs or buys is not stated.
+- 3.1.4 The endings: The 'hunted for a killing' test and the 'nine principals' of RT2-04 are not enumerated in the sources read (3.2.1 lists thirteen); RT2-04 is PENDING on the story's Act III.
+- 3.1.5 Ending signs and Tom's reading: The sign for each factor is named; the exact words and scenes are the story's. The ending-signs thresholds in the C# Core still carry the old numeric lines and need reconciling with RT-01 before the port.
+- 3.1.6 Mickey's past: The trigger for Sheila's trust is not written; the real book is an Act I thread and an Act II beat, so when it opens depends on it.
+- RT-01 Act III morning grading: 'A quarter' is not said to be a quarter of the limit or of the week's fares; if Act III keeps fewer or more than five mornings the rule is rewritten. Four item kinds are named for five mornings.
+- RT-02 Main-story beat content: No scenes exist as design yet; the beats are written only as states. Which bible is current is open.
+- RT2-04 How the ending is chosen: 'The nine principals' are not named (3.2.1 lists thirteen); 'hunted for a killing' is not defined here (the police's four stages are the nearest). Status PENDING on the story's Act III.
+- RT2-15 The successor's offer and the last day: 'Not past his nerve' has no figure; with a ruled Act II of about 5 weeks a man recruited after the second week of Act II has under three weeks' service when Act III opens (calendar week 1 Act I, weeks 2 to 6 Act II, week 7 Act III), and nothing says what a player who recruits late gets.
+- 3.2.1 Principals: No voice is named for Ellis, Ada, Alison, Danby, Jensen or Garbutt, and Danby's scenes are still to write.
+- 3.2.2 The firm's people: The three drivers' own cards and routines are in the regular cards, not in the design sources read.
+- 3.2.3 The thirty regulars: The description names about fifteen of the thirty; the cards in game-design are the full list.
+- 3.2.4 The crowd: The 6 of 13 figure is a starting audit number, not a target; no goal for how many drawn people must have a resident. G9's bands wait on the 1987 time-use tables (PENDING).
+- 3.2.5 Someone worth being honest for: Danby's scenes are 'still to write' (DESIGN s.16); only Alison's first fare is staged.
+- 3.2.6 One complete person: The cost of one complete person has no measured figure yet.
+- 3.2.7 Calling on people: The length of the 'set gap' before a call draws a cooler answer is not given.
+- 3.3 Side stories: Which 22 to 28 of the 32 drafts are kept is not chosen.
+- 3.4.1 Fare people: The per-distance rate behind '80p plus distance' is not given.
+- 3.5.1 Carries: Which foot route is the dark route to the landing on the G1 plan is not named (yards' lane then quay road, or the ginnel).
+- 3.5.2 Collections: COPY-2 (21 Nov) has no section on debts and collections; builders must take it from ONE-SHOT-PROMPT s.25. 'The later ones' beyond the five are not listed.
+- 3.5.3 Break-in sites: COPY-2 (21 Nov) has no break-in section; builders must take it from ONE-SHOT-PROMPT s.15. The break-in rooms themselves are the story measure's content (UNMEASURED).
+- 3.5.4 Tails, minding and lifts content: Named only as to count: no number of authored tails, minding jobs or lifts is set; it waits on GD-08's band and the story measure.
+- 3.5.6 Job template and step states: The four job states and the five step states are counted but not named in the sources read.
+- GD-08 The catalogue of jobs and stories per act (count, kinds, givers): The band for jobs per real hour is not yet measured (A10, 1 PC hour; PENDING); the catalogue count per act waits on the story measure.
+- RT-03 Job and mission catalogue after week one: No job counts per place; jobs for the cold stores, landing and old basin after week one are unwritten.
+- 3.6.1 Live talk: The length of the thinking sound is not given.
+- 3.6.2 Claim check: No pass rate is set for how many planted bad replies must be caught.
+- 3.6.3 Written street lines: The number of live situations is uncounted (F19 PENDING); COPY-2 s.28 still prints the old 'once a week per street' wording.
+- 3.6.4 Crowd lines by situation: The kinds of speaker are not listed, and the number of situations is uncounted (F19 needs at least 14 live an hour).
+- 3.6.7 AI notice and line report: Where a reported line goes and who reads it is not given; the AI service to be named is chosen later.
+- FIT-F19 Enough shared-line situations live each hour: The situation table has not been counted; PENDING that count.
+- FIT-L01 60 street lines for the 12 people seen most, 30 for the rest: Under the ruled calendar 49 lines would cover the daily rule, so 60 now leaves slack.
+- RT-19 Content supply at night and late in Acts II-III: The per-hour band is not measured (PENDING); Act III's nights wait on the story measure.
+- 4.1.1 Quay Street: Trades for bays 2 and 6 are not stated; Mickey's own bay is not placed against the six.
+- 4.1.2 The rest of the Hook: Atlas-01 is the September data; it has to be brought to G1's plan and cleared of the drink and betting lines before it feeds the map.
+- 4.1.3 Landmarks and signs: The street_signs tool's output and the sign count per street are not described in the sources read.
+- 4.1.5 Street build rules: The bars need re-taking from outside sources (footage, published figures); sightlines, block lengths and weather dressing have no number yet.
+- GD-01 Travel time across the playable map: The band is judgement until the PC measuring on 23 to 28 Nov (PENDING).
+- FIT-G1 The Hook's road plan in metres, the chase loop: The plan is a design decision not yet in the map data; atlas-01 (September) must be updated to it.
+- 4.2.1 Ferry landing and quay: The quay's dressing and how the lit quay differs from the dark yard route are the builder's, not set in the sources read.
+- 4.2.2 Old Basin, fish dock, cold stores: Cargo volumes and employer sizes are unresolved in atlas-01.
+- 4.2.3 Dock gate, customs, Harbour Board: Layouts of the gate, the Board's counter and the bonded store are not described; counts of jobs per place wait on RT-03.
+- 4.3.1 Mickey's office and yard: The yard's two escapes are not named in the sources read.
+- 4.3.2 The flat above: No interior list or look for the flat beyond its place in the story.
+- 4.3.3 Shops and workplaces: Hal's trade, the pawn's and the caff's positions on the G1 plan, and bays 2 and 6 are not stated.
+- 4.3.4 Homes: Homes beyond Ada's are not listed.
+- 4.3.5 Iveson's yard and hut: The yard's layout and contents, and whether a yard dog is there, are not designed.
+- 4.3.6 The chapel and hall: No interior description of the chapel or hall.
+- 4.3.7 The police station: The station is not placed on the G1 road plan and has no interior description.
+- 4.3.8 Where a beaten Tom wakes: Neither the hospital nor Grace Rinaldi's kitchen is on the road plan, and the ward's interior is not described.
+- GV-04 Places stay open: How a closing is 'said in the world' is not specified (a sign, a line, a locked door).
+- 4.4 Props and street furniture: Counts for bins, railings and bollards are not set; lamp staining and the bowl-shade drift are listed as owed.
+- 4.5.1 Traffic drivers: Junctions, lights, flashing a wrong-side car and reacting to crashes are named in the description but the stage 1 model covers one side road; stage 2 is not designed.
+- 4.5.2 Parked cars: The other three designs are unnamed; the kerb places on the G1 plan are not listed here.
+- 4.6.1 Car designs: The number of makes is not set beyond the hatchback plus three.
+- 4.6.2 Working vehicles: No design, count or look for vans, lorries, dock trucks, police cars or the ambulance.
+- 4.7 Day and night: The four or five states and their light values are not set; the sun times in the light note assume a north-east coast latitude that canon does not give.
+- 4.8 Weather: The profile weights, how weather changes over days, and drying time in game hours are not set.
+- 4.9 1990 detail: The style sheet is draft only; the six owed brands have no names yet.
+- 4.10 Pubs without drink and the closed school: What each pub is for without drink is a design task still open; no pub is placed on the G1 plan.
+- 4.11.1 Yard dogs: No reach figure is given for a bark.
+- 5.1.1 Faces: No sheet or count for the faces of the thirty regulars beyond the fifteen; no rule for how many face variants the crowd draws from.
+- 5.1.2 Bodies: No list of body types for the cast and crowd (heights, builds, how many) and no rule that the crowd's builds match 1990 Britain; the old plan to fit garments to six bodies is stopped and nothing replaced it.
+- 5.1.3 Hair: The frame cost is to be measured but no budget in ms per head or per crowd is set.
+- 5.1.4 Clothes: No written outfit list for the cast or crowd (how many distinct outfits per kind of person); only Tom's four are specified.
+- 5.1.5 Crowd variety: No number for how long or how far before the same face, body or outfit may repeat, no count of distinct crowd faces, bodies and outfits, and no test; the parts tree shows three out-of-period Mixamo placeholder people only.
+- 5.2.1 Locomotion: No figure for the foot-slide limit (the research left a 3 cm lenient bar out as animation craft) and its test has never run; the speeds in G4 are PENDING the reference games' footage.
+- 5.2.2 Fight animation: The animation source for fights is not named and the lab test has not been run; the number of distinct blows, reactions and falls the library must hold is not listed.
+- 5.2.3 Interaction animation: No list of the clips the game needs (phone, search, carry, door, car, sit), no timing for each, and no phone clip although phone boxes are a core device.
+- 5.2.4 Faces and mouths: No lip-sync accuracy number and no expression list; this row overlaps 5.2.9 (live lines' mouths are in both).
+- 5.2.5 Crowd and idle animation: No list of idle kinds per place and trade and no minimum count of distinct idles; the 'nobody frozen' figure is a baseline, not a pass mark.
+- 5.2.6 Body language of knowing: The animation set for each ladder step (what an avoid or a half-recognition looks like) is not listed; the parts tree notes avoid and lean variants are not evidenced.
+- 5.2.7 Clip sourcing and cleanup: No cleanup standard: no foot-slide limit, no retarget error limit and no count of clips needed.
+- 5.2.8 Physical reactions and falls: The row's 'blended with physics' is not specified anywhere (no ragdoll blend time or limits); getting-up and falls against a kerb, wall or step have no clip count.
+- 5.2.9 Live-talk faces: Named only; not designed beyond the mouth rule: no gesture set, no gaze rule while a live line runs; this row duplicates the mouth half of 5.2.4.
+- 5.3.1 Building kits: No kit list with counts (how many window, door and shopfront types the Hook needs) and no brick-bond rule beyond the one photographed texture.
+- 5.3.2 Materials and grime: No wear-level figures per surface; the audit found Mickey's wear not shown and walls clean and new.
+- 5.3.3 Wet street: The drying times are from north-east coast data, a working assumption since canon names no region; no wetness-to-look table.
+- 5.3.4 Shop glass and windows: No reflection quality number (screen-space versus planar) and no crack state for glass.
+- 5.4.1 Day exposure and sky: The hill haze is still short and no haze figure is set.
+- 5.4.2 Night lighting: The ER-NIGHT-01 brightness floor has no number in any source it cites; it points to the tuning table in section 19.
+- 5.4.3 Grade, grain and depth of field: No grade target values, no grain strength, no depth-of-field settings, and no reference frame for the grade.
+- 5.5.1 Footsteps and foley: No list of surfaces and gaits, no recorded levels; the listening pass (A7, about 2 PC hours) is still to run.
+- 5.5.2 Doors and impacts: No door sound set (how many creaks, latches, impacts) and no force-reach distance for a forced door; the repository holds no door sound asset.
+- 5.5.3 Street beds and states: The four states of the hour are never named, nor their hours, and LEDGER's own caps are not set.
+- 5.5.4 Rain and rooms: No numbers for how much each layer fades, or for room reverb sizes; the fade curve is not set.
+- 5.5.5 Car sound: The automatic-change dip length is unset; the squeal onset is an estimate and M12 is not measured by the scripted drives.
+- 5.5.6 Fight sound: No sound set size (how many variants per layer).
+- 5.5.7 The mix: No lead-voice level, no amount the beds duck in talk and no timing for the duck; Mixing.cs exists in Core but is unported.
+- 5.6.1 Cast voices: Voices for the other principals and the thirty regulars are not chosen; no count of distinct voices for the crowd, and no repeat rule (the review themes list repeated voices).
+- 5.6.2 Voice generation and watermark: No watermark code exists in the voice server (audit H13) and the watermark's strength and detection method are not specified.
+- 5.6.3 Thinking sound and timing: No length or count for the thinking sounds beyond the two approved for Ron and Darren.
+- 5.7.1 Radio programmes and period songs: No programme or song list, no count of pieces or minutes, no maker named and no rule for the radio's talk content.
+- FIT-P09 Music made for the game, placed in the world: No count of pieces, no total minutes and no maker named; the allowance for a licensed period station is a separate cost the fit check left unasked.
+- 5.8.1 Camera rig by state: The run, room and talk rows have no distance numbers; only the street, fight and car rows have figures.
+- 5.8.2 Cut scenes: The number and list of cut scenes is not set; 'few' has no count, and the act-end and ending closes are not described as cut scenes.
+- 5.8.3 Staged scenes in play: Named only; not designed beyond that rule: no list of staged beats, no blocking and timing rules, and the teardown that would measure it is not yet run.
+- GV-06 How a deed is told: restraint and cruelty: No list of the deed qualities that make a telling different (restraint, kicks on a downed man, weapon) and no wording tiers; related RT2-11 covers finishing a downed man.
+- 5.9 Effects: No effects list with counts or budgets; no rain, breath or smoke is built.
+- 5.10 Art direction and look reference: The grade targets and floors the row names are not written as numbers in any source read.
+- 6.1.1 The prompt: No prompt wording style and the 'everything usable has a prompt' check has not been run.
+- 6.1.3 The belief line: How long the line stays, how many can queue and the prototype's rate (one in ten seconds, merged) versus the 3 s rule are not reconciled.
+- 6.1.4 Light and sound cues: No darkness depth, size or fade rate for the corners; it is not built.
+- 6.1.5 Knowing the time: Street clock positions and the bell's hours are not listed.
+- 6.3 The paper map: No rule for when a place counts as 'been told of' (which sources, how much is drawn) and the Hook-plus-docks extent is not drawn.
+- 6.4 Menus: Credits content and when they are reached (after the ending) are not specified further.
+- 6.5 Teaching the player: The list of hints and the order in which interface parts appear are not written.
+- 6.6 Controls: The pad's layout is not written and pad typing for talk is not specified (the prototype's pad cannot type words).
+- RT-14 Typed-talk interpretation: The set has clean lines only; harder, abusive and off-limits input is RT-15's job and no reader has yet been run against this set.
+- 6.10 Letters and papers in hand: The paper's name is owed by the brand bible; no list of letters or notes beyond the three kinds, and no page layout.
+- 7.1 The first hour: CLK-01's check holds only if the first hour's talk stops total 2.5 to 3.5 real minutes (2 minutes would read about 01:10); no source says which talk scenes make up that time or who enforces it in the staging.
+- 7.2 An evening: No source gives the real minutes an evening takes once stopped-clock talk time is added to CLK-05's 6 running minutes, so the 3 to 6 minute job, the walk home and the count are not shown to fit one evening.
+- 7.4 Acts II and III pacing: RT2-07 lets a payment hold a rival on his rung for two game weeks, so in a 5 week act a player who pays every rival can leave a week with no rival rung before the fail-safe starts; the rule 'every week has a rival rung' has no stated cure.
+- GD-03 Jobs done out of order and sequence breaks: How many 'other routes' the tester must try follows from the number of scripted approaches, which is stated two ways.
+- 7.5 The hour budget: The shares sum for 18 hours; the ruled 15 to 20 hours gives no per-activity hours, and the teardown's figures are not in yet (PC measuring 25 to 27 Nov).
+- FIT-F15 What the act hours include (side stories inside 15 to 20 h): Under the ruled clock the running hours can fall as low as 13, below his 15; the only cure written is more nights played, with no rule when a median bot lands short.
+- FIT-F16 Act hours against places and people: The per-place and per-person minutes are not restated for the ruled clock.
+- 7.6 Tension and retellable moments: The 12 per thirty minutes and the 'none over half' figures are judgement with no reference game behind them (teardown, PC 25 to 28 Nov).
+- GD-05 Humour and a mix of tones: The scene count per act waits on the story measure (28 Nov); 'a light moment' has no definition a bot can log beyond the examples.
+- 7.7 Rising in position, felt: The table ties 'Nowak' to rung 2 (reached on Sunday) yet the first hour has somebody say 'Nowak' on Thursday of week one; the sources do not say what earns the name before rung 2.
+- 7.8 Saving: No figure for how long a save may take or how large it may be, and 'held during a fight' does not say what a crash in that window loses beyond AX-07's 'at most the last deed'.
+- 7.9 Failure without reload: The parts tree records that no failure route has yet been timed against the 2 minute limit.
+- 7.11 Waiting and time skips: No figure for how fast game time runs during a wait or a sleep, and none for what counts as 'stops for what the town has for him' beyond the three examples.
+- 7.12 Always something to do: The count of live things needed at once is an estimate; it is checked only by the 20 idle moments test on the prototype.
+- GD-02 Density: something to meet every so many metres or seconds on a street: The band of things per street minute is not set (the teardown's town pieces are still to come) and 25 people is a judgement figure; F18 shows 30 lines a regular repeat from about day 31 for people seen daily, answered only by D-Q4's 60 lines for the 12 seen most.
+- FIT-F32 Something within 30 s by day: The 20 to 30 live things figure is an estimate with no reference; no count of authored things by hour exists.
+- 7.13 The game clock: A5 (timing one reference evening on footage) is still listed for the PC, so the 6 real minute evening is not yet compared with a timed reference evening.
+- RT2-20 The clock in moving talk: No limit on how long a moving talk may run, and so none on game time spent in it.
+- CLK-01 The staged first hour against the landing's window: A first-hour bot with the clock read at each mark must find the hand-over between 22:00 and 01:00; the table's 7:00 figure matches 1.5 stopped minutes by then, not 2.5.
+- CLK-03 Routines against walking: No source gives a standard check for the 200 m limit over the authored routines.
+- CLK-05 The evening and the shop day: The reference evening has not yet been timed on footage (A5, PC 23 to 28 Nov).
+- CLK-06 Calendar and acts: The low end of 13 hours is below his 15 and no rule says how the median is lifted.
+- CLK-07 Weekly rhythms (rent, cooling, rival rungs): RT2-07's two game week hold after a payment can leave a 5 week act with a week and no rival rung; no rule says so.
+- RT2-21 After the ending and past nine weeks: Under the seven week calendar Christmas Day falls after the 14 day test window, so the one special day named is never tested; no rule says what happens after it or whether post-ending play ever ends.
+- 7.16 Pastimes: No rule for what the club gives beyond being seen and recruits (no reward, no progress, which fits 'no stats'), and no figure for how often it may be visited.
+- 8.1.1 Frame, memory and crowd budget: No per-system budget exists for update time, texture pool, crowd or voice; Study 12's numbers are from Mafia and Kingdom Come II configuration files (Mafia is no longer a reference) and are proposals only.
+- 8.1.2 Streaming and loading: No limit for a loading wait, a hitch length or pop-in distance, and no test; a builder has only the 30 frame floor.
+- 8.1.3 Player PCs and shader stutter: No minimum specification, no scaling steps and no stutter limit; after the November stutter fix 2 frames in 45,000 went over the line.
+- 8.2.1 Crash and bug reporting: The crash service and who receives the report are not chosen ('checked when the services are chosen for the Unreal build'), so 'to whom' in the question cannot yet be written; 'consented play records' in the row's name has no definition beyond the crash report.
+- GV-05 Bugs at release: 'Blocking fault' is defined only as stuck, lost save or crash, and 'three nights running' is not defined for a night with no new build.
+- 8.3.1 PC display options: Frame generation (in the row's name) is not covered by any source; whether the 55% fixed draw size is exposed as the resolution scale option and its default are not stated.
+- 8.4.1 Visual stand-ins for sound cues: No pass or fail for it: which sounds are captioned, how long a word stays, how close to the sound it appears and what a caption says for a car or shout beyond the examples.
+- AX-01 Text and interface size, contrast and font: XAG 102 also asks 3 to 1 for interface components and AX-01 sets only the text figure; it is not said whether the 24 unit minimum scales with window height.
+- AX-02 Subtitle options: The default for street-chatter subtitles is not stated (the description only says a switch exists).
+- AX-03 Motion and comfort settings (shake, bob, blur, field of view, background movement): No pass or fail test for the field of view setting, and no statement of how it scales the run, room, talk, fight and car cameras (the car view widens with speed); defaults for each motion switch are not stated (motion blur off by default is in CLOUD-FIGURES C3).
+- AX-04 Audio options (separate sliders, mono, speech clarity): Defaults are not stated, and nothing says whether softening changes only the player's mix or also the reach the town hears (a shot carries about 177 m).
+- AX-06 Menu usability (large stationary targets, back goes one level, focus visible, settings before play and from pause, all remembered): XAG 114 also asks that each screen is titled and states the selected item's effect; AX-06 does not say so.
+- AX-08 Accessibility features listed in game and on the store page: The store page text does not yet exist (the store page is outside the design proof), so the script's second input is not defined.
+- AX-09 Screen narration of menus: Only menus and Ledger lines are tested; reading of in-play prompts is allowed but has no test.
+- AX-10 Pause and focus safety (pause on losing focus, alt-tab safe): No rule for a live talk reply in flight when focus is lost (the 8 s drop and the 2 s limit run on real time).
+- AX-11 Information never by colour alone; key objects distinct: The filters themselves have no test (the standard tests the cues, not the filters).
+- 8.5 Install and launch: No installer or store delivery is designed; the order and number of first-run screens are not fixed once the accessibility offers are added.
+- 8.6.1 Talk service longevity and offline: No cost per player hour, no allowance figure, no rule for the day the service ends beyond falling back to written lines (red team 2 asked for the cost and latency too).
+- 8.7 Local models on the card: No minimum card for the local model and no memory share (the 6 GB card line excludes it for now); old research put a 7B model at 16 GB of video memory.
+- 8.8 Runtime content guards: The word-list gate cannot read intent (canon says so); the live reply check is a model, so the only stated bar is RT-15's zero breaches on a red-team set.
+- RT-15 Live-talk abuse and off-limits input: The word-list gate cannot read intent, so the zero-breach figure rests on the reviewer reading 50 of the 300 replies.
+- 8.9 Text and language: 'Text out of code' has no named check (for example a scan for string literals), so it cannot be passed or failed as written.
+- 8.10 Collision and physics: Ragdoll blended with authored falls (in the row's name) is not designed; only the car-hit bands (P04) and 'falls as the hit's direction says' are written, with no blend rule or test.
+- 10.1 Release build: Named only for the installer: no source designs it, its size, or how the game reaches a player beyond Steam.
+- 10.2 Store, rating and disclosure: G4 says guardrails 6 (report a line, logged) and 7 (a hostile-lines run before each release) may not exist yet; the price is not set.
+- 10.3 Friends' builds: The friends' build requirements are mapped to the Unreal phases; with Unreal paused until the prototype is done, no source re-dates the phase 4 build.
+- 10.4 Credits and notices: No credits screen exists (24 Sep note), the engine libraries' notices were open on 5 Oct, and no source says how the credits are shown (length, order, reachable from the title).
+- 10.5 Release testing: 'Long sessions' has no length or pass figure; the 2-hour soak of 8.10 is the only stated soak.
+- 10.6 After release: Named only for patches; no source states a position on mods after release (the row's name asks for one).
+- 10.7 Platform account, cloud saves and achievements: Steam's overlay (the row's name) can show its own pop-ups and the report button for live AI content; no source says whether they are allowed in play, and Steam Cloud is 'as commonly used', not read.
+- 10.8 Trailer, key art and store capsule: No brief for the trailer or key art (length, what it shows, music, the no-spoiler and content rules applied to a film).
+- 10.9 Player support and community: The support address, who answers it and how fast are not set.
+- 10.10 Legal and company admin: Nothing is stated: no name search is recorded, no company, no payment route.
+- 10.11 Player data and privacy: The service's retention period and deletion route are not stated anywhere yet ('as stated' cannot be checked until the studio's server and its provider are fixed).
+- 10.12 Demo, price and wishlists: No price, no demo decision and no wishlist plan.
+
+## Source traces not found
+
+- 1.1.3: not found: an on-foot door time of under 2 s. The 2 s figure in the sources is for car doors (ER-DRIVE-07); the rest (5 s never stuck, no jump) is found.
+- 2.1.1: not found: 'every walk arrives' is not in DESIGN §2 (the cap and the owner are); it is in the prototype's own walk checks
+- 3.1.4: not found: his 'pick M8 19 Nov' by name in canon, RULINGS or QUESTIONS; found: RULINGS 28 Oct (one main story, two or three endings) and canon OPEN 3 (whole design approved 19 Nov)
+- 5.1.5: not found: 'risk R5' in 6-RISKS.md is frame rate and memory; the nearest crowd-variety risk is R4 (people break the illusion); no repeat-distance or variety rule found in any source
+- 5.2.4: not found: 'Sheila's face whole when she talks' is not in the current RULINGS (only in the 4 Oct friends' build decision, H1-inventory); the loudness and audio-driven mouth lines are in RULINGS 1 Oct
+- 8.1.3: not found: Epic's tech blog on shader stutter is not in the repository; the same point is in Epic's PSO precaching documentation as read in PSO-AND-VRAM-METHOD, and Study 12 notes Mafia switches precaching on
+- OUT-12: not found: a 30 Oct ruling saying 'no game over' (RULINGS carries 'never a game over' only on hold-ups, 20 Nov, and D35, D58 as RULINGS gives them are about reloading and hunted-state endings); the rule is in the description and DESIGN

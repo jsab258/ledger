@@ -96,3 +96,4 @@ Scripts in order when rebuilding: runs 1 to 4 scripts, run5_apply.py, covmd.py l
 - Chases against the map: the Hook holds 1 to 3 minutes without repeating roads; the references' 4 to 8 do not. Rulings to revisit written (R1 map, R2 clock), keep recommended for both, in DEFINITIONS run 5 second pass and DESIGN-COMPLETE. No fresh reviewer for this short pass (arithmetic checked by hand); the next run's reviewer reads it with the measuring updates.
 - Counts unchanged: 401 rows, 111 MEASURED, 132 DECIDED, 42 PENDING, 45 UNMEASURED, 0 UNDEFINED.
 Next run starts at "Next run starts here" of run 5 above, plus: put R1 and R2 to him through the advisor; count GTA VI's tram stop in block 1.
+- 23 Nov (blueprint keeper): From 23 Nov the design proof checks BLUEPRINT.md, and red teams 3 and 4 are given the blueprint, not the old description.

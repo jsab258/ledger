@@ -1,0 +1,299 @@
+{
+ "version": 1,
+ "updated": "2026-11-23",
+ "by": "blueprint keeper, claude-opus-5-5",
+ "totals": {
+  "parts": 421,
+  "measured": 101,
+  "measured_on_real_figures": 35,
+  "decided": 140,
+  "pending": 40,
+  "unmeasured": 46,
+  "out": 14,
+  "outside": 57,
+  "machinery": 23
+ },
+ "conflicts_settled": 165,
+ "gaps": 294,
+ "groups": {
+  "What the player does with his hands": {
+   "parts": 82,
+   "measured_on_real_figures": 6,
+   "measured": 16,
+   "decided": 30,
+   "pending": 20,
+   "unmeasured": 16,
+   "out": 0,
+   "outside": 0,
+   "machinery": 0,
+   "open_questions": [
+    "1.1.8",
+    "1.2.10",
+    "RT-09",
+    "RT2-11"
+   ]
+  },
+  "The town under the hood": {
+   "parts": 94,
+   "measured_on_real_figures": 10,
+   "measured": 25,
+   "decided": 53,
+   "pending": 6,
+   "unmeasured": 10,
+   "out": 0,
+   "outside": 0,
+   "machinery": 0,
+   "open_questions": [
+    "2.6.5",
+    "2.6.8",
+    "2.14"
+   ]
+  },
+  "Story and people": {
+   "parts": 45,
+   "measured_on_real_figures": 3,
+   "measured": 18,
+   "decided": 10,
+   "pending": 8,
+   "unmeasured": 8,
+   "out": 0,
+   "outside": 1,
+   "machinery": 0,
+   "open_questions": [
+    "3.1.6",
+    "3.2.1",
+    "3.2.3",
+    "3.3",
+    "FIT-L01"
+   ]
+  },
+  "The place": {
+   "parts": 33,
+   "measured_on_real_figures": 0,
+   "measured": 6,
+   "decided": 8,
+   "pending": 1,
+   "unmeasured": 0,
+   "out": 0,
+   "outside": 18,
+   "machinery": 0,
+   "open_questions": [
+    "4.3.6",
+    "4.9"
+   ]
+  },
+  "How it looks and sounds": {
+   "parts": 39,
+   "measured_on_real_figures": 0,
+   "measured": 5,
+   "decided": 1,
+   "pending": 0,
+   "unmeasured": 8,
+   "out": 0,
+   "outside": 25,
+   "machinery": 0,
+   "open_questions": [
+    "5.6.1",
+    "5.7.1",
+    "FIT-P09"
+   ]
+  },
+  "The interface and the Ledger": {
+   "parts": 19,
+   "measured_on_real_figures": 1,
+   "measured": 5,
+   "decided": 13,
+   "pending": 0,
+   "unmeasured": 1,
+   "out": 0,
+   "outside": 0,
+   "machinery": 0,
+   "open_questions": []
+  },
+  "The game's shape": {
+   "parts": 48,
+   "measured_on_real_figures": 3,
+   "measured": 8,
+   "decided": 19,
+   "pending": 5,
+   "unmeasured": 3,
+   "out": 13,
+   "outside": 0,
+   "machinery": 0,
+   "open_questions": [
+    "7.1",
+    "7.16",
+    "OUT-08"
+   ]
+  },
+  "Technical": {
+   "parts": 25,
+   "measured_on_real_figures": 11,
+   "measured": 16,
+   "decided": 4,
+   "pending": 0,
+   "unmeasured": 0,
+   "out": 0,
+   "outside": 5,
+   "machinery": 0,
+   "open_questions": [
+    "8.1.3",
+    "8.6.1"
+   ]
+  },
+  "The machinery": {
+   "parts": 23,
+   "measured_on_real_figures": 0,
+   "measured": 0,
+   "decided": 0,
+   "pending": 0,
+   "unmeasured": 0,
+   "out": 0,
+   "outside": 0,
+   "machinery": 23,
+   "open_questions": []
+  },
+  "Shipping": {
+   "parts": 13,
+   "measured_on_real_figures": 1,
+   "measured": 2,
+   "decided": 2,
+   "pending": 0,
+   "unmeasured": 0,
+   "out": 1,
+   "outside": 8,
+   "machinery": 0,
+   "open_questions": [
+    "10.2",
+    "10.6",
+    "10.7",
+    "10.8",
+    "10.10",
+    "10.12"
+   ]
+  }
+ },
+ "open_questions": [
+  {
+   "id": "Q1",
+   "parts": "1.1.8, OUT-08",
+   "question": "Vaulting low walls and fences, next to the no-jump ruling (scope).",
+   "recommended": "Keep vaulting at set places only."
+  },
+  {
+   "id": "Q2",
+   "parts": "1.2.10",
+   "question": "Taking a parked car by force (scope, rating).",
+   "recommended": "Yes, parked cars only; never a driver pulled out."
+  },
+  {
+   "id": "Q3",
+   "parts": "RT-09, 4.3.6",
+   "question": "Tom's own line: he will not strike women, over-sixties or the priest. Sparing the priest brushes canon's \"religion is never a mechanic\" (canon).",
+   "recommended": "Keep it as Tom's character, never framed as a religious rule."
+  },
+  {
+   "id": "Q4",
+   "parts": "RT2-11",
+   "question": "Holding strike for 2 s over a downed man: is that a \"finisher\" under his combat design of 12 Oct? (canon)",
+   "recommended": "Keep as written: no animation, asked twice, camera turns away."
+  },
+  {
+   "id": "Q5",
+   "parts": "2.6.5",
+   "question": "May a witnessed killing go straight to a manhunt, skipping the police stages? (canon)",
+   "recommended": "No: keep all four stages."
+  },
+  {
+   "id": "Q6",
+   "parts": "2.6.8",
+   "question": "Can DS Ellis herself be bought? (canon: police corruptible as individuals)",
+   "recommended": "No, as the description says; others on the force can be."
+  },
+  {
+   "id": "Q7",
+   "parts": "2.14",
+   "question": "Does every named person get his or her own temper? (scope, open since 29 Sep)",
+   "recommended": "Yes, measured before it lands."
+  },
+  {
+   "id": "Q8",
+   "parts": "3.1.6",
+   "question": "Sheila's trust: what opens the book and her use of his name (his open point C12, canon).",
+   "recommended": "A state the town can see, not a day count."
+  },
+  {
+   "id": "Q9",
+   "parts": "3.1, 7.5, 7.13",
+   "question": "The ruled clock (60 s a game hour, about 7 weeks) gives a running time of about 13 to 20 hours against his 15 to 20; no source says how a short playthrough is lifted (scope).",
+   "recommended": "Let the design proof fix the floor inside the ruling (denser Act II weeks), not lengthen the calendar; his ruling stands."
+  },
+  {
+   "id": "Q10",
+   "parts": "3.2.1, 5.6.1",
+   "question": "Uncast voices: Danny, June, Father Walsh and six more (canon: no voice cast without his yes).",
+   "recommended": "One listening page for all nine; he picks the best fit for each."
+  },
+  {
+   "id": "Q11",
+   "parts": "3.3, 3.2.3, FIT-L01",
+   "question": "Advisor decisions on scope: about 25 side stories inside the ruled hours; 60 street lines for the 12 most seen, 30 for the rest.",
+   "recommended": "Keep both; he may cut lines to about 50 to save writing."
+  },
+  {
+   "id": "Q12",
+   "parts": "4.9",
+   "question": "A second CCTV site, which canon leaves to him (canon).",
+   "recommended": "None: the bank alone."
+  },
+  {
+   "id": "Q13",
+   "parts": "5.7.1, FIT-P09",
+   "question": "Music: a short made-for-the-game score under cut scenes and act ends; a licensed period station (scope, money).",
+   "recommended": "Score yes, short and made for the game; no licensed station."
+  },
+  {
+   "id": "Q14",
+   "parts": "7.1",
+   "question": "Restaging his approved first hour of 29 Sep (arrival by ferry, a fare at 2:30, the debt book at 4:30), his question 4.",
+   "recommended": "Yes, as DESIGN section 15 stages it."
+  },
+  {
+   "id": "Q15",
+   "parts": "7.16",
+   "question": "Pastimes: is the club the only one? (scope, his question 3)",
+   "recommended": "The club alone."
+  },
+  {
+   "id": "Q16",
+   "parts": "8.1.3",
+   "question": "The minimum PC to state on the store page (scope).",
+   "recommended": "Set from measured packaged runs on his RX 6700 and one lower card."
+  },
+  {
+   "id": "Q17",
+   "parts": "8.6.1",
+   "question": "The live-talk allowance per copy and the monthly ceiling (money).",
+   "recommended": "Fix only after the talk bench measures a playthrough's cost, as his 24 Sep ruling says."
+  },
+  {
+   "id": "Q18",
+   "parts": "10.2, 10.12",
+   "question": "The store fee, the price, a paid age-rating review, a demo (money).",
+   "recommended": "PEGI 16 as the design target; pay only when 2026-grade frames exist; a demo of the first evening; price after the prototype."
+  },
+  {
+   "id": "Q19",
+   "parts": "10.6, 10.7",
+   "question": "District updates free or paid; achievements at release (scope, money).",
+   "recommended": "Say only \"no mods at release\" for now; no achievements at release."
+  },
+  {
+   "id": "Q20",
+   "parts": "10.8, 10.10",
+   "question": "The first store capsule (a whole street frame) and a name search for LEDGER (his accounts and money).",
+   "recommended": "Show him the capsule from a packaged frame; he runs the name search before the Coming Soon page."
+  }
+ ],
+ "story": "pending: story v3 not picked"
+}
