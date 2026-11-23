@@ -16,13 +16,16 @@ Everyone keeps a day, with Tom or without him.
 - Standard: Places with a cap and an owner (Studies 1, 17); every walk arrives (prototype walk checks) Test: S: walk checks wherever Tom stands; no jammed doorway in a seeded week
 - Source: DESIGN §2; aaa-s01-04 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5 (The town lives without him); DEFINITIONS CLK-03 (F09)
 - Status: decided. Coverage row: 2.1.1. Conflicts settled: C-036.
+- Prior research: production/specs/hook-cast.json gives routines for 41 people and 24 areas; hours out and in per person in production/art/clothing/HOOK-GARMENT-LIST-2026-11-03.md; research/small-town-meetings (dock rhythm, market days; Hull bobbers from about 2 am, auction 7 am).
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 
 ### 2.1.2 The crowd's clock windows
 
 - How it works: The unnamed crowd keeps clock windows: the dock shift at dawn, shoppers through the day, the street emptying at night; adults only. On Quay Street's parade front (100 m, both pavements) the bands (design pass 4, rescaled) are 05:30 to 07:00 5 to 8 people; 08:00 to 09:30, 12:00 to 14:00 and 16:30 to 18:00 12 to 20; other daytime 6 to 12; 18:00 to 22:00 5 to 10; 22:00 to 01:00 2 to 5; 01:00 to 05:30 0 to 2 besides the constable. On the quay road by the fish dock 05:30 to 07:00 it is 10 to 18. One camera frame holds 4 to 10 at a busy band (GD-02). Rain halves each band; Thursday's market takes a third off the shops' daytime bands; Saturday's match doubles the street at 15:00 and 17:00 for half an hour (up to 30). These bands are the design's until the 1990 hours are found.
-- Standard: Hours from 1990 research (owed) Test: S: crowd counts by hour match the researched table
+- Standard: Opening windows from the 1990 sources already held: Shops Act 1950 (all shut by eight, early closing day, Sunday papers, tobacco, sweets and meals only; research/shop-hours-1990), production/specs/hook-cast.json, dock and market rhythm; who walks the pavement by hour is still owed (B4) Test: S: crowd counts by hour match the researched table
 - Source: DESIGN §2; aaa-s01-05 (no reference figure yet). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5; DEFINITIONS G9 (FIT-G9); CLOUD-FIGURES B4
 - Status: unmeasured. Coverage row: 2.1.2.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
 
 ### 2.1.3 Off-screen life
 
@@ -30,6 +33,7 @@ Everyone keeps a day, with Tom or without him.
 - Standard: Unseen people keep the same rules as seen ones (DESIGN §2) Test: S: a seeded week gives the same result watched or unwatched
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5; DESIGN §4 (ER-JOB-07)
 - Status: decided. Coverage row: 2.1.3.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 
 ### 2.1.4 Weather and hour change who is out
 
@@ -37,6 +41,8 @@ Everyone keeps a day, with Tom or without him.
 - Standard: ER-NIGHT-03: rain changes who is out, heard and seen, the same way every time Test: S: the same seed dry, drizzle, rain
 - Source: DESIGN §6 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §6 (ER-NIGHT-03); RULINGS 5 Oct and 7 Oct; DEFINITIONS G9
 - Status: decided. Coverage row: 2.1.4.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-08 the night is its own street; a third of jobs and side stories after dark; decided. None measured.
 
 ### 2.1.5 Crowd movement and avoidance
 
@@ -44,6 +50,7 @@ Everyone keeps a day, with Tom or without him.
 - Standard: none yet: avoidance distances and step-aside timing to be measured; the checklist's civilian behaviour items as acceptance checks Test: B: 30 minutes walking through crowds, no clipping or jams; H screenshots
 - Source: MASTER-CHECKLIST A12, A13 (no numbers) (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §5; DEFINITIONS G2; MEASUREMENTS-NEEDED A4; PARTS-TREE 2.1.5
 - Status: unmeasured. Coverage row: 2.1.5.
+- Prep: PRIOR-RESEARCH-INDEX section 8: KCD2 step-aside distance and timing in Kuttenberg (A4) and GTA V pedestrians stepping aside are to be measured from play on his PC.
 
 ### 2.1.6 The town's calendar
 
@@ -51,6 +58,8 @@ Everyone keeps a day, with Tom or without him.
 - Standard: No real people or events spoken of (canon: no real people); no children (canon) Test: S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02
 - Source: canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A20; DESCRIPTION-COPY-2 §5; DEFINITIONS CLK-06, RT2-21; canon (Brands, content rule)
 - Status: ruled (his ruling or canon). Coverage row: 2.1.6. Conflicts settled: C-037.
+- Prior research: DECISIONS 20 Nov A12 to A22 (RULINGS prototype lines): Thursday market, Saturday match, Bonfire Night on the quay, Remembrance Sunday; one patrol car, two bought constables; ambulance about ten game minutes.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 
 ### FIT-G9 Crowd counts by hour and place
 
@@ -58,6 +67,7 @@ Everyone keeps a day, with Tom or without him.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 G9; design pass 4 'The crowd against the counted views' and Run 5 second pass (stretch counts stay as rescaled)
 - Status: pending. Coverage row: FIT-G9. Conflicts settled: C-038.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
 
 ### FIT-G10 Opening hours, day and night
 
@@ -65,6 +75,8 @@ Everyone keeps a day, with Tom or without him.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §G10; FIT-CHECK F11, P28; canon (content rule)
 - Status: decided. Coverage row: FIT-G10.
+- Prior research: research/shop-hours-1990 and production/specs/hook-cast.json hold the opening hours (Shops Act 1950, repealed 1 Dec 1994: shut by 8 pm, one early closing day, Sunday listed goods only).
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-08 the night is its own street; a third of jobs and side stories after dark; decided. None measured.
 
 ## 2.2 Perception
 
@@ -84,6 +96,8 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: Five rungs; recognition gated by relationship, never by distance and light alone (canon) Test: S: golden rows
 - Source: canon The moat (his ruling or canon). Designed in: canon (The moat); DESIGN §2; DEFINITIONS RT2-03; DESCRIPTION-COPY-2 §5
 - Status: ruled (his ruling or canon). Coverage row: 2.2.2.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Tom links him only while he wears it; decided, thin. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided. None measured.
 
 ### 2.2.3 Sight by distance and light
 
@@ -91,6 +105,8 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: DESIGN first values (35, 18, 8, 25 m; light 1, 0.7, 0.25, 0.12); ER-EYES-02 symmetry Test: S: figures at 8, 18, 35 m
 - Source: DESIGN §2 (LEDGER's own first values) (waits on a dated study). Designed in: DESIGN §2 (ER-EYES-02, -03); DESCRIPTION-COPY-2 §7; DEFINITIONS RT2-03, RT2-16
 - Status: pending. Coverage row: 2.2.3.
+- Prior research: research/eyewitness-testimony: identification about 96% at 5 m, 42% at 20 m, about 30% at 40 m; research/gaze-and-knowing (Fotios 2015). KCD2 recognition about 4 s, night minus 0.7, fog minus 0.5 are file-read leads; the old Unity Core held 40 m, not 35.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-05 no reaction without a printable chain of sightings; never through walls; decided. None measured.
 
 ### 2.2.4 Sound reach
 
@@ -98,6 +114,8 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: Footstep at 3 am about 3.6 m; car 44 m by day; shot 177 m by day (DESIGN) Test: S: reach rows by act, hour and rain
 - Source: DESIGN §2, §5, §7 (no reference figure yet). Designed in: DESIGN §2, §5, §6, §7; ONE-SHOT-PROMPT 8 (Light, noise and time); DESIGN-ADDENDUM
 - Status: unmeasured. Coverage row: 2.2.4.
+- Prep: PRIOR-RESEARCH-INDEX section 8: how far footsteps and voices carry in KCD2, by ear against known distances (A7), still to be played; game-design/weapons-spec.md gives the .38 at about 177 m, capped at 250 m.
+- Prep: SOUND-PLAN SND-07: Tom's step in the mix must match the reach function within 1 dB at 03:00 (about 3.6 m) and be silent below -60 dBFS at noon; SND-13: after a seen deed the bed and one-shots fall at least 6 dB in that street for about a game hour (own design).
 
 ### 2.2.5 Give-away rules
 
@@ -105,6 +123,8 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: ER-EYES-10 Test: S: golden rows per give-away
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2 (ER-EYES-10); DESCRIPTION-COPY-2 §7; canon (Era)
 - Status: decided. Coverage row: 2.2.5.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Tom links him only while he wears it; decided, thin. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
 
 ### 2.2.6 Ground rules and trespass
 
@@ -131,6 +151,9 @@ Permanent per-person memory.
 - Standard: ER-EYES-07: every memory survives save, load and skipped time Test: S: SaveChaos; reload at random moments and compare
 - Source: canon; DESIGN §2 (his ruling or canon). Designed in: canon (The moat); DESIGN §2 (ER-EYES-07); DEFINITIONS RT2-10, RT2-16
 - Status: ruled (his ruling or canon). Coverage row: 2.3.1.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-09 nothing clears a memory: no payment, item or menu; ruled. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 
 ### 2.3.2 Witness certainty
 
@@ -138,6 +161,7 @@ Permanent per-person memory.
 - Standard: ER-EYES-06; ruling 30 Sep Test: S: golden rows
 - Source: ruling 30 Sep; DESIGN §2 (his ruling or canon). Designed in: RULINGS 30 Sep; DESIGN §2 (ER-EYES-06); DESCRIPTION-COPY-2 §5, §20; ONE-SHOT-PROMPT Who tells whom
 - Status: ruled (his ruling or canon). Coverage row: 2.3.2.
+- Prior research: research/eyewitness-testimony: weapon focus; witnesses who talk corrupt each other; confidence rises with retelling. The entry omits weapon focus and contamination.
 
 ## 2.4 Gossip
 
@@ -149,7 +173,8 @@ Talk passing between people who meet; the engine, never the show.
 - How it works: Talk passes only between people who know each other and meet, within 6 m, weaker with each telling (about 0.8 per hop against a 0.2 floor, so a story fades by about seven hops). In the town code talk passes every 6 game minutes, only between people the cast ties together and puts in the same place that hour; a deed seen by one of the principals reaches about five of the nine on its first day and then stops. The paper carries news beyond the routines' meetings at the strength Alison wrote. How a deed was done (restraint or cruelty) travels with the telling.
 - Standard: Within 6 m, weaker each telling (the Core's rule); about 0.8 per hop against a 0.2 floor (PLAYERS standards list) Test: S: golden rows; Soak
 - Source: canon; C# Core; map-players (reference game). Designed in: DESIGN §2; ONE-SHOT-PROMPT Who tells whom; GTAVI-MAP GV-06; PARTS-TREE map-players S6
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.1.
+- Status: decided (the old Core's own design values, no outside measurement; C-221).md marks it solid). Coverage row: 2.4.1.
+- Prior research: research/rumour-propagation (14 Sep): 0.8 a hop and the 0.2 floor are tunables with no measurement, corroboration is not modelled; research/small-town-networks: tie layers 5, 15, 50, 150, dense clusters weakly joined.
 
 ### 2.4.2 Cooling by kind
 
@@ -157,6 +182,7 @@ Talk passing between people who meet; the engine, never the show.
 - Standard: 1 to 7 game days by kind (a lift or a scuffle a day or two, a break-in about three, a wounding or robbery about a week), replacing the Core's single 96-hour half-life; a told version cools like the seen one; slots shed by GV-02. Test: S: new golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md C1: KCD2 wanted fades within a few in-game days (GamerBlurb, PC Gamer, Gfinity 2025); RDR2 bounty held until paid (rdr2.org 2023); GTA VI clues shed by change (Vice, GamesRadar 2026) (reference game). Designed in: DESIGN §2; CLOUD-FIGURES C1; DEFINITIONS RT2-16, CLK-07; ONE-SHOT-PROMPT Who tells whom
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.2. Conflicts settled: C-039.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-04 a cost to body or standing shows and has an end or a way back; decided; FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
 
 ### 2.4.3 Showing what people know
 
@@ -164,6 +190,10 @@ Talk passing between people who meet; the engine, never the show.
 - Standard: Every person who knows something of Tom shows it on that ladder before any line; nobody who knows nothing shows it; the step shown matches what they hold (a told version never above a seen one). Test: B: seeded deed, then a walk past 30 people: each one's shown step is checked against their memory store.
 - Source: The description, section 5 (What a person catches; Who tells whom). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.4.3; ONE-SHOT-PROMPT Who tells whom; DESIGN §2
 - Status: decided. Coverage row: 2.4.3.
+- Prior research: research/emergent-story-legibility and coverage-audit-disco-elysium: enumerate, do not summarise; show the working in itemised reasons; failure gives content, not refusal.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-01 a deed a named person saw is said to Tom with one concrete detail; decided; MEM-03 each person at the refuse rung refuses Tom something within two game days; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
+- Prior research: aaa-studies/MEMORY-SYSTEMS.md: Hitman's most punished fault is noticing that breaks its own rules (5 of 9 players coded, thin), not a missing meter; posture first answers it without a meter.
 
 ### 2.4.4 It comes back
 
@@ -171,6 +201,11 @@ Talk passing between people who meet; the engine, never the show.
 - Standard: ER-EYES-08: in week one within one game day; and within the first 30 real minutes at the playing clock (gossip timeliness, map-players S4) Test: S: 16 seeded weeks; timeliness at the playing clock
 - Source: DESIGN §2; PLAYERS second study (reference game). Designed in: DESIGN §2 (ER-EYES-08); ONE-SHOT-PROMPT Who tells whom, S06; PARTS-TREE map-players S4; DEFINITIONS clock
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.4.
+- Prior research: research/teaching-in-thirty-minutes and game-design/first-hour-2026-09-29.md: the old first-hour minute figures were taken at 2 game minutes a real second (12-minute day); re-run them at 60 s a game hour before trusting them.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-01 a deed a named person saw is said to Tom with one concrete detail; decided; MEM-05 no reaction without a printable chain of sightings; never through walls; decided. None measured.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-10 a deed said to his face within 30 real minutes, three named people within two hours; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-01 the tester logs each moment against four tests, with systems and mark; decided; STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
 
 ### 2.4.5 The paper and the news
 
@@ -190,6 +225,7 @@ What people do once they have seen something.
 - Standard: No mobiles in 1990: the walk is the timer; at least 30 real s in Tom's sight (ER-EYES-04) Test: S: walk timed and visible
 - Source: canon era; DESIGN §2 (his ruling or canon). Designed in: DESIGN §2 (ER-EYES-04); DESCRIPTION-COPY-2 §16; DESIGN-ADDENDUM A10; DEFINITIONS RT2-19
 - Status: ruled (his ruling or canon). Coverage row: 2.5.1.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
 
 ### 2.5.2 Stopping a witness
 
@@ -197,6 +233,10 @@ What people do once they have seen something.
 - Standard: Ruling 3 Oct; ruling 1 Oct (neighbour reports unless on his side or talked round) Test: S: each answer's effect on the report and the talk
 - Source: rulings 1 and 3 Oct (his ruling or canon). Designed in: RULINGS 1 Oct and 3 Oct; DESIGN §2, §8; DESCRIPTION-COPY-2 §16
 - Status: ruled (his ruling or canon). Coverage row: 2.5.2.
+- Prior research: research/police-response-1990 and research/threats-1990: 1991 reporting rates vandalism 27%, burglary with loss 92%, common assault 25.5%, wounding 47.7%, robbery 47.2%; witnesses on high-crime estates report 29%, fear of reprisal behind 22% of silence; no witness-intimidation offence until 1994, a vague threat at most a 400 pound fine.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-09 nothing clears a memory: no payment, item or menu; ruled. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Tom holds changes the reply and is named; a wrong push ends in a state, never a reload; decided. None measured.
 
 ### 2.5.3 Crowd reaction to a deed
 
@@ -204,6 +244,7 @@ What people do once they have seen something.
 - Standard: ER-EYES-09; ruling 23 Sep. Raised by Y2.6: a person with the nerve for it (their temper) may step in, unarmed, at a hold-up or a beating in the street; Tom's line holds if that person is one it covers. Test: S: after a seen deed, look, gather, quieter talk
 - Source: ruling 23 Sep (his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN §2 (ER-EYES-09); GTAVI-MAP Y2.6; DESCRIPTION-COPY-2 §16
 - Status: ruled (his ruling or canon). Coverage row: 2.5.3.
+- Prior research: game-design/town-traits-draft-2026-09-29.md: nerve, loyalty and greed for all 41 residents, with who would report a wounding (14) or a killing (32); scope left on his page 29 Sep (Q6).
 
 ### 2.5.4 A street on edge
 
@@ -211,6 +252,7 @@ What people do once they have seen something.
 - Standard: rule: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S. Test: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A37 (from REFERENCE-MECHANICS-2026-11-20 M2.16) (reference game). Designed in: DESIGN-ADDENDUM A37; DESCRIPTION-COPY-2 §16; DEFINITIONS G5
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.5.4.
+- Prior research: research/group-standing-without-a-score: taking the maximum makes one furious person and a town that has turned both read 'hostile'; count people above the sharing floor and band them into words.
 
 ### 2.5.5 Finding an unseen deed
 
@@ -218,6 +260,7 @@ What people do once they have seen something.
 - Standard: rule: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows. Test: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows.
 - Source: DESIGN-ADDENDUM-2026-11-20 A38 (from REFERENCE-MECHANICS-2026-11-20 M2.61) (reference game). Designed in: DESIGN-ADDENDUM A38; DESCRIPTION-COPY-2 §15; ONE-SHOT-PROMPT 14 (Death, bodies and the missing); DEFINITIONS RT2-11
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.5.5.
+- Prior research: research/crime-scene-1990: no National DNA Database until 10 Apr 1995 (NAFIS 1999), DNA first used Oct 1986; forensics compare and never name; RFLP needs about a coin-sized undegraded stain and several days.
 
 ### GV-02 Shedding what a witness holds, slot by slot
 
@@ -232,6 +275,7 @@ What people do once they have seen something.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-10 Test: B (bot), as written under RT2-10
 - Source: design pass 3, RT2-10 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-10; DESCRIPTION-COPY-2 §5, §16
 - Status: decided. Coverage row: RT2-10.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Tom or police can be met again, with a face and own line; decided. None measured.
 
 ## 2.6 Police and law
 
@@ -244,6 +288,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: Heard or seen 3 s before a challenge; calls out first (ER-POL-02) Test: S and H: the challenge announced
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 (ER-POL-02); DEFINITIONS G5; DESCRIPTION-COPY-2 §18; ONE-SHOT-PROMPT 21
 - Status: decided. Coverage row: 2.6.1. Conflicts settled: C-041.
+- Prior research: research/british-policing-1988-1992 and production/art/atlas-02: custodian helmet, no stab vest, no high-visibility jacket until 1994; PACE Code E (tape) operational 29 Jul 1988.
 
 ### 2.6.2 Challenge and search
 
@@ -258,6 +303,8 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: ER-POL-01 Test: S: golden rows
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 (ER-POL-01); DESCRIPTION-COPY-2 §17; DEFINITIONS RT2-02, RT2-03
 - Status: decided. Coverage row: 2.6.3.
+- Prior research: research/police-response-1990 ARREST note: criminal damage arrestable, common assault normally a summons, wounding, robbery and murder arrestable, hearsay can found suspicion; first appearance before magistrates, fine first, instalments (COURT).
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided; FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
 
 ### 2.6.4 Custody as hours
 
@@ -265,6 +312,8 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: About 6 h a window, 8 a wounding, 12 a robbery, 22 a killing, then released without charge or on police bail pending inquiries, or charged and remanded (the 1990 terms; "released under investigation" is later wording); under 2 real minutes; never twice for one deed (ER-POL-03). Inside PACE limits (24 h, 36 serious); 73% of 1984-87 detainees held under 6 h; 542 held over 24 h in 1990. Test: S: arrest timed
 - Source: CLOUD-FIGURES-2026-11-21.md B2: Hansard 8 Jul 1987; Home Office bulletin 1991 via Statewatch; Bottomley 1991 via Kemp and others (real-world figure or published standard). Designed in: DESIGN §8; CLOUD-FIGURES B2; DEFINITIONS RT2-02, RT2-16, RT2-17; DESCRIPTION-COPY-2 §17
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.6.4. Conflicts settled: C-043.
+- Prior research: Home Office Research Study 104 (1989) via research/police-response-1990 CUSTODY note: mean hold just over 5 h, median 3 h 19 min; criminal damage 4.9 h, violence 6.7, robbery 10.3, very serious about 22; a second source agreeing with CLOUD-FIGURES B2. Magistrates could bail for murder in 1990, rarely (inferred).
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided. None measured.
 
 ### 2.6.5 DS Ellis and the four stages
 
@@ -272,6 +321,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: No stage skipped unseen; a manhunt's sign shows at least one game hour before an arrest (ER-POL-05, provisional on C5) Test: S: every route to a manhunt passes its signs
 - Source: DESIGN §8; ending signs 30 Sep (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 (ER-POL-05); DEFINITIONS RT-13, RT2-02; ONE-SHOT-PROMPT 21; RULINGS 30 Sep
 - Status: decided. Coverage row: 2.6.5. Conflicts settled: C-044.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided. None measured.
 
 ### 2.6.6 Armed response and the dial's police
 
@@ -300,6 +350,8 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: An arrest is hours, a caution, or a charge and bail; no prison terms (DESIGN §8, §18) Test: S: a charge reaches the endings; a search finds what is stored at the office; addendum rules ER-SEARCHED-01
 - Source: DESIGN §8, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8, §18; DESIGN-ADDENDUM A13; DEFINITIONS RT-13, RT2-04; DESCRIPTION-COPY-2 §17
 - Status: decided. Coverage row: 2.6.9. Conflicts settled: C-047.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided; FF-04 a cost to body or standing shows and has an end or a way back; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided; FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
 
 ### 2.6.10 Police after a deed
 
@@ -307,6 +359,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S. Raised by Y2.3: the place stays warm for days, not minutes: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often; no circle on screen. Test: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30) (reference game). Designed in: DESIGN-ADDENDUM A36; GTAVI-MAP Y2.3 (bars raised); DESCRIPTION-COPY-2 §18; DEFINITIONS RT2-19
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.6.10. Conflicts settled: C-048.
+- Prior research: research/crime-scene-1990 (no cold hits in 1990) and research/police-response-1990 (witness reporting rates); canon names CCTV and the weekly tape.
 
 ### RT-13 Ellis's case model
 
@@ -328,6 +381,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-16 Test: B (bot), as written under RT2-16
 - Source: design pass 3, RT2-16 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-16, 2.4.2; DESCRIPTION-COPY-2 §18
 - Status: decided. Coverage row: RT2-16.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-04 a cost to body or standing shows and has an end or a way back; decided; FF-05 police know only what a person perceived or a search found; decided. None measured.
 
 ### RT2-17 A gun found in a stop at War
 
@@ -335,6 +389,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-17 Test: B (bot), as written under RT2-17
 - Source: design pass 3, RT2-17 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-17, 2.6.6; DESCRIPTION-COPY-2 §18, §27
 - Status: decided. Coverage row: RT2-17.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided. None measured.
 
 ### FIT-G5 The beat constable's round
 
@@ -354,6 +409,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Every fare driven, by Tom or the firm's drivers, enters the book; rent and wages leave it on their days; the book's balance always equals its flows (ER-MONEY-01). Test: B: a week of fares and wages; the book audited against the flows.
 - Source: The description, section 24; RT-17. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.7.1, G8, RT-17, RT2-06; DESIGN §9; DESCRIPTION-COPY-2 §20
 - Status: decided. Coverage row: 2.7.1.
+- Prior research: research/cab-office-1990: agent model (driver pays a weekly settle) against principal; settle about 49 to 54 pounds a week (derived from a 2004 figure and RPI, a 1990 figure not found), radio licence 120 pounds a year, VAT threshold 25,400 pounds; bears on the firm's takings, not Tom's 18 pound rent.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
 
 ### 2.7.2 Night money and the tin
 
@@ -361,6 +418,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Every night job's take goes to the tin or the pocket, never the book except through the count; the tin can be lost only by being stolen or searched, said in words. Test: B: night jobs then the count; a break-in on the tin.
 - Source: The description, sections 24, 26; RT-17. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.7.2, RT-17; DESIGN §9; DESCRIPTION-COPY-2 §20, §22
 - Status: decided. Coverage row: 2.7.2.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-02 no take over the greater of £150 or 1.5 weeks' income; Act II's last week 3 to 10 times Act I's; decided. None measured.
 
 ### 2.7.3 The wash
 
@@ -368,6 +427,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: The count never washes over the limit without Sheila's warning first; each week over is recorded for Act III; a front raises the limit by its set amount. The 80% and the front's amount are balance figures checked against GD-07's money curve. Test: B: counts at, under and over the limit; the record read by RT-01's grading.
 - Source: The description, sections 26, 31; GD-07. (waits on a dated study). Designed in: DEFINITIONS §2.7.3, RT2-18; DESIGN §9 (ER-MONEY-04); DESCRIPTION-COPY-2 §21
 - Status: pending. Coverage row: 2.7.3.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-06 money held at Act III's start never changes a morning's grade; decided. None measured.
+- Prep: NUMBERS-RUN M4: the wash binds only the hard player (over 100 per cent of the limit in 3 of 7 weeks at mid amounts, all 7 at high); counting drivers' fares at 40 per cent and Tom's own at 80 per cent makes the steady player use 109 to 143 per cent in six of seven weeks. A rule change to record, his to overturn; the 80 per cent is PENDING (GD-07).
 
 ### 2.7.4 Rent and running costs
 
@@ -375,6 +436,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Doing nothing misses Friday's rent; a week of fares alone pays it (ER-MONEY-03). The £18 rent sits in the 1990 band: council £23.36 a week (Apr 1990), private £65 (1991); cab running costs from 1990 fares (about £1.04 a mile London cab) and diesel about 45p a litre. Test: S: both weeks scripted
 - Source: CLOUD-FIGURES-2026-11-21.md B1: Hansard 27 Jun 1990, 15 Apr 1993, 30 Jan 1992, 18 May 1990 (real-world figure or published standard). Designed in: DESIGN §9 (ER-MONEY-03); CLOUD-FIGURES B1; DEFINITIONS RT-16, G8; DESIGN §5
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.7.4. Conflicts settled: C-050.
+- Prior research: production/art/atlas-02: average gross weekly earnings 263.10 pounds; research/street-lines-1990: prescription 3.05 an item from 1 Apr 1990, dental check 3.15; archived DECISIONS 13 Oct: cod 2.60 a pound (one source).
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided; MP-04 the lazy bot pays every Friday's rent; needs fares near £2.50 to £3.50; decided. None measured.
 
 ### 2.7.5 Purses, tills and shops
 
@@ -382,6 +445,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Purses and a weekly restock stay; no price tables or supply chains (DESIGN §18) Test: S: a shop refuses and remembers; addendum rules ER-HAGGLE-01
 - Source: DESIGN §9, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §9, §18; DESIGN-ADDENDUM A30; DESCRIPTION-COPY-2 §14; DEFINITIONS G10
 - Status: decided. Coverage row: 2.7.5.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-05 every buyer has a weekly purse; a refusal or part-payment in the last two weeks; decided. None measured.
 
 ### 2.7.6 Fencing
 
@@ -389,6 +453,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: About a third of retail (0.33), from 0.2 for jewellery to 0.4 for a video recorder; less for each further piece the same week; buyers differ in what they take (second-hand shop radios and video recorders, scrap yard car parts, a man at the back of the caff jewellery); each is also a listener. No price table on screen. Test: S: golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md B3: Sutton 2014; AIC 2002; BOCSAR 1998 (real-world figure or published standard). Designed in: CLOUD-FIGURES B3; DESIGN §4, §9; GTAVI-MAP Y2.7; DESIGN-ADDENDUM A30; DESCRIPTION-COPY-2 §14
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.7.6. Conflicts settled: C-051.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-02 no take over the greater of £150 or 1.5 weeks' income; Act II's last week 3 to 10 times Act I's; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-05 every buyer has a weekly purse; a refusal or part-payment in the last two weeks; decided. None measured.
 
 ### 2.7.7 Flows ledger
 
@@ -403,6 +469,9 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: What money buys is position (DESIGN §9); purses and weekly restock, no price tables (DESIGN §18) Test: S: each shop sells its list; H: 'what did you spend on?'; addendum rules ER-SPEND-01
 - Source: DESIGN §9, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A21; DEFINITIONS G8; DESCRIPTION-COPY-2 §14; DESIGN §9, §18
 - Status: decided. Coverage row: 2.7.8.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-01 on every Friday a wanted thing on the bot's own path is out of reach; the hard player at high amounts and fares-only player fail on the numbers run; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided; MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
 
 ### GD-07 Economy over weeks: what money buys and how it rises across 15 to 20 hours
 
@@ -410,6 +479,10 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: The players study punishes money with nothing to buy (GTA V and RDR2 late game). Pass: at each act's end, in both a greedy and a lazy bot playthrough, at least one named thing on the rung ladder he does not yet hold is still out of reach of his money; the curve's shape is set from the reference games' money over a playthrough. Test: B: an economy bot playing greedy and lazy; the curve plotted against the rung ladder.
 - Source: The description, sections 24, 28, 31, 32; MEASUREMENTS-NEEDED A (money over a playthrough); PLAYERS-KCD2-GTAV-RDR2 complaints. (waits on a dated study). Designed in: DEFINITIONS §GD-07, G8; DESCRIPTION-COPY-2 Economy over weeks; FIT-CHECK F24
 - Status: pending. Coverage row: GD-07.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-01 on every Friday a wanted thing on the bot's own path is out of reach; the hard player at high amounts and fares-only player fail on the numbers run; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-02 no take over the greater of £150 or 1.5 weeks' income; Act II's last week 3 to 10 times Act I's; decided. None measured.
+- Prior research: aaa-studies/MONEY-AND-PROGRESSION.md: reference ratios for the numbers run: RDR2 late cash a few times to about 20 times its dearest common buy; GTA V biggest take about 33 times its first; KCD2 buyers run out of money. Thin figures, none measured.
+- Prep: NUMBERS-RUN M2: GD-07's test (a named thing out of reach at every act's end) should also be run on a fares-only player; for him money stops mattering by week 3 at a high fare.
 
 ### RT-16 Missed rent
 
@@ -417,6 +490,9 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Each step on its Friday; paying clears it; the office itself is never lost at any point in the game (only the flat above). Test: B: the do-nothing run through three Fridays; a pay-late run.
 - Source: The description, sections 24 (rent), 3 (no game over); the doing-nothing run of S23. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-16; DESIGN §9; DESCRIPTION-COPY-2 §20
 - Status: decided. Coverage row: RT-16.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-04 the lazy bot pays every Friday's rent; needs fares near £2.50 to £3.50; decided. None measured.
+- Prep: NUMBERS-RUN M2, M5: at the Act I firm rate and a 1.30 fare the book loses 21 a week, so rent goes unpaid, RT-16's ladder lets the flat by week 4 and wages go unpaid (RT2-06); nothing in the money rules can end the game itself.
 
 ### RT-17 Money pots in practice
 
@@ -424,6 +500,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: Every payment draws from a place the rules allow; the flows ledger balances (ER-MONEY-01); a search keeps exactly what was found. Test: B: every kind of payment from each place; a break-in; a night search with cash on Tom.
 - Source: The description, sections 21 (what he finds he keeps), 24 (two pots; clean money spent anywhere), 26 (the count), 27 (cut from the tin). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-17, §2.7.2; DESCRIPTION-COPY-2 §20 to §22
 - Status: decided. Coverage row: RT-17.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided. None measured.
 
 ### FIT-G8 Prices of what money buys
 
@@ -431,6 +509,10 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS §G8; FIT-CHECK F24, P15; DESCRIPTION-COPY-2 §14
 - Status: pending. Coverage row: FIT-G8. Conflicts settled: C-052.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-01 on every Friday a wanted thing on the bot's own path is out of reach; the hard player at high amounts and fares-only player fail on the numbers run; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided; MP-04 the lazy bot pays every Friday's rent; needs fares near £2.50 to £3.50; decided. None measured.
+- Prep: NUMBERS-RUN sections 1 and 2: the design gives no pence a mile; at a London 1990 fare of 1.30 the first week's rent of 18 needs 14 fares against about 6 offered, so a typical Hook fare should pay 2.50 to 3.50 (confirm at the Thursday 26 Nov price check). The driver's wage of 90 is low against 1990 average earnings of 263.10 (ONS, art sheet) unless part-time or commission; minicabs needed no meter in 1990, so the fare rate may be the firm's price board (a lead).
 
 ### FIT-F24 Money over nine weeks (in against out; seven under the ruled clock)
 
@@ -438,6 +520,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS §G8, GD-07; FIT-CHECK F24, F25
 - Status: pending. Coverage row: FIT-F24. Conflicts settled: C-053.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-01 on every Friday a wanted thing on the bot's own path is out of reach; the hard player at high amounts and fares-only player fail on the numbers run; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-02 no take over the greater of £150 or 1.5 weeks' income; Act II's last week 3 to 10 times Act I's; decided. None measured.
 
 ## 2.8 Debts
 
@@ -457,6 +541,7 @@ Mickey's debt book.
 - Standard: A payment never exceeds the debtor's purse; the remainder stays and is said in the Ledger's Money page; a squeeze or a let-off produces a told version within a game day. Test: B: each of the five debtors fronted up with different purses.
 - Source: The description, section 25. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.8.2; ONE-SHOT-PROMPT 25; DESIGN §4; DESCRIPTION-COPY-2 §20
 - Status: decided. Coverage row: 2.8.2.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Tom holds changes the reply and is named; a wrong push ends in a state, never a reload; decided. None measured.
 
 ## 2.9 The outfit and the arrangement
 
@@ -469,6 +554,7 @@ The run to the ferry landing that Mickey kept.
 - Standard: At most one ask a night, every other night in Act I (DESIGN §6) Test: S: ask schedule in a seeded week
 - Source: DESIGN §6, §16 (no reference figure yet). Designed in: DESIGN §6, §16; ONE-SHOT-PROMPT 4 (7:00 to 11:30), S04, S05
 - Status: unmeasured. Coverage row: 2.9.1.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
 
 ### 2.9.2 Keeping or ending the arrangement
 
@@ -483,6 +569,7 @@ The run to the ferry landing that Mickey kept.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-01 Test: B (bot), as written under RT2-01
 - Source: design pass 3, RT2-01 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-01; DESIGN §14; DESCRIPTION-COPY-2 §25
 - Status: decided. Coverage row: RT2-01. Conflicts settled: C-054.
+- Prep: NUMBERS-RUN M3: no rule says who pays for the third car; at 600 to 1,200 a car the third car runs in week 4 at best and week 7 at worst, only the hard player at high amounts reaches five cars (week 7); a car earns the book 20 to 50 a week over its driver's wage, so cars are a pure sink. Fix proposed: hire purchase (a tenth down, 15 to 25 a week from the book).
 
 ## 2.10 Rivals
 
@@ -495,6 +582,7 @@ Three heads, each going after a different ledger.
 - Standard: ER-RIV-02 Test: S: no rung skipped, each said or shown
 - Source: DESIGN §13 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §13 (ER-RIV-02); DEFINITIONS RT2-07, RT-04; DESCRIPTION-COPY-2 §24
 - Status: decided. Coverage row: 2.10.1. Conflicts settled: C-055.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-05 a rival's man meets Tom twice; every man he beat meets him within three game days; decided. None measured.
 
 ### 2.10.2 Rival eyes
 
@@ -502,6 +590,7 @@ Three heads, each going after a different ledger.
 - Standard: ER-RIV-01 Test: S: every rival move traces; ER-EYES-05 no all-knowing town: every reaction by a neighbour, the police or a rival prints its chain of sightings
 - Source: DESIGN §13; Core rule (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §13 (ER-RIV-01); DESCRIPTION-COPY-2 §24; DEFINITIONS RT2-08
 - Status: decided. Coverage row: 2.10.2.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided; STORY-05 a rival's man meets Tom twice; every man he beat meets him within three game days; decided. None measured.
 
 ### 2.10.3 Pressures and answers
 
@@ -509,6 +598,7 @@ Three heads, each going after a different ledger.
 - Standard: ER-RIV-03: three answers, none ends the game Test: S: each pressure's three answers
 - Source: DESIGN §13 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §13 (ER-RIV-03); DEFINITIONS RT-06, RT2-07, RT2-18; DESCRIPTION-COPY-2 §24
 - Status: decided. Coverage row: 2.10.3.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided; MEM-11 no memory closes the game or a main thread; another road within a game day; decided. None measured.
 
 ### 2.10.4 The Fixer
 
@@ -516,6 +606,7 @@ Three heads, each going after a different ledger.
 - Standard: Every read he sells is true to the town's memory at that moment; a meeting he brokers happens; the truce holds exactly two game weeks and is offered once. His prices follow GD-07's curve. Test: B: reads compared with the rival's true state; truce timing.
 - Source: The description, sections 29, 30; RT-06. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.10.4, RT-06, RT2-19; DESIGN §13; DESCRIPTION-COPY-2 §24
 - Status: decided. Coverage row: 2.10.4.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided. None measured.
 
 ### RT-05 The two rivals not met at Act II's end
 
@@ -530,6 +621,7 @@ Three heads, each going after a different ledger.
 - Standard: Each rival's threat rung shows one harm in its own style; every harm repairable; a counter needs a hook Tom holds; a truce holds exactly two game weeks. Test: B: ladder runs to the threat rung for each rival; counter with and without a hook.
 - Source: The description, sections 29, 30. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-06, RT2-18; DESCRIPTION-COPY-2 §24, §38
 - Status: decided. Coverage row: RT-06.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-08 a threat Tom ignores is kept within the time named, else three game days; decided. None measured.
 
 ### RT2-07 What moves a rival up his ladder
 
@@ -537,6 +629,7 @@ Three heads, each going after a different ledger.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-07 Test: B (bot), as written under RT2-07
 - Source: design pass 3, RT2-07 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-07, RT-04, RT-06; DESCRIPTION-COPY-2 §24
 - Status: decided. Coverage row: RT2-07. Conflicts settled: C-056.
+- Prep: NUMBERS-RUN R1 to R3: as written an aggressive player's Act II ends on day 12 (Widow noticed day 8, sit-down day 12); a payer sees rung changes only in weeks 1 and 5. Fix A one rung a rival every 5 game days (hard player ends day 28); fix B a paid rival holds 7 days and takes at most 2 payments (payer's sit-down day 38). Fail-safe kept as written. First notice staggered (assumed): Widow day 8, Cammack day 10, Agar day 13.
 
 ### RT2-08 Rivals as actors
 
@@ -577,6 +670,8 @@ Men who know: needs, nerve, loyalty, fates.
 - Standard: rule: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger. Test: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.
 - Source: DESIGN-ADDENDUM-2026-11-20 A40 (from REFERENCE-MECHANICS-2026-11-20 M7.8) (reference game). Designed in: DESIGN-ADDENDUM A40; DEFINITIONS G8, RT-17; DESCRIPTION-COPY-2 §22
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.11.4.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-06 cars and men show harm; no repeated care action required; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided. None measured.
 
 ## 2.12 Position in the town
 
@@ -589,6 +684,7 @@ The rise under the hood: never a number.
 - Standard: canon; ER-RISE-02 (heard within a game day, never goes back) Test: S: each step heard within a day
 - Source: canon premise; ruling 29 Sep (his ruling or canon). Designed in: canon (Premise and cast); DESIGN §14 (ER-RISE-02); DESCRIPTION-COPY-2 §26; RULINGS 29 Sep
 - Status: ruled (his ruling or canon). Coverage row: 2.12.1.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
 
 ### 2.12.2 Rung table
 
@@ -603,6 +699,10 @@ The rise under the hood: never a number.
 - Standard: Each soft key opens exactly its doors: the Harbour Board's counter refuses him in the arrival clothes and lets him in with the decent jacket; any door that opens to him clean refuses him bloodied or filthy. Test: B: the same doors tried in each outfit and state.
 - Source: The description, section 32. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.12.3, RT2-18, G8; DESIGN §14; DESCRIPTION-COPY-2 §26
 - Status: decided. Coverage row: 2.12.3.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-03 each person at the refuse rung refuses Tom something within two game days; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 
 ### 2.12.4 Greetings by regard
 
@@ -610,6 +710,8 @@ The rise under the hood: never a number.
 - Standard: At least 6 lines per situation per kind of speaker (DESIGN §11) Test: H: same street walked at rung 1 and rung 3 (ER-RISE-03)
 - Source: DESIGN §11, §14 (no reference figure yet). Designed in: DESIGN §11, §14 (ER-RISE-03); DESCRIPTION-COPY-2 §26; ONE-SHOT-PROMPT 32
 - Status: unmeasured. Coverage row: 2.12.4.
+- Prior research: production/cloud-week/lines: 1,626 ambient lines, at least 8 per kind and situation, with silence rules, not yet merged; the count of 6 is met on paper (PRIOR-RESEARCH-INDEX section 4 item 6); KCD2 crowd pool median 5 variants, repeat gap 32 s is a file-read lead.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-06 every person answers a street manner within 1 s (ruled, though the study says measured). None measured.
 
 ### 2.12.5 Property that reacts
 
@@ -617,6 +719,10 @@ The rise under the hood: never a number.
 - Standard: Each rung changes three things a newcomer can point to (ER-RISE-03) Test: H: office at rung 1 and rung 3 compared
 - Source: DESIGN §14 (no reference figure yet). Designed in: DESIGN §14 (ER-RISE-03); DESCRIPTION-COPY-2 §26
 - Status: unmeasured. Coverage row: 2.12.5.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-01 three changes a week a returning player can point to; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
+- Prior research: aaa-studies/MONEY-AND-PROGRESSION.md MP-07: KCD2 skills reach about 20 of 30 by the first region's end and late Henry is a powerhouse (two reviews, thin); growth here stays position only.
 
 ### RT-07 Hooks and knowledge as leverage
 
@@ -628,7 +734,7 @@ The rise under the hood: never a number.
 ## 2.13 The escalation dial
 
 Fists, shown, fired, war: a fact in the town's memory, not a meter.
-
+- Prior research: game-design/combat-design.md (12 Oct): eight-rung ladder (stare, square up, threaten, shove, strike, weapon out, weapon used, kill); most confrontations end on rungs 1 to 4.
 
 ### 2.13 The escalation dial
 
@@ -643,11 +749,13 @@ Fists, shown, fired, war: a fact in the town's memory, not a meter.
 - Standard: War only on these learned events; never on an unseen one; the fall rule as the description. Test: B: seeded sequences of shootings seen and unseen; the dial's state checked.
 - Source: The description, section 33. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-12; DESIGN §7; DESCRIPTION-COPY-2 §27
 - Status: decided. Coverage row: RT-12.
+- Prep: NUMBERS-RUN R4: the dial and Ellis each fall one step after about two quiet game weeks (RT-12, RT-13), so in a 5-week Act II either falls at most twice; the cooling numbers were set for 7 weeks and should be re-read when the panel plays a 5-week Act II. No rate change proposed. RT2-14's first gun ways can arrive in Act II's first week for a player Sheila trusts early.
 
 ## 2.14 Each person's temper
 
 Nerve, loyalty and readiness to talk for each named person.
-
+- Prior research: game-design/town-traits-draft-2026-09-29.md: nerve, loyalty to Tom (a stranger 0.3), greed and a 'police never' flag drafted for all 41 residents (Ron 0.8/0.7/0.3, Sheila 0.6/0.6/0.2); ready, pending his scope answer (Q6).
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-09 no empty dodge: a reply lacks neither a fact nor a stated reason; decided. None measured.
 
 ### 2.14 Each person's temper
 
@@ -667,6 +775,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Standard: Two cars and two drivers at rung 1, five cars at rung 3 (DESIGN §14) Test: S: a bought car joins the board and the ranks; addendum rules ER-FIRM-01 to 02
 - Source: DESIGN §14 (no reference figure yet). Designed in: DESIGN §12, §14; DESIGN-ADDENDUM A14; DEFINITIONS RT2-01, RT2-06, G8; DESCRIPTION-COPY-2 §23
 - Status: unmeasured. Coverage row: 2.15.1.
+- Prior research: production/art/mickeys-cars drew the office for nine cars; production/specs/hook-cast.json has Mickey's open 7 to 27 every day, while cab-operations.json differs.
 
 ### 2.15.2 Ranks and accounts
 
@@ -674,6 +783,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Standard: A rank is won by either road and never otherwise; accounts open in that order, each at its rung (the cold store at rung 3); "enough days" is five days in a fortnight (a balance figure checked with GD-07). Test: B: rank presence runs; account order.
 - Source: The description, sections 28, 31. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.15.2, RT2-01, G8; DESIGN-ADDENDUM A14; DESCRIPTION-COPY-2 §23
 - Status: decided. Coverage row: 2.15.2. Conflicts settled: C-059.
+- Prior research: research/cab-office-1990: radio licence 120 pounds a year, VAT threshold 25,400 pounds, settle about 49 to 54 a week bear on ranks and accounts; the laundering cap for a cab office is still owed from the 28 Sep outline.
 
 ### 2.15.3 Other firms on the ranks
 
@@ -692,7 +802,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 ## 2.16 Death, bodies and the missing
 
 A killing is permanent and remembered forever; a man who stops keeping his routine becomes the town's question.
-
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-04 a cost to body or standing shows and has an end or a way back; decided. None measured.
 
 ### 2.16 Death, bodies and the missing
 
@@ -711,7 +821,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 ## 2.17 Fronts and rackets held
 
 Taking a share of a business, putting a man in, money and trouble coming back; run through people, never sliders.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-01 three changes a week a returning player can point to; decided. None measured.
 
 ### 2.17 Fronts and rackets held
 
@@ -737,7 +847,7 @@ Taking a share of a business, putting a man in, money and trouble coming back; r
 ## 2.18 Ambulance and the hospital
 
 Someone hurt is taken to hospital after a call from the phone box; stopping to help means making that call.
-
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
 
 ### 2.18 Ambulance and the hospital
 
@@ -749,7 +859,8 @@ Someone hurt is taken to hospital after a call from the phone box; stopping to h
 ## 2.19 Lasting marks on the town
 
 A forced door shows for a day; glass stays broken until mended; his cars on the ranks; things stay where they were left.
-
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-04 a man Tom beat shows a mark for a game day and mentions it first; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-01 three changes a week a returning player can point to; decided. None measured.
 
 ### 2.19 Lasting marks on the town
 
