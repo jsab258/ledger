@@ -15,7 +15,7 @@ People on screen.
 - How it works: Four faces are frozen and approved: Ron P2, Sheila S4 with its hair, Darren S6 with Epic's short cut, Tom L1. The other eleven casting sheets are approved as text and their faces are cast in MetaHuman from them, a generated portrait being a mood only. The test is his eye at talking distance, and a face must not read underlit in passing.
 - Standard: Faces frozen: Ron P2, Sheila S4, Darren S6, Tom L1; the other eleven cast from their sheets Test: his eye at talking distance
 - Source: RULINGS 30 Sep, 8 Oct (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 25 Sep, 30 Sep, 8 Oct (Faces, hair and voices); PARTS-TREE 5.1.1; 6-RISKS R4
-- Status: outside. Coverage row: 5.1.1. Conflicts settled: C-095.
+- Status: outside. Coverage row: 5.1.1. Conflicts settled: C-112.
 
 ### 5.1.2 Bodies
 
@@ -36,11 +36,11 @@ People on screen.
 - How it works: Clothes are Kiln garments (skinned meshes, only loose parts simulated). Tom wears three outfits across the rise (as he arrived, a decent jacket, a good overcoat) and a dark coat for nights, each changing how strangers speak to him and which doors open; prices are a second-hand coat 15 pounds, the decent jacket 45, the good overcoat 90. The floor is plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; passers-by are judged at eight metres, principals at talking distance on the 2026 bar against KCD2 frames.
 - Standard: Clothes' floor: plain, period-plausible, no modern giveaways, no clipping; principals at talking distance on the 2026 bar Test: the gate; his eye in the game's camera
 - Source: RULINGS Clothes (3 Oct, 19 Nov) (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN §14; DEFINITIONS-2026-11-21 §G8; DESIGN-ADDENDUM §A21; RULINGS Clothes 3 Oct, 29 Sep, 19 Nov; production/art/clothing/RUBRIC.md
-- Status: outside. Coverage row: 5.1.4. Conflicts settled: C-096.
+- Status: outside. Coverage row: 5.1.4. Conflicts settled: C-113.
 
 ### 5.1.5 Crowd variety
 
-- How it works: Named only; not designed beyond: a crowd count by hour and place (Quay Street's parade front 25 to 35 people in the busy bands, 8 to 14 from 18:00 to 22:00, 3 to 6 from 22:00) and the rule that a crowd extra who catches any slot of a deed becomes kept, with a fixed face, a coat and a home. No repeat distance or variety rule exists.
+- How it works: Named only; not designed beyond: a crowd count by hour and place (design pass 4: the parade front 12 to 20 people in the busy bands, 5 to 10 from 18:00 to 22:00, 2 to 5 from 22:00; one frame 4 to 10, GD-02) and the rule that a crowd extra who catches any slot of a deed becomes kept, with a fixed face, a coat and a home. No repeat distance or variety rule exists.
 - Standard: none yet: repeat distance and variety rules to be set Test: S: no identical pair in one frame; his eye
 - Source: risk R5 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DEFINITIONS-2026-11-21 §G9, §RT2-10; COVERAGE 5.1.5; 6-RISKS R4; PARTS-TREE 5.1.5
 - Status: outside. Coverage row: 5.1.5.
@@ -62,11 +62,11 @@ Movement.
 - How it works: Fight animation follows the melee sheet: a jab lands 0.25 to 0.40 s after the press, a hook 0.45 to 0.75 s, the committed heavy blow 0.63 to 0.85 s and cannot be cancelled; the struck man reacts for 0.5 to 0.7 s (light) or 0.9 to 1.3 s (heavy), and a knocked-down man starts to get up after 1.5 to 3.0 s. A struck man reels by the side he was hit and nobody is hit through a wall. Per the 12 Oct ruling, the animation source is lab-tested before anything is built; no fight animation exists yet.
 - Standard: Melee sheet C2 to C4; ruling 12 Oct: animation source lab test before building Test: melee drills in Unreal match the browser
 - Source: RULINGS combat; melee sheet (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: FEEL-TARGETS-MELEE-2026-11-18 C2, C3, C4, C7; DESIGN §7; RULINGS Combat 12 Oct; PARTS-TREE 5.2.2
-- Status: outside. Coverage row: 5.2.2. Conflicts settled: C-097.
+- Status: outside. Coverage row: 5.2.2. Conflicts settled: C-114.
 
 ### 5.2.3 Interaction animation
 
-- How it works: Named only; not designed beyond: a list of interactions found across the description (doors open and stairs climb with no stop over 5 s; getting in and out of a car each under 2 s from both sides; sit, lean and light a cigarette on B; carry a holdall; search; raise the watch with N). The only standard is that none glitches.
+- How it works: Named only; not designed beyond: a list of interactions found across the description (doors open and stairs climb with no stop over 5 s; getting into a car 1.5 to 2.5 s door to seated and out under 2 s, from both sides (1.2.3); sit, lean and light a cigarette on B; carry a holdall; search; raise the watch with N). The only standard is that none glitches.
 - Standard: No glitches (CLAUDE.md gate) Test: the gate
 - Source: CLAUDE.md (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: ONE-SHOT-PROMPT S01, S02 and §9; DESIGN §5 ER-DRIVE-07; DESCRIPTION-2 §8; PARTS-TREE 5.2.3
 - Status: outside. Coverage row: 5.2.3.
@@ -217,7 +217,7 @@ The street heard; sound carries the town's eyes. CC0 only (D26).
 - How it works: A blow sounds four layers: whoosh from blow start, impact from contact, a pain cry after contact, and an enemy shout before his blow lands. The impact must come within 0.034 s of contact, the whoosh from 0.05 s before to 0.10 s after the start, the pain cry 0.05 to 0.30 s after contact, and the shout at least 0.40 s before. There is never combat music.
 - Standard: Melee sheet; DESIGN §7 Test: H: sound-only test; his ear
 - Source: DESIGN §17 (no reference figure yet). Designed in: FEEL-TARGETS-MELEE-2026-11-18 C13; DESIGN §7, §17; ER-MUSIC-01; PARTS-TREE 5.5.6
-- Status: unmeasured. Coverage row: 5.5.6. Conflicts settled: C-098.
+- Status: unmeasured. Coverage row: 5.5.6. Conflicts settled: C-115.
 
 ### 5.5.7 The mix
 
@@ -259,17 +259,17 @@ Silence is the commonest music; never combat music.
 
 ### 5.7.1 Radio programmes and period songs
 
-- How it works: Named only; not designed beyond: music comes from places (a radio in the caff, a shop, the office set, a window at night, the chapel organ), all invented or made for the game, on licences that never expire. A score may go under the few cut scenes and the act ends and an ending's close, but no music starts or changes because a fight or chase starts. The pirate radio station is owed by the brand bible.
-- Standard: No real bands, lyrics or brands (canon); content from the allowlist or our own, only on licences that never expire Test: canon gate; his ear
+- How it works: Named only; not designed beyond: music comes from places (a radio in the caff, a shop, the office set, a window at night, the chapel organ), all invented or made for the game, on licences that never expire. Music is heard only where it plays in the world (DEFINITIONS P09, 21 Nov); whether a short made-for-the-game score goes under cut scenes and act ends is Q11 for him, and none is built meanwhile; no music starts or changes because a fight or chase starts. The pirate radio station is owed by the brand bible.
+- Standard: No real bands, lyrics or brands (canon); content from the allowlist or the studio's own, only on licences that never expire Test: canon gate; his ear
 - Source: canon Brands and law (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon Brands and law; ADDENDUM §A8; DEFINITIONS-2026-11-21 §P09; ER-MUSIC-01; RULINGS Sources
-- Status: outside. Coverage row: 5.7.1. Conflicts settled: C-099, C-100.
+- Status: outside. Coverage row: 5.7.1. Conflicts settled: C-116, C-117.
 
 ### FIT-P09 Music made for the game, placed in the world
 
 - How it works: No music station in the cab. Music is heard only where it plays in the world (a radio in the caff, the chapel's organ, a record through a window), and every piece is made for the game and listed with its maker, since canon makes every band fictional with no real lyrics and no period recording is licensed. The check is the audio files listed against the allowlist and canon's fictional-brands rule.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS-2026-11-21 §P09; FIT-CHECK-2026-11-21 P09 and question 4 note; canon Brands and law; ADDENDUM §A8
-- Status: measured. Coverage row: FIT-P09. Conflicts settled: C-101.
+- Status: measured. Coverage row: FIT-P09. Conflicts settled: C-118.
 
 ## 5.8 Cameras and cut scenes
 
@@ -281,7 +281,7 @@ The camera system and the few short scenes.
 - How it works: One camera arm reads rows by Tom's state: street (the Between picture's height, 86 degree lens, 3.1 m back, feet in frame), run, room and talk (closer), fight (wider, 3.5 to 5.0 m back, both men's feet in at least 90% of frames), and car (about 5.8 m back, widening with speed). Blends take one second or less, shake obeys Reduce motion, and the camera never ends inside a wall, body or car. The field of view is a setting from 75 to 100 degrees, default 86.
 - Standard: Ruling 28 Oct (street, talk closer, fights wider); blends 1 s or less; shake obeys Reduce motion Test: S: frames counted; B clip detector
 - Source: RULINGS 28 Oct; DESIGN §17 (his ruling or canon). Designed in: RULINGS 28 Oct, 21 Nov; DESIGN §17 (ER-CAM-01, ER-CAM-02); FEEL-TARGETS-MELEE C10; DEFINITIONS-2026-11-21 Design pass 3 header; PARTS-TREE 5.8.1
-- Status: measured. Coverage row: 5.8.1. Conflicts settled: C-102.
+- Status: measured. Coverage row: 5.8.1. Conflicts settled: C-119.
 
 ### 5.8.2 Cut scenes
 
@@ -299,7 +299,7 @@ The camera system and the few short scenes.
 
 ### GV-06 How a deed is told: restraint and cruelty
 
-- How it works: The telling carries how a deed was done, not only that it was: a man put down with three blows and left alone is told differently from one kicked on the ground. The version is derived from people's beliefs, never a stored meter, and the worst telling once carried is never undone. The test is two seeded fights differing only in restraint, giving different told versions and different greetings within a game day.
+- How it works: The telling carries how a deed was done, not only that it was: a man put down with three blows and left alone is told differently from one beaten further once he is down. The version is derived from people's beliefs, never a stored meter, and the worst telling once carried is never undone. The test is two seeded fights differing only in restraint, giving different told versions and different greetings within a game day.
 - Standard: Two seeded fights differing only in restraint produce different told versions and different greetings within a game day. Test: B: paired fights; the told lines and greetings compared.
 - Source: production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md (DECIDED by the design proof, for him to overturn). Designed in: GTAVI-MAP-2026-11-21 §GV-06; YARDSTICK.md; IDEAS-FOR-LEDGER.md idea 9; DESIGN §2
 - Status: decided. Coverage row: GV-06.
