@@ -29,7 +29,7 @@ Walking the town with the camera: the verb under every other verb.
 - How it works: A door opens with the use key and Tom walks through without catching; stairs are walked, not snagged on; a locked door says it is locked. Nothing inside Mickey's holds him against a wall. Doors creak, hit and latch, and a forced door is the loudest thing in a quiet street. From any state he can move on within 5 s by walking, getting out or backing out, or a short in-world reset puts him on clear ground; there is no jump.
 - Standard: Never stuck (ER-CORE-01: moves on within 5 s); in or out of a door in under 2 s; no jump (ruling 23 Sep) Test: B: 30 minutes of walking into every door and stair; S: door use timed
 - Source: DESIGN §1 ER-CORE-01; ruling 23 Sep (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §1 ER-CORE-01; RULINGS 23 Sep genre line (no jump)
-- Status: measured. Coverage row: 1.1.3.
+- Status: ruled (his ruling or canon). Coverage row: 1.1.3.
 
 ### 1.1.4 Carrying
 
@@ -97,7 +97,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: A car Tom may open (the firm's cars, his own, an unlocked one) takes 1.5 to 2.5 s from door to seated, from either side, and he is moving within 1 s after; getting out takes under 2 s. A blocked door never traps him. Forcing a locked parked car takes about 6 s; there is no carjacking of a car with somebody in it. Crew and fares ride in the cab and a man at his side rides along; getting out after a wreck is immediate and Tom walks.
 - Standard: a car Tom may open: door to seated 1.5 to 2.5 s, moving within 1 s after; out under 2 s; forced entry of a locked car about 6 s; a blocked door never traps (ER-DRIVE-07) Test: S: enter and exit timed from both sides, door blocked
 - Source: STATUS.md and gtavi-driving-builder-2026-11-21 (SOLID); description section 23 (reference game). Designed in: DEFINITIONS design pass 4 'Getting in and out (1.2.3)'; GTAVI-MAP Run 5 additions; DESCRIPTION-COPY-2 s.10, s.23; DESIGN s.5 ER-DRIVE-07; PARTS-TREE notes on 1.2.3
-- Status: measured. Coverage row: 1.2.3. Conflicts settled: C-006, C-007.
+- Status: measured (solid in STATUS.md: five uncut, dated samples). Coverage row: 1.2.3. Conflicts settled: C-006, C-007.
 
 ### 1.2.4 Crashes, damage and unsticking
 
@@ -111,7 +111,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: People look before they step out, so nobody steps out within the stopping distance of a car at 30 mph (23 m); at town speeds a hit is the player's doing, and only his car can strike anybody. A hit knocks a person down and hurts them badly but never kills, whatever they land on. Fall by speed: under 10 mph a stagger, 10 to 25 mph knocked down and sitting up within 5 s, over 25 mph thrown down and still up to 20 s, then moving. The choice (stop and help, or drive off) comes within 2 s; an ambulance takes about ten game minutes; drive off and it is a hit-and-run chase and 'a Mickey's cab knocked her down and never stopped' goes round.
 - Standard: Canon (his pick 18 Nov 22:07): hurts, never kills; only the player's car strikes; the choice put within 2 s (ER-DRIVE-03, ER-DRIVE-04, ER-DRIVE-05, ER-DRIVE-10) Test: S: 1,000 seeded crossings with no contact; hits at 5, 15, 30, 50 mph, nobody dies; both choices seeded
 - Source: canon content rule; DESIGN §5 (his ruling or canon). Designed in: Canon content rule (his pick 18 Nov 22:07); DESIGN §5 ER-DRIVE-03 to -05, -10; DESCRIPTION-COPY-2 §11; DEFINITIONS pass 3 §P04, §G2
-- Status: measured. Coverage row: 1.2.5.
+- Status: ruled (his ruling or canon). Coverage row: 1.2.5.
 
 ### 1.2.6 Tailing and being tailed by car
 
@@ -132,7 +132,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: Kevin, Terry or a crewman can drive Tom: he says where, by landmark, and can skip the ride, which passes exactly its drive time on the clock. He can talk with the driver on the way. A crewman told to drive is an AI driver and always brakes for people.
 - Standard: A crewman told to drive is an AI driver and always brakes for people (DESIGN §12); a skipped ride costs its real time on the clock Test: S: a ride arrives; skip advances the clock by the drive's time; addendum rules ER-RIDE-01
 - Source: DESIGN §12; canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A24 (ER-RIDE-01); DESCRIPTION-COPY-2 §10; DESIGN §12
-- Status: measured. Coverage row: 1.2.8. Conflicts settled: C-010.
+- Status: ruled (his ruling or canon). Coverage row: 1.2.8. Conflicts settled: C-010.
 
 ### 1.2.9 Repairs, plates and paint
 
@@ -153,7 +153,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: One key (H) sounds the horn while held. It is a noise at about 60 m by day, further at night and less in rain, and turns watchers' heads like any noise. A short toot outside a door brings out a fare or a man Tom is waiting for within 10 s if he is within 15 m; a long blast in a quiet street at night draws a look from lit windows; pedestrians in the road step aside; it never alarms police alone.
 - Standard: rule: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows). Test: A horn sounded at night is heard by every listener inside its reach and by nobody outside it, and a waiting fare inside 15 m comes out within 10 s (golden rows).
 - Source: DESIGN-ADDENDUM-2026-11-20 A32 (from REFERENCE-MECHANICS-2026-11-20 M1.75) (reference game). Designed in: DESIGN-ADDENDUM A32; DESCRIPTION-COPY-2 §10
-- Status: measured. Coverage row: 1.2.11.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.2.11.
 
 ### GV-01 The boot, seen
 
@@ -221,14 +221,14 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: The ladder has eight rungs: stare, square up, threaten, shove or grab, strike, weapon out, weapon used, kill. Most confrontations end on rungs 1 to 4: a stare held, a man squared up to, a threat said (in talk or shown), a shove into a wall, and somebody gives way. Each rung is an act with the seven slots, so the town treats it like any deed. On the M key a hard look is rung 1 and a shove rung 4; a grab holds a man about 2 s.
 - Standard: Most confrontations end on rungs 1 to 4; each rung an act the town treats like any deed Test: S: each rung exposes seven slots; H: rung reached and why
 - Source: his combat design 12 Oct; DESIGN §7 (his ruling or canon). Designed in: DESIGN §7; DESCRIPTION-COPY-2 §9, §8; RULINGS 12 Oct (combat design)
-- Status: measured. Coverage row: 1.3.4.
+- Status: ruled (his ruling or canon). Coverage row: 1.3.4.
 
 ### 1.3.5 The street as a weapon
 
 - How it works: Seven places first: walls, doorways, railings, car bonnets, steps, kerbs and the quay edge, each a paired move fitted by height (a man shoved against railings, a head against a bonnet, a man put over the quay edge). Nothing is shown at length. A man put into railings is out of the fight for 4 s, and a man put in the water climbs out at the nearest ladder within a minute.
 - Standard: Seven places first, fitted by height (DESIGN); Sleeping Dogs' environment moves as the reference (melee sheet (a)) Test: S: each of seven places triggers its move; content check: no finisher shown at length
 - Source: DESIGN §7; FEEL-TARGETS-MELEE (a) (reference game). Designed in: DESIGN §7; DESCRIPTION-COPY-2 §9, §6; DEFINITIONS pass 3 §P18; FEEL-TARGETS-MELEE (a)
-- Status: measured. Coverage row: 1.3.5.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.5.
 
 ### 1.3.6 Things to hand and carried weapons
 
@@ -242,7 +242,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: There is no health bar: posture, breath, a dropped guard, blood and a limp show a man's state, and a player asked 'who was winning?' can say. Fists knock a man out (10 to 30 s) and never kill on their own. A fall against a kerb, wall or step within 3 s of a blow can kill, rarely, and the town treats it as a killing; the quiet blow from behind with a cosh or fist knocks out for 10 to 30 s. Tom has three states, fresh, hurt and beaten, shown only in his body.
 - Standard: No health bar; fists never kill; only a fall against kerb, wall or step within 3 s of a blow can, rarely (ER-FIGHT-05); knock-out 10 to 30 s Test: S: 10,000 simulated fights, deaths only by the fall rule; H: 'who was winning?'
 - Source: ruling 30 Oct; DESIGN §7; melee sheet (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §9; DESIGN §7 ER-FIGHT-05; RULINGS 30 Oct; FEEL-TARGETS-MELEE C7; DEFINITIONS RT-11, RT2-12
-- Status: measured. Coverage row: 1.3.7.
+- Status: ruled (his ruling or canon). Coverage row: 1.3.7.
 
 ### 1.3.8 Odds, crowds and nerve in a fight
 
@@ -256,7 +256,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: A fight ends when someone backs off, runs, goes down, the police arrive or people step in; backing off and running are inputs at every moment. Tom cannot die: beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, with a street that knows he lost, and is in control within 60 real seconds with the cost said. Hospital costs days, never money, and plants a witness.
 - Standard: A way out at every moment (ER-FIGHT-03); Tom never dies, in control within 60 real s (ER-FIGHT-04); Tom cannot die (the approved design) Test: S: each of five endings scripted; beaten route timed
 - Source: DESIGN §7; the description §3; the approved design, canon OPEN 3 (his ruling or canon). Designed in: DESIGN §7 Death; DESCRIPTION-COPY-2 §9; DEFINITIONS RT2-13; canon OPEN 3 (the approved whole-game design)
-- Status: measured. Coverage row: 1.3.9. Conflicts settled: C-014.
+- Status: ruled (his ruling or canon). Coverage row: 1.3.9. Conflicts settled: C-014.
 
 ### 1.3.10 Firearms
 
@@ -277,7 +277,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: Every fight's men are written as one of a few kinds: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps his distance, and (from the fit check) a wiry one who slips and runs. A big man has the most hidden capacity and a knife man the least. No two fights in a row use the same mix, so Lee on the quay, Iveson's yard hand and the two dockers by car two each feel different.
 - Standard: No two fights in a row use the same mix (ER-TYPES-01); players punish the same loop (PLAYERS punish 9) Test: S: the job data; addendum rules ER-TYPES-01
 - Source: PLAYERS.md; DESIGN §18 (reference game). Designed in: DESCRIPTION-COPY-2 §9; DESIGN-ADDENDUM A29 (ER-TYPES-01); DEFINITIONS pass 3 §P17, RT-11
-- Status: measured. Coverage row: 1.3.12. Conflicts settled: C-015.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.12. Conflicts settled: C-015.
 
 ### RT-09 Tom's line against women, over-sixties and the priest
 
@@ -380,7 +380,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - How it works: A witness who means to tell sets off, to a friend, a phone box or the station, and is seen going; when the walk starts in Tom's sight it lasts at least 30 real seconds (50% longer with the assist). 'Oi!' stops her for about 2 s and turns her round; then he can talk her round, pay, threaten, help or let her go. A threat can stop a report to the police, never the street's talk; a paid witness remembers being paid. A phone-box call brings a constable that night and the statement is signed at the station at nine next morning, until which Tom can still reach her.
 - Standard: The walk lasts at least 30 real s when it starts in Tom's sight (ER-EYES-04); a threat stops a report, never the talk (ruling 3 Oct) Test: S: walk timed; H: 'did you get to her first?'
 - Source: DESIGN §2; ruling 3 Oct (his ruling or canon). Designed in: DESIGN §2 'The walk', ER-EYES-04; DESCRIPTION-COPY-2 §16, §8; RULINGS 3 Oct; DEFINITIONS RT2-19
-- Status: measured. Coverage row: 1.4.5.
+- Status: ruled (his ruling or canon). Coverage row: 1.4.5.
 
 ### 1.4.6 Seeing assist
 
@@ -394,7 +394,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - How it works: Street manners sit on one key (M), picked by the stick: a nod, a greeting, a hard look, a shove, and a call ('Oi!') that stops a walker for about 2 s and turns him round. Each is an act with the seven slots, answered in body or voice within 1 s and remembered like any act. A greeting raises nothing; a hard look and a shove are rungs 1 and 4.
 - Standard: Answered in body or voice within 1 s; each is an act with the seven slots (canon moat) Test: S: each gesture answered within 1 s and remembered; addendum rules ER-MANNER-01
 - Source: canon; DESIGN §7 lower rungs (his ruling or canon). Designed in: DESIGN-ADDENDUM A10 (ER-MANNER-01); DESCRIPTION-COPY-2 §8
-- Status: measured. Coverage row: 1.4.7.
+- Status: ruled (his ruling or canon). Coverage row: 1.4.7.
 
 ### 1.4.8 Drawing a watcher away
 
@@ -551,7 +551,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - How it works: Two things under the coat (a weapon, the envelope, a key, a tool, the torch) and one in the hand or a holdall; the rest lives at the office in a locked drawer, the yard shed and the tin. A constable's search finds what is under the coat and in the hand; an office search finds what is stored there; what is stored survives save, load and skipped time. The Ledger's Open list says in words what he carries. The cab's boot also holds the envelope, a spare coat or a box.
 - Standard: Two things under the coat; the rest at the office; found in a search (ruling 23 Sep: coat, pockets, cab-office storage) Test: S: a search finds what is carried; office storage keeps across saves; addendum rules ER-POCKET-01 to 02
 - Source: ruling 23 Sep genre line; DESIGN §7 (his ruling or canon). Designed in: DESIGN-ADDENDUM A5 (ER-POCKET-01, -02); RULINGS 23 Sep genre line; GTAVI-MAP GV-01
-- Status: measured. Coverage row: 1.6.9.
+- Status: ruled (his ruling or canon). Coverage row: 1.6.9.
 
 ### 1.6.10 Tom's wardrobe
 
@@ -572,21 +572,21 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - How it works: A torch (about £4 at the ironmonger) takes one of the two pockets and is worked with I. Switched on it lights a short cone: a search in a dark room takes its table time with it and twice as long without. A lit torch makes Tom count as lit at 0.7 to anyone with a line of sight to him or the beam, and a beam moving behind a window shows from the street as a precursor. Off, it is a thing in a pocket a constable may find.
 - Standard: rule: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows). Test: In the same dark room, a search with the torch takes the table time and without it twice that; a watcher outside the window catches the beam as a precursor only when the torch is on (golden rows).
 - Source: DESIGN-ADDENDUM-2026-11-20 A33 (from REFERENCE-MECHANICS-2026-11-20 M1.101) (reference game). Designed in: DESIGN-ADDENDUM A33, A4; DESCRIPTION-COPY-2 §3 (Controls); DEFINITIONS pass 3 §G8
-- Status: measured. Coverage row: 1.6.12.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.12.
 
 ### 1.6.13 Lifting from a pocket
 
 - How it works: Beside or behind a person in a crowd, a queue or a packed caff, one held press of about 2 s takes the one thing worth taking (a key, a letter, a wallet). Whether he feels it follows fixed limits, never a roll: an attentive man, good light or fewer than three people near means he feels it; a distracted man in a crowd of three or more in poor light does not. His head turns before he feels it and Tom can stop. Felt, it is a deed with the seven slots and he turns on Tom; a lifted key is missed by morning and he suspects only people he noticed near him.
 - Standard: rule: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows). Test: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows).
 - Source: DESIGN-ADDENDUM-2026-11-20 A34 (from REFERENCE-MECHANICS-2026-11-20 M1.97) (reference game). Designed in: DESIGN-ADDENDUM A34; DESCRIPTION-COPY-2 §14
-- Status: measured. Coverage row: 1.6.13.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.13.
 
 ### 1.6.14 Damage by hand
 
 - How it works: A job or pressure can ask Tom to break a window, windscreen, van light or shop sign himself. It is a loud act heard at the force reach, the damage stays until mended, and the owner reads it as a message from whoever he suspects and knows by morning. It climbs a rival's ladder if aimed at his; sending men to do it is the sent verb.
 - Standard: rule: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13) (reference game). Designed in: DESIGN-ADDENDUM A35; DESCRIPTION-COPY-2 §22
-- Status: measured. Coverage row: 1.6.14.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.14.
 
 
 ### 1.6.15 Hold-ups of shops and people
@@ -619,7 +619,7 @@ Tom's power is people: orders in the field, sending in Act II, the board.
 - How it works: From Act II, eight verbs, each through a named man: hurt, plan, frame, lean on a witness, move or hide a body, dock or beat one of his own, hit a rival's property, vouch. A send is two inputs, the verb then a target from the Ledger; the man does it on the next night his routine allows, decided by his nerve against the target's, the watchers, light and noise. Every send resolves within two game nights, Tom learns the morning after from the man's own line, and the result runs the same perception and memory as his own deed. A beating is never shown at length, and each send leaves a chain the town can trace.
 - Standard: Each through a named person; an order given and a line written; a beating never shown at length (DESIGN §12; canon no cruelty as spectacle) Test: S: each verb leaves a chain the town can trace; accomplice knows
 - Source: D56; DESIGN §12 (his ruling or canon). Designed in: DESIGN §12 Orders; DESCRIPTION-COPY-2 §22; DEFINITIONS RT-08, RT-09
-- Status: measured. Coverage row: 1.7.2.
+- Status: ruled (his ruling or canon). Coverage row: 1.7.2.
 
 ### 1.7.3 The board
 
