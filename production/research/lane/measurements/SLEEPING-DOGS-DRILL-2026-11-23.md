@@ -20,3 +20,10 @@ Tool: tools/drills/watch_opening.py (starts the game, a FIXED list of timed taps
 - Holding W alone already moves Wei at a jog in the chase; whether Shift changes the gait needs the frames compared side by side.
 
 Hours: 0.65 measuring (drills), logged in STATUS.md.
+
+## Drill 1 read (23 Nov 21:40 to 21:50 Swiss, by eye on two labelled contact sheets of the legs, 44 and 50 grabs)
+- **W alone (walk4):** a jog, not a walk, all 4 s (heels flick up behind, arms pumping). Step rate about 3.4 a second (soles seen up at about 0.29 s steps; one sample, read by eye at a 90 ms grab step against a 290 ms step, so ±0.4). A lead, not solid.
+- **W with Shift (run4):** a faster run, and at about 1.0 to 2.1 s the run key carried Wei over the cardboard and round a hanging net in an automatic vault and turn (grabs 13 to 26): in this game the run key also does the free-running. So run4 is not a clean straight run; a speed run needs open ground.
+- **Speed not readable from this drill:** the distance-to-Naz readout (45 m to 32 m in walk4) mixes in Naz's own running, and nothing in view has a known length. The ruler has to come from a still target (the readout while Naz stands, or a checkpoint marker) or a counted run of paving over open ground. A slow walk needs its own key (none found on W alone): look up the game's controls page before the next run.
+- Next runs (each about 7 min from launch, after 10 idle minutes): hold W and W+Shift on the open quay after the chase, not in the market lanes.
+Hours: 0.2 measuring (reading).
