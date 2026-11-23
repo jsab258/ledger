@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-23 16:22 (the hourly run)
 
-**Row due:** at the next start (last row 15:24; page read 15:40: no verdicts, no advisor; filter verdicts after 2026-11-23T14:40 UTC, advisor after 2026-11-23T15:15:00+01:00; last ack 330 at 15:24).
+**Row due:** at the next start (last row 16:28; page read 16:37: no verdicts, no advisor; filter verdicts after 2026-11-23T15:37 UTC, advisor after 2026-11-23T16:15:00+01:00; last ack 332 at 16:30).
 **Uncommitted:** nothing beyond what the Stopped line names.
-**Stopped:** 2026-11-23 15:44 (the 15:22 run: advisors 328-330 acked; star slot reader and G5 re-read; installed-game method written and reviewed; two questions on his page; stopped at a clean point near the history limit, 237k of 250k)
+**Stopped:** 2026-11-23 16:43 (the 16:22 run: advisors 331-332 acked; his games ruling recorded; recorder asked on his page; installed-game reprice; catalogue notes read by two helpers; stopped at a clean point near the history limit, 222k of 250k)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,18 +34,18 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 23 Nov 07:07-07:10: the order of 23 Nov saved, its adoption item raised.
 - 13:07-14:40: his tap (08:12) adopted it; its item ledger written, last week's items carried into orders/archive/2026-11-23.md; week-shape.json inactive; progress page with last week's numbers; the budget table (production/research/games-numbers/BUDGET-TABLE-2026-11-23.md, reviewed, fixes applied); his page: the three games can go (item uninstall-three-games-2026-11-23); nightly package and walk weekly, the night after Sunday (production/playtest/nightly/schedule.json, walk_tonight() in tools/nightly_walk.py); api_batch prices pictures by tokens; advisors 320-323 acked; the C: folder list in the 14:00 row.
 - 15:22-2026-11-23 15:44: advisors 328-330 acked with the drive reading (C: 205 GB free, RDR2 fits leaving about 85 GB); the uninstall item closed; tools/star_slots.py (n23-2 try 3, fixed slots and a template, from HUD-ICON-READING-NOTES): 47 of 49 on 6wy7gx, about 30 of 36 on 49g1xb, red stars as lit; G5's flag cleared (A, B, C, G are two-star spells; STATUS.md); INSTALLED-METHOD.md written, reviewed (INSTALLED-METHOD-REVIEW), revised; GTA V, GTA IV, KCD2 copies load replaced unsigned files: not run (DECISIONS 15:26); his page asks store copies and scripted keys in Sleeping Dogs. Pushed 4aa0f93e5.
+- 16:22-16:43: advisors 331-332 acked; his games ruling in RULINGS and INSTALLED-METHOD.md; game items closed; ffmpeg on the allowlist (item 18), its run refused, asked on his page; installed-game reprice in STATUS.md; catalogue started. Pushed 697d7ae91.
 
 ## In flight
-- Nothing runs; no helpers.
-- Page tools (lost on reload; rewrite): seekTo(v,t); starscan(t0,t1,step,cols,cw) and starscanT(times,cols,cw) crop x 0.854W-W, y 0-0.083H into a fixed canvas, labels UNDER cells; fsheetT(times,cols,cw) full frames. Canvas at most 6 x 130 px wide; poll window._r (45 s limit).
+- Nothing runs; no helpers. Catalogue notes done: NOTES-A (GTA VI 41 usable rows, RDR2 43, KCD2 24), NOTES-B (GTA V 41, GTA IV 20, Sleeping Dogs 12, Yakuza 12), NOTES-HIS-VIDEO (10); unreached: Reddit, ResetEra, GameFAQs, all YouTube view counts (helpers' WebFetch gets digests only).
+- Page tools (lost on reload; rewrite): seekTo(v,t); starscan and starscanT crop x 0.854W-W, y 0-0.083H; fsheetT full frames; canvas at most 6 x 130 px; poll window._r (45 s).
 
 ## Next, in order
 00. Pace first: `python tools/pace_line.py <week> --fable <fable>` (needs the number). Ceiling now line plus 25 (advisor 330, replaces 325). At 15:23 the week read 20% against 1.3%: under the ceiling, keep measuring.
-0. Read his answers on the two new items: store-copies-for-measuring-2026-11-23 and scripted-keys-in-games-2026-11-23. With a yes on keys: the first Sleeping Dogs drill per INSTALLED-METHOD.md (fetch PresentMon; ffmpeg only after an allowlist line naming its build; check the GOG files first and record the judgement; scan-code test; walk and run first; only when he has been away 10 min). Without it: footage only, and say so in the reprice.
-1. Advisor 324: the hidden-details catalogue widened (GTA VI, RDR2, KCD2, GTA V, GTA IV, Sleeping Dogs, Yakuza; captions by the cheap reader on the API credit; due Thu 26 Nov 18:00; about 4 h).
+0. His page: recorder-for-drills-2026-11-23 (his chat yes lets ffmpeg be fetched and run into F:/LedgerTools/tools/ffmpeg; the 9-byte ffmpeg-lgpl.zip there is a failed fetch of the session's own, delete it). With the recorder: KCD2 first (it has saves) per INSTALLED-METHOD.md, then the openings of Sleeping Dogs, GTA V, GTA IV by fixed key scripts (two tries each). Captions: YouTube's transcript panel in the browser pane works (expand the description, Show transcript, read the segments); a script fetch of the caption track was refused, do not retry it.
+1. Advisor 324 catalogue (due Thu 26 Nov 18:00): the session reads the top videos' transcripts per game in the browser pane (search YouTube there for 'hidden details' per game; titles, views, dates from the page) to fill Sleeping Dogs, Yakuza and KCD2; then one research-synthesis helper ranks the twenty best for LEDGER into details-catalogue/CATALOGUE.md from the four notes, one fresh reviewer against the sources.
 2. n23-2: the ruler check (film our own packaged build with play.py; true walk 160, run 420 cm/s, SliceCharacter.h; measure by the footage method; error per kind of number into STATUS.md). star_slots.py's known misses: grey over bright or white backgrounds, faint grey; empty slots untrusted.
 3. n23-1: the reprice (advisor 328's split: drills in installed clean copies vs footage), then the feel rows; every row names its blueprint decision.
 4. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third (Dropbox's client and the unpinned flag; whether this session's sandbox blocks the attribute write).
@@ -58,6 +58,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5. History rewrite: HELD for his word at the PC. Progress page daily from the live page (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 23 Nov 16:2x: running a just-fetched ffmpeg, and a page script fetching YouTube captions, were refused by the permission check; not worked round. Stamps ran ahead twice more: Get-Date first.
 - 21-22 Nov: 'uncut' descriptions can be false; seeks hang in some runs (test one); run ci-checks alone (./tools/ci-checks.sh after unset MSYS_NO_PATHCONV; env -u bash is refused); stamps ran about 10 minutes ahead of the clock five times: Get-Date in its own call before every stamp.
 
 ## Kept as they are

@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 2 open · updated Monday 23 November, 16:27",
+ "kicker": "LEDGER · Needs you · 2 open · updated Monday 23 November, 16:33",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -58,7 +58,7 @@
    "only_you": "his-setting",
    "tried": "The session fetched the free recorder (ffmpeg); this PC's safety check refused to run it without your word.",
    "recommendation": "Yes, when you are next at the PC.",
-   "added": "2026-11-23 16:36",
+   "added": "2026-11-23 16:31",
    "pictures": [],
    "detail": [],
    "options": [

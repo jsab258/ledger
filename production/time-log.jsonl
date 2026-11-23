@@ -1099,4 +1099,8 @@
 {"event": "start", "at": "2026-11-23T15:22:00", "task": "n23-1", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-23T15:27:00", "note": "page reads, store-copies item, method research brief"}
 {"event": "start", "at": "2026-11-23T16:22:00", "task": "n23-1 his games ruling recorded, page, recorder ask", "phase": "2", "kind": "production"}
-{"event": "stop", "at": "2026-11-23T16:42:00", "note": ""}
+{"event": "stop", "at": "2026-11-23T16:33:00", "note": ""}
+{"event": "start", "at": "2026-11-23T16:33:00", "task": "n23-1 installed-game reprice; advisor 324 catalogue reading", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T16:43:00", "note": ""}
+{"event": "start", "at": "2026-11-23T16:35:00", "task": "advisor 324 catalogue: two research-reader helpers (A 6 min, B 4 min)", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T16:41:00", "note": ""}
