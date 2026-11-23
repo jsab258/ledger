@@ -1,0 +1,4 @@
+Plan letters per reader (X4 The Burial Club, Y5 The Arrested Ship, Z4 The Knowledge):
+r1: A=Y5 B=Z4 C=X4
+r2: A=X4 B=Y5 C=Z4
+r3: A=Z4 B=X4 C=Y5
