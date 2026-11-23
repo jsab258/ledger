@@ -8,7 +8,7 @@ Each entry: how it works; its standard and test; the source of the standard; its
 ## 9.1 Kiln
 
 His clothing pipeline, then props, vehicles, buildings and people modules.
-
+- Prior research: research/fabric-targets: measured KES values exist for only nine mixed fabrics (PMC8584912), e.g. wool 161.8 g/m2, Cusick drape 0.319; research/game-clothing-pipeline: Epic's outfit route wipes hand weights (tears at armpit and upper thigh).
 
 ### 9.1 Kiln
 
@@ -76,7 +76,7 @@ His clothing pipeline, then props, vehicles, buildings and people modules.
 ## 9.2 Art pipeline
 
 MetaHuman casting, Blender kits, the asset plan, the catalogue.
-
+- Prior research: research/faster-builds: last five packaged builds mean 39.7 min (compile 5.0, imports 6.8, cook, stage, pak and archive 15.6, copy 1.3, tests 10.3); research/asset-checks: before-counts for 10 pieces, 72 gate rounds, 257 reviews, 64 FAILs.
 
 ### 9.2 Art pipeline
 
@@ -112,7 +112,7 @@ Each system proved in the prototype ported under the same tests (money, debts, j
 ## 9.5 Testing and gates
 
 The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eight, the nightly packaged walk, the publish gate.
-
+- Prior research: research/qa-practice and research/packaged-game-testing: a pass is the packaged build the player launches; start-up check after every package, scripted golden path with real key presses, long runs, AI free play, free tools only.
 
 ### 9.5 Testing and gates
 
@@ -136,7 +136,7 @@ One home for every number the browser, the Core and Unreal are tuned from.
 ## 9.7 Records and guards
 
 Doc caps, approvals, retention, git size guard, content and canon gates.
-
+- Prior research: research/disk (16 to 17 Nov): F: 119.5 GB with 22.4 GB free against the 20 GB floor, held by the MetaHuman project 21.2 GB, gate pictures 14.3 GB, garments 7.1 GB.
 
 ### 9.7 Records and guards
 
@@ -198,7 +198,7 @@ The dated plan, forecasts, hour coding, allowances and caps; a new system placed
 ## 9.11 Reference studies and re-checks
 
 The 18 studies, unreached sources, re-checks (Study 17 review, GTA VI after a month).
-
+- Prior research: research/egress-allowlist: the cloud container reached few sites (gateway 403 to CONNECT); the lesson is the rule 'what the cloud cannot reach is researched from this PC'.
 
 ### 9.11 Reference studies and re-checks
 
