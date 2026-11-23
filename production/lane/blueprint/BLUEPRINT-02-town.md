@@ -50,7 +50,7 @@ Everyone keeps a day, with Tom or without him.
 - How it works: The game runs from Monday 15 October 1990. Thursday is market day in Copper Row and empties the Hook's shops; Saturday's match fills the street at three and five; on Sunday the shops shut and the chapel is busy. Two dated days: Bonfire Night (a display on the quay, adults only), taken as Monday 5 November, and Remembrance Sunday at the chapel on 11 November, both in week 4 of the 7-week calendar. Nobody speaks of real people or news; the invented local poll-tax campaign may be talked about. After the ending the town repeats its ordinary weeks with no special days beyond Christmas Day.
 - Standard: No real people or events spoken of (canon: no real people); no children (canon) Test: S: routines change on the calendar days; content gate; addendum rules ER-CAL-01 to 02
 - Source: canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A20; DESCRIPTION-COPY-2 §5; DEFINITIONS CLK-06, RT2-21; canon (Brands, content rule)
-- Status: measured. Coverage row: 2.1.6. Conflicts settled: C-037.
+- Status: ruled (his ruling or canon). Coverage row: 2.1.6. Conflicts settled: C-037.
 
 ### FIT-G9 Crowd counts by hour and place
 
@@ -76,14 +76,14 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - How it works: Every act exposes seven slots a watcher may catch or miss: the precursor (a torch beam, a man hanging about), the draw (a weapon coming out), the act, the victim, the actor, the flight and the aftermath (broken glass, a body). A person who caught only the aftermath knows only that something happened. Offers, threats, promises and lies are acts with the seven slots too.
 - Standard: Every act exposes seven perceivable slots (canon) Test: S: PerceptionGolden rows
 - Source: canon The moat (his ruling or canon). Designed in: canon (The moat); DESIGN §2; DESCRIPTION-COPY-2 §5 (What a person catches); DEFINITIONS RT-14
-- Status: measured. Coverage row: 2.2.1.
+- Status: ruled (his ruling or canon). Coverage row: 2.2.1.
 
 ### 2.2.2 Identification ladder
 
 - How it works: What a witness knew of who did it climbs five rungs: someone, a shape, a mark (the coat, the car, a limp, a bruise), a face, recognition. Recognition is gated by knowing him, never by distance and light alone: a stranger who saw his face clearly at 5 m can describe it but never name Tom. A person knows Tom for good only by four triggers (spoken to face to face, rode as his fare, somebody they know named him in his sight, or saw his face at 8 m or less in light 0.7 or more at the office on two different days). A face seen once can be matched later ('that's the man') and pointed out to the police, but not named until told.
 - Standard: Five rungs; recognition gated by relationship, never by distance and light alone (canon) Test: S: golden rows
 - Source: canon The moat (his ruling or canon). Designed in: canon (The moat); DESIGN §2; DEFINITIONS RT2-03; DESCRIPTION-COPY-2 §5
-- Status: measured. Coverage row: 2.2.2.
+- Status: ruled (his ruling or canon). Coverage row: 2.2.2.
 
 ### 2.2.3 Sight by distance and light
 
@@ -130,14 +130,14 @@ Permanent per-person memory.
 - How it works: Every person's memory (what they saw, heard and were told) is permanent and per person: nothing is wiped by time, a save and load, or skipped hours. Remediation is behavioural: a man can be talked round, paid, frightened or befriended but still remembers. A crowd extra who catches a slot becomes a kept person with a fixed face, coat, home and routine, saved with the town. The station keeps what was signed, every plate noted and every description.
 - Standard: ER-EYES-07: every memory survives save, load and skipped time Test: S: SaveChaos; reload at random moments and compare
 - Source: canon; DESIGN §2 (his ruling or canon). Designed in: canon (The moat); DESIGN §2 (ER-EYES-07); DEFINITIONS RT2-10, RT2-16
-- Status: measured. Coverage row: 2.3.1.
+- Status: ruled (his ruling or canon). Coverage row: 2.3.1.
 
 ### 2.3.2 Witness certainty
 
 - How it works: A witness is only as sure as what they caught: a noise or a shape is suspicion, never 'he did it'. A shopkeeper who saw a man in a dark coat says 'a man in a dark coat, could have been anyone', even if Tom was the only man in the street. A told version is weaker than the seen one ('Ada saw him' is sure, 'Ada told me' less, a third telling a guess), and Tom's Ledger shows the same: said to his face is sure, saw them looking is 'thinks so', two heads together is 'guesses'.
 - Standard: ER-EYES-06; ruling 30 Sep Test: S: golden rows
 - Source: ruling 30 Sep; DESIGN §2 (his ruling or canon). Designed in: RULINGS 30 Sep; DESIGN §2 (ER-EYES-06); DESCRIPTION-COPY-2 §5, §20; ONE-SHOT-PROMPT Who tells whom
-- Status: measured. Coverage row: 2.3.2.
+- Status: ruled (his ruling or canon). Coverage row: 2.3.2.
 
 ## 2.4 Gossip
 
@@ -149,14 +149,14 @@ Talk passing between people who meet; the engine, never the show.
 - How it works: Talk passes only between people who know each other and meet, within 6 m, weaker with each telling (about 0.8 per hop against a 0.2 floor, so a story fades by about seven hops). In the town code talk passes every 6 game minutes, only between people the cast ties together and puts in the same place that hour; a deed seen by one of the principals reaches about five of the nine on its first day and then stops. The paper carries news beyond the routines' meetings at the strength Alison wrote. How a deed was done (restraint or cruelty) travels with the telling.
 - Standard: Within 6 m, weaker each telling (the Core's rule); about 0.8 per hop against a 0.2 floor (PLAYERS standards list) Test: S: golden rows; Soak
 - Source: canon; C# Core; map-players (reference game). Designed in: DESIGN §2; ONE-SHOT-PROMPT Who tells whom; GTAVI-MAP GV-06; PARTS-TREE map-players S6
-- Status: measured. Coverage row: 2.4.1.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.1.
 
 ### 2.4.2 Cooling by kind
 
 - How it works: Talk cools by kind, about 1 to 7 game days: a scuffle or lift a day or two, a break-in about three, a wounding or robbery about a week; a hit-and-run 3 game days, an officer struck 7; a body or a killing never cools, and the person who saw keeps it for good. A told version cools like the seen one. This replaces the Core's single 96-hour half-life and needs new golden rows. KCD2's wanted status fades in a few in-game days; RDR2's bounty stays until paid. Under the 60 s clock talk cools in 24 real minutes to 2.8 real hours.
 - Standard: 1 to 7 game days by kind (a lift or a scuffle a day or two, a break-in about three, a wounding or robbery about a week), replacing the Core's single 96-hour half-life; a told version cools like the seen one; slots shed by GV-02. Test: S: new golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md C1: KCD2 wanted fades within a few in-game days (GamerBlurb, PC Gamer, Gfinity 2025); RDR2 bounty held until paid (rdr2.org 2023); GTA VI clues shed by change (Vice, GamesRadar 2026) (reference game). Designed in: DESIGN §2; CLOUD-FIGURES C1; DEFINITIONS RT2-16, CLK-07; ONE-SHOT-PROMPT Who tells whom
-- Status: measured. Coverage row: 2.4.2. Conflicts settled: C-039.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.2. Conflicts settled: C-039.
 
 ### 2.4.3 Showing what people know
 
@@ -170,14 +170,14 @@ Talk passing between people who meet; the engine, never the show.
 - How it works: In week one every answer to the outfit and every plainly seen deed is said to Tom's face by somebody he has met, within one game day (on paper at the old clock: the outfit's answer at minute 13 by Darren; a seen night 16 times in 16). Something must come back to him within his first 30 real minutes. Every reaction traces to a chain of sightings and tellings the test hook can print; there is no all-knowing town. At 60 s a game hour a game day is 24 real minutes.
 - Standard: ER-EYES-08: in week one within one game day; and within the first 30 real minutes at the playing clock (gossip timeliness, map-players S4) Test: S: 16 seeded weeks; timeliness at the playing clock
 - Source: DESIGN §2; PLAYERS second study (reference game). Designed in: DESIGN §2 (ER-EYES-08); ONE-SHOT-PROMPT Who tells whom, S06; PARTS-TREE map-players S4; DEFINITIONS clock
-- Status: measured. Coverage row: 2.4.4.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.4.4.
 
 ### 2.4.5 The paper and the news
 
 - How it works: The local paper (its name owed by the brand bible) comes out twice a week. Its local page carries only what Alison Sedman knows and chose to write, so a story about Tom is only as sure as what she was told. It lies on the caff's counter and in people's hands; readers know it at the strength she wrote it. Letters open on screen as a page and go into the Ledger (the solicitor's letter from Agar's side, the VAT letter in Act III, notes left at the office). No real people, events or brands in print.
 - Standard: The press works only through a person, Alison (D56); a story prints only what she knows (canon moat) Test: S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01
 - Source: D56; DESIGN §11 (his ruling or canon). Designed in: DESIGN-ADDENDUM A19; DESCRIPTION-COPY-2 §5; DESIGN §11 (D56)
-- Status: measured. Coverage row: 2.4.5.
+- Status: ruled (his ruling or canon). Coverage row: 2.4.5.
 
 ## 2.5 Witnesses after a deed
 
@@ -189,35 +189,35 @@ What people do once they have seen something.
 - How it works: A witness who means to tell sets off to a friend, a phone box or the station, and is seen going. No mobiles in 1990, so the walk is the timer: when it starts in Tom's sight it lasts at least 30 real seconds (50% longer with the assist). 'Oi!' stops a walker for about 2 s. A call from the phone box brings the constable to the spot that night; the signed statement is made at the station at nine next morning, and until she has signed Tom can still reach her.
 - Standard: No mobiles in 1990: the walk is the timer; at least 30 real s in Tom's sight (ER-EYES-04) Test: S: walk timed and visible
 - Source: canon era; DESIGN §2 (his ruling or canon). Designed in: DESIGN §2 (ER-EYES-04); DESCRIPTION-COPY-2 §16; DESIGN-ADDENDUM A10; DEFINITIONS RT2-19
-- Status: measured. Coverage row: 2.5.1.
+- Status: ruled (his ruling or canon). Coverage row: 2.5.1.
 
 ### 2.5.2 Stopping a witness
 
 - How it works: Tom can reach a witness first and talk her round, pay, threaten, help or let her go. A threat can stop a report to the police, never the street's talk (she may not sign, but she will tell her sister). Paid, she remembers being paid; her temper decides how hard she is to pay or frighten. A neighbour who sees him put a window in reports him unless on his side (Ada's tea, a friend) or talked round. Mickey's people never go to the police about one of their own; Rita, Wayne, Hal, the scrap dealer, the customs officer and the outfit's man never go because of their trade.
 - Standard: Ruling 3 Oct; ruling 1 Oct (neighbour reports unless on his side or talked round) Test: S: each answer's effect on the report and the talk
 - Source: rulings 1 and 3 Oct (his ruling or canon). Designed in: RULINGS 1 Oct and 3 Oct; DESIGN §2, §8; DESCRIPTION-COPY-2 §16
-- Status: measured. Coverage row: 2.5.2.
+- Status: ruled (his ruling or canon). Coverage row: 2.5.2.
 
 ### 2.5.3 Crowd reaction to a deed
 
 - How it works: After a seen deed, people within a few metres look, at least one gathers and drifts back, witnesses talk quieter for a game hour, and bystanders who saw a weapon flee. A person with the nerve (their temper) may step in, unarmed, at a hold-up or a beating in the street; Tom's line against women, the over-sixties and the priest holds if that person is one it covers.
 - Standard: ER-EYES-09; ruling 23 Sep. Raised by Y2.6: a person with the nerve for it (their temper) may step in, unarmed, at a hold-up or a beating in the street; Tom's line holds if that person is one it covers. Test: S: after a seen deed, look, gather, quieter talk
 - Source: ruling 23 Sep (his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN §2 (ER-EYES-09); GTAVI-MAP Y2.6; DESCRIPTION-COPY-2 §16
-- Status: measured. Coverage row: 2.5.3.
+- Status: ruled (his ruling or canon). Coverage row: 2.5.3.
 
 ### 2.5.4 A street on edge
 
 - How it works: Three seen deeds on one street within two game days set it on edge: doors locked earlier, windows watched longer, witnesses setting off to tell sooner, shops shut early, and the constable walking it more often (a second constable walks the same beat half a cycle behind, halving each gap to 2 minutes at Mickey's door and 4 at the yards' lane and landing). It eases as talk cools; the memories stay. One deed alone does not do it. It shows in people and doors, never a meter.
 - Standard: rule: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S. Test: A burst of three seen deeds on one street raises its watchers' readiness to tell and the constable's visits, and both fall back as talk cools; one deed alone does not. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A37 (from REFERENCE-MECHANICS-2026-11-20 M2.16) (reference game). Designed in: DESIGN-ADDENDUM A37; DESCRIPTION-COPY-2 §16; DEFINITIONS G5
-- Status: measured. Coverage row: 2.5.4.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.5.4.
 
 ### 2.5.5 Finding an unseen deed
 
 - How it works: Every unseen deed leaves traces (a forced door, glass, a missing thing, a body), and whoever's routine next brings them past finds it: the owner on his return, the cleaner at six, the first dock worker. The finder holds only the aftermath slot and reports or tells as a witness would. Nothing is found by a chance roll. A body hidden or sunk (put in the dock from the quay edge in 3 s) is never found, and the missing man becomes the town's question: his landlady asks, his mates at the dock gate ask, Ellis asks.
 - Standard: rule: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows. Test: Every unseen deed with a trace where a routine passes is found by the first person whose routine passes it, and that person holds only the aftermath; a hidden or sunk body is never found. Check S: golden rows.
 - Source: DESIGN-ADDENDUM-2026-11-20 A38 (from REFERENCE-MECHANICS-2026-11-20 M2.61) (reference game). Designed in: DESIGN-ADDENDUM A38; DESCRIPTION-COPY-2 §15; ONE-SHOT-PROMPT 14 (Death, bodies and the missing); DEFINITIONS RT2-11
-- Status: measured. Coverage row: 2.5.5.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.5.5.
 
 ### GV-02 Shedding what a witness holds, slot by slot
 
@@ -264,7 +264,7 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: An arrest costs hours, never the game, and under 2 real minutes of play: a constable walks up (go with him, or run), the station, the duty solicitor (free), the hours pass. About 6 hours for a window (2 and a caution if he owns up), 8 for a wounding, 12 for a robbery, 22 for a killing, then released without charge or on police bail pending inquiries, or charged and remanded (PACE 1984 as it stood in 1990). Also 8 for a hit-and-run or an officer struck, 12 for a gun found at a War stop, 22 for an officer killed; a refused stop with no deed behind it is 2 hours and a caution (a charge the second time). The coat is kept if he wore it; never taken twice for one deed; the street sees him go. This sits inside PACE (24 hours, 36 for serious).
 - Standard: About 6 h a window, 8 a wounding, 12 a robbery, 22 a killing, then released without charge or on police bail pending inquiries, or charged and remanded (the 1990 terms; "released under investigation" is later wording); under 2 real minutes; never twice for one deed (ER-POL-03). Inside PACE limits (24 h, 36 serious); 73% of 1984-87 detainees held under 6 h; 542 held over 24 h in 1990. Test: S: arrest timed
 - Source: CLOUD-FIGURES-2026-11-21.md B2: Hansard 8 Jul 1987; Home Office bulletin 1991 via Statewatch; Bottomley 1991 via Kemp and others (real-world figure or published standard). Designed in: DESIGN §8; CLOUD-FIGURES B2; DEFINITIONS RT2-02, RT2-16, RT2-17; DESCRIPTION-COPY-2 §17
-- Status: measured. Coverage row: 2.6.4. Conflicts settled: C-043.
+- Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.6.4. Conflicts settled: C-043.
 
 ### 2.6.5 DS Ellis and the four stages
 
@@ -292,7 +292,7 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: Two named officers in the Hook can be paid or leaned on, each with a price and a limit: one looks away from a car once (£50), the other loses a statement once (£200). A constable's challenge can be answered with a note if he is one of them; offered to an honest one it is a crime he saw. Buying one is an act a colleague may see, and that colleague keeps it. A bought officer Tom strikes stops being bought for good. The station as a whole never changes.
 - Standard: Police corruptible as individuals, never as a thesis (canon) Test: S: one bought officer, his limits; the rest of the station unchanged; addendum rules ER-BOUGHT-01
 - Source: canon (his ruling or canon). Designed in: canon (content rule); DESIGN-ADDENDUM A13; DEFINITIONS G8, RT2-02; DESCRIPTION-COPY-2 §18
-- Status: measured. Coverage row: 2.6.8. Conflicts settled: C-046.
+- Status: ruled (his ruling or canon). Coverage row: 2.6.8. Conflicts settled: C-046.
 
 ### 2.6.9 Charges, bail and the office searched
 
@@ -306,7 +306,7 @@ A pressure Tom can read and answer, never the end of the game.
 - How it works: A reported deed always brings an officer to its spot; a body brings tape, a torch at night and Ellis next morning. The spot is watched ground for the rest of the night, and the place stays warm for days: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often. After a lost chase the patrol searches the last-seen streets for 30 to 120 real s, slowly, lamp on the turnings, then waits on that road for the rest of the night; seen inside the search, the same chase resumes (design pass 4, DP5-C03). An anonymous 999 call brings a constable that night but never makes an arrest alone. Nothing on screen marks where he searches.
 - Standard: rule: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S. Raised by Y2.3: the place stays warm for days, not minutes: next morning a constable knocks along that street and asks at windows, and for two nights the spot is walked more often; no circle on screen. Test: A reported deed always brings an officer to its spot, a body brings tape and Ellis next morning, and the spot is watched until morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30) (reference game). Designed in: DESIGN-ADDENDUM A36; GTAVI-MAP Y2.3 (bars raised); DESCRIPTION-COPY-2 §18; DEFINITIONS RT2-19
-- Status: measured. Coverage row: 2.6.10. Conflicts settled: C-048.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.6.10. Conflicts settled: C-048.
 
 ### RT-13 Ellis's case model
 
@@ -374,7 +374,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - How it works: Rent is £18 every Friday, owed to the landlord's agent, a named man who calls at the counter; drivers' wages (£90 a week) come out of the book weekly. Doing nothing misses Friday's rent; a week of Tom's own fares alone pays it. A missed Friday becomes arrears said in the Ledger and by the agent on Monday; two missed: a letter and notice to quit the flat above in a fortnight; three: the flat is let and Tom sleeps in the office. The office itself is never lost, and paying arrears ends the ladder. A car hit at about 35 mph is off the road for a day.
 - Standard: Doing nothing misses Friday's rent; a week of fares alone pays it (ER-MONEY-03). The £18 rent sits in the 1990 band: council £23.36 a week (Apr 1990), private £65 (1991); cab running costs from 1990 fares (about £1.04 a mile London cab) and diesel about 45p a litre. Test: S: both weeks scripted
 - Source: CLOUD-FIGURES-2026-11-21.md B1: Hansard 27 Jun 1990, 15 Apr 1993, 30 Jan 1992, 18 May 1990 (real-world figure or published standard). Designed in: DESIGN §9 (ER-MONEY-03); CLOUD-FIGURES B1; DEFINITIONS RT-16, G8; DESIGN §5
-- Status: measured. Coverage row: 2.7.4. Conflicts settled: C-050.
+- Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.7.4. Conflicts settled: C-050.
 
 ### 2.7.5 Purses, tills and shops
 
@@ -388,7 +388,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - How it works: Rita's back room (open from rung 2) buys hot goods at about a third of retail (0.33): about 0.2 for jewellery up to 0.4 for a video recorder, less for each further piece the same week. Buyers differ: the second-hand shop takes radios and video recorders, the scrap yard car parts, a man at the back of the caff jewellery, and Wayne's pawn takes goods too; each is also a listener. Rita refuses or lowballs goods whose deed is still hot in talk. A haggle is three offers at most, and no price table shows.
 - Standard: About a third of retail (0.33), from 0.2 for jewellery to 0.4 for a video recorder; less for each further piece the same week; buyers differ in what they take (second-hand shop radios and video recorders, scrap yard car parts, a man at the back of the caff jewellery); each is also a listener. No price table on screen. Test: S: golden rows
 - Source: CLOUD-FIGURES-2026-11-21.md B3: Sutton 2014; AIC 2002; BOCSAR 1998 (real-world figure or published standard). Designed in: CLOUD-FIGURES B3; DESIGN §4, §9; GTAVI-MAP Y2.7; DESIGN-ADDENDUM A30; DESCRIPTION-COPY-2 §14
-- Status: measured. Coverage row: 2.7.6. Conflicts settled: C-051.
+- Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 2.7.6. Conflicts settled: C-051.
 
 ### 2.7.7 Flows ledger
 
@@ -576,7 +576,7 @@ Men who know: needs, nerve, loyalty, fates.
 - How it works: A driver gets a weekly wage (£90) from the fare book; drivers leave if unpaid or frightened. A man on a night job gets a cut (£10 to £40) agreed in a line of talk before it, paid from the tin. Going alone keeps the whole take but brings no second man. Paid short or late, a man's loyalty falls and he asks for his cut first, the sign before breaking; paid fairly he holds longer. Every pound paid out balances in the flows ledger.
 - Standard: rule: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger. Test: S: a seeded night job paid short lowers that man's loyalty and he asks for his cut before any break; every pound paid out balances in the flows ledger.
 - Source: DESIGN-ADDENDUM-2026-11-20 A40 (from REFERENCE-MECHANICS-2026-11-20 M7.8) (reference game). Designed in: DESIGN-ADDENDUM A40; DEFINITIONS G8, RT-17; DESCRIPTION-COPY-2 §22
-- Status: measured. Coverage row: 2.11.4.
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.11.4.
 
 ## 2.12 Position in the town
 
@@ -588,7 +588,7 @@ The rise under the hood: never a number.
 - How it works: Each person uses the name they have reached: the new owner, then Nowak, then Tom, then Tommy (Tom to most and Tommy to two or three at rung 4). The gate is knowing, not liking: a man who fears him may still call him Tom. A step never goes back, and each step up is heard within a game day of being reached. Sheila withholds his name until she trusts him, which comes with a clean week in which he never asked her to put the books off (built so meanwhile; Q7 for him: a visible state rather than a day count).
 - Standard: canon; ER-RISE-02 (heard within a game day, never goes back) Test: S: each step heard within a day
 - Source: canon premise; ruling 29 Sep (his ruling or canon). Designed in: canon (Premise and cast); DESIGN §14 (ER-RISE-02); DESCRIPTION-COPY-2 §26; RULINGS 29 Sep
-- Status: measured. Coverage row: 2.12.1.
+- Status: ruled (his ruling or canon). Coverage row: 2.12.1.
 
 ### 2.12.2 Rung table
 
@@ -635,7 +635,7 @@ Fists, shown, fired, war: a fact in the town's memory, not a meter.
 - How it works: The dial is a fact in the town's memory, not a meter, in four states: 0 Fists (nobody carries a gun); 1 Shown (a gun has been seen, news across town, the rivals' top men start carrying); 2 Fired (a shot heard to about 177 m by day, kept for good; armed officers come slowly; Ellis up a step); 3 War (a few named men on each side carry and everyone knows who; armed cars and stop and search; watchers run sooner, night fares fall; a shot can kill, each death named and permanent). Fired moves to War on a second shooting by a different side, a named man wounded by another firm's shot, or more than two of Tom's men seen carrying. It never moves on a deed nobody saw or heard, and falls one step after about two quiet game weeks, never back to 0.
 - Standard: ER-FIGHT-08, ER-FIGHT-09 (guns and killing stay rare at every state); falls one step after about two quiet game weeks, never back to 0 Test: S: dial never moves on an unseen deed; War weeks counted
 - Source: ruling 18 Nov; DESIGN §7 (his ruling or canon). Designed in: DESIGN §7 (ER-FIGHT-08, -09); DEFINITIONS RT-12; RULINGS 18 Nov; DESCRIPTION-COPY-2 §27
-- Status: measured. Coverage row: 2.13.
+- Status: ruled (his ruling or canon). Coverage row: 2.13.
 
 ### RT-12 Escalation dial War trigger
 
@@ -680,7 +680,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - How it works: One other minicab firm works the Hook, a small outfit with two cars whose owner is a new minor person. It takes the fares people stop giving Mickey's after a hit-and-run and gives them back as the talk fades. It is a business, never a fourth rival and never a crime faction.
 - Standard: 'People ring another firm for a while' (DESIGN §5); the three rivals stay three (canon) Test: S: fares move to the other firm after a drive-off and come back
 - Source: DESIGN §5; canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A14; DESIGN §5; canon (three rivals)
-- Status: measured. Coverage row: 2.15.3.
+- Status: ruled (his ruling or canon). Coverage row: 2.15.3.
 
 ### RT2-06 The firm failing for good
 
@@ -699,7 +699,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 - How it works: A killing is rare, permanent and remembered forever; a body never cools in talk and is never wiped. Tom cannot die: beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, in control within 60 real seconds. Fists never kill on open ground; a fall onto a kerb's edge, a step or a wall's foot within 3 s of a heavy blow, when the man was already spent, can kill (1 in 50 to 1 in 20 such knockdowns). Finishing a downed man is a separate decision, asked twice. A body left where a routine passes is found; a hidden or sunk one never is, and the missing man becomes the town's question.
 - Standard: Killing possible, rare, permanent, remembered forever (canon) Test: S: a missing routine is noticed; a body never cools
 - Source: canon content rule (his ruling or canon). Designed in: canon (content rule); DESIGN §7; DEFINITIONS RT2-11, RT2-12; ONE-SHOT-PROMPT 14
-- Status: measured. Coverage row: 2.16.
+- Status: ruled (his ruling or canon). Coverage row: 2.16.
 
 ### RT2-05 Killing principals and needed people
 
@@ -756,4 +756,4 @@ A forced door shows for a day; glass stays broken until mended; his cars on the 
 - How it works: Damage stays until mended: a forced door shows for a day, broken glass stays broken until the owner mends it, blood stays until rain or a bucket washes it; a rival's base keeps a mark until mended and property harm is repaired by people for money and a day. A beaten Tom carries bruises and a cut lip for three game days and a limp for one. Marks keep across save and load, and nothing is ever wiped.
 - Standard: Force shows on the door for a day (DESIGN §4); nothing is ever wiped (canon) Test: S: marks persist across save and load for their set time
 - Source: DESIGN §4; canon (his ruling or canon). Designed in: DESIGN §4; ONE-SHOT-PROMPT 15; DEFINITIONS RT-06, RT2-08; canon (The moat)
-- Status: measured. Coverage row: 2.19.
+- Status: ruled (his ruling or canon). Coverage row: 2.19.
