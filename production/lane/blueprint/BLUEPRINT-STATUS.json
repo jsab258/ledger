@@ -1,49 +1,48 @@
 {
  "version": 1,
- "updated": "2026-11-23 (keeper run 2)",
+ "updated": "2026-11-23 (keeper run 3)",
  "by": "blueprint keeper, claude-opus-5-5",
  "totals": {
   "measured": 1,
   "ruled": 75,
   "sourced": 15,
-  "decided": 133,
-  "pending": 62,
+  "decided": 134,
+  "pending": 61,
   "unmeasured": 45,
   "out": 14,
   "outside": 57,
   "machinery": 22,
   "parts": 424
  },
- "conflicts_settled": 202,
- "gaps": 324,
+ "conflicts_settled": 245,
+ "gaps": 371,
  "groups": {
   "What the player does with his hands": {
    "parts": 86,
    "measured": 1,
-   "decided": 32,
+   "decided": 31,
    "pending": 28,
    "unmeasured": 15,
    "out": 0,
    "outside": 0,
    "machinery": 0,
    "open_questions": [
-    "Q1",
-    "Q2",
     "Q3",
     "Q4"
    ],
    "note": "includes 1.6.15 hold-ups (no coverage row yet)",
-   "ruled": 10,
+   "ruled": 11,
    "sourced": 0,
    "rulings_to_revisit": [
-    "R1"
+    "R1",
+    "R9"
    ]
   },
   "The town under the hood": {
    "parts": 94,
    "measured": 0,
-   "decided": 53,
-   "pending": 13,
+   "decided": 54,
+   "pending": 12,
    "unmeasured": 10,
    "out": 0,
    "outside": 0,
@@ -55,7 +54,11 @@
     "Q10"
    ],
    "ruled": 15,
-   "sourced": 3
+   "sourced": 3,
+   "rulings_to_revisit": [
+    "R11",
+    "R13"
+   ]
   },
   "Story and people": {
    "parts": 45,
@@ -73,7 +76,10 @@
     "Q18"
    ],
    "ruled": 15,
-   "sourced": 0
+   "sourced": 0,
+   "rulings_to_revisit": [
+    "R13"
+   ]
   },
   "The place": {
    "parts": 33,
@@ -91,13 +97,15 @@
    "ruled": 6,
    "sourced": 0,
    "rulings_to_revisit": [
-    "R1"
+    "R1",
+    "R5",
+    "R6"
    ]
   },
   "How it looks and sounds": {
    "parts": 39,
    "measured": 0,
-   "decided": 1,
+   "decided": 2,
    "pending": 0,
    "unmeasured": 8,
    "out": 0,
@@ -107,11 +115,12 @@
     "Q8",
     "Q11"
    ],
-   "ruled": 5,
+   "ruled": 4,
    "sourced": 0,
    "rulings_to_revisit": [
     "R3",
-    "R4"
+    "R4",
+    "R7"
    ]
   },
   "The interface and the Ledger": {
@@ -125,7 +134,11 @@
    "machinery": 0,
    "open_questions": [],
    "ruled": 4,
-   "sourced": 1
+   "sourced": 1,
+   "rulings_to_revisit": [
+    "R8",
+    "R10"
+   ]
   },
   "The game's shape": {
    "parts": 48,
@@ -137,7 +150,6 @@
    "outside": 0,
    "machinery": 0,
    "open_questions": [
-    "Q1",
     "Q12",
     "Q13"
    ],
@@ -164,7 +176,8 @@
    "sourced": 10,
    "rulings_to_revisit": [
     "R3",
-    "R4"
+    "R4",
+    "R10"
    ]
   },
   "The machinery": {
@@ -178,7 +191,8 @@
    "machinery": 22,
    "open_questions": [],
    "ruled": 0,
-   "sourced": 0
+   "sourced": 0,
+   "rulings_to_revisit": []
   },
   "Shipping": {
    "parts": 13,
@@ -195,22 +209,11 @@
     "Q17"
    ],
    "ruled": 1,
-   "sourced": 1
+   "sourced": 1,
+   "rulings_to_revisit": []
   }
  },
  "open_questions": [
-  {
-   "id": "Q1",
-   "parts": "1.1.8, OUT-08",
-   "question": "Vaulting low walls and fences, next to the no-jump ruling (scope).",
-   "recommended": "Keep vaulting at set places only."
-  },
-  {
-   "id": "Q2",
-   "parts": "1.2.10",
-   "question": "Taking a parked car by force (scope, rating).",
-   "recommended": "Yes, parked cars only, about 6 s by force; never a driver pulled out."
-  },
   {
    "id": "Q3",
    "parts": "RT-09, 4.3.6",
@@ -319,23 +322,78 @@
  "rulings_to_revisit": [
   {
    "id": "R1",
-   "ruling": "the map: the Hook plus its docks",
-   "recommended": "keep; chases 1 to 3 minutes"
+   "ruling": "The map: the Hook plus its docks",
+   "recommended": "a) keep the map; chases 1 to 3 minutes"
   },
   {
    "id": "R2",
-   "ruling": "the clock: 60 s a game hour, about 7 weeks",
-   "recommended": "keep; fix shortfalls inside it"
+   "ruling": "The clock: 60 real seconds a game hour, Act II about 5 game weeks",
+   "recommended": "a) keep 60 s and seven weeks; fix shortfalls inside it"
   },
   {
    "id": "R3",
-   "ruling": "the thinking sound (28 Sep)",
-   "recommended": "drop it; the glance covers the wait"
+   "ruling": "The thinking sound",
+   "recommended": "a) drop it; the glance covers the wait"
   },
   {
    "id": "R4",
-   "ruling": "the 6 GB card line for the game alone (24 Oct)",
-   "recommended": "keep until the Unreal phase is profiled with Pocket"
+   "ruling": "The card: the 6 GB line for the game alone and the day's spare card time of 1.7 ms",
+   "recommended": "a) keep both until the newest packaged build is re-measured with Pocket on the processor, then budget people, cars and lamps from what is spare"
+  },
+  {
+   "id": "R5",
+   "ruling": "The empty unit, bay 3",
+   "recommended": "b) bare glass dressed with card, cardboard and a fallen blind"
+  },
+  {
+   "id": "R6",
+   "ruling": "Window surrounds",
+   "recommended": "a) keep white frames and plain surrounds"
+  },
+  {
+   "id": "R7",
+   "ruling": "Colour from photographs",
+   "recommended": "b) photographs win on shape and material, measured reflectances and the Hook sheet on colour"
+  },
+  {
+   "id": "R8",
+   "ruling": "Jobs without waypoints",
+   "recommended": "a) keep, with landmarks, people who give the way and the Ledger's Open page"
+  },
+  {
+   "id": "R9",
+   "ruling": "Growth in position only, no stats",
+   "recommended": "a) keep"
+  },
+  {
+   "id": "R10",
+   "ruling": "No prepared openings",
+   "recommended": "a) a written line replaces a reply later than 2 s"
+  },
+  {
+   "id": "R11",
+   "ruling": "Fares few and chosen",
+   "recommended": "a) keep; fare worth 2.50 to 3.50 pounds, at least 7 fares in week one"
+  },
+  {
+   "id": "R13",
+   "ruling": "The resident cast",
+   "recommended": "a) keep the cast; shared kinds plus about 5 own lines each, after the first loops"
   }
+ ],
+ "answered": [
+  {
+   "id": "Q1",
+   "answer": "vaulting at set places only (his words of 20 Nov 07:39, advisor 263)"
+  },
+  {
+   "id": "Q2",
+   "answer": "yes, parked cars only, about 6 s by force; never a driver pulled out (his words of 20 Nov 07:39, advisor 263)"
+  }
+ ],
+ "blocking": [
+  "his yes on the measured story (Q18)",
+  "PC measuring five-sample numbers",
+  "feasibility: content cannot be made inside the one-shot week (INVENTORY)"
  ]
 }

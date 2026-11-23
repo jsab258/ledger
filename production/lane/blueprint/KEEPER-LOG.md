@@ -36,3 +36,16 @@ Next run starts here (after run 1's list, which still holds):
 4. details-catalogue (features only, no timings, no GTA VI story); GTA V's teardown into 5.11 as a column.
 5. His answers to R1 to R4 and Q1 to Q18 from the advisor rows.
 Prior research index of 23 Nov: fold PRIOR-RESEARCH-INDEX.md into the blueprint; every part's standard names prior research where it exists.
+
+## Run 3, Monday 23 November 2026, from about 14:15 (same session, claude-opus-5-5)
+
+- PRIOR-RESEARCH-INDEX.md, SOUND-PLAN.md, INVENTORY.md, the revised TECH-PLAN and NUMBERS-RUN and the nine AAA studies landed during run 2; folded in by three Sonnet helpers (377 lines appended, 19 replacements), then a fresh Opus review, 25 points, fixed once.
+- Counts: 424 parts: 1 measured, 75 ruled, 15 sourced, 134 decided, 61 pending, 45 unmeasured, 14 out, 57 outside, 22 machinery; 245 conflicts; 371 gaps; questions Q3 to Q18 open (Q1, Q2 answered); rulings to revisit R1 to R11 and R13.
+- Not landed: production/research/lane/details-catalogue/, GTA V's teardown, the PC measuring's five-sample numbers, the story v3 pick.
+
+Next run starts here (runs 1 and 2's lists still hold):
+1. details-catalogue when it lands (features only, no timings, no GTA VI story).
+2. STATUS.md: rows to measured only on solid numbers; the file's headline still says one solid against three in its rows.
+3. GTA V's teardown into 5.11 as a column; the PC measuring's counts into GD-02, FIT-G9, DP5-C02 and C03.
+4. His answers to R1 to R13 and the open questions from the advisor rows; the story pick.
+5. Watch for duplicate prep sections: the preparation session also writes a voices hookup (TECH-PLAN section 10); 8.12 follows it.
