@@ -90,7 +90,7 @@ The Hook's working waterfront (canon, 19 Nov).
 - How it works: Tom never walks or runs into the water: the quay edge stops him like a kerb that cannot be stepped off, and cars cannot leave the quay (bollards and the edge stop them, and a car backs out). In a fight the quay edge is one of the street's places: a man put in climbs out at the nearest ladder within 60 real seconds, soaked and humiliated, and the town talks. Water never kills. Tom, put in by others, climbs out the same way. Things can be thrown in (a weapon, goods, a bag); what goes in is gone and whoever saw it keeps it. Tested by 30 minutes along every quay edge on foot and by car with no fall in.
 - Standard: Never stuck (ER-CORE-01); Tom cannot die (his ruling); water never kills Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02
 - Source: DESIGN §1; his rulings (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.6; COPY-2 s.6; DESIGN-ADDENDUM A11 (ER-WATER-01, 02); DESIGN s.1
-- Status: measured. Coverage row: 4.2.4.
+- Status: ruled (his ruling or canon). Coverage row: 4.2.4.
 
 ## 4.3 Interiors
 
@@ -196,7 +196,7 @@ AI drivers that always brake for people; parked cars from the kit.
 - How it works: Traffic stage 1 is the background cars at the street's end. Each lane draws arrivals from a seeded stream, so the same week plays the same: average gaps 50 s in the rush hours, 75 s by day, 150 s in the evening, 450 s at night, never under 4 s in one lane, at most three cars in the pool. Cars drive 20 to 28 mph (never over 30), follow the Intelligent Driver Model, slow to 20 mph from 60 m before Quay Street's mouth, and stop about 2 m behind a person in the lane, hooting at 3 s and 10 s. A person who steps out inside stopping distance (23 m at 30 mph) is never struck: the car halts dead. Only the player's car can strike anybody; AI drivers always brake, a crewman told to drive too.
 - Standard: AI drivers always brake for people (canon); ER-DRIVE-04 Test: S: 1,000 seeded crossings; 40 minutes lawful driving with no hits
 - Source: canon; DESIGN §5 (his ruling or canon). Designed in: TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18; COPY-2 s.10, s.11; DESIGN s.5 (ER-DRIVE-04); DEFINITIONS G2; canon (cars)
-- Status: measured. Coverage row: 4.5.1. Conflicts settled: C-107.
+- Status: ruled (his ruling or canon). Coverage row: 4.5.1. Conflicts settled: C-107.
 
 ### 4.5.2 Parked cars
 
@@ -234,7 +234,7 @@ The clock's light: day and night now, four or five states later, no moving sun.
 - How it works: Day and night now, four or five light states later, no moving sun (7 Oct). Night is pools of lamp light with darkness between and lit windows, never one orange wash (1 Oct); dusk comes with the lamps switching on (about 70 lux, the sodium taking 8 to 15 minutes to turn full yellow). Day exposure stays one stop darker (29 Oct). Sound carries about twice as far in the small hours. Tom and the ground 5 m round him stay readable at night; the frame's corners darken with the same light value the watchers use. Under the ruled clock a game day is 24 real minutes and the dark part about 14 of them.
 - Standard: Ruling 7 Oct; night as pools of lamp light with dark between (1 Oct) Test: the gate at night
 - Source: RULINGS weather and night (his ruling or canon). Designed in: DESIGN s.6 (ER-NIGHT-01, 02); LIGHT-WEATHER-VALUES-2026-11-17; RULINGS 1 Oct, 7 Oct, 29 Oct; DEFINITIONS CLK-05
-- Status: measured. Coverage row: 4.7. Conflicts settled: C-108, C-109.
+- Status: ruled (his ruling or canon). Coverage row: 4.7. Conflicts settled: C-108, C-109.
 
 ## 4.8 Weather
 
@@ -246,7 +246,7 @@ Dry overcast, drizzle, rain; one wetness value drives look, sight, sound and who
 - How it works: Weather comes as weighted profiles: dry overcast, drizzle, rain; never sunshine in the friends' build. One wetness value drives the look (wet street dark and glistening, mirroring sky and buildings, puddles that are water), what is seen and heard, and who is out: rain cuts sight and sound, halves the voices, empties the street (each crowd band halved), lowers car grip and makes the road slippery. The same seed played dry, in drizzle and in rain gives three different streets, the same each time. A wet road takes about 3 to 14 hours to dry and puddles days; rain on about 12 days a month is the working assumption.
 - Standard: Grey range only, never sunshine in the friends' build (5 Oct); one wetness value (DESIGN §6) Test: S: same seed in three weathers
 - Source: RULINGS 5 Oct; DESIGN §6 (his ruling or canon). Designed in: DESIGN s.6 (ER-NIGHT-03); LIGHT-WEATHER-VALUES-2026-11-17; COPY-2 s.5, s.10; DEFINITIONS G9; RULINGS 5 Oct
-- Status: measured. Coverage row: 4.8.
+- Status: ruled (his ruling or canon). Coverage row: 4.8.
 
 ## 4.9 1990 detail
 
@@ -258,7 +258,7 @@ Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phon
 - How it works: Late-analog 1990: landlines, phone boxes, answering machines, pagers, cash and paper; no mobiles, no internet. CCTV only at the bank (built to Q10's recommendation; canon leaves a second site to him), one camcorder in town as a rare witness. Poll-tax posters are an invented local campaign, never real parties or people. Money is pounds and pence only, written plain; typed letters in Courier Prime, street plates in Marcellus SC. The brand bible still owes six names: the football club, the local paper, the pirate radio station, the regional TV channel, the telephone operator (kiosk mark) and the postal cypher. The interface style sheet is a draft, nothing ruled.
 - Standard: canon era; late-analog; brand bible owes the football club, paper, pirate radio, TV channel, phone operator, postal cypher Test: canon-gate and content-gate; his eye
 - Source: canon Era, Brands and law (his ruling or canon). Designed in: canon 'Era' and 'Brands and law'; STYLE-SHEET-1990-DRAFT-2026-11-18; RULINGS 3 Oct; COPY-2 s.2, s.5
-- Status: measured. Coverage row: 4.9. Conflicts settled: C-110.
+- Status: ruled (his ruling or canon). Coverage row: 4.9. Conflicts settled: C-110.
 
 ## 4.10 Pubs without drink and the closed school
 
@@ -270,7 +270,7 @@ Places that exist with no drink and no children.
 - How it works: Pubs may stand as buildings on the street, boarded or serving food, never entered for drink; Mickey's is a minicab office (D19, superseding D15's pub). Alcohol and gambling are out entirely, in image and speech, and nobody can bet on anything, including at the boxing club. The school stands closed for the game's window: the building is there and nobody is in it; no children are rendered, in the crowd or in dialogue. Enforced at six sites including the animation library by clip name. Tuesday's chapel hall evening (tea and talk) is the model for a place that exists without drink.
 - Standard: canon content rule: pubs as places, boarded or serving food; the school stands closed Test: content gate over clips and props
 - Source: canon D18 (his ruling or canon). Designed in: canon content rule (D18) and Mickey's (D19); COPY-2 s.3, s.29; DEFINITIONS G10
-- Status: measured. Coverage row: 4.10. Conflicts settled: C-111.
+- Status: ruled (his ruling or canon). Coverage row: 4.10. Conflicts settled: C-111.
 
 ## 4.11 Animals and birds
 
