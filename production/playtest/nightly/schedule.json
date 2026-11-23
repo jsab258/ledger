@@ -1,0 +1,5 @@
+{
+  "why": "Advisor 313 (22 Nov 2026), his ruling of 21 Nov: nothing in Unreal changes until after the prototype and Kiln, so the nightly package and walk pause; one walk a week, on the night after Sunday (the 01:30 run dated Monday), so nothing rots unseen. Set nightly to true the day Unreal work restarts.",
+  "nightly": false,
+  "walk_days": ["Monday"]
+}

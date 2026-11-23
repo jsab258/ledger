@@ -160,7 +160,7 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 
 ### Seated check of a held garment in the shipped build (19 Nov 2026)
 - Made: a seated film of a test-worn garment on a background character, from the packaged build, with no code change.
-- Method: combine two existing test switches: one moves the clock to the hour the character sits and lights the room; the other films the character from the first clear direction for a fixed span. The sitting test itself was stale (it waited for an animation by an old name), but its clock jump still served. A seated view finds faults a standing view cannot: hems riding up off footwear, knee kinks, crease shading.
+- Method: two existing test switches: one jumps the clock to the sitting hour and lights the room, one films from the first clear direction. A seated view finds hems riding up, knee kinks and crease shading.
 - Tools: the packaged game's test switches; PIL for crops; one fresh final reviewer per view.
 - Target and check: no skin, clipping or floating cloth seated; listed shortfalls no worse than standing. Failed: a few pixels of bare ankle between hem and boot top when the knee bends.
 - Cost: about 0.5 h. Evidence: F:/LedgerTools/game-inputs/films/ron-work-trousers-2026-11-19/seated/REVIEW-SEATED-1.md
@@ -184,3 +184,4 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md
 - 2026-11-22, footage durations: spells at 30 s, edges at 1 s, endings in full frames (menus and cameras fake edges); five per level. Cost 1.7 h. Evidence: measurements/g5-heat-samples-m_2RP-2026-11-22.md.
 - 2026-11-22: a spell lit at a clip's end never counts.
+- 2026-11-23, shipped budgets: the pack tool pulls settings files; own presets first, base files decode levels; encrypted packs give sizes only; a 'frame time' key was a hitch threshold. 1 h. Evidence: games-numbers/BUDGET-TABLE-2026-11-23.md.

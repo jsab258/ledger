@@ -1628,6 +1628,1644 @@
    ],
    "state": "done",
    "closed": "2026-11-09 11:17, done (11:20): he asked in the session; the test started"
+  },
+  {
+   "id": "lane-task-at-pc-2026-11-17",
+   "added": "2026-11-17 16:30",
+   "his_hands": true,
+   "tag": "ACTION",
+   "title": "Add the lane session's hourly task (your pick of 16:05)",
+   "why": [
+    "A second session works this week on things that never touch the machine, so the meter moves faster.",
+    "Only you can create a scheduled task, at the PC itself."
+   ],
+   "steps": [
+    "Claude app: Scheduled (left sidebar)",
+    "New task",
+    "Name: LEDGER: the lane session",
+    "Folder: C:\\Users\\Jafar\\ledger-lane",
+    "Repeat: Hourly",
+    "Model: Opus 5.5",
+    "Prompt: in File Explorer open ledger-local, production, lane, then lane-prompt.txt; press Ctrl+A, Ctrl+C; paste into the prompt box",
+    "Permissions: automatically approve",
+    "Click Save",
+    "Tap Done below"
+   ],
+   "text": "Add the lane session's hourly task at the PC (numbered steps on the page).",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today: it stops by itself on Monday 23 November at 07:00.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-17 16:40, withdrawn on his message of 16:34 (advisor 203): no new scheduled task; the lane is to start from the existing 15-minute task"
+  },
+  {
+   "id": "metatailor-access-2026-11-12",
+   "added": "2026-11-12 11:01",
+   "text": "Your hands, one minute, at the PC: MetaTailor's free test is ready (your yes to its clicks, 07:17), but the app refuses computer-use approval inside a scheduled run. Your message at 11:54 did not bring the card (this conversation still counts as a scheduled run). The other route: in the Claude app, open Scheduled in the sidebar, choose ledger-daily-fresh-session, open its settings and add META-Tailor.exe (F:\\LedgerTools\\tool-tests-2026-11\\metatailor\\app\\META-Tailor.exe) to the apps it may control. The test then runs while you are away.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done: one message and one tap; the test fits Tom's jumper on Sheila and measures it against her 3-hour Blender refit.",
+   "options": [
+    [
+     "done",
+     "Done, message sent and Allow tapped (recommended)"
+    ],
+    [
+     "no",
+     "Skip the MetaTailor test"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 13:11, done 12:55: he ran the test from the chat (go now); result 13:06, METATAILOR-TEST-2026-11-12.md"
+  },
+  {
+   "id": "fable-verdict-2026-11-10",
+   "added": "2026-11-10 00:29",
+   "text": "The new model, Fable 5.2, against today's Opus 5.5, judged blind on three past clothing problems and one code fix: Opus was better on the cuffs, equal on the neckband and nearly equal on the skin-through fix; Fable was better on the code fix (right on all real logs). Fable cost about three times as much and took twice as long. Switch any work to Fable?",
+   "links": [],
+   "recommendation": "No switch: Opus stays for the session and for clothing. Fable is used only as the 'one different method' after two failed tries on code or tool faults, and re-tested at the next model. The test overshot its 5% cap by about 3 points; your two Fable resets are untouched. No web link: the answer is this page.",
+   "options": [
+    [
+     "escalate",
+     "No switch; Fable only for code after two failed tries (recommended)"
+    ],
+    [
+     "none",
+     "No Fable at all"
+    ],
+    [
+     "clothing",
+     "Switch clothing work to Fable"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 07:22, 2026-11-10 07:08, answered escalate: no switch; Fable only for code after two failed tries (RULINGS 8 Nov models line)"
+  },
+  {
+   "id": "rife-interpolator-2026-11-09",
+   "added": "2026-11-09 11:50",
+   "text": "A licence outside your list, for the motion experiment only: may the free frame-smoother RIFE (MIT licence, its model weights stated MIT by their author) be used to turn the video model's slow clips into 60 frames a second for Epic's capture plugin? Nothing of it ships in the game; its notice is kept.",
+   "links": [
+    {
+     "label": "RIFE's Vulkan program (licence in the repository)",
+     "url": "https://github.com/nihui/rife-ncnn-vulkan"
+    },
+    {
+     "label": "The weights' author (MIT stated in its README)",
+     "url": "https://github.com/hzwer/Practical-RIFE"
+    }
+   ],
+   "recommendation": "Yes: Epic's plugin wants 60 frames a second and our clips are 16 to 24; RIFE runs on your card and is the one option with a stated licence for its weights (the two others' weights state none). Ten seconds of your time.",
+   "options": [
+    [
+     "yes",
+     "Yes (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 12:25, answered yes (11:59): RIFE for the experiment only, its MIT notices kept"
+  },
+  {
+   "id": "browser-civitai-reddit-2026-11-09",
+   "added": "2026-11-09 20:20",
+   "text": "You chose A in the chat with the advisor (19:35). Tap to make it a rule: the builder may read Civitai and Reddit pages in your Chrome on this PC, read only, to find the most-used Wan 2.2 video workflows for people moving. No posting, no accounts, no sign-ins; no download unless its licence is checked against your list first and recorded. The builder only, never helpers. This widens 'computer use only in Marvelous' by this one use.",
+   "links": [],
+   "recommendation": "Yes: both sites refuse automated readers, and they hold the community's rankings of which settings work; without them the study has a gap. No web link: the answer is this page.",
+   "options": [
+    [
+     "yes",
+     "Yes, as written (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 21:17, answered yes on the page (20:18) and in the chat (21:16): the rule in RULINGS under computer use; the reading is the next session's first step"
+  },
+  {
+   "id": "comfyui-install-2026-11-09",
+   "added": "2026-11-09 20:33",
+   "text": "The session's safety check refused installing ComfyUI (the advisor's step for the video experiment), because it runs code from outside. To allow it, type this in the session's chat: 'Install ComfyUI from patientx's ComfyUI-Zluda repository by its README's main steps, into C:\\LedgerTools\\ai-video\\comfyui, no one-click scripts.' Then tap Done here.",
+   "links": [
+    {
+     "label": "The repository it would install from",
+     "url": "https://github.com/patientx/ComfyUI-Zluda"
+    }
+   ],
+   "recommendation": "Allow it: ComfyUI runs the community's video workflows on this card where the current tool cannot; nothing from it ships in the game. If you would rather not, the experiment carries on with the current tool.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "no",
+     "No, keep the current tool"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 21:17, his instruction in the chat (21:17): the native AMD portable route into F:/LedgerTools/ai-video/comfyui-rocm instead; install running"
+  },
+  {
+   "id": "comfyui-move-to-c-2026-11-09",
+   "added": "2026-11-09 21:40",
+   "text": "ComfyUI is installed (14 GB) where you said, on F:, which leaves F: with 6.7 GB free; tonight's build needs 20 GB there, so it would stop. Move ComfyUI to C:\\LedgerTools\\ai-video\\comfyui-rocm instead (C: has 107 GB free; your 9 Nov ruling puts the experiment's programs on C:)?",
+   "links": [],
+   "recommendation": "Move it to C:: nothing is lost, F: gets its room back before tonight's build, and it matches your ruling. No web link: the answer is this page.",
+   "options": [
+    [
+     "move",
+     "Move it to C: (recommended)"
+    ],
+    [
+     "keep",
+     "Keep it on F:, skip tonight's build"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-09 21:36, answered ok in the chat (21:34): moved to C:/LedgerTools/ai-video/comfyui-rocm, 65,618 files, 13.5 GB"
+  },
+  {
+   "id": "drapestudio-licence-2026-11-10",
+   "added": "2026-11-10 10:23",
+   "text": "Drape Studio (C:\\DrapeStudio) was made by the Craft Anything tool from Marvelous Designer itself: its own log says the request was \"same app with no login\" and that it decompiled Marvelous and copied 59 of its preset values. CLO's terms, which your Marvelous plan accepts, forbid reverse engineering and any access other than the program CLO provides. Garments made with it could put the sold game at risk, so it has not been run. Use it for the game's clothes?",
+   "links": [
+    {
+     "label": "CLO General Terms, Use of the Services (c)(v), (c)(viii)",
+     "url": "https://legal.clo-set.com/modal-tou-general"
+    }
+   ],
+   "recommendation": "Set it aside and keep using Marvelous: the clone's whole basis is what CLO's terms forbid, and the risk would sit in every garment of a sold game. Its good ideas (runs with no window, jobs in and out as files, the same result every run, measures built in) are written down as what a tool the builder can use lawfully needs.",
+   "options": [
+    [
+     "aside",
+     "Set it aside, keep Marvelous (recommended)"
+    ],
+    [
+     "test",
+     "Test it anyway, your risk, not for shipped clothes"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 13:40, his note 11:30: his own tool, test it; tested 13:25 to 13:40, report via the advisor"
+  },
+  {
+   "id": "texture-pipeline-test-2026-11-10",
+   "added": "2026-11-10 15:23",
+   "text": "Run the full materials-and-texturing pipeline test now, beside the motion experiment? (Megascans, MaterialCraft, TextureCraft, our Blender bakes and Unreal's layering: a one-page map first, then four chains each beside today's method in the packaged game: Tom's jeans, a prop, a shop-front piece, the Flemish brick; first verdict Wednesday midday.) It is new work in a running week, so it waits for your yes.",
+   "links": [
+    {
+     "label": "Megascans free on Fab (Quixel, 5 Nov)",
+     "url": "https://quixel.com/news/update-megascans-are-going-free-again"
+    },
+    {
+     "label": "TextureCraft",
+     "url": "https://getartcraft.com/apps/texturecraft"
+    },
+    {
+     "label": "MaterialCraft",
+     "url": "https://getartcraft.com/apps/materialcraft"
+    }
+   ],
+   "recommendation": "Yes, run it now: the week is about 8 points ahead of its line, so there is room, and a free scanned library plus scriptable texture tools could save many hand-built hours in phase 2.",
+   "options": [
+    [
+     "yes",
+     "Yes, run it now (recommended)"
+    ],
+    [
+     "next",
+     "No, put it in next Monday's order"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 17:23, answered yes 16:58: the test started 17:22"
+  },
+  {
+   "id": "fab-megascans-five-2026-11-10",
+   "added": "2026-11-10 18:35",
+   "text": "For the texturing test's verdict on Wednesday: sign in on fab.com in your own browser, open each of the five links, and press 'Add to My Library' on each (all free). Then tap Done. Nothing is bought; the session downloads them into the test project itself.",
+   "links": [
+    {
+     "label": "Brick Wall Worn (the brick to beat)",
+     "url": "https://www.fab.com/listings/499d9ba7-f361-491c-b66e-c16c89bac34a"
+    },
+    {
+     "label": "Leakage (the grime stain for both bricks)",
+     "url": "https://www.fab.com/listings/ab46f137-ab5c-4f68-a2f5-508d7a04680e"
+    },
+    {
+     "label": "Wooden Storage Box (the prop)",
+     "url": "https://www.fab.com/listings/53a6cf14-0cf5-46d0-b90b-71134b7c490e"
+    },
+    {
+     "label": "Industrial Junkyard Crate Metal (the second prop)",
+     "url": "https://www.fab.com/listings/3e83258c-676f-48b0-860c-10f16e917684"
+    },
+    {
+     "label": "Flaked Paint Wall (chips for the shop front's paint)",
+     "url": "https://www.fab.com/listings/b718e7f1-4f5e-4dc9-a950-4aa2cf937b64"
+    }
+   ],
+   "recommendation": "Done, about five minutes: without these the brick and prop chains have nothing to be compared against, and the verdict would be half a test.",
+   "options": [
+    [
+     "done",
+     "Done, all five added (recommended)"
+    ],
+    [
+     "later",
+     "Not now: judge the test without Megascans"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 05:41, answered done 20:49 (10 Nov): the five are in his Fab library, the brick wall was there already; download through the Fab plugin next"
+  },
+  {
+   "id": "pacing-and-discord-2026-11-10",
+   "added": "2026-11-10 19:31",
+   "text": "Your two answers to the advisor (18:53), as one tap. (1) Pacing: while the week is ahead of the line, your priority items and jobs that mostly use the card or the processor (clips, solves, bakes, builds, films, renders) still run; the ceiling only holds back new token-heavy work and helpers. (2) Discord: the builder alone may read the one channel below in your Chrome, read-only (no posting, reacting, messaging, joining or account changes), saving only useful links with a date and one line each, no usernames.",
+   "links": [
+    {
+     "label": "The Discord channel",
+     "url": "https://discord.com/channels/1359579021108842617/1550205610208002128"
+    }
+   ],
+   "recommendation": "Yes to both: the motion experiment and the texturing test stop waiting on the ceiling, and the channel's links feed the open problems at no cost.",
+   "options": [
+    [
+     "both",
+     "Yes to both (recommended)"
+    ],
+    [
+     "pacing",
+     "Pacing only, no Discord"
+    ],
+    [
+     "neither",
+     "Neither"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-10 19:36, answered both (19:28): pacing and Discord reading in RULINGS the same evening"
+  },
+  {
+   "id": "launcher-metahuman-content-2026-11-11",
+   "added": "2026-11-11 05:55",
+   "text": "Your hands, about 5 minutes at the PC, Unreal closed. Since the Epic launcher began moving Unreal to 5.8.4 on 9 November, its optional MetaHuman content is missing, so Ron, Sheila and Darren lost their standing idle in the night walks. Steps: open the Epic Games Launcher, Unreal Engine, Library. On the 5.8 tile click the yellow Resume button first and wait until it reads Launch (the update never finished, so Options is hidden until then). Then the small arrow, Options; tick every box that mentions MetaHuman, and Engine Source; never tick Editor symbols for debugging (tens of GB). Apply, then tap Done here.",
+   "links": [],
+   "recommendation": "Do it when you are next at the PC: it brings back the people's approved idle and the engine source the session checks engine questions against.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "later",
+     "Later"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 09:46, done (09:41): checked 09:46: Unreal 5.8.4, the MetaHuman optional content (5.8 GB) and engine source (550 files in Engine/Private) present"
+  },
+  {
+   "id": "tom-whole-person-2026-11-11",
+   "added": "2026-11-11 06:45",
+   "text": "Tom as one whole person, for your look (this week's order, item 2). Shortfalls first: his boots read soft, almost like slippers, from the side, with no laces seen; he perches on the front edge of the bench; in an about-turn from standing his trailing shoe keeps pointing the old way for a few frames; one frame of skin shows at his right hip as he sits (not in the film below); his jeans hang as stiff tubes at the hem. Nothing else was found: no clipping, no skin at neck, chest or wrists, no pops. Three stills by day (whole, close as in talk, his boots), then two short films from the packaged game: standing, turning and breaking into a run, and sitting on the office bench (cropped to him). Fresh reviewers checked every frame.",
+   "links": [],
+   "pictures": [
+    {
+     "src": "production/approvals/needs-you/pictures/tom-whole-2026-11-11.jpg",
+     "alt": "Tom, whole, in the street by day"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-close-2026-11-11.jpg",
+     "alt": "Tom, close, as in talk"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-boots-2026-11-11.jpg",
+     "alt": "Tom's boots and jeans"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-walk-2026-11-11.webp",
+     "alt": "Film: Tom stands, turns and breaks into a run (side-on, knee height)"
+    },
+    {
+     "src": "production/approvals/needs-you/pictures/tom-sit-2026-11-11.webp",
+     "alt": "Film: Tom sitting on the office bench (cropped to him)"
+    }
+   ],
+   "recommendation": "Yes, with the listed points fixed in the next order: he holds together as one person, and the shortfalls are small, known and already on the list.",
+   "options": [
+    [
+     "yes",
+     "Yes, with the points listed (recommended)"
+    ],
+    [
+     "no",
+     "Not yet: say what is wrong in the note"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 08:28, answered no (07:44): face and hair good; boots read as rubber slippers, jacket has no cloth texture, jeans no denim; clothes brought up to the floor, then shown again"
+  },
+  {
+   "id": "f-drive-room-2026-11-11",
+   "added": "2026-11-11 08:31",
+   "text": "A yes to delete, nothing else to do. The game drive F: is 0.2 GB under its 20 GB floor, so new downloads and tonight's packaged build are stopped. The room can come from old review pictures that the session itself took: 29 folders older than two weeks (6.3 GB), whose verdicts are already recorded, plus the session's own test logs older than two days (0.25 GB). Nothing of yours, nothing on your pages, nothing the game uses. Tap Yes to let the session delete them and log each one.",
+   "links": [],
+   "recommendation": "Yes: it frees about 6.5 GB, keeps every recent picture and every verdict, and lets tonight's build run.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete them (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 09:23, answered yes (09:06): 29 old review folders deleted, 6.3 GB, F: back to 24.6 GB free; each logged"
+  },
+  {
+   "id": "resizing-backbone-2026-11-11",
+   "added": "2026-11-11 11:53",
+   "text": "One tap. On 8 November you made Epic's resizable outfits the clothing backbone, to be decided by today's test. What was found: Epic's resizing is already in the game (the white base layer is Epic's own outfit fitted to each person), but it bakes an ordinary fixed garment per person, about the size of ours on disk (its cost while playing not measured). The real test with Tom's jumper was not run: no full script route was found. Cheaper first tries exist and were not tried (copying Epic's outfit by script; Epic's free Techwear outfit); a small piece of editor code, roughly 4 hours, is the surest. Corrected 12:35 against its reviewer. Pick one.",
+   "links": [],
+   "recommendation": "Keep our own garments, carried from body to body (Sheila's blouse and skirt carried in about half an hour each; fit faults still open), and test Epic's resizing in phase 5 for the crowd, cheapest route first.",
+   "options": [
+    [
+     "keep",
+     "Keep our garments; Epic's resizing later for the crowd (recommended)"
+    ],
+    [
+     "test",
+     "Spend about 4 hours this week on the real test with Tom's jumper"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered keep (12:33): carried garments stay; Epic's resizing tested in phase 5 for the crowd, cheapest route first"
+  },
+  {
+   "id": "fifteen-minute-start-2026-11-11",
+   "added": "2026-11-11 11:59",
+   "text": "One tap. Start the next work session every 15 minutes instead of every hour. Today about 1 h 45 min was lost to gaps after a session stopped just past the hourly start. A start is skipped while a session is still working, so it costs nothing then. On yes: the schedule changes, a session hands over as soon as it is full, and the guard against two sessions at once stays.",
+   "links": [],
+   "recommendation": "Yes: it closes the gaps between sessions at no extra cost.",
+   "options": [
+    [
+     "yes",
+     "Yes, every 15 minutes (recommended)"
+    ],
+    [
+     "no",
+     "No, keep hourly"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered yes (12:28): RULINGS updated; the schedule itself needs his chat line (schedule-fifteen-minutes-2026-11-11)"
+  },
+  {
+   "id": "efficiency-ruling-2026-11-11",
+   "added": "2026-11-11 11:59",
+   "text": "One tap to make your words of 11:51 a standing ruling: efficiency is the project's first philosophy, never at the cost of quality; checks and improvements come on their own, daily, or as decisions for you. On yes it goes into the rulings, replacing the 5 and 7 November efficiency line, and a daily waste report runs by 19:00.",
+   "links": [],
+   "recommendation": "Yes: it is what you said, and it puts the daily check on record.",
+   "options": [
+    [
+     "yes",
+     "Yes, make it a ruling (recommended)"
+    ],
+    [
+     "edit",
+     "Change the wording first"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 12:49, answered yes (12:28): RULINGS 11 Nov line replaces 5 and 7 Nov's, his words; DAILY file by 19:00"
+  },
+  {
+   "id": "schedule-fifteen-minutes-2026-11-11",
+   "added": "2026-11-11 12:49",
+   "text": "Your hands, one minute at the PC: your 15-minute yes is in the rulings, but a scheduled run may not change its own schedule. In any Claude Code chat on this PC, type: 'Change the scheduled task ledger-daily-fresh-session to run every 15 minutes. In its prompt, replace the wait until minute 15 of the hour with: finish the piece, hand over, stop; and replace the full page reads with the filtered reads in the handover's standing ways.' Then tap Done.",
+   "links": [],
+   "recommendation": "Do it when next at the PC: until then sessions still start only hourly and the gaps stay.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "later",
+     "Later"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): checked on disk 18:05, the task runs every 15 minutes with its new prompt"
+  },
+  {
+   "id": "session-settings-2026-11-11",
+   "added": "2026-11-11 12:49",
+   "text": "Two waste cuts the session may not set itself, both for this project only. (1) A stop check: a session that ends its turn without handing over is sent back once to hand over (tested on real sessions). (2) never-used skills hidden in this project (about 2,000 tokens of reading saved at every start; his other work's skills stay); your other projects untouched. To allow both, type in any Claude Code chat on this PC: 'In ledger-local, add the Stop hook running python tools/stop_hook.py to .claude/settings.json, and hide the skills listed in production/research/token-audit/DAILY-2026-11-11.md in .claude/settings.local.json.' Then tap Done.",
+   "links": [],
+   "recommendation": "Yes, both: no session ends without a handover, and every start reads less.",
+   "options": [
+    [
+     "done",
+     "Done, I typed it (recommended)"
+    ],
+    [
+     "no",
+     "No, leave settings as they are"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): Stop hook in place and already fired once; 14 skills hidden"
+  },
+  {
+   "id": "houdini-cascadeur-accounts-2026-11-11",
+   "added": "2026-11-11 17:25",
+   "text": "Your hands, about 10 minutes, for the free tests you said yes to at 16:14. (1) Make a SideFX account (first link), then on the download page take Houdini 21 Apprentice and its launcher; (2) make a Cascadeur account (third link, Free plan's Get started). Tell nothing else; if an install is refused here, the exact line to type comes back to you. Known limits, to be confirmed in the tests: Apprentice runs Houdini Engine in Unreal only for paid licences and may not save to the formats Unreal reads; Cascadeur Free cannot export FBX (only its own format), so its results are judged inside Cascadeur, not in the game.",
+   "links": [
+    {
+     "label": "SideFX account",
+     "url": "https://www.sidefx.com/register/"
+    },
+    {
+     "label": "Houdini download",
+     "url": "https://www.sidefx.com/download/"
+    },
+    {
+     "label": "Cascadeur plans (Free: Get started)",
+     "url": "https://cascadeur.com/plans"
+    },
+    {
+     "label": "Cascadeur download",
+     "url": "https://cascadeur.com/download"
+    }
+   ],
+   "recommendation": "Done: both are free, test only, nothing made in them goes into the game.",
+   "options": [
+    [
+     "done",
+     "Done, both accounts made (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, done (18:00): the tests start with a 15-minute check of each free version's limits"
+  },
+  {
+   "id": "paid-tools-ruling-2026-11-11",
+   "added": "2026-11-11 17:25",
+   "text": "One tap to make it a standing ruling: any tool, paid or free, that would fix a standing problem (an open boss, a fault set aside, a try used up) reaches this page within a day as a decision with its cost, the expected gain and a recommendation; nothing waits in a research file as 'his decision'. Houdini and Cascadeur sat in research that way and never reached you.",
+   "links": [],
+   "recommendation": "Yes: you see every paid way out within a day, and you still decide every franc.",
+   "options": [
+    [
+     "yes",
+     "Yes, make it a ruling (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, answered yes (18:00): in RULINGS 11 Nov"
+  },
+  {
+   "id": "paid-tools-top-three-2026-11-11",
+   "added": "2026-11-11 17:42",
+   "text": "From today's sweep of tools our research left as 'your decision' (Houdini and Cascadeur already decided), the top three. Two can be tested free first: MetaTailor (fits a garment onto each MetaHuman body, the refit that took most of today for Sheila; free version, a few exports a month; Pro about US$35 a month) and KeenTools FaceBuilder (faces from photographs, for faces failing their casting sheets; 15-day free trial; US$20 a month). Both are licences outside your list and need accounts in your name (links below), tests only, nothing into the game unless you approve. The third costs money now: Marvelous Enterprise, US$199 for a month of unattended drapes, where today's layering test failed. The other 20 wait in a ranked list.",
+   "links": [
+    {
+     "label": "MetaTailor (free version)",
+     "url": "https://www.metatailor.com/"
+    },
+    {
+     "label": "KeenTools FaceBuilder (15-day trial)",
+     "url": "https://keentools.io/products/facebuilder-for-blender"
+    }
+   ],
+   "recommendation": "Free tests of both, no money: they hit the two problems that cost us most hours.",
+   "options": [
+    [
+     "free",
+     "Free tests of both; I'll make the accounts (recommended)"
+    ],
+    [
+     "free-and-mde",
+     "Those, and buy Marvelous Enterprise for a month"
+    ],
+    [
+     "none",
+     "None for now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:09, answered free (18:00): MetaTailor free and FaceBuilder trial, once his accounts exist"
+  },
+  {
+   "id": "tool-tests-first-start-2026-11-11",
+   "added": "2026-11-11 18:15",
+   "text": "Your hands, about 10 minutes, so the free tool tests can start (both programs are installed, thank you). (1) Open Houdini 22 from the Start menu once; when it asks about a licence, pick 'Install my free Houdini Apprentice license', then close it. (2) Open Cascadeur from the Start menu once and sign in with your new account, then close it. (3) MetaTailor: make a free account on its site and install its free app (first link). FaceBuilder needs nothing from you: its 15-day trial starts when the session first runs it. Then tap Done.",
+   "links": [
+    {
+     "label": "MetaTailor (free account and app)",
+     "url": "https://www.metatailor.com/"
+    }
+   ],
+   "recommendation": "Done: the Houdini and Cascadeur tests you asked for can't start without the licence and sign-in.",
+   "options": [
+    [
+     "done",
+     "Done, all three (recommended)"
+    ],
+    [
+     "part",
+     "Done in part (say which in the note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 18:53, done (18:34): Houdini Apprentice licence confirmed by hython 18:53; Cascadeur and MetaTailor checked at their tests"
+  },
+  {
+   "id": "launcher-fab-clicks-ruling-2026-11-11",
+   "added": "2026-11-11 18:55",
+   "text": "A ruling, one tap, to save your hands (your pick A in chat, 18:24): the builder alone, never a helper, may also click in the Epic Games Launcher (already signed in) and on fab.com in your Chrome, only to (1) download items already in your Fab library, (2) press 'Add to My Library' on free items an adopted order names, (3) install Unreal engine updates and optional components (never the debugging symbols). Never buy, sign in, create accounts, accept paid terms or change account settings; each use one line in DECISIONS.",
+   "links": [],
+   "recommendation": "Yes: the phase 2 props batch and later launcher steps then need nothing from you.",
+   "options": [
+    [
+     "yes",
+     "Yes, as worded (recommended)"
+    ],
+    [
+     "no",
+     "No, I keep doing the launcher steps"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-11 19:43, answered yes (19:16): in RULINGS 11 Nov, the computer-use line"
+  },
+  {
+   "id": "cmu-motion-licence-2026-11-12",
+   "added": "2026-11-12 02:23",
+   "text": "A licence, one tap: may the game use moves from Carnegie Mellon's free motion-capture library (sitting down, getting up, idles, gestures) as the base for people's movements? Its own page, read tonight, says the data may be included in products that are sold, only not resold as data. No money; a credit line is asked only for published papers.",
+   "links": [
+    {
+     "label": "Carnegie Mellon's library and its terms",
+     "url": "https://mocap.cs.cmu.edu/"
+    }
+   ],
+   "recommendation": "Yes: real captured moves for sitting and idles at no cost; we never ship the files as a library, only moves inside the game.",
+   "options": [
+    [
+     "yes",
+     "Yes, add it to the licence list (recommended)"
+    ],
+    [
+     "no",
+     "No, keep to other sources"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 07:31, answered yes (07:17): CMU motion library on the licence list; raw ASF/AMC or BVH fetched when an item needs it"
+  },
+  {
+   "id": "pause-nightly-answers-task-2026-11-12",
+   "added": "2026-11-12 02:23",
+   "text": "Your hands, one minute: in the Claude app, open Scheduled in the sidebar, choose the task 'ledger-page-answers-nightly' and switch it off. Since 10 November it stops each night at a permission question nobody can answer; the session already reads your answers back itself.",
+   "links": [],
+   "recommendation": "Switch it off: it has done nothing for three nights, and a session cannot change a schedule.",
+   "options": [
+    [
+     "done",
+     "Done, switched off (recommended)"
+    ],
+    [
+     "keep",
+     "Keep it running"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 08:26, done (08:20): he switched the nightly task off"
+  },
+  {
+   "id": "metatailor-clicks-2026-11-12",
+   "added": "2026-11-12 03:26",
+   "text": "A ruling, one tap: MetaTailor works only by mouse, and your ruling lets the session click only in Marvelous. May the session click in MetaTailor too, only for its free test (carrying Sheila's blouse and cardigan from Tom's body, counting the clicks), only after 10 minutes without your mouse, each use in the hourly row? Your account and its app are ready; the app is copied out of WinRAR's temporary folder so it is not lost.",
+   "links": [
+    {
+     "label": "MetaTailor",
+     "url": "https://www.metatailor.com/"
+    }
+   ],
+   "recommendation": "Yes, for the test only: it is the one way to learn whether it saves the day per wearer that Sheila's refit cost.",
+   "options": [
+    [
+     "yes",
+     "Yes, clicks in MetaTailor for its test (recommended)"
+    ],
+    [
+     "hands",
+     "No, I will do the test's clicks myself"
+    ],
+    [
+     "no",
+     "No, drop the test"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 07:31, answered yes (07:17): the session may click in MetaTailor for its free test only, after 10 minutes idle, each use in the hourly row"
+  },
+  {
+   "id": "advisor-relay-counts-2026-11-12",
+   "added": "2026-11-12 07:33",
+   "text": "A ruling, one tap (your yes in chat to the advisor, 11 Nov 22:15): when you pick something in your chat with the advisor, the advisor's message quoting your words and the time counts as your yes. Money, licences, canon and accounts still need your own tap here.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: fewer taps for choices you have already made in chat; the big things still come here.",
+   "options": [
+    [
+     "yes",
+     "Yes, as worded (recommended)"
+    ],
+    [
+     "no",
+     "No, I keep tapping here"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 08:26, answered yes (08:17): in RULINGS"
+  },
+  {
+   "id": "approved-programs-install-2026-11-12",
+   "added": "2026-11-12 07:33",
+   "text": "A ruling, one tap (your yes in chat to the advisor, 11 Nov 22:15): a program you approve on this page may be installed by the session from the source named there, into the LedgerTools folders on C: or F: only, without you typing anything. If Windows' permission check still refuses, the item gives you the one line to type.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: approved tools get installed the same hour instead of waiting for your hands.",
+   "options": [
+    [
+     "yes",
+     "Yes, as worded (recommended)"
+    ],
+    [
+     "no",
+     "No, I install programs myself"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-12 08:26, answered yes (08:18): in RULINGS"
+  },
+  {
+   "id": "c-drive-room-2026-11-12",
+   "added": "2026-11-12 23:00",
+   "text": "One tap to free C: (44 GB free today, 107 on 9 Nov; the aim is over 70 before Monday). Since 9 Nov: the AI-video install 26 GB, Unreal's 5.8.4 update rewrote 27 GB of the engine, Drape Studio's maker 9 GB, your three new tools 6 GB, Houdini 8 GB, the build machine and Unreal's caches about 16 GB. Done without asking: two of my own leftover folders deleted (3 GB), Unreal's cache now kept 7 days instead of 14. Asked: I delete the AI-video install (26 GB; the route is dropped; about an hour to download again), MetaTailor's unpacked copy in Windows' temporary folder (0.8 GB; the copy on F: stays) and my own Cascadeur copy (1 GB); you uninstall Cascadeur in Windows Settings, Apps (one minute, 1 GB); Houdini stays for the hair test. Yours, untouched unless you say: LM Studio's models 22 GB, Stable Diffusion 12 GB, Vuze 11.5 GB, downloaded AI models 7 GB.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: about 29 GB back at once, 30 with Cascadeur, nothing the game or a test still uses.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete those three; I uninstall Cascadeur (recommended)"
+    ],
+    [
+     "video",
+     "Only the AI-video install"
+    ],
+    [
+     "no",
+     "Keep everything"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-13 07:47, his yes 13 Nov 07:24; AI-video install, MetaTailor's temp copy and the Cascadeur copy deleted 07:50 (chair-rise source kept on F:); C: 72.6 GB free; Cascadeur's uninstall is his"
+  },
+  {
+   "id": "talk-router-key-2026-11-12",
+   "added": "2026-11-12 23:50",
+   "text": "Money and your account, about 10 minutes (your pick A to the advisor, 21:48: try other companies' models for the talk). Sonnet 5.5 and a local model on your card need nothing from you and start with the next order. For Google's, OpenAI's and an open model: (1) open openrouter.ai and make an account; (2) on its Credits page add US$10 and leave automatic top-up off; (3) on its Keys page make a key named LEDGER bake-off with a credit limit of 10; (4) in File Explorer type %LOCALAPPDATA%\\LEDGER in the address bar, make a new text document named router-key.txt, paste the key into it and save. Never paste the key into the chat. The talk program will also stop itself at US$10 a run in its own code.",
+   "links": [
+    {
+     "label": "OpenRouter",
+     "url": "https://openrouter.ai"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "One router account: one key and one US$10 limit reach every company's models, against a separate account, key and bill per company.",
+   "options": [
+    [
+     "router",
+     "One router account, US$10 (recommended)"
+    ],
+    [
+     "each",
+     "A key from each company instead"
+    ],
+    [
+     "no",
+     "Not now: Sonnet 5.5 and local only"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-13 08:53, his pick 'router' at 08:37 (13 Nov); router-key.txt is in place; the bake-off starts with the next order (waiting list, advisor 125)"
+  },
+  {
+   "id": "humanmotioncraft-install-2026-11-13",
+   "added": "2026-11-13 14:12",
+   "text": "One tap (your words to the advisor, 10:36: 'ok let's test it'). Effect of yes: the builder downloads HumanMotionCraft's official Windows release from its GitHub releases page into its own tools folder on F:, and tests it from the command line, with no clicks from you. Nothing enters the game.",
+   "links": [
+    {
+     "label": "HumanMotionCraft releases",
+     "url": "https://github.com/YalKouassi/HumanMotionCraft/releases"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: it is the free motion tool you asked to test, and the builder installs it without your hands.",
+   "options": [
+    [
+     "yes",
+     "Yes, install and test it (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-13 14:23, his pick yes (14:12), and his own typed approval in a local session about 14:12 (advisor 141): install and test now"
+  },
+  {
+   "id": "start-gate-advisor-rows-2026-11-13",
+   "added": "2026-11-13 14:12",
+   "text": "One tap: when should the next work session start? Today 09:15 to 11:22 was lost: three of your asks to the advisor sat unread while the start waited out its pause after a clean stop. A: also start a session whenever the advisor has a message not yet answered, even during the pause (changes your 4 Nov rule that the start looks only at the handover and the logs). B: shorten the pause after a clean stop from 120 to 45 minutes. C: leave it as it is.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: your asks are picked up within 15 minutes, and no session starts when nothing waits.",
+   "options": [
+    [
+     "a",
+     "A: start on an unanswered advisor message (recommended)"
+    ],
+    [
+     "b",
+     "B: pause 45 minutes instead of 120"
+    ],
+    [
+     "c",
+     "C: leave it"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-13 14:23, his pick A (14:12), and his own typed approval (advisor 141): the gate also starts on an unanswered advisor message"
+  },
+  {
+   "id": "start-model-opus-2026-11-14",
+   "added": "2026-11-14 20:31",
+   "text": "Your hands, two minutes at the PC: the quarter-hourly start runs on Fable, and today its starts that only said 'wait' or found nothing due cost about US$48 of the day's US$89 at list prices. On Opus (your 8 and 10 Nov rulings name Opus for the session) the same starts cost about 40% of that. In the Claude app: Scheduled, open 'ledger-daily-fresh-session', Edit, set Model to Opus 5.5, Save. Then tap A here. A session cannot change this itself.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: Opus is what your rulings set, and it frees about two Kiln rounds a day of allowance.",
+   "options": [
+    [
+     "a",
+     "A: done, it runs on Opus (recommended)"
+    ],
+    [
+     "b",
+     "B: keep Fable"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-14 22:05, his tap A at 21:52: the start task runs on Opus 5.5"
+  },
+  {
+   "id": "c-root-empty-folders-2026-11-14",
+   "added": "2026-11-14 22:05",
+   "text": "Your hands, one minute: helpers left eight empty folders at C:'s root (their pictures are moved to F:). A session may not delete folders at a drive's root. In File Explorer, open C:\\ and delete a2, r4, diag, base, tube0, pics, closeups and home. Leave actions-runner-ledger (the build machine). C:\\pic and C:\\c are not clearly ours: yours to keep or delete. Then tap A.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: they are empty and only LEDGER's leftovers.",
+   "options": [
+    [
+     "a",
+     "A: deleted (recommended)"
+    ],
+    [
+     "b",
+     "B: leave them"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-14 22:19, his note 'You delete' at 22:11: the eight empty folders removed by the session at 22:2x"
+  },
+  {
+   "id": "adopt-order-2026-11-16",
+   "added": "2026-11-15 17:29",
+   "text": "Next week's order (16 to 23 November), built by the advisor from your running list: the double week you picked on 12 November (about 205 hours, the doubled line on from your tap), Kiln to M5 and M6, Ron complete, phase 2's street budget and the rough whole street, talk's provider bake-off, people alive, hair, the first parked car. Adopt the order of 16 November?",
+   "links": [],
+   "recommendation": "Yes: it holds your picks of 12 to 15 November and keeps the week at about 84% of its hours. On your tap the doubled line starts, its rules are recorded and its items are worked in order. Nothing in it is acted on before your tap. The 26 GB video folder it mentions was already deleted on 13 November with your yes, so no second tap for it. No web link: the full text is under Read it here.",
+   "options": [
+    [
+     "yes",
+     "Yes, adopt it (recommended)"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "detail": [
+    "His order of 16 November 2026",
+    "Built by the advisor on Sunday 15 November from the running list, the builder's reports and the week's audit facts; adopted by his tap on his page. Runs from that tap to Monday 23 November 2026, 13:00 Swiss time.",
+    "The double week (his picks of 12 Nov): about 170% of a normal week, so about 205 main-line hours. The doubled line runs from 0 to 95% between Monday 13:00 and Wednesday 15:00; he presses the spare reset at the watchdog's 93% alert; then 0 to 90% by Monday 23 Nov 07:00. Unreal and the card never idle, six helpers carry the non-Unreal work, nights included.",
+    "1. Record first (RULINGS.md, within its cap; never restated in an order)",
+    "1. Discord reads of the ArtCraft server go through the advisor on his direct ask in chat; the builder's safety check refuses his browser when the ask comes through the page (15 Nov).",
+    "2. Kiln, by design: no special cases, held-back jobs at every milestone, and M7 (the Hook's whole garment list through Kiln, no Marvelous needed) as clothing's finish line (14 Nov), one line pointing at the design note.",
+    "3. On his tap: production/week-shape.json active; the handover's goal line names this order; tools/order_current_check.py passes.",
+    "2. The week: about 172 of about 205 main-line hours (84%); helpers count against their item",
+    "n16-1 Kiln, clothing. Its share is set by his answer to the advisor's evaluation on Monday 07:40; held here at about 23%, front-loaded (about 35% Monday to Wednesday). The breadth set's six patterns made in Marvelous before 26 Nov, with the held-back jobs set up. Then rounds to M5 (outfits on the cast, the heavy body sitting) and M6 (one outfit walked packaged). Also: the parity list against Marvelous beside M7's count, FoldCraft's solver read and reused where it helps, the code-search test (two rounds with it, two without), and Kiln's disk use bounded on F:. Done: M5 and M6 met with the held-back result, and a renewal recommendation by Tuesday 24 Nov. 46 h, 23%.",
+    "n16-2 Ron as one complete person (from n09-5): his donkey jacket and trousers from the breadth set, the office exit, his routine and talk. Done: on his page with the cost table, batched with Tom's look. 10 h, 5%.",
+    "n16-3 Phase 2's street budget and scale test (time and card memory per view at a district's size; method note first), then the rough whole street with routes and doors the tester walks. Card memory's last measure (n09-3) is taken at that scale. Done: budgets measured in a packaged walk; the rough street's frame on his page at its gate. 40 h, 20%.",
+    "n16-4 The street's checks (width, kit reuse, the street's ends) and Flemish bond with burnt headers, before the corner is copied. Done: passed packaged. 10 h, 5%.",
+    "n16-5 The corner's finish copied along the street from the shopfront and slate-roof skills, each repeat costed against the first. Done: passed packaged; cost per front on the scoreboard. 15 h, 7%.",
+    "n16-6 Talk made provider-neutral, then the bake-off: Sonnet 5.5 first, then Google's and OpenAI's small models, one open model on a fast host, and one local model on his card for small talk. Then the talk quality loop, inside the day's API ceiling. Done: one recommendation on his page with first-sound times, invented details and cost per played hour. 12 h, 6%.",
+    "n16-7 People alive (from n09-8): the CMU moves through Unreal's retargeter after their review, plus idle variety and look-at on the street's walkers. Done: a packaged film passed by a fresh reviewer. 10 h, 5%.",
+    "n16-8 Hair (from n09-7): Loomwright's hair loop, capped at 8 h, with our capture fault fixed first, on Tom's crown and Darren's curls, against today's strands. Done: a verdict with renders that rides with the people looks. 8 h, 4%.",
+    "n16-9 Parked cars: the hatchback first (after his silhouette answer), by the cheapest route that passes. Done: one car passed packaged, its hours costed for the other three. 12 h, 6%.",
+    "n16-10 Efficiency and safety:",
+    "same-day packaged verdicts wherever the night walk isn't needed;",
+    "quiet starts rarer or cheaper;",
+    "the model, C:-root and output-path guards each shown firing;",
+    "the doubled line on with his tap, and the reset time recorded when the meter drops after his press;",
+    "the DAILY file by 19:00.",
+    "Done: before and after in Monday's numbers. 6 h, 3%.",
+    "n16-11 Numbers from the games' files (from n09-12): UE4SS once per game, licence first, never beside Unreal. Done: the budget table. 3 h, 1%.",
+    "3. Waiting, ranked (run only when the week's items wait)",
+    "1. The rest of the Hook's garments through Kiln, toward M7.",
+    "2. The fishmonger and the empty unit.",
+    "3. Props and dressing from the Megascans list.",
+    "4. Street furniture and lamps.",
+    "5. Mickey's front at night, including the too-dark fault.",
+    "6. The hill's crowns.",
+    "7. Light by real values and weather life.",
+    "8. Skills from phase 1, each written at its next repeat (n09-10).",
+    "9. The quay-end stop of the tester and the walkers.",
+    "10. Rita's broken window, the wall dish's black centre and the worn paint at the front's edges.",
+    "11. The image-to-3D lab test, as Kiln's props module.",
+    "12. The street's sound (needs his ear).",
+    "4. Decided with this tap",
+    "His taps, batched:",
+    "this adoption;",
+    "deleting C:/LedgerTools/ai-video (26 GB, the dropped video route; recommended yes);",
+    "the reset press at the 93% alert;",
+    "Tom's and Ron's looks together;",
+    "the rough street's frame at its gate.",
+    "The builder decides everything else.",
+    "Carried twice, kept unless he drops them here:",
+    "hair (Tom's crown);",
+    "people alive;",
+    "Sheila out of the white layer (now in Kiln's breadth set).",
+    "All three are part of the largest gap to a PS5-level game (people).",
+    "Closed into this order's items: n09-3, n09-5, n09-6, n09-7, n09-8, n09-10 and n09-12 close into n16-3, n16-2, n16-1, n16-8, n16-7, waiting item 8 and n16-11."
+   ],
+   "state": "done",
+   "closed": "2026-11-15 22:08, his tap yes, 15 Nov 21:08: week shape on, goal line names the 16 Nov order"
+  },
+  {
+   "id": "gate-hook-2026-11-15",
+   "added": "2026-11-15 19:55",
+   "text": "Most hourly starts only find there is nothing to do, yet each pays for a full start (US$15.83 of today's US$26.12). A small check can end those starts before they cost anything. Switch it on?",
+   "links": [],
+   "recommendation": "Yes: about US$10 to 12 saved a day, US$50 to 80 a week. Your messages are never touched; only the hourly task's idle starts end early, and working starts run as now. If the check fails in any way, the start simply runs as it does today. It is the same kind of switch as the end-of-turn check you allowed on 11 November. The first real starts after it is on are measured and reported.",
+   "options": [
+    [
+     "yes",
+     "Yes, switch it on (recommended)"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "detail": [
+    "What it is: a prompt-submit hook in the project's settings that runs the hourly gate before the model is called; a WAIT ends the run at once (Claude Code's hooks documentation, read 15 Nov). Built and self-tested; not switched on. Advisor's efficiency review of 15 Nov 19:46."
+   ],
+   "state": "done",
+   "closed": "2026-11-15 22:08, his tap yes, 15 Nov 21:09; the settings change was refused in the unattended run, so it waits for a turn he starts at the PC"
+  },
+  {
+   "id": "gate-hook-install-2026-11-15",
+   "added": "2026-11-15 23:23",
+   "text": "Your hands, about 2 minutes, any day this week (not urgent): switch on the start check you said yes to. At the PC or through Chrome Remote Desktop: open the Claude app, the Code tab, start a new session in the ledger-local folder, paste this one line and send it: install the gate hook, and add FoldCraft and ast-grep to the licence list as your pick A of 15 Nov. If Claude asks to allow a change to the project's settings, press Allow. It worked when Claude answers that both are done and committed. Then tap Done here. (Added 16 Nov 06:50: the licence list's line for FoldCraft and ast-grep, both MIT, also needs a turn you start.)",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done when convenient: saves about US$10 a day on quiet days. Only a session you start yourself may change the project's settings, so the hourly runs cannot do it for you.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-16 07:56, done in his own turn (07:52): the gate hook installed and tested; FoldCraft and ast-grep on the licence list"
+  },
+  {
+   "id": "marvelous-bridge-2026-11-16",
+   "added": "2026-11-16 10:28",
+   "text": "Your hands, about one minute, today if you can: the clothing patterns wait on Marvelous's LEDGER bridge, which would not start on its own this morning (two tries, then Claude's safety check stopped a third). At the PC or through Chrome Remote Desktop: in Marvelous Designer (already open), open the menu Plugins, then Plug-in, then click LEDGER bridge. Nothing else. Then tap Done here. If you would rather Claude tries once more by itself, tap Another try.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Done (one click in Marvelous): Ron's jacket and trousers, Sheila's skirt and the two held-back jobs all need the bridge, and Marvelous renews on 26 November.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "retry",
+     "Another try by Claude"
+    ],
+    [
+     "not-yet",
+     "Not yet (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-16 12:39, Closed by his pick A (advisor 174, 12:24): breadth patterns from our own pattern tools; Marvelous for comparison drapes only; the auto-start to be fixed to recover by itself; never on his page again."
+  },
+  {
+   "id": "f-room-2026-11-16",
+   "added": "2026-11-16 11:56",
+   "text": "One tap: drive F has 19.9 GB free, just under the 20 GB it must keep, so this afternoon's street scale test, Ron's body in Blender and tonight's build cannot start. May Claude delete the working outputs of four finished tool tests from 12 November (the motion tool's three rounds and the clothing-fit tool's test, 2.5 GB)? Their written reports and verdicts stay; only the bulk files go. Nothing of yours, nothing the game uses.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: those tools were judged and set aside; the reports keep what was learnt, and F gets back to about 22 GB.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete them (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them (add a note)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-16 12:39, Not his to answer (advisor 173, 12:19): own leftovers of four finished 12 Nov tool tests deleted at 12:38, 2.49 GB; reports kept."
+  },
+  {
+   "id": "clearout-at-pc-2026-11-17",
+   "added": "2026-11-17 12:08",
+   "his_hands": true,
+   "text": "Allow the drive clear-out at your PC. Your yes was given at 08:20, but the app's safety check stops Claude deleting these folders on its own. At the PC: open the Claude app, go to LEDGER's production session, type \"Run the clear-out delete now\", and click Allow when it asks. It frees about 13 GB: 7.7 GB of old gate pictures already replaced, and the 5.6 GB copy of Epic's animation sample that nothing reads (it can be fetched again from Fab with your sign-in). Drive F has under 1 GB above the 20 GB it must keep, and the next 12 hours, tonight's build included, need about 3 GB. Then tap Done.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it before tonight's build (about 23:00); only the listed folders go, nothing of yours and nothing the game uses.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-17 12:26, done at his word in the session (2026-11-17 12:26): the 41 listed gate items and the animation sample copy deleted, F: 20.8 to 34.9 GB free; the dress film script kept first in game-inputs/kept-scripts"
+  },
+  {
+   "id": "storage-remove-list-2026-11-17",
+   "added": "2026-11-17 13:09",
+   "text": "One yes: the storage plan you picked at 12:43 found 14.4 GB on the drives that nothing in the game or the tools uses, all of it downloadable again without your sign-in. (1) The old Parler voice program and its model, 8.8 GB on F and C (Sheila speaks with the Pocket voice since 27 October). (2) A set of accent recordings, 3.8 GB, that no tool reads. (3) The extracts from Kingdom Come II and Mafia, 1.8 GB, whose numbers are already written down. Kept on purpose: the approved cast's faces, everything the game reads, a voice setup that may not be rebuildable, and the lab folder. If the app's safety check stops the delete, the session will ask for your Allow at the PC the same hour.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: F goes from 35 to about 46 GB free, comfortably above its 20 GB floor for this week's Kiln runs and builds.",
+   "options": [
+    [
+     "yes",
+     "Yes, remove all three (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-17 14:42, answered yes (14:26): all three removed through retention.py at 14:41, 14.6 GB (F: and C:); the designed voices and the study notes kept",
+   "tag": "DECISION"
+  },
+  {
+   "id": "backup-schedule-at-pc-2026-11-17",
+   "added": "2026-11-17 13:17",
+   "his_hands": true,
+   "text": "Two clicks at your PC: the nightly backup, and 23 GB back on C: (numbered steps on the page).",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today: tonight's backup runs, and C: goes from 47 to about 70 GB free.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "done",
+   "tag": "ACTION",
+   "updated": "2026-11-17 15:58: laid out for a phone (his message 15:48, advisor 200)",
+   "title": "Two clicks at your PC: the nightly backup, and 23 GB back on C:",
+   "why": [
+    "The app will not let Claude make a Windows schedule, so the 05:00 backup needs your Allow.",
+    "Dropbox undoes Claude's online-only setting within seconds (tested), so only your right-click frees the space."
+   ],
+   "steps": [
+    "Claude app: Scheduled tasks",
+    "Open \"LEDGER: the hourly fresh session\"",
+    "History: Today at 2:21 PM",
+    "Type: Register the backup schedule now",
+    "Click Allow if asked",
+    "File Explorer: click Dropbox in the left column",
+    "Right-click the folder LEDGER backup",
+    "Choose Make online-only (nothing is deleted)",
+    "Tap Done below"
+   ],
+   "closed": "2026-11-17 16:40, withdrawn on his message of 16:34 (advisor 203): the 15-minute gate starts the backup; Dropbox online-only not needed now"
+  },
+  {
+   "id": "presentmon-licence-2026-11-17",
+   "added": "2026-11-17 18:54",
+   "tag": "DECISION",
+   "title": "Allow a free frame-timing tool (PresentMon) on your PC?",
+   "why": [
+    "Order item 11 compares the big games' speed with ours; Intel's free PresentMon times their frames from outside, without opening their files.",
+    "It is MIT-licensed, stays on your PC and never ships, but it is not on the licence list, so it is yours to allow."
+   ],
+   "text": "Allow Intel's free PresentMon (MIT licence) on your PC to time the big games' frames from outside; used only for measuring, never shipped.",
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    },
+    {
+     "label": "PresentMon (Intel, free)",
+     "url": "https://github.com/GameTechDev/PresentMon"
+    }
+   ],
+   "recommendation": "Yes: real frame times for the comparison, from outside the games, at no cost.",
+   "options": [
+    [
+     "yes",
+     "Yes, add it to the list (recommended)"
+    ],
+    [
+     "no",
+     "No, published figures only"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-17 19:36, answered yes: written into the licence allowlist (item 12) the same hour"
+  },
+  {
+   "id": "output-cap-switch-on-2026-11-17",
+   "added": "2026-11-17 20:34",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Claude switched both on itself (17 Nov 20:33, 18 Nov 08:50); the app's safety check refused each change to the project's hook settings, so only your word in the chat can allow them.",
+   "title": "One message in the chat: switch on the output cap and the order-item hooks",
+   "text": "Type one line in the working session so Claude may switch on two project settings: the cap on long tool output (about US$40 a day saved) and the hooks that tag each session and helper with its order item.",
+   "why": [
+    "Long command output cost US$67 in a day; the cap is built, reviewed and tested.",
+    "The item hooks make Monday's spend-by-item numbers exact (Kiln's share among them)."
+   ],
+   "steps": [
+    "Claude app: Scheduled tasks",
+    "Open \"LEDGER: the hourly fresh session\"",
+    "History: Today at 11:12 AM (or the newest run)",
+    "Type: Switch the output cap hook and the order-item hooks on",
+    "Click Allow if asked",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today: both start working with the next command.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-18 12:15, his word in the chat (12:15): the output cap and the order-item hooks switched on in the project's settings the same minute"
+  },
+  {
+   "id": "kiln-front-end-licence-2026-11-17",
+   "added": "2026-11-17 21:36",
+   "tag": "DECISION",
+   "title": "May garments made through Kiln's copied job interface go into the game?",
+   "text": "Kiln reuses Drape Studio's job interface (the command names only, not its engine, presets or files) so Marvelous's job scripts run unchanged. The design note made this your licence call before any Kiln garment is adopted.",
+   "why": [
+    "Ron's work trousers are the first Kiln garment heading for the game; adopting them waits on this.",
+    "Since this morning all 58 values once taken by decompiling Marvelous are replaced by Kiln's own (public instructions, own rules or own measurement; the last, 18 Nov 09:40). Every command Ron's trousers use is in Marvelous's public scripting docs (two return-key spellings unconfirmed); about 22 other names Kiln serves are not, and Kiln stops serving them."
+   ],
+   "steps": [
+    "Tap Yes or No below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Not yet, briefly: two things outside the 58 are still open (a few start values read from the installed program's data files, and the leg and torso start fits made against Marvelous's drapes); Kiln refits them to our own measurements, then this comes back to you.",
+   "options": [
+    [
+     "notyet",
+     "Not yet: replace the decompiled parts first (recommended)"
+    ],
+    [
+     "yes",
+     "Yes, adopt Kiln garments now as they are"
+    ],
+    [
+     "no",
+     "No: Kiln garments reach the game only through Marvelous"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-18 12:16, withdrawn on his message of 12:13 (advisor 221): Kiln is his own tool, not a licence; decided by the session (12:16): Ron's trousers adopted once the start values and the leg and torso fits are on our own measurements"
+  },
+  {
+   "id": "study-leftovers-delete-2026-11-18",
+   "added": "2026-11-18 00:55",
+   "tag": "DECISION",
+   "title": "Delete the old game-file readers your outside-only ruling retired?",
+   "text": "Since your 17 Nov ruling, other games are studied from outside only. Three leftovers from the old way sit on the F: drive: the FModel file reader (100 MB), the Silent Hill 2 reader and its outputs (59 MB), and an empty inZOI folder. Nothing uses them; a check now fails the build if such a reader comes back.",
+   "why": [
+    "They are things you asked for, so deleting them needs your yes (your 29 Oct ruling).",
+    "Kept, they are tools your ruling no longer allows anyone to run."
+   ],
+   "steps": [
+    "Tap Yes or No below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes: nothing uses them and your ruling retired them; the study notes in our own words stay.",
+   "options": [
+    [
+     "yes",
+     "Yes, delete all three (recommended)"
+    ],
+    [
+     "no",
+     "No, keep them"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-18 12:16, withdrawn on his message of 12:13 (advisor 221): the old readers stay; nothing runs them and the build check fails if one is used"
+  },
+  {
+   "id": "font-pick-2026-11-19",
+   "tag": "DECISION",
+   "kind": "licence-off-list",
+   "title": "A typewriter font for the browser prototype only (Apache 2.0)",
+   "text": "May the browser prototype use the Special Elite font (Apache 2.0, by Astigmatic)? Never shipped in the game.",
+   "why": [
+    "Apache 2.0 is not on the font line of the list (only OFL); the 21:10 yes covered the four tools, not the font.",
+    "Read at source: Google Fonts' own listing says license APACHE2 (18 Nov)."
+   ],
+   "links": [
+    {
+     "label": "The font's licence at source",
+     "url": "https://raw.githubusercontent.com/google/fonts/main/apache/specialelite/METADATA.pb"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes, for the prototype only: an open licence, and nothing of it reaches the game.",
+   "options": [
+    [
+     "yes",
+     "Yes, prototype only (recommended)"
+    ],
+    [
+     "no",
+     "No, use an OFL font"
+    ]
+   ],
+   "state": "done",
+   "added": "2026-11-19 00:56",
+   "closed": "2026-11-19 07:51, answered yes (07:43): on the licence list, line 14, prototype only"
+  },
+  {
+   "id": "dinov3-pick-2026-11-19",
+   "tag": "DECISION",
+   "kind": "licence-off-list",
+   "title": "Image-to-3D lab test: allow Meta's DINOv3 helper model?",
+   "text": "The props test (waiting item 11) runs TRELLIS.2 (MIT, allowed) through trellis.cpp, which needs Meta's DINOv3 image model under its own 'dinov3-license', not on the list. Allow it for the lab test only?",
+   "why": [
+    "Without it the test cannot run on this PC's card.",
+    "Licence read in full 19 Nov: royalty-free, commercial use allowed; no weapons or military use; a lab measurement only, nothing adopted on its result."
+   ],
+   "links": [
+    {
+     "label": "DINOv3's model card (licence)",
+     "url": "https://huggingface.co/timm/vit_large_patch16_dinov3.lvd1689m"
+    },
+    {
+     "label": "DINOv3 licence (full text)",
+     "url": "https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes, lab test only: worldwide, royalty-free, outputs ours with no limit beyond its banned uses (real weapons, trade controls); the licence copy goes with anything shared. Read 18 Nov 21:45 through a fetch summary of https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md; re-read the full text before publishing.",
+   "options": [
+    [
+     "yes",
+     "Yes, lab test only (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "state": "done",
+   "added": "2026-11-19 00:56",
+   "closed": "2026-11-19 07:51, answered yes (07:43): on the licence list, line 15, lab test only"
+  },
+  {
+   "id": "marvelous-cancel-2026-11-19",
+   "added": "2026-11-19 10:44",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "purchase",
+   "tried": "Only the account holder can stop a subscription; Claude never signs in to or changes accounts (RULINGS 11 Nov).",
+   "title": "Cancel Marvelous Designer's renewal before 26 November",
+   "text": "Your pick of 10:31 today: Marvelous lapses. It renews by itself on 26 Nov, so switch the renewal off in your Marvelous account before then.",
+   "why": [
+    "Everything made in Marvelous is being exported to open formats on F: and the backup before the month ends.",
+    "Kiln stays the clothing route at 70% after Monday."
+   ],
+   "steps": [
+    "Sign in at marvelousdesigner.com with your account",
+    "Open your account's subscription or billing page",
+    "Switch automatic renewal off (or cancel at period end)",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "Marvelous Designer",
+     "url": "https://www.marvelousdesigner.com/"
+    },
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it by Wed 25 Nov: the exports finish before the month ends either way.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-19 13:39, done (his tap 13:28): renewal cancelled; exports finish before 26 Nov"
+  },
+  {
+   "id": "marvelous-copies-2026-11-19",
+   "added": "2026-11-19 11:21",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The bridge's own starter (11:19) refuses to pick among four copies by design; a scheduled run has no computer use, and Claude does not close your Marvelous.",
+   "title": "Close the extra Marvelous windows, keep one",
+   "text": "Four copies of Marvelous have been open since 16 Nov and three are frozen, so Claude cannot reach Marvelous to export every garment before it lapses on 26 Nov.",
+   "why": [
+    "The export of every Marvelous project to open files waits on one working copy.",
+    "Every garment is already saved on F:, so nothing is lost by closing."
+   ],
+   "steps": [
+    "Close every Marvelous Designer window (choose Don't save if asked)",
+    "Open Marvelous Designer once",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Do it today when you are at the PC: about two minutes.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-19 13:39, done (his tap 13:29): one Marvelous copy running since 13:29, responding; the bridge start follows"
+  },
+  {
+   "id": "fable-reset-2026-11-19",
+   "added": "2026-11-19 12:32",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Only you can press a usage reset in the Claude app; the records do not say how many resets you have left or when they expire.",
+   "title": "Press a Fable reset now",
+   "text": "The week's usage is at 44%, just above the ceiling for this point of the week (43.8%); Fable's own meter is at 47%. Above the ceiling Claude starts nothing new, so the Fable work on Kiln waits.",
+   "why": [
+    "Waiting on it: Fable at full effort on Kiln's hardest pieces (the coat, the trousers' legs, Sheila's blouse, the jacket over the jumper, the donkey jacket, a new stiffness method).",
+    "Your 19 Nov ruling: Fable at full speed, your resets undoing the cost."
+   ],
+   "steps": [
+    "Press one usage reset in the Claude app",
+    "Tap Done below, or tell the advisor how many resets you have left and when they expire"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Press it now: Kiln v1 is due Monday 13:00.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "blocks": "Every new Fable piece of Kiln v1 waits: the week is above its ceiling",
+   "closed": "2026-11-19 13:39, held, not pressed (his pick 13:31, advisor 246): burn Fable first; the item returns at about 98% of Fable's meter"
+  },
+  {
+   "id": "marvelous-box-2026-11-19",
+   "added": "2026-11-19 13:45",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The bridge's starter (13:43) found one copy, as wanted, but a small box of its own sits over the main window, so it stops by design; a scheduled run has no computer use, and Claude clicks nothing in a box it cannot read.",
+   "title": "Answer the small Marvelous box, then leave Marvelous open",
+   "text": "The Marvelous you opened at 13:29 shows a small box over its main window (about 392 by 174), which blocks the bridge that exports every garment before 26 Nov.",
+   "why": [
+    "The export of every Marvelous project to open files waits on it.",
+    "Every garment is already saved on F:, so nothing is lost."
+   ],
+   "steps": [
+    "Look at Marvelous Designer on the PC",
+    "Answer or close the small box in front of it (a sign-in box: sign in; anything else: OK or Close)",
+    "Leave Marvelous open, then tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the Marvelous bridge and the export of every Marvelous project before 26 Nov",
+   "recommendation": "Do it today when you are at the PC: about one minute.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-21 10:08, He answered the box (Done 09:44); the bridge started 10:05 and all 52 projects were exported by 10:15."
+  },
+  {
+   "id": "fable-press-2026-11-19",
+   "added": "2026-11-19 15:10",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "Only you can press a usage reset in the Claude app.",
+   "title": "Press your Fable reset now",
+   "text": "Fable is at 92% of its week at 15:09 and rising about 30 points an hour; six Fable helpers on Kiln stop at 100%. Your pick of 13:31: press at the end of the burn.",
+   "why": [
+    "Fable reaches 97% about 15:20 and 100% about 15:25.",
+    "The week is at 68%; after the press Fable's use leaves it."
+   ],
+   "steps": [
+    "Press the Fable usage reset in the Claude app",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "the six Fable helpers on Kiln once Fable reaches 100%",
+   "recommendation": "Press it as soon as you see this.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-19 16:55, He pressed his Fable reset before 15:29 on 19 Nov (week 22%, Fable 0%; advisor 248)"
+  },
+  {
+   "id": "licence-rule-2026-11-20",
+   "added": "2026-11-20 07:57",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "The builder tried this edit on 19 Nov at 18:12; the safety check refuses changes to the project rules in a run you did not start, so only a session you start can make it.",
+   "title": "Paste one line into the builder's session so licences stop being your question",
+   "text": "Your standing rule that licences are never your question (advisor 259) is not yet written into the project rules, so licence questions can still reach you.",
+   "why": [
+    "The safety check refuses this edit in a run you did not start; it needs one message from you at the PC.",
+    "Four licence items wait to be closed by that same session once the rule is in."
+   ],
+   "steps": [
+    "Open the Claude app on the PC",
+    "Open the builder's session (LEDGER)",
+    "Paste exactly: Apply advisor 259 now: my standing rule that licences are never my question goes into CLAUDE.md, RULINGS and the page check, as written there.",
+    "When it reports it done, tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "closing the four open licence questions and keeping licence asks off your page",
+   "recommendation": "Do it next time you are at the PC: about one minute.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-21 09:47, he sent the line in the session at 09:43; applied: CLAUDE.md, RULINGS and the page check (refuses licence items, self-test)"
+  },
+  {
+   "id": "cli-signin-2026-11-21",
+   "added": "2026-11-21 08:32",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "sign-in",
+   "tried": "Sessions may not sign in for you; the app's own sessions still work, but the separate command-line Claude the night job uses lost its sign-in at 02:09 last night.",
+   "title": "Sign the night's Claude back in (about two minutes)",
+   "text": "Last night's checks that use Claude (the sentence bench and the walk's picture check) all failed because the command-line Claude's sign-in expired.",
+   "why": [
+    "Without it, tonight's bench and picture check fail again.",
+    "The game itself and the walk are fine; only those two checks need it."
+   ],
+   "steps": [
+    "On the PC, open Command Prompt (Start, type cmd, Enter)",
+    "Type claude and press Enter",
+    "Type /login and press Enter, then finish the sign-in in the browser it opens",
+    "Back in Command Prompt, type /exit and press Enter, then tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "tonight's sentence bench and the walk's picture check",
+   "recommendation": "Do it today when you are at the PC: about two minutes.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ],
+    [
+     "no",
+     "Not now"
+    ]
+   ],
+   "state": "done",
+   "closed": "2026-11-21 10:03, He signed in 09:46; a short command-line call answered at 10:08."
   }
  ]
 }

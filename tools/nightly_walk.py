@@ -452,6 +452,13 @@ def main():
         rep = report(date, night, st["since"], st.get("verdict"), st.get("bench"), st.get("eyes"))
         print(rep["paragraph"])
         return 0
+    # ONE WALK A WEEK WHILE UNREAL WORK WAITS (advisor 313, his ruling of 21 Nov: nothing in Unreal
+    # changes until after the prototype and Kiln): the package and walk run only on the night after
+    # Sunday (the 01:30 run dated Monday); every other night logs and ends. production/playtest/
+    # nightly/schedule.json sets the days; "nightly": true there, or --force, resumes every night.
+    if not walk_tonight(dt.date.today()) and "--force" not in sys.argv:
+        log("weekly schedule: no walk tonight (production/playtest/nightly/schedule.json)")
+        return 0
     # ANY GAME WINDOW LEFT OPEN IS CLOSED FIRST (Jafar, 7 October: the night before, three copies
     # left by a cut-off measurement kept this walk from starting its game).
     try:
@@ -522,6 +529,19 @@ def long_session_if_requested(date, night, request=LONG_REQUEST, now=None, runne
         return {"did": "failed", "error": str(e)}
 
 
+def walk_tonight(day, schedule=None):
+    """True when tonight's run walks: schedule.json's "nightly" true, or the day's name in its "walk_days"
+    (the run's own date: the 01:30 run after Sunday is dated Monday). No file: every night, as before."""
+    if schedule is None:
+        path = os.path.join(REPO, "production", "playtest", "nightly", "schedule.json")
+        if not os.path.exists(path):
+            return True
+        schedule = json.load(open(path, encoding="utf-8"))
+    if schedule.get("nightly"):
+        return True
+    return day.strftime("%A") in schedule.get("walk_days", [])
+
+
 def selftest():
     ok = bad = 0
 
@@ -530,6 +550,10 @@ def selftest():
         ok, bad = (ok + 1, bad) if cond else (ok, bad + 1)
         if not cond:
             print("nightly_walk selftest FAIL " + name)
+    weekly = {"nightly": False, "walk_days": ["Monday"]}
+    check("the weekly schedule walks the night after Sunday", walk_tonight(dt.date(2026, 11, 30), weekly))
+    check("the weekly schedule skips a Tuesday", not walk_tonight(dt.date(2026, 11, 24), weekly))
+    check("nightly true walks every night", walk_tonight(dt.date(2026, 11, 24), {"nightly": True}))
     b = parse_bench('firsts: a newcomer\'s first questions, 60 answered (0 failed): "that\'s all I know" 21 (lena 7, rocco 8, sam 6), refused 1; api-rate usd, not billed=0.00 -> firsts.jsonl')
     check("the bench's count and who said it are read", b["count"] == 21 and b["by_who"] == {"Sheila": 7, "Ron": 8, "Darren": 6})
     check("a bench with no count says so", parse_bench("nothing")["count"] is None)
