@@ -1,27 +1,25 @@
-# Design proof: fourth report (21 November 2026, run 4)
+# Design proof: fifth report (23 November 2026, run 5)
 
-Not complete yet. Every part is now defined; none is left undefined.
+Not complete yet. Nothing is undefined.
 
-398 rows, one per part a player meets:
-- Measured: 101, now only where the standard rests on something real: 20 on reference-game numbers, 15 on dated real-world figures, 66 on his rulings or canon
-- Decided: 131, design decisions inside his rulings, listed for him to overturn
-- Pending a dated study or his answer: 49
-- Unmeasured: 46
-- Undefined: 0
+401 rows, one per part a player meets:
+- Measured: 111 (21 on reference-game numbers, 15 on dated real-world figures, 75 on his rulings or canon)
+- Decided: 132, design choices inside his rulings, his to overturn
+- Pending a dated study: 42
+- Unmeasured: 45, each with how and when it gets measured
 - Out by his rulings: 14; outside (Unreal-only and shipping): 57
 
 What changed today:
-- The pre-mortem's guards are in the gate: "measured" means a real figure, design choices are counted apart; "material gap" is defined before red team 3; at most four red-team rounds, then anything open comes to him as scope.
-- Red team 2's 22 gaps are defined: attacking the police, who knows Tom, how the ending is chosen, rivals' bases, guns, the phone.
-- The Hook has a road plan in metres, built on the 48 m Quay Street: a car crosses in about 66 s, a walk takes about 5 minutes, and car chases get a 1.5 km loop round the docks (about one 90 s chase a lap).
-- The clock is written both ways, so his answer drops straight in.
-- A fresh reviewer's 30 faults: fixed once.
+- His clock is written in: 60 s a game hour, a 24-minute day, 7 game weeks, Act II five.
+- Chases lose their 90-second timer. The reference chases run 2 to 8 minutes and GTA VI's end only by escape or capture, so ours end only when lost, caught, wrecked or at the edge. The exact length and search time wait on five-sample numbers this week.
+- The busiest street view is reset to 12 to 20 people: above GTA VI's counted streets (about 10), within what 1990 footage shows.
+- Getting into a car is the first feel number on five real samples (GTA VI, about 2 seconds).
+- A fresh reviewer's 14 faults: fixed once.
 
 Before the gate:
-- His clock answer (C11), by Sat 28 Nov.
-- The PC measuring, 23 to 28 Nov (GTA VI first).
-- 1990 prices and street hours from the cloud, by Thu 26 Nov.
+- The PC measuring, Mon 23 to Fri 27 Nov, GTA VI first. About 134 hours are priced against 60 in the order; the cheaper routes must close that, and Monday's reprice will say.
+- 1990 prices and who is out by hour, by Thu 26 Nov.
 - The story, by Sat 28 Nov.
-- Red teams 3 and 4 on 29 and 30 Nov.
+- Red teams 3 and 4 on Sun 29 and Mon 30 Nov.
 
-The gate: about Mon 30 Nov to Tue 1 Dec at the earliest.
+The gate: about Mon 30 Nov to Tue 1 Dec at the earliest, later if the measuring runs over, inside the one-shot's 7 Dec plan date.

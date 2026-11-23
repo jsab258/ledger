@@ -71,3 +71,19 @@ Next run starts here:
 4. Sat 28 Nov: the fit check and the players' questions again on the defined design.
 5. Red team 3 (Sun 29 Nov) and 4 (Mon 30 Nov): rt2_build.py adapted (fold in passes 2 and 3; ten new planted parts not in planted.json or planted-2.json; refer to sections by name); triage line by line against G-B's four tests, naming the test met. No round 5 (G-C).
 Scripts in order when rebuilding: run 1 to 3 scripts, then run4_guard.py, run4_apply.py, covmd.py last.
+
+## Run 5, 23 November 2026, from 13:18 (Opus 5.5, configured claude-opus-5-5)
+
+Launched as "design proof run 2: the design pass" with run 1's steps (a) to (d). Those steps were already done by runs 2 to 4 (20 to 21 Nov): the 44 undefined parts defined, GTA VI, the walkthrough themes and the story patterns mapped, every unmeasured row given a plan, the counts and gate list written. So this run took up where run 4's log stopped and did what the order of 23 Nov names for design proof run 5 (his clock B, the chase against the chase sheet, the crowd against measured views).
+- Step 0: start row 2026-11-23-1318-design. Allowance: the newest row with a reading says 95% at 12:08 on 22 Nov, but the week reset at 13:00 today, so that reading is last week's; this week's line (0 to 90% by Mon 30 Nov 07:00) applies and spend was kept small (one Opus reviewer).
+- Design pass 4 (DEFINITIONS-2026-11-21.md, last heading): clock B written in (CLK-01 to CLK-07, 7.13, FIT-F13 MEASURED on his ruling; RT-04's fail-safe in Act II week 5); chases: no timer (DP5-C01 DECIDED, raised by GTA VI), length and search bands (DP5-C02, DP5-C03 PENDING); the busiest view 12 to 20 and G9's bands rescaled (GD-02, FIT-G9 PENDING, bands DECIDED); 1.2.3 MEASURED on GTA VI's five parked-car entries. Fresh Opus reviewer: 14 points, fixed once (list at the top of pass 4). scripts/run5_apply.py writes the rows (safe to rerun); covmd.py after.
+- GTAVI-MAP: run 5 additions. MEASUREMENTS-NEEDED.md: new top section for the order as adopted (installed games first, five-sample rule, GTA VI first, about 134 PC hours left against n23-1's 60, the lean order); run 2's list kept below as history; every UNMEASURED row's measure_when dated to the order.
+- Counts: 401 rows: 111 MEASURED (21 reference game, 15 real-world, 75 his rulings or canon), 132 DECIDED, 42 PENDING, 45 UNMEASURED, 0 UNDEFINED, 14 OUT, 57 OUTSIDE. DESIGN-COMPLETE.md and REPORT.md (fifth) updated.
+
+Next run starts here:
+1. When the PC measuring reports (STATUS.md on wip, from Mon 23 Nov): set rows only on solid numbers; first DP5-C02 and FIT-F04 (chase lengths), DP5-C03 (search length), GD-02 and FIT-G9 (crowd counts, KCD2 from the installed game), the feel rows. Rerun run5_apply.py's counts and covmd.py.
+2. Cloud by Thu 26 Nov: 1990 prices (FIT-G8, RT2-14), 2.1.2 and FIT-G9 from the ONS tables, FIT-F19; then FIT-F24's money run.
+3. The text fixes design pass 4 lists (every "within 90 real seconds", 45 s, 18 minutes, 9 weeks, "eighth game week") go into the blueprint, not the old description: give them to the blueprint keeper's next fold (BLUEPRINT-CHANGELOG), since the giant prompt is written from BLUEPRINT.md.
+4. Sat 28 Nov: the fit check and the players' questions again; then red teams 3 (Sun 29) and 4 (Mon 30) on the blueprint, rt2_build.py adapted, ten new planted parts, triage by G-B. No round 5.
+5. Read on arrival: production/research/lane/aaa-studies/ (studies A and B, landing this week) and production/lane/blueprint/PRIOR-RESEARCH-INDEX.md; map their standards to rows.
+Scripts in order when rebuilding: runs 1 to 4 scripts, run5_apply.py, covmd.py last.

@@ -22,37 +22,38 @@ Anything else (taste, polish, more of something that exists, Unreal-only looks, 
 
 **G-D. The clock before red team 3.** His open C11 is settled before red team 3 (pre-mortem way 19). Its rows are PENDING his answer; both versions are written in DEFINITIONS-2026-11-21.md (design pass 3, the clock) so either answer drops in the same day.
 
-## Where it stands, 21 November 2026, after run 4
+## Where it stands, 23 November 2026, after run 5
 
 | Condition | State |
 |---|---|
-| 1. Rows | Not met. 398 rows: 101 MEASURED, 131 DECIDED, 49 PENDING, 46 UNMEASURED, 0 UNDEFINED, 14 OUT, 57 OUTSIDE. Of the 101 MEASURED: 20 on reference-game numbers, 15 on dated real-world figures or published standards (together 35), 66 on his rulings or canon. |
-| 2. Themes | Met as a mapping (all 242 themes on parts with a test); they close with condition 1. Not recomputed for the 35 new rows of run 4, which hang on parts already mapped. |
-| 3. Red teams | Not met. Round 1: 19 material gaps; round 2: 22. Both rounds' gaps are now defined. Clean rounds so far: 0. Rounds left: 3 and 4 (G-C). |
+| 1. Rows | Not met. 401 rows: 111 MEASURED, 132 DECIDED, 42 PENDING, 45 UNMEASURED, 0 UNDEFINED, 14 OUT, 57 OUTSIDE. Of the 111 MEASURED: 21 on reference-game numbers, 15 on dated real-world figures or published standards (together 36), 75 on his rulings or canon. Only two measuring-block numbers are solid by the five-sample rule so far (GTA VI's two-star wanted spell, a parked-car entry); the rest of the sheets are leads. |
+| 2. Themes | Met as a mapping (all 242 themes on parts with a test); they close with condition 1. Not recomputed for the rows of runs 4 and 5, which hang on parts already mapped. |
+| 3. Red teams | Not met. Round 1: 19 material gaps; round 2: 22; all defined. Clean rounds so far: 0. Rounds left: 3 and 4 (G-C). |
 | 4. Catch rate | Round 1: 10 and 9 of 10. Round 2a: 10 and 8; round 2b after one brief fix: 9 and 10. |
+
+Run 5 (23 Nov): his clock B written in (G-D met: the clock is settled before red team 3); design pass 4 took the chase off its 90 s timer (GTA VI's bar), reset the busiest-view crowd on the counted views, and measured car entry on GTA VI's five samples; a fresh reviewer's 14 points fixed once.
 
 ## What stands between the design and the gate, with dates
 
 | What | Rows | Closed by | When |
 |---|---|---|---|
-| His answer on the clock (C11): A 45 s a game hour with a slower first evening, or B 60 s with a 7-week calendar; both written in design pass 3 | 7.13, CLK-01 to CLK-07, FIT-F13 (9 PENDING) | his answer, put to him by the advisor; the chosen version is dropped in the same day | before red team 3 (G-D), so by Sat 28 Nov |
-| GTA VI's footage pass, first (his ruling, the full pass) | GTA VI's column on the PENDING feel rows; GD-02; 1.2.10, 2.6.10 | PC measuring, block 1 (about 24.5 PC hours) | Mon 23 to Tue 24 Nov |
-| Feel numbers for KCD2, GTA V and RDR2, with walk and run speeds | 16 PENDING, 3 UNMEASURED; FIT-G4, FIT-F21 | PC measuring, block 2 | Tue 24 to Thu 26 Nov |
-| The teardown and the hour split | 7.5 PENDING; 23 UNMEASURED; FIT-F16 | PC measuring, block 3 | Wed 25 to Fri 27 Nov |
-| Extra rows on the feel sheets, with chase lengths in four games (GTA IV in Mafia DE's place) | 6 UNMEASURED; GD-01, GD-02, GD-07, GD-08, RT-10, RT-11, RT-19, 2.7.3 PENDING; FIT-F04 | PC measuring, block 4 (about 16.5 PC hours) | Thu 26 to Sat 28 Nov |
-| The listening pass | 8 UNMEASURED | PC measuring, block 5 (about 2 PC hours) | Fri 27 to Sat 28 Nov |
-| 1990 prices (spending, guns) and who is out by hour | FIT-G8, RT2-14, FIT-G9, 2.1.2 | cloud: dated 1990 price sources; ONS time in and out of home tables, scaled back | by Thu 26 Nov |
+| GTA VI's footage to solid, first: being seen with the search after sight is lost, G-rows (town crowd), driving, the split hour | GTA VI's column on the PENDING feel rows; DP5-C03; GD-02; FIT-G9; 2.6.10; 7.5 | PC, order n23-1, block 1 (about 15 h left) | Mon 23 to Tue 24 Nov |
+| Car chases to solid in four games (GTA IV in Mafia's place): lost-chase and search lengths | DP5-C02, DP5-C03, FIT-F04 | PC, block 2 (about 6 h) | Tue 24 Nov |
+| The feel block, KCD2 from the installed game first, with walk and run speeds and the teardown | the PENDING feel rows; 2 FEEL and 23 teardown UNMEASURED; FIT-G4, FIT-F21, FIT-F16 | PC, block 3 (about 78.7 h before the cheaper routes) | Tue 24 to Fri 27 Nov |
+| The other footage studies to solid (street life, conversations, first hours, district, port towns' daytime counts) | GD-02's floor and ceiling, FIT-G9 and the study rows | PC, block 4 (about 15.5 h) | Wed 25 to Fri 27 Nov |
+| Extra rows and the listening pass | 6 A and 8 listening UNMEASURED; GD-01, GD-07, GD-08, RT-10, RT-11, RT-19, 2.7.3 PENDING | PC, block 5 (about 16.5 h) | Thu 26 to Fri 27 Nov |
+| 1990 prices (spending, guns) and who is out by hour | FIT-G8, RT2-14, FIT-G9, 2.1.2 | cloud: dated price sources; ONS time-use tables | by Thu 26 Nov |
 | Cloud checks on the line table and the money run | FIT-F19, FIT-F24 | cloud, 0.5 h and 2 h | F19 by Thu 26 Nov; F24 by Sat 28 Nov |
-| Checks on the next prototype build: the one-hit wreck's rate and something within 30 s | FIT-F05, FIT-F32 | cloud, 1.5 h on the build | by Sat 28 Nov; if no build by then they stay PENDING and go to him with red team 4's list |
-| Story content, Act III's shape, the ending rule, the successor | 5 UNMEASURED; GD-05, RT-01, RT-02, RT-03, RT2-04, RT2-15 PENDING | the story measure | by Sat 28 Nov 12:00 |
-| The fit check and the players' questions again, on the defined design | before red team 3 | cloud | Sat 28 Nov |
-| Red team 3: a fresh copy with design passes 2 and 3 folded in, ten new planted parts, the improved briefs, triage by the four tests of G-B | conditions 3 and 4 | cloud, two fresh Opus helpers | Sun 29 Nov |
-| Red team 4, the last round (G-C); anything still open after it goes to him once as scope with a recommendation | conditions 3 and 4 | cloud | Mon 30 Nov |
-| The DECIDED list shown to him (131 rows, below), each his to overturn | condition 1 | the advisor | before the gate |
+| Checks on the next prototype build: the one-hit wreck's rate and something within 30 s | FIT-F05, FIT-F32 | cloud, 1.5 h on the build | by Sat 28 Nov; with no build they go to him with red team 4's list |
+| Story content, Act III's shape, the ending rule, the successor | 5 UNMEASURED; GD-05, RT-01 to RT-03, RT2-04, RT2-15 PENDING | story v3 | by Sat 28 Nov 12:00 |
+| The fit check and the players' questions again, on the defined design and the blueprint | before red team 3 | cloud | Sat 28 Nov |
+| Red team 3: a fresh copy from the blueprint with design passes 2 to 4 folded in, ten new planted parts, the improved briefs, triage by G-B's four tests | conditions 3 and 4 | cloud, two fresh Opus helpers | Sun 29 Nov |
+| Red team 4, the last round (G-C); anything still open goes to him once as scope with a recommendation | conditions 3 and 4 | cloud | Mon 30 Nov |
+| The DECIDED list shown to him (132 rows, below), each his to overturn | condition 1 | the advisor | before the gate |
 
-Done on 21 Nov (run 4): the process guards G-A to G-D; design pass 3 (red team 2's 22 gaps, the fit check's ten gaps with the Hook's road plan in metres, its four text fixes, its open pairs given measurements, seven players' gaps, the advisor's three decisions D-Q2 to D-Q4); the clock written both ways; a fresh reviewer's 30 points fixed once.
+The measuring is the risk. STATUS.md prices about 134 PC hours to bring every number to five samples; the order gives n23-1 60. The gate holds its date only if the cheaper routes (code measurers, the cheap reader, installed games first, one stream for several studies) close that gap; Monday's reprice says whether they do. If not, the lean order in MEASUREMENTS-NEEDED.md runs first, and the rows left at Fri 27 Nov are listed here by name and move the gate by the days they take.
 
-Earliest the gate can be met: Mon 30 Nov to Tue 1 Dec, unchanged: red team 3 on Sun 29 Nov and red team 4 on Mon 30 Nov must both be clean, after the PC measuring (23 to 28 Nov), the story measure (28 Nov) and his clock answer. If either round is not clean, there is no round 5: the open items go to him on Mon 30 Nov as scope, and the gate is judged on his answers (about Tue 1 Dec). The giant prompt is written only after the gate (pre-mortem way 4).
+Earliest the gate can be met: Mon 30 Nov to Tue 1 Dec, if the measuring closes by Fri 27 Nov and red teams 3 and 4 are both clean. Otherwise no round 5: the open items go to him on Mon 30 Nov as scope and the gate is judged on his answers (about Tue 1 Dec), and any measuring still open pushes it later, inside the one-shot's plan date of Mon 7 Dec.
 
 ## DECIDED rows: design decisions for him to overturn
 
@@ -191,3 +192,4 @@ Each row below has a pass-or-fail standard the design sessions chose inside his 
 | FIT-P45 | Birds and animals | design pass 3; FIT-CHECK-2026-11-21.md |
 | FIT-P52 | What an ordinary drawer holds | design pass 3; FIT-CHECK-2026-11-21.md |
 | FIT-L01 | 60 street lines for the 12 people seen most, 30 for the rest | design pass 3; FIT-CHECK-2026-11-21.md |
+| DP5-C01 | A chase has no timer (car and foot) | design pass 4 (run 5): raised by GTA VI's bar over the description's 90 s |
