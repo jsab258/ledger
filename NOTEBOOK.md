@@ -2956,3 +2956,12 @@ Figures below are as the advisor relayed them at 22:35, unless a file is named; 
 - 2026-11-23, the tool lane: the asset tool is mission critical; when it resumes after the one-go build and its loops, the strongest model leads it and routine steps go to the standard model (RULINGS.md, 23 Nov).
 - 2026-11-23, the owner's taps are a cost: every cloud start from the advisor's chat and every new website asks him for approval; count his taps per day and design starts so they need fewer (advisor 336).
 Cost of this entry about 0.1 h.
+
+
+## 24 Nov 2026: a game's own distance readout as a ruler (unit done)
+- Made: walk and run speeds for an installed open-world game, solid by the five-sample rule: sprint 5.5 m/s, jog 4.5 m/s (production/research/lane/measurements/SLEEPING-DOGS-DRILL-2026-11-23.md).
+- Method: find a scripted moment where a figure the player chases stands still while the game shows the distance to it in whole metres; play that moment by a fixed timed key script (the restart key on the fail screen, then fixed holds); film the game's own window on the high-resolution clock; find the readout by colour plus shape (colour alone was fooled by green scenery) and tile every grab with its time; speed = metres between the first and last readout change over the time between. The grab step must be finer than the time per metre.
+- Tools: tools/drills/watch_opening.py, tools/drills/marker_read.py.
+- Target and check: five samples per speed, spread judged against the readout's whole-metre step.
+- Cost: about 2.4 h for both speeds (each run waits ten idle minutes; one run at a time).
+- Failed and why: a key landed before the fail screen (the opening's timing drifts; a second key fixed it); a queue started with a shell ampersand stayed alive unseen and a second queue started a second copy, both lost (queue only through the session's background runner; check processes with the system's own list); after a forced close the next run filmed a white window; once the sprint key did not take (a run at jog speed), so a sixth run replaced it. Lesson: check each run's frames for a whole view and the expected speed band before counting it.
