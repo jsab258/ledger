@@ -8,7 +8,11 @@ Each entry: how it works; its standard and test; the source of the standard; its
 ## 7.1 The first hour
 
 Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30, the carry, the morning after.
-
+- Prior research: production/cloud-week/first-30-minutes (50 beats, control in 0:20 or 0:03, at most three empty minutes a route); KCD2 and Mafia bring a new thing about every 3 minutes; the old minute figures were taken at the old clock, re-run before trusting.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-10 a deed said to his face within 30 real minutes, three named people within two hours; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-02 one full moment in the first 30 minutes, two each later hour, in all of five seeded evenings; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-04 check order: first hour, rest of Act I, Act II stage one; decided. None measured.
+- Prior research: aaa-studies/WHERE-PLAYERS-QUIT.md: the first hour is not where RDR2 loses most (opening 12.7 points, chapter 2 31.2); 7.1 stands and the open stretch after it gets WQ-01 to WQ-03; not measured.
 
 ### 7.1 The first hour
 
@@ -20,7 +24,10 @@ Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30,
 ## 7.2 An evening
 
 One game day: an easy day, a tightening dusk, the job, getting home, the count, the sting next morning.
-
+- Prior research: research/meridian-test-administration: ask open and unprompted, maker silent, nothing about the moat; 'Did the town feel alive?' is the worst question.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-02 one full moment in the first 30 minutes, two each later hour, in all of five seeded evenings; decided; STORY-06 one moment in five is funny; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-08 6 of 8 panel players retell a moment naming a person and a later consequence; pending the panel. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-07 every Act I step reachable by landmark with the map shut; 6 of 8 open it less in evening two; decided. None measured.
 
 ### 7.2 An evening
 
@@ -44,7 +51,11 @@ Act I, Monday to Sunday, about two hours.
 ## 7.4 Acts II and III pacing
 
 State-fired beats across seven weeks, then the inspection week.
-
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
+- Prior research: aaa-studies/WHERE-PLAYERS-QUIT.md: RDR2 (the one full curve, a mirror site) loses 31.2 points of owners in chapter 2 (72.7% to 41.5%), more than the guided opening (12.7); 20.4% finish; leads, not measured.
 
 ### 7.4 Acts II and III pacing
 
@@ -59,6 +70,8 @@ State-fired beats across seven weeks, then the inspection week.
 - Standard: For every job, the AI tester runs all orders of its steps it can reach plus one skip by each other route; no run ends stuck or waiting for something that cannot happen. Test: B: permuted step runs on every authored job.
 - Source: The description, sections 14 and 3 (no game over, never stuck); the review studies (missions on rails punished in 5 of 8 games, STORY-PATTERNS rank 5). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS GD-03; GAME-DESCRIPTION-COPY-2 §13, §37; DESIGN §4 (ER-JOB-03, 07)
 - Status: decided. Coverage row: GD-03. Conflicts settled: C-131.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-06 a step lost twice brings another way within a game day; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided. None measured.
 
 ### RT-04 Act transitions and stall paths
 
@@ -66,6 +79,8 @@ State-fired beats across seven weeks, then the inspection week.
 - Standard: Every Sunday answer reaches rung 2 by a state; every Act II reaches a sit-down by the end of Act II's fifth game week (the fail-safe starts four game days before it; F13 under his clock) without a rung skipped unseen; rung changes fire exactly on the table's conditions. Test: B: three week-one bots (each answer) and a do-nothing Act II bot; the act, rung and ladder log checked.
 - Source: The description, sections 29 (ladder never skips a rung), 30 (Act II ends at a sit-down), 32 (the rung table), 36, 37 (opens on rung 2; beats on states); ER-CORE-04 (no dead end). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT-04, F13; GAME-DESCRIPTION-COPY-2 §38, §31, §26; RULINGS 21 Nov
 - Status: decided. Coverage row: RT-04. Conflicts settled: C-132, C-133.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 
 ### FIT-F13 Act II's week count and its fail-safe
 
@@ -73,11 +88,13 @@ State-fired beats across seven weeks, then the inspection week.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock'; design pass 3 F13; RULINGS 21 Nov
 - Status: ruled (his ruling or canon). Coverage row: FIT-F13. Conflicts settled: C-134, C-135.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 
 ## 7.5 The hour budget
 
 How play time is shared: on foot, driving, talk, jobs, fights and chases, the Ledger, waiting.
-
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-10 talk under 30%, aim 19%; half of Act I decision talks staged at the matter; decided; TALK-11 choices per minute and exchange length set from footage; pending. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
 
 ### 7.5 The hour budget
 
@@ -92,6 +109,8 @@ How play time is shared: on foot, driving, talk, jobs, fights and chases, the Le
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS F15, D-Q3; FIT-CHECK F15, question 3; RULINGS 28 Oct and 21 Nov (15 to 20 hours, side stories inside)
 - Status: ruled (his ruling or canon). Coverage row: FIT-F15. Conflicts settled: C-138, C-139, C-140.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-07 two thirds of side stories within three steps and 15 minutes, none over 30; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
 
 ### FIT-F16 Act hours against places and people
 
@@ -99,11 +118,15 @@ How play time is shared: on foot, driving, talk, jobs, fights and chases, the Le
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: FIT-CHECK F16; DEFINITIONS GD-02, D-Q4 (L-01); MEASUREMENTS-NEEDED block 3
 - Status: pending. Coverage row: FIT-F16. Conflicts settled: C-141.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided; WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
 
 ## 7.6 Tension and retellable moments
 
 Nine sources of tension; a retellable moment each evening.
-
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-10 a deed said to his face within 30 real minutes, three named people within two hours; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-01 the tester logs each moment against four tests, with systems and mark; decided; STORY-02 one full moment in the first 30 minutes, two each later hour, in all of five seeded evenings; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided; STORY-07 two first evenings share under half their moments; decided. None measured.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-08 6 of 8 panel players retell a moment naming a person and a later consequence; pending the panel. None measured.
 
 ### 7.6 Tension and retellable moments
 
@@ -118,6 +141,7 @@ Nine sources of tension; a retellable moment each evening.
 - Standard: Humour is praised in 5 of 8 games' story reviews (6% of story sub-themes); a clash of tone is punished. Pass: each act has at least one comic scene and each evening at least one light moment; no comic scene sits inside a scene of death or grief. Test: Story measure readers mark comic scenes per act on the summary; the bot logs light lines per evening.
 - Source: canon.md, Tone; STORY-PATTERNS-STEAM-2026-11-20 (rank 7 humour; tone clash a single mention). (waits on a dated study). Designed in: DEFINITIONS GD-05; canon.md Tone; STORY-PATTERNS-STEAM-2026-11-20 (rank 7 humour, 5 of 8); GAME-DESCRIPTION-COPY-2 §2
 - Status: pending. Coverage row: GD-05.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-06 one moment in five is funny; decided. None measured.
 
 ## 7.7 Rising in position, felt
 
@@ -134,7 +158,10 @@ What a newcomer can point to at each rung: the name, greetings, property, clothe
 ## 7.8 Saving
 
 An autosave after every deed, consequence and job step; reloading never stopped.
-
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-03 saving never costs time; an autosave at least every 10 real minutes outside a fight; decided. None measured.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-07 sleep is a door, never a need, and always saves; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-04 a failed step changes the town, never sends him back; decided. None measured.
+- Prior research: aaa-studies/FAILURE-AND-FRUSTRATION.md: a save system that costs time is 5.7% of KCD2 Steam reviews against 0.3% GTA V and 1.4% RDR2 (script-coded, rough); KCD1 autosaved hours apart.
 
 ### 7.8 Saving
 
@@ -146,7 +173,13 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 ## 7.9 Failure without reload
 
 Beaten, arrested, refused, late: each ends in a state the town can talk about.
-
+- Prior research: research/failure-after-arrest: failure in a game with no reset is about the continuation, not the retry; permanent memory builds a death spiral by construction, so four brakes; the failure place needs its old content, not only a time bar.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-11 no memory closes the game or a main thread; another road within a game day; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Tom holds changes the reply and is named; a wrong push ends in a state, never a reload; decided; TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-06 a step lost twice brings another way within a game day; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided; FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided; MS-04 a failed step changes the town, never sends him back; decided. None measured.
+- Prior research: aaa-studies/FAILURE-AND-FRUSTRATION.md: GTA V death costs 5% of cash up to $5,000 and a skip after three fails; KCD2 sends back to the last save (saving 5.7% of its Steam reviews, rough); none measured.
 
 ### 7.9 Failure without reload
 
@@ -170,7 +203,8 @@ No stats, no difficulty ladder: assists only (seeing assist, hints, aim of drivi
 ## 7.11 Waiting and time skips
 
 'Wait until' each known appointment; sleep as a skip; a wait stops for what the town has for him.
-
+- Prior research: research/waiting: never force waiting; 'wait until' and the arrival wake (Shenmue II); Skyrim refuses wait near enemies, KCD2 refuses sleep in timed quests, KCD1 players complained of unwarned expiry.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-03 a daily act holds control at most 10 s the first time, 5 after; decided; IM-07 sleep is a door, never a need, and always saves; decided. None measured.
 
 ### 7.11 Waiting and time skips
 
@@ -182,7 +216,10 @@ No stats, no difficulty ladder: assists only (seeing assist, hints, aim of drivi
 ## 7.12 Always something to do
 
 By day, with no job live, a fare, a debt or a person with a word for him within 30 real seconds.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-05 something within 30 s by day, no random fight; the 30 s pending, the fight ban ruled. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Prior research: aaa-studies/DENSE-DISTRICT-REVIEWS.md: Yakuza 0 critic: never far from a fight, few everyday dealings with passers-by; Like a Dragon random battles a wear-out; no encounter rate found.
 
 ### 7.12 Always something to do
 
@@ -197,6 +234,10 @@ By day, with no job live, a fare, a debt or a person with a word for him within 
 - Standard: one camera frame at FOV 86 on the parade: 4 to 10 people at busy bands, 2 to 7 other daytime, 0 to 2 quiet night; market and match 15 to 25; at least 40% standing or seated at a made place; replaced by five-sample counts (games set the floor, the 1990 archive the ceiling) Test: B: a one-hour walk logging every line and every meetable thing per minute.
 - Source: MEASUREMENTS-NEEDED A (density); Y2.5, Y4.1. (waits on a dated study). Designed in: DEFINITIONS GD-02 and design pass 4 Run 5 second pass; GTAVI-MAP Run 5 additions; COPY-2 s.28, s.37; MEASUREMENTS-NEEDED A9; street-life finding 5
 - Status: pending. Coverage row: GD-02. Conflicts settled: C-144, C-145, C-146, C-147.
+- Prior research: PRIOR-RESEARCH-INDEX section 3 group 7: the scale test never ran more than 20 walkers and his 30 Sep rule is one approved person before twenty; GTA VI's busiest ordinary view counted about 10 (G7 lead). Check the people budget before fixing 25.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-02 no stretch over 40 m without a door to a place with a person in it; decided; DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-10 things met per minute and crossing times set from footage; pending. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
 
 ### FIT-F32 Something within 30 s by day
 
@@ -204,11 +245,12 @@ By day, with no job live, a fare, a debt or a person with a word for him within 
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: FIT-CHECK F32; DEFINITIONS 'open pairs' F32, G4; GAME-DESCRIPTION-COPY-2 §34
 - Status: pending. Coverage row: FIT-F32. Conflicts settled: C-148.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-05 something within 30 s by day, no random fight; the 30 s pending, the fight ban ruled. None measured.
 
 ## 7.13 The game clock
 
 How fast a game hour passes in real time.
-
+- Prior research: research/game-clock: Skyrim 72 min a day, Fallout 3 and NV 48, Majora 54, Sims 4 24, Stardew about 14, KCD1 about 96 (official forum); 49 game days at 24 real minutes is about 19.6 hours, about 13 with nights skipped (PRIOR-RESEARCH-INDEX section 1 item 1).
 
 ### 7.13 The game clock
 
@@ -230,6 +272,7 @@ How fast a game hour passes in real time.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-20 Test: B (bot), as written under RT2-20
 - Source: design pass 3, RT2-20 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT2-20; GAME-DESCRIPTION-COPY-2 §28; RT-18
 - Status: decided. Coverage row: RT2-20. Conflicts settled: C-151.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-10 talk under 30%, aim 19%; half of Act I decision talks staged at the matter; decided. None measured.
 
 ### CLK-01 The staged first hour against the landing's window
 
@@ -244,6 +287,7 @@ How fast a game hour passes in real time.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-02; design pass 3 CLK-02 (F08); FIT-CHECK F08; COPY-2 s.12
 - Status: ruled (his ruling or canon). Coverage row: CLK-02. Conflicts settled: C-153.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
 
 ### CLK-03 Routines against walking
 
@@ -283,7 +327,8 @@ How fast a game hour passes in real time.
 ## 7.14 Variety
 
 No set piece twice in 30 minutes; no fare wrinkle twice running.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-04 every revisit carries something new; never the same spot twice for one verb; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-06 no go-get-return errand dressed as a story; decided. None measured.
 
 ### 7.14 Variety
 
@@ -310,6 +355,7 @@ What happens when the story ends: the close, credits, and whether play continues
 - Standard: A replay with a different Sunday answer and a different first rival meets at least eight named differences a player can point to in its first five hours. The figure is judgement until checked against KCD2's and RDR2's published branch counts. Test: Two bot playthroughs with opposite choices; a fresh reviewer lists the differences from both logs.
 - Source: CLOUD-FIGURES-2026-11-21.md C4: KCD2 one ending, 8 epilogue decisions and 3 later paths (Gamepressure, PC Gamer 2025); RDR2 2 endings, 4 with honour (rdr2.org 2023, SegmentNext 2024); LEDGER's eight differences in five hours asks more than either (reference game). Designed in: DEFINITIONS GD-04; CLOUD-FIGURES C4; GAME-DESCRIPTION-COPY-2 §37, §33
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: GD-04. Conflicts settled: C-162.
+- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-07 two first evenings share under half their moments; decided. None measured.
 
 ### RT2-21 After the ending and past nine weeks (seven under the ruled clock)
 
@@ -367,6 +413,7 @@ Things to do with people that are not crime: the recommended answer is an amateu
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: ruling 28 Oct: the Hook plus the docks; more districts after release (left out by his ruling or canon). Designed in: RULINGS 28 Oct; canon.md (19 Nov docks ruling); DEFINITIONS design pass 3 G1, G3; design pass 4 C-01, R1
 - Status: out. Coverage row: OUT-05. Conflicts settled: C-164.
+- Prior research: aaa-studies/DENSE-DISTRICT-REVIEWS.md: 57% of 1,228 Push Square readers prefer smaller, densely detailed worlds; a larger Yakuza map was called three times emptier; a vote, not a measure; supports the Hook plus docks.
 
 ### OUT-06 Stats, levels, skill trees and survival meters
 
@@ -374,6 +421,9 @@ Things to do with people that are not crime: the recommended answer is an amateu
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: ruling 30 Oct and D33, D34: position, never numbers (left out by his ruling or canon). Designed in: RULINGS 30 Oct, 'What the game is'; GAME-DESCRIPTION-COPY-2 §3, §26
 - Status: out. Coverage row: OUT-06.
+- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-07 sleep is a door, never a need, and always saves; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
+- Prior research: aaa-studies/IMMERSION-FEATURES.md: survival chores 3.8% of KCD2 Steam reviews, 0.6% RDR2, 0.2% GTA V (script counts, rough); RDR2 needs called half-baked; fits the ruling.
 
 ### OUT-07 Crafting
 
@@ -416,6 +466,8 @@ Things to do with people that are not crime: the recommended answer is an amateu
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: D35, D58; ruling 30 Oct: no game over (left out by his ruling or canon). Designed in: GAME-DESCRIPTION-COPY-2 s.3, s.34; DESIGN s.1 ER-CORE-04; RULINGS Combat line; DEFINITIONS design pass 4 C-01
 - Status: out. Coverage row: OUT-12. Conflicts settled: C-165, C-166.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-04 a failed step changes the town, never sends him back; decided. None measured.
 
 ### OUT-13 Children
 
