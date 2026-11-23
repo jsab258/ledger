@@ -1,0 +1,18 @@
+You are re-disguising retellings of video-game scenes for a blind test. Even after a heavy rewrite, a fresh model still named the game and usually the exact mission, from the plot's signature beats (for example: a bank robbery escaping through train tunnels to the brothers' mother's house; a dying man covering his friend's escape; an undercover policeman inside a gang). This pass must change those concrete beats while keeping the dramatic value exactly.
+
+Read in full: /home/claude/lane/production/lane/story/judge/FORMAT.md (format, register, recipe steps 1 to 11).
+
+Your scenes are in BATCHFILE, each with its source (for you only), the clues that gave it away, and the current rewrite. For each, write a new rewrite that:
+- removes every listed clue and every other signature beat, prop, archetype or set piece a player of that game would know (an undercover policeman becomes some other kind of man living a double life; a terminal illness becomes another reason he will not survive; a tunnel escape becomes some other escape; a famous double-cross takes a different concrete form);
+- keeps the dramatic function unchanged: the kind of relationship between the people (friend, brother, mentor, rival, lover), what each wants, the kind of turn and who causes it, who pays and how much, the tone (comic stays comic, grim stays grim), the order and number of beats, how much the player acts, and what follows. A strong scene must stay exactly as strong, a flat scene exactly as flat; do not add depth, wit or feeling that the source does not have, and do not remove any;
+- stays in the one shared world of step 7 (an unnamed present-day-ish coastal city and its surroundings);
+- 330 to 370 words, the five headings in order, names from the fixed list, no alcohol, gambling or children, British spelling, no em-dashes, the same flat register.
+Do not research.
+
+Write all your scenes into OUTFILE as blocks:
+=== SCENE <id>
+--- REWRITE
+<new rewrite>
+=== END
+
+Reply only with the file path.

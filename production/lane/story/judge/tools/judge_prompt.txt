@@ -1,0 +1,1 @@
+Read the file JUDGEFILE in full (it is long; read all of it) and follow its instructions exactly, as a judge. Read no other file, do not search the web, and do not try to find out where the scenes come from. Write one JSON line per pair, nothing else, to OUTFILE (one line per pair, every pair in the file answered). Reply only "done".

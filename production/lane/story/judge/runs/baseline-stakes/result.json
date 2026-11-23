@@ -1,0 +1,41 @@
+{
+ "tag": "base",
+ "models": {
+  "sonnet": {
+   "clean": {
+    "pairs": 20,
+    "A": 12,
+    "F": 7,
+    "T": 1,
+    "decided_share": 0.95,
+    "acc_decided": 0.632,
+    "strict": 0.6,
+    "single_acc": 0.625
+   },
+   "recog": {
+    "pairs": 20,
+    "A": 15,
+    "F": 5,
+    "T": 0,
+    "decided_share": 1.0,
+    "acc_decided": 0.75,
+    "strict": 0.75,
+    "single_acc": 0.75
+   },
+   "all": {
+    "pairs": 40,
+    "A": 27,
+    "F": 12,
+    "T": 1,
+    "decided_share": 0.975,
+    "acc_decided": 0.692,
+    "strict": 0.675,
+    "single_acc": 0.688
+   },
+   "n_judgements": 80,
+   "position_first": 0.512,
+   "length_longer": 0.75,
+   "length_pairs": 52
+  }
+ }
+}

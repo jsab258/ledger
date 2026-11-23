@@ -1,31 +1,31 @@
-# The scene set (final disguised texts)
+# The scene set (final disguised texts, after the blind scrub)
 
-What the judges read. Labels and sources are in SOURCES.md, never shown to a judge.
+What the judges read in the clean re-run. Labels and sources are in SOURCES.md, never shown to a judge. The pre-scrub text of each scene is kept in scenes.json as text_preScrub, with the scrub changes.
 
 ## S10
 
 ### Setting
-A walled former tram works in the middle of the city, ringed with fences and scaffolding, with a vehicle pit below. It is night. The mood is heavy with guards.
+A walled former tram works in the middle of the city, ringed with fences and scaffolding, with a vehicle pit below. It is night.
 
 ### People
-Abel heads the private debt-collection firm that dominates the city and wants to keep power; the player knows he was linked to a string of arsons. The lead is an infiltrator working for a small resistance team, picked before the mission and unable to hand over to anyone once inside. Guards and dogs patrol. The mission is the last of a long run of jobs against his firm.
+Abel heads the private debt-collection firm that dominates the city and wants to keep power; the player knows he was linked to a string of arsons. The lead is an infiltrator working for a small resistance team, picked before the mission and unable to hand over to anyone once inside. Guards and dogs patrol.
 
 ### What happens
 The lead's team exposed Abel's part in the arsons, and the public heard of it. He refused to step down and shut himself inside his headquarters, threatening the streets. The lead climbs the outer fence on a hoist, crosses scaffolding to the inner wall and goes along a roof, taking a key card from a desk in a site cabin. Guards and dogs can be knocked out or avoided, and some steps skipped by sending a small remote-control car through a gap. The lead opens the gate and shuts off a power box. A notice at the pit lift warns that the lead cannot leave or hand over until Abel is beaten. Abel comes out in a large armoured digger that gunfire cannot hurt. The lead closes coolant valves to expose its weak plates and shoots them in short windows, in three rounds, while reinforcements keep arriving and the digger fires at marked spots. When it is stopped, Abel climbs out and the lead shoots him in a few shots. He says a few words, dies, and the lead is carried outside.
 
 ### The lines that matter
-Abel, once exposed, refuses to step down. A notice asks the lead to choose: return later, or be ready. As he dies, Abel says he used to believe in people. He says nothing more about what changed in him.
+Abel, once exposed, refuses to step down. A notice asks the lead to choose: return later, or be ready. As he dies, Abel says he used to believe in people.
 
 ### What the player does
-The lead sneaks in, takes the key card, and uses guns or tricks against the digger. The final fight against Abel is short and takes only a few shots. The mission closes the run.
+The lead sneaks in, takes the key card, and uses guns or tricks against the digger.
 
 ## S11
 
 ### Setting
-A run-down part of the city in daylight, a coast road running along the seafront, and a bus terminus at the far end of the route. The mood is sour and routine.
+A run-down part of the city in daylight, a coast road running along the seafront, and a bus terminus at the far end of the route.
 
 ### People
-Abel is a photographer for a local paper and has just shown Bram the pictures from a profile. Bram is a former gang boss trying to look respectable, and wants men who mocked him silenced. The lead knows Bram as a man who hands him small jobs. Three men ride the bus and are the targets.
+Abel is a photographer for a local paper and has just shown Bram the pictures from a profile. Bram is a former gang boss trying to look respectable, and wants men who mocked him silenced. The lead knows Bram as a man who hands him jobs. Three men ride the bus and are the targets.
 
 ### What happens
 Bram looks at the pictures of himself and says they make him look soft. Abel tells him he will be well known. Bram says old associates talk behind his back. The lead asks who they are. Bram calls the lead his oldest friend and asks him to silence the men on the bus, which runs from one district to another, and promises a large favour. The lead agrees. He waits at the bus stop, then follows the bus along the coast road in a car, staying close. Driving straight to the terminus fails the job. At the terminus the three men get off. They talk about wanting a car, notice the lead staring at them, and order him removed. The lead shoots all three in the bus bay. If any reach a car, the lead hunts them down. He then phones Bram to say it is done, and Bram is pleased.
@@ -42,10 +42,10 @@ The lead keeps the bus in sight without losing it, then kills the targets at the
 A holiday park of empty chalets on a headland, out of season, in a hard gale. The crew has sheltered there for weeks and the food has run low. The lead and a newer ally drive out alone, down to the rocks and the shingle shore beyond.
 
 ### People
-Abel is the crew's cook and says the cupboards are empty. Bram is a quiet, skilled angler who offers to go out with the lead. Cass is an older man who talks a great deal and appears briefly at the end. The lead has been with the crew for years. The player knows the crew is hungry and that Bram only recently joined.
+Abel is the crew's cook and says the cupboards are empty. Bram is a quiet, skilled angler who offers to go out with the lead. Cass is an older man who talks a great deal and appears at the end. The lead has been with the crew for years. The player knows the crew is hungry and that Bram only recently joined.
 
 ### What happens
-Abel tells the lead the park needs food. After some argument, Bram offers to fish with the lead and hands over a rod. They drive an old van down a track to the shore. Bram shows the lead how to read the swell and the tide line and how the wind carries a line out. The lead casts for a bass and lands it with one steady pull. Bram sends the lead after another. The lead finds two shoals feeding together, lands one fish from each, and loads them into the van. On the drive back Bram talks about where he stands in the crew. A big seal hauls across the slipway ahead and Bram says to leave it alone. They go on to the park, where the lead parks the van and carries the catch to Abel. Cass arrives, chats briefly about the day's luck, and leaves. Abel asks the lead to help with the gutting.
+Abel tells the lead the park needs food. After some argument, Bram offers to fish with the lead and hands over a rod. They drive an old van down a track to the shore. Bram shows the lead how to read the swell and the tide line and how the wind carries a line out. The lead casts for a bass and lands it with one steady pull. Bram sends the lead after another. The lead finds two shoals feeding together, lands one fish from each, and loads them into the van. On the drive back Bram talks about where he stands in the crew. A big seal hauls across the slipway ahead and Bram says to leave it alone. They go on to the park, where the lead parks the van and carries the catch to Abel. Cass arrives, chats about the day's luck, and leaves. Abel asks the lead to help with the gutting.
 
 ### The lines that matter
 - Abel: "There is nothing left in the cupboards. We will be hungry before long."
@@ -54,15 +54,15 @@ Abel tells the lead the park needs food. After some argument, Bram offers to fis
 - Bram: "I am still working out where I fit with you all."
 
 ### What the player does
-The player learns reading the water and the rod, lands each fish with one clean pull without losing it, keeps clear of the seal, delivers the catch, and helps with the gutting. No danger follows and no choice changes the outcome.
+The player learns reading the water and the rod, lands each fish with one clean pull without losing it, keeps clear of the seal, delivers the catch, and helps with the gutting.
 
 ## S14
 
 ### Setting
-A guesthouse by the road at the edge of a farming village, with a yard store behind it. The scene also takes in a joiner's workshop in the next village and an angler's shed by a pond. The mood is easy and slow.
+A guesthouse by the road at the edge of a farming village, with a yard store behind it. The scene also takes in a joiner's workshop in the next village and an angler's shed by a pond.
 
 ### People
-Abel and Bram are two travelling street musicians who are stuck at the guesthouse. Cass is a joiner who owns a guitar. Dorran runs the guesthouse and is owed money. Ezra is an angler who makes line. The player already knows Abel and Bram will happily talk, and that the lead is willing to take small jobs.
+Abel and Bram are two travelling street musicians who are stuck at the guesthouse. Cass is a joiner who owns a guitar. Dorran runs the guesthouse and is owed money. Ezra is an angler who makes line. The player already knows Abel and Bram will happily talk, and that the lead is willing to take jobs.
 
 ### What happens
 Abel asks the lead to get a guitar so he and Bram can perform. Cass will not sell it, so the lead can steal it at night, using picks on two doors, or persuade Cass to sell. Back at the guesthouse a man breaks the guitar. The lead can beat him up at Bram's request or talk him into an apology. The strings must be cut from heavy line, so the lead visits Ezra in his shed. The lead can buy a reel from a tackle shop instead of taking the line from a neighbour's boat. When the instrument is mended, the pair still owe Dorran money and cannot leave. The lead can haggle the debt down and pay it, or work it off by clearing the blocked drain behind the yard store and carrying eight sacks from a van into the store. Dorran confirms the debt is cleared and the lead tells the pair.
@@ -74,12 +74,12 @@ Abel asks the lead to get a guitar so he and Bram can perform. Cass will not sel
 - Bram: "You have done more than we had any right to ask."
 
 ### What the player does
-The player picks between theft and persuasion for the guitar, between a beating and an apology, and between paying the debt and doing the chores. The quest gives no money or gear.
+The player picks between theft and persuasion for the guitar, between a beating and an apology, and between paying the debt and doing the chores.
 
 ## S16
 
 ### Setting
-A harbour-side district in warm weather and the countryside behind it. The scene covers a remedies shop, a boatbuilder's yard, a farm with a grave under trees, a cleared patch of woodland and a cliff path above a river mouth. The mood is anxious.
+A harbour-side district in warm weather and the countryside behind it. The scene covers a remedies shop, a boatbuilder's yard, a farm with a grave under trees, a cleared patch of woodland and a cliff path above a river mouth.
 
 ### People
 Ada, who keeps the remedies shop, asks the lead to find her adult daughter, Bess. Abel is a dock worker who shouts about a man called Bram. Cass is a farmer with an old quarrel against Ada. Dorran is a man who has taken Bess. The player already knows Ada helped the lead earlier and owes a landowner a debt.
@@ -99,13 +99,13 @@ The player questions each person, follows the trail, and negotiates or fights at
 ## S20
 
 ### Setting
-A large seaside hotel, shut for the winter, at night, with long corridors, a lift, a caretaker's office and guest rooms. The mood is quiet and still, with a danger that does not show itself at first and long empty corridors lit in pale green.
+A large seaside hotel, shut for the winter, at night, with long corridors, a lift, a caretaker's office and guest rooms. The long empty corridors are lit in pale green.
 
 ### People
 The lead is an undercover police officer working inside a gang. Abel is a young member of the gang who has been hurt and is in a bed upstairs. Bram is an older gangster who helps the lead. Rival gang members have come to finish Abel. The player already knows the lead is guarding Abel and that Abel does not know the lead's secret.
 
 ### What happens
-Abel phones the lead and asks him to come at once. The lead drives to the hotel. In the entrance a short scene shows armed rivals inside. The lead takes a pistol from the first man he fights and takes cover. He clears the ground floor and goes up in the lift.
+Abel phones the lead and asks him to come at once. The lead drives to the hotel. In the entrance a scene shows armed rivals inside. The lead takes a pistol from the first man he fights and takes cover. He clears the ground floor and goes up in the lift.
 
 On the upper floor he forces a blocked door and fights a group. A timer starts: the lead has to clear the remaining men, reach the caretaker's office and key in the release code at the door panel before time runs out. Bram joins him and they hold the office together while men come from both ends of the corridor. When the last man falls, police sirens start. The lead drives Abel away and takes him home. The job ends when the lead goes to sleep at home, which opens the next job. The player sees no more of the hotel.
 
@@ -135,7 +135,7 @@ The player covers Ada from the roof, fights alone through the quarter, escapes b
 ## S23
 
 ### Setting
-A kitchen-fitting firm's showroom and warehouse, and a large house with a long lawn in a wealthy suburb, on a bright morning. The mood is brisk and comic, with a household going about its day.
+A kitchen-fitting firm's showroom and warehouse, and a large house with a long lawn in a wealthy suburb, on a bright morning. A household is going about its day.
 
 ### People
 The lead is a young man who runs errands for a boss he does not respect, to work off an old favour. Abel owns the firm and bullies his staff and customers. Bram is a customer unsure about an instalment contract. Cass is a middle-aged robber hiding in a lorry. Ada is the lady of the house. Dorran is her piano tutor, and Ezra is her cook. The player already knows the lead wants a better life than this.
@@ -154,7 +154,7 @@ The player moves the lead unseen through the house and garage, then drives to th
 ## S25
 
 ### Setting
-Harbour streets and the loading gantries of a container yard above them, in daylight. The lead and a partner are on a round of court errands and the mood is routine.
+Harbour streets and the loading gantries of a container yard above them, in daylight. The lead and a partner are on a round of court errands.
 
 ### People
 Abel is the lead's partner, a steady court enforcement officer who wants to catch a man who dodged a repayment order. Bram is a dock thief who skipped his payments after Abel served him the papers. Cass is a harbour authority man who comes at the end only if Bram dies. The player knows the lead is a young officer with a partner who thinks well of him.
@@ -171,7 +171,7 @@ The player chases Bram on foot and over the walkways, chooses how to approach th
 ## S30
 
 ### Setting
-A small flat above a shop, a back-room dealer, a scrapyard with a crane and a long warehouse, and the roads leading away, over one afternoon. The mood is uneasy, with old friends who do not entirely trust each other and a job that all three want over quickly.
+A small flat above a shop, a back-room dealer, a scrapyard with a crane and a long warehouse, and the roads leading away, over one afternoon. The people are old friends who do not entirely trust each other, on a job that all three want over quickly.
 
 ### People
 The lead is a young man trying to leave gang life behind. Abel is his loud, loyal friend who sets up deals. Bram has just left prison and dislikes the lead. Cass is a rival gang member whom Abel has done business with. Della is the lead's aunt, who has friends visiting. The player already knows the lead wants out and Abel does not.
@@ -190,15 +190,15 @@ The player buys the pistol, fights through the warehouse, disables the police va
 ## S41
 
 ### Setting
-The function room of a seaside hotel straight after a shooting, then the city's quiet roads at night on the way to a hospital. The shooting is over and the guests have gone. The mood is subdued, with a journey still to make.
+The function room of a seaside hotel straight after a shooting, then the city's roads at night on the way to a hospital. The shooting is over and the guests have gone.
 
 ### People
 The lead is a police officer working undercover inside a crime family. Abel is an elderly senior member of the family who survived the attack and is hurt. Bram and other gunmen wait along the route. The player already knows the lead has just watched the family dinner go wrong and that Abel matters a great deal to the family.
 
 ### What happens
-When the gunfire stops, the lead walks round the empty room and goes down a back stair. Abel is waiting behind a service door, injured. The lead has to get him to the hospital. Markers on the map show the route. The drive is short and the roads are empty, so the lead only steers.
+When the gunfire stops, the lead walks round the empty room and goes down a back stair. Abel is waiting behind a service door, injured. The lead has to get him to the hospital. Markers on the map show the route. The roads are empty, so the lead only steers.
 
-Partway along, armed men step out of a side road. The lead stops the car, settles Abel behind a wall and climbs onto a footbridge above the road. From there he leans out and shoots the gunmen without putting Abel at risk. The usual cover control does not work here, so the player moves the lead by hand. When the last gunman is down, the lead goes back to the car and carries on. They reach the hospital and the mission ends there. Nothing is said about the gunmen and nothing inside the hospital is shown. The player moves straight on. The part is only a link between two larger scenes.
+Partway along, armed men step out of a side road. The lead stops the car, settles Abel behind a wall and climbs onto a footbridge above the road. From there he leans out and shoots the gunmen without putting Abel at risk. The usual cover control does not work here, so the player moves the lead by hand. When the last gunman is down, the lead goes back to the car and carries on. They reach the hospital and the mission ends there. Nothing is said about the gunmen and nothing inside the hospital is shown. The player moves straight on.
 
 ### The lines that matter
 - Abel says he is hurt but can still walk.
@@ -212,13 +212,13 @@ The player follows the marked route, drives with care, and takes the high positi
 ## S44
 
 ### Setting
-A rain-dark coastal city, then a flooding dry dock beneath the shipyard and a chapel. The case is the last in a long run, and the lead's career and marriage are gone. The mood is of an ending.
+A rain-dark coastal city, then a flooding dry dock beneath the shipyard and a chapel. The lead's career and marriage are gone.
 
 ### People
 Ada is a newspaper columnist the lead has wronged and who now wants the saboteurs stopped. Abel is the lead's partner on the building-fraud desk. Bram is the lead's old friend from a war abroad, now working against the corrupt. Cass is a former engineer from the lead's old unit, who brings the buildings down. Dorran is the head of the planning board, who is part of the plot. The player knows the lead once gave an order in the war that he has never forgiven himself for.
 
 ### What happens
-Cass grabs Ada after a surveyor is attacked in his office. The lead and Abel work through a list of contractors, then search the office and Cass's room, finding a cutting rig, knotted wire charms and photographs from the war. Bram calls for a meeting, but the board head has ordered him killed. The lead helps Bram reach the shipyard in a car chase under fire. They split up in the dock. The lead fights corrupt guards, crosses a flooding floor along a gantry, and uses the rig at close range. In a pump house he finds Ada and Cass. A flashback shows the lead ordering a convoy of refugees' trucks blown at a bridge in the war. Bram deals with Cass, and the lead saves Ada, then dies when the sluice gives way. At the funeral, the men who ruined him praise him. Ada speaks briefly and walks out.
+Cass grabs Ada after a surveyor is attacked in his office. The lead and Abel work through a list of contractors, then search the office and Cass's room, finding a cutting rig, knotted wire charms and photographs from the war. Bram calls for a meeting, but the board head has ordered him killed. The lead helps Bram reach the shipyard in a car chase under fire. They split up in the dock. The lead fights corrupt guards, crosses a flooding floor along a gantry, and uses the rig at close range. In a pump house he finds Ada and Cass. A flashback shows the lead ordering a convoy of refugees' trucks blown at a bridge in the war. Bram deals with Cass, and the lead saves Ada, then dies when the sluice gives way. At the funeral, the men who ruined him praise him. Ada speaks and walks out.
 
 ### The lines that matter
 Ada tells the lead she knows what he did. Cass says the lead made him what he is. Bram tells the lead to get Ada out and leave the rest to him. Dorran, at the chapel, calls the lead a good man and a credit to the service.
@@ -229,7 +229,7 @@ The player follows leads, searches rooms, drives and shoots through the chase, f
 ## S46
 
 ### Setting
-A district of low terraces just after a family retirement party, then a goods yard on the edge of the city, a railway line through the hills and a quarry with a tall water tower. The mood is angry and fast.
+A district of low terraces just after a family retirement party, then a goods yard on the edge of the city, a railway line through the hills and a quarry with a tall water tower.
 
 ### People
 Abel is the lead's friend, who phones with news. Bram is the lead's cousin, who rides along. Cass is the target, an older criminal boss with armed men. Ada was the lead's girlfriend, killed at the party, and is spoken of only by others.
@@ -238,7 +238,7 @@ Abel is the lead's friend, who phones with news. Bram is the lead's cousin, who 
 Right after the party Abel phones the lead. He and Bram have found some of Cass's men in a garage. The lead joins them in a car and they follow the men. The long chase ends at the goods yard. The lead fights inside and reaches Cass, who blames him for Ada's death and says things would have gone better if the lead had worked with him. Cass runs to the tracks, leaves guards behind to be killed, and climbs aboard a freight train. The lead chases along the line in a stolen car. Abel and Bram arrive in a heavy truck and the lead leaps aboard from a bridge. They drive alongside the train and Abel fires into the engine. It catches fire, but a loose girder thrown from a wagon also hits the truck, and both end up in the quarry. Cass runs beneath the water tower. The lead finds him and kills him at close range.
 
 ### The lines that matter
-Cass says the lead caused Ada's death and that working together would have gone better. As the credits start, the lead says the thing he wanted has come, and it feels like a dream rather than a happy ending. In a call afterwards, a former ally says Ada should not have died, and Bram says he is moving away from the city.
+Cass says the lead caused Ada's death and that working together would have gone better. As the credits start, the lead says the thing he wanted has come. In a call afterwards, a former ally says Ada should not have died, and Bram says he is moving away from the city.
 
 ### What the player does
 The lead drives in the chase, fights through the yard, drives the stolen car, times the jump onto the truck and shoots Cass. Missing the jump, losing Cass's men or wrecking the car ends the mission early. Abel and Bram handle the truck and its gun.
@@ -265,7 +265,7 @@ The player decides whether to use the sluice and whether to persuade Ada to stay
 ## S48
 
 ### Setting
-A quiet boat ramp on the coast, the open water off a marshy estuary, and the deck of a large cargo barge under way. It is the middle of the day. The mood is improvised, with the lead making it up as he goes.
+A boat ramp on the coast, the open water off a marshy estuary, and the deck of a large cargo barge under way. It is the middle of the day.
 
 ### People
 The lead is an unstable criminal in hiding with his old partner, Abel. Bram is the lead's nervous associate. Cora is a rich man's wife whom the lead has kidnapped and who is held in a rented house. Cass is the captain of a private haulage company's barge. The player already knows the lead and Abel are lying low and that the company is dangerous.
@@ -279,15 +279,15 @@ Cass tells him by radio to turn away. The lead ignores him. The crew fire flares
 Abel tells a friend that the lead has taken a hostage. The lead tells Cora he may have to kill her, and she says she values his honesty. Bram tells the lead where the guns are. The captain says the lead is in a restricted zone and must turn back, and the lead does not answer.
 
 ### What the player does
-The player drives the small boat low, climbs aboard by the hoist cable, shoots the guards, steers the large barge briefly and bails out by jumping before it goes down.
+The player drives the small boat low, climbs aboard by the hoist cable, shoots the guards, steers the large barge and bails out by jumping before it goes down.
 
 ## S52
 
 ### Setting
-City streets, a ferry quay on the harbour, a walled hospital garden with an orangery, and the roads around it, in the run-up to a house-warming party. The mood is light and errand-like, with small tasks piled on top of one another.
+City streets, a ferry quay on the harbour, a walled hospital garden with an orangery, and the roads around it, in the run-up to a house-warming party.
 
 ### People
-The lead is a man secretly paid by a rival firm to report on a gang. Abel is a member of the gang who is about to move in with his partner. Ada is his partner, who is exacting about small things. Gardeners tend the orangery. Wardens chase the lead briefly at the end. The player already knows the lead is close to Abel and Ada.
+The lead is a man secretly paid by a rival firm to report on a gang. Abel is a member of the gang who is about to move in with his partner. Ada is his partner, who is exacting about small things. Gardeners tend the orangery. Wardens chase the lead at the end. The player already knows the lead is close to Abel and Ada.
 
 ### What happens
 The lead picks up Ada and drives her to a shop, taking care not to anger her, since she notices every bump in the road. At the shop Abel phones the lead and asks him to find the launch carrying the party food and bring it to him. The lead runs the length of the quay, jumps onto the launch's stern, moves along its rail to the wheelhouse and keeps his balance.
@@ -303,7 +303,7 @@ The player drives Ada carefully through the traffic, chases the launch, jumps on
 ## S56
 
 ### Setting
-A tall private surgery on the edge of the city, with a generator room in the basement, a service lift in the next building, an operating suite and a last chamber at the top. The mood is hurried, then still.
+A tall private surgery on the edge of the city, with a generator room in the basement, a service lift in the next building, an operating suite and a last chamber at the top.
 
 ### People
 Ada is the surgery's owner, who is finishing a procedure that will erase her face, her records and her trail for good, so that she can never be brought to account. The player knows she did terrible things to get here. Bess is an ally who watches by video call and wants Ada stopped. Guards defend the building.
@@ -315,12 +315,12 @@ A message from Ada's former driver tells the lead where Ada is. The lead enters 
 Bess tells the lead to stop the procedure before it finishes. Ada pleads with the lead to leave the equipment alone. Ada says that whatever the lead decides, neither she nor Bess can change it, and the choice is the lead's. Bess, if the procedure is allowed to finish, swears at the lead and ends the call.
 
 ### What the player does
-The lead takes the generator room, cuts the two feeds and fights through guards. The player then makes a single choice: end Ada or spare her. The story continues either way, changing only what Bess says.
+The lead takes the generator room, cuts the two feeds and fights through guards. The player then makes a single choice: end Ada or spare her.
 
 ## S59
 
 ### Setting
-A back lane behind a row of houses, a car dealer's garage, a police station and a night road. The case is a plain theft inquiry with a wealthy visitor in the background. Nothing is hidden and the questions are mostly about who bought what.
+A back lane behind a row of houses, a car dealer's garage, a police station and a night road. The case is a theft inquiry with a wealthy visitor in the background. The questions are mostly about who bought what.
 
 ### People
 Abel is a patrol officer who shows the lead the abandoned boat trailer. Bram is a neighbour who found it. Cass is the dealer who sold the parts. Dorran is a visiting company director who has reported his own boat stolen. Ada is the thief's partner. Ezra is the thief, who races away. The player knows the lead is working a theft case and that the boat may belong to the visitor.
@@ -337,10 +337,10 @@ The player gathers clues, answers each reply with trust, doubt or accusation, an
 ## S60
 
 ### Setting
-A farming district beyond the city, hit by a bad harvest. The scene moves between a roadside cafe, a neighbouring hamlet, a gang's squat in a derelict factory at night, and a cottage in a third village. The mood is rural and worried.
+A farming district beyond the city, hit by a bad harvest. The scene moves between a roadside cafe, a neighbouring hamlet, a gang's squat in a derelict factory at night, and a cottage in a third village.
 
 ### People
-Ada is a woman who wants a lucky pendant to ease a hard run of years. Abel is a cafe owner who sends the lead to her. Bram holds the pendant and will only part with it in a fight. Cass and Dorran are farmhands who took it. Ezra is a gang leader. Bess owns the pendant now, and Fenn is her sick husband. The player already knows the lead takes small jobs for strangers.
+Ada is a woman who wants a lucky pendant to ease a hard run of years. Abel is a cafe owner who sends the lead to her. Bram holds the pendant and will only part with it in a fight. Cass and Dorran are farmhands who took it. Ezra is a gang leader. Bess owns the pendant now, and Fenn is her sick husband. The player already knows the lead takes jobs for strangers.
 
 ### What happens
 Abel sends the lead to Ada, who needs the pendant. Bram will not sell it, and after a fist fight he admits it was stolen and names two farmhands. Cass says he and Dorran took it to give themselves courage against a gang led by Ezra. Ezra captured Dorran. The lead sneaks into the squat at night, frees Dorran after dealing with a guard, and kills Ezra in his sleep. Ezra had already sold the pendant. Dorran says it was traced to Bess in another village. Bess spent all her family's savings on it and believes it cured her husband Fenn. The lead finds that Fenn is not ill in body but afraid. A hard persuasion attempt lets the lead talk him back to his feet. Bess gives up the pendant and the lead brings it to Ada. It is not magical.
@@ -352,18 +352,18 @@ Abel sends the lead to Ada, who needs the pendant. Bram will not sell it, and af
 - Ada: "It is only a trinket, but I feel better."
 
 ### What the player does
-The player chooses to talk, fight, steal or sneak at each lead, and decides how to treat the farmhands. The persuasion attempt with Fenn changes whether he recovers. The result depends on the routes taken.
+The player chooses to talk, fight, steal or sneak at each lead, and decides how to treat the farmhands. The persuasion attempt with Fenn changes whether he recovers.
 
 ## S61
 
 ### Setting
-The coast and farmland around the city. The job starts at a notice board outside a harbour-side shop, beside a large estate, and takes the lead to a quarry in the hills, then far south to a farm, and then to a stretch of shore lined with wrecked boat hulls. The mood is flat and windy.
+The coast and farmland around the city. The job starts at a notice board outside a harbour-side shop, beside a large estate, and takes the lead to a quarry in the hills, then far south to a farm, and then to a stretch of shore lined with wrecked boat hulls. It is windy.
 
 ### People
-Abel is a landowner at the estate who put up the notice. He wants his family's old watch returned. The thieves who took it are small-time criminals and never speak. They are the only ones the lead meets along the way. The player already knows the lead takes paid work from notice boards and does not ask much about the owner.
+Abel is a landowner at the estate who put up the notice. He wants his family's old watch returned. The thieves who took it are criminals and never speak. They are the only ones the lead meets along the way. The player already knows the lead takes paid work from notice boards and does not ask much about the owner.
 
 ### What happens
-The lead reads the notice and takes the job. South-west of a gravel works he finds a gang of thieves and kills them. On the body of one he finds a notebook, which names the next place. The lead travels far south to a second group at a farm, kills them, and finds a second notebook. It points to a distant place in the north-east. There he reaches the shore of wrecked hulls and kills the last thieves. Among their things he finds the stolen items. He then returns to Abel at the estate. Abel takes the watch, pays, and the job ends. No new person appears on the way, and the notebooks add little beyond the next location.
+The lead reads the notice and takes the job. South-west of a gravel works he finds a gang of thieves and kills them. On the body of one he finds a notebook, which names the next place. The lead travels far south to a second group at a farm, kills them, and finds a second notebook. It points to a distant place in the north-east. There he reaches the shore of wrecked hulls and kills the last thieves. Among their things he finds the stolen items. He then returns to Abel at the estate. Abel takes the watch, pays, and the job ends. No new person appears on the way.
 
 ### The lines that matter
 - Abel, on the notice: "A watch was stolen from my family. Return it and I will pay."
@@ -372,20 +372,20 @@ The lead reads the notice and takes the job. South-west of a gravel works he fin
 - Abel, at the end: "That is the one. Here is your money."
 
 ### What the player does
-The player takes the notice, follows each notebook to its place, fights the thieves at each, and takes the items. The player then returns to the owner for payment. No choice changes the result, and no other person or event is met on the route.
+The player takes the notice, follows each notebook to its place, fights the thieves at each, and takes the items. The player then returns to the owner for payment. No other person or event is met on the route.
 
 ## S62
 
 ### Setting
-A busy coastal city on a bright day, taking in a fish market, a laundrette and a sports hall behind a tyre depot. The mood is casual, with little at stake.
+A busy coastal city on a bright day, taking in a fish market, a laundrette and a sports hall behind a tyre depot.
 
 ### People
 The lead is a hired man for a gang who keeps a second life he tells nobody about. Ada is a young woman who has asked the lead for a favour. Abel is a retired wrestler who runs a training room at the back of the hall. Three trainees practise there. The player already knows the lead is a skilled fighter, and nothing else about Ada.
 
 ### What happens
-The lead meets Ada at a marked place. She asks him where she could learn to defend herself. The lead takes a van from a lock-up and Ada rides beside him. They stop three times, at a fish market, a laundrette and the sports hall. Each stop is a place on a map, and nothing happens at the first two. The lead and Ada exchange a few remarks between stops. The drive is the main part of the mission.
+The lead meets Ada at a marked place. She asks him where she could learn to defend herself. The lead takes a van from a lock-up and Ada rides beside him. They stop three times, at a fish market, a laundrette and the sports hall. Each stop is a place on a map, and nothing happens at the first two. The lead and Ada exchange a few remarks between stops.
 
-At the last stop the lead meets Abel, who once coached him, and a short lesson begins. The player picks a target and strikes twice at each of three trainees in turn. Abel teaches a low sweeping kick, which the player uses on the nearest trainee. The lead beats the group. The lesson ends and so does the mission. Ada thanks the lead and goes inside. Abel will teach further moves if the player brings him marked tin tags hidden around the city, but the mission does not mention them.
+At the last stop the lead meets Abel, who once coached him, and a lesson begins. The player picks a target and strikes twice at each of three trainees in turn. Abel teaches a low sweeping kick, which the player uses on the nearest trainee. The lead beats the group. The lesson ends and so does the mission. Ada thanks the lead and goes inside. Abel will teach further moves if the player brings him marked tin tags hidden around the city, but the mission does not mention them.
 
 ### The lines that matter
 - Ada: "Is there anywhere I could learn to defend myself?"
@@ -394,12 +394,12 @@ At the last stop the lead meets Abel, who once coached him, and a short lesson b
 - The lead: "It is good to be back in this room."
 
 ### What the player does
-The player drives the van through three stops, follows the lesson instructions on the screen, uses the new kick on the trainees, and receives a new move. Nothing here changes the main story, and Ada does not appear again.
+The player drives the van through three stops, follows the lesson instructions on the screen, uses the new kick on the trainees, and receives a new move. Ada does not appear again.
 
 ## S63
 
 ### Setting
-A rented flat above a shop, then the takings office of a ferry company on a busy quay in daylight, then a rail goods yard behind the harbour. The mood is hushed, then noisy, then hurried.
+A rented flat above a shop, then the takings office of a ferry company on a busy quay in daylight, then a rail goods yard behind the harbour.
 
 ### People
 Abel leads the crew and wants the money taken without losing any of his own; the lead knows him as a friend who gives him work. Bram is his brother and argues easily. Cass is a young crew member. Dorran is a clerk. The player knows the crew trusts the lead to drive.
@@ -419,7 +419,7 @@ The lead drives, helps rob the office, shoots a way out, picks a path through th
 ## S64
 
 ### Setting
-A lane beside a ferry terminal at night, outside a small cafe, then a morgue, a house and a bus station. The mood is of a routine case that turns out to be something else.
+A lane beside a ferry terminal at night, outside a small cafe, then a morgue, a house and a bus station.
 
 ### People
 Abel is the lead's partner on the road-collision unit. Bram is a dead man lying in the lane. Ada is a witness who was outside the cafe. Cass is the cafe's owner. Bess is the dead man's wife. Dorran is the dead man's business partner. Ezra is the driver of the van that struck him. The player knows the lead is new to the unit and wants to be thorough.
@@ -436,7 +436,7 @@ The player collects the clues, chooses the order of visits, puts truth, doubt or
 ## S65
 
 ### Setting
-A wooded lorry park, then a burning cold store held by private security men, then a farmyard where a family firm loads vans to move. The lead carries an old wound that never healed and the mood is of a loyalty tested.
+A wooded lorry park, then a burning cold store held by private security men, then a farmyard where a family firm loads vans to move. The lead carries an old wound that never healed.
 
 ### People
 Abel is the lead's gang boss and wants the deed box in the store office. Bram is a gang member who is eager for a fight. Cass heads a family firm of hauliers whose people the security men have killed. Dorran is his father and begs him to stay out of the feud. Ada and Ezra are the lead's allies in the fight, and Fenn is an elder of the firm. The player knows the lead has begun to doubt Abel.
@@ -448,12 +448,12 @@ Cass asks the gang to drive with him to the store. Dorran begs his son to stay h
 Dorran says his son will end like his wife and elder son. The lead tells Abel that he left him behind. Abel says he did no such thing. Ezra tells the lead to go and help those who still need him.
 
 ### What the player does
-The player fights through the store, protects Fenn, and takes the deed box. The player decides nothing beyond the fighting, and cannot prevent Cass being shot or Abel walking away, only face both afterwards.
+The player fights through the store, protects Fenn, and takes the deed box.
 
 ## S67
 
 ### Setting
-A disused salt works on a tidal flat, reached by a causeway and cut off at high water. A watchman's cottage stands on a rise, with a pump house on the far bank and a stony shore beyond. Rain falls without stopping. The mood is damp, cold and still.
+A disused salt works on a tidal flat, reached by a causeway and cut off at high water. A watchman's cottage stands on a rise, with a pump house on the far bank and a stony shore beyond. Rain falls without stopping. It is damp and cold.
 
 ### People
 Abel is a caretaker who guards the cottage and will not open the door. Bram, Cass and Dorran are his three workmates, who are missing. The lead wants to get inside, because someone he has searched for a long time is behind the door. The player already knows the lead crossed the causeway to get here.
@@ -468,12 +468,12 @@ The lead crosses the causeway and walks up to the cottage. Abel says he cannot l
 - Abel, at the end: "That is all we wanted. Come inside."
 
 ### What the player does
-The player fights the thieves, the dogs and the drifter, and keeps waking Cass while walking him back. The player can search the shore in any order. The quest ends when the player reports to Abel, and nothing else is asked of him.
+The player fights the thieves, the dogs and the drifter, and keeps waking Cass while walking him back. The player can search the shore in any order. The quest ends when the player reports to Abel.
 
 ## S68
 
 ### Setting
-A family-run scrapyard at the edge of the city, with a pumping station in the rocks nearby, a lock-up garage on a rival's estate, and a cleared patch of waste ground. The mood is cramped and wary, and the yard's people treat the lead as an outsider.
+A family-run scrapyard at the edge of the city, with a pumping station in the rocks nearby, a lock-up garage on a rival's estate, and a cleared patch of waste ground. The yard's people treat the lead as an outsider.
 
 ### People
 Abel is the yard's boss. Ada is his adult daughter, who has run away to be with her lover Cass. Bram is Abel's other son, held captive. Bess reads tea leaves and says she dreamed of the lead. Cora is a nurse who treats the yard's people. Dorran is a dead man who must be buried. The player already knows the yard does not trust the lead.
@@ -488,26 +488,26 @@ Abel asks the lead to find Ada. The lead takes her scarf, and his dog tracks her
 - Bess: "You were in my dream. You are here to help us."
 
 ### What the player does
-The player follows each errand, chooses how to treat the guard and the timber merchants, and decides between taking the paper and the contest. If the player wins, Abel brings the watch and the family is reunited. If not, the reward is small.
+The player follows each errand, chooses how to treat the guard and the timber merchants, and decides between taking the paper and the contest. If the player wins, Abel brings the watch and the family is reunited.
 
 ## S71
 
 ### Setting
-A large hall above a restaurant near the harbour, on the evening of an old crew man's retirement dinner. White cloths, bright lamps and a seated crowd. The mood is warm and formal, with guests chatting quietly, until a noise comes from the stairs.
+A large hall above a restaurant near the harbour, on the evening of an old crew man's retirement dinner. White cloths, bright lamps and a seated crowd. Guests are chatting quietly until a noise comes from the stairs.
 
 ### People
 The lead is a reporter secretly passing a crew's business to a newspaper while working as its driver. Abel is the host, the lead's closest friend in the crew. Ada is his wife, who has welcomed the lead warmly. Bram is a senior crew elder. Rival crew members attack the room. The player already knows the lead likes this couple and is lying to them.
 
 ### What happens
-The lead buys a tie at a shop and arrives at the hall. The mood is quiet. He goes out to the car to fetch a box of presents, and screams come from inside. He finds the stairs guarded, climbs in at the fire escape and fights the attackers in the restaurant below.
+The lead buys a tie at a shop and arrives at the hall. He goes out to the car to fetch a box of presents, and screams come from inside. He finds the stairs guarded, climbs in at the fire escape and fights the attackers in the restaurant below.
 
-He takes a gun from one of them and uses it on the rest. Further in, he finds Abel and Ada on the floor, bleeding on the white cloths and her green dress. Abel is dying. He tells the lead to get Ada out because she does not deserve this. The lead then clears the balcony and the main hall of attackers, collecting their weapons as he goes. Afterwards he finds Bram waiting behind a door, unhurt, and the mission continues with Bram's escape. The lead has time to feel nothing but anger, and forgets for a while that he is a reporter.
+He takes a gun from one of them and uses it on the rest. Further in, he finds Abel and Ada on the floor, bleeding on the white cloths and her green dress. Abel is dying. He tells the lead to get Ada out because she does not deserve this. The lead then clears the balcony and the main hall of attackers, collecting their weapons as he goes. Afterwards he finds Bram waiting behind a door, unhurt, and the mission continues with Bram's escape.
 
 ### The lines that matter
 Abel, dying, asks the lead to take Ada away. Abel says she did nothing to deserve this. Ada, earlier, tells the lead she is glad he is there. Bram says nothing of his own plans.
 
 ### What the player does
-The player buys the tie, fights through the restaurant, takes a gun by disarming a man, clears the balcony and hall, and speaks to the dying host. Nothing the player does changes the outcome, and the lead's grief carries into the next mission.
+The player buys the tie, fights through the restaurant, takes a gun by disarming a man, clears the balcony and hall, and speaks to the dying host.
 
 ## S72
 
@@ -529,7 +529,7 @@ The player questions Abel, chooses quiet takedowns, fights through the yard, the
 ## S73
 
 ### Setting
-The payroll office of a wholesale warehouse on a trading estate, in the daytime. The lead is on his rounds as a hired security man and a radio call sends him to a robbery in progress. The mood is of routine work.
+The payroll office of a wholesale warehouse on a trading estate, in the daytime. The lead is on his rounds as a hired security man and a radio call sends him to a robbery in progress.
 
 ### People
 Abel is the lead's rounds partner, who stays at his side through the fight. The robbers are at least five men, some unnamed, with pistols, a shotgun and a short automatic. Bram is the man who fires from the upper floor. Cass is a robber with a stolen guard's pistol. The player knows the lead is new to the firm and has been on rounds for only a short while.
@@ -541,15 +541,15 @@ The lead and Abel hear a radio bulletin about an armed robbery at a payroll offi
 The radio says the suspects are armed and will shoot. The lead tells the robbers to drop their guns and come out. The robbers shout that they will not. Abel comments on the gun the lead chose.
 
 ### What the player does
-The player picks a weapon, shoots from cover, and decides whether to stay behind it or advance on the building. Rough play carries no penalty in this call, since the lead's trial period is not yet at stake. The call is brief, and it leads straight into the next one with no scene afterwards. Using the handgun instead of the long gun is allowed.
+The player picks a weapon, shoots from cover, and decides whether to stay behind it or advance on the building. It leads straight into the next one with no scene afterwards. Using the handgun instead of the long gun is allowed.
 
 ## S75
 
 ### Setting
-A smallholding yard and a quiet lane in the farmland beyond the city, in the middle of a hot afternoon. The mood is loose and unsupervised.
+A smallholding yard and a quiet lane in the farmland beyond the city, in the middle of a hot afternoon.
 
 ### People
-Abel and Bram, two partners in a robbery, appear briefly in a flat far away. Cass, a detective from a national crime unit, visits them. The lead is a volatile local criminal who runs a dealing business. Ada is the lead's girlfriend. Dorran is a scrap merchant and the lead's rival. Ezra and Fenn are the lead's nervous hangers-on. The player already knows the lead believes his old partner is dead.
+Abel and Bram, two partners in a robbery, appear in a flat far away. Cass, a detective from a national crime unit, visits them. The lead is a volatile local criminal who runs a dealing business. Ada is the lead's girlfriend. Dorran is a scrap merchant and the lead's rival. Ezra and Fenn are the lead's nervous hangers-on. The player already knows the lead believes his old partner is dead.
 
 ### What happens
 Abel and Bram talk about the money from a ferry terminal robbery. Cass arrives, says he knows Abel is alive, and warns that the lead is dangerous. A news report mentions the robbery. Abel denies all.
@@ -586,7 +586,7 @@ The player wades, searches and fights Bram, then picks the lead's answer: he sti
 ## S79
 
 ### Setting
-A disused textile mill by the river, reached by a goods hoist. It is day, shortly after a meeting of the lead's team is broken up. Every floor is trapped, and the search for answers is long.
+A disused textile mill by the river, reached by a goods hoist. It is day, shortly after a meeting of the lead's team is broken up. Every floor is trapped.
 
 ### People
 Abel is the lead's contact on the phone, who reads papers sent to him as photographs. Ada is the secret leader of a group the player knows has set warehouse fires; a film speaks for it. Bram is a security chief who wants power. Hired gunmen fill the final section.
@@ -603,13 +603,13 @@ The lead follows the courier, enters the code, fights the guards, searches the o
 ## S83
 
 ### Setting
-A large house in a wealthy district, empty for years, then a sealed basement flat at dusk, fitted like an old family sitting room. The mood is uneasy and darkens as the lead goes down.
+A large house in a wealthy district, empty for years, then a sealed basement flat at dusk, fitted like an old family sitting room.
 
 ### People
 Ada is the absent owner, who runs a private clinic keeping dying patients on machines against their wishes. Abel is a voice on the lead's phone. Bess is Ada's mother, who is old and weak. Cora is an ally who wants Ada stopped. The player knows Ada has hurt many people.
 
 ### What happens
-The lead breaks in, puts down one guard, and forces the door. A friendly, crackling voice on an intercom mistakes the lead for Ada's staff and sends the lead below. A shed key starts the lift. The voice sends the lead to watch tapes in the sitting room, and a watch in a drawer has the door code engraved on its back. The tapes show Bess refusing Ada's treatment, having seen what it did to the family dog. In the garage the lead finds the dog caged and wired to a drip, whining, and switches off the drip. Another tape shows Ada injecting Bess against her will. In the cellar the lead finds kidnapped people asleep in rows of beds. The voice plays Ada's log: after twenty-nine days Ada kept her mother alive in the sealed room, speaking only through the intercom. The voice offers Ada's location if the lead switches off the machines. The lead does, and Abel receives the location and a short thank-you. Upstairs, Cora admits she went down earlier and could not do it.
+The lead breaks in, puts down one guard, and forces the door. A friendly, crackling voice on an intercom mistakes the lead for Ada's staff and sends the lead below. A shed key starts the lift. The voice sends the lead to watch tapes in the sitting room, and a watch in a drawer has the door code engraved on its back. The tapes show Bess refusing Ada's treatment, having seen what it did to the family dog. In the garage the lead finds the dog caged and wired to a drip, whining, and switches off the drip. Another tape shows Ada injecting Bess against her will. In the cellar the lead finds kidnapped people asleep in rows of beds. The voice plays Ada's log: after twenty-nine days Ada kept her mother alive in the sealed room, speaking only through the intercom. The voice offers Ada's location if the lead switches off the machines. The lead does, and Abel receives the location and a thank-you. Upstairs, Cora admits she went down earlier and could not do it.
 
 ### The lines that matter
 - Bess, on a tape: "This is not my home, and I do not agree to it."
@@ -618,12 +618,12 @@ The lead breaks in, puts down one guard, and forces the door. A friendly, crackl
 - Cora: "Stop the clinic before thousands more suffer."
 
 ### What the player does
-The lead picks locks, finds door codes, watches tapes and switches off the dog's drip. The only real choice is the voice's bargain, which ends her. The visit is mostly searching and listening, with one guard.
+The lead picks locks, finds door codes, watches tapes and switches off the dog's drip. The only choice is the voice's bargain, which ends her.
 
 ## S84
 
 ### Setting
-A busy coastal city in late autumn. The scene moves through a hospital ward, a records office, the old quarter, a bus depot and a derelict ferry terminal. The streets are quiet.
+A busy coastal city in late autumn. The scene moves through a hospital ward, a records office, the old quarter, a bus depot and a derelict ferry terminal.
 
 ### People
 Abel is a bookkeeper and the lead's friend. He wants his business partner Ada, who lies injured, to live. Bram is a nurse who notices odd wounds. Cass is the council's housing officer, who hands out files and favours freely. Dorran is a stern charity director. Ezra cleans buses. The player knows Abel trusts too easily.
@@ -642,7 +642,7 @@ The player follows clues and chooses whether to talk to Dorran, fight him, or sp
 ## S85
 
 ### Setting
-A flat above a shop in the old quarter, where an older woman gives work to people she trusts, then a lorry park in daylight where a deal is about to be made. The roof of a nearby building overlooks the spot. The mood is business-like.
+A flat above a shop in the old quarter, where an older woman gives work to people she trusts, then a lorry park in daylight where a deal is about to be made. The roof of a nearby building overlooks the spot.
 
 ### People
 Ada runs the flat and wants a stranger to watch a deal she does not trust. Abel is a crew member buying something from people he does not know; the lead knows him from earlier work. Bess is Ada's friend, who brings the lead and vouches for him. Bram is Ada's doorman.
@@ -663,7 +663,7 @@ The lead goes to the rooftop and holds fire until the exchange begins. He then s
 ## S89
 
 ### Setting
-A cold-storage depot with offices and a walled yard on the dockside, held by a criminal family. It is night. The mood is urgent and cluttered with guards.
+A cold-storage depot with offices and a walled yard on the dockside, held by a criminal family. It is night.
 
 ### People
 Ada leads the family and runs a ring that holds debtors as labourers; she wants to stay free. Bess is an ally with evidence for a prosecutor. Guards and hired men defend the depot. The player knows Ada has captives in sealed freezer rooms and a switch she can use to drop them to a killing cold.
@@ -680,7 +680,7 @@ The lead chooses a route, resets the cooling, holds off guards with traps and co
 ## S91
 
 ### Setting
-A haulage yard at the edge of the docks, the same yard where the lead found his first work when he came to the city years before. The mood is cold.
+A haulage yard at the edge of the docks, the same yard where the lead found his first work when he came to the city years before.
 
 ### People
 Abel is the target, a man the lead once trusted who betrayed him; he is sending a load of lorries out of the city tonight. Armed guards crowd the yard. Bram is the lead's cousin, who hears of it afterwards. The lead wants Abel dead.
@@ -697,10 +697,10 @@ The lead fights through three areas using cover, a rifle and explosives, then fi
 ## S93
 
 ### Setting
-A boatyard shed, a ferry terminal, then high ground above the estuary with a quarry office and a gantry. It is some years after the old gang broke up. The mood is of an old score closing.
+A boatyard shed, a ferry terminal, then high ground above the estuary with a quarry office and a gantry. It is some years after the old gang broke up.
 
 ### People
-Abel is a boatbuilder who feels he must finish an old matter. Ada is his wife, who asks him to let it go. Bram is a quiet driver who goes with him. Bess is a hard woman with a grudge who also goes. Cass is a minor thug the party hunts. Dorran is the man who betrayed the old gang. Ezra is the old gang's founder, and the player knows his mind has gone.
+Abel is a boatbuilder who feels he must finish an old matter. Ada is his wife, who asks him to let it go. Bram is a quiet driver who goes with him. Bess is a hard woman with a grudge who also goes. Cass is a thug the party hunts. Dorran is the man who betrayed the old gang. Ezra is the old gang's founder, and the player knows his mind has gone.
 
 ### What happens
 Bram and Bess report that Cass has been found at the ferry terminal. Abel drives out with them, and they say on the way that they plan to leave the country. Abel runs Cass down. Bess beats him, then Abel locks him in the boot of a car and drives it onto the lip of a flooded pit, balancing it over the water. Cass breaks and says Dorran has men waiting on the high ground. Bess says to let it go anyway, and the player may refuse, after which Bess does. At the top a gunman in a barn loft wounds Bram, and Abel kills him. Bess is slashed on the arm. Abel wins a fist fight against Dorran's second-in-command, then clears the quarry yard. Abel calls Dorran out. Ezra comes out of the gantry hut and aims at Abel and Bess. Abel talks him down. Ezra pushes Dorran from the gantry onto the concrete, and Abel finishes him.
@@ -718,7 +718,7 @@ The player chases Cass, chooses whether to spare him, shoots the gunman, wins th
 ## S94
 
 ### Setting
-A harbour-side district of the city in late summer. The scene runs through a crematorium garden, a café, a scrap crew's camp, a cannery and, last, a wealthy family's house. The mood is quiet and suspicious.
+A harbour-side district of the city in late summer. The scene runs through a crematorium garden, a café, a scrap crew's camp, a cannery and, last, a wealthy family's house.
 
 ### People
 Ada is an informant who fears her cover is blown and that her contacts are being killed. Abel is a local detective who helps the lead. Bess is the first victim. Bram is a chaplain at the garden. Cora is a woman in hiding and Della is another victim. Cass is a man at the camp. Dorran is a suspect who is innocent. The player already knows Ada and the lead have grown close.
@@ -738,7 +738,7 @@ The player gathers evidence, passes checks of nerve and charm to make witnesses 
 ## S98
 
 ### Setting
-A cramped flat, then a large recycling plant full of bins, cranes and security guards, on a grey weekday. The mood is workmanlike, with a lot of waiting and moving heavy things.
+A cramped flat, then a large recycling plant full of bins, cranes and security guards, on a grey weekday.
 
 ### People
 The lead is a criminal planning a robbery. Abel is a reluctant friend who works at the plant. Bram is Abel's flatmate. Cass is a contact who plans the job from a distance. Dorran and others are guards and managers. The player already knows the lead wants a bigger score than anything he has done.

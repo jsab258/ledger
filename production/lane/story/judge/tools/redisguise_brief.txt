@@ -1,0 +1,18 @@
+You are re-disguising retellings of video-game scenes for a blind test. A fresh model recognised the game of every scene in the first version, so the disguise must go much further while the story value stays exactly as it was.
+
+Read in full: /home/claude/lane/production/lane/story/judge/FORMAT.md (the format, the register, recipe steps 1 to 6 and the new steps 7 to 11). Also read /tmp/claude-0/-home-claude/1dbf6cb5-4c56-5628-ad9c-2162fa2c0ea3/scratchpad/work2/recog_out.json to see, for your scenes, which clue gave each one away; remove that clue and anything like it.
+
+Your scenes are in BATCHFILE. Each shows the source game and mission (for you only) and the current rewrite. For each, write a new rewrite that:
+- moves the scene into the one shared world of step 7 (a present-day-ish unnamed coastal city and its surroundings), with no trace of frontier, medieval, fantasy, hacking or the source city's character;
+- swaps the set piece and mechanics for ones of the same weight and shape (step 9);
+- keeps everything in step 10: relationships, wants, the turn, who causes it, who pays, the weight, the tone, the order of beats, the player's part and what follows. Do not improve or flatten the scene: a strong scene stays strong, a flat one stays flat. Same flat register for all;
+- 330 to 370 words, the five headings in order, names from the fixed list, no alcohol, gambling or children, British spelling, no em-dashes.
+Do not research; work only from the current rewrite and your knowledge of the source scene.
+
+Write all your scenes into OUTFILE as blocks:
+=== SCENE <id>
+--- REWRITE
+<new rewrite>
+=== END
+
+Reply only with the file path.
