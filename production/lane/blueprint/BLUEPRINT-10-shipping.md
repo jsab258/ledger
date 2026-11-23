@@ -8,7 +8,7 @@ Each entry: how it works; its standard and test; the source of the standard; its
 ## 10.1 Release build
 
 The packaged release build and installer.
-
+- Prior research: research/shipping-build: Shipping removes logging and the console; each friend's evening needs the ladder settings checked in the launch.
 
 ### 10.1 Release build
 
@@ -20,7 +20,8 @@ The packaged release build and installer.
 ## 10.2 Store, rating and disclosure
 
 Store page, age rating, Steam's AI disclosure, price and length statement.
-
+- Prior research: research/ethics-and-reception: 508,192 Steam reviews, games disclosing generative AI recommended 68.4% against 86.3% (17.9 points lower), the penalty attaching to AI as a substitute for craft; research/steam-ai-disclosure: form rewritten 16 Jan 2026.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
 
 ### 10.2 Store, rating and disclosure
 
@@ -32,7 +33,7 @@ Store page, age rating, Steam's AI disclosure, price and length statement.
 ## 10.3 Friends' builds
 
 A friends' build at the end of every phase from phase 4, on his PC.
-
+- Prior research: research/meridian-test-administration: ask open, unprompted, maker silent; separate roles across time and medium.
 
 ### 10.3 Friends' builds
 
@@ -44,7 +45,7 @@ A friends' build at the end of every phase from phase 4, on his PC.
 ## 10.4 Credits and notices
 
 Third-party notices, credits for CC-BY makers, allowlist notices kept.
-
+- Prior research: research/engine-notices: Ogg/Vorbis, MsQuic, oneTBB, ONNX Runtime, DirectML, DirectX Agility SDK, Aftermath, XAudio2 and DbgHelp each ask a notice; research/terms-2026-10-03: UE EULA 6(e), MetaHuman content Unreal-only.
 
 ### 10.4 Credits and notices
 
@@ -56,7 +57,8 @@ Third-party notices, credits for CC-BY makers, allowlist notices kept.
 ## 10.5 Release testing
 
 Final passes over the whole game: every ending, every job outcome, long sessions.
-
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-03 a planned job with two ways within Act II's first 2 hours; 4 of 8 panel players name a scene; decided; WQ-04 check order: first hour, rest of Act I, Act II stage one; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-07 the panel writes each tester's last stage and reason; decided. None measured.
 
 ### 10.5 Release testing
 
@@ -87,7 +89,7 @@ Patches, new districts in updates, a stated position on mods.
 ## 10.7 Platform account, cloud saves and achievements
 
 Steam integration: cloud saves, achievements if any, overlay, account handling.
-
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-07 the panel writes each tester's last stage and reason; decided. None measured.
 
 ### 10.7 Platform account, cloud saves and achievements
 
@@ -123,7 +125,7 @@ Where players report problems and get answers after release.
 ## 10.10 Legal and company admin
 
 Name search, the company's admin, tax and contracts for selling the game.
-
+- Prior research: research/ui-design BRANDING: the LEDGER name sits near Ledger SAS in class 9, unchecked.
 
 ### 10.10 Legal and company admin
 
@@ -135,7 +137,7 @@ Name search, the company's admin, tax and contracts for selling the game.
 ## 10.11 Player data and privacy
 
 Consent and data protection for what players type that is sent to the talk service.
-
+- Prior research: research/player-data-notice (July to Aug 2026 terms): Anthropic API deletes inputs and outputs within 30 days, flagged ones up to 2 years, no training by default, storage in the US, DPA with SCCs; GDPR Article 13 duties.
 
 ### 10.11 Player data and privacy
 
