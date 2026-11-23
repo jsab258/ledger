@@ -16,13 +16,21 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - Standard: The first week's nine designs stand as written (ruling 29 Sep); M1 5 of 8 for a week Test: H: the week run; panel M1
 - Source: ruling 29 Sep; BUILD-ORDER (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.36; COPY-2 s.30 and s.4; DESIGN s.15, s.16; DEFINITIONS RT-04; PANEL-BAR-2026-11-21; BUILD-ORDER M1; RULINGS 'The story and the first week'
 - Status: ruled (his ruling or canon). Coverage row: 3.1.1. Conflicts settled: C-060.
+- Prior research: research/british-crime-fiction-tone and game-design/story-outline-2026-09-28.md: the National Dock Labour Scheme ended 3 Jul 1989 (9,221 registered dockers in April 1989, under 4,000 by October 1990); poll-tax riot 31 Mar 1990; the class reading, not greed; game-design/warehouse-fire-2026-09-29.md for Mickey's past.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-04 check order: first hour, rest of Act I, Act II stage one; decided; WQ-05 each act ends closing a thread; decided. None measured.
 
 ### 3.1.2 Act II, The Rise and the Squeeze
 
 - How it works: Act II opens on its state: Sheila has her answer and the firm is his (rung 2). Eight beats fire on states in any order the states allow: the old firm's end (landing men hand over and fade, or the rivals start a rung sooner), each rival's first notice, the real book on Sheila's trust, the cold-store contract on rung 3, the first gun, Ellis reaching 'investigating' (one case with the fire), the guaranteed collision (a day appointment and a night job fall on one evening, played at the door of his day life), and the sit-down with one head that ends the act. The firm climbs rungs 2 to 4 while each rival climbs its ladder; every game week brings one rival rung, one firm change and one return of a deed; sending opens here. A fail-safe starts four game days before the end of the act's last week: the highest rival then climbs its remaining rungs one a game day, so Act II still ends at a sit-down. Under the 21 Nov ruling the act is about 5 game weeks and 9.3 to 14 running hours; rung 3 is five cars, a night desk, a first front, a first round and the cold-store contract; rung 4 is at least two fronts and two rounds plus men at the dock gate, the cold store and the landing. Story status: the chosen story is pending. Story v3 (production/lane/story/v3/) is in progress and not picked; the latest full draft is production/lane/story/STORY-FINAL.md (The Passenger, 20 Nov), not yet approved by him. What follows is mechanics from the design sources, not plot.
-- Standard: Beats fire on states, never on days; 11 to 14 hours Test: H: a played stretch of Act II; S: every beat reachable
+- Standard: Beats fire on states, never on days; 9.3 to 14 hours under the ruled clock (CLK-06; C-243) Test: H: a played stretch of Act II; S: every beat reachable
 - Source: DESIGN §16 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.37; COPY-2 s.31; DESIGN s.16; DEFINITIONS RT-04, F13, F15, CLK-06; RULINGS 21 Nov
 - Status: unmeasured. Coverage row: 3.1.2. Conflicts settled: C-061, C-062, C-063.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-03 a planned job with two ways within Act II's first 2 hours; 4 of 8 panel players name a scene; decided; WQ-05 each act ends closing a thread; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
 
 ### 3.1.3 Act III, The Ledger Comes Due
 
@@ -30,6 +38,9 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - Standard: Each morning one deciding step graded by what the books hold (DESIGN §16) Test: S: each morning's step graded; H: 'how does this end, and why'
 - Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.38; COPY-2 s.32; DESIGN s.16; DEFINITIONS RT-01, RT2-15, CLK-06
 - Status: decided. Coverage row: 3.1.3. Conflicts settled: C-064.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-06 money held at Act III's start never changes a morning's grade; decided. None measured.
 
 ### 3.1.4 The endings
 
@@ -44,6 +55,7 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - Standard: ER-END-02, ER-END-03; D58; ending signs 30 Sep Test: S: balance sweep; H predicts the ending
 - Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.39; COPY-2 s.33; DESIGN s.16 (ER-END-02, ER-END-03); game-design/ending-signs-2026-09-30.md; DEFINITIONS RT2-04
 - Status: decided. Coverage row: 3.1.5. Conflicts settled: C-067.
+- Prior research: research/ending-reading and game-design/ending-signs-2026-09-30.md: one sign at each threshold, built from what Tom has seen and able to be wrong; no number shown for the ending; two earlier attempts set aside because the signs sat on the thresholds.
 
 ### 3.1.6 Mickey's past
 
@@ -58,6 +70,7 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - Standard: Every morning's grade traces to named weeks of the book; the player's Tom's reading predicts the outcome (ER-END-02). Test: B: seeded books with known over-limit weeks; grades and ending checked.
 - Source: The description, sections 26, 38, 39; DESIGN §16. (waits on a dated study). Designed in: DEFINITIONS RT-01; COPY-2 s.21, s.32, s.38; ONE-SHOT-PROMPT s.26, s.38
 - Status: pending. Coverage row: RT-01.
+- Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-06 money held at Act III's start never changes a morning's grade; decided. None measured.
 
 ### RT-02 Main-story beat content
 
@@ -65,6 +78,8 @@ Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 - Standard: Every beat has its scene; every scene names at least one choice and one return; none needs a system the game lacks. Test: Trace check: beat to scene to system (TRACE style), by a fresh reviewer.
 - Source: The description, sections 36 and 37; the story measure's bible (current version STORY-BIBLE-M1). (waits on a dated study). Designed in: DEFINITIONS RT-02; COPY-2 s.31, s.38; ONE-SHOT-PROMPT s.36, s.37
 - Status: pending. Coverage row: RT-02. Conflicts settled: C-068.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-05 each side story has a turn, a hard choice and a consequence a game day later; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-03 a planned job with two ways within Act II's first 2 hours; 4 of 8 panel players name a scene; decided; WQ-05 each act ends closing a thread; decided. None measured.
 
 ### RT2-04 How the ending is chosen
 
@@ -105,6 +120,9 @@ Named people.
 - Standard: Thirty regulars stand as written (ruling 30 Sep); about 30 own street lines each Test: H: transcripts; S: line counts
 - Source: ruling 30 Sep; DESIGN §11 (his ruling or canon). Designed in: COPY-2 s.5, s.28; DESIGN s.11; DEFINITIONS L-01; RULINGS 'Talk and AI' street lines
 - Status: ruled (his ruling or canon). Coverage row: 3.2.3. Conflicts settled: C-070.
+- Prior research: research/casting (1991 census, Hull): 29% of adults late teens and twenties, 36% aged 45 or over, 98.8% white, over a third of households council-rented, half without a car, unemployment about 12%; own street lines for Ron, Darren, Father Walsh and June, shared for Sheila, Alison and Ada (RULINGS 30 Sep).
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Tom or police can be met again, with a face and own line; decided. None measured.
+- Prep: INVENTORY section 2: regulars 30 (16 in the prototype; all 30 in cloud-week/town with facts, 8 with secrets); own lines 12 x 60 = 720 and about 57 people x 30 = 1,710 (the prototype about 150 and about 120); 401 own lines for Ron, Darren, Father Walsh and June already exist in cloud-week/lines (94, 93, 112, 102).
 
 ### 3.2.4 The crowd
 
@@ -112,6 +130,9 @@ Named people.
 - Standard: No children anywhere (canon); 6 of 13 street figures have a resident behind them (map-players) Test: S: crowd generation content check; counts by hour
 - Source: canon; PLAYERS second study (reference game). Designed in: DEFINITIONS design pass 4 Run 5 second pass GD-02; design pass 3 G9; COPY-2 s.5; DESIGN s.2; walkers-vs-residents audit; PLAYERS; canon content rule
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.2.4. Conflicts settled: C-071.
+- Prior research: research/casting and production/cloud-week/town: 30 regulars counted to the 1991 census; a cast of 200 to 300 named residents is his pick of 19 Nov (the 51 new facts await his check).
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Tom or police can be met again, with a face and own line; decided. None measured.
+- Prep: SOUND-PLAN SND-12: wordless walla by density, none under 3 people, thin 3 to 11, full at 12 or more (own bands sized to the rescaled G9 counts); words come only from people's own lines; SND-14 every reaction situation has lines for at least 6 speaker kinds.
 
 ### 3.2.5 Someone worth being honest for
 
@@ -137,12 +158,18 @@ Named people.
 ## 3.3 Side stories
 
 25 to 40 found on foot, no markers, each 3 to 5 steps, ending in something the town knows.
-
+- Prior research: game-design/side-stories-2026-11-08.md: 32 drafts, all micro (3 to 5 steps), tone 15 light, 14 grey, 3 dark; 21 open in Act I, 9 in Act II, 2 any; research/side-stories: a pass with twelve fixes applied.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-09 half the side stories first met by walking past; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-05 each side story has a turn, a hard choice and a consequence a game day later; decided; MS-06 no go-get-return errand dressed as a story; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-07 two thirds of side stories within three steps and 15 minutes, none over 30; decided; MS-08 a threat Tom ignores is kept within the time named, else three game days; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
+- Prior research: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: Witcher 3 designers allow an item request only if it leads to a conversation, a choice or a secret; most-named best quests read as stand-alone tales (five lists, thin).
+- Prep: INVENTORY: 25 side stories at about 30 lines each is 750 lines, about 0.5 hour if ready ahead, 3 hours if written in the one-shot; the prototype has 4 (18 to 26 strings each).
 
 ### 3.3 Side stories
 
 - How it works: Side stories are found on foot with no markers, mostly light or grey against the main story, each 3 to 5 steps and ending in something the town knows; some are offered only after earlier steps; they run beside the acts from week one (one is placed at minute 23 of the first hour). Count: about 25 (at least 22, at most 28) at a median 10 to 14 minutes, about 5 hours inside the 15 to 20. The 32 drafts of 8 Nov are the list to draw from. Each act holds at least one scene written to be funny.
-- Standard: 25 to 40; whole stories, not errands (PLAYERS praise 5); the 32 drafts of 8 Nov Test: H: found unaided; S: each ends in a town fact
+- Standard: about 25 (22 to 28, F15); whole stories, not errands (PLAYERS praise 5); the 32 drafts of 8 Nov Test: H: found unaided; S: each ends in a town fact
 - Source: DESIGN §4; Study 17 (reference game). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13, s.4; DESIGN s.4; DEFINITIONS F15, GD-05
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.3. Conflicts settled: C-073.
 
@@ -178,6 +205,8 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G7; FIT-CHECK F20, G7; COPY-2 s.12
 - Status: decided. Coverage row: FIT-G7. Conflicts settled: C-078.
+- Prep: NUMBERS-RUN M1, M2, P4: put at least 7 of the playthrough's fares in week one (S07's day shift has 6); cap offered fares at 80 (FIT F20's 55 to 110 would repeat up to 30 rides, Kevin and Terry take the rest off screen); the clean-only player sinks at low fares and needs wants of his own (third car on terms, flat arrears, decent jacket).
+- Prep: INVENTORY section 2: 40 fare people with 80 rides, about 240 fare talk lines and about 160 pick-up and way calls for Pauline's radio; the prototype has 14 rides (7 named people) and 24 fare lines.
 
 ### FIT-F20 Which fares carry a wrinkle (every one after the first)
 
@@ -225,6 +254,8 @@ The authored jobs.
 - Standard: Each answer leads to a different following state; counter needs a hook Tom holds (RT-07); what was said is what the town then believes (a told version within a game day). Test: B: a sit-down played each way; the following state and the town's version compared.
 - Source: The description, section 30; RT-06, RT-07. (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.30; DEFINITIONS 3.5.5, RT-06, RT-07, RT-04
 - Status: decided. Coverage row: 3.5.5.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
 
 ### 3.5.6 Job template and step states
 
@@ -232,6 +263,11 @@ The authored jobs.
 - Standard: Four job states and five step states; every step's place by landmark, two sources of direction, a skip (DESIGN §4; ER-JOB-02, 05, 07) Test: S: job data checks; every outcome reached by script
 - Source: DESIGN §4; Studies 11, 16 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN s.4 (ER-JOB-01 to 07); DEFINITIONS CLK-04, GD-03
 - Status: decided. Coverage row: 3.5.6. Conflicts settled: C-082.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-04 every revisit carries something new; never the same spot twice for one verb; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-06 a step lost twice brings another way within a game day; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided; MS-02 a planned job's three keys leave at least two different traces; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided; MS-04 a failed step changes the town, never sends him back; decided. None measured.
+- Prior research: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: four of seven professional pieces fault rigid missions (RDR2 fails for straying); GTA V heists with a choice of approach are praised; thin.
 
 ### 3.5.7 How jobs reach him
 
@@ -239,6 +275,10 @@ The authored jobs.
 - Standard: A job is offered by a person, on a state, never by a marker or the clock alone (DESIGN §4 law 1) Test: S: every job has a giver and a channel; H: 'how did you hear of it?'; addendum rules ER-REACH-01
 - Source: DESIGN §4 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN-ADDENDUM A17 (ER-REACH-01); DESIGN s.4
 - Status: decided. Coverage row: 3.5.7.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided; DENSE-09 half the side stories first met by walking past; decided. None measured.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
 
 ### GD-08 The catalogue of jobs and stories per act (count, kinds, givers)
 
@@ -246,6 +286,10 @@ The authored jobs.
 - Standard: Jobs per real hour and kinds per act inside the band the teardown and the reference games' mission counts show; no set piece twice in thirty minutes (section 14). Test: A count of the authored catalogue per act against the band; the bot's job log for kind repeats.
 - Source: The description, sections 14, 37; MEASUREMENTS-NEEDED A (jobs per hour). (waits on a dated study). Designed in: DEFINITIONS GD-08, F15, G6, G7; COPY-2 s.13, s.37; MEASUREMENTS-NEEDED A10
 - Status: pending. Coverage row: GD-08.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-02 a planned job's three keys leave at least two different traces; decided; MS-07 two thirds of side stories within three steps and 15 minutes, none over 30; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-03 a planned job with two ways within Act II's first 2 hours; 4 of 8 panel players name a scene; decided. None measured.
+- Prior research: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: GTA V about 22 to 25 and RDR2 about 26 real minutes per story mission (story hours over mission count, an upper bound that includes travel); no single-mission length found, so no band yet.
+- Prep: INVENTORY section 2: about 40 authored jobs (an estimate: about 8 in Act I, at least 10 break-in sites, at least 6 for the three Act II places, rounds, lifts, tails); the prototype has 2 night jobs and 7 job templates; GD-08's jobs per hour stay PENDING.
 
 ### RT-03 Job and mission catalogue after week one
 
@@ -253,6 +297,9 @@ The authored jobs.
 - Standard: Each place has at least two jobs and one person with a word; counts as GD-08. Test: Catalogue count; bot visits each place and finds something to do within 30 s (section 40).
 - Source: The description, sections 14, 28, 29, 40; the story measure. (waits on a dated study). Designed in: DEFINITIONS RT-03; COPY-2 s.38; ONE-SHOT-PROMPT s.14, s.28, s.29, s.40
 - Status: pending. Coverage row: RT-03.
+- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
+- Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-02 a planned job's three keys leave at least two different traces; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-03 a planned job with two ways within Act II's first 2 hours; 4 of 8 panel players name a scene; decided. None measured.
 
 ## 3.6 Dialogue
 
@@ -265,6 +312,10 @@ Talk content and its system; the moat, never the main thing.
 - Standard: Reply within 2 s or the written line plays; slower than 8 s dropped (ER-TALK-01); median first speech 2 s or less Test: S: slow stand-in; packaged speech measure
 - Source: DESIGN §11; RULINGS speech line (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-01); RULINGS 'Talk and AI' (23 Sep, 28 Sep, 7 to 28 Oct)
 - Status: ruled (his ruling or canon). Coverage row: 3.6.1.
+- Prior research: research/voice-latency IN-GAME-2026-11-02 run F, 4 Nov: median first speech 2.02 s against the 2.0 s bar, 7 of 30 lines at 4 s or more; bench medians 16 Nov 1.81 s (today's mix), 1.89 s (Sonnet 5.5), 2.33 s (Sonnet 5); cost about 0.12 dollars an hour at 15 replies, 2.4 times the target.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-07 live replies median about 12 words, cap 35 (70 for an account), street lines about 7; the 12 is background only. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
+- Prior research: aaa-studies/TALK-AS-PLAY.md: no published figure for choices a minute or exchange length in any reference game; the 12-word median comes from studies/03 (KCD2 files, background only), so live-reply length is unmeasured.
 
 ### 3.6.2 Claim check
 
@@ -272,6 +323,10 @@ Talk content and its system; the moat, never the main thing.
 - Standard: ER-TALK-04; ruling 25 Sep; speech rulings 7 to 28 Oct Test: S: planted bad replies
 - Source: RULINGS; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11; RULINGS 25 Sep, 29 Sep, 7 to 28 Oct
 - Status: ruled (his ruling or canon). Coverage row: 3.6.2. Conflicts settled: C-083.
+- Prior research: research/invented-claims: 17 of 30 invented details caught at the start (57%), 96 of 309 true first sentences refused by Haiku; research/conversation-model-capability: a hard constraint on a small model gave 100% valid format but answer accuracy fell from 19.7 to 11.0%.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-01 a deed a named person saw is said to Tom with one concrete detail; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Tom holds changes the reply and is named; a wrong push ends in a state, never a reload; decided; TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided; TALK-09 no empty dodge: a reply lacks neither a fact nor a stated reason; decided. None measured.
 
 ### 3.6.3 Written street lines
 
@@ -279,6 +334,8 @@ Talk content and its system; the moat, never the main thing.
 - Standard: About 30 own lines a regular; a person's own line once a day, a shared line once a week per street (ER-TALK-02). Raised by Y2.5: no shared street line heard twice in one real hour of play anywhere (GD-02). Test: H: transcripts
 - Source: RULINGS street lines; DESIGN §11 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-02); DEFINITIONS GD-02, L-01, F19; RULINGS street lines
 - Status: ruled (his ruling or canon). Coverage row: 3.6.3. Conflicts settled: C-084, C-085.
+- Prior research: RULINGS 30 Sep (street lines): own lines for Ron, Darren, Father Walsh and June, shared ones for Sheila, Alison and Ada, neighbours' talk at most every 45 s; production/cloud-week/lines (45 s floor and hour of hush are rulings).
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-07 live replies median about 12 words, cap 35 (70 for an account), street lines about 7; the 12 is background only. None measured.
 
 ### 3.6.4 Crowd lines by situation
 
@@ -286,6 +343,9 @@ Talk content and its system; the moat, never the main thing.
 - Standard: At least 6 lines per situation per kind of speaker (DESIGN §11) Test: S: line counts; content gate
 - Source: DESIGN §11 (no reference figure yet). Designed in: ONE-SHOT-PROMPT 'Who lives here'; COPY-2 s.5; DESIGN s.11
 - Status: unmeasured. Coverage row: 3.6.4. Conflicts settled: C-086.
+- Prior research: production/cloud-week/lines (1,626 lines, at least 8 per kind and situation) already exceeds the 6-line count; mark the count met by design and keep the listening test; the 1990 idiom list (research/street-lines-1990, 25 of 350 lines flagged) should be an acceptance check on every written line.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Tom or police can be met again, with a face and own line; decided. None measured.
+- Prep: INVENTORY section 2: shared lines about 500 at the floor (6 per situation for about 6 speaker kinds, 14 situations); 1,225 already exist in cloud-week/lines (1,054 in nine shared kinds plus 171 directions, at least 8 per kind and situation) but are not in the prototype (56 shared, 22 barks, 14 shopkeeper barks).
 
 ### 3.6.5 Decision lines
 
@@ -293,6 +353,8 @@ Talk content and its system; the moat, never the main thing.
 - Standard: ER-TALK-03; ER-CORE-03 Test: S: 170 lines that are not a plain yes
 - Source: DESIGN §11 (DECIDED by the design proof, for him to overturn). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN s.11 (ER-TALK-03)
 - Status: decided. Coverage row: 3.6.5.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-01 every suggested and decision line is the exact text Tom says, stance-tagged; decided; TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
 
 ### 3.6.6 Suggested lines
 
@@ -300,6 +362,7 @@ Talk content and its system; the moat, never the main thing.
 - Standard: Ruling 1 Oct Test: S: shown on both devices
 - Source: RULINGS 1 Oct (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; RULINGS 1 Oct
 - Status: ruled (his ruling or canon). Coverage row: 3.6.6.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-01 every suggested and decision line is the exact text Tom says, stance-tagged; decided. None measured.
 
 ### 3.6.7 AI notice and line report
 
@@ -314,6 +377,7 @@ Talk content and its system; the moat, never the main thing.
 - Standard: Suggested lines on Tab, shown at once on a controller (ruling 1 Oct); Tom's written lines approved; no voice for Tom without his yes (24 Sep) Test: S: a whole talk by pad alone; addendum rules ER-SPEAK-01
 - Source: RULINGS 1 Oct, 24 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN-ADDENDUM A25; RULINGS 1 Oct, 24 Sep
 - Status: ruled (his ruling or canon). Coverage row: 3.6.8.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-01 every suggested and decision line is the exact text Tom says, stance-tagged; decided; TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
 
 ### FIT-F19 Enough shared-line situations live each hour
 
@@ -321,6 +385,7 @@ Talk content and its system; the moat, never the main thing.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 'open pairs' F19; FIT-CHECK F19; GD-02
 - Status: pending. Coverage row: FIT-F19. Conflicts settled: C-087.
+- Prep: NUMBERS-RUN P3: with a flat 6 lines for each of about 6 speaker kinds (36) a shared remark repeats within an hour once remarks pass 36 an hour (GD-02: none twice in a real hour); keep the floor of 6 per kind for every situation and add about 120 everyday lines (about 500 in all, INVENTORY section 2). Jobs per hour (GD-08) are unset, so job repeats cannot yet be run.
 
 ### FIT-L01 60 street lines for the 12 people seen most, 30 for the rest
 
@@ -328,11 +393,12 @@ Talk content and its system; the moat, never the main thing.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 L-01 and D-Q4; FIT-CHECK F18; RULINGS street lines
 - Status: decided. Coverage row: FIT-L01. Conflicts settled: C-088.
+- Prep: NUMBERS-RUN P2: the 12 most-seen (60 own lines, once a day) never repeat in 49 days; a 30-line regular met most nights repeats from night 31, about 12 times by the end. Fix: for 30-line people an own line at most every second day met. Cutting to 50 lines (Q9) makes repeats worse.
 
 ## 3.7 Street happenings
 
 Small authored incidents placed on the clock and the town's state: a row on the pavement, a breakdown, a shoplifter, a lost tourist.
-
+- Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-05 something within 30 s by day, no random fight; the 30 s pending, the fight ban ruled; DENSE-09 half the side stories first met by walking past; decided. None measured.
 
 ### 3.7 Street happenings
 
@@ -354,3 +420,4 @@ Small authored incidents placed on the clock and the town's state: a row on the 
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G6; FIT-CHECK F17, P11; COPY-2 s.13
 - Status: decided. Coverage row: FIT-G6. Conflicts settled: C-091.
+- Prep: NUMBERS-RUN P1 and INVENTORY: happenings at one per 15 real minutes need 60, 70 and 80 for 15, 17.5 and 20 hours played, so 80 (about 10 a kind over 8 kinds, about 8 lines each, about 640 lines) is the cheaper certain fix.
