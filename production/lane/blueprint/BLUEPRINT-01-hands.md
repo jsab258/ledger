@@ -87,24 +87,24 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 
 ### 1.2.2 Car camera
 
-- How it works: The chase camera sits about 5.8 m back (band 5 to 6.5 m) and 1.6 to 2.0 m high, with lag of 0.1 to 0.25 s. The field of view is 60 to 65 degrees at rest, 64 to 70 at 30 mph, 70 to 78 at 60 and 76 to 86 at 90, which is how a slow car reads as quick. B held turns it to the rear window for the car in the mirror. It never enters a wall, a car or a post.
-- Standard: M10: 5 to 6.5 m back, 1.6 to 2.0 m high, lag 0.1 to 0.25 s, field of view 60 to 65 deg at rest widening to 76 to 86 at 90 mph; ER-DRIVE-06 Test: S: D8 camera run; B: 40-minute soak with no clipped frame
+- How it works: The chase camera sits about 5.8 m back (band 5 to 6.5 m) and 1.6 to 2.0 m high, with lag of 0.1 to 0.25 s. The field of view is 60 to 65 degrees at rest, 64 to 70 at 30 mph, 70 to 78 at 60, which is how a slow car reads as quick. B held turns it to the rear window for the car in the mirror. It never enters a wall, a car or a post.
+- Standard: M10: 5 to 6.5 m back, 1.6 to 2.0 m high, lag 0.1 to 0.25 s, field of view 60 to 65 deg at rest widening to 70 to 78 at 60 mph (the Hook's top speed, G2); ER-DRIVE-06 Test: S: D8 camera run; B: 40-minute soak with no clipped frame
 - Source: FEEL-TARGETS-DRIVING (c2) M10; DESIGN §5, §17 (waits on a dated study). Designed in: FEEL-TARGETS-DRIVING (c2) M10; DESIGN §5, §17 ER-DRIVE-06; DESCRIPTION-COPY-2 §10
 - Status: pending. Coverage row: 1.2.2.
 
 ### 1.2.3 Getting in and out
 
-- How it works: Getting in or out takes under 2 s from either side; a blocked door never traps him; a locked cab says so. Crew and fares ride in the cab and a man at his side rides along. Getting out after a wreck is immediate and Tom walks.
-- Standard: In or out in under 2 s; a blocked door never traps him (ER-DRIVE-07) Test: S: enter and exit timed from both sides, door blocked
-- Source: DESIGN §5 (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §10; DESIGN §5 ER-DRIVE-07; PARTS-TREE notes on 1.2.3
-- Status: unmeasured. Coverage row: 1.2.3. Conflicts settled: C-006.
+- How it works: A car Tom may open (the firm's cars, his own, an unlocked one) takes 1.5 to 2.5 s from door to seated, from either side, and he is moving within 1 s after; getting out takes under 2 s. A blocked door never traps him. Forcing a locked parked car takes about 6 s; there is no carjacking of a car with somebody in it. Crew and fares ride in the cab and a man at his side rides along; getting out after a wreck is immediate and Tom walks.
+- Standard: a car Tom may open: door to seated 1.5 to 2.5 s, moving within 1 s after; out under 2 s; forced entry of a locked car about 6 s; a blocked door never traps (ER-DRIVE-07) Test: S: enter and exit timed from both sides, door blocked
+- Source: STATUS.md and gtavi-driving-builder-2026-11-21 (SOLID); description section 23 (reference game). Designed in: DEFINITIONS design pass 4 'Getting in and out (1.2.3)'; GTAVI-MAP Run 5 additions; DESCRIPTION-COPY-2 s.10, s.23; DESIGN s.5 ER-DRIVE-07; PARTS-TREE notes on 1.2.3
+- Status: measured. Coverage row: 1.2.3. Conflicts settled: C-006, C-007.
 
 ### 1.2.4 Crashes, damage and unsticking
 
 - How it works: Damage comes in stages by closing speed: under 10 mph is forgiven, then dented, then crumpled, and from about 35 mph in one hit the car will not drive on. It says so at once, Tom gets out and walks, the firm fetches it and it is off the road a day; a dent stays until the firm mends it at the yard overnight. A car wedged on a pole or wall always backs out, and after any crash it moves or can be left within 5 s. Raised by Y1.1: front damage over the threshold pulls the car to one side until repaired, a broken lamp darkens the road ahead at night, and a dent is a mark witnesses remember. A car can ram another; both take damage and nobody inside dies.
 - Standard: M11: fragile like The Getaway (under 5 mph nothing; over 30 to 35 mph may not drive on); ER-DRIVE-01 (moves or can be left within 5 s); ER-DRIVE-08. Raised by Y1.1: front damage over the crash threshold pulls the car to one side until repaired, and a broken lamp darkens the road ahead at night; a dent is a mark witnesses remember. Test: S: pole and wall hits at 10, 20, 35, 50 mph; B: 30 minutes of crashing
 - Source: FEEL-TARGETS-DRIVING M11; DESIGN §5 (waits on a dated study). Designed in: DESIGN §5 ER-DRIVE-01, -08; DESCRIPTION-COPY-2 §10; FEEL-TARGETS-DRIVING M11; GTAVI-MAP Y1.1; DEFINITIONS pass 3 §F05
-- Status: pending. Coverage row: 1.2.4. Conflicts settled: C-007, C-008.
+- Status: pending. Coverage row: 1.2.4. Conflicts settled: C-008, C-009.
 
 ### 1.2.5 Cars and people
 
@@ -132,21 +132,21 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: Kevin, Terry or a crewman can drive Tom: he says where, by landmark, and can skip the ride, which passes exactly its drive time on the clock. He can talk with the driver on the way. A crewman told to drive is an AI driver and always brakes for people.
 - Standard: A crewman told to drive is an AI driver and always brakes for people (DESIGN §12); a skipped ride costs its real time on the clock Test: S: a ride arrives; skip advances the clock by the drive's time; addendum rules ER-RIDE-01
 - Source: DESIGN §12; canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A24 (ER-RIDE-01); DESCRIPTION-COPY-2 §10; DESIGN §12
-- Status: measured. Coverage row: 1.2.8. Conflicts settled: C-009.
+- Status: measured. Coverage row: 1.2.8. Conflicts settled: C-010.
 
 ### 1.2.9 Repairs, plates and paint
 
 - How it works: A wrecked cab is off the road a day and a dent is mended at the yard overnight. A witness notes the plate as a mark. Shaun Hewson's paint takes the roof sign off and gives a new colour, after which earlier sightings no longer name that car; new plates or a respray also clear a noted plate, but only for witnesses who have not yet told anyone. There is no fuel or wear.
 - Standard: A dead car is off the road a day (DESIGN §5); no fuel or wear (DESIGN §18). Raised by GTA VI's respray rule: new plates or a respray clear the police's noted plate for that car (see GV-02). Test: S: a repainted car is not named as the firm's by a witness who saw the old paint; addendum rules ER-PAINT-01
 - Source: DESIGN §5, §12, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A24; DESIGN §5, §12, §18; GTAVI-MAP GV-02
-- Status: decided. Coverage row: 1.2.9. Conflicts settled: C-010.
+- Status: decided. Coverage row: 1.2.9. Conflicts settled: C-011.
 
 ### 1.2.10 Taking a parked car
 
-- How it works: Only parked cars, never one with somebody in it, and only by force, with no minigame. It is loud (heard at the force reach), the owner reports it when he finds it gone, the car is then known to the police, and a taken car has no roof sign so witnesses do not name it as the firm's. Raised by Y1.2: a brick through the quarter-light is about 3 s and loud; a tool at the door and ignition is about 10 s and quieter; a car with a steering lock cannot be taken.
-- Standard: Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car. Raised by Y1.2: the two ways in differ by the car: a brick through the quarter-light (about 3 s, loud) or a tool at the door and the ignition (about 10 s, quieter); a car with a steering lock cannot be taken; times to be checked in the footage pass. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
+- How it works: Only parked cars, never one with somebody in it, and only by force, with no minigame. It is loud (heard at the force reach), the owner reports it when he finds it gone, the car is then known to the police, and a taken car has no roof sign so witnesses do not name it as the firm's. Taking one by force takes about 6 s (the description, section 23, kept by design pass 4). GTA VI's two ways in (a brick through the quarter-light or a tool at the door) are a lead to check in the footage pass, without their times; a car with a steering lock cannot be taken.
+- Standard: Recommended answer to Q2, built to it meanwhile; no lockpicking game (DESIGN §18); never a moving car. Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
 - Source: Q2 (open) (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
-- Status: decided. Coverage row: 1.2.10. Conflicts settled: C-011.
+- Status: decided. Coverage row: 1.2.10. Conflicts settled: C-012.
 
 ### 1.2.11 The horn
 
@@ -174,7 +174,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - How it works: The Hook is a 30 mph town (the built-up limit of 1990). Traffic drives at 20 to 28 mph; every car in the Hook reaches 60 mph on the 420 m straights and no more there; a patrol car is no faster than Tom's car on a straight. The patrol stops a driver it sees at 50 mph or more, or doing a reckless act (a hit, the pavement, a red light at speed); 31 to 49 mph draws a look and a noted plate, never a stop. Nobody steps out within the 23 m stopping distance of a car at 30 mph.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §G2; FIT-CHECK F33
-- Status: decided. Coverage row: FIT-G2. Conflicts settled: C-012.
+- Status: decided. Coverage row: FIT-G2. Conflicts settled: C-013.
 
 ### FIT-F05 How often the one-hit wreck happens in ordinary driving
 
@@ -254,9 +254,9 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 ### 1.3.9 How a fight ends
 
 - How it works: A fight ends when someone backs off, runs, goes down, the police arrive or people step in; backing off and running are inputs at every moment. Tom cannot die: beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, with a street that knows he lost, and is in control within 60 real seconds with the cost said. Hospital costs days, never money, and plants a witness.
-- Standard: A way out at every moment (ER-FIGHT-03); Tom never dies, in control within 60 real s (ER-FIGHT-04); Tom cannot die (his ruling) Test: S: each of five endings scripted; beaten route timed
-- Source: DESIGN §7; his rulings (his ruling or canon). Designed in: DESIGN §7 Death; DESCRIPTION-COPY-2 §9; DEFINITIONS RT2-13; RULINGS (his rulings: Tom cannot die)
-- Status: measured. Coverage row: 1.3.9. Conflicts settled: C-013.
+- Standard: A way out at every moment (ER-FIGHT-03); Tom never dies, in control within 60 real s (ER-FIGHT-04); Tom cannot die (the approved design) Test: S: each of five endings scripted; beaten route timed
+- Source: DESIGN §7; the description §3; the approved design, canon OPEN 3 (his ruling or canon). Designed in: DESIGN §7 Death; DESCRIPTION-COPY-2 §9; DEFINITIONS RT2-13; canon OPEN 3 (the approved whole-game design)
+- Status: measured. Coverage row: 1.3.9. Conflicts settled: C-014.
 
 ### 1.3.10 Firearms
 
@@ -277,14 +277,14 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: Every fight's men are written as one of a few kinds: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps his distance, and (from the fit check) a wiry one who slips and runs. A big man has the most hidden capacity and a knife man the least. No two fights in a row use the same mix, so Lee on the quay, Iveson's yard hand and the two dockers by car two each feel different.
 - Standard: No two fights in a row use the same mix (ER-TYPES-01); players punish the same loop (PLAYERS punish 9) Test: S: the job data; addendum rules ER-TYPES-01
 - Source: PLAYERS.md; DESIGN §18 (reference game). Designed in: DESCRIPTION-COPY-2 §9; DESIGN-ADDENDUM A29 (ER-TYPES-01); DEFINITIONS pass 3 §P17, RT-11
-- Status: measured. Coverage row: 1.3.12. Conflicts settled: C-014.
+- Status: measured. Coverage row: 1.3.12. Conflicts settled: C-015.
 
 ### RT-09 Tom's line against women, over-sixties and the priest
 
 - How it works: If someone Tom's line covers (a woman, anyone of sixty or over, the priest) attacks him, he guards, slips and backs off; the strike input does nothing and he says so. In a fight that includes them he strikes, shoves or grabs only the others, and does not grab a covered person even to take a weapon. He refuses a send that would hurt one, in his own words. A rival's men are not bound. The line holds at the boxing club and in hold-ups.
 - Standard: Zero strikes, shoves or grabs by Tom on anyone covered, and zero sends that hurt one, in any fight, hold-up or send. Test: B: seeded fights and sends including covered people; any such strike fails.
 - Source: The description, section 10 (Tom's own line) and its conflicts note on hold-ups. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-09; DESCRIPTION-COPY-2 §9; DESIGN-ADDENDUM A41
-- Status: decided. Coverage row: RT-09. Conflicts settled: C-015.
+- Status: decided. Coverage row: RT-09. Conflicts settled: C-016.
 
 ### RT-10 Firearms as a verb
 
@@ -305,7 +305,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: There is no kick input and no finisher animation. Finishing a downed man is a decision in the quiet afterwards: with nobody else standing, Tom stands over him and holds strike for 2 s, and the game asks 'Finish him?' twice. With fists yes is a serious beating (hospital, days), never a death; with a weapon it is a killing. The camera turns away and the sound carries it. A body is dragged at 0.9 m/s, loaded into a boot in 4 s, or put in the dock from the quay edge in 3 s; a living man put in the water climbs out at the nearest ladder. A knife wounds (hospital 5 game days, blood on Tom, 8 hours if arrested) and kills only by the finishing decision or the fall rule.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-11 Test: B (bot), as written under RT2-11
 - Source: design pass 3, RT2-11 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 RT2-11; DESCRIPTION-COPY-2 §9; canon content rule
-- Status: decided. Coverage row: RT2-11. Conflicts settled: C-016.
+- Status: decided. Coverage row: RT2-11. Conflicts settled: C-017.
 
 ### RT2-12 The rare fatal fall
 
@@ -319,11 +319,11 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: Tom is robbed when beaten by men who rob for a living (a rival's men, the dockers by car two, a robber), never by a constable, at the boxing club, or by a debtor standing his ground. They take the paper money in his pocket (coins are left) and anything in his hand or under the coat they want (the envelope, a weapon, goods), never the Ledger, his coat or the office keys. The takers are named men with routines, whom Tom can front up, send men at, or let go; a taken envelope becomes a debt to the landing men of what it held, said by Ron the next day.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-13 Test: B (bot), as written under RT2-13
 - Source: design pass 3, RT2-13 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 RT2-13; DESCRIPTION-COPY-2 §9
-- Status: decided. Coverage row: RT2-13. Conflicts settled: C-017.
+- Status: decided. Coverage row: RT2-13. Conflicts settled: C-018.
 
 ### RT2-14 How guns reach Tom
 
-- How it works: Two kinds of gun, both of fictional make: a service revolver (six rounds) and a sawn-off shotgun (two). None in the Hook at the start. Mickey's revolver lies in his inner office desk under the real book, found once when the locked office opens on Sheila's trust. One seller, a deckhand off a coaster in on Tuesdays and Fridays, sells at the fish dock after midnight to a man introduced by Rita (rung 3) or Darren's tip: revolver £150, shotgun £90, rounds £10 a box. A gun can also be taken from a man who drew one or from a body, or stolen from a rival's lock-up on a raid. A gun moves the dial only when seen or heard.
+- How it works: Two kinds of gun, both of fictional make: a service revolver (six rounds) and a sawn-off shotgun (two). None in the Hook at the start. Mickey's revolver lies in his inner office desk under the real book, found once when the locked office opens on Sheila's trust (rung 2; see the gap on guns rare and late). One seller, a deckhand off a coaster in on Tuesdays and Fridays, sells at the fish dock after midnight to a man introduced by Rita (rung 3) or Darren's tip: revolver £150, shotgun £90, rounds £10 a box. A gun can also be taken from a man who drew one or from a body, or stolen from a rival's lock-up on a raid. A gun moves the dial only when seen or heard.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-14 Test: B (bot), as written under RT2-14
 - Source: design pass 3, RT2-14 (waits on a dated study). Designed in: DEFINITIONS design pass 3 RT2-14; DESCRIPTION-COPY-2 §27
 - Status: pending. Coverage row: RT2-14.
@@ -333,7 +333,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - How it works: At least five kinds of fighter: the boxer who guards, the brawler who rushes, the big man slow to drop, the man with a knife who keeps his distance, and the wiry one who slips and runs. No two fights in a row use the same mix.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §P17; DESIGN-ADDENDUM A29
-- Status: decided. Coverage row: FIT-P17. Conflicts settled: C-018.
+- Status: decided. Coverage row: FIT-P17. Conflicts settled: C-019.
 
 ### FIT-P18 Two against one stays deadly
 
@@ -373,7 +373,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - How it works: What makes him easier to know: running, the same coat as last night, blood (until washed with water in private), dirt, a weapon in the hand, wrong clothes for the door, bruises, a holdall, the car. The coat buys doubt about the face and none about the car: a deed from the car always names the car. He can shed a slot against witnesses who have not told yet: change the coat, use the second car or respray, a cap and scarf at night or a barber for a week, walk apart from Ron, get rid of the weapon; what gossip has carried is never undone.
 - Standard: ER-EYES-10: each give-away raises what a witness catches; a deed from the car always names the car Test: S: golden rows, one per give-away
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2 'What gives him away', ER-EYES-10; DESIGN-ADDENDUM A21; GTAVI-MAP GV-02; DESCRIPTION-COPY-2 §7
-- Status: decided. Coverage row: 1.4.4. Conflicts settled: C-019.
+- Status: decided. Coverage row: 1.4.4. Conflicts settled: C-020.
 
 ### 1.4.5 Reaching the witness
 
@@ -410,31 +410,31 @@ On foot and by car; every chase ends, caught or lost.
 
 ### 1.5.1 Fleeing on foot
 
-- How it works: Run from a constable and it is a chase through the Hook's back ways: ginnels, yards, bollarded lanes a car cannot follow, six vault places. It is lost once Tom has been unseen for 7 s, or the gap is over 70 m while he is unseen; it ends, caught or lost, within 90 real seconds. Tom runs 5.5 m/s, a constable 5.2 and vaults in 1.2 s against Tom's 0.8; a 90 s foot chase covers 450 to 540 m, about the ginnel and a street. After losing him the constable searches the last place seen for about a game hour.
-- Standard: Lost once unseen for 7 s or 70 m (DESIGN §8); ends within 90 real s (ER-POL-04); feel to be measured in reference games Test: S: 50 seeded chases end in 90 s; H: 'how did you lose him?'
-- Source: DESIGN §8; advisor 256 (waits on a dated study). Designed in: DESIGN §8 The beat, ER-POL-04; DESCRIPTION-COPY-2 §19; DEFINITIONS pass 3 §F03, §G1, §G4
-- Status: pending. Coverage row: 1.5.1.
+- How it works: Run from a constable and it is a chase through the Hook's back ways: ginnels, yards, bollarded lanes a car cannot follow, six vault places. There is no timer. It is lost once the constable has not seen Tom for 7 s, or the gap is over 70 m while he is out of sight (70 m applies on foot; a car chase uses 200 m), and otherwise ends caught, wrecked or at the soft edge. A good bot's foot chase has a median of 30 to 90 s (the ginnel and a street). Tom runs 5.5 m/s, a constable 5.2 and vaults in 1.2 s against Tom's 0.8. After losing him the constable searches the last-seen streets for 30 to 120 real s; seen inside it, the same chase resumes.
+- Standard: Lost once unseen for 7 s or 70 m (DESIGN §8); No chase ends while the pursuer can see Tom, except caught, wrecked or at the soft edge; lost car chase median 60 to 120 s, 90th percentile under 240 s; foot chase median 30 to 90 s; none past 240 s (design pass 4, DP5-C01 to C03); feel to be measured in reference games Test: S: 50 seeded chases, chase and search lengths logged (DP5-C01 to C03); H: 'how did you lose him?'
+- Source: DESIGN §8; advisor 256 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01 to C-03 and Run 5 second pass; design pass 3 F03, G1, G4; DESIGN s.8
+- Status: pending. Coverage row: 1.5.1. Conflicts settled: C-021, C-022.
 
 ### 1.5.2 Pursuing on foot
 
-- How it works: Somebody runs from Tom: a runner fare, a man from a fight, a witness heading for the phone. He runs at Tom's run speed less about 5% (5.2 against 5.5 m/s) by the routes of his own routine. From 10 m behind a runner on a straight Tom closes in about 33 s; a gap over about 25 m is closed only by a better line. A hand on the collar from within 1 m behind, then let go, talk or the lower rungs; breaking sight for 7 s or 70 m loses him and he goes home or to a friend. Every foot chase ends within 90 real seconds.
-- Standard: none yet: catch-up speeds and give-up rules to be measured Test: S: a runner can be caught by a direct line and lost by a slow one; ends within 90 s; addendum rules ER-PURSUE-01 to 02
-- Source: DESIGN §5 runner wrinkle, §7 'someone runs' (waits on a dated study). Designed in: DESIGN-ADDENDUM A3 (ER-PURSUE-01, -02); DESCRIPTION-COPY-2 §19; DEFINITIONS pass 3 §G4
-- Status: pending. Coverage row: 1.5.2.
+- How it works: Somebody runs from Tom: a runner fare, a man from a fight, a witness heading for the phone. He runs at Tom's run speed less about 5% (5.2 against 5.5 m/s) by the routes of his own routine. From 10 m behind a runner on a straight Tom closes in about 33 s; a gap over about 25 m is closed only by a better line. A hand on the collar from within 1 m behind, then let go, talk or the lower rungs; breaking sight for 7 s or 70 m loses him and he goes home or to a friend. As with every chase there is no timer; a foot chase is a median of 30 to 90 s.
+- Standard: none yet: catch-up speeds and give-up rules to be measured Test: S: a runner can be caught by a direct line and lost by a slow one; no timer, foot chase median 30 to 90 s (DP5-C02); addendum rules ER-PURSUE-01 to 02
+- Source: DESIGN §5 runner wrinkle, §7 'someone runs' (waits on a dated study). Designed in: DESIGN-ADDENDUM A3 (ER-PURSUE-01, -02); DEFINITIONS design pass 4 C-01, C-02; design pass 3 G4
+- Status: pending. Coverage row: 1.5.2. Conflicts settled: C-023.
 
 ### 1.5.3 Car chases
 
-- How it works: A hit-and-run seen by an officer, a refused stop or a car that saw the deed starts a chase with the patrol car's bell and lights. It ends caught or lost within 90 real seconds; a car chase is lost by 7 s unseen or a gap over 200 m while unseen, never by distance driven alone. The drivable loop is 1,528 m, a lap in 76 to 96 s at chase speed; a chase that reaches the soft edge ends there as lost. Caught is a stop or an arrest, never a game over, and nobody shoots from a moving car.
-- Standard: Refusing a stop is a chase that ends caught or lost (DESIGN §5); ER-POL-04 and ER-DRIVE-10 Test: S: seeded car chases end within 90 s; lost by breaking sight
-- Source: DESIGN §5, §8 (waits on a dated study). Designed in: DESIGN §5, §8 ER-POL-04; DESCRIPTION-COPY-2 §19; DEFINITIONS pass 3 §F03, §G1, §G3
-- Status: pending. Coverage row: 1.5.3. Conflicts settled: C-020.
+- How it works: A hit-and-run seen by an officer, a refused stop or a car that saw the deed starts a chase with the patrol car's bell and lights. There is no timer: it ends lost, caught, wrecked or at the soft edge. A car chase is lost by 7 s unseen or a gap over 200 m while unseen, never by distance driven alone. A good-driver bot's lost car chase has a median of 60 to 120 s and a 90th percentile under 240 s; none passes 4 real minutes. The drivable loop is 1,528 m, a lap in 76 to 96 s. Caught is a stop or an arrest, never a game over, and nobody shoots from a moving car.
+- Standard: Refusing a stop is a chase that ends caught or lost (DESIGN §5); ER-DRIVE-10; No chase ends while the pursuer can see Tom, except caught, wrecked or at the soft edge; lost car chase median 60 to 120 s, 90th percentile under 240 s; foot chase median 30 to 90 s; none past 240 s (design pass 4, DP5-C01 to C03) Test: S: 50 seeded chases, chase and search lengths logged (DP5-C01 to C03); lost by breaking sight
+- Source: DESIGN §5, §8 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01, C-02, Run 5 second pass 'Can the Hook and the docks hold the measured chases?'; design pass 3 F03, G1, G3; DESIGN s.5
+- Status: pending. Coverage row: 1.5.3. Conflicts settled: C-024, C-025, C-026.
 
 ### 1.5.4 Pursuers
 
-- How it works: A constable announces himself (footsteps, a torch, a cough) at least 3 s before he can challenge, and calls out first. He walks his beat at 1.1 m/s, runs 5.2 m/s, never sees through a wall, never knows where Tom went without seeing and never catches by a speed Tom cannot match on a straight. The patrol car is no faster than Tom's car. After a lost chase he searches the last place seen for about a game hour (half a real minute at most on the spot) and seeing Tom again starts a new chase.
+- How it works: A constable announces himself (footsteps, a torch, a cough) at least 3 s before he can challenge, and calls out first. He walks his beat at 1.1 m/s, runs 5.2 m/s, never sees through a wall, never knows where Tom went without seeing, and never catches by a speed Tom cannot match on a straight. The patrol car is no faster than Tom's car. He gives up only when sight is broken (7 s unseen, or the gap over 200 m by car or 70 m on foot): no chase ends while he can see Tom. After that he searches the last-seen streets for 30 to 120 real s, lamp on the turnings, then waits on that road for the night; seeing Tom inside the search resumes the same chase, after it starts a new one.
 - Standard: Police announce themselves 3 s before a challenge (ER-POL-02); give up when sight is broken per 1.5.1 Test: S: pursuer gives up at the rule; never cheats through walls
-- Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8 ER-POL-02; DESCRIPTION-COPY-2 §18, §19; DESIGN-ADDENDUM A3, A36; DEFINITIONS pass 3 §G2, §G4, §G5
-- Status: decided. Coverage row: 1.5.4.
+- Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN s.8 ER-POL-02; DESCRIPTION-COPY-2 s.18, s.19; DESIGN-ADDENDUM A3, A36; DEFINITIONS design pass 4 C-01, C-03; design pass 3 G2, G4, G5
+- Status: decided. Coverage row: 1.5.4. Conflicts settled: C-027.
 
 ### RT2-22 A foot chase caught by a constable
 
@@ -445,24 +445,45 @@ On foot and by car; every chase ends, caught or lost.
 
 ### FIT-G3 A chase at the soft edge
 
-- How it works: One rule for any chase, by car or on foot, that reaches the soft edge: it ends there as lost, the pursuer turns back, and Tom or his car goes out of the Hook and comes back as time passed (30 game minutes out and back, nothing on screen). The patrol waits on that road for the rest of the night, so Tom must come back past it. What follows depends on what the officer saw: a plate read within 18 m in light 0.7 or more is noted, and a deed he saw brings a constable to the office next morning at ten. Driving to the edge with no chase offers the six districts by landmark and comes back as time passed.
+- How it works: One rule for any chase, by car or on foot, that reaches the soft edge: it ends there as lost, the pursuer turns back, and Tom or his car goes out of the Hook and comes back as time passed (30 game minutes out and back, which is 30 real seconds at 60 s a game hour, nothing on screen). The patrol waits on that road for the rest of the night, so Tom must come back past it. A plate read within 18 m in light 0.7 or more is noted, and a deed he saw brings a constable to the office next morning at ten. Driving to the edge with no chase offers the six districts by landmark and comes back as time passed. Design pass 4 makes the edge one of the four chase endings (lost, caught, wrecked, edge).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §G3; FIT-CHECK F34
-- Status: decided. Coverage row: FIT-G3. Conflicts settled: C-021.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 G3; design pass 4 C-01; FIT-CHECK F34
+- Status: decided. Coverage row: FIT-G3. Conflicts settled: C-028.
 
 ### FIT-F03 What the 70 m of a lost chase means
 
-- How it works: A chase is lost when the pursuer has not seen Tom for 7 s, or the gap between pursuer and Tom is over 70 m while Tom is out of sight. For car chases the distance is 200 m, because a car covers 70 m in about 4 s and would end every car chase at the first corner. On foot the gap rarely reaches 70 m in 90 s, so foot chases are lost by the 7 s. Distance driven alone never loses a chase.
+- How it works: A chase is lost when the pursuer has not seen Tom for 7 s, or the gap is over 70 m while Tom is out of sight. For car chases the distance is 200 m, because a car covers 70 m in about 4 s. On foot the gap rarely reaches 70 m in a typical chase, so foot chases are mostly lost by the 7 s. Distance driven alone never loses a chase. Design pass 4 changes only the wording: 'inside 90 s' becomes 'in a typical chase', since no chase has a timer.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §F03; FIT-CHECK F03
-- Status: decided. Coverage row: FIT-F03. Conflicts settled: C-022.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 F03; design pass 4 C-01; FIT-CHECK F03
+- Status: decided. Coverage row: FIT-F03. Conflicts settled: C-029, C-030.
 
 ### FIT-F04 Chase length against the reference games (GTA IV in Mafia DE's place)
 
-- How it works: Named only; not designed beyond: a measurement. Time 10 police chases each in GTA V, RDR2 (lawmen), GTA VI footage (no story) and GTA IV (in Mafia DE's place, by his ruling), from start to caught or lost, to set whether the design's 90 real second limit fits what players expect (PC 2 h, block 4, 26 to 28 Nov).
+- How it works: A measurement, still open: time police chases in GTA V, RDR2 (lawmen), GTA VI footage (no story) and GTA IV (in Mafia DE's place), from start to caught or lost, to check the chase band against what players expect. The 19-chase sheet already gives leads (most 2 to 8 minutes; shortest escapes about 1 minute; floors at 7 to 67 s steps; long chases over-represented). Design pass 4 has dropped the 90 s limit this measurement was meant to test, so it now tests C-02's band (median 60 to 120 s car, 30 to 90 s foot, 90th percentile under 240 s). Five-sample lengths are due in PC block 1 and the feel block (23 to 27 Nov); the row closes in PC block 4, 26 to 28 Nov, about 2 h.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 'The fit check's open pairs' §F04; FIT-CHECK F04
-- Status: pending. Coverage row: FIT-F04.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 F04; design pass 4 'The chase against the chase sheet'; FIT-CHECK F04
+- Status: pending. Coverage row: FIT-F04. Conflicts settled: C-031.
+
+### DP5-C01 A chase has no timer (car and foot)
+
+- How it works: A chase has no timer, on foot or by car. It ends lost (7 s unseen, or the gap over 200 m by car or 70 m on foot while unseen), caught, wrecked, or at the soft edge, and no chase ends while the pursuer can see Tom except caught, wrecked or at the edge. One patrol car stays, so pressure comes from where he waits and what he knows. The experience rule 'every chase ends within 90 s' becomes 'every chase ends caught, lost, wrecked or at the edge, and none passes 4 real minutes'. No bot's chase may pass 240 s. Decided; his to overturn.
+- Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
+- Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 4 C-01 and its Standard; car-chases-sheet; g5-heat-samples; FIT-CHECK F02 to F04, P13
+- Status: decided. Coverage row: DP5-C01. Conflicts settled: C-032.
+
+### DP5-C02 Chase length on the Hook's loops
+
+- How it works: On the Hook's loops a good-driver bot's lost car chase has a median of 60 to 120 s and a 90th percentile under 240 s (about two and a half laps of the 1,528 m loop); a foot chase has a median of 30 to 90 s. This is below the sheet's 2 to 8 minutes on purpose: those are uploaders' picks at three stars and more on maps many times the Hook. At chase speed (16 to 20 m/s) 2 minutes cover 1.3 to 1.6 laps and 4 minutes 2.5 to 3.1 laps; past about 3 minutes every road has been driven twice. A bot that drives straight and never breaks sight is caught or reaches an edge, never chased past 4 minutes.
+- Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
+- Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-02 and Run 5 second pass; car-chases-sheet; g5-heat-samples
+- Status: pending. Coverage row: DP5-C02. Conflicts settled: C-033.
+
+### DP5-C03 The search after a chase is lost
+
+- How it works: After a chase is lost the patrol searches the last-seen streets for 30 to 120 real seconds, slowly, lamp on the turnings, then waits on that road for the rest of the night. Seen again inside the search, the same chase resumes with what he already knows; seen after it, a new chase starts. The band is a judgement between the search leads (about 20 s, 50 s, 68 s, once at least 6 minutes) and GTA VI's solid whole wanted spell (about 27 to 122 s, median about 47 s, four of five samples from one player).
+- Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
+- Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-03; g5-heat-samples; being-seen sheets
+- Status: pending. Coverage row: DP5-C03. Conflicts settled: C-034.
 
 ## 1.6 Jobs with the hands
 
@@ -485,10 +506,10 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 
 ### 1.6.3 Lifts and the hot mark
 
-- How it works: Goods carry a hot mark that fades with value and distance, and the owner never forgets them: he recognises his own goods in a shop window. Rita's back room fences from rung 2, refuses or lowballs hot goods, and Wayne's pawn takes goods too. A haggle is three offers at most; the buyer's answers come from his purse, how hot the goods are and how he regards Tom. Notes from a till are hot for a week. The fence's rate is about 0.4 in the design; the 1990 research says about a third.
-- Standard: Hot mark fades with value and distance; owner never forgets; fence about 0.4 of honest price (lead) Test: S: golden rows for the mark; the owner recognises the goods
+- How it works: Goods carry a hot mark that fades with value and distance, and the owner never forgets them: he recognises his own goods in a shop window. Rita's back room fences from rung 2, refuses or lowballs hot goods, and Wayne's pawn takes goods too. A haggle is three offers at most; the buyer's answers come from his purse, how hot the goods are and how he regards Tom. Notes from a till are hot for a week. The fence's rate is about a third of retail (0.33; 0.2 for jewellery up to 0.4 for a video recorder), from the 1990 research (CLOUD-FIGURES B3).
+- Standard: Hot mark fades with value and distance; owner never forgets; fence about 0.33 of retail (CLOUD-FIGURES B3) Test: S: golden rows for the mark; the owner recognises the goods
 - Source: DESIGN §4 Lifts (no reference figure yet). Designed in: DESIGN §4 Lifts; DESCRIPTION-COPY-2 §14; DESIGN-ADDENDUM A41; CLOUD-FIGURES B3
-- Status: unmeasured. Coverage row: 1.6.3. Conflicts settled: C-023.
+- Status: unmeasured. Coverage row: 1.6.3. Conflicts settled: C-035.
 
 ### 1.6.4 Fronting up
 
@@ -534,7 +555,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 
 ### 1.6.10 Tom's wardrobe
 
-- How it works: Three outfits across the game (as he arrived, a decent jacket, a good overcoat) plus a dark coat for nights, each changing how strangers speak to him and which doors open. A second coat bought after a deed breaks the mark rung for anyone who saw the first; a barber changes the look for a week; a scarf up and a hat down at night break the face rung but are a mark by day. Prices: second-hand coat £15, decent jacket £45, good overcoat £90, barber £4 (to be checked against 1990 sources). Clothes are his to approve in the game's camera.
+- How it works: Three outfits across the game (as he arrived, a decent jacket, a good overcoat) plus a dark coat for nights, each changing how strangers speak to him and which doors open. A second coat bought after a deed breaks the mark rung for witnesses who saw the first and have not yet told anyone (GV-02); what gossip has carried is never undone; a barber changes the look for a week; a scarf up and a hat down at night break the face rung but are a mark by day. Prices: second-hand coat £15, decent jacket £45, good overcoat £90, barber £4 (to be checked against 1990 sources). Clothes are his to approve in the game's camera.
 - Standard: Three outfits across the game each changing how strangers speak and which doors open (DESIGN §14); his to approve in the game's camera Test: S: a change of coat lowers a witness's mark rung; H: strangers greet differently; addendum rules ER-COAT-01
 - Source: DESIGN §14; rulings 29 Sep, 3 Oct (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §14; DESIGN-ADDENDUM A21; DESCRIPTION-COPY-2 §26; DEFINITIONS pass 3 §G8; RULINGS 29 Sep, 3 Oct (clothes)
 - Status: decided. Coverage row: 1.6.10.
@@ -566,6 +587,13 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: rule: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13) (reference game). Designed in: DESIGN-ADDENDUM A35; DESCRIPTION-COPY-2 §22
 - Status: measured. Coverage row: 1.6.14.
+
+
+### 1.6.15 Hold-ups of shops and people
+- How it works: Never in Act I: possible from rung 2 and only through the escalation dial, with a carried weapon (bat, knife) from dial state 0 and with a gun only once a gun has reached Tom through a person. Only places with a till and people with a purse: the six shops of Quay Street, the pawn, the chandlery, the Harbour Office pay window on a Friday, a named adult carrying takings to the bank; never Ada, the priest, anyone sixty or over, and no children anywhere. It starts on the held weapon key with the weapon out (rung 6 of the ladder); the keeper answers by his temper; Tom can wait (the till in about 8 s, to measure), threaten again, or go. The take is what the till holds that hour, hot for a week. Always witnessed at face distance, always reported or told (Rita, Wayne and Hal tell their own people), a robbery (12 hours if taken), DS Ellis up one stage; said to his face within a game day; that shop refuses him for good; at most one a week per street before the shops shut early, never the same place twice; never a game over.
+- Standard: ER-HOLDUP-01 to 05: none before rung 2, none with a gun before one reached Tom through a person; every one witnessed at face distance, reported or told within a game hour, said to his face within a game day; the take never above the till and balanced in the flows ledger; Tom in control within 2 real minutes with a Ledger line; nobody under the content rule and no place twice. Test: S: seeded hold-ups, the chain printed; the target list.
+- Source: his ruling of 20 Nov (hold-ups: shops and people, rare and late through the dial; loud, witnessed, remembered, heavily punished, never a game over); DESIGN-ADDENDUM A41 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A41; RULINGS 20 Nov.
+- Status: decided. Coverage row: none yet (no parts-tree part or coverage.json row; asked of the design proof in BLUEPRINT-11).
 
 ### RT2-19 The phone as a verb
 
