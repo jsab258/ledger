@@ -49,3 +49,4 @@ Next run starts here (runs 1 and 2's lists still hold):
 3. GTA V's teardown into 5.11 as a column; the PC measuring's counts into GD-02, FIT-G9, DP5-C02 and C03.
 4. His answers to R1 to R13 and the open questions from the advisor rows; the story pick.
 5. Watch for duplicate prep sections: the preparation session also writes a voices hookup (TECH-PLAN section 10); 8.12 follows it.
+- 23 Nov 2026, landscape job: production/research/lane/ai-games-landscape/LESSONS-2026-11-24.md (with PROJECTS.md) for the keeper and the design proof: what about 25 other AI-built games teach; feeds his dates question of 24 Nov (when the one-shot starts; when the Unreal move is tested).
