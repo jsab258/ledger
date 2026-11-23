@@ -43,7 +43,7 @@ The minimal screen.
 - How it works: There is no screen clock. N raises Tom's watch and the hour shows for 2 s; the clock over the Harbour Board and the office clock tell it, and the chapel bell strikes the hours by day. The hour can be known within 3 s anywhere. A game hour is 60 real seconds, so a game day is 24 real minutes.
 - Standard: The hour known within 3 s anywhere (ER-TIME-01); no timers on screen (ruling 23 Sep) Test: S: the watch glance; H: 'what time is it?'; addendum rules ER-TIME-01
 - Source: rulings; addendum (his ruling or canon). Designed in: ADDENDUM §A31; ONE-SHOT-PROMPT §8; RULINGS 21 Nov; DEFINITIONS-2026-11-21 The clock (version B); PARTS-TREE 6.1.5
-- Status: measured. Coverage row: 6.1.5. Conflicts settled: C-103.
+- Status: measured. Coverage row: 6.1.5. Conflicts settled: C-120.
 
 ## 6.2 The Ledger notebook
 
@@ -76,7 +76,7 @@ Tom's notebook of people and events: the one place he sees where he stands.
 - How it works: Money is said in words, for example 'Thirty-one pounds in your pocket. The tin has about forty. Rent, eighteen, Friday. Darren still owes twelve.' He always knows what he has and what is owed by Friday; Tom starts with 23.50 and the rent is 18 each Friday. A week of Tom's own fares pays it; doing nothing misses it.
 - Standard: ER-MONEY-02 Test: H: asked what he has
 - Source: DESIGN §9 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §9, §10 ER-MONEY-02; DESCRIPTION-2 §20; DEFINITIONS-2026-11-21 §G8; CLOUD-FIGURES-2026-11-21 B1
-- Status: decided. Coverage row: 6.2.4. Conflicts settled: C-104.
+- Status: decided. Coverage row: 6.2.4. Conflicts settled: C-121.
 
 ### 6.2.5 Tom's reading
 
@@ -150,7 +150,7 @@ Typing, suggested lines, the game's own decision lines, Leave always there.
 - How it works: Each typed line is read into one act: question, agree, refuse, offer, threat, promise, claim, insult, small talk or leave. An offer's amount is read exactly ('a tenner' is 10 pounds), an offer above what Tom carries fails in character, and offers, threats, promises and lies are acts the hearer remembers. The bar is a 300-line labelled set (period, modern, terse and misspelt; 65 hard): the reader's act matches the label or an allowed alternative on at least 95% of all lines and 90% of hard lines. Two blind human labellers agreed 295 of 300 (98.3%).
 - Standard: On the labelled set typed-talk/RT14-SET-2026-11-21.jsonl (300 lines, period, modern, terse and misspelt, 66 hard), the reader's act matches the label or an allowed alternative on at least 95% of lines and 90% of hard lines; every amount read exactly; every offer, threat, promise and lie enters the hearer's memory. Test: A labelled set of 300 lines (period and modern phrasing) run through the reader; memory checked after each.
 - Source: typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28 (real-world figure or published standard). Designed in: DEFINITIONS-2026-11-21 §RT-14; typed-talk/README.md and agreement-2026-11-21.json; DESCRIPTION-2 §28
-- Status: measured. Coverage row: RT-14. Conflicts settled: C-105.
+- Status: measured. Coverage row: RT-14. Conflicts settled: C-122.
 
 ## 6.8 Photo mode
 
@@ -162,7 +162,7 @@ Optional presentation: a free camera to take pictures, off the play path.
 - How it works: From the pause menu only, Photograph freezes the town and frees the camera within 10 m of Tom and never through a wall, body or car. All interface is hidden; the player can tilt, roll, set the lens from 24 to 85 mm, focus and exposure, and save a picture at the window's size; no posing, filters, stickers or text. Leaving returns the frozen moment exactly (save hash equal).
 - Standard: (1) Reachable only from pause; (2) camera never more than 10 m from Tom and never inside geometry; (3) no interface element in a saved picture; (4) the town state after leaving equals the state before (save hash). Test: B (bot): 200 random photo-mode sessions with clip detector and before and after save hashes; S: a saved picture has no interface pixel.
 - Source: Ruling 23 Sep (optional presentation allowed); the camera rule; GTA V and RDR2 photo modes as the common PC expectation [I: widely known, not measured here]. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS-2026-11-21 §6.8; DESCRIPTION-2 §35; RULINGS 23 Sep (genre)
-- Status: decided. Coverage row: 6.8. Conflicts settled: C-106.
+- Status: decided. Coverage row: 6.8. Conflicts settled: C-123.
 
 ## 6.9 Finding the way
 
