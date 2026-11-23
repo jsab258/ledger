@@ -16,6 +16,7 @@ Smooth play.
 - Standard: 6 GB card line is the game alone (24 Oct); spare card time 1.7 ms Test: S: budget table per build
 - Source: RULINGS 24 Oct; study 12 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 23 Sep, 24 Oct; DESIGN §17 (ER-PERF-01); Study 12 (production/research/aaa-reference/studies/12-tech-budgets.md); RECS-BY-PHASE s12-03
 - Status: outside. Coverage row: 8.1.1. Conflicts settled: C-167.
+- Prior research: packaged scale ladder 17 Nov (DECISIONS 17 Nov 08:03): about 100 MB of card per street-length, +0.2 ms over nine lengths, median 14.0 to 14.3 ms, peak 4,920 to 4,955 MB at ten lengths, slowest 1% 22.75 ms, no people; 21 Oct walk: worst frame 30.3 ms, none of 1,800 over 33.3; game alone 4.6 to 5.4 GB.
 
 ### 8.1.2 Streaming and loading
 
@@ -23,6 +24,7 @@ Smooth play.
 - Standard: none yet: load and hitch limits to be set Test: S: hitch count on a scripted drive
 - Source: study 04, 12 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: Study 4 (04-street-world.md); DEFINITIONS G3; DESIGN §17 (ER-PERF-01); COVERAGE row 8.1.2
 - Status: outside. Coverage row: 8.1.2.
+- Prior research: research/street-scale-test and the 17 Nov ladder answer frame and card per street-length but not streaming hitches; production/cloud-week research 1d: fifteen glass captures drove the 99th percentile to 46.8 ms.
 
 ### 8.1.3 Player PCs and shader stutter
 
@@ -30,6 +32,7 @@ Smooth play.
 - Standard: Epic's PSO precaching for shader stutter; minimum spec to be set Test: S: hitch count on first run of a clean install
 - Source: Epic tech blog on shader stutter (red team source) (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: COVERAGE row 8.1.3; frame-headroom/PSO-AND-VRAM-METHOD-2026-10-23; production/friends-build/MAP.md (basics 2 to 4); Study 12
 - Status: outside. Coverage row: 8.1.3. Conflicts settled: C-168.
+- Prior research: research/hardware-floor: recommended minimum 12 GB card, 16 GB RAM, 6 cores, SSD, 1080p 30; about 45% of Steam players have 12 GB or more, 32% 16 GB; research/frame-headroom: upscaler High 1.0 to 1.2 ms against Highest 2.6 to 3.1.
 
 ## 8.2 Stability and saves that never break
 
@@ -42,6 +45,7 @@ No crashes, no corrupt saves, long sessions safe.
 - Standard: (1) Nothing leaves the PC without a yes, and nothing is read or sent before it; (2) the question says what is sent, why, to whom and how long it is kept; No and Never as easy as Yes and Always; withdrawable in Settings; (3) the report contains no typed talk, no save unless ticked, no serial, machine id, user name or named path; (4) an unsent local report is deleted after 30 days; (5) the game never crashes while writing its own report (a forced crash test). Test: B: forced crashes x 50 with traffic capture; no outbound packet without consent; report contents checked against the list.
 - Source: PRIVACY-CHECK-2026-11-21.md: ICO storage and access guidance (13 May, 29 Apr 2026), ICO blog 11 Sep 2025; consent route as fault reports are not strictly necessary (real-world figure or published standard). Designed in: DEFINITIONS 8.2.1; PRIVACY-CHECK-2026-11-21 (the four points added); GAME-DESCRIPTION-COPY-2 §35
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 8.2.1. Conflicts settled: C-169.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-07 the panel writes each tester's last stage and reason; decided. None measured.
 
 ### GV-05 Bugs at release
 
@@ -73,6 +77,7 @@ Text, hearing, motor and cognition options.
 - Standard: ER-SND-01's information reachable without sound, never as a meter of others' minds (D33) Test: H: ER-EYES-01 with sound off and the option on; addendum rules ER-ASSIST-01
 - Source: DESIGN §17; D33 (his ruling or canon). Designed in: DESIGN-ADDENDUM §A6 (ER-ASSIST-01); GAME-DESCRIPTION-COPY-2 §3; DESIGN §17 (ER-SND-01); DESIGN-ADDENDUM §A6 (D33)
 - Status: ruled (his ruling or canon). Coverage row: 8.4.1.
+- Prep: SOUND-PLAN SND-26: with the assist on, a word for each of four cues (Tom's loud noise, a street gone quiet, a shout, a car heard) and none when off; it shows what Tom hears, never what anyone knows.
 
 ### AX-01 Text and interface size, contrast and font
 
@@ -174,11 +179,12 @@ The server relay, the key never shipped, each copy's allowance, a spending stop,
 - Standard: Offline: the written street carries on (ruling 23 Sep); allowance above a playthrough's measured cost (24 Sep) Test: the game played whole with the service off
 - Source: RULINGS 23, 24 Sep (his ruling or canon). Designed in: RULINGS 23, 24 Sep, 4 Oct; GAME-DESCRIPTION-COPY-2 §28; friends-build MAP; store/steam-ai-disclosure.md
 - Status: ruled (his ruling or canon). Coverage row: 8.6.1. Conflicts settled: C-177.
+- Prior research: research/llm-inference-economics: 2 Nov measured about 0.12 dollars an hour at 15 replies (0.0073 to 0.0080 a line), 2.4 times the 0.05 target; research/runtime-ai-business: at a placeholder 14 cents an hour a 40-hour allowance costs at most 5.60 dollars; research/prompt-caching: Haiku 4.5 will not cache under 4,096 tokens.
 
 ## 8.7 Local models on the card
 
 Voice and fallback talk on the player's card, re-tested every three months.
-
+- Prior research: research/local-models: on 299 fresh lines the paid model picks the right action 259 (286 with worked examples), best free model 237 (Ministral 3 3B); retested about every three months (RULINGS 28 Oct); research/conversation-model-capability: constrained decoding 3.6 to 8.2 times slower.
 
 ### 8.7 Local models on the card
 
@@ -190,7 +196,7 @@ Voice and fallback talk on the player's card, re-tested every three months.
 ## 8.8 Runtime content guards
 
 The content rule on live speech and crowd generation.
-
+- Prior research: research/cast-cards: with the rule in the prompt, replies avoid the drinking offer; research/holding-a-large-script: three gates are word lists; research/ethics-and-reception: live content guard now a ruling (24 and 29 Sep).
 
 ### 8.8 Runtime content guards
 
@@ -233,34 +239,39 @@ Bodies, props, cars and doors colliding believably; ragdoll blended with authore
 
 ## 8.11 The browser build: budgets, step and save
 
-Added 23 Nov (keeper run 2) from TECH-PLAN.md of 23 Nov (the blueprint preparation's tech plan, sections 1, 4, 5 and 6; not yet through its fresh reviewer, so a later run checks it). 8.1.1 to 8.1.3 stay the Unreal build's budgets; these are the browser build's, which the one-shot and the loops build first.
+Added 23 Nov (keeper run 2) from TECH-PLAN.md of 23 Nov (the blueprint preparation's tech plan, sections 1, 4, 5 and 6; since checked by a fresh reviewer (LOG.md, run 1: 29 systems, dead rules 217, crowd band rescaled, unsourced targets marked proposed here)). 8.1.1 to 8.1.3 stay the Unreal build's budgets; these are the browser build's, which the one-shot and the loops build first.
 
 ### 8.11.1 Browser build budgets
-- How it works: each budget is a row the gate reads; a build over by more than half fails (against a frozen baseline). Frame 16.7 ms at the 95th percentile, never over 33 ms, on his PC (RX 6700, Chrome, High, a 2560 by 1440 class window, the browser stage's choice; 3440 by 1440 stays the ruling's target for the Unreal build) with rain, night, the busiest view and, once the loops add it, the Pocket helper speaking; logic per frame median 1 ms and 99.9th percentile 4 ms; the town step at most 2 ms a frame; draw calls 1,000 and triangles 1.5 million in the busiest view; page open to title 5 s; new game to control 20 s with the ferry shot and under 2 s after it; a week-7 save loaded to control in 5 s; script memory 1 GB at week 7; the save under 200,000 characters at week 7. Frame times are read with PresentMon (allowlist item 12); software frame times on the cloud machine cannot judge feel, so feel is checked once a loop on his PC.
+- How it works: each budget is a row the gate reads; a build fails at the budget itself, and separately at 1.5 times slower than the accepted baseline (frozen, changed only with a reviewer's line). Frame median 16.7 ms, worst 25 ms, never over 33.3 ms (Study 12; TECH-PLAN section 6), on his PC (RX 6700, Chrome, High, 3440 by 1440, as the ruling of 23 Sep and TECH-PLAN section 6 say) with rain, night, the busiest view and, once the loops add it, the Pocket helper speaking; logic per frame median 1 ms and 99.9th percentile 4 ms; the town step at most 2 ms a frame; draw calls 1,000 and triangles 1.5 million in the busiest view; page open to title 5 s; new game to control 20 s with the ferry shot and under 2 s after it; a week-7 save loaded to control in 5 s; script memory 1 GB at week 7; the save under 200,000 characters at week 7. Frame times are read with PresentMon (allowlist item 12); software frame times on the cloud machine cannot judge feel, so feel is checked once a loop on his PC.
 - Today (measured on the prototype in the cloud, 23 Nov, software renderer on 2 cores, so a floor): page to title 3.2 s; new game to control 9.3 s (ferry shot 20 s unskipped); logic tick median 0.10 ms, 95th 0.40, 99th 6.6, 99.9th 20.9, worst 71.6 ms over 21,600 ticks; 38 people alive (28 named); save 24,000 to 32,000 characters written in 0.7 ms. The spikes, not the average, are the fault; their cause is untraced.
 - Standard: every row above inside its budget on his PC; logic 99.9th percentile under 4 ms before any story is built. Test: S: LEDGER.perf() over 600 ticks; PresentMon on his PC once a loop, with the helper speaking once it exists.
 - Source: TECH-PLAN section 6 (targets) and section 1 (today); ruling 23 Sep (60 fps) for the frame. Status: decided (targets). The budgets keep 25 to 35 people on screen as headroom, as design pass 4 says; the crowd built is the blueprint's (GD-02 and FIT-G9; C-200).
+- Prep: TECH-PLAN section 6: each budget row is read by the gate; the gate's 8 ms logic limit (TICK_BUDGET_MS) is replaced by the 4 ms 99.9th percentile row; the 1.5 times slower check (SLOWER_FAILS) stays against a frozen baseline; only the frame figure is Unreal-derived (Study 12), every other row is marked proposed here.
 
 ### 8.11.2 Fixed step and the job queue
 - How it works: logic runs at a fixed 1/60 s step with an accumulator, at most 5 steps a frame; the cab keeps 120 steps a second; the renderer interpolates and never writes game state; heavy work (the town's hourly call, path planning for more than 3 people, gossip) is spread by a job queue at 2 ms a frame. Walking and every timing are independent of the frame rate.
 - Standard: identical outcomes at 30, 60 and 144 frames a second on the same seed. Test: S: seeded run at three frame rates, state compared. Source: TECH-PLAN section 5; the description section 40. Status: decided.
+- Prep: TECH-PLAN sections 2, 8, 9: layer rules (data, rule pieces, town, systems, presentation), no teleports and no pinned people (position-jump guard over 3 m), one clock (60 s a game hour, prototype still 45), seeded draws, FAULTS empty at each story's end, dead rules from 217 to zero, test door LEDGER.screen(), mix(), perf().
 
 ### 8.11.3 Browser save format
 - How it works: one save object with a version number (4 today), kept in browser storage and the account database in 150,000-character chunks, the newer by time stamp winning; autosave every 75 s; three rotating autosaves plus one at each act start, never overwriting the only good save; a converter from version 5 on (version 4 and older refused); nothing derived is saved. Save and reload give the same week and the same next 10 minutes. AX-07's eight manual slots with pictures stand (C-201).
 - Standard: under 200,000 characters at week 7; reload deterministic for 10 minutes; a tab closed mid-write never loses the last good save. Test: S: story saves; 100 writes interrupted by closing the tab. Source: TECH-PLAN section 4; AX-07. Status: decided.
+- Prep: TECH-PLAN section 4: converter from save version 5 on with a test loading every story save; saves never hold derived state; save size 24,000 to 32,000 characters on day one, the town alone about 17,000.
 
 ## 8.12 Live voices: the hookup
 
 Added 23 Nov (keeper run 2) from his ruling of 20 and 21 Nov ("live voices: his PC's Pocket voices via a local helper, in the loops, hookup in the blueprint; nothing browser-only"), the voice rulings (24 Sep to 19 Nov), the allowlist's item 16, TECH-PLAN section 3 and 8, the existing helper (tools/voice-live/pocket-server.py on wip) and the voice-latency research (production/research/voice-latency, 21 Oct to 7 Nov); TECH-PLAN gives only the person record's voice id (section 3). Built in the loops once the browser evening holds, never in the one-shot.
 
 ### 8.12.1 What runs where
-- How it works: the game page in the browser holds the person cards, the written line records, the claim check and the content gate, the subtitles and the sound mix. Live replies come from the talk service; its route in the browser is a gap: for friends' evenings his key capped at $5 an evening with no relay (ruling of 4 Oct), at release the studio's server (ruling of 24 Sep); the key is never shipped. A small local helper on his PC turns text into speech with Kyutai's Pocket TTS (100 million parameters, on the processor, so the graphics card stays the game's), at below-normal priority on four threads (the Unreal measure of 21 Oct, on six threads at below-normal priority: slowest 1 per cent of frames 20.6 ms with it speaking; the four-thread runs of 23 Oct gave worst frames of 30.1 and 32.9 ms). Voices: Sheila p267, Ron p227, Darren p286 (Newcastle), Agar p226, the dispatcher p280, each from a VCTK reference clip; Danny, June and Father Walsh only after his yes (Q8). Tom is never voiced: his lines are text. The street's unprompted lines are written ahead and checked once.
+- How it works: the game page in the browser holds the person cards, the written line records, the subtitles and the sound mix; the claim check and the content gate run in the talk program inside the local helper (TECH-PLAN section 10, which names the existing program; C-249). Live replies come from the talk service; its route in the browser is a gap: for friends' evenings his key capped at $5 an evening with no relay (ruling of 4 Oct), at release the studio's server (ruling of 24 Sep); the key is never shipped. A small local helper on his PC turns text into speech with Kyutai's Pocket TTS (100 million parameters, on the processor, so the graphics card stays the game's), at below-normal priority on four threads (the Unreal measure of 21 Oct, on six threads at below-normal priority: slowest 1 per cent of frames 20.6 ms with it speaking; the four-thread runs of 23 Oct gave worst frames of 30.1 and 32.9 ms). Voices: Sheila p267, Ron p227, Darren p286 (Newcastle), Agar p226, the dispatcher p280, each from a VCTK reference clip; Danny, June and Father Walsh only after his yes (Q8). Tom is never voiced: his lines are text. The street's unprompted lines are written ahead and checked once.
 - Standard: nothing browser-only: the helper is the same program the Unreal build uses; the game plays whole with the helper absent. Test: S: helper off, helper killed mid-line, helper slow (stand-in), helper fast. Source: rulings 20 and 21 Nov, 3 Oct, 26 and 27 Oct, 19 Nov; pocket-server.py. Status: ruled (the hookup's place and cast); the transport is a gap.
+- Prep: TECH-PLAN section 10: one helper process on 127.0.0.1 starts the talk program (key, cap, claim check; key never in the browser) and the Pocket server, and also serves the game from a local folder when live voices are on, because a published page may not be allowed to reach a program on his computer; first test is whether it can. Page and helper talk over one WebSocket.
 
 ### 8.12.2 How one line flows
-- How it works: the player speaks to a named person; the clock stops during talk; the AI notice shows before the first talk. A short thinking sound with a glance plays at once and is cut when the answer's first sound starts (ruling 28 Sep; off in the Unreal build since 7 Oct and put to him as R3). The text comes from the talk service, checked by the content gate and the claim check (the first sentence streamed and checked ahead of the rest), or from a written line record as the fall-back. The helper takes one request (id, who, text), one sentence at a time, and answers in pieces: the first 0.16 s of sound at once, then every half second. The subtitle appears only with its audio and stays the line plus 0.3 s; the mouth follows the voice's loudness (the page's sound mix reports each sound's loudness at the listener).
+- How it works: the player speaks to a named person; the clock stops during talk; the AI notice shows before the first talk. A short thinking sound with a glance plays at once and is cut when the answer's first sound starts (ruling 28 Sep; off in the Unreal build since 7 Oct and put to him as R3). The text comes from the talk service, checked by the content gate and the claim check (the first sentence streamed and checked ahead of the rest), or from a written line record as the fall-back. The page sends the player's line, who is spoken to and the scene over one WebSocket on 127.0.0.1; the helper (which also serves the game from a local folder when live voices are on) runs the talk program and Pocket and streams back the reply's text, held by the page until its audio plays (no subtitle before its audio, ruling 23 Sep), then the voice in short chunks of raw audio played through Web Audio (TECH-PLAN section 10; C-249). Inside, Pocket speaks one sentence at a time, the first 0.16 s of sound at once, then every half second (pocket-server.py). The subtitle appears only with its audio and stays the line plus 0.3 s; the mouth follows the voice's loudness (the page's sound mix reports each sound's loudness at the listener).
 - Standard: a reply heard within 2 s (median, a newcomer's real questions) or the written line plays; a line slower than about 8 s is dropped with an in-character brush-off and a small sign; no subtitle without audio. Test: S: 30 newcomer questions per person timed from line sent to first audible sample, the helper's own part timed apart; subtitle log over a 2-hour soak; LEDGER.screen() and LEDGER.mix(). Source: rulings 23 Sep, 28 Sep, 1 Oct, 7 to 28 Oct; 3.6.1, 5.6.3, 8.6.1, AX-02. Status: ruled (bars); the browser figures are unmeasured.
 - Today (Unreal build, not the browser): Pocket's first sound 0.18 to 0.46 s after the text; with the real talk service the median first sound 2.02 s, 14 of 30 under 2.0 s, 90th percentile 6.04 s, worst 8.22 s, 2 of 30 timed out (run F, 4 Nov); the runs of 7 Nov (same measure) gave cached medians of 2.04, 1.67 and 1.58 s and 1.78 s over 90 lines pooled, with 15 at 4 s or more. The voice is not the delay; the reply check is (a first sentence refused and written again, 4 to 9 s).
+- Prep: TECH-PLAN section 10 delay budget to first audible word against 2.0 s median: page to helper 0.02, first sentence 1.00, claim check 0.30, Pocket first audio 0.20, helper to sound card 0.10, margin 0.38. Six stamps: sent, first sentence written, check cleared, first audio made, first audio sent (helper) and first audio played (page).
 
 ### 8.12.3 Watermark, consent and notices
 - How it works: generated speech keeps a watermark (D50; ruling 24 and 25 Sep); the Pocket helper has no watermark code today (audit of 19 Nov), so the means is open. The consent risk of VCTK voices for game characters is his, accepted in writing (his pick of 19 Nov, 10:31; allowlist item 16). Credits carry Kyutai (CC BY 4.0) and VCTK with its licence and a note that the recordings were modified. The AI notice, a way to report any line and Steam's AI disclosure stand (ruling 24 Sep). Nothing leaves the PC for speech: the helper is local.
