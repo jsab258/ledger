@@ -16,7 +16,7 @@ What ran: the six play stories that exist (S01 to S06) as in-game tests on the c
 | 4 | lines-repeat (people repeat one line) | nobody | stories check no repeats; consequence checker's own run hears 11 to 15 lines; its run over a played session flagged only a pre-existing repeat; AI players did not name it |
 | 5 | witness-forgets-on-load | machine (save and reload give back the same week) | stories: S06 passed from the loaded save |
 | 6 | cab-sticks-after-post | clumsy (indirect: later crashes "not reached"); stories S02 probable (the stop beside the parked car failed) | |
-| 7 | pause-menu-swallows-keys | clumsy (pause and resume by Escape; back to play after key spam); AI clumsy player at minute 1.4 | the AI clumsy player was then trapped and tested nothing else |
+| 7 | pause-menu-swallows-keys | clumsy (pause and resume by Escape; back to play after key spam); AI clumsy player at minute 1.4; stories (S01 on G2: "the AI notice never shows again", found by the fresh review) | the AI clumsy player was then trapped and tested nothing else |
 | 8 | empty-night-street | nobody | no checker counts people; the explorer wrote only "a dark side street with nothing in it" |
 | 9 | debts-not-saved | nobody | the machine compares a save with a re-save, both without the debt book; its idle day changes no debt |
 | 10 | heads-turn-in-data-only (a check that tests the wrong thing) | nobody | S01 reads the mind's look value, not the drawn head |
@@ -28,7 +28,7 @@ What ran: the six play stories that exist (S01 to S06) as in-game tests on the c
 | 16 | count-doubles-money | stories (S06: the flows ledger does not balance, every branch) | |
 | 17 | bollard-not-solid | nobody | clumsy reads the props from the repository's source, not the build's, and passes Tom at 0.33 m (0.64 on the clean build) |
 
-Caught: 7 of 17 (41%). By checker: stories 3 (4 with S02's probable); machine 2; clumsy 2; consequence checker 0; AI players 1 (the Sonnet clumsy player); Opus player types 0.
+Caught: 7 of 17 (41%). By checker: stories 4 (5 with S02's probable; the pause menu's S01 line added after the fresh review); machine 2; clumsy 2; consequence checker 0; AI players 1 (the Sonnet clumsy player); Opus player types 0.
 
 ## False alarms and noise on the clean build
 

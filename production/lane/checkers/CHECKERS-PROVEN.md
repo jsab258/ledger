@@ -4,13 +4,13 @@
 
 ## In plain words
 
-Before the mend the checkers caught 7 of 17 planted faults (41%). Mended, they caught 11 of those 17 (65%). On 14 fresh faults planted after the mend they caught 4 (29%); fixes that round 2 showed the mends needed, made afterwards and not counted, bring that to 6 of 14. They probed what the mend did not aim at: plan by 29%.
+Before the mend the checkers caught 7 of 17 planted faults (41%). Mended, they caught 11 of those 17 (65%). On 14 fresh faults planted after the mend they caught 4 for certain (29%) and 2 more probably; later fixes, not counted, add 2. The fresh faults were aimed where the mend was not: plan on about a third.
 
-Per checker, round 1 then round 2: stories 3 of 17, 3 of 14; new machine checks 6 of 17, 1 of 14 (3 fixed); gate machine checks 2, 0; clumsy run 2 of 11, 1 of 9; new watchers 1, 0 (1 fixed); consequence checker 0 of 12; AI players 1 of 17, 1 of 14.
+Per checker, round 1 then round 2: play stories 4 of 17, 3 of 14 (5 probable); new game checks 6 of 17, 1 of 14; the gate's game checks 2, 0; clumsy run 2 of 11, 1 of 9; new watchers 1, 0; consequence checker 0 of 12; AI players 1 of 17, 1 of 14.
 
-What still slips through: faults off the path a story plays (a fare paid only when stopped exactly, a stair with no prompt at night, news that goes cold while the scripted chain still tells it); anything judged by what the game records rather than what a person sees or hears (heads turning only in the game's mind, silent voices, a death booked at the hospital); repeated lines; a talk nobody reaches that cannot be left; things drawn half solid; a camera fault in a room no check visits.
+What still slips through: faults off the path a story plays (a fare paid only when stopped exactly, news that goes cold while the scripted chain still tells it); anything judged by what the game records rather than what a person sees or hears (heads turning only in the game's mind, silent voices, a death booked at the hospital); repeated lines; a talk nobody reaches that cannot be left; things drawn half solid; a camera fault in a room no check visits.
 
-The go or no-go threshold is sound only on three conditions. A check counts as working only when it passes twice and off the scripted path too (hidden.py enforces this). What already fails on today's build is listed first (S05's chase branch, six machine lines, seven clumsy lines), so only new work counts. And since stories caught under a third of the fresh faults, a go also needs no new blocker from the machine checks, the watchers and the AI players.
+The go or no-go threshold is sound only on three conditions. A check counts as working only when it passes twice and off the scripted path too. What already fails today is listed first, from two runs, since that list moves (one story branch failed on the clean build and passed on two planted ones). And since stories caught about a third of the fresh faults, a go also needs no new blocker from the other checkers.
 
 The giant prompt must carry: every menu, the title screen and every box worked by keys alone (today's title screen takes none and ended two AI sessions); the test hook kept by name; sounds recorded only when they really play, and the drawn head's turn readable; a warning that hidden twins replay each story a second time, by another route, after Save and Continue, and at night; and the faults the AI players found today (listed below).
 
@@ -18,16 +18,16 @@ The giant prompt must carry: every menu, the title screen and every box worked b
 
 | Checker | Round 1, before the mend | Round 1's faults, mended checkers | Round 2, fresh faults | Round 2 with the later fixes |
 |---|---|---|---|---|
-| Play stories (S01 to S06 as in-game tests) | 3 of 17 | 3 of 17 | 3 of 14 | 3 of 14 |
+| Play stories (S01 to S06 as in-game tests) | 4 of 17 (5 with one probable) | 4 of 17 | 3 of 14 (5 with two probable) | 3 of 14 |
 | Story watchers (new) | none | 1 of 17 | 0 of 14 | 1 of 14 |
 | Machine checks, the gate's (unchanged) | 2 of 17 | 2 of 17 | 0 of 14 | 0 of 14 |
 | Machine checks, mended (machine_plus, new) | none | 6 of 17 (7 with one probable) | 1 of 14 | 3 of 14 |
 | Clumsy run | 2 of 11 | 2 of 11 (not re-run) | 1 of 9 | 1 of 9 |
 | Consequence checker | 0 of 12 | not re-run | not run | |
-| AI players and breakers | 1 of 17 (5 sessions) | not re-run | 1 of 14 (3 sessions) | |
-| Any checker | 7 of 17 (41%) | 11 of 17 (65%) | 4 of 14 (29%) | 6 of 14 (43%) |
+| AI players and breakers | 1 of 17 (5 sessions) | not re-run | 1 of 14 (2 with one probable; 3 sessions) | |
+| Any checker | 7 of 17 (41%) | 11 of 17 (65%) | 4 of 14 (29%); 6 with two probable | 6 of 14 (43%); 8 with two probable |
 
-"Of N" counts the faults on the builds that checker ran on. Grouped builds were used for the slower checkers; four faults that a group's other fault may have hidden were run again alone (none was caught alone).
+"Of N" counts the faults on the builds that checker ran on. "Probable": the evidence fits the fault but a second fault on the same build could explain it, and the fault alone did not show it. Grouped builds were used for the slower checkers; four faults that a group's other fault may have hidden were run again alone (none was caught alone).
 
 ## Round 2, per fault
 
@@ -36,25 +36,25 @@ The giant prompt must carry: every menu, the title screen and every box worked b
 | drop-off-needs-exact-stop (passes on the scripted path) | nobody | the story driver and the fare calls both stop on the spot; no AI player reached a fare |
 | news-goes-cold (a witness who forgets) | nobody, also alone | the first week's news chain is scripted and still told it |
 | long-lines-not-kept (a person repeats) | nobody | the watcher looks inside one story; repeats need an evening |
-| flat-stair-night (soft lock) | nobody, also alone | no story goes up the stair at night; the machine visits named places by day |
+| flat-stair-night (soft lock) | probable: stories on H2 (from S02 Tom is stuck in the flat over the office, "no way found", seen on no other build), most likely the stuck handbrake's slow fare running into the night | alone, no story goes up the stair at night; the machine visits named places by day |
 | handbrake-sticks (a car that sticks) | stories (S02), clumsy (cab stuck after every crash) | |
-| talk-box-keeps-keys (keys swallowed) | not shown, also alone; the story player's "holding S left him in the same place" after a talk may be it | the talk check closes the box but never walks afterwards |
+| talk-box-keeps-keys (keys swallowed) | probable: stories on H3 (S06: after the talk with Darren, Tom cannot walk out of the office in all three branches, 40 lines against 3 on the clean build) and the AI story player on H3 ("holding S left him in place" after a talk) | alone, S06 showed only the clean build's lines; the talk check closes the box but never walks afterwards |
 | rain-empties-streets (an empty street) | machine_plus (the crowd counted each hour) | |
-| ledger-not-saved (a save loses a step) | stories (S03 Day book, S04 Ron unnamed, S06 People) | the watcher, by a flaw in the mend (fixed after: caught alone) |
+| ledger-not-saved (a save loses a step) | stories (S03 Day book, shown alone; S04 Ron unnamed and S06 People most likely the same, not run alone) | the watcher, by a flaw in the mend (fixed after: caught alone) |
 | voices-silent (tests the wrong thing) | nobody | every check reads the sound record |
 | text-me-line (1990) | nobody (the fixed scan catches it) | no 1990 word list read the built game |
 | kids-line (no children) | nobody (the fixed scan catches it) | the mended scan paired quotes wrongly in the minified build |
-| run-down-kills (a car never kills) | nobody, also alone | clumsy checks the moment of the hit; the death is booked at the hospital |
+| run-down-kills (a car never kills) | nobody, also alone | on H2 the stuck handbrake left the clumsy run unable to knock anyone down; alone it checks the moment of the hit, and the death is booked at the hospital |
 | long-subtitles-stick | stories (S01 layout), AI story player | |
 | flat-camera-in-wall | nobody | no check puts the camera in the flat |
 
-Round 1's faults with the mended checkers: newly caught drink-line and teen-in-crowd (content and ages as the game keeps them), passer-by-fare-unpaid (six fares in a row, all unpaid; second-fare-unpaid probable on the same evidence), empty-night-street (the crowd by hour), witness-forgets-on-load (the watcher). Still missed: lines-repeat, heads-turn-in-data-only, ada-talk-no-leave (the talk check never opened Ada; it now names whom it could not open), bollard-not-solid, debts-not-saved (caught alone after the watcher fix).
+Round 1's faults with the mended checkers: the new game checks caught six, drink-line ("pint" in the built game), teen-in-crowd ("c5 is 15"), passer-by-fare-unpaid (six fares in a row, all unpaid; second-fare-unpaid probable on the same evidence), empty-night-street (nobody out at 3 and 4 in the morning), slow-step (0.81 ms a step against 0.16 on the twin) and pause-menu-swallows-keys (still open after Escape); the watcher caught witness-forgets-on-load. Newly caught in all: drink-line, teen-in-crowd, passer-by-fare-unpaid and empty-night-street. Still missed: lines-repeat, heads-turn-in-data-only, ada-talk-no-leave (the talk check never opened Ada; it now names whom it could not open), bollard-not-solid, debts-not-saved (caught alone after the watcher fix).
 
 ## False alarms
 
-- Stories on the clean build: S05's chase branch fails both times (12 lines) and S06's with it. Two browsers at once crashed pages twice; a passer-by blocked the story driver once under load. The same build gives the same result twice, but any code change can move a branch either way (G1 and one single passed S05 where the clean build failed).
-- The gate's machine checks fail six lines on the clean build (content "not reached", frame rate against a stored baseline, four camera places). The clumsy run fails seven; "everyone knocked down is told" came and went between builds.
-- machine_plus: the crowd check at half the table failed three builds on wet days (rain thins the crowd by design); at a quarter, after the fix, only the planted empty streets fail.
+- Stories on the clean build: S05's chase branch fails both times (12 lines) and S06's with it. Two browsers at once crashed pages twice; a passer-by blocked the story driver once under load. The same build gives the same result twice, but any code change can move a branch either way (G1 and the news-goes-cold build passed S05 where the clean build failed, so the list of what already fails must come from two runs).
+- The gate's machine checks fail six lines on the clean build (content "not reached", frame rate against a stored baseline, four camera places), and on planted builds more camera places came and went (the Golden River, the Washeteria) and draw calls rose from 587 to 887, none pointing at a planted fault. The clumsy run fails seven; "everyone knocked down is told" came and went between builds.
+- The new game checks: the crowd check at half the table failed three builds on wet days (rain thins the crowd by design). It now asks for a quarter; by the counts recorded, only the planted empty streets would fail at a quarter, but that was not re-run. The fixed content and 1990 scans were run on every round 2 build and the clean one (runs/postfix/): only the planted lines fail. The fixed save watcher was run on the clean build for S01 to S03 only.
 - AI players: no claim found false, but nearly all their faults are real faults of today's build, not planted ones.
 
 ## Faults the AI players found in today's build (for the giant prompt)

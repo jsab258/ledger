@@ -1,0 +1,23 @@
+{
+ "when": "2026-11-23T19:39",
+ "dist": "/home/claude/chk/r2/H2/dist-check",
+ "results": [
+  {
+   "rule": "content in the built game",
+   "ok": false,
+   "steps": "lines of prose in the built ledger.js: 3020",
+   "fails": [
+    [
+     "kids",
+     "Not now, I've the kids to fetch from school."
+    ]
+   ]
+  },
+  {
+   "rule": "nothing of later years in the built game",
+   "ok": true,
+   "steps": "the same lines against words never right in Britain in 1990",
+   "late": []
+  }
+ ]
+}

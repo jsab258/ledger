@@ -1,0 +1,23 @@
+{
+ "when": "2026-11-23T19:39",
+ "dist": "/home/claude/chk/r2/H3/dist-check",
+ "results": [
+  {
+   "rule": "content in the built game",
+   "ok": true,
+   "steps": "lines of prose in the built ledger.js: 3018",
+   "fails": []
+  },
+  {
+   "rule": "nothing of later years in the built game",
+   "ok": false,
+   "steps": "the same lines against words never right in Britain in 1990",
+   "late": [
+    [
+     "Text me",
+     "Text me when you're back, love."
+    ]
+   ]
+  }
+ ]
+}
