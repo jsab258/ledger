@@ -1,0 +1,236 @@
+id,verdict,parts,gap,note
+A14.01,covered,1.4.1 2.2.3 2.2.4,,"Watchers see and hear by set distance, light and noise reach."
+A14.02,covered,1.1.5 1.5.4,,"Behind a van, stall or corner nothing is caught; watchers never see through walls."
+A14.03,covered,1.4.1 2.2.2 2.3.2,,"Head turn at least 0.8 s before identification, then the five-rung ladder from shape to known."
+A14.04,covered,1.4.3 1.4.8 2.2.4,,"Noise reach by act, hour and rain; heads turn to noises."
+A14.05,covered,1.4.8,,A watcher inside a noise reach turns or walks to look and remembers the noise; Tom is not known by magic.
+A14.06,covered,1.5.4 DP5-C03 2.6.10,,After a lost chase the patrol searches the last-seen streets only.
+A14.07,covered,2.3.1 2.4.1 2.3.2,,"Memory records what each person saw, heard or was told, with certainty by source."
+A14.08,covered,1.4.1 1.5.4 2.5.3,,"Alert shown by body and voice: head turns, calling out, walking off to tell, crowd looks."
+A14.09,covered,1.5.4 1.5.1,,partly: pursuers use the real back ways and never cheat through walls; no stated test that NPC pathing uses only walkable routes.
+A14.10,missing,,,Needs a rule and test that NPC and pursuer paths replan when a door shuts or a car blocks a lane.
+A14.11,covered,8.10 2.1.1 1.1.8,,partly: nobody stuck over 5 s and places capped so doorways do not jam; no stairs test for NPCs.
+A14.12,covered,1.3.2 1.3.8,,"partly: at most two men swing at once, 0.4 s apart, watchers keep about 3 m; no spacing rule beyond that."
+A14.13,covered,1.3.12 1.3.3,,"Fighter types set distance: brawler rushes, knife man keeps away, boxer guards."
+A14.14,missing,,,"Needs a rule in RT-10 that armed men do not fire without a clear line, and a test with a wall between."
+A14.15,covered,1.3.9 1.3.8 1.3.12 RT-10,,"Men back off, run or give way by nerve; the wiry type slips and runs; armed men run when outmatched."
+A14.16,missing,,,"Needs a rule for how a man reacts when Tom or a mate gets behind him (turn, call out or break)."
+A14.17,covered,1.3.8 1.3.9 2.14,,partly: nerve and numbers make a man give way sooner when alone; no explicit reaction to a mate going down.
+A14.18,covered,1.3.2 RT-10,,"Every blow readable 0.45 to 0.80 s ahead; gun hits depend on aim, distance and movement."
+A14.19,covered,1.3.1 1.3.2 1.3.12,,partly: committed blows and breaking weapons are readable; nobody is invulnerable so no special reason line is needed.
+A14.20,covered,1.3.9 1.5.4 DP5-C01,,"A fight ends by back-off, run, down or police; a chase ends lost, caught, wrecked or at the edge."
+A14.21,covered,2.3.1 1.5.4 DP5-C03,,Memory is permanent and a search continues; seen again inside it the same chase resumes.
+A14.22,covered,1.5.1 1.5.4 8.10,,"Bollarded lanes stop cars, pursuers never pass walls, and no stuck over 5 s."
+A14.23,covered,1.3.9 DP5-C01,,No chase timer but fixed endings; fights end on back-off or arrival of police.
+A15.01,covered,6.1.4 1.4.1 1.4.2,,Picture corners darken with the watchers' light value; nothing says hidden by design.
+A15.02,covered,1.1.5 2.2.4 OUT-08,,"partly: still, slow walk and run change sight and noise; no crouch (OUT-08 no crouch)."
+A15.03,covered,1.4.2 2.2.3,,"Light scale daylight 1, lamp 0.7, unlit 0.25, doorway 0.12 drives what is caught."
+A15.04,covered,2.2.4 1.4.3 5.5.1,,"Noise reach by act (walk, run, door, car, horn, shot) and the player hears the same."
+A15.05,covered,2.2.6 4.1.3,,"partly: places carry public, hours, private or forbidden labels; how a private place reads to the eye is not stated."
+A15.06,covered,2.2.6 1.6.1 1.5.4,,"A challenge warns, warns again, then acts; a constable announces himself 3 s ahead."
+A15.07,covered,1.3.4 2.2.1,,"Eight-rung ladder: stare, square up, threaten up to kill, each an act the town reads."
+A15.08,covered,2.2.1 2.2.3 2.3.2,,"Witness knowledge depends on distance, light, facing and what was caught."
+A15.09,covered,2.5.1 2.5.2,,"A witness walks to a friend, phone box or station and is seen going; walk of at least 30 s."
+A15.10,covered,2.5.1 2.5.2,,"Tom can reach the walker first and talk her round, pay, threaten or let go."
+A15.11,covered,2.6.3 2.6.9 2.13,,"Police response set by deed, signed statement and the escalation dial; no fines as a system."
+A15.12,covered,2.13 2.4.3 1.5.4,,"Dial is a fact in town memory shown in people and police, not a meter; chase shown by the pursuer."
+A15.13,covered,DP5-C01 FIT-F03 1.5.4,,Lost after 7 s unseen or a set gap while out of sight; no timer.
+A15.14,covered,1.5.4 DP5-C03 2.6.10,,Searchers go to the last-seen streets and do not know where he hid.
+A15.15,covered,1.4.4 1.6.10,,"Coat, cap, respray and barber shed what a witness has not told; gossip already carried stays."
+A15.16,covered,2.6.2 RT2-22 1.3.9,,"Stand and be searched, run and it is a chase, back off ends a fight; caught runner searched as if he stood."
+A15.17,covered,2.6.4 2.6.9 2.6.2 7.9,,"Arrest costs set game hours, charge and bail, search keeps what is found; no fines."
+A15.18,covered,7.9 2.6.4 4.3.8,,"Control back within 2 real minutes after arrest or beating, with the cost said."
+A15.19,covered,6.1.1 1.6.1,,partly: prompt names the thing and the wrong action never fires; no test that harmless-looking prompts carry no crime.
+A16.01,covered,1.7.4,,A man at his side follows at about 2 m.
+A16.02,covered,1.7.4,,Never lags more than 10 s.
+A16.03,covered,1.7.4 1.7.1,,He waits at doors and on a wait order.
+A16.04,covered,1.7.1 1.7.4,,Crew never block a door or lane (ER-CREW-02).
+A16.05,covered,1.7.4 8.10,,"partly: doors, car and fights covered; vault places and stairs for followers not stated."
+A16.06,covered,1.7.4,,partly: keeps up or waits and never fails a job by being slow; no stated catch-up when truly left behind.
+A16.07,covered,1.2.3 1.2.7 1.7.4,,Crew and fares ride in the cab and a man at his side rides along.
+A16.08,covered,1.7.4 1.3.8,,"He stands in a fight and takes the second man, so two against two is fair."
+A16.09,missing,,,"Needs a rule for Tom hitting a man at his side or a mate hit by a swing (reaction, memory, loyalty cost)."
+A16.10,covered,1.7.1,,"Two inputs at most, answered in voice or body within 1 s; a man who cannot says why."
+A16.11,covered,5.8.3 RT2-20 1.2.7,,Talk can run while walking or driving; clock rule set for moving talk; no talk scene runs 60 s without control.
+A16.12,missing,,,"Needs a said-once flag on follower and passenger lines about events, tested in a long ride-along."
+A16.13,covered,2.11.3 2.16 1.7.1,,"partly: fates, death and refusal-with-reason are covered; in-the-moment downed follower state not described."
+A16.14,covered,2.3.1 7.8 8.11.3,,partly: the town state and memory survive save and load (SaveChaos); a follower's present-at-his-side state is not named.
+A17.01,covered,1.3.4 1.3.6,,"partly: weapons draw only on a held input and cannot be undrawn unseen; fists have no separate ready stance, guard is a held key."
+A17.02,covered,1.3.1 1.3.3,,A blow starts within 0.1 s of the button; the man pointed at is the man hit.
+A17.03,covered,1.3.1 1.3.3,,"No lock-on, slide to about 1 m, closing 0.40 to 0.55 s from at most 2 m, nobody hit through a wall."
+A17.04,covered,1.3.1 5.5.6,,"Hit-stop, camera close-in and four sound layers with impact within 0.034 s of contact."
+A17.05,missing,,,Decide in or out: no armour or shield in the design; guard in 1.3.2 is the nearest thing.
+A17.06,covered,5.2.8 1.3.1,,A struck man reels to the side he was hit.
+A17.07,covered,1.3.2 5.5.6,,"Blocked fist does little, blocked heavy blow staggers Tom, weapons break through."
+A17.08,covered,1.3.2,,"Every incoming blow readable 0.45 to 0.80 s before it lands, never an icon."
+A17.09,covered,1.3.1 1.3.2,,Heavy blow cannot be cancelled; a slip about 0.3 s turns the next blow into a counter.
+A17.10,covered,1.3.6 1.3.2,,Weapon on a held input from two things under the coat; guard and slip on their own keys.
+A17.11,covered,1.3.2 5.9,,"Mashing empties Tom in 6 to 10 jabs and he needs 4 to 8 s for his wind, shown in breath."
+A17.12,covered,1.3.5 8.10,,Seven street places with paired moves; nobody hit through walls.
+A17.13,covered,1.3.9,,"A fight ends on back-off, run, down, police or people stepping in."
+A17.14,covered,1.3.9 4.3.8 7.9,,Win ends the fight; a beaten Tom wakes with the cost said within 60 s; running is an input.
+A17.15,covered,5.8.1 1.3.1,,Fight camera 3.5 to 5.0 m back keeps both men's feet in at least 90% of frames; close-in is a switch.
+A18.01,unreal,5.2.2 1.3.6,,Fight animation follows the melee sheet; weapon-specific fit is judged in Unreal.
+A18.02,covered,1.3.1 5.5.6,,"Jab contact 0.25 to 0.40 s, hit-stop and impact sound locked to contact."
+A18.03,covered,1.3.3 1.3.6,,partly: closing distance and swing times set; no reach figure per weapon.
+A18.04,covered,1.3.3 5.2.2,,partly: slide limited to about 1 m in the wind-up; animation quality judged in Unreal.
+A18.05,missing,,,"Needs recovery times after a jab, heavy blow and swing, and a test that they are readable."
+A18.06,covered,1.3.2,,Guard is a held key with set results by blow type.
+A18.07,covered,1.3.2,,partly: swung weapons break through guard; no stated visual cue for the unblockable.
+A18.08,covered,1.3.2,,A tap with a direction slips a blow in about 0.3 s; counter follows.
+A18.09,covered,1.3.2,,"partly: no parry, a slip then counter has its own window and result."
+A18.10,missing,,,"Decide in or out: no combo system is described, only single jab, heavy blow and swing."
+A18.11,covered,1.3.2 RT-11 5.2.8,,"Stagger by blow type, hidden capacity by fighter type, reel to the hit side."
+A18.12,covered,1.3.5 RT2-11,,"partly: no finishers by design; the street moves are fitted by height to railings, bonnets and walls."
+A18.13,covered,1.3.2 1.3.8 5.8.1,,"At most two swing at once, watchers keep 3 m, fight camera widens."
+A18.14,covered,1.3.1 1.3.6 RT-11,,Fists never kill alone; weapons add capacity and swing time; things to hand break.
+A19.01,covered,RT-10 1.3.10,,"partly: mouse or stick aims, hit depends on aim and movement; timings not yet set."
+A19.02,missing,,,"Needs a rule and test for the aim camera and muzzle at cover or a wall (aim blocked, no shot through geometry)."
+A19.03,covered,RT-10 RT2-14,,partly: revolver and sawn-off are set apart by rounds and price; spread and range bands not set.
+A19.04,missing,,G38,"Needs recoil and aim return for each gun, measured with the firearms footage."
+A19.05,covered,AX-03 5.9,,"partly: guns flash (photosensitivity line, reduce flashing switch); the flash look is not specified."
+A19.06,covered,2.2.4 5.5.7 1.3.10,,partly: shot heard to 177 m by day and gunshots clip in loud-noise softening; no per-weapon gun sound design.
+A19.07,covered,RT-10,,"partly: arm shot disarms, leg shot stops a runner, so hit place matters; impact marks not specified."
+A19.08,unreal,none,G232,"5.9 names blood, rain, breath, smoke and glass only; Unreal needs bullet and blow impacts per flesh, wood, metal and stone."
+A19.09,missing,,G38,"Needs a rate of fire for the revolver and sawn-off with the draw, aim and hit timings."
+A19.10,covered,RT-10 RT2-14,,partly: six rounds tracked and bought by the box; no on-screen count by design.
+A19.11,missing,,,"Needs an empty-gun cue (click and hand action) in RT-10, since there is no ammunition count on screen."
+A19.12,covered,RT-10 RT2-14,,partly: a revolver holds six and reloads in a shown action; transfer from boxes carried not stated.
+A19.13,unreal,RT-10 5.2.3,,Reload is a shown action; the animation fit is judged in Unreal.
+A19.14,missing,,,"Needs a rule for a reload broken off by a hit, a draw change or running."
+A19.15,covered,1.3.6 1.6.9,,"Two things under the coat, drawn on a held input, one weapon at a time."
+A19.16,covered,1.3.6 RT-10,,partly: draw on a held input and cannot be undrawn unseen; holster look not stated.
+A19.17,missing,,,"Decide in or out: only two guns with one round type each are described, no types or fire modes."
+A19.18,missing,,,Needs a pad aim-assist rule for the aim row (RT-10); 6.6 says only that every verb is reachable by pad.
+A19.19,missing,,,"Decide in or out: no scoped weapon in the two-gun list (RT2-14), so likely moot."
+A19.20,missing,,,"Needs an aim or arc cue for thrown stones and goods (1.4.8, 1.6.7) or a stated decision that none is shown."
+A19.21,unreal,5.2.3 1.4.8,,"Throw animation and hand position judged in Unreal; 5.2.3 is only named, standard is that nothing glitches."
+A19.22,missing,,,Decide in or out: no explosives appear in the design; Bonfire Night display is the only blast-like event.
+A19.23,covered,RT-10 2.16 RT2-11,,"Before War a gun hit wounds and never kills; killing is a named, permanent event."
+A19.24,missing,,,"Needs a rule that the drawn gun is lowered or blocked at close walls, with the aim row camera test."
+A20.01,covered,1.3.7 RT-11,,"Posture, breath, guard, blood and limp show state; no health bar; fresh, hurt, beaten."
+A20.02,covered,1.3.7 1.3.11,,"partly: harm, marks and stitching by the doctor are shown; no temporary protection exists in the design."
+A20.03,covered,1.3.7 RT-11,,"Hurt shows as slower guard, shorter breath and a stagger; no warning overlay by design."
+A20.04,missing,,,Decide in or out: only healing is time and the doctor (1.3.11); no use-item healing verb is described.
+A20.05,missing,,,"Decide in or out: same as A20.04; no healing item, so nothing is consumed."
+A20.06,covered,1.3.11 RT-11,,"Bruises three game days, limp one day, knife bleeds until stitched."
+A20.07,covered,1.3.2 5.9,,Breath shown; wind regained in 4 to 8 s.
+A20.08,covered,1.3.9 7.9 OUT-12,,Tom cannot die; defeat is a beating with a waking place and cost.
+A20.09,covered,7.9 4.3.8 RT2-13,,The cost is said and the street knows he lost; who robbed him is known.
+A20.10,covered,7.9 1.3.9 OUT-12,,"No game over; control back within 60 s after a beating, 2 minutes after any failure."
+A20.11,covered,7.8 7.9,,"No checkpoints; autosave after every deed, consequence and job step."
+A20.12,covered,7.8 2.3.1,,partly: no retry reset by design; reload gives the same next hour (ER-SAVE-01).
+A20.13,covered,4.3.8 1.3.9,,partly: three set waking places and control within 60 s; no test that no attacker is still on him.
+A20.14,covered,1.3.9 RT2-13 7.9 2.6.4,,"Robbery, lost hours, marks and talk are the penalties."
+A20.15,covered,GD-03 GV-05 8.10 7.9,,"Never stuck over 5 s, sequence breaks allowed, another road within a game day."
+A20.16,covered,7.10 6.4,,"Assists are settings, off by default, each changing only its own thing."
+A21.01,covered,1.1.3 4.1.5 4.3.1,,Door widths and room sizes from interior research; street rules from Study 4.
+A21.02,covered,4.3.2 FIT-P34 4.1.5,,partly: office to flat by stair and rooms counted; no general adjacency rule.
+A21.03,missing,,,Needs a check that outside footprints and inside room sizes agree (door and window positions match).
+A21.04,covered,FIT-P34 4.2.4 8.10,,Every other door says it is locked; the quay edge stops him like a kerb.
+A21.05,covered,6.9 4.1.3 6.3,,"Door numbers, street name plates and the paper map; directions by landmark."
+A21.06,covered,4.1.3 6.9 3.4.3,,"Named landmarks, and Pauline gives the way by landmark."
+A21.07,covered,4.2.1 4.2.2 4.2.3 4.3.3,,"Ferry landing, basin, dock gate and Quay Street are separate named places."
+A21.08,missing,,,"Needs a look rule for vault places (1.1.8) and breakable things to hand (1.3.6), so players can tell them."
+A21.09,covered,4.1.4 4.2.4 OUT-05,,"Quay edge, bollards, and a soft edge back as time passed."
+A21.10,covered,4.1.4,,"Leaving by the soft edge is a time skip, nothing fails."
+A21.11,covered,1.1.2 1.1.3 5.8.1,,Camera never ends inside a wall; Tom's 68 cm against real doorway widths.
+A21.12,covered,4.1.2 1.5.1 FIT-G1,,"partly: loops, ginnels and yards give routes; no stated test of alternatives per job."
+A21.13,covered,7.12 FIT-P34 4.3.3,,Something to do within 30 s by day; 24 enterable rooms each with a usable object.
+A21.14,covered,GD-01 FIT-G4 CLK-03,,"Travel time bands, speeds and places within about 200 m of walking."
+A21.15,covered,6.3 6.9,,Paper map and street signs; Ledger keeps directions.
+A21.16,covered,4.2.4 8.10,,The quay edge stops him like a kerb; no passing through walls or bodies.
+A21.17,covered,1.1.3 FIT-G10 2.2.6,,Locked door says so; opening hours and private labels set who may enter.
+A21.18,covered,4.3.1 4.3.2 FIT-P34 1.1.3,,Rooms built to the room kit with enterable counts; nothing inside Mickey's holds him.
+A22.01,unreal,5.10 5.3.1,,Gate says no visible fault; no check named for holes or missing faces.
+A22.02,unreal,5.11.4 5.10,,Triangle caps and 512 px/m at walking distance; judged against the Hook sheet.
+A22.03,unreal,5.11.4,,Texel density figures set; stretch test not named.
+A22.04,unreal,5.11.4 5.3.2,,Texel density and real-value calibration set.
+A22.05,unreal,5.3.2 5.11.4,,Shared surface material classes and photographs; look judged against the Hook sheet.
+A22.06,unreal,none,,"Needs an edge-bevel and edge-wear standard for hard edges, judged against the Hook sheet."
+A22.07,unreal,4.1.5 5.3.1,,Street build rules and kit pivots at sill or bottom face; no float check named.
+A22.08,unreal,5.11.4 5.3.1,,"Kit grid and fit rule: pieces within 10 per cent, pivots at sill."
+A22.09,unreal,none,,Needs an overlapping-surface flicker check (z-fighting) in the packaged walk.
+A22.10,unreal,5.11.4,,"Kit variety: at least 15 distinct meshes per front, at most 10 per cent used once, checked by script."
+A22.11,unreal,5.3.2 5.11.4,,"Grime strategy and wear decals set, calibrated to wet overcast photographs."
+A22.12,covered,4.3.1 FIT-P52 4.4,,partly: office and drawers have written contents; no general rule per room type.
+A22.13,covered,4.1.3 6.9 4.4,,Every door numbered and every street named; signs made period-correct.
+A22.14,covered,4.9 4.4 4.6.1 5.10,,"Late-analog 1990 detail, 1990 street furniture and fictional cars checked against dated photographs."
+A22.15,unreal,none,,"Needs a day, night and wet screenshot check of landmark props for recognisability."
+A22.16,unreal,5.11.4,,"partly: LOD rule (each about half, none above 0.6 of the last); no popping test."
+A22.17,unreal,5.11.4,,partly: interior standards exist for rooms behind glass; no check from both sides.
+A23.01,unreal,5.4.1 5.4.2 5.10,,"Exposure, lamp pools and floor of visibility, judged against the Hook sheet."
+A23.02,unreal,5.4.2 5.11.4,,Shadow-casting lights capped at 6 in view; window lamps cast within 15 m.
+A23.03,unreal,5.11.4 5.4.2,,Sun cascades and shadow lights set; moving-character shadow check not named.
+A23.04,unreal,none,,Needs a night walk check for light leaking through walls and window frames.
+A23.05,unreal,5.4.1 5.4.2,,partly: day exposure and night pools set; no interior light levels.
+A23.06,unreal,5.4.1,,"Exposure pin is fixed (4.0 day, 0.4 night), so no auto-exposure flash; doorway transition not tested."
+A23.07,covered,1.4.2 5.4.2 6.1.4,G214,partly: Tom and ground 5 m round him always visible above a floor; floor has no number (G214).
+A23.08,unreal,5.4.2 5.11.4 4.4,,Lamp pools about ten times the fill; lit windows; lights capped.
+A23.09,unreal,2.1.1 5.4.2,,Lit window means somebody home; no rule that glow and light switch together.
+A23.10,unreal,5.3.3 5.3.4,,Wet street mirrors sky and buildings; shop glass shows the street.
+A23.11,unreal,none,,"No usable mirror in the design (car rear window is a camera turn, 1.2.2); Unreal would need Tom in shop-glass reflections."
+A23.12,unreal,5.3.4,G212,Glass shows sky and street; no crack state or reflection quality set.
+A23.13,unreal,8.3.1,,Upscaler listed in settings; no anti-alias choice or shimmer test.
+A23.14,unreal,8.3.1,,Upscaler listed; no ghosting test on cars and moving people.
+A23.15,unreal,5.4.3 5.8.2,G215,One colour grade shared by browser and Unreal; grade values still owed.
+A23.16,unreal,5.4.1 5.11.4,,Sky is a photograph; hill built as merged houses at distance.
+A23.17,covered,AX-11 6.1.1,,"partly: key objects distinct and never by colour alone; no test against rain, smoke or blood effects."
+A24.01,unreal,none,,"Needs wind motion for trees and grass on the hill (vegetation ratio is set, motion is not)."
+A24.02,unreal,5.11.4,,"partly: coat tails and hems simulated; washing, awnings and signs not named."
+A24.03,unreal,5.9,G232,Rain is named but not built; Unreal needs rain blocked under roofs and arches.
+A24.04,covered,5.5.4,,partly: one rain value fades layers and rooms change echo; sheltered outdoor spots not named.
+A24.05,unreal,5.3.3 5.11.4,,"Wet street dark and glistening, roughness 0.06 against dry; dry-out 3 to 14 hours."
+A24.06,covered,5.3.3 4.8 2.1.4,G191,partly: one wetness value and a drying time; ramp rules and weights not set.
+A24.07,covered,2.1.4 5.5.4,,partly: rain empties the street and halves voices; no umbrella or hurry animation.
+A24.08,unreal,5.3.3,,Harbour water dark and reflection-led in research; no motion standard.
+A24.09,unreal,none,G232,Needs splash effect and sound for things and men put in the water (4.2.4).
+A24.10,unreal,4.6.2,,Boats are scenery (RULINGS 23 Sep); wakes needed only if scenery boats move.
+A24.11,unreal,none,G232,"Fire is not in 5.9; the warehouse fire and Bonfire Night display need light, motion and sound."
+A24.12,unreal,5.9,G232,partly: smoke named; dust and source tie not set.
+A24.13,unreal,none,G232,"5.9 lists broken glass only; needs debris per surface for blows, shots and car hits."
+A24.14,covered,5.3.2 2.19 5.9,,"partly: blood and glass last until washed, rained off or mended; bullet holes not named."
+A24.15,unreal,none,,"No tracks system; only needed for wet or muddy ground, a choice for Unreal."
+A24.16,unreal,none,,"Needs a check that smoke, fire, spray and flashes end with their source."
+A24.17,unreal,none,,"Needs a check that effects follow moving cars and people (exhaust, breath, smoke)."
+A24.18,covered,2.1.4 7.13 4.8,,"Weather and clock are global values, not area state; streaming reset not tested (8.1.2)."
+A25.01,covered,2.1.1 2.1.2 2.1.3 3.7,,"Routines, crowd windows, off-screen life and street happenings."
+A25.02,covered,5.5.3 2.1.2,,"Street beds, one-shots capped by place and hour, placed sources."
+A25.03,covered,2.1.2 FIT-G9,,"People counts by hour and place, halved in rain."
+A25.04,covered,2.1.1 3.7 5.2.5,,"partly: routines and happenings vary activity; work, smoke and talk idles are not built."
+A25.05,covered,4.3.3 FIT-G10 2.2.6,,"Shop hours, Sunday shut, back-room knock hours."
+A25.06,covered,2.1.3 2.19,,Unseen people keep the same rules and things stay where left.
+A25.07,covered,2.16 2.19 1.6.7 RT2-11,,"Bodies, dropped weapons and goods are remembered by who saw; things stay until mended."
+A25.08,covered,2.7.5 2.16,,partly: shops restock weekly and a killed man stays dead; drawer refill rule not stated.
+A25.09,covered,2.1.3 3.7,,"Happenings come from town state and hour, never dice or boundaries."
+A25.10,covered,4.7 2.1.1 5.4.2,,"Light states and routines turn with the hour; people sleep, windows go dark."
+A25.11,covered,7.11,,Wait until a known appointment; sleep is a skip.
+A25.12,covered,7.11 2.1.3 GD-03,,A wait or sleep always stops for what the town has; job steps sleep and settle by the clock.
+A25.13,covered,3.7 FIT-G6,,partly: happenings are small authored scenes Tom can step into; recovery after he ignores one not described.
+A25.14,covered,FIT-P45 4.11.1,,"Gulls rise, dogs bark, cats in yards."
+A25.15,covered,FIT-P45,,Gulls rise when someone runs at them and draw a glance.
+A25.16,missing,,,Needs a rule that crowd and happening spawns appear out of view or beyond a set distance from Tom.
+A26.01,covered,1.2.3 6.1.1,,Door to seated 1.5 to 2.5 s with a prompt naming the car.
+A26.02,unreal,1.2.3 5.2.3,,Timing set; animation fit to door and seat judged in Unreal.
+A26.03,covered,1.2.3,,From either side; a blocked door never traps him.
+A26.04,covered,1.2.1 6.6,,Keys and pad reach the same course time within 10%.
+A26.05,covered,1.2.1,,0 to 30 mph in 3.0 to 4.5 s; dry braking bands.
+A26.06,covered,1.2.1,,Steering eases in 0.2 to 0.35 s; lane change settles within 1 s.
+A26.07,missing,,,"Needs the reverse control and its prompt, and a test that reversing out of a wedge works on keys and pad."
+A26.08,unreal,none,,Needs a wheel spin rate tied to speed on the car asset.
+A26.09,unreal,none,,Needs front wheels turning with steering on the car asset.
+A26.10,unreal,1.2.1,,Sway named in 1990 feel; no suspension standard.
+A26.11,unreal,8.10 1.2.1,,partly: no launch or spin on a touch; wheel-to-ground contact check not named.
+A26.12,covered,5.5.5,,"partly: engine note tracks speed within 5%, 28 to 210 Hz; load not named."
+A26.13,covered,5.5.5 5.5.2,,partly: squeal from 80% of grip; crash sound not specified.
+A26.14,covered,1.2.4 5.4.2,,partly: headlights implied by the broken-lamp rule; brake and reversing lights not named.
+A26.15,covered,1.2.2,,"Chase camera band, never in walls; B turns it to the rear window."
+A26.16,covered,1.2.3,,Out in under 2 s and immediate after a wreck.
+A26.17,covered,1.2.3 1.2.4 8.10,,partly: moves or can be left within 5 s; no rule for the exit spot beside walls or traffic.
+A26.18,covered,1.2.4,,"Stages by closing speed shown as dent, crumple, pull to one side, broken lamp."
+A26.19,covered,1.2.4 8.10,,partly: wedged car always backs out within 5 s and no launches; overturning not mentioned.
+A26.20,covered,4.5.1,G186,"partly: lanes, IDM, 20 to 28 mph, stops behind people; junction rules not designed."
+A26.21,covered,4.5.1 1.2.5,G186,partly: traffic halts for people and hoots; response to crashes not designed.
+A26.22,covered,1.2.5 2.1.5,,People look before stepping out and none within 23 m of a car at 30 mph.
+A26.23,covered,1.2.7 1.2.8,,partly: crew and fares ride in the cab; seat and sway animation not stated.
+A26.24,covered,2.19 1.2.9 7.8,,Things stay where left; wrecked cab off the road a day; save keeps the town.

@@ -50,3 +50,4 @@ Next run starts here (runs 1 and 2's lists still hold):
 4. His answers to R1 to R13 and the open questions from the advisor rows; the story pick.
 5. Watch for duplicate prep sections: the preparation session also writes a voices hookup (TECH-PLAN section 10); 8.12 follows it.
 - 23 Nov 2026, landscape job: production/research/lane/ai-games-landscape/LESSONS-2026-11-24.md (with PROJECTS.md) for the keeper and the design proof: what about 25 other AI-built games teach; feeds his dates question of 24 Nov (when the one-shot starts; when the Unreal move is tested).
+- 23 Nov 2026, checklist check: production/lane/blueprint/checklist-check/CHECKLIST-VS-BLUEPRINT.md (and .csv): all 957 master-checklist items against the blueprint, 560 covered (194 partly), 80 out, 132 Unreal phase, 185 missing (29 need an in-or-out decision first); fold the missing items in as parts or gaps, the top twenty first.

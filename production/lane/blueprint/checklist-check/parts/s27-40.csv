@@ -1,0 +1,244 @@
+id,verdict,parts,gap,note
+A27.01,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.02,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.03,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.04,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.05,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.06,missing,,,"Decide in or out: no mount, horse or riding animal appears anywhere in the blueprint; none fits 1990 Hook, probably out"
+A27.07,out,4.6.2 4.2.4,,"RULINGS 23 Sep genre: boats and buses scenery; boats are scenery, never boarded or floated"
+A27.08,out,4.6.2 4.2.4,,RULINGS 23 Sep genre: boats and buses scenery; no boat is steerable
+A27.09,out,4.6.2 4.2.4,,RULINGS 23 Sep genre: boats and buses scenery; no boarding of vessels
+A27.10,out,4.6.2 4.2.4,,RULINGS 23 Sep genre: boats and buses scenery; no moving deck to stand on
+A27.11,out,4.6.2,,RULINGS 23 Sep genre: boats and buses scenery; no public transport to ride
+A27.12,covered,1.2.3 1.2.7 1.2.8 1.6.9,,"partly: cars only (crew and fares ride in the cab, items survive); boats and buses are out"
+A28.01,missing,,,Needs a part saying a sound comes from its source's side (panning) with a test; blueprint sets only reach in metres
+A28.02,missing,,,Needs a test that sound direction follows Tom's facing or the camera; none written
+A28.03,covered,5.5.5 5.5.3,,partly: car and placed sources carry their sound by reach; no rule or test that a moving source's sound moves with it
+A28.04,covered,5.5.3 2.2.4 1.4.3,,partly: every sound has a reach and loudness is reach in metres; no distance fall-off curve or test
+A28.05,missing,,,"Needs a rule that far sources lose high detail (a distance filter), with a listening test"
+A28.06,missing,,,"Needs a muffling rule for walls and shut doors; rain cuts reach and rooms get reverb, but nothing dulls sound through walls"
+A28.07,missing,,,Needs a rule that sound leaks through open doors and windows (a door left open carries a shout); none written
+A28.08,covered,5.5.4,,SND-16 and SND-17: shared reverb swapped at the doorway and a room tone per room kind
+A28.09,covered,5.5.4,,"partly: eight room kinds (office, caff, chapel and so on) each with its own tone; no size-based rule"
+A28.10,covered,5.5.4,,SND-16 crossfades the reverb over about 1 m of walking and at least 0.5 s
+A28.11,missing,,,"Needs a rule for wide sources (rain, a crowd, the quay) to play as beds, not point sounds"
+A28.12,missing,,,"Needs a rule for sound above and below (the flat over the office, stairs); only one level is described"
+A28.13,missing,,,"Needs a rule for where the ears sit (Tom or the camera, 3.1 m back); not stated"
+A28.14,covered,5.5.3 5.5.7 GD-02,,partly: far voices capped (3 by day) and talk lowers the beds; no rule on how loud a far conversation may be
+A28.15,missing,,,"Needs a smooth-pan rule and a drive-past test for passing cars; linked to panning, which is not specified"
+A29.01,covered,5.5.1,,partly: steps by surface and gait; no test that the sound lands on foot contact
+A29.02,covered,5.5.1,,"SND-05 to 07: at least seven surfaces, three shoe kinds"
+A29.03,covered,5.5.1 1.4.3,,"walk, run and slow walk differ; a tester with the picture off can tell a walk from a run"
+A29.04,out,OUT-08,,"OUT-08 no jump or climb: only the 0.8 s vault, which lands as a step"
+A29.05,missing,,,5.5.1 is called foley but sets only footsteps; needs coat rustle and holdall sounds
+A29.06,covered,1.3.7 5.5.6 5.9,,partly: breath shows in fights and as an effect; no rule for Tom's breathing when running
+A29.07,covered,5.5.2,,"doors creak, hit and latch; G217 has no set size"
+A29.08,missing,,,"Needs a small sound standard for taking, searching and putting things down; none written"
+A29.09,covered,5.5.2 1.2.4,,"partly: doors and glass; no material table for car hits on poles, bins, walls"
+A29.10,covered,5.5.2,,partly: forced door and broken glass only; no other breakage
+A29.11,covered,5.5.6 1.3.10 RT-10,G221,"partly: shot, echo and four fight layers timed; reload and draw sounds not set"
+A29.12,covered,5.5.6 5.6.1,,"pain cry after contact, voices chosen per character; no per-type pain set"
+A29.13,covered,5.5.5 5.5.3,,partly: engine follows speed and placed sources name an owner; no rule for other machines going quiet when off
+A29.14,missing,,,Needs a splash sound for things thrown in and men put in the water (4.2.4); none written
+A29.15,missing,,G221,Needs a no-repeat and variant-count rule per sound; G221 notes no set size for fight sound
+A29.16,missing,,,Needs a test that one event fires one sound (mix record check); none written
+A29.17,missing,,,Needs a test that steps stop when Tom stops; none written
+A29.18,covered,5.5.6,,partly: fight layers have timing limits (impact within 0.034 s of contact); other events have none
+A30.01,covered,5.5.7 AX-04,,bed at least 6 dB under a spoken line; 'voices clear' switch adds 6 dB
+A30.02,covered,5.5.7,G222,partly: loudness -23 LUFS over 30 min and the quietest lead voice sets the mix; G222 no lead level
+A30.03,covered,5.6.1 3.2.1,,"a voice chosen per character, judged by ear, cast on his yes"
+A30.04,missing,,,Needs a standard for delivery to fit the speaker's mood (live and prepared lines); only voice choice is set
+A30.05,covered,5.5.7 AX-04,,true peak at most -1 dBTP; loudest sound at most 20 LU above; loud noise softening switch
+A30.06,missing,,,Needs a seamless-loop test for beds and music; beds are loops but no click check is written
+A30.07,covered,5.7.1 FIT-P09,,partly: music is heard only from in-world sources so there is no score to cut; Q11 short score undecided
+A30.08,covered,5.5.6 5.7.1,,"by design no combat music: 'never combat music', nothing starts or changes for a fight or chase"
+A30.09,covered,5.7.1 5.5.7,,music only where it plays in the world; silence is the commonest music
+A30.10,covered,5.5.7 5.7.1,,'silence is the commonest music'
+A30.11,missing,,G226,Needs a minimum loop length for radio and in-world pieces; none set and no song list
+A30.12,covered,5.5.3 5.5.7 SND-13,,"at most 40 sounds at once, spawn caps by hour, voice leads the mix"
+A30.13,missing,,,"Needs a rule that a line stops when its speaker falls, leaves or is killed mid-line; none written"
+A30.14,covered,RT-18 AX-10 6.4,,"partly: clock and pause rules set, sound not named; needs 'all audio pauses and resumes' test"
+A30.15,missing,,,Needs a headphone and speaker-layout check; AX-04 has only a mono switch
+A30.16,covered,5.7.1 FIT-P09,,"music only where it plays in the world: caff radio, window, chapel organ"
+A31.01,covered,6.7 3.6.1 2.5.2,,speak to a named person; Leave always offered
+A31.02,covered,5.6.3 5.2.4 3.6.1,,a glance and a thinking sound before the answer
+A31.03,covered,5.2.4,,"Tom stands about 1.5 m from a speaker, both facing"
+A31.04,covered,5.2.4 5.2.9 8.12.2,G203,mouths follow loudness (live) or audio-driven (prepared); G203 no accuracy number
+A31.05,covered,5.6.1 AX-02,,"voice cast per character, speaker's name in subtitles"
+A31.06,covered,6.7 3.6.5 3.6.6,,decision lines are the exact text Tom says; suggested lines about four words
+A31.07,covered,3.6.5 6.7,,only a plain yes is taken; anything irreversible asks twice
+A31.08,covered,6.7 AX-06,,only a plain yes is taken and nothing destructive sits one press from Resume
+A31.09,missing,,,"Needs a rule for Tom walking off mid-talk (talk ends, person remembers); only haggling says walking away is remembered"
+A31.10,missing,,,Needs a rule for a fight or shout breaking in on talk; standing talk stops the clock so it is not covered
+A31.11,covered,6.2.2 6.2.3 6.2.1,,what Tom was told is written in the Day book and Open page
+A31.12,covered,2.3.1 2.12.4 3.6.4,,"memory is permanent per person and greetings follow regard, so no repeated introductions"
+A31.13,covered,2.3.1 3.6.2 2.12.4,,people speak from what they saw and were told; claim check on live lines
+A31.14,covered,3.6.2 2.16,,claim check holds speech to the town's state; a missing man is the town's question
+A31.15,covered,5.5.7 GD-02,,talk lowers beds; everyday street talk at most every 45 s
+A31.16,covered,6.1.2 AX-02 8.12.2,,subtitle shows only with its audio; every line logged in a 2-hour soak
+A31.17,covered,5.6.3 3.6.1,,partly: reply within 2 s or the written line plays; no pause-length rule
+A31.18,covered,5.6.3 8.6.1,,a line slower than 8 s is dropped for an in-character brush-off; offline written lines carry on
+A32.01,covered,5.8.2 5.8.3 7.1,,few short scenes; control at 0:20 after the ferry shot; staged talk keeps control
+A32.02,covered,5.8.2 5.8.1,G229,partly: only the ferry shot is specified; no shot-composition standard
+A32.03,missing,,,Needs a check that people and props start a staged scene in place and end at the right marks; none written
+A32.04,missing,,,Needs a rule that scenes show Tom's current coat and carried items (1.6.10); none written
+A32.05,covered,5.2.4 5.2.9 5.2.6,,mouths follow the voice and body language of knowing is ruled
+A32.06,covered,6.4 AX-10,,Esc pauses everywhere
+A32.07,covered,5.8.2,,every scene is skippable
+A32.08,missing,,,Needs a confirm or hold-to-skip so one stray key cannot skip a scene; none written
+A32.09,missing,,,Needs subtitles tested inside any cinematic framing; 6.1.2 tests four window sizes only
+A32.10,missing,,,Needs a rule that control returns at a usable place and facing after a scene; none written
+A32.11,missing,,,Needs a rule on danger during staged and moving talk (RT2-20 keeps the world running); none written
+A32.12,covered,1.2.8 5.8.2 3.5.6,,partly: a skipped ride passes its exact drive time and job states are saved; no test of a skipped scene's state
+A32.13,covered,8.5 8.1.3 8.1.2,G270,progress shown while the street prepares; trips past the soft edge load nothing; G270 no load limit
+A33.01,covered,6.2.3 3.5.6,,Open lists jobs and appointments by person and landmark
+A33.02,covered,6.2.3 6.2.2 6.5,,Ledger Open and Day book; hints again
+A33.03,missing,,,Needs a way for Open to show which jobs the story needs and which are optional; not stated
+A33.04,covered,3.5.6 6.2.2 6.1.3,,each step change is saved and written in the Day book within a game minute
+A33.05,covered,6.2.2 6.1.3 7.9,,each step done or failed is a Day book line; the town can talk about it
+A33.06,covered,6.2.4 2.7.1 2.7.5,,money said in words after a job; payment follows the debtor's purse
+A33.07,covered,3.5.6 CLK-04 7.11,,windows known at least 5 game hours before they open; 'wait until' offered
+A33.08,covered,3.5.6,,steps sleep while Tom is away and settle by the clock
+A33.09,covered,GD-03,,"a step met early, late or by another route counts as met; tester runs all orders"
+A33.10,covered,GD-03,,a step already met counts as met
+A33.11,covered,GD-03 RT2-05 2.16,,job moves to failed in a state the town can talk about; never stuck
+A33.12,covered,RT2-13 1.6.9 GD-03,,a taken envelope becomes a debt; stored items survive; no job waits on an impossible step
+A33.13,covered,GV-04 3.5.6,,places stay open; every lock has three keys
+A33.14,covered,GD-03 GV-05 8.10,,no job ends stuck; nobody stuck over 5 s; no blocking fault at release
+A33.15,covered,3.5.6 CLK-04 6.1.5,,job windows on the town clock and a known hour anywhere within 3 s
+A33.16,covered,6.9 3.5.6,,"every job gives an address and landmark, two sources of direction"
+A33.17,out,OUT-09 6.9,,OUT-09 no markers; reachability is tested by newcomers reaching ten named places unaided
+A33.18,covered,6.2.3 3.5.6 3.5.7,,"Open lists every live job, debt and appointment"
+A33.19,covered,6.2.2 6.2.3 3.5.6,,Open lists live items; finished ones go to the Day book and wrong beliefs are struck through
+A33.20,covered,3.3 3.7 7.12 GD-02,,"side stories, street happenings and something within 30 s by day"
+A33.21,covered,7.14 7.16 GD-08,,"variety, pastimes and the job catalogue per act"
+A34.01,covered,1.3.7 RT-11,,"no health bar by ruling intent: posture, breath, guard, blood and limp show state"
+A34.02,missing,,,"Decide in or out: 1.3.10 says no ammunition count, so needs a way to see a revolver is empty (cylinder, dry click)"
+A34.03,covered,1.6.9 6.2.3 1.3.10,,partly: Open lists what he carries; a drawn gun and held item are seen; no on-screen state
+A34.04,out,OUT-06,,"OUT-06 no skills or abilities, so no cooldowns"
+A34.05,covered,6.1.1 AX-01,,partly: prompt held 0.2 s and sized for reading; no placement rule against hiding the object
+A34.06,covered,1.3.10 AX-05,,partly: no crosshair; an optional dot is off by default; no contrast test
+A34.07,covered,1.3.2 8.4.1 1.5.2,,"partly: blows read in the body, shouts and cars shown by sound-shown; no on-screen direction cue by design"
+A34.08,out,OUT-09 2.4.3,,OUT-09 no markers: no friend or foe icons; people read by posture and the seeing outline 1.4.6
+A34.09,out,OUT-06 1.3.7,,OUT-06 no meters or status icons; hurt and beaten show in his body only
+A34.10,missing,,,Needs a minimum on-screen time for the belief line and toasts; none set
+A34.11,covered,6.5 6.1.3,,partly: never two hints within 12 s; no priority rule for urgent text
+A34.12,covered,6.1.2 AX-01,,partly: subtitles tested for no overlap at four window sizes; prompts and belief line not in that test
+A34.13,missing,,,Needs a rule hiding prompts and the belief line in staged scenes; only photo mode hides the interface
+A34.14,missing,,,RT-18 says Ledger and map stop Tom but not the town; needs a visible sign that the town goes on
+A34.15,covered,6.2.4 6.2.1 6.1.5,,"money, people and time are stated from real state; nothing on screen Tom could not know"
+A34.16,covered,AX-02 6.5 6.1.2,,partly: screen already minimal; street-chatter subtitles and hints can be turned off
+A35.01,covered,6.3 RT-18,,"map opens with Comma and stops Tom, not the town; no timing standard"
+A35.02,missing,,,Needs Tom's own position drawn on the paper map or a ruling that it is not; 6.3 marks only places
+A35.03,missing,,,Needs facing shown with Tom's position on the paper map; not stated
+A35.04,missing,,G238,Needs a map scale and zoom rule; the map is drawn but its extent and zoom are not set
+A35.05,covered,6.6 6.3,,"partly: every verb reachable by keys, mouse and pad; map panning not described"
+A35.06,covered,AX-01 6.3,,partly: text size and contrast rules cover labels; no icon-distinction rule
+A35.07,missing,,,Needs a key to the map's marks; none written
+A35.08,missing,,,Needs a rule for picking among overlapping marks; none written
+A35.09,out,OUT-09,,"OUT-09 no minimap, waypoints or markers"
+A35.10,out,OUT-09 6.9,,OUT-09 no route lines; directions come from people and landmarks
+A35.11,out,OUT-09,,OUT-09 no route to recalculate
+A35.12,missing,,,Needs a floor rule for the flat above the office and multi-storey rooms on the map; not stated
+A35.13,covered,6.3,,map marks only places he has been or been told of; G238 gives no rule for 'told of'
+A35.14,covered,6.2.2 6.2.3,,partly: Open and Day book split live from done; the map does not show job state
+A35.15,covered,6.9 4.1.3 6.3,,"street plates, door numbers and landmarks match the Ledger's names"
+A35.16,covered,6.2.2 6.2.3 6.10,,Day book and Open keep every job step and letter
+A35.17,covered,6.2.2 6.10,,Day book lists events in order; letters go into the Ledger
+A35.18,missing,,,Decide in or out: no fast travel is designed or ruled out; OUT-05 makes distant districts time skips and 1.2.8 skips a crew ride
+A35.19,missing,,,Decide in or out: no fast travel is designed or ruled out; OUT-05 makes distant districts time skips and 1.2.8 skips a crew ride
+A35.20,missing,,,Decide in or out: no fast travel is designed or ruled out; OUT-05 makes distant districts time skips and 1.2.8 skips a crew ride
+A36.01,covered,1.6.9 6.2.3,,"Open lists what he carries; stored items survive save, load and skipped time"
+A36.02,missing,,,Needs an on-screen or spoken acknowledgement of what was taken; taking is one press with no feedback described
+A36.03,covered,6.2.3 1.6.9,,partly: carried things named in words; no item descriptions or quantities rule
+A36.04,missing,,,"Needs item kinds (usable, valuable, hot, quest) told apart in Open; only the hot mark exists"
+A36.05,covered,1.6.9,,"carrying is limited to two under the coat and one in hand, so no sorting is needed"
+A36.06,missing,,,"Needs a stacking rule for like items (cigarettes, notes, keys); none written"
+A36.07,missing,,,Needs a rule for how many of a stack to drop or hand over; none written
+A36.08,covered,1.6.9 1.6.10 1.3.10,,partly: held and under-coat items and worn outfit are seen; no menu state
+A36.09,out,OUT-06,,"OUT-06 no stats, so gear has nothing to compare"
+A36.10,missing,,,Needs a way to tell why an item cannot be carried or worn; only 'wrong clothes for the door' is shown by people
+A36.11,covered,1.6.10 1.4.4,,each outfit changes how strangers speak and which doors open
+A36.12,covered,6.6 1.3.10,,"partly: fixed keys for torch, stone, cigarette, watch and a held key draws a gun; no general quick slot"
+A36.13,missing,,,"Needs a single-use rule (torch battery, cigarettes, envelope handed over); none written"
+A36.14,covered,1.6.9,,two under the coat and one in the hand
+A36.15,missing,,,Needs feedback when Tom's hands and coat are full; none written
+A36.16,covered,1.6.9 1.6.7,,"office drawer, yard shed and tin for storing; drain, dock and quay for disposing"
+A36.17,missing,,,Needs a confirm before throwing away or handing over something valuable; talk asks twice but items do not
+A36.18,covered,1.6.3 2.7.6,,hot mark on stolen goods and the owner never forgets them
+A36.19,covered,1.6.2 FIT-P52 1.6.9,,partly: contents authored per job and an ordinary drawer's contents set; no rule for refilling
+A36.20,covered,RT2-13 7.8 7.9,,Tom cannot die; beating may rob him of paper money and held items; reload gives the same next hour
+A36.21,missing,,,Needs a check that Ledger pages stay usable while the town changes them; none written
+A37.01,covered,2.7.8 2.7.5,,prices spoken by the seller; no table by design
+A37.02,covered,6.2.4,,"money said in words: what he has, the tin, what is owed"
+A37.03,covered,2.7.5 2.7.6,,"shops buy, haggle or refuse; fences pay a fraction"
+A37.04,missing,,,Needs a spoken total for more than one item; the shop list is one item at a time with a three-offer haggle
+A37.05,covered,RT-14 2.7.8,,partly: an offer above what Tom carries fails in character; no wording standard for buying
+A37.06,missing,,,Needs a test that one confirmed purchase charges once; none written
+A37.07,covered,2.7.6 2.7.5,,fence pays about a third of retail; shop prices are the seller's list
+A37.08,missing,,,Decide in or out: no buyback designed; needs a ruling or a rule that a sold item can be bought back from the buyer
+A37.09,covered,2.7.5 FIT-G10,,"shops keep hours, restock weekly and market day empties them"
+A37.10,out,OUT-07,,RULINGS 23 Sep: no crafting; recipes do not exist
+A37.11,out,OUT-07,,RULINGS 23 Sep: no crafting; missing ingredients do not exist
+A37.12,out,OUT-07,,RULINGS 23 Sep: no crafting; upgrade previews do not exist
+A37.13,out,OUT-07,,RULINGS 23 Sep: no crafting; crafting results do not exist
+A37.14,out,OUT-07,,RULINGS 23 Sep: no crafting; crafting with limited capacity do not exist
+A37.15,out,OUT-07 1.2.9,,OUT-07 no crafting or upgrades; cars are mended or replaced at the yard (1.2.9)
+A37.16,missing,,,Needs a test that a cancelled haggle or sale costs nothing; walking away is remembered but loss is not tested
+A38.01,covered,7.7 2.12.1 2.12.4,,rise shown in what people call him and how they greet him
+A38.02,covered,7.7 6.2.5 OUT-06,,"position said in words and in Tom's reading, never a number"
+A38.03,covered,2.12.2 2.12.3,,partly: the rung table says what opens at each step; no upgrades by design
+A38.04,covered,2.12.2 2.7.8,,rung table gives what is needed; costs are spoken prices
+A38.05,out,OUT-06,,"OUT-06 no skills, perks or abilities to buy"
+A38.06,covered,6.5,,interface and hints appear piece by piece at first need
+A38.07,covered,7.7 3.1.1 3.1.2,,"greetings, property and act ends mark milestones"
+A38.08,out,OUT-01 1.6.10,,"OUT-01 Tom is a fixed character; outfits are three set coats, no customisation screen"
+A38.09,out,OUT-01,,OUT-01 player is Tom Nowak throughout; no character creation
+A38.10,out,OUT-01,,OUT-01 no appearance choices; Tom's look is fixed
+A38.11,covered,7.10 AX-08,,each assist has a plain line on what it changes
+A38.12,missing,,,Needs a short confirmation when an assist is switched; 7.10 tests each changes only its own thing
+A38.13,out,OUT-06,,OUT-06 no stats; the only choices are set outfits
+A38.14,covered,6.7 OUT-12,,game says what is permanent before it happens; irreversible acts ask twice
+A38.15,covered,7.8 2.12.1 2.3.1,,everything is saved including rung and memories
+A39.01,missing,,,Needs a plain line telling the player when the game saves; autosave rules exist but nothing says it to him
+A39.02,covered,7.8 8.11.3 AX-07,G352,"after every deed, consequence and job step; G352 no longest gap"
+A39.03,missing,,,Needs a visible 'saving' sign; none designed
+A39.04,covered,7.8 AX-07 6.4,,at least eight manual slots plus three rotating autosaves
+A39.05,covered,7.8,,"by design never refused, even in a fight, so no reason message needed"
+A39.06,covered,7.8 AX-07,,partly: manual slots and rotating autosaves are told apart; no checkpoints exist
+A39.07,covered,AX-07 6.4 7.8,,"picture, day, hour, place and rung in words"
+A39.08,missing,,,Needs a confirm before overwriting or deleting a slot; AX-06 only bars a destructive choice next to Resume
+A39.09,missing,,,Needs a rule that New game never overwrites existing slots or autosaves; no profile concept
+A39.10,covered,7.8 8.11.3 8.10,,reload gives the same next hour; nobody stuck over 5 s
+A39.11,covered,7.8 1.6.9,,carried and stored items survive save and load
+A39.12,covered,7.8 3.5.6,,every job state change saved
+A39.13,covered,2.19 7.8,,marks keep across save and load
+A39.14,covered,2.3.1 7.8 RT2-10,G92,person memory saved; G92 no cap on kept extras
+A39.15,covered,7.8 7.13 2.19,,partly: reload gives the same next hour and marks fade on the clock; no timer-specific test
+A39.16,covered,7.8 8.11.3,,partly: save and reload give the same week and next 10 minutes; no explicit test for duplicated rewards
+A39.17,covered,7.9 OUT-12,,"Tom cannot die and control returns within 2 minutes; saving mid-fight could reload beside enemies, untested"
+A39.18,covered,AX-07 8.11.3,,written to a new file and swapped; kill test across 100 saves
+A39.19,missing,,,"Needs a message and safe behaviour when a save cannot be written (disk full, read-only); none written"
+A39.20,covered,AX-07 8.11.3 7.8,,partly: three rotating autosaves and last two good states; no damaged-save message or choice
+A39.21,covered,8.11.3 AX-06,,partly: old save versions are converted or refused; settings survive an update; no downloadable content exists
+A39.22,covered,10.7,,clash shows both saves; offline play is local first
+A39.23,covered,10.7,,"a clash shows both saves with day, hour and place; 5 forced clashes lose nothing"
+A39.24,covered,10.7,,same-account PCs tested 10 times
+A39.25,missing,,,"10.7 syncs the settings file too, so graphics settings could follow a save to a weaker PC; needs graphics kept per machine"
+A39.26,covered,8.5 8.1.3,G270,progress while the street prepares; G270 no load limit
+A39.27,missing,,,Needs a rule that control waits until the loaded world is ready; only a first-launch hold for shaders is set
+A39.28,missing,,,Needs a path back to title or another save when a load fails; none written
+A40.01,covered,6.4 AX-10 RT-18,,Esc pauses everywhere
+A40.02,covered,RT-18 6.3 6.2,,"clock stops only in talk and pause; Ledger, map and letters do not pause the town"
+A40.03,covered,RT-18 AX-10,,partly: clock and state frozen (save hash unchanged); animation and sound not named
+A40.04,missing,,,Needs Resume to drop queued input; 6.6 buffers a press 100 ms early but nothing clears it on resume
+A40.05,covered,AX-10,,game pauses on losing focus; 100 alt-tabs and 50 resizes tested
+A40.06,missing,,,Needs a sleep and wake test; AX-10 covers alt-tab and resizing only
+A40.07,covered,6.4 7.15,,partly: title and quit exist; pause menu's route to title not spelled out
+A40.08,covered,6.4 8.5,,Quit is on the title menu; pause menu quit not stated
+A40.09,covered,7.8 AX-07,,"by design quitting saves, so no warning is needed"
+A40.10,covered,7.8 AX-07,,partly: quit saves and saves swap in once complete; no rule to wait for a save in flight
+A40.11,missing,,,Needs a test that the process and the local voice helper (8.12.1) close within seconds of quit
+A40.12,missing,,,Needs a test that no sound plays after exit (voice helper included); none written
+A40.13,covered,AX-06 7.8 8.5,,every setting remembered; Continue returns him as saved
+A40.14,covered,6.2.3 6.2.5 6.5,,"Open answers 'what next, and where'; Tom's reading and hints again"

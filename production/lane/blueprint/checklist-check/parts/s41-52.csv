@@ -1,0 +1,214 @@
+id,verdict,parts,gap,note
+A41.01,unreal,8.3.1 8.5,,Resolution list including 21:9 at 3440 by 1440 is set; judged in the Unreal build
+A41.02,unreal,8.3.1,,"Windowed, borderless and full screen are listed; Unreal build to meet"
+A41.03,unreal,none,,No part names monitor choice; 8.3.1 would need a monitor selector line and a two-monitor test
+A41.04,unreal,8.3.1,,partly: frame cap and V-sync are set; nothing says the display refresh rate is read or honoured; needs a refresh-rate test on a high-refresh screen
+A41.05,unreal,8.3.1,,"Frame cap of 30, 60, 120 or none is set"
+A41.06,unreal,8.3.1,,V-sync is a listed setting
+A41.07,unreal,8.3.1 8.1.3,G271,"partly: Low, Medium, High ladder exists but only High is measured and no step has a target gain"
+A41.08,unreal,8.3.1 AX-03,,"partly: per-option overrides, motion blur and depth of field switches exist; the list of expensive features (shadows, volumetrics) is not written"
+A41.09,unreal,8.1.1,G269,"partly: texture pool fixed at 1,500 MB for the 6 GB line; no pool steps by card size are adopted"
+A41.10,covered,8.3.1 AX-03,G278,"Field of view 75 to 100, default 86; no pass test and car camera scaling unsaid"
+A41.11,covered,8.5 8.3.1,,partly: brightness is offered at first launch; no calibration reference picture is described
+A41.12,unreal,8.3.1,,HDR is judged with Unreal; no HDR standard or test written yet
+A41.13,covered,AX-03 8.3.1 5.4.3,,Motion blur off by default with its own switch
+A41.14,unreal,5.4.3 AX-03,G215,partly: grain is part of the grade and depth of field has a switch; no grain or chromatic aberration switch or strength is set
+A41.15,unreal,8.3.1 8.1.1,G274,Upscaler where the engine has one and a resolution scale are listed; the packaged walk draws at 55% and upscales
+A41.16,unreal,8.3.1,G274,"Frame generation is named in the row but no source covers it; needs a rule that generated frames are labelled apart from rendered ones, or a decision to leave it out"
+A41.17,covered,AX-01,,UI scale 100 to 200% checked at three resolutions
+A41.18,covered,8.3.1 AX-01 6.1.2,,partly: 21:9 is listed and text is checked at three sizes; no test for stretched people or clipped prompts at other aspect ratios
+A41.19,covered,8.3.1,,A benchmark or settings preview is listed; wording of each setting not written
+A41.20,unreal,none,,No part has a revert-if-not-confirmed timer for display changes; 8.3.1 would need one with a test
+A41.21,missing,,,"Needs a rule that any setting needing a restart says so before applying, with a menu-walk check"
+A41.22,covered,AX-06 6.6,,"Every setting is remembered, settings file compared across a restart"
+A42.01,covered,AX-04,,"Five sliders: master, voices, effects, street, music; checked at 0 and 100"
+A42.02,missing,,,AX-04 checks buses with meters but does not say a slider plays a sample while moved; add to AX-04
+A42.03,missing,,,Nothing on choosing or following the output device; needs a rule and a test for default-device change and unplugging
+A42.04,missing,,,Only a mono switch exists; no speaker or headphone mix choice in AX-04
+A42.05,covered,AX-04,,partly: loud noise softening clips gunshots to a door slam and voices-clear lifts speech 6 dB; no general quiet-listening compressor
+A42.06,out,OUT-10 8.9,,"RULINGS 23 Sep genre: English only, so one spoken and one subtitle language; subtitles on or off is AX-02"
+A42.07,covered,6.6 AX-05,,"Every action rebindable on keys and pad, per device"
+A42.08,covered,AX-05 AX-06,,partly: every action rebindable; menu navigation keys are not named as rebindable
+A42.09,missing,,,No rule for warning when two actions share a key; add to AX-05 with a rebind test
+A42.10,covered,AX-05 6.6,,Reset to defaults per device
+A42.11,covered,AX-05,,Mouse and stick sensitivity set separately for X and Y
+A42.12,missing,,,AX-05 has one sensitivity per device; no separate aiming sensitivity once guns exist (RT2-14)
+A42.13,covered,AX-05,,Invert per axis per device
+A42.14,missing,,,No dead-zone setting for sticks; add to AX-05 with a pad drift test
+A42.15,missing,,,No stick or trigger response curve options; add to AX-05 if the pad is to be a first-class device
+A42.16,covered,6.6 AX-05,,Every hold has a toggle and a hold-becomes-tap switch
+A42.17,missing,,,No vibration or haptic setting anywhere; needs a rule on whether the pad vibrates and an intensity slider
+A42.18,covered,AX-05 7.10,,"Aim-assist strength off, light, strong once guns exist; dot optional and off"
+A42.19,covered,6.5 6.6 6.1.1,,"Hints on first need, prompts follow the device last used, hints again from the Ledger"
+A42.20,covered,6.6 AX-05 1.2.1,,partly: every action rebindable and prompts follow the device; a separate on-foot and car binding set is not stated
+A43.01,covered,AX-01,,All text at least 24 units
+A43.02,covered,AX-01,,Scales 100 to 200% in Settings
+A43.03,covered,AX-01 6.1.2,,"No overlap or leaving the screen at any window size, screenshot-checked"
+A43.04,covered,AX-01,,"Body text at least 4.5 to 1, measured on 50 frames"
+A43.05,covered,AX-02 AX-01,,"Subtitle background box off, half or full; outlines on other text not stated"
+A43.06,covered,AX-11 6.1.4,,No information by colour alone; tested through three colour-blindness simulations
+A43.07,out,OUT-09 AX-11,,"OUT-09 no markers; people and key objects differ by shape and light under AX-11, so no friend or foe markers exist"
+A43.08,covered,AX-05,,partly: the aiming dot is optional and off by default; no size or colour option
+A43.09,covered,6.1.1 7.10 AX-11,,Every usable thing has a prompt; seeing outline is an assist; key objects differ by shape and light
+A43.10,covered,AX-11 7.10,,partly: key objects distinct by shape and light and an optional outline; no clutter test
+A43.11,covered,AX-09,,"Read menus aloud switch, off by default and offered on the first menu"
+A43.12,covered,AX-09,,Speaks the focused item and its value; menu walk log must show a speech event for each
+A43.13,covered,AX-09,G282,partly: menus and Ledger lines read; error and confirmation boxes are not named and in-play prompts have no test
+A43.14,covered,AX-09 6.10 6.2.2,,partly: Ledger lines are read aloud and letters go into the Ledger; letters shown as page images are not said to be read
+A43.15,covered,AX-06 6.7,,Focused item always visible; Leave always offered in talk
+A43.16,covered,AX-01 6.1.2,,Text checked at three resolutions and four window sizes
+A44.01,covered,6.1.2 AX-02,,Subtitles on by default for every spoken line
+A44.02,covered,AX-02,,Offered on the first menu before any sound
+A44.03,covered,AX-02 6.1.2,,Speaker name on by default for named people
+A44.04,covered,8.4.1,G275,partly: words at the screen edge for shouts and cars; no direction of the sound is given
+A44.05,covered,8.4.1,G275,"Sound shown assist captions loud noises, the street going quiet, shouts and cars"
+A44.06,covered,6.1.2 AX-02,,partly: line plus 0.3 s; no minimum reading time for short lines and no adjustment
+A44.07,covered,AX-02 6.1.2,,"Three sizes, box off, half or full, name on or off"
+A44.08,covered,AX-04,,Mono switch; essential information also shown by 8.4.1
+A44.09,covered,8.4.1 6.1.4,,Sound shown words and the corner light cue
+A44.10,covered,6.7 8.6.1,,"partly: no speech input exists; talk is typed or picked from suggested lines, and a whole talk can be done by pad"
+A44.11,out,OUT-03,,RULINGS 23 Sep: no multiplayer
+A45.01,covered,6.6 AX-05,,Every action rebindable individually
+A45.02,covered,AX-05,,No action needs repeated pressing
+A45.03,covered,AX-05 6.6,,Toggle for every hold and hold-becomes-tap switch
+A45.04,missing,,,No rule that no verb needs two buttons at once; add a check to AX-05 or 6.6
+A45.05,covered,7.10 6.6,,"partly: slower fight wind-ups, longer witness walks and a 100 ms early-press window exist; no general timing slider"
+A45.06,covered,AX-05 5.8.2,,partly: no quick-time events are designed and no action needs repeated pressing; cutscenes are skippable
+A45.07,covered,AX-06,,"Large stationary targets; menu walk by pad, keys and mouse"
+A45.08,missing,,,Nothing on menu or cursor speed; add to AX-05 if a pad cursor is ever used
+A45.09,covered,7.10 AX-05,,Driving help eases steering and strengthens brakes; longer fights and walks
+A45.10,covered,6.4 AX-10,,Esc pauses everywhere; pause on losing focus
+A45.11,missing,,,"Only keyboard, mouse and a pad are named; add a line and a test for adaptive controllers through the platform input layer"
+A45.12,covered,6.6 AX-05,,No motion gestures exist; every verb is a key or pad button
+A46.01,covered,6.2.3 6.5 6.2.4,,"Open page, hints and money in words in plain language; terms list not written"
+A46.02,covered,6.5 7.10,,Hints again from the Ledger
+A46.03,covered,6.4 7.13 6.10,,"partly: Esc pauses, talk stops the clock, letters open as pages; subtitle time is not adjustable"
+A46.04,missing,,,"No rule that a menu action shows what changed (setting applied, game saved); add to AX-06 with a menu-walk check"
+A46.05,covered,7.10,,"Each assist changes only its own thing, all off by default"
+A46.06,covered,7.10 AX-06,,"Settings are reachable from pause; assists apply without a restart is implied, not tested"
+A46.07,covered,6.9 7.10,,"partly: lost-for-90-s landmark line, a passer-by after 3 minutes, directions kept in the Ledger; no markers by OUT-09"
+A46.08,covered,AX-03,,"Switches for shake, head bob, close-in and blur"
+A46.09,missing,,,On-foot camera follow (1.1.2) has no recentring control or setting; add to AX-03 or 1.1.2
+A46.10,covered,AX-03,,Reduce flashing switch and photosensitivity line
+A46.11,missing,,,AX-03 title names background movement but no menu animation switch is described; add one or state menus are still
+A46.12,missing,,,No rule on pulsing UI or notification frequency beyond hint spacing (6.5); add a no-pulse line
+A46.13,covered,10.2 AX-03,,partly: rating target and photosensitivity line shown once guns flash; no in-game content note at start
+A46.14,covered,AX-06,,Every setting remembered and survives an update
+A47.01,out,OUT-10 8.9,,"RULINGS 23 Sep genre: English only, no localisation"
+A47.02,out,OUT-10 8.9,,RULINGS 23 Sep genre: English only
+A47.03,missing,,,"No glyph test; English only still needs pound sign, dashes and curly quotes checked in the chosen faces"
+A47.04,out,OUT-10,,"RULINGS 23 Sep genre: English only, no translation"
+A47.05,out,OUT-10,,RULINGS 23 Sep genre: English only
+A47.06,missing,,,"No names-and-terms check across dialogue, map and Ledger; 4.9 brand bible owes six names; add a names list check to 9.7"
+A47.07,covered,6.6 6.1.1,,partly: prompts follow the device last used; showing the rebound key is not stated
+A47.08,missing,,,Decide in or out: no name entry exists (Tom is fixed); typed talk accents are not tested
+A47.09,covered,6.2.4 4.9,,Money is pounds and pence in words; 1990 units only
+A47.10,out,OUT-10,,RULINGS 23 Sep genre: English only
+A47.11,missing,,G290,No check for placeholder keys or internal labels on screen; text out of code has no named test
+A47.12,out,OUT-10,,"RULINGS 23 Sep genre: English only, no language switch"
+A48.01,covered,8.1.1 8.11.1,G269,60 fps at 3440 by 1440 never under 30; browser frame median 16.7 ms
+A48.02,covered,8.1.1 8.11.1,,"Median, worst and ceiling frame times set; slowest 1% measured"
+A48.03,unreal,8.1.3,G271,PSO precaching and a hold on the first loading screen; no hitch limit or test set
+A48.04,unreal,8.1.2,G270,Named only; no load time or hitch limit; the soft edge is a time skip
+A48.05,unreal,8.1.2 8.10,G270,"Named only; collision has a soak test, streaming ahead of the player has none"
+A48.06,unreal,8.1.2,G270,No texture streaming limit or test; needs a pop-in and texture-resolve standard
+A48.07,unreal,8.1.2,G270,No pop-in distance set
+A48.08,covered,8.1.1 8.11.1,G269,Budgets stated for the busiest view in rain and at night; people and shadow caps not yet adopted
+A48.09,covered,6.6 8.11.2,,partly: every action answers in 100 ms and a job queue caps heavy work at 2 ms a frame; no menu test while busy
+A48.10,covered,8.5 6.4,,Progress shown while shaders and the street prepare; new game to control within 20 s
+A48.11,covered,10.5 GV-05 8.10,,2-hour soak and whole-evening walks with zero crashes; 8.11.1 memory at week 7
+A48.12,covered,AX-10 8.3.1,,partly: 50 resizes tested; changing presets or display mode live is not tested
+A48.13,missing,,,No test for plugging or changing audio or input devices in play
+A48.14,covered,AX-10,,"100 alt-tabs, no crash, stuck key or changed state"
+A48.15,covered,8.11.2,,Fixed 1/60 s step; timings independent of frame rate
+A48.16,covered,AX-07 7.8 8.11.3,,Process killed at random during 100 saves; good save always loads
+A48.17,covered,AX-07 8.2.1 7.8,,"Rotating autosaves, a crash loses at most the last deed, crash report on next launch"
+A48.18,missing,,,"No rule for plain-words error messages (save failed, disk full); 8.6.1 covers only the talk fallback"
+A48.19,covered,GV-05 8.10 AX-10,,Never stuck is a release bar; stuck over 5 s is zero
+A48.20,covered,AX-06 8.11.3 10.6,,Settings survive an update; save converter; saves in Steam Cloud; patches not designed (G297)
+A49.01,covered,10.7,,Steam first; saves and settings sync through Steam Cloud on the same account; local multi-user not described
+A49.02,missing,,,No rule for signing out of Steam in play or offline start; add to 10.7 with a test
+A49.03,missing,,,No rule for pad ownership or unplugging a pad in play; add to AX-10 or 6.6
+A49.04,covered,AX-10 10.9,G298,"partly: pause on lost focus covers an overlay opening; no overlay test, and pop-ups in play are unsettled"
+A49.05,missing,,,Photo mode saves its own pictures (6.8) but nothing tests Steam screenshot keys in the packaged build
+A49.06,missing,,,"Decide in or out: 10.7 says no achievements at release (Q16 recommends it, not yet ruled)"
+A49.07,covered,10.7,,partly: Steam Cloud sync and clash picker for saves; no achievements to sync
+A49.08,missing,,,Decide in or out: 10.6 allows paid district updates but no rule recognises owned content
+A49.09,missing,,,No rule for a save made with content the install lacks; needed once districts are added after release
+A49.10,covered,10.11 8.2.1,,AI notice before the first typed line; crash report asked once; nothing sent before a yes
+A49.11,covered,8.2.1 10.11,,Report and typed text only on a yes; offline play is an equal choice
+A49.12,missing,,,No sleep and resume test; talk service connection after resume is also unplanned
+A49.13,out,,,"canon project facts: PC only, on Windows; handheld platforms not targeted (AX-01 still tests 1280 by 720)"
+A49.14,covered,AX-07 7.8,,Save written to a new file and swapped in only when complete; process-kill test
+A50.01,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.02,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.03,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.04,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.05,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.06,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.07,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.08,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.09,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.10,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.11,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.12,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.13,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.14,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.15,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.16,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.17,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.18,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.19,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.20,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.21,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.22,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.23,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.24,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A50.25,out,OUT-03,,RULINGS 23 Sep genre: no multiplayer; OUT-03 single player only
+A51.01,covered,6.8,,Freezes the town; leaving restores the state exactly (save hash)
+A51.02,covered,6.8,,Reachable from pause only; 200 random sessions tested for state change
+A51.03,covered,6.8,,All interface hidden; saved picture tested for interface pixels
+A51.04,covered,6.8,,partly: pictures are saved at window size; the folder and finding them are not said
+A51.05,missing,,,Music is invented or made for the game (5.7.1) so licence obstruction is unlikely; no stated streamer-safe position or check
+A51.06,covered,6.2.2 6.5 10.11,,"partly: Day book, hints again and the AI notice can be read again; cutscenes (ferry shot) are not said to be rewatchable"
+A51.07,covered,6.4 10.4,G239,partly: credits are a menu item; whether they open from the title is not stated
+A51.08,missing,,G295,"No credits screen designed; needs scroll, pause and exit controls"
+A51.09,covered,7.15,,Ledger last page says no new main beats; the clock runs on
+A51.10,covered,7.15 RT2-21,,Play returns in the town within 10 s at the ending state
+A51.11,covered,7.15 GD-04,,partly: no New Game Plus by design; named replay differences; no chapter select
+A51.12,covered,6.2.2 6.2.3,,partly: Open lists what remains and the Day book what is done; no completion count by OUT-06
+A51.13,covered,6.2.3 6.2.5 6.2.2,,Open answers what next and where from the Ledger alone; Tom reading
+A1,missing,,,"No splash, logo or legal notice screen at launch; 10.4 and 8.12.3 give the notices and 8.5 the first screen"
+A2,covered,8.3.1 8.5 8.1.3,,"First launch finds a picture the PC can keep smooth, then offers presets, brightness and scale"
+A4,missing,,,The crash report holds the build (8.2.1) but no build version is shown to the player; add to the title or settings page
+D1,covered,6.6,,Keyboard with mouse reaches every verb
+E4,covered,AX-05,,partly: separate sensitivity and invert; no acceleration option
+F2,covered,6.2.3 6.2.2,,"Open lists jobs, debts, promises and appointments with landmarks; no markers by OUT-09"
+F7,covered,AX-09,,Menus and Ledger read aloud by the system speech voice
+H9,unreal,5.2.5 8.1.1,G269,"3 ms animation budget proposed in Study 12, not adopted; Unreal-only"
+J9,covered,4.3.1 4.3.4 FIT-P34 GV-04,,At least 24 rooms open; places stay open
+K7,covered,2.6.1 2.6.10 2.6.3 2.6.4,,"Beat constable, patrol, arrests as hours, police after a deed"
+N7,covered,6.7 3.6.1 8.12.2,,"Anyone named can be spoken to live, with memory; voices on Pocket; Tom is text"
+O6,out,OUT-06 6.2.5,,OUT-06 no stats; the Day book and Tom reading are the only record
+P3,unreal,5.4.3 5.4.1,G215,"Grade, grain and depth of field named only; no target values"
+Q5,missing,,G271,No minimum specification or hardware floor; 8.1.3 says none set
+R11,covered,AX-08,G281,"Accessibility page and the same list on the store page, script-checked; store page text not written"
+S5,out,OUT-10,,RULINGS 23 Sep genre: English only
+T1,covered,10.1 10.2 10.8 10.6,G292,"partly: store, build and Coming Soon rules exist; installer and patching not designed"
+T4,covered,10.2,,"Steam survey, PEGI 16 target and what would push it to 18"
+T5,covered,10.4 9.7.1 8.12.3,,partly: third-party notices and credits checked by a script; the game own EULA is not mentioned
+T6,missing,,,"No statement on DRM or anti-cheat; single player, so decide whether Steam wrapper or none"
+T7,missing,,,No rule on Steam terms or button names in text; 6.6 prompts follow the device but naming is not set
+U3,covered,8.2.1 10.9,G272,"Report a problem in pause, support address, test reports reach the inbox"
+U4,covered,10.6,G297,partly: districts after release named; patch notes and a patch plan are not designed
+U5,covered,10.3 10.5,,"Friends builds from phase 4, the panel of eight on a whole playthrough"
+V1,covered,5.6.1 5.6.2 5.6.3,G223,Voices chosen per character on his yes; others not yet cast
+V10,covered,10.4,G295,partly: credits obligations set; no credits screen or full name list yet
+V2,covered,5.2.7 5.2.1,,partly: clips from libraries and CMU capture; no own capture or performance direction
+V3,covered,5.7.1 FIT-P09 9.7.1,G226,"partly: music from places, made for the game or invented; no list, composer or licence plan"
+V4,covered,4.9 8.8 10.10,,partly: no real brand or person in print or speech; brand bible owes six names; name search is his
+V5,covered,10.8,G299,partly: sizes and hour estimates; no trailer brief
+V6,covered,5.10 5.11,,"Hook sheet, dated photographs, standards and teardowns"
+V7,covered,3.6.3 3.6.4 8.8 GD-08,,partly: written lines checked once and word-list gated; no editing pass or volume plan
+V8,covered,9.5 10.5 GV-05,,"Bot, scripted tests, nightly packaged walk and release passes; no localisation by OUT-10"
+V9,covered,10.1 9.5 9.7,,"Packaged release build walked by the tester, guards on every commit"

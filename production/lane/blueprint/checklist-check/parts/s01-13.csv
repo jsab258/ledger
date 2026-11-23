@@ -1,0 +1,267 @@
+id,verdict,parts,gap,note
+A01.01,covered,8.5,,Unreal build starts from its shortcut; the browser build is a page
+A01.02,covered,8.5 8.1.3,,progress shown while shaders and the street prepare
+A01.03,covered,8.5,,starts from one shortcut with talk program and voice inside
+A01.04,covered,6.4 8.5,,"partly: title screen with New game, Continue and Quit; no window title or splash rule"
+A01.05,unreal,8.5 8.3.1,,opens at a sensible size; first launch finds a smooth picture; Unreal only
+A01.06,unreal,8.3.1 8.5,,none names which monitor it opens on; Unreal build needs a monitor choice and a test
+A01.07,covered,AX-04 5.5.7,,"partly: five volume sliders, but no first-launch level is set"
+A01.08,out,OUT-10 8.9,,"OUT-10 English only, no localisation"
+A01.09,covered,AX-02 6.1.2,,subtitles on by default and offered on the first menu before any sound
+A01.10,covered,AX-02 AX-04 AX-09 AX-06,,assists offered on the first menu; settings reachable before play
+A01.11,covered,10.11 8.2.1,,partly: the AI notice and crash-report consent are plain screens; no account beyond Steam is asked
+A01.12,covered,8.6.1 10.11,,offline mode plays the whole first hour on written lines
+A01.13,covered,8.6.1,,"offline or slow, written street carries on with an in-character brush-off"
+A01.14,covered,8.5 8.1.3,,progress while shaders and the street prepare
+A01.15,missing,,G285,Decide in or out: no rule for a message while the store is still installing or updating content
+A01.16,missing,,G285,Decide in or out: no start-failure message saying what failed and what to do; 8.2.1 covers only the crash report after a crash
+A01.17,covered,AX-06 8.5,,"partly: every setting is remembered and survives an update; first-run choices (presets, brightness, scale) are not named as remembered"
+A01.18,missing,,,"Decide in or out: no start logos are named, so no skip rule exists; needs one line if the store or engine adds any"
+A02.01,covered,6.4 7.8,,"title menu offers New game, Continue and Quit; save and load is its own screen"
+A02.02,covered,6.4 AX-07 8.5,,partly: Continue returns him as saved; no rule says which of manual and autosave counts as latest
+A02.03,covered,6.4 AX-07 7.8,,partly: eight manual slots and three autosaves; no explicit warning when New game would push out autosaves
+A02.04,covered,AX-06,,focused item always visible
+A02.05,covered,AX-06 6.4,,partly: menu walk logs focus on every screen; order itself is not specified
+A02.06,covered,AX-06 6.6,,partly: Back always goes one level up; confirm is not named as one fixed control
+A02.07,covered,AX-06,,Back goes one level up on every screen and never quits
+A02.08,covered,AX-06 6.4,,"menu walk by pad, keys and mouse on every screen"
+A02.09,covered,AX-06,,partly: large stationary targets; hit area matching the drawn button is not stated
+A02.10,missing,,,"needs a line that the save list, settings and Ledger scroll with the wheel, plus a menu-walk check"
+A02.11,covered,AX-06 6.6,G241,partly: menu walk by pad is a test; the pad layout is not yet written
+A02.12,covered,AX-06,,partly: focus always visible; scrolling lists not named
+A02.13,missing,,G280,needs a rule that an unavailable option says why (for example Continue with no save)
+A02.14,covered,6.4 AX-06 6.7,,"partly: nothing destructive one press from Resume, and irreversible talk choices ask twice; no confirm named for deleting a save or quitting"
+A02.15,missing,,,"needs a rule that a pop-up dialogue takes all input and nothing behind it fires, with a menu-walk check"
+A02.16,missing,,,"needs a rule that a menu returns to the same item after a detail screen; AX-06 remembers settings, not position"
+A02.17,covered,6.7 3.6.8 8.6.1,,partly: talk typing works by keyboard or suggested lines by pad; no menu text entry such as save names
+A02.18,covered,3.6.8 8.6.1 3.6.6,,on a pad suggested lines show at once with an on-screen keyboard
+A02.19,covered,8.5 6.4 8.11.1,,partly: progress shown at start-up; budget for new game to control; no busy sign for other accepted choices such as load
+A02.20,missing,,,"needs a rule and test that a double click or press cannot start load, save or new game twice"
+A03.01,covered,1.1.1 6.6,,every action answers within 100 ms
+A03.02,covered,1.1.1 1.1.2 5.8.1,G7,partly: mouse look never jumps and blends take 1 s or less; follow lag has no number
+A03.03,covered,6.6 1.6.8 6.1.1,,one use key for every usable thing; fixed keys list
+A03.04,covered,6.6,G241,partly: prompts follow the device last used; pad layout is not written
+A03.05,covered,6.6 AX-05,,partly: every action can be rebound; prompts showing the new key is not stated
+A03.06,covered,6.6,,keyboard with mouse and pad each reach every verb; prompts follow the last device used
+A03.07,missing,,,Decide in or out: gyro or other simultaneous pad aiming is not mentioned; aiming is by mouse or stick (RT-10)
+A03.08,covered,6.1.1,,"partly: use-key misfire test (500 presses, zero); no general one-press-one-action check"
+A03.09,covered,6.6 AX-05,,every hold has a toggle and a hold-becomes-tap switch; held press used for pocket and gun draw
+A03.10,missing,,,"needs a rule that a hold shows progress (pocket lift, gun draw, search) and a check that it does"
+A03.11,covered,6.6 1.1.1,,a press 100 ms early still counts
+A03.12,missing,,,"needs a rule for opposite or clashing inputs (both strafe keys, keys plus stick) and a test"
+A03.13,covered,1.1.1,,partly: starting and stopping have a short ease; stop on release is not tested as such
+A03.14,covered,AX-10,,no stuck key after losing focus (100 alt-tabs); menu-open case not named
+A03.15,missing,,,needs a rule and test that the click or press that closes a menu does nothing in play
+A03.16,missing,,,needs a rule that input held through loading or the ferry shot does nothing on arrival
+A03.17,covered,1.1.1,,partly: a light stick touch walks slowly; fully analogue speed is not stated for foot
+A03.18,missing,,,needs a line and test that diagonal speed equals straight speed on keys and stick
+A03.19,missing,,G241,needs pad dead-zone defaults and a setting; AX-05 has sensitivity and invert only
+A03.20,missing,,,needs a line that mouse look has no acceleration (raw input) in AX-05
+A03.21,missing,,,"needs a rule for pad unplugged mid-play (pause, prompt change) and a test"
+A03.22,missing,,,needs a rule that a pad reconnects without restart and a test
+A03.23,covered,FIT-G4 8.11.2 1.1.1,,partly: speeds never depend on frame rate and logic runs on a fixed step; input sampling is not named
+A03.24,missing,,,needs a rule for which pad drives when two are connected (single player)
+A04.01,covered,7.1 5.8.2,,ferry shot of 20 s then control at 0:20; skippable
+A04.02,covered,7.1 1.1.2,,control starts on Quay Street with the camera at the Between height looking down the street
+A04.03,covered,7.1 1.1.3,,partly: control within 1.5 min and never stuck; no named safe space for trying moves
+A04.04,covered,7.1 1.1.2 6.5,,partly: control at 0:20 and a hint after 4 s standing still; no camera hint named
+A04.05,covered,7.1 6.2.3,,"Sheila walk-round at 1:45, first verb by 3 min, Open lists what next and where"
+A04.06,covered,7.1 6.9 6.2.3,,every go-to step names its place by landmark; newcomer reaches a place in 3 min
+A04.07,covered,6.5 6.1.1,,hints fire the first time they can mean something; prompt names what is ahead
+A04.08,covered,6.5 6.6,,partly: prompts follow the last device; rebound keys not stated
+A04.09,covered,6.5,G240,partly: never two hints within 12 s; on-screen time of one hint is not set
+A04.10,missing,,G240,"needs a rule that a taught action is confirmed when done, with a test"
+A04.11,covered,6.5,,"""hints again"" brings them back from the Ledger"
+A04.12,covered,6.5,,partly: a hint fires only when it can mean something; an action done early is not named
+A04.13,covered,6.5,,each hint fires once
+A04.14,covered,6.5 6.6,,partly: hints again from the Ledger; no controls page named
+A04.15,covered,6.5,,"partly: hints come on need or hesitation only, nothing forced; no skip switch"
+A04.16,covered,7.1 1.1.3 7.9,,"never stuck within 5 s, no game over, hints only on hesitation"
+A05.01,covered,1.1.2 5.8.1,,mouse look free; camera arm by state
+A05.02,covered,1.1.2 5.8.1,,"3.1 m back on foot, 3.5 to 5.0 m in a fight, 5.8 m in a car"
+A05.03,covered,AX-03 8.3.1 5.8.1,,"86 degrees default, setting 75 to 100"
+A05.04,covered,1.1.2 5.8.1,,feet always in frame; both men's feet in 90% of fight frames
+A05.05,covered,1.1.2 5.8.1,G7,partly: blends 1 s or less; follow lag has no number
+A05.06,covered,1.1.2 5.8.1,,"never ends inside a wall, body, car or lamp post; clip detector soak"
+A05.07,covered,1.1.2 5.8.1,,partly: blends in a second or less; recovery after an obstruction is not named
+A05.08,covered,1.1.2,G16,comes in front of thin things; lamp posts named
+A05.09,missing,,,needs a rule for fading or hiding Tom when the camera is close in rooms
+A05.10,covered,1.1.2 5.8.1,G228,closer camera in rooms and talk; screenshots in tight rooms
+A05.11,missing,,,needs a camera check on stairs (up and down) in the Mickey's and flat soak
+A05.12,out,OUT-08,,OUT-08 no climbing
+A05.13,missing,,,"needs a rule that the camera never overrides mouse or stick input, plus a test"
+A05.14,missing,,,Decide in or out: no recentre key or behind-the-back rule is named
+A05.15,covered,5.8.1 5.8.3,,"blends of 1 s or less between street, run, room, talk, fight and car rows"
+A05.16,out,OUT-08,,"OUT-08 no crouch, no prone"
+A05.17,covered,RT-10,,partly: gun aim row with no crosshair; sightline and camera offset are not specified
+A05.18,missing,,,Decide in or out: shoulder switching is not mentioned in the gun aim row
+A05.19,out,1.3.3,,"design 1.3.3 no lock-on (design-proof decision, not his ruling)"
+A05.20,out,1.3.3,,"design 1.3.3 no lock-on, so nothing to release"
+A05.21,missing,,,needs a rule for where the camera and heading land after the ferry shot or any scene
+A05.22,covered,AX-03 5.8.1,,partly: shake obeys Reduce motion and has its own switch; no rule that shake never hides information
+A05.23,covered,AX-03,,partly: each motion effect has a switch; no horizon or roll rule outside photo mode
+A05.24,missing,,,needs a rule that move keys keep a sensible heading after a camera cut or blend
+A06.01,covered,1.1.1 FIT-G4,,"walk 1.6, slow walk 0.9, run 5.5 m/s"
+A06.02,covered,1.1.1 FIT-G4 5.2.1,,run at 5.5 m/s for chases; no stamina
+A06.03,covered,1.1.1,G6,partly: weight and short ease named; start and stop numbers wait on measuring
+A06.04,covered,1.1.1,G6,partly: short ease on stopping; no numbers
+A06.05,covered,5.2.1 1.1.1,,motion matching with no foot sliding; quick turning
+A06.06,covered,5.2.1 1.1.1,,partly: motion matching; turn on the spot is not specified
+A06.07,missing,,,needs a line on backing-up gait (he backs out of rooms and off fights) in 5.2.1 or 1.1.1
+A06.08,missing,,,needs a line on sideways gait (or that movement always faces travel) in 5.2.1 or 1.1.1
+A06.09,covered,5.2.1 1.1.1,,partly: motion matching and eased movement; blends not tested
+A06.10,missing,,,needs a stated rule for movement relative to camera (camera-relative on keys and stick) and a test
+A06.11,covered,1.1.3 8.10,,partly: never stuck within 5 s and no pass-through; kerbs and seams not named
+A06.12,covered,1.1.3 8.10,G8,"stairs walked, not snagged on; no speed or time"
+A06.13,missing,,,needs a slope rule (Quay Street climbs 48 m from the quay) and a walk test
+A06.14,missing,,,needs a slope limit and what stops him; the town is mostly flat but nothing says so
+A06.15,covered,8.10 1.1.3,,partly: zero stuck over 5 s in the soak; small decoration not named
+A06.16,covered,8.10 1.1.3,,partly: never stuck over 5 s; sliding along walls is not stated
+A06.17,out,OUT-08,,OUT-08 no crouch
+A06.18,out,OUT-08,,"OUT-08 no crouch, so nothing to stand through"
+A06.19,out,4.6.2,,RULINGS 23 Sep: boats and buses are scenery; Tom rides cars only (1.2.8)
+A06.20,covered,1.1.4 FIT-G4 1.3.11,,holdall slows him; a limp for a day after a beating; slow walk
+A06.21,covered,1.1.3 8.10,,within 5 s he moves on or a short in-world reset puts him on clear ground
+A07.01,out,OUT-08,,OUT-08 no jump key (RULINGS 23 Sep genre: no jump)
+A07.02,out,OUT-08,,OUT-08 no jump key (RULINGS 23 Sep genre: no jump)
+A07.03,out,OUT-08,,OUT-08 no jump key (RULINGS 23 Sep genre: no jump)
+A07.04,out,OUT-08,,"OUT-08 no jump or climbing, so no drops; the quay edge stops him (4.2.4)"
+A07.05,out,OUT-08,,"OUT-08 no jump or climbing, so no drops; the quay edge stops him (4.2.4)"
+A07.06,out,OUT-08,,"OUT-08 no jump or climbing, so no drops; the quay edge stops him (4.2.4)"
+A07.07,covered,1.1.8,,vault places are marked in the map data and prompted
+A07.08,covered,1.1.8,,"under about 1.2 m, running at it, about 0.8 s; thickness not named"
+A07.09,covered,1.1.8 OUT-08,,"partly: vault only, no mantle or climb; hand placement not stated"
+A07.10,covered,1.1.8 OUT-08,,"vaults only at set marked places, nowhere else"
+A07.11,out,OUT-08,,OUT-08 no climbing
+A07.12,out,OUT-08,,"OUT-08 no climbing, so no ladders for Tom"
+A07.13,out,OUT-08,,"OUT-08 no climbing, so no ladders for Tom"
+A07.14,out,OUT-08 1.1.8,,OUT-08 no climbing; vault points are the only marked ones
+A07.15,out,OUT-08 4.2.4,,OUT-08 no swimming; Tom never enters the water (4.2.4)
+A07.16,out,OUT-08 4.2.4,,OUT-08 no swimming; Tom never enters the water (4.2.4)
+A07.17,out,OUT-08 4.2.4,,OUT-08 no swimming; Tom never enters the water (4.2.4)
+A07.18,out,OUT-08 4.2.4,,OUT-08 no swimming; Tom never enters the water (4.2.4)
+A07.19,out,OUT-08 4.2.4,,OUT-08 no swimming; Tom never enters the water (4.2.4)
+A07.20,out,OUT-08,,OUT-08 no climbing and no grapples or ropes
+A08.01,unreal,5.1.1 5.1.2 5.10,,MetaHuman faces and bodies judged in Unreal against the Hook sheet; no all-angle check named
+A08.02,unreal,5.1.2 5.3.1 4.1.5,,bodies fixed in F:\LedgerTools; building kits from dated photographs; needs a scale check in the Unreal gate
+A08.03,unreal,5.1.4 5.1.2,,"clothes fit the bodies, no clipping or holes (floor)"
+A08.04,unreal,5.1.2,,"none names hands; needs a hands check in the Unreal gate (close-ups, held items)"
+A08.05,unreal,5.1.1 5.2.4,,partly: faces judged at talking distance; eyelids and gaze not named
+A08.06,unreal,none,,"needs a mouth-interior check in the Unreal gate (teeth, tongue in talk close-ups)"
+A08.07,unreal,5.1.3,,"hair pass list: by day, night, wet, from behind, at four distances"
+A08.08,unreal,5.1.4 5.3.2 5.10,,"clothes floor and calibrated reflectances; no list of cloth, leather and metal to tell apart"
+A08.09,covered,1.6.10 1.6.9 1.1.4,,"three outfits and a dark coat show on him; holdall seen, coat items unseen"
+A08.10,covered,5.2.3 1.1.4,,partly: holdall in hand; no rule for correct hand or orientation beyond no glitches
+A08.11,covered,1.6.9 1.1.4,,partly: gear under the coat is unseen by design; no holster
+A08.12,unreal,5.1.4 5.2.3,,no clipping or holes; poses in the gate
+A08.13,unreal,5.4.2 5.1.4,,none names character shadows; needs a shadow check in the Unreal gate
+A08.14,missing,,,"needs a line that the ferry shot, talk and play use the same character assets and outfit state"
+A08.15,unreal,5.1.3 5.1.4,,"hair judged at about 1, 3.1, 10 and 25 m with no colour change or popping; faces and bodies by LOD not named"
+A08.16,covered,1.3.11 5.9 1.4.4 5.3.2,,"partly: bruises, cut lip, limp, blood and dirt shown on him; wet clothes in rain not stated"
+A08.17,out,OUT-02,,OUT-02 no first-person view
+A09.01,unreal,5.2.5,,idles must not hold still; breathing not named
+A09.02,unreal,5.2.5,G204,"random start, play rate 0.9 to 1.1; idle counts not set"
+A09.03,unreal,5.2.1,G200,"feet must not slide; 3 cm a contact in research, test not run"
+A09.04,unreal,none,,needs foot placement on stairs and uneven ground in 5.2.3 or 5.2.1 and a check in the Unreal gate
+A09.05,unreal,none,,needs the same Unreal check (leg bend on steps and kerbs)
+A09.06,unreal,5.2.1,,motion matching with feet not sliding; speeds set
+A09.07,unreal,5.2.1,,partly: motion matching only; lean is not named
+A09.08,unreal,5.2.1,,motion matching blends walk and run
+A09.09,unreal,5.2.1 5.2.3,,"none says upper-body actions play over walking (carry, smoke, search); needs a layered-animation line"
+A09.10,unreal,5.2.6 5.2.4,G208,head turns first at the start of recognition; independence from torso is not specified
+A09.11,unreal,5.2.3,G202,only standard is that none glitches
+A09.12,unreal,none,,"needs finger poses for held things (holdall, cigarette, gun) in the Unreal gate"
+A09.13,unreal,none,,"needs two-handed holds named (a box, a gun) or ruled out"
+A09.14,unreal,5.2.3 1.1.7,,sit is named as an interaction; contact with the seat is not
+A09.15,unreal,5.2.3 1.1.7,G202,sit and stand named; transitions have no timing
+A09.16,unreal,5.2.1 5.2.3 5.2.2,G202,holdall run speed set; carry and weapon animation sets not listed
+A09.17,covered,5.2.8 1.3.1,,a struck man reels by the side he was hit
+A09.18,unreal,none,,needs a rule that cut-off animations blend to a valid pose (gate check)
+A09.19,covered,5.2.8 RT2-11,G207,partly: rolls once and sits up within 5 s; clip count and final-pose match not set
+A09.20,covered,RT2-12 5.2.8 8.10,G291,partly: falls follow hit direction and speed bands; ragdoll blend not designed
+A09.21,covered,8.10 5.2.8,,partly: nothing passes through floors or walls; resting contact not named
+A09.22,unreal,5.1.3 5.1.4 9.1.8,,hair strands and loose cloth parts simulated; follow-through not tested apart from the gate
+A09.23,unreal,none,,needs a check that nobody shows a default pose on streaming in (Unreal gate)
+A09.24,covered,5.2.5,,random start and play rate 0.9 to 1.1 with neighbours differing
+A10.01,covered,5.2.4 5.2.9,G208,partly: both face each other with a glance before a live answer; eyes alone not named
+A10.02,covered,5.2.6 1.4.1,,partly: head turns for recognition; a stranger turning to an approaching Tom is not named
+A10.03,missing,,G208,needs a gaze rule that the torso follows when Tom is beyond a comfortable head angle
+A10.04,unreal,none,,needs neck and head limits in the Unreal gate for the head turns of 5.2.6
+A10.05,covered,5.2.4,G208,partly: both face each other at about 1.5 m; gaze target not specified
+A10.06,missing,,G208,needs a gaze rule for occasional breaks of eye contact in talk
+A10.07,unreal,none,,needs a blink check in the Unreal gate (MetaHuman faces)
+A10.08,covered,5.2.4 5.2.9,G203,partly: mouths follow loudness only; no expression list
+A10.09,missing,,G208,needs a listener-reaction rule during live and written lines
+A10.10,missing,,G208,needs a gesture set for talk; 5.2.9 says gestures are not designed
+A10.11,covered,2.5.3 3.7,,partly: after a seen deed people look and gather; shared attention at other times not named
+A10.12,covered,1.3.4 5.2.6,,the ladder from stare and square up to threat shows in posture and face
+A10.13,missing,,,needs a reaction rule when Tom stands too close to a stranger or stares
+A10.14,covered,2.1.1 2.5.3 5.2.5,,people go back to their routine; a crowd drifts back after a deed
+A11.01,covered,6.1.1 1.6.8 AX-11,,everything usable has a prompt; key objects distinct by shape and light
+A11.02,covered,6.1.1,,prompt held 0.2 s before it changes
+A11.03,covered,6.1.1,,prompt names the person or thing ahead and in view
+A11.04,missing,,,needs a use range in metres and a check (reach versus the visible object)
+A11.05,covered,6.1.1,,partly: prompts only for what is ahead and in view; wall test not named
+A11.06,covered,6.1.1,,one prompt asks which when two things share a key; a person with a word comes before a door
+A11.07,covered,6.1.1 1.6.8,,the prompt names what the action will do
+A11.08,covered,6.2.2 6.1.3,,partly: Day book and belief line record results; no general success cue for each interaction
+A11.09,covered,1.1.3 FIT-P34,,a locked door says it is locked; other doors say so
+A11.10,missing,,,"needs a progress sign for timed searches (2, 4 and 5 s) and the held pocket lift"
+A11.11,missing,,,needs a cancel rule for searches and holds (stepping away aborts)
+A11.12,covered,1.1.3 8.10,,partly: doors open with the use key and never catch; door collision state not named
+A11.13,covered,1.1.3 1.2.3 8.10,,never stuck over 5 s; a blocked car door never traps him
+A11.14,missing,,,"needs a rule for a door blocked by a body or prop (stop, push or refuse) and a test"
+A11.15,covered,1.1.3 FIT-P34 1.6.1,,a locked door says it is locked; keys and force are the ways in
+A11.16,covered,1.6.2 FIT-P52,,"partly: drawers, desks and wardrobes searched and found items authored; visible opening not stated"
+A11.17,covered,1.6.2 1.6.3,,partly: taking is one press and goods leave the place; visible removal not stated
+A11.18,covered,1.3.6 1.6.7,,partly: dropped weapons and left things stay in the world; landing place not ruled
+A11.19,covered,6.10,,letters open on screen as a page and go into the Ledger
+A11.20,missing,,,needs a line that closing a letter or inspect view returns him to the same spot and camera
+A11.21,covered,1.6.8 RT2-19,,"kettle, radio, fare book, tin and phones each used by the use key"
+A11.22,covered,2.1.1,,partly: places have a cap and an owner for people; Tom and a person on one object not named
+A11.23,covered,2.2.6 1.6.2 1.6.3,,"places labelled public, open by hours, private or forbidden; taking and lifts are deeds seen like any"
+A11.24,missing,,,needs a rule for an interaction ending cleanly when its object is broken or taken (1.6.14 breaks things)
+A12.01,covered,8.10,,zero pass-throughs and zero stuck over 5 s in a 2-hour soak
+A12.02,covered,8.10,,nothing passes through walls
+A12.03,covered,8.10,,partly: pass-through detector; collision fit to the visible shape is not checked
+A12.04,covered,1.1.3 8.10,,"door use under 2 s, never catches"
+A12.05,missing,,,"needs a rule for small loose props (bins, crates, stones) so they do not block him"
+A12.06,missing,,,"needs a weight line for heavy props (crates, barrels) and a test"
+A12.07,missing,,,"needs one gravity and a drop test for thrown stone, dropped items and bodies"
+A12.08,missing,,,needs a settle-time rule for props and bodies (sleep after a set time)
+A12.09,covered,8.10,,partly: no car launches or spins on a touch; props not named
+A12.10,covered,8.10,,"zero pass-throughs including cars, checked by detector"
+A12.11,covered,8.10,,nothing passes through bodies or cars
+A12.12,missing,,,"needs a rule for being blocked by a friend or crewman (swap, nudge or wait)"
+A12.13,missing,,,"Decide in or out: no moving machinery (cranes, lorry tail-lifts, barriers) is designed at the docks"
+A12.14,covered,1.2.1 5.5.1,,partly: rain lowers car grip and footsteps differ by surface; on foot no friction
+A12.15,covered,5.5.2 5.5.6 5.5.1,G217,"doors, impacts and blows have their own sound layers"
+A12.16,covered,2.19 1.6.14 5.3.2,,glass and damage stay until mended; remnants not itemised
+A12.17,missing,,,needs a rule that a broken window or door changes collision and what he can pass through
+A12.18,covered,8.10,,"partly: soak of walking, driving and fights; props on uneven ground not named"
+A13.01,covered,2.1.1 2.1.2 3.7,,everyone keeps a routine; crowd keeps clock windows
+A13.02,covered,2.1.2 5.2.5 5.1.5,G199,partly: activity from routines and idle variation; pace and posture variety has no rule
+A13.03,covered,2.1.5,G77,crowd walks round people and things without jams; no distances yet
+A13.04,covered,2.1.5,G77,partly: avoidance and step-aside timing still to be measured
+A13.05,covered,3.6.4,,partly: crowd lines for bumping into someone; no body reaction is named
+A13.06,missing,,,"needs a rule for people reacting to Tom blocking their way (a remark, then a step round)"
+A13.07,covered,2.1.1 2.1.5,,caps and owners per place so no doorway jams; 30-minute crowd walk
+A13.08,covered,2.1.1 8.10,,partly: every walk arrives and nothing passes through walls; stairs not named for crowd
+A13.09,covered,5.2.3 1.1.7 5.2.5,G204,"partly: sit, lean and smoke are named interactions; NPC work and sit idles are not built"
+A13.10,missing,,G204,"needs an idle list by trade with props (broom, crate, cigarette), since work and smoke idles are not built"
+A13.11,covered,2.4.1 3.6.4 3.6.3,,partly: neighbours greet and talk passes within 6 m; staged two-person chat not named
+A13.12,missing,,,"needs a rule that two people speak in turn and wait, with a transcript check"
+A13.13,covered,3.6.3 FIT-L01 3.6.4,,no shared street line heard twice in one real hour; speech at most every 45 s
+A13.14,covered,1.4.3 1.2.11 2.5.3,,noises turn heads at their reach; people look and gather
+A13.15,covered,2.5.3 1.3.8,,watchers keep about 3 m and scatter once a weapon is out; bystanders who saw a weapon flee
+A13.16,covered,2.5.3 1.3.8,,harmless proximity draws a look; a seen deed or weapon brings gathering or flight
+A13.17,covered,2.5.3 1.3.8,,partly: bystanders flee a weapon; taking cover is not named
+A13.18,missing,,,"needs a flight rule that people run away from the danger and toward the doors, with a test"
+A13.19,covered,3.6.4 2.16 2.5.3 3.7,,a body or a man down has its own situation lines; people gather; a man fallen on the cobbles is a happening
+A13.20,covered,2.5.3 2.5.4,,partly: crowd drifts back and witnesses talk quieter; a panic-end rule is not named
+A13.21,covered,2.5.3 3.6.4,,witnesses talk quieter for a game hour; lines for a body or man down
+A13.22,covered,3.6.2 2.1.1,,a character says only what the simulation knows; activity from routine
+A13.23,missing,,,"needs a rule for how a person answers when spoken to mid-task (stops, answers short, glances)"
+A13.24,covered,2.1.1 2.1.3,,"the town code uses no chance and unseen people keep the same rules, so the same week plays the same"
+A13.25,missing,,G270,"needs a spawn and despawn rule that nobody pops in or out in view, with a distance and a test"
+A13.26,covered,2.1.1 2.1.5,,partly: places have caps and every walk arrives; re-routing around a blocked path is not named

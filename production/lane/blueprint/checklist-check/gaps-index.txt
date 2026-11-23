@@ -1,0 +1,372 @@
+Gaps already listed in BLUEPRINT-11 (numbered here G1.. in order, cut to 220 chars)
+G1 | Hold-ups (1.6.15): ruled in on 20 Nov and designed in DESIGN-ADDENDUM A41, but no parts-tree part and no coverage.json row exist; the blueprint carries the part as decided. The design proof to add the row.
+G2 | Guns rare and late: Mickey's revolver can be found at rung 2 (RT2-14, 2.12.2), about the start of Act II, which sits uneasily with his rulings (guns rare, late, after melee). The design proof to gate the find on a later 
+G3 | "Released under investigation" in CLOUD-FIGURES B2 is later wording than 1990; the design proof to correct B2 against PACE 1984.
+G4 | Car camera (1.2.2): how the ruled field-of-view setting (75 to 100) scales the car camera's 60 to 78 degree band is not said.
+G5 | coverage.json carries stale standard lines for the rows corrected at review (1.5.1 to 1.5.3, 2.6.10, 3.4.2, 7.2, RT-04, 5.2.3, 5.7.1 and others); the design proof to bring them in line.
+G6 | 1.1.1 Walk, run and turn: No start, stop or turn-rate numbers; the speeds above are first values waiting on the PC footage measuring (23 to 28 Nov).
+G7 | 1.1.2 On-foot camera follow: Follow lag and turn feel have no numbers (PC measuring, 23 to 28 Nov).
+G8 | 1.1.3 Doors, stairs and thresholds: No time or speed for doors, stairs or thresholds on foot, and no stair rule beyond 'walked, not snagged'. The row's status MEASURED rests on the 5 s rule alone.
+G9 | 1.1.4 Carrying: Only the holdall has a speed; no figures for the suitcase or a box, and no pick-up or put-down times (PC measuring A1, about 1 h).
+G10 | 1.1.5 Hiding and keeping out of sight: The felt rules are first values; GTA VI and other reference behaviour is still to be measured (PC block 1).
+G11 | 1.1.6 Tailing on foot: The row's 'none yet' is stale on the look-back rhythm (now 20 to 40 s) but following-distance bands and the 'made' thresholds are still unset (PC measuring A2, about 2 h).
+G12 | 1.1.7 Stopping and blending in: No time after which a stander 'without a reason' draws a look, and no places list for where standing belongs.
+G13 | 1.1.8 Vaulting low walls and fences: Vault heights and speed are first values (to measure); what Tom does at a high wall (cannot climb, stops) is only in the description's staged chase.
+G14 | FIT-G4 Tom's, the constables' and the runner's speeds: Figures stand until the reference games' walk and run speeds are measured (PC block 2); beat pace 1.1 m/s is 'widely stated, not checked against a primary source'.
+G15 | 1.2.1 Car handling: The sheet is to be replaced by the measured one (PC block 1 and 2); the description does not say whether the 60 mph cap is a speed limiter or road length alone.
+G16 | 1.2.2 Car camera: Not said whether the 75 to 100 field of view setting scales the car camera (its rest value of 60 to 65 is below the setting's floor of 75); no number for how far it comes in front of thin things.
+G17 | 1.2.3 Getting in and out: No rule for passengers' seats or where a fare sits; the five samples came from one player, so the figure carries a one-player caveat.
+G18 | 1.2.4 Crashes, damage and unsticking: No figures for how hard the pull to one side is, how far a broken lamp cuts the light, or how a dent shows to a witness.
+G19 | 1.2.5 Cars and people: How many game days the firm's name and fares suffer is a 'first value' left blank in ER-DRIVE-10 and not given in the sources read.
+G20 | 1.2.6 Tailing and being tailed by car: Following distances and the point at which he is made by car are not set (PC measuring A2).
+G21 | 1.2.9 Repairs, plates and paint: No cost, time or place for new plates or a respray, and no one is named who supplies plates.
+G22 | 1.2.10 Taking a parked car: Force reach in metres is not stated; which cars carry a steering lock is not set; the copy of the description (COPY-2) no longer has the section.
+G23 | 1.2.11 The horn: Night and rain multipliers on the 60 m reach are not given.
+G24 | GV-01 The boot, seen: Boot capacity is not given.
+G25 | GV-03 The passenger who knows the way: What happens in a chase with no passenger is not stated (Pauline's radio is the only fallback in the description).
+G26 | FIT-F05 How often the one-hit wreck happens in ordinary driving: If it fails, no fallback rule is written (a taller wreck threshold would be a feel change).
+G27 | 1.3.1 Blows and contact: Values are first values until the PC footage block (1 and 2) measures KCD2, GTA V, RDR2 and GTA VI.
+G28 | 1.3.2 Reading and answering blows: The addendum's slip of 'about 0.3 s' and the sheet's whole dodge of 0.50 to 0.80 s (blows cannot land for 0.20 to 0.35 s) read as different parts of the move; the builder should confirm
+G29 | 1.3.4 The lower rungs: How a man decides to give way at each rung is only 'nerve' in words; no thresholds.
+G30 | 1.3.5 The street as a weapon: Out-of-fight time is given only for railings; no times for the other six places.
+G31 | 1.3.6 Things to hand and carried weapons: No damage ordering numbers beyond 'bat more than cosh' (RT-11); knuckleduster and knife wounds are only described.
+G32 | 1.3.7 Condition without bars: The cosh knock-out length is 'LEDGER's own first value' (10 to 30 s taken from the fist figure).
+G33 | 1.3.8 Odds, crowds and nerve in a fight: Nerve has no numbers beyond the qualitative rules.
+G34 | 1.3.9 How a fight ends: 'The cost said' has no format or wording rule; days in hospital are given only for a knife wound (5 game days).
+G35 | 1.3.10 Firearms: Draw, aim and hit timings are not set (PC measuring A12, about 1.5 h, after the rest).
+G36 | 1.3.11 Marks that last: Real-time length depends on the clock: at 60 s a game hour (a 24 minute day) three game days is about 72 real minutes.
+G37 | RT-09 Tom's line against women, over-sixties and the priest: How the player can tell a person is over sixty is not stated.
+G38 | RT-10 Firearms as a verb: Draw, aim and hit timing bands are not set until the firearms footage is measured (PC block 4, 26 to 28 Nov).
+G39 | RT-11 Hidden damage and injury states: Capacity numbers per type are not set; the melee sheet's 3 to 6 heavy blows to put down a fresh man (C15) is the only band so far.
+G40 | RT2-11 Finishing a downed man, kicks and bodies: 'Knife wounds rung 7' and 'a killing' with a weapon give the player a way to kill that the ruling says is rare; the sources do not bound how often it is offered.
+G41 | RT2-12 The rare fatal fall: The 'within 3 s of a blow' timing of the description is not restated in the definition.
+G42 | RT2-14 How guns reach Tom: Prices are PENDING a check against dated 1990 figures (with G8, cloud, by Thu 26 Nov).
+G43 | 1.4.1 Reading watchers: Reference behaviour for the cues has not been measured yet (PC block 1).
+G44 | 1.4.2 Light and dark as cover: The brightness floor has no number; it 'lives in the one tuning table' but the table is not in these sources.
+G45 | 1.4.3 Hearing his own noise: Only the footstep (3.6 m at 3 am) and the cab and horn have distances; running, doors and a shout have none (PC listening pass A7).
+G46 | 1.4.4 Give-aways and the coat: No figures for how much each give-away raises what a witness catches (golden rows, one per give-away, are owed).
+G47 | 1.4.5 Reaching the witness: No price or odds for paying a witness (it follows her purse and temper in words).
+G48 | 1.4.6 Seeing assist: The look of the outline (colour, thickness, distance) is not given.
+G49 | 1.4.7 Street manners: Reach in metres for a nod or call is not given.
+G50 | 1.4.8 Drawing a watcher away: The reach of a stone or a bin is not given.
+G51 | 1.5.1 Fleeing on foot: Foot chase band (median 30 to 90 s) is a judgement until five-sample lengths from PC block 1 and the feel block (23 to 27 Nov).
+G52 | 1.5.2 Pursuing on foot: Catch-up speed is set at a first value; give-up rules beyond 7 s or 70 m are not set.
+G53 | 1.5.3 Car chases: Band is a judgement until five-sample lengths (PC block 1, 23 to 27 Nov); the reference chases of 4 to 8 minutes do not fit the map without repeating roads.
+G54 | 1.5.4 Pursuers: Rivals' men as pursuers: no speeds, shouts or give-up rules are given for them.
+G55 | FIT-G3 A chase at the soft edge: Whether 30 real seconds out and back feels like time passed is not tested.
+G56 | FIT-F04 Chase length against the reference games (GTA IV in Mafia DE's place): Fewer than five samples exist; the band stays a judgement until they do.
+G57 | DP5-C01 A chase has no timer (car and foot): The prompt's lines 143, 175, 242, 372, 1255 and sections 22 and 23 must be rewritten; a text search must find no 'within 90 real seconds' for a chase.
+G58 | DP5-C02 Chase length on the Hook's loops: A judgement band until five-sample chase lengths (PC block 1 and feel block, 23 to 27 Nov); they may raise it.
+G59 | DP5-C03 The search after a chase is lost: Five-sample search lengths (GTA VI being seen) due in PC block 1, 23 to 24 Nov; the four-of-five return rule is a lead.
+G60 | 1.6.1 Getting in: No time to copy a key, no reach for force in metres.
+G61 | 1.6.2 Searching and taking: The row's 'none yet' is stale; the table is first values awaiting the footage pass (A3, about 1 h).
+G62 | 1.6.3 Lifts and the hot mark: No numbers for how the hot mark fades (days or metres).
+G63 | 1.6.4 Fronting up: No figure for how much a squeeze brings beyond the purse, or how long the street tells it.
+G64 | 1.6.5 Minding and waiting: No pay figures in the sources; they are per job.
+G65 | 1.6.10 Tom's wardrobe: Prices are PENDING a check against dated 1990 sources (G8).
+G66 | 1.6.11 Casing a place: How long a casing takes to learn something is not given.
+G67 | 1.6.12 A torch on a night job: Cone length and beam reach are not given.
+G68 | 1.6.13 Lifting from a pocket: Middle cases (attentive but crowded and dark) are not set; the standard's golden rows cover only the two corners.
+G69 | 1.6.14 Damage by hand: The force reach in metres and the time to break a window are not given.
+G70 | RT2-19 The phone as a verb: Opening hours or ring-back for homes' phones are not stated.
+G71 | 1.7.1 Orders in the field: Order range and how long an order holds are not given.
+G72 | 1.7.2 Sending (the eight verbs): No cost or cut for a send is given here.
+G73 | 1.7.3 The board: 'Enough days' to win a rank is not given.
+G74 | 2.1.1 Schedules of named people: No number for the cap at each kind of place (how many may stand at a door or in a room); the parts tree prices the routines as a guess.
+G75 | 2.1.2 The crowd's clock windows: The 1990 table of who is out by hour is not found (ONS tables to be read by Thu 26 Nov, MTUS 1987 file on the PC as fallback), so every band above is unchecked.
+G76 | 2.1.4 Weather and hour change who is out: Rain's cut to sight and sound has no figure beyond 'halves the voices' and 'halves each crowd band'; drizzle has no figure of its own.
+G77 | 2.1.5 Crowd movement and avoidance: No avoidance distance, step-aside time or queue rule; no figure for how a crowd person passes Tom.
+G78 | 2.1.6 The town's calendar: The hour and place of the Bonfire Night display and of the chapel service are not given; the club's name for the match and the paper's name are owed by the brand bible.
+G79 | FIT-G9 Crowd counts by hour and place: Bands wait on the 1990 hours-in-and-out-of-home figures (ONS, by Thu 26 Nov) and five-sample counts.
+G80 | 2.2.3 Sight by distance and light: These are LEDGER's own first values; the reference games' figures (GTA VI footage block, 23 to 24 Nov) are not in yet, so none is checked.
+G81 | 2.2.4 Sound reach: The force reach has no metre figure; rain's cut and the car's night reach ('much further') have no number; the figures are judgement until the listening pass (PC, 27 to 28 Nov).
+G82 | 2.2.5 Give-away rules: 'Catches more' has no number per give-away; only that each beats the plain act (golden rows, one per give-away).
+G83 | 2.2.6 Ground rules and trespass: Only the half-minute total is given; the gap between the first and second warning is not.
+G84 | 2.4.2 Cooling by kind: Days are given for a scuffle, lift, break-in, wounding, robbery, hit-and-run and officer struck; none for a hold-up, a shot heard or a car stolen.
+G85 | 2.4.3 Showing what people know: No timing, distance or memory-strength threshold for moving between the six steps.
+G86 | 2.4.4 It comes back: The 'within one game day' rule is for week one only; nothing says how fast a deed must come back later in the game.
+G87 | 2.4.5 The paper and the news: No rule for which events Alison chooses to write, or which two days the paper comes out.
+G88 | 2.5.2 Stopping a witness: No price for paying a witness (G8 has no item for it).
+G89 | 2.5.3 Crowd reaction to a deed: The distance within which people look is a placeholder ('[first value] m') in ER-EYES-09; only 'a few metres' is given.
+G90 | 2.5.4 A street on edge: No figure for how much earlier doors lock or how much sooner witnesses set off.
+G91 | 2.5.5 Finding an unseen deed: No figure for how long before a missing man becomes the question.
+G92 | RT2-10 Crowd extras as witnesses: No cap on how many kept extras the save holds.
+G93 | 2.6.3 Statements and the arrest rule: Not said whether a face pointed out without a name counts as a named statement for an arrest.
+G94 | 2.6.5 DS Ellis and the four stages: Whether a witnessed killing may go straight to a manhunt (his C5) is still open; the design works under either answer.
+G95 | 2.6.6 Armed response and the dial's police: 'Slowly' and 'later than an ordinary call' have no seconds or minutes; the number of armed cars beyond 'at least one' is not given.
+G96 | 2.6.8 Bought men and squaring the law: The names and prices of the two officers are not fixed beyond the G8 amounts.
+G97 | 2.6.9 Charges, bail and the office searched: No figure for how a charge on bail weighs on Ellis's case beyond being read at the ending.
+G98 | FIT-G5 The beat constable's round: The 1.1 m/s beat pace is a traditional figure not checked against a primary source.
+G99 | 2.7.2 Night money and the tin: No figure for how much night money a job brings (G8 gives only a man's cut of £10 to £40).
+G100 | 2.7.3 The wash: The front's weekly amount has no number; the 80% and the amount wait on the economy curve (GD-07, PC measuring 23 to 28 Nov).
+G101 | 2.7.4 Rent and running costs: No figure for running costs (fuel, repairs) in the game's own tuning; only the 1990 reference figures (about £1.04 a mile London cab, diesel about 45p a litre).
+G102 | 2.7.5 Purses, tills and shops: No purse sizes for shopkeepers or people (only that they limit what is paid).
+G103 | 2.7.6 Fencing: The drop for each further piece in a week has no number; the hot mark's fade with value and distance has none either.
+G104 | 2.7.8 Spending: The G8 prices are the design's and unchecked against dated 1990 sources (cloud, by Thu 26 Nov); the front's share and a hook's price (what Darren sells) have no figure.
+G105 | GD-07 Economy over weeks: what money buys and how it rises across 15 to 20 hours: No named out-of-reach item for each act's end, and no income figure for fronts or the cold-store contract; the curve's shape is not yet se
+G106 | FIT-G8 Prices of what money buys: Unchecked against dated 1990 sources; no price for a front's share, a hook, a witness paid off, the Widow's tax or the Fixer's reads.
+G107 | FIT-F24 Money over nine weeks (in against out): No income figure for night jobs, fronts or the contract, so in against out cannot be run past week one.
+G108 | 2.8.1 The five debtors: No purse amount for any debtor (what each can pay at a first call), and the story measure for the five (due Sat 28 Nov) is not in.
+G109 | 2.9.1 The asks: The amount of Tom's cut is not given anywhere.
+G110 | 2.10.3 Pressures and answers: No amount for the Widow's tax or for a pay-off, and no cost for the glazier or tyre man.
+G111 | 2.10.4 The Fixer: His prices have no figures (they wait on GD-07's curve).
+G112 | RT-05 The two rivals not met at Act II's end: Their pressure at the Act III rung is not described (no list of what each does in that week).
+G113 | RT-06 Rival threat rung and counters: No repair cost for the glazier or tyre man.
+G114 | RT2-08 Rivals as actors: The lieutenants' and the nine men's names are left to the casting sheet; none is given here.
+G115 | 2.11.1 Recruiting: No numeric loyalty ceiling for either road and no time a need recruit takes.
+G116 | 2.11.2 Nerve, loyalty and breaking: No numbers for nerve or loyalty or for the point where a man breaks (to be measured per person, see 2.14).
+G117 | 2.11.4 Crew pay and the cut: No figure for how much a short or late payment lowers loyalty.
+G118 | 2.12.1 The name ladder: Which two or three people call him Tommy is not decided; how long 'time' is for Sheila's trust is not given beyond one clean week.
+G119 | 2.12.3 Access and soft keys: Only two doors are tied to a named outfit (the Harbour Board's counter, the licensing hearing); there is no list of which other doors need which clothes.
+G120 | 2.12.4 Greetings by regard: No count of kinds of speaker; the teardown (23 rows, 25 to 27 Nov) has not yet set the 6-line figure from a reference game.
+G121 | 2.12.5 Property that reacts: A lock-up and a second phone line (named in the row) are not found in any source; only the office, the flat and the fleet are given, so the per-rung list of three changes is incomplete.
+G122 | RT-07 Hooks and knowledge as leverage: No price for a hook from Darren and no rule for how believable a bluff is.
+G123 | 2.13 The escalation dial: ER-FIGHT-09's cap on deaths an act is a placeholder ('[first value]'); only 'a few named carriers per side' is given.
+G124 | 2.14 Each person's temper: No per-person values yet and no source named for them (casting sheets are the likely place).
+G125 | 2.15.1 Fleet and drivers: No fleet size for rung 4, no shift lengths and no drivers-per-car rule.
+G126 | 2.15.2 Ranks and accounts: The second rank's place is still to be put in the atlas; the unlock conditions for the Harbour Board's late men and the solicitor's office are not given.
+G127 | 2.15.3 Other firms on the ranks: How many game days the fares stay away is a placeholder ('[first value] game days' in ER-DRIVE-10).
+G128 | RT2-05 Killing principals and needed people: No fallback is written for Rita, Wayne, Hal, Ian Megginson, Sheila's own absence (she is kept from his hands, but can leave, see RT2-06) or the retired doctor.
+G129 | 2.17 Fronts and rackets held: No price for a front's share, no weekly takings for a front or a round, and no list of which businesses can be taken.
+G130 | RT2-09 Turf: posts held and lost: The size of the night runs' loss and the Widow's tax are not given in money.
+G131 | 2.18 Ambulance and the hospital: No table of hospital days per kind of hurt (only a knife wound at 5 game days).
+G132 | 2.19 Lasting marks on the town: How long an owner takes to mend glass has no figure.
+G133 | 3.1.1 Act I, The Inheritance: The first week's content beyond the five threads (what each night's ask carries, which scenes fill days two to six) waits on the measured story; nothing in the design sources fixes it.
+G134 | 3.1.2 Act II, The Rise and the Squeeze: Under the ruled clock the whole game runs 13 to 20 hours, below the ruled 15 to 20 at its lower end; DEFINITIONS' fix is more nights skipped by default, never a shorter calendar. P
+G135 | 3.1.3 Act III, The Ledger Comes Due: Five mornings but only four items are named (fare book, cars' records, wages, an account's invoices); the fifth is not. What 'asks for it in writing' costs or buys is not stated.
+G136 | 3.1.4 The endings: The 'hunted for a killing' test and the 'nine principals' of RT2-04 are not enumerated in the sources read (3.2.1 lists thirteen); RT2-04 is PENDING on the story's Act III.
+G137 | 3.1.5 Ending signs and Tom's reading: The sign for each factor is named; the exact words and scenes are the story's. The ending-signs thresholds in the C# Core still carry the old numeric lines and need reconciling with 
+G138 | 3.1.6 Mickey's past: The trigger for Sheila's trust is not written; the real book is an Act I thread and an Act II beat, so when it opens depends on it.
+G139 | RT-01 Act III morning grading: 'A quarter' is not said to be a quarter of the limit or of the week's fares; if Act III keeps fewer or more than five mornings the rule is rewritten. Four item kinds are named for five morn
+G140 | RT-02 Main-story beat content: No scenes exist as design yet; the beats are written only as states. Which bible is current is open.
+G141 | RT2-04 How the ending is chosen: 'The nine principals' are not named (3.2.1 lists thirteen); 'hunted for a killing' is not defined here (the police's four stages are the nearest). Status PENDING on the story's Act III.
+G142 | RT2-15 The successor's offer and the last day: 'Not past his nerve' has no figure; with a ruled Act II of about 5 weeks a man recruited after the second week of Act II has under three weeks' service when Act III opens (c
+G143 | 3.2.1 Principals: No voice is named for Ellis, Ada, Alison, Danby, Jensen or Garbutt, and Danby's scenes are still to write.
+G144 | 3.2.2 The firm's people: The three drivers' own cards and routines are in the regular cards, not in the design sources read.
+G145 | 3.2.3 The thirty regulars: The description names about fifteen of the thirty; the cards in game-design are the full list.
+G146 | 3.2.4 The crowd: The 6 of 13 figure is a starting audit number, not a target; the band is still leads (fewer than five samples each).
+G147 | 3.2.5 Someone worth being honest for: Danby's scenes are 'still to write' (DESIGN s.16); only Alison's first fare is staged.
+G148 | 3.2.6 One complete person: The cost of one complete person has no measured figure yet.
+G149 | 3.2.7 Calling on people: The length of the 'set gap' before a call draws a cooler answer is not given.
+G150 | 3.3 Side stories: Which 22 to 28 of the 32 drafts are kept is not chosen.
+G151 | 3.4.1 Fare people: The per-distance rate behind '80p plus distance' is not given.
+G152 | 3.5.1 Carries: Which foot route is the dark route on the G1 plan is not named.
+G153 | 3.5.2 Collections: COPY-2 (21 Nov) has no section on debts and collections; builders must take it from ONE-SHOT-PROMPT s.25. 'The later ones' beyond the five are not listed.
+G154 | 3.5.3 Break-in sites: COPY-2 (21 Nov) has no break-in section; builders must take it from ONE-SHOT-PROMPT s.15. The break-in rooms themselves are the story measure's content (UNMEASURED).
+G155 | 3.5.4 Tails, minding and lifts content: Named only as to count: no number of authored tails, minding jobs or lifts is set; it waits on GD-08's band and the story measure.
+G156 | 3.5.6 Job template and step states: The four job states and the five step states are counted but not named in the sources read.
+G157 | GD-08 The catalogue of jobs and stories per act (count, kinds, givers): The band for jobs per real hour is not yet measured (A10, 1 PC hour; PENDING); the catalogue count per act waits on the story measure.
+G158 | RT-03 Job and mission catalogue after week one: No job counts per place; jobs for the cold stores, landing and old basin after week one are unwritten.
+G159 | 3.6.1 Live talk: The length of the thinking sound is not given.
+G160 | 3.6.2 Claim check: No pass rate is set for how many planted bad replies must be caught.
+G161 | 3.6.3 Written street lines: The number of live situations is uncounted (F19 PENDING); COPY-2 s.28 still prints the old 'once a week per street' wording.
+G162 | 3.6.4 Crowd lines by situation: The kinds of speaker are not listed, and the number of situations is uncounted (F19 needs at least 14 live an hour).
+G163 | 3.6.7 AI notice and line report: Where a reported line goes and who reads it is not given; the AI service to be named is chosen later.
+G164 | FIT-F19 Enough shared-line situations live each hour: The situation table has not been counted; PENDING that count.
+G165 | FIT-L01 60 street lines for the 12 people seen most, 30 for the rest: Under the ruled calendar 49 lines would cover the daily rule, so 60 now leaves slack.
+G166 | RT-19 Content supply at night and late in Acts II-III: The per-hour band is not measured (PENDING); Act III's nights wait on the story measure.
+G167 | 4.1.1 Quay Street: Trades for bays 2 and 6 are not stated; Mickey's own bay is not placed against the six.
+G168 | 4.1.2 The rest of the Hook: Atlas-01 is the September data; it has to be brought to G1's plan and cleared of the drink and betting lines before it feeds the map.
+G169 | 4.1.3 Landmarks and signs: The street_signs tool's output and the sign count per street are not described in the sources read.
+G170 | 4.1.5 Street build rules: The bars need re-taking from outside sources (footage, published figures); sightlines, block lengths and weather dressing have no number yet.
+G171 | GD-01 Travel time across the playable map: The band is judgement until the PC measuring on 23 to 28 Nov (PENDING).
+G172 | FIT-G1 The Hook's road plan in metres, the chase loop: The plan is a design decision not yet in the map data; atlas-01 (September) must be updated to it. Past about 3 minutes every road has been driven twice.
+G173 | 4.2.1 Ferry landing and quay: The quay's dressing and how the lit quay differs from the dark yard route are the builder's, not set in the sources read.
+G174 | 4.2.2 Old Basin, fish dock, cold stores: Cargo volumes and employer sizes are unresolved in atlas-01.
+G175 | 4.2.3 Dock gate, customs, Harbour Board: Layouts of the gate, the Board's counter and the bonded store are not described; counts of jobs per place wait on RT-03.
+G176 | 4.3.1 Mickey's office and yard: The yard's two escapes are not named in the sources read.
+G177 | 4.3.2 The flat above: No interior list or look for the flat beyond its place in the story.
+G178 | 4.3.3 Shops and workplaces: Hal's trade, the pawn's and the caff's positions on the G1 plan, and bays 2 and 6 are not stated.
+G179 | 4.3.4 Homes: Homes beyond Ada's are not listed.
+G180 | 4.3.5 Iveson's yard and hut: The yard's layout and contents, and whether a yard dog is there, are not designed.
+G181 | 4.3.6 The chapel and hall: No interior description of the chapel or hall.
+G182 | 4.3.7 The police station: The station is not placed on the G1 road plan and has no interior description.
+G183 | 4.3.8 Where a beaten Tom wakes: Neither the hospital nor Grace Rinaldi's kitchen is on the road plan, and the ward's interior is not described.
+G184 | GV-04 Places stay open: How a closing is 'said in the world' is not specified (a sign, a line, a locked door).
+G185 | 4.4 Props and street furniture: Counts for bins, railings and bollards are not set; lamp staining and the bowl-shade drift are listed as owed.
+G186 | 4.5.1 Traffic drivers: Junctions, lights, flashing a wrong-side car and reacting to crashes are named in the description but the stage 1 model covers one side road; stage 2 is not designed.
+G187 | 4.5.2 Parked cars: The other three designs are unnamed; the kerb places on the G1 plan are not listed here.
+G188 | 4.6.1 Car designs: The number of makes is not set beyond the hatchback plus three.
+G189 | 4.6.2 Working vehicles: No design, count or look for vans, lorries, dock trucks, police cars or the ambulance.
+G190 | 4.7 Day and night: The four or five states and their light values are not set; the sun times in the light note assume a north-east coast latitude that canon does not give.
+G191 | 4.8 Weather: The profile weights, how weather changes over days, and drying time in game hours are not set.
+G192 | 4.9 1990 detail: The style sheet is draft only; the six owed brands have no names yet.
+G193 | 4.10 Pubs without drink and the closed school: What each pub is for without drink is a design task still open; no pub is placed on the G1 plan.
+G194 | 4.11.1 Yard dogs: No reach figure is given for a bark.
+G195 | 5.1.1 Faces: No sheet or count for the faces of the thirty regulars beyond the fifteen; no rule for how many face variants the crowd draws from.
+G196 | 5.1.2 Bodies: No list of body types for the cast and crowd (heights, builds, how many) and no rule that the crowd's builds match 1990 Britain; the old plan to fit garments to six bodies is stopped and nothing replaced it
+G197 | 5.1.3 Hair: The frame cost is to be measured but no budget in ms per head or per crowd is set.
+G198 | 5.1.4 Clothes: No written outfit list for the cast or crowd (how many distinct outfits per kind of person); only Tom's four are specified.
+G199 | 5.1.5 Crowd variety: No number for how long or how far before the same face, body or outfit may repeat, no count of distinct crowd faces, bodies and outfits, and no test; the parts tree shows three out-of-period Mixamo p
+G200 | 5.2.1 Locomotion: No figure for the foot-slide limit (the research left a 3 cm lenient bar out as animation craft) and its test has never run; the speeds in G4 are PENDING the reference games' footage.
+G201 | 5.2.2 Fight animation: The animation source for fights is not named and the lab test has not been run; the number of distinct blows, reactions and falls the library must hold is not listed.
+G202 | 5.2.3 Interaction animation: No list of the clips the game needs (phone, search, carry, door, car, sit), no timing for each, and no phone clip although phone boxes are a core device.
+G203 | 5.2.4 Faces and mouths: No lip-sync accuracy number and no expression list; this row overlaps 5.2.9 (live lines' mouths are in both).
+G204 | 5.2.5 Crowd and idle animation: No list of idle kinds per place and trade and no minimum count of distinct idles; the 'nobody frozen' figure is a baseline, not a pass mark.
+G205 | 5.2.6 Body language of knowing: The animation set for each ladder step (what an avoid or a half-recognition looks like) is not listed; the parts tree notes avoid and lean variants are not evidenced.
+G206 | 5.2.7 Clip sourcing and cleanup: No cleanup standard: no foot-slide limit, no retarget error limit and no count of clips needed.
+G207 | 5.2.8 Physical reactions and falls: The row's 'blended with physics' is not specified anywhere (no ragdoll blend time or limits); getting-up and falls against a kerb, wall or step have no clip count.
+G208 | 5.2.9 Live-talk faces: Named only; not designed beyond the mouth rule: no gesture set, no gaze rule while a live line runs; this row duplicates the mouth half of 5.2.4.
+G209 | 5.3.1 Building kits: No kit list with counts (how many window, door and shopfront types the Hook needs) and no brick-bond rule beyond the one photographed texture.
+G210 | 5.3.2 Materials and grime: No wear-level figures per surface; the audit found Mickey's wear not shown and walls clean and new.
+G211 | 5.3.3 Wet street: The drying times are from north-east coast data, a working assumption since canon names no region; no wetness-to-look table.
+G212 | 5.3.4 Shop glass and windows: No reflection quality number (screen-space versus planar) and no crack state for glass.
+G213 | 5.4.1 Day exposure and sky: The hill haze is still short and no haze figure is set.
+G214 | 5.4.2 Night lighting: The ER-NIGHT-01 brightness floor has no number in any source it cites; it points to the tuning table in section 19.
+G215 | 5.4.3 Grade, grain and depth of field: No grade target values, no grain strength, no depth-of-field settings, and no reference frame for the grade.
+G216 | 5.5.1 Footsteps and foley: No list of surfaces and gaits, no recorded levels; the listening pass (A7, about 2 PC hours) is still to run.
+G217 | 5.5.2 Doors and impacts: No door sound set (how many creaks, latches, impacts) and no force-reach distance for a forced door; the repository holds no door sound asset.
+G218 | 5.5.3 Street beds and states: The four states of the hour are never named, nor their hours, and LEDGER's own caps are not set.
+G219 | 5.5.4 Rain and rooms: No numbers for how much each layer fades, or for room reverb sizes; the fade curve is not set.
+G220 | 5.5.5 Car sound: The automatic-change dip length is unset; the squeal onset is an estimate and M12 is not measured by the scripted drives.
+G221 | 5.5.6 Fight sound: No sound set size (how many variants per layer).
+G222 | 5.5.7 The mix: No lead-voice level, no amount the beds duck in talk and no timing for the duck; Mixing.cs exists in Core but is unported.
+G223 | 5.6.1 Cast voices: Voices for the other principals and the thirty regulars are not chosen; no count of distinct voices for the crowd, and no repeat rule (the review themes list repeated voices).
+G224 | 5.6.2 Voice generation and watermark: No watermark code exists in the voice server (audit H13) and the watermark's strength and detection method are not specified.
+G225 | 5.6.3 Thinking sound and timing: No length or count for the thinking sounds beyond the two approved for Ron and Darren.
+G226 | 5.7.1 Radio programmes and period songs: No programme or song list, no count of pieces or minutes, no maker named and no rule for the radio's talk content.
+G227 | FIT-P09 Music made for the game, placed in the world: No count of pieces, no total minutes and no maker named; the allowance for a licensed period station is a separate cost the fit check left unasked.
+G228 | 5.8.1 Camera rig by state: The run, room and talk rows have no distance numbers; only the street, fight and car rows have figures.
+G229 | 5.8.2 Cut scenes: The number and list of cut scenes is not set; 'few' has no count, and the act-end and ending closes are not described as cut scenes.
+G230 | 5.8.3 Staged scenes in play: Named only; not designed beyond that rule: no list of staged beats, no blocking and timing rules, and the teardown that would measure it is not yet run.
+G231 | GV-06 How a deed is told: restraint and cruelty: No list of the deed qualities that make a telling different (restraint, kicks on a downed man, weapon) and no wording tiers; related RT2-11 covers finishing a downed man.
+G232 | 5.9 Effects: No effects list with counts or budgets; no rain, breath or smoke is built.
+G233 | 5.10 Art direction and look reference: The grade targets and floors the row names are not written as numbers in any source read.
+G234 | 6.1.1 The prompt: No prompt wording style and the 'everything usable has a prompt' check has not been run.
+G235 | 6.1.3 The belief line: How long the line stays, how many can queue and the prototype's rate (one in ten seconds, merged) versus the 3 s rule are not reconciled.
+G236 | 6.1.4 Light and sound cues: No darkness depth, size or fade rate for the corners; it is not built.
+G237 | 6.1.5 Knowing the time: Street clock positions and the bell's hours are not listed.
+G238 | 6.3 The paper map: No rule for when a place counts as 'been told of' (which sources, how much is drawn) and the Hook-plus-docks extent is not drawn.
+G239 | 6.4 Menus: Credits content and when they are reached (after the ending) are not specified further.
+G240 | 6.5 Teaching the player: The list of hints and the order in which interface parts appear are not written.
+G241 | 6.6 Controls: The pad's layout is not written and pad typing for talk is not specified (the prototype's pad cannot type words).
+G242 | RT-14 Typed-talk interpretation: The set has clean lines only; harder, abusive and off-limits input is RT-15's job and no reader has yet been run against this set.
+G243 | 6.10 Letters and papers in hand: The paper's name is owed by the brand bible; no list of letters or notes beyond the three kinds, and no page layout.
+G244 | 7.1 The first hour: CLK-01's check holds only if the first hour's talk stops total 2.5 to 3.5 real minutes (2 minutes would read about 01:10); no source says which talk scenes make up that time or who enforces it in the 
+G245 | 7.2 An evening: No source gives the real minutes an evening takes once stopped-clock talk time is added to CLK-05's 6 running minutes, so the 3 to 6 minute job, the walk home and the count are not shown to fit one evenin
+G246 | 7.4 Acts II and III pacing: RT2-07 lets a payment hold a rival on his rung for two game weeks, so in a 5 week act a player who pays every rival can leave a week with no rival rung before the fail-safe starts; the rule 'e
+G247 | GD-03 Jobs done out of order and sequence breaks: How many 'other routes' the tester must try follows from the number of scripted approaches, which is stated two ways.
+G248 | 7.5 The hour budget: The shares sum for 18 hours; the ruled 15 to 20 hours gives no per-activity hours, and the teardown's figures are not in yet (PC measuring 25 to 27 Nov).
+G249 | FIT-F15 What the act hours include (side stories inside 15 to 20 h): Under the ruled clock the running hours can fall as low as 13, below his 15; the only cure written is more nights played, with no rule when a median bo
+G250 | FIT-F16 Act hours against places and people: The per-place and per-person minutes are not restated for the ruled clock.
+G251 | 7.6 Tension and retellable moments: The 12 per thirty minutes and the 'none over half' figures are judgement with no reference game behind them (teardown, PC 25 to 28 Nov).
+G252 | GD-05 Humour and a mix of tones: The scene count per act waits on the story measure (28 Nov); 'a light moment' has no definition a bot can log beyond the examples.
+G253 | 7.7 Rising in position, felt: The table ties 'Nowak' to rung 2 (reached on Sunday) yet the first hour has somebody say 'Nowak' on Thursday of week one; the sources do not say what earns the name before rung 2.
+G254 | 7.8 Saving: No figure for how long a save may take or how large it may be, and 'held during a fight' does not say what a crash in that window loses beyond AX-07's 'at most the last deed'.
+G255 | 7.9 Failure without reload: The parts tree records that no failure route has yet been timed against the 2 minute limit.
+G256 | 7.11 Waiting and time skips: No figure for how fast game time runs during a wait or a sleep, and none for what counts as 'stops for what the town has for him' beyond the three examples.
+G257 | 7.12 Always something to do: The count of live things needed at once is an estimate; it is checked only by the 20 idle moments test on the prototype.
+G258 | GD-02 Density: something to meet every so many metres or seconds on a street: Things per street minute is not set; all counts are leads (fewer than five samples; frames read at 480 px miss distant figures).
+G259 | FIT-F32 Something within 30 s by day: The 20 to 30 live things figure is an estimate with no reference; no count of authored things by hour exists.
+G260 | 7.13 The game clock: A5 (timing one reference evening on footage) is still listed for the PC.
+G261 | RT2-20 The clock in moving talk: No limit on how long a moving talk may run, and so none on game time spent in it.
+G262 | CLK-01 The staged first hour against the landing's window: A first-hour bot reading the clock at each mark must find the hand-over between 22:00 and 01:00; the table's 7:00 figure matches 1.5 stopped minutes by then, not
+G263 | CLK-03 Routines against walking: No source gives a check for the 200 m limit over the authored routines.
+G264 | CLK-05 The evening and the shop day: The reference evening has not been timed on footage (A5, PC 23 to 28 Nov).
+G265 | CLK-06 Calendar and acts: Low end 13 hours is below his 15; no rule lifts the median beyond the skipped-nights fix; a short median comes back as a finding.
+G266 | CLK-07 Weekly rhythms (rent, cooling, rival rungs): RT2-07's two-week hold after a payment can leave a five-week act with a week and no rival rung; no rule says so.
+G267 | RT2-21 After the ending and past nine weeks: Under the seven week calendar Christmas Day falls after the 14 day test window, so the one special day named is never tested; no rule says what happens after it or whether pos
+G268 | 7.16 Pastimes: No rule for what the club gives beyond being seen and recruits (no reward, no progress, which fits 'no stats'), and no figure for how often it may be visited.
+G269 | 8.1.1 Frame, memory and crowd budget: No per-system budget exists for update time, texture pool, crowd or voice; Study 12's numbers are from Mafia and Kingdom Come II configuration files (Mafia is no longer a reference) 
+G270 | 8.1.2 Streaming and loading: No limit for a loading wait, a hitch length or pop-in distance, and no test; a builder has only the 30 frame floor.
+G271 | 8.1.3 Player PCs and shader stutter: No minimum specification, no scaling steps and no stutter limit; after the November stutter fix 2 frames in 45,000 went over the line.
+G272 | 8.2.1 Crash and bug reporting: The crash service and who receives the report are not chosen ('checked when the services are chosen for the Unreal build'), so 'to whom' in the question cannot yet be written; 'consented pl
+G273 | GV-05 Bugs at release: 'Blocking fault' is defined only as stuck, lost save or crash, and 'three nights running' is not defined for a night with no new build.
+G274 | 8.3.1 PC display options: Frame generation (in the row's name) is not covered by any source; whether the 55% fixed draw size is exposed as the resolution scale option and its default are not stated.
+G275 | 8.4.1 Visual stand-ins for sound cues: No pass or fail for it: which sounds are captioned, how long a word stays, how close to the sound it appears and what a caption says for a car or shout beyond the examples.
+G276 | AX-01 Text and interface size, contrast and font: XAG 102 also asks 3 to 1 for interface components and AX-01 sets only the text figure; it is not said whether the 24 unit minimum scales with window height.
+G277 | AX-02 Subtitle options: The default for street-chatter subtitles is not stated (the description only says a switch exists).
+G278 | AX-03 Motion and comfort settings (shake, bob, blur, field of view, background movement): No pass or fail test for the field of view setting, and no statement of how it scales the run, room, talk, fight and car cameras (
+G279 | AX-04 Audio options (separate sliders, mono, speech clarity): Defaults are not stated, and nothing says whether softening changes only the player's mix or also the reach the town hears (a shot carries about 177 m).
+G280 | AX-06 Menu usability (large stationary targets, back goes one level, focus visible, settings before play and from pause, all remembered): XAG 114 also asks that each screen is titled and states the selected item's effect
+G281 | AX-08 Accessibility features listed in game and on the store page: The store page text does not yet exist (the store page is outside the design proof), so the script's second input is not defined.
+G282 | AX-09 Screen narration of menus: Only menus and Ledger lines are tested; reading of in-play prompts is allowed but has no test.
+G283 | AX-10 Pause and focus safety (pause on losing focus, alt-tab safe): No rule for a live talk reply in flight when focus is lost (the 8 s drop and the 2 s limit run on real time).
+G284 | AX-11 Information never by colour alone; key objects distinct: The filters themselves have no test (the standard tests the cues, not the filters).
+G285 | 8.5 Install and launch: No installer or store delivery is designed; the order and number of first-run screens are not fixed once the accessibility offers are added.
+G286 | 8.6.1 Talk service longevity and offline: No cost per player hour, no allowance figure, no rule for the day the service ends beyond falling back to written lines (red team 2 asked for the cost and latency too).
+G287 | 8.7 Local models on the card: No minimum card for the local model and no memory share (the 6 GB card line excludes it for now); old research put a 7B model at 16 GB of video memory.
+G288 | 8.8 Runtime content guards: The word-list gate cannot read intent (canon says so); the live reply check is a model, so the only stated bar is RT-15's zero breaches on a red-team set.
+G289 | RT-15 Live-talk abuse and off-limits input: The word-list gate cannot read intent, so the zero-breach figure rests on the reviewer reading 50 of the 300 replies.
+G290 | 8.9 Text and language: 'Text out of code' has no named check (for example a scan for string literals), so it cannot be passed or failed as written.
+G291 | 8.10 Collision and physics: Ragdoll blended with authored falls (in the row's name) is not designed; only the car-hit bands (P04) and 'falls as the hit's direction says' are written, with no blend rule or test.
+G292 | 10.1 Release build: Named only for the installer: no source designs it, its size, or how the game reaches a player beyond Steam.
+G293 | 10.2 Store, rating and disclosure: G4 says guardrails 6 (report a line, logged) and 7 (a hostile-lines run before each release) may not exist yet; the price is not set.
+G294 | 10.3 Friends' builds: The friends' build requirements are mapped to the Unreal phases; with Unreal paused until the prototype is done, no source re-dates the phase 4 build.
+G295 | 10.4 Credits and notices: No credits screen exists (24 Sep note), the engine libraries' notices were open on 5 Oct, and no source says how the credits are shown (length, order, reachable from the title).
+G296 | 10.5 Release testing: 'Long sessions' has no length or pass figure; the 2-hour soak of 8.10 is the only stated soak.
+G297 | 10.6 After release: Named only for patches; no source states a position on mods after release (the row's name asks for one).
+G298 | 10.7 Platform account, cloud saves and achievements: Steam's overlay (the row's name) can show its own pop-ups and the report button for live AI content; no source says whether they are allowed in play, and Steam Cloud i
+G299 | 10.8 Trailer, key art and store capsule: No brief for the trailer or key art (length, what it shows, music, the no-spoiler and content rules applied to a film).
+G300 | 10.9 Player support and community: The support address, who answers it and how fast are not set.
+G301 | 10.10 Legal and company admin: Nothing is stated: no name search is recorded, no company, no payment route.
+G302 | 10.11 Player data and privacy: The service's retention period and deletion route are not stated anywhere yet ('as stated' cannot be checked until the studio's server and its provider are fixed).
+G303 | 10.12 Demo, price and wishlists: No price, no demo decision and no wishlist plan.
+G304 | Happenings written (FIT-G6, DEFINITIONS G6): at least 60 written against about 70 heard in 17 hours (3.7) and 60 to 80 at 15 to 20 hours (numbers run, which recommends 80). For the design proof to set; 60 stands as writt
+G305 | Week one does not pay at a 1990 London fare: 14 fares at £1.30 pay the £18 rent against about 6 offered (at G7's 40 fares over seven weeks); FIT-F24 assumed about 18 own fares. The week-one fare count and the fare rate a
+G306 | The rise stalls on car prices: only the hard player at the highest amounts reaches five cars (week 7) and the third car comes in weeks 4 to 7, so rung 3 is out of reach for almost everyone in a five-week Act II. The run 
+G307 | The wash barely bites below the hard player; the run recommends counting drivers' fares at 40% (Tom's own at 80%); RT-01's grading line would change with it.
+G308 | Money stops mattering for the fares-only player by week 3; GD-07 has no fares-only bot and the clean path's wants list is short.
+G309 | Escalation runs away for an aggressive player (Act II can end on day 12) and stalls for a payer (no rung from day 9 to 38). The revised run recommends at most one rival rung every 5 game days (the aggressive player's Act
+G310 | The 30-line regulars repeat their own lines from night 31; the run recommends an own line at most every second day met (cutting lines to 50, as Q9 allows, makes repeats worse).
+G311 | Shared street lines need sizing by how often a situation comes up (about 500 in all at the floor of 6 per situation per speaker kind, INVENTORY section 2), not a flat 6 per situation.
+G312 | GD-08 still has no jobs-per-hour figure, so job repeats cannot be run.
+G313 | Unpriced: the Widow's tax, pay-off prices, front takings, Fixer prices, repairs.
+G314 | The cause of the prototype's tick spikes (99.9th percentile 20.9 ms, worst 71.6 ms) is untraced.
+G315 | The one-real-hour no-repeat rule for shared lines has no field in the line record.
+G316 | GTA V's teardown has not landed; RDR2 has no craft figures; no reference game gives triangles for facades, props or vehicles, KCD2's LOD switch distances, a measured street frame time or resident texture memory; a drivin
+G317 | The transport between the page and the helper (local address, protocol, audio format, a secure page calling a local address, the page's behaviour with no helper) is not written; the existing helper returns file paths for
+G318 | How the helper is installed, started, prewarmed (about 14 s) and stopped; whether friends at the browser evening hear Pocket or a fall-back.
+G319 | Which voice speaks written and prepared lines for Agar, the dispatcher and the crowd; no Pocket reference clip or id was found for Agar or the dispatcher.
+G320 | The watermark's method (no code in the Pocket helper; the audit's option was not found answered).
+G321 | The thinking sound against Pocket's 0.2 s first sound (cut mid-word; switched off in the Unreal build since 7 Oct while the 28 Sep ruling stands); its browser behaviour.
+G322 | Mouths in the browser: the mechanism is set (loudness from the sound mix, 8.12.2); the update rate and a pass line are not.
+G323 | No latency or frame figure through a browser; the browser's text route (studio relay or the helper) is not settled.
+G324 | Advisor 299's own words were not found in the repository; the hookup rests on the ruling of 20 and 21 Nov.
+G325 | Feasibility (INVENTORY.md): the one-shot cannot make its content inside the week (about 62 hours made inside against about 11 free); INVENTORY section 4 ("What to make ahead, before 7 Dec") proposes what is made ahead, w
+G326 | His pick of 19 Nov 21:56 of a cast of 200 to 300 residents (advisor 260, DECISIONS 19 Nov 22:13; on the order's waiting list, not in RULINGS) does not fit the one-shot's week at the written line counts: put to him as R13
+G327 | INDEX (prior research index): Owed by earlier decisions and not on the question list: ten more samples of the town's news (his 29 Sep: wait until he meets one in the game); four brand names (football club, paper, pirate 
+G328 | INDEX (prior research index): Prior research: PRIOR-RESEARCH-INDEX.md section 8 lists what only play can answer on his PC: KCD2 recognition time, hint timing, crowd-line variants, step-aside, carrying, footstep reach, bu
+G329 | INDEX (prior research index): Prior research: story v3 should start from the approved outline of 28 Sep (game-design/story-outline-2026-09-28.md, under re-measure), the dock scheme's end (3 Jul 1989; registered dockers 9
+G330 | INDEX (prior research index): Craft standards in 5.11 name the Kiln milestones M5 and M6 (outfit reset, level change seen at the street camera, cloth cost) and the browser prototype's evening gates all Unreal work (RULIN
+G331 | 1.3.1 (prior research index): The hit-stop band of 0.025 to 0.13 s has no source in any old file (PRIOR-RESEARCH-INDEX section 3 group 1); the footage must give it.
+G332 | 2.1.2 (prior research index): No 1990 time-use figure for who is on a port street by hour, and no Hull or Grimsby early-closing day (PRIOR-RESEARCH-INDEX section 5).
+G333 | 2.2.3 (prior research index): Familiar-face recognition distance, the most load-bearing number of the old witness ladder, has no study; KCD2 recognition time to be timed from play (section 8).
+G334 | 2.3.2 (prior research index): Weapon focus is cited from search summaries only; a primary paper must be re-read before it becomes a rule.
+G335 | 2.6.3 (prior research index): 2.6.3 has no offence list; adopt the ARREST note's table as the standard.
+G336 | 2.6.10 (prior research index): CCTV and the weekly tape (canon names them), a disguise failing on people who know him, and finding someone from a description have no part or rider (PRIOR-RESEARCH-INDEX section 3 group 2)
+G337 | 3.1.3 (prior research index): The laundering cap for a cab office is still owed from the approved outline of 28 Sep; Act III is a VAT inspection, which replaced the setting paper's excise duty and section 112 (game-desig
+G338 | 3.6.4 (prior research index): The 1990 idiom list is in no part's test.
+G339 | 4.1.1 (prior research index): Entry's trades by bay omit Rita's pawnshop (terrace-fronts.md lists (Rita's front: RULINGS 22 Oct; the pawnbroker's window: 1 Oct) Mickey's, fishmonger, Rita's pawnshop, the empty unit, laun
+G340 | 4.2.1 (prior research index): No Humber tide range; quay height derived from a Newlyn-like datum (research/south-quay).
+G341 | 4.9 (prior research index): No dated 1988 to 1992 photograph of Quay Street's kind of street furniture and no colour source for 1990 paint (PRIOR-RESEARCH-INDEX section 5).
+G342 | 5.6.1 (prior research index): Zlata the dispatcher (DECISIONS 17 Nov, quay-cast.json) is not in canon's cast; the entry's dispatcher p280 needs her name settled.
+G343 | 5.11 (prior research index): 5.11.4 has no detail-distance row (people 10 m, buildings 192 m, props 64 m).
+G344 | 5.11 (prior research index): Whole-outfit cap and boots against the shoe cap to be settled from own outfits (M5, M6); 0.35 ms a simulated garment is a forum snippet, to be measured in M6; wardrobe counts of 40 and 60 to 
+G345 | 7.1 (prior research index): KCD2's first control: the lane's players study measured under 2 minutes against study 02's estimate of 3.5; measured wins (already reconciled on wip).
+G346 | 10.12 (prior research index): The name risk (Ledger SAS, class 9) is unchecked; see 10.10 and Q17.
+G347 | 1.3.11 (AAA studies sets A and B): Entry covers Tom's own marks only; MEM-04 and STORY-05 need a visible mark on a man Tom beat, with a stated duration (at least a game day).
+G348 | 2.2.5 (AAA studies sets A and B): IM-04 says dirt comes from a deed or happening, never walking or rain alone; the entry lists dirt as a give-away without saying how it arises.
+G349 | 2.12.5 (AAA studies sets A and B): MP-07 and MP-01 need the rung ladder's dearer things priced on the clean path; NUMBERS-RUN found the hard and fares-only paths run out of wants.
+G350 | 3.6.1 (AAA studies sets A and B): No length rule for live replies; TALK-07 proposes median about 12 words, cap 35 (70 for an account), a design choice.
+G351 | 7.5 (AAA studies sets A and B): TALK-11 and TALK-10 wait on the share of play in talk in RDR2, KCD2 and GTA V; no source gives it, so the PC session must measure it.
+G352 | 7.8 (AAA studies sets A and B): No longest gap between autosaves is stated; FF-03 proposes 10 real minutes outside a fight.
+G353 | 7.11 (AAA studies sets A and B): No time limit for daily acts (eat, wash, barber, change coat); IM-03 proposes 10 real seconds the first time and 5 after, a design choice.
+G354 | FIT-P34 (AAA studies sets A and B): DENSE-02 (a door to a place with a person in it every 40 m along all streets) may not fit 24 rooms (8 named places and at least 10 break-in rooms): about 3.4 km of loops needs far more
+G355 | INDEX (AAA studies sets A and B): Studies: the nine AAA study files (production/research/lane/aaa-studies/, 23 Nov, sets A and B plus second pass) are folded in part by part; logs LOG.md and LOG-B.md show all done, and M
+G356 | INDEX (AAA studies sets A and B): The PC session owes: every Steam achievement row for eleven games (WQ), footage counts for Yakuza 0, Like a Dragon and Sleeping Dogs (DENSE-10), talk and play-share timings in KCD2, RDR2
+G357 | INDEX (AAA studies sets A and B): Panel pass marks differ by part: 7 of 8 (7.2, 7.3), 6 of 8 (10.5, STORY-08, DENSE-07), 5 of 8 (7.6), 4 of 8 (WQ-03); the blueprint lacks one list of panel questions and thresholds.
+G358 | 8.11 (preparation files): TECH-PLAN has no PC frame figure for the one-shot build of 20 Nov; the only PC frame history is the Unreal records of 21 Oct to 17 Nov (worst walking frame 30.3 ms; median 14.0 to 14.3 ms with n
+G359 | 8.11.1 (preparation files): PresentMon on LEDGER's own build needs allowlist item 12 widened (it names the study games); 8.11.1 cites item 12 without that caveat. A licence line, routed the usual way.
+G360 | 8.11.2 (preparation files): The plumbing hour (TECH-PLAN section 9) is a one-shot task with no Jafar step; the cause of the tick spikes (99.9th 20.9 ms) is untraced and is its first item.
+G361 | 8.12.1 (preparation files): TECH-PLAN fills only part of the transport gap: it names WebSocket, localhost, raw audio chunks in Web Audio and local serving as the fall-back route, but not the audio format, chunk size, how
+G362 | 8.12.2 (preparation files): The budget rows do not add up to what is measured: the talk program is budgeted 1.00 s plus 0.30 s check, but run F (4 Nov) gave 2.02 s end to end, so the talk program takes about 1.7 s; the 0
+G363 | FIT-G8 (preparation files): Unpriced and not run: the Widow's dock-gate tax, a held rung's price, repairs, Fixer prices; leaving sinks out flatters the player.
+G364 | 2.7.3 (preparation files): The model treats the limit as a hard cap; the going over after Sheila's warning is not modelled.
+G365 | GD-07 (preparation files): GD-07 has no fares-only bot; the clean path's wants list is short.
+G366 | 5.5.7 (preparation files): 5.5.7 sets no loudness figure; SND-25's -23 LUFS has no PC platform rule behind it (neither source covers PC) and is a plan figure.
+G367 | 5.7.1 (preparation files): SOUND-PLAN is silent on Q11 (a short made-for-the-game score under cut scenes and act ends) and on 5.7.1's 'licences that never expire'; SND-21 says no score under play and removes the prototyp
+G368 | 5.6.3 (preparation files): SOUND-PLAN has no standard for the thinking sound (R3), its cut at the answer's first sound or its place in the voices bus (SND-24 is speech first, sliders and a voices-clear switch only).
+G369 | FIT-P34 (preparation files): Count: FIT-P34 says at least 24 and does not count the rival bases; INVENTORY counts 27 or more. Which count the checker uses is not stated.
+G370 | 4.4 (preparation files): INVENTORY has no row for props or street furniture: 4.1.5 and 4.4 set at least 5 props per 10 m of street from a fixed list (Quay Street's scene file places about 9 per 10 m), so Quay Street's 48
+G371 | INDEX (preparation files): Prep: INVENTORY sections 1 and 3: about 6,200 lines to write (about 5,300 not yet written after 1,225 shared and 401 own exist) and about 115 named people; at 44 minutes a story the week needs 
