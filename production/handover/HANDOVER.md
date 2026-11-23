@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-23 20:07 (the hourly run)
 
-**Row due:** at the next start (last row 19:28 run-end; page read 19:26: advisor 333 acked; filter verdicts after 2026-11-23T18:26 UTC, advisor after 2026-11-23T19:10:00+01:00; last ack 333 written 19:30 stamp).
+**Row due:** at the next start (last row 20:26; page read 20:51: nothing new; filter verdicts after 2026-11-23T18:26 UTC, advisor after 2026-11-23T19:44:00+01:00; last ack 2026-11-23-2026-eff written 20:26 stamp).
 **Uncommitted:** nothing.
-**Stopped:** 2026-11-23 19:27 (the 18:51 run: recipe rewrite done and pushed; n23-3's first text-model numbers; advisor 333 acked; play.py film frames time-stamped; history near its point)
+**Stopped:** 2026-11-23 21:03 (the 20:07 run: the fast film ruled fit for speeds; Sleeping Dogs opening got through by script and a first walk and run filmed; advisor efficiency review acked; history near its point)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,33 +34,32 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- Earlier runs (13:07-18:08): order adopted, star reader, installed-game method, catalogue, n23-5 research; see the day's commits.
-- n23-5 recipe rewrite DONE: RECIPE.md chapters 0, 0b (the one-go build's start conditions, checks, the 20 Nov failure), 1 (a design counts as measured); 25 entries folded; review PASS WITH FIXES, all 7 applied; pushed 8b3580705. Recipe map needed no change.
-- n23-3 started: questions and first numbers in production/research/voice-latency/N23-3-QUESTIONS-2026-11-23.md (Sonnet 5 1.19 s median, Sonnet 5.5 1.57, Haiku 1.71; one run each; US$0.946 of measure-2026-11-23's dollar, logged).
-- Advisor 333 (measuring is the critical path; drills first, hours logged in STATUS.md; recipe and records wait): acked 19:30. play.py film_frame now writes times.jsonl (each frame's grab window, perf_counter).
+- Earlier runs (13:07-19:27): order adopted, star reader, installed-game method, catalogue, n23-5 recipe rewrite (pushed 8b3580705), n23-3 first numbers; see the day's commits.
+- 20:07 run: advisor's efficiency review (19:44) acked 20:26: the drills no longer wait on the recorder. play.py walk --film --fast (pushed 45354ec65): 48 grabs, about 27 new pictures a second in our build, each within about 30 ms (FILM-RULER-2026-11-23.md). DAILY-2026-11-23 carries the measuring-hours line (every DAILY file from now). Recorder item's reasons updated on his page (only for quick moves now).
+- Sleeping Dogs: tools/drills/watch_opening.py (fixed timed taps and walk/run holds, film, stops at his touch, closes the game). Opening got through on try 2 of 2: control in the night-market chase at about 254 s after launch; drill 1 filmed a 4 s walk at 258 s and a 4 s run at 265 s (about 11 grabs a second in this game, each about 85 ms). SLEEPING-DOGS-DRILL-2026-11-23.md; STATUS.md on-foot row 0.9 h logged.
+- GTA IV, GTA V, KCD2 copies NOT run: replaced unsigned launcher files; a safety line kept despite his 16:10 ruling (DECISIONS 23 Nov 20:30). Their rows go to footage. Say so plainly if he asks; do not re-ask him.
 
 ## In flight
-- Nothing runs. Browser pane page tools (lost on reload): capt/capt2 caption-strip finders, grab sheets.
+- Nothing runs. Sleeping Dogs closed by the tool (check no sdhdship.exe before any build).
 
 ## Next, in order
-00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 18:52 read 26% against 3.3% (+22.7, under the ceiling plus 25, advisor 330): lean.
-0. ADVISOR 333: the measuring block first, hours logged in STATUS.md as they go; the next row owes hours since 13:00 and first drill numbers.
-1. Test the time-stamped film (untested): our packaged build, play.py start past the title (Enter, then Enter x14, memory tester-film-past-the-title), walk straight with --film, then speed from the frames' times and the player's position against the true walk 160 cm/s, run 420 (SliceCharacter.h). This is also n23-2's ruler check. If its error is under the drills' need, the installed-game drills start with it per INSTALLED-METHOD.md (Sleeping Dogs, GTA V, GTA IV, KCD2), each only after he has been away 10 minutes, stopping at his first touch. If not, footage rows first; the recorder item stays on his page.
-2. n23-3 (paused): the order-swapped repeat pair (B then C) on the next measuring dollar (measure-2026-11-24); firsts-label for invented details; voice alone (latency.py without --live, --voice game, --prewarm; free); together beside the packaged game; cost per hour. Measurements due Fri 27 Nov.
-3. n23-4 voice scan; n23-7 (credit row in each DAILY file; DAILY-2026-11-23.md written 17:50, not refreshed).
-4. n23-1: the reprice split and feel rows once drills run; every row names its blueprint decision.
-5. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
-0g. GTA VI footage queue: TRIED-ARCHIVE.md, "Moved from the handover".
+00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 20:24 read 27% against 4.1% (+22.9): lean, no extra helpers.
+1. Sleeping Dogs walk and run speeds from drill 1's frames (F:/LedgerTools/tmp/drills/sdhdship-opening-2026-11-23-2055, walk4-* and run4-*, times in times.jsonl rows with "hold"): first measure a length in the game itself (the market's herringbone paving brick, or the on-screen distance to Naz while he stands), then Wei's progress per frame; code reads, two sheets by eye. Then four more runs for five (each run restarts from launch, keys as the 2055 run: Enter 45, 56, every 8 s 82-138, walk4 258, run4 265; about 7 min each; only after 10 idle minutes, and the tool's own keys count as use). Whether Shift changes the gait: compare walk4 and run4 frames.
+2. Drill rows next in Sleeping Dogs: a punch (fists row) needs about 60 fps: grabs here are 11 a second, so fists stay on the recorder item or footage.
+3. n23-3 (paused): order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; voice alone (latency.py without --live, --voice game, --prewarm; free); cost per hour. Due Fri 27 Nov.
+4. n23-4 voice scan; n23-7 (DAILY file each day with the measuring-hours line; credit row).
+5. n23-1 rest: footage rows for GTA IV, GTA V, KCD2 on-foot/fists/driving; reprice in STATUS.md with today's drill hours.
+6. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30.
-1p. Paused with Kiln: Ron's seated hem cover try 2 of 2; fins try 3 brief READY.
 4p. Marvelous stays open (his word). No Unreal work until the browser prototype is done (advisor 288).
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 23 Nov 19:1x: ClaimBench --moment sends every held question to Haiku (a bench-only rule); the game's routing is arm C (--model claude-sonnet-5 --reply-thinking-off). Sonnet 5 beat 5.5 tonight, the reverse of 16 Nov: one run each, not settled.
-- 23 Nov 17:3x: a caption-box detector run twice at once fought over the video's position and missed half the boxes; run one scan at a time. Silent detail videos have empty transcripts: read their caption strip by frames.
-- 23 Nov 16:2x: running a just-fetched ffmpeg, and a page script fetching YouTube captions, were refused by the permission check; not worked round. Stamps ran ahead twice more: Get-Date first.
-- 21-22 Nov: 'uncut' descriptions can be false; seeks hang in some runs (test one); run ci-checks alone (./tools/ci-checks.sh after unset MSYS_NO_PATHCONV; env -u bash is refused); stamps ran about 10 minutes ahead of the clock five times: Get-Date in its own call before every stamp.
+- 23 Nov 20:31: a game started by the tool from the background is not handed the front; no key went (by design); fixed by play.focus before the first tap.
+- 23 Nov 20:39: the tool's own taps reset Windows' idle clock, so the next run waits 10 minutes after the last; queue runs with a wait loop, never --force.
+- 23 Nov 20:08: the walk-speed check against Tom's 160 cm/s was impossible: the game writes no player position. Judge our build's speed on screen against a known length, as in the installed games.
+- 23 Nov 19:1x: ClaimBench --moment sends every held question to Haiku (a bench-only rule); the game's routing is arm C (--model claude-sonnet-5 --reply-thinking-off). Sonnet 5 beat 5.5 tonight, one run each, not settled.
+- 23 Nov 17:3x: a caption-box detector run twice at once fought over the video's position; run one scan at a time. Silent detail videos: read their caption strip by frames.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

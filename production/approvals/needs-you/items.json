@@ -231,8 +231,8 @@
    "title": "Let the session use a free screen recorder (ffmpeg) for the game drills",
    "text": "The drills in your installed games need the screen recorded; the free recorder ffmpeg is cleared for measuring, never shipped, but the safety check on this PC wants your own yes.",
    "why": [
-    "Without a recorder the drills give no numbers; footage carries the measuring meanwhile.",
-    "Sleeping Dogs also has no save yet, so its opening comes first; the session tries it by script."
+    "Since 20:12 the session's own grabber times walks and runs in the games (about 27 pictures a second), so the drills start without it.",
+    "The recorder is still wanted for quick moves, like a punch's wind-up, that need 60 pictures a second."
    ],
    "steps": [
     "Open the newest LEDGER session in the Claude app at the PC",
@@ -245,7 +245,7 @@
      "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
     }
    ],
-   "blocks": "the installed-game drills (n23-1); footage covers them meanwhile",
+   "blocks": "only the drills' quick moves (n23-1); walks, runs and timings go ahead with the session's own grabber",
    "recommendation": "Yes, when you are next at the PC.",
    "options": [
     [
