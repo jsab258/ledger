@@ -1,4 +1,36 @@
-# Measurements needed, for the order of 23 November (run 2, 21 November 2026)
+# Measurements needed, for the order of 23 November as adopted (run 5, 23 November 2026)
+
+For the builder working item n23-1 of the order of 23 November (the measuring block, 60 PC hours, done by Fri 27 Nov). Rules from the order and his rulings: a number counts for the design gate only on five uncut, dated samples read at a finer step than what it measures; an installed game on his PC answers first (our own uncut recordings, the console, PresentMon, and UE4SS for the Unreal games; his ruling 16:15, 22 Nov), public footage second; code measures what code can (HUD template matching, the local person detector, frame difference); the cheap reader frames once it agrees with Opus spot checks. Mafia is never a reference. No GTA VI story content anywhere. Every row in coverage.json carries its plan in measure_how and measure_when.
+
+Remaining hours below are STATUS.md's own estimates of 21 to 22 Nov (to solid, five samples a number); the reprice after Monday's trial and the feel block's first game replaces them.
+
+## The order, GTA VI first
+
+| # | Block | Rows it closes | PC hours left | When |
+|---|---|---|---|---|
+| 1 | GTA VI footage, to solid: being seen (S1, S3, S7, G6; the search after sight is lost, five samples, for DP5-C03; one-star and three-star spells), driving (carjack dropped: no LEDGER part, section 23), G-rows (G7 crowd in town views for GD-02 and G9, G2 lamps, G8 repeated lines), the split hour | PENDING feel rows 1.1.x to 1.5.x with GTA VI's column; DP5-C03; GD-02; FIT-G9; 2.6.10's search; 7.5 | about 15 (being seen 6, driving 1.5, G-rows 6, split hour 1.5) | Mon 23 to Tue 24 Nov |
+| 2 | Car chases to solid: five uncut chases a game, GTA VI, GTA V, GTA IV, Sleeping Dogs, at 5 s or finer, lost-chase length and search length | DP5-C02, FIT-F04 (chase length), DP5-C03 | about 6 | Tue 24 Nov |
+| 3 | The feel block (driving, fists, on foot, being seen, foot chases, activity timing, teardown), KCD2 from the installed game first | PENDING feel rows; UNMEASURED 1.3.6, 1.3.8 (FEEL); the teardown's 23 UNMEASURED rows (1.1.7, 1.2.7, 1.6.3 to 1.6.6, 1.7.1, 1.7.3, 2.2.6, 2.9.1, 2.12.4, 2.12.5, 2.15.1, 2.18, 3.4.1, 3.4.2, 3.5.1, 3.6.4, 5.8.3, 6.5, 7.6, 7.12, 7.14) | about 78.7 (before code measurers and the cheap reader) | Tue 24 to Fri 27 Nov |
+| 4 | The other footage studies to solid: street life (crowd and reactions, for GD-02), conversations, players' first hours, small district, port towns' daytime counts (GD-02's ceiling) | GD-02, FIT-G9, conversation and first-hour rows | about 15.5 (street life 6, conversations 3, first hours 3.5, district 1.5, port towns 1.5) | Wed 25 to Fri 27 Nov |
+| 5 | Extra rows on the feel sheets (section A of the history below) and the listening pass | UNMEASURED 1.1.4, 1.1.6, 1.2.6, 1.3.10, 1.6.2, 2.1.5 (A); 2.2.4, 5.5.1 to 5.5.7 (listening); PENDING GD-01, GD-07, GD-08, RT-10, RT-11, RT-19 | about 16.5 | Thu 26 to Fri 27 Nov |
+| 6 | Our own build filmed (n23-2: the ruler check and the cheap-reader trial) | the method's error per kind of number | about 2 to 3 | Mon 23 Nov from 13:00 |
+
+Total left: about 134 PC hours against the order's 60 for n23-1. The week cannot hold it at the old rate. The order's cheaper routes (code measurers, the cheap reader, one uncut stream serving several studies, installed games before footage) are what must close the gap; the reprice of Mon 23 Nov says by how much. If they do not, the lean order is: block 1 and block 2 whole (they decide the chase, the search and the crowd, which design pass 4 left PENDING), then the feel block's driving and being seen, then section A's damage (A6), travel time (A8) and density (A9); everything else that misses Fri 27 Nov moves the gate back by the days it takes, and is listed by row in DESIGN-COMPLETE.md.
+
+Closed since the history list was written: 1.2.3 getting in and out (GTA VI, five samples, solid; run 5); the clock rows CLK-01 to CLK-07, 7.13 and FIT-F13 (his ruling); 2.6.4, 2.7.4, 2.7.6, 2.4.2, 8.3.1, GD-04, 7.2, 7.3, 8.2.1, 10.11, RT-14 (run 3). G5's heat length at two stars is solid but measures the whole wanted spell, so the search band waits on block 1.
+
+## In the cloud (no PC time)
+
+| Work | Rows | When |
+|---|---|---|
+| 1990 prices from dated sources (shop, caff, fuel, cab fares, a second-hand car) | FIT-G8, RT2-14, then FIT-F24 the money run | by Thu 26 Nov |
+| Who is out by hour, from the ONS time-use tables (fallback: the 1987 MTUS file on his PC, about 1 h) | 2.1.2, FIT-G9 | by Thu 26 Nov |
+| The shared-line situations count | FIT-F19 | by Thu 26 Nov |
+| The story measure (story v3) | 2.8.1, 3.1.2, 3.5.2 to 3.5.4 (UNMEASURED); GD-05, GD-08, RT-01 to RT-03, RT-19 (story part) | by Sat 28 Nov 12:00 |
+| The fit check and the players' questions again, on the defined design | all FIT rows | Sat 28 Nov |
+| Red teams 3 and 4 | material gaps | Sun 29 and Mon 30 Nov |
+
+## History: the list as run 2 wrote it (21 November 2026), kept for reference
 
 For the builder who writes the order of 23 November on Sunday 22 November at 16:00. Every row of the coverage map that still needs a number is here, with how it is measured, where, when and the PC hours. Each row in coverage.json carries the same plan in its fields measure_how and measure_when.
 
