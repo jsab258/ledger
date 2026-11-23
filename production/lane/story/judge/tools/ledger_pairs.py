@@ -9,7 +9,9 @@ Score:  python ledger_pairs.py score OUTDIR
 
 Pairs: the candidate against 4 clean admired and 4 clean forgettable shelf scenes, plus 4 shelf
 control pairs (clean admired against clean forgettable) whose answer is known. Each pair in both
-orders. A judge model that gets a control wrong in both orders is not counted for that run.
+orders. A judge model whose verdict on any control is wrong in both orders is not counted for
+that run (the whole model, not one judge); rebuild with another --seed and run fresh judges.
+Floor (printed): the candidate beats all 4 forgettable scenes in both orders, for each counted model.
 """
 import json, random, sys, os, glob
 
@@ -22,11 +24,19 @@ def build(cand_path, out, seed):
     rng = random.Random(seed)
     cand = open(cand_path).read().strip()
     n = len(cand.split())
-    if not 320 <= n <= 380:
-        sys.exit(f'candidate is {n} words; rewrite it to FORMAT.md (330-370) first')
+    heads = ['## Setting', '## People', '## What happens', '## The lines that matter', '## What the player does']
+    pos = [cand.find(h) for h in heads]
+    if -1 in pos or pos != sorted(pos):
+        sys.exit('candidate must have the five FORMAT.md headings, in order')
+    if not 315 <= n <= 375:
+        sys.exit(f'candidate is {n} words; the scrubbed shelf runs 315 to 371, FORMAT.md asks 330 to 370')
     clean = [x for x in SET if not x['recognised']]
-    adm = rng.sample([x for x in clean if x['label'] == 'admired'], 4)
-    frg = rng.sample([x for x in clean if x['label'] == 'forgettable'], 4)
+    near = [x for x in clean if abs(x['n_words'] - n) <= 25]  # the length pull: keep pairs close in length
+    if sum(x['label'] == 'admired' for x in near) < 4 or sum(x['label'] == 'forgettable' for x in near) < 4:
+        near = clean
+        print('warning: too few shelf scenes within 25 words of the candidate; length may pull')
+    adm = rng.sample([x for x in near if x['label'] == 'admired'], 4)
+    frg = rng.sample([x for x in near if x['label'] == 'forgettable'], 4)
     ca = [x for x in clean if x['label'] == 'admired' and x not in adm]
     cf = [x for x in clean if x['label'] == 'forgettable' and x not in frg]
     controls = list(zip(rng.sample(ca, 4), rng.sample(cf, 4)))
@@ -81,6 +91,10 @@ def score(out):
         print(model, 'controls', res['control'], '(counted)' if ok else '(NOT counted: a control was wrong)')
         print('  against admired:', res['admired'])
         print('  against forgettable:', res['forgettable'])
+        if ok:
+            floor = res['forgettable'].count('LEDGER') == 4
+            print('  floor (beats all 4 forgettable):', 'met' if floor else 'NOT met')
+            print('  against praised: %d won, %d tied, %d lost' % (res['admired'].count('LEDGER'), res['admired'].count('tie'), res['admired'].count('shelf')))
 
 
 if __name__ == '__main__':

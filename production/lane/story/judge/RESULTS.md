@@ -1,43 +1,45 @@
 # Judge proof: results
 
-Run 23 November 2026, 22:50 to 23:20 Swiss time, after PLAN.md was pushed (356ef694). Brief: BRIEF-v1.md, unchanged throughout. Judges: fresh claude-opus-5-5 and fresh Sonnet subagents, 20 judgements each, the two orders of a pair never to the same judge; 32 judges in all (16 a model). No Fable.
+23 November 2026, Swiss time. PLAN.md (the pass mark) was pushed at 22:48 (356ef694), before any judge ran. Brief: BRIEF-v1.md, unchanged throughout. Judges: fresh claude-opus-5-5 and fresh Sonnet subagents, 20 judgements each, the two orders of a pair never to the same judge. No Fable.
 
-## Clean pairs (both scenes passed the recognition screen): the pass mark
+## The result: clean re-run on scrubbed texts (22:58)
 
-| | Half A Opus | Half A Sonnet | Half B Opus | Half B Sonnet | Pooled Opus | Pooled Sonnet |
-|---|---|---|---|---|---|---|
-| Pairs | 20 | 20 | 20 | 20 | 40 | 40 |
-| Admired chosen in both orders | 19 | 19 | 19 | 17 | 38 | 36 |
-| Forgettable chosen in both orders | 0 | 1 | 0 | 0 | 0 | 1 |
-| Orders disagree (tie) | 1 | 0 | 1 | 3 | 2 | 3 |
-| Accuracy on decided pairs | 100% | 95% | 100% | 100% | 100% | 97% |
-| Decided share | 95% | 100% | 95% | 85% | 95% | 93% |
+Why a re-run: the fresh reviewer found wording in some rewrites that hinted at the label ("the mood is routine", "no choice changes the result", "the notebooks add little", mostly in forgettable scenes). One fresh Sonnet, given all 40 texts without labels, removed mood verdicts, commentary on a scene's importance and judgement adjectives by one rule for all (set/scenes.json keeps each scene's changes and pre-scrub text; 36 changes in admired scenes, 40 in forgettable). The scrubbed set was pushed (41d190bc) and all 40 clean pairs (both halves) were run again, both orders, by 8 fresh judges (4 a model). Same brief, same pass mark.
 
-Over all 160 judgements per model (clean and recognised pairs):
-- Position: scene shown first chosen 51% (Opus), 54% (Sonnet). Half A 48% and 53%; half B 54% and 56%.
-- Length: longer scene chosen 59% for both (104 judgements a model where the two differ by 5 words or more). Half B Opus alone was 62%. Admired scenes average 365 words, forgettable 363, so this is not label in disguise. Controlled for label: accuracy 97% (Opus) and 95% (Sonnet) when the admired scene was longer, 89% and 87% when the forgettable one was longer. A small length pull, or noise (46 to 58 judgements each side).
-- Agreement, Opus and Sonnet same verdict: clean pairs 90% in each half; all pairs 90% (A) and 95% (B). Cohen's kappa is low on clean pairs (near 0 in half A) only because nearly every verdict is "admired" for both: with almost no spread, kappa says little. Kappa on all pairs: 0.39 (A), 0.78 (B).
+| Clean pairs, 40 a model | Opus | Sonnet | Mark |
+|---|---|---|---|
+| Admired chosen in both orders | 36 | 34 | |
+| Forgettable chosen in both orders | 2 | 3 | |
+| Orders disagree (tie) | 2 | 3 | |
+| Accuracy on decided pairs | 94.7% | 91.9% | at least 85% |
+| Decided share | 95% | 92.5% | at least 67% |
+| Scene shown first chosen (80 judgements) | 52.5% | 53.8% | 40 to 60% |
+| Longer scene chosen (70 judgements differing by 5+ words) | 60.0% | 58.6% | 40 to 60% |
+| Same verdict, Opus and Sonnet | 90% (kappa 0.56) | | at least 70% |
 
-Against the pass mark (pooled, the deciding result since half A passed and half B confirmed it): accuracy on decided pairs 100% and 97% (mark 85%); decided 95% and 93% (mark 67%); position 51% and 54% (mark 40 to 60%); length 59% and 59% (mark 40 to 60%, inside by one point); agreement 90% (mark 70%). PASS. The brief was not mended; no second brief was needed.
+PASS by the mark as written, with Opus's length figure exactly on the limit. The brief was not mended.
 
-## Recognised pairs (at least one scene the screen named): memory measured, not gating
+Length, looked at closer: admired and forgettable clean scenes average 349 and 348 words. When the admired scene was the longer one, the judges chose it 38 of 38 (Opus) and 36 of 38 (Sonnet); when the forgettable one was longer, 28 of 32 and 27 of 32. So length pulls about 10 to 15 points. FORMAT.md's equal length matters, and LEDGER scenes must be held to the shelf's length.
 
-| | Half A Opus | Half A Sonnet | Half B Opus | Half B Sonnet |
-|---|---|---|---|---|
-| Accuracy on decided pairs | 95% | 94% | 94% | 94% |
-| Decided share | 95% | 90% | 90% | 90% |
+Where it went wrong: every wrong or split verdict, for both models, involves one of three of the eight admired scenes: S64 (an L.A. Noire case), S20 (a Sleeping Dogs hospital rescue whose admired label was inferred, not named by its source) and, for Sonnet only, S94 (a KCD2 quest). Whether the judges or the labels are wrong there cannot be told from this set.
 
-No higher than on clean pairs. Memory of famous scenes did not lift the score; the judge did as well on scenes nobody recognised.
+## First runs on unscrubbed texts (22:49 to 22:50), kept for the record
 
-## Control: a stakes-only judge
+Half A then half B, 16 judges (8 a model), 40 pairs a half, 20 clean and 20 with at least one recognised scene.
 
-Fresh Sonnet, half A, asked only which scene has more at stake (BASELINE-BRIEF.md). Clean pairs: right on 63% of decided pairs (12 admired, 7 forgettable, 1 tie); all pairs 69%; longer scene chosen 75%. So danger and loss alone explain a little of the judge's score, not most of it: the full brief adds about 35 points on clean pairs.
+- Clean pairs pooled: Opus 38 right, 0 wrong, 2 ties; Sonnet 36 right, 1 wrong, 3 ties. On clean pairs, scene shown first 50% and 54%; longer scene 48% and 50% (46 judgements). (An earlier draft of this file gave position and length over all pairs, 51 to 54% and 59%; the mark is on clean pairs.)
+- Pairs with a recognised scene: 94 to 95% of decided pairs, no higher than clean.
+- The scrub cost a few points (100% to 94.7% for Opus, 97% to 92% for Sonnet), so the hints did some of the work, not most.
+
+## Control: a stakes-only judge (22:50)
+
+Fresh Sonnet (4 judges), half A, unscrubbed texts, asked only which scene has more at stake (BASELINE-BRIEF.md). Clean pairs: 63% of decided pairs (12 right, 7 wrong, 1 tie). Danger and loss alone explain little of the judge's score.
 
 ## What the test does not show
 
-1. Great from good. The forgettable side is mostly errands, set-ups and filler missions; the admired side mostly climaxes and character turns. The judge can tell those apart. Whether it can tell a great heavy scene from a merely competent heavy scene was not tested: there is no middle tier on the shelf.
-2. Small samples: 40 clean pairs a model, from 18 clean scenes (8 admired, 10 forgettable). Scenes repeat across pairs, so the pairs are not independent. With 38 of 38, the true rate is very likely above 90%, but on a narrow set.
-3. Labels: several forgettable labels rest on one list or one reviewer (set/SOURCES.md). The judge agreeing with them is partly agreement with thin labels.
-4. Disguise was done by Claude models and judged by Claude models; one family throughout. APPROACH wants a non-Claude judge; none was available to this run.
-5. The famous admired scenes could not be disguised from Opus without rewriting their stories (22 of 40 still recognised after three passes). The clean admired scenes are the less famous ones: three KCD2 quests, a Sleeping Dogs hospital rescue, two Watch Dogs: Legion story missions, a GTA IV revenge scene and an L.A. Noire case.
-6. Judges saw 20 pairs each; a scene could appear in several of one judge's pairs.
+1. Great from good. The forgettable side is mostly errands, set-ups and filler; the admired side mostly turns and losses; the brief itself names errands as forgettable. The judge separates those kinds. A great heavy scene against a competent heavy scene was not tested: there is no middle tier on the shelf.
+2. Small and linked samples: 40 clean pairs from 18 scenes (8 admired, 10 forgettable); scenes repeat across pairs and within a judge's 20.
+3. Thin labels: several forgettable labels rest on one list or one reviewer, and three of the eight clean admired (S16, S20, S56) rest on one source each or on praise of a chapter, not the mission (set/SOURCES.md).
+4. One family: disguise, scrub and judges are all Claude models. APPROACH wants a non-Claude judge; none was available here.
+5. Memory: 22 of 40 scenes stayed recognised after three disguise passes, and Opus named the right game for most clean scenes at low confidence. Each game gives both labels, so the game alone does not tell the label, and recognised pairs scored no higher; but with scores near the ceiling, a memory effect cannot be ruled out.
+6. Rewriters knew the labels when they wrote. The scrub removed explicit hints; what they chose to include could still lean.

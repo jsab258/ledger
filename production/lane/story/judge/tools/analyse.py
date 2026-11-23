@@ -22,6 +22,7 @@ for model in ['opus','sonnet']:
   out={}
   for subset in ['clean','recog','all']:
     ps=[p for p in P['pairs'] if subset=='all' or (p['clean'] if subset=='clean' else not p['clean'])]
+    if not ps: continue
     v={}
     for p in ps:
       a=picks.get(p['pair']+'x'); b=picks.get(p['pair']+'y')
