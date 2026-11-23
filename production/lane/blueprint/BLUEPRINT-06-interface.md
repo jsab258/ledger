@@ -22,7 +22,7 @@ The minimal screen.
 - How it works: A subtitle appears only with its audio (ruling 23 Sep), large and never under 24 units, with no overlap at four window sizes. It stays for its line plus 0.3 s, size has three steps, background box off, half or full, speaker's name on by default, and street chatter subtitles can be switched off. Subtitles are on by default and offered before the first sound.
 - Standard: A subtitle shows only with its audio (ruling 23 Sep); nothing under 24 units; no overlap at four window sizes (ER-SCREEN-02) Test: S: layout test at four sizes
 - Source: RULINGS; DESIGN §17 (his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN §17 ER-SCREEN-02; DEFINITIONS-2026-11-21 §AX-01, §AX-02; PARTS-TREE 6.1.2
-- Status: measured. Coverage row: 6.1.2.
+- Status: ruled (his ruling or canon). Coverage row: 6.1.2.
 
 ### 6.1.3 The belief line
 
@@ -43,7 +43,7 @@ The minimal screen.
 - How it works: There is no screen clock. N raises Tom's watch and the hour shows for 2 s; the clock over the Harbour Board and the office clock tell it, and the chapel bell strikes the hours by day. The hour can be known within 3 s anywhere. A game hour is 60 real seconds, so a game day is 24 real minutes.
 - Standard: The hour known within 3 s anywhere (ER-TIME-01); no timers on screen (ruling 23 Sep) Test: S: the watch glance; H: 'what time is it?'; addendum rules ER-TIME-01
 - Source: rulings; addendum (his ruling or canon). Designed in: ADDENDUM §A31; ONE-SHOT-PROMPT §8; RULINGS 21 Nov; DEFINITIONS-2026-11-21 The clock (version B); PARTS-TREE 6.1.5
-- Status: measured. Coverage row: 6.1.5. Conflicts settled: C-120.
+- Status: ruled (his ruling or canon). Coverage row: 6.1.5. Conflicts settled: C-120.
 
 ## 6.2 The Ledger notebook
 
@@ -95,7 +95,7 @@ A map of the Hook that marks only places he has been or been told of.
 - How it works: The paper map is a drawn map of the Hook, not a list, marking only the places Tom has been or been told of; opened with Comma it stops Tom but pauses nothing. There is no minimap, and street-name plates sit at street ends. In the prototype it draws the whole town with no gating.
 - Standard: No minimap (D37); only known places Test: S: no unknown place marked; H: finds a told place
 - Source: D12, D20, D37; DESIGN §10 (his ruling or canon). Designed in: RULINGS D27, D30 (no minimap; a paper map and street signs); DESIGN §10; ADDENDUM §A9; PARTS-TREE 6.3
-- Status: measured. Coverage row: 6.3.
+- Status: ruled (his ruling or canon). Coverage row: 6.3.
 
 ## 6.4 Menus
 
@@ -150,7 +150,7 @@ Typing, suggested lines, the game's own decision lines, Leave always there.
 - How it works: Each typed line is read into one act: question, agree, refuse, offer, threat, promise, claim, insult, small talk or leave. An offer's amount is read exactly ('a tenner' is 10 pounds), an offer above what Tom carries fails in character, and offers, threats, promises and lies are acts the hearer remembers. The bar is a 300-line labelled set (period, modern, terse and misspelt; 65 hard): the reader's act matches the label or an allowed alternative on at least 95% of all lines and 90% of hard lines. Two blind human labellers agreed 295 of 300 (98.3%).
 - Standard: On the labelled set typed-talk/RT14-SET-2026-11-21.jsonl (300 lines, period, modern, terse and misspelt, 66 hard), the reader's act matches the label or an allowed alternative on at least 95% of lines and 90% of hard lines; every amount read exactly; every offer, threat, promise and lie enters the hearer's memory. Test: A labelled set of 300 lines (period and modern phrasing) run through the reader; memory checked after each.
 - Source: typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28 (real-world figure or published standard). Designed in: DEFINITIONS-2026-11-21 §RT-14; typed-talk/README.md and agreement-2026-11-21.json; DESCRIPTION-2 §28
-- Status: measured. Coverage row: RT-14. Conflicts settled: C-122.
+- Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: RT-14. Conflicts settled: C-122.
 
 ## 6.8 Photo mode
 
@@ -174,7 +174,7 @@ Addresses, house numbers, street-name plates, passengers' 'left here', asking a 
 - How it works: Every door that matters has a number and every street a name plate at its ends; jobs, fares and letters give an address and a landmark. Asked the way, people give it by landmark or say 'no idea, try the caff'; in the car a fare says 'left here' a junction before, and Pauline repeats the way on R. Lost for 90 s, Tom's own line repeats the landmark once; after three minutes the next person within 5 m offers the way. A newcomer reaches ten named places unaided within 3 minutes each.
 - Standard: A newcomer reaches a named place unaided within 3 minutes (ER-JOB-01); no markers (ruling 23 Sep) Test: H: ten named places reached unaided; S: every place has an address and a landmark; addendum rules ER-WAY-01 to 03
 - Source: DESIGN §4; rulings (his ruling or canon). Designed in: ADDENDUM §A9; DESIGN §4 Guidance, ER-JOB-01, ER-DRIVE-09; PARTS-TREE 6.9
-- Status: measured. Coverage row: 6.9.
+- Status: ruled (his ruling or canon). Coverage row: 6.9.
 
 ## 6.10 Letters and papers in hand
 
