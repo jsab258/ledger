@@ -1,17 +1,14 @@
-GOAL (to Mon 23 Nov 13:00): his order of 16 November, adopted by his tap of 15 Nov 21:08, item by item (production/orders/2026-11-16.md); anything new goes on its waiting list.
+GOAL (to Mon 30 Nov 13:00): his order of 23 November, adopted 23 Nov 08:12 (production/orders/2026-11-23.md); new things go on its waiting list. Phase 2's carried items: production/orders/archive/2026-11-23.md.
 
-Phase 0 done (production/audits/phase0-exit/BUNDLE.md). Phase 1's open exits and the 9 Nov items closed into this order (its section 4).
+## This week
 
-## Phase 2
+- [ ] n23-1 measuring block: every row solid or not needed (production/research/lane/measurements/STATUS.md) by Fri 27 Nov.
+- [ ] n23-2 our own build filmed and measured (tools/star_slots.py).
+- [ ] n23-3 live talk; n23-4 voice scan; n23-5 recipe rewrite.
+- [ ] n23-6 weekly audit; n23-7 efficiency and safety.
+- [ ] Advisor 324: hidden-details catalogue (production/research/lane/details-catalogue/CATALOGUE.md).
 
-- [ ] n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note).
-- [ ] n16-2 Ron as one complete person (CLOTHES.md).
-- [ ] n16-3 street budget and scale test, method note first; the rough street (TOWN.md).
-- [ ] n16-4 street checks, Flemish bond; n16-5 the corner copied along the street.
-- [ ] n16-6 talk provider-neutral, bake-off (the second provider's client built and reviewed 16 Nov, ledger/DevTools/OpenAiCompatibleClient.cs; next the Sonnet 5.5 leg, other hosts with the router key on the waiting list); n16-7 people alive; n16-8 hair.
-- [ ] n16-9 parked cars; n16-10 efficiency and safety; n16-11 the games' numbers (Steam walkthrough study, advisor 273).
-
-STATE (21 Nov 22:35): Kiln paused; five first passes done; two sheets owe Built on; repriced about 102 h (STATUS.md); depth marking next; then 35.2, feel.
+STATE (23 Nov 17:40): one number solid; drills wait for the recorder on his page; catalogue in review.
 
 ## Handovers
 

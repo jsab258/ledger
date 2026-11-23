@@ -1104,3 +1104,5 @@
 {"event": "stop", "at": "2026-11-23T16:43:00", "note": ""}
 {"event": "start", "at": "2026-11-23T16:35:00", "task": "advisor 324 catalogue: two research-reader helpers (A 6 min, B 4 min)", "phase": "2", "kind": "production"}
 {"event": "stop", "at": "2026-11-23T16:41:00", "note": ""}
+{"event": "start", "at": "2026-11-23T17:25:00", "task": "advisor 324 hidden-details catalogue: videos read, twenty ranked, reviewed", "phase": "2", "kind": "production"}
+{"event": "stop", "at": "2026-11-23T17:44:00", "note": ""}
