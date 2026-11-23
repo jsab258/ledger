@@ -19,4 +19,20 @@ Next run starts here:
 3. When story v3 is picked: name it in BLUEPRINT.md's story section and point chapter 03 at its bible.
 4. When he answers a question (his page or advisor rows): replace the recommendation, drop the question.
 5. When a design proof run lands (design pass, fit check rerun, red teams 3 and 4): fold its changed rows in.
+
+## Run 2, Monday 23 November 2026, from 13:49 (claude-opus-5-5), the advisor's fire of 13:15
+
+- Start row 2026-11-23-1349-blueprint-run2. Budget: Allowance 0% at 13:29 (main row), the week reset at 13:00; line 0 to 90% to Mon 30 Nov 07:00; stop at 88%.
+- PRIOR-RESEARCH-INDEX.md has not landed (its session started 13:18); built on the research folders on wip instead (BLUEPRINT.md, "What it builds on").
+- Folded in: the solid rule (C-202), 5.11 craft standards, TECH-PLAN (8.11, 9.13), NUMBERS-RUN (gaps), the live voices hookup (8.12), Rulings to revisit R1 to R4. Preparation items are six, not seven: no blueprint line asked him to play the prototype, so nothing changed.
+- Counts: 424 parts: 1 measured, 75 ruled, 15 sourced, 133 decided, 62 pending, 45 unmeasured, 14 out, 57 outside, 22 machinery; 202 conflicts; 324 gaps; 18 questions; 4 rulings to revisit.
+- Fresh Opus review of the additions: 24 points, fixed once.
+- Not landed yet: PRIOR-RESEARCH-INDEX.md, INVENTORY.md and SOUND-PLAN.md (the preparation's items c and d), production/research/lane/aaa-studies/, production/research/lane/details-catalogue/, GTA V's teardown, the PC measuring's five-sample numbers, the story v3 pick.
+
+Next run starts here (after run 1's list, which still holds):
+1. PRIOR-RESEARCH-INDEX.md: read it first; say what is built on and where it disagrees.
+2. STATUS.md: move a row to measured only on a number it marks solid; reconcile its headline (one solid) with its rows (three).
+3. INVENTORY.md and SOUND-PLAN.md when they land (5.5 sound, 3.6 lines, FIT-G6); TECH-PLAN and NUMBERS-RUN again after their fresh reviewer.
+4. details-catalogue (features only, no timings, no GTA VI story); GTA V's teardown into 5.11 as a column.
+5. His answers to R1 to R4 and Q1 to Q18 from the advisor rows.
 Prior research index of 23 Nov: fold PRIOR-RESEARCH-INDEX.md into the blueprint; every part's standard names prior research where it exists.

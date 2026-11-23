@@ -1,6 +1,6 @@
 # LEDGER: the blueprint
 
-The whole game as one design. Version 1, 23 November 2026, by the blueprint keeper (claude-opus-5-5). This is the one document the design flows into; the giant one-shot prompt is written from it alone, and the one-shot starts only when it is complete (his ruling of 20 and 21 November; plan date the reset of Monday 7 December). Canon outranks it and his rulings decide what is in and out. Nothing here is new: the keeper consolidates what the design sources already say, settles their clashes by date and ruling, and lists what is missing.
+The whole game as one design. Version 1, 23 November 2026, by the blueprint keeper (claude-opus-5-5); updated the same day by keeper run 2 (the solid rule for measured, craft standards, the browser build, the live voices hookup, rulings to revisit). This is the one document the design flows into; the giant one-shot prompt is written from it alone, and the one-shot starts only when it is complete (his ruling of 20 and 21 November; plan date the reset of Monday 7 December). Canon outranks it and his rulings decide what is in and out. Nothing here is new: the keeper consolidates what the design sources already say, settles their clashes by date and ruling, and lists what is missing.
 
 ## The game in one page
 
@@ -23,9 +23,11 @@ The bar: Kingdom Come: Deliverance II for immersion and finish; GTA for why peop
 ## How to read it
 
 Every part has a short entry: how it works; its standard (a number or a pass-or-fail test) and test; the source of that standard (a reference game's measured figure, a dated real-world figure, his ruling or canon, or DECIDED by the design proof for him to overturn); its status; and its coverage.json row id. Statuses:
-- measured: the standard rests on a real figure (his ruling or canon, a reference game, a dated real-world figure or published standard);
+- measured: the standard rests on a number production/research/lane/measurements/STATUS.md marks solid: five uncut, dated samples read at a step finer than what they measure (advisor 302; his words of 22 Nov). Only these count as measured for the gate;
+- ruled: the standard is his ruling or canon (it binds, but it is not a measurement);
+- sourced: the standard rests on a dated real-world figure or a published standard (1990 statistics, accessibility guidelines, law), read from its source, not measured by the five-sample rule;
 - decided: a design decision with a pass-or-fail standard, his to overturn;
-- pending: defined, a number waits on a named, dated study (most on the PC measuring of 23 to 28 November);
+- pending: defined, a number waits on a named, dated study, or rests on a reference-game lead not yet solid;
 - unmeasured: defined, no reference figure behind its number yet;
 - out: left out by his ruling or canon (kept so nobody builds it);
 - outside: Unreal-only work (looks, engine, performance), judged in Unreal against the Hook sheet and KCD2 frames;
@@ -33,29 +35,42 @@ Every part has a short entry: how it works; its standard (a number or a pass-or-
 
 Sources, newest first; on a clash the newer wins unless canon or a ruling says otherwise: canon and RULINGS (on wip); DEFINITIONS-2026-11-21 (its design pass 4 of 23 Nov newest), GTAVI-MAP, FIT-CHECK, CLOUD-FIGURES, PANEL-BAR and PRIVACY-CHECK of 21 Nov; the description copy of 21 Nov (redteam2/GAME-DESCRIPTION-COPY-2); DESIGN-ADDENDUM of 20 Nov; the description inside ONE-SHOT-PROMPT of 20 Nov; VISION of 19 Nov (approved); DESIGN and BUILD-ORDER of 18 Nov; the parts tree.
 
+## What it builds on
+
+The prior research inventory (production/lane/blueprint/PRIOR-RESEARCH-INDEX.md) has not landed yet; its session started at 13:18 today, and the next keeper run builds on it. Until then the blueprint rests on the design sources above and, from keeper run 2, on these research folders on wip, read by helpers: the 25 Oct reference studies (production/research/aaa-reference/studies 01, 04, 05, 06, 12), the KCD2 and RDR2 teardown (ledger-v2/research), the coverage audits, the Mafia notes (game-clothing-pipeline, phase5-procedural, street-wear: Unreal use only), the inZOI and Silent Hill 2 studies, pre-production/4-BUDGETS.md and production/specs/asset-budgets.json (5.11 craft standards); production/research/voice-latency, the allowlist and the existing voice helper (8.12 live voices); the measuring block's STATUS.md (the solid rule); and the preparation files TECH-PLAN.md and NUMBERS-RUN.md (8.11, 9.13 and the gaps). Where they disagree, BLUEPRINT-11 says which wins and why (C-200 to C-213): rulings over studies, dated photographs over a game's grid, newer over older, a design source over a preparation file.
+
 ## The chapters
 
-| File | Group | Parts | measured (on real figures) | decided | pending | unmeasured | out | outside | machinery |
-|---|---|---|---|---|---|---|---|---|---|
-| BLUEPRINT-01-hands.md | What the player does with his hands | 86 | 17 (7) | 32 | 22 | 15 | 0 | 0 | 0 |
-| BLUEPRINT-02-town.md | The town under the hood | 94 | 25 (10) | 53 | 6 | 10 | 0 | 0 | 0 |
-| BLUEPRINT-03-story.md | Story and people | 45 | 18 (3) | 10 | 8 | 8 | 0 | 1 | 0 |
-| BLUEPRINT-04-place.md | The place | 33 | 6 (0) | 8 | 1 | 0 | 0 | 18 | 0 |
-| BLUEPRINT-05-looks-sound.md | How it looks and sounds | 39 | 5 (0) | 1 | 0 | 8 | 0 | 25 | 0 |
-| BLUEPRINT-06-interface.md | The interface and the Ledger | 19 | 5 (1) | 13 | 0 | 1 | 0 | 0 | 0 |
-| BLUEPRINT-07-shape.md | The game's shape | 48 | 17 (3) | 10 | 5 | 3 | 13 | 0 | 0 |
-| BLUEPRINT-08-technical.md | Technical | 25 | 16 (11) | 4 | 0 | 0 | 0 | 5 | 0 |
-| BLUEPRINT-09-machinery.md | The machinery | 22 | 0 (0) | 0 | 0 | 0 | 0 | 0 | 22 |
-| BLUEPRINT-10-shipping.md | Shipping | 13 | 2 (1) | 2 | 0 | 0 | 1 | 8 | 0 |
-| all | | 424 | 111 (36) | 133 | 42 | 45 | 14 | 57 | 22 |
+| File | Group | Parts | measured | ruled | sourced | decided | pending | unmeasured | out | outside | machinery |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| BLUEPRINT-01-hands.md | What the player does with his hands | 86 | 1 | 10 | 0 | 32 | 28 | 15 | 0 | 0 | 0 |
+| BLUEPRINT-02-town.md | The town under the hood | 94 | 0 | 15 | 3 | 53 | 13 | 10 | 0 | 0 | 0 |
+| BLUEPRINT-03-story.md | Story and people | 45 | 0 | 15 | 0 | 10 | 11 | 8 | 0 | 1 | 0 |
+| BLUEPRINT-04-place.md | The place | 33 | 0 | 6 | 0 | 8 | 1 | 0 | 0 | 18 | 0 |
+| BLUEPRINT-05-looks-sound.md | How it looks and sounds | 39 | 0 | 5 | 0 | 1 | 0 | 8 | 0 | 25 | 0 |
+| BLUEPRINT-06-interface.md | The interface and the Ledger | 19 | 0 | 4 | 1 | 13 | 0 | 1 | 0 | 0 | 0 |
+| BLUEPRINT-07-shape.md | The game's shape | 48 | 0 | 14 | 0 | 10 | 8 | 3 | 13 | 0 | 0 |
+| BLUEPRINT-08-technical.md | Technical | 25 | 0 | 5 | 10 | 4 | 1 | 0 | 0 | 5 | 0 |
+| BLUEPRINT-09-machinery.md | The machinery | 22 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 22 |
+| BLUEPRINT-10-shipping.md | Shipping | 13 | 0 | 1 | 1 | 2 | 0 | 0 | 1 | 8 | 0 |
+| all | | 424 | 1 | 75 | 15 | 133 | 62 | 45 | 14 | 57 | 22 |
 
-All 401 coverage.json rows are in, each once (284 parts-tree leaves and 117 rows added by the reviews, red teams, fit check, clock and rulings, each filed under the parts-tree part it belongs to), plus the 22 machinery parts and one ruled part with no coverage row yet (1.6.15 hold-ups, his ruling of 20 Nov, designed in DESIGN-ADDENDUM A41). The nine clock rows are measured on his ruling of 21 Nov (design pass 4 took clock B on 23 Nov). Design pass 4 of 23 Nov is folded in (no chase timer, the crowd per frame, car entry, three new chase rows DP5-C01 to C03).
+All 401 coverage.json rows are in, each once (284 parts-tree leaves and 117 rows added by the reviews, red teams, fit check, clock and rulings, each filed under the parts-tree part it belongs to), plus the 22 machinery parts and one ruled part with no coverage row yet (1. Keeper run 2 added sections without coverage rows, not counted in the table: 5.11 craft standards, 8.11 the browser build, 8.12 the live voices hookup, 9.13 the browser build's modules, data and test door.6.15 hold-ups, his ruling of 20 Nov, designed in DESIGN-ADDENDUM A41). The nine clock rows are ruled, on his ruling of 21 Nov (design pass 4 took clock B on 23 Nov). Design pass 4 of 23 Nov is folded in (no chase timer, the crowd per frame, car entry, three new chase rows DP5-C01 to C03).
 
-BLUEPRINT-11-conflicts-and-gaps.md holds the 194 conflicts settled or corrected settled (what won and why), the 303 gaps for the design proof and the source traces not found.
+BLUEPRINT-11-conflicts-and-gaps.md holds the conflicts (C-000a to C-212, 202 in all, what won and why), the 324 gaps for the design proof and the source traces not found; at the first build it held the 194 conflicts settled or corrected settled (what won and why), the 303 gaps for the design proof and the source traces not found.
 
 ## The story chapter
 
 Pending. Story v3 (production/lane/story/v3/) is being written and is not picked; its phase 1 ranked twenty premises on 21 Nov. The latest full draft, STORY-FINAL.md (The Passenger, 20 Nov), was never approved. His rulings want his yes on the measured story before the one-shot. Until v3 is picked, chapter 03 carries the story's machinery (acts, beats firing on states, endings chosen by the town and the books, side stories, fares, street happenings) but no plot. When v3 is picked, this section names it and chapter 03 points to its bible.
+
+## Rulings to revisit
+
+His rulings are not unquestionable (his words of 22 Nov, as relayed in the order of 23 Nov). Where a finding or a measured number argues against one, it is listed here with its evidence and a recommendation, for him as one multiple-choice question. Until he answers, the ruling stands, and his newer words beat his older ones. None of the evidence below is yet solid by the five-sample rule.
+
+- R1 The map: the Hook plus its docks (his ruling of 28 Oct; canon's docks line of 19 Nov). Evidence: reference car chases ran 2 to 8 minutes (19 chases in GTA VI, GTA V, GTA IV and Sleeping Dogs; leads, uploaders' picks, three stars and more, on far bigger maps); the Hook's three loops (1,528, about 1,000 and about 910 m) hold 1 to 3 minutes before every road has been driven twice (design pass 4). Question: (a) keep the map; chases run 1 to 3 minutes and are made rich by lanes, yards, the switch to foot and the search (recommended: the five-sample chase lengths land this week and are checked against it); (b) add one drivable road past the soft edge for chases only (about 2 to 3 km, nothing to enter); (c) decide after the five-sample lengths.
+- R2 The clock: 60 real seconds a game hour, Act II about 5 game weeks (his ruling of 21 Nov, his newest on it; about 7 weeks in all by CLK-06). Evidence: the references' days run 48 to 144 real minutes against LEDGER's 24 (CLOUD-FIGURES C2, published figures; GTA VI unconfirmed); the evening is 6 real minutes against GTA V's about 12; the running time comes to 13 to 20 hours against his 15 to 20 (CLK-06); and the numbers run finds the rung ladder unreachable in a five-week Act II on the written car prices and the cooling rates set for a seven-week act (NUMBERS-RUN, assumed amounts). Question: (a) keep 60 s and seven weeks; fix the shortfalls inside it (three bot playthroughs check the hours, a short median fixed by fewer nights skipped; the design proof adopts the numbers run's ladder fixes) (recommended: his newest ruling, chosen with the references in front of him); (b) 90 s a game hour with a shorter calendar; (c) revisit after the first loops' playthroughs.
+- R3 The thinking sound (his ruling of 28 Sep: a short thinking sound with a glance before an answer, cut when the answer starts). Evidence: with Pocket the first sound arrives in about 0.2 s (POCKET-SWITCH, 26 Oct), so the sound is cut mid-word; it has been off in play in the Unreal build since his ruling of 7 Oct (no prepared openings). Question: (a) drop it; the glance alone covers the wait (recommended: his newer words of 7 Oct, and the voice is now fast enough); (b) keep it, played only when no sound has arrived after a set time; (c) keep it as ruled.
+- R4 The 6 GB card line for the game alone (his ruling of 24 Oct, "for now"). Evidence: it and 4-BUDGETS' 2.8 GB voice reserve were set while the voice ran on the graphics card; the live voice is now Pocket on the processor (pocket-server.py; 8.12.1). Question: (a) keep 6 GB until the Unreal phase is profiled with Pocket running (recommended: nothing is built in Unreal before the prototype is done, so there is no cost in waiting); (b) raise the game's card line now by the freed reserve; (c) revisit in phase 2, as the ruling of 24 Oct already says for the spare card time.
 
 ## Questions that are his (canon, scope, money)
 
@@ -78,9 +93,7 @@ Each with the recommendation. Until he answers, each part is built to the recomm
 - Q15 (10.2, 10.12): The store fee, the price, a paid age-rating review, a demo (money). Recommended: PEGI 16 as the design target; pay only when 2026-grade frames exist; a demo of the first evening; price after the prototype.
 - Q16 (10.6, 10.7): District updates free or paid; achievements at release (scope, money). Recommended: Decide free or paid with the release price, say nothing now; no achievements at release.
 - Q17 (10.8, 10.10): The first store capsule (a whole street frame) and a name search for LEDGER (his accounts and money). Recommended: Show him the capsule from a packaged frame; he runs the name search before the Coming Soon page.
-- Q18 (1.5.3, DP5-C02, FIT-G1, OUT-05): Design pass 4's R1: his map (the Hook plus the docks) holds car chases of 1 to 3 minutes without repeating roads; reference chases ran 2 to 8 (leads) (scope). Recommended: Keep the map; chases rich in lanes, yards, the switch to foot and the search, not length; check again when the five-sample lengths land.
-- Q19 (7.13, CLK-06): Design pass 4's R2: his clock (60 s a game hour, a 24-minute day) is the shortest of the references (48 to 144 minutes), and its running time is 13 to 20 hours against his 15 to 20 (scope). Recommended: Keep 60 s; three bot playthroughs check the hours, and a short median is fixed by fewer nights skipped, never a longer calendar.
-- Q20 (3.1, BLUEPRINT.md story section): His yes on the measured story, which the one-shot waits on (story, canon). Story v3 is mid-way (phase 1 ranked twenty premises; phase 2 writes three bibles from 23 Nov); STORY-FINAL (The Passenger, 20 Nov) was never approved. Recommended: Wait for v3's measured pick (its phase 2 and measure this week) and give the yes on that; not on STORY-FINAL.
+- Q18 (3.1, BLUEPRINT.md story section): His yes on the measured story, which the one-shot waits on (story, canon). Story v3 is mid-way (phase 1 ranked twenty premises; phase 2 writes three bibles from 23 Nov); STORY-FINAL (The Passenger, 20 Nov) was never approved. Recommended: Wait for v3's measured pick (its phase 2 and measure this week) and give the yes on that; not on STORY-FINAL.
 
 ## Keeping it
 

@@ -209,6 +209,21 @@ Rule: canon outranks everything, then his rulings (the later stands), then the n
 - Killing an officer brings the manhunt at once (RT2-02); every other witnessed killing goes through the four stages, each sign shown a game hour ahead (2.6.5). Settled as a design decision, his to overturn; no longer a question.
 - The clock running hours: a short median is fixed by fewer nights skipped by default, never a longer calendar (design pass 4); no longer a question for him.
 
+### Settled in keeper run 2 (23 Nov)
+- C-200 The crowd the browser budgets assume. TECH-PLAN (23 Nov) sizes its budgets for 25 to 35 people on screen, G9's first-pass band, rescaled the same day by design pass 4 (4 to 10 in a frame, 12 to 20 along the parade front, up to 30 at the match). Design pass 4 itself keeps the performance budget at 25 or more on screen as headroom. Settled as it says: the budgets keep 25 to 35 as headroom; the crowd built is design pass 4's.
+- C-201 Saves. AX-07 (decided) has at least eight manual slots with pictures; TECH-PLAN describes one save object. AX-07 wins; the plan's act-start autosave, 75 s interval, converter and 200,000-character cap are added to it (8.11.3).
+- C-202 Measured. Up to run 1, a row counted as measured on a reference-game figure, a dated real-world figure or his ruling. Advisor 302 and STATUS.md (his words of 22 Nov, depth before speed): only a number resting on five uncut, dated samples read at a finer step is measured. That wins. STATUS.md marks three findings solid: GTA VI's whole two-star wanted spell (about 27 to 122 s, median about 47), a return into sight resuming the pursuit at the level held, and car entry (door to seated 1.5 to 2.5 s); its headline still says one, so the file disagrees with itself. Of the blueprint's rows only 1.2.3 rests wholly on a solid number and is measured; DP5-C03's resume rule rests on the solid return finding but its 30 to 120 s search band is a judgement, so it stays pending. 20 reference-game rows are pending as leads; 75 rows are ruled (his ruling or canon) and 15 sourced (dated real-world figures or published standards), shown apart and not counted as measured.
+- C-203 Garment triangles: asset-budgets.json caps garments on Mafia's medians (jacket 22,000), while his ruling of 17 Nov names KCD2 as the bar and Mafia only as a study of Unreal's use; KCD2's outfit is about half Mafia's. The ruling wins in spirit: the standards are bands, KCD2 at the low end, Mafia at the ceiling (5.11.4).
+- C-204 A principal's whole outfit: 4-BUDGETS (3 Oct) gives 25,000 triangles; asset-budgets (28 Oct) has no outfit cap (its garment caps sum to 58,000, above Mafia's median outfit of about 43,000 and over twice KCD2's 24,532). His ruling of 17 Nov (KCD2 the bar) wins: the band runs from 25,000 (KCD2, 4-BUDGETS) to about 43,000 (Mafia's ceiling), as judgement until the first profile.
+- C-205 Figures read from the games' own files (studies 1, 4, 5, 6, 12, the Mafia notes, the inZOI and Silent Hill 2 files, 25 Oct to 7 Nov) against his ruling of 17 Nov (other games studied from the outside only, never files opened). The ruling wins: nothing more is taken that way; the recorded figures stay as notes, marked "read from files before 17 Nov", and none counts as measured.
+- C-206 Nanite: on in Mafia, off for LEDGER (decision of 3 Oct, no ruling). LEDGER's decision stands; Mafia's world figures (cluster caps, distant detail) do not transfer, its skinned garments do.
+- C-207 The Unity-era performance budget (25 Aug) against the 23 Sep ruling (60 fps at 3440 by 1440 in Unreal) and 4-BUDGETS: the ruling and the newer budget win; the Unity costs are not used.
+- C-208 The kit grid: a 75 mm course from the vignette scene's metric brick (today's trade standard, not a period source) against 85 to 88 mm measured on a dated 1994 photograph (TERRACE-KIT-TABLE G1). The photograph wins (rulings of 21 Sep and 1 Oct: dated photographs govern what things looked like); Mafia gives only how pieces fit.
+- C-209 Town size: the teardown suggests hundreds to a couple of thousand scheduled people; his ruling of 30 Sep keeps the thirty regulars as written. The ruling wins; the craft rows use 3 principals and 12 passers-by in view.
+- C-210 Cars: 4-BUDGETS and asset-budgets budget parked cars only; his rulings of 17 and 18 Nov add traffic, an arcade car and AAA driving as the end state. The rulings win; a driving car's budget is a gap.
+- C-211 LOD ratios: study 6, the jacket and the jumper and the engine's defaults differ; asset-budgets (28 Oct, newest) sets 1.0, 0.47, 0.25, 0.09 with a step tolerance of 0.6, and wins.
+- C-212 Fence rate in the prompt: ONE-SHOT-PROMPT section 16 still says about 0.4; the blueprint carries 0.33 (CLOUD-FIGURES B3). The blueprint wins; the giant prompt is written from it.
+
 ## Gaps for the design proof
 - Hold-ups (1.6.15): ruled in on 20 Nov and designed in DESIGN-ADDENDUM A41, but no parts-tree part and no coverage.json row exist; the blueprint carries the part as decided. The design proof to add the row.
 - Guns rare and late: Mickey's revolver can be found at rung 2 (RT2-14, 2.12.2), about the start of Act II, which sits uneasily with his rulings (guns rare, late, after melee). The design proof to gate the find on a later state or put it to him.
@@ -515,6 +530,33 @@ Found while consolidating; nothing here is invented to fill them. Each line: the
 - 10.10 Legal and company admin: Nothing is stated: no name search is recorded, no company, no payment route.
 - 10.11 Player data and privacy: The service's retention period and deletion route are not stated anywhere yet ('as stated' cannot be checked until the studio's server and its provider are fixed).
 - 10.12 Demo, price and wishlists: No price, no demo decision and no wishlist plan.
+
+### Gaps found in keeper run 2 (23 Nov)
+- Happenings written (FIT-G6, DEFINITIONS G6): at least 60 written against about 70 heard in 17 hours (3.7) and 60 to 80 at 15 to 20 hours (numbers run, which recommends 80). For the design proof to set; 60 stands as written meanwhile.
+Numbers run (NUMBERS-RUN.md, 23 Nov: a model of the written rules with seven assumed amounts in three bands; to be run again after Thursday's 1990 prices and line table). Its proposals change written rules and are for the design proof, not settled here:
+- Week one does not pay at a 1990 London fare: 14 fares at £1.30 pay the £18 rent against about 6 offered (at G7's 40 fares over seven weeks); FIT-F24 assumed about 18 own fares. The week-one fare count and the fare rate are set nowhere. The run recommends £2.50 to £3.50 for a 1 to 2 mile fare and at least 7 fares in week one.
+- The rise stalls on car prices: no player reaches five cars in seven weeks, so rung 3 never happens in a five-week Act II. The run recommends hire purchase (a tenth down, £15 to £25 a week from the book). For the design proof; in-game prices are not his money question; it becomes his (scope) only if it adds a new system (RULINGS 29 Sep: no new system before its place in PLAN.md).
+- The wash barely bites below the hard player; the run recommends counting drivers' fares at 40% (Tom's own at 80%); RT-01's grading line would change with it.
+- Money stops mattering for the fares-only player by week 3; GD-07 has no fares-only bot and the clean path's wants list is short.
+- Escalation runs away for an aggressive player (Act II can end on day 12) and stalls for a payer (no rung from day 9 to 38). The run recommends at most one rival rung every 4 game days, the Act II sit-down not before day 29, and a paid hold of one week with doubling asks (RT2-07, 2.10.1 and FIT-F13 would change).
+- The 30-line regulars repeat their own lines from night 31; the run recommends an own line at most every second day met (cutting lines to 50, as Q9 allows, makes repeats worse).
+- Shared street lines need sizing by how often a situation comes up (about 400 in all), not a flat 6 per situation.
+- GD-08 still has no jobs-per-hour figure, so job repeats cannot be run.
+- Unpriced: the Widow's tax, pay-off prices, front takings, Fixer prices, repairs.
+Tech plan:
+- The cause of the prototype's tick spikes (99.9th percentile 20.9 ms, worst 71.6 ms) is untraced.
+- The one-real-hour no-repeat rule for shared lines has no field in the line record.
+Craft (5.11):
+- GTA V's teardown has not landed; RDR2 has no craft figures; no reference game gives triangles for facades, props or vehicles, KCD2's LOD switch distances, a measured street frame time or resident texture memory; a driving car's budget, a crowd at distance and the street camera have no LEDGER figure.
+Live voices (8.12):
+- The transport between the page and the helper (local address, protocol, audio format, a secure page calling a local address, the page's behaviour with no helper) is not written; the existing helper returns file paths for a game process.
+- How the helper is installed, started, prewarmed (about 14 s) and stopped; whether friends at the browser evening hear Pocket or a fall-back.
+- Which voice speaks written and prepared lines for Agar, the dispatcher and the crowd; no Pocket reference clip or id was found for Agar or the dispatcher.
+- The watermark's method (no code in the Pocket helper; the audit's option was not found answered).
+- The thinking sound against Pocket's 0.2 s first sound (cut mid-word; switched off in the Unreal build since 7 Oct while the 28 Sep ruling stands); its browser behaviour.
+- Mouths in the browser: the mechanism is set (loudness from the sound mix, 8.12.2); the update rate and a pass line are not.
+- No latency or frame figure through a browser; the browser's text route (studio relay or the helper) is not settled.
+- Advisor 299's own words were not found in the repository; the hookup rests on the ruling of 20 and 21 Nov.
 
 ## Source traces not found
 
