@@ -4,6 +4,17 @@
 
 Marks: THIN where a claim rests on one wiki, guide or article; [I] this study's own arithmetic or judgement. All pages read 23 Nov 2026; page dates given where shown. Steam review and forum text could not be read from the cloud (gated), so no new review counts were made.
 
+
+## Built on, and where this differs
+
+Read first (23 Nov; no PRIOR-RESEARCH-INDEX.md yet, so the research folders on wip and lane were searched by subject):
+- production/research/failure-after-arrest/SUMMARY.md (earlier research topic 14): in a game without resets, failure design is about making the continuation worth playing; permanent memory builds a spiral of failure unless something pushes back; make the failure a place with a decision in it; Failbetter softened its own permanent loss in a sequel. Built on in FF-01, FF-04 and the new FF-08.
+- production/research/aaa-reference/studies/16-jobs-story.md: KCD2's failure continues as a world state the town can talk about, never a game over (much of it read from KCD2's files, so background only under the 17 Nov ruling). FF-01 and FF-06 rest on the published sources above.
+- production/research/police-response-1990/ (custody, arrest, the period rule that saying nothing costs nothing): already in the design's custody hours (2.6.4).
+- The players study for the complaint counts.
+
+Where this differs: the earlier research proposed custody as a scene with a clock and one decision, built on the period rule that saying nothing costs nothing in court. The design's newer rule passes an arrest in under 2 real minutes and makes the choice cost hours: for a window, going quietly costs about six game hours and owning up two and a caution; for a wounding or a robbery the hours are 8 and 12 whatever he says (2.6.4). That is a difference: the newer design stands, and the research's point survives only for the smallest deeds.
+
 ## In plain words
 
 1. What failure costs. GTA V charges little for death (5% of cash, at most $5,000, weapons kept) and offers to skip a mission part after three failures. RDR2 restarts a mission from a checkpoint, takes "some money" for an open-world death, and runs bounties per state (rdr2.org; GamesRadar says per county) with a witness who can be frightened off. KCD2 sends the player back to his last save, and its crimes are paid in fines, the pillory, caning, a brand that halves good reputation, and at last execution.
@@ -78,6 +89,25 @@ LEDGER's failure, as designed: Tom cannot die (his ruling; 1.3.9); no game-over 
 - **FF-05 The police know only what a person perceived or a search found.** No arrest, statement or description happens without a person who perceived the act, an officer who saw it, or evidence a search found where the design allows (RT2-17, 2.6.9); a frightened witness may stop a report, as RDR2's witness rule and LEDGER's ruling of 3 Oct allow. Fail: any police step with none of these behind it. Basis: RDR2's witness rule (rdr2.org, GamesRadar) and the ruling of 3 Oct; players' complaints about law that knows too much are thin (players study: first pass 4.5% for arbitrary rules, Steam 0.7%, hand check none). Rows: 2.6.3, 1.4.5, 2.6.5, 2.6.9, RT2-16, RT2-17.
 - **FF-06 A step that can be tried again, lost twice, brings another way.** Beside every step's own skip (3.5.6), when a step that can be tried again (a fight, a chase, a lift, a talk) is lost twice, a person (Ron, Sheila, the man who gave the job) offers another way within one game day, or the job turns into a state the story carries on from. Fail: a third attempt at the same step with no new way offered. Basis: GTA V's skip after three failures (a wiki and a guide, with Kotaku); LEDGER has no retry screen, so the offer comes from a person (DECIDED: two losses, one game day). Pairs with MS-04 in MISSIONS-AND-SIDE-QUESTS.md. Rows: 3.5.6, 7.9, GD-03.
 - **FF-07 Losing happens, and is not routine.** The bots' behaviour in trouble (DECIDED): the greedy bot takes every fight and night job offered and never backs off; the lazy bot takes no night job and backs off or walks away from every confrontation; the median bot takes half. Pass: the greedy bot is beaten or arrested at least once in Act I and Act II together; the lazy bot is neither beaten nor arrested in Act I; the median bot is beaten or arrested at least once and at most six times across Act I and Act II (about once a game week at most). Fail: outside these. Basis: being hurt is ordinary in KCD2 (56.7% of owners have won three skirmishes while bleeding) and over a quarter of KCD1's owners have served three days in prison; difficulty that is wrong is 3.9% of reviews (mean of three games, rough). Rows: 1.3.8, 1.3.9, 2.6.3, 7.9.
+
+- **FF-08 A worse position stays playable (Act II).** A forced-failure bot (DECIDED: it plays as the median bot but walks into two beatings and two arrests in one game week of Act II, weeks 1 to 4, never by a hold-up) must find, in the following game week: at least two jobs offered to it (3.5.7), at least one person outside the police who still deals with it, the Friday rent payable from the book, and at least two brakes that need an act open to it (talking a story down, buying or leaning it quiet, putting things right with a person through a favour or a payment), beside letting it cool and changing coat, which are always open. Hospital days count inside the week. Fail: any of these missing. Not for Act I (the hard opening, 30 Oct) and not for a hold-up's own costs (heavily punished, 20 Nov), which stand. Basis: the earlier failure research (production/research/failure-after-arrest/SUMMARY.md): permanent memory builds a spiral of failure by construction; the studio behind the most admired permanent-loss system later softened it. DECIDED: the counts and weeks. Rows: 7.9, 2.4.2, 2.6.9, 1.6.10, RT-16, 3.5.7, RT-03.
+
+## Rulings to revisit
+
+None of the findings here argues against a ruling. Checked: "reloading is never stopped, the game says what is permanent" (D27, D30) agrees with FF-01; "hold-ups heavily punished, never a game over" (20 Nov) agrees with FF-01 and FF-04, and FF-08 leaves a hold-up's own costs alone; the earlier research's warning against severity (a studio softening its permanent loss) is a reason for FF-08's brakes, not against the ruling; the hard opening, "from having nothing and nobody" (30 Oct), is kept by FF-08 not applying in Act I; a car hurts but never kills (18 Nov) agrees with the failure costs, and Tom cannot die is the design's row 1.3.9 (not a ruling); the neighbour who reports unless talked round (1 Oct) agrees with FF-05.
+
+## Measured or not
+
+Only numbers that production/research/lane/measurements/STATUS.md (on wip, updated 21 Nov 22:14) marks solid count as measured: a number is solid only on at least five samples from uncut, dated footage read at a step finer than the thing measured. Its solid numbers today are the GTA VI heat length at two stars and the GTA VI car-entry time; neither is used here. So nothing in this file counts as measured: every figure is a published figure or a count with the number of sources it rests on, and the standards stay DECIDED or PENDING until play measures them.
+
+## Measuring requests (for the builder's play on his PC)
+
+GTA V, GTA IV, Sleeping Dogs and RDR2 are installed on his PC and measured in play by the builder. These numbers only play can give; none is guessed here.
+
+1. GTA V, GTA IV, RDR2 and Sleeping Dogs: from death and from arrest, the real seconds until the player has control again, the money actually lost in play, and the game time passed. Changes FF-01's bands and FF-02 (BLUEPRINT 07, 7.9; BLUEPRINT 02, 2.6.4).
+2. The same four: after a mission failure, the real seconds until the player is playing again (in GTA IV, including any drive back to the mission's start). Changes FF-01 and FF-06 (BLUEPRINT 07, 7.9; BLUEPRINT 03, 3.5.6).
+3. RDR2: the money actually lost on an open-world death, and the real seconds from a witnessed crime to the bounty showing. Changes FF-02 and FF-05 (BLUEPRINT 02, 2.6.3).
+4. All four: the real minutes between autosaves in an hour of ordinary play. Changes FF-03's 10 minutes (BLUEPRINT 07, 7.8).
 
 ## Not reached
 

@@ -4,6 +4,17 @@
 
 Marks: [STEAM] Steam's own global achievement page (steamcommunity.com/stats/<app>/achievements), read 23 Nov 2026; [MIRROR] a site that lists Steam achievement percentages (gamerguides.com), read 23 Nov 2026, undated, not proved to be Steam's own figure; [DEV] a developer's own figure reported second hand; THIN where a figure rests on one source or one anecdote; [I] this study's own arithmetic or judgement.
 
+
+## Built on, and where this differs
+
+Read first (23 Nov; no PRIOR-RESEARCH-INDEX.md yet, so the research folders on wip and lane were searched by subject):
+- The players study (production/research/lane/PLAYERS-KCD2-GTAV-RDR2-2026-11-20.md): boredom and the slow opening as RDR2 complaints; story and characters as the first praise. Built on for the reasons behind the curves.
+- production/research/aaa-reference/PLAYERS.md (12 Oct): the first thirty minutes need a scene a friend would retell (R6, P4). Built on in WQ-03, which asks the same of Act II's first hours.
+- production/research/lane/CHEAP-TRICKS-READ-EXPENSIVE-2026-11-18.md: the first hour as a probation (Cheung and others, CHI PLAY 2014, qualitative) and Hollow Knight's achievement curve (about 26% gone before the first charm and 32% by the first boss, mostly within two hours, Game Developer, 2020).
+- wip: production/research/lane/measurements/players-first-hours-sheet-2026-11-21.md (a reader's sheet, not a measurement).
+
+Where this differs: the earlier files put the weight on the first hour, with Hollow Knight's count as evidence. RDR2's curve does not measure the first hour (its first row, the prologue's end, comes later), and its 12.7 and 31.2 points cover stretches of different length. So the two measure different spans and both stand: the first hour keeps its rules (7.1), and the first open stretch after the guided opening gets its own (WQ-01 to WQ-03). Neither overrules the other.
+
 ## In plain words
 
 1. The steepest drop comes early, after the guided opening, not in the middle or near the end. Red Dead Redemption 2, the only full curve reached, loses 31 points of its owners between the end of chapter 1 and the end of chapter 2 (72.7% to 41.5%), more than in all its later chapters together (41.5% to 20.4%, 21 points). GTA IV and The Witcher 3 show the same shape on thinner rows, placed in the story by mission or quest name only.
@@ -114,6 +125,21 @@ The bots named below are the three bot playthroughs of DEFINITIONS F15 (lazy, me
 ## Handover
 
 - To the PC session (short): read every row of Steam's global achievement percentages for the eleven games through Steam's public no-key call, and write the story rows into this file's tables, marked as such. The cloud reached only the 26 most common rows of each page.
+
+## Rulings to revisit
+
+None of the findings here argues against a ruling, so no question is put. Checked: the 30 Oct hard opening, "from having nothing and nobody": RDR2's slow, guided opening costs 12.7 points of its owners, and KCD2, which starts its hero weak on purpose (Jirsa, GamesRadar, 15 Dec 2025), had about 8% of players finished two weeks after release, put down by its director to length and difficulty (reported second hand). Nothing read shows a hard opening losing players by itself; what is punished is a slow one (the players study's slow opening and slow controls), which WQ-01 and the first-hour rules already guard against. Length 15 to 20 hours (28 Oct) and two or three endings (28 Oct) agree with WQ-05 and WQ-06.
+
+## Measured or not
+
+Only numbers that production/research/lane/measurements/STATUS.md (on wip, updated 21 Nov 22:14) marks solid count as measured: a number is solid only on at least five samples from uncut, dated footage read at a step finer than the thing measured. Its solid numbers today are the GTA VI heat length at two stars and the GTA VI car-entry time; neither is used here. So nothing in this file counts as measured: every figure is a published figure or a count with the number of sources it rests on, and the standards stay DECIDED or PENDING until play measures them.
+
+## Measuring requests (for the builder's play on his PC)
+
+GTA V, GTA IV, Sleeping Dogs and RDR2 are installed on his PC and measured in play by the builder. These numbers only play can give; none is guessed here.
+
+1. RDR2: the real time a normal player takes for the prologue, chapter 1 and chapter 2 (story missions only, plus what he meets on the way), and in chapter 2 the longest stretch between one story mission ending and the next being offered or reached. Changes WQ-01's 30 minutes and WQ-02's 4-hour stage (BLUEPRINT 07, 7.4 and RT-04).
+2. GTA V, GTA IV and Sleeping Dogs: the real time from a new game to the first moment the player chooses his own next thing, and the longest gap between story missions in the first 3 hours. Changes WQ-01 and WQ-03 (BLUEPRINT 07, 7.1 and 7.4).
 
 ## Not reached
 

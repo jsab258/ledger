@@ -4,6 +4,16 @@
 
 Marks: THIN where a claim rests on one source or a forum; [I] this study's own arithmetic or judgement. Every page was read on 23 Nov 2026; the page's own date is given where it shows one.
 
+
+## Built on, and where this differs
+
+Read first (23 Nov; no PRIOR-RESEARCH-INDEX.md yet, so the research folders on wip and lane were searched by subject):
+- The players study, point 6 (missions that fail the player for doing it his way) and the story-patterns study (missions on rails). Built on throughout.
+- production/research/aaa-reference/studies/16-jobs-story.md (KCD2 and Mafia, much of it from their files): KCD2's failure continues as a world state, never a game over; it puts patience mostly on people (with a 5-hour deadline on errands and two game-over timers in a guide); 199 objectives in 78 quests (58%) have two or more completed outcomes. Its Mafia half is not a reference (his ruling of 17 Nov), and its figures read from KCD2's own files are not used as a basis here (the same ruling: no game files opened); MS-01, MS-04 and MS-08 rest on the critics and published sources above, with study 16's direction as background only.
+- game-design/side-stories-2026-11-08.md and its review (production/research/side-stories/REVIEW-2026-11-08.md): 32 drafts, all now "micro" in size, each offered on a state with a patience window, each ending in something the town keeps. MS-05 to MS-07 agree and add the turn, the hard choice and the returning consequence as tests; the count is now about 25 (DEFINITIONS F15).
+
+Where this differs: study 16 gives a KCD2 main quest about 1.3 to 1.9 hours; MS-03's 5 to 30 minute band is for one LEDGER job, not a whole story arc, so the two do not conflict. Nothing found argues against the earlier files.
+
 ## In plain words
 
 1. GTA V and RDR2 build their main story from many hand-made missions, of at most about 22 to 26 minutes each (this study's arithmetic from story length over mission count; an upper bound), each a fixed script. GTA V forgives failure with checkpoints and offers to skip a part failed three times; RDR2's checkpoints were not found.
@@ -85,6 +95,22 @@ LEDGER's jobs follow the job template (3.5.6): offered by a person on a state (3
 - **MS-07 Most side stories are short, inside F15's budget.** At least two thirds of the side stories finish within three steps and about 15 real minutes in the bot playthroughs; none runs over about 30 minutes; the library's median is 10 to 14 minutes and the whole set about 5 hours (F15). Fail: outside those counts. Basis: F15 sets the budget; the loved Witcher 3 quests read as stand-alone tales and the KCD2 rows that sound like long chains sit lowest (both THIN). DECIDED: the two thirds and the 15 and 30 minutes. Rows: 3.3, FIT-F15, GD-08.
 - **MS-08 A threat in a side story is kept.** When a person in a side story threatens or promises something and Tom does nothing, it happens in the world within the time named (or within three game days if none is named, DECIDED), and the town can tell. Fail: a threat or promise that comes to nothing unexplained. Basis: KCD2's consequences that pull their punches (PC Gamer 2025, one review). Rows: 3.3, RT-06.
 - **MS-09 Side stories never undercut the main story's urgency.** No side story is offered while a main beat's hurry is running (the hurry wrinkle as CLK-02 defines it, pending his answer on the clock), and none starts on Act III's mornings; side stories fill the slack Act I and Act II leave between beats. Fail: a side story offered during a hurry or on an Act III morning. Basis: PCWorld's pacing complaint about The Witcher 3 (2015; one review, THIN). Rows: 3.3, 3.1.3, 7.4, CLK-02.
+
+## Rulings to revisit
+
+- **23 Sep: jobs, no waypoints.** Evidence: the players study's theme "missions that waste time, give no direction or fail you for doing it your way" is 7.4% of reviews on average (rough, over-counted), with "no direction" inside it and not separated. The bar game, KCD2, points a marker at most objective starts and leaves the "where" to it (study 16, from its files, background only), and PLAYERS.md (12 Oct) named the tension as risk R6: players punish no direction, and LEDGER rules out waypoints. Recommendation: keep, with every go-to step named by a landmark and a person (4.1.3, 6.9) and the next main step always in the Ledger's Open page (WQ-01). The question for him: Keep jobs without waypoints? A) keep, with landmarks, people who give the way and the Open page (recommended); B) add an optional marker as an assist, off by default; C) add markers. Until he answers, the ruling stands.
+
+## Measured or not
+
+Only numbers that production/research/lane/measurements/STATUS.md (on wip, updated 21 Nov 22:14) marks solid count as measured: a number is solid only on at least five samples from uncut, dated footage read at a step finer than the thing measured. Its solid numbers today are the GTA VI heat length at two stars and the GTA VI car-entry time; neither is used here. So nothing in this file counts as measured: every figure is a published figure or a count with the number of sources it rests on, and the standards stay DECIDED or PENDING until play measures them.
+
+## Measuring requests (for the builder's play on his PC)
+
+GTA V, GTA IV, Sleeping Dogs and RDR2 are installed on his PC and measured in play by the builder. These numbers only play can give; none is guessed here.
+
+1. GTA V, GTA IV, RDR2 and Sleeping Dogs: ten story missions each, timed from offer to result, split into travel there, scenes, the action, getting away and travel back; the number of checkpoints and the real time between them. Changes MS-03's bands and the dead-leg rule (BLUEPRINT 03, 3.5.6; BLUEPRINT 07, 7.5).
+2. The same four games: in three of those missions, try three departures from the plan (leave the area, flank or go quiet, use another route) and record which fail the mission and what the fail costs in real seconds to the retry. Changes MS-01 and MS-04 (BLUEPRINT 03, 3.5.6; BLUEPRINT 07, 7.9).
+3. RDR2 and GTA V: three side activities or stranger missions each, timed from start to end with their step counts. Changes MS-07's bands (BLUEPRINT 03, 3.3; BLUEPRINT 07, FIT-F15).
 
 ## Not reached
 

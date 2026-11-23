@@ -4,6 +4,17 @@
 
 Marks: THIN where a claim rests on one source or a handful of pages; [I] this study's own arithmetic or judgement. All pages read 23 Nov 2026; page dates given where shown. Steam reviews and Reddit threads could not be read from the cloud (gated), so the per-feature tallies below are of pages read, not of reviews. Fetched pages came through a reader's summary, so quotes are as summarised; four pages were checked directly by the reviewer (Wccftech's Garbut piece, the Deep Silver feature, GamesRadar's Jirsa piece and Giga.de).
 
+
+## Built on, and where this differs
+
+Read first (23 Nov; no PRIOR-RESEARCH-INDEX.md yet, so the research folders on wip and lane were searched by subject):
+- The players study: survival chores 3.8% of KCD2's reviews, 0.6% of RDR2's, 0.2% of GTA V's; RDR2's slow animations. Built on in IM-01 and IM-03.
+- production/research/coverage-audit-kcd2/SUMMARY.md: blood on the coat that someone notices and that takes a private sink to wash; a coat as what a witness remembers; sleeping as the end of a day with the town moving on. Built on in IM-04, IM-05 and IM-07.
+- production/research/coverage-audit-rdr2/SUMMARY.md: people who saw a crime in a set of clothes may know the clothes again; the survival layer (eating, warmth, health meters) left out on purpose. Built on in IM-01 and IM-05.
+- production/research/aaa-reference/studies/06-characters-wardrobe.md: KCD2's clothes tagged clean, dirty or damaged in its tables. Background for IM-04.
+
+Where this differs: the KCD2 audit suggested torn coats as well as dirty ones; torn is not in the design, and IM-04 keeps to blood and dirt, the two give-aways the design has (a soaking is left out: Tom never goes into the water). No disagreement on what to keep.
+
 ## In plain words
 
 1. Players do not hate daily-life systems as such. In the players study's Steam coding, survival chores as friction are 3.8% of KCD2's reviews (217 of 5,701), 0.6% of RDR2's (47 of 7,757 kept) and 0.2% of GTA V's (script counts, rough; RDR2's first pass on Metacritic and OpenCritic read 7.8%, its Steam hand check 1 of 68). Small, beside story, world and the PC version.
@@ -72,10 +83,26 @@ LEDGER's daily life, as designed: no stats or survival meters (OUT-06); cars hav
 - **IM-01 Nothing about Tom's body or needs drains on a clock.** No value for hunger, tiredness, hygiene, warmth or fuel exists; a code search finds none, and no penalty in the game is triggered by time passing without a daily act. Fail: any such value or penalty. (Marks fading, rent falling due and talk spreading are the town's clock, not needs, and are not touched by this.) Basis: his ruling (OUT-06); RDR2's needs called "half-baked" (Twinfinite) and chores that reward nothing (The Outline, unverified); survival chores 3.8% of KCD2's reviews (rough). Rows: OUT-06, 1.2.9.
 - **IM-02 Every daily act pays in the town.** Each daily act on the closed list brings at least one of: a person to talk to, a line overheard, a changed greeting, or a door that opens or shuts. The barber's payoff (a changed greeting for a game day) is DECIDED here. Fail: a daily act with none. Basis: [I] what is loved is answered by the world (KCD2's reactions to smell and looks; RDR2's shopkeepers); chores are what reward nothing (The Outline, unverified). Rows: 2.12.3, 1.6.10, 4.10, 2.7.8, FIT-G8.
 - **IM-03 Daily acts are short.** No daily act on the closed list holds control longer than 10 real seconds the first time and 5 after (DECIDED), except those that pass game time (sleep, the launderette's wash), which skip it at once. Fail: any daily act over its limit in the AI tester's timing. Basis: loved upkeep is a few seconds of touch; the players study's "menus, controls, camera and slow animations" is 9.0% of RDR2's Steam reviews (under-counted; hand check 10 of 68), and its point 8 asks for a longest-action number in the feel targets. Rows: 7.11, 1.6.7.
-- **IM-04 Blood, dirt and a soaking come from deeds, and are noticed.** Blood, dirt and a soaking come from a deed or a happening (a fight, the water, a yard at night), never from ordinary walking or rain alone (DECIDED, since rain is constant in the town), and each is a give-away seen and said by people who notice until it is washed or dried. Fail: a state arising from walking or rain alone, or a state nobody notices. Basis: players seeking mods to wash less often in KCD2 (Giga.de, THIN); the loved side is people noticing (GamesRadar review; PC Gamer's smell piece). Rows: 1.6.7, 1.3.11, 1.4.4, 2.2.5.
+- **IM-04 Blood and dirt come from deeds, and are noticed.** Blood and dirt come from a deed or a happening (a fight, a yard at night, a fall), never from ordinary walking or rain alone (DECIDED, since rain is constant in the town), and each is a give-away seen and said by people who notice until it is washed. Fail: a state arising from walking or rain alone, or a state nobody notices. Basis: players seeking mods to wash less often in KCD2 (Giga.de, THIN); the loved side is people noticing (GamesRadar review; PC Gamer's smell piece). Rows: 1.6.7, 1.3.11, 1.4.4, 2.2.5.
 - **IM-05 A coat is remembered.** A coat seen at a deed is recognised by a witness who sees it again until Tom changes coat; washing clears blood only, keeps the coat known, and plants the launderette's witness; each of the three outfits changes at least one greeting and one door (2.12.3). Fail: a witness who fails to recognise the seen coat on Tom, a wash that clears the coat, or an outfit that changes nothing. Basis: KCD2's stolen clothes recognised by their owner (PC Gamer review). Rows: 1.6.10, 1.6.7, 1.4.4, 2.12.3, 2.3.1.
 - **IM-06 Something to look after that shows harm, never a grooming loop.** The firm's cars and Tom's men carry their own visible state: a dent shows until the firm mends it, and a dead car is off the road a day (1.2.9); a man paid short asks for his cut (2.11.4); a man hurt in Tom's service shows it and says so (DECIDED); no repeated care action (washing a car, feeding a man) is ever required. Fail: harm that does not show, or a required repeated care action. Basis: RDR2's horse, loved because it can be hurt and shows it (Windows Central; Garbut); horse feeding and brushing listed as a chore by The Outline (unverified, THIN). Rows: 1.2.9, 2.11.4, 1.7.4.
 - **IM-07 Sleep is the night's door, never a need.** Tom sleeps only at home or a place the story names; sleeping always skips to morning and saves (FF-03 in FAILURE-AND-FRUSTRATION.md); no tiredness ever forces it. Fail: forced sleep, or a sleep that does not save. Basis: KCD2's own or rented bed saves (Gamepressure guide); exhaustion as a meter is not in LEDGER (OUT-06). Rows: 7.11, 7.8, OUT-06.
+
+## Rulings to revisit
+
+None of the findings here argues against a ruling. Checked: no stats and no survival meters (D27, D30; OUT-06) agree with IM-01 (some players add needs by mod, a thin sign that a few want more, not a case to change); coat, pockets and cab-office storage (23 Sep) and no crafting agree with IM-02 to IM-05.
+
+## Measured or not
+
+Only numbers that production/research/lane/measurements/STATUS.md (on wip, updated 21 Nov 22:14) marks solid count as measured: a number is solid only on at least five samples from uncut, dated footage read at a step finer than the thing measured. Its solid numbers today are the GTA VI heat length at two stars and the GTA VI car-entry time; neither is used here. So nothing in this file counts as measured: every figure is a published figure or a count with the number of sources it rests on, and the standards stay DECIDED or PENDING until play measures them.
+
+## Measuring requests (for the builder's play on his PC)
+
+GTA V, GTA IV, Sleeping Dogs and RDR2 are installed on his PC and measured in play by the builder. These numbers only play can give; none is guessed here.
+
+1. RDR2: in an hour of ordinary story play, how many upkeep acts the player is asked or nudged to do (eat, wash, clean a gun, brush or feed the horse) and the real seconds each takes from button to control. Changes IM-03's 10 and 5 seconds (BLUEPRINT 07, 7.11).
+2. Sleeping Dogs and GTA V: the real seconds for eating, buying clothes and changing, and whether anyone in the street reacts. Changes IM-02 and IM-03 (BLUEPRINT 01, 1.6.10).
+3. GTA IV: the same for eating and changing clothes. Changes IM-03 (BLUEPRINT 07, 7.11).
 
 ## Not reached
 
