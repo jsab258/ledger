@@ -459,6 +459,10 @@ def main():
     if not walk_tonight(dt.date.today()) and "--force" not in sys.argv:
         log("weekly schedule: no walk tonight (production/playtest/nightly/schedule.json)")
         return 0
+    held = weekly_stop()
+    if held:
+        log("weekly stop: no walk until %s (production/weekly-stop.json)" % held)
+        return 0
     # ANY GAME WINDOW LEFT OPEN IS CLOSED FIRST (Jafar, 7 October: the night before, three copies
     # left by a cut-off measurement kept this walk from starting its game).
     try:
@@ -542,6 +546,26 @@ def walk_tonight(day, schedule=None):
     return day.strftime("%A") in schedule.get("walk_days", [])
 
 
+WEEKLY_STOP = os.path.join(REPO, "production", "weekly-stop.json")
+
+
+def weekly_stop(path=WEEKLY_STOP, now=None):
+    """THE WEEKLY STOP HOLDS THE NIGHT FOR FREE (advisors 352 and 354, his words of 24 Nov: at 90% on the weekly
+    meter everything stops, with no background spending). The session writes production/weekly-stop.json,
+    {"until": "YYYY-MM-DDTHH:MM", "set": ..., "reading": N}, when its newest reading is 90% or more; this run
+    then ends before it packages or starts the AI tester (a model), until the stated local time. Returns the
+    until-time while held, else None; an unreadable file holds nothing (logged by the caller's absence of a line)."""
+    if not os.path.exists(path):
+        return None
+    try:
+        until = json.load(open(path, encoding="utf-8"))["until"]
+        if (now or dt.datetime.now()) < dt.datetime.fromisoformat(until):
+            return until
+    except Exception:
+        return None
+    return None
+
+
 def selftest():
     ok = bad = 0
 
@@ -550,6 +574,17 @@ def selftest():
         ok, bad = (ok + 1, bad) if cond else (ok, bad + 1)
         if not cond:
             print("nightly_walk selftest FAIL " + name)
+    import tempfile
+    tmpd = tempfile.mkdtemp()
+    stopf = os.path.join(tmpd, "weekly-stop.json")
+    check("no stop file holds nothing", weekly_stop(stopf) is None)
+    with open(stopf, "w", encoding="utf-8") as fh:
+        json.dump({"until": "2026-11-30T13:00"}, fh)
+    check("the stop file holds the Monday 01:30 run", weekly_stop(stopf, dt.datetime(2026, 11, 30, 1, 30)) == "2026-11-30T13:00")
+    check("the stop file lapses after its time", weekly_stop(stopf, dt.datetime(2026, 11, 30, 13, 1)) is None)
+    with open(stopf, "w", encoding="utf-8") as fh:
+        fh.write("not json")
+    check("a broken stop file holds nothing", weekly_stop(stopf, dt.datetime(2026, 11, 30, 1, 30)) is None)
     weekly = {"nightly": False, "walk_days": ["Monday"]}
     check("the weekly schedule walks the night after Sunday", walk_tonight(dt.date(2026, 11, 30), weekly))
     check("the weekly schedule skips a Tuesday", not walk_tonight(dt.date(2026, 11, 24), weekly))
