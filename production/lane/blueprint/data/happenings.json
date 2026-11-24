@@ -1,0 +1,2569 @@
+{
+ "file": "happenings.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "BLUEPRINT-03 3.7; BLUEPRINT-07 FIT-G6, 7.14; DEFINITIONS G6",
+  "BLUEPRINT-02 2.10.3, RT-06 (rival moves)",
+  "routines.json (who is where at the hour)"
+ ],
+ "kinds": {
+  "row": "a row on a doorstep",
+  "breakdown": "a van broken down across the lane",
+  "shoplifter": "a shoplifter running from the grocer (grocer open, known thief out)",
+  "lost_man": "a lost man with a suitcase",
+  "dog_loose": "a dog loose on the quay",
+  "locked_out": "a woman locked out",
+  "fallen_man": "a man fallen on the cobbles (help him up, rob him or walk on)",
+  "crate": "a crate off a lorry at the dock gate (help, take or walk on)"
+ },
+ "counts": {
+  "happenings": 63,
+  "by_kind": {
+   "row": 8,
+   "breakdown": 8,
+   "shoplifter": 8,
+   "lost_man": 8,
+   "dog_loose": 8,
+   "locked_out": 7,
+   "fallen_man": 8,
+   "crate": 8
+  },
+  "rival_moves": 9
+ },
+ "rules": {
+  "placement": "A happening is eligible when its hours and state hold and its people are where routines.json puts them; the director picks among the eligible, never by dice.",
+  "repeat": "No scene twice within 3 real hours (cool_real_minutes 180); none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street.",
+  "return": "A helped stranger can turn up days later with a small favour (3.7).",
+  "content": "No children (a 'lad' is an adult of 18 or more), no alcohol or gambling, no slurs; every scene passes the content gate."
+ },
+ "open_points": [
+  "Every happening's words are TO WRITE for the story lane; the structure (who, where, hours, state, choices, what the town keeps) is here.",
+  "One of the eight kinds, the crate, is always at the dock gate by the blueprint's wording; its eight scenes differ by hour and by who is watching."
+ ],
+ "happenings": [
+  {
+   "id": "row.01",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "19:00-21:00",
+    "state": "the lodger three weeks behind (side story 27 not yet offered)",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "sylvia_rennison",
+    "a lodger of Danny's"
+   ],
+   "where": "boarding_house",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "step in",
+      "listen and walk on",
+      "fetch Ron"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.01.done",
+    "town_keeps:Sylvia's version"
+   ],
+   "town_keeps": "Sylvia's version",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.02",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "18:00-18:30",
+    "state": "Friday, Julie behind on rent",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "julie_kettlewell",
+    "leonard_askew"
+   ],
+   "where": "home_cl_9",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "stand there",
+      "pay it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.02.done",
+    "town_keeps:whether Mickey's still looks after its own"
+   ],
+   "town_keeps": "whether Mickey's still looks after its own",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.03",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "22:00-23:00",
+    "state": "Darren out of money",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "darren_milner",
+    "his mother (an older woman)"
+   ],
+   "where": "d_nr_23",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "knock",
+      "wait in the car",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.03.done",
+    "town_keeps:Darren's pride"
+   ],
+   "town_keeps": "Darren's pride",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.04",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "21:00-23:00",
+    "state": "Act II, Danny's crew on the street",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "peter_tang",
+    "jason_pinder"
+   ],
+   "where": "tangs_takeaway",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "stand at the counter",
+      "send Jason off",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.04.done",
+    "town_keeps:who stood at the counter"
+   ],
+   "town_keeps": "who stood at the counter",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.05",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "20:00-22:00",
+    "state": "a frame argued",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "vince_lazenby",
+    "jimmy_raw"
+   ],
+   "where": "snooker_hall",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "break it up",
+      "back Jimmy",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.05.done",
+    "town_keeps:the snooker hall's opinion"
+   ],
+   "town_keeps": "the snooker hall's opinion",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.06",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "12:00-13:00",
+    "state": "the Widow's man not paying",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "grace_rinaldi",
+    "mark_billany"
+   ],
+   "where": "caff",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "pay for him",
+      "make him pay",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.06.done",
+    "town_keeps:Grace forgets nobody"
+   ],
+   "town_keeps": "Grace forgets nobody",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.07",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "10:00-11:00",
+    "state": "Friday hair day gone wrong",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "dorothy_garbett",
+    "eileen_crabtree"
+   ],
+   "where": "d_cl_17",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "calm it",
+      "drive one home",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.07.done",
+    "town_keeps:Chapel Lane laughs"
+   ],
+   "town_keeps": "Chapel Lane laughs",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "row.08",
+   "kind": "row",
+   "what": "a row on a doorstep",
+   "when": {
+    "hours": "05:00-07:00",
+    "state": "Haddock's dear running",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "eddie_birtwhistle",
+    "brenda_laverack"
+   ],
+   "where": "fish_dock",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "take Brenda's side",
+      "take the porter's",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.row.08.done",
+    "town_keeps:the dock closes ranks or does not"
+   ],
+   "town_keeps": "the dock closes ranks or does not",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.01",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "08:00-10:00",
+    "state": "weekday morning",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "harry_holt",
+    "a van driver"
+   ],
+   "where": "mickeys_yard",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "push it clear",
+      "fetch Holt",
+      "drive round"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.01.done",
+    "town_keeps:Holt's bill"
+   ],
+   "town_keeps": "Holt's bill",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.02",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "14:00-16:00",
+    "state": "car one overdue a service",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "kevin_needham"
+   ],
+   "where": "rank_mickeys",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fix it",
+      "send for Holt",
+      "take car two"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.02.done",
+    "town_keeps:the board loses a car for a day"
+   ],
+   "town_keeps": "the board loses a car for a day",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.03",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "06:00-07:00",
+    "state": "the gate busy at six",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "stathers"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help clear it",
+      "use the jam to slip a car through",
+      "wait"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.03.done",
+    "town_keeps:the gate men remember"
+   ],
+   "town_keeps": "the gate men remember",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.04",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "09:00-10:00",
+    "state": "a funeral, the Man in Black present",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "brendan_walsh",
+    "the hearse driver"
+   ],
+   "where": "chapel",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "push the hearse",
+      "offer car two",
+      "stand aside"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.04.done",
+    "town_keeps:the Man in Black's mark"
+   ],
+   "town_keeps": "the Man in Black's mark",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.05",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "05:00-05:45",
+    "state": "contract week",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "malcolm_ruddock",
+    "a refrigerated lorry"
+   ],
+   "where": "cold_stores",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "carry the shift round it",
+      "go on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.05.done",
+    "town_keeps:Tharratt hears"
+   ],
+   "town_keeps": "Tharratt hears",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.06",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "16:00-18:00",
+    "state": "rain",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a delivery van"
+   ],
+   "where": "fishing_quay_east",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "go round by the cut",
+      "sound the horn"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.06.done",
+    "town_keeps:the bridge's traffic"
+   ],
+   "town_keeps": "the bridge's traffic",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.07",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "22:00-23:00",
+    "state": "the last boat in",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "gordon_leckenby",
+    "the last boat's van"
+   ],
+   "where": "ferry_landing",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help unload",
+      "look at the load",
+      "go on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.07.done",
+    "town_keeps:Gordon talks about the weather"
+   ],
+   "town_keeps": "Gordon talks about the weather",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "breakdown.08",
+   "kind": "breakdown",
+   "what": "a van broken down across the lane",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "a sold car that will not start",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "bernard_gill",
+    "a customer"
+   ],
+   "where": "car_lot",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "laugh",
+      "push it",
+      "buy it cheap"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.breakdown.08.done",
+    "town_keeps:Gill's patter"
+   ],
+   "town_keeps": "Gill's patter",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.01",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "grocer open, known thief out",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "arthur_brigham",
+    "a known thief"
+   ],
+   "where": "grocer",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "trip him",
+      "let him run"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.01.done",
+    "town_keeps:Brigham's thanks or his complaint"
+   ],
+   "town_keeps": "Brigham's thanks or his complaint",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.02",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "07:00-09:00",
+    "state": "papers out, a pack of cigarettes taken",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "peart",
+    "a lad of twenty"
+   ],
+   "where": "newsagent",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "pay for it",
+      "let him run"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.02.done",
+    "town_keeps:Peart's queue"
+   ],
+   "town_keeps": "Peart's queue",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.03",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "11:00-12:00",
+    "state": "Saturday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "brenda_laverack",
+    "a man with a coat"
+   ],
+   "where": "laveracks",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "chase him to the quay",
+      "laugh"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.03.done",
+    "town_keeps:Brenda's version by noon"
+   ],
+   "town_keeps": "Brenda's version by noon",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.04",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "15:00-17:00",
+    "state": "the pen picked few that morning",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "tadeusz_nowicki",
+    "a casual from the pen"
+   ],
+   "where": "ironmonger",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "pay for it",
+      "let him go"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.04.done",
+    "town_keeps:Mr Nowicki's opinion"
+   ],
+   "town_keeps": "Mr Nowicki's opinion",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.05",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "14:00-16:00",
+    "state": "a coaster in",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "george_cammidge",
+    "a deckhand"
+   ],
+   "where": "chandlery",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "look away",
+      "buy what he took"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.05.done",
+    "town_keeps:the chandler counts"
+   ],
+   "town_keeps": "the chandler counts",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.06",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "Monday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "hal_metcalfe",
+    "a man Hal knows"
+   ],
+   "where": "metcalfes",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "say nothing",
+      "tell Hal later"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.06.done",
+    "town_keeps:Hal never forgets his own goods"
+   ],
+   "town_keeps": "Hal never forgets his own goods",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.07",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "09:00-15:00",
+    "state": "Thursday market",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "tracey_scarth",
+    "a stranger"
+   ],
+   "where": "market_stalls_quay",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch him",
+      "chase",
+      "let him go"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.07.done",
+    "town_keeps:Tracey's stall talks"
+   ],
+   "town_keeps": "Tracey's stall talks",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "shoplifter.08",
+   "kind": "shoplifter",
+   "what": "a shoplifter running from the grocer (grocer open, known thief out)",
+   "when": {
+    "hours": "13:00-15:00",
+    "state": "weekday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "joe_cairns",
+    "a woman with a pram-sized bag"
+   ],
+   "where": "second_hand",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "stop her",
+      "pay",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.shoplifter.08.done",
+    "town_keeps:Joe forgives everybody"
+   ],
+   "town_keeps": "Joe forgives everybody",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.01",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "15:00-17:00",
+    "state": "a boat in",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a stranger with a suitcase"
+   ],
+   "where": "ferry_landing",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "walk him to Regent House",
+      "give him a cab",
+      "point the way"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.01.done",
+    "town_keeps:a helped stranger may turn up days later with a small favour"
+   ],
+   "town_keeps": "a helped stranger may turn up days later with a small favour",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.02",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "18:00-19:00",
+    "state": "Monday, first visit",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "raymond_kaye"
+   ],
+   "where": "bus_stop_qs",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "show him",
+      "drive him",
+      "send him wrong"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.02.done",
+    "town_keeps:he remembers"
+   ],
+   "town_keeps": "he remembers",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.03",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "11:00-13:00",
+    "state": "weekday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "an older man looking for his old street"
+   ],
+   "where": "rank_north",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "walk him",
+      "drive him",
+      "shrug"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.03.done",
+    "town_keeps:Chapel Lane learns who helped"
+   ],
+   "town_keeps": "Chapel Lane learns who helped",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.04",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "funeral week",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a widow come for a funeral, the wrong day"
+   ],
+   "where": "chapel",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "take her to Father Walsh",
+      "a cab to the station",
+      "point"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.04.done",
+    "town_keeps:Father Walsh hears"
+   ],
+   "town_keeps": "Father Walsh hears",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.05",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "06:00-08:00",
+    "state": "a coaster in",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a seaman off a coaster"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "walk him to the Board",
+      "take him to the caff",
+      "point"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.05.done",
+    "town_keeps:the pen sees"
+   ],
+   "town_keeps": "the pen sees",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.06",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "07:00-09:00",
+    "state": "weekday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver from inland"
+   ],
+   "where": "fish_dock",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "show him the cold stores",
+      "sell him a wrong way",
+      "point"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.06.done",
+    "town_keeps:Tharratt's lorry late or not"
+   ],
+   "town_keeps": "Tharratt's lorry late or not",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.07",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "20:00-22:00",
+    "state": "a dock accident that week",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a father come for news (an adult son hurt on the docks)"
+   ],
+   "where": "infirmary",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "drive him",
+      "wait with him",
+      "point"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.07.done",
+    "town_keeps:the pen thanks or does not"
+   ],
+   "town_keeps": "the pen thanks or does not",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "lost_man.08",
+   "kind": "lost_man",
+   "what": "a lost man with a suitcase",
+   "when": {
+    "hours": "22:00-23:30",
+    "state": "between ships, broke",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "terence_bould"
+   ],
+   "where": "boarding_house",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "lend him a pound",
+      "a free ride",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.lost_man.08.done",
+    "town_keeps:he pays it back, or does not"
+   ],
+   "town_keeps": "he pays it back, or does not",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.01",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "07:00-09:00",
+    "state": "Norman off shift",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "norman_dent's dog",
+    "norman_dent"
+   ],
+   "where": "fishing_quay_east",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch it",
+      "whistle",
+      "leave it"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.01.done",
+    "town_keeps:Norman's thanks (the ledger knows Norman's dog)"
+   ],
+   "town_keeps": "Norman's thanks (the ledger knows Norman's dog)",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.02",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "16:00-17:00",
+    "state": "the gap unchained",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "Iveson's yard dog"
+   ],
+   "where": "iveson_yard",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "shut the gap",
+      "throw it a sandwich",
+      "run"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.02.done",
+    "town_keeps:Neil Screeton finds out who"
+   ],
+   "town_keeps": "Neil Screeton finds out who",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.03",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "Sunday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a terrier",
+    "ian_megginson"
+   ],
+   "where": "allotments",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch it",
+      "help Ian",
+      "laugh"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.03.done",
+    "town_keeps:the allotments' talk"
+   ],
+   "town_keeps": "the allotments' talk",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.04",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "09:00-12:00",
+    "state": "Thursday market",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a stray"
+   ],
+   "where": "market_stalls_quay",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "shoo it",
+      "feed it",
+      "ignore"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.04.done",
+    "town_keeps:the fish stall's opinion"
+   ],
+   "town_keeps": "the fish stall's opinion",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.05",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "19:00-21:00",
+    "state": "Tuesday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a dog at the Tuesday tea"
+   ],
+   "where": "chapel_hall",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch it",
+      "carry it out",
+      "leave it"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.05.done",
+    "town_keeps:Nora Cronin's protectiveness"
+   ],
+   "town_keeps": "Nora Cronin's protectiveness",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.06",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "13:00-15:00",
+    "state": "weekday",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "Ada's neighbour's dog"
+   ],
+   "where": "rank_mickeys",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "catch it",
+      "ask Ada",
+      "leave it"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.06.done",
+    "town_keeps:Ada saw"
+   ],
+   "town_keeps": "Ada saw",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.07",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "05:00-06:00",
+    "state": "dawn, the porters",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a dog at the boxes"
+   ],
+   "where": "fish_dock",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "chase it off",
+      "feed it a fish",
+      "leave it"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.07.done",
+    "town_keeps:the porters"
+   ],
+   "town_keeps": "the porters",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "dog_loose.08",
+   "kind": "dog_loose",
+   "what": "a dog loose on the quay",
+   "when": {
+    "hours": "08:00-10:00",
+    "state": "morning",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a dog at the birds",
+    "wilf_hardcastle"
+   ],
+   "where": "pigeon_loft",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "chase it off",
+      "help Wilf",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.dog_loose.08.done",
+    "town_keeps:Wilf's thanks"
+   ],
+   "town_keeps": "Wilf's thanks",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.01",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "18:00-20:00",
+    "state": "evening, rain",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a woman locked out of 6 Quay Street"
+   ],
+   "where": "home_qs_cottage_6",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Ian Megginson",
+      "climb in",
+      "lend a coat"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.01.done",
+    "town_keeps:a helped neighbour"
+   ],
+   "town_keeps": "a helped neighbour",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.02",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "17:30-19:00",
+    "state": "her nan out",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "mandy_calvert"
+   ],
+   "where": "d_nr_37",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Les Cotterill",
+      "wait with her",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.02.done",
+    "town_keeps:Mandy tells Rita's counter"
+   ],
+   "town_keeps": "Mandy tells Rita's counter",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.03",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "23:00-24:00",
+    "state": "after the last boat, Sylvia's door bolted",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "karen_grummitt"
+   ],
+   "where": "boarding_house",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "knock up Sylvia",
+      "a bed at the office",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.03.done",
+    "town_keeps:Sylvia hears"
+   ],
+   "town_keeps": "Sylvia hears",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.04",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "22:30-23:30",
+    "state": "closing, keys inside",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "beryl_wood"
+   ],
+   "where": "launderette",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Ian",
+      "drive her to Tasker's",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.04.done",
+    "town_keeps:Beryl's gossip"
+   ],
+   "town_keeps": "Beryl's gossip",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.05",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "08:00-09:00",
+    "state": "morning",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "joyce_ellerby"
+   ],
+   "where": "tea_room",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Ian",
+      "the back window",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.05.done",
+    "town_keeps:the Copper Kettle's doilies"
+   ],
+   "town_keeps": "the Copper Kettle's doilies",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.06",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "07:30-08:00",
+    "state": "after a night shift",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "sandra_newbould"
+   ],
+   "where": "d_cl_19",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Ian",
+      "drive her to her sister's",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.06.done",
+    "town_keeps:casualty hears"
+   ],
+   "town_keeps": "casualty hears",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "locked_out.07",
+   "kind": "locked_out",
+   "what": "a woman locked out",
+   "when": {
+    "hours": "11:30-12:30",
+    "state": "after the chapel",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "winifred_duggleby"
+   ],
+   "where": "d_cl_16",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "fetch Ian",
+      "climb in",
+      "sit her at Ada's"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.locked_out.07.done",
+    "town_keeps:the chapel hears"
+   ],
+   "town_keeps": "the chapel hears",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.01",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "22:00-01:00",
+    "state": "night, ice or rain",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "an older man going home"
+   ],
+   "where": "mickeys_yard",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "rob him",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.01.done",
+    "town_keeps:who helped, or who robbed"
+   ],
+   "town_keeps": "who helped, or who robbed",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.02",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "09:00-11:00",
+    "state": "a funeral, the steps wet",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "cyril_pashby"
+   ],
+   "where": "chapel",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "walk on",
+      "give him a ride"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.02.done",
+    "town_keeps:the Man in Black marks it"
+   ],
+   "town_keeps": "the Man in Black marks it",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.03",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "05:00-07:00",
+    "state": "frost",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "albert_suggitt"
+   ],
+   "where": "fish_dock",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "fetch the doctor",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.03.done",
+    "town_keeps:the dock's word"
+   ],
+   "town_keeps": "the dock's word",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.04",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "09:00-11:00",
+    "state": "pension day",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "harold_stead"
+   ],
+   "where": "newsagent",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "drive him to the Infirmary",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.04.done",
+    "town_keeps:Edith tells Sheila"
+   ],
+   "town_keeps": "Edith tells Sheila",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.05",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "22:30-23:30",
+    "state": "after a fight",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "jimmy_raw"
+   ],
+   "where": "snooker_hall",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "rob him",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.05.done",
+    "town_keeps:Jimmy remembers"
+   ],
+   "town_keeps": "Jimmy remembers",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.06",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "14:00-15:00",
+    "state": "after a shift, a bad back",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "bill_huxtable"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "a ride home",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.06.done",
+    "town_keeps:the pen"
+   ],
+   "town_keeps": "the pen",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.07",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "23:00-24:00",
+    "state": "rain",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a passenger off the last boat"
+   ],
+   "where": "ferry_landing",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him up",
+      "rob him",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.07.done",
+    "town_keeps:the tea stall saw"
+   ],
+   "town_keeps": "the tea stall saw",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "fallen_man.08",
+   "kind": "fallen_man",
+   "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
+   "when": {
+    "hours": "17:30-18:30",
+    "state": "contract week",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a packer off the shift"
+   ],
+   "where": "cold_stores",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help him",
+      "drive him",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.fallen_man.08.done",
+    "town_keeps:the shift talks"
+   ],
+   "town_keeps": "the shift talks",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.01",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "06:00-08:00",
+    "state": "a lorry through the gate",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "stathers"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help load it back",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.01.done",
+    "town_keeps:the gate men"
+   ],
+   "town_keeps": "the gate men",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.02",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "13:00-15:00",
+    "state": "the afternoon shift change",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "mark_billany"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.02.done",
+    "town_keeps:Billany saw"
+   ],
+   "town_keeps": "Billany saw",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.03",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "09:00-11:00",
+    "state": "a customs check",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "paddy_rourke"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.03.done",
+    "town_keeps:customs counts"
+   ],
+   "town_keeps": "customs counts",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.04",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "16:00-18:00",
+    "state": "end of shift",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "colin_mastin"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.04.done",
+    "town_keeps:Colin's word"
+   ],
+   "town_keeps": "Colin's word",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.05",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "10:00-12:00",
+    "state": "Lee on the gate (if Frank's man)",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "lee_drewery"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "let Lee take it"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.05.done",
+    "town_keeps:whose man Lee is"
+   ],
+   "town_keeps": "whose man Lee is",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.06",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "07:00-09:00",
+    "state": "the pen picked few",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "the pen"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "hand it to the pen"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.06.done",
+    "town_keeps:the pen remembers"
+   ],
+   "town_keeps": "the pen remembers",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.07",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "19:00-21:00",
+    "state": "after dark, nobody at the hut",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.07.done",
+    "town_keeps:nobody saw, or somebody did"
+   ],
+   "town_keeps": "nobody saw, or somebody did",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  },
+  {
+   "id": "crate.08",
+   "kind": "crate_spill",
+   "what": "a crate off a lorry at the dock gate (help, take or walk on)",
+   "when": {
+    "hours": "11:00-13:00",
+    "state": "Board works",
+    "note": "placed by the town's state and the hour, never by dice (3.7)"
+   },
+   "who": [
+    "a lorry driver",
+    "stan_pickles"
+   ],
+   "where": "dock_gate",
+   "beats": [
+    {
+     "say": "TO WRITE (story lane): the opening, under two minutes in all"
+    },
+    {
+     "choose": [
+      "help",
+      "take it",
+      "walk on"
+     ]
+    },
+    {
+     "say": "TO WRITE (story lane): one line per choice"
+    }
+   ],
+   "sets": [
+    "happening.crate.08.done",
+    "town_keeps:Stan's favour"
+   ],
+   "town_keeps": "Stan's favour",
+   "once": true,
+   "cool_real_minutes": 180,
+   "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
+  }
+ ],
+ "rival_moves": [
+  {
+   "id": "widow_tax",
+   "rival": "maureen_jensen",
+   "kind": "pressure",
+   "where": "dock_gate",
+   "what": "her men tax his drivers at the dock gate",
+   "touches": "the tax hut's take",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "widow_poach",
+   "rival": "maureen_jensen",
+   "kind": "pressure",
+   "where": "dock_gate",
+   "what": "she poaches his least loyal man (Stathers offers Ron his old place in front of Frank)",
+   "touches": "a man lost",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "widow_harm_window",
+   "rival": "maureen_jensen",
+   "kind": "harm",
+   "where": "mickeys",
+   "what": "the office window put in, or a driver told he will not drive again",
+   "touches": "property",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": {
+    "who": "phil_rawling",
+    "cost": "economy: the glazier",
+    "days": 1
+   },
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "agar_letter",
+   "rival": "geoffrey_agar",
+   "kind": "pressure",
+   "where": "mickeys",
+   "what": "the licence letter, addressed to Mr Nowek",
+   "touches": "paper",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "agar_inspection",
+   "rival": "geoffrey_agar",
+   "kind": "pressure",
+   "where": "rank_mickeys",
+   "what": "an inspection of the cars",
+   "touches": "paper",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "agar_harm_hearing",
+   "rival": "geoffrey_agar",
+   "kind": "harm",
+   "where": "licensing",
+   "what": "his solicitor names a date for the licence hearing (kept on two points of four)",
+   "touches": "paper",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": {
+    "who": "anthony_raine",
+    "cost": "the brief's fee (economy)",
+    "days": 1
+   },
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "danny_heat",
+   "rival": "danny_cammack",
+   "kind": "pressure",
+   "where": "mickeys",
+   "what": "trouble on Quay Street outside Mickey's",
+   "touches": "noise",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "danny_rank",
+   "rival": "danny_cammack",
+   "kind": "pressure",
+   "where": "rank_ferry",
+   "what": "his car on the ferry rank, his men on the empty unit",
+   "touches": "ground",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": null,
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  },
+  {
+   "id": "danny_harm_tyres",
+   "rival": "danny_cammack",
+   "kind": "harm",
+   "where": "rank_mickeys",
+   "what": "car two's tyres slashed on the rank",
+   "touches": "property",
+   "answers": {
+    "pay": "holds the rival on its rung two game weeks unless Frank does a deed against him",
+    "defy": "climbs the ladder (2.10.1)",
+    "counter": "spends a hook Frank holds"
+   },
+   "repair": {
+    "who": "harry_holt",
+    "cost": "economy: the tyre man",
+    "days": 1
+   },
+   "words": "TO WRITE (story lane)",
+   "src": "BLUEPRINT-02 2.10.3, RT-06; STORY-FRAME 2 and 5"
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+{
+ "id": "laundry_hampers",
+ "n": 10,
+ "title": "The laundry's hampers",
+ "giver": "doreen_harland",
+ "tone": "light",
+ "act": "II",
+ "opens_when": "Mickey's has a spare car on the rank in daytime",
+ "waits": "until the van is mended (2 days)",
+ "empire_tie": "the firm: clean money on the book",
+ "steps": [
+  {
+   "id": "found",
+   "at": "launderette",
+   "who": "doreen_harland",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Your lot could carry these for us. Mickey would have."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "launderette",
+   "who": "doreen_harland",
+   "verb": "the hampers",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "take the contract",
+   "sets": [
+    "laundry_run"
+   ],
+   "town_keeps": "the cab office's name on the laundry's run",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "turn it down",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "take it too cheap",
+   "sets": [
+    "sheila_asks"
+   ],
+   "town_keeps": "Sheila asks",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 10"
+}

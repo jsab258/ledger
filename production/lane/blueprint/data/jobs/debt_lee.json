@@ -1,0 +1,77 @@
+{
+ "id": "debt_lee",
+ "kind": "collection",
+ "name": "Mickey's debt book: Lee, 15 pounds",
+ "giver": "sheila_dunn",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Mickey's debt book, the page for Lee."
+ ],
+ "steps": [
+  {
+   "id": "find",
+   "at": "fish_dock",
+   "verb": "find the debtor where his routine has him",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "the routine (routines.json)"
+    },
+    {
+     "way": "talk",
+     "how": "ask Ron"
+    },
+    {
+     "way": "talk",
+     "how": "ask the caff"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "collect",
+   "at": "fish_dock",
+   "verb": "collect: stands, with the docks behind him, and it comes to blows",
+   "keys": [
+    {
+     "way": "force",
+     "how": "fists on the quay (a brawler)"
+    },
+    {
+     "way": "talk",
+     "how": "claim car three and win him (STORY-FRAME 7)"
+    },
+    {
+     "way": "choice",
+     "how": "let Ron fill the doorway"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 1500,
+  "note": "a debtor pays only what his purse holds; the rest stays on the book (3.5.2)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "squeezing or letting a debt go is told on the street within a game day",
+ "people": [
+  "lee_drewery"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "BLUEPRINT-02 2.8.1; BLUEPRINT-03 3.5.2; STORY-FRAME 7 (worked examples 1 and 2)"
+}

@@ -1,0 +1,52 @@
+{
+ "id": "fifteen_pounds",
+ "kind": "collection",
+ "name": "Fifteen pounds",
+ "giver": "lee_drewery",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "stand",
+   "at": "fish_dock",
+   "verb": "Lee stands for his fifteen pounds",
+   "keys": [
+    {
+     "way": "force",
+     "how": "fists"
+    },
+    {
+     "way": "talk",
+     "how": "claim car three to his face"
+    },
+    {
+     "way": "pay",
+     "how": "pay his debt off with work at a post"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 1500
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "Lee as the first man at a post",
+ "people": [
+  "lee_drewery"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 4 item 5 (new: Fifteen pounds, which can make him the first man at a post)"
+}

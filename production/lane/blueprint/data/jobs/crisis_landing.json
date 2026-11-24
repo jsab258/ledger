@@ -1,0 +1,77 @@
+{
+ "id": "crisis_landing",
+ "kind": "tail",
+ "name": "The landing, by night",
+ "giver": "maureen_jensen",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "find",
+   "at": "ferry_landing",
+   "verb": "his man has stopped answering; a load is due on the last boat",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "the tea stall"
+    },
+    {
+     "way": "back_way",
+     "how": "Karen at the window"
+    },
+    {
+     "way": "choice",
+     "how": "the snooker hall"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "snatch",
+   "at": "ferry_landing",
+   "verb": "Craig Fewson has him in a van: a tail and a snatch on the night quay",
+   "keys": [
+    {
+     "way": "route",
+     "how": "by the road"
+    },
+    {
+     "way": "route",
+     "how": "by the water"
+    },
+    {
+     "way": "talk",
+     "how": "trade for him"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "the post held or lost",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "craig_fewson"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act IIb (crisis one); the danger: a gun shown"
+}

@@ -1,0 +1,53 @@
+{
+ "id": "lift_medals",
+ "kind": "lift",
+ "name": "The tray in Metcalfe's window",
+ "giver": "wayne_harrison",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Metcalfe leaves a tray of medals in the window overnight. Rita would take them, if she did not know whose they were."
+ ],
+ "steps": [
+  {
+   "id": "take",
+   "at": "metcalfes_shop",
+   "verb": "the tray of medals",
+   "keys": [
+    {
+     "way": "back_way",
+     "how": "the window, at night"
+    },
+    {
+     "way": "back_way",
+     "how": "the back door in the alley"
+    },
+    {
+     "way": "choice",
+     "how": "a lift in the day while Hal is at Rita's (Monday 11:00)"
+    }
+   ],
+   "fail": null,
+   "words": "Put Metcalfe's window in and took the tray of medals. Hal Metcalfe never forgets his own goods.",
+   "lines": [
+    "Put Metcalfe's window in and took the tray of medals. Hal Metcalfe never forgets his own goods."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "pocket",
+  "band_note": "fence at a third of retail; honest value 90 pounds"
+ },
+ "ledger": "Wayne says Metcalfe leaves a tray of medals in his window overnight.",
+ "returns": "Hal never forgets his own goods; the buy-back within 7 game days",
+ "people": [
+  "wayne_harrison",
+  "hal_metcalfe"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js lift_coin; 1.6.3"
+}

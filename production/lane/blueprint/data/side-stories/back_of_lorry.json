@@ -1,0 +1,75 @@
+{
+ "id": "back_of_lorry",
+ "n": 13,
+ "title": "Off the back of a lorry",
+ "giver": "darren_milner",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "Darren owes the office and Frank has money on him",
+ "waits": "2 town hours",
+ "empire_tie": "money: Darren's debt",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "darren_milner",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Ten each to you. I owe you anyway."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "darren_milner",
+   "verb": "a crate of transistor radios",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "buy one",
+   "sets": [
+    "bought_radio"
+   ],
+   "town_keeps": "what Frank buys and from whom",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "refuse",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "pay off the debt in radios",
+   "sets": [
+    "darren_debt_radios"
+   ],
+   "town_keeps": "the chandler sees one in the office if it goes wrong",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 13"
+}

@@ -1,0 +1,57 @@
+{
+ "id": "mind_julie",
+ "kind": "minding",
+ "name": "Standing at Julie Kettlewell's door",
+ "giver": "julie_kettlewell",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "17:30",
+  "20:00"
+ ],
+ "offer": [
+  "The rent man comes at six and he does not come alone. Would you just stand there. You need not say anything."
+ ],
+ "steps": [
+  {
+   "id": "stand",
+   "at": "home_cl_9",
+   "verb": "stand at her door while the rent man comes",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "stand at her door"
+    },
+    {
+     "way": "route",
+     "how": "sit in the cab outside"
+    },
+    {
+     "way": "choice",
+     "how": "send Ron"
+    }
+   ],
+   "fail": null,
+   "words": "Stood at Julie Kettlewell's door while the rent man came and went. He looked, and said nothing.",
+   "lines": [
+    "Stood at Julie Kettlewell's door while the rent man came and went. He looked, and said nothing."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "the town records who stood with whom",
+  "pence": 0
+ },
+ "ledger": "Julie Kettlewell wants somebody stood at her door at six, when the rent man comes.",
+ "returns": "Julie's need met: a need recruit (2.11.1)",
+ "people": [
+  "julie_kettlewell",
+  "leonard_askew"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js mind_julie; 3.5.4"
+}

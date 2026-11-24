@@ -43,27 +43,50 @@
   [
    0.0,
    "ferry_landing",
-   "the landing"
+   "the landing",
+   "mon-sat"
   ],
   [
    1.25,
    "edge_west",
-   "gone along the quay"
+   "gone along the quay",
+   "mon-sat"
   ],
   [
    9.0,
    "caff",
-   "a tea in the corner"
+   "a tea in the corner",
+   "mon-sat"
   ],
   [
    9.75,
    "edge_west",
-   "gone"
+   "gone",
+   "mon-sat"
   ],
   [
    21.75,
    "ferry_landing",
-   "the landing"
+   "the landing",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "ferry_landing",
+   "the landing",
+   "sun"
+  ],
+  [
+   1.25,
+   "edge_west",
+   "gone along the quay",
+   "sun"
+  ],
+  [
+   21.75,
+   "ferry_landing",
+   "the landing",
+   "sun"
   ]
  ],
  "lines": {

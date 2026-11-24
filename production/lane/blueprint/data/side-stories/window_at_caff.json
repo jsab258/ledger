@@ -1,0 +1,102 @@
+{
+ "id": "window_at_caff",
+ "n": 11,
+ "title": "The window at the caff",
+ "giver": "grace_rinaldi",
+ "tone": "grey",
+ "act": "I-II",
+ "opens_when": "Grace knows Frank by name",
+ "waits": "until the glazier comes (2 days)",
+ "empire_tie": "a rival's man to turn: Jason Pinder (STORY-FRAME 4 item 15)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "caff",
+   "who": "grace_rinaldi",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "No police, and no fists either."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "caff",
+   "who": "grace_rinaldi",
+   "verb": "Grace",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "launderette",
+   "who": "tracey_scarth",
+   "verb": "Tracey saw a young man running",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "phone_parade",
+   "who": "jason_pinder",
+   "verb": "the newest of Danny's crew on the corner",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "Grace's justice",
+   "sets": [
+    "jason_washes_pots",
+    "jason_turnable"
+   ],
+   "town_keeps": "that Frank did it Grace's way",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "hand him to Ellis",
+   "sets": [
+    "grace_calls_it_police"
+   ],
+   "town_keeps": "Grace says so at her counter",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "hurt him",
+   "sets": [
+    "barred_from_caff"
+   ],
+   "town_keeps": "Grace bars Frank and says why",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 11"
+}

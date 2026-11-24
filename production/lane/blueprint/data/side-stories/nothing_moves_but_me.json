@@ -1,0 +1,90 @@
+{
+ "id": "nothing_moves_but_me",
+ "n": 31,
+ "title": "Nothing moves but me",
+ "giver": "norman_dent",
+ "tone": "dark",
+ "act": "II",
+ "opens_when": "Norman has had company from Frank once",
+ "waits": "until the crates move (2 nights)",
+ "empire_tie": "a rival: Danny (and the trade in small)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "dents_warehouses",
+   "who": "norman_dent",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Lights in an empty warehouse."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "dents_warehouses",
+   "who": "norman_dent",
+   "verb": "the row at night",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "net_loft",
+   "who": "wes_akers",
+   "verb": "the crates of car radios",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "tip Ellis",
+   "sets": [
+    "crew_lost_stock",
+    "norman_witness"
+   ],
+   "town_keeps": "whatever Norman saw",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "take the crates through Rita's",
+   "sets": [
+    "danny_grudge"
+   ],
+   "town_keeps": "money, and Danny's grudge",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "warn Danny",
+   "sets": [
+    "danny_owes_favour"
+   ],
+   "town_keeps": "a favour owed",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 31"
+}

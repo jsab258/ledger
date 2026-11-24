@@ -1,0 +1,54 @@
+{
+ "id": "sit_down_agar",
+ "kind": "sit_down",
+ "name": "The sit-down: Geoffrey Agar",
+ "giver": "geoffrey_agar",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "sit",
+   "at": "agar_back_room",
+   "verb": "the sit-down: accept, defy, or counter with what he knows",
+   "keys": [
+    {
+     "way": "pay",
+     "how": "accept the terms"
+    },
+    {
+     "way": "threat",
+     "how": "defy"
+    },
+    {
+     "way": "talk",
+     "how": "counter with a hook he holds"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "the act closes on it; Frank goes in hurt",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the rival's ladder and pact",
+ "people": [
+  "geoffrey_agar",
+  "simon_ombler"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "2.10.1; STORY-FRAME 5 Act IIb (the sit-down)"
+}

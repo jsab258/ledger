@@ -1,0 +1,100 @@
+{
+ "id": "coat_back_room",
+ "n": 5,
+ "title": "A coat from the back room",
+ "giver": "tracey_scarth",
+ "tone": "grey",
+ "act": "I-II",
+ "opens_when": "Tracey has seen Frank twice in the same jacket",
+ "waits": "until the market's next day",
+ "empire_tie": "standing: dress as a soft key (2.12.3)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "launderette",
+   "who": "tracey_scarth",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Mickey had a good coat. Bring it me, I'll take it in two inches."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys_inner_office",
+   "who": null,
+   "verb": "the coat on the office hook",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "launderette",
+   "who": "tracey_scarth",
+   "verb": "Tracey's pins",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "boarding_house",
+   "who": "june_suddaby",
+   "verb": "June, if she sees it on him",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "wear it",
+   "sets": [
+    "wears_mickeys_coat",
+    "june_cold"
+   ],
+   "town_keeps": "whose coat is walking down Quay Street",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "give it to June",
+   "sets": [
+    "june_has_coat"
+   ],
+   "town_keeps": "June keeps it or gives it back",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "leave it",
+   "sets": [],
+   "town_keeps": "the coat on the hook",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 5"
+}

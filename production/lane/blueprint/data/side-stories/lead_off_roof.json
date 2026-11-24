@@ -1,0 +1,102 @@
+{
+ "id": "lead_off_roof",
+ "n": 23,
+ "title": "Lead off the roof",
+ "giver": "winifred_duggleby",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "it has rained two days running, and Danny's crew is on the street (Act II)",
+ "waits": "until Dennis sells the lead on (2 days)",
+ "empire_tie": "the trade in small (STORY-FRAME 7)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "chapel",
+   "who": "winifred_duggleby",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Rain through the roof onto the flowers."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "chapel",
+   "who": "winifred_duggleby",
+   "verb": "the wet altar",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "iveson_yard",
+   "who": "dennis_iveson",
+   "verb": "Dennis's scales",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "phone_parade",
+   "who": "shane_boddy",
+   "verb": "the two at the corner (Shane and Wes)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "buy it back",
+   "sets": [
+    "dennis_profits_twice"
+   ],
+   "town_keeps": "who mended the chapel",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "lean on the two",
+   "sets": [
+    "danny_hears_touched_crew"
+   ],
+   "town_keeps": "Danny hears",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "give Ellis their names",
+   "sets": [
+    "gave_ellis_names",
+    "parish_no_thanks"
+   ],
+   "town_keeps": "the trade in small",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 23"
+}

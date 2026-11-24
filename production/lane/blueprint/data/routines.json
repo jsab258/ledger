@@ -424,7 +424,7 @@
      "days": "sun"
     }
    ],
-   "longest_walk_m": 20,
+   "longest_walk_m": 42,
    "src": "canon; 3.2.2"
   },
   {
@@ -1241,7 +1241,7 @@
      "days": "sun"
     }
    ],
-   "longest_walk_m": 360,
+   "longest_walk_m": 361,
    "src": "canon; STORY-FRAME 4"
   },
   {
@@ -1839,18 +1839,6 @@
      "place": "d_cl_9",
      "act": "asleep",
      "days": "sun"
-    },
-    {
-     "from": "09:30",
-     "place": "caff",
-     "act": "a tea with Pat",
-     "days": "sun"
-    },
-    {
-     "from": "12:45",
-     "place": "d_cl_9",
-     "act": "home",
-     "days": "sun"
     }
    ],
    "longest_walk_m": 417,
@@ -2387,12 +2375,12 @@
     },
     {
      "from": "10:30",
-     "place": "caff",
-     "act": "Sunday breakfast",
+     "place": "ferry_landing",
+     "act": "a walk on the quay",
      "days": "sun"
     },
     {
-     "from": "11:45",
+     "from": "12:00",
      "place": "boarding_house",
      "act": "her room",
      "days": "sun"
@@ -2817,19 +2805,19 @@
      "days": "sun"
     },
     {
-     "from": "07:30",
-     "place": "caff",
-     "act": "Sunday mornings",
+     "from": "10:00",
+     "place": "chapel",
+     "act": "Mass",
      "days": "sun"
     },
     {
-     "from": "12:15",
+     "from": "13:15",
      "place": "d_bp_3",
      "act": "home",
      "days": "sun"
     }
    ],
-   "longest_walk_m": 142,
+   "longest_walk_m": 393,
    "src": "canon; side story 11"
   },
   {
@@ -2918,27 +2906,50 @@
     {
      "from": "00:00",
      "place": "ferry_landing",
-     "act": "the landing"
+     "act": "the landing",
+     "days": "mon-sat"
     },
     {
      "from": "01:15",
      "place": "edge_west",
-     "act": "gone along the quay"
+     "act": "gone along the quay",
+     "days": "mon-sat"
     },
     {
      "from": "09:00",
      "place": "caff",
-     "act": "a tea in the corner"
+     "act": "a tea in the corner",
+     "days": "mon-sat"
     },
     {
      "from": "09:45",
      "place": "edge_west",
-     "act": "gone"
+     "act": "gone",
+     "days": "mon-sat"
     },
     {
      "from": "21:45",
      "place": "ferry_landing",
-     "act": "the landing"
+     "act": "the landing",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "ferry_landing",
+     "act": "the landing",
+     "days": "sun"
+    },
+    {
+     "from": "01:15",
+     "place": "edge_west",
+     "act": "gone along the quay",
+     "days": "sun"
+    },
+    {
+     "from": "21:45",
+     "place": "ferry_landing",
+     "act": "the landing",
+     "days": "sun"
     }
    ],
    "longest_walk_m": 0,

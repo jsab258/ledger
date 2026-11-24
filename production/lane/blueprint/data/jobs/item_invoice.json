@@ -1,0 +1,55 @@
+{
+ "id": "item_invoice",
+ "kind": "break_in",
+ "name": "An invoice: the cold-store book in Agar's office",
+ "giver": "derek_hebblewhite",
+ "act_min": 3,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "21:00",
+  "05:00"
+ ],
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "in",
+   "at": "agar_back_room",
+   "verb": "the cold-store book",
+   "keys": [
+    {
+     "way": "route",
+     "how": "a break-in by night"
+    },
+    {
+     "way": "talk",
+     "how": "a word with Simon Ombler"
+    },
+    {
+     "way": "key",
+     "how": "Ian's locks"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "simon_ombler"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act III item 3"
+}

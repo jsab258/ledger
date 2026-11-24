@@ -1,0 +1,66 @@
+{
+ "id": "five_mornings",
+ "n": 35,
+ "title": "Five mornings",
+ "giver": "eric_tharratt",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "four cars",
+ "waits": "a game week",
+ "empire_tie": "the contract (the main line: see jobs/five_mornings.json)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "cold_stores",
+   "who": "eric_tharratt",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Eric Tharratt, cold stores. The packing shift met on time, five mornings running. Then he'll talk."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "cold_stores",
+   "who": "eric_tharratt",
+   "verb": "five mornings",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "the contract",
+   "sets": [
+    "contract_won"
+   ],
+   "town_keeps": "the fifth morning",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "missed",
+   "sets": [
+    "contract_lost"
+   ],
+   "town_keeps": "the gate stays shut to him",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 35 (new in STORY-FRAME 4)"
+}

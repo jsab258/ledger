@@ -122,7 +122,7 @@ TO_COME = {
         'properties': {'id': ID, 'kind': {'type': 'string', 'enum': ['carry', 'collection', 'break_in', 'lift', 'tail', 'minding', 'fare', 'sit_down', 'send']},
                        'giver': {'type': 'string'}, 'act_min': {'type': 'integer'}, 'rung_min': {'type': 'integer'}, 'offer': {'type': 'array'},
                        'steps': {'type': 'array', 'items': {'type': 'object', 'required': ['id', 'at', 'verb', 'keys'],
-                           'properties': {'id': ID, 'at': ID, 'verb': {'type': 'string'}, 'keys': {'type': 'array', 'items': {'type': 'object', 'required': ['way'], 'properties': {'way': {'type': 'string', 'enum': ['key', 'back_way', 'force', 'talk', 'pay', 'threat', 'watch']}}}, 'x-note': 'three ways to every lock'}, 'fail': {'type': ['string', 'null']}}}},
+                           'properties': {'id': ID, 'at': ID, 'verb': {'type': 'string'}, 'keys': {'type': 'array', 'items': {'type': 'object', 'required': ['way'], 'properties': {'way': {'type': 'string', 'enum': ['key', 'back_way', 'force', 'talk', 'pay', 'threat', 'watch', 'route', 'choice'], 'x-note-wave2': 'route (a way through: road, water, foot, cab) and choice (a decision, not a lock) added by wave 2; how holds the words'}}}, 'x-note': 'three ways to every lock'}, 'fail': {'type': ['string', 'null']}}}},
                        'pay': {'type': 'object', 'required': ['to'], 'properties': {'to': {'type': 'string', 'enum': ['pocket', 'tin', 'book']}, 'pence': {'type': 'integer', 'minimum': 0}, 'band': {'type': 'array', 'minItems': 2, 'maxItems': 2}}},
                        'ledger': {'type': 'string'}, 'src': SRC},
         'x-rules': ['every step "at" is a places.json or rooms.json id', 'every break-in step has three keys']},

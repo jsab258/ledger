@@ -1,0 +1,75 @@
+{
+ "id": "walsh_rounds",
+ "n": 22,
+ "title": "Father Walsh's rounds",
+ "giver": "nora_cronin",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "Nora has seen Father Walsh speak to Frank",
+ "waits": "until the cold weather ends",
+ "empire_tie": "the priest who carries Ron's messages out of the cells",
+ "steps": [
+  {
+   "id": "found",
+   "at": "grocer",
+   "who": "nora_cronin",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Could a car just happen to be passing?"
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "edge_north",
+   "who": "brendan_walsh",
+   "verb": "his night sick calls",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "arrange it quietly",
+   "sets": [
+    "walsh_guessed"
+   ],
+   "town_keeps": "Nora's protectiveness turned his way",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "tell him outright",
+   "sets": [
+    "walsh_refused_kindly"
+   ],
+   "town_keeps": "he refuses, kindly",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "leave it",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 22"
+}

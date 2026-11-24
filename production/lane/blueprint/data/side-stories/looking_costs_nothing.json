@@ -1,0 +1,90 @@
+{
+ "id": "looking_costs_nothing",
+ "n": 25,
+ "title": "Looking costs nothing",
+ "giver": "rita_welburn",
+ "tone": "grey",
+ "act": "I",
+ "opens_when": "Frank has passed Rita's window with Ron",
+ "waits": "until the ticket runs out (a month)",
+ "empire_tie": "the bond: Ron (a cheaper way at the night between)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "ritas",
+   "who": "rita_welburn",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Mickey's watch came in the week he died."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "ritas",
+   "who": "rita_welburn",
+   "verb": "the ticket",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "metcalfes",
+   "who": "hal_metcalfe",
+   "verb": "Hal knows: it was Ron, for the funeral flowers",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "redeem it and give it to Ron",
+   "sets": [
+    "watch_redeemed",
+    "ron_loyalty_big"
+   ],
+   "town_keeps": "Ron leaves it at the station desk, or wears it at five",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "ask him why",
+   "sets": [
+    "ron_ashamed"
+   ],
+   "town_keeps": "he tells, and is ashamed",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "leave it in the window",
+   "sets": [
+    "watch_for_sale"
+   ],
+   "town_keeps": "Mickey's watch still for sale in the close",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 25"
+}

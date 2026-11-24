@@ -1,0 +1,87 @@
+{
+ "id": "lamp_outside_adas",
+ "n": 30,
+ "title": "The lamp outside Ada's",
+ "giver": "ada_vane",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "night has fallen once with Frank on Ada's side of the street",
+ "waits": "until the next council letter (a week)",
+ "empire_tie": "a favour owed (the Board's works man)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "adas",
+   "who": "ada_vane",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "The lamp's been out for weeks."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "phone_parade",
+   "who": null,
+   "verb": "the council's number",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "harbour_board",
+   "who": "stan_pickles",
+   "verb": "the works man",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "through Stan",
+   "sets": [
+    "lamp_fixed_favour"
+   ],
+   "town_keeps": "the light itself, every night",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "Ian with a ladder",
+   "sets": [
+    "lamp_fixed_letter"
+   ],
+   "town_keeps": "a lit pavement, and a council letter",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "leave it dark",
+   "sets": [],
+   "town_keeps": "the dark",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 30"
+}

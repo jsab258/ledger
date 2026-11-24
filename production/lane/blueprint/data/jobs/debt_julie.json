@@ -1,0 +1,77 @@
+{
+ "id": "debt_julie",
+ "kind": "collection",
+ "name": "Mickey's debt book: Julie, 9 pounds",
+ "giver": "sheila_dunn",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Mickey's debt book, the page for Julie."
+ ],
+ "steps": [
+  {
+   "id": "find",
+   "at": "home_cl_9",
+   "verb": "find the debtor where his routine has him",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "the routine (routines.json)"
+    },
+    {
+     "way": "talk",
+     "how": "ask Ron"
+    },
+    {
+     "way": "talk",
+     "how": "ask the caff"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "collect",
+   "at": "home_cl_9",
+   "verb": "collect: cannot pay: mercy or shame",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "strike it out (mercy)"
+    },
+    {
+     "way": "choice",
+     "how": "take what she has (shame, told on the street)"
+    },
+    {
+     "way": "choice",
+     "how": "give her work (the night desk later)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 900,
+  "note": "a debtor pays only what his purse holds; the rest stays on the book (3.5.2)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "squeezing or letting a debt go is told on the street within a game day",
+ "people": [
+  "julie_kettlewell"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "BLUEPRINT-02 2.8.1; BLUEPRINT-03 3.5.2; STORY-FRAME 7 (worked examples 1 and 2)"
+}

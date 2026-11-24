@@ -1,0 +1,75 @@
+{
+ "id": "all_on_forms",
+ "n": 20,
+ "title": "All on the forms",
+ "giver": "christine_pickering",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "Christine has spoken to Frank once at the newsagent's",
+ "waits": "the one telling",
+ "empire_tie": "a rival: Agar (the yard's lease, STORY-FRAME 4 item 1)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "newsagent",
+   "who": "christine_pickering",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "A stranger has been asking who holds the yard's lease."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "newsagent",
+   "who": "christine_pickering",
+   "verb": "the telling",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "thank her",
+   "sets": [
+    "source_harbour_board"
+   ],
+   "town_keeps": "a clerk's opinion of his manners",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "press money on her",
+   "sets": [
+    "christine_insulted"
+   ],
+   "town_keeps": "she stops telling him things",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "ignore it",
+   "sets": [],
+   "town_keeps": "he never learns who asked",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 20"
+}

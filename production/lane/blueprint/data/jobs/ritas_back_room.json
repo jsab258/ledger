@@ -1,0 +1,77 @@
+{
+ "id": "ritas_back_room",
+ "kind": "break_in",
+ "name": "Rita's back room",
+ "giver": "wayne_harrison",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "There's a clock on the back shelf she has not written down. Side door is on the latch till six. We split it."
+ ],
+ "steps": [
+  {
+   "id": "in",
+   "at": "ritas_back_room",
+   "verb": "in at the side door",
+   "keys": [
+    {
+     "way": "back_way",
+     "how": "the side door before six"
+    },
+    {
+     "way": "key",
+     "how": "a key from Wayne (talk)"
+    },
+    {
+     "way": "force",
+     "how": "force"
+    }
+   ],
+   "fail": null,
+   "words": "In at Rita's side door.",
+   "lines": [
+    "In at Rita's side door."
+   ]
+  },
+  {
+   "id": "clock",
+   "at": "ritas_back_room",
+   "verb": "the carriage clock off the back shelf",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "take it"
+    },
+    {
+     "way": "choice",
+     "how": "take it and something else"
+    },
+    {
+     "way": "choice",
+     "how": "leave it"
+    }
+   ],
+   "fail": null,
+   "words": "The carriage clock, off the back shelf.",
+   "lines": [
+    "The carriage clock, off the back shelf."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "pocket",
+  "band_note": "fence at a third of retail (economy 2.7.6), split with Wayne"
+ },
+ "ledger": "Wayne's offer: the clock off Rita's back shelf, and a split.",
+ "returns": "Rita never forgets her own goods",
+ "people": [
+  "wayne_harrison",
+  "rita_welburn"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js ritaback"
+}

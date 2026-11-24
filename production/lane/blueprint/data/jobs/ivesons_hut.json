@@ -1,0 +1,78 @@
+{
+ "id": "ivesons_hut",
+ "kind": "break_in",
+ "name": "Iveson's hut",
+ "giver": "darren_milner",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Iveson keeps it in a tin box in the hut. The lad chains the gap at five. Not that I'm telling you anything."
+ ],
+ "steps": [
+  {
+   "id": "in",
+   "at": "iveson_hut",
+   "verb": "get into the hut",
+   "keys": [
+    {
+     "way": "back_way",
+     "how": "the back way before five (the crane gap)"
+    },
+    {
+     "way": "key",
+     "how": "a key (talk)"
+    },
+    {
+     "way": "force",
+     "how": "force"
+    }
+   ],
+   "fail": null,
+   "words": "Got into Iveson's hut.",
+   "lines": [
+    "Got into Iveson's hut."
+   ]
+  },
+  {
+   "id": "box",
+   "at": "iveson_hut",
+   "verb": "the tin box under the bench",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "open it"
+    },
+    {
+     "way": "choice",
+     "how": "take it whole"
+    },
+    {
+     "way": "watch",
+     "how": "leave it and look"
+    }
+   ],
+   "fail": null,
+   "words": "The tin box: eighty pounds.",
+   "lines": [
+    "The tin box: eighty pounds."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "pocket",
+  "pence": 8000
+ },
+ "ledger": "Darren's tip: Iveson's tin box, in the hut at the scrap yard.",
+ "returns": "Norman Dent has a noise and a shape (STORY-FRAME 7 worked example 2)",
+ "people": [
+  "dennis_iveson",
+  "neil_screeton",
+  "norman_dent"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js hut; 2.8.1 (Iveson's three keys)"
+}

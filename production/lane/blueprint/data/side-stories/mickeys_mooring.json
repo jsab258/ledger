@@ -1,0 +1,87 @@
+{
+ "id": "mickeys_mooring",
+ "n": 17,
+ "title": "Mickey's mooring",
+ "giver": "gary_mawer",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "the Widow's people have noticed Frank",
+ "waits": "until the yard's month end",
+ "empire_tie": "a rival: the Widow's ladder",
+ "steps": [
+  {
+   "id": "found",
+   "at": "caff",
+   "who": "gary_mawer",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Mickey rented a mooring, three months unpaid."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "iveson_yard",
+   "who": "gary_mawer",
+   "verb": "the yard and the bill",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "widow_base",
+   "who": "stathers",
+   "verb": "the Widow's man asks about it",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "pay and keep it empty",
+   "sets": [
+    "widow_notices_berth"
+   ],
+   "town_keeps": "whether he is in the boat trade",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "let her people have it",
+   "sets": [
+    "widow_goodwill_debt"
+   ],
+   "town_keeps": "a debt of goodwill she will call in",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "let the yard take it",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 17"
+}

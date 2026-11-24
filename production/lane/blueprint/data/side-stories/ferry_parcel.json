@@ -1,0 +1,89 @@
+{
+ "id": "ferry_parcel",
+ "n": 18,
+ "title": "The ferry parcel",
+ "giver": "gordon_leckenby",
+ "tone": "grey",
+ "act": "I-II",
+ "opens_when": "June is still in town",
+ "waits": "until June leaves",
+ "empire_tie": "June's claim to the name on the board",
+ "steps": [
+  {
+   "id": "found",
+   "at": "ferry_landing",
+   "who": "gordon_leckenby",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Came back on the boat marked not known."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "ferry_landing",
+   "who": "gordon_leckenby",
+   "verb": "the parcel of letters",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "boarding_house",
+   "who": "june_suddaby",
+   "verb": "June",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "give them unopened",
+   "sets": [
+    "june_speaks"
+   ],
+   "town_keeps": "how June is with him",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "read them first",
+   "sets": [
+    "read_june_letters"
+   ],
+   "town_keeps": "June can tell",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "burn them",
+   "sets": [
+    "letters_burned"
+   ],
+   "town_keeps": "nothing, said",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 18"
+}

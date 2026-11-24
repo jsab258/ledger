@@ -1,0 +1,80 @@
+{
+ "id": "car_three",
+ "kind": "lift",
+ "name": "Car three: Danny's car across Mickey's rank",
+ "giver": "danny_cammack",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "move",
+   "at": "rank_mickeys",
+   "verb": "drive Danny's car off the rank (the keys are in it)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "round the corner"
+    },
+    {
+     "way": "route",
+     "how": "to the quay's edge, front wheels over the water"
+    },
+    {
+     "way": "route",
+     "how": "into the water"
+    }
+   ],
+   "fail": null,
+   "words": "It's on my rank, so it's on my board. Car three. Two pound forty to the quay. Sheila, put it in the book.",
+   "lines": [
+    "It's on my rank, so it's on my board. Car three. Two pound forty to the quay. Sheila, put it in the book."
+   ]
+  },
+  {
+   "id": "board",
+   "at": "mickeys_office",
+   "verb": "hang the keys on Mickey's board and chalk CAR 3",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "chalk it"
+    },
+    {
+     "way": "key",
+     "how": "leave the keys with Sheila"
+    },
+    {
+     "way": "choice",
+     "how": "give them back to Danny"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "pence": 240,
+  "note": "two pound forty to the quay; Sheila asks whether Mr Cammack wants a receipt"
+ },
+ "ledger": "Car three.",
+ "returns": "Ada and Shaun saw it; by noon Brenda has it whole (STORY-FRAME 7 worked example 1)",
+ "people": [
+  "danny_cammack",
+  "ron_kirby",
+  "shane_boddy",
+  "wes_akers"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 3 (the one deed only Frank would do) and 5 Act I (Danny's noticed rung)"
+}

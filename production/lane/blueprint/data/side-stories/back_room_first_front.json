@@ -1,0 +1,76 @@
+{
+ "id": "back_room_first_front",
+ "n": 34,
+ "title": "The back room, the first front",
+ "giver": "rita_welburn",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "rung 2 (Rita's back room opens)",
+ "waits": "TO WRITE (story lane)",
+ "empire_tie": "a front (rung 3)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "ritas_back_room",
+   "who": "rita_welburn",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "ritas_back_room",
+   "who": "rita_welburn",
+   "verb": "terms",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "ritas_back_room",
+   "who": "wayne_harrison",
+   "verb": "Wayne's debt",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "a front",
+   "sets": [
+    "front_ritas"
+   ],
+   "town_keeps": "Danny hears his fence has a partner",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "no",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 34 (new in STORY-FRAME 4)"
+}

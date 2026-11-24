@@ -240,7 +240,7 @@
   },
   {
    "id": "story.rival_rungs.to_write",
-   "who": "maureen_jensen, geoffrey_agar, danny_cammack",
+   "who": "rivals",
    "situation": "story.rival_rungs",
    "text": "TO WRITE (story lane): Each rival's noticed, visit, pressure, threat and sit-down lines (2.10.1 to 2.10.3, RT-06).",
    "once": "game",
@@ -249,7 +249,7 @@
   },
   {
    "id": "story.fares.to_write",
-   "who": "fare people",
+   "who": "fare_people",
    "situation": "story.fares",
    "text": "TO WRITE (story lane): Two rides' lines for each of the 40 fare people (fares.json TO WRITE fields).",
    "once": "game",

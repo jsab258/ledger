@@ -1,0 +1,78 @@
+{
+ "id": "friday_means_friday",
+ "n": 27,
+ "title": "Friday means Friday",
+ "giver": "sylvia_rennison",
+ "tone": "grey",
+ "act": "I-II",
+ "opens_when": "Frank has stopped by the boarding house's step once",
+ "waits": "until Friday",
+ "empire_tie": "a rival: Danny's ladder",
+ "steps": [
+  {
+   "id": "found",
+   "at": "boarding_house",
+   "who": "sylvia_rennison",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Mickey would have had a word."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "boarding_house",
+   "who": "sylvia_rennison",
+   "verb": "a lodger of Danny's three weeks behind",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "send Ron",
+   "sets": [
+    "paid_by_ron",
+    "danny_hears_mickeys_still"
+   ],
+   "town_keeps": "Mickey's is still Mickey's",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "pay it",
+   "sets": [
+    "sylvia_grateful"
+   ],
+   "town_keeps": "she tells nobody, then everybody",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "I'm not Mickey",
+   "sets": [
+    "sylvia_phrase"
+   ],
+   "town_keeps": "she says it back in the close, word for word",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 27"
+}

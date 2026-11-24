@@ -1,0 +1,89 @@
+{
+ "id": "ride_for_sergeant",
+ "n": 7,
+ "title": "A ride for the sergeant",
+ "giver": "carol_ellis",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "raining, after dark, Ellis has met Frank once",
+ "waits": "30 town minutes, then she walks",
+ "empire_tie": "the law: Ellis's stage (what she holds on paper)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "carol_ellis",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "It's the police. She wants a car."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "terry_hodgson",
+   "verb": "Terry takes the job",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "fish_dock",
+   "who": "carol_ellis",
+   "verb": "the ride",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "ride with her",
+   "sets": [
+    "ellis_heard_him"
+   ],
+   "town_keeps": "a live talk in the back of a cab",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "Terry alone",
+   "sets": [
+    "terry_version"
+   ],
+   "town_keeps": "Terry's version, told to Kevin",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "refuse",
+   "sets": [
+    "ellis_walked_in_rain"
+   ],
+   "town_keeps": "she remembers",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 7"
+}

@@ -1,0 +1,54 @@
+{
+ "id": "tail_coverdale",
+ "kind": "tail",
+ "name": "Where Miss Coverdale goes",
+ "giver": "sheila_dunn",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Somebody at the Harbour Office is writing letters about our licence. I would like to know who she takes them to."
+ ],
+ "steps": [
+  {
+   "id": "follow",
+   "at": "customs",
+   "verb": "follow her from the customs house at half past four",
+   "keys": [
+    {
+     "way": "route",
+     "how": "on foot"
+    },
+    {
+     "way": "route",
+     "how": "by cab"
+    },
+    {
+     "way": "choice",
+     "how": "send Darren"
+    }
+   ],
+   "fail": null,
+   "words": "Followed Susan Coverdale to the solicitor's door: Agar's.",
+   "lines": [
+    "Followed Susan Coverdale to the solicitor's door: Agar's."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "a hook: Susan is Agar's eyes (2.10.2)",
+  "pence": 0
+ },
+ "ledger": "Sheila wants to know who Susan Coverdale takes her letters to.",
+ "returns": "Susan looks back every 20 to 40 s; a face she knows ends the tail",
+ "people": [
+  "susan_coverdale",
+  "geoffrey_agar"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js tail_susan; 2.10.2; 3.5.4"
+}

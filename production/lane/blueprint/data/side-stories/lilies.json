@@ -1,0 +1,64 @@
+{
+ "id": "lilies",
+ "n": 21,
+ "title": "Lilies",
+ "giver": "winifred_duggleby",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "the Saturday before the anniversary, Frank at the chapel or the grocer's",
+ "waits": "until Sunday's service",
+ "empire_tie": "standing with the chapel",
+ "steps": [
+  {
+   "id": "found",
+   "at": "chapel",
+   "who": "winifred_duggleby",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Nobody gives lilies any more."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "copper_row_market",
+   "who": null,
+   "verb": "the market in Copper Row, by a car from the rank",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "lilies",
+   "sets": [
+    "lilies_on_altar"
+   ],
+   "town_keeps": "a kindness, told after the service",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "chrysanthemums again",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 21"
+}

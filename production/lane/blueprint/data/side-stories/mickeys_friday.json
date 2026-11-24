@@ -1,0 +1,90 @@
+{
+ "id": "mickeys_friday",
+ "n": 4,
+ "title": "Mickey's Friday",
+ "giver": "lily_tang",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "Frank's first order at the Tangs' on a Friday",
+ "waits": "Fridays, for four weeks",
+ "empire_tie": "a man: Ron's loyalty (the bond)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "tangs_takeaway",
+   "who": "lily_tang",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Same as Mickey's? Every Friday, two of number nine. I remember."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "tangs_takeaway",
+   "who": "lily_tang",
+   "verb": "ask who ate the second",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "rank_mickeys",
+   "who": "ron_kirby",
+   "verb": "Fridays, aye.",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "keep Fridays with Ron",
+   "sets": [
+    "ron_loyalty_step",
+    "fridays_kept"
+   ],
+   "town_keeps": "Lily counts out two in the close",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "let it lapse",
+   "sets": [
+    "fridays_lapsed"
+   ],
+   "town_keeps": "Lily counts out one",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "ask her to stop",
+   "sets": [
+    "lily_stops"
+   ],
+   "town_keeps": "Lily tells Peter",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 4"
+}

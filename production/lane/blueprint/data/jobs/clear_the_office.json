@@ -1,0 +1,53 @@
+{
+ "id": "clear_the_office",
+ "kind": "carry",
+ "name": "Clearing the office the night before the search",
+ "giver": "sheila_dunn",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "clear",
+   "at": "mickeys_office",
+   "verb": "one night to clear the office by the yard's two ways; the day book has to stay",
+   "keys": [
+    {
+     "way": "route",
+     "how": "the yard gate to the quay"
+    },
+    {
+     "way": "back_way",
+     "how": "the back fence into the yards' lane (the vault)"
+    },
+    {
+     "way": "choice",
+     "how": "Ron carries it"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "sheila_dunn",
+  "ron_kirby"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act IIb (the turn)"
+}

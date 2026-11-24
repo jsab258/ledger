@@ -1,0 +1,130 @@
+{
+ "id": "envelope_landing",
+ "kind": "carry",
+ "name": "Mickey's arrangement: the envelope to the landing",
+ "giver": "ron_kirby",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "night one after 22:00; asks on nights 1, 3, 5, 7",
+ "window": [
+  "22:00",
+  "01:00"
+ ],
+ "offer": [
+  "Aye. Well. Envelope still wants carrying."
+ ],
+ "steps": [
+  {
+   "id": "take",
+   "at": "mickeys_office",
+   "verb": "take the envelope",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "from Ron's hand"
+    },
+    {
+     "way": "watch",
+     "how": "from the hook by the dark coat"
+    },
+    {
+     "way": "choice",
+     "how": "send it back with Ron"
+    }
+   ],
+   "fail": null,
+   "words": "Ron: Mickey's arrangement, down to the ferry landing after ten.",
+   "lines": [
+    "Ron: Mickey's arrangement, down to the ferry landing after ten."
+   ]
+  },
+  {
+   "id": "go",
+   "at": "ferry_landing",
+   "verb": "carry it to the landing, 22:00 to 01:00",
+   "keys": [
+    {
+     "way": "route",
+     "how": "the lit quay (quick, seen)"
+    },
+    {
+     "way": "back_way",
+     "how": "the yards' lane behind the warehouses, slow in the dark (footsteps carry half as far)"
+    },
+    {
+     "way": "route",
+     "how": "the cab (quickest; anyone who sees it names the car)"
+    }
+   ],
+   "fail": "searched",
+   "words": "At the landing a man says 'Mickey's?'",
+   "lines": [
+    "At the landing a man says 'Mickey's?'"
+   ]
+  },
+  {
+   "id": "cut",
+   "at": "ferry_landing",
+   "verb": "take the cut back for the tin",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "hand it over and take the cut"
+    },
+    {
+     "way": "choice",
+     "how": "open it first (a carbon of the night's fare sheet)"
+    },
+    {
+     "way": "choice",
+     "how": "keep it and walk"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "searched",
+   "at": "ferry_landing",
+   "verb": "stopped by the beat constable",
+   "keys": [
+    {
+     "way": "talk",
+     "how": "stand and be searched (the constable keeps the envelope; the ask goes on as a state)"
+    },
+    {
+     "way": "route",
+     "how": "run (a chase with no timer)"
+    },
+    {
+     "way": "talk",
+     "how": "talk (the claim check)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 2000,
+  "note": "economy: Frank's cut a run, nights one, three, five and seven of Act I"
+ },
+ "ledger": "An envelope to the landing, for Mickey's arrangement.",
+ "returns": "the line in the book next morning (Sheila); Ron's look",
+ "people": [
+  "ron_kirby",
+  "old_firm_man",
+  "pc_haigh"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "BLUEPRINT-03 3.5.1; STORY-FRAME 1 and 2 (the envelope holds a carbon of the night's fare sheet, decision of 24 Nov); economy 2.9.1"
+}

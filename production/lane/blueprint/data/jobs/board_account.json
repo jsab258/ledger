@@ -1,0 +1,52 @@
+{
+ "id": "board_account",
+ "kind": "carry",
+ "name": "An account at the Harbour Board",
+ "giver": "christine_pickering",
+ "act_min": 3,
+ "rung_min": 3,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "counter",
+   "at": "harbour_board_counter",
+   "verb": "open an account at the counter (the decent jacket)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "the decent jacket"
+    },
+    {
+     "way": "talk",
+     "how": "an introduction"
+    },
+    {
+     "way": "talk",
+     "how": "an appointment the Fixer brokers"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "band_note": "account work (economy)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "christine_pickering"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "RT-03 Harbour Board; 2.12.3 (soft keys)"
+}

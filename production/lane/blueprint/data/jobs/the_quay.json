@@ -1,0 +1,56 @@
+{
+ "id": "the_quay",
+ "kind": "sit_down",
+ "name": "The quay at four: the day book",
+ "giver": "danny_cammack",
+ "act_min": 3,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "16:00",
+  "17:00"
+ ],
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "fight",
+   "at": "fishing_quay_east",
+   "verb": "Danny in Mickey's own car on the quay's edge with the day book",
+   "keys": [
+    {
+     "way": "force",
+     "how": "fists (unless the dial stands at Fired or War)"
+    },
+    {
+     "way": "talk",
+     "how": "talk"
+    },
+    {
+     "way": "choice",
+     "how": "the car itself"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "lose and the choice is made for him (a new input to the ending rule)",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the counter at five",
+ "people": [
+  "danny_cammack"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act III (the last day)"
+}

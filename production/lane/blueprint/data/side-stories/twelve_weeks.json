@@ -1,0 +1,90 @@
+{
+ "id": "twelve_weeks",
+ "n": 9,
+ "title": "Twelve weeks' notice",
+ "giver": "julie_kettlewell",
+ "tone": "grey",
+ "act": "I-II",
+ "opens_when": "Frank passes the newsagent while Julie is there",
+ "waits": "6 town hours, then she takes a job across town",
+ "empire_tie": "a man: Julie at the night desk (the likeliest successor)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "newsagent",
+   "who": "julie_kettlewell",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "The laundry held back my last weeks' money."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "launderette",
+   "who": "leonard_tasker",
+   "verb": "the laundry's office and its owner",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "launderette",
+   "who": "doreen_harland",
+   "verb": "Doreen saw the pay packets made up",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "lean on Tasker",
+   "sets": [
+    "tasker_paid",
+    "tasker_complained"
+   ],
+   "town_keeps": "he tells the Harbour Board clerk",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "pay her from the office",
+   "sets": [
+    "sheila_marked_it"
+   ],
+   "town_keeps": "Sheila marks it in the book",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "a job beside Pauline",
+   "sets": [
+    "julie_hired"
+   ],
+   "town_keeps": "whether Mickey's still looks after its own",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 9"
+}

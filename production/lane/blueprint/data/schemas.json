@@ -20109,8 +20109,11 @@
             "talk",
             "pay",
             "threat",
-            "watch"
-           ]
+            "watch",
+            "route",
+            "choice"
+           ],
+           "x-note-wave2": "route (a way through: road, water, foot, cab) and choice (a decision, not a lock) added by wave 2; how holds the words"
           }
          }
         },

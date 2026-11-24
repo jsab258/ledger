@@ -1,0 +1,83 @@
+{
+ "id": "five_mornings",
+ "kind": "carry",
+ "name": "The packing shift: five mornings",
+ "giver": "eric_tharratt",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "05:00",
+  "06:00"
+ ],
+ "offer": [
+  "Eric Tharratt, cold stores. The packing shift met on time, five mornings running. Then he'll talk."
+ ],
+ "steps": [
+  {
+   "id": "convoy",
+   "at": "cold_stores",
+   "verb": "four cars meet the packing shift on time, before six",
+   "keys": [
+    {
+     "way": "force",
+     "how": "through the dock gate (pay, bluff or push the Widow's men)"
+    },
+    {
+     "way": "back_way",
+     "how": "round by Agar's cold-store road and the fish dock in the dark"
+    },
+    {
+     "way": "choice",
+     "how": "the fifth car is Frank's own"
+    }
+   ],
+   "fail": "late",
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "late",
+   "at": "dock_gate",
+   "verb": "the gate swinging shut on every car he has",
+   "keys": [
+    {
+     "way": "pay",
+     "how": "pay the tax"
+    },
+    {
+     "way": "talk",
+     "how": "bluff"
+    },
+    {
+     "way": "force",
+     "how": "push"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "pence_per_week": 4000,
+  "note": "the contract: 40 pounds more a car a week (economy); won on five on-time mornings in one game week; lost after three missed in a week; won again once (places.json accounts)"
+ },
+ "ledger": "Eric Tharratt, cold stores. The packing shift met on time, five mornings running. Then he'll talk.",
+ "returns": "the fifth morning, the gate swinging shut",
+ "people": [
+  "eric_tharratt",
+  "stathers",
+  "kevin_needham",
+  "terry_hodgson"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act IIa (the contract); 2.15.2; places.json accounts"
+}

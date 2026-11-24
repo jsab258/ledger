@@ -1,0 +1,66 @@
+{
+ "id": "two_real_minutes",
+ "n": 2,
+ "title": "Two real minutes",
+ "giver": "pauline_kitching",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "Frank behind the counter while Pauline is on another call",
+ "waits": "about one minute",
+ "empire_tie": "the firm: Pauline's regard",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "pauline_kitching",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Take the phone a minute, love."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "pauline_kitching",
+   "verb": "take the call",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "booking right",
+   "sets": [
+    "pauline_you_will_do"
+   ],
+   "town_keeps": "Pauline's first word on him, on the radio",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "booking wrong",
+   "sets": [
+    "caller_tells_queue"
+   ],
+   "town_keeps": "Mickey's has gone to pot",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 2"
+}

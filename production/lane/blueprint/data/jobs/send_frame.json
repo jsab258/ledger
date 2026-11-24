@@ -1,0 +1,54 @@
+{
+ "id": "send_frame",
+ "kind": "send",
+ "name": "Send: frame",
+ "giver": "frank_nowak",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "send",
+   "at": "net_loft",
+   "verb": "frame (through a named man; the man's nerve against the target's)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "the board's line"
+    },
+    {
+     "way": "talk",
+     "how": "a word in talk"
+    },
+    {
+     "way": "watch",
+     "how": "the night his routine allows"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "paid_to": "man",
+  "band_note": "set by the job"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "Frank learns the morning after from the man's own line; the town can trace the chain",
+ "people": [
+  "wes_akers"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "BLUEPRINT-01 1.7.2 and RT-08 (the eight verbs); an example target, not a script"
+}

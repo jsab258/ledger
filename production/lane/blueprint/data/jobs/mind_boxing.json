@@ -1,0 +1,56 @@
+{
+ "id": "mind_boxing",
+ "kind": "minding",
+ "name": "The door at the boxing club",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "17:00",
+  "22:00"
+ ],
+ "offer": [
+  "The club's got a show on Saturday. They want a face on the door who is not from the docks."
+ ],
+ "steps": [
+  {
+   "id": "stand",
+   "at": "boxing_club",
+   "verb": "stand the door on show night",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "stand on the door"
+    },
+    {
+     "way": "choice",
+     "how": "send Ron"
+    },
+    {
+     "way": "watch",
+     "how": "stand with Ron"
+    }
+   ],
+   "fail": null,
+   "words": "Stood the door at the boxing club. People saw who stood there.",
+   "lines": [
+    "Stood the door at the boxing club. People saw who stood there."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "pocket",
+  "band_note": "minding pay set by the job (3.5.4)"
+ },
+ "ledger": "Ron: the boxing club wants a face on the door on Saturday.",
+ "returns": "men who train there can be recruited (2.11.1)",
+ "people": [
+  "ron_kirby",
+  "sid_bulmer"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "prototype jobsx.js mind_ron"
+}

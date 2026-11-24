@@ -1,0 +1,102 @@
+{
+ "id": "night_lodger",
+ "n": 3,
+ "title": "The night lodger",
+ "giver": "ian_megginson",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "Frank has slept a night at the office, and Ian has passed the door",
+ "waits": "until the next night",
+ "empire_tie": "a man: Darren at the yard (the yard in week six)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "ian_megginson",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Anybody with a hairpin and an hour."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "ian_megginson",
+   "verb": "the scratched lock",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "dents_warehouses",
+   "who": "norman_dent",
+   "verb": "Norman saw a light at three",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "mickeys_yard",
+   "who": "darren_milner",
+   "verb": "Darren asleep in the spare car",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "throw him out",
+   "sets": [
+    "darren_says_frank_hard"
+   ],
+   "town_keeps": "how he treats a man with nowhere to go",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "let him stay",
+   "sets": [
+    "darren_night_eye",
+    "darren_is_franks"
+   ],
+   "town_keeps": "Darren becomes his, and talks about it",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "new lock",
+   "sets": [
+    "lock_changed"
+   ],
+   "town_keeps": "Ian's bill",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 3"
+}

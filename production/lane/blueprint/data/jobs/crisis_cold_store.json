@@ -1,0 +1,60 @@
+{
+ "id": "crisis_cold_store",
+ "kind": "break_in",
+ "name": "The cold store, before dawn",
+ "giver": "eric_tharratt",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": [
+  "04:00",
+  "06:00"
+ ],
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "in",
+   "at": "cold_store_office",
+   "verb": "men from away have shut the door man in a cold room and locked the shift out",
+   "keys": [
+    {
+     "way": "key",
+     "how": "Ian Megginson's locks"
+    },
+    {
+     "way": "key",
+     "how": "a key bought from Malcolm Ruddock"
+    },
+    {
+     "way": "force",
+     "how": "force, against the clock"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "note": "the contract kept or lost",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "barry_coult",
+  "ray_spink",
+  "kenny_varley",
+  "malcolm_ruddock",
+  "ian_megginson"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act IIb (crisis two)"
+}

@@ -1,0 +1,77 @@
+{
+ "id": "posters_on_glass",
+ "n": 14,
+ "title": "Posters on the glass",
+ "giver": "margaret_lofthouse",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "the campaign's poster seen twice on Quay Street",
+ "waits": "until the campaign moves on (a week)",
+ "empire_tie": "standing (the town's own invented campaign; no real party or person)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "margaret_lofthouse",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "May I put one up properly?"
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "margaret_lofthouse",
+   "verb": "the poster on the window",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "let her",
+   "sets": [
+    "poster_up"
+   ],
+   "town_keeps": "half the street nods, the Harbour Board frowns",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "tear them down",
+   "sets": [
+    "kerb_painted"
+   ],
+   "town_keeps": "the campaign paints the kerb",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "both sides",
+   "sets": [
+    "both_posted"
+   ],
+   "town_keeps": "which side of the window the office is on",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 14"
+}

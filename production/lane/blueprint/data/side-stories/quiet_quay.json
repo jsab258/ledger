@@ -1,0 +1,75 @@
+{
+ "id": "quiet_quay",
+ "n": 19,
+ "title": "The quiet quay",
+ "giver": "susan_coverdale",
+ "tone": "grey",
+ "act": "II-III",
+ "opens_when": "Susan has seen Frank at the landing at night",
+ "waits": "three late turns",
+ "empire_tie": "a rival's eyes: Agar's",
+ "steps": [
+  {
+   "id": "found",
+   "at": "customs",
+   "who": "susan_coverdale",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "A car, after a late turn."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "customs",
+   "who": "susan_coverdale",
+   "verb": "her late fares, two or three nights",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "straight rides",
+   "sets": [
+    "susan_thinks_honest"
+   ],
+   "town_keeps": "what one careful woman tells her colleagues",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "use her talk",
+   "sets": [
+    "susan_noticed"
+   ],
+   "town_keeps": "she notices that too",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "refuse",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 19"
+}

@@ -1,0 +1,50 @@
+{
+ "id": "item_wages",
+ "kind": "collection",
+ "name": "The wages: a man paid off the book",
+ "giver": "derek_hebblewhite",
+ "act_min": 3,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "find",
+   "at": "home_nr_12",
+   "verb": "find him at his own door and bring him in, or keep him away",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "his need"
+    },
+    {
+     "way": "choice",
+     "how": "a hook"
+    },
+    {
+     "way": "choice",
+     "how": "Ron at the door"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act III item 1"
+}

@@ -1,0 +1,89 @@
+{
+ "id": "closing_at_tangs",
+ "n": 12,
+ "title": "Closing time at the Tangs'",
+ "giver": "lily_tang",
+ "tone": "grey",
+ "act": "II",
+ "opens_when": "Lily has served Frank twice",
+ "waits": "three closing times",
+ "empire_tie": "a rival: Danny's ladder",
+ "steps": [
+  {
+   "id": "found",
+   "at": "tangs_takeaway",
+   "who": "lily_tang",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "It is nothing."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "tangs_takeaway",
+   "who": "peter_tang",
+   "verb": "be at the counter at closing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "phone_parade",
+   "who": "jason_pinder",
+   "verb": "the men at the corner",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "presence",
+   "sets": [
+    "lily_remembers"
+   ],
+   "town_keeps": "who stood at the counter",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "humiliate the leader",
+   "sets": [
+    "danny_notices"
+   ],
+   "town_keeps": "Danny's crew notices",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "nothing",
+   "sets": [
+    "regulars_saw_nothing"
+   ],
+   "town_keeps": "the regulars see him not see it",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 12"
+}

@@ -1,0 +1,77 @@
+{
+ "id": "the_camcorder",
+ "n": 32,
+ "title": "The camcorder",
+ "giver": "hal_metcalfe",
+ "tone": "dark",
+ "act": "any",
+ "opens_when": "the camcorder's owner filmed a deed of Frank's",
+ "waits": "until the tape is lent out (a week)",
+ "empire_tie": "the law: a seen deed on tape",
+ "steps": [
+  {
+   "id": "found",
+   "at": "metcalfes",
+   "who": "hal_metcalfe",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "metcalfes",
+   "who": "hal_metcalfe",
+   "verb": "the tape",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "buy the tape",
+   "sets": [
+    "tape_bought"
+   ],
+   "town_keeps": "Hal knows its price",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "take it",
+   "sets": [
+    "tape_taken"
+   ],
+   "town_keeps": "a tape existed, which is worse",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "let it lie",
+   "sets": [
+    "tape_to_ellis_or_alison"
+   ],
+   "town_keeps": "a picture, the one witness that does not forget",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 32"
+}

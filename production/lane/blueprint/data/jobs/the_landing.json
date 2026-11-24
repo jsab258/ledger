@@ -1,0 +1,128 @@
+{
+ "id": "the_landing",
+ "kind": "break_in",
+ "name": "The Landing",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "Frank at the third rung, or any rival at threat, or end of game week four; never before the end of week three",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "look",
+   "at": "ferry_landing",
+   "verb": "a day of looking",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "from the tea stall"
+    },
+    {
+     "way": "watch",
+     "how": "from the snooker hall window"
+    },
+    {
+     "way": "watch",
+     "how": "Karen Grummitt's ticket window"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "in",
+   "at": "widow_net_store",
+   "verb": "the Widow's weekly load off the last boat (boxed goods and tobacco)",
+   "keys": [
+    {
+     "way": "route",
+     "how": "the road: the van, driven by a man he has met"
+    },
+    {
+     "way": "back_way",
+     "how": "the gate: in with the contract cars at shift change, to the net store under her office"
+    },
+    {
+     "way": "route",
+     "how": "the boat: on the stage as she ties up"
+    }
+   ],
+   "fail": "wrong",
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "wrong",
+   "at": "ferry_landing",
+   "verb": "one thing always goes wrong; the car brought round by a man with four lessons",
+   "keys": [
+    {
+     "way": "route",
+     "how": "Ron at the wheel"
+    },
+    {
+     "way": "route",
+     "how": "Frank at the wheel"
+    },
+    {
+     "way": "back_way",
+     "how": "on foot by the yards' lane"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "hold",
+   "at": "post_landing",
+   "verb": "a man standing there in the morning",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "Ron"
+    },
+    {
+     "way": "choice",
+     "how": "a crewman with nerve"
+    },
+    {
+     "way": "choice",
+     "how": "Danny's man (if allied)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "band_note": "the load: tobacco 100 pounds a case off the boat (economy EC-07); the landing's nights after"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "Danny's name on the town's telling (STORY-FRAME 3)",
+ "people": [
+  "ron_kirby",
+  "maureen_jensen",
+  "pat_brannigan",
+  "mark_billany",
+  "danny_cammack"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 The midpoint; timetables bonfire_night_display (5 Nov, the display on the quay)"
+}

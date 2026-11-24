@@ -1,0 +1,75 @@
+{
+ "id": "name_board_boat",
+ "n": 16,
+ "title": "The name board",
+ "giver": "albert_suggitt",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "Frank has passed Albert at the nets twice",
+ "waits": "until Dennis melts it down (3 days)",
+ "empire_tie": "a hook: Iveson remembers who pays fair",
+ "steps": [
+  {
+   "id": "found",
+   "at": "fish_dock",
+   "who": "albert_suggitt",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "My old boat's board went for scrap."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "iveson_yard",
+   "who": "dennis_iveson",
+   "verb": "Dennis's price",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "buy it back",
+   "sets": [
+    "dennis_paid_fair"
+   ],
+   "town_keeps": "Albert's story at the caff for weeks",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "take it",
+   "sets": [
+    "dennis_robbed"
+   ],
+   "town_keeps": "Dennis remembers",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "tell Albert it's gone",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 16"
+}

@@ -1,0 +1,75 @@
+{
+ "id": "sign_there",
+ "n": 24,
+ "title": "Sign there, dear",
+ "giver": "edith_stockill",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "Edith has seen Frank keep something to himself",
+ "waits": "6 town hours",
+ "empire_tie": "standing: how he keeps a confidence",
+ "steps": [
+  {
+   "id": "found",
+   "at": "newsagent",
+   "who": "edith_stockill",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Everybody else round here talks."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "newsagent",
+   "who": "edith_stockill",
+   "verb": "witness her will",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "keep it",
+   "sets": [
+    "edith_trusts"
+   ],
+   "town_keeps": "Edith's word to Sheila",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "let it slip",
+   "sets": [
+    "edith_heard_back"
+   ],
+   "town_keeps": "the street knows what it should not",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "decline",
+   "sets": [],
+   "town_keeps": "nothing",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 24"
+}

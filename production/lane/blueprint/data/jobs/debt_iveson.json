@@ -1,0 +1,79 @@
+{
+ "id": "debt_iveson",
+ "kind": "collection",
+ "name": "Mickey's debt book: Dennis, 80 pounds",
+ "giver": "sheila_dunn",
+ "act_min": 1,
+ "rung_min": 1,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "Mickey's debt book, the page for Dennis."
+ ],
+ "steps": [
+  {
+   "id": "find",
+   "at": "iveson_hut",
+   "verb": "find the debtor where his routine has him",
+   "keys": [
+    {
+     "way": "watch",
+     "how": "the routine (routines.json)"
+    },
+    {
+     "way": "talk",
+     "how": "ask Ron"
+    },
+    {
+     "way": "talk",
+     "how": "ask the caff"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "collect",
+   "at": "iveson_hut",
+   "verb": "collect: has the money, a yard and a yard hand; three keys",
+   "keys": [
+    {
+     "way": "threat",
+     "how": "front up the yard hand, Neil Screeton"
+    },
+    {
+     "way": "back_way",
+     "how": "the hut at night (break in for the tin box)"
+    },
+    {
+     "way": "threat",
+     "how": "lean on what he bought out of the burned warehouse"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 8000,
+  "note": "a debtor pays only what his purse holds; the rest stays on the book (3.5.2)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "squeezing or letting a debt go is told on the street within a game day",
+ "people": [
+  "dennis_iveson",
+  "neil_screeton",
+  "norman_dent"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "BLUEPRINT-02 2.8.1; BLUEPRINT-03 3.5.2; STORY-FRAME 7 (worked examples 1 and 2)"
+}

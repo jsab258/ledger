@@ -1,0 +1,1652 @@
+{
+ "file": "fares.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "BLUEPRINT-03 3.4.1; BLUEPRINT-07 FIT-G7, 7.14",
+  "tools/lane/prototype/project/src/game/tune/fares.js (14 rides with words)",
+  "game-design/side-stories-2026-11-08.md (fares inside side stories)",
+  "STORY-FRAME-2026-11-26",
+  "economy: a fare is 80p plus 1.10 pounds a mile, a quarter more at night and on Sunday"
+ ],
+ "rules": {
+  "offer": "Pauline calls the fares Frank is offered; each is a named person going where their routine takes them at that hour (routines.json). A fare lasts 1 to 2 real minutes.",
+  "wrinkles": "Every fare after the first teaching fare carries one of seven wrinkles: talker, parcel, tail, runner, wait, hurry, face; never the same wrinkle twice running (7.14) and no fare person rides with the same lines twice in a playthrough (FIT-G7). The fare picker enforces 'twice running'; this file gives each ride its wrinkle.",
+  "pay": "80p flag fall plus 1.10 pounds a mile, a quarter more after 22:00 and on Sunday (economy); drivers keep half of their own fares (choice 1, economy).",
+  "second_ride": "The second ride is offered only once its offered_when holds: changed by what Frank has done."
+ },
+ "counts": {
+  "fare_people": 40,
+  "rides": 80,
+  "wrinkles": {
+   "none": 1,
+   "talker": 27,
+   "hurry": 11,
+   "runner": 4,
+   "face": 15,
+   "parcel": 9,
+   "wait": 10,
+   "tail": 3
+  },
+  "rides_with_words": 17
+ },
+ "open_points": [
+  "Lines for most rides are TO WRITE for the story lane; the 14 prototype rides keep their words (renamed for the lead).",
+  "Rides whose from or to is off the Hook (edge_north, police_station, infirmary, copper_row_market) are driven to the soft edge and end there (2.2, soft edges)."
+ ],
+ "fare_people": [
+  {
+   "id": "brendan_walsh",
+   "person": "brendan_walsh",
+   "name": "Brendan Walsh",
+   "rides": [
+    {
+     "id": "brendan_walsh.1",
+     "n": 1,
+     "from": "infirmary",
+     "to": "chapel",
+     "wrinkle": null,
+     "when": {
+      "hours": "15:00-23:00",
+      "days": "daily",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Your uncle drove me this road a hundred times. He never once let me pay.",
+      "Sit up straight in that seat. The street is looking at who is in it."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js priest (the first teaching fare)"
+    },
+    {
+     "id": "brendan_walsh.2",
+     "n": 2,
+     "from": "edge_north",
+     "to": "priests_house",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "20:30-22:30",
+      "days": "daily",
+      "offered_when": "after Nora's word (side story 22): he guesses, and says nothing"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 22"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js priest (the first teaching fare)"
+  },
+  {
+   "id": "brenda_laverack",
+   "person": "brenda_laverack",
+   "name": "Brenda Laverack",
+   "rides": [
+    {
+     "id": "brenda_laverack.1",
+     "n": 1,
+     "from": "laveracks",
+     "to": "fish_dock",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "05:00-08:00",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Iveson's lad chains the crane gap at five sharp, every night since the fire. Before that anybody could walk in.",
+      "Not that I'd know what anybody wanted in a scrap yard."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js brenda_dawn"
+    },
+    {
+     "id": "brenda_laverack.2",
+     "n": 2,
+     "from": "fish_dock",
+     "to": "laveracks",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "07:00-08:15",
+      "days": "mon-sat",
+      "offered_when": "after Haddock's dear (side story 8): her version of how he sorted it"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 8"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js brenda_dawn"
+  },
+  {
+   "id": "malcolm_ruddock",
+   "person": "malcolm_ruddock",
+   "name": "Malcolm Ruddock",
+   "rides": [
+    {
+     "id": "malcolm_ruddock.1",
+     "n": 1,
+     "from": "cold_stores",
+     "to": "boarding_house",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "17:30-18:30",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "The cold store wants a firm that turns up. The one they have is late every other morning.",
+      "Ask at the Harbour Office. It is their contract to give."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js shift (three off the packing shift, spoken for by the deputy)"
+    },
+    {
+     "id": "malcolm_ruddock.2",
+     "n": 2,
+     "from": "d_cs_5",
+     "to": "cold_stores",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "05:00-05:30",
+      "days": "mon-fri",
+      "offered_when": "after the contract is won or lost"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5 five mornings"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js shift (three off the packing shift, spoken for by the deputy)"
+  },
+  {
+   "id": "terence_bould",
+   "person": "terence_bould",
+   "name": "Terence Bould",
+   "rides": [
+    {
+     "id": "terence_bould.1",
+     "n": 1,
+     "from": "boarding_house",
+     "to": "ferry_landing",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "20:30-22:15",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "The last boat. If I miss it I am in this town another night.",
+      "That is the hooter. He will not wait."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js lodger_ferry"
+    },
+    {
+     "id": "terence_bould.2",
+     "n": 2,
+     "from": "ferry_landing",
+     "to": "harbour_board",
+     "wrinkle": "runner",
+     "when": {
+      "hours": "10:00-11:00",
+      "days": "mon-fri",
+      "offered_when": "after a berth: he says goodbye, or does not"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "3.4.1 (a lodger for the last ferry)"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js lodger_ferry"
+  },
+  {
+   "id": "alison_sedman",
+   "person": "alison_sedman",
+   "name": "Alison Sedman",
+   "rides": [
+    {
+     "id": "alison_sedman.1",
+     "n": 1,
+     "from": "bus_stop_qs",
+     "to": "burned_warehouse",
+     "wrinkle": "face",
+     "when": {
+      "hours": "09:00-17:00",
+      "days": "tue,thu",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "You are Mickey Suddaby's nephew. Did he ever say what he saw, the night of the fire?",
+      "He was on the rank that night. Everybody says so, and nobody says what he saw."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js alison_fire; STORY-FRAME 5 Act I (Alison's fare to the warehouse row)"
+    },
+    {
+     "id": "alison_sedman.2",
+     "n": 2,
+     "from": "burned_warehouse",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "11:00-13:00",
+      "days": "tue,thu",
+      "offered_when": "after the page about the fire (Mickey's real book): what she asks next"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 4 item 10"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js alison_fire; STORY-FRAME 5 Act I (Alison's fare to the warehouse row)"
+  },
+  {
+   "id": "raymond_kaye",
+   "person": "raymond_kaye",
+   "name": "Raymond Kaye",
+   "rides": [
+    {
+     "id": "raymond_kaye.1",
+     "n": 1,
+     "from": "edge_north",
+     "to": "boarding_house",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "17:30-19:00",
+      "days": "mon",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "You are from Mickey's. Good. Mickey used to take a thing round for me."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js parcel (a gentleman at the station)"
+    },
+    {
+     "id": "raymond_kaye.2",
+     "n": 2,
+     "from": "boarding_house",
+     "to": "edge_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "08:30-09:00",
+      "days": "wed",
+      "offered_when": "if Frank opened the parcel: he knows"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "7.14 (the parcel)"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js parcel (a gentleman at the station)"
+  },
+  {
+   "id": "shane_boddy",
+   "person": "shane_boddy",
+   "name": "Shane Boddy",
+   "rides": [
+    {
+     "id": "shane_boddy.1",
+     "n": 1,
+     "from": "market_stalls_quay",
+     "to": "chapel",
+     "wrinkle": "runner",
+     "when": {
+      "hours": "21:00-24:00",
+      "days": "fri,sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Just along here. Anywhere here."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js runner"
+    },
+    {
+     "id": "shane_boddy.2",
+     "n": 2,
+     "from": "phone_parade",
+     "to": "cammack_base",
+     "wrinkle": "face",
+     "when": {
+      "hours": "17:00-19:00",
+      "days": "mon-sat",
+      "offered_when": "if Frank let the runner go, or caught him"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "7.14 (the runner)"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js runner"
+  },
+  {
+   "id": "rodney_usher",
+   "person": "rodney_usher",
+   "name": "Rodney Usher",
+   "rides": [
+    {
+     "id": "rodney_usher.1",
+     "n": 1,
+     "from": "ritas",
+     "to": "harbour_board",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "19:00-23:00",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Pull in past the door. Keep the engine running. Two minutes."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js wait"
+    },
+    {
+     "id": "rodney_usher.2",
+     "n": 2,
+     "from": "harbour_board",
+     "to": "snooker_hall",
+     "wrinkle": "runner",
+     "when": {
+      "hours": "17:00-17:30",
+      "days": "mon-fri",
+      "offered_when": "after the wait: what he carried out of the Board"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "RT-03 (a clerk who sells times)"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js wait"
+  },
+  {
+   "id": "wayne_harrison",
+   "person": "wayne_harrison",
+   "name": "Wayne Harrison",
+   "rides": [
+    {
+     "id": "wayne_harrison.1",
+     "n": 1,
+     "from": "ritas",
+     "to": "ferry_landing",
+     "wrinkle": "tail",
+     "when": {
+      "hours": "18:00-22:00",
+      "days": "tue",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "See Metcalfe's van? Stay behind it. Not close. I want to know where he goes of a night.",
+      "There. The smoke house door. Every Tuesday, I knew it."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js tail_hal"
+    },
+    {
+     "id": "wayne_harrison.2",
+     "n": 2,
+     "from": "snooker_hall",
+     "to": "d_nr_27",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "21:30-22:00",
+      "days": "mon-sat",
+      "offered_when": "after the tail: Hal knows, or does not"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "7.14 (the tail)"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js tail_hal"
+  },
+  {
+   "id": "norman_dent",
+   "person": "norman_dent",
+   "name": "Norman Dent",
+   "rides": [
+    {
+     "id": "norman_dent.1",
+     "n": 1,
+     "from": "d_cl_20",
+     "to": "dents_warehouses",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "19:00-19:30",
+      "days": "daily",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Nights on the row, you see who comes. A van at number nine, two in the morning, Tuesdays and Fridays.",
+      "I write nothing down. I am paid to watch warehouses, not people."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js norman_night"
+    },
+    {
+     "id": "norman_dent.2",
+     "n": 2,
+     "from": "dents_warehouses",
+     "to": "d_cl_20",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "07:00-07:30",
+      "days": "daily",
+      "offered_when": "after side story 31 (Nothing moves but me): what he saw of Frank"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 31"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js norman_night"
+  },
+  {
+   "id": "aidan_keogh",
+   "person": "aidan_keogh",
+   "name": "Aidan Keogh",
+   "rides": [
+    {
+     "id": "aidan_keogh.1",
+     "n": 1,
+     "from": "doctors",
+     "to": "infirmary",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "22:00-02:00",
+      "days": "daily",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "I stitch what comes to my door and I ask nothing. Fifteen pounds, and I remember every face."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js doctor_night"
+    },
+    {
+     "id": "aidan_keogh.2",
+     "n": 2,
+     "from": "infirmary",
+     "to": "doctors",
+     "wrinkle": "face",
+     "when": {
+      "hours": "23:00-02:00",
+      "days": "daily",
+      "offered_when": "after the yard (week six): he has stitched Frank's arm, or not"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5 the yard"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js doctor_night"
+  },
+  {
+   "id": "julie_kettlewell",
+   "person": "julie_kettlewell",
+   "name": "Julie Kettlewell",
+   "rides": [
+    {
+     "id": "julie_kettlewell.1",
+     "n": 1,
+     "from": "home_cl_9",
+     "to": "market_stalls_quay",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "08:00-12:00",
+      "days": "thu",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "I drove a van for the bakery four years, till they laid us off. I can drive anything.",
+      "If you ever want a driver who turns up."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js julie_work (her fare: the slate decision, 2.8.1)"
+    },
+    {
+     "id": "julie_kettlewell.2",
+     "n": 2,
+     "from": "edge_north",
+     "to": "home_cl_9",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "14:30-15:00",
+      "days": "tue,sat",
+      "offered_when": "after the night desk is offered, or not"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 4 item 6"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js julie_work (her fare: the slate decision, 2.8.1)"
+  },
+  {
+   "id": "susan_coverdale",
+   "person": "susan_coverdale",
+   "name": "Susan Coverdale",
+   "rides": [
+    {
+     "id": "susan_coverdale.1",
+     "n": 1,
+     "from": "customs",
+     "to": "solicitor_office",
+     "wrinkle": "face",
+     "when": {
+      "hours": "12:00-17:00",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Mr Agar asks after the firm. He takes an interest in who holds a private-hire licence on the Hook.",
+      "It was only a remark, Mr Nowak."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js susan_face (rung 2)"
+    },
+    {
+     "id": "susan_coverdale.2",
+     "n": 2,
+     "from": "customs",
+     "to": "d_nr_14",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "21:00-23:00",
+      "days": "mon-fri",
+      "offered_when": "her late turns (side story 19): two or three nights"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 19"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js susan_face (rung 2)"
+  },
+  {
+   "id": "bill_huxtable",
+   "person": "bill_huxtable",
+   "name": "Bill Huxtable",
+   "rides": [
+    {
+     "id": "bill_huxtable.1",
+     "n": 1,
+     "from": "bus_stop_qs",
+     "to": "dock_gate",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "05:00-05:45",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Your day driver pays at the gate now, same as the rest. Mrs Jensen's man takes it off them in the hut.",
+      "You did not hear that from me."
+     ],
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js kevin_gate (rung 2)"
+    },
+    {
+     "id": "bill_huxtable.2",
+     "n": 2,
+     "from": "dock_gate",
+     "to": "d_nr_1",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "14:00-15:00",
+      "days": "mon-sat",
+      "offered_when": "after Frank's man stands the gate"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "RT-03"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js kevin_gate (rung 2)"
+  },
+  {
+   "id": "harold_stead",
+   "person": "harold_stead",
+   "name": "Harold Stead",
+   "rides": [
+    {
+     "id": "harold_stead.1",
+     "n": 1,
+     "from": "d_cl_15",
+     "to": "infirmary",
+     "wrinkle": "tail",
+     "when": {
+      "hours": "09:30-10:00",
+      "days": "tue,fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented fare person"
+    },
+    {
+     "id": "harold_stead.2",
+     "n": 2,
+     "from": "infirmary",
+     "to": "d_cl_15",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "11:30-12:00",
+      "days": "tue,fri",
+      "offered_when": "the second week: he asks for 'Mickey's lad' by name"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented fare person"
+  },
+  {
+   "id": "dorothy_garbett",
+   "person": "dorothy_garbett",
+   "name": "Dorothy Garbett",
+   "rides": [
+    {
+     "id": "dorothy_garbett.1",
+     "n": 1,
+     "from": "d_cl_17",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "13:30-14:00",
+      "days": "wed",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "dorothy_garbett.2",
+     "n": 2,
+     "from": "edge_north",
+     "to": "d_cl_17",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "17:30-18:00",
+      "days": "wed",
+      "offered_when": "what she carries back from her sister's"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "sandra_newbould",
+   "person": "sandra_newbould",
+   "name": "Sandra Newbould",
+   "rides": [
+    {
+     "id": "sandra_newbould.1",
+     "n": 1,
+     "from": "d_cl_19",
+     "to": "infirmary",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "20:30-21:00",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "sandra_newbould.2",
+     "n": 2,
+     "from": "infirmary",
+     "to": "d_cl_19",
+     "wrinkle": "face",
+     "when": {
+      "hours": "07:00-07:30",
+      "days": "mon-fri",
+      "offered_when": "after anybody of Frank's comes into casualty"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "tony_marsden",
+   "person": "tony_marsden",
+   "name": "Tony Marsden",
+   "rides": [
+    {
+     "id": "tony_marsden.1",
+     "n": 1,
+     "from": "d_nr_20",
+     "to": "fish_dock",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "04:00-04:30",
+      "days": "mon,wed,fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "tony_marsden.2",
+     "n": 2,
+     "from": "fish_dock",
+     "to": "d_nr_20",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "12:00-14:00",
+      "days": "mon,wed,fri",
+      "offered_when": "paid in haddock if the catch was poor"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "janet_ruddle",
+   "person": "janet_ruddle",
+   "name": "Janet Ruddle",
+   "rides": [
+    {
+     "id": "janet_ruddle.1",
+     "n": 1,
+     "from": "d_cl_21",
+     "to": "edge_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "17:30-18:00",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "janet_ruddle.2",
+     "n": 2,
+     "from": "edge_north",
+     "to": "d_cl_21",
+     "wrinkle": "face",
+     "when": {
+      "hours": "01:00-01:30",
+      "days": "mon-fri",
+      "offered_when": "after Danby's friendship moves (she knows him)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "gerald_pashley",
+   "person": "gerald_pashley",
+   "name": "Gerald Pashley",
+   "rides": [
+    {
+     "id": "gerald_pashley.1",
+     "n": 1,
+     "from": "d_cl_22",
+     "to": "edge_north",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "13:30-14:00",
+      "days": "sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented (did Mickey's books before Sheila)"
+    },
+    {
+     "id": "gerald_pashley.2",
+     "n": 2,
+     "from": "edge_north",
+     "to": "d_cl_22",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "21:00-21:30",
+      "days": "sat",
+      "offered_when": "after Sheila trusts Frank: his bitterness changes"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented (did Mickey's books before Sheila)"
+  },
+  {
+   "id": "kathleen_moran",
+   "person": "kathleen_moran",
+   "name": "Kathleen Moran",
+   "rides": [
+    {
+     "id": "kathleen_moran.1",
+     "n": 1,
+     "from": "chapel",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "12:00-12:30",
+      "days": "sun",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "kathleen_moran.2",
+     "n": 2,
+     "from": "chapel",
+     "to": "edge_north",
+     "wrinkle": "face",
+     "when": {
+      "hours": "12:00-12:30",
+      "days": "sun",
+      "offered_when": "after Remembrance Sunday (the pen's backs to Ron)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "ahmed_rashid",
+   "person": "ahmed_rashid",
+   "name": "Ahmed Rashid",
+   "rides": [
+    {
+     "id": "ahmed_rashid.1",
+     "n": 1,
+     "from": "market_stalls_quay",
+     "to": "edge_north",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "09:00-09:30",
+      "days": "thu",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "ahmed_rashid.2",
+     "n": 2,
+     "from": "market_stalls_quay",
+     "to": "edge_north",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "09:00-09:30",
+      "days": "thu",
+      "offered_when": "haggles the fare a second time, or does not"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "brian_tindall",
+   "person": "brian_tindall",
+   "name": "Brian Tindall",
+   "rides": [
+    {
+     "id": "brian_tindall.1",
+     "n": 1,
+     "from": "rank_north",
+     "to": "ferry_landing",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "05:30-06:00",
+      "days": "mon,wed,fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "brian_tindall.2",
+     "n": 2,
+     "from": "ferry_landing",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "13:30-14:00",
+      "days": "mon,wed,fri",
+      "offered_when": "what ships he brought in (the Widow's loads)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "eileen_crabtree",
+   "person": "eileen_crabtree",
+   "name": "Eileen Crabtree",
+   "rides": [
+    {
+     "id": "eileen_crabtree.1",
+     "n": 1,
+     "from": "adas",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "12:30-13:00",
+      "days": "fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    },
+    {
+     "id": "eileen_crabtree.2",
+     "n": 2,
+     "from": "boarding_house",
+     "to": "edge_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "11:00-11:30",
+      "days": "fri",
+      "offered_when": "carries the Hook's gossip about Frank into town"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "invented"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; invented"
+  },
+  {
+   "id": "arvids_ozols",
+   "person": "arvids_ozols",
+   "name": "Arvids Ozols",
+   "rides": [
+    {
+     "id": "arvids_ozols.1",
+     "n": 1,
+     "from": "rank_mickeys",
+     "to": "fishing_basin_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "21:00-22:00",
+      "days": "daily",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "To nowhere, please. One hour."
+     ],
+     "src": "STORY-FRAME 4 item 17 (paid in tinned fish)"
+    },
+    {
+     "id": "arvids_ozols.2",
+     "n": 2,
+     "from": "rank_mickeys",
+     "to": "fishing_basin_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "21:00-22:00",
+      "days": "daily",
+      "offered_when": "his last hour to nowhere, the week the timber ship is towed out (STORY-FRAME 5 week 4)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; STORY-FRAME 4 item 17 (paid in tinned fish)"
+  },
+  {
+   "id": "carol_ellis",
+   "person": "carol_ellis",
+   "name": "Carol Ellis",
+   "rides": [
+    {
+     "id": "carol_ellis.1",
+     "n": 1,
+     "from": "fish_dock",
+     "to": "police_station",
+     "wrinkle": "face",
+     "when": {
+      "hours": "20:00-23:00",
+      "days": "daily",
+      "offered_when": "raining, after dark, Ellis has met Frank once (side story 7)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 7 (A ride for the sergeant)"
+    },
+    {
+     "id": "carol_ellis.2",
+     "n": 2,
+     "from": "mickeys",
+     "to": "police_station",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "09:00-12:00",
+      "days": "daily",
+      "offered_when": "after the search: a live talk in the back of a cab"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 3 Ellis"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 7 (A ride for the sergeant)"
+  },
+  {
+   "id": "derek_hebblewhite",
+   "person": "derek_hebblewhite",
+   "name": "Derek Hebblewhite",
+   "rides": [
+    {
+     "id": "derek_hebblewhite.1",
+     "n": 1,
+     "from": "harbour_board",
+     "to": "edge_north",
+     "wrinkle": "face",
+     "when": {
+      "hours": "14:00-16:00",
+      "days": "mon-fri",
+      "offered_when": "week four: a fare who asks for a receipt"
+     },
+     "lines": [
+      "The same bollard?"
+     ],
+     "src": "STORY-FRAME 4 item 19"
+    },
+    {
+     "id": "derek_hebblewhite.2",
+     "n": 2,
+     "from": "mickeys",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "16:00-17:00",
+      "days": "mon-fri",
+      "offered_when": "Act III: the inspector's mornings"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5 Act III"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; STORY-FRAME 4 item 19"
+  },
+  {
+   "id": "june_suddaby",
+   "person": "june_suddaby",
+   "name": "June Suddaby",
+   "rides": [
+    {
+     "id": "june_suddaby.1",
+     "n": 1,
+     "from": "mickeys",
+     "to": "ferry_landing",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "10:00-12:00",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "Thank you for the lift. I meant what I said. I want nothing from it.",
+      "But whatever you turn that office into, do it with your eyes open. He never did."
+     ],
+     "src": "prototype fares.js (June's lift)"
+    },
+    {
+     "id": "june_suddaby.2",
+     "n": 2,
+     "from": "ferry_landing",
+     "to": "boarding_house",
+     "wrinkle": "face",
+     "when": {
+      "hours": "15:00-16:00",
+      "days": "sat",
+      "offered_when": "after the ferry parcel (side story 18)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 18"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; prototype fares.js (June's lift)"
+  },
+  {
+   "id": "karen_grummitt",
+   "person": "karen_grummitt",
+   "name": "Karen Grummitt",
+   "rides": [
+    {
+     "id": "karen_grummitt.1",
+     "n": 1,
+     "from": "boarding_house",
+     "to": "ferry_landing",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "17:00-17:15",
+      "days": "thu",
+      "offered_when": "a car at five on Thursday, with her case (side story 28)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 28 (One way)"
+    },
+    {
+     "id": "karen_grummitt.2",
+     "n": 2,
+     "from": "ferry_landing",
+     "to": "boarding_house",
+     "wrinkle": "face",
+     "when": {
+      "hours": "19:00-19:30",
+      "days": "mon-sat",
+      "offered_when": "if she stayed: she hates the Hook a little more, and him"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 28"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 28 (One way)"
+  },
+  {
+   "id": "edith_stockill",
+   "person": "edith_stockill",
+   "name": "Edith Stockill",
+   "rides": [
+    {
+     "id": "edith_stockill.1",
+     "n": 1,
+     "from": "d_cl_12",
+     "to": "newsagent",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "09:00-10:00",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 24"
+    },
+    {
+     "id": "edith_stockill.2",
+     "n": 2,
+     "from": "newsagent",
+     "to": "d_cl_12",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "13:30-14:00",
+      "days": "mon-sat",
+      "offered_when": "after the will: she trusts him, or has heard it back"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 24"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 24"
+  },
+  {
+   "id": "winifred_duggleby",
+   "person": "winifred_duggleby",
+   "name": "Winifred Duggleby",
+   "rides": [
+    {
+     "id": "winifred_duggleby.1",
+     "n": 1,
+     "from": "chapel",
+     "to": "copper_row_market",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "10:00-12:00",
+      "days": "sat",
+      "offered_when": "the lilies (side story 21)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 21 (Lilies)"
+    },
+    {
+     "id": "winifred_duggleby.2",
+     "n": 2,
+     "from": "copper_row_market",
+     "to": "chapel",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "11:00-13:00",
+      "days": "sat",
+      "offered_when": "with the lilies or without"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 21"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 21 (Lilies)"
+  },
+  {
+   "id": "sylvia_rennison",
+   "person": "sylvia_rennison",
+   "name": "Sylvia Rennison",
+   "rides": [
+    {
+     "id": "sylvia_rennison.1",
+     "n": 1,
+     "from": "boarding_house",
+     "to": "laveracks",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "10:00-10:30",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 27"
+    },
+    {
+     "id": "sylvia_rennison.2",
+     "n": 2,
+     "from": "laveracks",
+     "to": "boarding_house",
+     "wrinkle": "face",
+     "when": {
+      "hours": "11:00-11:30",
+      "days": "mon-fri",
+      "offered_when": "she repeats his phrase word for word (side story 27)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 27"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 27"
+  },
+  {
+   "id": "hal_metcalfe",
+   "person": "hal_metcalfe",
+   "name": "Henry Metcalfe",
+   "rides": [
+    {
+     "id": "hal_metcalfe.1",
+     "n": 1,
+     "from": "metcalfes",
+     "to": "ritas",
+     "wrinkle": "tail",
+     "when": {
+      "hours": "10:45-11:00",
+      "days": "mon",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 26"
+    },
+    {
+     "id": "hal_metcalfe.2",
+     "n": 2,
+     "from": "ritas",
+     "to": "metcalfes",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "11:45-12:00",
+      "days": "mon",
+      "offered_when": "a day before Frank would hear it: what the street says of him"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 26"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 26"
+  },
+  {
+   "id": "christine_pickering",
+   "person": "christine_pickering",
+   "name": "Christine Pickering",
+   "rides": [
+    {
+     "id": "christine_pickering.1",
+     "n": 1,
+     "from": "harbour_board",
+     "to": "d_nr_9",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "16:45-17:15",
+      "days": "mon-fri",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 20"
+    },
+    {
+     "id": "christine_pickering.2",
+     "n": 2,
+     "from": "newsagent",
+     "to": "d_nr_9",
+     "wrinkle": "face",
+     "when": {
+      "hours": "11:30-12:00",
+      "days": "sat",
+      "offered_when": "after All on the forms: manners, or money pressed on her"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 20"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 20"
+  },
+  {
+   "id": "philip_danby",
+   "person": "philip_danby",
+   "name": "Philip Danby",
+   "rides": [
+    {
+     "id": "philip_danby.1",
+     "n": 1,
+     "from": "allotments",
+     "to": "d_cl_29",
+     "wrinkle": "runner",
+     "when": {
+      "hours": "17:30-18:00",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 4 item 10"
+    },
+    {
+     "id": "philip_danby.2",
+     "n": 2,
+     "from": "d_cl_29",
+     "to": "ferry_landing",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "10:30-11:00",
+      "days": "sun",
+      "offered_when": "the friendship's next step, or its end"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 4 item 10"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; STORY-FRAME 4 item 10"
+  },
+  {
+   "id": "doreen_harland",
+   "person": "doreen_harland",
+   "name": "Doreen Harland",
+   "rides": [
+    {
+     "id": "doreen_harland.1",
+     "n": 1,
+     "from": "d_cl_25",
+     "to": "launderette",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "05:15-05:45",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side stories 9, 10"
+    },
+    {
+     "id": "doreen_harland.2",
+     "n": 2,
+     "from": "launderette",
+     "to": "d_cl_25",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "13:45-14:15",
+      "days": "mon-fri",
+      "offered_when": "the laundry's hampers (side story 10) if taken"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 10"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side stories 9, 10"
+  },
+  {
+   "id": "eric_tharratt",
+   "person": "eric_tharratt",
+   "name": "Eric Tharratt",
+   "rides": [
+    {
+     "id": "eric_tharratt.1",
+     "n": 1,
+     "from": "edge_north",
+     "to": "cold_stores",
+     "wrinkle": "hurry",
+     "when": {
+      "hours": "05:00-05:30",
+      "days": "mon-fri",
+      "offered_when": "after the third on-time morning"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5 the contract"
+    },
+    {
+     "id": "eric_tharratt.2",
+     "n": 2,
+     "from": "cold_stores",
+     "to": "edge_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "17:45-18:15",
+      "days": "mon-fri",
+      "offered_when": "after five mornings: then he'll talk"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 6 the next want"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; STORY-FRAME 5 the contract"
+  },
+  {
+   "id": "maureen_jensen",
+   "person": "maureen_jensen",
+   "name": "Maureen Jensen",
+   "rides": [
+    {
+     "id": "maureen_jensen.1",
+     "n": 1,
+     "from": "widow_base",
+     "to": "dock_gate",
+     "wrinkle": "face",
+     "when": {
+      "hours": "08:00-17:00",
+      "days": "mon-sat",
+      "offered_when": "Act III item 4: the Widow in the back of his cab"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 5 Act III"
+    },
+    {
+     "id": "maureen_jensen.2",
+     "n": 2,
+     "from": "d_cs_19",
+     "to": "mickeys",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "21:00-23:00",
+      "days": "daily",
+      "offered_when": "the night he comes back from casualty: she has not walked up Quay Street in years"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "STORY-FRAME 3 the Widow"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; STORY-FRAME 5 Act III"
+  },
+  {
+   "id": "keith_garbutt",
+   "person": "keith_garbutt",
+   "name": "Keith Garbutt",
+   "rides": [
+    {
+     "id": "keith_garbutt.1",
+     "n": 1,
+     "from": "snooker_hall",
+     "to": "edge_north",
+     "wrinkle": "wait",
+     "when": {
+      "hours": "21:30-22:30",
+      "days": "mon-sat",
+      "offered_when": "first ride"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "2.10.4"
+    },
+    {
+     "id": "keith_garbutt.2",
+     "n": 2,
+     "from": "caff",
+     "to": "edge_north",
+     "wrinkle": "face",
+     "when": {
+      "hours": "11:30-12:00",
+      "days": "mon-sat",
+      "offered_when": "after the truce is spent: he is careful what he says in a cab"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "2.10.4"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; 2.10.4"
+  },
+  {
+   "id": "margaret_lofthouse",
+   "person": "margaret_lofthouse",
+   "name": "Margaret Lofthouse",
+   "rides": [
+    {
+     "id": "margaret_lofthouse.1",
+     "n": 1,
+     "from": "mickeys",
+     "to": "edge_north",
+     "wrinkle": "parcel",
+     "when": {
+      "hours": "09:30-10:00",
+      "days": "mon,wed,fri",
+      "offered_when": "with her posters (side story 14)"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 14"
+    },
+    {
+     "id": "margaret_lofthouse.2",
+     "n": 2,
+     "from": "market_stalls_quay",
+     "to": "edge_north",
+     "wrinkle": "talker",
+     "when": {
+      "hours": "09:30-10:00",
+      "days": "mon,wed,fri",
+      "offered_when": "which side of the window the office is on"
+     },
+     "lines": [
+      "TO WRITE (story lane)"
+     ],
+     "src": "side story 14"
+    }
+   ],
+   "src": "3.4.1; FIT-G7; side story 14"
+  }
+ ]
+}

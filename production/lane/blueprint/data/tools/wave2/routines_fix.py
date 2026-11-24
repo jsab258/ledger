@@ -69,12 +69,12 @@ RT = {
 "julie_kettlewell": "mon,wed,fri|00:00 d_cl_9 asleep; 08:30 newsagent the cards in the window; 09:30 launderette asking after work; 11:00 caff a tea she makes last; 14:30 d_cl_9 home; 18:00 d_cl_9 the rent man at six"
   "/thu|00:00 d_cl_9 asleep; 08:30 newsagent the cards in the window; 09:30 market_stalls_quay looking; 13:00 d_cl_9 home"
   "/tue,sat|00:00 d_cl_9 asleep; 08:30 newsagent the cards in the window; 09:30 edge_north into town for work; 15:00 d_cl_9 home"
-  "/sun|00:00 d_cl_9 asleep; 09:30 caff a tea with Pat; 12:45 d_cl_9 home",
+  "/sun|00:00 d_cl_9 asleep",
 "june_suddaby": "mon-fri|00:00 boarding_house her room; 10:00 mickeys his things; 11:30 tea_room alone; 13:00 boarding_house her room"
   "/sat|00:00 boarding_house her room; 11:00 ferry_landing the boat over and back; 15:00 boarding_house her room"
   "/sun|00:00 boarding_house her room; 09:30 chapel Mass and a candle; 13:30 boarding_house her room",
 "karen_grummitt": "mon-sat|00:00 boarding_house her room; 06:30 ferry_landing the ticket window; 19:00 boarding_house her room"
-  "/sun|00:00 boarding_house her room; 10:30 caff Sunday breakfast; 11:45 boarding_house her room",
+  "/sun|00:00 boarding_house her room; 10:30 ferry_landing a walk on the quay; 12:00 boarding_house her room",
 "kathleen_moran": "sun|00:00 edge_north home in town; 09:00 chapel Mass; 12:00 chapel waiting for a car; 12:30 edge_north by cab: home in town"
   "/mon-sat|00:00 edge_north home in town",
 "kevin_needham": "mon-sat|00:00 edge_north home; 06:15 caff breakfast; 07:00 rank_mickeys car one; 12:30 caff his break; 13:15 rank_mickeys car one; 19:00 edge_north home"
@@ -144,4 +144,9 @@ RT = {
 "winifred_duggleby": "mon-fri|00:00 d_cl_16 asleep; 08:00 chapel the flowers and the brass; 11:30 d_cl_16 home; 15:00 adas a cup with Ada; 18:30 d_cl_16 home"
   "/sat|00:00 d_cl_16 asleep"
   "/sun|00:00 d_cl_16 asleep; 09:30 chapel Mass; 12:00 d_cl_16 home",
+"grace_rinaldi": "mon-thu|00:00 d_bp_3 asleep; 05:30 caff opening up; 15:30 d_bp_3 home"
+  "/fri-sat|00:00 d_bp_3 asleep; 05:30 caff opening up; 22:15 d_bp_3 home"
+  "/sun|00:00 d_bp_3 asleep; 10:00 chapel Mass; 13:15 d_bp_3 home",
+"old_firm_man": "mon-sat|00:00 ferry_landing the landing; 01:15 edge_west gone along the quay; 09:00 caff a tea in the corner; 09:45 edge_west gone; 21:45 ferry_landing the landing"
+  "/sun|00:00 ferry_landing the landing; 01:15 edge_west gone along the quay; 21:45 ferry_landing the landing",
 }

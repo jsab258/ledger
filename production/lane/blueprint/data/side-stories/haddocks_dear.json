@@ -1,0 +1,90 @@
+{
+ "id": "haddocks_dear",
+ "n": 8,
+ "title": "Haddock's dear",
+ "giver": "brenda_laverack",
+ "tone": "light",
+ "act": "I",
+ "opens_when": "Frank has spoken to Brenda once",
+ "waits": "3 dawns",
+ "empire_tie": "a rival: the Widow's ladder (noticed)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "laveracks",
+   "who": "brenda_laverack",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Somebody's collecting my order under my name."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "fish_dock",
+   "who": "eddie_birtwhistle",
+   "verb": "the porter who signs for her boxes",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "fish_dock",
+   "who": "dougie_saltmarsh",
+   "verb": "the syndicate's man who takes the porters' cut",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "catch the porter",
+   "sets": [
+    "porter_caught",
+    "seen_on_dock"
+   ],
+   "town_keeps": "Brenda's version, by noon",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "pay her loss",
+   "sets": [
+    "paid_brenda"
+   ],
+   "town_keeps": "Brenda's thanks",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "ask the Widow's people",
+   "sets": [
+    "owes_widow_favour"
+   ],
+   "town_keeps": "the dock knows whose favour he asked",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 8"
+}

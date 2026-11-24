@@ -1,0 +1,54 @@
+{
+ "id": "shipment_times",
+ "kind": "collection",
+ "name": "The times of shipments",
+ "giver": "rodney_usher",
+ "act_min": 3,
+ "rung_min": 3,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "buy",
+   "at": "snooker_hall",
+   "verb": "a clerk who sells the times of shipments",
+   "keys": [
+    {
+     "way": "pay",
+     "how": "pay"
+    },
+    {
+     "way": "threat",
+     "how": "lean on him"
+    },
+    {
+     "way": "talk",
+     "how": "trade a hook"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "paid_to": "usher",
+  "band_note": "a few pounds a time (judgement)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "rodney_usher"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "RT-03 Harbour Board (a clerk who sells times of shipments)"
+}

@@ -1,0 +1,115 @@
+{
+ "id": "long_way_round",
+ "n": 1,
+ "title": "The long way round",
+ "giver": "kevin_needham",
+ "tone": "grey",
+ "act": "I",
+ "opens_when": "Sheila has opened the day book to him, or Pauline has said Kevin's name twice on the radio",
+ "waits": "until Kevin's next pay day",
+ "empire_tie": "a man: the driver's loyalty; feeds Act III item 2 (car one's log)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "mickeys",
+   "who": "kevin_needham",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "Kevin's quiet again."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "mickeys",
+   "who": "sheila_dunn",
+   "verb": "the day book at the counter",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "rank_mickeys",
+   "who": "kevin_needham",
+   "verb": "car one's mileage",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "mickeys",
+   "who": "pauline_kitching",
+   "verb": "Pauline's log",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s4"
+   ]
+  },
+  {
+   "id": "s4",
+   "at": "caff",
+   "who": "kevin_needham",
+   "verb": "Kevin at his break",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "sack him",
+   "sets": [
+    "rank_one_short",
+    "drivers_know_he_reads_the_book"
+   ],
+   "town_keeps": "whether Frank reads the book",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "a cut",
+   "sets": [
+    "racket_started",
+    "book_lies_more"
+   ],
+   "town_keeps": "the book lies a little more",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "pay the gap",
+   "sets": [
+    "sheila_saw_gap"
+   ],
+   "town_keeps": "Sheila sees it",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 1"
+}

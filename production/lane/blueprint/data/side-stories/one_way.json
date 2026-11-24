@@ -1,0 +1,78 @@
+{
+ "id": "one_way",
+ "n": 28,
+ "title": "One way",
+ "giver": "karen_grummitt",
+ "tone": "light",
+ "act": "I-II",
+ "opens_when": "Karen has sold Frank a ticket or seen him at the landing twice",
+ "waits": "until Thursday, 5:00",
+ "empire_tie": "a man: the ferry's view (2.11.1)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "ferry_landing",
+   "who": "karen_grummitt",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "A car at five on Thursday, and not a word to Mrs Rennison."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "boarding_house",
+   "who": "karen_grummitt",
+   "verb": "the car at five",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "the car at five",
+   "sets": [
+    "karen_gone",
+    "sylvia_cool"
+   ],
+   "town_keeps": "Sylvia's version, or Karen's postcard",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "tell Sylvia",
+   "sets": [
+    "karen_stays_hates"
+   ],
+   "town_keeps": "she hates the Hook a little more, and him",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "pay her fortnight and send the car",
+   "sets": [
+    "karen_gone_paid"
+   ],
+   "town_keeps": "Karen's postcard",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 28"
+}

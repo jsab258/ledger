@@ -1,0 +1,102 @@
+{
+ "id": "rent_on_adas_window",
+ "n": 29,
+ "title": "The rent on Ada's window",
+ "giver": "dawn_pybus",
+ "tone": "grey",
+ "act": "I",
+ "opens_when": "Ada's tea is past (never before)",
+ "waits": "until the next rent day",
+ "empire_tie": "a rival: Agar (Ada's rent, STORY-FRAME 4 item 1)",
+ "steps": [
+  {
+   "id": "found",
+   "at": "adas",
+   "who": "dawn_pybus",
+   "verb": "found on foot, no marker",
+   "lines": [
+    "The landlord has raised Ada's rent."
+   ],
+   "next": [
+    "s1"
+   ]
+  },
+  {
+   "id": "s1",
+   "at": "adas",
+   "who": "dawn_pybus",
+   "verb": "Dawn's clipboard",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s2"
+   ]
+  },
+  {
+   "id": "s2",
+   "at": "mickeys",
+   "who": "sheila_dunn",
+   "verb": "Mickey paid the difference",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "s3"
+   ]
+  },
+  {
+   "id": "s3",
+   "at": "agar_base",
+   "who": "leonard_askew",
+   "verb": "the landlord's agent",
+   "lines": [
+    "TO WRITE (story lane)"
+   ],
+   "next": [
+    "ends"
+   ]
+  }
+ ],
+ "ends": [
+  {
+   "id": "end_1",
+   "choice": "keep paying in secret",
+   "sets": [
+    "ada_rent_paid",
+    "sheila_knows"
+   ],
+   "town_keeps": "who keeps Ada at her window",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_2",
+   "choice": "tell Ada",
+   "sets": [
+    "ada_refuses_or_ashamed"
+   ],
+   "town_keeps": "her tea goes cold",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "end_3",
+   "choice": "let it stop",
+   "sets": [
+    "ada_window_empty"
+   ],
+   "town_keeps": "the street notices its watcher gone",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "game-design/side-stories-2026-11-08.md story 29"
+}

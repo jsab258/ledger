@@ -1,0 +1,55 @@
+{
+ "id": "post_dock_gate",
+ "kind": "minding",
+ "name": "A man at the dock gate",
+ "giver": "stathers",
+ "act_min": 3,
+ "rung_min": 4,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "post",
+   "at": "post_dock_gate",
+   "verb": "a man of his posted at the gate, 06:00 to 22:00",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "a need recruit"
+    },
+    {
+     "way": "choice",
+     "how": "a hook recruit"
+    },
+    {
+     "way": "watch",
+     "how": "a man won from the pen at six"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence_per_week": 4000,
+  "note": "rung 4 posts: 40 pounds a week each from cash (economy)",
+  "pence": 0,
+  "paid_to": "man"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "stathers"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "RT-03 dock gate; RT2-09 (posts held by their men, never by Frank: STORY-FRAME 5)"
+}

@@ -1,0 +1,78 @@
+{
+ "id": "garbutt_meeting",
+ "kind": "sit_down",
+ "name": "A meeting the Fixer brokers",
+ "giver": "keith_garbutt",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "page",
+   "at": "phone_parade",
+   "verb": "page Garbutt from a box; he rings that box back within half a game hour",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "the parade's box"
+    },
+    {
+     "way": "choice",
+     "how": "the landing's box"
+    },
+    {
+     "way": "route",
+     "how": "the dock gate's box"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "meet",
+   "at": "snooker_hall",
+   "verb": "a true read, a meeting, or the one truce a game",
+   "keys": [
+    {
+     "way": "talk",
+     "how": "a read"
+    },
+    {
+     "way": "talk",
+     "how": "a meeting"
+    },
+    {
+     "way": "talk",
+     "how": "the truce"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "paid_to": "garbutt",
+  "band_note": "his prices follow the economy curve (2.10.4)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [
+  "keith_garbutt"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "2.10.4"
+}
