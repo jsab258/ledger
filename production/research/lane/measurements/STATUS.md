@@ -61,7 +61,7 @@ Friday 27 Nov at the five-sample rule (estimate): about 134 hours were left this
 | Feel: driving (Sleeping Dogs plus a second game) | a lead is enough (advisor 341) | the car's bands, tuned to the fixed map; chase speed from the car-chase clips | 4.5 | 3 | lead: Sleeping Dogs drill plus a second game, about 1.5 h a game |
 | Feel: being seen (KCD2, RDR2 only) | decides | the constable's ladder: seen to alarm to pursuit | 4 | 1 | footage |
 | Feel: chases on foot (L.A. Noire, Sleeping Dogs, GTA V) | decides | foot-chase length and how an escape ends it | 5 | 1 | footage |
-| Crowd counts by street and hour (cloud check, 24 Nov) | decides | how crowds are built if the floor exceeds the card | 3 | 0.5 | footage, five samples a game, dates owed (crowd-counts-2026-11-24.md, 24 Nov 09:56): busiest daytime views KCD2 about 10, 9, 6, 6, 5, RDR2 about 7, 6, 6, 5, 5 (median 6 each); quiet streets 0 to 3; read by eye at 720p |
+| Crowd counts by street and hour (cloud check, 24 Nov) | decides | how crowds are built if the floor exceeds the card | 3 | 0.5 | SOLID by count, by eye: five samples a game from dated uncut walks (crowd-counts-2026-11-24.md, 24 Nov 09:58): busiest daytime views KCD2 about 10, 9, 6, 6, 5, RDR2 about 7, 6, 6, 5, 5 (median 6 each); quiet streets 0 to 3; read by eye at 720p |
 | Street life Q3 (reactions spread and settle) | decides | the crowd's reaction radius and settle time | 3 | 1 | footage |
 | Feel: being seen (Hitman, GTA V) | a lead is enough | (the ladder is set by KCD2 and RDR2) | 4 | 0.5 | - |
 | GTA VI being seen (S1, S3, S7, G6) | a lead is enough | G5 heat length is solid already; the rest refines | 6 | 1 | second game: RDR2, inside the being-seen row |

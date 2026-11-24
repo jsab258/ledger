@@ -36,7 +36,7 @@ KCD2's views on this route hold 0 to about 9 people, the busiest about 9. Five b
 Not a busy view; the busy centre (the trolley streets, the market) is still owed: five views a game.
 
 ## Busy views, second pass (24 Nov 2026, 09:45 to 09:56 Swiss)
-Method as above (frame_grab.js, one frame a grab, read by the yellow label; the screenshot shows the grab before the last, so each label was matched by eye). People visible in the whole frame, the player and his horse left out. Both clips play as single uncut walks or rides (no cuts seen in the frames read); upload dates not read.
+Method as above (frame_grab.js, one frame a grab, read by the yellow label; the screenshot shows the grab before the last, so each label was matched by eye). People visible in the whole frame, the player and his horse left out. Both clips play as single uncut walks or rides (no cuts seen in the frames read). Upload dates (read 24 Nov 09:58 from each watch page's uploadDate): 45u45C4weys 14 Feb 2025; JXR-XfhiTyc 13 Feb 2025; 7vzuOl96f5s 26 Oct 2018 (the release day, so a console copy); goywFEHQFWY 17 Jul 2025.
 
 ### KCD2: https://www.youtube.com/watch?v=JXR-XfhiTyc ("Exploring medieval Kuttenberg - Relaxing ambient walk", 57 min 21 s, 720p, first person)
 | Video time | Place | Light | People |
@@ -71,8 +71,8 @@ Method as above (frame_grab.js, one frame a grab, read by the yellow label; the 
 - Quiet streets and lanes in both: 0 to 3. Dusk in KCD2: 1 to 5.
 
 ### What it means
-Busy daytime streets in both reference cities hold about 5 to 10 people in one view, median about 6; quiet streets 0 to 3. Five samples a game from uncut walks, but read by eye at 720p (distant figures under about 20 px could be missed, unverified) and the upload dates not read: state "five samples, dates owed". The market at midday in KCD2 (the busiest scene the check named) was not in either clip at its peak; the counts are a floor for the busiest place, not a ceiling.
+Busy daytime streets in both reference cities hold about 5 to 10 people in one view, median about 6; quiet streets 0 to 3. Five samples a game from uncut walks, but read by eye at 720p (distant figures under about 20 px could be missed, unverified) with the dates read: five samples a game, solid by the count rule, by eye. The market at midday in KCD2 (the busiest scene the check named) was not in either clip at its peak; the counts are a floor for the busiest place, not a ceiling.
 
 ## Next for this row
-- Dates of the four clips (each watch page's description). The KCD2 market at midday if a clip shows it, as a check on the ceiling.
+- The KCD2 market at midday if a clip shows it, as a check on the ceiling.
 - The number our crowd needs per view goes to the crowd part with these bands; the card's count is measured on our own build.

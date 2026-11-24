@@ -2965,3 +2965,12 @@ Cost of this entry about 0.1 h.
 - Target and check: five samples per speed, spread judged against the readout's whole-metre step.
 - Cost: about 2.4 h for both speeds (each run waits ten idle minutes; one run at a time).
 - Failed and why: a key landed before the fail screen (the opening's timing drifts; a second key fixed it); a queue started with a shell ampersand stayed alive unseen and a second queue started a second copy, both lost (queue only through the session's background runner; check processes with the system's own list); after a forced close the next run filmed a white window; once the sprint key did not take (a run at jog speed), so a sixth run replaced it. Lesson: check each run's frames for a whole view and the expected speed band before counting it.
+
+## Crowd counts from footage (24 Nov 2026)
+- Made: people visible in one view on busy and quiet streets of two reference cities, five busiest daytime views each: about 10, 9, 6, 6, 5 and about 7, 6, 6, 5, 5, median 6; quiet streets 0 to 3 (production/research/lane/measurements/crowd-counts-2026-11-24.md).
+- Method: pick long uncut walking or riding clips with no commentary in each game's biggest city; seek to fixed times (every 5 min in a long walk, every 75 s in a short ride); draw one frame a grab full size on a canvas labelled with its video time; count every person in the whole frame by eye, the player left out; note place and light; take the five busiest daytime views. Read each clip's upload date from the watch page's own data.
+- Tools: tools/drills/frame_grab.js in the browser pane, viewport 1600x900 set again before every screenshot (the pane drops it when its width changes and crops the frame otherwise).
+- Target and check: five samples a game from dated uncut footage; distant figures under about 20 px at 720p may be missed (a floor, not a ceiling).
+- Cost: about 0.5 h for two clips after the first readings.
+- Failed and why: the screenshot shows the grab before the last (match the yellow label, not the call order); a full-size screenshot cropped the right third until the viewport was set again; a walking route through quiet lanes gives few busy views, so pick clips by place, not by length.
+- Recipe map: no step moved (a measuring method already on the map as footage reading).
